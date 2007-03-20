@@ -1,13 +1,13 @@
 //::///////////////////////////////////////////////
-//:: Truenaming include: Uttering
-//:: true_inc_Utter
+//:: Tome of Battle include: Initiating
+//:: tob_inc_move
 //::///////////////////////////////////////////////
 /** @file
     Defines structures and functions for handling
-    truespeaking an utterance
+    initiating a maneuver
 
     @author Stratovarius
-    @date   Created - 2006.7.17
+    @date   Created - 2007.3.20
     @thanks to Ornedan for his work on Psionics upon which this is based.
 */
 //:://////////////////////////////////////////////
@@ -18,18 +18,18 @@
 /*                 Constants                    */
 //////////////////////////////////////////////////
 
-const string PRC_TRUESPEAKING_CLASS        = "PRC_CurrentUtterance_TrueSpeakingClass";
-const string PRC_UTTERANCE_LEVEL           = "PRC_CurrentUtterance_Level";
-const string TRUE_DEBUG_IGNORE_CONSTRAINTS = "TRUE_DEBUG_IGNORE_CONSTRAINTS";
+const string PRC_INITIATING_CLASS        = "PRC_CurrentManeuver_InitiatingClass";
+const string PRC_MANEVEUR_LEVEL           = "PRC_CurrentManeuver_Level";
+const string TOB_DEBUG_IGNORE_CONSTRAINTS = "TOB_DEBUG_IGNORE_CONSTRAINTS";
 
 /**
- * The variable in which the utterance token is stored. If no token exists,
- * the variable is set to point at the truespeaker itself. That way OBJECT_INVALID
+ * The variable in which the maneuver token is stored. If no token exists,
+ * the variable is set to point at the initiator itself. That way OBJECT_INVALID
  * means the variable is unitialised.
  */
-const string PRC_UTTERANCE_TOKEN_VAR  = "PRC_UtteranceToken";
-const string PRC_UTTERANCE_TOKEN_NAME = "PRC_UTTERTOKEN";
-const float  PRC_UTTERANCE_HB_DELAY   = 0.5f;
+const string PRC_MANEVEUR_TOKEN_VAR  = "PRC_ManeuverToken";
+const string PRC_MANEVEUR_TOKEN_NAME = "PRC_MOVETOKEN";
+const float  PRC_MANEVEUR_HB_DELAY   = 0.5f;
 
 
 //////////////////////////////////////////////////
@@ -37,54 +37,20 @@ const float  PRC_UTTERANCE_HB_DELAY   = 0.5f;
 //////////////////////////////////////////////////
 
 /**
- * A structure that contains common data used during utterance.
+ * A structure that contains common data used during maneuver.
  */
-struct utterance{
+struct maneuver{
     /* Generic stuff */
-    /// The creature Truespeaking the Utterance
-    object oTrueSpeaker;
-    /// Whether the utterance is successful or not
-    int bCanUtter;
-    /// The creature's truespeaker level in regards to this utterance
-    int nTruespeakerLevel;
-    /// The utterance's spell ID
+    /// The creature Truespeaking the Maneuver
+    object oInitiator;
+    /// Whether the maneuver is successful or not
+    int bCanManeuver;
+    /// The creature's initiator level in regards to this maneuver
+    int nInitiatorLevel;
+    /// The maneuver's spell ID
     int nSpellId;
-    /// The DC for speaking the utterance
-    int nUtterDC;
-    //  Used to mark friendly utterances
-    int bIgnoreSR;
-
-    /* Metautterances */
-    /// Whether Empower utterance was used with this utterance
-    int bEmpower;
-    /// Whether Extend utterance was used with this utterance
-    int bExtend;
-    /// Whether Quicken utterance was used with this utterance
-    int bQuicken;
-    
-    /* Speak Unto the Masses */
-    // Check if the target is a friend of not
-    int bFriend;
-    // Saving Throw DC
-    int nSaveDC;
-    // Saving Throw
-    int nSaveThrow;
-    // Saving Throw Type
-    int nSaveType;
-    // Spell Pen
-    int nPen;
-    // Duration Effects
-    effect eLink;
-    // Impact Effects
-    effect eLink2; 
-    // Any Item Property
-    itemproperty ipIProp1;
-    // Any Item Property
-    itemproperty ipIProp2;
-    // Any Item Property
-    itemproperty ipIProp3;
-    // Duration
-    float fDur;
+    /// The DC for speaking the maneuver
+    int nMoveDC;
 };
 
 //////////////////////////////////////////////////
@@ -92,83 +58,83 @@ struct utterance{
 //////////////////////////////////////////////////
 
 /**
- * Determines if the utterance that is currently being attempted to be TrueSpoken
- * can in fact be truespoken. Determines metautterances used.
+ * Determines if the maneuver that is currently being attempted to be TrueSpoken
+ * can in fact be truespoken. Determines metamaneuvers used.
  *
- * @param oTrueSpeaker  A creature attempting to truespeak a utterance at this moment.
- * @param oTarget       The target of the utterance, if any. For pure Area of Effect.
- *                      utterances, this should be OBJECT_INVALID. Otherwise the main
- *                      target of the utterance as returned by PRCGetSpellTargetObject().
- * @param nMetaUtterFlags The metautterances that may be used to modify this utterance. Any number
+ * @param oInitiator  A creature attempting to truespeak a maneuver at this moment.
+ * @param oTarget       The target of the maneuver, if any. For pure Area of Effect.
+ *                      maneuvers, this should be OBJECT_INVALID. Otherwise the main
+ *                      target of the maneuver as returned by PRCGetSpellTargetObject().
+ * @param nMetaUtterFlags The metamaneuvers that may be used to modify this maneuver. Any number
  *                      of METAUTTERANCE_* constants ORd together using the | operator.
  *                      For example (METAUTTERANCE_EMPOWER | METAUTTERANCE_EXTEND)
  * @param nLexicon      Whether it is of the Crafted Tool, Evolving Mind or Perfected Map
  *                      Use one of three constants: TYPE_EVOLVING_MIND, TYPE_CRAFTED_TOOL, TYPE_PERFECTED_MAP
  *
- * @return              A utterance structure that contains the data about whether
- *                      the utterance was successfully truespeaked, what metautterances
+ * @return              A maneuver structure that contains the data about whether
+ *                      the maneuver was successfully truespeaked, what metamaneuvers
  *                      were used and some other commonly used data, like the 
- *                      TrueNamer's truespeaker level for this utterance.
+ *                      TrueNamer's initiator level for this maneuver.
  */
-struct utterance EvaluateUtterance(object oTrueSpeaker, object oTarget, int nMetaUtterFlags, int nLexicon);
+struct maneuver EvaluateManeuver(object oInitiator, object oTarget, int nMetaUtterFlags, int nLexicon);
 
 /**
- * Causes OBJECT_SELF to use the given utterance.
+ * Causes OBJECT_SELF to use the given maneuver.
  *
- * @param nUtter         The index of the utterance to use in spells.2da or an UTTER_*
- * @param nClass         The index of the class to use the utterance as in classes.2da or a CLASS_TYPE_*
- * @param nLevelOverride An optional override to normal truespeaker level. 
+ * @param nUtter         The index of the maneuver to use in spells.2da or an UTTER_*
+ * @param nClass         The index of the class to use the maneuver as in classes.2da or a CLASS_TYPE_*
+ * @param nLevelOverride An optional override to normal initiator level. 
  *                       Default: 0, which means the parameter is ignored.
  */
-void UseUtterance(int nUtter, int nClass, int nLevelOverride = 0);
+void UseManeuver(int nUtter, int nClass, int nLevelOverride = 0);
 
 /**
- * A debugging function. Takes a utterance structure and
+ * A debugging function. Takes a maneuver structure and
  * makes a string describing the contents.
  *
- * @param utter A set of utterance data
+ * @param utter A set of maneuver data
  * @return      A string describing the contents of utter
  */
-string DebugUtterance2Str(struct utterance utter);
+string DebugManeuver2Str(struct maneuver utter);
 
 /**
- * Stores a utterance structure as a set of local variables. If
+ * Stores a maneuver structure as a set of local variables. If
  * a structure was already stored with the same name on the same object,
  * it is overwritten.
  *
  * @param oObject The object on which to store the structure
  * @param sName   The name under which to store the structure
- * @param utter   The utterance structure to store
+ * @param utter   The maneuver structure to store
  */
-void SetLocalUtterance(object oObject, string sName, struct utterance utter);
+void SetLocalManeuver(object oObject, string sName, struct maneuver utter);
 
 /**
- * Retrieves a previously stored utterance structure. If no structure is stored
+ * Retrieves a previously stored maneuver structure. If no structure is stored
  * by the given name, the structure returned is empty.
  *
  * @param oObject The object from which to retrieve the structure
  * @param sName   The name under which the structure is stored
  * @return        The structure built from local variables stored on oObject under sName
  */
-struct utterance GetLocalUtterance(object oObject, string sName);
+struct maneuver GetLocalManeuver(object oObject, string sName);
 
 /**
- * Deletes a stored utterance structure.
+ * Deletes a stored maneuver structure.
  *
  * @param oObject The object on which the structure is stored
  * @param sName   The name under which the structure is stored
  */
-void DeleteLocalUtterance(object oObject, string sName);
+void DeleteLocalManeuver(object oObject, string sName);
 
 /**
- * Sets the evaluation functions to ignore constraints on truespeaking.
- * Call this just prior to EvaluateUtterance() in a utterance script.
- * That evaluation will then ignore lacking utterance ability score,
- * utterance Points and Psionic Focuses.
+ * Sets the evaluation functions to ignore constraints on initiating.
+ * Call this just prior to EvaluateManeuver() in a maneuver script.
+ * That evaluation will then ignore lacking maneuver ability score,
+ * maneuver Points and Psionic Focuses.
  *
- * @param oTrueSpeaker A creature attempting to truespeak a utterance at this moment.
+ * @param oInitiator A creature attempting to truespeak a maneuver at this moment.
  */
-void TruenameDebugIgnoreConstraints(object oTrueSpeaker);
+void TruenameDebugIgnoreConstraints(object oInitiator);
 
 //////////////////////////////////////////////////
 /*                  Includes                    */
@@ -182,19 +148,19 @@ void TruenameDebugIgnoreConstraints(object oTrueSpeaker);
 //////////////////////////////////////////////////
 
 /** Internal function.
- * Handles Spellfire absorption when a utterance is used on a friendly spellfire
+ * Handles Spellfire absorption when a maneuver is used on a friendly spellfire
  * user.
  */
-struct utterance _DoTruenameSpellfireFriendlyAbsorption(struct utterance utter, object oTarget)
+struct maneuver _DoTruenameSpellfireFriendlyAbsorption(struct maneuver utter, object oTarget)
 {
     if(GetLocalInt(oTarget, "SpellfireAbsorbFriendly") &&
-       GetIsFriend(oTarget, utter.oTrueSpeaker)
+       GetIsFriend(oTarget, utter.oInitiator)
        )
     {
-        if(CheckSpellfire(utter.oTrueSpeaker, oTarget, TRUE))
+        if(CheckSpellfire(utter.oInitiator, oTarget, TRUE))
         {
-            PRCShowSpellResist(utter.oTrueSpeaker, oTarget, SPELL_RESIST_MANTLE);
-            utter.bCanUtter = FALSE;
+            PRCShowSpellResist(utter.oInitiator, oTarget, SPELL_RESIST_MANTLE);
+            utter.bCanManeuver = FALSE;
         }
     }
 
@@ -202,99 +168,99 @@ struct utterance _DoTruenameSpellfireFriendlyAbsorption(struct utterance utter, 
 }
 
 /** Internal function.
- * Deletes utterance-related local variables.
+ * Deletes maneuver-related local variables.
  *
- * @param oTrueSpeaker The creature currently truespeaking a utterance
+ * @param oInitiator The creature currently initiating a maneuver
  */
-void _CleanUtteranceVariables(object oTrueSpeaker)
+void _CleanManeuverVariables(object oInitiator)
 {
-    DeleteLocalInt(oTrueSpeaker, PRC_TRUESPEAKING_CLASS);
-    DeleteLocalInt(oTrueSpeaker, PRC_UTTERANCE_LEVEL);
+    DeleteLocalInt(oInitiator, PRC_INITIATING_CLASS);
+    DeleteLocalInt(oInitiator, PRC_MANEVEUR_LEVEL);
 }
 
 /** Internal function.
- * Determines whether a utterance token exists. If one does, returns it.
+ * Determines whether a maneuver token exists. If one does, returns it.
  *
- * @param oTrueSpeaker A creature whose utterance token to get
- * @return            The utterance token if it exists, OBJECT_INVALID otherwise.
+ * @param oInitiator A creature whose maneuver token to get
+ * @return            The maneuver token if it exists, OBJECT_INVALID otherwise.
  */
-object _GetUtteranceToken(object oTrueSpeaker)
+object _GetManeuverToken(object oInitiator)
 {
-    object oUtrToken = GetLocalObject(oTrueSpeaker, PRC_UTTERANCE_TOKEN_VAR);
+    object oUtrToken = GetLocalObject(oInitiator, PRC_MANEVEUR_TOKEN_VAR);
 
-    // If the token object is no longer valid, set the variable to point at truespeaker
+    // If the token object is no longer valid, set the variable to point at initiator
     if(!GetIsObjectValid(oUtrToken))
     {
-        oUtrToken = oTrueSpeaker;
-        SetLocalObject(oTrueSpeaker, PRC_UTTERANCE_TOKEN_VAR, oUtrToken);
+        oUtrToken = oInitiator;
+        SetLocalObject(oInitiator, PRC_MANEVEUR_TOKEN_VAR, oUtrToken);
     }
 
 
     // Check if there is no token
-    if(oUtrToken == oTrueSpeaker)
+    if(oUtrToken == oInitiator)
         oUtrToken = OBJECT_INVALID;
 
     return oUtrToken;
 }
 
 /** Internal function.
- * Destroys the given utterance token and sets the creature's utterance token variable
+ * Destroys the given maneuver token and sets the creature's maneuver token variable
  * to point at itself.
  *
- * @param oTrueSpeaker The truespeaker whose token to destroy
+ * @param oInitiator The initiator whose token to destroy
  * @param oUtrToken    The token to destroy
  */
-void _DestroyUtteranceToken(object oTrueSpeaker, object oUtrToken)
+void _DestroyManeuverToken(object oInitiator, object oUtrToken)
 {
     DestroyObject(oUtrToken);
-    SetLocalObject(oTrueSpeaker, PRC_UTTERANCE_TOKEN_VAR, oTrueSpeaker);
+    SetLocalObject(oInitiator, PRC_MANEVEUR_TOKEN_VAR, oInitiator);
 }
 
 /** Internal function.
- * Destroys the previous utterance token, if any, and creates a new one.
+ * Destroys the previous maneuver token, if any, and creates a new one.
  *
- * @param oTrueSpeaker A creature for whom to create a utterance token
+ * @param oInitiator A creature for whom to create a maneuver token
  * @return            The newly created token
  */
-object _CreateUtteranceToken(object oTrueSpeaker)
+object _CreateManeuverToken(object oInitiator)
 {
-    object oUtrToken = _GetUtteranceToken(oTrueSpeaker);
-    object oStore   = GetObjectByTag("PRC_MANIFTOKEN_STORE"); //GetPCSkin(oTrueSpeaker);
+    object oUtrToken = _GetManeuverToken(oInitiator);
+    object oStore   = GetObjectByTag("PRC_MANIFTOKEN_STORE"); //GetPCSkin(oInitiator);
 
     // Delete any previous tokens
     if(GetIsObjectValid(oUtrToken))
-        _DestroyUtteranceToken(oTrueSpeaker, oUtrToken);
+        _DestroyManeuverToken(oInitiator, oUtrToken);
 
     // Create new token and store a reference to it
-    oUtrToken = CreateItemOnObject(PRC_UTTERANCE_TOKEN_NAME, oStore);
-    SetLocalObject(oTrueSpeaker, PRC_UTTERANCE_TOKEN_VAR, oUtrToken);
+    oUtrToken = CreateItemOnObject(PRC_MANEVEUR_TOKEN_NAME, oStore);
+    SetLocalObject(oInitiator, PRC_MANEVEUR_TOKEN_VAR, oUtrToken);
 
-    Assert(GetIsObjectValid(oUtrToken), "GetIsObjectValid(oUtrToken)", "ERROR: Unable to create utterance token! Store object: " + DebugObject2Str(oStore), "true_inc_Utter", "_CreateUtteranceToken()");
+    Assert(GetIsObjectValid(oUtrToken), "GetIsObjectValid(oUtrToken)", "ERROR: Unable to create maneuver token! Store object: " + DebugObject2Str(oStore), "true_inc_Utter", "_CreateManeuverToken()");
 
     return oUtrToken;
 }
 
 /** Internal function.
- * Determines whether the given truespeaker is doing something that would
- * interrupt truespeaking a utterance or affected by an effect that would do
+ * Determines whether the given initiator is doing something that would
+ * interrupt initiating a maneuver or affected by an effect that would do
  * the same.
  *
- * @param oTrueSpeaker A creature on which _UtteranceHB() is running
- * @return            TRUE if the creature can continue truespeaking,
+ * @param oInitiator A creature on which _ManeuverHB() is running
+ * @return            TRUE if the creature can continue initiating,
  *                    FALSE otherwise
  */
-int _UtteranceStateCheck(object oTrueSpeaker)
+int _ManeuverStateCheck(object oInitiator)
 {
-    int nAction = GetCurrentAction(oTrueSpeaker);
-    // If the current action is not among those that could either be used to truespeak the utterance or movement, the utterance fails
+    int nAction = GetCurrentAction(oInitiator);
+    // If the current action is not among those that could either be used to truespeak the maneuver or movement, the maneuver fails
     if(!(nAction || ACTION_CASTSPELL     || nAction == ACTION_INVALID      ||
          nAction || ACTION_ITEMCASTSPELL || nAction == ACTION_MOVETOPOINT  ||
          nAction || ACTION_USEOBJECT     || nAction == ACTION_WAIT
        ) )
         return FALSE;
 
-    // Affected by something that prevents one from truespeaking
-    effect eTest = GetFirstEffect(oTrueSpeaker);
+    // Affected by something that prevents one from initiating
+    effect eTest = GetFirstEffect(oInitiator);
     int nEType;
     while(GetIsEffectValid(eTest))
     {
@@ -309,64 +275,64 @@ int _UtteranceStateCheck(object oTrueSpeaker)
             return FALSE;
 
         // Get next effect
-        eTest = GetNextEffect(oTrueSpeaker);
+        eTest = GetNextEffect(oInitiator);
     }
 
     return TRUE;
 }
 
 /** Internal function.
- * Runs while the given creature is truespeaking. If they move, take other actions
- * that would cause them to interrupt truespeaking the utterance or are affected by an
- * effect that would cause such interruption, deletes the utterance token.
+ * Runs while the given creature is initiating. If they move, take other actions
+ * that would cause them to interrupt initiating the maneuver or are affected by an
+ * effect that would cause such interruption, deletes the maneuver token.
  * Stops if such condition occurs or something else destroys the token.
  *
- * @param oTrueSpeaker A creature truespeaking a utterance
- * @param lTrueSpeaker The location where the truespeaker was when starting the utterance
- * @param oUtrToken    The utterance token that controls the ongoing utterance
+ * @param oInitiator A creature initiating a maneuver
+ * @param lTrueSpeaker The location where the initiator was when starting the maneuver
+ * @param oUtrToken    The maneuver token that controls the ongoing maneuver
  */
-void _UtteranceHB(object oTrueSpeaker, location lTrueSpeaker, object oUtrToken)
+void _ManeuverHB(object oInitiator, location lTrueSpeaker, object oUtrToken)
 {
-    if(DEBUG) DoDebug("_UtteranceHB() running:\n"
-                    + "oTrueSpeaker = " + DebugObject2Str(oTrueSpeaker) + "\n"
+    if(DEBUG) DoDebug("_ManeuverHB() running:\n"
+                    + "oInitiator = " + DebugObject2Str(oInitiator) + "\n"
                     + "lTrueSpeaker = " + DebugLocation2Str(lTrueSpeaker) + "\n"
                     + "oUtrToken = " + DebugObject2Str(oUtrToken) + "\n"
-                    + "Distance between utterance start location and current location: " + FloatToString(GetDistanceBetweenLocations(lTrueSpeaker, GetLocation(oTrueSpeaker))) + "\n"
+                    + "Distance between maneuver start location and current location: " + FloatToString(GetDistanceBetweenLocations(lTrueSpeaker, GetLocation(oInitiator))) + "\n"
                       );
     if(GetIsObjectValid(oUtrToken))
     {
         // Continuance check
-        if(GetDistanceBetweenLocations(lTrueSpeaker, GetLocation(oTrueSpeaker)) > 2.0f || // Allow some variance in the location to account for dodging and random fidgeting
-           !_UtteranceStateCheck(oTrueSpeaker)                                       // Action and effect check
+        if(GetDistanceBetweenLocations(lTrueSpeaker, GetLocation(oInitiator)) > 2.0f || // Allow some variance in the location to account for dodging and random fidgeting
+           !_ManeuverStateCheck(oInitiator)                                       // Action and effect check
            )
         {
-            if(DEBUG) DoDebug("_UtteranceHB(): truespeaker moved or lost concentration, destroying token");
-            _DestroyUtteranceToken(oTrueSpeaker, oUtrToken);
+            if(DEBUG) DoDebug("_ManeuverHB(): initiator moved or lost concentration, destroying token");
+            _DestroyManeuverToken(oInitiator, oUtrToken);
 
-            // Inform truespeaker
-            FloatingTextStrRefOnCreature(16828469, oTrueSpeaker, FALSE); // "You have lost concentration on the utterance you were attempting to truespeak!"
+            // Inform initiator
+            FloatingTextStrRefOnCreature(16828469, oInitiator, FALSE); // "You have lost concentration on the maneuver you were attempting to truespeak!"
         }
         // Schedule next HB
         else
-            DelayCommand(PRC_UTTERANCE_HB_DELAY, _UtteranceHB(oTrueSpeaker, lTrueSpeaker, oUtrToken));
+            DelayCommand(PRC_MANEVEUR_HB_DELAY, _ManeuverHB(oInitiator, lTrueSpeaker, oUtrToken));
     }
 }
 
 /** Internal function.
- * Checks if the truespeaker is in range to use the utterance they are trying to use.
- * If not, queues commands to make the truespeaker to run into range.
+ * Checks if the initiator is in range to use the maneuver they are trying to use.
+ * If not, queues commands to make the initiator to run into range.
  *
- * @param oTrueSpeaker A creature truespeaking a utterance
- * @param nUtter      SpellID of the utterance being truespeaked
+ * @param oInitiator A creature initiating a maneuver
+ * @param nUtter      SpellID of the maneuver being truespeaked
  * @param lTarget     The target location or the location of the target object
  */
-void _UtteranceRangeCheck(object oTrueSpeaker, int nUtter, location lTarget)
+void _ManeuverRangeCheck(object oInitiator, int nUtter, location lTarget)
 {
-    float fDistance   = GetDistanceBetweenLocations(GetLocation(oTrueSpeaker), lTarget);
+    float fDistance   = GetDistanceBetweenLocations(GetLocation(oInitiator), lTarget);
     float fRangeLimit;
     string sRange     = Get2DACache("spells", "Range", nUtter);
 
-    // Personal range utterances are always in range
+    // Personal range maneuvers are always in range
     if(sRange == "P")
         return;
     // Ranges according to the CCG spells.2da page
@@ -397,15 +363,15 @@ void _UtteranceRangeCheck(object oTrueSpeaker, int nUtter, location lTarget)
 }
 
 /** Internal function.
- * Assigns the fakecast command that is used to display the conjuration VFX when using an utterance.
- * Separated from UseUtterance() due to a bug with ActionFakeCastSpellAtObject(), which requires
+ * Assigns the fakecast command that is used to display the conjuration VFX when using an maneuver.
+ * Separated from UseManeuver() due to a bug with ActionFakeCastSpellAtObject(), which requires
  * use of ClearAllActions() to work around.
  * The problem is that if the target is an item on the ground, if the actor is out of spell
  * range when doing the fakecast, they will run on top of the item instead of to the edge of
  * the spell range. This only happens if there was a "real action" in the actor's action queue
  * immediately prior to the fakecast.
  */
-void _AssignUseUtteranceFakeCastCommands(object oTrueSpeaker, object oTarget, location lTarget, int nSpellID)
+void _AssignUseManeuverFakeCastCommands(object oInitiator, object oTarget, location lTarget, int nSpellID)
 {
     // Nuke actions to prevent the fakecast action from bugging
     ClearAllActions();
@@ -418,16 +384,16 @@ void _AssignUseUtteranceFakeCastCommands(object oTrueSpeaker, object oTarget, lo
 
 
 /** Internal function.
- * Places the cheatcasting of the real utterance into the truespeaker's action queue.
+ * Places the cheatcasting of the real maneuver into the initiator's action queue.
  */
-void _UseUtteranceAux(object oTrueSpeaker, object oUtrToken, int nSpellId,
+void _UseManeuverAux(object oInitiator, object oUtrToken, int nSpellId,
                   object oTarget, location lTarget,
                   int nUtter, int nClass, int nLevelOverride,
                   int bQuickened
                   )
 {
-    if(DEBUG) DoDebug("_UseUtteranceAux() running:\n"
-                    + "oTrueSpeaker = " + DebugObject2Str(oTrueSpeaker) + "\n"
+    if(DEBUG) DoDebug("_UseManeuverAux() running:\n"
+                    + "oInitiator = " + DebugObject2Str(oInitiator) + "\n"
                     + "oUtrToken = " + DebugObject2Str(oUtrToken) + "\n"
                     + "nSpellId = " + IntToString(nSpellId) + "\n"
                     + "oTarget = " + DebugObject2Str(oTarget) + "\n"
@@ -438,33 +404,33 @@ void _UseUtteranceAux(object oTrueSpeaker, object oUtrToken, int nSpellId,
                     + "bQuickened = " + BooleanToString(bQuickened) + "\n"
                       );
 
-    // Make sure nothing has interrupted this utterance
+    // Make sure nothing has interrupted this maneuver
     if(GetIsObjectValid(oUtrToken))
     {
-        if(DEBUG) DoDebug("_UseUtteranceAux(): Token was valid, queueing actual utterance");
+        if(DEBUG) DoDebug("_UseManeuverAux(): Token was valid, queueing actual maneuver");
         // Set the class to truespeak as
-        SetLocalInt(oTrueSpeaker, PRC_TRUESPEAKING_CLASS, nClass + 1);
+        SetLocalInt(oInitiator, PRC_INITIATING_CLASS, nClass + 1);
 
-        // Set the utterance's level
-        SetLocalInt(oTrueSpeaker, PRC_UTTERANCE_LEVEL, StringToInt(lookup_spell_innate(nSpellId)));
+        // Set the maneuver's level
+        SetLocalInt(oInitiator, PRC_MANEVEUR_LEVEL, StringToInt(lookup_spell_innate(nSpellId)));
 
-        // Set whether the utterance was quickened
-        SetLocalInt(oTrueSpeaker, PRC_UTTERANCE_IS_QUICKENED, bQuickened);
+        // Set whether the maneuver was quickened
+        SetLocalInt(oInitiator, PRC_MANEVEUR_IS_QUICKENED, bQuickened);
 
-        // Queue the real utterance
+        // Queue the real maneuver
         //ActionCastSpell(nUtter, nLevelOverride, 0, 0, METAMAGIC_NONE, CLASS_TYPE_INVALID, TRUE, TRUE, oTarget);
 
         if(nLevelOverride != 0)
-            AssignCommand(oTrueSpeaker, ActionDoCommand(SetLocalInt(oTrueSpeaker, PRC_CASTERLEVEL_OVERRIDE, nLevelOverride)));
+            AssignCommand(oInitiator, ActionDoCommand(SetLocalInt(oInitiator, PRC_CASTERLEVEL_OVERRIDE, nLevelOverride)));
         if(GetIsObjectValid(oTarget))
-            AssignCommand(oTrueSpeaker, ActionCastSpellAtObject(nUtter, oTarget, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+            AssignCommand(oInitiator, ActionCastSpellAtObject(nUtter, oTarget, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
         else
-            AssignCommand(oTrueSpeaker, ActionCastSpellAtLocation(nUtter, lTarget, METAMAGIC_NONE, TRUE, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+            AssignCommand(oInitiator, ActionCastSpellAtLocation(nUtter, lTarget, METAMAGIC_NONE, TRUE, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
         if(nLevelOverride != 0)
-            AssignCommand(oTrueSpeaker, ActionDoCommand(DeleteLocalInt(oTrueSpeaker, PRC_CASTERLEVEL_OVERRIDE)));
+            AssignCommand(oInitiator, ActionDoCommand(DeleteLocalInt(oInitiator, PRC_CASTERLEVEL_OVERRIDE)));
 
-        // Destroy the utterance token for this utterance
-        _DestroyUtteranceToken(oTrueSpeaker, oUtrToken);
+        // Destroy the maneuver token for this maneuver
+        _DestroyManeuverToken(oInitiator, oUtrToken);
     }
 }
 
@@ -473,50 +439,50 @@ void _UseUtteranceAux(object oTrueSpeaker, object oUtrToken, int nSpellId,
 /*             Function definitions             */
 //////////////////////////////////////////////////
 
-struct utterance EvaluateUtterance(object oTrueSpeaker, object oTarget, int nMetaUtterFlags, int nLexicon)
+struct maneuver EvaluateManeuver(object oInitiator, object oTarget, int nMetaUtterFlags, int nLexicon)
 {
     /* Get some data */
-    int bIgnoreConstraints = (DEBUG) ? GetLocalInt(oTrueSpeaker, TRUE_DEBUG_IGNORE_CONSTRAINTS) : FALSE;
-    // truespeaker-related stuff
-    int nTruespeakerLevel = GetTruespeakerLevel(oTrueSpeaker);
-    int nUtterLevel      = GetUtteranceLevel(oTrueSpeaker);
-    int nClass           = GetTruespeakingClass(oTrueSpeaker);
+    int bIgnoreConstraints = (DEBUG) ? GetLocalInt(oInitiator, TOB_DEBUG_IGNORE_CONSTRAINTS) : FALSE;
+    // initiator-related stuff
+    int nInitiatorLevel = GetTruespeakerLevel(oInitiator);
+    int nUtterLevel      = GetManeuverLevel(oInitiator);
+    int nClass           = GetTruespeakingClass(oInitiator);
 
-    /* Initialise the utterance structure */
-    struct utterance utter;
-    utter.oTrueSpeaker      = oTrueSpeaker;
-    utter.bCanUtter         = TRUE;                                   // Assume successfull utterance by default
-    utter.nTruespeakerLevel = nTruespeakerLevel;
+    /* Initialise the maneuver structure */
+    struct maneuver utter;
+    utter.oInitiator      = oInitiator;
+    utter.bCanManeuver         = TRUE;                                   // Assume successfull maneuver by default
+    utter.nInitiatorLevel = nInitiatorLevel;
     utter.nSpellId          = PRCGetSpellId();
-    utter.nUtterDC          = GetBaseUtteranceDC(oTarget, oTrueSpeaker, nLexicon);
+    utter.nMoveDC          = GetBaseManeuverDC(oTarget, oInitiator, nLexicon);
 
-    // Account for metautterances. This includes adding the appropriate DC boosts.
-    utter = EvaluateMetautterances(utter, nMetaUtterFlags);
+    // Account for metamaneuvers. This includes adding the appropriate DC boosts.
+    utter = EvaluateMetamaneuvers(utter, nMetaUtterFlags);
     // Account for the law of resistance
-    utter.nUtterDC += GetLawOfResistanceDCIncrease(oTrueSpeaker, utter.nSpellId);
+    utter.nMoveDC += GetLawOfResistanceDCIncrease(oInitiator, utter.nSpellId);
     // DC change for targeting self and using a Personal Truename
-    utter.nUtterDC += AddPersonalTruenameDC(oTrueSpeaker, oTarget);  
+    utter.nMoveDC += AddPersonalTruenameDC(oInitiator, oTarget);  
     // DC change for ignoring Spell Resistance
-    utter.nUtterDC += AddIgnoreSpellResistDC(oTrueSpeaker);
-    // DC change for specific utterances
-    utter.nUtterDC += AddUtteranceSpecificDC(oTrueSpeaker);
+    utter.nMoveDC += AddIgnoreSpellResistDC(oInitiator);
+    // DC change for specific maneuvers
+    utter.nMoveDC += AddManeuverSpecificDC(oInitiator);
     
-    // Check the Law of Sequence. Returns True if the utterance is active
-    if (CheckLawOfSequence(oTrueSpeaker, utter.nSpellId))
+    // Check the Law of Sequence. Returns True if the maneuver is active
+    if (CheckLawOfSequence(oInitiator, utter.nSpellId))
     {
-    	utter.bCanUtter = FALSE;
-    	FloatingTextStringOnCreature("You already have " + GetUtteranceName(utter.nSpellId) + " active. Utterance Failed.", oTrueSpeaker, FALSE);
+    	utter.bCanManeuver = FALSE;
+    	FloatingTextStringOnCreature("You already have " + GetManeuverName(utter.nSpellId) + " active. Maneuver Failed.", oInitiator, FALSE);
     }
     
-    // Skip paying anything if something has prevented successfull utterance already by this point
-    if(utter.bCanUtter)
+    // Skip paying anything if something has prevented successfull maneuver already by this point
+    if(utter.bCanManeuver)
     {
         /* Roll the dice, and see if we succeed or fail.
          */
-        if(GetIsSkillSuccessful(oTrueSpeaker, SKILL_TRUESPEAK, utter.nUtterDC) || bIgnoreConstraints)
+        if(GetIsSkillSuccessful(oInitiator, SKILL_TRUESPEAK, utter.nMoveDC) || bIgnoreConstraints)
         {
-        	// Increases the DC of the subsequent utterances
-        	DoLawOfResistanceDCIncrease(oTrueSpeaker, utter.nSpellId);
+        	// Increases the DC of the subsequent maneuvers
+        	DoLawOfResistanceDCIncrease(oInitiator, utter.nSpellId);
                 // Spellfire friendly absorption - This may set bCananifest to FALSE
                 utter = _DoTruenameSpellfireFriendlyAbsorption(utter, oTarget);
                 //* APPLY SIDE-EFFECTS THAT RESULT FROM SUCCESSFULL UTTERANCE ABOVE *//
@@ -526,22 +492,22 @@ struct utterance EvaluateUtterance(object oTrueSpeaker, object oTarget, int nMet
         else
         {
             // No need for an output here because GetIsSkillSuccessful does it for us.
-            utter.bCanUtter = FALSE;
+            utter.bCanManeuver = FALSE;
         }
     }//end if
 
-    if(DEBUG) DoDebug("EvaluateUtterance(): Final result:\n" + DebugUtterance2Str(utter));
+    if(DEBUG) DoDebug("EvaluateManeuver(): Final result:\n" + DebugManeuver2Str(utter));
 
-    // Initiate utterance-related variable CleanUp
-    DelayCommand(0.5f, _CleanUtteranceVariables(oTrueSpeaker));
+    // Initiate maneuver-related variable CleanUp
+    DelayCommand(0.5f, _CleanManeuverVariables(oInitiator));
 
     return utter;
 }
 
-void UseUtterance(int nUtter, int nClass, int nLevelOverride = 0)
+void UseManeuver(int nUtter, int nClass, int nLevelOverride = 0)
 {
-    object oTrueSpeaker = OBJECT_SELF;
-    object oSkin       = GetPCSkin(oTrueSpeaker);
+    object oInitiator = OBJECT_SELF;
+    object oSkin       = GetPCSkin(oInitiator);
     object oTarget     = PRCGetSpellTargetObject();
     object oUtrToken;
     location lTarget   = PRCGetSpellTargetLocation();
@@ -549,68 +515,68 @@ void UseUtterance(int nUtter, int nClass, int nLevelOverride = 0)
     int nUtterDur      = StringToInt(Get2DACache("spells", "ConjTime", nUtter)) + StringToInt(Get2DACache("spells", "CastTime", nUtter));
     int bQuicken       = FALSE;
 
-    // Normally swift action utterances check
-    if(Get2DACache("feat", "Constant", GetClassFeatFromPower(nUtter, nClass)) == "SWIFT_ACTION" && // The utterance is swift action to use
-       TakeSwiftAction(oTrueSpeaker)                                                                // And the truespeaker can take a swift action now
+    // Normally swift action maneuvers check
+    if(Get2DACache("feat", "Constant", GetClassFeatFromPower(nUtter, nClass)) == "SWIFT_ACTION" && // The maneuver is swift action to use
+       TakeSwiftAction(oInitiator)                                                                // And the initiator can take a swift action now
        )
     {
         nUtterDur = 0;
     }
-    // Quicken utterance check
-    else if(nUtterDur <= 6000                                 && // If the utterance could be quickened by having truespeaking time of 1 round or less
-            GetLocalInt(oTrueSpeaker, METAUTTERANCE_QUICKEN_VAR) && // And the truespeaker has Quicken utterance active
-            TakeSwiftAction(oTrueSpeaker)                         // And the truespeaker can take a swift action
+    // Quicken maneuver check
+    else if(nUtterDur <= 6000                                 && // If the maneuver could be quickened by having initiating time of 1 round or less
+            GetLocalInt(oInitiator, METAUTTERANCE_QUICKEN_VAR) && // And the initiator has Quicken maneuver active
+            TakeSwiftAction(oInitiator)                         // And the initiator can take a swift action
             )
     {
-        // Set the utterance time to 0 to skip VFX
+        // Set the maneuver time to 0 to skip VFX
         nUtterDur = 0;
-        // And set the Quicken utterance used marker to TRUE
+        // And set the Quicken maneuver used marker to TRUE
         bQuicken = TRUE;
     }
 
-    if(DEBUG) DoDebug("UseUtterance(): truespeaker is " + DebugObject2Str(oTrueSpeaker) + "\n"
+    if(DEBUG) DoDebug("UseManeuver(): initiator is " + DebugObject2Str(oInitiator) + "\n"
                     + "nUtter = " + IntToString(nUtter) + "\n"
                     + "nClass = " + IntToString(nClass) + "\n"
                     + "nLevelOverride = " + IntToString(nLevelOverride) + "\n"
-                    + "utterance duration = " + IntToString(nUtterDur) + "ms \n"
+                    + "maneuver duration = " + IntToString(nUtterDur) + "ms \n"
                     + "bQuicken = " + BooleanToString(bQuicken) + "\n"
                     //+ "Token exists = " + BooleanToString(GetIsObjectValid(oUtrToken))
                       );
 
-    // Create the utterance token. Deletes any old tokens and cancels corresponding utterances as a side effect
-    oUtrToken = _CreateUtteranceToken(oTrueSpeaker);
+    // Create the maneuver token. Deletes any old tokens and cancels corresponding maneuvers as a side effect
+    oUtrToken = _CreateManeuverToken(oInitiator);
 
-    /// @todo Hook to the truespeaker's OnDamaged event for the concentration checks to avoid losing the utterance
+    /// @todo Hook to the initiator's OnDamaged event for the concentration checks to avoid losing the maneuver
 
-    // Nuke action queue to prevent cheating with creative utterance stacking.
+    // Nuke action queue to prevent cheating with creative maneuver stacking.
     // Probably not necessary anymore - Ornedan
-    if(DEBUG) SendMessageToPC(oTrueSpeaker, "Clearing all actions in preparation for second stage of the utterance.");
+    if(DEBUG) SendMessageToPC(oInitiator, "Clearing all actions in preparation for second stage of the maneuver.");
     ClearAllActions();
 
     // If out of range, move to range
-    _UtteranceRangeCheck(oTrueSpeaker, nUtter, GetIsObjectValid(oTarget) ? GetLocation(oTarget) : lTarget);
+    _ManeuverRangeCheck(oInitiator, nUtter, GetIsObjectValid(oTarget) ? GetLocation(oTarget) : lTarget);
 
-    // Start the utterance monitor HB
-    ActionDoCommand(_UtteranceHB(oTrueSpeaker, GetLocation(oTrueSpeaker), oUtrToken));
+    // Start the maneuver monitor HB
+    ActionDoCommand(_ManeuverHB(oInitiator, GetLocation(oInitiator), oUtrToken));
 
     // Assuming the spell isn't used as a swift action, fakecast for visuals
     if(nUtterDur > 0)
     {
         // Hack. Workaround of a bug with the fakecast actions. See function comment for details
-        ActionDoCommand(_AssignUseUtteranceFakeCastCommands(oTrueSpeaker, oTarget, lTarget, nSpellID));
+        ActionDoCommand(_AssignUseManeuverFakeCastCommands(oInitiator, oTarget, lTarget, nSpellID));
     }
 
-    // Action queue the function that will cheatcast the actual utterance
-    DelayCommand(nUtterDur / 1000.0f, AssignCommand(oTrueSpeaker, ActionDoCommand(_UseUtteranceAux(oTrueSpeaker, oUtrToken, nSpellID, oTarget, lTarget, nUtter, nClass, nLevelOverride, bQuicken))));
+    // Action queue the function that will cheatcast the actual maneuver
+    DelayCommand(nUtterDur / 1000.0f, AssignCommand(oInitiator, ActionDoCommand(_UseManeuverAux(oInitiator, oUtrToken, nSpellID, oTarget, lTarget, nUtter, nClass, nLevelOverride, bQuicken))));
 }
 
-string DebugUtterance2Str(struct utterance utter)
+string DebugManeuver2Str(struct maneuver utter)
 {
     string sRet;
 
-    sRet += "oTrueSpeaker = " + DebugObject2Str(utter.oTrueSpeaker) + "\n";
-    sRet += "bCanUtter = " + BooleanToString(utter.bCanUtter) + "\n";
-    sRet += "nTruespeakerLevel = "  + IntToString(utter.nTruespeakerLevel) + "\n";
+    sRet += "oInitiator = " + DebugObject2Str(utter.oInitiator) + "\n";
+    sRet += "bCanManeuver = " + BooleanToString(utter.bCanManeuver) + "\n";
+    sRet += "nInitiatorLevel = "  + IntToString(utter.nInitiatorLevel) + "\n";
 
     sRet += "bEmpower  = " + BooleanToString(utter.bEmpower)  + "\n";
     sRet += "bExtend   = " + BooleanToString(utter.bExtend)   + "\n";
@@ -619,13 +585,13 @@ string DebugUtterance2Str(struct utterance utter)
     return sRet;
 }
 
-void SetLocalUtterance(object oObject, string sName, struct utterance utter)
+void SetLocalManeuver(object oObject, string sName, struct maneuver utter)
 {
     //SetLocal (oObject, sName + "_", );
-    SetLocalObject(oObject, sName + "_oTrueSpeaker", utter.oTrueSpeaker);
+    SetLocalObject(oObject, sName + "_oInitiator", utter.oInitiator);
 
-    SetLocalInt(oObject, sName + "_bCanUtter",      utter.bCanUtter);
-    SetLocalInt(oObject, sName + "_nTruespeakerLevel",  utter.nTruespeakerLevel);
+    SetLocalInt(oObject, sName + "_bCanManeuver",      utter.bCanManeuver);
+    SetLocalInt(oObject, sName + "_nInitiatorLevel",  utter.nInitiatorLevel);
     SetLocalInt(oObject, sName + "_nSpellID",          utter.nSpellId);
 
     SetLocalInt(oObject, sName + "_bEmpower",  utter.bEmpower);
@@ -633,13 +599,13 @@ void SetLocalUtterance(object oObject, string sName, struct utterance utter)
     SetLocalInt(oObject, sName + "_bQuicken",  utter.bQuicken);
 }
 
-struct utterance GetLocalUtterance(object oObject, string sName)
+struct maneuver GetLocalManeuver(object oObject, string sName)
 {
-    struct utterance utter;
-    utter.oTrueSpeaker = GetLocalObject(oObject, sName + "_oTrueSpeaker");
+    struct maneuver utter;
+    utter.oInitiator = GetLocalObject(oObject, sName + "_oInitiator");
 
-    utter.bCanUtter      = GetLocalInt(oObject, sName + "_bCanUtter");
-    utter.nTruespeakerLevel  = GetLocalInt(oObject, sName + "_nTruespeakerLevel");
+    utter.bCanManeuver      = GetLocalInt(oObject, sName + "_bCanManeuver");
+    utter.nInitiatorLevel  = GetLocalInt(oObject, sName + "_nInitiatorLevel");
     utter.nSpellId          = GetLocalInt(oObject, sName + "_nSpellID");
 
     utter.bEmpower  = GetLocalInt(oObject, sName + "_bEmpower");
@@ -649,12 +615,12 @@ struct utterance GetLocalUtterance(object oObject, string sName)
     return utter;
 }
 
-void DeleteLocalUtterance(object oObject, string sName)
+void DeleteLocalManeuver(object oObject, string sName)
 {
-    DeleteLocalObject(oObject, sName + "_oTrueSpeaker");
+    DeleteLocalObject(oObject, sName + "_oInitiator");
 
-    DeleteLocalInt(oObject, sName + "_bCanUtter");
-    DeleteLocalInt(oObject, sName + "_nTruespeakerLevel");
+    DeleteLocalInt(oObject, sName + "_bCanManeuver");
+    DeleteLocalInt(oObject, sName + "_nInitiatorLevel");
     DeleteLocalInt(oObject, sName + "_nSpellID");
 
     DeleteLocalInt(oObject, sName + "_bEmpower");
@@ -662,10 +628,10 @@ void DeleteLocalUtterance(object oObject, string sName)
     DeleteLocalInt(oObject, sName + "_bQuicken");
 }
 
-void TruenameDebugIgnoreConstraints(object oTrueSpeaker)
+void TruenameDebugIgnoreConstraints(object oInitiator)
 {
-    SetLocalInt(oTrueSpeaker, TRUE_DEBUG_IGNORE_CONSTRAINTS, TRUE);
-    DelayCommand(0.0f, DeleteLocalInt(oTrueSpeaker, TRUE_DEBUG_IGNORE_CONSTRAINTS));
+    SetLocalInt(oInitiator, TOB_DEBUG_IGNORE_CONSTRAINTS, TRUE);
+    DelayCommand(0.0f, DeleteLocalInt(oInitiator, TOB_DEBUG_IGNORE_CONSTRAINTS));
 }
 
 // Test main

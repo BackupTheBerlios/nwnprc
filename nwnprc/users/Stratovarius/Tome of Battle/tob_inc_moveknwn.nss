@@ -30,7 +30,9 @@
 /*                 Constants                    */
 //////////////////////////////////////////////////
 
-const int MANEUVER_LIST_ManeuverR     = CLASS_TYPE_ManeuverR;
+const int MANEUVER_LIST_CRUSADER          = CLASS_TYPE_CRUSADER;
+const int MANEUVER_LIST_SWORDSAGE         = CLASS_TYPE_SWORDSAGE;
+const int MANEUVER_LIST_WARBLADE          = CLASS_TYPE_WARBLADE;
 
 /// Special Maneuver list. Maneuvers gained via Martial Study or other sources.
 const int MANEUVER_LIST_MISC          = CLASS_TYPE_INVALID;//-1;
@@ -106,10 +108,9 @@ void SetKnownManeuversModifier(object oCreature, int nList, int nNewValue, int n
  *
  * @param oCreature The creature whose Maneuvers to check
  * @param nList     The list to check. One of MANEUVER_LIST_*
- * @param nDiscipline     Type of the Maneuver: Evolving Mind, Crafted Tool, or Perfected Map
  * @return          The number of Maneuvers known oCreature has from nList
  */
-int GetManeuverCount(object oCreature, int nList, int nDiscipline);
+int GetManeuverCount(object oCreature, int nList);
 
 /**
  * Gets the maximum number of Maneuvers a character may posses from a given list
@@ -118,10 +119,9 @@ int GetManeuverCount(object oCreature, int nList, int nDiscipline);
  *
  * @param oCreature Character to determine maximum Maneuvers for
  * @param nList     MANEUVER_LIST_* of the list to determine maximum Maneuvers for
- * @param nDiscipline     Type of the Maneuver: Evolving Mind, Crafted Tool, or Perfected Map
  * @return          Maximum number of Maneuvers that oCreature may know from the given list.
  */
-int GetMaxManeuverCount(object oCreature, int nList, int nDiscipline);
+int GetMaxManeuverCount(object oCreature, int nList);
 
 /**
  * Determines whether a character has a given Maneuver, gained via some Maneuver list.
@@ -222,14 +222,14 @@ void _RemoveManeuverArray(object oCreature, int nList, int nLevel, int nDiscipli
 
 int AddManeuverKnown(object oCreature, int nList, int n2daRow, int nDiscipline, int bLevelDependent = FALSE, int nLevelToTieTo = -1)
 {
-    string sBase      = _MANEUVER_LIST_NAME_BASE + IntToString(nList) + IntToString(nDiscipline);
+    string sBase      = _POWER_LIST_NAME_BASE + IntToString(nList);
     string sArray     = sBase;
-    string sUtterFile = GetAMSDefinitionFileName(nList);
+    string sPowerFile = GetAMSDefinitionFileName(/*PowerListToClassType(*/nList/*)*/);
     string sTestArray;
     int i, j, nSize, bReturn;
 
     // Get the spells.2da row corresponding to the cls_psipw_*.2da row
-    int nSpells2daRow = StringToInt(Get2DACache(sUtterFile, "SpellID", n2daRow));
+    int nSpells2daRow = StringToInt(Get2DACache(sPowerFile, "SpellID", n2daRow));
 
     // Determine the array name.
     if(bLevelDependent)
@@ -238,18 +238,18 @@ int AddManeuverKnown(object oCreature, int nList, int n2daRow, int nDiscipline, 
         if(nLevelToTieTo == -1)
             nLevelToTieTo = GetHitDice(oCreature);
 
-        sArray += _MANEUVER_LIST_LEVEL_ARRAY + IntToString(nLevelToTieTo);
+        sArray += _POWER_LIST_LEVEL_ARRAY + IntToString(nLevelToTieTo);
     }
     else
     {
-        sArray += _MANEUVER_LIST_GENERAL_ARRAY;
+        sArray += _POWER_LIST_GENERAL_ARRAY;
     }
 
-    // Make sure the Maneuver isn't already in an array. If it is, abort and return FALSE
+    // Make sure the power isn't already in an array. If it is, abort and return FALSE
     // Loop over each level array and check that it isn't there.
     for(i = 1; i <= GetHitDice(oCreature); i++)
     {
-        sTestArray = sBase + _MANEUVER_LIST_LEVEL_ARRAY + IntToString(i);
+        sTestArray = sBase + _POWER_LIST_LEVEL_ARRAY + IntToString(i);
         if(persistant_array_exists(oCreature, sTestArray))
         {
             nSize = persistant_array_get_size(oCreature, sTestArray);
@@ -259,7 +259,7 @@ int AddManeuverKnown(object oCreature, int nList, int n2daRow, int nDiscipline, 
         }
     }
     // Check the non-level-dependent array
-    sTestArray = sBase + _MANEUVER_LIST_GENERAL_ARRAY;
+    sTestArray = sBase + _POWER_LIST_GENERAL_ARRAY;
     if(persistant_array_exists(oCreature, sTestArray))
     {
         nSize = persistant_array_get_size(oCreature, sTestArray);
@@ -268,18 +268,17 @@ int AddManeuverKnown(object oCreature, int nList, int n2daRow, int nDiscipline, 
                 return FALSE;
     }
 
-    // All checks are made, now start adding the new Maneuver
+    // All checks are made, now start adding the new power
     // Create the array if it doesn't exist yet
     if(!persistant_array_exists(oCreature, sArray))
         persistant_array_create(oCreature, sArray);
 
-    // Store the Maneuver in the array
+    // Store the power in the array
     if(persistant_array_set_int(oCreature, sArray, persistant_array_get_size(oCreature, sArray), nSpells2daRow) != SDL_SUCCESS)
     {
-        if(DEBUG) DoDebug("true_inc_truknwn: AddManeuverKnown(): ERROR: Unable to add Maneuver to known array\n"
+        if(DEBUG) DoDebug("psi_inc_powknown: AddPowerKnown(): ERROR: Unable to add power to known array\n"
                         + "oCreature = " + DebugObject2Str(oCreature) + "\n"
                         + "nList = " + IntToString(nList) + "\n"
-                        + "nDiscipline = " + IntToString(nDiscipline) + "\n"
                         + "n2daRow = " + IntToString(n2daRow) + "\n"
                         + "bLevelDependent = " + BooleanToString(bLevelDependent) + "\n"
                         + "nLevelToTieTo = " + IntToString(nLevelToTieTo) + "\n"
@@ -288,21 +287,21 @@ int AddManeuverKnown(object oCreature, int nList, int n2daRow, int nDiscipline, 
         return FALSE;
     }
 
-    // Increment Maneuvers known total
-    SetPersistantLocalInt(oCreature, sBase + _MANEUVER_LIST_TOTAL_KNOWN,
-                          GetPersistantLocalInt(oCreature, sBase + _MANEUVER_LIST_TOTAL_KNOWN) + 1
+    // Increment powers known total
+    SetPersistantLocalInt(oCreature, sBase + _POWER_LIST_TOTAL_KNOWN,
+                          GetPersistantLocalInt(oCreature, sBase + _POWER_LIST_TOTAL_KNOWN) + 1
                           );
 
-    // Give the Maneuver's control feats
+    // Give the power's control feats
     object oSkin        = GetPCSkin(oCreature);
-    string sUtterFeatIP = Get2DACache(sUtterFile, "IPFeatID", n2daRow);
-    itemproperty ipFeat = PRCItemPropertyBonusFeat(StringToInt(sUtterFeatIP));
+    string sPowerFeatIP = Get2DACache(sPowerFile, "IPFeatID", n2daRow);
+    itemproperty ipFeat = PRCItemPropertyBonusFeat(StringToInt(sPowerFeatIP));
     IPSafeAddItemProperty(oSkin, ipFeat, 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-    // Second Maneuver feat, if any
-    sUtterFeatIP = Get2DACache(sUtterFile, "IPFeatID2", n2daRow);
-    if(sUtterFeatIP != "")
+    // Second power feat, if any
+    sPowerFeatIP = Get2DACache(sPowerFile, "IPFeatID2", n2daRow);
+    if(sPowerFeatIP != "")
     {
-        ipFeat = PRCItemPropertyBonusFeat(StringToInt(sUtterFeatIP));
+        ipFeat = PRCItemPropertyBonusFeat(StringToInt(sPowerFeatIP));
         IPSafeAddItemProperty(oSkin, ipFeat, 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
     }
 
@@ -311,22 +310,31 @@ int AddManeuverKnown(object oCreature, int nList, int n2daRow, int nDiscipline, 
 
 void RemoveManeuversKnownOnLevel(object oCreature, int nLevel)
 {
-    if(DEBUG) DoDebug("true_inc_truknwn: RemoveManeuversKnownOnLevel():\n"
+    if(DEBUG) DoDebug("psi_inc_powknown: RemovePowersKnownOnLevel():\n"
                     + "oCreature = " + DebugObject2Str(oCreature) + "\n"
                     + "nLevel = " + IntToString(nLevel) + "\n"
                       );
 
-    string sPostFix = _MANEUVER_LIST_LEVEL_ARRAY + IntToString(nLevel);
-    // For each Maneuver list and lexicon, determine if an array exists for this level.
-    int nDiscipline;
-    for(nDiscipline = LEXICON_MIN_VALUE;  nDiscipline <= LEXICON_MAX_VALUE; nDiscipline++)
-    {
-        if(persistant_array_exists(oCreature, _MANEUVER_LIST_NAME_BASE + IntToString(MANEUVER_LIST_ManeuverR) + IntToString(nDiscipline) + sPostFix))
-            _RemoveManeuverArray(oCreature, MANEUVER_LIST_ManeuverR, nLevel, nDiscipline);
+    string sPostFix = _POWER_LIST_LEVEL_ARRAY + IntToString(nLevel);
+    // For each power list, determine if an array exists for this level.
+    if(persistant_array_exists(oCreature, _POWER_LIST_NAME_BASE + IntToString(POWER_LIST_PSION) + sPostFix))
+        // If one does exist, clear it
+        _RemovePowerArray(oCreature, POWER_LIST_PSION, nLevel);
 
-        if(persistant_array_exists(oCreature, _MANEUVER_LIST_NAME_BASE + IntToString(MANEUVER_LIST_MISC) + IntToString(nDiscipline) + sPostFix))
-            _RemoveManeuverArray(oCreature, MANEUVER_LIST_MISC, nLevel, nDiscipline);
-    }
+    if(persistant_array_exists(oCreature, _POWER_LIST_NAME_BASE + IntToString(POWER_LIST_WILDER) + sPostFix))
+        _RemovePowerArray(oCreature, POWER_LIST_WILDER, nLevel);
+
+    if(persistant_array_exists(oCreature, _POWER_LIST_NAME_BASE + IntToString(POWER_LIST_PSYWAR) + sPostFix))
+        _RemovePowerArray(oCreature, POWER_LIST_PSYWAR, nLevel);
+
+    if(persistant_array_exists(oCreature, _POWER_LIST_NAME_BASE + IntToString(POWER_LIST_FIST_OF_ZUOKEN) + sPostFix))
+        _RemovePowerArray(oCreature, POWER_LIST_FIST_OF_ZUOKEN, nLevel);
+
+    if(persistant_array_exists(oCreature, _POWER_LIST_NAME_BASE + IntToString(POWER_LIST_WARMIND) + sPostFix))
+        _RemovePowerArray(oCreature, POWER_LIST_WARMIND, nLevel);
+
+    if(persistant_array_exists(oCreature, _POWER_LIST_NAME_BASE + IntToString(POWER_LIST_MISC) + sPostFix))
+        _RemovePowerArray(oCreature, POWER_LIST_MISC, nLevel);
 }
 
 int GetKnownManeuversModifier(object oCreature, int nList, int nDiscipline)
@@ -339,55 +347,160 @@ void SetKnownManeuversModifier(object oCreature, int nList, int nNewValue, int n
     SetPersistantLocalInt(oCreature, _MANEUVER_LIST_NAME_BASE + IntToString(nList) + IntToString(nDiscipline) + _MANEUVER_LIST_MODIFIER, nNewValue);
 }
 
-int GetManeuverCount(object oCreature, int nList, int nDiscipline)
+int GetManeuverCount(object oCreature, int nList)
 {
     return GetPersistantLocalInt(oCreature, _MANEUVER_LIST_NAME_BASE + IntToString(nList) + IntToString(nDiscipline) + _MANEUVER_LIST_TOTAL_KNOWN);
 }
 
-int GetMaxManeuverCount(object oCreature, int nList, int nDiscipline)
+int GetMaxManeuverCount(object oCreature, int nList)
 {
-    int nMaxManeuvers = 0;
+    int nMaxPowers = 0;
 
     switch(nList)
     {
-        case MANEUVER_LIST_ManeuverR:{
-            // Determine base Maneuvers known
-            int nLevel = GetLevelByClass(CLASS_TYPE_ManeuverR, oCreature);
+        case POWER_LIST_PSION:{
+            // Determine base powers known
+            int nLevel = GetLevelByClass(CLASS_TYPE_PSION, oCreature);
+                nLevel += GetFirstPsionicClass(oCreature) == CLASS_TYPE_PSION ? GetPsionicPRCLevels(oCreature) : 0;
             if(nLevel == 0)
                 break;
-                if      (LEXICON_EVOLVING_MIND == nDiscipline)
-                    nMaxManeuvers = StringToInt(Get2DACache(GetAMSKnownFileName(CLASS_TYPE_ManeuverR), "EvolvingMind", nLevel - 1));
-                else if (LEXICON_CRAFTED_TOOL  == nDiscipline)
-                    nMaxManeuvers = StringToInt(Get2DACache(GetAMSKnownFileName(CLASS_TYPE_ManeuverR), "CraftedTool",  nLevel - 1));
-                else if (LEXICON_PERFECTED_MAP == nDiscipline)
-                    nMaxManeuvers = StringToInt(Get2DACache(GetAMSKnownFileName(CLASS_TYPE_ManeuverR), "PerfectedMap", nLevel - 1));
+            nMaxPowers = StringToInt(Get2DACache(GetAMSKnownFileName(CLASS_TYPE_PSION), "PowersKnown", nLevel - 1));
 
             // Calculate feats
+            // Apply the epic feat Power Knowledge - +2 powers known per
+            int nFeat = FEAT_POWER_KNOWLEDGE_PSION_1;
+            while(nFeat <= FEAT_POWER_KNOWLEDGE_PSION_10 &&
+                  GetHasFeat(nFeat, oCreature))
+            {
+                nMaxPowers += 2;
+                nFeat++;
+            }
 
             // Add in the custom modifier
-            nMaxManeuvers += GetKnownManeuversModifier(oCreature, nList, nDiscipline);
+            nMaxPowers += GetKnownPowersModifier(oCreature, nList);
             break;
         }
-        case MANEUVER_LIST_MISC:
-            DoDebug("GetMaxManeuverCount(): ERROR: Using unfinished Maneuver list!");
+        case POWER_LIST_WILDER:{
+            // Determine base powers known
+            int nLevel = GetLevelByClass(CLASS_TYPE_WILDER, oCreature);
+                nLevel += GetFirstPsionicClass(oCreature) == CLASS_TYPE_WILDER ? GetPsionicPRCLevels(oCreature) : 0;
+            if(nLevel == 0)
+                break;
+            nMaxPowers = StringToInt(Get2DACache(GetAMSKnownFileName(CLASS_TYPE_WILDER), "PowersKnown", nLevel - 1));
+
+            // Calculate feats
+            // Apply the epic feat Power Knowledge - +2 powers known per
+            int nFeat = FEAT_POWER_KNOWLEDGE_WILDER_1;
+            while(nFeat <= FEAT_POWER_KNOWLEDGE_WILDER_10 &&
+                  GetHasFeat(nFeat, oCreature))
+            {
+                nMaxPowers += 2;
+                nFeat++;
+            }
+
+            // Add in the custom modifier
+            nMaxPowers += GetKnownPowersModifier(oCreature, nList);
+            break;
+        }
+        case POWER_LIST_PSYWAR:{
+            // Determine base powers known
+            int nLevel = GetLevelByClass(CLASS_TYPE_PSYWAR, oCreature);
+                nLevel += GetFirstPsionicClass(oCreature) == CLASS_TYPE_PSYWAR ? GetPsionicPRCLevels(oCreature) : 0;
+            if(nLevel == 0)
+                break;
+            nMaxPowers = StringToInt(Get2DACache(GetAMSKnownFileName(CLASS_TYPE_PSYWAR), "PowersKnown", nLevel - 1));
+
+            // Calculate feats
+            // Apply the epic feat Power Knowledge - +2 powers known per
+            int nFeat = FEAT_POWER_KNOWLEDGE_PSYWAR_1;
+            while(nFeat <= FEAT_POWER_KNOWLEDGE_PSYWAR_10 &&
+                  GetHasFeat(nFeat, oCreature))
+            {
+                nMaxPowers += 2;
+                nFeat++;
+            }
+
+            // Add in the custom modifier
+            nMaxPowers += GetKnownPowersModifier(oCreature, nList);
+            break;
+        }
+        case POWER_LIST_FIST_OF_ZUOKEN:{
+            // Determine base powers known
+            int nLevel = GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN, oCreature);
+                nLevel += GetFirstPsionicClass(oCreature) == CLASS_TYPE_FIST_OF_ZUOKEN ? GetPsionicPRCLevels(oCreature) : 0;
+            if(nLevel == 0)
+                break;
+            nMaxPowers = StringToInt(Get2DACache(GetAMSKnownFileName(CLASS_TYPE_FIST_OF_ZUOKEN), "PowersKnown", nLevel - 1));
+
+            // Calculate feats
+            // Apply the epic feat Power Knowledge - +2 powers known per
+            int nFeat = FEAT_POWER_KNOWLEDGE_FIST_OF_ZUOKEN_1;
+            while(nFeat <= FEAT_POWER_KNOWLEDGE_FIST_OF_ZUOKEN_10 &&
+                  GetHasFeat(nFeat, oCreature))
+            {
+                nMaxPowers += 2;
+                nFeat++;
+            }
+
+            // Add in the custom modifier
+            nMaxPowers += GetKnownPowersModifier(oCreature, nList);
+            break;
+        }
+        case POWER_LIST_WARMIND:{
+            // Determine base powers known
+            int nLevel = GetLevelByClass(CLASS_TYPE_WARMIND, oCreature);
+                nLevel += GetFirstPsionicClass(oCreature) == CLASS_TYPE_WARMIND ? GetPsionicPRCLevels(oCreature) : 0;
+            if(nLevel == 0)
+                break;
+            nMaxPowers = StringToInt(Get2DACache(GetAMSKnownFileName(CLASS_TYPE_WARMIND), "PowersKnown", nLevel - 1));
+
+            // Calculate feats
+            // Apply the epic feat Power Knowledge - +2 powers known per
+            int nFeat = FEAT_POWER_KNOWLEDGE_WARMIND_1;
+            while(nFeat <= FEAT_POWER_KNOWLEDGE_WARMIND_10 &&
+                  GetHasFeat(nFeat, oCreature))
+            {
+                nMaxPowers += 2;
+                nFeat++;
+            }
+
+            // Add in the custom modifier
+            nMaxPowers += GetKnownPowersModifier(oCreature, nList);
+            break;
+        }
+
+        case POWER_LIST_MISC:
+            DoDebug("GetMaxPowerCount(): ERROR: Using unfinishes power list!");
             break;
 
         default:{
-            string sErr = "GetMaxManeuverCount(): ERROR: Unknown Maneuver list value: " + IntToString(nList) + IntToString(nDiscipline);
+            string sErr = "GetMaxPowerCount(): ERROR: Unknown power list value: " + IntToString(nList);
             if(DEBUG) DoDebug(sErr);
             else      WriteTimestampedLogEntry(sErr);
         }
     }
 
-    return nMaxManeuvers;
+    return nMaxPowers;
 }
 
 int GetHasManeuver(int nUtter, object oCreature = OBJECT_SELF)
 {
-    if((GetLevelByClass(CLASS_TYPE_ManeuverR, oCreature)
-        && GetHasFeat(GetClassFeatFromPower(nUtter, CLASS_TYPE_ManeuverR), oCreature)
+    if((GetLevelByClass(CLASS_TYPE_PSION, oCreature)
+        && GetHasFeat(GetClassFeatFromPower(nPower, CLASS_TYPE_PSION), oCreature)
+        ) ||
+       (GetLevelByClass(CLASS_TYPE_PSYWAR, oCreature)
+        && GetHasFeat(GetClassFeatFromPower(nPower, CLASS_TYPE_PSYWAR), oCreature)
+        ) ||
+       (GetLevelByClass(CLASS_TYPE_WILDER, oCreature)
+        && GetHasFeat(GetClassFeatFromPower(nPower, CLASS_TYPE_WILDER), oCreature)
+        ) ||
+       (GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN, oCreature)
+        && GetHasFeat(GetClassFeatFromPower(nPower, CLASS_TYPE_FIST_OF_ZUOKEN), oCreature)
+        ) ||
+       (GetLevelByClass(CLASS_TYPE_WARMIND, oCreature)
+        && GetHasFeat(GetClassFeatFromPower(nPower, CLASS_TYPE_WARMIND), oCreature)
         )
-        // add new truenaming classes here
+        // add new psionic classes here
        )
         return TRUE;
     return FALSE;

@@ -20,6 +20,15 @@
 /*                 Constants                    */
 //////////////////////////////////////////////////
 
+const int    DISCIPLINE_DESERT_WIND    = 1;
+const int    DISCIPLINE_DEVOTED_SPIRIT = 2;
+const int    DISCIPLINE_DIAMOND_MIND   = 3;
+const int    DISCIPLINE_IRON_HEART     = 4;
+const int    DISCIPLINE_SETTING_SUN    = 5;
+const int    DISCIPLINE_SHADOW_HAND    = 6;
+const int    DISCIPLINE_STONE_DRAGON   = 7;
+const int    DISCIPLINE_TIGER_CLAW     = 8;
+const int    DISCIPLINE_WHITE_RAVEN    = 9;
 
 //////////////////////////////////////////////////
 /*             Function prototypes              */

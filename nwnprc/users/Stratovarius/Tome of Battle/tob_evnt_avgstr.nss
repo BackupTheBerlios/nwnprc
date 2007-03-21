@@ -20,5 +20,36 @@ Created:   20.3.2007
 
 void main()
 {
+        object oWielder = OBJECT_SELF;  
+        object oTarget = PRCGetSpellTargetObject();
+        object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oWielder);
+        object oWeap2 = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oWielder);
+        int nBonus = max(GetLocalInt(oWeap, "PRC_AVENGING_STRIKE_DAMBONUS"), GetLocalInt(oWeap2, "PRC_AVENGING_STRIKE_DAMBONUS"));        
+        int nType = MyPRCGetRacialType(oTarget);
+        int nAlign = GetAlignmentGoodEvil(oTarget);
+        int nSpell;
         
+        if(nAlign == ALIGNMENT_EVIL && nType == RACIAL_TYPE_OUTSIDER)
+        {
+                //apply bonus damage
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nBonus, DAMAGE_TYPE_MAGICAL), oTarget);
+                
+                //Remove script
+                RemoveEventScript(oWeap, EVENT_ONHIT, "tob_evnt_avgstr");
+                RemoveEventScript(oWeap2, EVENT_ONHIT, "tob_evnt_avgstr");
+                
+                //remove spell effects
+                effect eTest = GetFirstEffect(oWielder);
+                
+                while (GetIsEffectValid(eTest))
+                {
+                        nSpell = GetEffectSpellId(eTest);
+                        if(nSpell == SPELL_AVENGING_STRIKE)
+                        {
+                                RemoveEffect(oWeap, eTest);
+                                RemoveEffect(oWeap2, eTest);
+                        }
+                        eTest = GetNextEffect(oWeapon);
+                }
+        }                       
 }

@@ -23,6 +23,7 @@ const int AOE_PER_REPEL_VERMIN                  = 180;
 const int AOE_PER_SOLID_FOG                     = 179;
 const int AOE_PER_REPULSION                     = 178;
 const int AOE_PER_CALM_EMOTIONS                 = 177;
+const int VFX_PER_AVASMASS                      = 141;
 
 // Psionic Area of Effects
 const int AOE_PER_PSIGREASE                     = 131;
@@ -114,8 +115,6 @@ const int POISON_RAVAGE_JADE_WATER              = 144;
 const int POISON_RAVAGE_PURIFIED_COUATL_VENOM   = 145;
 const int POISON_RAVAGE_UNICORN_BLOOD           = 146;
 
-const int VFX_PER_AVASMASS                      = 141;
-
 //:://////////////////////////////////////////////
 //:: Skill Const
 //:://////////////////////////////////////////////
@@ -123,6 +122,8 @@ const int VFX_PER_AVASMASS                      = 141;
 const int SKILL_IAIJUTSU_FOCUS  = 27;
 const int SKILL_JUMP            = 28;
 const int SKILL_TRUESPEAK       = 29;
+const int SKILL_SENSE_MOTIVE    = 30;
+const int SKILL_MARTIAL_LORE    = 31;
 
 
 //:://////////////////////////////////////////////

@@ -2,7 +2,6 @@
 Tome of Battle
 -----------------------------------------------------
 
-prc_amagsys_gain: Add ToB Maneuver gaining.
 tob_moveconv: Add Maneuver swapping
-prc_inc_function: Add Maneuver Classes to the list for prc_amagsys_gain
-inc_lookup: Add Maneuver Classes
+tob_inc_recovery: Create and hook in
+TLK: Add classes, feats, Maneuvers to the TLK files.

@@ -25,6 +25,9 @@ void main()
         object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
         object oWeap2 = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
         
+        //Set the bonus int on the weapons
+        SetLocalInt(oWeap, "PRC_AVENGING_STRIKE_DAMBONUS", nBonus);
+        
         effect eBonus = EffectAttackIncrease(nBonus, ATTACK_BONUS_MISC);
                eBonus = VersusAlignmentEffect(eBonus, ALIGNMENT_EVIL);
                eBonus = VersusRacialTypeEffect(eBonus, RACIAL_TYPE_OUTSIDER);
@@ -43,5 +46,6 @@ void main()
         {
               IPSafeAddItemProperty(oWeap2, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 9999.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
               AddEventScript(oWeap2, EVENT_ONHIT, "tob_evnt_avgstr", FALSE, FALSE);
+              SetLocalInt(oWeap2, "PRC_AVENGING_STRIKE_DAMBONUS", nBonus);
         }
 }

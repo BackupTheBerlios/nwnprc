@@ -19,7 +19,7 @@
 // This function holds all functions that are supposed to run before the actual
 // spellscript gets run. If this functions returns FALSE, the spell is aborted
 // and the spellscript will not run
-int TOBPreManeuverCastCode();
+int PreManeuverCastCode();
 
 
 //------------------------------------------------------------------------------
@@ -27,7 +27,7 @@ int TOBPreManeuverCastCode();
 // the order in which the functions are called here DOES MATTER, changing it
 // WILL break the crafting subsystems
 //------------------------------------------------------------------------------
-int TOBPreManeuverCastCode()
+int PreManeuverCastCode()
 {
     object oInitiator = OBJECT_SELF;
     object oTarget = PRCGetSpellTargetObject();

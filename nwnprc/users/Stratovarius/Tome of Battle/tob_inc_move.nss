@@ -19,7 +19,7 @@
 //////////////////////////////////////////////////
 
 const string PRC_INITIATING_CLASS        = "PRC_CurrentManeuver_InitiatingClass";
-const string PRC_MANEVEUR_LEVEL           = "PRC_CurrentManeuver_Level";
+const string PRC_MANEUVER_LEVEL           = "PRC_CurrentManeuver_Level";
 const string TOB_DEBUG_IGNORE_CONSTRAINTS = "TOB_DEBUG_IGNORE_CONSTRAINTS";
 
 /**
@@ -49,8 +49,6 @@ struct maneuver{
     int nInitiatorLevel;
     /// The maneuver's spell ID
     int nSpellId;
-    /// The DC for speaking the maneuver
-    int nMoveDC;
 };
 
 //////////////////////////////////////////////////
@@ -65,37 +63,31 @@ struct maneuver{
  * @param oTarget       The target of the maneuver, if any. For pure Area of Effect.
  *                      maneuvers, this should be OBJECT_INVALID. Otherwise the main
  *                      target of the maneuver as returned by PRCGetSpellTargetObject().
- * @param nMetaUtterFlags The metamaneuvers that may be used to modify this maneuver. Any number
- *                      of METAUTTERANCE_* constants ORd together using the | operator.
- *                      For example (METAUTTERANCE_EMPOWER | METAUTTERANCE_EXTEND)
- * @param nLexicon      Whether it is of the Crafted Tool, Evolving Mind or Perfected Map
- *                      Use one of three constants: TYPE_EVOLVING_MIND, TYPE_CRAFTED_TOOL, TYPE_PERFECTED_MAP
  *
  * @return              A maneuver structure that contains the data about whether
- *                      the maneuver was successfully truespeaked, what metamaneuvers
- *                      were used and some other commonly used data, like the 
- *                      TrueNamer's initiator level for this maneuver.
+ *                      the maneuver was successfully initiated and some other 
+ *                      commonly used data, like the PC's initiator level for this maneuver.
  */
-struct maneuver EvaluateManeuver(object oInitiator, object oTarget, int nMetaUtterFlags, int nLexicon);
+struct maneuver EvaluateManeuver(object oInitiator, object oTarget);
 
 /**
  * Causes OBJECT_SELF to use the given maneuver.
  *
- * @param nUtter         The index of the maneuver to use in spells.2da or an UTTER_*
+ * @param nManeuver         The index of the maneuver to use in spells.2da or an UTTER_*
  * @param nClass         The index of the class to use the maneuver as in classes.2da or a CLASS_TYPE_*
  * @param nLevelOverride An optional override to normal initiator level. 
  *                       Default: 0, which means the parameter is ignored.
  */
-void UseManeuver(int nUtter, int nClass, int nLevelOverride = 0);
+void UseManeuver(int nManeuver, int nClass, int nLevelOverride = 0);
 
 /**
  * A debugging function. Takes a maneuver structure and
  * makes a string describing the contents.
  *
- * @param utter A set of maneuver data
- * @return      A string describing the contents of utter
+ * @param move A set of maneuver data
+ * @return      A string describing the contents of move
  */
-string DebugManeuver2Str(struct maneuver utter);
+string DebugManeuver2Str(struct maneuver move);
 
 /**
  * Stores a maneuver structure as a set of local variables. If
@@ -104,9 +96,9 @@ string DebugManeuver2Str(struct maneuver utter);
  *
  * @param oObject The object on which to store the structure
  * @param sName   The name under which to store the structure
- * @param utter   The maneuver structure to store
+ * @param move   The maneuver structure to store
  */
-void SetLocalManeuver(object oObject, string sName, struct maneuver utter);
+void SetLocalManeuver(object oObject, string sName, struct maneuver move);
 
 /**
  * Retrieves a previously stored maneuver structure. If no structure is stored
@@ -126,46 +118,15 @@ struct maneuver GetLocalManeuver(object oObject, string sName);
  */
 void DeleteLocalManeuver(object oObject, string sName);
 
-/**
- * Sets the evaluation functions to ignore constraints on initiating.
- * Call this just prior to EvaluateManeuver() in a maneuver script.
- * That evaluation will then ignore lacking maneuver ability score,
- * maneuver Points and Psionic Focuses.
- *
- * @param oInitiator A creature attempting to truespeak a maneuver at this moment.
- */
-void TruenameDebugIgnoreConstraints(object oInitiator);
-
 //////////////////////////////////////////////////
 /*                  Includes                    */
 //////////////////////////////////////////////////
 
-#include "true_inc_metautr"
-#include "true_inc_truespk" 
+#include "tob_inc_tobfunc" 
 
 //////////////////////////////////////////////////
 /*             Internal functions               */
 //////////////////////////////////////////////////
-
-/** Internal function.
- * Handles Spellfire absorption when a maneuver is used on a friendly spellfire
- * user.
- */
-struct maneuver _DoTruenameSpellfireFriendlyAbsorption(struct maneuver utter, object oTarget)
-{
-    if(GetLocalInt(oTarget, "SpellfireAbsorbFriendly") &&
-       GetIsFriend(oTarget, utter.oInitiator)
-       )
-    {
-        if(CheckSpellfire(utter.oInitiator, oTarget, TRUE))
-        {
-            PRCShowSpellResist(utter.oInitiator, oTarget, SPELL_RESIST_MANTLE);
-            utter.bCanManeuver = FALSE;
-        }
-    }
-
-    return utter;
-}
 
 /** Internal function.
  * Deletes maneuver-related local variables.
@@ -175,7 +136,7 @@ struct maneuver _DoTruenameSpellfireFriendlyAbsorption(struct maneuver utter, ob
 void _CleanManeuverVariables(object oInitiator)
 {
     DeleteLocalInt(oInitiator, PRC_INITIATING_CLASS);
-    DeleteLocalInt(oInitiator, PRC_MANEVEUR_LEVEL);
+    DeleteLocalInt(oInitiator, PRC_MANEUVER_LEVEL);
 }
 
 /** Internal function.
@@ -186,21 +147,21 @@ void _CleanManeuverVariables(object oInitiator)
  */
 object _GetManeuverToken(object oInitiator)
 {
-    object oUtrToken = GetLocalObject(oInitiator, PRC_MANEVEUR_TOKEN_VAR);
+    object oMoveToken = GetLocalObject(oInitiator, PRC_MANEVEUR_TOKEN_VAR);
 
     // If the token object is no longer valid, set the variable to point at initiator
-    if(!GetIsObjectValid(oUtrToken))
+    if(!GetIsObjectValid(oMoveToken))
     {
-        oUtrToken = oInitiator;
-        SetLocalObject(oInitiator, PRC_MANEVEUR_TOKEN_VAR, oUtrToken);
+        oMoveToken = oInitiator;
+        SetLocalObject(oInitiator, PRC_MANEVEUR_TOKEN_VAR, oMoveToken);
     }
 
 
     // Check if there is no token
-    if(oUtrToken == oInitiator)
-        oUtrToken = OBJECT_INVALID;
+    if(oMoveToken == oInitiator)
+        oMoveToken = OBJECT_INVALID;
 
-    return oUtrToken;
+    return oMoveToken;
 }
 
 /** Internal function.
@@ -208,11 +169,11 @@ object _GetManeuverToken(object oInitiator)
  * to point at itself.
  *
  * @param oInitiator The initiator whose token to destroy
- * @param oUtrToken    The token to destroy
+ * @param oMoveToken    The token to destroy
  */
-void _DestroyManeuverToken(object oInitiator, object oUtrToken)
+void _DestroyManeuverToken(object oInitiator, object oMoveToken)
 {
-    DestroyObject(oUtrToken);
+    DestroyObject(oMoveToken);
     SetLocalObject(oInitiator, PRC_MANEVEUR_TOKEN_VAR, oInitiator);
 }
 
@@ -224,20 +185,20 @@ void _DestroyManeuverToken(object oInitiator, object oUtrToken)
  */
 object _CreateManeuverToken(object oInitiator)
 {
-    object oUtrToken = _GetManeuverToken(oInitiator);
+    object oMoveToken = _GetManeuverToken(oInitiator);
     object oStore   = GetObjectByTag("PRC_MANIFTOKEN_STORE"); //GetPCSkin(oInitiator);
 
     // Delete any previous tokens
-    if(GetIsObjectValid(oUtrToken))
-        _DestroyManeuverToken(oInitiator, oUtrToken);
+    if(GetIsObjectValid(oMoveToken))
+        _DestroyManeuverToken(oInitiator, oMoveToken);
 
     // Create new token and store a reference to it
-    oUtrToken = CreateItemOnObject(PRC_MANEVEUR_TOKEN_NAME, oStore);
-    SetLocalObject(oInitiator, PRC_MANEVEUR_TOKEN_VAR, oUtrToken);
+    oMoveToken = CreateItemOnObject(PRC_MANEVEUR_TOKEN_NAME, oStore);
+    SetLocalObject(oInitiator, PRC_MANEVEUR_TOKEN_VAR, oMoveToken);
 
-    Assert(GetIsObjectValid(oUtrToken), "GetIsObjectValid(oUtrToken)", "ERROR: Unable to create maneuver token! Store object: " + DebugObject2Str(oStore), "true_inc_Utter", "_CreateManeuverToken()");
+    Assert(GetIsObjectValid(oMoveToken), "GetIsObjectValid(oMoveToken)", "ERROR: Unable to create maneuver token! Store object: " + DebugObject2Str(oStore), "true_inc_Utter", "_CreateManeuverToken()");
 
-    return oUtrToken;
+    return oMoveToken;
 }
 
 /** Internal function.
@@ -289,17 +250,17 @@ int _ManeuverStateCheck(object oInitiator)
  *
  * @param oInitiator A creature initiating a maneuver
  * @param lTrueSpeaker The location where the initiator was when starting the maneuver
- * @param oUtrToken    The maneuver token that controls the ongoing maneuver
+ * @param oMoveToken    The maneuver token that controls the ongoing maneuver
  */
-void _ManeuverHB(object oInitiator, location lTrueSpeaker, object oUtrToken)
+void _ManeuverHB(object oInitiator, location lTrueSpeaker, object oMoveToken)
 {
     if(DEBUG) DoDebug("_ManeuverHB() running:\n"
                     + "oInitiator = " + DebugObject2Str(oInitiator) + "\n"
                     + "lTrueSpeaker = " + DebugLocation2Str(lTrueSpeaker) + "\n"
-                    + "oUtrToken = " + DebugObject2Str(oUtrToken) + "\n"
+                    + "oMoveToken = " + DebugObject2Str(oMoveToken) + "\n"
                     + "Distance between maneuver start location and current location: " + FloatToString(GetDistanceBetweenLocations(lTrueSpeaker, GetLocation(oInitiator))) + "\n"
                       );
-    if(GetIsObjectValid(oUtrToken))
+    if(GetIsObjectValid(oMoveToken))
     {
         // Continuance check
         if(GetDistanceBetweenLocations(lTrueSpeaker, GetLocation(oInitiator)) > 2.0f || // Allow some variance in the location to account for dodging and random fidgeting
@@ -307,14 +268,14 @@ void _ManeuverHB(object oInitiator, location lTrueSpeaker, object oUtrToken)
            )
         {
             if(DEBUG) DoDebug("_ManeuverHB(): initiator moved or lost concentration, destroying token");
-            _DestroyManeuverToken(oInitiator, oUtrToken);
+            _DestroyManeuverToken(oInitiator, oMoveToken);
 
             // Inform initiator
             FloatingTextStrRefOnCreature(16828469, oInitiator, FALSE); // "You have lost concentration on the maneuver you were attempting to truespeak!"
         }
         // Schedule next HB
         else
-            DelayCommand(PRC_MANEVEUR_HB_DELAY, _ManeuverHB(oInitiator, lTrueSpeaker, oUtrToken));
+            DelayCommand(PRC_MANEVEUR_HB_DELAY, _ManeuverHB(oInitiator, lTrueSpeaker, oMoveToken));
     }
 }
 
@@ -323,14 +284,14 @@ void _ManeuverHB(object oInitiator, location lTrueSpeaker, object oUtrToken)
  * If not, queues commands to make the initiator to run into range.
  *
  * @param oInitiator A creature initiating a maneuver
- * @param nUtter      SpellID of the maneuver being truespeaked
+ * @param nManeuver      SpellID of the maneuver being initiated
  * @param lTarget     The target location or the location of the target object
  */
-void _ManeuverRangeCheck(object oInitiator, int nUtter, location lTarget)
+void _ManeuverRangeCheck(object oInitiator, int nManeuver, location lTarget)
 {
     float fDistance   = GetDistanceBetweenLocations(GetLocation(oInitiator), lTarget);
     float fRangeLimit;
-    string sRange     = Get2DACache("spells", "Range", nUtter);
+    string sRange     = Get2DACache("spells", "Range", nManeuver);
 
     // Personal range maneuvers are always in range
     if(sRange == "P")
@@ -386,51 +347,42 @@ void _AssignUseManeuverFakeCastCommands(object oInitiator, object oTarget, locat
 /** Internal function.
  * Places the cheatcasting of the real maneuver into the initiator's action queue.
  */
-void _UseManeuverAux(object oInitiator, object oUtrToken, int nSpellId,
+void _UseManeuverAux(object oInitiator, object oMoveToken, int nSpellId,
                   object oTarget, location lTarget,
-                  int nUtter, int nClass, int nLevelOverride,
-                  int bQuickened
-                  )
+                  int nManeuver, int nClass, int nLevelOverride)
 {
     if(DEBUG) DoDebug("_UseManeuverAux() running:\n"
                     + "oInitiator = " + DebugObject2Str(oInitiator) + "\n"
-                    + "oUtrToken = " + DebugObject2Str(oUtrToken) + "\n"
+                    + "oMoveToken = " + DebugObject2Str(oMoveToken) + "\n"
                     + "nSpellId = " + IntToString(nSpellId) + "\n"
                     + "oTarget = " + DebugObject2Str(oTarget) + "\n"
                     + "lTarget = " + DebugLocation2Str(lTarget) + "\n"
-                    + "nUtter = " + IntToString(nUtter) + "\n"
+                    + "nManeuver = " + IntToString(nManeuver) + "\n"
                     + "nClass = " + IntToString(nClass) + "\n"
                     + "nLevelOverride = " + IntToString(nLevelOverride) + "\n"
-                    + "bQuickened = " + BooleanToString(bQuickened) + "\n"
                       );
 
     // Make sure nothing has interrupted this maneuver
-    if(GetIsObjectValid(oUtrToken))
+    if(GetIsObjectValid(oMoveToken))
     {
         if(DEBUG) DoDebug("_UseManeuverAux(): Token was valid, queueing actual maneuver");
         // Set the class to truespeak as
         SetLocalInt(oInitiator, PRC_INITIATING_CLASS, nClass + 1);
 
         // Set the maneuver's level
-        SetLocalInt(oInitiator, PRC_MANEVEUR_LEVEL, StringToInt(lookup_spell_innate(nSpellId)));
-
-        // Set whether the maneuver was quickened
-        SetLocalInt(oInitiator, PRC_MANEVEUR_IS_QUICKENED, bQuickened);
-
-        // Queue the real maneuver
-        //ActionCastSpell(nUtter, nLevelOverride, 0, 0, METAMAGIC_NONE, CLASS_TYPE_INVALID, TRUE, TRUE, oTarget);
+        SetLocalInt(oInitiator, PRC_MANEUVER_LEVEL, StringToInt(lookup_spell_innate(nSpellId)));
 
         if(nLevelOverride != 0)
             AssignCommand(oInitiator, ActionDoCommand(SetLocalInt(oInitiator, PRC_CASTERLEVEL_OVERRIDE, nLevelOverride)));
         if(GetIsObjectValid(oTarget))
-            AssignCommand(oInitiator, ActionCastSpellAtObject(nUtter, oTarget, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+            AssignCommand(oInitiator, ActionCastSpellAtObject(nManeuver, oTarget, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
         else
-            AssignCommand(oInitiator, ActionCastSpellAtLocation(nUtter, lTarget, METAMAGIC_NONE, TRUE, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+            AssignCommand(oInitiator, ActionCastSpellAtLocation(nManeuver, lTarget, METAMAGIC_NONE, TRUE, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
         if(nLevelOverride != 0)
             AssignCommand(oInitiator, ActionDoCommand(DeleteLocalInt(oInitiator, PRC_CASTERLEVEL_OVERRIDE)));
 
         // Destroy the maneuver token for this maneuver
-        _DestroyManeuverToken(oInitiator, oUtrToken);
+        _DestroyManeuverToken(oInitiator, oMoveToken);
     }
 }
 
@@ -444,107 +396,71 @@ struct maneuver EvaluateManeuver(object oInitiator, object oTarget, int nMetaUtt
     /* Get some data */
     int bIgnoreConstraints = (DEBUG) ? GetLocalInt(oInitiator, TOB_DEBUG_IGNORE_CONSTRAINTS) : FALSE;
     // initiator-related stuff
-    int nInitiatorLevel = GetTruespeakerLevel(oInitiator);
-    int nUtterLevel      = GetManeuverLevel(oInitiator);
-    int nClass           = GetTruespeakingClass(oInitiator);
+    int nInitiatorLevel  = GetInitiatorLevel(oInitiator);
+    int nManeuverLevel   = GetManeuverLevel(oInitiator);
+    int nClass           = GetInitiatingClass(oInitiator);
 
     /* Initialise the maneuver structure */
-    struct maneuver utter;
-    utter.oInitiator      = oInitiator;
-    utter.bCanManeuver         = TRUE;                                   // Assume successfull maneuver by default
-    utter.nInitiatorLevel = nInitiatorLevel;
-    utter.nSpellId          = PRCGetSpellId();
-    utter.nMoveDC          = GetBaseManeuverDC(oTarget, oInitiator, nLexicon);
-
-    // Account for metamaneuvers. This includes adding the appropriate DC boosts.
-    utter = EvaluateMetamaneuvers(utter, nMetaUtterFlags);
-    // Account for the law of resistance
-    utter.nMoveDC += GetLawOfResistanceDCIncrease(oInitiator, utter.nSpellId);
-    // DC change for targeting self and using a Personal Truename
-    utter.nMoveDC += AddPersonalTruenameDC(oInitiator, oTarget);  
-    // DC change for ignoring Spell Resistance
-    utter.nMoveDC += AddIgnoreSpellResistDC(oInitiator);
-    // DC change for specific maneuvers
-    utter.nMoveDC += AddManeuverSpecificDC(oInitiator);
-    
-    // Check the Law of Sequence. Returns True if the maneuver is active
-    if (CheckLawOfSequence(oInitiator, utter.nSpellId))
-    {
-    	utter.bCanManeuver = FALSE;
-    	FloatingTextStringOnCreature("You already have " + GetManeuverName(utter.nSpellId) + " active. Maneuver Failed.", oInitiator, FALSE);
-    }
+    struct maneuver move;
+    move.oInitiator      = oInitiator;
+    move.bCanManeuver    = TRUE; // Assume successfull maneuver by default
+    move.nInitiatorLevel = nInitiatorLevel;
+    move.nSpellId        = PRCGetSpellId();
     
     // Skip paying anything if something has prevented successfull maneuver already by this point
-    if(utter.bCanManeuver)
+    if(move.bCanManeuver)
     {
-        /* Roll the dice, and see if we succeed or fail.
-         */
-        if(GetIsSkillSuccessful(oInitiator, SKILL_TRUESPEAK, utter.nMoveDC) || bIgnoreConstraints)
-        {
-        	// Increases the DC of the subsequent maneuvers
-        	DoLawOfResistanceDCIncrease(oInitiator, utter.nSpellId);
-                // Spellfire friendly absorption - This may set bCananifest to FALSE
-                utter = _DoTruenameSpellfireFriendlyAbsorption(utter, oTarget);
-                //* APPLY SIDE-EFFECTS THAT RESULT FROM SUCCESSFULL UTTERANCE ABOVE *//
-
-        }
-        // Failed the DC roll
-        else
-        {
-            // No need for an output here because GetIsSkillSuccessful does it for us.
-            utter.bCanManeuver = FALSE;
-        }
+	// If you're this far in, you always succeed, there are very few checks.
+	// Do Martial Lore data
+	IdentifyManeuver(move.oInitiator, move.nSpellId);
+	IdentifyDiscipline(move.oInitiator);
+	
     }//end if
 
-    if(DEBUG) DoDebug("EvaluateManeuver(): Final result:\n" + DebugManeuver2Str(utter));
+    if(DEBUG) DoDebug("EvaluateManeuver(): Final result:\n" + DebugManeuver2Str(move));
 
     // Initiate maneuver-related variable CleanUp
     DelayCommand(0.5f, _CleanManeuverVariables(oInitiator));
 
-    return utter;
+    return move;
 }
 
-void UseManeuver(int nUtter, int nClass, int nLevelOverride = 0)
+void UseManeuver(int nManeuver, int nClass, int nLevelOverride = 0)
 {
     object oInitiator = OBJECT_SELF;
     object oSkin       = GetPCSkin(oInitiator);
     object oTarget     = PRCGetSpellTargetObject();
-    object oUtrToken;
+    object oMoveToken;
     location lTarget   = PRCGetSpellTargetLocation();
     int nSpellID       = PRCGetSpellId();
-    int nUtterDur      = StringToInt(Get2DACache("spells", "ConjTime", nUtter)) + StringToInt(Get2DACache("spells", "CastTime", nUtter));
-    int bQuicken       = FALSE;
+    int nMoveDur       = StringToInt(Get2DACache("spells", "ConjTime", nManeuver)) + StringToInt(Get2DACache("spells", "CastTime", nManeuver));
 
     // Normally swift action maneuvers check
-    if(Get2DACache("feat", "Constant", GetClassFeatFromPower(nUtter, nClass)) == "SWIFT_ACTION" && // The maneuver is swift action to use
+    if(Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "SWIFT_ACTION" && // The maneuver is swift action to use
        TakeSwiftAction(oInitiator)                                                                // And the initiator can take a swift action now
        )
     {
-        nUtterDur = 0;
+        nMoveDur = 0;
     }
     // Quicken maneuver check
-    else if(nUtterDur <= 6000                                 && // If the maneuver could be quickened by having initiating time of 1 round or less
-            GetLocalInt(oInitiator, METAUTTERANCE_QUICKEN_VAR) && // And the initiator has Quicken maneuver active
+    else if(nMoveDur <= 6000                                 && // If the maneuver could be quickened by having initiating time of 1 round or less
             TakeSwiftAction(oInitiator)                         // And the initiator can take a swift action
             )
     {
         // Set the maneuver time to 0 to skip VFX
-        nUtterDur = 0;
-        // And set the Quicken maneuver used marker to TRUE
-        bQuicken = TRUE;
+        nMoveDur = 0;
     }
 
     if(DEBUG) DoDebug("UseManeuver(): initiator is " + DebugObject2Str(oInitiator) + "\n"
-                    + "nUtter = " + IntToString(nUtter) + "\n"
+                    + "nManeuver = " + IntToString(nManeuver) + "\n"
                     + "nClass = " + IntToString(nClass) + "\n"
                     + "nLevelOverride = " + IntToString(nLevelOverride) + "\n"
-                    + "maneuver duration = " + IntToString(nUtterDur) + "ms \n"
-                    + "bQuicken = " + BooleanToString(bQuicken) + "\n"
-                    //+ "Token exists = " + BooleanToString(GetIsObjectValid(oUtrToken))
+                    + "maneuver duration = " + IntToString(nMoveDur) + "ms \n"
+                    //+ "Token exists = " + BooleanToString(GetIsObjectValid(oMoveToken))
                       );
 
     // Create the maneuver token. Deletes any old tokens and cancels corresponding maneuvers as a side effect
-    oUtrToken = _CreateManeuverToken(oInitiator);
+    oMoveToken = _CreateManeuverToken(oInitiator);
 
     /// @todo Hook to the initiator's OnDamaged event for the concentration checks to avoid losing the maneuver
 
@@ -554,65 +470,53 @@ void UseManeuver(int nUtter, int nClass, int nLevelOverride = 0)
     ClearAllActions();
 
     // If out of range, move to range
-    _ManeuverRangeCheck(oInitiator, nUtter, GetIsObjectValid(oTarget) ? GetLocation(oTarget) : lTarget);
+    _ManeuverRangeCheck(oInitiator, nManeuver, GetIsObjectValid(oTarget) ? GetLocation(oTarget) : lTarget);
 
     // Start the maneuver monitor HB
-    ActionDoCommand(_ManeuverHB(oInitiator, GetLocation(oInitiator), oUtrToken));
+    ActionDoCommand(_ManeuverHB(oInitiator, GetLocation(oInitiator), oMoveToken));
 
     // Assuming the spell isn't used as a swift action, fakecast for visuals
-    if(nUtterDur > 0)
+    if(nMoveDur > 0)
     {
         // Hack. Workaround of a bug with the fakecast actions. See function comment for details
         ActionDoCommand(_AssignUseManeuverFakeCastCommands(oInitiator, oTarget, lTarget, nSpellID));
     }
 
     // Action queue the function that will cheatcast the actual maneuver
-    DelayCommand(nUtterDur / 1000.0f, AssignCommand(oInitiator, ActionDoCommand(_UseManeuverAux(oInitiator, oUtrToken, nSpellID, oTarget, lTarget, nUtter, nClass, nLevelOverride, bQuicken))));
+    DelayCommand(nMoveDur / 1000.0f, AssignCommand(oInitiator, ActionDoCommand(_UseManeuverAux(oInitiator, oMoveToken, nSpellID, oTarget, lTarget, nManeuver, nClass, nLevelOverride))));
 }
 
-string DebugManeuver2Str(struct maneuver utter)
+string DebugManeuver2Str(struct maneuver move)
 {
     string sRet;
 
-    sRet += "oInitiator = " + DebugObject2Str(utter.oInitiator) + "\n";
-    sRet += "bCanManeuver = " + BooleanToString(utter.bCanManeuver) + "\n";
-    sRet += "nInitiatorLevel = "  + IntToString(utter.nInitiatorLevel) + "\n";
-
-    sRet += "bEmpower  = " + BooleanToString(utter.bEmpower)  + "\n";
-    sRet += "bExtend   = " + BooleanToString(utter.bExtend)   + "\n";
-    sRet += "bQuicken  = " + BooleanToString(utter.bQuicken);//    + "\n";
+    sRet += "oInitiator = " + DebugObject2Str(move.oInitiator) + "\n";
+    sRet += "bCanManeuver = " + BooleanToString(move.bCanManeuver) + "\n";
+    sRet += "nInitiatorLevel = "  + IntToString(move.nInitiatorLevel);
 
     return sRet;
 }
 
-void SetLocalManeuver(object oObject, string sName, struct maneuver utter)
+void SetLocalManeuver(object oObject, string sName, struct maneuver move)
 {
     //SetLocal (oObject, sName + "_", );
-    SetLocalObject(oObject, sName + "_oInitiator", utter.oInitiator);
+    SetLocalObject(oObject, sName + "_oInitiator", move.oInitiator);
 
-    SetLocalInt(oObject, sName + "_bCanManeuver",      utter.bCanManeuver);
-    SetLocalInt(oObject, sName + "_nInitiatorLevel",  utter.nInitiatorLevel);
-    SetLocalInt(oObject, sName + "_nSpellID",          utter.nSpellId);
-
-    SetLocalInt(oObject, sName + "_bEmpower",  utter.bEmpower);
-    SetLocalInt(oObject, sName + "_bExtend",   utter.bExtend);
-    SetLocalInt(oObject, sName + "_bQuicken",  utter.bQuicken);
+    SetLocalInt(oObject, sName + "_bCanManeuver",      move.bCanManeuver);
+    SetLocalInt(oObject, sName + "_nInitiatorLevel",   move.nInitiatorLevel);
+    SetLocalInt(oObject, sName + "_nSpellID",          move.nSpellId);
 }
 
 struct maneuver GetLocalManeuver(object oObject, string sName)
 {
-    struct maneuver utter;
-    utter.oInitiator = GetLocalObject(oObject, sName + "_oInitiator");
+    struct maneuver move;
+    move.oInitiator = GetLocalObject(oObject, sName + "_oInitiator");
 
-    utter.bCanManeuver      = GetLocalInt(oObject, sName + "_bCanManeuver");
-    utter.nInitiatorLevel  = GetLocalInt(oObject, sName + "_nInitiatorLevel");
-    utter.nSpellId          = GetLocalInt(oObject, sName + "_nSpellID");
+    move.bCanManeuver      = GetLocalInt(oObject, sName + "_bCanManeuver");
+    move.nInitiatorLevel  = GetLocalInt(oObject, sName + "_nInitiatorLevel");
+    move.nSpellId          = GetLocalInt(oObject, sName + "_nSpellID");
 
-    utter.bEmpower  = GetLocalInt(oObject, sName + "_bEmpower");
-    utter.bExtend   = GetLocalInt(oObject, sName + "_bExtend");
-    utter.bQuicken  = GetLocalInt(oObject, sName + "_bQuicken");
-
-    return utter;
+    return move;
 }
 
 void DeleteLocalManeuver(object oObject, string sName)
@@ -622,10 +526,6 @@ void DeleteLocalManeuver(object oObject, string sName)
     DeleteLocalInt(oObject, sName + "_bCanManeuver");
     DeleteLocalInt(oObject, sName + "_nInitiatorLevel");
     DeleteLocalInt(oObject, sName + "_nSpellID");
-
-    DeleteLocalInt(oObject, sName + "_bEmpower");
-    DeleteLocalInt(oObject, sName + "_bExtend");
-    DeleteLocalInt(oObject, sName + "_bQuicken");
 }
 
 void TruenameDebugIgnoreConstraints(object oInitiator)

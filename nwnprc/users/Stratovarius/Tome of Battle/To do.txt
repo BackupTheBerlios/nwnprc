@@ -7,3 +7,5 @@ tob_inc_move: Weapons check
 tob_moveconv: Add Maneuver swapping
 tob_inc_recovery: Create and hook in
 TLK: Add classes, feats, Maneuvers to the TLK files.
+tob_inc_tobfunc: Update _CheckPrereqsByDiscipline with proper numbers in the for loop
+tob_movehook: TOBGetIsManeuverSupernatural() <-- Needs to be created.

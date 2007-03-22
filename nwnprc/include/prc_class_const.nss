@@ -157,3 +157,6 @@ const int CLASS_TYPE_SCOUT                   = 63;
 const int CLASS_TYPE_HEALER                  = 64;
 const int CLASS_TYPE_SHUGENJA		     = 79;
 const int CLASS_TYPE_COC                     = 92;
+const int CLASS_TYPE_CRUSADER                = 234;
+const int CLASS_TYPE_SWORDSAGE               = 235;
+const int CLASS_TYPE_WARBLADE                = 236;

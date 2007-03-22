@@ -4095,13 +4095,18 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
           // if you hit enemy
           if(iAttackRoll > 0)
           {
-
+                   SetLocalInt(oDefender, "PRCCombat_StruckByAttack", TRUE);
+                   DelayCommand(1.0, DeleteLocalInt(oDefender, "PRCCombat_StruckByAttack"));
+                   if(DEBUG) 
+                   {	
+                   	DoDebug("prc_inc_combat: First Attack has Hit, set Local");
+                   	if (GetLocalInt(oDefender, "PRCCombat_StruckByAttack")) DoDebug("prc_inc_combat: Local Value is True");
+                   }
               // This sets a local variable on the target that is struck
               // Allows you to apply saves and such based on the success or failure
               if(bFirstAttack)
               {
-                   SetLocalInt(oDefender, "PRCCombat_StruckByAttack", TRUE);
-                   DelayCommand(1.0, DeleteLocalInt(oDefender, "PRCCombat_StruckByAttack"));
+
               }
 
               DelayCommand(0.01, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oDefender));

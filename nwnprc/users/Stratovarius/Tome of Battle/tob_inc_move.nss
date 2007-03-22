@@ -123,6 +123,7 @@ void DeleteLocalManeuver(object oObject, string sName);
 //////////////////////////////////////////////////
 
 #include "tob_inc_tobfunc" 
+#include "tob_inc_martlore" 
 
 //////////////////////////////////////////////////
 /*             Internal functions               */
@@ -391,7 +392,7 @@ void _UseManeuverAux(object oInitiator, object oMoveToken, int nSpellId,
 /*             Function definitions             */
 //////////////////////////////////////////////////
 
-struct maneuver EvaluateManeuver(object oInitiator, object oTarget, int nMetaUtterFlags, int nLexicon)
+struct maneuver EvaluateManeuver(object oInitiator, object oTarget)
 {
     /* Get some data */
     int bIgnoreConstraints = (DEBUG) ? GetLocalInt(oInitiator, TOB_DEBUG_IGNORE_CONSTRAINTS) : FALSE;
@@ -528,7 +529,7 @@ void DeleteLocalManeuver(object oObject, string sName)
     DeleteLocalInt(oObject, sName + "_nSpellID");
 }
 
-void TruenameDebugIgnoreConstraints(object oInitiator)
+void ManeuverDebugIgnoreConstraints(object oInitiator)
 {
     SetLocalInt(oInitiator, TOB_DEBUG_IGNORE_CONSTRAINTS, TRUE);
     DelayCommand(0.0f, DeleteLocalInt(oInitiator, TOB_DEBUG_IGNORE_CONSTRAINTS));

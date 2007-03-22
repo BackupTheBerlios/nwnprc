@@ -143,6 +143,16 @@ void MakeLookupLoopMaster()
     DelayCommand(7.3, MakeLookupLoop(CLASS_TYPE_TRUENAMER,        0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "RealSpellID", "GetPowerFromSpellID"));
     DelayCommand(7.5, MakeLookupLoop(CLASS_TYPE_TRUENAMER,        0, GetPRCSwitch(FILE_END_CLASS_POWER), "RealSpellID", "FeatID",  "GetClassFeatFromPower_"+IntToString(CLASS_TYPE_TRUENAMER)));
     DelayCommand(7.6, MakeLookupLoop(CLASS_TYPE_TRUENAMER,        0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "", "SpellIDToClsPsipw"));
+    // Tome of Battle uses the same lookup loop style as the psionic classes. Time adjusted to put it after the last of the caster lookup loops
+    DelayCommand(11.3, MakeLookupLoop(CLASS_TYPE_CRUSADER,         0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "RealSpellID", "GetPowerFromSpellID"));
+    DelayCommand(11.4, MakeLookupLoop(CLASS_TYPE_CRUSADER,         0, GetPRCSwitch(FILE_END_CLASS_POWER), "RealSpellID", "FeatID",  "GetClassFeatFromPower_"+IntToString(CLASS_TYPE_CRUSADER)));
+    DelayCommand(11.5, MakeLookupLoop(CLASS_TYPE_CRUSADER,         0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "", "SpellIDToClsPsipw"));    
+    DelayCommand(11.6, MakeLookupLoop(CLASS_TYPE_SWORDSAGE,        0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "RealSpellID", "GetPowerFromSpellID"));
+    DelayCommand(11.7, MakeLookupLoop(CLASS_TYPE_SWORDSAGE,        0, GetPRCSwitch(FILE_END_CLASS_POWER), "RealSpellID", "FeatID",  "GetClassFeatFromPower_"+IntToString(CLASS_TYPE_SWORDSAGE)));
+    DelayCommand(11.8, MakeLookupLoop(CLASS_TYPE_SWORDSAGE,        0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "", "SpellIDToClsPsipw"));        
+    DelayCommand(11.9, MakeLookupLoop(CLASS_TYPE_WARBLADE,         0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "RealSpellID", "GetPowerFromSpellID"));
+    DelayCommand(12.0, MakeLookupLoop(CLASS_TYPE_WARBLADE,         0, GetPRCSwitch(FILE_END_CLASS_POWER), "RealSpellID", "FeatID",  "GetClassFeatFromPower_"+IntToString(CLASS_TYPE_WARBLADE)));
+    DelayCommand(12.1, MakeLookupLoop(CLASS_TYPE_WARBLADE,         0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "", "SpellIDToClsPsipw"));        
     //add new psionic classes here
     //also add them later too
 
@@ -312,7 +322,11 @@ void MakeSpellbookLevelLoop(int nClass, int nMin, int nMax, string sVarNameBase,
        nClass == CLASS_TYPE_FIST_OF_ZUOKEN ||
        nClass == CLASS_TYPE_WARMIND        ||
        // Add new psionic classes here
-
+       
+       // Tome of Battle
+       nClass == CLASS_TYPE_CRUSADER       ||
+       nClass == CLASS_TYPE_SWORDSAGE      ||
+       nClass == CLASS_TYPE_WARBLADE       ||
        // Other new caster types
        nClass == CLASS_TYPE_TRUENAMER
        )
@@ -389,7 +403,11 @@ void MakeLookupLoop(int nClass, int nMin, int nMax, string sSourceColumn,
        nClass == CLASS_TYPE_FIST_OF_ZUOKEN ||
        nClass == CLASS_TYPE_WARMIND        ||
        // Add new psionic classes here
-
+       
+       // Tome of Battle
+       nClass == CLASS_TYPE_CRUSADER       ||
+       nClass == CLASS_TYPE_SWORDSAGE      ||
+       nClass == CLASS_TYPE_WARBLADE       ||
        // Other new caster types
        nClass == CLASS_TYPE_TRUENAMER
        )
@@ -502,6 +520,8 @@ string GetAMSKnownFileName(int nClass)
     // Various naming schemes based on system
     if(nClass == CLASS_TYPE_TRUENAMER)
         sFile = "cls_true_known";
+    if(nClass == CLASS_TYPE_CRUSADER || nClass == CLASS_TYPE_SWORDSAGE || nClass == CLASS_TYPE_WARBLADE)
+        sFile = "cls_mvkn" + GetStringRight(sFile, GetStringLength(sFile) - 8); // Hardcoded the cls_ part. It's not as if any class uses some other prefix - Ornedan, 20061210
     // Assume psionics if no other match
     else
         sFile = "cls_psbk" + GetStringRight(sFile, GetStringLength(sFile) - 8); // Hardcoded the cls_ part. It's not as if any class uses some other prefix - Ornedan, 20061210
@@ -517,6 +537,8 @@ string GetAMSDefinitionFileName(int nClass)
     // Various naming schemes based on system
     if(nClass == CLASS_TYPE_TRUENAMER)
         sFile = "cls_true_utter";
+    if(nClass == CLASS_TYPE_CRUSADER || nClass == CLASS_TYPE_SWORDSAGE || nClass == CLASS_TYPE_WARBLADE)
+        sFile = "cls_move" + GetStringRight(sFile, GetStringLength(sFile) - 8); // Hardcoded the cls_ part. It's not as if any class uses some other prefix - Ornedan, 20061210
     // Assume psionics if no other match
     else
         sFile = "cls_psipw" + GetStringRight(sFile, GetStringLength(sFile) - 8); // Hardcoded the cls_ part. It's not as if any class uses some other prefix - Ornedan, 20061210

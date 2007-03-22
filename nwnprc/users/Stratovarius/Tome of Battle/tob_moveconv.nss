@@ -242,7 +242,7 @@ void main()
                     if(sFeatID != ""                                           // Non-blank row
                      && !GetHasFeat(StringToInt(sFeatID), oPC)                 // PC does not already posses the maneuver
                      && (!StringToInt(Get2DACache(sManeuverFile, "HasPrereqs", i))// Maneuver has no prerequisites
-                      || CheckManeuverPrereqs(StringToInt(sFeatID), oPC)          // Or the PC possess the prerequisites
+                      || CheckManeuverPrereqs(nClass, StringToInt(sFeatID), oPC)          // Or the PC possess the prerequisites
                          )
                        )
                     {

@@ -27166,6 +27166,38 @@ You imbue a robe, priestly garment, or outfit of regular clothing with divine po
      - Reduces ability damage due to spell casting by 1, to a minimum of 1 point          (but does not reduce the sacrifice cost of this spell).
 
      Sacrifice: 1d4 points of Strength damage</entry>
+<entry id="52484" lang="en" sex="m">Stone Bones</entry>
+<entry id="52485" lang="en" sex="m">Stone Dragon (Strike)
+Level: Crusader 1, Swordsage 1, Warblade 1
+Initiation Action: 1 Standard Action
+Range: Personal
+Target: You
+Duration: 1 round
+
+You focus your energy to enhance your defenses, drawing on the power of your weapon's impact with a foe to toughen yourself against a counterattack.
+    
+You gain DR 5/Adamantium (+5) for 1 round.</entry>
+<entry id="52486" lang="en" sex="m">Crusader</entry>
+<entry id="52487" lang="en" sex="m">Crusaders</entry>
+<entry id="52488" lang="en" sex="m">crusader</entry>
+<entry id="52489" lang="en" sex="m">Crusader Description</entry>
+<entry id="52490" lang="en" sex="m">Swordsage</entry>
+<entry id="52491" lang="en" sex="m">Swordsages</entry>
+<entry id="52492" lang="en" sex="m">swordsage</entry>
+<entry id="52493" lang="en" sex="m">Swordsage Description</entry>
+<entry id="52494" lang="en" sex="m">Warblade</entry>
+<entry id="52495" lang="en" sex="m">Warblades</entry>
+<entry id="52496" lang="en" sex="m">warblade</entry>
+<entry id="52497" lang="en" sex="m">Warblade Description</entry>
+<entry id="52498" lang="en" sex="m">Desert Wind</entry>
+<entry id="52499" lang="en" sex="m">Devoted Spirit</entry>
+<entry id="52500" lang="en" sex="m">Diamond Mind</entry>
+<entry id="52501" lang="en" sex="m">Iron Heart</entry>
+<entry id="52502" lang="en" sex="m">Setting Sun</entry>
+<entry id="52503" lang="en" sex="m">Shadow Hand</entry>
+<entry id="52504" lang="en" sex="m">Stone Dragon</entry>
+<entry id="52505" lang="en" sex="m">Tiger Claw</entry>
+<entry id="52506" lang="en" sex="m">White Raven</entry>
   <entry id="52985" lang="en" sex="m">This feat opens the spellbook for this class. This is a conversation and feat driven version of the normal spellbook. Instead of appearing on the spell radial, they will appear on the class radial instead. Also, you may be able to use the spell after you have cast all your uses. No spell will result, but you will spend a round trying to cast it.</entry>
   <entry id="52986" lang="en" sex="m">Caster Level(s): Wizard / Sorcerer 9
 Innate Level: 9

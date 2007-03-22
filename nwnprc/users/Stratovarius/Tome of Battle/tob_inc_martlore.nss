@@ -46,10 +46,8 @@ void IdentifyDiscipline(object oInitiator);
 /*                  Includes                    */
 //////////////////////////////////////////////////
 
-#include "prc_move_const"
-#include "prc_alterations"
-#include "tob_inc_move"
-#include "tob_inc_moveknwn"
+#include "tob_move_const"
+#include "tob_inc_tobfunc"
 
 //////////////////////////////////////////////////
 /*             Internal functions               */
@@ -58,12 +56,12 @@ void IdentifyDiscipline(object oInitiator);
 void _DoMartialLoreCheck(object oInitiator, object oCheck, int nManeuverLevel, int nSpellId)
 {
 	// NPCs wouldn't benefit from being told the name of the maneuver
-	if (!GetIsPC(oTarget)) return;
+	if (!GetIsPC(oCheck)) return;
 	
 	// No Bonus normally
 	int nSwordSage = 0;
 	
-	if (TOBGetHasDiscipleFocus(oInitiator, nSpellId)) nSwordSage = 2;
+	if (TOBGetHasDisciplineFocus(oInitiator, nSpellId)) nSwordSage = 2;
 	
 	// Roll the check, DC is reduced by Swordsage bonus instead of bonus on check. Same end result.
 	if(GetIsSkillSuccessful(oCheck, SKILL_MARTIAL_LORE, 10 + nManeuverLevel - nSwordSage))
@@ -79,18 +77,18 @@ void _DoMartialLoreCheck(object oInitiator, object oCheck, int nManeuverLevel, i
 void _DoDisciplineCheck(object oInitiator, object oCheck, int nInitiatorLevel)
 {
 	// NPCs wouldn't benefit from being told the disciplines
-	if (!GetIsPC(oTarget)) return;
+	if (!GetIsPC(oCheck)) return;
 	
 	if(GetIsSkillSuccessful(oCheck, SKILL_MARTIAL_LORE, 20 + nInitiatorLevel))
 	{	
 		// Check the Disciplines, 1 to 9
-		sDiscipline = "";
-		int 1;
+		string sDiscipline = "";
+		int i;
 		for(i = 1; i < 10; i++)
 		{
-			if (TOBGetHasDisciple(oInitiator, i)) 
+			if (TOBGetHasDisciplineFocus(oInitiator, i)) 
 			{
-				sDiscipline += GetDiscipleName(i);
+				sDiscipline += GetDisciplineName(i);
 				sDiscipline += ", ";
 			}
 		}

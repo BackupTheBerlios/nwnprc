@@ -12,7 +12,7 @@
 */ 
 
 // Level 1 Maneuvers
-const int MOVE_SD_STONE_BONES         = -1;
+const int MOVE_SD_STONE_BONES         = 6001;
 
 // Level 2 Maneuvers
 

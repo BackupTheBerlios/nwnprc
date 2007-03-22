@@ -15,6 +15,7 @@
 
 #include "prc_inc_spells"
 #include "inc_utility"
+#include "x2_inc_spellhook"
 
 // This function holds all functions that are supposed to run before the actual
 // spellscript gets run. If this functions returns FALSE, the spell is aborted
@@ -39,7 +40,7 @@ int PreManeuverCastCode()
     //---------------------------------------------------------------------------
     // Run NullPsionicsField Check - Adjust so only Supernatural Maneuvers are affected
     //---------------------------------------------------------------------------
-    if (nContinue && TOBGetIsManeuverSupernatural)
+    if (nContinue /*&& TOBGetIsManeuverSupernatural()*/)
         nContinue = NullPsionicsField();
 
     return nContinue;

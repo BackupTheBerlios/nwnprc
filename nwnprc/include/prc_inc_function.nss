@@ -289,6 +289,10 @@ void EvalPRCFeats(object oPC)
        GetLevelByClass(CLASS_TYPE_DUSKBLADE,        oPC) ||
        // Truenaming
        GetLevelByClass(CLASS_TYPE_TRUENAMER,        oPC) ||
+       // Tome of Battle
+       GetLevelByClass(CLASS_TYPE_CRUSADER,         oPC) ||
+       GetLevelByClass(CLASS_TYPE_SWORDSAGE,        oPC) ||
+       GetLevelByClass(CLASS_TYPE_WARBLADE,         oPC) ||
        // Racial casters
        (GetLevelByClass(CLASS_TYPE_OUTSIDER, oPC) && GetRacialType(oPC) == RACIAL_TYPE_RAKSHASA)
         )

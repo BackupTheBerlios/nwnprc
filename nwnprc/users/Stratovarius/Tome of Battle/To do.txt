@@ -2,6 +2,8 @@
 Tome of Battle
 -----------------------------------------------------
 
+STANCES - Using, Learning, Making bonuses persistent.
+tob_inc_move: Weapons check
 tob_moveconv: Add Maneuver swapping
 tob_inc_recovery: Create and hook in
 TLK: Add classes, feats, Maneuvers to the TLK files.

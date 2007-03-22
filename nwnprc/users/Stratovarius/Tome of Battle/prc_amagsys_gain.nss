@@ -25,7 +25,7 @@
 #include "psi_inc_psifunc"
 #include "inc_newspellbook"
 #include "true_inc_trufunc"
-
+#include "tob_inc_tobfunc"
 
 //////////////////////////////////////////////////
 /*             Function prototypes              */
@@ -34,7 +34,7 @@
 int CheckMissingPowers(object oPC, int nClass);
 int CheckMissingSpells(object oPC, int nClass, int nMinLevel, int nMaxLevel);
 int CheckMissingUtterances(object oPC, int nClass, int nLexicon);
-
+int CheckMissingManeuvers(object oPC, int nClass);
 
 //////////////////////////////////////////////////
 /*             Function definitions             */
@@ -91,11 +91,11 @@ void main()
         return;
         
     // Handle Tome of Battle
-    if(CheckMissingUtterances(oPC, CLASS_TYPE_CRUSADER))
+    if(CheckMissingManeuvers(oPC, CLASS_TYPE_CRUSADER))
         return;
-    if(CheckMissingUtterances(oPC, CLASS_TYPE_SWORDSAGE))
+    if(CheckMissingManeuvers(oPC, CLASS_TYPE_SWORDSAGE))
         return;
-    if(CheckMissingUtterances(oPC, CLASS_TYPE_WARBLADE))
+    if(CheckMissingManeuvers(oPC, CLASS_TYPE_WARBLADE))
         return;        
 }
 
@@ -174,7 +174,7 @@ int CheckMissingUtterances(object oPC, int nClass, int nLexicon)
     return FALSE;
 }
 
-int CheckMissingmManeuvers(object oPC, int nClass)
+int CheckMissingManeuvers(object oPC, int nClass)
 {
     int nLevel = GetLevelByClass(nClass, oPC);
     if(!nLevel)

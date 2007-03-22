@@ -32,6 +32,7 @@ int PreManeuverCastCode()
 {
     object oInitiator = OBJECT_SELF;
     object oTarget = PRCGetSpellTargetObject();
+    int nMoveId = PRCGetSpellId();
     int nContinue;
 
     DeleteLocalInt(oInitiator, "SpellConc");
@@ -40,7 +41,7 @@ int PreManeuverCastCode()
     //---------------------------------------------------------------------------
     // Run NullPsionicsField Check - Adjust so only Supernatural Maneuvers are affected
     //---------------------------------------------------------------------------
-    if (nContinue /*&& TOBGetIsManeuverSupernatural()*/)
+    if (nContinue && GetIsManeuverSupernatural(nMoveId))
         nContinue = NullPsionicsField();
 
     return nContinue;

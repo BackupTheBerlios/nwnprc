@@ -387,6 +387,19 @@ void _UseManeuverAux(object oInitiator, object oMoveToken, int nSpellId,
     }
 }
 
+int _GetIsManeuverWeaponAppropriate(object oInitiator)
+{
+	object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
+	// If the initiator is empty handed, unarmed strikes are good
+	if (!GetIsObjectValid(oItem)) return TRUE;
+	// If melee weapon, all good. 
+	if (IPGetIsMeleeWeapon(oItem)) return TRUE;
+	// Add other legal items in here, like Bloodstorm Blade throwing
+	
+	// If one of the other's hasn't tripped, fail here
+	return FALSE;
+}
+
 
 //////////////////////////////////////////////////
 /*             Function definitions             */
@@ -408,7 +421,14 @@ struct maneuver EvaluateManeuver(object oInitiator, object oTarget)
     move.nInitiatorLevel = nInitiatorLevel;
     move.nSpellId        = PRCGetSpellId();
     
-    // Skip paying anything if something has prevented successfull maneuver already by this point
+    // If the weapon is not appropriate, fail.
+    if (!_GetIsManeuverWeaponAppropriate(move.oInitiator)) 
+    {
+    	move.bCanManeuver = FALSE;
+    	FloatingTextStrRefOnCreature(16829728, oInitiator, FALSE); // "You do not have an appropriate weapon to initiate this maneuver."
+    }
+    
+    // Skip doing anything if something has prevented successfull maneuver already by this point
     if(move.bCanManeuver)
     {
 	// If you're this far in, you always succeed, there are very few checks.

@@ -20,20 +20,20 @@
 /* Constant defintions                          */
 //////////////////////////////////////////////////
 
-const int STAGE_SELECT_LEVEL        = 0;
+const int STAGE_SELECT_LEVEL           = 0;
 const int STAGE_SELECT_MANEUVER        = 1;
-const int STAGE_CONFIRM_SELECTION   = 2;
-const int STAGE_ALL_POWERS_SELECTED = 3;
+const int STAGE_CONFIRM_SELECTION      = 2;
+const int STAGE_ALL_MANEUVERS_SELECTED = 3;
 
 const int CHOICE_BACK_TO_LSELECT    = -1;
 
-const int STRREF_BACK_TO_LSELECT    = -1; // "Return to maneuver level selection."
-const int STRREF_LEVELLIST_HEADER   = -1; // "Select level of maneuver to gain.\n\nNOTE:\nThis may take a while when first browsing a particular level's maneuvers."
-const int STRREF_MOVELIST_HEADER1   = -1; // "Select a maneuver to gain.\nYou can select"
-const int STRREF_MOVELIST_HEADER2   = -1; // "more maneuvers"
+const int STRREF_BACK_TO_LSELECT    = 16829723; // "Return to maneuver level selection."
+const int STRREF_LEVELLIST_HEADER   = 16829724; // "Select level of maneuver to gain.\n\nNOTE:\nThis may take a while when first browsing a particular level's maneuvers."
+const int STRREF_MOVELIST_HEADER1   = 16829725; // "Select a maneuver to gain.\nYou can select"
+const int STRREF_MOVELIST_HEADER2   = 16829726; // "more maneuvers"
 const int STRREF_SELECTED_HEADER1   = 16824209; // "You have selected:"
 const int STRREF_SELECTED_HEADER2   = 16824210; // "Is this correct?"
-const int STRREF_END_HEADER         = -1; // "You will be able to select more maneuvers after you gain another level in a psionic caster class."
+const int STRREF_END_HEADER         = 16829727; // "You will be able to select more maneuvers after you gain another level in a blade magic initiator class."
 const int STRREF_END_CONVO_SELECT   = 16824212; // "Finish"
 const int LEVEL_STRREF_START        = 16824809;
 const int STRREF_YES                = 4752;     // "Yes"
@@ -181,12 +181,9 @@ void main()
                 SetHeader(GetStringByStrRef(STRREF_LEVELLIST_HEADER));
 
                 // Determine maximum maneuver level
-                // Initiators can choose up to their level +1/2 levels in all other classes
-                // See ToB p39
-                int nInitiatorLevel = GetInitiatorLevel(oPC, nClass);
-                int nTotalHD = GetHitDice(oPC);
-                // Max level is therefor the level plus 1/2 of remaining levels
-                int nMaxLevel = nInitiatorLevel + ((nTotalHD - nInitiatorLevel)/2);
+                // Initiators get new maneuvers at the same levels as wizards
+                // See ToB p39, table 3-1
+                int nMaxLevel = (GetInitiatorLevel(oPC, nClass) + 1)/2;
 
                 // Set the tokens
                 int i;
@@ -283,7 +280,7 @@ void main()
                 AddChoice(GetStringByStrRef(STRREF_NO), FALSE, oPC); // "No"
             }
             // Conversation finished stage
-            else if(nStage == STAGE_ALL_POWERS_SELECTED)
+            else if(nStage == STAGE_ALL_MANEUVERS_SELECTED)
             {
                 if(DEBUG) DoDebug("tob_moveconv: Building finish note");
                 SetHeader(GetStringByStrRef(STRREF_END_HEADER));
@@ -365,7 +362,7 @@ void main()
             int nCurrentManeuvers = GetManeuverCount(oPC, nClass);
             int nMaxManeuvers = GetMaxManeuverCount(oPC, nClass);
             if(nCurrentManeuvers >= nMaxManeuvers)
-                nStage = STAGE_ALL_POWERS_SELECTED;
+                nStage = STAGE_ALL_MANEUVERS_SELECTED;
             else
                 nStage = STAGE_SELECT_MANEUVER;
         }

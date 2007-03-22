@@ -187,6 +187,16 @@ int GetFirstBladeMagicClassPosition(object oCreature = OBJECT_SELF);
  */
 int CheckManeuverPrereqs(int nClass, int nFeat, object oPC);
 
+/**
+ * Checks whether the maneuver is supernatural or not
+ * Mainly used to check for AMF areas.
+ * Mostly from Swordsage maneuvers
+ *
+ * @param nMoveId The Maneuver to Check
+ * @return        TRUE if Maneuver is (Su), else FALSE
+ */
+int GetIsManeuverSupernatural(int nMoveId);
+
 //////////////////////////////////////////////////
 /*                  Includes                    */
 //////////////////////////////////////////////////
@@ -468,6 +478,14 @@ int CheckManeuverPrereqs(int nClass, int nFeat, object oPC)
 
     // if you've reached this far then return TRUE
     return TRUE;
+}
+
+int GetIsManeuverSupernatural(int nMoveId)
+{
+	if (nMoveId == MOVE_DW_BLISTERING_FLOURISH) return TRUE;
+
+	// If nothing returns TRUE, fail
+	return FALSE;
 }
 // Test main
 //void main(){}

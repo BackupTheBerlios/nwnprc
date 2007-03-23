@@ -2,9 +2,9 @@
 
     FeatLabel                                      FeatIndex List GrantedOnLevel OnMenu 
 0   **Class_feats**                                ****      **** ****           ****   
-442 **StoneDragonManeuvers**                       ****      **** ****           ****   
+442 **Crusader_ManeuverLevel_One**                 ****      **** ****           ****   
 443 StoneBones                                     8002      2    99             1      
-275 ****                                           ****      **** ****           ****   
+443 StonefootStance                                8003      2    99             1      
 276 ****                                           ****      **** ****           ****   
 277 "Remember to move all ToB feats"               ****      **** ****           ****   
 278 "outside the autoupdate range"                 ****      **** ****           ****   

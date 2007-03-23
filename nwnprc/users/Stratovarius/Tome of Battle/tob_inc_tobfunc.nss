@@ -231,6 +231,23 @@ void MarkStanceActive(object oInitiator, int nStance);
  */
 effect VersusSizeEffect(object oInitiator, effect eEffect, int nSize);
 
+/**
+ * Checks every 6 seconds whether an adept has moved too far for a stance
+ *
+ * @param oPC        The Initiator
+ * @param nMoveId    The stance
+ */
+void InitiatorMovementCheck(object oPC, int nMoveId);
+
+/**
+ * Returns the total bonus to ability Checks for chosen ability
+ *
+ * @param oPC      The PC
+ * @param nAbility The ability to check
+ * @return        Total bonus
+ */
+int GetAbilityCheckBonus(object oPC, int nAbility);
+
 //////////////////////////////////////////////////
 /*                  Includes                    */
 //////////////////////////////////////////////////
@@ -301,6 +318,29 @@ int _CheckPrereqsByDiscipline(object oPC, int nDiscipline, int nCount, int nClas
      
      // Gotten this far and you haven't met the prereqs
      return FALSE;
+}
+
+void _RecursiveStanceCheck(object oPC, object oTestWP, int nMoveId)
+{
+    // Distance moved in the last round
+    float fDist = GetDistanceBetween(oPC, oTestWP);
+    // Giving them a little extra distance because of NWN's dance of death
+    float fCheck = FeetToMeters(10.0);
+
+    if(DEBUG) DoDebug("InitiatorMovementCheck: Moved too far, cancelling stances.");
+
+    // Moved the distance
+    if (fDist >= fCheck)
+    {
+        // Clean up stances or other abilities that are lost when moving too far
+        RemoveEffectsFromSpell(oPC, nMoveId);
+        // Clean up the test WP as well
+        DestroyObject(oTestWP);
+    }
+    else if (GZGetDelayedSpellEffectsExpired(nMoveId, oPC, oPC)) // run the check again in 6 seconds, if the stanceis still there
+    {
+    	DelayCommand(6.0, _RecursiveStanceCheck(oPC, nMoveId));
+    }
 }
 
 //////////////////////////////////////////////////
@@ -597,8 +637,30 @@ effect VersusSizeEffect(object oInitiator, effect eEffect, int nSize)
 	return eLink;
 }
 
-void DoAbilityCheckBonus(object oInitiator, int nAbil, int nBonus)
+void InitiatorMovementCheck(object oPC, int nMoveId)
 {
+    // Check to see if the WP is valid
+    string sWPTag = "PRC_BMWP_" + GetName(oPC) + GetManeuverName(nMoveId);
+    object oTestWP = GetWaypointByTag(sWPTag);
+    if (!GetIsObjectValid(oTestWP))
+    {
+        // Create waypoint for the movement
+        CreateObject(OBJECT_TYPE_WAYPOINT, "nw_waypoint001", GetLocation(oPC), FALSE, sWPTag);
+        if(DEBUG) DoDebug("InitiatorMovementCheck: WP for " + DebugObject2Str(oPC) + " didn't exist, creating. Tag: " + sWPTag);
+    }
+    // Start the recursive HB check for movement
+    _RecursiveStanceCheck(oPC, oTestWP, nMoveId)
+}
+
+int GetAbilityCheckBonus(object oPC, int nAbility)
+{
+	int nBonus = 0;
+	if (nAbility == ABILITY_STRENGTH)
+	{
+		if (GetHasSpellEffect(MOVE_SD_STONEFOOT_STANCE, oPC)) nBonus += 2;
+	}
+	
+	return nBonus;
 }
 // Test main
 //void main(){}

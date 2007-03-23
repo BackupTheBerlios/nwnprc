@@ -47,9 +47,8 @@ void main()
        	effect eLink =                          VersusSizeEffect(oInitiator, EffectACIncrease(2), 1);
        	       eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_ROOTED_TO_SPOT));
        	       
-       	DoAbilityCheckBonus(oInitiator, ABILITY_STRENGTH, 2);
        	InitiatorMovementCheck(oInitiator, move.nSpellId);
 
-       	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oInitiator, 6.0);
+       	ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oInitiator);
     }
 }

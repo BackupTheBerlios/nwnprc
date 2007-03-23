@@ -2,7 +2,7 @@
 Tome of Battle
 -----------------------------------------------------
 
-Stances - Make one, then finish up functions for checking it.
+Stances - Testing time
 tob_moveconv: Add Maneuver swapping, test stance learning.
 tob_inc_recovery: Create and hook in
 TLK: Add classes, feats, Maneuvers to the TLK files.

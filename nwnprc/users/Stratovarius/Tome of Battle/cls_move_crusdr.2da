@@ -1,8 +1,8 @@
 2DA V2.0
 
-    Label                       Name     Level FeatID IPFeatID SpellID RealSpellID HasPrereqs Discipline
-0   ****                        ****     ****  ****   ****     ****    ****        0          0
-1   **DevotedSpirit**           ****     ****  ****   ****     ****    ****        0          0
-36  **StoneDragon**             ****     ****  ****   ****     ****    ****        0          0
-2   StoneBones                  16829700 1     8002   14002    4502    6001        0          7
-71  **WhiteRaven**              ****     ****  ****   ****     ****    ****        0          0
+    Label                       Name     Level FeatID IPFeatID SpellID RealSpellID HasPrereqs Discipline Stance
+0   ****                        ****     ****  ****   ****     ****    ****        0          0          0
+1   **DevotedSpirit**           ****     ****  ****   ****     ****    ****        0          0          0
+36  **StoneDragon**             ****     ****  ****   ****     ****    ****        0          0          0
+2   StoneBones                  16829700 1     8002   14002    4502    6001        0          7          0
+71  **WhiteRaven**              ****     ****  ****   ****     ****    ****        0          0          0

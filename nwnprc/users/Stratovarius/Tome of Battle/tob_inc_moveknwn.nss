@@ -33,6 +33,8 @@
 const int MANEUVER_LIST_CRUSADER          = CLASS_TYPE_CRUSADER;
 const int MANEUVER_LIST_SWORDSAGE         = CLASS_TYPE_SWORDSAGE;
 const int MANEUVER_LIST_WARBLADE          = CLASS_TYPE_WARBLADE;
+const int MANEUVER_TYPE_STANCE            = 1;
+const int MANEUVER_TYPE_MANEUVER          = 2;
 
 /// Special Maneuver list. Maneuvers gained via Martial Study or other sources.
 const int MANEUVER_LIST_MISC          = CLASS_TYPE_INVALID;//-1;
@@ -87,8 +89,9 @@ void RemoveManeuversKnownOnLevel(object oCreature, int nLevel);
  * @param oCreature The creature whose modifier to get
  * @param nList     The list the maximum Maneuvers known from which the modifier
  *                  modifies. One of MANEUVER_LIST_*
+ * @param nType     MANEUVER_TYPE_
  */
-int GetKnownManeuversModifier(object oCreature, int nList);
+int GetKnownManeuversModifier(object oCreature, int nList, int nType);
 
 /**
  * Sets the value of the Maneuvers known modifier, which is a value that is added
@@ -97,9 +100,9 @@ int GetKnownManeuversModifier(object oCreature, int nList);
  * @param oCreature The creature whose modifier to set
  * @param nList     The list the maximum Maneuvers known from which the modifier
  *                  modifies. One of MANEUVER_LIST_*
- * @param nDiscipline  Type of the Maneuver: Evolving Mind, Crafted Tool, or Perfected Map
+ * @param nType     MANEUVER_TYPE_
  */
-void SetKnownManeuversModifier(object oCreature, int nList, int nNewValue, int nDiscipline);
+void SetKnownManeuversModifier(object oCreature, int nList, int nNewValue, int nType);
 
 /**
  * Gets the number of Maneuvers a character character possesses from a
@@ -107,9 +110,10 @@ void SetKnownManeuversModifier(object oCreature, int nList, int nNewValue, int n
  *
  * @param oCreature The creature whose Maneuvers to check
  * @param nList     The list to check. One of MANEUVER_LIST_*
+ * @param nType     MANEUVER_TYPE_
  * @return          The number of Maneuvers known oCreature has from nList
  */
-int GetManeuverCount(object oCreature, int nList);
+int GetManeuverCount(object oCreature, int nList, int nType);
 
 /**
  * Gets the maximum number of Maneuvers a character may posses from a given list
@@ -118,9 +122,10 @@ int GetManeuverCount(object oCreature, int nList);
  *
  * @param oCreature Character to determine maximum Maneuvers for
  * @param nList     MANEUVER_LIST_* of the list to determine maximum Maneuvers for
+ * @param nType     MANEUVER_TYPE_ 
  * @return          Maximum number of Maneuvers that oCreature may know from the given list.
  */
-int GetMaxManeuverCount(object oCreature, int nList);
+int GetMaxManeuverCount(object oCreature, int nList, int nType);
 
 /**
  * Determines whether a character has a given Maneuver, gained via some Maneuver list.
@@ -190,14 +195,14 @@ void _ManeuverRecurseRemoveArray(object oCreature, string sArrayName, string sUt
     }
 }
 
-void _RemoveManeuverArray(object oCreature, int nList, int nLevel)
+void _RemoveManeuverArray(object oCreature, int nList, int nLevel, int nType)
 {
     if(DEBUG) DoDebug("_RemoveManeuverArray():\n"
                     + "oCreature = " + DebugObject2Str(oCreature) + "\n"
                     + "nList = " + IntToString(nList) + "\n"
                       );
 
-    string sBase  = _MANEUVER_LIST_NAME_BASE + IntToString(nList);
+    string sBase  = _MANEUVER_LIST_NAME_BASE + IntToString(nList) + IntToString(nType);
     string sArray = sBase + _MANEUVER_LIST_LEVEL_ARRAY + IntToString(nLevel);
     int nSize = persistant_array_get_size(oCreature, sArray);
 
@@ -218,9 +223,9 @@ void _RemoveManeuverArray(object oCreature, int nList, int nLevel)
 /*             Function definitions             */
 //////////////////////////////////////////////////
 
-int AddManeuverKnown(object oCreature, int nList, int n2daRow, int nDiscipline, int bLevelDependent = FALSE, int nLevelToTieTo = -1)
+int AddManeuverKnown(object oCreature, int nList, int n2daRow, int nType, int bLevelDependent = FALSE, int nLevelToTieTo = -1)
 {
-    string sBase      = _MANEUVER_LIST_NAME_BASE + IntToString(nList);
+    string sBase      = _MANEUVER_LIST_NAME_BASE + IntToString(nList) + IntToString(nType);
     string sArray     = sBase;
     string sPowerFile = GetAMSDefinitionFileName(/*PowerListToClassType(*/nList/*)*/);
     string sTestArray;
@@ -314,37 +319,42 @@ void RemoveManeuversKnownOnLevel(object oCreature, int nLevel)
                       );
 
     string sPostFix = _MANEUVER_LIST_LEVEL_ARRAY + IntToString(nLevel);
-    // For each power list, determine if an array exists for this level.
-    if(persistant_array_exists(oCreature, _MANEUVER_LIST_NAME_BASE + IntToString(MANEUVER_LIST_CRUSADER) + sPostFix))
-        // If one does exist, clear it
-        _RemoveManeuverArray(oCreature, MANEUVER_LIST_CRUSADER, nLevel);
+    // For each Maneuver list and type, determine if an array exists for this level.
+    // There's only 2 types
+    int nType;
+    for(nType = 1;  nType <= 2; nType++)
+    {
+    	if(persistant_array_exists(oCreature, _MANEUVER_LIST_NAME_BASE + IntToString(MANEUVER_LIST_CRUSADER) + sPostFix))
+    	    // If one does exist, clear it
+    	    _RemoveManeuverArray(oCreature, MANEUVER_LIST_CRUSADER, nLevel, nType);
 
-    if(persistant_array_exists(oCreature, _MANEUVER_LIST_NAME_BASE + IntToString(MANEUVER_LIST_SWORDSAGE) + sPostFix))
-        _RemoveManeuverArray(oCreature, MANEUVER_LIST_SWORDSAGE, nLevel);
+    	if(persistant_array_exists(oCreature, _MANEUVER_LIST_NAME_BASE + IntToString(MANEUVER_LIST_SWORDSAGE) + sPostFix))
+    	    _RemoveManeuverArray(oCreature, MANEUVER_LIST_SWORDSAGE, nLevel, nType);
 
-    if(persistant_array_exists(oCreature, _MANEUVER_LIST_NAME_BASE + IntToString(MANEUVER_LIST_WARBLADE) + sPostFix))
-        _RemoveManeuverArray(oCreature, MANEUVER_LIST_WARBLADE, nLevel);
+    	if(persistant_array_exists(oCreature, _MANEUVER_LIST_NAME_BASE + IntToString(MANEUVER_LIST_WARBLADE) + sPostFix))
+    	    _RemoveManeuverArray(oCreature, MANEUVER_LIST_WARBLADE, nLevel, nType);
 
-    if(persistant_array_exists(oCreature, _MANEUVER_LIST_NAME_BASE + IntToString(MANEUVER_LIST_MISC) + sPostFix))
-        _RemoveManeuverArray(oCreature, MANEUVER_LIST_MISC, nLevel);
+    	if(persistant_array_exists(oCreature, _MANEUVER_LIST_NAME_BASE + IntToString(MANEUVER_LIST_MISC) + sPostFix))
+    	    _RemoveManeuverArray(oCreature, MANEUVER_LIST_MISC, nLevel, nType);
+    }
 }
 
-int GetKnownManeuversModifier(object oCreature, int nList)
+int GetKnownManeuversModifier(object oCreature, int nList, int nType)
 {
-    return GetPersistantLocalInt(oCreature, _MANEUVER_LIST_NAME_BASE + IntToString(nList) + _MANEUVER_LIST_MODIFIER);
+    return GetPersistantLocalInt(oCreature, _MANEUVER_LIST_NAME_BASE + IntToString(nList) + IntToString(nType) + _MANEUVER_LIST_MODIFIER);
 }
 
-void SetKnownManeuversModifier(object oCreature, int nList, int nNewValue, int nDiscipline)
+void SetKnownManeuversModifier(object oCreature, int nList, int nNewValue, int nType)
 {
-    SetPersistantLocalInt(oCreature, _MANEUVER_LIST_NAME_BASE + IntToString(nList) + IntToString(nDiscipline) + _MANEUVER_LIST_MODIFIER, nNewValue);
+    SetPersistantLocalInt(oCreature, _MANEUVER_LIST_NAME_BASE + IntToString(nList) + IntToString(nType) + _MANEUVER_LIST_MODIFIER, nNewValue);
 }
 
-int GetManeuverCount(object oCreature, int nList)
+int GetManeuverCount(object oCreature, int nList, int nType)
 {
-    return GetPersistantLocalInt(oCreature, _MANEUVER_LIST_NAME_BASE + IntToString(nList) + _MANEUVER_LIST_TOTAL_KNOWN);
+    return GetPersistantLocalInt(oCreature, _MANEUVER_LIST_NAME_BASE + IntToString(nList) + IntToString(nType) + _MANEUVER_LIST_TOTAL_KNOWN);
 }
 
-int GetMaxManeuverCount(object oCreature, int nList)
+int GetMaxManeuverCount(object oCreature, int nList, int nType)
 {
     int nMaxManeuvers = 0;
 
@@ -356,12 +366,15 @@ int GetMaxManeuverCount(object oCreature, int nList)
                 nLevel += GetFirstBladeMagicClass(oCreature) == CLASS_TYPE_CRUSADER ? GetBladeMagicPRCLevels(oCreature) : 0;
             if(nLevel == 0)
                 break;
-            nMaxManeuvers = StringToInt(Get2DACache(GetAMSKnownFileName(CLASS_TYPE_CRUSADER), "ManeuverKnown", nLevel - 1));
+            if (nType == MANEUVER_TYPE_MANEUVER)
+            	nMaxManeuvers = StringToInt(Get2DACache(GetAMSKnownFileName(CLASS_TYPE_CRUSADER), "ManeuverKnown", nLevel - 1));
+	    else if (nType == MANEUVER_TYPE_STANCE)
+            	nMaxManeuvers = StringToInt(Get2DACache(GetAMSKnownFileName(CLASS_TYPE_CRUSADER), "StancesKnown", nLevel - 1));            	
 
             // Calculate feats
 
             // Add in the custom modifier
-            nMaxManeuvers += GetKnownManeuversModifier(oCreature, nList);
+            nMaxManeuvers += GetKnownManeuversModifier(oCreature, nList, nType);
             break;
         }
         case MANEUVER_LIST_SWORDSAGE:{
@@ -370,12 +383,15 @@ int GetMaxManeuverCount(object oCreature, int nList)
                 nLevel += GetFirstBladeMagicClass(oCreature) == CLASS_TYPE_SWORDSAGE ? GetBladeMagicPRCLevels(oCreature) : 0;
             if(nLevel == 0)
                 break;
-            nMaxManeuvers = StringToInt(Get2DACache(GetAMSKnownFileName(CLASS_TYPE_SWORDSAGE), "ManeuverKnown", nLevel - 1));
+            if (nType == MANEUVER_TYPE_MANEUVER)
+            	nMaxManeuvers = StringToInt(Get2DACache(GetAMSKnownFileName(CLASS_TYPE_SWORDSAGE), "ManeuverKnown", nLevel - 1));
+	    else if (nType == MANEUVER_TYPE_STANCE)
+            	nMaxManeuvers = StringToInt(Get2DACache(GetAMSKnownFileName(CLASS_TYPE_SWORDSAGE), "StancesKnown", nLevel - 1)); 
 
             // Calculate feats
 
             // Add in the custom modifier
-            nMaxManeuvers += GetKnownManeuversModifier(oCreature, nList);
+            nMaxManeuvers += GetKnownManeuversModifier(oCreature, nList, nType);
             break;
         }
         case MANEUVER_LIST_WARBLADE:{
@@ -384,12 +400,15 @@ int GetMaxManeuverCount(object oCreature, int nList)
                 nLevel += GetFirstBladeMagicClass(oCreature) == CLASS_TYPE_WARBLADE ? GetBladeMagicPRCLevels(oCreature) : 0;
             if(nLevel == 0)
                 break;
-            nMaxManeuvers = StringToInt(Get2DACache(GetAMSKnownFileName(CLASS_TYPE_WARBLADE), "ManeuverKnown", nLevel - 1));
+            if (nType == MANEUVER_TYPE_MANEUVER)
+            	nMaxManeuvers = StringToInt(Get2DACache(GetAMSKnownFileName(CLASS_TYPE_WARBLADE), "ManeuverKnown", nLevel - 1));
+	    else if (nType == MANEUVER_TYPE_STANCE)
+            	nMaxManeuvers = StringToInt(Get2DACache(GetAMSKnownFileName(CLASS_TYPE_WARBLADE), "StancesKnown", nLevel - 1)); 
 
             // Calculate feats
 
             // Add in the custom modifier
-            nMaxManeuvers += GetKnownManeuversModifier(oCreature, nList);
+            nMaxManeuvers += GetKnownManeuversModifier(oCreature, nList, nType);
             break;
         }        
 

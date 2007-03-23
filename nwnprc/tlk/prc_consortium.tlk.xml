@@ -27199,11 +27199,14 @@ You gain DR 5/Adamantium (+5) for 1 round.</entry>
 <entry id="52505" lang="en" sex="m">Tiger Claw</entry>
 <entry id="52506" lang="en" sex="m">White Raven</entry>
 <entry id="52507" lang="en" sex="m">Return to maneuver level selection.</entry>
-<entry id="52508" lang="en" sex="m">Select level of maneuver to gain.\n\nNOTE:\nThis may take a while when first browsing a particular level's maneuvers.</entry>
-<entry id="52509" lang="en" sex="m">Select a maneuver to gain.\nYou can select</entry>
-<entry id="52510" lang="en" sex="m">more maneuvers</entry>
+<entry id="52508" lang="en" sex="m">Select level of maneuver or stance to gain. \n \ nNOTE: \nThis may take a while when first browsing a particular level's maneuvers.</entry>
+<entry id="52509" lang="en" sex="m">Select a maneuver or stance to gain.\nYou can select</entry>
+<entry id="52510" lang="en" sex="m">more maneuvers or stances</entry>
 <entry id="52511" lang="en" sex="m">You will be able to select more maneuvers after you gain another level in a blade magic initiator class.</entry>
 <entry id="52512" lang="en" sex="m">You do not have an appropriate weapon to initiate this maneuver.</entry>
+<entry id="52513" lang="en" sex="m">Choose Maneuvera or Stances.</entry>
+<entry id="52514" lang="en" sex="m">Stances.</entry>
+<entry id="52515" lang="en" sex="m">Maneuvers</entry>
   <entry id="52985" lang="en" sex="m">This feat opens the spellbook for this class. This is a conversation and feat driven version of the normal spellbook. Instead of appearing on the spell radial, they will appear on the class radial instead. Also, you may be able to use the spell after you have cast all your uses. No spell will result, but you will spend a round trying to cast it.</entry>
   <entry id="52986" lang="en" sex="m">Caster Level(s): Wizard / Sorcerer 9
 Innate Level: 9

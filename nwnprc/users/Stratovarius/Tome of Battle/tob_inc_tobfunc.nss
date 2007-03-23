@@ -197,6 +197,40 @@ int CheckManeuverPrereqs(int nClass, int nFeat, object oPC);
  */
 int GetIsManeuverSupernatural(int nMoveId);
 
+/**
+ * Checks whether the initiator has an active stance
+ *
+ * @param oInitiator The Initiator
+ * @return        TRUE or FALSE
+ */
+int GetHasActiveStance(object oInitiator);
+
+/**
+ * Clears spell effects and local ints for Stances
+ *
+ * @param oInitiator The Initiator
+ */
+void ClearStances(object oInitiator);
+
+/**
+ * Marks a stance active via local ints
+ *
+ * @param oInitiator The Initiator
+ * @param nStance    The stance to mark active
+ */
+void MarkStanceActive(object oInitiator, int nStance);
+
+/**
+ * This will take an effect that is supposed to be based on size
+ * And use vs racial effects to approximate it
+ *
+ * @param oInitiator The Initiator
+ * @param eEffect    The effect to scale
+ * @param nSize      0 affects creature one size or more smaller.
+ *                   1 affects creatures one size or more larger
+ */
+effect VersusSize(object oInitiator, effect eEffect, int nSize);
+
 //////////////////////////////////////////////////
 /*                  Includes                    */
 //////////////////////////////////////////////////
@@ -486,6 +520,81 @@ int GetIsManeuverSupernatural(int nMoveId)
 
 	// If nothing returns TRUE, fail
 	return FALSE;
+}
+
+int GetHasActiveStance(object oInitiator)
+{
+	if (GetHasSpellEffect(MOVE_SD_STONEFOOT_STANCE, oInitiator)) return TRUE;
+
+	// If nothing returns TRUE, fail
+	return FALSE;
+}
+
+void ClearStances(object oInitiator)
+{
+	// Clears locals and spell effects
+	// The local has the spellId
+	int nStance1 = GetLocalInt(oInitiator, "TOBStanceOne");
+	RemoveEffectsFromSpell(oInitiator, nStance1);
+	int nStance2 = GetLocalInt(oInitiator, "TOBStanceTwo");
+	RemoveEffectsFromSpell(oInitiator, nStance2);	
+	DeleteLocalInt(oInitiator, "TOBStanceOne");
+	DeleteLocalInt(oInitiator, "TOBStanceTwo");
+}
+
+void MarkStanceActive(object oInitiator, int nStance)
+{
+	// If the first stance is active, use second
+	// This should only be called with the first active when it is legal to have two stances
+	if (GetLocalInt(oInitiator, "TOBStanceOne") > 0) SetLocalInt(oInitiator, "TOBStanceTwo", nStance);
+	else SetLocalInt(oInitiator, "TOBStanceOne", nStance);
+}
+
+effect VersusSize(object oInitiator, effect eEffect, int nSize)
+{
+	// Right now this only deals with medium and small PCs
+	int nPCSize = PRCGetCreatureSize(oInitiator);
+	effect eLink;
+	// Creatures larger than PC
+	if (nSize == 1)	
+	{
+		eLink = VersusRacialTypeEffect(eEffect, RACIAL_TYPE_ABERRATION);
+		eLink = EffectLinkEffects(eLink, VersusRacialTypeEffect(eEffect, RACIAL_TYPE_CONSTRUCT));
+		eLink = EffectLinkEffects(eLink, VersusRacialTypeEffect(eEffect, RACIAL_TYPE_DRAGON));
+		eLink = EffectLinkEffects(eLink, VersusRacialTypeEffect(eEffect, RACIAL_TYPE_ELEMENTAL));
+		eLink = EffectLinkEffects(eLink, VersusRacialTypeEffect(eEffect, RACIAL_TYPE_GIANT));
+		eLink = EffectLinkEffects(eLink, VersusRacialTypeEffect(eEffect, RACIAL_TYPE_OUTSIDER));
+		if (nPCSize == CREATURE_SIZE_SMALL)
+		{
+			eLink = EffectLinkEffects(eLink, VersusRacialTypeEffect(eEffect, RACIAL_TYPE_ANIMAL));
+			eLink = EffectLinkEffects(eLink, VersusRacialTypeEffect(eEffect, RACIAL_TYPE_BEAST));
+			eLink = EffectLinkEffects(eLink, VersusRacialTypeEffect(eEffect, RACIAL_TYPE_DWARF));
+			eLink = EffectLinkEffects(eLink, VersusRacialTypeEffect(eEffect, RACIAL_TYPE_ELF));
+			eLink = EffectLinkEffects(eLink, VersusRacialTypeEffect(eEffect, RACIAL_TYPE_HALFELF));
+			eLink = EffectLinkEffects(eLink, VersusRacialTypeEffect(eEffect, RACIAL_TYPE_HALFORC));
+			eLink = EffectLinkEffects(eLink, VersusRacialTypeEffect(eEffect, RACIAL_TYPE_HUMAN));
+			eLink = EffectLinkEffects(eLink, VersusRacialTypeEffect(eEffect, RACIAL_TYPE_HUMANOID_GOBLINOID));
+			eLink = EffectLinkEffects(eLink, VersusRacialTypeEffect(eEffect, RACIAL_TYPE_HUMANOID_MONSTROUS));
+			eLink = EffectLinkEffects(eLink, VersusRacialTypeEffect(eEffect, RACIAL_TYPE_HUMANOID_ORC));
+			eLink = EffectLinkEffects(eLink, VersusRacialTypeEffect(eEffect, RACIAL_TYPE_HUMANOID_REPTILIAN));
+			eLink = EffectLinkEffects(eLink, VersusRacialTypeEffect(eEffect, RACIAL_TYPE_MAGICAL_BEAST));
+			eLink = EffectLinkEffects(eLink, VersusRacialTypeEffect(eEffect, RACIAL_TYPE_OOZE));
+			eLink = EffectLinkEffects(eLink, VersusRacialTypeEffect(eEffect, RACIAL_TYPE_SHAPECHANGER));
+			eLink = EffectLinkEffects(eLink, VersusRacialTypeEffect(eEffect, RACIAL_TYPE_UNDEAD));		
+		}
+	}// Smaller
+	if (nSize == 0)	
+	{
+		eLink = VersusRacialTypeEffect(eEffect, RACIAL_TYPE_FEY);
+		eLink = EffectLinkEffects(eLink, VersusRacialTypeEffect(eEffect, RACIAL_TYPE_VERMIN));
+		if (nPCSize == CREATURE_SIZE_MEDIUM)
+		{
+			eLink = EffectLinkEffects(eLink, VersusRacialTypeEffect(eEffect, RACIAL_TYPE_GNOME));
+			eLink = EffectLinkEffects(eLink, VersusRacialTypeEffect(eEffect, RACIAL_TYPE_HALFLING));	
+		}
+	}	
+	
+	return eLink;
 }
 // Test main
 //void main(){}

@@ -20,10 +20,11 @@
 /* Constant defintions                          */
 //////////////////////////////////////////////////
 
-const int STAGE_SELECT_LEVEL           = 0;
-const int STAGE_SELECT_MANEUVER        = 1;
-const int STAGE_CONFIRM_SELECTION      = 2;
-const int STAGE_ALL_MANEUVERS_SELECTED = 3;
+const int STAGE_SELECT_STANCE_MOVE     = 0;
+const int STAGE_SELECT_LEVEL           = 1;
+const int STAGE_SELECT_MANEUVER        = 2;
+const int STAGE_CONFIRM_SELECTION      = 3;
+const int STAGE_ALL_MANEUVERS_SELECTED = 4;
 
 const int CHOICE_BACK_TO_LSELECT    = -1;
 
@@ -38,6 +39,9 @@ const int STRREF_END_CONVO_SELECT   = 16824212; // "Finish"
 const int LEVEL_STRREF_START        = 16824809;
 const int STRREF_YES                = 4752;     // "Yes"
 const int STRREF_NO                 = 4753;     // "No"
+const int STRREF_MOVESTANCE_HEADER  = 16829729; // "Choose Maneuver or Stances."
+const int STRREF_STANCE             = 16829730; // "Stances"
+const int STRREF_MANEUVER           = 16829731; // "Maneuvers"
 
 
 const int SORT       = TRUE; // If the sorting takes too much CPU, set to FALSE
@@ -175,6 +179,29 @@ void main()
         {
             if(DEBUG) DoDebug("tob_moveconv: Stage was not set up already");
             // Level selection stage
+	    if(nStage == STAGE_SELECT_STANCE_MOVE)
+            {
+                if(DEBUG) DoDebug("tob_moveconv: Building maneuver or stance selection");
+                SetHeader(GetStringByStrRef(STRREF_MOVESTANCE_HEADER));
+
+                // Determine whether they're missing maneuvers or stances
+                int nMaxMove = GetMaxManeuverCount(oPC, nClass, MANEUVER_TYPE_MANEUVER);
+                int nMaxStance = GetMaxManeuverCount(oPC, nClass, MANEUVER_TYPE_STANCE);
+                int nCountMove = GetManeuverCount(oPC, nClass, MANEUVER_TYPE_MANEUVER);
+                int nCountStance = GetManeuverCount(oPC, nClass, MANEUVER_TYPE_STANCE);
+
+                // Set the tokens
+                // If the max they should have is greater than the amount they do have, add the choice.
+                if (nMaxMove > nCountMove)
+                	AddChoice(GetStringByStrRef(STRREF_MANEUVER), 1);
+                if (nMaxStance > nCountStance)
+                	AddChoice(GetStringByStrRef(STRREF_STANCE), 2);
+
+                // Set the next, previous and wait tokens to default values
+                SetDefaultTokens();
+                // Set the convo quit text to "Abort"
+                SetCustomToken(DYNCONV_TOKEN_EXIT, GetStringByStrRef(DYNCONV_STRREF_ABORT_CONVO));
+            }            
             if(nStage == STAGE_SELECT_LEVEL)
             {
                 if(DEBUG) DoDebug("tob_moveconv: Building level selection");
@@ -202,8 +229,13 @@ void main()
             if(nStage == STAGE_SELECT_MANEUVER)
             {
                 if(DEBUG) DoDebug("tob_moveconv: Building maneuver selection");
-                int nCurrentManeuvers = GetManeuverCount(oPC, nClass);
-                int nMaxManeuvers = GetMaxManeuverCount(oPC, nClass);
+		string sMoveStance;
+                int nMoveStance = GetLocalInt(oPC, "nStanceOrManeuver");
+                if      (nMoveStance == MANEUVER_TYPE_MANEUVER) sMoveStance = "ManeuverKnown";
+                else if (nMoveStance == MANEUVER_TYPE_STANCE)   sMoveStance = "StancesKnown";                
+                
+                int nCurrentManeuvers = GetManeuverCount(oPC, nClass, nMoveStance);
+                int nMaxManeuvers = GetMaxManeuverCount(oPC, nClass, nMoveStance);
                 string sToken = GetStringByStrRef(STRREF_MOVELIST_HEADER1) + " " + //"Select a maneuver to gain.\n You can select "
                                 IntToString(nMaxManeuvers-nCurrentManeuvers) + " " +
                                 GetStringByStrRef(STRREF_MOVELIST_HEADER2);        //" more maneuvers"
@@ -227,6 +259,13 @@ void main()
                     if(nManeuverLevel < nManeuverLevelToBrowse){
                         continue;
                     }
+                    // If looking for stances, skip maneuvers, else reverse
+                    if(nMoveStance == MANEUVER_TYPE_STANCE && StringToInt(Get2DACache(sManeuverFile, "Level", i)) == 0){
+                        continue;
+                    }  // Skip stances when looking for maneuvers
+                    else if(nMoveStance == MANEUVER_TYPE_MANEUVER && StringToInt(Get2DACache(sManeuverFile, "Level", i)) == 1){
+                        continue;
+                    }                      
                     /* Due to the way the maneuver list 2das are structured, we know that once
                      * the level of a read maneuver is greater than the maximum manifestable
                      * it'll never be lower again. Therefore, we can skip reading the
@@ -237,7 +276,7 @@ void main()
                     }
                     sFeatID = Get2DACache(sManeuverFile, "FeatID", i);
                     if(sFeatID != ""                                           // Non-blank row
-                     && !GetHasFeat(StringToInt(sFeatID), oPC)                 // PC does not already posses the maneuver
+                     && !GetHasFeat(StringToInt(sFeatID), oPC)                 // PC does not already possess the maneuver
                      && (!StringToInt(Get2DACache(sManeuverFile, "HasPrereqs", i))// Maneuver has no prerequisites
                       || CheckManeuverPrereqs(nClass, StringToInt(sFeatID), oPC)          // Or the PC possess the prerequisites
                          )
@@ -299,6 +338,7 @@ void main()
         // End of conversation cleanup
         DeleteLocalInt(oPC, "nClass");
         DeleteLocalInt(oPC, "nManeuver");
+        DeleteLocalInt(oPC, "nStanceOrManeuver");
         DeleteLocalInt(oPC, "nManeuverLevelToBrowse");
         DeleteLocalInt(oPC, "ManeuverListChoiceOffset");
 
@@ -319,7 +359,13 @@ void main()
     {
         int nChoice = GetChoice(oPC);
         if(DEBUG) DoDebug("tob_moveconv: Handling PC response, stage = " + IntToString(nStage) + "; nChoice = " + IntToString(nChoice) + "; choice text = '" + GetChoiceText(oPC) +  "'");
-        if(nStage == STAGE_SELECT_LEVEL)
+        if(nStage == STAGE_SELECT_STANCE_MOVE)
+        {
+            if(DEBUG) DoDebug("tob_moveconv: Stance or Maneuver selected");
+            SetLocalInt(oPC, "nStanceOrManeuver", nChoice);
+            nStage = STAGE_SELECT_LEVEL;
+        }        
+        else if(nStage == STAGE_SELECT_LEVEL)
         {
             if(DEBUG) DoDebug("tob_moveconv: Level selected");
             SetLocalInt(oPC, "nManeuverLevelToBrowse", nChoice);
@@ -330,7 +376,7 @@ void main()
             if(nChoice == CHOICE_BACK_TO_LSELECT)
             {
                 if(DEBUG) DoDebug("tob_moveconv: Returning to level selection");
-                nStage = STAGE_SELECT_LEVEL;
+                nStage = STAGE_SELECT_STANCE_MOVE;
                 DeleteLocalInt(oPC, "nManeuverLevelToBrowse");
             }
             else
@@ -348,19 +394,20 @@ void main()
         else if(nStage == STAGE_CONFIRM_SELECTION)
         {
             if(DEBUG) DoDebug("tob_moveconv: Handling maneuver confirmation");
+            int nMoveStance = GetLocalInt(oPC, "nStanceOrManeuver");
             if(nChoice == TRUE)
             {
                 if(DEBUG) DoDebug("tob_moveconv: Adding maneuver");
                 int nManeuver = GetLocalInt(oPC, "nManeuver");
-
-                AddManeuverKnown(oPC, nClass, nManeuver, TRUE, GetHitDice(oPC));
+                
+                AddManeuverKnown(oPC, nClass, nManeuver, nMoveStance, TRUE, GetHitDice(oPC));
 
                 // Delete the stored offset
                 DeleteLocalInt(oPC, "ManeuverListChoiceOffset");
             }
 
-            int nCurrentManeuvers = GetManeuverCount(oPC, nClass);
-            int nMaxManeuvers = GetMaxManeuverCount(oPC, nClass);
+            int nCurrentManeuvers = GetManeuverCount(oPC, nClass, nMoveStance);
+            int nMaxManeuvers = GetMaxManeuverCount(oPC, nClass, nMoveStance);
             if(nCurrentManeuvers >= nMaxManeuvers)
                 nStage = STAGE_ALL_MANEUVERS_SELECTED;
             else

@@ -180,10 +180,12 @@ int CheckMissingManeuvers(object oPC, int nClass)
     if(!nLevel)
         return FALSE;
 
-    int nCurrentPowers = GetManeuverCount(oPC, nClass);
-    int nMaxPowers = GetMaxManeuverCount(oPC, nClass);
+    int nCurrentManeuvers = GetManeuverCount(oPC, nClass, MANEUVER_TYPE_MANEUVER);
+    int nMaxManeuvers = GetMaxManeuverCount(oPC, nClass, MANEUVER_TYPE_MANEUVER);
+    int nCurrentStances = GetManeuverCount(oPC, nClass, MANEUVER_TYPE_STANCE);
+    int nMaxStances = GetMaxManeuverCount(oPC, nClass, MANEUVER_TYPE_STANCE);    
 
-    if(nCurrentPowers < nMaxPowers)
+    if(nCurrentManeuvers < nMaxManeuvers || nCurrentStances < nMaxStances)
     {
         // Mark the class for which the PC is to gain powers and start the conversation
         SetLocalInt(oPC, "nClass", nClass);

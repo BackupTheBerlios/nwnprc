@@ -27207,6 +27207,18 @@ You gain DR 5/Adamantium (+5) for 1 round.</entry>
 <entry id="52513" lang="en" sex="m">Choose Maneuvera or Stances.</entry>
 <entry id="52514" lang="en" sex="m">Stances.</entry>
 <entry id="52515" lang="en" sex="m">Maneuvers</entry>
+<entry id="52516" lang="en" sex="m">Stonefoot Stance</entry>
+<entry id="52517" lang="en" sex="m">Stone Dragon (Stance)
+Level: Crusader 1, Swordsage 1, Warblade 1
+Initiation Action: 1 Swift Action
+Range: Personal
+Target: You
+Duration: Stance
+
+You crouch and set your feet flat on the ground, drawing the resilience of the earth into your body.
+
+You gain a +2 bonus on Strength checks, and a +2 AC bonus against creatures larger than you.
+This stance ends if you move more than 5 feet for any reason.</entry>
   <entry id="52985" lang="en" sex="m">This feat opens the spellbook for this class. This is a conversation and feat driven version of the normal spellbook. Instead of appearing on the spell radial, they will appear on the class radial instead. Also, you may be able to use the spell after you have cast all your uses. No spell will result, but you will spend a round trying to cast it.</entry>
   <entry id="52986" lang="en" sex="m">Caster Level(s): Wizard / Sorcerer 9
 Innate Level: 9

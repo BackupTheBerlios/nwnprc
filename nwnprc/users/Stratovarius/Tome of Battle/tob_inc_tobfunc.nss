@@ -229,7 +229,7 @@ void MarkStanceActive(object oInitiator, int nStance);
  * @param nSize      0 affects creature one size or more smaller.
  *                   1 affects creatures one size or more larger
  */
-effect VersusSize(object oInitiator, effect eEffect, int nSize);
+effect VersusSizeEffect(object oInitiator, effect eEffect, int nSize);
 
 //////////////////////////////////////////////////
 /*                  Includes                    */
@@ -550,7 +550,7 @@ void MarkStanceActive(object oInitiator, int nStance)
 	else SetLocalInt(oInitiator, "TOBStanceOne", nStance);
 }
 
-effect VersusSize(object oInitiator, effect eEffect, int nSize)
+effect VersusSizeEffect(object oInitiator, effect eEffect, int nSize)
 {
 	// Right now this only deals with medium and small PCs
 	int nPCSize = PRCGetCreatureSize(oInitiator);
@@ -595,6 +595,10 @@ effect VersusSize(object oInitiator, effect eEffect, int nSize)
 	}	
 	
 	return eLink;
+}
+
+void DoAbilityCheckBonus(object oInitiator, int nAbil, int nBonus)
+{
 }
 // Test main
 //void main(){}

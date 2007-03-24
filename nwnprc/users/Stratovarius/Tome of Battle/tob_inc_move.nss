@@ -400,6 +400,17 @@ int _GetIsManeuverWeaponAppropriate(object oInitiator)
 	return FALSE;
 }
 
+void _StanceSpecificChecks(object oInitiator)
+{
+	int nStanceToKeep = -1;
+	if (GetLevelByClass(CLASS_TYPE_WARBLADE, oInitiator) >= 20)
+	{
+		nStanceToKeep = GetHasActiveStance(oInitiator);	
+	}
+	
+	// Can only have one stance active, except for a level 20+ Warblade
+	ClearStances(oInitiator, nStanceToKeep);
+}
 
 //////////////////////////////////////////////////
 /*             Function definitions             */
@@ -432,6 +443,8 @@ struct maneuver EvaluateManeuver(object oInitiator, object oTarget)
     if(move.bCanManeuver)
     {
 	// If you're this far in, you always succeed, there are very few checks.
+	// Deletes any active stances, and allows a Warblade 20 to have his two stances active.
+	_StanceSpecificChecks(oInitiator);
 	// Do Martial Lore data
 	IdentifyManeuver(move.oInitiator, move.nSpellId);
 	IdentifyDiscipline(move.oInitiator);

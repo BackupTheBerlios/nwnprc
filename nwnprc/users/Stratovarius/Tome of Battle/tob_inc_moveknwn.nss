@@ -279,7 +279,7 @@ int AddManeuverKnown(object oCreature, int nList, int n2daRow, int nType, int bL
     // Store the power in the array
     if(persistant_array_set_int(oCreature, sArray, persistant_array_get_size(oCreature, sArray), nSpells2daRow) != SDL_SUCCESS)
     {
-        if(DEBUG) DoDebug("psi_inc_powknown: AddPowerKnown(): ERROR: Unable to add power to known array\n"
+        if(DEBUG) DoDebug("tob_inc_moveknwn: AddPowerKnown(): ERROR: Unable to add power to known array\n"
                         + "oCreature = " + DebugObject2Str(oCreature) + "\n"
                         + "nList = " + IntToString(nList) + "\n"
                         + "n2daRow = " + IntToString(n2daRow) + "\n"
@@ -356,6 +356,7 @@ int GetManeuverCount(object oCreature, int nList, int nType)
 
 int GetMaxManeuverCount(object oCreature, int nList, int nType)
 {
+    if(DEBUG) DoDebug("tob_moveconv: MaxManeuver nType: " + IntToString(nType));
     int nMaxManeuvers = 0;
 
     switch(nList)
@@ -363,18 +364,27 @@ int GetMaxManeuverCount(object oCreature, int nList, int nType)
         case MANEUVER_LIST_CRUSADER:{
             // Determine base Maneuvers known
             int nLevel = GetLevelByClass(CLASS_TYPE_CRUSADER, oCreature);
+            	if(DEBUG) DoDebug("tob_moveconv: Crusader nLevel 1: " + IntToString(nLevel));
                 nLevel += GetFirstBladeMagicClass(oCreature) == CLASS_TYPE_CRUSADER ? GetBladeMagicPRCLevels(oCreature) : 0;
+                if(DEBUG) DoDebug("tob_moveconv: Crusader nLevel 2: " + IntToString(nLevel));
             if(nLevel == 0)
                 break;
             if (nType == MANEUVER_TYPE_MANEUVER)
+            {
             	nMaxManeuvers = StringToInt(Get2DACache(GetAMSKnownFileName(CLASS_TYPE_CRUSADER), "ManeuverKnown", nLevel - 1));
+            	if(DEBUG) DoDebug("tob_moveconv: Crusader Maneuvers: " + IntToString(nMaxManeuvers));
+            }
 	    else if (nType == MANEUVER_TYPE_STANCE)
+	    {
             	nMaxManeuvers = StringToInt(Get2DACache(GetAMSKnownFileName(CLASS_TYPE_CRUSADER), "StancesKnown", nLevel - 1));            	
+            	if(DEBUG) DoDebug("tob_moveconv: Crusader Stances: " + IntToString(nMaxManeuvers));
+            }
 
             // Calculate feats
 
             // Add in the custom modifier
             nMaxManeuvers += GetKnownManeuversModifier(oCreature, nList, nType);
+            if(DEBUG) DoDebug("tob_moveconv: Crusader nMaxManeuvers End: " + IntToString(nMaxManeuvers));
             break;
         }
         case MANEUVER_LIST_SWORDSAGE:{

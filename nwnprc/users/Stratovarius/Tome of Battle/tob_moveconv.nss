@@ -193,9 +193,9 @@ void main()
                 // Set the tokens
                 // If the max they should have is greater than the amount they do have, add the choice.
                 if (nMaxMove > nCountMove)
-                	AddChoice(GetStringByStrRef(STRREF_MANEUVER), 1);
+                	AddChoice(GetStringByStrRef(STRREF_MANEUVER), 2);
                 if (nMaxStance > nCountStance)
-                	AddChoice(GetStringByStrRef(STRREF_STANCE), 2);
+                	AddChoice(GetStringByStrRef(STRREF_STANCE), 1);
 
                 // Set the next, previous and wait tokens to default values
                 SetDefaultTokens();
@@ -260,10 +260,10 @@ void main()
                         continue;
                     }
                     // If looking for stances, skip maneuvers, else reverse
-                    if(nMoveStance == MANEUVER_TYPE_STANCE && StringToInt(Get2DACache(sManeuverFile, "Level", i)) == 0){
+                    if(nMoveStance == MANEUVER_TYPE_STANCE && StringToInt(Get2DACache(sManeuverFile, "Stance", i)) == 0){
                         continue;
                     }  // Skip stances when looking for maneuvers
-                    else if(nMoveStance == MANEUVER_TYPE_MANEUVER && StringToInt(Get2DACache(sManeuverFile, "Level", i)) == 1){
+                    else if(nMoveStance == MANEUVER_TYPE_MANEUVER && StringToInt(Get2DACache(sManeuverFile, "Stance", i)) == 1){
                         continue;
                     }                      
                     /* Due to the way the maneuver list 2das are structured, we know that once
@@ -406,12 +406,19 @@ void main()
                 DeleteLocalInt(oPC, "ManeuverListChoiceOffset");
             }
 
-            int nCurrentManeuvers = GetManeuverCount(oPC, nClass, nMoveStance);
-            int nMaxManeuvers = GetMaxManeuverCount(oPC, nClass, nMoveStance);
-            if(nCurrentManeuvers >= nMaxManeuvers)
+            // Determine whether they're missing maneuvers or stances
+            int nMaxMove = GetMaxManeuverCount(oPC, nClass, MANEUVER_TYPE_MANEUVER);
+            int nMaxStance = GetMaxManeuverCount(oPC, nClass, MANEUVER_TYPE_STANCE);
+            int nCountMove = GetManeuverCount(oPC, nClass, MANEUVER_TYPE_MANEUVER);
+            int nCountStance = GetManeuverCount(oPC, nClass, MANEUVER_TYPE_STANCE);
+            if(DEBUG) DoDebug("tob_moveconv: nCountMove: " + IntToString(nCountMove));
+            if(DEBUG) DoDebug("tob_moveconv: nMaxMove: " + IntToString(nMaxMove));
+            if(DEBUG) DoDebug("tob_moveconv: nCountStance: " + IntToString(nCountStance));
+            if(DEBUG) DoDebug("tob_moveconv: nMaxStance: " + IntToString(nMaxStance));
+            if(nCountStance >= nMaxStance && nCountMove >= nMaxMove)
                 nStage = STAGE_ALL_MANEUVERS_SELECTED;
             else
-                nStage = STAGE_SELECT_MANEUVER;
+                nStage = STAGE_SELECT_STANCE_MOVE;
         }
 
         if(DEBUG) DoDebug("tob_moveconv: New stage: " + IntToString(nStage));

@@ -201,16 +201,18 @@ int GetIsManeuverSupernatural(int nMoveId);
  * Checks whether the initiator has an active stance
  *
  * @param oInitiator The Initiator
- * @return        TRUE or FALSE
+ * @return        The SpellId or FALSE
  */
 int GetHasActiveStance(object oInitiator);
 
 /**
- * Clears spell effects and local ints for Stances
+ * Clears spell effects for Stances
+ * Will NOT clear nDontClearMove
  *
  * @param oInitiator The Initiator
+ * @param nDontClearMove A single Stance not to clear
  */
-void ClearStances(object oInitiator);
+void ClearStances(object oInitiator, int nDontClearMove);
 
 /**
  * Marks a stance active via local ints
@@ -322,24 +324,30 @@ int _CheckPrereqsByDiscipline(object oPC, int nDiscipline, int nCount, int nClas
 
 void _RecursiveStanceCheck(object oPC, object oTestWP, int nMoveId)
 {
+    // Seeing if this works better
+    string sWPTag = "PRC_BMWP_" + GetName(oPC) + GetManeuverName(nMoveId);
+    oTestWP = GetWaypointByTag(sWPTag);
     // Distance moved in the last round
     float fDist = GetDistanceBetween(oPC, oTestWP);
     // Giving them a little extra distance because of NWN's dance of death
     float fCheck = FeetToMeters(10.0);
-
-    if(DEBUG) DoDebug("InitiatorMovementCheck: Moved too far, cancelling stances.");
+    if(DEBUG) DoDebug("_RecursiveStanceCheck: fDist: " + FloatToString(fDist));
+    if(DEBUG) DoDebug("_RecursiveStanceCheck: fCheck: " + FloatToString(fCheck));
+    
 
     // Moved the distance
     if (fDist >= fCheck)
     {
         // Clean up stances or other abilities that are lost when moving too far
         RemoveEffectsFromSpell(oPC, nMoveId);
+        if(DEBUG) DoDebug("_RecursiveStanceCheck: Moved too far, cancelling stances.");
         // Clean up the test WP as well
         DestroyObject(oTestWP);
     }
-    else if (GZGetDelayedSpellEffectsExpired(nMoveId, oPC, oPC)) // run the check again in 6 seconds, if the stanceis still there
+    else // run the check again
     {
-    	DelayCommand(6.0, _RecursiveStanceCheck(oPC, nMoveId));
+    	DelayCommand(6.0, _RecursiveStanceCheck(oPC, oTestWP, nMoveId));
+    	if(DEBUG) DoDebug("_RecursiveStanceCheck: DelayCommand(6.0, _RecursiveStanceCheck(oPC, oTestWP, nMoveId)).");
     }
 }
 
@@ -564,22 +572,18 @@ int GetIsManeuverSupernatural(int nMoveId)
 
 int GetHasActiveStance(object oInitiator)
 {
-	if (GetHasSpellEffect(MOVE_SD_STONEFOOT_STANCE, oInitiator)) return TRUE;
+	if (GetHasSpellEffect(MOVE_SD_STONEFOOT_STANCE, oInitiator)) return MOVE_SD_STONEFOOT_STANCE;
 
 	// If nothing returns TRUE, fail
 	return FALSE;
 }
 
-void ClearStances(object oInitiator)
+void ClearStances(object oInitiator, int nDontClearMove)
 {
-	// Clears locals and spell effects
-	// The local has the spellId
-	int nStance1 = GetLocalInt(oInitiator, "TOBStanceOne");
-	RemoveEffectsFromSpell(oInitiator, nStance1);
-	int nStance2 = GetLocalInt(oInitiator, "TOBStanceTwo");
-	RemoveEffectsFromSpell(oInitiator, nStance2);	
-	DeleteLocalInt(oInitiator, "TOBStanceOne");
-	DeleteLocalInt(oInitiator, "TOBStanceTwo");
+	// Clears spell effects, will not clear DontClearMove
+	// This is used to allow Warblades to have two stances.
+	if (GetHasSpellEffect(MOVE_SD_STONEFOOT_STANCE, oInitiator) && nDontClearMove != MOVE_SD_STONEFOOT_STANCE) 
+		RemoveEffectsFromSpell(oInitiator, MOVE_SD_STONEFOOT_STANCE);
 }
 
 void MarkStanceActive(object oInitiator, int nStance)
@@ -649,7 +653,7 @@ void InitiatorMovementCheck(object oPC, int nMoveId)
         if(DEBUG) DoDebug("InitiatorMovementCheck: WP for " + DebugObject2Str(oPC) + " didn't exist, creating. Tag: " + sWPTag);
     }
     // Start the recursive HB check for movement
-    _RecursiveStanceCheck(oPC, oTestWP, nMoveId)
+    _RecursiveStanceCheck(oPC, oTestWP, nMoveId);
 }
 
 int GetAbilityCheckBonus(object oPC, int nAbility)

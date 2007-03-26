@@ -52,7 +52,7 @@ void main()
 	//Define vars
 	object oPC = OBJECT_SELF;
 
-	StartDynamicConversation("sp_cnv_trures", oPC, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, oPC);
+	StartDynamicConversation("sp_cnv_trures", oPC, DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, FALSE, TRUE, oPC);
 
 	SPSetSchool();
 }

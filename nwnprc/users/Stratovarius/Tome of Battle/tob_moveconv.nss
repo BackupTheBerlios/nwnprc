@@ -246,9 +246,7 @@ void main()
 
                 // Determine maximum maneuver level
                 int nInitiatorLevel = GetInitiatorLevel(oPC, nClass);
-                int nMaxLevel = StringToInt(Get2DACache(sPsiFile, "MaxManeuverLevel", nInitiatorLevel-1));
-
-
+                
                 int nManeuverLevelToBrowse = GetLocalInt(oPC, "nManeuverLevelToBrowse");
                 int i, nManeuverLevel;
                 string sFeatID;

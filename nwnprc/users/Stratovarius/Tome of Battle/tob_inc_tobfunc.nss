@@ -246,9 +246,17 @@ void InitiatorMovementCheck(object oPC, int nMoveId);
  *
  * @param oPC      The PC
  * @param nAbility The ability to check
- * @return        Total bonus
+ * @return         Total bonus
  */
 int GetAbilityCheckBonus(object oPC, int nAbility);
+
+/**
+ * Checks whether the maneuver is a stance
+ *
+ * @param nMoveId    The Maneuver
+ * @return           TRUE or FALSE
+ */
+int GetIsStance(int nMoveId);
 
 //////////////////////////////////////////////////
 /*                  Includes                    */
@@ -258,6 +266,7 @@ int GetAbilityCheckBonus(object oPC, int nAbility);
 #include "prc_alterations"
 #include "tob_inc_move"
 #include "tob_inc_moveknwn"
+#include "tob_inc_recovery"
 
 //////////////////////////////////////////////////
 /*             Internal functions               */
@@ -665,6 +674,13 @@ int GetAbilityCheckBonus(object oPC, int nAbility)
 	}
 	
 	return nBonus;
+}
+
+int GetIsStance(int nMoveId)
+{
+	if (StringToInt(Get2DACache(sManeuverFile, "Stance", i)) == 1) return TRUE;
+	
+	return FALSE;
 }
 // Test main
 //void main(){}

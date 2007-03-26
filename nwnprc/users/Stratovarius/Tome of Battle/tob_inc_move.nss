@@ -438,6 +438,30 @@ struct maneuver EvaluateManeuver(object oInitiator, object oTarget)
     	move.bCanManeuver = FALSE;
     	FloatingTextStrRefOnCreature(16829728, oInitiator, FALSE); // "You do not have an appropriate weapon to initiate this maneuver."
     }
+    // If the maneuver is not readied, fail.
+    if (!GetIsManeuverReadied(move.oInitiator, nClass, move.nSpellId)) 
+    {
+    	move.bCanManeuver = FALSE;
+    	FloatingTextStrRefOnCreature(GetManeuverName(move.nSpellId) + " is not readied.", oInitiator, FALSE);
+    }    
+    // If the maneuver is expended, fail.
+    if (GetIsManeuverExpended(move.oInitiator, nClass, move.nSpellId)) 
+    {
+    	move.bCanManeuver = FALSE;
+    	FloatingTextStrRefOnCreature(GetManeuverName(move.nSpellId) + " is already expended.", oInitiator, FALSE);
+    }   
+    // If the PC is in a Warblade recovery round, fail
+    if (GetIsWarbladeRecoveryRound(oPC)) 
+    {
+    	move.bCanManeuver = FALSE;
+    	FloatingTextStrRefOnCreature(GetName(oPC) + " is recovering Warblade maneuvers.", oInitiator, FALSE);
+    }  
+    // Is the maneuver granted, and is the class a Crusader
+    if (GetIsManeuverGranted(oPC, move.nSpellId) && nClass == CLASS_TYPE_CRUSADER) 
+    {
+    	move.bCanManeuver = FALSE;
+    	FloatingTextStrRefOnCreature(GetManeuverName(move.nSpellId) + " is not a granted maneuver.", oInitiator, FALSE);
+    }     
     
     // Skip doing anything if something has prevented successfull maneuver already by this point
     if(move.bCanManeuver)
@@ -445,6 +469,8 @@ struct maneuver EvaluateManeuver(object oInitiator, object oTarget)
 	// If you're this far in, you always succeed, there are very few checks.
 	// Deletes any active stances, and allows a Warblade 20 to have his two stances active.
 	_StanceSpecificChecks(oInitiator);
+	// Expend the Maneuver until recovered
+	ExpendManeuver(move.oInitiator, nClass, move.nSpellId);
 	// Do Martial Lore data
 	IdentifyManeuver(move.oInitiator, move.nSpellId);
 	IdentifyDiscipline(move.oInitiator);

@@ -2,9 +2,15 @@
 Tome of Battle
 -----------------------------------------------------
 
-Stances - Add removing all other stances when activating a stance.
 tob_moveconv: Add Maneuver swapping
 tob_inc_recovery: Create and hook in
 TLK: Add classes, feats, Maneuvers to the TLK files.
 tob_inc_tobfunc: Update _CheckPrereqsByDiscipline with proper numbers in the for loop
 tob_movehook: GetIsManeuverSupernatural() <-- Needs to be filled out with maneuvers.
+tob_moverdy: Flesh out GetLoopBegin/End conversations
+TO DO: ORGANIZE MANEUVER LEVELS SO THAT MANEUVERS AND STANCES OF THE SAME LEVEL ARE SEPERATED BY TYPE.
+Add recovery and readying hooks into the appropriate areas.
+Set Local int in the Warblade recovery script.
+Withheld MAneuvers: write the process for granting moves when in combat.
+
+There are a few places where GetLevelByClass is used. This will not work with PrCs. Update when those are added. tob_inc_recovery has at least some.

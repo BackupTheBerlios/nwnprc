@@ -1,26 +1,25 @@
 /*
    ----------------
-   Stone Bones
+   Generic Maneuver
 
-   tob_stdr_stnbns
+   tob_disc_move.nss
    ----------------
 
-   20/03/07 by Stratovarius
+   26/03/07 by Stratovarius
 */ /** @file
 
-    Stones Bones
+    Generic Maneuver
 
-    Stone Dragon (Strike)
+    Discipline (Strike, Boost, Counter, or Stance)
     Level: Crusader 1, Swordsage 1, Warblade 1
-    Initiation Action: 1 Standard Action
-    Range: Personal
-    Target: You
-    Duration: 1 round
+    Initiation Action: 1 Standard/Swift/Full-Round Action
+    Range: 
+    Target: 
+    Duration:
 
-    You focus your energy to enhance your defenses, drawing on the power of
-    your weapon's impact with a foe to toughen yourself against a counterattack.
+    Flavour Text
     
-    You gain DR 5/adamantium (+5) for 1 round.
+    Mechanical abilities
 */
 
 #include "tob_inc_tobfunc"
@@ -43,14 +42,12 @@ void main()
 
     if(move.bCanManeuver)
     {
+    	// This section is for a strike, change for a boost or counter
     	effect eNone;
 	PerformAttack(oTarget, oInitiator, eNone);
 	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
     	{
-        	effect eLink =                          EffectDamageReduction(5, DAMAGE_POWER_PLUS_FIVE);
-        	       eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_ROOTED_TO_SPOT));
-
-        	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oInitiator, 6.0);
+        	// Apply effects in here
         }
     }
 }

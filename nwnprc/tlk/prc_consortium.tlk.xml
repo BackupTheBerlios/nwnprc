@@ -25137,6 +25137,40 @@ Description:  You grow an internal cyst of undead flesh called a mother cyst. Th
   <entry id="52113" lang="en" sex="m">Sannish</entry>
   <entry id="52114" lang="en" sex="m">Terran Brandy</entry>
   <entry id="52115" lang="en" sex="m">Vodare</entry>
+  <entry id="52164" lang="en" sex="m">Aerie</entry>
+  <entry id="52165" lang="en" sex="m">Ajantis</entry>
+  <entry id="52166" lang="en" sex="m">Annah</entry>
+  <entry id="52167" lang="en" sex="m">Anomen</entry>
+  <entry id="52168" lang="en" sex="m">Branwen</entry>
+  <entry id="52169" lang="en" sex="m">Cern</entry>
+  <entry id="52170" lang="en" sex="m">Dynaheir</entry>
+  <entry id="52171" lang="en" sex="m">Edwin</entry>
+  <entry id="52172" lang="en" sex="m">Haer_D'alis</entry>
+  <entry id="52173" lang="en" sex="m">Ignus</entry>
+  <entry id="52174" lang="en" sex="m">Imoen</entry>
+  <entry id="52175" lang="en" sex="m">Jan</entry>
+  <entry id="52176" lang="en" sex="m">Irenicus</entry>
+  <entry id="52177" lang="en" sex="m">Keldorn</entry>
+  <entry id="52178" lang="en" sex="m">Kivan</entry>
+  <entry id="52179" lang="en" sex="m">Korgan</entry>
+  <entry id="52180" lang="en" sex="m">Baldur's Gate Default Male</entry>
+  <entry id="52181" lang="en" sex="m">Mazzy</entry>
+  <entry id="52182" lang="en" sex="m">Minsc</entry>
+  <entry id="52183" lang="en" sex="m">Montaron</entry>
+  <entry id="52184" lang="en" sex="m">Morte</entry>
+  <entry id="52185" lang="en" sex="m">Nalia</entry>
+  <entry id="52186" lang="en" sex="m">Quayle</entry>
+  <entry id="52187" lang="en" sex="m">Safana</entry>
+  <entry id="52188" lang="en" sex="m">Sarevok</entry>
+  <entry id="52189" lang="en" sex="m">Skie</entry>
+  <entry id="52190" lang="en" sex="m">Trias</entry>
+  <entry id="52191" lang="en" sex="m">Valygar</entry>
+  <entry id="52192" lang="en" sex="m">Vhailor</entry>
+  <entry id="52193" lang="en" sex="m">Viconia</entry>
+  <entry id="52194" lang="en" sex="m">Xan</entry>
+  <entry id="52195" lang="en" sex="m">Xzar</entry>
+  <entry id="52196" lang="en" sex="m">Yeslick</entry>
+  <entry id="52197" lang="en" sex="m">Yoshimo</entry>
   <entry id="52198" lang="en" sex="m">PrC Extra Stunning</entry>
   <entry id="52199" lang="en" sex="m">Use this feat to convert your extra stunning uses to normal stunning uses.</entry>
   <entry id="52200" lang="en" sex="m">Enlightened Fist</entry>
@@ -27166,8 +27200,8 @@ You imbue a robe, priestly garment, or outfit of regular clothing with divine po
      - Reduces ability damage due to spell casting by 1, to a minimum of 1 point          (but does not reduce the sacrifice cost of this spell).
 
      Sacrifice: 1d4 points of Strength damage</entry>
-<entry id="52484" lang="en" sex="m">Stone Bones</entry>
-<entry id="52485" lang="en" sex="m">Stone Dragon (Strike)
+  <entry id="52484" lang="en" sex="m">Stone Bones</entry>
+  <entry id="52485" lang="en" sex="m">Stone Dragon (Strike)
 Level: Crusader 1, Swordsage 1, Warblade 1
 Initiation Action: 1 Standard Action
 Range: Personal
@@ -27177,38 +27211,38 @@ Duration: 1 round
 You focus your energy to enhance your defenses, drawing on the power of your weapon's impact with a foe to toughen yourself against a counterattack.
     
 You gain DR 5/Adamantium (+5) for 1 round.</entry>
-<entry id="52486" lang="en" sex="m">Crusader</entry>
-<entry id="52487" lang="en" sex="m">Crusaders</entry>
-<entry id="52488" lang="en" sex="m">crusader</entry>
-<entry id="52489" lang="en" sex="m">Crusader Description</entry>
-<entry id="52490" lang="en" sex="m">Swordsage</entry>
-<entry id="52491" lang="en" sex="m">Swordsages</entry>
-<entry id="52492" lang="en" sex="m">swordsage</entry>
-<entry id="52493" lang="en" sex="m">Swordsage Description</entry>
-<entry id="52494" lang="en" sex="m">Warblade</entry>
-<entry id="52495" lang="en" sex="m">Warblades</entry>
-<entry id="52496" lang="en" sex="m">warblade</entry>
-<entry id="52497" lang="en" sex="m">Warblade Description</entry>
-<entry id="52498" lang="en" sex="m">Desert Wind</entry>
-<entry id="52499" lang="en" sex="m">Devoted Spirit</entry>
-<entry id="52500" lang="en" sex="m">Diamond Mind</entry>
-<entry id="52501" lang="en" sex="m">Iron Heart</entry>
-<entry id="52502" lang="en" sex="m">Setting Sun</entry>
-<entry id="52503" lang="en" sex="m">Shadow Hand</entry>
-<entry id="52504" lang="en" sex="m">Stone Dragon</entry>
-<entry id="52505" lang="en" sex="m">Tiger Claw</entry>
-<entry id="52506" lang="en" sex="m">White Raven</entry>
-<entry id="52507" lang="en" sex="m">Return to maneuver level selection.</entry>
-<entry id="52508" lang="en" sex="m">Select level of maneuver or stance to gain. \n \n NOTE: \nThis may take a while when first browsing a particular level's maneuvers.</entry>
-<entry id="52509" lang="en" sex="m">Select a maneuver or stance to gain.\nYou can select</entry>
-<entry id="52510" lang="en" sex="m">more maneuvers or stances</entry>
-<entry id="52511" lang="en" sex="m">You will be able to select more maneuvers after you gain another level in a blade magic initiator class.</entry>
-<entry id="52512" lang="en" sex="m">You do not have an appropriate weapon to initiate this maneuver.</entry>
-<entry id="52513" lang="en" sex="m">Choose Maneuvers or Stances.</entry>
-<entry id="52514" lang="en" sex="m">Stances.</entry>
-<entry id="52515" lang="en" sex="m">Maneuvers</entry>
-<entry id="52516" lang="en" sex="m">Stonefoot Stance</entry>
-<entry id="52517" lang="en" sex="m">Stone Dragon (Stance)
+  <entry id="52486" lang="en" sex="m">Crusader</entry>
+  <entry id="52487" lang="en" sex="m">Crusaders</entry>
+  <entry id="52488" lang="en" sex="m">crusader</entry>
+  <entry id="52489" lang="en" sex="m">Crusader Description</entry>
+  <entry id="52490" lang="en" sex="m">Swordsage</entry>
+  <entry id="52491" lang="en" sex="m">Swordsages</entry>
+  <entry id="52492" lang="en" sex="m">swordsage</entry>
+  <entry id="52493" lang="en" sex="m">Swordsage Description</entry>
+  <entry id="52494" lang="en" sex="m">Warblade</entry>
+  <entry id="52495" lang="en" sex="m">Warblades</entry>
+  <entry id="52496" lang="en" sex="m">warblade</entry>
+  <entry id="52497" lang="en" sex="m">Warblade Description</entry>
+  <entry id="52498" lang="en" sex="m">Desert Wind</entry>
+  <entry id="52499" lang="en" sex="m">Devoted Spirit</entry>
+  <entry id="52500" lang="en" sex="m">Diamond Mind</entry>
+  <entry id="52501" lang="en" sex="m">Iron Heart</entry>
+  <entry id="52502" lang="en" sex="m">Setting Sun</entry>
+  <entry id="52503" lang="en" sex="m">Shadow Hand</entry>
+  <entry id="52504" lang="en" sex="m">Stone Dragon</entry>
+  <entry id="52505" lang="en" sex="m">Tiger Claw</entry>
+  <entry id="52506" lang="en" sex="m">White Raven</entry>
+  <entry id="52507" lang="en" sex="m">Return to maneuver level selection.</entry>
+  <entry id="52508" lang="en" sex="m">Select level of maneuver or stance to gain. \n \n NOTE: \nThis may take a while when first browsing a particular level's maneuvers.</entry>
+  <entry id="52509" lang="en" sex="m">Select a maneuver or stance to gain.\nYou can select</entry>
+  <entry id="52510" lang="en" sex="m">more maneuvers or stances</entry>
+  <entry id="52511" lang="en" sex="m">You will be able to select more maneuvers after you gain another level in a blade magic initiator class.</entry>
+  <entry id="52512" lang="en" sex="m">You do not have an appropriate weapon to initiate this maneuver.</entry>
+  <entry id="52513" lang="en" sex="m">Choose Maneuvers or Stances.</entry>
+  <entry id="52514" lang="en" sex="m">Stances.</entry>
+  <entry id="52515" lang="en" sex="m">Maneuvers</entry>
+  <entry id="52516" lang="en" sex="m">Stonefoot Stance</entry>
+  <entry id="52517" lang="en" sex="m">Stone Dragon (Stance)
 Level: Crusader 1, Swordsage 1, Warblade 1
 Initiation Action: 1 Swift Action
 Range: Personal

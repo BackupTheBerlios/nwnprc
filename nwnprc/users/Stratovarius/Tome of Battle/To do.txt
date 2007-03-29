@@ -6,6 +6,7 @@ tob_moveconv: Add Maneuver swapping
 tob_inc_recovery: Create and hook in
 TLK: Add classes, feats, Maneuvers to the TLK files.
 tob_inc_tobfunc: Update _CheckPrereqsByDiscipline with proper numbers in the for loop
+tob_inc_tobfunc: Update GetIsStance and other functions about stances
 tob_movehook: GetIsManeuverSupernatural() <-- Needs to be filled out with maneuvers.
 tob_moverdy: Flesh out GetLoopBegin/End conversations
 TO DO: ORGANIZE MANEUVER LEVELS SO THAT MANEUVERS AND STANCES OF THE SAME LEVEL ARE SEPERATED BY TYPE.

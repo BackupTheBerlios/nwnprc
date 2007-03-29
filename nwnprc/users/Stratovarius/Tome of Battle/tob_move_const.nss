@@ -14,8 +14,10 @@
 // Level 1 Maneuvers
 const int MOVE_SD_STONE_BONES         = 6001;
 const int MOVE_SD_STONEFOOT_STANCE    = 6002;
+
 // Needed for GetIsManeuverSupernatural as an example
 const int MOVE_DW_BLISTERING_FLOURISH = -1;
+const int MOVE_DW_BURNING_BLADE       = -1;
 
 
 // Level 2 Maneuvers

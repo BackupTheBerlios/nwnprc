@@ -258,6 +258,30 @@ int GetAbilityCheckBonus(object oPC, int nAbility);
  */
 int GetIsStance(int nMoveId);
 
+/**
+ * Dazzles the target: -1 Attack, Search, Spot, and VFX
+ *
+ * @return           the Dazzle effect
+ */
+effect EffectDazzle();
+
+/**
+ * Sets up everything for the Damage boosts (xd6 + IL fire damage)
+ * That the Desert Wind discipline has.
+ *
+ * @param oPC      The PC
+ */
+void DoDesertWindBoost(object oPC);
+
+/**
+ * Determines which PC in the area is weakest, and 
+ * returns that PC.
+ *
+ * @param oPC      The PC
+ * @return         The Target
+ */
+object GetCrusaderHealTarget(object oPC);
+
 //////////////////////////////////////////////////
 /*                  Includes                    */
 //////////////////////////////////////////////////
@@ -672,15 +696,68 @@ int GetAbilityCheckBonus(object oPC, int nAbility)
 	{
 		if (GetHasSpellEffect(MOVE_SD_STONEFOOT_STANCE, oPC)) nBonus += 2;
 	}
-	
+	if(DEBUG) DoDebug("GetAbilityCheckBonus: nBonus " + IntToString(nBonus));
 	return nBonus;
 }
 
 int GetIsStance(int nMoveId)
 {
+	if(DEBUG) DoDebug("GetIsStance running");	
 	if (StringToInt(Get2DACache(sManeuverFile, "Stance", i)) == 1) return TRUE;
 	
 	return FALSE;
+}
+
+effect EffectDazzle()
+{
+	effect eLink = EffectLinkEffects(EffectAttackDecrease(1), EffectSkillDecrease(SKILL_SEARCH, 1));
+	       eLink = EffectLinkEffects(eLink, EffectSkillDecrease(SKILL_SPOT, 1));
+	       eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_IMP_PWBLIND));
+
+	if(DEBUG) DoDebug("EffectDazzle running");	       
+	return eLink;
+}
+
+void DoDesertWindBoost(object oPC)
+{
+	if(DEBUG) DoDebug("DoDesertWindBoost running");
+	effect eVis = EffectLinkEffects(EffectVisualEffect(VFX_IMP_FLAME_M), EffectVisualEffect(VFX_IMP_PULSE_FIRE));
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oPC);
+        object oItem = IPGetTargetedOrEquippedMeleeWeapon();
+        // Add eventhook to the item
+        AddEventScript(oItem, EVENT_ITEM_ONHIT, "tob_dw_onhit", TRUE, FALSE);
+        DelayCommand(6.0, RemoveEventScript(oItem, EVENT_ITEM_ONHIT, "tob_dw_onhit", TRUE, FALSE););
+        // Add the OnHit
+        IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 6.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+        SetLocalInt(oPC, "DesertWindBoot", PRCGetSpellId());
+        DelayCommand(6.0, DeleteLocalInt(oPC, "DesertWindBoot"));
+}
+
+object GetCrusaderHealTarget(object oPC)
+{
+    	int nMaxHP = 0;
+    	int nCurrentHP = 0;
+    	int nCurrentMax = 0;
+    	object oReturn;
+    	//Get the first target in the radius around the caster
+    	object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(10.0), GetLocation(oPC));
+    	while(GetIsObjectValid(oTarget) && GetIsPC(oTarget))
+    	{
+    		if(DEBUG) DoDebug("GetCrusaderHealTarget: oTarget " + GetName(oTarget));
+		nCurrentHP = GetCurrentHitPoints(oTarget);
+		nMaxHP = GetMaxHitPoints(oTarget);
+		// Check HP vs current biggest loss
+		// Set the target
+		if ((nMaxHP - nCurrentHP) > nCurrentMax)
+		{
+			nCurrentMax = nMaxHP - nCurrentHP;
+			oReturn = oTarget;
+		}
+        	//Get the next target in the specified area around the caster
+        	oTarget = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(10.0), GetLocation(oPC));
+    	}
+    	if(DEBUG) DoDebug("GetCrusaderHealTarget: oReturn " + GetName(oReturn));
+    	return oReturn;
 }
 // Test main
 //void main(){}

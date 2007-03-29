@@ -44,7 +44,7 @@ void main()
     if(move.bCanManeuver)
     {
     	effect eNone;
-	PerformAttack(oTarget, oInitiator, eNone);
+	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, FALSE, "Stone Bones Hit", "Stone Bones Miss");
 	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
     	{
         	effect eLink =                          EffectDamageReduction(5, DAMAGE_POWER_PLUS_FIVE);

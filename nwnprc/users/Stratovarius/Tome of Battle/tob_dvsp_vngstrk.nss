@@ -43,7 +43,7 @@ void main()
     if(move.bCanManeuver)
     {
     	effect eNone;
-	PerformAttack(oTarget, oInitiator, eNone);
+	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, FALSE, "Vanguard Strike Hit", "Vanguard Strike Miss");
 	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
     	{
 		effect eLink = EffectLinkEffects(EffectACDecrease(4), EffectVisualEffect(VFX_IMP_SOUND_SYMBOL_WEAKNESS));

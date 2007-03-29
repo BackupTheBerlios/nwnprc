@@ -55,6 +55,7 @@ void main()
     	else if (nSkill >= 19) eResist = EffectDamageImmunityIncrease(DAMAGE_TYPE_FIRE, 100);
     	effect eDur = EffectVisualEffect(VFX_DUR_PROTECTION_ELEMENTS);
     	effect eLink = EffectLinkEffects(eResist, eDur);
+    	       eLink = SupernaturalEffect(eLink);
     	ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oInitiator);
     }
 }

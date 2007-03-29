@@ -18,6 +18,8 @@ const int MOVE_SD_STONEFOOT_STANCE    = 6002;
 // Needed for GetIsManeuverSupernatural as an example
 const int MOVE_DW_BLISTERING_FLOURISH = -1;
 const int MOVE_DW_BURNING_BLADE       = -1;
+const int MOVE_DS_IRON_GUARDS_GLARE   = -1;
+const int MOVE_DS_MARTIAL_SPIRIT     = -1;
 
 
 // Level 2 Maneuvers
@@ -35,3 +37,6 @@ const int MOVE_DW_BURNING_BLADE       = -1;
 // Level 8 Maneuvers
 
 // Level 9 Maneuvers
+
+// AoE Constants
+AOE_PER_IRON_GUARD_GLARE              = 158;

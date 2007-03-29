@@ -46,6 +46,7 @@ void main()
     {
        	effect eLink =                          VersusSizeEffect(oInitiator, EffectACIncrease(2), 1);
        	       eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_ROOTED_TO_SPOT));
+       	       eLink = ExtraordinaryEffect(eLink);
        	       
        	InitiatorMovementCheck(oInitiator, move.nSpellId);
 

@@ -278,9 +278,10 @@ void DoDesertWindBoost(object oPC);
  * returns that PC.
  *
  * @param oPC      The PC
+ * @param fDistance The distance to check in feet
  * @return         The Target
  */
-object GetCrusaderHealTarget(object oPC);
+object GetCrusaderHealTarget(object oPC, float fDistance);
 
 //////////////////////////////////////////////////
 /*                  Includes                    */
@@ -726,21 +727,21 @@ void DoDesertWindBoost(object oPC)
         object oItem = IPGetTargetedOrEquippedMeleeWeapon();
         // Add eventhook to the item
         AddEventScript(oItem, EVENT_ITEM_ONHIT, "tob_dw_onhit", TRUE, FALSE);
-        DelayCommand(6.0, RemoveEventScript(oItem, EVENT_ITEM_ONHIT, "tob_dw_onhit", TRUE, FALSE););
+        DelayCommand(6.0, RemoveEventScript(oItem, EVENT_ITEM_ONHIT, "tob_dw_onhit", TRUE, FALSE));
         // Add the OnHit
         IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 6.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
         SetLocalInt(oPC, "DesertWindBoot", PRCGetSpellId());
         DelayCommand(6.0, DeleteLocalInt(oPC, "DesertWindBoot"));
 }
 
-object GetCrusaderHealTarget(object oPC)
+object GetCrusaderHealTarget(object oPC, float fDistance)
 {
     	int nMaxHP = 0;
     	int nCurrentHP = 0;
     	int nCurrentMax = 0;
     	object oReturn;
     	//Get the first target in the radius around the caster
-    	object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(10.0), GetLocation(oPC));
+    	object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(fDistance), GetLocation(oPC));
     	while(GetIsObjectValid(oTarget) && GetIsPC(oTarget))
     	{
     		if(DEBUG) DoDebug("GetCrusaderHealTarget: oTarget " + GetName(oTarget));
@@ -754,7 +755,7 @@ object GetCrusaderHealTarget(object oPC)
 			oReturn = oTarget;
 		}
         	//Get the next target in the specified area around the caster
-        	oTarget = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(10.0), GetLocation(oPC));
+        	oTarget = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(fDistance), GetLocation(oPC));
     	}
     	if(DEBUG) DoDebug("GetCrusaderHealTarget: oReturn " + GetName(oReturn));
     	return oReturn;

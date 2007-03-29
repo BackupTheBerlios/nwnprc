@@ -44,6 +44,7 @@ void main()
     if(move.bCanManeuver)
     {
     	effect eSummonedMonster = EffectSummonCreature("tob_dw_distembr", VFX_FNF_SUMMON_MONSTER_1);
+    	       eSummonedMonster = SupernaturalEffect(eSummonedMonster);
 	ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummonedMonster, PRCGetSpellTargetLocation(), 6.0);	
     }
 }

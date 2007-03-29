@@ -1,26 +1,25 @@
 /*
    ----------------
-   Stone Bones
+   Vanguard Strike
 
-   tob_stdr_stnbns
+   tob_dvsp_vngstrk
    ----------------
 
-   20/03/07 by Stratovarius
+   29/03/07 by Stratovarius
 */ /** @file
 
-    Stones Bones
+    Vanguard Strike
 
-    Stone Dragon (Strike)
-    Level: Crusader 1, Swordsage 1, Warblade 1
+    Devoted Spirit (Strike)
+    Level: Crusader 1
     Initiation Action: 1 Standard Action
-    Range: Personal
-    Target: You
-    Duration: 1 round
+    Range: Melee Attack
+    Target: One Creature
 
-    You focus your energy to enhance your defenses, drawing on the power of
-    your weapon's impact with a foe to toughen yourself against a counterattack.
+    You batter aside your foe's defenses with a vicious, overwhelming attack, 
+    leaving him vulnerable to your allies blows.
     
-    You gain DR 5/adamantium (+5) for 1 round.
+    You make a single attack against an enemy. If you hit, that enemy takes a -4 AC penalty for one round.
 */
 
 #include "tob_inc_tobfunc"
@@ -47,10 +46,9 @@ void main()
 	PerformAttack(oTarget, oInitiator, eNone);
 	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
     	{
-        	effect eLink =                          EffectDamageReduction(5, DAMAGE_POWER_PLUS_FIVE);
-        	       eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_ROOTED_TO_SPOT));
+		effect eLink = EffectLinkEffects(EffectACDecrease(4), EffectVisualEffect(VFX_IMP_SOUND_SYMBOL_WEAKNESS));
 		       eLink = ExtraordinaryEffect(eLink);
-        	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oInitiator, 6.0);
+		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0);
         }
     }
 }

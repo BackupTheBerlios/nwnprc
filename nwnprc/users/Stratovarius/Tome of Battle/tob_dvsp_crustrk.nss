@@ -60,11 +60,3 @@ void main()
         }
     }
 }
-
-// Return an ALIGNMENT_* constant to represent oCreature's good/evil alignment
-// * Return value if oCreature is not a valid creature: -1
-int GetAlignmentGoodEvil(object oCreature);
-
-// Return an ALIGNMENT_* constant to represent oCreature's law/chaos alignment
-// * Return value if oCreature is not a valid creature: -1
-int GetAlignmentLawChaos(object oCreature);

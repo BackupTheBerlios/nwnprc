@@ -1,27 +1,26 @@
 /*
    ----------------
-   Stonefoot Stance
+   Punishing Stance
 
-   tob_stdr_stnftst
+   tob_irnh_pnshstn
    ----------------
 
-   23/03/07 by Stratovarius
+   29/03/07 by Stratovarius
 */ /** @file
 
-    Stonefoot Stance
+    Punishing Stance
 
-    Stone Dragon (Stance)
-    Level: Crusader 1, Swordsage 1, Warblade 1
+    Iron Heart (Stance)
+    Level: Warblade 1
     Initiation Action: 1 Swift Action
     Range: Personal
     Target: You
     Duration: Stance
 
-    You crouch and set your feet flat on the ground, drawing 
-    the resilience of the earth into your body.
+    You chop down violently with your weapon, lending extra force to your blows.
+    These attacks comes at a cost, as your enemies slash at your undefended legs and flanks.
     
-    You gain a +2 bonus on Strength checks, and a +2 AC bonus against creatures larger than you.
-    This stance ends if you move more than 5 feet for any reason.
+    You deal an extra 1d6 damage with melee attacks, but take a -2 AC penalty.
 */
 
 #include "tob_inc_tobfunc"
@@ -44,12 +43,11 @@ void main()
 
     if(move.bCanManeuver)
     {
-       	effect eLink =                          VersusSizeEffect(oInitiator, EffectACIncrease(2), 1);
+       	effect eLink =                          EffectACDecrease(2);
+       	       eLink = EffectLinkEffects(eLink, EffectDamageIncrease(DAMAGE_BONUS_1d6));
        	       eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_ROOTED_TO_SPOT));
        	       eLink = ExtraordinaryEffect(eLink);
        	       
-       	InitiatorMovementCheck(oInitiator, move.nSpellId);
-
        	ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);
     }
 }

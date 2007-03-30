@@ -19,7 +19,8 @@ const int MOVE_SD_STONEFOOT_STANCE    = 6002;
 const int MOVE_DW_BLISTERING_FLOURISH = -1;
 const int MOVE_DW_BURNING_BLADE       = -1;
 const int MOVE_DS_IRON_GUARDS_GLARE   = -1;
-const int MOVE_DS_MARTIAL_SPIRIT     = -1;
+const int MOVE_DS_MARTIAL_SPIRIT      = -1;
+const int MOVE_DM_STANCE_OF_CLARITY   = -1;
 
 
 // Level 2 Maneuvers
@@ -40,3 +41,4 @@ const int MOVE_DS_MARTIAL_SPIRIT     = -1;
 
 // AoE Constants
 AOE_PER_IRON_GUARD_GLARE              = 158;
+AOE_PER_STANCE_OF_CLARITY             = 159;

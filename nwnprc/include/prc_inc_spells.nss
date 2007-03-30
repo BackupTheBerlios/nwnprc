@@ -1210,6 +1210,12 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
     // Necrotic Cyst penalty on Necromancy spells
     if(GetPersistantLocalInt(oTarget, NECROTIC_CYST_MARKER) && (GetSpellSchool(nSpell) == SPELL_SCHOOL_NECROMANCY))
         nDC += 2;
+    
+    // This Maneuver allows people to use a skill check instead of a save on a Will save
+    if (GetLocalInt(oTarget, "MomentOfPerfectMind") && nSavingThrow == SAVING_THROW_WILL)
+    {
+    	return GetIsSkillSuccessful(oTarget, SKILL_CONCENTRATION, nDC);
+    }
 
     int nSaveRoll = BWSavingThrow(nSavingThrow, oTarget, nDC, nSaveType, oSaveVersus, fDelay);
 

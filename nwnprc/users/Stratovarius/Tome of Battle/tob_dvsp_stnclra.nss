@@ -49,20 +49,15 @@ void main()
 			nMaxCR = nCurCR;
 			oToughest = oTarget;
 			// Make sure it doesnt get applied more than once to any given target
+			// The negative is 4 to counter out the -2 overall AC of the Initiator
 			if(GetHasSpellEffect(MOVE_DM_STANCE_OF_CLARITY, oTarget))  RemoveEffectsFromSpell(oTarget, MOVE_DM_STANCE_OF_CLARITY);
-			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, VersusRacialTypeEffect(EffectAttackDecrease(2), PRCGetRacialType(GetAreaOfEffectCreator()), oToughest, 6.0);
-		}
-		else
-		{
-			// Adjust target's AB instead of their AC, works more smoothly
-			// Make sure it doesnt get applied more than once to any given target
-			// even though it shouldnt stack.
-			if(GetHasSpellEffect(MOVE_DM_STANCE_OF_CLARITY, oTarget))  RemoveEffectsFromSpell(oTarget, MOVE_DM_STANCE_OF_CLARITY);
-			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, VersusRacialTypeEffect(EffectAttackIncrease(2), PRCGetRacialType(GetAreaOfEffectCreator()), oTarget, 6.0);
+			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, VersusRacialTypeEffect(EffectAttackDecrease(4), PRCGetRacialType(GetAreaOfEffectCreator()), oToughest, 6.0);
 		}
                 
         }
         //Get next target.
         oTarget = GetNextInPersistentObject(OBJECT_SELF);
     }
+    // And the initiator gets a -2 AC vs everything
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectACDecrease(2), GetAreaOfEffectCreator(), 6.0);
 }

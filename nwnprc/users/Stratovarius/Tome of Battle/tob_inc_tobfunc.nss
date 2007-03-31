@@ -283,6 +283,49 @@ void DoDesertWindBoost(object oPC);
  */
 object GetCrusaderHealTarget(object oPC, float fDistance);
 
+/**
+ * Marks a PC is charging for a round
+ *
+ * @param oPC      The PC
+ */
+void SetIsCharging(object oPC);
+
+/**
+ * Get whether a PC is charging for a round
+ *
+ * @param oPC      The PC
+ * @return           TRUE or FALSE
+ */
+int GetIsCharging(object oPC);
+
+/**
+ * This will do a complete PnP charge attack
+ * Only call EITHER Attack OR Bull Rush
+ *
+ * @param oPC           The PC
+ * @param oTarget       The Target
+ * @param nDoAttack     Do an attack at the end of a charge or not
+ * @param nGenerateAoO  Does the movement generate an AoO
+ * @param nBullRush     Do a Bull Rush at the end of a charge
+ * @param nBullAoO      Does the bull rush attempt generate an AoO
+ * @param nMustFollow   Does the Bull rush require the pushing PC to follow the target
+ *
+ * @return              TRUE if the attack or Bull rush hits, else FALSE
+ */
+int DoCharge(object oPC, object oTarget, int nDoAttack = TRUE, int nGenerateAoO = TRUE, int nBullRush = FALSE, int nBullAoO = TRUE, int nMustFollow = TRUE);
+
+/**
+ * This will do a complete PnP Bull rush
+ *
+ * @param oPC           The PC
+ * @param oTarget       The Target
+ * @param nGenerateAoO  Does the Bull rush attempt generate an AoO
+ * @param nMustFollow   Does the Bull rush require the pushing PC to follow the target
+ *
+ * @return              TRUE if the Bull rush succeeds, else FALSE
+ */
+int DoBullRush(object oPC, object oTarget, int nGenerateAoO = TRUE, int nMustFollow = TRUE)
+
 //////////////////////////////////////////////////
 /*                  Includes                    */
 //////////////////////////////////////////////////
@@ -383,6 +426,49 @@ void _RecursiveStanceCheck(object oPC, object oTestWP, int nMoveId)
     	DelayCommand(6.0, _RecursiveStanceCheck(oPC, oTestWP, nMoveId));
     	if(DEBUG) DoDebug("_RecursiveStanceCheck: DelayCommand(6.0, _RecursiveStanceCheck(oPC, oTestWP, nMoveId)).");
     }
+}
+
+void _DoBullRushKnockBack(object oTarget, object oPC, float fFeet)
+{
+            // Calculate how far the creature gets pushed
+            float fDistance = FeetToMeters(fFeet);
+            // Determine if they hit a wall on the way
+            location lPC           = GetLocation(oPC);
+            location lTargetOrigin = GetLocation(oTarget);
+            vector vAngle          = AngleToVector(GetRelativeAngleBetweenLocations(lPC, lTargetOrigin));
+            vector vTargetOrigin   = GetPosition(oTarget);
+            vector vTarget         = vTargetOrigin + (vAngle * fDistance);
+
+            if(!LineOfSightVector(vTargetOrigin, vTarget))
+            {
+                // Hit a wall, binary search for the wall
+                float fEpsilon    = 1.0f;          // Search precision
+                float fLowerBound = 0.0f;          // The lower search bound, initialise to 0
+                float fUpperBound = fDistance;     // The upper search bound, initialise to the initial distance
+                fDistance         = fDistance / 2; // The search position, set to middle of the range
+
+                do{
+                    // Create test vector for this iteration
+                    vTarget = vTargetOrigin + (vAngle * fDistance);
+
+                    // Determine which bound to move.
+                    if(LineOfSightVector(vTargetOrigin, vTarget))
+                        fLowerBound = fDistance;
+                    else
+                        fUpperBound = fDistance;
+
+                    // Get the new middle point
+                    fDistance = (fUpperBound + fLowerBound) / 2;
+                }while(fabs(fUpperBound - fLowerBound) > fEpsilon);
+            }
+
+            // Create the final target vector
+            vTarget = vTargetOrigin + (vAngle * fDistance);
+
+            // Move the target
+            location lTargetDestination = Location(GetArea(oTarget), vTarget, GetFacing(oTarget));
+            AssignCommand(oTarget, ClearAllActions(TRUE));
+            AssignCommand(oTarget, JumpToLocation(lTargetDestination));
 }
 
 //////////////////////////////////////////////////
@@ -760,5 +846,110 @@ object GetCrusaderHealTarget(object oPC, float fDistance)
     	if(DEBUG) DoDebug("GetCrusaderHealTarget: oReturn " + GetName(oReturn));
     	return oReturn;
 }
+
+void SetIsCharging(object oPC)
+{
+	SetLocalInt(oPC, "PCIsCharging", TRUE);
+	// You count as having charged for the entire round
+	DelayCommand(6.0, DeleteLocalInt(oPC, "PCIsCharging"));
+}
+
+int GetIsCharging(object oPC)
+{
+	return GetLocalInt(oPC, "PCIsCharging");
+}
+
+int DoCharge(object oPC, object oTarget, int nDoAttack = TRUE, int nGenerateAoO = TRUE, int nBullRush = FALSE, int nBullAoO = TRUE, int nMustFollow = TRUE)
+{
+	if (!nGenerateAoO)
+	{
+		// Huge bonus to tumble to prevent AoOs from movement
+		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectSkillIncrease(SKILL_TUMBLE, 50), oPC, 6.0);
+	}
+	// Return value
+	int nSucceed = FALSE;
+	float fDistance = GetDistanceBetweenLocations(GetLocation(oPC), GetLocation(oTarget));
+	// PnP rules use feet, might as well convert it now.
+	fDistance = MetersToFeet(fDistance);
+	if(fDistance >= 10.0)
+	{
+		// Mark the PC as charging
+		SetIsCharging(oPC);
+		// These are the bonuses to attacks/AC on a charge
+		effect eNone;
+	        effect eCharge = EffectLinkEffects(EffectAttackIncrease(2), EffectACDecrease(2));
+	        eCharge = EffectLinkEffects(eCharge, EffectMovementSpeedIncrease(99));
+	        eCharge = SupernaturalEffect(eCharge);
+	        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eCharge, oPC, 6.0);
+	        // Move to the target
+	        AssignCommand(oPC, ClearAllActions());
+	       	AssignCommand(oPC, ActionMoveToObject(oTarget, TRUE));
+	       	if (nDoAttack) // Perform the Attack
+	       	{
+			PerformAttack(oPC, oAreaTarget, eNone, 0.0, 0, 0, 0, FALSE, "Charge Hit", "Charge Miss");
+			// Local int set when Perform Attack hits
+			nSucceed = GetLocalInt(oTarget, "PRCCombat_StruckByAttack");
+		}
+		if (nBullRush)
+			nSucceed = DoBullRush(oPC, oTarget, nBullAoO, nMustFollow);
+	}
+	else
+	{
+		FloatingTextStringOnCreature("You are too close to charge " + GetName(oTarget), oPC);
+	}	
+}
+
+int DoBullRush(object oPC, object oTarget, int nGenerateAoO = TRUE, int nMustFollow = TRUE)
+{
+	// The basic modifiers
+	int nSucceed = FALSE;
+	int nPCStr = GetAbilityModifier(ABILITY_STRENGTH, oPC);
+	int nTargetStr = GetAbilityModifier(ABILITY_STRENGTH, oTarget);
+	int nPCBonus = GetSizeModifier(oPC);
+	int nTargetBonus = GetSizeModifier(oTarget);
+	// Get a +2 bonus for charging during a bullrush
+	if (GetIsCharging(oPC)) nPCBonus += 2;
+	// Do the AoO for moving into the enemy square
+	if (nGenerateAoO)
+	{
+		location lTarget = GetLocation(oPC);
+		// Use the function to get the closest creature as a target
+		object oAreaTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+		while(GetIsObjectValid(oAreaTarget))
+		{
+		    // All enemies in range get a free AoO shot
+		    if(oAreaTarget != oPC && // Don't hit yourself
+		       GetIsInMeleeRange(oPC, oAreaTarget) && // They must be in melee range
+		       GetIsEnemy(oAreaTarget, oPC)) // Only enemies are going to take AoOs
+		    {
+		        // Perform the Attack
+			PerformAttack(oPC, oAreaTarget, eNone, 0.0, 0, 0, 0, FALSE, "Attack of Opportunity Hit", "Attack of Opportunity Miss");
+		    }
+		
+		//Select the next target within the spell shape.
+		oAreaTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+        	}	
+	}
+	int nPCCheck = nPCStr + nPCBonus + d20();
+	int nTargetCheck = nTargetStr + nTargetBonus + d20();
+	// Now roll the ability check
+	if (nPCCheck >= nTargetCheck)
+	{
+		// Knock them back 5 feet
+		float fFeet = 5.0;
+		// For every 5 points greater, knock back an additional 5 feet.
+		fFeet += 5.0 * ((nPCCheck - nTargetCheck) / 5);
+		nSucceed = TRUE;
+		_DoBullRushKnockBack(oTarget, oPC, fFeet);
+		// If the PC has to keep pushing to knock back, move the PC along, 5 feet less
+		if (nMustFollow) _DoBullRushKnockBack(oPC, oTarget, (fFeet - 5.0));
+	}
+	else
+		FloatingTextStringOnCreature("You have failed your Strength check for your Bull Rush Attempt",oPC);
+	
+	// Let people know if we made the hit or not
+	return nSucceed;
+}
+
 // Test main
 //void main(){}

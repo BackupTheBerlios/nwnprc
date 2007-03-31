@@ -307,24 +307,39 @@ int GetIsCharging(object oPC);
  * @param nDoAttack     Do an attack at the end of a charge or not
  * @param nGenerateAoO  Does the movement generate an AoO
  * @param nBullRush     Do a Bull Rush at the end of a charge
+ * @param nExtraBonus   An extra bonus to grant the PC on the Bull rush
  * @param nBullAoO      Does the bull rush attempt generate an AoO
  * @param nMustFollow   Does the Bull rush require the pushing PC to follow the target
  *
  * @return              TRUE if the attack or Bull rush hits, else FALSE
  */
-int DoCharge(object oPC, object oTarget, int nDoAttack = TRUE, int nGenerateAoO = TRUE, int nBullRush = FALSE, int nBullAoO = TRUE, int nMustFollow = TRUE);
+int DoCharge(object oPC, object oTarget, int nDoAttack = TRUE, int nGenerateAoO = TRUE, int nBullRush = FALSE, int nExtraBonus = 0, int nBullAoO = TRUE, int nMustFollow = TRUE);
 
 /**
  * This will do a complete PnP Bull rush
  *
  * @param oPC           The PC
  * @param oTarget       The Target
+ * @param nExtraBonus   An extra bonus to grant the PC
  * @param nGenerateAoO  Does the Bull rush attempt generate an AoO
  * @param nMustFollow   Does the Bull rush require the pushing PC to follow the target
  *
  * @return              TRUE if the Bull rush succeeds, else FALSE
  */
-int DoBullRush(object oPC, object oTarget, int nGenerateAoO = TRUE, int nMustFollow = TRUE)
+int DoBullRush(object oPC, object oTarget, int nExtraBonus, int nGenerateAoO = TRUE, int nMustFollow = TRUE);
+
+/**
+ * This will do a complete PnP Trip
+ *
+ * @param oPC           The PC
+ * @param oTarget       The Target
+ * @param nExtraBonus   An extra bonus to grant the PC
+ * @param nGenerateAoO  Does the Trip attempt generate an AoO
+ * @param nCounterTrip  Can the target attempt a counter trip if you fail
+ *
+ * @return              TRUE if the Trip succeeds, else FALSE
+ */
+int DoTrip(object oPC, object oTarget, int nExtraBonus, int nGenerateAoO = TRUE, int nCounterTrip = TRUE);
 
 //////////////////////////////////////////////////
 /*                  Includes                    */
@@ -782,6 +797,11 @@ int GetAbilityCheckBonus(object oPC, int nAbility)
 	if (nAbility == ABILITY_STRENGTH)
 	{
 		if (GetHasSpellEffect(MOVE_SD_STONEFOOT_STANCE, oPC)) nBonus += 2;
+		if (GetHasSpellEffect(MOVE_SS_STEP_WIND,        oPC)) nBonus += 4;
+	}
+	else if (nAbility == ABILITY_DEXTERITY)
+	{
+		if (GetHasSpellEffect(MOVE_SS_STEP_WIND,        oPC)) nBonus += 4;
 	}
 	if(DEBUG) DoDebug("GetAbilityCheckBonus: nBonus " + IntToString(nBonus));
 	return nBonus;
@@ -859,7 +879,7 @@ int GetIsCharging(object oPC)
 	return GetLocalInt(oPC, "PCIsCharging");
 }
 
-int DoCharge(object oPC, object oTarget, int nDoAttack = TRUE, int nGenerateAoO = TRUE, int nBullRush = FALSE, int nBullAoO = TRUE, int nMustFollow = TRUE)
+int DoCharge(object oPC, object oTarget, int nDoAttack = TRUE, int nGenerateAoO = TRUE, int nBullRush = FALSE, int nExtraBonus = 0, int nBullAoO = TRUE, int nMustFollow = TRUE)
 {
 	if (!nGenerateAoO)
 	{
@@ -891,7 +911,7 @@ int DoCharge(object oPC, object oTarget, int nDoAttack = TRUE, int nGenerateAoO 
 			nSucceed = GetLocalInt(oTarget, "PRCCombat_StruckByAttack");
 		}
 		if (nBullRush)
-			nSucceed = DoBullRush(oPC, oTarget, nBullAoO, nMustFollow);
+			nSucceed = DoBullRush(oPC, oTarget, nExtraBonus, nBullAoO, nMustFollow);
 	}
 	else
 	{
@@ -899,7 +919,7 @@ int DoCharge(object oPC, object oTarget, int nDoAttack = TRUE, int nGenerateAoO 
 	}	
 }
 
-int DoBullRush(object oPC, object oTarget, int nGenerateAoO = TRUE, int nMustFollow = TRUE)
+int DoBullRush(object oPC, object oTarget, int nExtraBonus, int nGenerateAoO = TRUE, int nMustFollow = TRUE)
 {
 	// The basic modifiers
 	int nSucceed = FALSE;
@@ -909,6 +929,8 @@ int DoBullRush(object oPC, object oTarget, int nGenerateAoO = TRUE, int nMustFol
 	int nTargetBonus = GetSizeModifier(oTarget);
 	// Get a +2 bonus for charging during a bullrush
 	if (GetIsCharging(oPC)) nPCBonus += 2;
+	// Other ability bonuses
+	nPCBonus += GetAbilityCheckBonus(oPC, ABILITY_STRENGTH);
 	// Do the AoO for moving into the enemy square
 	if (nGenerateAoO)
 	{
@@ -946,6 +968,62 @@ int DoBullRush(object oPC, object oTarget, int nGenerateAoO = TRUE, int nMustFol
 	}
 	else
 		FloatingTextStringOnCreature("You have failed your Strength check for your Bull Rush Attempt",oPC);
+	
+	// Let people know if we made the hit or not
+	return nSucceed;
+}
+
+int DoTrip(object oPC, object oTarget, int nExtraBonus, int nGenerateAoO = TRUE, int nCounterTrip = TRUE)
+{
+	// The basic modifiers
+	int nSucceed = FALSE;
+	int nPCStat, nTargetStat;
+	// Use the higher of the two mods
+	if (GetAbilityModifier(ABILITY_STRENGTH, oPC) > GetAbilityModifier(ABILITY_DEXTERITY, oPC))
+		nPCStat = GetAbilityModifier(ABILITY_STRENGTH, oPC) + GetAbilityCheckBonus(oPC, ABILITY_STRENGTH);
+	else
+		nPCStat = GetAbilityModifier(ABILITY_DEXTERITY, oPC) + GetAbilityCheckBonus(oPC, ABILITY_DEXTERITY);
+	// Use the higher of the two mods	
+	if (GetAbilityModifier(ABILITY_STRENGTH, oTarget) > GetAbilityModifier(ABILITY_DEXTERITY, oTarget))
+		nTargetStat = GetAbilityModifier(ABILITY_STRENGTH, oTarget) + GetAbilityCheckBonus(oTarget, ABILITY_STRENGTH);
+	else
+		nTargetStat = GetAbilityModifier(ABILITY_DEXTERITY, oTarget) + GetAbilityCheckBonus(oTarget, ABILITY_DEXTERITY);
+	// Get mods for size
+	int nPCBonus = GetSizeModifier(oPC);
+	int nTargetBonus = GetSizeModifier(oTarget);
+	
+	// Do the AoO for a trip attempt
+	if (nGenerateAoO)
+	{
+		// Perform the Attack
+		effect eNone;
+		PerformAttack(oPC, oTarget, eNone, 0.0, 0, 0, 0, FALSE, "Attack of Opportunity Hit", "Attack of Opportunity Miss");	
+	}
+	int nPCCheck = nPCStat + nPCBonus + nExtraBonus + d20();
+	int nTargetCheck = nTargetStat + nTargetBonus + d20();
+	// Now roll the ability check
+	if (nPCCheck >= nTargetCheck)
+	{
+		FloatingTextStringOnCreature("You have succeeded your ability check for your Trip attempt",oPC);
+		// Knock em down
+		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(EffectKnockdown()), oTarget, 6.0);
+		nSucceed = TRUE;
+	}
+	else // If you fail, enemy gets a counter trip attempt, using Strength
+	{
+		nTargetStat = GetAbilityModifier(ABILITY_STRENGTH, oTarget) + GetAbilityCheckBonus(oTarget, ABILITY_STRENGTH);
+		FloatingTextStringOnCreature("You have failed your ability check for your Trip attempt",oPC);
+		// Roll counter trip attempt
+		nTargetCheck = nTargetStat + nTargetBonus + d20();
+		nPCCheck = nPCStat + nPCBonus + d20();
+		// If counters aren't allowed, don't knock em down
+		// Its down here to allow the text message to go through
+		if (nTargetCheck >= nPCCheck && nCounterTrip)
+		{
+			// Knock em down
+			ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(EffectKnockdown()), oPC, 6.0);
+		}
+	}
 	
 	// Let people know if we made the hit or not
 	return nSucceed;

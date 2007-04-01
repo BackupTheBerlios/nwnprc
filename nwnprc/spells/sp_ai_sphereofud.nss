@@ -5,10 +5,10 @@
 //
 // Does the disintegrate logic.
 //
-void DoDisintegrate(object oCaster, object oTarget, int nSpellSaveDC)
+void DoDisintegrate(object oCaster, object oTarget, int nSpellSaveDC, int nSR)
 {
     // Make SR check
-    if (!SPResistSpell(oCaster, oTarget))
+    if (!SPResistSpell(oCaster, oTarget, nSR))
     {
         // Make the touch attack.               
         int nTouchAttack = PRCDoMeleeTouchAttack(oTarget);;
@@ -131,7 +131,7 @@ void main()
         // Attempty to disintegrate the current target.
         //SendMessageToPC(oCaster, "Disintegrating, BUSY for 1 round");
         object oSphere = OBJECT_SELF;
-        DoDisintegrate(oCaster, oIntruder, GetLocalInt(oCaster, "SP_SPHEREOFUD_DC"));
+        DoDisintegrate(oCaster, oIntruder, GetLocalInt(oCaster, "SP_SPHEREOFUD_DC"), GetLocalInt(oCaster, "SP_SPHEREOFUD_SR"));
         
         // Wait a round to clear our busy state which will keep our attacks
         // to 1 per round.

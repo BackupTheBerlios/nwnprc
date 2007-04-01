@@ -48,15 +48,15 @@ void main()
     	int nDamage = d6();
     	int nDamageType = DAMAGE_TYPE_MAGICAL;
     	
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, nDamage, nDamageType, FALSE, "Sapphire Nightmare Blade Hit", "Sapphire Nightmare Blade Miss");
+	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, nDamage, nDamageType, FALSE, "Clinging Shadow Strike Hit", "Clinging Shadow Strike Miss");
 	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
     	{
     		// Saving Throw
     		if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (11 + GetAbilityModifier(ABILITY_WISDOM, oInitiator)))
     		{
-			effect eLink = ExtraordinaryEffect(EffectVisualEffect(VFX_IMP_HEAD_EVIL));
+			effect eLink = SupernaturalEffect(EffectVisualEffect(VFX_IMP_HEAD_EVIL));
 			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink, oTarget);
-			eLink = ExtraordinaryEffect(EffectMissChance(20));
+			eLink = SupernaturalEffect(EffectMissChance(20));
 			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0);
 		}
         }

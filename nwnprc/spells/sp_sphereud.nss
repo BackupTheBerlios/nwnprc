@@ -20,7 +20,8 @@ void main()
     ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, 
         EffectSummonCreature("sp_sphereofud"), lTarget, fDuration);
     
-    // Save the spell DC for the spell so the sphere can use it.
+    // Save the spell DC and SR for the spell so the sphere can use it.
     int nSaveDC = PRCGetSaveDC(OBJECT_SELF,OBJECT_SELF);
     SetLocalInt(OBJECT_SELF, "SP_SPHEREOFUD_DC", nSaveDC);
+    SetLocalInt(OBJECT_SELF, "SP_SPHEREOFUD_SR", nCasterLvl);
 }

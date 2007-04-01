@@ -21,6 +21,7 @@ const int MOVE_DW_BURNING_BLADE       = -1;
 const int MOVE_DS_IRON_GUARDS_GLARE   = -1;
 const int MOVE_DS_MARTIAL_SPIRIT      = -1;
 const int MOVE_DM_STANCE_OF_CLARITY   = -1;
+const int MOVE_SH_CHILD_SHADOW        = -1;
 
 
 // Level 2 Maneuvers

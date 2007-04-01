@@ -48,7 +48,7 @@ struct maneuver{
     /// The creature's initiator level in regards to this maneuver
     int nInitiatorLevel;
     /// The maneuver's spell ID
-    int nSpellId;
+    int nMoveId;
 };
 
 //////////////////////////////////////////////////
@@ -430,7 +430,7 @@ struct maneuver EvaluateManeuver(object oInitiator, object oTarget)
     move.oInitiator      = oInitiator;
     move.bCanManeuver    = TRUE; // Assume successfull maneuver by default
     move.nInitiatorLevel = nInitiatorLevel;
-    move.nSpellId        = PRCGetSpellId();
+    move.nMoveId        = PRCGetSpellId();
     
     // If the weapon is not appropriate, fail.
     if (!_GetIsManeuverWeaponAppropriate(move.oInitiator)) 
@@ -439,16 +439,16 @@ struct maneuver EvaluateManeuver(object oInitiator, object oTarget)
     	FloatingTextStrRefOnCreature(16829728, oInitiator, FALSE); // "You do not have an appropriate weapon to initiate this maneuver."
     }
     // If the maneuver is not readied, fail.
-    if (!GetIsManeuverReadied(move.oInitiator, nClass, move.nSpellId)) 
+    if (!GetIsManeuverReadied(move.oInitiator, nClass, move.nMoveId)) 
     {
     	move.bCanManeuver = FALSE;
-    	FloatingTextStrRefOnCreature(GetManeuverName(move.nSpellId) + " is not readied.", oInitiator, FALSE);
+    	FloatingTextStrRefOnCreature(GetManeuverName(move.nMoveId) + " is not readied.", oInitiator, FALSE);
     }    
     // If the maneuver is expended, fail.
-    if (GetIsManeuverExpended(move.oInitiator, nClass, move.nSpellId)) 
+    if (GetIsManeuverExpended(move.oInitiator, nClass, move.nMoveId)) 
     {
     	move.bCanManeuver = FALSE;
-    	FloatingTextStrRefOnCreature(GetManeuverName(move.nSpellId) + " is already expended.", oInitiator, FALSE);
+    	FloatingTextStrRefOnCreature(GetManeuverName(move.nMoveId) + " is already expended.", oInitiator, FALSE);
     }   
     // If the PC is in a Warblade recovery round, fail
     if (GetIsWarbladeRecoveryRound(oPC)) 
@@ -457,10 +457,10 @@ struct maneuver EvaluateManeuver(object oInitiator, object oTarget)
     	FloatingTextStrRefOnCreature(GetName(oPC) + " is recovering Warblade maneuvers.", oInitiator, FALSE);
     }  
     // Is the maneuver granted, and is the class a Crusader
-    if (GetIsManeuverGranted(oPC, move.nSpellId) && nClass == CLASS_TYPE_CRUSADER) 
+    if (GetIsManeuverGranted(oPC, move.nMoveId) && nClass == CLASS_TYPE_CRUSADER) 
     {
     	move.bCanManeuver = FALSE;
-    	FloatingTextStrRefOnCreature(GetManeuverName(move.nSpellId) + " is not a granted maneuver.", oInitiator, FALSE);
+    	FloatingTextStrRefOnCreature(GetManeuverName(move.nMoveId) + " is not a granted maneuver.", oInitiator, FALSE);
     }     
     
     // Skip doing anything if something has prevented successfull maneuver already by this point
@@ -470,9 +470,9 @@ struct maneuver EvaluateManeuver(object oInitiator, object oTarget)
 	// Deletes any active stances, and allows a Warblade 20 to have his two stances active.
 	_StanceSpecificChecks(oInitiator);
 	// Expend the Maneuver until recovered
-	ExpendManeuver(move.oInitiator, nClass, move.nSpellId);
+	ExpendManeuver(move.oInitiator, nClass, move.nMoveId);
 	// Do Martial Lore data
-	IdentifyManeuver(move.oInitiator, move.nSpellId);
+	IdentifyManeuver(move.oInitiator, move.nMoveId);
 	IdentifyDiscipline(move.oInitiator);
 	
     }//end if
@@ -564,7 +564,7 @@ void SetLocalManeuver(object oObject, string sName, struct maneuver move)
 
     SetLocalInt(oObject, sName + "_bCanManeuver",      move.bCanManeuver);
     SetLocalInt(oObject, sName + "_nInitiatorLevel",   move.nInitiatorLevel);
-    SetLocalInt(oObject, sName + "_nSpellID",          move.nSpellId);
+    SetLocalInt(oObject, sName + "_nSpellID",          move.nMoveId);
 }
 
 struct maneuver GetLocalManeuver(object oObject, string sName)
@@ -574,7 +574,7 @@ struct maneuver GetLocalManeuver(object oObject, string sName)
 
     move.bCanManeuver      = GetLocalInt(oObject, sName + "_bCanManeuver");
     move.nInitiatorLevel  = GetLocalInt(oObject, sName + "_nInitiatorLevel");
-    move.nSpellId          = GetLocalInt(oObject, sName + "_nSpellID");
+    move.nMoveId          = GetLocalInt(oObject, sName + "_nSpellID");
 
     return move;
 }

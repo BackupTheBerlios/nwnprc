@@ -48,7 +48,7 @@ void main()
        	       eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_ROOTED_TO_SPOT));
        	       eLink = ExtraordinaryEffect(eLink);
        	       
-       	InitiatorMovementCheck(oInitiator, move.nSpellId);
+       	InitiatorMovementCheck(oInitiator, move.nMoveId);
 
        	ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);
     }

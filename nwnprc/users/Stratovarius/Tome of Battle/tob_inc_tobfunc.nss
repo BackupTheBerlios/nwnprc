@@ -235,11 +235,13 @@ effect VersusSizeEffect(object oInitiator, effect eEffect, int nSize);
 
 /**
  * Checks every 6 seconds whether an adept has moved too far for a stance
+ * Or whether the adept has moved far enough to get a bonus from a stance
  *
  * @param oPC        The Initiator
  * @param nMoveId    The stance
+ * @param fFeet      The distance to check
  */
-void InitiatorMovementCheck(object oPC, int nMoveId);
+void InitiatorMovementCheck(object oPC, int nMoveId, float fFeet = 10.0);
 
 /**
  * Returns the total bonus to ability Checks for chosen ability
@@ -414,7 +416,7 @@ int _CheckPrereqsByDiscipline(object oPC, int nDiscipline, int nCount, int nClas
      return FALSE;
 }
 
-void _RecursiveStanceCheck(object oPC, object oTestWP, int nMoveId)
+void _RecursiveStanceCheck(object oPC, object oTestWP, int nMoveId, float fFeet = 10.0)
 {
     // Seeing if this works better
     string sWPTag = "PRC_BMWP_" + GetName(oPC) + GetManeuverName(nMoveId);
@@ -422,7 +424,7 @@ void _RecursiveStanceCheck(object oPC, object oTestWP, int nMoveId)
     // Distance moved in the last round
     float fDist = GetDistanceBetween(oPC, oTestWP);
     // Giving them a little extra distance because of NWN's dance of death
-    float fCheck = FeetToMeters(10.0);
+    float fCheck = FeetToMeters(fFeet);
     if(DEBUG) DoDebug("_RecursiveStanceCheck: fDist: " + FloatToString(fDist));
     if(DEBUG) DoDebug("_RecursiveStanceCheck: fCheck: " + FloatToString(fCheck));
     
@@ -430,13 +432,27 @@ void _RecursiveStanceCheck(object oPC, object oTestWP, int nMoveId)
     // Moved the distance
     if (fDist >= fCheck)
     {
-        // Clean up stances or other abilities that are lost when moving too far
-        RemoveEffectsFromSpell(oPC, nMoveId);
-        if(DEBUG) DoDebug("_RecursiveStanceCheck: Moved too far, cancelling stances.");
-        // Clean up the test WP as well
-        DestroyObject(oTestWP);
+        // Stances that clean up
+        if (nMoveId = MOVE_SD_STONEFOOT_STANCE) 
+        {
+        	RemoveEffectsFromSpell(oPC, nMoveId);
+        	if(DEBUG) DoDebug("_RecursiveStanceCheck: Moved too far, cancelling stances.");
+	        // Clean up the test WP as well
+        	DestroyObject(oTestWP);
+        }
+        else if (nMoveId = MOVE_SH_CHILD_SHADOW)
+        {
+        	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, SupernaturalEffect(EffectConcealment(20)), oPC, 6.0);
+        	if(DEBUG) DoDebug("_RecursiveStanceCheck: Applying bonuses.");
+        	// Clean up the test WP 
+        	DestroyObject(oTestWP);
+        	// Create waypoint for the movement for next round
+		CreateObject(OBJECT_TYPE_WAYPOINT, "nw_waypoint001", GetLocation(oPC), FALSE, sWPTag);        	
+        }
+        
     }
-    else // run the check again
+    // If they still have the spell, keep going
+    if (GetHasSpellEffect(nMoveId, oPC))
     {
     	DelayCommand(6.0, _RecursiveStanceCheck(oPC, oTestWP, nMoveId));
     	if(DEBUG) DoDebug("_RecursiveStanceCheck: DelayCommand(6.0, _RecursiveStanceCheck(oPC, oTestWP, nMoveId)).");
@@ -776,7 +792,7 @@ effect VersusSizeEffect(object oInitiator, effect eEffect, int nSize)
 	return eLink;
 }
 
-void InitiatorMovementCheck(object oPC, int nMoveId)
+void InitiatorMovementCheck(object oPC, int nMoveId, float fFeet = 10.0)
 {
     // Check to see if the WP is valid
     string sWPTag = "PRC_BMWP_" + GetName(oPC) + GetManeuverName(nMoveId);
@@ -788,7 +804,7 @@ void InitiatorMovementCheck(object oPC, int nMoveId)
         if(DEBUG) DoDebug("InitiatorMovementCheck: WP for " + DebugObject2Str(oPC) + " didn't exist, creating. Tag: " + sWPTag);
     }
     // Start the recursive HB check for movement
-    _RecursiveStanceCheck(oPC, oTestWP, nMoveId);
+    _RecursiveStanceCheck(oPC, oTestWP, nMoveId, fFeet);
 }
 
 int GetAbilityCheckBonus(object oPC, int nAbility)

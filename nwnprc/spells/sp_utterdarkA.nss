@@ -34,35 +34,32 @@ Created:   5/21/06
 
 void main()
 {
-	SPSetSchool(SPELL_SCHOOL_CONJURATION);
-	
-	object oTarget = GetEnteringObject();
-	object oPC = GetAreaOfEffectCreator();
-	int nCasterLvl = PRCGetCasterLevel(oPC);
-	float fDuration = (nCasterLvl * 600.0f);
-	
-	effect eInvis = EffectInvisibility(INVISIBILITY_TYPE_DARKNESS);
-	effect eDark = EffectDarkness();
-	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
-	effect eLink = EffectLinkEffects(eDark, eDur);	
-	effect eLink2 =  EffectLinkEffects(eInvis, eDur);	
-	effect ePnP = EffectLinkEffects(eDur, EffectDarkness());
-	
-	if(GetPRCSwitch(PRC_PNP_DARKNESS_35ED))
-	{
-		ePnP = EffectLinkEffects(eDur, EffectConcealment(20));
-	}
-	
-	//if valid                     and not caster
-	if(GetIsObjectValid(oTarget) && oTarget != oPC)
-	{
-		if(GetAlignmentGoodEvil(oTarget) != ALIGNMENT_EVIL)
-		{
-			SPApplyEffectToObject(DURATION_TYPE_PERMANENT, ePnP, oTarget);
-		}
-	
-	}
-	SPSetSchool();
+        SPSetSchool(SPELL_SCHOOL_CONJURATION);
+        
+        object oTarget = GetEnteringObject();
+        object oPC = GetAreaOfEffectCreator();
+        int nCasterLvl = PRCGetCasterLevel(oPC);
+        float fDuration = (nCasterLvl * 600.0f);
+        
+        effect eLink = EffectInvisibility(INVISIBILITY_TYPE_DARKNESS);
+               eLink = EffectLinkEffects(eLink, EffectUltravision());
+        effect eDark = EffectDarkness();
+                
+                                
+        //if valid                     and not caster
+        if(GetIsObjectValid(oTarget) && oTarget != oPC)
+        {
+                if(GetAlignmentGoodEvil(oTarget) != ALIGNMENT_EVIL)
+                {
+                        SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eDark, oTarget);
+                }
+                
+                else
+                {
+                        SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);
+                }       
+        }
+        SPSetSchool();
 }
-			
-			
+                        
+                        

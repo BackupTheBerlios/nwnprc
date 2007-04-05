@@ -44,8 +44,7 @@ void main()
         int nCasterLvl = PRCGetCasterLevel(oPC);
         int nMetaMagic = PRCGetMetaMagicFeat();
         float fDuration = (nCasterLvl * 600.0f);
-        location lLoc = GetSpellTargetLocation();
-        
+                
         //Check Extend metamagic feat.
         if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
         {
@@ -54,7 +53,7 @@ void main()
         
         //Create an instance of the AOE Object using the Apply Effect function
         
-        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAOE, lLoc, fDuration);
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAOE, oPC, fDuration);
         
         //Sanctified spells get mandatory 10 pt good adjustment, regardless of switch
         AdjustAlignment(oPC, ALIGNMENT_GOOD, 10);

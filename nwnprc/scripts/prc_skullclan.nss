@@ -57,8 +57,11 @@ void SkullClanSwordLight(object oPC, object oSkin, string sFlag)
 	object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
 	// Because there is no negative item property for attack vs race, we need to use a permanent effect.
 	IPSafeAddItemProperty(oItem, ItemPropertyAttackBonusVsRace(RACIAL_TYPE_UNDEAD, 20), 99999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+	// Now we check for left hand for duel wielders
+	oItem = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
+	if(IPGetIsMeleeWeapon(oItem)) IPSafeAddItemProperty(oItem, ItemPropertyAttackBonusVsRace(RACIAL_TYPE_UNDEAD, 20), 99999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
 	effect eAB = VersusRacialTypeEffect(EffectAttackDecrease(20), RACIAL_TYPE_UNDEAD);
-	eAB = SupernaturalEffect(eAB);
+	eAB = ExtraordinaryEffect(eAB);
 	ApplyEffectToObject(DURATION_TYPE_PERMANENT, eAB, oPC);
 	SetLocalInt(oSkin, sFlag, TRUE);
 }

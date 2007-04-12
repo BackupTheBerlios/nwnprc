@@ -484,7 +484,7 @@ void DoCutscene(object oPC, int nSetup = FALSE)
             SetLocalObject(GetModule(), "PCForThread"+sResult, OBJECT_SELF);
         }
     }
-    DoRotatingCamera(oPC);
+    // DoRotatingCamera(oPC);
 }
 
 void CloneMasterCheck()
@@ -503,6 +503,7 @@ void CloneMasterCheck()
 
 void DoRotatingCamera(object oPC)
 {
+    if (DEBUG) DoDebug("Running DoRotatingCamera()");
     if(!GetIsObjectValid(oPC))
     {
         // then the ccc is free to use again

@@ -104,6 +104,8 @@ void main()
             DelayCommand(10.0, StartDynamicConversation("prc_ccc_main", oPC, FALSE, FALSE, TRUE));
             // sets up the cutscene to the point in the convo at which the player logged out
             DelayCommand(11.0, DoCutscene(oPC, TRUE));
+            // mark that stage 1 of the cutscene is set up
+            SetLocalInt(oPC, "CutsceneStage", 1);
             SetExecutedScriptReturnValue(X2_EXECUTE_SCRIPT_END);
         }
         else // returning character
@@ -194,6 +196,18 @@ void main()
             // variable named nChoice is the value of the player's choice as stored when building the choice list
             // variable named nStage determines the current conversation node
             int nChoice = GetChoice(oPC);
+            
+            // check if the second stage of the cutscene needs setting up
+            // note: this is an *ugly hack*
+            // basically, if the player has made a choice, we know the area has fully loaded
+            // so we can set up the camera facing here
+            if (GetLocalInt(oPC, "CutsceneStage") == 1)
+            {
+                // do the camera stuff
+                DoRotatingCamera(oPC);
+                // mark that stage 2 of the cutscene is set up
+                SetLocalInt(oPC, "CutsceneStage", 2);
+            }
             
             // get nStage back so SetStage() actually changes the stage
             if(DEBUG) DoDebug("nStage before HandleChoice: " + IntToString(nStage));

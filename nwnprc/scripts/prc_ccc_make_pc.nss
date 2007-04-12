@@ -86,18 +86,18 @@ void main()
         || nClass == CLASS_TYPE_SORCERER)
             && !GetPRCSwitch(PRC_PNP_FAMILIARS))
     {
-        sScript += LetoAdd("FamiliarType", IntToString(nFamiliar), "int");
+        sScript += LetoSet("FamiliarType", IntToString(nFamiliar), "int");
         if(GetFamiliarName(oPC) == "")
-            sScript += LetoAdd("FamiliarName", RandomName(NAME_FAMILIAR), "string");
+            sScript += LetoSet("FamiliarName", RandomName(NAME_FAMILIAR), "string");
     }
 
     //Animal Companion
     //has a random name
     if(nClass == CLASS_TYPE_DRUID)
     {
-        sScript += LetoAdd("CompanionType", IntToString(nAnimalCompanion), "int");
+        sScript += LetoSet("CompanionType", IntToString(nAnimalCompanion), "int");
         if(GetAnimalCompanionName(oPC) == "")
-            sScript += LetoAdd("CompanionName", RandomName(NAME_ANIMAL), "string");
+            sScript += LetoSet("CompanionName", RandomName(NAME_ANIMAL), "string");
     }
 
     //Domains

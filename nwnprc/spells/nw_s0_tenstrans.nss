@@ -19,6 +19,7 @@
 //: Sep2002: losing hit-points won't get rid of the rest of the bonuses
 
 //:: modified by mr_bumpkin  Dec 4, 2003
+//:: modified by motu99 Apr 3, 2007
 
 /*
 PnP TT:
@@ -59,18 +60,28 @@ effects are subsumed by the spell effects).
 #include "x2_inc_shifter"
 
 #include "pnp_shft_poly"
+#include "prc_inc_combat"
 
-int CalculateAttackBonus()
+
+/*
+int CalculateAttackBonus(object oPC)
 {
-   int iBAB = GetBaseAttackBonus(OBJECT_SELF);
-   int iHD = GetHitDice(OBJECT_SELF);
+   int iBAB = GetBaseAttackBonus(oPC);
+   int iHD = GetHitDice(oPC);
    int iBonus = (iHD > 20) ? ((20 + (iHD - 19) / 2) - iBAB) : (iHD - iBAB); // most confusing line ever. :)
 
    return (iBonus > 0) ? iBonus : 0;
 }
+*/
 
+// this is used for PnP Tenser's in order to ensure that we attack anything in our sight
+// and to turn off that behavior (and restore # attacks), when spell has ended
 void PnPTensTransPseudoHB()
 {
+//	object oPC = OBJECT_SELF;
+	if (DEBUG) DoDebug("entered PnPTensTransPseudoHB");
+
+	// if we don't have the spell effect any more, do clean up
     if(!GetHasSpellEffect(SPELL_TENSERS_TRANSFORMATION))
     {
         //remove IPs for simple + martial weapon prof
@@ -98,34 +109,63 @@ void PnPTensTransPseudoHB()
             }
             ipTest = GetNextItemProperty(oSkin);
         }
+		// motu99: added this, to facilitate logic in prc_bab_caller
+//		DeleteLocalInt(OBJECT_SELF, "AttackCount_TensersTrans");
+		DeleteLocalInt(OBJECT_SELF, "CasterLvl_TensersTrans");
+		
+		// now execute prc_bab_caller to set the base attack count to normal again
+		ExecuteScript("prc_bab_caller", OBJECT_SELF);
+
         //end the pseudoHB
         return;
     }
+
+	// the spell is still active: make sure that we attack everything in sight
     if(GetCurrentAction() != ACTION_ATTACKOBJECT)
     {
-        ClearAllActions();
+//DoDebug("PnPTensTransPseudoHB: not attacking, look for enemies to attack");
+		// look for any living enemies
         object oTarget = GetNearestCreature(CREATURE_TYPE_REPUTATION,
             REPUTATION_TYPE_ENEMY, OBJECT_SELF, 1,
                 CREATURE_TYPE_PERCEPTION, PERCEPTION_SEEN_AND_HEARD,
                     CREATURE_TYPE_IS_ALIVE, TRUE);
-        if(GetDistanceToObject(oTarget) > 5.0)
-        {
-            ActionEquipMostDamagingRanged(oTarget);
-        }
-        else
-        {
-            int nTwoWeapon;
-            if(GetHasFeat(FEAT_AMBIDEXTERITY))
-                nTwoWeapon++;
-            if(GetHasFeat(FEAT_TWO_WEAPON_FIGHTING))
-                nTwoWeapon++;
-            if(GetHasFeat(FEAT_IMPROVED_TWO_WEAPON_FIGHTING))
-                nTwoWeapon++;
-            ActionEquipMostDamagingMelee(oTarget, nTwoWeapon);
-        }
-        ActionAttack(oTarget);
+
+		// if we find a living enemy, we will attack it, otherwise don't bother
+		if (GetIsObjectValid(oTarget) && !GetIsDead(oTarget))
+		{
+//DoDebug("PnPTensTransPseudoHB: found living enemy - clear all actions and attack it");
+			// stop anything we have been doing
+			ClearAllActions();
+
+			// if we don't yet have a weapon equipped (unless we are unarmed with a creature weapon equipped or a monk)
+			// we equip the most damaging ranged or melee weapon, depending on the distance to our enemies
+			object oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, OBJECT_SELF);
+			if(	(	!GetIsObjectValid(oWeapon) && !GetIsUnarmedFighter(OBJECT_SELF) )
+				||	GetBaseItemType(oWeapon) == BASE_ITEM_TORCH)
+			{
+//DoDebug("PnPTensTransPseudoHB: no weapon equipped, equip most damaging weapon");
+				if(GetDistanceToObject(oTarget) > 10.0)
+				{
+					ActionEquipMostDamagingRanged(oTarget);
+				}
+				else
+				{
+					int nTwoWeapon;
+					if(GetHasFeat(FEAT_AMBIDEXTERITY))
+						nTwoWeapon++;
+					if(GetHasFeat(FEAT_TWO_WEAPON_FIGHTING))
+						nTwoWeapon++;
+					if(GetHasFeat(FEAT_IMPROVED_TWO_WEAPON_FIGHTING))
+						nTwoWeapon++;
+					ActionEquipMostDamagingMelee(oTarget, nTwoWeapon);
+				}
+			}
+			// now attack the enemy
+			ActionAttack(oTarget);
+		}
     }
-    DelayCommand(6.0, PnPTensTransPseudoHB());
+    // do the pseudo heart beat again in 6 seconds, continue as long as spell lasts
+	DelayCommand(6.0, PnPTensTransPseudoHB());
 }
 
 void main()
@@ -133,95 +173,110 @@ void main()
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION);
 
+	// check if we should the PnP version
     if(GetPRCSwitch(PRC_PNP_TENSERS_TRANSFORMATION))
     {
-
+		// motu99: shouldn't this already have been checked before?
+		// in any case it will prevent casting a second tenser's while the first is still running
+		// (because no spell casting at all is allowed for a creature who has PnP tenser's on it)
         if (!X2PreSpellCastCode())
         {
             return;
         }
 
         //Declare major variables
+		object oTarget = PRCGetSpellTargetObject();
+		object oSkin = GetPCSkin(oTarget);
+
         int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
+//DoDebug("nw_s0_tensTrans: "+GetName(OBJECT_SELF) +" casts level " + IntToString(nCasterLvl)+ " TensersTrans on " + GetName(oTarget));
         float fDuration = RoundsToSeconds(nCasterLvl);
         int nMeta = PRCGetMetaMagicFeat();
-        int nHP;
-        int nBAB = nCasterLvl / 2;
-        int nStr = d4(2);
-        int nDex = d4(2);
-        int nCon = d4(2);
-        object oSkin = GetPCSkin(OBJECT_SELF);
 
-        int nTotalAttacks = (nBAB + GetBaseAttackBonus(OBJECT_SELF)/5)+1;
-        if(nTotalAttacks>5)
-            nTotalAttacks = 5;
-        int nCurrAttacks  = (GetBaseAttackBonus(OBJECT_SELF)/5)+1;
-        if(nCurrAttacks>5)
-            nCurrAttacks = 5;
-        int nAttacks = nTotalAttacks - nCurrAttacks;
-        if(nAttacks > 5)
-            nAttacks = 5;
-        if(nAttacks < 0)
-            nAttacks = 0;
+		// Attack Bonus Increase
+        int nAB = nCasterLvl / 2;
 
+		int nHP;
+        int nStr;
+        int nDex;
+        int nCon;
 
-        //Determine bonus HP
-        nHP += d6(nCasterLvl);
+		// find out the number of attacks with the bonus (can be higher than 4)
+		// motu99: commented this out, because it is done in prc_bab_caller
+//		int nTotalAttacks = GetMainHandAttacks(oTarget, nAB);
 
-        //Metamagic
-        if(nMeta & METAMAGIC_MAXIMIZE)
-        {
-            nHP = nCasterLvl * 6;
-            nStr = 8;
-            nDex = 8;
-            nCon = 8;
-        }
-        else if(nMeta & METAMAGIC_EMPOWER)
-        {
-            nHP += nHP/2;
-            nStr += nStr/2;
-            nDex += nDex/2;
-            nCon += nCon/2;
-        }
-        else if(nMeta & METAMAGIC_EXTEND)
-        {
-            fDuration *= 2.0;
-        }
+        //Determine bonus HP and Ability adjustments
+		//Metamagic
+		if(nMeta & METAMAGIC_MAXIMIZE)
+		{
+			nHP = nCasterLvl * 6;
+			nStr = 8;
+			nDex = 8;
+			nCon = 8;
+		}
+		else
+		{
+			nHP = d6(nCasterLvl);
+			nStr = d4(2);
+			nDex = d4(2);
+			nCon = d4(2);
+		}
 
-        effect eStr = EffectAbilityIncrease(ABILITY_STRENGTH, nStr);
-        effect eDex = EffectAbilityIncrease(ABILITY_DEXTERITY, nDex);
-        effect eCon = EffectAbilityIncrease(ABILITY_CONSTITUTION, nCon);
-        effect eBAB = EffectAttackIncrease(nBAB);
-//accounted for in prc_bab_caller    
-//        effect eAttacks = EffectModifyAttacks(nAttacks);
-        SetLocalInt(OBJECT_SELF, "AttackCount_TensersTrans", nTotalAttacks);
-        ExecuteScript("prc_bab_caller", OBJECT_SELF);
-        effect eHP = EffectTemporaryHitpoints(nHP); //apply separately
-        effect eFort = EffectSavingThrowIncrease(SAVING_THROW_FORT, 5);
-        effect eVis = EffectVisualEffect(VFX_IMP_SUPER_HEROISM);
-        effect eLink;
-        eLink = EffectLinkEffects(eStr, eDex);
-        eLink = EffectLinkEffects(eLink, eCon);
-        eLink = EffectLinkEffects(eLink, eBAB);
-//        eLink = EffectLinkEffects(eLink, eAttacks);
-        eLink = EffectLinkEffects(eLink, eFort);
-        itemproperty ipSimple = PRCItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_SIMPLE);
-        itemproperty ipMartial = PRCItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_MARTIAL);
+		if(nMeta & METAMAGIC_EMPOWER)
+		{
+			nHP += nHP/2;
+			nStr += nStr/2;
+			nDex += nDex/2;
+			nCon += nCon/2;
+		}
 
-        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, OBJECT_SELF, fDuration, TRUE, -1, nCasterLvl);
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, OBJECT_SELF, fDuration, TRUE, -1, nCasterLvl);
-        //AddItemProperty(DURATION_TYPE_TEMPORARY, ipSimple, oSkin, fDuration);
-        //AddItemProperty(DURATION_TYPE_TEMPORARY, ipMartial, oSkin, fDuration);
-        IPSafeAddItemProperty(oSkin, ipSimple,  fDuration);
-        IPSafeAddItemProperty(oSkin, ipMartial, fDuration);
+		if(nMeta & METAMAGIC_EXTEND)
+		{
+			fDuration += fDuration;
+		}
 
-        DelayCommand(6.0, PnPTensTransPseudoHB());
+		effect eEffect = EffectAbilityIncrease(ABILITY_STRENGTH, nStr);
+		eEffect = EffectLinkEffects(eEffect, EffectAbilityIncrease(ABILITY_DEXTERITY, nDex));
+		eEffect = EffectLinkEffects(eEffect, EffectAbilityIncrease(ABILITY_CONSTITUTION, nCon));
+		eEffect = EffectLinkEffects(eEffect, EffectAttackIncrease(nAB));
+		eEffect = EffectLinkEffects(eEffect, EffectSavingThrowIncrease(SAVING_THROW_FORT, 5));
+		//accounted for in prc_bab_caller
+		// eEffect = EffectLinkEffects(eEffect, EffectModifyAttacks(nAttacks));
 
-        DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-        // Getting rid of the integer used to hold the spells spell school
-        return;
-    }
+		//apply separately (so that we don't loose any other boni when we loose the temporary HP)
+		effect eHP = EffectTemporaryHitpoints(nHP); 
+
+		effect eVis = EffectVisualEffect(VFX_IMP_SUPER_HEROISM);
+
+		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, oTarget, fDuration, TRUE, -1, nCasterLvl);
+		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eEffect, oTarget, fDuration, TRUE, -1, nCasterLvl);
+
+		itemproperty ipSimple = PRCItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_SIMPLE);
+		itemproperty ipMartial = PRCItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_MARTIAL);
+		//AddItemProperty(DURATION_TYPE_TEMPORARY, ipSimple, oSkin, fDuration);
+		//AddItemProperty(DURATION_TYPE_TEMPORARY, ipMartial, oSkin, fDuration);
+		IPSafeAddItemProperty(oSkin, ipSimple,  fDuration);
+		IPSafeAddItemProperty(oSkin, ipMartial, fDuration);
+
+		// remember the caster level in order to properly calculate the number of attacks in prc_bab_caller
+		SetLocalInt(oTarget, "CasterLvl_TensersTrans", nCasterLvl);
+//		SetLocalInt(oTarget, "AttackCount_TensersTrans", nTotalAttacks);
+		// prc_bab_caller must be executed *after* the spell effects have been applied to the target (otherwise it won't detect Tenser's on the target)
+		ExecuteScript("prc_bab_caller", oTarget);
+		
+		//motu99: why don't we signal the spell event, as in Bioware tenser's? 
+		// SignalEvent(oTarget, EventSpellCastAt(oTarget, SPELL_TENSERS_TRANSFORMATION, FALSE));
+
+		// put the pseudo heart beat on the target of the spell
+		DelayCommand(6.0, AssignCommand(oTarget,PnPTensTransPseudoHB()));
+
+		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+		// Getting rid of the integer used to hold the spells spell school
+		
+		// finished with PnP version
+		return;
+	}
 
 
 
@@ -253,36 +308,41 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     // End of Spell Cast Hook
 
     //Declare major variables
+	object oTarget = PRCGetSpellTargetObject();
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nDuration = CasterLvl;
     int nMeta = PRCGetMetaMagicFeat();
-    int nHP, nCnt;
+    int nHP, nAB, nCnt;
 
-    //Determine bonus HP
-    for(nCnt; nCnt <= CasterLvl; nCnt++)
-    {
-        nHP += d6();
-    }
-
+ /*
+	//Determine bonus HP
+	for(nCnt; nCnt <= CasterLvl; nCnt++)
+	{
+		nHP += d6();
+	}
+*/
     //Metamagic
-    if(nMeta & METAMAGIC_MAXIMIZE)
-    {
-        nHP = CasterLvl * 6;
-    }
-    else if(nMeta & METAMAGIC_EMPOWER)
-    {
-        nHP = nHP + (nHP/2);
-    }
-    else if(nMeta & METAMAGIC_EXTEND)
-    {
-        nDuration *= 2;
-    }
+	//Determine bonus HP and Ability adjustments
+	//Metamagic
+	if(nMeta & METAMAGIC_MAXIMIZE)
+		nHP = CasterLvl * 6;
+	else
+		nHP = d6(CasterLvl);
+
+	if(nMeta & METAMAGIC_EMPOWER)
+		nHP += nHP/2;
+
+	if(nMeta & METAMAGIC_EXTEND)
+		nDuration += nDuration;
+
+	// attack bonus
+	nAB = CasterLvl / 2;
 
     // Get The PC's Equipment
-    object oWeaponOld = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, OBJECT_SELF);
-    object oArmorOld  = GetItemInSlot(INVENTORY_SLOT_CHEST, OBJECT_SELF);
-    object oHelmetOld = GetItemInSlot(INVENTORY_SLOT_HEAD, OBJECT_SELF);
-    object oShieldOld = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, OBJECT_SELF);
+    object oWeaponOld = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget);
+    object oArmorOld  = GetItemInSlot(INVENTORY_SLOT_CHEST, oTarget);
+    object oHelmetOld = GetItemInSlot(INVENTORY_SLOT_HEAD, oTarget);
+    object oShieldOld = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oTarget);
 
     if (GetBaseItemType(oShieldOld) != BASE_ITEM_SMALLSHIELD &&
         GetBaseItemType(oShieldOld) != BASE_ITEM_LARGESHIELD &&
@@ -292,10 +352,14 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     }
 
     //Declare effects
-    effect eAttack = EffectAttackIncrease(CalculateAttackBonus());
+    effect eAttack = EffectAttackIncrease(nAB);
     effect eSave = EffectSavingThrowIncrease(SAVING_THROW_FORT, 5);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+
+	// motu99: This could be calculated better (see below), but I left it at 2 extra attacks, because this is bioware's strange implementation
+//	effect eSwing = EffectModifyAttacks(GetMainHandAttacks(oTarget, nAB)-GetMainHandAttacks(oTarget));
     effect eSwing = EffectModifyAttacks(2);
+
     effect ePoly = EffectPolymorph(28);
     effect eHP = EffectTemporaryHitpoints(nHP);
     effect eVis = EffectVisualEffect(VFX_IMP_SUPER_HEROISM);
@@ -307,20 +371,20 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     eLink = EffectLinkEffects(eLink, ePoly);
 
     //Signal Spell Event
-    SignalEvent(OBJECT_SELF, EventSpellCastAt(OBJECT_SELF, SPELL_TENSERS_TRANSFORMATION, FALSE));
+    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_TENSERS_TRANSFORMATION, FALSE));
 
     //this command will make shore that polymorph plays nice with the shifter
-    ShifterCheck(OBJECT_SELF);
+    ShifterCheck(oTarget);
 
-    ClearAllActions(); // prevents an exploit
+    AssignCommand(oTarget, ClearAllActions()); // prevents an exploit
 
-    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);
-    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, OBJECT_SELF, RoundsToSeconds(nDuration), TRUE, -1, CasterLvl);
-    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, OBJECT_SELF, RoundsToSeconds(nDuration), TRUE, -1, CasterLvl);
+    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, oTarget, RoundsToSeconds(nDuration), TRUE, -1, CasterLvl);
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration), TRUE, -1, CasterLvl);
 
     // Get the Polymorphed form's stuff
-    object oWeaponNew = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,OBJECT_SELF);
-    object oArmorNew = GetItemInSlot(INVENTORY_SLOT_CARMOUR,OBJECT_SELF);
+    object oWeaponNew = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oTarget);
+    object oArmorNew = GetItemInSlot(INVENTORY_SLOT_CARMOUR,oTarget);
 
     // Tenser's Sword is overpowerful with equipment merging -- no longer do you
     // need a +3 flaming longsword if you have reasonably good equipment.

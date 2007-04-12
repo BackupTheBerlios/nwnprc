@@ -17,6 +17,7 @@
     By: Flaming_Sword
     Created: Jun 29, 2006
     Modified: Jun 30, 2006
+    Modified; Apr 7, 2007 by motu99
 */
 
 #include "prc_sp_func"
@@ -26,8 +27,10 @@ void DeleteTheInts(object oTarget)
 {
     DeleteLocalInt(oTarget, "X2_Wep_Dam_Type");
     DeleteLocalInt(oTarget, "X2_Wep_Caster_Lvl");
+    DeleteLocalInt(oTarget, "X2_Wep_Dam_Type_DF");
+    DeleteLocalInt(oTarget, "X2_Wep_Caster_Lvl_DF");
 }
-/// Used simply to use up a bit less processor time on the delayed command to delete these 2 Ints.
+/// Used simply to use up a bit less processor time on the delayed command to delete these 4 Ints.
 
 void ApplyEffectsToWeapon(object oItem, int nSpellID, float fDuration, object oCaster, int nCasterLevel)
 {
@@ -63,22 +66,35 @@ void ApplyEffectsToWeapon(object oItem, int nSpellID, float fDuration, object oC
             //SendMessageToPC(OBJECT_SELF, "I am the caster");
             switch(nDamageType)
             {
-            case DAMAGE_TYPE_ACID: nAppearanceType = ITEM_VISUAL_ACID; break;
-            case DAMAGE_TYPE_COLD: nAppearanceType = ITEM_VISUAL_COLD; break;
-            case DAMAGE_TYPE_ELECTRICAL: nAppearanceType = ITEM_VISUAL_ELECTRICAL; break;
-            case DAMAGE_TYPE_SONIC: nAppearanceType = ITEM_VISUAL_SONIC; break;
+				case DAMAGE_TYPE_ACID: nAppearanceType = ITEM_VISUAL_ACID; break;
+				case DAMAGE_TYPE_COLD: nAppearanceType = ITEM_VISUAL_COLD; break;
+				case DAMAGE_TYPE_ELECTRICAL: nAppearanceType = ITEM_VISUAL_ELECTRICAL; break;
+				case DAMAGE_TYPE_SONIC: nAppearanceType = ITEM_VISUAL_SONIC; break;
             }
-            DeleteLocalInt(oItem, "X2_Wep_Dam_Type");
-            SetLocalInt(oItem, "X2_Wep_Dam_Type", nDamageType);
+			// motu99: added differentiation for Darkfire and flame weapon
+			if (bDarkfire)
+			{
+				// DeleteLocalInt(oItem, "X2_Wep_Dam_Type_DF");
+				SetLocalInt(oItem, "X2_Wep_Dam_Type_DF", nDamageType);
+				// Sets Caster Level int because it was too confusing trying to figure out caster level
+				// in the damage script.
+				// DeleteLocalInt(oItem, "X2_Wep_Caster_Lvl");
+				SetLocalInt(oItem, "X2_Wep_Caster_Lvl_DF", nCasterLevel);
+			}
+			else
+			{
+				// DeleteLocalInt(oItem, "X2_Wep_Dam_Type");
+				SetLocalInt(oItem, "X2_Wep_Dam_Type", nDamageType);
+				// Sets Caster Level int because it was too confusing trying to figure out caster level
+				// in the damage script.
+				// DeleteLocalInt(oItem, "X2_Wep_Caster_Lvl");
+				SetLocalInt(oItem, "X2_Wep_Caster_Lvl", nCasterLevel);
+			}
 
-            // Sets Caster Level int because it was too confusing trying to figure out caster level
-            // in the damage script.
-            DeleteLocalInt(oItem, "X2_Wep_Caster_Lvl");
-            SetLocalInt(oItem, "X2_Wep_Caster_Lvl", nCasterLevel);
 
             // If the spell is cast again, any previous itemproperties matching are removed.
             if(!bDarkfire || (bDarkfire && !(GetBaseItemType(oItem) == BASE_ITEM_SHORTSPEAR && GetHasFeat(FEAT_THUNDER_WEAPON, oCaster))))
-                IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(bDarkfire ? 127 : 124, max(nCasterLevel, 10)), fDuration, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+                IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(bDarkfire ? 127 : 124, nCasterLevel), fDuration, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
             IPSafeAddItemProperty(oItem, ItemPropertyVisualEffect(nAppearanceType), fDuration,X2_IP_ADDPROP_POLICY_REPLACE_EXISTING,FALSE,TRUE);
             //DelayCommand(fDuration, DeleteTheInts(oItem));
             break;

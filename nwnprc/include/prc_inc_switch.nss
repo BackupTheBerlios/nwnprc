@@ -1499,7 +1499,47 @@ const string PRC_BRAWLER_SIZE                        = "PRC_BRAWLER_SIZE";
  */
 const string PRC_APPEARANCE_SIZE                        = "PRC_APPEARANCE_SIZE";
 
+/**
+  * This reenables the Bioware Monk attack progression, with up to 6 monk attacks per round
+*/
+const string PRC_BIOWARE_MONK_ATTACKS                  ="PRC_BIOWARE_MONK_ATTACKS";
 
+/**
+ * This switch (if on) takes care that only light weapons (one size smaller than the creature size)
+ * are finessable, meaning that small races can only finesse tiny weapons
+ */
+const string PRC_SMALL_CREATURE_FINESSE                  ="PRC_SMALL_CREATURE_FINESSE";
+
+/**
+ * This switch (if on) lets dark fire and flame weapon
+ * spells stack. They also stack with normal fire damage of the weapon
+*/
+const string PRC_FLAMEWEAPON_DARKFIRE_STACK                  ="PRC_FLAMEWEAPON_DARKFIRE_STACK";
+
+/**
+ * switches on Biowares Divine Power version (bonus atacks come at full AB)
+ */
+const string PRC_BIOWARE_DIVINE_POWER                = "PRC_BIOWARE_DIVINE_POWER";
+
+/**
+ * if True, allows us to select a better target in prc combat functions
+ * by switching from one target to another (closer) target
+ * only relevant for melee combat (we never switch targets on ranged combat)
+ */
+const string PRC_ALLOW_SWITCH_OF_TARGET                = "PRC_ALLOW_SWITCH_OF_TARGET";
+
+/**
+ * disable coup the grace on first attack in round
+ */
+const string PRC_DISABLE_COUP_DE_GRACE                = "PRC_DISABLE_COUP_DE_GRACE";
+
+/**
+ * limit to the (non-dice) damage of a flame weapon or darkfire spell
+ * WARNING: These two switches should be set to a default value of 10 in the initialization scripts!!
+ * Otherwise we still have the bug from PRC 3.1c of (non-dice) damage becoming excessively high for high caster levels
+ */
+const string PRC_FLAME_WEAPON_DAMAGE_MAX          = "PRC_FLAME_WEAPON_DAMAGE_MAX";
+const string PRC_DARKFIRE_DAMAGE_MAX              = "PRC_DARKFIRE_DAMAGE_MAX";
 
 
 /******************************************************************************\
@@ -3362,6 +3402,14 @@ void CreateSwitchNameArray()
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_3_5e_FIST_DAMAGE);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_BRAWLER_SIZE);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_APPEARANCE_SIZE);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_BIOWARE_MONK_ATTACKS);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_SMALL_CREATURE_FINESSE);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_FLAMEWEAPON_DARKFIRE_STACK);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_BIOWARE_DIVINE_POWER);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_ALLOW_SWITCH_OF_TARGET);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_DISABLE_COUP_DE_GRACE);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_FLAME_WEAPON_DAMAGE_MAX);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_DARKFIRE_DAMAGE_MAX);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_DISABLE_CRAFT);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CRAFT_TIMER_MULTIPLIER);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CRAFT_TIMER_MAX);

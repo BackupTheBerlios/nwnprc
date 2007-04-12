@@ -26,20 +26,53 @@ still problem:
 
 
 //:: modified by mr_bumpkin Dec 4, 2003
-#include "spinc_common"
+//:: modified by motu99 April 7, 2007
 
+#include "spinc_common"
+#include "x2_inc_spellhook"
 #include "prc_alterations"
 
+/*
+#include "prc_inc_combat"
+#include "x2_inc_shifter"
+#include "pnp_shft_poly"
+*/
 
-#include "x2_inc_spellhook"
+void PnPDivinePowerPseudoHB();
 
-int CalculateAttackBonus()
+void PnPDivinePowerPseudoHB()
 {
-   int iBAB = GetBaseAttackBonus(OBJECT_SELF);
-   int iHD = GetHitDice(OBJECT_SELF);
-   int iBonus = (iHD > 20) ? ((20 + (iHD - 19) / 2) - iBAB) : (iHD - iBAB); // most confusing line ever. :)
-   
-   return (iBonus > 0) ? iBonus : 0;
+//	object oPC = OBJECT_SELF;
+	if (DEBUG) DoDebug("entered PnPDivinePowerPseudoHB");
+
+	// if we don't have the spell effect any more, do clean up
+    if(!GetHasSpellEffect(SPELL_DIVINE_POWER))
+    {
+		DeleteLocalInt(OBJECT_SELF, "AttackCount_DivinePower");
+		
+		// now execute prc_bab_caller to set the base attack count to normal again
+		ExecuteScript("prc_bab_caller", OBJECT_SELF);
+
+        //end the pseudoHB
+        return;
+	}
+	// otherwise rerun the Pseudo HB until spell expires
+	DelayCommand(6.0, PnPDivinePowerPseudoHB());
+}
+
+
+void RemoveTempHitPointsFromObject(object oPC)
+{
+    effect eProtection;
+    int nCnt = 0;
+
+    eProtection = GetFirstEffect(oPC);
+    while (GetIsEffectValid(eProtection))
+    {
+      if(GetEffectType(eProtection) == EFFECT_TYPE_TEMPORARY_HITPOINTS)
+        RemoveEffect(oPC, eProtection);
+      eProtection = GetNextEffect(oPC);
+    }
 }
 
 void main()
@@ -66,64 +99,78 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
     //Declare major variables
     object oTarget = PRCGetSpellTargetObject();
-    int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-    int nLevel = CasterLvl;
-    int nHP = nLevel;
-    int nAttack = CalculateAttackBonus();
+	int iBAB = GetBaseAttackBonus(oTarget);
+	int iHD = GetHitDice(oTarget);
+
+    int iCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
+//DoDebug("nw_s0_divpower: " +GetName(OBJECT_SELF)+" is casting DivinePower with caster level " + IntToString(iCasterLvl)+" on "+GetName(oTarget));
+    int nHP = iCasterLvl;
+    float fDuration = RoundsToSeconds(iCasterLvl);
+
+	int iFighterBAB = GetFighterBAB(iHD);
+    int iAttackBonus = iFighterBAB - iBAB;
+	if (iAttackBonus < 0) iAttackBonus = 0;
+	
+	int iTotalAttackCount = GetAttacks(iFighterBAB, iHD);
+	int iBonusAttacks = iTotalAttackCount - GetAttacks(iBAB, iHD);
+
     int nStr = GetAbilityScore(oTarget, ABILITY_STRENGTH);
-    int nStrength = (nStr - 18) * -1;
-    if(nStrength < 0)
-    {
-        nStrength = 0;
-    }
+    int iStrengthBonus = 18 - nStr;
+
+	//Meta-Magic
     int nMetaMagic = PRCGetMetaMagicFeat();
+    if(nMetaMagic & METAMAGIC_EXTEND)
+        fDuration += fDuration;
+
     effect eVis = EffectVisualEffect(VFX_IMP_SUPER_HEROISM);
-    effect eStrength = EffectAbilityIncrease(ABILITY_STRENGTH, nStrength);
     effect eHP = EffectTemporaryHitpoints(nHP);
-    effect eAttack = EffectAttackIncrease(nAttack);
-//accounted for in prc_bab_caller    
-//    effect eAttackMod = EffectModifyAttacks(1);
-    int nAttackCount;
-    if(CasterLvl<6)
-        nAttackCount = 1;
-    else if(CasterLvl<11)
-        nAttackCount = 2;
-    else if(CasterLvl<16)
-        nAttackCount = 3;
-    else if(CasterLvl>=16)
-        nAttackCount = 4;
-    SetLocalInt(oTarget, "AttackCount_DivinePower", nAttackCount);
-    ExecuteScript("prc_bab_caller", OBJECT_SELF);
-    effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
 
-    effect eLink = eAttack;//EffectLinkEffects(eAttack, eAttackMod);
-    eLink = EffectLinkEffects(eLink, eDur);
+	// begin effect link with visual duration effect
+	effect eLink = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+	
+	// make sure the attack bonus is a bonus, link it the the duration visual
+	if (iAttackBonus > 0)
+		eLink = EffectLinkEffects(eLink, EffectAttackIncrease(iAttackBonus));
 
-//    effect eLink = EffectLinkEffects(eAttack, eHP);
-//    eLink = EffectLinkEffects(eLink, eDur);
+	int bBiowareDP = GetPRCSwitch(PRC_BIOWARE_DIVINE_POWER);
+	
+	// if there are any bonus attacks, link them in, but only if we have biowares Divine Power version
+	if (iBonusAttacks > 0 && bBiowareDP)
+	{
+		eLink = EffectLinkEffects(eLink, EffectModifyAttacks(iBonusAttacks));
+	}
 
-    //Make sure that the strength modifier is a bonus
-    if(nStrength > 0)
-    {
-        eLink = EffectLinkEffects(eLink, eStrength);
-    }
-    //Meta-Magic
-    if(CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
-    {
-        nLevel *= 2;
-    }
-    RemoveEffectsFromSpell(oTarget, GetSpellId());
-    RemoveTempHitPoints();
+    //Make sure that the strength modifier is a bonus, and link it in
+    if(iStrengthBonus > 0)
+        eLink = EffectLinkEffects(eLink,EffectAbilityIncrease(ABILITY_STRENGTH, iStrengthBonus));
+ 
+	// remove any effects from any previous Divine Power Spell
+	RemoveEffectsFromSpell(oTarget, GetSpellId());
+    RemoveTempHitPointsFromObject(oTarget);
 
     //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_DIVINE_POWER, FALSE));
 
     //Apply Link and VFX effects to the target
-    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nLevel),TRUE,-1,CasterLvl);
-    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, oTarget, RoundsToSeconds(nLevel),TRUE,-1,CasterLvl);
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, oTarget, fDuration,TRUE,-1,iCasterLvl);
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration,TRUE,-1,iCasterLvl);
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+	// motu99: this must be executed *after* the spell effects are applied, otherwise prc_bab_caller will not change the base attack count!
+	if(!bBiowareDP)
+	{	// if we don't use Bioware's version of DP, set the additional # of attacks via prc_bab_caller
+		SetLocalInt(oTarget, "AttackCount_DivinePower", iTotalAttackCount);
+		ExecuteScript("prc_bab_caller", oTarget);
+/*
+		// now reset the # attacks after the spell expires
+		DelayCommand(fDuration +0.45, DeleteLocalInt(oTarget, "AttackCount_DivinePower"));
+		DelayCommand(fDuration +0.5, ExecuteScript("prc_bab_caller", oTarget));
+*/
+		// put the pseudo heart beat on the target of the spell, to check whether spell expired
+		DelayCommand(6.0, AssignCommand(oTarget,PnPDivinePowerPseudoHB()));
+	}
+
+	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 // Getting rid of the local integer storing the spellschool name
 }
 

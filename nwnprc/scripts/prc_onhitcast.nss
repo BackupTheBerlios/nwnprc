@@ -37,6 +37,7 @@ void DoImprovedRicochet(object oPC, object oTarget);
 void main()
 {
     // Call the normal OnHitCastSpell: Unique script
+	if (DEBUG) DoDebug("prc_onhitcast: entered, executing normal onhitcastspell unique script x2_s3_onhitcast");
     ExecuteScript("x2_s3_onhitcast", OBJECT_SELF);
 
     object oItem;        // The item casting triggering this spellscript
@@ -58,6 +59,9 @@ void main()
     {
         oItem = GetLocalObject(oSpellOrigin, "PRC_CombatSystem_OnHitCastSpell_Item");
     }
+
+	if (DEBUG) DoDebug("prc_onhitcast: now executing prc stuff for item "+ GetName(oItem));
+
     nVassal    = GetLevelByClass(CLASS_TYPE_VASSAL, OBJECT_SELF);
     nBArcher   = GetLevelByClass(CLASS_TYPE_BLARCHER, OBJECT_SELF);
     nFoeHunter = GetLevelByClass(CLASS_TYPE_FOE_HUNTER, OBJECT_SELF);

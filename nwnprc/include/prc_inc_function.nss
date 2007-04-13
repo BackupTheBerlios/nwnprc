@@ -242,7 +242,8 @@ void EvalPRCFeats(object oPC)
        )
         ExecuteScript("acp_auto", oPC);
 
-    // Epic spells
+// this is handled inside the PRC Options conversation now.
+/*    // Epic spells
     if((GetCasterLvl(CLASS_TYPE_CLERIC,   oPC) >= 21 ||
         GetCasterLvl(CLASS_TYPE_DRUID,    oPC) >= 21 ||
         GetCasterLvl(CLASS_TYPE_SORCERER, oPC) >= 21 ||
@@ -255,7 +256,8 @@ void EvalPRCFeats(object oPC)
     {
         IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(IP_CONST_FEAT_EPIC_REST), 0.0f,
                               X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-    }
+    }*/
+    
     // Miscellaneous
     ExecuteScript("prc_sneak_att", oPC);
     ExecuteScript("race_skin", oPC);

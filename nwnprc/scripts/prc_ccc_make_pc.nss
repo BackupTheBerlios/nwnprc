@@ -143,8 +143,8 @@ void main()
         sScript += LetoAdd("SkillList/Rank", IntToString(array_get_int(oPC, "Skills", i)), "byte");
         sScript += LetoAdd("LvlStatList/[_]/SkillList/Rank", IntToString(array_get_int(oPC, "Skills", i)), "byte");
     }
-    sScript += LetoAdd("SkillPoints", IntToString(array_get_int(oPC, "Skills", -1)), "word");
-    sScript += LetoAdd("LvlStatList/[_]/SkillPoints", IntToString(array_get_int(oPC, "Skills", -1)), "word");
+    sScript += LetoAdd("SkillPoints", IntToString(nSkillPointsSaved), "word");
+    sScript += LetoAdd("LvlStatList/[_]/SkillPoints", IntToString(nSkillPointsSaved), "word");
     
     // saved skill points - this is set regardless to stop the skill point exploit
     sScript += LetoSet("SkillPoints", IntToString(nSkillPointsSaved), "word");

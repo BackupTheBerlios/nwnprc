@@ -227,7 +227,7 @@ int GetSpellslotLevel(int nClass, object oPC)
             nArcSpellslotLevel += (GetLevelByClass(nTempClass, oPC) + 1) / nArcSpellMod;
         if(nDivSpellMod == 1)
             nDivSpellslotLevel += GetLevelByClass(nTempClass, oPC);
-        else if(nDivSpellslotLevel > 1)
+        else if(nDivSpellMod > 1)
             nDivSpellslotLevel += (GetLevelByClass(nTempClass, oPC) + 1) / nDivSpellMod;
     }
     if(GetFirstArcaneClass(oPC) == nClass)

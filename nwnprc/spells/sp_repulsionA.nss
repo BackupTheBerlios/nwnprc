@@ -4,14 +4,14 @@
 //:://////////////////////////////////////////////7
 /** @file Repulsion
 Abjuration
-Level: 	Clr 7, Protection 7, Sor/Wiz 6
-Components: 	V, S, F/DF
-Casting Time: 	1 standard action
-Range: 	Up to 10 ft./level
-Area: 	Up to 10-ft.-radius/level emanation centered on you
-Duration: 	1 round/level (D)
-Saving Throw: 	Will negates
-Spell Resistance: 	Yes
+Level:  Clr 7, Protection 7, Sor/Wiz 6
+Components:     V, S, F/DF
+Casting Time:   1 standard action
+Range:  Up to 10 ft./level
+Area:   Up to 10-ft.-radius/level emanation centered on you
+Duration:       1 round/level (D)
+Saving Throw:   Will negates
+Spell Resistance:       Yes
 
 An invisible, mobile field surrounds you and prevents
 creatures from approaching you. You decide how big 
@@ -47,62 +47,66 @@ void DoPush(object oTarget, object oCaster);
 
 void main()
 {
-	object oCaster = GetAreaOfEffectCreator();
-	object oTarget = GetEnteringObject();
-	int nDC = SPGetSpellSaveDC(oTarget, oCaster);
-	
-	//SR
-	if(!MyPRCResistSpell(oCaster, oTarget, PRCGetCasterLevel(oCaster) + SPGetPenetr()))
-	{
-		//Saving Throw
-		if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
-		{
-			DoPush(oTarget, oCaster);
-		}
-	}			
+        object oCaster = GetAreaOfEffectCreator();
+        object oTarget = GetEnteringObject();
+        int nDC = SPGetSpellSaveDC(oTarget, oCaster);
+        
+        
+        if(oTarget != oCaster)
+        {
+                //SR
+                if(!MyPRCResistSpell(oCaster, oTarget, PRCGetCasterLevel(oCaster) + SPGetPenetr()))
+                {
+                        //Saving Throw
+                        if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
+                        {
+                                DoPush(oTarget, oCaster);
+                        }
+                }
+        }                       
 }
 
 void DoPush(object oTarget, object oCaster)
 {
-	// Calculate how far the creature gets pushed
-	float fDistance = FeetToMeters(50.0f);
-	// Determine if they hit a wall on the way
-	location lTrueSpeaker   = GetLocation(oCaster);
-	location lTargetOrigin = GetLocation(oTarget);
-	vector vAngle          = AngleToVector(GetRelativeAngleBetweenLocations(lTrueSpeaker, lTargetOrigin));
-	vector vTargetOrigin   = GetPosition(oTarget);
-	vector vTarget         = vTargetOrigin + (vAngle * fDistance);
-	
-	if(!LineOfSightVector(vTargetOrigin, vTarget))
-	{
-		// Hit a wall, binary search for the wall
-		float fEpsilon    = 1.0f;          // Search precision
-		float fLowerBound = 0.0f;          // The lower search bound, initialise to 0
-		float fUpperBound = fDistance;     // The upper search bound, initialise to the initial distance
-		fDistance         = fDistance / 2; // The search position, set to middle of the range
-		
-		do
-		{
-			// Create test vector for this iteration
-			vTarget = vTargetOrigin + (vAngle * fDistance);
-			
-			// Determine which bound to move.
-			if(LineOfSightVector(vTargetOrigin, vTarget))
-			fLowerBound = fDistance;
-			else
-			fUpperBound = fDistance;
-			
-			// Get the new middle point
-			fDistance = (fUpperBound + fLowerBound) / 2;
-		}
-		while(fabs(fUpperBound - fLowerBound) > fEpsilon);
-	}
-	
-	// Create the final target vector
-	vTarget = vTargetOrigin + (vAngle * fDistance);
-	
-	// Move the target
-	location lTargetDestination = Location(GetArea(oTarget), vTarget, GetFacing(oTarget));
-	AssignCommand(oTarget, ClearAllActions(TRUE));
-	AssignCommand(oTarget, JumpToLocation(lTargetDestination));
+        // Calculate how far the creature gets pushed
+        float fDistance = FeetToMeters(50.0f);
+        // Determine if they hit a wall on the way
+        location lTrueSpeaker   = GetLocation(oCaster);
+        location lTargetOrigin = GetLocation(oTarget);
+        vector vAngle          = AngleToVector(GetRelativeAngleBetweenLocations(lTrueSpeaker, lTargetOrigin));
+        vector vTargetOrigin   = GetPosition(oTarget);
+        vector vTarget         = vTargetOrigin + (vAngle * fDistance);
+        
+        if(!LineOfSightVector(vTargetOrigin, vTarget))
+        {
+                // Hit a wall, binary search for the wall
+                float fEpsilon    = 1.0f;          // Search precision
+                float fLowerBound = 0.0f;          // The lower search bound, initialise to 0
+                float fUpperBound = fDistance;     // The upper search bound, initialise to the initial distance
+                fDistance         = fDistance / 2; // The search position, set to middle of the range
+                
+                do
+                {
+                        // Create test vector for this iteration
+                        vTarget = vTargetOrigin + (vAngle * fDistance);
+                        
+                        // Determine which bound to move.
+                        if(LineOfSightVector(vTargetOrigin, vTarget))
+                        fLowerBound = fDistance;
+                        else
+                        fUpperBound = fDistance;
+                        
+                        // Get the new middle point
+                        fDistance = (fUpperBound + fLowerBound) / 2;
+                }
+                while(fabs(fUpperBound - fLowerBound) > fEpsilon);
+        }
+        
+        // Create the final target vector
+        vTarget = vTargetOrigin + (vAngle * fDistance);
+        
+        // Move the target
+        location lTargetDestination = Location(GetArea(oTarget), vTarget, GetFacing(oTarget));
+        AssignCommand(oTarget, ClearAllActions(TRUE));
+        AssignCommand(oTarget, JumpToLocation(lTargetDestination));
 }

@@ -154,7 +154,7 @@ int CheckMissingUtterances(object oPC, int nClass, int nLexicon)
 
     int nCurrentUtterances = GetUtteranceCount(oPC, nClass, nLexicon);
     int nMaxUtterances = GetMaxUtteranceCount(oPC, nClass, nLexicon);
-    if(DEBUG) DoDebug("CheckMissingUtterances(" + IntToString(nClass) + ", " + GetName(oPC) + ") = " + IntToString(nCurrentUtterances) + ", " + IntToString(nMaxUtterances));
+    if(DEBUG) DoDebug("CheckMissingUtterances(" + IntToString(nClass) + ", " + IntToString(nLexicon) + ", " + GetName(oPC) + ") = " + IntToString(nCurrentUtterances) + ", " + IntToString(nMaxUtterances));
 
     if(nCurrentUtterances < nMaxUtterances)
     {

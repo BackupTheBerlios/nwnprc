@@ -363,7 +363,7 @@ int GetMaxUtteranceCount(object oCreature, int nList, int nLexicon)
                     nMaxUtterances = StringToInt(Get2DACache(GetAMSKnownFileName(CLASS_TYPE_TRUENAMER), "PerfectedMap", nLevel - 1));
 
             // Calculate feats
-
+	    if(DEBUG) DoDebug("case UTTERANCE_LIST_TRUENAMER:{" + IntToString(nMaxUtterances));
             // Add in the custom modifier
             nMaxUtterances += GetKnownUtterancesModifier(oCreature, nList, nLexicon);
             break;

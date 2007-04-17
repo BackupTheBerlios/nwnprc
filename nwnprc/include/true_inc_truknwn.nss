@@ -347,7 +347,7 @@ int GetUtteranceCount(object oCreature, int nList, int nLexicon)
 int GetMaxUtteranceCount(object oCreature, int nList, int nLexicon)
 {
     int nMaxUtterances = 0;
-
+    if(DEBUG) DoDebug("GetMaxUtteranceCount(" + IntToString(nList) + ", " + IntToString(nLexicon) + ", " + GetName(oCreature) + ")");
     switch(nList)
     {
         case UTTERANCE_LIST_TRUENAMER:{

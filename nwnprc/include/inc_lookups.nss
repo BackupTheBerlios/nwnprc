@@ -520,7 +520,8 @@ string GetAMSKnownFileName(int nClass)
     // Various naming schemes based on system
     if(nClass == CLASS_TYPE_TRUENAMER)
         sFile = "cls_true_known";
-    if(nClass == CLASS_TYPE_CRUSADER || nClass == CLASS_TYPE_SWORDSAGE || nClass == CLASS_TYPE_WARBLADE)
+    // ToB
+    else if(nClass == CLASS_TYPE_CRUSADER || nClass == CLASS_TYPE_SWORDSAGE || nClass == CLASS_TYPE_WARBLADE)
         sFile = "cls_mvkn" + GetStringRight(sFile, GetStringLength(sFile) - 8); // Hardcoded the cls_ part. It's not as if any class uses some other prefix - Ornedan, 20061210
     // Assume psionics if no other match
     else
@@ -537,7 +538,8 @@ string GetAMSDefinitionFileName(int nClass)
     // Various naming schemes based on system
     if(nClass == CLASS_TYPE_TRUENAMER)
         sFile = "cls_true_utter";
-    if(nClass == CLASS_TYPE_CRUSADER || nClass == CLASS_TYPE_SWORDSAGE || nClass == CLASS_TYPE_WARBLADE)
+    // ToB
+    else if(nClass == CLASS_TYPE_CRUSADER || nClass == CLASS_TYPE_SWORDSAGE || nClass == CLASS_TYPE_WARBLADE)
         sFile = "cls_move" + GetStringRight(sFile, GetStringLength(sFile) - 8); // Hardcoded the cls_ part. It's not as if any class uses some other prefix - Ornedan, 20061210
     // Assume psionics if no other match
     else

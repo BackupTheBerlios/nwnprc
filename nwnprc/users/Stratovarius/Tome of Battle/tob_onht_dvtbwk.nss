@@ -14,7 +14,7 @@ the end of the your next turn.
 void main()
 {
         object oSpellOrigin = OBJECT_SELF;
-        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectACIncrease(1, AC_ARMOUR_ENCHANTMENT_BONUS), oSpellOrigin, 6.0f);
+        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectACIncrease(1, AC_DODGE_BONUS), oSpellOrigin, 6.0f);
 }
 
         

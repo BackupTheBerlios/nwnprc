@@ -306,6 +306,10 @@ void EvalPRCFeats(object oPC)
     // Gathers all the calls to SetBaseAttackBonus() to one place
     // Must be after all evaluationscripts that need said function.
     ExecuteScript("prc_bab_caller", oPC);
+    
+    //Tome of Battle feats
+    if(GetHasFeat(FEAT_DEVOTED_BULWARK, oPC)                     ExecuteScript("tob_devote_blwk", oPC);
+    
 }
 
 void DeletePRCLocalInts(object oSkin)

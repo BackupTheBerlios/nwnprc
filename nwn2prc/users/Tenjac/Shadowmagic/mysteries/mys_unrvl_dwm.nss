@@ -1,15 +1,18 @@
 //::///////////////////////////////////////////////
-//:: Name      
-//:: FileName  
+//:: Name      Unravel Dweomer
+//:: FileName  mys_unrvl_dwm.nss
 //:://////////////////////////////////////////////
-/**@file 
+/**@file Unravel Dweomer
+Initiate, Unbinding Shade
+Level/School: 4th/Abjuration
+Range: Close
+Target: Up to one creature/level, all within 30 ft
+of each other.
+Duration:  Instantaneous
+Saving Throw: See text  
+Spell Resistance: No
 
-Level/School: 
-Range: 
-Effect: 
-Duration:  
-Saving Throw:  
-Spell Resistance: 
+This mystery functions like the spell break enchantment.
 
 Author:    Tenjac
 Created:   

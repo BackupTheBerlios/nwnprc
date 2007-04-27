@@ -544,7 +544,7 @@ void DoHeaderAndChoices(int nStage)
             SetDefaultTokens();
             break;
         }
-        case STAGE_DOMAIN_CHECK: {
+        case STAGE_DOMAIN_CHECK1: {
             sText = GetStringByStrRef(16824209) + "\n"; // You have selected:
             // first domain
             int nDomain = GetLocalInt(OBJECT_SELF,"Domain1");
@@ -553,8 +553,18 @@ void DoHeaderAndChoices(int nStage)
                 nDomain = 0;
             sText += GetStringByStrRef(StringToInt(Get2DACache("domains", "Name", nDomain))) + "\n";
             sText += GetStringByStrRef(StringToInt(Get2DACache("domains", "Description", nDomain))) + "\n";
+            sText += "\n"+GetStringByStrRef(16824210); // Is this correct?
+            SetHeader(sText);
+            // choices Y/N
+            AddChoice(GetStringByStrRef(4753), -1); // no
+            AddChoice(GetStringByStrRef(4752), 1); // yes
+            MarkStageSetUp(nStage);
+            break;
+        }
+        case STAGE_DOMAIN_CHECK2: {
+            sText = GetStringByStrRef(16824209) + "\n"; // You have selected:
             // second domain
-            nDomain = GetLocalInt(OBJECT_SELF,"Domain2");
+            int nDomain = GetLocalInt(OBJECT_SELF,"Domain2");
             // fix for air domain being 0
             if (nDomain == -1)
                 nDomain = 0;
@@ -1419,6 +1429,7 @@ int HandleChoice(int nStage, int nChoice)
                 if (nChoice == 0)
                     nChoice = -1;
                 SetLocalInt(OBJECT_SELF, "Domain1", nChoice);
+                nStage = STAGE_DOMAIN_CHECK1;
             }
             else // second domain
             {
@@ -1426,11 +1437,30 @@ int HandleChoice(int nStage, int nChoice)
                 if (nChoice == 0)
                     nChoice = -1;
                 SetLocalInt(OBJECT_SELF, "Domain2", nChoice);
-                nStage++;
+                nStage = STAGE_DOMAIN_CHECK2;
+            }    
+            break;
+        }
+        case STAGE_DOMAIN_CHECK1: {
+            if (nChoice == 1)
+            {
+                nStage = STAGE_DOMAIN;
+                MarkStageNotSetUp(STAGE_DOMAIN_CHECK1);
+                MarkStageNotSetUp(STAGE_DOMAIN);
+                // add domain feats
+                AddDomainFeats();
+            }
+            else
+            {
+                nStage = STAGE_DOMAIN;
+                MarkStageNotSetUp(STAGE_DOMAIN_CHECK1);
+                MarkStageNotSetUp(STAGE_DOMAIN);
+                DeleteLocalInt(OBJECT_SELF,"Domain1");
+                DeleteLocalInt(OBJECT_SELF,"Domain2");
             }
             break;
         }
-        case STAGE_DOMAIN_CHECK: {
+        case STAGE_DOMAIN_CHECK2: {
             if (nChoice == 1)
             {
                 nStage++;
@@ -1440,7 +1470,7 @@ int HandleChoice(int nStage, int nChoice)
             else
             {
                 nStage = STAGE_DOMAIN;
-                MarkStageNotSetUp(STAGE_DOMAIN_CHECK);
+                MarkStageNotSetUp(STAGE_DOMAIN_CHECK2);
                 MarkStageNotSetUp(STAGE_DOMAIN);
                 DeleteLocalInt(OBJECT_SELF,"Domain1");
                 DeleteLocalInt(OBJECT_SELF,"Domain2");

@@ -1867,7 +1867,7 @@ void  DoDomainsLoop()
         sName = Get2DACache("domains", "Name", i);
         while(i <= GetPRCSwitch(FILE_END_DOMAINS))
         {
-            if (sName != "" && sName != sDomain)
+            if (sName != "" && IntToString(i) != sDomain)
             {
                 AddChoice(GetStringByStrRef(StringToInt(sName)), i);
             }

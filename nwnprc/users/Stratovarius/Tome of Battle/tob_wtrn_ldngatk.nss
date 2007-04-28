@@ -1,25 +1,26 @@
 /*
    ----------------
-   Vanguard Strike
+   Leading the Attack
 
-   tob_dvsp_vngstrk
+   tob_wtrn_ldngatk.nss
    ----------------
 
-   29/03/07 by Stratovarius
+   27/04/07 by Stratovarius
 */ /** @file
 
-    Vanguard Strike
+    Leading the Attack
 
-    Devoted Spirit (Strike)
-    Level: Crusader 1
+    White Raven (Strike)
+    Level: Crusader 1, Warblade 1
     Initiation Action: 1 Standard Action
     Range: Melee Attack
     Target: One Creature
 
-    You batter aside your foe's defenses with a vicious, overwhelming attack, 
-    leaving him vulnerable to your allies blows.
+    You boldly strike at your enemy. As you attack, you shout a war cry
+    to demonstrate that victory is at hand. This attack inspires nearby
+    allies to join the fray with renewed vigor.
     
-    You make a single attack against an enemy. If you hit, that enemy takes a -4 AC penalty for one round.
+    If your strike hits, your target suffers a -4 penalty to AC.
 */
 
 #include "tob_inc_tobfunc"
@@ -42,12 +43,12 @@ void main()
 
     if(move.bCanManeuver)
     {
-    	effect eNone;
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Vanguard Strike Hit", "Vanguard Strike Miss");
+	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Leading the Attack Hit", "Leading the Attack Miss");
 	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
     	{
-		effect eLink = EffectLinkEffects(EffectACDecrease(4), EffectVisualEffect(VFX_IMP_SOUND_SYMBOL_WEAKNESS));
-		       eLink = ExtraordinaryEffect(eLink);
+		effect eLink = ExtraordinaryEffect(EffectVisualEffect(PSI_IMP_CONCUSSION_BLAST));
+		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink, oTarget);
+		eLink = ExtraordinaryEffect(EffectACDecrease(4));
 		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0);
         }
     }

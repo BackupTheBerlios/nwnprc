@@ -13,5 +13,6 @@ TO DO: ORGANIZE MANEUVER LEVELS SO THAT MANEUVERS AND STANCES OF THE SAME LEVEL 
 Add recovery and readying hooks into the appropriate areas.
 Set Local int in the Warblade recovery script.
 Withheld MAneuvers: write the process for granting moves when in combat.
+Add a radial feat with the various combat options on it. 
 
 There are a few places where GetLevelByClass is used. This will not work with PrCs. Update when those are added. tob_inc_recovery has at least some.

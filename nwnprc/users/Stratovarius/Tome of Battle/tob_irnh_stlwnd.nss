@@ -42,7 +42,7 @@ void main()
     if(move.bCanManeuver)
     {
     	effect eNone;
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, FALSE, "Steel Wind Hit", "Steel Wind Miss");
+	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Steel Wind Hit", "Steel Wind Miss");
 	location lTarget = GetLocation(oTarget);
 	// Use the function to get the closest creature as a target
 	object oAreaTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lTarget, TRUE, OBJECT_TYPE_CREATURE);

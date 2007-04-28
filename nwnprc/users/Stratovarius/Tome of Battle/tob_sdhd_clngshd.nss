@@ -48,7 +48,7 @@ void main()
     	int nDamage = d6();
     	int nDamageType = DAMAGE_TYPE_MAGICAL;
     	
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, nDamage, nDamageType, FALSE, "Clinging Shadow Strike Hit", "Clinging Shadow Strike Miss");
+	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, nDamage, nDamageType, "Clinging Shadow Strike Hit", "Clinging Shadow Strike Miss");
 	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
     	{
     		// Saving Throw

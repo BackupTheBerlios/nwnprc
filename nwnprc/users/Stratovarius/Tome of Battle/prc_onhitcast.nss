@@ -253,6 +253,18 @@ void main()
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(2), oHealTarget);
 	SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_HEALING_L_LAW), oHealTarget);
     }
+    
+    // Blood in the Water
+    if(GetHasSpellEffect(MOVE_TC_BLOOD_WATER, oSpellOrigin) && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
+    {
+    	// Fake critical hit check
+    	if (d20() >= GetWeaponCriticalRange(oSpellOrigin, oItem))
+    	{
+        	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectAttackIncrease(1), oSpellOrigin);
+        	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectACIncrease(1), oSpellOrigin);
+		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_COM_BLOOD_CRT_YELLOW_HEAD), oSpellOrigin);
+	}
+    }    
 
     /*//////////////////////////////////////////////////
     //////////////// Blade Magic ///////////////////////

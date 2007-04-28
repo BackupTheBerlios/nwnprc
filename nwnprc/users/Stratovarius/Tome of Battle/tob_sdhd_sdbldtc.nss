@@ -46,7 +46,7 @@ void main()
     if(move.bCanManeuver)
     {
     	// Normal attack
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, FALSE, "Shadow Blade Technique Hit", "Shadow Blade Technique Miss");
+	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Shadow Blade Technique Hit", "Shadow Blade Technique Miss");
 	// Shadow double blade
 	if (GetAttackRoll(oTarget, oInitiator, GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator)))
 	{

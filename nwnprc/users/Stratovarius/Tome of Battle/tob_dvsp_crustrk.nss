@@ -46,7 +46,7 @@ void main()
     if(move.bCanManeuver)
     {
     	effect eNone;
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, FALSE, "Crusader's Strike Hit", "Crusader's Strike Miss");
+	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Crusader's Strike Hit", "Crusader's Strike Miss");
 	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
     	{
     		if (GetAlignmentGoodEvil(oInitiator) != GetAlignmentGoodEvil(oTarget) || 

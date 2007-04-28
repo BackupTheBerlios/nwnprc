@@ -922,7 +922,14 @@ int DoCharge(object oPC, object oTarget, int nDoAttack = TRUE, int nGenerateAoO 
 	       	AssignCommand(oPC, ActionMoveToObject(oTarget, TRUE));
 	       	if (nDoAttack) // Perform the Attack
 	       	{
-			PerformAttack(oPC, oAreaTarget, eNone, 0.0, 0, 0, 0, FALSE, "Charge Hit", "Charge Miss");
+	       		int nDamage = 0;
+	       		// Checks for a White Raven Stance
+	       		// If it exists, +1 damage/initiator level
+	       		if (GetIsObjectValid(GetLocalObject(oPC, "LeadingTheCharge")))
+	       		{
+	       			nDamage += GetInitiatorLevel(GetLocalObject(oPC, "LeadingTheCharge"));
+	       		}
+			PerformAttack(oPC, oAreaTarget, eNone, 0.0, 0, nDamage, 0, FALSE, "Charge Hit", "Charge Miss");
 			// Local int set when Perform Attack hits
 			nSucceed = GetLocalInt(oTarget, "PRCCombat_StruckByAttack");
 		}

@@ -1,6 +1,6 @@
 /*
    ----------------
-   Moment of Perfect Clarity
+   Moment of Perfect Mind
 
    tob_dmnd_prfclry.nss
    ----------------
@@ -8,7 +8,7 @@
     29/03/07 by Stratovarius
 */ /** @file
 
-    Moment of Perfect Clarity
+    Moment of Perfect Mind
 
     Diamond Mind (Counter)
     Level: Swordsage 1, Warblade 1

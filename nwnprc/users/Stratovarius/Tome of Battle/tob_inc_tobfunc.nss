@@ -343,6 +343,14 @@ int DoBullRush(object oPC, object oTarget, int nExtraBonus, int nGenerateAoO = T
  */
 int DoTrip(object oPC, object oTarget, int nExtraBonus, int nGenerateAoO = TRUE, int nCounterTrip = TRUE);
 
+/**
+ * Will take an int and transform it into one of the DAMAGE_BONUS constants (From 1 to 20).
+ *
+ * @param nCheck     Int to convert
+ * @return           DAMAGE_BONUS_1 to DAMAGE_BONUS_20
+ */
+int GetIntToDamage(int nCheck);
+
 //////////////////////////////////////////////////
 /*                  Includes                    */
 //////////////////////////////////////////////////
@@ -1050,6 +1058,94 @@ int DoTrip(object oPC, object oTarget, int nExtraBonus, int nGenerateAoO = TRUE,
 	
 	// Let people know if we made the hit or not
 	return nSucceed;
+}
+
+int GetIntToDamage(int nCheck)
+{
+    int IntToDam = -1;
+
+    if (nCheck == 1)
+    {
+        IntToDam = DAMAGE_BONUS_1;
+    }
+    else if (nCheck == 2)
+    {
+        IntToDam = DAMAGE_BONUS_2;
+    }
+    else if (nCheck == 3)
+    {
+        IntToDam = DAMAGE_BONUS_3;
+    }
+    else if (nCheck == 4)
+    {
+        IntToDam = DAMAGE_BONUS_4;
+    }
+    else if (nCheck == 5)
+    {
+        IntToDam = DAMAGE_BONUS_5;
+    }
+    else if (nCheck == 6)
+    {
+        IntToDam = DAMAGE_BONUS_6;
+    }
+    else if (nCheck == 7)
+    {
+        IntToDam = DAMAGE_BONUS_7;
+    }
+    else if (nCheck == 8)
+    {
+        IntToDam = DAMAGE_BONUS_8;
+    }
+    else if (nCheck == 9)
+    {
+        IntToDam = DAMAGE_BONUS_9;
+    }
+    else if (nCheck == 10)
+    {
+        IntToDam = DAMAGE_BONUS_10;
+    }
+    else if (nCheck == 11)
+    {
+        IntToDam = DAMAGE_BONUS_11;
+    }
+    else if (nCheck == 12)
+    {
+        IntToDam = DAMAGE_BONUS_12;
+    }
+    else if (nCheck == 13)
+    {
+        IntToDam = DAMAGE_BONUS_13;
+    }
+    else if (nCheck == 14)
+    {
+        IntToDam = DAMAGE_BONUS_14;
+    }
+    else if (nCheck == 15)
+    {
+        IntToDam = DAMAGE_BONUS_15;
+    }
+    else if (nCheck == 16)
+    {
+        IntToDam = DAMAGE_BONUS_16;
+    }
+    else if (nCheck == 17)
+    {
+        IntToDam = DAMAGE_BONUS_17;
+    }
+    else if (nCheck == 18)
+    {
+        IntToDam = DAMAGE_BONUS_18;
+    }
+    else if (nCheck == 19)
+    {
+        IntToDam = DAMAGE_BONUS_19;
+    }
+    else if (nCheck >= 20)
+    {
+        IntToDam = DAMAGE_BONUS_20;
+    }
+
+    return IntToDam;
 }
 
 // Test main

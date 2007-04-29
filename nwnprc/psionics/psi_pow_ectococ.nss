@@ -74,6 +74,11 @@ void main()
         int nMaxSize = CREATURE_SIZE_MEDIUM + manif.nTimesAugOptUsed_2;
     	effect eLink =                          EffectCutsceneParalyze();
     	       eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_GLOBE_INVULNERABILITY));
+    	       // The cocoon has hardness 8 and 20 hitpoints
+       		eLink = EffectLinkEffects(eLink, EffectDamageResistance(DAMAGE_TYPE_SLASHING,    8));
+		eLink = EffectLinkEffects(eLink, EffectDamageResistance(DAMAGE_TYPE_PIERCING,    8));
+                eLink = EffectLinkEffects(eLink, EffectDamageResistance(DAMAGE_TYPE_BLUDGEONING, 8));    
+                eLink = EffectLinkEffects(eLink, EffectDamageReduction(20, DAMAGE_POWER_PLUS_TWENTY, 20));    
         effect eVis  = EffectVisualEffect(VFX_DUR_TENTACLE);
         float fDuration = RoundsToSeconds(manif.nManifesterLevel);
         if(manif.bExtend) fDuration *= 2;

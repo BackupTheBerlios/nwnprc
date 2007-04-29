@@ -1232,6 +1232,17 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
         SetLocalInt(oTarget, "PRC_Power_SecondChance_UserForRound", TRUE);
         DelayCommand(6.0f, DeleteLocalInt(oTarget, "PRC_Power_SecondChance_UserForRound"));
     }
+    
+    // Zealous Surge Reroll
+    if(nSaveRoll == 0 &&     // Failed the save
+       GetLocalInt(oTarget, "ZealousSurge"))
+    {
+        // Reroll
+        nSaveRoll = BWSavingThrow(nSavingThrow, oTarget, nDC, nSaveType, oSaveVersus, fDelay);
+
+        // Ability Used
+	DeleteLocalInt(oTarget, "ZealousSurge");
+    }      
 
     // Iron Mind Barbed Mind ability
     if(GetLevelByClass(CLASS_TYPE_IRONMIND, oTarget) >= 10)
@@ -1319,6 +1330,16 @@ int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveTy
         SetLocalInt(oTarget, "PRC_Power_SecondChance_UserForRound", TRUE);
         DelayCommand(6.0f, DeleteLocalInt(oTarget, "PRC_Power_SecondChance_UserForRound"));
     }
+    // Zealous Surge Reroll
+    if(nDamage == nOriginalDamage  &&     // Failed the save
+       GetLocalInt(oTarget, "ZealousSurge"))
+    {
+        // Reroll
+        nDamage = GetReflexAdjustedDamage(nDamage, oTarget, nDC, nSaveType, oSaveVersus);
+
+        // Ability Used
+	DeleteLocalInt(oTarget, "ZealousSurge");
+    }    
 
     return nDamage;
 }
@@ -2010,6 +2031,7 @@ int GetHasMettle(object oTarget, int nSavingThrow)
         if (GetLevelByClass(CLASS_TYPE_IRONMIND, oTarget) >= 5 && GetBaseAC(oArmour) >= 6) nMettle = TRUE;
         else if (GetLevelByClass(CLASS_TYPE_HEXBLADE, oTarget) >= 3) nMettle = TRUE;
         else if (GetLevelByClass(CLASS_TYPE_SOHEI, oTarget) >= 9) nMettle = TRUE;
+        else if (GetLevelByClass(CLASS_TYPE_CRUSADER, oTarget) >= 13) nMettle = TRUE;
         // Fill out the line below to add another class with Will mettle
         // else if (GetLevelByClass(CLASS_TYPE_X, oTarget) >= X) nMettle = TRUE;
     }
@@ -2018,6 +2040,7 @@ int GetHasMettle(object oTarget, int nSavingThrow)
         // Add Classes with Fort mettle here
         if (GetLevelByClass(CLASS_TYPE_HEXBLADE, oTarget) >= 3) nMettle = TRUE;
         else if (GetLevelByClass(CLASS_TYPE_SOHEI, oTarget) >= 9) nMettle = TRUE;
+        else if (GetLevelByClass(CLASS_TYPE_CRUSADER, oTarget) >= 13) nMettle = TRUE;
     }
 
     return nMettle;

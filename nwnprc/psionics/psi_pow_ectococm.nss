@@ -68,6 +68,11 @@ void main()
         int nDC         = GetManifesterDC(oManifester);
         effect eLink    = EffectCutsceneParalyze();
     	       eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_GLOBE_INVULNERABILITY));
+    	       // The cocoon has hardness 8 and 20 hitpoints
+	        eLink = EffectLinkEffects(eLink, EffectDamageResistance(DAMAGE_TYPE_SLASHING,    8));
+	       	eLink = EffectLinkEffects(eLink, EffectDamageResistance(DAMAGE_TYPE_PIERCING,    8));
+	        eLink = EffectLinkEffects(eLink, EffectDamageResistance(DAMAGE_TYPE_BLUDGEONING, 8));    
+                eLink = EffectLinkEffects(eLink, EffectDamageReduction(20, DAMAGE_POWER_PLUS_TWENTY, 20));    
         effect eVis     = EffectVisualEffect(VFX_DUR_TENTACLE);
         float fRadius   = EvaluateWidenPower(manif, FeetToMeters(20.0f + (5.0f * manif.nTimesAugOptUsed_1)));
         float fDuration = RoundsToSeconds(manif.nManifesterLevel);

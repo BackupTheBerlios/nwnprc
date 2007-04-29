@@ -43,6 +43,7 @@ const int SMITE_TYPE_UNDEAD                         = 31;
 const int SMITE_TYPE_INFIDEL                        = 41;
 
 const int SMITE_TYPE_KIAI                           = 51;
+const int SMITE_TYPE_CRUSADER                       = 52;
 
 //this calculates damage and stuff from class and type
 //takes epic smiting feats etc into account
@@ -271,13 +272,27 @@ void DoSmite(object oPC, object oTarget, int nType)
         if(nAttack < 1)
             nAttack = 1;
         nDamageType = DAMAGE_TYPE_DIVINE;
-        sFailedTarget = "Taget cannot be invalid";
+        sFailedTarget = "Target cannot be invalid";
         sFailedSmiter = "Smite Failed: you are not Lawful";
         sHit =  "Kiai Smite Hit";
         sMiss = "Kiai Smite Missed";
         if(GetAlignmentLawChaos(OBJECT_SELF)    != ALIGNMENT_LAWFUL)
             nSmiterInvalid = TRUE;
     }
+    
+    else if(nType == SMITE_TYPE_CRUSADER)
+    {
+        eSmite = EffectVisualEffect(VFX_COM_HIT_DIVINE);
+        nDamage = GetAbilityModifier(ABILITY_CHARISMA, oPC);
+        if(nDamage < 1)
+            nDamage = 0; // Can't go negative
+        nAttack = GetLevelByClass(CLASS_TYPE_CRUSADER, oPC);
+        nDamageType = DAMAGE_TYPE_MAGICAL;
+        sFailedTarget = "Target cannot be invalid";
+        sFailedSmiter = "Smite Failed: Report Error";
+        sHit =  "Crusader Smite Hit";
+        sMiss = "Crusader Smite Missed";
+    }    
 
     //check target is valid
     //and show message if not

@@ -34,62 +34,66 @@ void SetRancorVar(object oPC);
 void SetImprovedRicochetVar(object oPC);
 void DoImprovedRicochet(object oPC, object oTarget);
 
+
 void main()
 {
+	object oSpellOrigin = OBJECT_SELF; // On a weapon: The one wielding the weapon. On an armor: The one wearing an armor
+
     // Call the normal OnHitCastSpell: Unique script
-	if (DEBUG) DoDebug("prc_onhitcast: entered, executing normal onhitcastspell unique script x2_s3_onhitcast");
-    ExecuteScript("x2_s3_onhitcast", OBJECT_SELF);
+	if (DEBUG) DoDebug("prc_onhitcast: entered, executing normal onhitcastspell unique power script x2_s3_onhitcast for "+GetName(oSpellOrigin));
+    ExecuteScript("x2_s3_onhitcast", oSpellOrigin);
+
+	// motu99: setting a local int, so that onhitcast impact spell scripts can find out, whether they were called from prc_onhitcast
+	// or from somewhere else (presumably the aurora engine). This local int will be deleted just before we exit prc_onhitcast
+	// Note that any scripts that are called by a DelayCommand (or AssignCommand) from prc_onhitcast will not find this local int
+	SetLocalInt(oSpellOrigin, "prc_ohc", TRUE);
 
     object oItem;        // The item casting triggering this spellscript
     object oSpellTarget; // On a weapon: The one being hit. On an armor: The one hitting the armor
-    object oSpellOrigin; // On a weapon: The one wielding the weapon. On an armor: The one wearing an armor
     int nVassal;         //Vassal Level
     int nBArcher;        // Blood Archer level
     int nFoeHunter;      // Foe Hunter Level
     //int bItemIsWeapon;
 
 
+	// fill the variables
+	oSpellTarget = PRCGetSpellTargetObject(oSpellOrigin);
 
-    // fill the variables
-    oSpellOrigin = OBJECT_SELF;
-    oSpellTarget = PRCGetSpellTargetObject();
-    oItem        = GetSpellCastItem();
-    // Scripted combat system
-    if(!GetIsObjectValid(oItem))
-    {
-        oItem = GetLocalObject(oSpellOrigin, "PRC_CombatSystem_OnHitCastSpell_Item");
-    }
+	// motu99: replaced call to Bioware's GetSpellCastItem with new PRC wrapper function
+	// that will ensure that we retrieve a valid item when we are called from scripted combat (prc_inc_combat) or
+	// any other routine that calls ExecuteSpellScript (found in prc_inc_spells) *outside* of a spell script
+	// oItem = GetSpellCastItem();
+	oItem = PRCGetSpellCastItem(oSpellOrigin);
+	
+	// if (DEBUG) DoDebug("prc_onhitcast: now executing prc stuff with item = "+ GetName(oItem)+", target = "+GetName(oSpellTarget)+", caller = "+GetName(oSpellOrigin));
 
-	if (DEBUG) DoDebug("prc_onhitcast: now executing prc stuff for item "+ GetName(oItem));
-
-    nVassal    = GetLevelByClass(CLASS_TYPE_VASSAL, OBJECT_SELF);
-    nBArcher   = GetLevelByClass(CLASS_TYPE_BLARCHER, OBJECT_SELF);
-    nFoeHunter = GetLevelByClass(CLASS_TYPE_FOE_HUNTER, OBJECT_SELF);
+    nVassal    = GetLevelByClass(CLASS_TYPE_VASSAL, oSpellOrigin);
+    nBArcher   = GetLevelByClass(CLASS_TYPE_BLARCHER, oSpellOrigin);
+    nFoeHunter = GetLevelByClass(CLASS_TYPE_FOE_HUNTER, oSpellOrigin);
 
     //// Swashbuckler Weakening and Wounding Criticals
-    if(GetHasFeat(INSIGHTFUL_STRIKE, OBJECT_SELF))
-        ExecuteScript("prc_swashweak", OBJECT_SELF);
+    if(GetHasFeat(INSIGHTFUL_STRIKE, oSpellOrigin))
+        ExecuteScript("prc_swashweak", oSpellOrigin);
 
     //// Stormlord Shocking & Thundering Spear
 
-    if(GetHasFeat(FEAT_THUNDER_WEAPON, OBJECT_SELF))
-        ExecuteScript("ft_shockweap", OBJECT_SELF);
+    if(GetHasFeat(FEAT_THUNDER_WEAPON, oSpellOrigin))
+        ExecuteScript("ft_shockweap", oSpellOrigin);
 
     if (GetHasSpellEffect(TEMPUS_ENCHANT_WEAPON, oItem))
     {
-        if((GetLocalInt(OBJECT_SELF, "WeapEchant1") == TEMPUS_ABILITY_VICIOUS &&
-             MyPRCGetRacialType(oSpellTarget)==GetLocalInt(OBJECT_SELF,"WeapEchantRace1")) ||
-           (GetLocalInt(OBJECT_SELF,"WeapEchant2")==TEMPUS_ABILITY_VICIOUS &&
-            MyPRCGetRacialType(oSpellTarget)==GetLocalInt(OBJECT_SELF,"WeapEchantRace2")) ||
-           (GetLocalInt(OBJECT_SELF,"WeapEchant3")==TEMPUS_ABILITY_VICIOUS &&
-            MyPRCGetRacialType(oSpellTarget)==GetLocalInt(OBJECT_SELF,"WeapEchantRace3"))
+        if((GetLocalInt(oSpellOrigin, "WeapEchant1") == TEMPUS_ABILITY_VICIOUS &&
+             MyPRCGetRacialType(oSpellTarget)==GetLocalInt(oSpellOrigin,"WeapEchantRace1")) ||
+           (GetLocalInt(oSpellOrigin,"WeapEchant2")==TEMPUS_ABILITY_VICIOUS &&
+            MyPRCGetRacialType(oSpellTarget)==GetLocalInt(oSpellOrigin,"WeapEchantRace2")) ||
+           (GetLocalInt(oSpellOrigin,"WeapEchant3")==TEMPUS_ABILITY_VICIOUS &&
+            MyPRCGetRacialType(oSpellTarget)==GetLocalInt(oSpellOrigin,"WeapEchantRace3"))
           )
-            ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectDamage(d6()),OBJECT_SELF);
+            ApplyEffectToObject(DURATION_TYPE_INSTANT,EffectDamage(d6()),oSpellOrigin);
     }
 
     if (GetIsPC(oSpellOrigin))
         SetLocalInt(oSpellOrigin,"DmgDealt",GetTotalDamageDealt());
-
 
     /// Vassal of Bahamut Dragonwrack
     if (nVassal > 3)
@@ -123,16 +127,16 @@ void main()
     }
 
     // Frenzied Berserker Auto Frenzy
-    if(GetHasFeat(FEAT_FRENZY, OBJECT_SELF) && GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
+    if(GetHasFeat(FEAT_FRENZY, oSpellOrigin) && GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
     {
-        if(!GetHasFeatEffect(FEAT_FRENZY))
+        if(!GetHasFeatEffect(FEAT_FRENZY, oSpellOrigin))
         {
-            DelayCommand(0.01, ExecuteScript("prc_fb_auto_fre", OBJECT_SELF) );
+            DelayCommand(0.01, ExecuteScript("prc_fb_auto_fre", oSpellOrigin) );
         }
 
-        if(GetHasFeatEffect(FEAT_FRENZY) && GetHasFeat(FEAT_DEATHLESS_FRENZY, OBJECT_SELF) && GetCurrentHitPoints(OBJECT_SELF) == 1)
+        if(GetHasFeatEffect(FEAT_FRENZY, oSpellOrigin) && GetHasFeat(FEAT_DEATHLESS_FRENZY, oSpellOrigin) && GetCurrentHitPoints(oSpellOrigin) == 1)
         {
-            DelayCommand(0.01, ExecuteScript("prc_fb_deathless", OBJECT_SELF) );
+            DelayCommand(0.01, ExecuteScript("prc_fb_deathless", oSpellOrigin) );
         }
     }
 
@@ -174,7 +178,7 @@ void main()
     // Foe Hunter Damage Resistance
     if(nFoeHunter > 1 && GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
     {
-        DelayCommand(0.01, ExecuteScript("prc_fh_dr",OBJECT_SELF) );
+        DelayCommand(0.01, ExecuteScript("prc_fh_dr",oSpellOrigin) );
     }
 
     // Foe Hunter Rancor Attack
@@ -245,10 +249,38 @@ void main()
     /*//////////////////////////////////////////////////
     //////////////// END PSIONICS //////////////////////
     //////////////////////////////////////////////////*/
+    
+    /*//////////////////////////////////////////////////
+    //////////////// Blade Magic ///////////////////////
+    //////////////////////////////////////////////////*/
 
-    if(GetLocalInt(OBJECT_SELF,"doarcstrike") && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
+    // Martial Spirit
+    if(GetHasSpellEffect(MOVE_DS_MARTIAL_SPIRIT, oSpellOrigin) && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
     {
-        int nDice = GetLocalInt(OBJECT_SELF,"curentspell");
+        object oHealTarget = GetCrusaderHealTarget(oSpellOrigin, 30.0);
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(2), oHealTarget);
+	SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_HEALING_L_LAW), oHealTarget);
+    }
+    
+    // Blood in the Water
+    if(GetHasSpellEffect(MOVE_TC_BLOOD_WATER, oSpellOrigin) && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
+    {
+    	// Fake critical hit check
+    	if (d20() >= GetWeaponCriticalRange(oSpellOrigin, oItem))
+    	{
+        	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectAttackIncrease(1), oSpellOrigin);
+        	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectACIncrease(1), oSpellOrigin);
+		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_COM_BLOOD_CRT_YELLOW_HEAD), oSpellOrigin);
+	}
+    }    
+
+    /*//////////////////////////////////////////////////
+    //////////////// Blade Magic ///////////////////////
+    //////////////////////////////////////////////////*/    
+
+    if(GetLocalInt(oSpellOrigin,"doarcstrike") && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
+    {
+        int nDice = GetLocalInt(oSpellOrigin,"curentspell");
         int nDamage = d4(nDice);
         effect eDam = EffectDamage(nDamage);
         ApplyEffectToObject(DURATION_TYPE_INSTANT,eDam,oSpellTarget);
@@ -259,7 +291,7 @@ void main()
     if(GetLocalInt(oItem, "X2_L_NUMTRIGGERS"))
     {
         DoDebug("Triggering Sequencer Discharge");
-        ExecuteScript("x2_s3_sequencer", OBJECT_SELF);
+        ExecuteScript("x2_s3_sequencer", oSpellOrigin);
     }
 
     // Handle Rend. Creature weapon damage + 1.5x STR bonus.
@@ -274,25 +306,63 @@ void main()
         DoRend(oSpellTarget, oSpellOrigin, oItem);
     }
 
-    //handle other OnHit:CastSpell properties
-    itemproperty ipTest = GetFirstItemProperty(oItem);
-    while(GetIsItemPropertyValid(ipTest))
-    {
-        if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_ONHITCASTSPELL)
-        {
-            int nIPSpell = GetItemPropertySubType(ipTest);
-            if(nIPSpell == 125)
-            {
-                ipTest = GetNextItemProperty(oItem);
-                continue; //abort if its OnHit:CastSpell:UniquePower otherwise it would TMI.
-            }
-            int nSpell   = StringToInt(Get2DACache("iprp_onhitspell", "SpellIndex", nIPSpell));
-            int nLevel   = GetItemPropertyCostTableValue(ipTest);
-            string sScript = Get2DACache("spells", "ImpactScript", nSpell);
-            ExecuteScript(sScript,oSpellOrigin);
-        }
-        ipTest = GetNextItemProperty(oItem);
-    }
+	// now cycle through all onhitcast spells on the item
+	// we must exclude unique power (which is associated with prc_onhitcast), because otherwise we would get infinite recursions
+	// it is of utmost importance to devise a *safe* way to cycle through all onhitcast spells on the item. The safe way is provided
+	// by the function ApplyAllOnHitCastSpellsOnItemExcludingSubType defined in prc_inc_spells
+
+	// There are two ways to call this function: Either with all necessary parameters passed explicitly to the function
+	// or with no parameters passed to the function (in this case default values are used, which also works, at least in prc_onhitcast)
+
+	// VERSION 1:
+	// generally it is more efficient to call ApplyAllOnHitCastSpellsOnItemExcludingSubType by explicitly passing the parameters to the function
+	// this will set up the overrides in the PRC-wrappers for the spell information functions, which generally is much faster
+	ApplyAllOnHitCastSpellsOnItemExcludingSubType(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, oSpellTarget, oItem, oSpellOrigin);
+
+	// VERSION 2:
+	// motu99: It might be safer to call this only with defaults in order disallow overrides being set.
+	// (they could have been set beforehand, though - in fact they *are* if we were routed from an onhitcast spell to prc_onhitcast)
+	// VERSION 2 has also been tested to work; however, if Bioware changes its implementation the code below is more likely to break
+	// ApplyAllOnHitCastSpellsOnItemExcludingSubType(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER); 
+
+/*
+// motu99: This is the old (unsafe) way to cycle through the onhitcast spells.
+// This method will break, whenever the called impact spell script cycles through the item properties of the SpellCastItem on its own
+// (or calls a function that cycles through the item properties - such as PRCGetMetaMagicFeat)
+// The safe way to do things is to use the functions ApplyAllOnHitCastSpells* to be found in prc_inc_spells
+// Left the piece of code here as an example and a warning, how perfectly reasonable code can break without the fault of the scripter
+// Such an "error" can easily happen to any of us. It is hellishly difficult to spot an error, caused by nested loops
+// over item properties in *different* scripts. Runtime behavior is erratic. If you are lucky, you get an
+// infinite recursion (then you will notice that something is wrong). If you are not lucky, the loop will just skip over
+// some item properties. And this simply because you put a completely harmless looking function like PRCGetMetaMagicFeat
+// into your Spell script. How could you possibly know that you just broke your script, because of an unsafe implementation
+// in a *different* script (here: prc_onhitcast)? You might not even know, that this different scripts exists.
+
+	//handle other OnHit:CastSpell properties
+DoDebug("prc_onhitcast: now doing other OnHitCastSpell properties on item = "+GetName(oItem));
+	itemproperty ipTest = GetFirstItemProperty(oItem);
+	while(GetIsItemPropertyValid(ipTest))
+	{
+		if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_ONHITCASTSPELL)
+		{
+			int nIPSpell = GetItemPropertySubType(ipTest);
+			if(nIPSpell == 125)
+			{
+				ipTest = GetNextItemProperty(oItem);
+				continue; //abort if its OnHit:CastSpell:UniquePower otherwise it would TMI.
+			}
+			int nSpell   = StringToInt(Get2DACache("iprp_onhitspell", "SpellIndex", nIPSpell));
+			// int nLevel   = GetItemPropertyCostTableValue(ipTest);
+			string sScript = Get2DACache("spells", "ImpactScript", nSpell);
+DoDebug("prc_onhitcast: Now executing Impact spell script "+sScript);
+			// motu99: Never execute complicated scripts within an GetFirst* / GetNext* loop !!!
+			// The code will break, whenever the script does a loop over item properties (or effects) on its own 
+			// rather store all found scripts in a local array, and execute the scripts in a separate loop
+			ExecuteScript(sScript,oSpellOrigin);
+		}
+		ipTest = GetNextItemProperty(oItem);
+	}
+*/
 
     /*//////////////////////////////////////////////////
     ///////////////////  SPELLFIRE  ////////////////////
@@ -398,8 +468,12 @@ void main()
     }
     */
     // Execute scripts hooked to this event for the player triggering it
+	if (DEBUG) DoDebug("prc_onhitcast: executing all scripts hooked to onhit events of attacker and item");
     ExecuteAllScriptsHookedToEvent(oSpellOrigin, EVENT_ONHIT);
     ExecuteAllScriptsHookedToEvent(oItem, EVENT_ITEM_ONHIT);
+
+	DeleteLocalInt(oSpellOrigin, "prc_ohc");
+	
 }
 
 void SetRancorVar(object oPC)

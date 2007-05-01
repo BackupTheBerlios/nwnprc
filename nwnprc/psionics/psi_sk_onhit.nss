@@ -23,15 +23,18 @@
 void main()
 {
     object oPC     = OBJECT_SELF;
-    object oTarget = GetSpellTargetObject();
-    object oItem   = GetSpellCastItem();
+    object oTarget = PRCGetSpellTargetObject(oPC);
+    object oItem   = PRCGetSpellCastItem(oPC);
     int nFlags = GetPersistantLocalInt(oPC, MBLADE_FLAGS);
 
-    // Scripted combat system
-    if(!GetIsObjectValid(oItem))
-    {
-        oItem = GetLocalObject(oPC, "PRC_CombatSystem_OnHitCastSpell_Item");
-    }
+/*
+// motu99: obsolate, is handled in PRCGetSpellCastItem
+	// Scripted combat system
+	if(!GetIsObjectValid(oItem))
+	{
+		oItem = GetLocalObject(oPC, "PRC_CombatSystem_OnHitCastSpell_Item");
+	}
+*/
 
     /* In order to bypass a BioBug where when the last item in a stack of throwable weapons is thrown,
      * GetSpellCastItem returns OBJECT_INVALID, the stack size is increased to be one larger than the amount the PC

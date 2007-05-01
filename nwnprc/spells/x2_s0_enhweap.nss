@@ -31,6 +31,7 @@ void DeleteTheInts(object oTarget)
     DeleteLocalInt(oTarget, "X2_Wep_Caster_Lvl_DF");
 }
 /// Used simply to use up a bit less processor time on the delayed command to delete these 4 Ints.
+// motu99: seems to be not used any more
 
 void ApplyEffectsToWeapon(object oItem, int nSpellID, float fDuration, object oCaster, int nCasterLevel)
 {
@@ -151,8 +152,8 @@ void ApplyEffectsToWeapon(object oItem, int nSpellID, float fDuration, object oC
 //  Variables passed may be changed if necessary
 int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 {
-    int nSpellID = PRCGetSpellId();
-    int nMetaMagic = PRCGetMetaMagicFeat();
+    int nSpellID = PRCGetSpellId(oCaster);
+    int nMetaMagic = PRCGetMetaMagicFeat(oCaster);
     int nPenetr = nCasterLevel + SPGetPenetr();
     //float fMaxDuration = RoundsToSeconds(nCasterLevel); //modify if necessary
 
@@ -277,9 +278,9 @@ void main()
 {
     object oCaster = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oCaster);
-    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    SPSetSchool(GetSpellSchool(PRCGetSpellId(oCaster)));
     if (!X2PreSpellCastCode()) return;
-    object oTarget = PRCGetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject(oCaster);
     int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
     if(!nEvent) //normal cast
     {

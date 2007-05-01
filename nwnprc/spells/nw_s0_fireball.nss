@@ -62,7 +62,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     effect eVis = EffectVisualEffect(VFX_IMP_FLAME_M);
     effect eDam;
     //Get the spell target location as opposed to the spell target.
-    location lTarget = GetSpellTargetLocation();
+    location lTarget = PRCGetSpellTargetLocation();
     //Limit Caster level for the purposes of damage
     if (nCasterLvl > 10)
     {
@@ -85,24 +85,29 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget))/20;
                 if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
                 {
-                    //Roll damage for each target
-                    nDamage = d6(nCasterLvl);
-                    //Resolve metamagic
+                     //Resolve metamagic
                     if ((nMetaMagic & METAMAGIC_MAXIMIZE))
                     {
                         nDamage = 6 * nCasterLvl;
                     }
-                    else if ((nMetaMagic & METAMAGIC_EMPOWER))
+					else
+					{
+						//Roll damage for each target
+						nDamage = d6(nCasterLvl);
+					}
+					
+					if ((nMetaMagic & METAMAGIC_EMPOWER))
                     {
-                       nDamage = nDamage + nDamage / 2;
+                       nDamage += nDamage / 2;
                     }
+					
                     nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
                     //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.
                     nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, (PRCGetSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_FIRE);
-                    //Set the damage effect
-                    eDam = EffectDamage(nDamage, EleDmg);
                     if(nDamage > 0)
                     {
+						//Set the damage effect
+						eDam = EffectDamage(nDamage, EleDmg);
                         // Apply effects to the currently selected target.
                         DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
                         PRCBonusDamage(oTarget);

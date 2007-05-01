@@ -26,18 +26,20 @@ void main()
 {
 	//Get attacker that hit
 	object oSpellOrigin = OBJECT_SELF;
-	object oSpellTarget = PRCGetSpellTargetObject();
-	object oItem        = GetSpellCastItem();
+	object oSpellTarget = PRCGetSpellTargetObject(oSpellOrigin);
+	// object oItem        = PRCGetSpellCastItem(oSpellOrigin); // motu99: oItem not used in the script, so why waste CPU time?
 	object oWeaponR     = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oSpellTarget);
 	object oWeaponL     = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oSpellTarget);
 	object oTarget;
-	
+
+/*
+// motu99: obsolate - is handled in PRCGetSpellCastItem	
 	// Scripted combat system
 	if(!GetIsObjectValid(oItem))
 	{
 		oItem = GetLocalObject(oSpellOrigin, "PRC_CombatSystem_OnHitCastSpell_Item");
 	}
-		
+*/
 	//If non-magical weapon in right hand
 	if(GetIsObjectValid(oWeaponR) && !GetIsMagical(oWeaponR))
 	{

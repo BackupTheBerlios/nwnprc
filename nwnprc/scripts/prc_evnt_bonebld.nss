@@ -8,15 +8,17 @@
 void main()
 {
 	object oSpellOrigin = OBJECT_SELF;
-	object oSpellTarget = PRCGetSpellTargetObject();
-	object oItem        = GetSpellCastItem();
+	object oSpellTarget = PRCGetSpellTargetObject(oSpellOrigin);
+	object oItem        = PRCGetSpellCastItem(oSpellOrigin);
+/*
+// motu99: obsolate, is handled in PRCGetSpellCastItem
 	
 	// Scripted combat system
 	if(!GetIsObjectValid(oItem))
 	{
 		oItem = GetLocalObject(oSpellOrigin, "PRC_CombatSystem_OnHitCastSpell_Item");
 	}
-	
+*/	
 	//Boneblade +1d6 damage vs living
 	if (GetHasSpellEffect(SPELL_BONEBLADE, oItem))
 	{

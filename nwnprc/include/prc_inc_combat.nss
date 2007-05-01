@@ -19,7 +19,7 @@
 //:: Proper calculation of attack bonus including any bonus effects on weapon or spells.
 //:: Proper calculation of weapon damage including any bonus effects or spell effects.
 //:: Proper calculation of bonus, main, and off-hand attacks.
-//:: Support for off-hand attacks from double sided weapons
+//:: Support for off-hand attacks from double (sided) weapons
 //:: Proper calculation of enemy AC.
 //:: Proper application of sneak attacks.
 //:: Proper application of touch attacks.
@@ -58,8 +58,12 @@
 //:://////////////////////////////////////////////
 //:: Current Limitations:
 //:://////////////////////////////////////////////
+//::
 //:: Coup De Grace does not take into account bonus damage [Except from touch attack spells]
-//:: Calculation of Enemey AC does not take into account bonus vs. racial type or alignment type.
+//:: Calculation of Enemy AC does not take into account bonus vs. racial type or alignment type.
+//:: Weapon Range is not taken into account in melee combat (whenever we are within 10 feet, we will apply the damage)
+//:: a few "hardwired" spells on weapon and armor of the type IP_CONST_ONHIT_<spellname> 
+//:: are not yet implemented (but we now know how to do them, so hopefully in a later release)
 //::
 //:://////////////////////////////////////////////
 //:: Tested:
@@ -79,8 +83,6 @@
 //:://////////////////////////////////////////////
 //:: On Hit: Slay Race/Alignment Group/Alignment
 //::         Wounding, Disease, Poison,
-//::         [Duration abilities] sleep, stun, hold, etc..
-//::         Unique Power - should test more of the abilities to make sure it works right
 //::
 //:: Bug Fix for Sanctuary/invis/stealth not being removed
 //:: Coup De Grace
@@ -92,11 +94,9 @@
 //:: Known Bugs:
 //:://////////////////////////////////////////////
 //::
-//::  On hit properties Stun, Doom and others don't work (stack underflow error)
 //::  GetIsFlanked does not work reliably
 //::  AB calculation (mostly done at beginning of round) ignores situational adjustments (such as when attackers come within melee range of a ranged attacker)
 //::  Damage calculation (partly done at beginning or round) ignores situational adjustments (for instance, favored enemy bonus is not adjusted when defender changes)
-//:: # attacks only updated by prc_bab_caller on unequip event (should also be updated on equip event) [This is a problem of prc_onhb_indiv, not of prc_inc_combat]
 //::
 //:://////////////////////////////////////////////
 
@@ -111,6 +111,7 @@ const int TOUCH_ATTACK_RANGED_SPELL = 4;
 // Distances
 const float MELEE_RANGE_FEET = 10.;
 const float MELEE_RANGE_METERS = 3.05;
+const float RANGE_15_FEET_IN_METERS = 4.57;
 
 // Colors in String messages to PCs
 const string COLOR_BLUE         = "<cfÌþ>";    // used by saving throws.
@@ -185,8 +186,6 @@ int GetFighterBAB(int iHD);
 
 // calculates the BAB that the character had at level 20
 // assumes that we are above level 20!
-// otherwise function call makes no sense, because we don't yet have a level 20 BAB
-// and the BAB is used "as is" in order to calculate the number of main hand attacks
 int GetLevel20BAB(int iBAB, int iHD);
 
 // calculates the # attacks, for normal weapons (non-monk); no maximum if called with high iBAB
@@ -331,7 +330,7 @@ object GetAmmunitionFromWeapon(object oWeapon, object oAttacker);
 // motu99: This actually was (and is) 10 feet
 int GetMeleeAttackers15ft(object oPC = OBJECT_SELF);
 
-// Returns true if melee attacker is in range to attack target
+// Returns true if melee attacker is in range to attack target (e.g. 10 feet)
 int GetIsInMeleeRange(object oDefender, object oAttacker);
 
 // returns the sum of all class levels that give an unarmed base attack bonus (UBAB)
@@ -362,7 +361,7 @@ int GetHasCrossBowEquippedWithoutRapidReload(object oPC);
 // However, the number of "normal" attacks might be increased due to special (attack) boni to BAB from spells (such as Tenser's or Divine Power)
 // in order to calculate the attack # with such boni, call the function with a non-zero value of iBABBonus (negative values are possible)
 // the minimum # attacks returned is always 1; the maximum number returned is 5 (for armed and unarmed combat)
-// if the PRC_BIOWARE_MONK_ATTACKS switch is on, the maximum number returned is 6 (only for - unarmed or kama - monk attacks)
+// if the PRC_BIOWARE_MONK_ATTACKS switch is on, the maximum number returned is 6 (only for monk attacks - unarmed or kama)
 int GetMainHandAttacks(object oPC, int iBABBonus = 0, int bIgnoreCrossBow = FALSE);
 
 // Returns number of offhand attacks per round for off-hand
@@ -419,13 +418,6 @@ struct BonusAttacks GetBonusAttacks(object oAttacker);
 // equips the first ammunition it finds in the inventory that works with the (ranged) weapon in the right hand
 // returns the equipped new ammunition
 object EquipAmmunition(object oPC);
-
-struct Effects CollectEffectType(object oPC, int iEffectType);
-
-void RemoveEffectsFromCreature(object oPC, struct Effects sEffects);
-
-// one would have to know how long the effects last
-void ReApplyEffectsToCreature(object oPC, struct Effects sEffects);
 
 //:://////////////////////////////////////////////
 //::  Debug Functions
@@ -566,7 +558,7 @@ int GetWeaponDamagePerRound(object oDefender, object oAttacker, object oWeap, in
 // and will not calculate it.  This is mainly for when you call PerformAttackRound
 // to do multiple attacks,  so that it does not have to recalculate all the bonuses
 // for every attack made.
-// bIsCritical = FALSE is not a critical; true is a critcal hit. (Function checks for crit immunity).
+// bIsCritical = FALSE is not a critical; true is a critical hit. (Function checks for crit immunity).
 // iNumDice:  0 = calculate it; Anything else is the number of dice rolled
 // iNumSides: 0 = calculate it; Anything else is the sides of the dice rolled
 // iCriticalMultiplier: 0 = calculate it; Anything else is the damage multiplier on a critical hit
@@ -576,34 +568,29 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
 //::  Attack Logic Functions
 //:://////////////////////////////////////////////
 
-// utility function to cast all onhitcast spells placed on oItem (in the possession of oPC) on oTarget
-void ApplyAllOnHitCastSpells(object oTarget, object oItem, object oPC = OBJECT_SELF);
-
-// utility function to cast an onhitcast spell with iSpellNr, stored on oItem (in the possession of oPC) on oTarget
-void DoOnHitSpell(int iSpellNr, object oTarget, object oItem, object oPC = OBJECT_SELF);
-
-// utility function to apply any onhit-property (found on an item) to oDefender
-// assumes that the Item Property Type of ip is an onhit property
+// utility function to apply any onhit-property (found on an item) to oTarget
+// assumes that the Item Property Type of ip is ITEM_PROPERTY_ON_HIT_PROPERTIES
 // cycles through all the known subtypes in order to properly perform the action
-void DoOnHitProperties(itemproperty ip, object oDefender);
+void DoOnHitProperties(itemproperty ip, object oTarget);
 
 // same as DoOnHitProperties, only cycles through on Monster hit subtypes
-void DoOnMonsterHit(itemproperty ip, object oDefender);
+// e.g. the item property type must be ITEM_PROPERTY_ON_MONSTER_HIT
+void DoOnMonsterHit(itemproperty ip, object oTarget);
 
 // Called by ApplyOnHitAbilities
 // properly applies on hit abilties with a X% chance of firing that last Y rounds.
 // in other words... on hit stun, daze, sleep, blindness, etc.
-// iDruationVal - iprp_onhitdur.2da entry number
-// eAbility -  the proper effect this ability will apply to the target
-// eVis     - the visual effect to apply
-void ApplyOnHitDurationAbiltiies(object oDefender, int iDurationVal, effect eAbility, effect eVis);
+// iDurationVal - iprp_onhitdur.2da entry number
+// eAbility -  the proper effect this ability will apply to the target (will be applied temporarily)
+// eVis     - the visual effect to apply (will be applied instantly)
+void ApplyOnHitDurationAbiltiies(object oTarget, int iDurationVal, effect eAbility, effect eVis);
 
 // applies any On Hit abilities like spells, vampiric regen, poison, vorpal, stun, etc.
 // if you sent a WEAPON
-// oDefender = one being hit | oAttacker = one attacking
+// oTarget = one being hit | oItemWielder = one attacking
 // if you send   ARMOR
-// oDefender = one attacking | oAttacker = one being hit
-void ApplyOnHitAbilities(object oDefender, object oAttacker, object oItem);
+// oTarget = one attacking | oItemWielder = one being hit
+void ApplyOnHitAbilities(object oTarget, object oItemWielder, object oItem);
 
 // Due to the lack of a proper sleep function in order to delay attacks properly
 // I needed to make a separate function to control the logic of each attack.
@@ -633,7 +620,7 @@ void AttackLoopMain(object oDefender, object oAttacker,
  * @param oAttacker      The object doing the attacks.
  *
  * @param eSpecialEffect Any special Vfx or other effects the attack should use IF successful.
- * @param eDuration      Changes the duration of the applied effect(s)
+ * @param eDuration      specifies the duration of the applied effect(s)
  *                       0.0 = DURATION_TYPE_INSTANT, effect lasts 0.0 seconds.
  *                      >0.0 = DURATION_TYPE_TEMPORARY, effect lasts the amount of time put in here.
  *                      <0.0 = DURATION_TYPE_PERMAMENT!!!!!  Effect lasts until dispelled.
@@ -661,18 +648,21 @@ void PerformAttackRound(object oDefender, object oAttacker,
 	int bApplyTouchToAll = FALSE, int iTouchAttackType = FALSE,
 	int bInstantAttack = FALSE);
 
+/**
 // Performs a single attack and can add in bonus damage damage/effects
 // If the first attack hits, a local int called "PRCCombat_StruckByAttack" will be TRUE
 // on the target for 1 second.
+// [Note that even though you only perform a single attack, there could be more than 1 attack,
+// if the attacker has a feat like cleave or circle kick. The local int is NOT set on the bonus attacks!
 //
 // eSpecialEffect -  any special Vfx or other effects the attack should use IF successful.
-// eDuration - Changes the duration of the applied effect(s)
+// eDuration - specifies the duration of the applied effect(s)
 //           0.0 = DURATION_TYPE_INSTANT, effect lasts 0.0 seconds.
 //          >0.0 = DURATION_TYPE_TEMPORARY, effect lasts the amount of time put in here.
 //          <0.0 = DURATION_TYPE_PERMAMENT!!!!!  Effect lasts until dispelled.
-// iAttackBonusMod is the attack modifier - Will effect all attacks if bEffectAllAttacks is on
-// iDamageModifier - should be either a DAMAGE_BONUS_* constant or an int of damage.
-//                   Give an int if the attack effects ONLY the first attack!
+// iAttackBonusMod is the attack modifier
+// iDamageModifier - is always an integer in PerformAttack()
+//      [Note that iDamageModifier might be a DAMAGE_BONUS_* const in PerformAttackRound]
 // iDamageType = DAMAGE_TYPE_*
 // sMessageSuccess - message to display on a successful hit. (i.e. "*Sneak Attack Hit*")
 // sMessageFailure - message to display on a failure to hit. (i.e. "*Sneak Attack Miss*")
@@ -680,6 +670,7 @@ void PerformAttackRound(object oDefender, object oAttacker,
 // oRightHandOverride - item to use as if in the right hand
 // oLeftHandOverride - item to use as if in the left hand
 // nHandednessOverride - if TRUE, count as offhand attack
+*/
 void PerformAttack(object oDefender, object oAttacker,
 	effect eSpecialEffect, float eDuration = 0.0, int iAttackBonusMod = 0,
 	int iDamageModifier = 0, int iDamageType = 0,
@@ -753,12 +744,13 @@ struct AttackLoopVars
 	string sMessageSuccess, sMessageFailure;
 	
 	// ints for internal logic (they can change during the attack or attack round)
-	int iCleaveAttacks; // number of cleave attacks performed in the round; does not include cleaves within cleaves
+	int iCleaveAttacks; // number of cleave attacks performed in the round; does not count cleaves within cleaves
 	int iCircleKick; // number of circle kicks per round (only one allowed)
-	int iAttackNumber; // number of attacks already performed in the round; does not count extra attacks (such as cleave, circle kick)
+	int iAttackNumber; // number of attacks already performed in the round; does not count double or triple cleaves
 	int bUseMonkAttackMod; // if true, we use the monk attack modifier (-3 instead of -5 for additional attacks per round)
-	int bApplyTouchToAll; // duplicates the parameter of PerformAttack() and PerformAttackRound() for use in Attack logic functions
+	int bApplyTouchToAll; // duplicates the parameter of PerformAttackRound() for use in Attack logic functions
 	int iTouchAttackType; // duplicates the parameter of PerformAttack() and PerformAttackRound() for use in Attack logic functions
+	int bFiveFootStep; // determines whether we already did a five foot step in the full combat round
 };
 
 // used to calculate the BonusAttacks (due to spell effects such as Haste, One Strike Two Cuts or similar)
@@ -769,24 +761,6 @@ struct BonusAttacks
 	int iPenalty;
 };
 
-// used to store effects (usually of a certain type) on an object
-// possible use: temporarily remove and then reapply these effects
-// code is experimental, not working yet
-struct Effects
-{
-	int iNr;
-	effect eEffect1;
-	effect eEffect2;
-	effect eEffect3;
-	effect eEffect4;
-	effect eEffect5;
-	int iDurType1;
-	int iDurType2;
-	int iDurType3;
-	int iDurType4;
-	int iDurType5;	
-};
-
 // used to store sides and number of dice to be rolled
 struct Dice
 {
@@ -794,19 +768,18 @@ struct Dice
 	int iSides;
 };
 
-
 // "quasi global" Vars needed to pass information between AttackLoopMain and AttackLoopLogic or other utitily functions used by these two
 
 /*
 // motu99: these vars work similar to locals attached to an object. They have global scope, but in contrast to the so called locals they have limited lifetime.
 // GLOBAL SCOPE: the variables are defined outside of any function, thus they are visible by all functions (and are initialized when main() starts up)
 // They are compiled into the code of any main() function created by the system, if that main() calls a prc_inc_combat function that uses these variables (such as PerformAttack)
-// LIMITED LIFETIME: These global scope vars only "live" as long as the main() function started within the contex of an object (usally an event or an action assigned to a PC or NPC) has not terminated
+// LIMITED LIFETIME: These global scope vars only "live" as long as the main() function started within the context of an object (usally an event or an action assigned to a PC or NPC) has not terminated
 // Whenever the main() function is called anew, all quasi-global variables are initialized to their default values
 // WARNING: no changes from the last call to the main() function are remembered!
-// USE: These variables are used to pass information between functions that execute within a single main(). They are much faster to access than the so called local attached to an object
+// USE: These variables are used to pass information between functions that execute within a single main(). They are much faster to access than the so called locals attached to an object
 // LIMITATIONS: They do not persist over a DelayCommand() or AssignCommand() call. Whenever you call a function via DelayCommand or AssignCommand
-// the system creates a new (!) main function in order to actually execute the function. So any function called via DelayCommand or AssignCommand will have
+// the system creates a new (!) main() function in order to actually execute the function. So any function called via DelayCommand or AssignCommand will have
 // all of its quasi-global variables initialzed to their default values! The values of these variables at the time when the DelayCommand() or AssignCommand() was executed,
 // are *not remembered* and not transferred to the function called within the DelayCommand() or AssignCommand().
 // Therefore when AttackLoopLogic() calls AttackLoopMain() in a DelayCommand(), in order to do any left over attacks in the round after a proper delay,
@@ -819,7 +792,7 @@ struct Dice
 int iCleaveAttacks = 0;
 int iCircleKick = 0;
 */
-// motu99: Still use these quasi-globals to communicate between functions *within one* single attack
+// motu99: Still using these quasi-globals to communicate between functions *within one* single attack
 int bFirstAttack;
 int bUseMonkAttackMod;
 
@@ -915,6 +888,11 @@ int GetPnPMonkAttacks(int iMonkLevel)
 //:://////////////////////////////////////////////
 //::  Weapon Information Functions
 //:://////////////////////////////////////////////
+
+// @TODO: include CEP stuff in the weapon information functions
+// maybe we should use the 2das instead of "hardwiring" everything
+// [don't know how slow cached calls to look up 2das are]
+// we could also use a switch to decide whether to use "hardwired" fast calls, or "safer" calls to 2das
 
 int GetDamageTypeByWeaponType(int iWeaponType)
 {
@@ -1100,13 +1078,13 @@ int GetIsMonkWeaponOrUnarmed(object oWeap)
 	return GetIsMonkWeaponTypeOrUnarmed(GetBaseItemType(oWeap));
 }
 
+// this function will return true on *any item* that is not invalid, shield or torch
 int GetIsOffhandWeaponType(int iWeaponType)
 // implicitly assumes, that iWeaponType is the base item type of the object held in the left hand.
 // This can only be a weapon, a shield, or a torch (or nothing)
 // returns TRUE; unless there is nothing in the left hand or a shield or a torch
 // also works if we pass a double-sided weapon to this function
 // note that we do not check for ranged weapons or two-handers or whether the base item is a weapon at all.
-// this function will return true on *any item* that is not invalid, shield or torch
 {
 	return	(	iWeaponType != BASE_ITEM_INVALID
 				&& iWeaponType != BASE_ITEM_LARGESHIELD
@@ -1116,15 +1094,15 @@ int GetIsOffhandWeaponType(int iWeaponType)
 			);
 }
 
+// returns TRUE; unless the oWeapL is an invalid object, a shield or a torch
 int GetIsOffhandWeapon(object oWeapL)
 // implicitly assumes, that oWeapL is the object held in the left hand. This can only be a weapon, a shield, or a torch
-// returns TRUE; unless there is nothing in the left hand or a shield or a torch
 {
 	return GetIsOffhandWeaponType(GetBaseItemType(oWeapL));
 }
 
+// returns TRUE for a double sided weapon type
 int GetIsDoubleSidedWeaponType(int iWeaponType)
-// returns TRUE for a double sided weapon
 {
 	return	(	iWeaponType == BASE_ITEM_DIREMACE
 				|| iWeaponType == BASE_ITEM_DOUBLEAXE
@@ -1132,8 +1110,8 @@ int GetIsDoubleSidedWeaponType(int iWeaponType)
 			);
 }
 
-int GetIsDoubleSidedWeapon(object oWeap)
 // returns TRUE for a double sided weapon
+int GetIsDoubleSidedWeapon(object oWeap)
 {
 	return GetIsDoubleSidedWeaponType(GetBaseItemType(oWeap));
 }
@@ -2055,7 +2033,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
 
 // returns the proper ammunition inventory slot based on iWeaponType
 // if not longbow, crossbow or sling, returns right hand slot
-// right hand slot is the correct slot for dars, shuriken and throwing axes
+// right hand slot is the correct slot for darts, shuriken and throwing axes
+// this does not check whether the weapon type actually is a ranged type
 int GetAmmunitionInventorySlotFromWeaponType(int iWeaponType)
 {
 	switch (iWeaponType)
@@ -2072,11 +2051,19 @@ int GetAmmunitionInventorySlotFromWeaponType(int iWeaponType)
 	return INVENTORY_SLOT_RIGHTHAND;
 }
 
+// for a ranged weapon type it will return the ammunition (if there is any)
+// for throwing weapons the ammunition is the weapon itself, so it returns whatever oAttacker holds in his right hand
+// Note that this does not check whether iWeaponType is weapon. For all non-ranged weapons (and any other types)
+// it will return whatever object oAttacker holds in his right hand 
 object GetAmmunitionFromWeaponType(int iWeaponType, object oAttacker)
 {
 	return GetItemInSlot(GetAmmunitionInventorySlotFromWeaponType(iWeaponType), oAttacker);
 }
 
+// for a ranged weapon it will return the ammunition (if there is any)
+// for throwing weapons the ammunition is the weapon itself, so it returns whatever oAttacker holds in his right hand
+// Note that this does not check whether oWeapon is a weapon. For all non-ranged weapons (or any other object)
+// it will return whatever object oAttacker holds in his right hand 
 object GetAmmunitionFromWeapon(object oWeapon, object oAttacker)
 {
 	return GetAmmunitionFromWeaponType(GetBaseItemType(oWeapon), oAttacker);
@@ -2182,7 +2169,6 @@ object GetUnarmedWeapon(object oPC)
 	object oWeapon = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oPC);
 	
 	// if they have a claw weapon of some sort
-	// motu99: here we check right creature slot, but in GetAttackDamage() PrC classes with an unarmed weapon (Brawler etc.) were checked for left creature slot
 	if( GetIsObjectValid(oWeapon) )
 	{
 		// should emulate how rare a critters special attack is
@@ -2207,7 +2193,7 @@ object GetUnarmedWeapon(object oPC)
 	else // we don't have a (right) critter weapon
 	{
 		object oGlove = GetItemInSlot(INVENTORY_SLOT_ARMS, oPC);
-		// motu99: this will also return bracers (don't know if we want this; if not, check wheter base item type is glove)
+		// motu99: this will also return bracers (don't know if we want this; if not, check here whether base item type is glove)
 		if (GetIsObjectValid(oGlove))
 			oWeapon = oGlove;
 		else
@@ -2223,6 +2209,7 @@ int GetIsUnarmed(object oPC)
 }
 
 // returns true if we have something in the left creature weapon slot, or if we have monk levels
+// [unarmed PrC classes with a creature weapon apparently have their creature weapon in the left creature slot]
 int GetIsUnarmedFighter(object oPC)
 {
 	return GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oPC) != OBJECT_INVALID
@@ -2230,6 +2217,7 @@ int GetIsUnarmedFighter(object oPC)
 }
 
 // motu99: includes PrC classes with an unarmed base attack bonus progression in the calculation
+// any new PrCs that add to UBAB should be included in this function
 int GetUBABLevel(object oPC)
 {
 	int iMonkLevel = 0;
@@ -2255,6 +2243,9 @@ int GetHasMonkWeaponEquipped(object oPC)
     return FALSE;
 }
 
+// we use this in GetMainHandAttacks in order to find out, whether cross-bow special
+// rules override the usual # of main hand attacks (Cross-bows without the rapid reload feat
+// only get one attack per round, regardless of the # of "normal" mainhand attacks)
 int GetHasCrossBowEquippedWithoutRapidReload(object oPC)
 {
 	object oWeapR = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
@@ -2282,7 +2273,7 @@ int GetHasCrossBowEquippedWithoutRapidReload(object oPC)
 int GetMainHandAttacks(object oPC, int iBABBonus = 0, int bIgnoreCrossBow = FALSE)
 {
 	// crossbows special rules
-	// if they don't have rapid reload, then only 1 attack per round
+	// if they wield a crossbow and don't have rapid reload, then only 1 attack per round
 	if (!bIgnoreCrossBow && GetHasCrossBowEquippedWithoutRapidReload(oPC))
 		return 1;
 
@@ -2301,7 +2292,11 @@ int GetMainHandAttacks(object oPC, int iBABBonus = 0, int bIgnoreCrossBow = FALS
 	if(GetHasMonkWeaponEquipped(oPC))
 	{
 		int iNumMonkAttacks;
-		bUseMonkAttackMod = TRUE; // motu99: moved up here, because we want monk progression whenever we have a kama equipped or are unarmed, not only when the UBAB would give more attacks than BAB
+
+		// motu99: moved up here, because we want monk progression whenever we have a kama equipped or are unarmed,
+		// it is for the PC to decide, whether he will use the unarmed progression. If unarmed combat gives him less attacks
+		// than armed combat, its his decision. 
+		bUseMonkAttackMod = TRUE; 
 
 		if(GetPRCSwitch(PRC_BIOWARE_MONK_ATTACKS))  // motu99: added switch to reenable bioware's (strange) monk UBAB progression
 		{
@@ -2314,8 +2309,10 @@ int GetMainHandAttacks(object oPC, int iBABBonus = 0, int bIgnoreCrossBow = FALS
 			// add in unarmed PrC's so that they stack for number of unarmed attacks
 			iNumMonkAttacks = GetPnPMonkAttacks(GetUBABLevel(oPC));
 		}
-        
-		// only use number of attacks from unarmed (UBAB) progression, if the number of attacks from UBAB is higher than number of attacks from "normal" BAB  
+
+		// only use number of attacks from unarmed (UBAB) progression, if the number
+		// of attacks from UBAB is higher than number of attacks from "normal" BAB
+		// motu99: Why do we try to "correct" the decision of the PC here? 
 		if(iNumMonkAttacks > iNumAttacks)
 		{
 			iNumAttacks = iNumMonkAttacks;
@@ -2411,6 +2408,9 @@ int GetOffHandAttacks(object oPC, int iMainHandAttacks = 0)
 // motu99: not sure if there a rule that offhand attacks must always be less or equal main hand attacks (+Bonus attacks)?
 // motu99: commented out for testing (remove comments after testing!)
 /*
+		if (!iMainHandAttacks)
+			iMainHandAttacks = GetMainHandAttacks(oPC); // these are main hand attacks without bonus attacks
+
 		if(iOffHandAttacks > iMainHandAttacks)
 		{
 			iOffHandAttacks = iMainHandAttacks;
@@ -2465,14 +2465,15 @@ int GetItemPropAlignment(int iGoodEvil,int iLawChaos)
 /** @todo
  * This needs fixing. Possible fixes:
  * 1) Wait until Primo gets the effects code done
- * 2) Add all missing stuff here (motu99: added some stuff)
+ * 2) Add all missing stuff here (motu99: addedmost missing things)
  * 3) Make all spells that apply AB bonus or penalty update a local variable that tracks the total of such effects.
  *    Have dispellation monitors to decrement the variable by same when the spell ends
  */
 
 
 // motu99: functions used for debugging
-// might move these to "inc_utility"
+// might move these to "inc_utility" or delete
+// there are better functions (using 2da lookups) in inc_utility
 
 string GetIPDamageBonusConstantName(int iDamageType) 
 {
@@ -2763,112 +2764,10 @@ string DebugStringItemProperty(itemproperty ip)
 	int iValue = GetItemPropertyCostTableValue(ip);
 	int iSubType = GetItemPropertySubType(ip);
 	int iParam1 = GetItemPropertyParam1Value(ip);
-	return "IP, Type = " + IntToString(iType) + " (" + GetItemPropertyName(iType) + "), Cost: " + IntToString(iValue) + ", Subtype: " + IntToString(iSubType) + ", Param1: " + IntToString(iParam1);
+	return "IP, Type = " + IntToString(iType) + " (" + GetItemPropertyName(iType) + "), Cost = " + IntToString(iValue) + ", Subtype = " + IntToString(iSubType) + ", Param1 = " + IntToString(iParam1);
 }
 
-// experimental:
-// This function collects effects of a certain type (iEffectType) on oPC (or its skin, armor etc.) in a struct for future use
-// This can be used, for instance, in order to temporarily strip the oPC of these effects, do something, and put them on again
-// If this works, we could implement things such as bypassing Damage Resistance or similar stuff
-// Problem is: when we strip off and then reapply effects with a temporary duration, we must know how long they last
-// there does not seem any way to find out, unless:
-// @Primo: Could you modify the PRC effect code, so that it stores the time (absolute module time, converted into seconds)
-// when a (tempory) effect expires. Then when we collect the effects, we could determine their expiration time,
-// When we reapply the effects, we simply have to calculate the remaining duration (subtract expiration time from current time)
-// and reapply the effects with the proper duration
-// OTOH: The aurora system must somehow destroy these effects. If it does this in a DelayCommand, we can simply put the
-// effects on oPC  with a huge duration (9999.) and hope that aurora will destroy them when their time has come
-// Caveat: if the DelayCommand() destroying a tempory effect happens to run in the short time interval between
-// stripping off the effects and reapplying it, we have a problem... 
-struct Effects CollectEffectType(object oPC, int iEffectType)
-{
-	struct Effects sEffects;
-	effect eEffect = GetFirstEffect(oPC);
-	sEffects.iNr = 0;
-
-	while(GetIsEffectValid(eEffect))
-	{
-DoDebug("CollectEffectType: found "+ DebugStringEffect(eEffect));
-
-		int iType = GetEffectType(eEffect);
-		int iDur = GetEffectDurationType(eEffect);
-		
-		if (iType == iEffectType)
-		{
-			if (sEffects.iNr > 4)
-			{
-				sEffects.iNr++;
-				return sEffects;
-			}
-
-			switch(sEffects.iNr)
-			{
-				case 0:
-					sEffects.eEffect1 = eEffect;
-					sEffects.iDurType1 = iDur;
-					break;
-				case 1:
-					sEffects.eEffect2 = eEffect;
-					sEffects.iDurType2 = iDur;
-					break;
-				case 2:
-					sEffects.eEffect3 = eEffect;
-					sEffects.iDurType3 = iDur;
-					break;
-				case 3:
-					sEffects.eEffect4 = eEffect;
-					sEffects.iDurType4 = iDur;
-					break;
-				case 4:
-					sEffects.eEffect5 = eEffect;
-					sEffects.iDurType5 = iDur;
-					break;
-			}
-			sEffects.iNr++;
-		}
-
-		eEffect = GetNextEffect(oPC);
-	}
-	return sEffects;
-}
-
-// this function removes the effects stored in the struct sEffects from oPC(or its skin, or armor, or whatsoever)
-// experimental; don't know if it works
-void RemoveEffectsFromCreature(object oPC, struct Effects sEffects)
-{
-	if (sEffects.iNr > 0)
-		RemoveEffect(oPC, sEffects.eEffect1);
-	if (sEffects.iNr > 1)
-		RemoveEffect(oPC, sEffects.eEffect2);
-	if (sEffects.iNr > 2)
-		RemoveEffect(oPC, sEffects.eEffect3);
-	if (sEffects.iNr > 3)
-		RemoveEffect(oPC, sEffects.eEffect4);
-	if (sEffects.iNr > 4)
-		RemoveEffect(oPC, sEffects.eEffect5);
-}
-
-// experimental: functionality not yet tested
-// this function reapplies the effects, stored in the struct sEffects, to oPC (or its skin, or armor, or whatsoever)
-// for temporary effects one would have to know how long the effects lasts
-// however, we simply assume that the aurora system knows when to remove these effects, and therefore apply them
-// with a very long duration
-void ReApplyEffectsToCreature(object oPC, struct Effects sEffects)
-{
-	float fDuration = 9999.;
-	if (sEffects.iNr > 0)
-		ApplyEffectToObject(sEffects.iDurType1, sEffects.eEffect1, oPC, fDuration);
-	if (sEffects.iNr > 1)
-		ApplyEffectToObject(sEffects.iDurType2, sEffects.eEffect2, oPC, fDuration);
-	if (sEffects.iNr > 2)
-		ApplyEffectToObject(sEffects.iDurType3, sEffects.eEffect3, oPC, fDuration);
-	if (sEffects.iNr > 3)
-		ApplyEffectToObject(sEffects.iDurType4, sEffects.eEffect4, oPC, fDuration);
-	if (sEffects.iNr > 4)
-		ApplyEffectToObject(sEffects.iDurType5, sEffects.eEffect5, oPC, fDuration);		
-}
-
-// motu99: modified this code so that it now works with PRC 3.1c
+// motu99: modified this code so that it now works with PRC 3.1d
 int GetMagicalAttackBonus(object oAttacker)  
 {
 // motu99: added createMagicTatoo, Heroism, GreaterHeroism, MantleOfEgregiousMight, Deadeye Sense
@@ -3000,9 +2899,10 @@ int GetMagicalAttackBonus(object oAttacker)
 					break;
 
 				case SPELL_TENSERS_TRANSFORMATION:
-					// fin d out caster level (should be stored in local int on oAttacker)
+					// find out caster level (should be stored in local int on oAttacker)
 					iBonus = GetLocalInt(oAttacker, "CasterLvl_TensersTrans");
-					// if there was no local int, we have to find out the caster level otherwise (is not very accurate)
+
+					// if there is no local int, we have to find out the caster level (is not very accurate)
 					if (!iBonus)
 					{
 						// Tenser's could have been cast on us by someone else (rune or scroll), so find out caster
@@ -3012,7 +2912,7 @@ int GetMagicalAttackBonus(object oAttacker)
 
 						iBonus = GetLevelByTypeArcane(oCaster);
 					}
-// DoDebug("GetMagicalAttackBonus: found Tensers Transformation, caster level = " + IntToString(iBonus));
+
 					iBonus /= 2;
 					iMagicBonus += iBonus;
 					break;
@@ -3097,7 +2997,8 @@ int GetMagicalAttackBonus(object oAttacker)
 					if(!GetIsObjectValid(oCaster)) // if we cannot find the caster, we assume the attacker was the caster
 						oCaster = oAttacker;
 
-						iMagicBonus--;
+					iMagicBonus--;
+
 					if(GetIsObjectValid(oCaster))
 					{
 						if(	GetLevelByClass(CLASS_TYPE_BARD, oCaster) >= BARD_LEVEL_FOR_BARD_SONG_AB_2
@@ -3123,7 +3024,6 @@ int GetMagicalAttackBonus(object oAttacker)
 
 		eEffect = GetNextEffect(oAttacker);
 	}
-// DoDebug("GetMagicalAttackBonus() is returning: "+IntToString(iMagicBonus));
 	return iMagicBonus;
 }
 
@@ -3146,7 +3046,6 @@ int GetWeaponAttackBonusItemProperty(object oWeap, object oDefender)
 	itemproperty ip = GetFirstItemProperty(oWeap);
 	while(GetIsItemPropertyValid(ip))
 	{
-// DoDebug("GetWeaponAttackBonusItemProperty() found "+DebugStringItemProperty(ip));
 		iTemp = 0;
 		int iIpType=GetItemPropertyType(ip);
 		switch(iIpType)
@@ -3195,7 +3094,6 @@ int GetWeaponAttackBonusItemProperty(object oWeap, object oDefender)
 		ip = GetNextItemProperty(oWeap);
     }
 	iBonus -= iPenalty;
-// DoDebug("GetWeaponAttackBonusItemProperty() is returning: " + IntToString(iBonus) + " for weapon " + GetName(oWeap) + ", Defender: " + GetName(oDefender));
     return iBonus;
 }
 
@@ -3253,9 +3151,9 @@ int GetDefenderAC(object oDefender, object oAttacker, int bIsTouchAttack = FALSE
 		// but only if it is not a touch attack
 		if(!bIsTouchAttack)
 		{
-// motu99: This calculation is quite costly; has to loop through all feats several times
-// if performance is an issue, better make one loop, checking for all of the below feats with a switch statement
-// and just return highest feat (feats seem to be item properties on the creature / PC, so could we loop through all item properties on the characters? not sure)
+// motu99: This calculation is quite costly; has to loop through all feats of OBJECT_SELF several times (up to 22 times)
+// if performance is an issue, better make one single loop, checking for the highest of the feats and return that
+//[feats seem to be item properties on the creature / PC, so could we loop through all item properties on the characters? not sure]
 			if     ( GetHasFeat(FEAT_NATARM_1) )  iAC += 1;
 			else if( GetHasFeat(FEAT_NATARM_2) )  iAC += 2;
 			else if( GetHasFeat(FEAT_NATARM_3) )  iAC += 3;
@@ -3313,45 +3211,42 @@ int GetDefenderAC(object oDefender, object oAttacker, int bIsTouchAttack = FALSE
 			iAC = min(iAC + GetAbilityModifier(ABILITY_CHARISMA, oDefender), nNormalAC);
 	}
 
-// DoDebug("GetDefenderAC() is returning: " + IntToString(iAC) + " for defender " + GetName(oDefender) + ", attacked by: " + GetName(oAttacker));
 	return iAC;
 }
 
 
-// motu99: changed name of variable iMainhand into iOffhand, because this is as any sane person would see it.
-
 // motu99: restructured code for better efficiency / readability March 16, 2007
 // note that the attack boni calculated here also depend on the defender
 // (for instance if weapon has an attack/enhancement bonus vs. specific alignments)
+
 // the only source of defender specific AB in this function is the attacker's weapon
 // if efficiency becomes an issue, it might be better to remember the defender (or its race/alignment),
 // so that AB and other stuff will only be recalculated when the defender changes.
 
 // at the current time, GetAttackBonus is calculated at the beginning of the round, but not for every attack.
 // therefore, if the defender changes during the round, weapon boni versus specific enemy races or alignments are not properly accounted for
-// might move that part out of GetAttackBonus.
-// also if we switch weapons during a combat round, this is not noticed until the beginning of the next round, where GetAttackBonus is called anew
+// so we eventually might want to move that part out of GetAttackBonus.
+// also if we switch weapons during a combat round, this will not be not noticed until the beginning of the next round, when GetAttackBonus is called anew
 
 // the following AB-sources are taken into account: (* = depends on Defender) 
 // Base Attack Bonus - iBAB
-// Ability modifier due to Str/Dex/Wis - iAbilityBonus [motu99: could change during a round, because of enemy actions]
-// Bonus from Feats - iFeatBonus (Weapon Focus, Specialization, Prowess, Good aim) [motu99: will change during the round, if we equip other weapons, or if defenders come in melee range for a ranged attack (with/without Point Blank Shot)]
+// Ability modifier due to Str/Dex/Wis - iAbilityBonus [motu99: could change during a round, if enemy does ability decreasing attacks]
+// Bonus from Feats - iFeatBonus (Weapon Focus, Specialization, Prowess, Good aim) [motu99: will change during the round, if we equip other weapons, or if defenders comes into melee range for a ranged attack (with/without Point Blank Shot)]
 // Two Weapon Fighting penalties - iTWFPenalty (is subtracted) [motu99: will change during the round, if we equip other weapons]
-// Bonus / Penalties from combat modes - iCombatModeBonus (Flurry of Blows is treated elsewhere) [motu99: could be changed during a round]
+// Bonus / Penalties from combat modes - iCombatModeBonus (Flurry of Blows is treated elsewhere) [motu99: the PC can change the combat mode during a round]
 // Magical Boni from Spells on Attacker - iMagicBonus [motu99: might not last through the round, or could be dispelled]
 // * Boni on Weapon - iWeaponAttackBonus, iWeaponEnhancement [motu99: will change during the round, if defender's race or alignment changes]
 int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iOffhand = 0, int iTouchAttackType = FALSE)
 {
 // note that oWeap could be gloves (for an unarmed monk) or a creature weapon
-// note that passing gloves or ammunition to this function may not work well with the override feature in
-// the PerformAttack() function: in order to calculate dual wielding penalties GetAttackBonus does not look up the weapon override variables
-// (stored somewhere in a struct that GetAttackBonus does not know), but actually looks what really is in the inventory slots of the PC
-// possible solution: pass right and left weapons to this function!
+// passing gloves or ammunition to this function may not work well with the override feature in PerformAttack()
+// [in order to calculate dual wielding penalties GetAttackBonus does not look up the weapon override variables, it looks directly into the inventory slots]
+// possible solution: pass right and left weapons to this function! (but make sure, that GetAttackBonus is not used in other prc sources,unless you want to modify these sources!!)
 
 	struct WeaponFeat sWeaponFeat; // holds all the feats relevant for the weapon (or rather weapon base type)
 	int iAttackBonus       = 0;
 	int iAbilityBonus      = 0; // boni from abilities (Str, Dex, Wis) - also depends on feats (Finesse, Intuitive Attack) and type of attack (touch, melee, ranged)
-	int iFeatBonus         = 0; // boni from (mostly weapon specific) feats (weapon focus, specialization, prowess, weapon of choice)
+	int iFeatBonus         = 0; // boni from feats (mostly weapon specific: weapon focus, specialization, prowess, weapon of choice)
 	int iMagicBonus        = 0; // boni from AB increasing spells or spell effects on attacker
 	int iCombatModeBonus   = 0; // boni / penalties from Combat Mode
 	int iTWFPenalty        = 0; // penalty from two weapon fighting
@@ -3369,7 +3264,7 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iOffhan
 	// uses GetMonkEnhancement in case a glove/creature weapon is passed as oWeapon
 	int iWeaponEnhancement = GetMonkEnhancement(oWeap, oDefender, oAttacker);
 
-	// Feats
+	// weapon specific feats
 	sWeaponFeat = GetAllFeatsOfWeaponType(iWeaponType);
 
 	int bFocus = 0;
@@ -3400,6 +3295,7 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iOffhan
 
 //	if(bWeaponOfChoice)  iFeatBonus += (GetLevelByClass(CLASS_TYPE_WEAPON_MASTER, oAttacker) / 5);
 // motu99:  original calculation was  not correct: Gimoire says that we get AB +1 at level 5, another +1 at level 13 and +1 every third level thereafter
+// lets hope Grimoire was right, otherwise I'll be off on a trip to Canossa
 	int iWeaponMasterLevel = GetLevelByClass(CLASS_TYPE_WEAPON_MASTER, oAttacker);
 
 	// only look for weapon of choice and related AB increase, if we have enough weapon master levels for the superior weapon focus feat
@@ -3415,7 +3311,6 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iOffhan
 		}
 	}
 
-// DoDebug("BAB with focus/prowess/weaponOfChoice feats: "+IntToString(iAttackBonus+iFeatBonus) );
 
     if(!bIsRangedWeapon) // first do calculations for "normal" melee weapons (includes unarmed, even torches)
     {
@@ -3428,11 +3323,11 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iOffhan
 		int iWeaponSize = StringToInt(Get2DACache("baseitems", "WeaponSize", iWeaponType));
 
 		if(iWeaponType == BASE_ITEM_KATANA)
-		{ // if we have a katana, see if we have the katana finesse feat; if yes we have a finessable weapon
+		{ // if we wield a katana, see if we have the katana finesse feat; if yes we have a finessable weapon
 			bIsFinessableWeapon = GetHasFeat(FEAT_KATANA_FINESSE, oAttacker);
 		}
 		else if(GetIsNaturalWeapon(oWeap))
-		{ // all "natural" weapons are finessable (the critters have them from their birth)
+		{ // all "natural" weapons are finessable (the critters have them from their birth - if they cannot use DEX for their own limbs ...)
 			bIsFinessableWeapon = GetHasFeat(FEAT_WEAPON_FINESSE, oAttacker);
 		}
 		// motu99: added a switch in order to have sensible rules for small creatures, don't know it its PnP, but assume so
@@ -3451,7 +3346,7 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iOffhan
 		// if(iStr > bTempBonus) // motu99: that is strange, this code prehibits any attack penalties due to low strength for melee weapons; removed this check
 		iAbilityBonus = iStr;
 
-		// if we have a finessable weapon, we take Dex, if it is higher than Str
+		// if we have a finessable weapon, we take Dex whenever it is higher than Str
 		if(bIsFinessableWeapon)
 		{
 			if(iDex > iAbilityBonus)	iAbilityBonus = iDex;
@@ -3459,14 +3354,17 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iOffhan
 
 		// Two Weapon Fighting Penalties
 		// NwN only allows melee weapons to be dual wielded
-		// motu99:  this calculation partly ignores the weapon overrides we have set in PerformAttack()
+		// motu99:  this calculation partly ignores the weapon overrides we might have passed to PerformAttack()
 
 		int iOffhandWeaponType;
 		int bIsDoubleSidedWeapon = FALSE;
 
 		// motu99: added check for double sided weapons
 		if(GetIsDoubleSidedWeaponType(iWeaponType))
+		{
 			bIsDoubleSidedWeapon = TRUE;
+			// iOffhandWeaponType = iWeaponType; // motu99 don't need this
+		}
 		else
 		{	// if it is an offhand attack, we assume the weapon given to us in oWeap is the offhand weapon
 			if (iOffhand)
@@ -3479,7 +3377,6 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iOffhan
 			}
 		}
 
-		// motu99: added double sided weapons
 		if(bIsDoubleSidedWeapon || GetIsOffhandWeaponType(iOffhandWeaponType))
 		{
 			int bOffHandLight;
@@ -3545,7 +3442,6 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iOffhan
 			if(bHasTWF)                    iTWFPenalty -= 2;
 			if(bOffHandLight)              iTWFPenalty -= 2;
 			if(bHasAbsoluteAmbidex)        iTWFPenalty -= 2;  // motu99: actually, if the absoluteambidex adds a permanent +2 to AB, this should be deleted
-// DoDebug("dual wield penalty for weapon "+ GetName(oWeap) +": "+IntToString(iTWFPenalty));
 				
 		}
 		// power attack can only be used in melee
@@ -3634,7 +3530,7 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iOffhan
 	// adds weapon attack boni to the bonus
 	iAttackBonus += iWeaponAttackBonus;
 
-	if (DEBUG)
+	if (GetPRCSwitch(PRC_COMBAT_DEBUG))
 	{
 		string sDebugFeedback = COLOR_WHITE;
 		sDebugFeedback += ("AB = " + IntToString(iAttackBonus) + " : ");
@@ -3742,23 +3638,24 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iOffha
 	
 	int iDiceRoll = d20();
 	string sDebugFeedback;
+	int bDebug = GetPRCSwitch(PRC_COMBAT_DEBUG);
 	
-	if (DEBUG) sDebugFeedback = "d20 ("  + IntToString(iDiceRoll) + ")";
-	if (DEBUG) sDebugFeedback += " + AB (" + IntToString(iAttackBonus) + ")";
+	if (bDebug) sDebugFeedback = "d20 ("  + IntToString(iDiceRoll) + ")";
+	if (bDebug) sDebugFeedback += " + AB (" + IntToString(iAttackBonus) + ")";
 
 	iAttackBonus += iMod;
 
-	if(DEBUG) sDebugFeedback += " - APR penalty ("  + IntToString(-iMod) + ")";
+	if(bDebug) sDebugFeedback += " - APR penalty ("  + IntToString(-iMod) + ")";
 
 	int iDefenderMod = GetAttackModVersusDefender(oDefender, oAttacker, oWeapon, iTouchAttackType);
 	iAttackBonus += iDefenderMod;
 
-	if(DEBUG) sDebugFeedback += " + Atk vs Def Adj ("  + IntToString(iDefenderMod) + ")";
+	if(bDebug) sDebugFeedback += " + Atk vs Def Adj ("  + IntToString(iDefenderMod) + ")";
 
 	int iEnemyAC = GetDefenderAC(oDefender, oAttacker, iTouchAttackType);
 
-	if (DEBUG) sDebugFeedback += " *versus* AC ("  + IntToString(iEnemyAC) + ")";
-	if (DEBUG) sDebugFeedback = COLOR_WHITE + "Attack Roll = " + IntToString(iAttackBonus + iDiceRoll) + ": " + sDebugFeedback;
+	if (bDebug) sDebugFeedback += " *versus* AC ("  + IntToString(iEnemyAC) + ")";
+	if (bDebug) sDebugFeedback = COLOR_WHITE + "Attack Roll = " + IntToString(iAttackBonus + iDiceRoll) + ": " + sDebugFeedback;
 
 	int iWeaponType = GetBaseItemType(oWeapon);
 	int iCritThreat = GetWeaponCriticalRange(oAttacker, oWeapon);
@@ -3886,7 +3783,7 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iOffha
 	if(bShowFeedback)
 	{
 		SendMessageToPC(oAttacker, sFeedback); // DelayCommand(fDelay, SendMessageToPC(oAttacker, sFeedback));
-		if (DEBUG) SendMessageToPC(oAttacker, sDebugFeedback);		
+		if (bDebug) SendMessageToPC(oAttacker, sDebugFeedback);		
 	}
 	return iReturn;
 }
@@ -3998,7 +3895,6 @@ int GetWeaponEnhancement(object oWeapon, object oDefender, object oAttacker)
 	itemproperty ip = GetFirstItemProperty(oWeapon);
 	while(GetIsItemPropertyValid(ip))
 	{
-// DoDebug("GetWeaponEnhancement() found " + DebugStringItemProperty(ip));
 		iTemp = 0;
 		int iItemPropType = GetItemPropertyType(ip);
 		switch(iItemPropType)
@@ -4093,7 +3989,7 @@ int GetMonkEnhancement(object oWeapon, object oDefender, object oAttacker)
 
 int GetDamagePowerConstant(object oWeapon, object oDefender, object oAttacker)
 {
-// motu99: call to GetMonkEnhancement executed several times; first for attack bonus, then for enhancement, now for damage power
+// motu99: call to GetMonkEnhancement is executed several times; first for attack bonus, then for enhancement, now for damage power
 // better store the iEnhancement value (from attack bonus calculation) and use it later to determine damage
 	int iDamagePower = GetMonkEnhancement(oWeapon, oDefender, oAttacker);
 
@@ -4542,9 +4438,6 @@ struct BonusDamage GetItemPropertyDamageConstant(int iDamageType, int iDice, str
 // then we need not store the dice constants, but rather do the rolls directly, merely summing up the real damage
 // for the various damage types in one single struct (with half the members than here) 
 // also note, that some damage depends on the enemy (alignment, race etc.), so it can change during one round
-// this is another reason not to precalculate the weapon bonus damage on the beginning of a round
-// the last reason is, that damage from Flame Weapon and Darkfire can be calculated more accurately when we actually roll the
-// dice as soon as we find the effect on the weapon. Implementation of Flame Weapon and Darkfire (stacking / not stacking) is much easier
 struct BonusDamage GetWeaponBonusDamage(object oWeapon, object oTarget)
 {
 	struct BonusDamage weapBonusDam;  // lets hope that everything is initialized to zero
@@ -4576,7 +4469,6 @@ struct BonusDamage GetWeaponBonusDamage(object oWeapon, object oTarget)
 			case ITEM_PROPERTY_DAMAGE_BONUS:
 				iDice = GetItemPropertyCostTableValue(ip);
 				iDamageType = GetItemPropertySubType(ip);
-// DoDebug("GetWeaponBonusDamage() found damage bonus with damage type " + IntToString(iDamageType) + " and dice constant " + IntToString(iDice) + " (" + GetIPDamageBonusConstantName(iDice) + ")");
 				break;
 
 			// Checks weapon for Holy Avenger property
@@ -4600,7 +4492,6 @@ struct BonusDamage GetWeaponBonusDamage(object oWeapon, object oTarget)
 				{
 					iDamageType = GetItemPropertyParam1Value(ip);
 				}
-// DoDebug("GetWeaponBonusDamage() found damage bonus versus alignment group with damage type " + IntToString(iDamageType) + " and dice constant " + IntToString(iDice) + " (" + GetIPDamageBonusConstantName(iDice) + ")");
 				break;
 				
 			case ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP:
@@ -4609,7 +4500,6 @@ struct BonusDamage GetWeaponBonusDamage(object oWeapon, object oTarget)
 					iDamageType = GetItemPropertyParam1Value(ip);
 					iDice = GetItemPropertyCostTableValue(ip);
 				}
-// DoDebug("GetWeaponBonusDamage() found damage bonus versus racial group with damage type " + IntToString(iDamageType) + " and dice constant " + IntToString(iDice) + " (" + GetIPDamageBonusConstantName(iDice) + ")");
 				break;
 				
 			case ITEM_PROPERTY_DAMAGE_BONUS_VS_SPECIFIC_ALIGNMENT:
@@ -4618,23 +4508,19 @@ struct BonusDamage GetWeaponBonusDamage(object oWeapon, object oTarget)
 					iDamageType = GetItemPropertyParam1Value(ip);
 					iDice = GetItemPropertyCostTableValue(ip);
 				}
-// DoDebug("GetWeaponBonusDamage() found damage bonus versus specific alignment with damage type " + IntToString(iDamageType) + " and dice constant " + IntToString(iDice) + " (" + GetIPDamageBonusConstantName(iDice) + ")");
 				break;
 				
- // Removed until new On Hit System is tested.
- /* motu99:  Apr 7, 2007: made onhit system work (at least for flame weapon and darkfire), so this is not needed here!
+ /* motu99:  Apr 7, 2007: made onhitcastspell system work (at least for flame weapon and darkfire), so this is not needed here!
 
 			case ITEM_PROPERTY_ONHITCASTSPELL:
 				iSpellType = GetItemPropertySubType(ip);
-				iDamage = GetItemPropertyCostTableValue(ip)+1; // always one to low
-DoDebug("GetWeaponBonusDamage() found onhitcastspell with Spell type: " + IntToString(iSpellType) +" and damage (ItemPropertyCostTableValue): " + IntToString(iDamage));
+				iDamage = GetItemPropertyCostTableValue(ip)+1; // spell level: always one to low
+DoDebug("GetWeaponBonusDamage() found onhitcastspell with Spell type: " + IntToString(iSpellType) +" and spell level (ItemPropertyCostTableValue): " + IntToString(iDamage));
 				switch(iSpellType)
 				{
 					// dark fire 1d6 + X dmg.  X = CasterLevel/2
 					case IP_CONST_ONHIT_CASTSPELL_ONHIT_DARKFIRE:
 
-						// commented out, so that darkfire or flame weapon damage does not overwrite any other fire damage
-						// we handle the fire damage from darkfire and flameweapon when we are through all item properties
 						// iDamageType = IP_CONST_DAMAGETYPE_FIRE;
 						// iDice = IP_CONST_DAMAGEBONUS_1d6;
 
@@ -4642,16 +4528,11 @@ DoDebug("GetWeaponBonusDamage() found onhitcastspell with Spell type: " + IntToS
 						if(iDamage > 10) iDamage = 10;
 
 						if(iDamage > iDamageDarkfire) iDamageDarkfire = iDamage;
-// Debug code
-iDice = IPGetDamageBonusConstantFromNumber(iDamage);
-DoDebug("GetWeaponBonusDamage() found DARKFIRE spell effect with a damage of " + IntToString(iDamage) + ", IPDamageBonusConstant " + IntToString(iDice) + " (" + GetIPDamageBonusConstantName(iDice) + ")");
-                        break;
+						break;
 						
 					// flame blade 1d4 + X dmg.  X = CasterLevel/2; motu99: in Grimoire it says +1 per casterlevel
 					case IP_CONST_ONHIT_CASTSPELL_ONHIT_FIREDAMAGE:
 
-						// commented out, so that darkfire or flame weapon damage does not overwrite any other fire damage
-						// we handle the fire damage from darkfire and flameweapon when we are through all item properties
 						// iDamageType = IP_CONST_DAMAGETYPE_FIRE;
 						// iDice = IP_CONST_DAMAGEBONUS_1d4;
 
@@ -4660,9 +4541,6 @@ DoDebug("GetWeaponBonusDamage() found DARKFIRE spell effect with a damage of " +
 						if(iDamage > 10) iDamage = 10;
 
 						if(iDamage > iDamageFlameWeapon) iDamageFlameWeapon = iDamage;
-// Debug code
-iDice = IPGetDamageBonusConstantFromNumber(iDamage);
-DoDebug("GetWeaponBonusDamage() found FLAME WEAPON spell effect with a damage of " + IntToString(iDamage) + ", IPDamageBonusConstant " + IntToString(iDice) + " (" + GetIPDamageBonusConstantName(iDice) + ")");
 						break;
 				}
 
@@ -4817,17 +4695,10 @@ DoDebug("GetWeaponBonusDamage() found FLAME WEAPON spell effect with a damage of
 
 		ip = GetNextItemProperty(oWeapon);
 	}
+	// we are through
 	// now add flame weapon and darkfire damage
-	// how we do this depends on the switch PRC_FLAMEWEAPON_DARKFIRE_STACK
-	// if the switch is on, flame weapon and darkfire stack. They also stack with any "normal" fire damage on the weapon
-	// (remark: if there are several "normal" fire damage properties on the weapon, only the maximum is taken)
-	// if the switch is off, flame weapon and darkfire fire damage is treated like "normal" fire damage on a weapon,
-	// meaning that they do *not* stack and only the maximum fire damage from all fire damage sources is taken
-	// motu99: If fire damage from the two spells shall stack, it might be better to store the damage in the spellBonusDam struct, filled in by GetMagicalBonusDamage()
-
-	// find out if fire damage from darkfire and flame weapon should stack
 /*
-// motu99: Not using this any more, rather using ApplyOnHitAbilities
+// motu99: Not using this any more, rather using prc_onhitcast to do any onhitcast spells on the weapon
 	int bStack = GetPRCSwitch(PRC_FLAMEWEAPON_DARKFIRE_STACK);
 
 	if(bStack)
@@ -4871,7 +4742,6 @@ DoDebug("GetWeaponBonusDamage() found FLAME WEAPON spell effect with a damage of
 			else if (iDamageFlameWeapon && iDice < 4) weapBonusDam.dice_Fire = IP_CONST_DAMAGEBONUS_1d4;
 		}
 	}
-// DoDebug("GetWeaponBonusDamage() filled struct with fire damage of " + IntToString(weapBonusDam.dam_Fire) + " [" + GetIPDamageBonusConstantName(weapBonusDam.dam_Fire) + "] and dice of " + IntToString(weapBonusDam.dice_Fire) + " [" + GetIPDamageBonusConstantName(weapBonusDam.dice_Fire) + "]");
 */
 	return weapBonusDam;
 }
@@ -4901,7 +4771,7 @@ struct Dice GetWeaponMonsterDamage(object oWeapon)
 	return sDice;
 }
 
-// contrary to GetWeaponBonusDamage this usually remains constant during the round (unless the spells happen to expire in that round, or is dispelled)
+// contrary to GetWeaponBonusDamage this usually remains constant during the round (unless the spells happen to expire in that round, or are dispelled)
 struct BonusDamage GetMagicalBonusDamage(object oAttacker)
 {
 // this searches for spell effects on the attacker that increase damage
@@ -5137,8 +5007,8 @@ struct BonusDamage GetMagicalBonusDamage(object oAttacker)
 // motu99: This partially depends on the defender, which might change during a round. But usually it is only calculated once at beginning of round
 int GetWeaponDamagePerRound(object oDefender, object oAttacker, object oWeap, int iOffhand = 0)
 {
-// @TODO: check if swashbuckler insightful strike works
 	string sDebugMessage = COLOR_WHITE;
+	int bDebug = GetPRCSwitch(PRC_COMBAT_DEBUG);
 
 	int iDamage = 0;
 	int iWeaponType = GetBaseItemType(oWeap);
@@ -5155,7 +5025,7 @@ int GetWeaponDamagePerRound(object oDefender, object oAttacker, object oWeap, in
 			if(iStr > iMighty) iStr = iMighty;
 
 			iDamage += iStr;
-			if (DEBUG) sDebugMessage += "Mighty (" + IntToString(iStr) + ")";
+			if (bDebug) sDebugMessage += "Mighty (" + IntToString(iStr) + ")";
 		}
 	}
 	// melee weapon rules
@@ -5171,14 +5041,11 @@ int GetWeaponDamagePerRound(object oDefender, object oAttacker, object oWeap, in
 
 		iDamage += iStr;
 
-		if (DEBUG) sDebugMessage += "Str Bonus (" + IntToString(iStr) + ")";
+		if (bDebug) sDebugMessage += "Str Bonus (" + IntToString(iStr) + ")";
 
 		// Handle the damage bonus from PRC Power Attack
 		iDamage += GetLocalInt(oAttacker, "PRC_PowerAttack_DamageBonus");
 	}
-
-// motu99: might have to add in Swashbuckler's insightful strike here (simple weapon)
-// unless this is already covered over the unique on hit abilities on the weapon
 
 	// weapon specializations
 	int iSpecializationBonus = 0;
@@ -5198,12 +5065,12 @@ int GetWeaponDamagePerRound(object oDefender, object oAttacker, object oWeap, in
 	}
 
 	iDamage += iSpecializationBonus;
-	if (DEBUG) sDebugMessage += " + WeapSpec (" + IntToString(iSpecializationBonus) + ")";
+	if (bDebug) sDebugMessage += " + WeapSpec (" + IntToString(iSpecializationBonus) + ")";
 	
 	// adds weapon enhancement bonus to damage
 	int iEnhancement = GetWeaponEnhancement(oWeap, oDefender, oAttacker);  // motu: we are calling this quite often (for attack rolls, for damage, etc); better call it once at beginning of round and remember
 	iDamage += iEnhancement;
-	if (DEBUG) sDebugMessage += " + WeapEnh (" + IntToString(iEnhancement) + ")";
+	if (bDebug) sDebugMessage += " + WeapEnh (" + IntToString(iEnhancement) + ")";
 
 	// support for power attack and expertise modes
 	int iCombatMode = GetLastAttackMode(oAttacker);
@@ -5221,7 +5088,7 @@ int GetWeaponDamagePerRound(object oDefender, object oAttacker, object oWeap, in
          !GetHasSpellEffect(SPELL_POWER_ATTACK1) */)
 	{
 		iDamage += 5;
-		if (DEBUG) sDebugMessage += " + PowAtk (" + IntToString(5) + ")";
+		if (bDebug) sDebugMessage += " + PowAtk (" + IntToString(5) + ")";
 	}
 	else if( iCombatMode == COMBAT_MODE_IMPROVED_POWER_ATTACK /*&&
          !GetHasSpellEffect(SPELL_SUPREME_POWER_ATTACK) &&
@@ -5237,7 +5104,7 @@ int GetWeaponDamagePerRound(object oDefender, object oAttacker, object oWeap, in
          !GetHasSpellEffect(SPELL_POWER_ATTACK1) */)
 	{
 		iDamage += 10;
-		if (DEBUG) sDebugMessage += " + ImpPowAtk (" + IntToString(10) + ")";
+		if (bDebug) sDebugMessage += " + ImpPowAtk (" + IntToString(10) + ")";
 	}
 
 	// calculates bonus damage for Favored Enemies
@@ -5245,11 +5112,11 @@ int GetWeaponDamagePerRound(object oDefender, object oAttacker, object oWeap, in
 	// can be moved if this becomes an issue of course.
 	int iFavoredEnemyBonus = GetFavoredEnemyDamageBonus(oDefender, oAttacker);
 	iDamage += iFavoredEnemyBonus;
-	if (DEBUG) sDebugMessage += " + FavEnmy (" + IntToString(iFavoredEnemyBonus) + ")";
-	if (DEBUG) sDebugMessage = COLOR_WHITE + "Weapon Damage = " + IntToString(iDamage) + ": " + sDebugMessage;
 
-// DoDebug("GetWeaponDamagePerRound() returns " + IntToString(iDamage) + " for weapon " + GetName(oWeap) + ", Attacker: " + GetName(oAttacker) + ", Defender: " + GetName(oDefender));
-	if (DEBUG) DoDebug(sDebugMessage);
+	if (bDebug) sDebugMessage += " + FavEnmy (" + IntToString(iFavoredEnemyBonus) + ")";
+	if (bDebug) sDebugMessage = COLOR_WHITE + "Weapon Damage = " + IntToString(iDamage) + ": " + sDebugMessage;
+	if (bDebug) DoDebug(sDebugMessage);
+
 	return iDamage;
 }
 
@@ -5301,7 +5168,6 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
 		int iStr = GetAbilityModifier(ABILITY_STRENGTH, oAttacker);
 		int iLevelMod = GetHitDice(oAttacker) / 2;
 		int iSaveDC = 10 + iStr + iLevelMod;
-//DoDebug(COLOR_WHITE + "GetAttackDamage: Devastating Critical - fortitude save DC = " + IntToString(iSaveDC));
 
 		if(!FortitudeSave(oDefender, iSaveDC, SAVING_THROW_TYPE_NONE, oAttacker) )
 		{
@@ -5323,6 +5189,7 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
 	if(eLink == eDeath)
 	{
 		string sDebugMessage = "";
+		int bDebug = GetPRCSwitch(PRC_COMBAT_DEBUG);
 		int iWeaponDamage = 0;
 		int iBonusWeaponDamage = 0;
 		int iMassCritBonusDamage = 0;
@@ -5371,7 +5238,7 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
 		if(iNumSides == 20) iDiceRoll = d20(iNumDice);
 
 		iWeaponDamage += iDiceRoll;
-		if (DEBUG) sDebugMessage += IntToString(iNumDice) + "d" + IntToString(iNumSides) + " (" + IntToString(iDiceRoll) + ")";
+		if (bDebug) sDebugMessage += IntToString(iNumDice) + "d" + IntToString(iNumSides) + " (" + IntToString(iDiceRoll) + ")";
 
 		int iOCRoll = 0;
 		// Determine Massive Critical Bonuses
@@ -5396,7 +5263,6 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
 				int iOCDice = iCriticalMultiplier - 1;
 				if(iOCDice < 1) iOCDice = 1;
 				iOCRoll = d6(iOCDice);
-//DoDebug(COLOR_WHITE + "GetAttackDamage(): Overwhelming Critical - extra damage = " + IntToString(iOCDice) + "d6 (" + IntToString(iOCRoll) + ")");
 			}
 		}
 
@@ -5405,7 +5271,7 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
 		else		iBonusWeaponDamage = GetWeaponDamagePerRound(oDefender, oAttacker, oWeapon, iOffhand);
 
 		// dpr = damage per round (assumed to be the same on every attack)
-		if (DEBUG) sDebugMessage += " + Weap Bon DPR (" + IntToString(iBonusWeaponDamage) + ")";
+		if (bDebug) sDebugMessage += " + Weap Bon DPR (" + IntToString(iBonusWeaponDamage) + ")";
 
 		iWeaponDamage += iBonusWeaponDamage;
 
@@ -5418,19 +5284,19 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
 		if(bIsCritical)
 		{
 			// determine critical damage
-			if (DEBUG) sDebugMessage += " + Crit (" + IntToString(iWeaponDamage * (iCriticalMultiplier-1)) + ") [* " + IntToString(iCriticalMultiplier) + "]";
+			if (bDebug) sDebugMessage += " + Crit (" + IntToString(iWeaponDamage * (iCriticalMultiplier-1)) + ") [* " + IntToString(iCriticalMultiplier) + "]";
 			iWeaponDamage *= iCriticalMultiplier;
 
 			if(iMassCritBonusDamage)
 			{
 				iWeaponDamage += iMassCritBonusDamage;
-				if (DEBUG) sDebugMessage += " + MassCrit (" + IntToString(iMassCritBonusDamage) + ")";
+				if (bDebug) sDebugMessage += " + MassCrit (" + IntToString(iMassCritBonusDamage) + ")";
 			}
 
 			if(iOCRoll)
 			{
 				iWeaponDamage += iOCRoll;
-				if (DEBUG) sDebugMessage += " + OvwhlmgCrit (" + IntToString(iOCRoll) + ")";
+				if (bDebug) sDebugMessage += " + OvwhlmgCrit (" + IntToString(iOCRoll) + ")";
 			}
 		}
 
@@ -5446,7 +5312,7 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
 		iWeaponDamage += GetDamageByConstant(sWeaponBonusDamage.dice_Slash, TRUE);
 
 		// weapon physical bonus damage - BPS = bludgeoning Piercing Slashing
-		if (DEBUG) sDebugMessage += " + Weap Bon Phys (" + IntToString(iWeaponDamage - iOldWeaponDamage) + ")";
+		if (bDebug) sDebugMessage += " + Weap Bon Phys (" + IntToString(iWeaponDamage - iOldWeaponDamage) + ")";
 		iOldWeaponDamage = iWeaponDamage;
 
 		// damage from spells is stored as solid number (note, these are not spells on the weapon, such as darkfire)
@@ -5463,7 +5329,7 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
 		// wouldn't it be better to keep the different physical damage types separate and link them in one effect?
 	
 		// spell physical bonus damage
-		if (DEBUG) sDebugMessage += " + Spell Phys (" + IntToString(iWeaponDamage - iOldWeaponDamage) + ")";
+		if (bDebug) sDebugMessage += " + Spell Phys (" + IntToString(iWeaponDamage - iOldWeaponDamage) + ")";
 
 		// Logic to determine if enemy can be sneak attacked
 		// and to add sneak attack damage
@@ -5475,7 +5341,7 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
 			{
 				iSneakDamage = GetSneakAttackDamage(iSneakDice);
 				iWeaponDamage += iSneakDamage;
-				if (DEBUG) sDebugMessage += " + Sneak (" + IntToString(iSneakDamage) + ")";
+				if (bDebug) sDebugMessage += " + Sneak (" + IntToString(iSneakDamage) + ")";
 			
 				string sMes = "*Sneak Attack*";
 				if (DEBUG) sMes = "scripted "+ sMes;
@@ -5505,7 +5371,6 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
 
 		iFire  = sSpellBonusDamage.dam_Fire;
 		iFire += GetDamageByConstant(sWeaponBonusDamage.dam_Fire, TRUE);
-// DoDebug("GetAttackDamage() found const fire damage " + IntToString(iFire));
 
 		iElec  = sSpellBonusDamage.dam_Elec;
 		iElec += GetDamageByConstant(sWeaponBonusDamage.dam_Elec, TRUE);
@@ -5535,7 +5400,6 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
 
 		iFire += GetDamageByConstant(sSpellBonusDamage.dice_Fire, TRUE);
 		iFire += GetDamageByConstant(sWeaponBonusDamage.dice_Fire, TRUE);
-// DoDebug("GetAttackDamage() found const and dice fire damage " + IntToString(iFire));
 
 		iElec += GetDamageByConstant(sSpellBonusDamage.dice_Elec, TRUE);
 		iElec += GetDamageByConstant(sWeaponBonusDamage.dice_Elec, TRUE);
@@ -5574,7 +5438,7 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
 			iMag *= iCriticalMultiplier;
 		}
 
-		if (DEBUG)
+		if (bDebug)
 		{
 			if (iAcid) sDebugMessage += COLOR_GREEN + " + Acid (" + IntToString(iAcid) + ")";
 			if (iCold) sDebugMessage += COLOR_LIGHT_BLUE + " + Cold (" + IntToString(iCold) + ")";
@@ -5646,8 +5510,8 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
 			if (iMag  > 0) eLink = EffectLinkEffects(EffectLinkEffects(eLink, EffectDamage(iMag, DAMAGE_TYPE_MAGICAL)), EffectVisualEffect(VFX_COM_HIT_DIVINE));
 
 		}
-		if (DEBUG) sDebugMessage = COLOR_WHITE + "Damage = " + IntToString(iWeaponDamage +iMagicalDamage) + ": " + sDebugMessage;
-		if (DEBUG) DoDebug(sDebugMessage);
+		if (bDebug) sDebugMessage = COLOR_WHITE + "Damage = " + IntToString(iWeaponDamage +iMagicalDamage) + ": " + sDebugMessage;
+		if (bDebug) DoDebug(sDebugMessage);
 	}
 	return eLink;
 }
@@ -5657,31 +5521,50 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
 //::  Attack Logic Functions
 //:://////////////////////////////////////////////
 
-void ApplyOnHitDurationAbiltiies(object oDefender, int iDurationVal, effect eAbility, effect eVis)
+void ApplyOnHitDurationAbiltiies(object oTarget, int iDurationVal, effect eAbility, effect eVis)
 {
 	int iChance   = StringToInt( Get2DACache("iprp_onhitdur", "EffectChance", iDurationVal) );
 	int iRoll = d100();
-// DoDebug("ApplyOnHitDurationAbiltiies: 2da-row = "+IntToString(iDurationVal)+", chance = "+IntToString(iChance)+", roll = "+IntToString(iRoll) );
 
 	if(iRoll <= iChance)
 	{
-//		int iDuration = StringToInt( Get2DACache("iprp_onhitdur", "DurationRounds", iDurationVal) );
 		int iDuration = StringToInt( Get2DACache("iprp_onhitdur", "DurationRounds", iDurationVal) );
-// DoDebug("ApplyOnHitDurationAbiltiies: duration = "+IntToString(iDuration));
 //		effect eLink = EffectLinkEffects(eAbility, eVis); // motu99: The visual effect eVis is instant, so linking with the temporary eAbility is not a good idea
-//		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oDefender, RoundsToSeconds(iDuration) );
-		ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
-		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAbility, oDefender, RoundsToSeconds(iDuration) );
-	}
-// DoDebug("ApplyOnHitDurationAbiltiies: done");
-	
+//		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(iDuration) );
+		ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAbility, oTarget, RoundsToSeconds(iDuration) );
+	}	
 }
 
 // motu99: added saving throws (most were missing)
 // @TODO: check if all saving throws are correct (will? fortitude?) and are called with appropriate SAVING_THROW_TYPE_*
-void DoOnHitProperties(itemproperty ip, object oDefender)
+// might also have to replace the Bioware saving throws with PRCMySavingThrow, eventually
+
+// Note, that for the IP_CONST_ONHIT_<spell> constants, where <spell> is a spell that should be cast
+// (such as IP_CONST_ONHIT_KNOCK, IP_CONST_ONHIT_LESSERDISPEL, etc.)
+// we have to call the Impact spell scripts directly, because the commands ActionCastSpell* do not work within PRC combat!
+/*
+// the reason why we can't cast the onhitcast spells as a normal spellcast action is, that the spell casts are inserted into the action queue of the PRC attacker,
+// but as long as the attacker is in physical combat (which is always the case for PerformAttack or PerformAttackRound), the (physical) attack action is
+// at the top of the action queue and remains there throughout the whole combat process (which can be several rounds)
+// Now the spell cast actions are inserted *after* the physical attack action, and therefore the spell cast actions are never executed
+// (unless we stop attacking - which usually only happens if all enemies or the PC is dead)
+// We can circumvent the problem with the action queue, by calling the Impact spell scripts directly. The problem with this approach is, that we are lacking
+// the internal setup (done in the ActionCastSpell* commands), which is required so that the spell scripts receive the essential information they need.
+// This essential information is retreived (in the spell script) via the functions GetSpellCastItem, GetSpellTarget etc.
+// Unfortunately these information functions do not return sensible values when the impact spell scripts are called directly, 
+// because the necessary setup (usually done in ActionCastSpell*) has not been done
+// What needs to be done, therefore, is to let the spell script know - by other means - what the essential parameters are
+//(for onhit cast spells we usually need SpellTarget and SpellCastItem)
+// As we don't know how Bioware passes the information to the GetSpellCastItem(), GetSpellTarget() etc. functions (most likely by local objects stored on the caster)
+// the most straight forward approach seems to be, to replace all calls to GetSpellCastItem(), GetSpellTarget() etc. in all of the onhitcast spell impact scripts
+// with PRC-wrapper functions, that use special local ints/objects (set on the caster or the module) in order to communicate the essential parameters to the spell impact script
+// The only thing we then need to do, is to properly set up these local ints/objects by ourselves, before we execute
+// the impact spell scripts, and delete them right after execution (so that they don't interfere with the normal spellcasting process)
+// See ExecuteSpellScript() in prc_inc_spells how this can be done
+*/
+void DoOnHitProperties(itemproperty ip, object oTarget)
 {
-// DoDebug("DoOnHitProperties: entered and found " + DebugStringItemProperty(ip));
 	// covers poison, vorpal, stun, disease, etc.
 	// ipSubType = IP_CONST_ONHIT_*
 	// ipCostVal = IP_CONST_ONHIT_SAVEDC_*
@@ -5690,8 +5573,6 @@ void DoOnHitProperties(itemproperty ip, object oDefender)
 	int iDC = GetItemPropertyCostTableValue(ip);
 	int iSubType = GetItemPropertySubType(ip);
 	int iParam1 = GetItemPropertyParam1Value(ip);
-
-// DoDebug("DoOnHitProperties: found onhit property, subtype = "+IntToString(iSubType)+", costval = "+IntToString(iDC)+", param1 = "+IntToString(iParam1));
 
 	// change to proper save DC
 	if (iDC < 0) iDC = 0;
@@ -5721,7 +5602,6 @@ void DoOnHitProperties(itemproperty ip, object oDefender)
 		}
 	}
 */
-// DoDebug("DoOnHitProperties: found onhit property with DC "+IntToString(iDC));
 
 	// sMes += " | I have On Hit: ";
 
@@ -5733,8 +5613,8 @@ void DoOnHitProperties(itemproperty ip, object oDefender)
 	string sDiseaseType;
 
 	// alignment code
-//	int iGoodEvil = GetAlignmentGoodEvil(oDefender);
-//	int iLawChaos = GetAlignmentLawChaos(oDefender);
+//	int iGoodEvil = GetAlignmentGoodEvil(oTarget);
+//	int iLawChaos = GetAlignmentLawChaos(oTarget);
 //	int iAlignSpecific = GetItemPropAlignment(iGoodEvil, iLawChaos);
 
 	switch (iSubType)
@@ -5749,61 +5629,70 @@ void DoOnHitProperties(itemproperty ip, object oDefender)
 		// iParam1 should be the ammout of levels to drain
 		case IP_CONST_ONHIT_LEVELDRAIN:
 		{
-			if( !FortitudeSave(oDefender, iDC, SAVING_THROW_TYPE_NEGATIVE) )
+			if( !FortitudeSave(oTarget, iDC, SAVING_THROW_TYPE_NEGATIVE) )
 			{
 				if(iParam1 < 1) iParam1 = 1;
 
 				eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
-				ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
+				ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 
 				eEffect = SupernaturalEffect( EffectNegativeLevel(iParam1) );
-				ApplyEffectToObject(DURATION_TYPE_PERMANENT, eEffect, oDefender);
+				ApplyEffectToObject(DURATION_TYPE_PERMANENT, eEffect, oTarget);
 			}
 			break;
 		}
 		// NEEDS TESTING
 		case IP_CONST_ONHIT_WOUNDING:
 		{
-			if( !FortitudeSave(oDefender, iDC, SAVING_THROW_TYPE_NONE) )
+			if( !FortitudeSave(oTarget, iDC, SAVING_THROW_TYPE_NONE) )
 			{
 				if(iParam1 < 1) iParam1 = 1;
 				iParam1 = -iParam1;
 
 				eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
-				ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
+				ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 
 				// in theory this will drain them 1 HP per round.
 				eEffect = ExtraordinaryEffect( EffectRegenerate(iParam1, 6.0 ) );
-				ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eEffect, oDefender, 9999.0);
+				ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eEffect, oTarget, 9999.0);
 			}
 			break;
 		}
-		// motu99: ActionCastSpell most likely will not work (not yet tested)
-		// @TODO: call the spell scripts directly and modify them, so that they can retrieve the SpellTarget and the SpellCastItem
-		// see DoOnHitSpell() how to do this
+		// motu99: ActionCastSpell* will not work within scripted combat
+		// @TODO: call the spell scripts directly via ExecuteSpellScript() and modify the spell scripts,
+		// so that they can retrieve the SpellTarget and the SpellCastItem (use the PRC wrappers)
+		// see new onhitcast section in prc_inc_spells for details
+
+		/** WARNING:
+		// It is extremely unsafe to call the spell scripts from within a loop over item properties
+		// But DoOnHitProperties() is called from such a loop (the loop is done in ApplyOnHitAbilities)
+		// So what we must do, is to pass the spell ID back to ApplyOnHitAbilities, there store it in an array
+		// and then execute all impact spell scripts AFTER we have cycled through the item properties!
+		// see prc_inc_spells (in particular the routines ApplyAllOnHitCastSpellsOnItem*) for details
+		*/
 		case IP_CONST_ONHIT_KNOCK:
 		{
-			ActionCastSpellAtObject(SPELL_KNOCK, oDefender, METAMAGIC_ANY, TRUE, iDC, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
+			ActionCastSpellAtObject(SPELL_KNOCK, oTarget, METAMAGIC_ANY, TRUE, iDC, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
 			break;
 		}
 		case IP_CONST_ONHIT_LESSERDISPEL:
 		{
-			ActionCastSpellAtObject(SPELL_LESSER_DISPEL, oDefender, METAMAGIC_ANY, TRUE, iDC, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
+			ActionCastSpellAtObject(SPELL_LESSER_DISPEL, oTarget, METAMAGIC_ANY, TRUE, iDC, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
 			break;
 		}
 		case IP_CONST_ONHIT_DISPELMAGIC:
 		{
-			ActionCastSpellAtObject(SPELL_DISPEL_MAGIC, oDefender, METAMAGIC_ANY, TRUE, iDC, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
+			ActionCastSpellAtObject(SPELL_DISPEL_MAGIC, oTarget, METAMAGIC_ANY, TRUE, iDC, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
 			break;
 		}
 		case IP_CONST_ONHIT_GREATERDISPEL:
 		{
-			ActionCastSpellAtObject(SPELL_GREATER_DISPELLING, oDefender, METAMAGIC_ANY, TRUE, iDC, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
+			ActionCastSpellAtObject(SPELL_GREATER_DISPELLING, oTarget, METAMAGIC_ANY, TRUE, iDC, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
 			break;
 		}
 		case IP_CONST_ONHIT_MORDSDISJUNCTION:
 		{
-			ActionCastSpellAtObject(SPELL_MORDENKAINENS_DISJUNCTION, oDefender, METAMAGIC_ANY, TRUE, iDC, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
+			ActionCastSpellAtObject(SPELL_MORDENKAINENS_DISJUNCTION, oTarget, METAMAGIC_ANY, TRUE, iDC, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
 			break;
 		}
 		// iParam1 = iprp_abilities.2da
@@ -5813,7 +5702,7 @@ void DoOnHitProperties(itemproperty ip, object oDefender)
 		case IP_CONST_ONHIT_ITEMPOISON:
 		case IP_CONST_ONHIT_ABILITYDRAIN:
 		{
-			if( !FortitudeSave(oDefender, iDC, SAVING_THROW_TYPE_NONE) )
+			if( !FortitudeSave(oTarget, iDC, SAVING_THROW_TYPE_NONE) )
 			{
 				if (iParam1 <= 0)		iStat = ABILITY_STRENGTH;
 				else if (iParam1 == 1)	iStat = ABILITY_DEXTERITY;
@@ -5823,18 +5712,18 @@ void DoOnHitProperties(itemproperty ip, object oDefender)
 				else					iStat = ABILITY_CHARISMA;
 
 				eVis = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);
-				ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
+				ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 
 				//eEffect = EffectAbilityDecrease(iStat, d2() );
-				//ApplyEffectToObject(DURATION_TYPE_PERMANENT, eEffect, oDefender);
-				ApplyAbilityDamage(oDefender, iStat, d2(), DURATION_TYPE_PERMANENT, TRUE);
+				//ApplyEffectToObject(DURATION_TYPE_PERMANENT, eEffect, oTarget);
+				ApplyAbilityDamage(oTarget, iStat, d2(), DURATION_TYPE_PERMANENT, TRUE);
 			}
 			break;
 		}
 		// ipParam1 = disease.2da
 		case IP_CONST_ONHIT_DISEASE:
 		{
-			if( !FortitudeSave(oDefender, iDC, SAVING_THROW_TYPE_NONE) )
+			if( !FortitudeSave(oTarget, iDC, SAVING_THROW_TYPE_NONE) )
 			{
 			
 				sDiseaseType = Get2DACache("disease", "Type", iParam1);
@@ -5844,29 +5733,29 @@ void DoOnHitProperties(itemproperty ip, object oDefender)
 				else if(sDiseaseType == "SUPER") eEffect = SupernaturalEffect(eEffect);
 
 				eVis = EffectVisualEffect(VFX_IMP_DISEASE_S);
-				ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
-				ApplyEffectToObject(DURATION_TYPE_PERMANENT, eEffect, oDefender);
+				ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+				ApplyEffectToObject(DURATION_TYPE_PERMANENT, eEffect, oTarget);
 			}
 			break;
 		}
 		// ipParam1 =  IPRP_ALIGNMENT
 		case IP_CONST_ONHIT_SLAYALIGNMENT:
 		{
-			// int iGoodEvil = GetAlignmentGoodEvil(oDefender);
-			// int iLawChaos = GetAlignmentLawChaos(oDefender);
-			// int iAlignSpecific = GetItemPropAlignment(GetAlignmentGoodEvil(oDefender), GetAlignmentLawChaos(oDefender));
+			// int iGoodEvil = GetAlignmentGoodEvil(oTarget);
+			// int iLawChaos = GetAlignmentLawChaos(oTarget);
+			// int iAlignSpecific = GetItemPropAlignment(GetAlignmentGoodEvil(oTarget), GetAlignmentLawChaos(oTarget));
 
 			// ipParam1 - specific alignment
-			if(iParam1 == GetItemPropAlignment(GetAlignmentGoodEvil(oDefender), GetAlignmentLawChaos(oDefender)))
+			if(iParam1 == GetItemPropAlignment(GetAlignmentGoodEvil(oTarget), GetAlignmentLawChaos(oTarget)))
 			{
-				if( !FortitudeSave(oDefender, iDC, SAVING_THROW_TYPE_NONE) )
+				if( !FortitudeSave(oTarget, iDC, SAVING_THROW_TYPE_NONE) )
 				{
 					eVis = EffectVisualEffect(VFX_IMP_DEATH);
-					ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
+					ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 
 					// circumvent death immunity
 					eEffect = EffectDamage(9999, DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_ENERGY);
-					ApplyEffectToObject(DURATION_TYPE_INSTANT, eEffect, oDefender);
+					ApplyEffectToObject(DURATION_TYPE_INSTANT, eEffect, oTarget);
 				}
 			}
 			break;
@@ -5875,22 +5764,22 @@ void DoOnHitProperties(itemproperty ip, object oDefender)
 		// ipParam1 =  IPRP_ALIGNGRP
 		case IP_CONST_ONHIT_SLAYALIGNMENTGROUP:
 		{
-			// int iGoodEvil = GetAlignmentGoodEvil(oDefender);
-			// int iLawChaos = GetAlignmentLawChaos(oDefender);
+			// int iGoodEvil = GetAlignmentGoodEvil(oTarget);
+			// int iLawChaos = GetAlignmentLawChaos(oTarget);
 
 			// ipParam1 - alignment group
 			if(	iParam1 == IP_CONST_ALIGNMENTGROUP_ALL
-				|| iParam1 == GetAlignmentGoodEvil(oDefender)
-				|| iParam1 == GetAlignmentLawChaos(oDefender))
+				|| iParam1 == GetAlignmentGoodEvil(oTarget)
+				|| iParam1 == GetAlignmentLawChaos(oTarget))
 			{
-				if( !FortitudeSave(oDefender, iDC, SAVING_THROW_TYPE_NONE) )
+				if( !FortitudeSave(oTarget, iDC, SAVING_THROW_TYPE_NONE) )
 				{
 					eVis = EffectVisualEffect(VFX_IMP_DEATH);
-					ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
+					ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 
 					// circumvent death immunity
 					eEffect = EffectDamage(9999, DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_ENERGY);
-					ApplyEffectToObject(DURATION_TYPE_INSTANT, eEffect, oDefender);
+					ApplyEffectToObject(DURATION_TYPE_INSTANT, eEffect, oTarget);
 				}
 			}
 			break;
@@ -5898,17 +5787,17 @@ void DoOnHitProperties(itemproperty ip, object oDefender)
 		// ipParam1 =  racialtypes.2da
 		case IP_CONST_ONHIT_SLAYRACE:
 		{
-			if(iParam1 == MyPRCGetRacialType(oDefender) )
+			if(iParam1 == MyPRCGetRacialType(oTarget) )
 			{
-				if( !FortitudeSave(oDefender, iDC, SAVING_THROW_TYPE_NONE) )
+				if( !FortitudeSave(oTarget, iDC, SAVING_THROW_TYPE_NONE) )
 				{
 				
 					eVis = EffectVisualEffect(VFX_IMP_DEATH);
-					ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
+					ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 
 					// circumvent death immunity
 					eEffect = EffectDamage(9999, DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_ENERGY);
-					ApplyEffectToObject(DURATION_TYPE_INSTANT, eEffect, oDefender);
+					ApplyEffectToObject(DURATION_TYPE_INSTANT, eEffect, oTarget);
 				}
 			}
 			break;
@@ -5916,114 +5805,114 @@ void DoOnHitProperties(itemproperty ip, object oDefender)
 		// ipParam1 = iprp_onhitdur.2da
 		case IP_CONST_ONHIT_BLINDNESS:
 		{
-			if( !FortitudeSave(oDefender, iDC, SAVING_THROW_TYPE_NONE) )
+			if( !FortitudeSave(oTarget, iDC, SAVING_THROW_TYPE_NONE) )
 			{
 				eEffect = EffectBlindness();
 				eVis = EffectVisualEffect(VFX_IMP_BLIND_DEAF_M);
-				ApplyOnHitDurationAbiltiies(oDefender, iParam1, eEffect, eVis);
+				ApplyOnHitDurationAbiltiies(oTarget, iParam1, eEffect, eVis);
 			}
 			break;
 		}
 		case IP_CONST_ONHIT_CONFUSION:
 		{
-			if( !WillSave(oDefender, iDC, SAVING_THROW_TYPE_NONE) )
+			if( !WillSave(oTarget, iDC, SAVING_THROW_TYPE_NONE) )
 			{
 				eEffect = EffectConfused();
 				eVis = EffectVisualEffect(VFX_IMP_CONFUSION_S);
-				ApplyOnHitDurationAbiltiies(oDefender, iParam1, eEffect, eVis);
+				ApplyOnHitDurationAbiltiies(oTarget, iParam1, eEffect, eVis);
 			}
 			break;
 		}
 		case IP_CONST_ONHIT_DAZE:
 		{
-			if( !WillSave(oDefender, iDC, SAVING_THROW_TYPE_NONE) )
+			if( !WillSave(oTarget, iDC, SAVING_THROW_TYPE_NONE) )
 			{
 				eEffect = EffectDazed();
 				eVis = EffectVisualEffect(VFX_IMP_DAZED_S);
-				ApplyOnHitDurationAbiltiies(oDefender, iParam1, eEffect, eVis);
+				ApplyOnHitDurationAbiltiies(oTarget, iParam1, eEffect, eVis);
 			}
 			break;
 		}
 		case IP_CONST_ONHIT_DEAFNESS:
 		{
-			if( !FortitudeSave(oDefender, iDC, SAVING_THROW_TYPE_NONE) )
+			if( !FortitudeSave(oTarget, iDC, SAVING_THROW_TYPE_NONE) )
 			{
 				eEffect = EffectDeaf();
 				eVis = EffectVisualEffect(VFX_IMP_BLIND_DEAF_M);
-				ApplyOnHitDurationAbiltiies(oDefender, iParam1, eEffect, eVis);
+				ApplyOnHitDurationAbiltiies(oTarget, iParam1, eEffect, eVis);
 			}
 			break;
 		}
 		case IP_CONST_ONHIT_DOOM:
 		{
-			if( !WillSave(oDefender, iDC, SAVING_THROW_TYPE_NONE) )
+			if( !WillSave(oTarget, iDC, SAVING_THROW_TYPE_NONE) )
 			{
 				eEffect = EffectAttackDecrease(2);
 				eEffect = EffectLinkEffects(eEffect, EffectDamageDecrease(2));
 				eEffect = EffectLinkEffects(eEffect, EffectSavingThrowDecrease(SAVING_THROW_ALL, 2));
 				eEffect = EffectLinkEffects(eEffect, EffectSkillDecrease(SKILL_ALL_SKILLS, 2));
 				eVis = EffectVisualEffect(VFX_IMP_DOOM);
-				ApplyOnHitDurationAbiltiies(oDefender, iParam1, eEffect, eVis);
+				ApplyOnHitDurationAbiltiies(oTarget, iParam1, eEffect, eVis);
 			}
 			break;
 		}
 		case IP_CONST_ONHIT_FEAR:
 		{
-			if( !WillSave(oDefender, iDC, SAVING_THROW_TYPE_NONE) )
+			if( !WillSave(oTarget, iDC, SAVING_THROW_TYPE_NONE) )
 			{
 				eEffect = EffectFrightened();
 				eVis = EffectVisualEffect(VFX_IMP_HEAD_EVIL);
-				ApplyOnHitDurationAbiltiies(oDefender, iParam1, eEffect, eVis);
+				ApplyOnHitDurationAbiltiies(oTarget, iParam1, eEffect, eVis);
 			}
 			break;
 		}
 		case IP_CONST_ONHIT_HOLD:
 		{
-			if( !WillSave(oDefender, iDC, SAVING_THROW_TYPE_NONE) )
+			if( !WillSave(oTarget, iDC, SAVING_THROW_TYPE_NONE) )
 			{
 				eEffect = EffectParalyze();
 				eVis = EffectVisualEffect(VFX_DUR_FREEZE_ANIMATION);
-				ApplyOnHitDurationAbiltiies(oDefender, iParam1, eEffect, eVis);
+				ApplyOnHitDurationAbiltiies(oTarget, iParam1, eEffect, eVis);
 			}
 			break;
 		}
 		case IP_CONST_ONHIT_SILENCE:
 		{
-			if( !WillSave(oDefender, iDC, SAVING_THROW_TYPE_NONE) )
+			if( !WillSave(oTarget, iDC, SAVING_THROW_TYPE_NONE) )
 			{
 				eEffect = EffectSilence();
 				eVis = EffectVisualEffect(VFX_IMP_SILENCE);
-				ApplyOnHitDurationAbiltiies(oDefender, iParam1, eEffect, eVis);
+				ApplyOnHitDurationAbiltiies(oTarget, iParam1, eEffect, eVis);
 			}
 			break;
 		}
 		case IP_CONST_ONHIT_SLEEP:
 		{
-			if( !WillSave(oDefender, iDC, SAVING_THROW_TYPE_NONE) )
+			if( !WillSave(oTarget, iDC, SAVING_THROW_TYPE_NONE) )
 			{
 				eEffect = EffectSleep();
 				eVis = EffectVisualEffect(VFX_IMP_SLEEP);
-				ApplyOnHitDurationAbiltiies(oDefender, iParam1, eEffect, eVis);
+				ApplyOnHitDurationAbiltiies(oTarget, iParam1, eEffect, eVis);
 			}
 			break;
 		}
 		case IP_CONST_ONHIT_SLOW:
 		{
-			if( !WillSave(oDefender, iDC, SAVING_THROW_TYPE_NONE) )
+			if( !WillSave(oTarget, iDC, SAVING_THROW_TYPE_NONE) )
 			{
 				eEffect = EffectSlow();
 				eVis = EffectVisualEffect(VFX_IMP_SLOW);
-				ApplyOnHitDurationAbiltiies(oDefender, iParam1, eEffect, eVis);
+				ApplyOnHitDurationAbiltiies(oTarget, iParam1, eEffect, eVis);
 			}
 			break;
 		}
 		case IP_CONST_ONHIT_STUN:
 		{
-			if( !WillSave(oDefender, iDC, SAVING_THROW_TYPE_NONE) )
+			if( !WillSave(oTarget, iDC, SAVING_THROW_TYPE_NONE) )
 			{
 				eEffect = EffectStunned();
 				eVis = EffectVisualEffect(VFX_IMP_STUN);
-				ApplyOnHitDurationAbiltiies(oDefender, iParam1, eEffect, eVis);
+				ApplyOnHitDurationAbiltiies(oTarget, iParam1, eEffect, eVis);
 			}
 			break;
 		}
@@ -6033,23 +5922,17 @@ void DoOnHitProperties(itemproperty ip, object oDefender)
 			break;
 		}
 	}
-
-// DoDebug("DoOnHitProperties: finished");
-			
 }
 
 // motu99: added saving throws (most were missing)
 // @TODO: check if all saving throws are correct (will? fortitude?) and are called with appropriate SAVING_THROW_TYPE_*
-void DoOnMonsterHit(itemproperty ip, object oDefender)
+// might also have to replace the Bioware saving throws with PRCMySavingThrow, eventually
+void DoOnMonsterHit(itemproperty ip, object oTarget)
 {
-// DoDebug("DoOnMonsterHit: entered and found " + DebugStringItemProperty(ip));
-
 //	int iType = GetItemPropertyType(ip);
 	int iDC = GetItemPropertyCostTableValue(ip);
 	int iSubType = GetItemPropertySubType(ip);
 	int iParam1 = GetItemPropertyParam1Value(ip);
-
-// DoDebug("DoOnMonsterHit: found onhit property, subtype = "+IntToString(iSubType)+", costval = "+IntToString(iDC)+", param1 = "+IntToString(iParam1));
 
 	// change to proper save DC
 	if (iDC < 0) iDC = 0;
@@ -6078,8 +5961,6 @@ void DoOnMonsterHit(itemproperty ip, object oDefender)
 	}
 */
 
-// DoDebug("DoOnMonsterHit: found onhit property with DC "+IntToString(iDC));
-
 	// motu99: moved variable declations out of switch statement, because declaration within produced a stack underflow error
 	// we could also enclose the statements in the case with curly brackets {}, but got paranoid after 4 hours of tracking down the error
 	effect eEffect;
@@ -6092,32 +5973,32 @@ void DoOnMonsterHit(itemproperty ip, object oDefender)
 		// ipParam1 should be the ammout of levels to drain
 		case IP_CONST_ONMONSTERHIT_LEVELDRAIN:
 		{
-			if( !FortitudeSave(oDefender, iDC, SAVING_THROW_TYPE_NEGATIVE) )
+			if( !FortitudeSave(oTarget, iDC, SAVING_THROW_TYPE_NEGATIVE) )
 			{
 				if(iParam1 < 1) iParam1 = 1;
 
 				eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
-				ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
+				ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 
 				eEffect = SupernaturalEffect( EffectNegativeLevel(iParam1) );
-				ApplyEffectToObject(DURATION_TYPE_PERMANENT, eEffect, oDefender);
+				ApplyEffectToObject(DURATION_TYPE_PERMANENT, eEffect, oTarget);
 			}
 			break;
 		}
 		// NEEDS TESTING
 		case IP_CONST_ONMONSTERHIT_WOUNDING:
 		{
-			if( !FortitudeSave(oDefender, iDC, SAVING_THROW_TYPE_NONE) )
+			if( !FortitudeSave(oTarget, iDC, SAVING_THROW_TYPE_NONE) )
 			{
 				if(iParam1 < 1) iParam1 = 1;
 				iParam1 = -iParam1;
 
 				eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
-				ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
+				ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 
 				// in theory this will drain them 1 HP per round.
 				eEffect = ExtraordinaryEffect( EffectRegenerate(iParam1, 6.0 ) );
-				ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eEffect, oDefender, 9999.0);
+				ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eEffect, oTarget, 9999.0);
 			}
 			break;
 		}
@@ -6128,7 +6009,7 @@ void DoOnMonsterHit(itemproperty ip, object oDefender)
 		case IP_CONST_ONMONSTERHIT_POISON:
 		case IP_CONST_ONMONSTERHIT_ABILITYDRAIN:
 		{
-			if( !FortitudeSave(oDefender, iDC, SAVING_THROW_TYPE_NONE) )
+			if( !FortitudeSave(oTarget, iDC, SAVING_THROW_TYPE_NONE) )
 			{
 				if (iParam1 <= 0)		iStat = ABILITY_STRENGTH;
 				else if (iParam1 == 1)	iStat = ABILITY_DEXTERITY;
@@ -6138,18 +6019,18 @@ void DoOnMonsterHit(itemproperty ip, object oDefender)
 				else					iStat = ABILITY_CHARISMA;
 
 				eVis = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);
-				ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
+				ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 
 				//eEffect = EffectAbilityDecrease(iStat, d2() );
-				//ApplyEffectToObject(DURATION_TYPE_PERMANENT, eEffect, oDefender);
-				ApplyAbilityDamage(oDefender, iStat, d2(), DURATION_TYPE_PERMANENT, TRUE);
+				//ApplyEffectToObject(DURATION_TYPE_PERMANENT, eEffect, oTarget);
+				ApplyAbilityDamage(oTarget, iStat, d2(), DURATION_TYPE_PERMANENT, TRUE);
 			}
 			break;
 		}
 		// ipParam1 = disease.2da
 		case IP_CONST_ONMONSTERHIT_DISEASE:
 		{
-			if( !FortitudeSave(oDefender, iDC, SAVING_THROW_TYPE_NONE) )
+			if( !FortitudeSave(oTarget, iDC, SAVING_THROW_TYPE_NONE) )
 			{
 				sDiseaseType = Get2DACache("disease", "Type", iParam1);
 				eEffect = EffectDisease(iParam1);
@@ -6158,24 +6039,24 @@ void DoOnMonsterHit(itemproperty ip, object oDefender)
 				else if(sDiseaseType == "SUPER") eEffect = SupernaturalEffect(eEffect);
 
 				eVis = EffectVisualEffect(VFX_IMP_DISEASE_S);
-				ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oDefender);
-				ApplyEffectToObject(DURATION_TYPE_PERMANENT, eEffect, oDefender);
+				ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+				ApplyEffectToObject(DURATION_TYPE_PERMANENT, eEffect, oTarget);
 			}
 			break;
 		}
 		case IP_CONST_ONMONSTERHIT_CONFUSION:
 		{
-			if( !WillSave(oDefender, iDC, SAVING_THROW_TYPE_NONE) )
+			if( !WillSave(oTarget, iDC, SAVING_THROW_TYPE_NONE) )
 			{
 				eEffect = EffectConfused();
 				eVis = EffectVisualEffect(VFX_IMP_CONFUSION_S);
-				ApplyOnHitDurationAbiltiies(oDefender, iParam1, eEffect, eVis);
+				ApplyOnHitDurationAbiltiies(oTarget, iParam1, eEffect, eVis);
 			}
 			break;
 		}
 		case IP_CONST_ONMONSTERHIT_DOOM:
 		{
-			if( !WillSave(oDefender, iDC, SAVING_THROW_TYPE_NONE) )
+			if( !WillSave(oTarget, iDC, SAVING_THROW_TYPE_NONE) )
 			{
 				eEffect = EffectAttackDecrease(2);
 				eEffect = EffectLinkEffects(eEffect, EffectDamageDecrease(2));
@@ -6183,37 +6064,37 @@ void DoOnMonsterHit(itemproperty ip, object oDefender)
 				eEffect = EffectLinkEffects(eEffect, EffectSkillDecrease(SKILL_ALL_SKILLS, 2));
 			
 				eVis = EffectVisualEffect(VFX_IMP_DOOM);
-				ApplyOnHitDurationAbiltiies(oDefender, iParam1, eEffect, eVis);
+				ApplyOnHitDurationAbiltiies(oTarget, iParam1, eEffect, eVis);
 			}
 			break;
 		}
 		case IP_CONST_ONMONSTERHIT_FEAR:
 		{
-			if( !WillSave(oDefender, iDC, SAVING_THROW_TYPE_NONE) )
+			if( !WillSave(oTarget, iDC, SAVING_THROW_TYPE_NONE) )
 			{
 				eEffect = EffectFrightened();
 				eVis = EffectVisualEffect(VFX_IMP_HEAD_EVIL);
-				ApplyOnHitDurationAbiltiies(oDefender, iParam1, eEffect, eVis);
+				ApplyOnHitDurationAbiltiies(oTarget, iParam1, eEffect, eVis);
 			}
 			break;
 		}
 		case IP_CONST_ONMONSTERHIT_SLOW:
 		{
-			if( !WillSave(oDefender, iDC, SAVING_THROW_TYPE_NONE) )
+			if( !WillSave(oTarget, iDC, SAVING_THROW_TYPE_NONE) )
 			{
 				eEffect = EffectSlow();
 				eVis = EffectVisualEffect(VFX_IMP_SLOW);
-				ApplyOnHitDurationAbiltiies(oDefender, iParam1, eEffect, eVis);
+				ApplyOnHitDurationAbiltiies(oTarget, iParam1, eEffect, eVis);
 			}
 			break;
 		}
 		case IP_CONST_ONMONSTERHIT_STUN:
 		{
-			if( !WillSave(oDefender, iDC, SAVING_THROW_TYPE_NONE) )
+			if( !WillSave(oTarget, iDC, SAVING_THROW_TYPE_NONE) )
 			{
 				eEffect = EffectStunned();
 				eVis = EffectVisualEffect(VFX_IMP_STUN);
-				ApplyOnHitDurationAbiltiies(oDefender, iParam1, eEffect, eVis);
+				ApplyOnHitDurationAbiltiies(oTarget, iParam1, eEffect, eVis);
 			}
 			break;
 		}
@@ -6223,99 +6104,26 @@ void DoOnMonsterHit(itemproperty ip, object oDefender)
 			break;
 		}
 	}
-// DoDebug("DoOnMonsterHit: finished");
-
 }
 
 // experimental: not working!
-void ClearActionsAndCastSpell(int iSpellID, object oDefender, int iCasterLvl)
+void ClearActionsAndCastSpell(int iSpellID, object oTarget, int iCasterLvl)
 {
 DoDebug("ClearActionsAndCastSpell: entered, clearing actions and casting spell # "+IntToString(iSpellID));
 	ClearAllActions(TRUE);
-	ActionCastSpellAtObject(iSpellID, oDefender, METAMAGIC_ANY, TRUE, iCasterLvl, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
+	ActionCastSpellAtObject(iSpellID, oTarget, METAMAGIC_ANY, TRUE, iCasterLvl, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
 //	ActionAttack(oDefender, TRUE);
 }
 
-// experimental; so far only working for flame weapon and darkfire 
-void DoOnHitSpell(int iSpellNr, object oTarget, object oItem, object oPC = OBJECT_SELF)
-{
-	// get the name of the impact spell script (for ExecuteScript)
-	string sScript = Get2DACache("spells", "ImpactScript", iSpellNr);
-//	if(DEBUG) DoDebug("DoOnHitSpell: executing on hit spell script "+sScript);
 
-	// tell the impact spell script what the spell cast item is
-	SetLocalObject(oPC, "PRC_SPELLCASTITEM_OVERRIDE", oItem);
-
-	// tell the impact spell script who the target is
-	SetLocalObject(oPC, "PRC_SPELL_TARGET_OBJECT_OVERRIDE", oTarget);
-
-	// execute the impact spell script in the context of oPC
-	ExecuteScript(sScript, oPC);
-
-	// cleanuup
-	DeleteLocalObject(oPC, "PRC_SPELLCASTITEM_OVERRIDE");
-	DeleteLocalObject(oPC, "PRC_SPELL_TARGET_OBJECT_OVERRIDE");
-
-//DoDebug("DoOnHitSpell: done executing on hit spell script "+sScript);
-}
-
-void ApplyAllOnHitCastSpells(object oTarget, object oItem, object oPC = OBJECT_SELF)
-{
-	int iType;
-	int iSubType;
-	int iSpellID;
-	int iCostVal;
-	
-	itemproperty ip = GetFirstItemProperty(oItem);
-
-	while(GetIsItemPropertyValid(ip))
-	{
-// DoDebug("ApplyAllOnHitCastSpells: found " + DebugStringItemProperty(ip));
-		iType = GetItemPropertyType(ip);
-
-		if (iType ==ITEM_PROPERTY_ONHITCASTSPELL)
-		{
-			iSubType = GetItemPropertySubType(ip);
-			iSpellID = StringToInt( Get2DACache("iprp_onhitspell", "SpellIndex", iSubType) );
-			iCostVal = GetItemPropertyCostTableValue(ip);
-//DoDebug("ApplyAllOnHitCastSpells: found onhitcastspell # " + IntToString(iSpellID)+", subtype = " + IntToString(iSubType));
-
-			// now do the impact spell scripts
-			DoOnHitSpell(iSpellID, oTarget, oItem, oPC);
-/*
-// motu99: Not needed, because DoOnHitSpell calls prc_onhitcast
-			// This is to catch OnHit: Unique
-			if (IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER == iSubType)
-			{
-				if(DEBUG) DoDebug("ApplyOnHitAbilities: found onhit unique power - calling prc_onhitcast");
-				ExecuteScript("prc_onhitcast", oPC);
-			}
-*/
-		}
-		ip = GetNextItemProperty(oItem);
-	}
-}
-
-// motu99: modified function so that it does not produce a stack underflow error any more
+// motu99: modified function so that it does not produce a stack underflow error
 // added saving throws (could be done more elegantly, but why bother, if it works)
 // @TODO: check if all saving throws are correct (will? fortitude?) and are called with appropriate SAVING_THROW_TYPE_*
-// @TODO: make modifications to onhitcast spells, so that DoOnHitSpell() works for all onhitcast spells (so far it is only working for Darkfire and Flame Weapon)
-// Note, that we have to call the Impact spell scripts directly, because the commands ActionCastSpell* do not work within PRC combat!
-// the reason why we can't cast the onhitcast spells as a normal spellcast action is, that the spell casts are inserted into the action queue of the PRC attacker,
-// but as long as the attacker is in physical combat (which is always the case for PerformAttack or PerformAttackRound), the (physical) attack action is
-// at the top of the action queue and remains there throughout the whole combat process (which can be several rounds)
-// Now the spell cast actions are inserted *after* the physical attack action, and therefore the spell cast actions are never executed (unless we stop attacking - which usually only happens if all enemies or the PC is dead)
-// We can circumvent the problem with the action queue, by calling the Impact spell scripts directly. The problem with this approach is, that we are lacking
-// the internal setup (done in the ActionCastSpell* commands), which is required so that the spell scripts receive the essential information they need.
-// This essential information is retreived (in the spell script) via the functions GetSpellCastItem, GetSpellTarget etc.
-// Unfortunately these information functions do not return sensible values when the impact spell scripts are called directly,  because the necessary setup (usually done in ActionCastSpell*) has not been done
-// What needs to be done, therefore, is to let the spell script know - by other means - what the essential parameters are (for onhit cast spells we usually need SpellTarget and SpellCastItem)
-// As we don't know how Bioware passes the information to the GetSpellCastItem(), GetSpellTarget() etc. functions (most likely by local objects stored on the caster)
-// the most straight forward approach seems to be, to replace all calls to GetSpellCastItem(), GetSpellTarget() etc. in all of the onhitcast spell impact scripts
-// with PRC-wrapper functions, that use special local ints/objects (set on the caster or the module) in order to communicate the essential parameters to the spell impact script
-// The only thing we then need to do, is to properly set up these local ints/objects by ourselves, before we execute the impact spell scripts, and delete them right after execution (so that they don't interfere with the normal spellcasting process)
-// See DoOnHitSpell() as an example how this can be done
-void ApplyOnHitAbilities(object oDefender, object oAttacker, object oItem)
+
+// made modifications to onhitcast system, so that onhitcasting should work - in principle - with all onhitcast spells
+// ( modifications to the spell scripts are required, in PRC 3.1d only done for Darkfire and Flame Weapon)
+// @TODO: do the necessary modifications for all impact spell scripts (see prc_inc_spells, what to do)
+void ApplyOnHitAbilities(object oTarget, object oItemWielder, object oItem)
 {
 //	string sMes = "";
 
@@ -6327,6 +6135,7 @@ void ApplyOnHitAbilities(object oDefender, object oAttacker, object oItem)
 	int iSpellID;
 	int iCostVal;
 	int iParam1;
+	int bOnHitCastSpell = FALSE;
 
 	effect eEffect;
 	
@@ -6334,107 +6143,47 @@ void ApplyOnHitAbilities(object oDefender, object oAttacker, object oItem)
 
 	while(GetIsItemPropertyValid(ip))
 	{
-// DoDebug("ApplyOnHitAbilities: found " + DebugStringItemProperty(ip));
 		iType = GetItemPropertyType(ip);
 
 		switch (iType)
 		{
 			case ITEM_PROPERTY_REGENERATION_VAMPIRIC:
 			{
-// DoDebug("ApplyOnHitAbilities: found ITEM_PROPERTY_REGENERATION_VAMPIRIC");
 				iCostVal = GetItemPropertyCostTableValue(ip);
 				eEffect = EffectHeal(iCostVal);
-				ApplyEffectToObject(DURATION_TYPE_INSTANT, eEffect, oAttacker, 0.0);
+				ApplyEffectToObject(DURATION_TYPE_INSTANT, eEffect, oItemWielder, 0.0);
 				break;
 			}
 			case ITEM_PROPERTY_ONHITCASTSPELL:
 			{
-				iSubType = GetItemPropertySubType(ip);
-				iSpellID = StringToInt( Get2DACache("iprp_onhitspell", "SpellIndex", iSubType) );
-				iCostVal = GetItemPropertyCostTableValue(ip);
-//DoDebug("ApplyOnHitAbilities: found onhitcastspell # " + IntToString(iSpellID)+", subtype = " + IntToString(iSubType));
-
-				// now do the impact spell scripts
-				SetLocalInt(oItem, "ApplyOnHitSpell", TRUE);
-				DoOnHitSpell(iSpellID, oDefender, oItem, oAttacker);
-				DeleteLocalInt(oItem, "ApplyOnHitSpell");
-
-/*
-// motu99: Not needed any more, because DoOnHitSpell will call prc_onhitcast
-				// This is to catch OnHit: Unique
-				if (IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER == iSubType)
-				{
-					if(DEBUG) DoDebug("ApplyOnHitAbilities: found onhit unique power - calling prc_onhitcast");
-					ExecuteScript("prc_onhitcast", oAttacker);
-				}
-*/
-				// motu99: The following code (in this case statement) is the old version for trying to cast an onhit spell
-				// the old version did not work; left it here, because if it *can* be brought to work, it will function more generally (e.g. with *any* user written spell script using *only* Biowares spell-script information functions)
-				// the new version (via DoOnHitSpell) requires us to insert the PRC-wrapper functions for the information functions GetSpellCastItem(), GetSpellTarget() etc. by hand into the spell scripts,
-				// so the new version does not work with user written spells that only know about Bioware's functions
-
-				// Store the weapon for retrieval in spellscripts.
-				// motu99: moved this up, so that it is set *before* the spell scripts execute
-				SetLocalObject(oAttacker, "PRC_CombatSystem_OnHitCastSpell_Item", oItem);
-				// Cleanup (motu99: better delete this in the spell scripts! Deleting it so late might break "normal" spell casting)
-				DelayCommand(0.5f, DeleteLocalObject(oAttacker, "PRC_CombatSystem_OnHitCastSpell_Item"));
-
-/*
-				// motu99: The following (commented out) code is not yet fully functional;
-
-				// now cast the spell (cheat-mode = TRUE, instant-mode = TRUE)
-				// motu99: Originally this did not work, because the spellcast is an action; it will be added to the action queue, but BEHIND the atttack action
-				// Therefore as long as we are attacking, the spell is NOT executed. Subsequent onhit spells accumulate after the attack action
-				// However, when we are through with attacking, the enemies (usually) are dead, so no sense to cast any left over spells on them
-				
-				AssignCommand(oAttacker, ActionCastSpellAtObject(iSpellID, oDefender, METAMAGIC_ANY, TRUE, iCostVal, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
-*/
-				// an ugly workaround is to issue clear all actions before the AssignCommand. But then we are not attacking any more
-				// However, as soon as we actually apply the damage to oDefender, the aurora engine will (automatically) put us in attack mode again
-				// But: if oDefender was invalid or dead before we could apply the damage, we will *not* be put into attack mode, and just stand around
-				// So better check whether oDefender lives, before we issue the ClearAllActions Command
-				// The problem with this is, that we are using an action to apply the spell damage. We don't do the spell attack immediately. So oDefender could still die inbetween
-				// Another problem is, that the impact spell script, that we are calling through ActionCastSpellAtObject, does not know anything about the local object "PRC_CombatSystem_OnHitCastSpell_Item"
-				// So if we don't modify every impact spell script, the script will make its usual call to GetSpellCastItem(), which then will return OBJECT_INVALID
-				// at that point the spell will abort (at least if it needs to know oItem, which usually is the case)
-				// so eventually we are stuck with the same problem that DoOnHitSpell has. We must replace GetSpellCastItem() in every spell script by a wrapper function: PRCGetSpellCastItem() 
-				// but then it seems better to use the logic in DoOnHitSpell in order to call the impact spell script immediately. This saves CPU time and we do not have to issue ClearAllActions(), which is highly problematic
-
-/*
-				// motu99: just for testing, remove if DoOnHitSpell is fully functional
-				if (TRUE)
-				{
-					DoDebug("ApplyOnHitAbilities: now assigning spell cast action to "+GetName(oAttacker));
-					AssignCommand(oAttacker, ClearActionsAndCastSpell(iSpellID, oDefender, iCostVal));
-				}
-*/				
+				// route all on-hit cast spells through the prc_onhitcast script
+				// originally prc_onhitcast was only meant for unique powers,
+				// but it has been extended to do all other onhit cast spells on the weapon
+				// in order to bypass the biobug, that will only execute the first onhitcast spell on an item
+				bOnHitCastSpell = TRUE;
 				break;
 			}
 			case ITEM_PROPERTY_ON_HIT_PROPERTIES:
 			{
-// DoDebug("ApplyOnHitAbilities: found ITEM_PROPERTY_ON_HIT_PROPERTIES");
-				DoOnHitProperties(ip, oDefender);
-// DoDebug("ApplyOnHitAbilities: did ITEM_PROPERTY_ON_HIT_PROPERTIES");
+				DoOnHitProperties(ip, oTarget);
 				break;
 			}
 			// much like above but for creature weapons
 			case ITEM_PROPERTY_ON_MONSTER_HIT:
 			{
-// DoDebug("ApplyOnHitAbilities: found ITEM_PROPERTY_ON_MONSTER_HIT");
-				DoOnMonsterHit(ip, oDefender);
+				DoOnMonsterHit(ip, oTarget);
 				break;
 			}
 			// poisons from poison.2da
 			case ITEM_PROPERTY_POISON:
 			{
-// DoDebug("ApplyOnHitAbilities: found ITEM_PROPERTY_POISON");
 				// @TODO: check if poison requires a Fortitude save
 				iSubType = GetItemPropertySubType(ip);
 				eEffect = EffectPoison( iSubType );
-				ApplyEffectToObject(DURATION_TYPE_PERMANENT, eEffect, oDefender);
+				ApplyEffectToObject(DURATION_TYPE_PERMANENT, eEffect, oTarget);
 
 				eEffect = EffectVisualEffect(VFX_IMP_POISON_L);
-				ApplyEffectToObject(DURATION_TYPE_INSTANT, eEffect, oDefender);
+				ApplyEffectToObject(DURATION_TYPE_INSTANT, eEffect, oTarget);
 				break;
 			}
 			default:
@@ -6442,13 +6191,26 @@ void ApplyOnHitAbilities(object oDefender, object oAttacker, object oItem)
 				break;
 			}
 		} // end switch iType
-// DoDebug("ApplyOnHitAbilities: looking for next item property");
 		ip = GetNextItemProperty(oItem);
 	}
-// DoDebug("ApplyOnHitAbilities: finished");
+
+	// now route all on hit cast spells through "prc_onhitcast"
+	if (bOnHitCastSpell)
+	{
+		ApplyOnHitUniquePower(oTarget, oItem, oItemWielder);
+	}
 
 //	FloatingTextStringOnCreature(sMes, oAttacker);
 }
+
+/**
+// these files formerly contained references to the local object "PRC_CombatSystem_OnHitCastSpell_Item"
+// references to this local int have been replaced by calls to PRCGetSpellCastItem()
+scripts.hak: - prc_evnt_bonebld
+		- prc_evnt_strmtl
+		- prc_onhitcast
+psionics.hak: psi_sk_onhit
+*/
 
 // checks all inventory slots for the haste item property
 // we need this, because looping over all effects on the oPC does not find Haste from items
@@ -6649,6 +6411,7 @@ object FindNearestNewEnemyWithinRange(object oAttacker, object oOldDefender, flo
 	return OBJECT_INVALID;
 }
 
+// debug function, might move this to inc_utility
 string GetActionName(int iAction)
 {
 	switch(iAction)
@@ -6692,9 +6455,9 @@ string GetActionName(int iAction)
 // if this action type is compatible with being in physical combat
 // (physical combat - including touch attack spells - is the combat done by PerformAttack and PerformAttackRound)
 // motu99: so far not clear, whether the categorization of the actions is sensible,
-// @TODO: either comment out or comment in the appropriate line, if the categorization for a specific actions must be changed 
-// should be used by AttackLoopLogic() in order to determine, whether it shall attack a new target or do nothing
-//(because the player has decided to cast a spell, run away or do any other non physical combat action)
+// @TODO: either comment out or comment in the appropriate line, if the categorization for a specific actions must be changed
+// this function should eventually be used by AttackLoopLogic() in order to determine, whether oAttacker shall attack a new target or do nothing
+//(for instance, we would do nothing when the player has decided to cast a spell, run away or do any other non physical combat action)
 int GetIsPhysicalCombatAction(int iAction)
 {
 	switch(iAction)
@@ -6707,7 +6470,7 @@ int GetIsPhysicalCombatAction(int iAction)
 //		case ACTION_COUNTERSPELL: return TRUE; // not clear if we can counterspell while physically attacking, probably not
 //		case ACTION_DIALOGOBJECT: return TRUE;
 //		case ACTION_DISABLETRAP: return TRUE;
-//		case ACTION_DROPITEM: return TRUE;
+		case ACTION_DROPITEM: return TRUE;
 //		case ACTION_EXAMINETRAP: return TRUE;
 //		case ACTION_FLAGTRAP: return TRUE;
 //		case ACTION_FOLLOW: return TRUE;
@@ -6734,10 +6497,11 @@ int GetIsPhysicalCombatAction(int iAction)
 	return FALSE;
 }
 
-// this function is needed in order to have the aurora combat system and the prc combat to run smoothly in parallel
+
+// this function is needed in order to have the aurora combat system and scripted prc combat to run smoothly in parallel
 // oDefender is the target selected by the prc combat functions
 // CheckForChangeOfTarget() tries to return the "best" target for the next (prc) attack
-object CheckForChangeOfTarget(object oAttacker, object oDefender, int bIsRangedAttack = FALSE)
+object CheckForChangeOfTarget(object oAttacker, object oDefender, int bAllowSwitchOfTarget = FALSE)
 {
 // First we determine the attempted (or last attacked) target (oTarget) and check if it is equal to oDefender.
 // If they are not equal, the preference is on oTarget, as it was the last attempted (last attacked) target
@@ -6756,10 +6520,6 @@ object CheckForChangeOfTarget(object oAttacker, object oDefender, int bIsRangedA
 	if (!GetIsObjectValid(oTarget) || GetIsDead(oTarget))
 		oTarget = GetAttackTarget(oAttacker);
 
-	// find out if we allowed target switching by prc combat
-	// motu99: @TODO: implement switch or local int
-	int bAllowSwitchOfTarget = GetPRCSwitch(PRC_ALLOW_SWITCH_OF_TARGET);
-
 	// check whether we might have to change targets
 	// find the "best pick" of oDefender and oTarget and make it oTarget
 	if (oTarget != oDefender)
@@ -6773,8 +6533,7 @@ object CheckForChangeOfTarget(object oAttacker, object oDefender, int bIsRangedA
 			oTarget = oDefender;
 		}
 		// if oTarget lives, we replace oTarget only if
-		else if	(	bAllowSwitchOfTarget // we have allowed a switch of targets
-					&& !bIsRangedAttack	// it is not a ranged attack
+		else if	(	bAllowSwitchOfTarget // we have allowed a switch of targets (this will never be the case for a ranged attack)
 					&& !GetIsInMeleeRange(oTarget, oAttacker) // oTarget is not in melee range
 					&& GetIsObjectValid(oDefender) // oDefender is valid
 					&& !GetIsDead(oDefender) // oDefender lives
@@ -6807,12 +6566,11 @@ object CheckForChangeOfTarget(object oAttacker, object oDefender, int bIsRangedA
 		// if the nearest (living) enemy is dead or invalid still, we must abort
 		if(!GetIsObjectValid(oTarget) || GetIsDead(oTarget))
 		{
-// DoDebug("CheckForChangeOfTarget: could not find a living target - returning OBJECT_INVALID");
 			return OBJECT_INVALID;
 		}
 	}
 	// oTarget lives, but (s)he might be out of melee range, so find a closer target if the switch permits (and we are not doing ranged combat)
-	else if (bAllowSwitchOfTarget && !bIsRangedAttack)
+	else if (bAllowSwitchOfTarget)
 	{
 		// only attempt a target switch, if oTarget is not in melee range
 		if (!GetIsInMeleeRange(oTarget, oAttacker))
@@ -6847,6 +6605,7 @@ object CheckForChangeOfTarget(object oAttacker, object oDefender, int bIsRangedA
 // note that if you make several calls to PerformAttack() via AssignCommand(DelayCommand(fDelay, PerformAttack()))
 // this might cancel any PerformAttack() actions that are still in the "pipeline"
 // so better change the order to DelayCommand(fDelay, AssignCommand(PerformAttack()))
+// or just don't use AssignCommand
 void ClearAllActionsAndMoveToObject(object oTarget)
 {
 	ClearAllActions();
@@ -6854,21 +6613,47 @@ void ClearAllActionsAndMoveToObject(object oTarget)
 }
 
 // AttackLoopLogic actually does the attack, e.g. it does all the rolls, and then calculates and applies the damage
-// it is called with the number of attacks left *after* the attack is done (this info is needed, if it should call AttackLoopMain() in order to schedule more attacks)
-// it will *first* do the attack, it will only check iBonusAttacks, iMainhandAttacks and iOffhandAttacks in order to decrement the Attack-modifier after it actually did the attack
 
-// it will first make some checks (if defender is still valid) and whether it actually can attack the defender
-// if it can attack, it will take the attacker out of stealth mode or invisibility etc.
-// then it checks whether defender is alive or dead
-// if alive, it checks whether it can coup the grace the defender. If it can, it forfeits all remaining attacks and tries the coup
-// if no coup de grace, it will do a normal attack roll
+/**
+// INTERNAL LOGIC:
 
-// after the attack was performed, it checks again whether the defender is dead
-// if he dead (and we actually did an attack on that defender - it could have been dead on entry), it will look for a new defender and perform a cleave attack (if appropriate) by calling itself again (recursively)
+// AttackLoopLogic is called with the number of attacks left *after* the attack is done
+// This info is needed,when we call AttackLoopMain() at the end of the AttackLoopLogic in order to schedule more attacks.
+// AttackLoopLogic will *first* do the attack with the parameters given,
+// it will only check iBonusAttacks, iMainhandAttacks and iOffhandAttacks later
+// in order to decrement the Attack-modifier after it actually did the attack
 
-// when it has done the attack (with all associated cleave and circle kick attacks), it tries to find out, whether there are any attacks left in the round
-// it well then decrement the AB-modifier fpr multiple attacks and call AttackLoopMain (with the proper delay)
+// When doing the attack,we first make some checks (if defender is still valid) and whether we actually can attack the defender
+// in order to run smoothly with the parallel running aurora system, we will select the "best" target for the next attack
 
+// if we are in melee combat, the target is out of melee range, but a 5 foot step can bring us into range, we do the 5 foot step
+// we can only do a 5 foot step once in a full combat round. If we cannot get into melee range with a 5 foot step, we cancel
+// the full attack round and do a move action to the target (we do this by an ActionAttack() command, so that
+// the aurora engine will initiate a new full combat round as soon as we are in melee range)
+
+// if we found a target in range, and it is the first attack, the attacker will be put out of stealth mode or invisibility etc.
+// then we check whether oDefender helpless. If so, we can coup the grace him. We forfeit all remaining attacks and try the coup
+
+// if oAttacker does not do a coup de grace, we roll a normal attack roll
+// if the attack roll hits, AttackLoopLogic applies the damage, including any special effects
+// special effects can be applied to all attacks, or only to the first attack in the round.
+
+// if we hit on our attack (and applied the damage), AttackLoopLogic determines whether it can do a circle kick
+// if we can do the circle kick (e.g. have the feat, there is a different target in melee range, and we did not already do
+// a circle kick in the round)  AttackLoopLogic calls itself recursively to do the circle kick
+
+// after the attack was performed (successful or not), AttackLoopLogic checks whether the defender is dead
+// if (s)he dead, AttackLoopLogic will look for a new defender
+
+// it the new defender is in melee range (and it actually was oAttacker that killed it), we check for the
+// cleave feat, and do the cleave by calling AttackLoopLogic recursively
+
+// if the new defender is out of range, we move to it (unless we have a ranged weapon), and hope we
+// are in range on the next attack
+
+// when AttackLoopLogic has done the attack (with all associated cleave and circle kick attacks), it checks whether there are any attacks left in the round
+// if so, it decrements the AB-modifier for multiple attacks and calls AttackLoopMain (with the proper delay) to schedule the next attack
+*/
 void AttackLoopLogic(object oDefender, object oAttacker,
 	int iBonusAttacks, int iMainAttacks, int iOffHandAttacks, int iMod,
 	struct AttackLoopVars sAttackVars, struct BonusDamage sMainWeaponDamage,
@@ -6881,80 +6666,113 @@ void AttackLoopLogic(object oDefender, object oAttacker,
 
 	if (DEBUG) DoDebug("entered AttackLoopLogic: bFirstAttack = " + IntToString(bFirstAttack) + ", cleave = " + IntToString(bIsCleaveAttack) + ", current action = " + GetActionName(iAction));
 
-	// if we are not attacking, abort (we loose all attacks which might be left in the round)
-	if (!GetLocalInt(oAttacker, "prc_action_attack"))
-	{
-		// the following check only works, if PRC and aurora combat systems run in parallel, so that aurora sets the attack action properly
-		// we check the current action, and if it is not equal to ACTION_ATTACKOBJECT, we return
-		// if PRC combat is to do an attack regardless of the current action state of oAttacker
-		// we must set the local int "prc_action_attack" to TRUE in advance (and then delete it with a DelayCommand() after we did the attack)
-		if (iAction != ACTION_ATTACKOBJECT && iAction != ACTION_MOVETOPOINT)
-//		if(!GetIsPhysicalCombatAction(GetCurrentAction(oAttacker)))
-		{
-			if (DEBUG) DoDebug("AttackLoopLogic: current action is not ACTION_ATTACKOBJECT or ACTION_MOVETOPOINT - aborting");
-			return;
-		}
-	}
-
-	// motu99: @TODO: implement switch or local int
-	int bAllowSwitchOfTarget = GetPRCSwitch(PRC_ALLOW_SWITCH_OF_TARGET);
 	int bIsRangedAttack = sAttackVars.bIsRangedWeapon || sAttackVars.iTouchAttackType == TOUCH_ATTACK_RANGED_SPELL || sAttackVars.iTouchAttackType == TOUCH_ATTACK_RANGED;
 
-	// first catch any changes in targeting that the parallell running aurora engine might have enforced
-	// and return an appropriate defender
-	oDefender = CheckForChangeOfTarget(oAttacker, oDefender, bIsRangedAttack);
-
-	// if after all the trouble looking for a valid target we did not find one, abort the attack
-	if(oDefender == OBJECT_INVALID)
+	// check for valid target etc., but only if it is not a cleave or circle kick (in this case we checked all of this before)
+	if (!bIsCleaveAttack)
 	{
-		if (DEBUG) DoDebug(COLOR_WHITE + "AttackLoopLogic: no enemies left - aborting");
-		return;
-	}
-
-	// If they are not within melee range and it is not a ranged attack
-	// move to the new target so that we can attack next round.
-	if(!bIsRangedAttack && !GetIsInMeleeRange(oDefender, oAttacker))
-	{
-// DoDebug(COLOR_WHITE + "AttackLoopLogic: move to melee range of " + GetName(oDefender) + ", current action: " + GetActionName(GetCurrentAction(oAttacker)));
-		AssignCommand(oAttacker, ClearAllActionsAndMoveToObject(oDefender));
-//		AssignCommand(oAttacker, ActionAttack(oDefender));
-		return;
-	}
-	 
-	// Since we are attacking, remove sanctuary / invisibility effects.
-	// Only bother to do this on the first attack...
-	// as they won't have the effect anymore on subsequent iterations.
-	if (bFirstAttack)
-	{
-		// FrikaC: Ghost strike doesn't cancel ethereal / invisible
-		if(	!GetLocalInt(oAttacker, "prc_ghost_strike")
-			&&	(	GetHasEffect(EFFECT_TYPE_INVISIBILITY, oAttacker)
-					|| GetHasEffect(EFFECT_TYPE_SANCTUARY, oAttacker)
-				)
-		)
-		{ // now remove sanctuary and invisibility effects from attacker
- 			// if (DEBUG) DoDebug("AttackLoopLogic: remove invisibility and sanctuary");
-
-			effect eEffect = GetFirstEffect(oAttacker);
-			while (GetIsEffectValid(eEffect) )
+		// if we are not attacking, abort (we loose all attacks which might be left in the round)
+		// we only abort, if the local int "prc_action_attack" is not set
+		if (!GetLocalInt(oAttacker, "prc_action_attack"))
+		{
+			// the following check only works, if PRC and aurora combat systems run in parallel, so that aurora sets the attack action properly
+			// we check the current action, and if it is not equal to ACTION_ATTACKOBJECT or ACTION_MOVETOPOINT, we return
+			// if PRC combat is to do an attack regardless of the current action state of oAttacker
+			// we must set the local int "prc_action_attack" to TRUE in advance (and then delete it with a DelayCommand() after we did the attack)
+			if (iAction != ACTION_ATTACKOBJECT && iAction != ACTION_MOVETOPOINT)
+//			if(!GetIsPhysicalCombatAction(GetCurrentAction(oAttacker)))
 			{
-				int iType = GetEffectType(eEffect);
-				if(	iType == EFFECT_TYPE_INVISIBILITY || iType == EFFECT_TYPE_SANCTUARY )
-					// motu99: Why delay? What with instant attacks?
-					DelayCommand(0.01, RemoveEffect(oAttacker, eEffect));
-
-				eEffect = GetNextEffect(oAttacker);
+				if (DEBUG) DoDebug("AttackLoopLogic: current action is not ACTION_ATTACKOBJECT or ACTION_MOVETOPOINT - aborting");
+				return;
 			}
 		}
 
-		// take the player out of stealth mode
-		if(GetActionMode(oAttacker, ACTION_MODE_STEALTH) )
+		// now determine whether it makes sense to switch to a better target in the following function CheckForChangeOfTarget()
+		// if the original target lives, we only allow a switch to a better target, if it is not a ranged attack and we set the respective PRC switch 
+		int bAllowSwitchOfTarget = !bIsRangedAttack && GetPRCSwitch(PRC_ALLOW_SWITCH_OF_TARGET);
+
+		// now catch any changes in targeting that the parallell running aurora engine might have enforced and return the best target
+		oDefender = CheckForChangeOfTarget(oAttacker, oDefender, bAllowSwitchOfTarget);
+
+		// if after all the trouble looking for a valid target we did not find one, abort the attack
+		if(oDefender == OBJECT_INVALID || GetIsDead(oDefender))
 		{
-			// if (DEBUG) DoDebug("AttackLoopLogic: take attacker out of stealth mode");
-			SetActionMode(oAttacker, ACTION_MODE_STEALTH, FALSE);
+			if (DEBUG) DoDebug(COLOR_WHITE + "AttackLoopLogic: no enemies left - aborting");
+			return;
+		}
+
+		// If oDefender is not within melee range and it is not a ranged attack
+		// move to oDefender so that we can attack next round. We give up all remaining attacks in the round, unless we can do a 5 foot step
+		if(!bIsRangedAttack && !GetIsInMeleeRange(oDefender, oAttacker))
+		{
+			// can we do a 5 foot step in order to get into melee range?
+			if (!sAttackVars.bFiveFootStep && GetDistanceBetween(oDefender, oAttacker) <= RANGE_15_FEET_IN_METERS)
+			{
+				if (DEBUG) DoDebug(COLOR_WHITE + "AttackLoopLogic: doing 5 foot step to move to melee range of " + GetName(oDefender) + ", current action: " + GetActionName(GetCurrentAction(oAttacker)));
+				// motu99: actually we should move to the location that puts us in melee range, but there is practically no difference
+				AssignCommand(oAttacker, ClearAllActionsAndMoveToObject(oDefender));
+				sAttackVars.bFiveFootStep = TRUE; // remember that we did a five foot step
+				// now call attackLoopLogic with a delay and exactly the same parameters
+				// motu99: @TODO: calculate the appropriate delay depending on creature speed and update fDelay in sAttackVars
+				DelayCommand(0.5,
+					AttackLoopLogic(oDefender, oAttacker, iBonusAttacks, iMainAttacks, iOffHandAttacks,
+						iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage,
+						iOffhand, bIsCleaveAttack));
+				// this return statement will not give up any pending attacks, because we called AttackLoopLogic in a DelayCommand beforehand
+				return;
+			}
+			else
+			{
+				// Our closest enemy is out of melee range (e.g. more than 10 feet away) and we cannot do a 5 foot step to get into range
+				// This means we need a full move action, e.g. we must give up all remaining attacks in the round
+				// so we call ActionAttack() in order to move to our enemy and let the aurora engine start a new combat round
+				// against oDefender, whenever we are in range
+				if (DEBUG) DoDebug(COLOR_WHITE + "AttackLoopLogic: doing full move action to get into melee range of " + GetName(oDefender) + ", current action: " + GetActionName(GetCurrentAction(oAttacker)));
+				AssignCommand(oAttacker, ActionAttack(oDefender));
+				// Note that in general we do not wan't to use the ActionAttack() command within PRC combat, because this will initiate
+				// a new attack round by the aurora engine. But here the rules require us to start a new combat round anyway. 
+				// The following return statement will terminate the whole combat round
+				return;
+			}
+		}
+	 
+		// Since we are attacking, remove sanctuary / invisibility effects.
+		// Only bother to do this on the first attack...
+		// as they won't have the effect anymore on subsequent iterations.
+		if (bFirstAttack)
+		{
+			// FrikaC: Ghost strike doesn't cancel ethereal / invisible
+			if(	!GetLocalInt(oAttacker, "prc_ghost_strike")
+				&&	(	GetHasEffect(EFFECT_TYPE_INVISIBILITY, oAttacker)
+						|| GetHasEffect(EFFECT_TYPE_SANCTUARY, oAttacker)
+					)
+			)
+			{ // now remove sanctuary and invisibility effects from attacker
+ 			// if (DEBUG) DoDebug("AttackLoopLogic: remove invisibility and sanctuary");
+
+				effect eEffect = GetFirstEffect(oAttacker);
+				while (GetIsEffectValid(eEffect) )
+				{
+					int iType = GetEffectType(eEffect);
+					if(	iType == EFFECT_TYPE_INVISIBILITY || iType == EFFECT_TYPE_SANCTUARY )
+						// motu99: Why delay? What with instant attacks?
+						DelayCommand(0.01, RemoveEffect(oAttacker, eEffect));
+
+					eEffect = GetNextEffect(oAttacker);
+				}
+			}
+
+			// take the player out of stealth mode
+			if(GetActionMode(oAttacker, ACTION_MODE_STEALTH) )
+			{
+				// if (DEBUG) DoDebug("AttackLoopLogic: take attacker out of stealth mode");
+				SetActionMode(oAttacker, ACTION_MODE_STEALTH, FALSE);
+			}
 		}
 	}
-	
+
+	// everything is set in order to actually do the attack
+
 	effect eDamage;
 	effect eInvalid;
 	string sMes = "";
@@ -6967,6 +6785,7 @@ void AttackLoopLogic(object oDefender, object oAttacker,
 	if (sAttackVars.eDuration < 0.0) iDurationType = DURATION_TYPE_PERMANENT;
 
 	// check defender HP before attacking
+	// motu99: HP check is most likely redundant, because we checked for a dead oDefender beforehand
 	if(GetCurrentHitPoints(oDefender) > 0)
 	{
 // DoDebug("AttackLoopLogic: found living target - " + GetName(oDefender));
@@ -7072,10 +6891,10 @@ void AttackLoopLogic(object oDefender, object oAttacker,
 						bInstantKill = TRUE;
 				}
 			}
-		} // End Coup de Grace
+		} // End Coup de Grace (CDG)
 		else
 		{
-			// perform normal attack roll
+			// if not CDG, perform normal attack roll
 // DoDebug("AttackLoopLogic: do normal attack roll");
 			iAttackRoll = GetAttackRoll(oDefender, oAttacker, oWeapon, iOffhand, iAttackBonus, iMod, TRUE, 0.0, sAttackVars.iTouchAttackType);
 		}
@@ -7087,7 +6906,7 @@ void AttackLoopLogic(object oDefender, object oAttacker,
 		// Allows you to apply saves and such based on the success or failure
 		if(bFirstAttack && iAttackRoll)
 		{
-			// if (DEBUG) DoDebug("AttackLoopLogic: first attack that hit - setting PRC local int");
+			// if (DEBUG) DoDebug("AttackLoopLogic: hit on first attack - setting PRC local int");
 			SetLocalInt(oDefender, "PRCCombat_StruckByAttack", TRUE);
 			DelayCommand(1.0, DeleteLocalInt(oDefender, "PRCCombat_StruckByAttack"));
 		}
@@ -7131,10 +6950,12 @@ void AttackLoopLogic(object oDefender, object oAttacker,
 //			if (DEBUG)
 //				SendMessageToPC(oAttacker, sAttackVars.sMessageSuccess);
 
-			// we hit: if this attack is a cleave attack
+			// if this attack is a cleave attack or a circle kick
 			if(bIsCleaveAttack)
-			{ // motu99: 2 means great cleave, 1 is normal cleave  (don't need to check for feats twice)
-				if(bIsCleaveAttack == 2)
+			{ // motu99: 3 means circle kick, 2 means great cleave, 1 is normal cleave  (don't need to check for feats twice)
+				if(bIsCleaveAttack == 3)
+					sMes = "*Circle Kick Hit*";
+				else if(bIsCleaveAttack == 2)
 					sMes = "*Great Cleave Hit*";
 				else
 					sMes = "*Cleave Attack Hit*";
@@ -7156,7 +6977,9 @@ void AttackLoopLogic(object oDefender, object oAttacker,
 			// we tried a cleave attack and missed
 			if(bIsCleaveAttack)
 			{
-				if(bIsCleaveAttack == 2)
+				if(bIsCleaveAttack == 3)
+					sMes = "*Circle Kick Miss*";
+				else if(bIsCleaveAttack == 2)
 					sMes = "*Great Cleave Miss*";
 				else
 					sMes = "*Cleave Attack Miss*";
@@ -7171,7 +6994,7 @@ void AttackLoopLogic(object oDefender, object oAttacker,
 		} // end of code for messages
 
 		// now do the real stuff
-		// if we hit the enemy (and did not kill it instantly)
+		// if we hit the enemy (and did not kill it instantly by CDG or vorpal)
 		if(!bInstantKill && iAttackRoll)
 		{
 			// only calculate damage if it is not a touch attack spell
@@ -7185,20 +7008,6 @@ void AttackLoopLogic(object oDefender, object oAttacker,
 			// apply the damage directly, unless there is none
 			if (eDamage != eInvalid)
 			{
-/*
-// motu99: only for testing (trying to find a way to bypass DR)
-// remove if done with testing
-				struct Effects sDefenderEffects;
-				struct Effects sSkinEffects;
-				object oSkin = GetItemInSlot(INVENTORY_SLOT_CARMOUR, oDefender);
-				int bDR = GetPRCSwitch(PRC_TIMESTOP_LOCAL);
-				if (bDR)
-				{
-					sDefenderEffects = CollectEffectType(oDefender, EFFECT_TYPE_DAMAGE_RESISTANCE);
-					sSkinEffects = CollectEffectType(oSkin, EFFECT_TYPE_DAMAGE_RESISTANCE);
-					// RemoveEffectsFromCreature(oDefender, sDefenderEffects);					
-				}
-*/				
 				ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oDefender);
 /*
 				// apply any on hit abilities from attackers weapon to defender shortly after damage; motu99: why delay? Check for dead target (and cleave/circle kick) is useless if we apply the damage outside AttackLoopLogic
@@ -7207,29 +7016,24 @@ void AttackLoopLogic(object oDefender, object oAttacker,
 				// apply on hit abilities of the attackers weapon to the defendor
 				ApplyOnHitAbilities(oDefender, oAttacker, oWeapon);
 				
-				// motu99: if it is a ranged attack, also apply the on hit abilities of the ammunition to the target (don't know if this makes sense, but there are blessed arrows)
-				if (sAttackVars.oAmmo != OBJECT_INVALID)
+				// motu99: if it is a ranged attack, also apply the on hit abilities of the ammunition to the target
+				// (don't know if this makes sense, but there are blessed arrows and other stuff)
+				if (sAttackVars.oAmmo != OBJECT_INVALID && sAttackVars.oAmmo != oWeapon)
 					ApplyOnHitAbilities(oDefender, oAttacker, sAttackVars.oAmmo);
 			
 				// immediately apply any on hit abilities from defenders armor to attacker
 				object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oDefender);
 				if( GetIsObjectValid(oArmor) )
 					ApplyOnHitAbilities(oAttacker, oDefender, oArmor);
-/*
-// motu99: only for testing (trying to find a way to bypass DR)
-// remove if done with testing
-				if (bDR)
-				{
-					ReApplyEffectsToCreature(oDefender, sDefenderEffects);					
-				}
-*/
 			}
 
 			// we hit: now do special effect (either applies to all attacks or to the first attack)
 			if(bFirstAttack || sAttackVars.bEffectAllAttacks)
 			{
 // DoDebug("AttackLoopLogic: looking for special effects");
-				if(sAttackVars.iDamageModifier > 0)
+				// motu99: don't know if this works with negative damage
+				// if not, change "!= 0" to  "> 0"
+				if(sAttackVars.iDamageModifier != 0)
 				{
 					int iDamagePower;
 					int iDamage;
@@ -7247,17 +7051,19 @@ void AttackLoopLogic(object oDefender, object oAttacker,
 					if (!bFirstAttack)
 						iDamage = GetDamageByConstant(iDamage, FALSE);
 
-					if(DEBUG) DoDebug("AttackLoopLogic: found special effect (iDamageModifier != 0) - now applying damage of " + IntToString(iDamage));
+					if(DEBUG) DoDebug("AttackLoopLogic: found special effect (iDamageModifier = "+IntToString(iDamage)+") - now applying damage");
+
 					// apply the special effect damage
+					// motu99: maybe we should link this damage to the "normal" weapon damage?
 					effect eBonusDamage = EffectDamage(iDamage, sAttackVars.iDamageType, iDamagePower);
 					ApplyEffectToObject(DURATION_TYPE_INSTANT, eBonusDamage, oDefender);
 				}
 
-				// apply any special bonus effects
+				// apply any special effects
 				// motu99: added check for invalid effect
 				if(sAttackVars.eSpecialEffect != eInvalid)
 				{
-					if (DEBUG) DoDebug("AttackLoopLogic: found special effect (eSpecialEffect != eInvalid) - now applying effect");
+					if (DEBUG) DoDebug("AttackLoopLogic: found special effect (eSpecialEffect) - now applying effect");
 					//struct PRCeffect eSpecialEffect = GetLocalPRCEffect(GetModule(), sAttackVars.sEffectLocalName);
 					ApplyEffectToObject(iDurationType, sAttackVars.eSpecialEffect, oDefender, sAttackVars.eDuration);
 				}
@@ -7266,12 +7072,25 @@ void AttackLoopLogic(object oDefender, object oAttacker,
 			}
 		} // end of code for a *hit* (iAttackRoll > 0), excluding instant kills (bInstantKill == FALSE)	
 
+		// stuff we have to do after an attack, regardless if we missed or not
+
+		// not the first attack any more
+		sAttackVars.iAttackNumber++;
+		bFirstAttack = !sAttackVars.iAttackNumber;
+
+		// Code to remove ammo from inventory after an attack is made
+		if( sAttackVars.bIsRangedWeapon )
+		{
+// DoDebug("AttackLoopLogic: reducing ammunition");
+			SetItemStackSize(sAttackVars.oAmmo, (GetItemStackSize(sAttackVars.oAmmo) - 1) );
+		}
+
 		// code for circle kick
 // DoDebug("AttackLoopLogic: check for circle kick");
-		if(	iAttackRoll
+		if(	iAttackRoll // only if we scored a hit
 			&& sAttackVars.iCircleKick == 0  // only if we didn't yet do a circle kick
-			&& GetHasMonkWeaponEquipped(oAttacker)
-			&& GetHasFeat(FEAT_CIRCLE_KICK, oAttacker) )
+			&& GetHasMonkWeaponEquipped(oAttacker) // we must be unarmed (or wield a kama)
+			&& GetHasFeat(FEAT_CIRCLE_KICK, oAttacker) ) // and we need the feat
 		{
 			if (DEBUG) DoDebug(COLOR_WHITE + "AttackLoopLogic: *hit* - now attempting circle kick");
 			// Find nearest enemy creature within 10 feet
@@ -7301,29 +7120,11 @@ void AttackLoopLogic(object oDefender, object oAttacker,
 				&& GetIsInMeleeRange(oCircleKickDefender, oAttacker) )
 			{
 // DoDebug("AttackLoopLogic: found valid target for circle kick " + GetName(oCircleKickDefender));
-				iAttackRoll = GetAttackRoll(oCircleKickDefender, oAttacker, oWeapon, iOffhand, iAttackBonus, iMod, TRUE, 0.0, sAttackVars.iTouchAttackType);
-				if(iAttackRoll)
-				{
-					if(iAttackRoll == 2) // critical hit
-						eDamage = GetAttackDamage(oCircleKickDefender, oAttacker, oWeapon, sWeaponDamage, sSpellBonusDamage, iOffhand, iWeaponDamageRound, TRUE, iNumDice, iNumSides, iCritMult);
-					else // normal hit
-						eDamage = GetAttackDamage(oCircleKickDefender, oAttacker, oWeapon, sWeaponDamage, sSpellBonusDamage, iOffhand, iWeaponDamageRound, FALSE, iNumDice, iNumSides, iCritMult);
-
-					ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oCircleKickDefender);
-					sMes = "*Circle Kick Hit*";
-				}
-				else
-					sMes = "*Circle Kick Miss*";
-
-				if (DEBUG)
-				{
-					sMes = "scripted " + sMes;
-//					SendMessageToPC(oAttacker, sMes);
-				}
-				FloatingTextStringOnCreature(sMes, oAttacker, FALSE);
-
+				
 				// remember that we did a circle kick in the round (so we cannot do any more)
 				sAttackVars.iCircleKick++;
+				// not sure, if circle kick comes at full AB, assumed so (if not, comment iMod in again)
+				AttackLoopLogic(oDefender, oAttacker, iBonusAttacks, iMainAttacks, iOffHandAttacks, 0 /*iMod*/, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage, iOffhand, 3);
 			}
 			else
 			{
@@ -7331,29 +7132,18 @@ void AttackLoopLogic(object oDefender, object oAttacker,
 			}
 		} // end code for circle kick
 
-		// stuff we have to do after an attack, regardless if we missed or not
-
-		// not the first attack any more
-		sAttackVars.iAttackNumber++;
-		bFirstAttack = !sAttackVars.iAttackNumber;
-
-		// Code to remove ammo from inventory after an attack is made
-		if( sAttackVars.bIsRangedWeapon )
-		{
-// DoDebug("AttackLoopLogic: reducing ammunition");
-			SetItemStackSize(sAttackVars.oAmmo, (GetItemStackSize(sAttackVars.oAmmo) - 1) );
-		}
 	} // end of code for oDefender with hitpoints HP  > 0
 	else
 	{	// this stub is for any code possibly required for the case when oDefender had HP <= 0 on entry
 	}
 
-	// checks HP of enemy to see if they are alive still or not
-	// note that defender could have been invalid from the beginning - we can see whether we actually killed it in *this* attack, if iAttackRoll > 0
+	// we are now through with the original attack sequence
+	// now we check HP of enemy to see if they are alive still or not
+	// note that defender could have been below 1 HP from the beginning - we can see whether we actually killed it in *this* attack, if iAttackRoll > 0
 	// motu99: problem in original code was, that damage application was delayed (except for a coup de grace),
-	// so we couldn't have noticed whether they are dead; changed that
+	// so we couldn't have noticed in the following checks whether they would be dead; changed that
 // DoDebug("AttackLoopLogic: check for dead enemy");
-	if(!GetIsObjectValid(oDefender) || GetCurrentHitPoints(oDefender) < 1)
+	if(!GetIsObjectValid(oDefender) || GetCurrentHitPoints(oDefender) <= 0)
 	{
 // DoDebug("AttackLoopLogic: enemy dead or invalid after attack");
 
@@ -7390,9 +7180,9 @@ void AttackLoopLogic(object oDefender, object oAttacker,
 				// motu99: commented out the return statement, because we still want to continue fighting
 				// and hope that we are in melee range when the next attack within the current round actually occurs
 				// returning means abort; so we forfeit any attacks that might still be left in the round!
-				// However, we might have to check whether the distance is too large to be covered in a flurry
-				// Don't know what PnP rules say when you find your target suddenly out of range and still have attacks left
-//				return;
+				// However, we might have to check whether the distance is too large to be covered
+				// according to PnP rules we can at most do a 5 foot step without canceling the full attack round
+				// return;
 			}
 			else if (iAttackRoll) 
 			{	// we did an attack that must have killed the original defender, we are within melee range of the new defender
@@ -7426,8 +7216,10 @@ void AttackLoopLogic(object oDefender, object oAttacker,
 	// we are through
 
 	// if it was a cleave attack, return directly from the recursive call (we don't wan't to decrement iMod, nor do we want to call AttackLoopMain at this point)
-	// by returning to the instance of AttackLoopLogic that called for the cleave, we will eventually land in the instance of AttackLoopLogic() that initiated the cleave(s).
-	// This (first) instance, however, does have bIsCleaveAttack = FALSE, so we do not return in that (first) instance (which would mean we give up all left over attacks in the round)
+	// by returning to the instance of AttackLoopLogic that called the cleave, we will eventually land in the instance of AttackLoopLogic() that initiated the cleave(s).
+	// This (first) instance, however, does have bIsCleaveAttack = FALSE, so when we are eventually through with all recursive cleave attacks,
+	// we will not return in that (first) instance (which would mean giving up all left over attacks in the round). Rather we check whether there are still
+	// attacks left in the round and call AttackLoopMain with an appropriate delay in order to do the next one.
 	if (bIsCleaveAttack)
 		return;
 
@@ -7730,7 +7522,7 @@ void PerformAttackRound(object oDefender, object oAttacker,
 	if(bInstantAttack)// If the full attack is to happen at once
 		sAttackVars.fDelay = 0.075; // Have some delay in order to avoid being a total resource hog
 	else
-		sAttackVars.fDelay = (6.0 / (iMainHandAttacks + sBonusAttacks.iNumber + iOffHandAttacks));
+		sAttackVars.fDelay = (5.5 / (iMainHandAttacks + sBonusAttacks.iNumber + iOffHandAttacks));
 
 	// sets iMods to iAttackBonusMod
 	// used in AttackLoopLogic to decrement attack bonus for attacks.
@@ -7826,7 +7618,7 @@ void PerformAttack(object oDefender, object oAttacker,
 		// sanity checks
 		if (!bIsUsingTwoWeapons)
 		{
-			DoDebug("called PerformAttack() for an offhand attack, but no offhand weapon wielded - aborting");
+			DoDebug("PerformAttack: offhand attack, but no offhand weapon wielded - aborting");
 			return;
 		}
 		iOffHandAttacks = 1;

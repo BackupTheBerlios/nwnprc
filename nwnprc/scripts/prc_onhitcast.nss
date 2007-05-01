@@ -253,7 +253,7 @@ void main()
     /*//////////////////////////////////////////////////
     //////////////// Blade Magic ///////////////////////
     //////////////////////////////////////////////////*/
-
+/*
     // Martial Spirit
     if(GetHasSpellEffect(MOVE_DS_MARTIAL_SPIRIT, oSpellOrigin) && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
     {
@@ -273,7 +273,7 @@ void main()
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_COM_BLOOD_CRT_YELLOW_HEAD), oSpellOrigin);
 	}
     }    
-
+*/
     /*//////////////////////////////////////////////////
     //////////////// Blade Magic ///////////////////////
     //////////////////////////////////////////////////*/    

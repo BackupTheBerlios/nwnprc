@@ -271,6 +271,12 @@ const string PRC_SPELL_TARGET_LOCATION_OVERRIDE      = "PRC_SPELL_TARGET_LOCATIO
 */
 const string PRC_SPELL_TARGET_OBJECT_OVERRIDE        = "PRC_SPELL_TARGET_OBJECT_OVERRIDE";
 
+/**
+ * Mostly internal
+ * Used to override PRCGetSpellCastItem();
+ */
+const string PRC_SPELLCASTITEM_OVERRIDE              = "PRC_SPELLCASTITEM_OVERRIDE";
+
 /*
  * This is for builders. It should not be set on the module, but should be set on players/creatures.
  * When this is set, it will add to spell metamagic. Not all spells may accept this.
@@ -1511,10 +1517,11 @@ const string PRC_BIOWARE_MONK_ATTACKS                  ="PRC_BIOWARE_MONK_ATTACK
 const string PRC_SMALL_CREATURE_FINESSE                  ="PRC_SMALL_CREATURE_FINESSE";
 
 /**
- * This switch (if on) lets dark fire and flame weapon
- * spells stack. They also stack with normal fire damage of the weapon
-*/
-const string PRC_FLAMEWEAPON_DARKFIRE_STACK                  ="PRC_FLAMEWEAPON_DARKFIRE_STACK";
+ * turns on combat debugging for scripted combat,
+ * similar to Bioware's dm_enablecombatdebugging 1
+ * will show a lot of info about the attack and damage rolls 
+ */
+const string PRC_COMBAT_DEBUG                        = "PRC_COMBAT_DEBUG";
 
 /**
  * switches on Biowares Divine Power version (bonus atacks come at full AB)
@@ -1535,11 +1542,11 @@ const string PRC_DISABLE_COUP_DE_GRACE                = "PRC_DISABLE_COUP_DE_GRA
 
 /**
  * limit to the (non-dice) damage of a flame weapon or darkfire spell
- * WARNING: These two switches should be set to a default value of 10 in the initialization scripts!!
- * Otherwise we still have the bug from PRC 3.1c of (non-dice) damage becoming excessively high for high caster levels
+ * if the switch is not set or zero, non-dice damage of flame weapon or darkfire is limited to 10
+ * it is recommended not to set these switches higher than 10
  */
-const string PRC_FLAME_WEAPON_DAMAGE_MAX          = "PRC_FLAME_WEAPON_DAMAGE_MAX";
-const string PRC_DARKFIRE_DAMAGE_MAX              = "PRC_DARKFIRE_DAMAGE_MAX";
+const string PRC_FLAME_WEAPON_DAMAGE_MAX             = "PRC_FLAME_WEAPON_DAMAGE_MAX";
+const string PRC_DARKFIRE_DAMAGE_MAX                 = "PRC_DARKFIRE_DAMAGE_MAX";
 
 
 /******************************************************************************\
@@ -3404,7 +3411,6 @@ void CreateSwitchNameArray()
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_APPEARANCE_SIZE);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_BIOWARE_MONK_ATTACKS);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_SMALL_CREATURE_FINESSE);
-    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_FLAMEWEAPON_DARKFIRE_STACK);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_BIOWARE_DIVINE_POWER);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_ALLOW_SWITCH_OF_TARGET);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_DISABLE_COUP_DE_GRACE);
@@ -3488,4 +3494,6 @@ void CreateSwitchNameArray()
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PERFECTED_MAP_CONSTANT);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PERFECTED_MAP_MULTIPLIER);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_DEBUG);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_COMBAT_DEBUG);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_SPELLCASTITEM_OVERRIDE);
 }

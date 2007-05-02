@@ -18128,6 +18128,20 @@ Spell Resistance: No
 
 The caster summons a one outsider from a list of 26 below.
 Astral Deva, Bralani Eladrin, Celestial Avenger, Hound Archon, Lantern Archon, Word Archon, Balor, Bezekira, Cornugon, Erinyes, Gelugon, Glabrezu, Hamatula, Imp, Marilith, Osyluth, Succubus, Vrock, Elder Air Elemental, Elder Earth Elemental, Elder Fire Elemental, Elder Water Elemental, Steam Mephit, Green Slaad, Red Slaadi, Death Slaadi.</entry>
+  <entry id="49756" lang="en" sex="m">Scrying</entry>
+  <entry id="49757" lang="en" sex="m">Divination (Scrying)
+Level: Bard 3, Cleric 5, Druid 4, Sorc/Wiz 4
+Components: V, S
+Casting Time: 1 standard action 
+Range: Special
+Effect: See text 
+Duration: 1 minute/level
+Saving Throw: Will negates 
+Spell Resistance: Yes
+
+You can see and hear some creature, which may be at any distance. If the subject succeeds on a Will save, the scrying attempt simply fails. If the save fails, you can see and hear the subject and the subject’s immediate surroundings.
+
+Valid targets are any monster within the same area as the caster, or any PC.</entry>
   <entry id="49999" lang="en" sex="m">**** 50,000 - 50,500 reserved for Race Pack Feats ****</entry>
   <entry id="50000" lang="en" sex="m">Light Sensitivity</entry>
   <entry id="50001" lang="en" sex="m">Type of Feat: Racial

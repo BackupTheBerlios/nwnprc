@@ -19,8 +19,6 @@
 #include "inc_utility"
 #include "prc_inc_itmrstr"
 #include "psi_inc_psifunc"
-//#include "prc_sp_func" // Provided by x2_inc_spellhook
-
 
 // This function holds all functions that are supposed to run before the actual
 // spellscript gets run. If this functions returns FALSE, the spell is aborted
@@ -84,6 +82,12 @@ int PsiPrePowerCastCode()
     //---------------------------------------------------------------------------
     if (nContinue)
         nContinue = NullPsionicsField();
+        
+    //---------------------------------------------------------------------------
+    // Run Scrying Check
+    //---------------------------------------------------------------------------
+    if (nContinue)
+        nContinue = Scrying();          
 
     if (nContinue)
     {

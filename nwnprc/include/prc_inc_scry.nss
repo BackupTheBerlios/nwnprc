@@ -98,17 +98,23 @@ void ScryMain(object oPC, object oTarget)
     int nDC          = GetLocalInt(oPC, "ScrySpellDC");
     float fDur       = GetLocalFloat(oPC, "ScryDuration");
     
-    //Make SR Check
-    if (MyPRCResistSpell(oPC, oTarget, nCasterLevel)) 
+    
+    
+    if(DEBUG) DoDebug("prc_inc_scry: Beginning ScryMain. nSpell: " + IntToString(nSpell));
+    if (nSpell != SPELL_CLAIRAUDIENCE_AND_CLAIRVOYANCE)
     {
-    	FloatingTextStringOnCreature("Target made Spell Resistance check vs Scrying", oPC, FALSE);
-    	return;
-    }
-    // Save
-    if (PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS)) 
-    {
-    	FloatingTextStringOnCreature("Target saved vs Scrying", oPC, FALSE);
-    	return;
+    	//Make SR Check
+    	if (MyPRCResistSpell(oPC, oTarget, nCasterLevel)) 
+    	{
+    		FloatingTextStringOnCreature("Target made Spell Resistance check vs Scrying", oPC, FALSE);
+    		return;
+    	}
+    	// Save
+    	if (PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS)) 
+    	{
+    		FloatingTextStringOnCreature("Target saved vs Scrying", oPC, FALSE);
+    		return;
+    	}
     }
     
     if(DEBUG) DoDebug("prc_inc_scry running.\n"
@@ -244,6 +250,11 @@ void DoScryEnd(object oPC, object oCopy)
 
     // Remove the heartbeat HP tracking local
     DeleteLocalInt(oPC, "Scry_HB_HP");
+   // Delete all of the marker ints for the spell 
+	DeleteLocalInt(oPC, "ScryCasterLevel");
+	DeleteLocalInt(oPC, "ScrySpellId");
+	DeleteLocalInt(oPC, "ScrySpellDC");
+	DeleteLocalFloat(oPC, "ScryDuration");     
 
     // Remove weapons nerfing
     RemoveScryEffects(oPC);

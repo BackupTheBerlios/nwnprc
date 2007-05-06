@@ -52,13 +52,13 @@ void AddLegalTargets(object oPC)
             if (GetObjectType(oCreature) == OBJECT_TYPE_CREATURE)
             {
             	// This can target PCs in the area, but not in other mods
-            	if (nSpellId == SPELL_CLAIRAUDIENCE_AND_CLAIRVOYANCE)
+            	if (nSpellId == SPELL_CLAIRAUDIENCE_AND_CLAIRVOYANCE && oPC != oCreature)
             	{
 			AddChoice(GetName(oCreature), nChoice, oPC);
 			StorePCForRecovery(oPC, oCreature, nChoice);
 		}
 		// Normally, the second part takes care of all PCs
-		else if (!GetIsPC(oCreature)
+		else if (!GetIsPC(oCreature))
 		{
 			AddChoice(GetName(oCreature), nChoice, oPC);
 			StorePCForRecovery(oPC, oCreature, nChoice);
@@ -82,7 +82,7 @@ void AddLegalTargets(object oPC)
  		    oPCTarget = GetNextPC();
  		}
  	}
-]
+}
 
 //////////////////////////////////////////////////
 /* Main function                                */

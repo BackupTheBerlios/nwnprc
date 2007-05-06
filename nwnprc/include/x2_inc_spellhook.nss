@@ -49,6 +49,10 @@ int DuskbladeArcaneChanneling();
 // with an arcane PrC via bioware spellcasting rather than via PrC spellcasting
 int BardSorcPrCCheck();
 
+// Scrying Spells/Powers
+// Returns false if Scrying except for a few specialized spells.
+int Scrying();
+
 // Use Magic Device Check.
 // Returns TRUE if the Spell is allowed to be cast, either because the
 // character is allowed to cast it or he has won the required UMD check
@@ -510,6 +514,22 @@ int ClassSLAStore()
         return FALSE;
     }
     return TRUE;
+}
+
+int Scrying()
+{
+    // Scrying blocks all powers except for a few special case ones.
+    object oPC = OBJECT_SELF;
+    int nSpellId = PRCGetSpellId();
+    int nScry    = GetLocalInt(oPC, "ScrySpellId");
+
+    if (nScry == SPELL_GREATER_SCRYING)
+    {
+	if (nSpellId == SPELL_DETECT_EVIL || nSpellId == SPELL_DETECT_GOOD || 
+	    nSpellId == SPELL_DETECT_LAW || nSpellId == SPELL_DETECT_CHAOS)
+		return TRUE;
+    }
+    return FALSE;
 }
 
 int X2UseMagicDeviceCheck()
@@ -1056,7 +1076,7 @@ int X2PreSpellCastCode()
     // Run Scrying Check
     //---------------------------------------------------------------------------
     if (nContinue)
-        nContinue = !GetLocalInt(oCaster, "Scry_Active");        
+        nContinue = Scrying();      
 
     //---------------------------------------------------------------------------
     // Run WardOfPeace Check

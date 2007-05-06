@@ -1,6 +1,6 @@
 //::///////////////////////////////////////////////
-//:: Scrying
-//:: sp_scrying.nss
+//:: Greater Scrying
+//:: sp_grscrying.nss
 //:://////////////////////////////////////////////
 /*
     A spell that allows the caster to scry either
@@ -130,7 +130,7 @@ SetLocalInt(oPC, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_DIVINATION);
         int nCasterLvl = PRCGetCasterLevel(oPC);
         int nSpell = PRCGetSpellId();
         int nDC = PRCGetSaveDC(oTarget, oPC);
-        float fDur = 60.0 * nCasterLvl;
+        float fDur = HoursToSeconds(nCasterLvl);
         int nMetaMagic = PRCGetMetaMagicFeat();
     	//Make Metamagic check for extend
     	if ((nMetaMagic & METAMAGIC_EXTEND))
@@ -141,7 +141,7 @@ SetLocalInt(oPC, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_DIVINATION);
         SetLocalInt(oPC, "ScryCasterLevel", nCasterLvl);
         SetLocalInt(oPC, "ScrySpellId", nSpell);
         SetLocalInt(oPC, "ScrySpellDC", nDC);
-        SetLocalFloat(oPC, "ScryDuration", fDur);       
+        SetLocalFloat(oPC, "ScryDuration", fDur);      
         
         StartDynamicConversation("prc_scry_conv", oPC, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, oPC);
         

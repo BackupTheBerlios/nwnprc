@@ -827,3 +827,7 @@ const int SPELL_MASS_HARM                           = 3218;
 // Scrying Spells
 const int SPELL_SCRY                                = 3219;
 const int SPELL_GREATER_SCRYING                     = 3655;
+const int SPELL_DISCERN_LOCATION                    = 3656;
+const int SPELL_LOCATE_CREATURE                     = 3657;
+const int SPELL_LOCATE_OBJECT                       = 3658;
+const int SPELL_ARCANE_EYE                          = 3659;

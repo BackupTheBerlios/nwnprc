@@ -62,13 +62,6 @@ void DoScryEnd(object oPC, object oCopy);
 void ScryMonitor(object oPC, object oCopy);
 
 /**
- * Nerfs any weapon the PC holds to prevent them from dealing damage
- *
- * @param oPC   The PC on whom to operate.
- */
-void ApplyScryEffects(object oPC);
-
-/**
  * Reverses ApplyScryEffects
  *
  * @param oPC   The PC on whom to operate.
@@ -81,6 +74,22 @@ void RemoveScryEffects(object oPC);
  * @param oPC   The PC on whom to operate.
  */
 int GetIsScrying(object oPC);
+
+/**
+ * Does the Discern Location content
+ *
+ * @param oPC     The PC on whom to operate.
+ * @param oTarget The spell Target
+ */
+void DiscernLocation(object oPC, object oTarget);
+
+/**
+ * Does the Locate Creature and Object content
+ *
+ * @param oPC     The PC on whom to operate.
+ * @param oTarget The spell Target
+ */
+void LocateCreatureOrObject(object oPC, object oTarget);
 
 //////////////////////////////////////////////////
 /* Function definitions                         */
@@ -97,10 +106,21 @@ void ScryMain(object oPC, object oTarget)
     int nSpell       = GetLocalInt(oPC, "ScrySpellId");
     int nDC          = GetLocalInt(oPC, "ScrySpellDC");
     float fDur       = GetLocalFloat(oPC, "ScryDuration");
+    if(DEBUG) DoDebug("prc_inc_scry: Beginning ScryMain. nSpell: " + IntToString(nSpell));    
     
+    // Discern Location skips all of this
+    if (nSpell == SPELL_DISCERN_LOCATION)
+    {
+    	DiscernLocation(oPC, oTarget);
+    	return;
+    }
+    // So do the Locate Twins
+    if (nSpell == SPELL_LOCATE_CREATURE || nSpell == SPELL_LOCATE_OBJECT)
+    {
+    	LocateCreatureOrObject(oPC, oTarget);
+    	return;
+    }     
     
-    
-    if(DEBUG) DoDebug("prc_inc_scry: Beginning ScryMain. nSpell: " + IntToString(nSpell));
     if (nSpell != SPELL_CLAIRAUDIENCE_AND_CLAIRVOYANCE)
     {
     	//Make SR Check
@@ -198,9 +218,6 @@ void DoScryBegin(object oPC, object oCopy, object oTarget)
     // Also stops it from casting spells
     SetLocalInt(oPC, "Scry_Active", TRUE);
     location lTarget = GetLocation(oTarget);
-
-    // Make the PC's weapons as non-damaging as possible
-    ApplyScryEffects(oPC);
 
     // Start a pseudo-hb to monitor the status of both PC and copy
     DelayCommand(SCRY_HB_DELAY, ScryMonitor(oPC, oCopy));
@@ -470,4 +487,36 @@ void RemoveScryEffects(object oPC)
 int GetIsScrying(object oPC)
 {
 	return GetLocalInt(oPC, "Scry_Active");
+}
+
+void DiscernLocation(object oPC, object oTarget)
+{
+	// Tells the name of the area the target is in
+	// Yes, this is a little crappy for an 8th level spell.
+	string sArea = GetName(GetArea(oTarget));
+	string sTarget = GetName(oTarget);
+	FloatingTextStringOnCreature(sTarget + " is in " + sArea, oPC, FALSE);	
+	
+	// Delete all of the marker ints for the spell 
+	DeleteLocalInt(oPC, "ScryCasterLevel");
+	DeleteLocalInt(oPC, "ScrySpellId");
+	DeleteLocalInt(oPC, "ScrySpellDC");
+	DeleteLocalFloat(oPC, "ScryDuration"); 	
+}
+
+void LocateCreatureOrObject(object oPC, object oTarget)
+{
+	location lPC     = GetLocation(oPC);
+	location lTarget = GetLocation(oTarget);
+	// Cause the caller to face the target
+	SetFacingPoint(GetPosition(oTarget));
+	// Now spit out the distance
+	float fDist = GetDistanceBetweenLocations(lPC, lTarget);
+	FloatingTextStringOnCreature(GetName(oTarget) + " is " + FloatToString(fDist) + " metres away from you.", oPC, FALSE);
+	
+	// Delete all of the marker ints for the spell 
+	DeleteLocalInt(oPC, "ScryCasterLevel");
+	DeleteLocalInt(oPC, "ScrySpellId");
+	DeleteLocalInt(oPC, "ScrySpellDC");
+	DeleteLocalFloat(oPC, "ScryDuration"); 	
 }

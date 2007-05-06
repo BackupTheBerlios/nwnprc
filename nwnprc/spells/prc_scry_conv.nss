@@ -43,47 +43,72 @@ void AddLegalTargets(object oPC)
          // This reads all of the legal choices 
          int nSpellId = GetLocalInt(oPC, "ScrySpellId");
          int nChoice = 1;
-         // First, get all creatures in the area you're in
-        object oCreature = GetFirstObjectInArea(GetArea(oPC));
-        while (GetIsObjectValid(oCreature) == TRUE)
+	if (nSpellId == SPELL_LOCATE_OBJECT)
+	{
+        	// First, get all objects in the area you're in
+        	object oObject = GetFirstObjectInArea(GetArea(oPC));
+        	while (GetIsObjectValid(oObject) == TRUE)
+        	{
+        	    if(DEBUG) DoDebug("prc_scry_conv: Looping Object Targets");
+        	    // Don't target PCs using this
+        	    if (GetObjectType(oObject) == OBJECT_TYPE_PLACEABLE || GetObjectType(oObject) ==  OBJECT_TYPE_ITEM)
+        	    {
+        	    	// If its a legal object, target it for locating
+			AddChoice(GetName(oObject), nChoice, oPC);
+			StorePCForRecovery(oPC, oObject, nChoice);
+        	    }
+        	    nChoice += 1;
+        	    oObject = GetNextObjectInArea(GetArea(oPC));
+        	}	
+        } 
+        else
         {
-            if(DEBUG) DoDebug("prc_scry_conv: Looping Monster Targets");
-            // Don't target PCs using this
-            if (GetObjectType(oCreature) == OBJECT_TYPE_CREATURE)
-            {
-            	// This can target PCs in the area, but not in other mods
-            	if (nSpellId == SPELL_CLAIRAUDIENCE_AND_CLAIRVOYANCE && oPC != oCreature)
-            	{
-			AddChoice(GetName(oCreature), nChoice, oPC);
-			StorePCForRecovery(oPC, oCreature, nChoice);
-		}
-		// Normally, the second part takes care of all PCs
-		else if (!GetIsPC(oCreature))
-		{
-			AddChoice(GetName(oCreature), nChoice, oPC);
-			StorePCForRecovery(oPC, oCreature, nChoice);
-		}
-            }
-            nChoice += 1;
-            oCreature = GetNextObjectInArea(GetArea(oPC));
-        }
-        if (nSpellId != SPELL_CLAIRAUDIENCE_AND_CLAIRVOYANCE)
-        {
-        	// Now, loop through all of the PCs
- 		object oPCTarget = GetFirstPC();
- 		// Don't target yourself
- 		while (GetIsObjectValid(oPCTarget) && oPCTarget != oPC)
- 		{
- 		    if(DEBUG) DoDebug("prc_scry_conv: Looping PC Targets");
- 		    AddChoice(GetName(oPCTarget), nChoice, oPC);
-		    StorePCForRecovery(oPC, oPCTarget, nChoice);
- 		    
- 		    nChoice += 1;
- 		    oPCTarget = GetNextPC();
+        	// First, get all creatures in the area you're in
+        	object oCreature = GetFirstObjectInArea(GetArea(oPC));
+        	while (GetIsObjectValid(oCreature) == TRUE)
+        	{
+        	    if(DEBUG) DoDebug("prc_scry_conv: Looping Monster Targets");
+        	    // Don't target PCs using this
+        	    if (GetObjectType(oCreature) == OBJECT_TYPE_CREATURE)
+        	    {
+        	    	// This can target PCs in the area, but not in other areas
+        	    	if ((nSpellId == SPELL_CLAIRAUDIENCE_AND_CLAIRVOYANCE ||
+        	    	     nSpellId == SPELL_LOCATE_CREATURE) &&
+        	             oPC != oCreature)
+        	    	{
+				AddChoice(GetName(oCreature), nChoice, oPC);
+				StorePCForRecovery(oPC, oCreature, nChoice);
+			}
+			// Normally, the second part takes care of all PCs
+			else if (!GetIsPC(oCreature))
+			{
+				AddChoice(GetName(oCreature), nChoice, oPC);
+				StorePCForRecovery(oPC, oCreature, nChoice);
+			}
+        	    }
+        	    nChoice += 1;
+        	    oCreature = GetNextObjectInArea(GetArea(oPC));
+        	}
+        	// These only target in their own areas
+        	if (nSpellId != SPELL_CLAIRAUDIENCE_AND_CLAIRVOYANCE &&
+        	    nSpellId != SPELL_LOCATE_CREATURE)
+        	{
+        		// Now, loop through all of the PCs
+ 			object oPCTarget = GetFirstPC();
+ 			// Don't target yourself
+ 			while (GetIsObjectValid(oPCTarget) && oPCTarget != oPC)
+ 			{
+ 			    if(DEBUG) DoDebug("prc_scry_conv: Looping PC Targets");
+ 			    AddChoice(GetName(oPCTarget), nChoice, oPC);
+			    StorePCForRecovery(oPC, oPCTarget, nChoice);
+ 			    
+ 			    nChoice += 1;
+ 			    oPCTarget = GetNextPC();
+ 			}
  		}
  	}
-}
-
+}	
+	
 //////////////////////////////////////////////////
 /* Main function                                */
 //////////////////////////////////////////////////

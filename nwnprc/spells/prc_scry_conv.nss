@@ -38,6 +38,52 @@ object RetrievePC(object oPC, int nChoice)
 	return GetLocalObject(oPC, "ScryTarget" + IntToString(nChoice));
 }
 
+void AddLegalTargets(object oPC)
+{
+         // This reads all of the legal choices 
+         int nSpellId = GetLocalInt(oPC, "ScrySpellId");
+         int nChoice = 1;
+         // First, get all creatures in the area you're in
+        object oCreature = GetFirstObjectInArea(GetArea(oPC));
+        while (GetIsObjectValid(oCreature) == TRUE)
+        {
+            if(DEBUG) DoDebug("prc_scry_conv: Looping Monster Targets");
+            // Don't target PCs using this
+            if (GetObjectType(oCreature) == OBJECT_TYPE_CREATURE)
+            {
+            	// This can target PCs in the area, but not in other mods
+            	if (nSpellId == SPELL_CLAIRAUDIENCE_AND_CLAIRVOYANCE)
+            	{
+			AddChoice(GetName(oCreature), nChoice, oPC);
+			StorePCForRecovery(oPC, oCreature, nChoice);
+		}
+		// Normally, the second part takes care of all PCs
+		else if (!GetIsPC(oCreature)
+		{
+			AddChoice(GetName(oCreature), nChoice, oPC);
+			StorePCForRecovery(oPC, oCreature, nChoice);
+		}
+            }
+            nChoice += 1;
+            oCreature = GetNextObjectInArea(GetArea(oPC));
+        }
+        if (nSpellId != SPELL_CLAIRAUDIENCE_AND_CLAIRVOYANCE)
+        {
+        	// Now, loop through all of the PCs
+ 		object oPCTarget = GetFirstPC();
+ 		// Don't target yourself
+ 		while (GetIsObjectValid(oPCTarget) && oPCTarget != oPC)
+ 		{
+ 		    if(DEBUG) DoDebug("prc_scry_conv: Looping PC Targets");
+ 		    AddChoice(GetName(oPCTarget), nChoice, oPC);
+		    StorePCForRecovery(oPC, oPCTarget, nChoice);
+ 		    
+ 		    nChoice += 1;
+ 		    oPCTarget = GetNextPC();
+ 		}
+ 	}
+]
+
 //////////////////////////////////////////////////
 /* Main function                                */
 //////////////////////////////////////////////////
@@ -77,34 +123,7 @@ void main()
                	string sAmount = "Which creature would you like to scry?";
                 SetHeader(sAmount);
 
-                // This reads all of the legal choices 
-                int nChoice = 1;
-                // First, get all creatures in the area you're in
-	        object oCreature = GetFirstObjectInArea(GetArea(oPC));
-	        while (GetIsObjectValid(oCreature) == TRUE)
-	        {
-	            if(DEBUG) DoDebug("prc_scry_conv: Looping Monster Targets");
-	            // Don't target PCs using this
-	            if (GetObjectType(oCreature) == OBJECT_TYPE_CREATURE && !GetIsPC(oCreature))
-	            {
-			AddChoice(GetName(oCreature), nChoice, oPC);
-			StorePCForRecovery(oPC, oCreature, nChoice);
-	            }
-	            nChoice += 1;
-	            oCreature = GetNextObjectInArea(GetArea(oPC));
-	        }
-	        // Now, loop through all of the PCs
-        	object oPCTarget = GetFirstPC();
-        	// Don't target yourself
-        	while (GetIsObjectValid(oPCTarget) && oPCTarget != oPC)
-        	{
-        	    if(DEBUG) DoDebug("prc_scry_conv: Looping PC Targets");
-        	    AddChoice(GetName(oPCTarget), nChoice, oPC);
-		    StorePCForRecovery(oPC, oPCTarget, nChoice);
-        	    
-        	    nChoice += 1;
-        	    oPCTarget = GetNextPC();
-        	}	        
+		AddLegalTargets(oPC);	        
 
                 MarkStageSetUp(STAGE_CHOOSE_TARGET, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
                 SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values

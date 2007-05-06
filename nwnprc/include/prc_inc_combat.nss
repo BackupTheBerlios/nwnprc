@@ -2154,13 +2154,18 @@ int GetMeleeAttackers15ft(object oPC = OBJECT_SELF)
 
 	if (oTarget == OBJECT_INVALID)
 		return FALSE;
+	float fBurningBrand = 0.0;
+	if (GetLocalInt(oPC, "DWBurningBrand")) fBurningBrand = FeetToMeters(5.0);
 
-	return GetDistanceBetween(oPC,oTarget) <= MELEE_RANGE_METERS;
+	return GetDistanceBetween(oPC,oTarget) <= (MELEE_RANGE_METERS + fBurningBrand);
 }
 
 int GetIsInMeleeRange(object oDefender, object oAttacker)
 {
-	return GetDistanceBetween(oDefender, oAttacker) <= MELEE_RANGE_METERS;
+	float fBurningBrand = 0.0;
+	if (GetLocalInt(oPC, "DWBurningBrand")) fBurningBrand = FeetToMeters(5.0);
+
+	return GetDistanceBetween(oPC,oTarget) <= (MELEE_RANGE_METERS + fBurningBrand);
 }
 
 object GetUnarmedWeapon(object oPC)
@@ -5486,7 +5491,9 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
 			// @TODO: store weaponEnhancement value and make new function that takes this value
 			int iDamagePower = GetDamagePowerConstant(oWeapon, oDefender, oAttacker);
 			int iDamageType = GetDamageTypeByWeaponType(iWeaponType);
-
+			// When this maneuver is in effect, weapon damage is fire
+			// Also put here so it doesn't muck up things looking for weapon damage type
+			if (GetLocalInt(oPC, "DWBurningBrand")) iDamageType = DAMAGE_TYPE_FIRE;
 
 			// motu99: why do we store different physical damage types (Bludg, Pierc, Slash) in the WeaponBonusDamage struct
 			// when we sum up all physical damage here and only use the weapon base damage type?

@@ -19,6 +19,7 @@
     You lash out in a blur of movement with two weapons, 
     hacking into your foe with a combination of feral strength and speed.
     
+    You attack with both weapons against a single foe at a -2 penalty.
     You must fight with two weapons to use this maneuver. 
 */
 

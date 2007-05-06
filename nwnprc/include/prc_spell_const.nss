@@ -823,3 +823,6 @@ const int SPELL_MASS_HARM                           = 3218;
  const int SPELL_EF_SPELL_SELECT_QUICK4              = 2509;
  const int SPELL_EF_ARCANE_FIST                      = 2510;
  const int SPELL_EF_ARCANE_REJUVENATION              = 2511;
+ 
+ // Scrying Spells
+ const int SPELL_SCRY                                = 3219;

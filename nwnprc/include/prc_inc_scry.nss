@@ -29,8 +29,6 @@ const string ALREADY_IMMORTAL_LOCAL_NAME = "Scry_ImmortalAlready";
 const float  SCRY_HB_DELAY         = 1.0f;
 // Will be moved out when its created.
 const int SPELL_END_SCRY = -1;
-const int SPELL_SCRY = 3219;
-
 
 //////////////////////////////////////////////////
 /* Function prototypes                          */
@@ -328,6 +326,9 @@ void ScryMonitor(object oPC, object oCopy)
     }
 }
 
+/*
+
+This has been moved to the individual spell scripts, because that way it is attached to SpellId.
 
 //Gives the PC -50 to attack and places No Damage iprop to all equipped weapons.
 void ApplyScryEffects(object oPC)
@@ -425,7 +426,7 @@ void ApplyScryEffects(object oPC)
             array_set_object(oPC, "Scry_Nerfed", array_get_size(oPC, "Scry_Nerfed"), oWeapon);
     }}
 }
-
+*/
 
 
 //Undoes changes made in ApplyScryEffects().

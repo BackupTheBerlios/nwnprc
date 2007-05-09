@@ -21,7 +21,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 {
     effect eImpact = EffectVisualEffect(VFX_IMP_HEAD_MIND);
     effect eVis = EffectVisualEffect(VFX_DUR_INVISIBILITY);
-    effect eInvis = EffectInvisibility(INVISIBILITY_TYPE_NORMAL);
+    effect eInvis = EffectInvisibility(INVISIBILITY_TYPE_IMPROVED);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
     effect eCover = EffectConcealment(50);
     effect eLink = EffectLinkEffects(eDur, eCover);

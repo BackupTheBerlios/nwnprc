@@ -831,3 +831,5 @@ const int SPELL_DISCERN_LOCATION                    = 3656;
 const int SPELL_LOCATE_CREATURE                     = 3657;
 const int SPELL_LOCATE_OBJECT                       = 3658;
 const int SPELL_ARCANE_EYE                          = 3659;
+const int SPELL_OBSCURE_OBJECT                      = 3660;
+const int SPELL_SEQUESTER                           = 3661;

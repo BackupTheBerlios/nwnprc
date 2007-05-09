@@ -106,7 +106,31 @@ void ScryMain(object oPC, object oTarget)
     int nSpell       = GetLocalInt(oPC, "ScrySpellId");
     int nDC          = GetLocalInt(oPC, "ScrySpellDC");
     float fDur       = GetLocalFloat(oPC, "ScryDuration");
-    if(DEBUG) DoDebug("prc_inc_scry: Beginning ScryMain. nSpell: " + IntToString(nSpell));    
+    if(DEBUG) DoDebug("prc_inc_scry: Beginning ScryMain. nSpell: " + IntToString(nSpell));
+    
+    if (GetHasSpellEffect(SPELL_SEQUESTER, oTarget))
+    {
+	// Spell auto-fails if this is the case
+	FloatingTextStringOnCreature(GetName(oTarget) + " has been Sequestered.", oPC, FALSE);
+	return;
+    }  
+
+    if (GetHasSpellEffect(SPELL_OBSCURE_OBJECT, oTarget))
+    {
+	// Spell auto-fails if this is the case
+	FloatingTextStringOnCreature(GetName(oTarget) + " has been Obscured.", oPC, FALSE);
+	return;
+    }    
+    
+    if (GetHasSpellEffect(SPELL_NONDETECTION, oTarget))
+    {
+	// Caster level check or the Divination fails.
+	if(PRCGetCasterLevel(oTarget) + 11 > nCasterLevel + d20())
+	{
+		FloatingTextStringOnCreature(GetName(oTarget) + " has Nondetection active.", oPC, FALSE);
+    		return;
+	}
+    }
     
     // Discern Location skips all of this
     if (nSpell == SPELL_DISCERN_LOCATION)
@@ -126,13 +150,13 @@ void ScryMain(object oPC, object oTarget)
     	//Make SR Check
     	if (MyPRCResistSpell(oPC, oTarget, nCasterLevel)) 
     	{
-    		FloatingTextStringOnCreature("Target made Spell Resistance check vs Scrying", oPC, FALSE);
+    		FloatingTextStringOnCreature(GetName(oTarget) + " made Spell Resistance check vs Scrying", oPC, FALSE);
     		return;
     	}
     	// Save
     	if (PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS)) 
     	{
-    		FloatingTextStringOnCreature("Target saved vs Scrying", oPC, FALSE);
+    		FloatingTextStringOnCreature(GetName(oTarget) + " saved vs Scrying", oPC, FALSE);
     		return;
     	}
     }

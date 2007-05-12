@@ -522,6 +522,8 @@ int Scrying()
     object oPC = OBJECT_SELF;
     int nSpellId = PRCGetSpellId();
     int nScry    = GetLocalInt(oPC, "ScrySpellId");
+    // If its an empty local int
+    if (nScry == 0) return TRUE;
 
     if (nScry == SPELL_GREATER_SCRYING)
     {
@@ -529,6 +531,12 @@ int Scrying()
 	    nSpellId == SPELL_DETECT_LAW || nSpellId == SPELL_DETECT_CHAOS)
 		return TRUE;
     }
+    if (nScry == POWER_CLAIRTANGENT_HAND)
+    {
+	if (nSpellId == POWER_FARHAND)
+		return TRUE;
+    }    
+    
     return FALSE;
 }
 

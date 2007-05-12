@@ -107,6 +107,7 @@ const int POWER_ENERGYMISSILE_SONIC             = 14094;
 const int POWER_ANIMAL_AFFINITY                 = 14095;
 const int POWER_STRENGTH_OF_MY_ENEMY            = 14096;
 const int POWER_CHAMELEON                       = 14097;
+const int POWER_CLAIRVOYANT_SENSE               = -1;
 
 // Level 3 Powers
 const int POWER_BODYADJUST                      = 14101;
@@ -155,6 +156,7 @@ const int POWER_ENERGYCONE_SONIC                = 14143;
 const int POWER_CLAW_OF_THE_VAMPIRE             = 14144;
 const int POWER_DUODIMENSIONAL_CLAW             = 14145;
 const int POWER_VAMPIRIC_WEAPON                 = 14146;
+const int POWER_ESCAPE_DETECTION                = -1;
 
 // Level 4 Powers
 const int POWER_INERTBARRIER                    = 14151;
@@ -188,6 +190,7 @@ const int POWER_WEAPON_ENERGY_COLD              = 14180;
 const int POWER_WEAPON_ENERGY_ELEC              = 14181;
 const int POWER_WEAPON_ENERGY_FIRE              = 14182;
 const int POWER_INTELLECTFORTRESS               = 14183;
+const int POWER_DETECT_REMOTE_VIEWING           = -1;
 
 // Level 5 Powers
 const int POWER_BALEFULTEL                      = 14191;
@@ -208,6 +211,7 @@ const int POWER_ENERGYCURRENT_FIRE              = 14205;
 const int POWER_ENERGYCURRENT_SONIC             = 14206;
 const int POWER_PSIONICREVIVIFY                 = 14207;
 const int POWER_PSYCHOFEEDBACK                  = 14208;
+const int POWER_CLAIRTANGENT_HAND               = -1;
 
 // Level 6 Powers
 const int POWER_BREATHBLACKDRAGON               = 14231;
@@ -226,6 +230,7 @@ const int POWER_PSIONICRESTORATION              = 14243;
 const int POWER_DISPELLING_BUFFER               = 14244;
 const int POWER_FORM_OF_DOOM                    = 14245;
 const int POWER_NULL_PSIONICS_FIELD             = 14246;
+const int POWER_REMOTE_VIEW_TRAP                = -1;
 
 // Level 7 Powers
 const int POWER_CRISISLIFE                      = 14271;
@@ -246,6 +251,7 @@ const int POWER_MOMENTOFPRESCIENCESKILLS        = 14285;
 const int POWER_ECTOCOCOONMASS                  = 14286;
 const int POWER_ETHEREALJAUNT                   = 14287;
 const int POWER_REDDOPSI                        = 14288;
+const int POWER_SEQUESTER                       = -1;
 
 // Level 8 Powers
 const int POWER_RECALLDEATH                     = 14301;

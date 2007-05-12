@@ -18,6 +18,7 @@
 //:: Created On: 30.04.2007
 //:://////////////////////////////////////////////
 
+#include "psi_inc_psifunc"
 #include "inc_utility"
 
 ///////////////////////
@@ -107,8 +108,34 @@ void ScryMain(object oPC, object oTarget)
     int nDC          = GetLocalInt(oPC, "ScrySpellDC");
     float fDur       = GetLocalFloat(oPC, "ScryDuration");
     if(DEBUG) DoDebug("prc_inc_scry: Beginning ScryMain. nSpell: " + IntToString(nSpell));
+
+    // Check if there is a valid copy around.
+    // If so, abort
+    if(nSpell == SPELL_END_SCRY)
+    {
+	  DoScryEnd(oPC, oCopy);
+	  return;
+    } 
     
-    if (GetHasSpellEffect(SPELL_SEQUESTER, oTarget))
+    if (GetHasSpellEffect(POWER_REMOTE_VIEW_TRAP, oTarget))
+    {
+    	effect eVis  = EffectVisualEffect(VFX_IMP_LIGHTNING_S);
+    	// Failed Save
+    	if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_NONE)) 
+    	{
+    		FloatingTextStringOnCreature("You have been caught in a Remote View Trap", oPC, FALSE);
+    		eVis = EffectLinkEffects(eVis, EffectDamage(d6(8), DAMAGE_TYPE_ELECTRICAL));
+    		ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+    		return;
+    	}
+    	else
+    	{
+    		FloatingTextStringOnCreature("You have saved against a Remote View Trap", oPC, FALSE);
+    		eVis = EffectLinkEffects(eVis, EffectDamage(d6(4), DAMAGE_TYPE_ELECTRICAL));
+    		ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);    	
+    	}
+    }         
+    if (GetHasSpellEffect(SPELL_SEQUESTER, oTarget) || GetHasSpellEffect(POWER_SEQUESTER, oTarget))
     {
 	// Spell auto-fails if this is the case
 	FloatingTextStringOnCreature(GetName(oTarget) + " has been Sequestered.", oPC, FALSE);
@@ -131,6 +158,24 @@ void ScryMain(object oPC, object oTarget)
     		return;
 	}
     }
+    if (GetHasSpellEffect(POWER_ESCAPE_DETECTION, oTarget))
+    {
+	// Caster level check or the Divination fails.
+	// Max of 10
+	if(max(10, GetManifesterLevel(oTarget)) + 13 > nCasterLevel + d20())
+	{
+		FloatingTextStringOnCreature(GetName(oTarget) + " has Escape Detection active.", oPC, FALSE);
+    		return;
+	}
+    }    
+    if (GetHasSpellEffect(POWER_DETECT_REMOTE_VIEWING, oTarget))
+    {
+	// Caster level check for the target to learn where the caster is
+	if(GetManifesterLevel(oTarget) + d20() >= nCasterLevel + d20())
+	{
+		FloatingTextStringOnCreature(GetName(oPC) + " is viewing you from " + GetName(GetArea(oPC)), oTarget, FALSE);
+	}
+    }    
     
     // Discern Location skips all of this
     if (nSpell == SPELL_DISCERN_LOCATION)
@@ -145,7 +190,8 @@ void ScryMain(object oPC, object oTarget)
     	return;
     }     
     
-    if (nSpell != SPELL_CLAIRAUDIENCE_AND_CLAIRVOYANCE)
+    if (nSpell != SPELL_CLAIRAUDIENCE_AND_CLAIRVOYANCE || nSpell != POWER_CLAIRTANGENT_HAND || 
+        nSpell != POWER_CLAIRVOYANT_SENSE)
     {
     	//Make SR Check
     	if (MyPRCResistSpell(oPC, oTarget, nCasterLevel)) 
@@ -165,14 +211,6 @@ void ScryMain(object oPC, object oTarget)
                     + "oPC = '" + GetName(oPC) + "' - '" + GetTag(oPC) + "' - " + ObjectToString(oPC)
                     + "Copy exists: " + BooleanToString(GetIsObjectValid(oCopy))
                       );
-
-    // Check if there is a valid copy around.
-    // If so, abort
-    if(nSpell == SPELL_END_SCRY)
-    {
-	  DoScryEnd(oPC, oCopy);
-	  return;
-    }
 
     // Create the copy
     oCopy = CopyObject(oPC, GetLocation(oTarget), OBJECT_INVALID, GetName(oPC) + "_" + COPY_LOCAL_NAME);

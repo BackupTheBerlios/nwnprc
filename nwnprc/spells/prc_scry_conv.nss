@@ -73,7 +73,8 @@ void AddLegalTargets(object oPC)
         	    {
         	    	// This can target PCs in the area, but not in other areas
         	    	if ((nSpellId == SPELL_CLAIRAUDIENCE_AND_CLAIRVOYANCE ||
-        	    	     nSpellId == SPELL_LOCATE_CREATURE) &&
+        	    	     nSpellId == SPELL_LOCATE_CREATURE ||
+        	    	     nSpellId == POWER_CLAIRVOYANT_SENSE) &&
         	             oPC != oCreature)
         	    	{
 				AddChoice(GetName(oCreature), nChoice, oPC);
@@ -91,7 +92,8 @@ void AddLegalTargets(object oPC)
         	}
         	// These only target in their own areas
         	if (nSpellId != SPELL_CLAIRAUDIENCE_AND_CLAIRVOYANCE &&
-        	    nSpellId != SPELL_LOCATE_CREATURE)
+        	    nSpellId != SPELL_LOCATE_CREATURE &&
+        	    nSpellId != POWER_CLAIRVOYANT_SENSE)
         	{
         		// Now, loop through all of the PCs
  			object oPCTarget = GetFirstPC();

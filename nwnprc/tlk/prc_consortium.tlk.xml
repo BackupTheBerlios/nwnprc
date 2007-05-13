@@ -5146,7 +5146,7 @@ Combining the dynamic powers of martial prowess and arcane might, the Hexblade p
 
 - Aligment Restrictions: non-good only
 - Hit Die: d10
-- Proficiencies: A Hexblade gains proficiency with Simple and Martial Weapons and Light Armour.
+- Proficiencies: A Hexblade gains proficiency with Simple and Martial Weapons, Light and Medium Armour and with Shields.
 - Skill Points: 2 + Int Modifier
 
 ABILITIES:
@@ -5157,19 +5157,19 @@ Level
  3: Mettle
  4: Dark Companion
  5: Bonus Feat, Hexblade's Curse 2/day
- 6: -
+ 6: Swift Cast 1/day
  7: Greater Hexblade's Curse
- 8: -
+ 8: Swift Cast 2/day
  9: Hexblade's Curse 3/day
 10: Bonus Feat
-11: -
+11: Swift Cast 3/day
 12: Aura of Unluck 1/day
 13: Hexblade's Curse 4/day
-14: -
+14: Swift Cast 4/day
 15: Bonus Feat
 16: Aura of Unluck 2/day
 17: Hexblade's Curse 5/day
-18: -
+18: Swift Cast 5/day
 19: Dire Hexblade's Curse
 20: Bonus Feat, Aura of Unluck 3/day
 
@@ -14357,23 +14357,23 @@ ABILITIES:
 
 Level
 21: Epic Dark Companion, Hexblade's Curse 6/day
-22: -
+22: Swift Cast 6/day
 23: -
 24: Bonus Feat, Aura of Unluck 4/day
 25: Hexblade's Curse 7/day
-26: -
+26: Swift Cast 7/day
 27: -
 28: Bonus Feat, Aura of Unluck 5/day
 29: Hexblade's Curse 8/day
-30: -
+30: Swift Cast 8/day
 31: -
 32: Bonus Feat, Aura of Unluck 6/day
 33: Hexblade's Curse 9/day
-34: -
+34: Swift Cast 9/day
 35: -
 36: Bonus Feat, Aura of Unluck 7/day
 37: Epic Hexblade's Curse, Hexblade's Curse 10/day
-38: -
+38: Swift Cast 10/day
 39: -
 40: Bonus Feat, Aura of Unluck 8/day </entry>
   <entry id="48576" lang="en" sex="m">Greater Hexblade's Curse</entry>
@@ -18303,6 +18303,10 @@ Specifics:</entry>
   <entry id="49811" lang="en" sex="m">Type of Feat: 
 Prerequisites: 
 Specifics:</entry>
+  <entry id="49812" lang="en" sex="m">Armored spellcasting</entry>
+  <entry id="49813" lang="en" sex="m">A Hexblade does not suffer a chance of spell failure when casting in light or medium armor or while using small shields.</entry>
+  <entry id="49814" lang="en" sex="m">At 6th level, the hexblade can cast one hexblade spell per day as a swift action, as long as its original casting time is a standard action or faster. He gains an additional use of this power at levels 8, 11, 14, 18, 22, 26, 30, 34 and 38.</entry>
+  <entry id="49815" lang="en" sex="m">Swift Cast</entry>
   <entry id="49999" lang="en" sex="m">**** 50,000 - 50,500 reserved for Race Pack Feats ****</entry>
   <entry id="50000" lang="en" sex="m">Light Sensitivity</entry>
   <entry id="50001" lang="en" sex="m">Type of Feat: Racial

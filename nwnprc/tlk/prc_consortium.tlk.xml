@@ -14323,7 +14323,7 @@ Use: Selected.</entry>
   <entry id="48566" lang="en" sex="m">Hexblade's Curse</entry>
   <entry id="48567" lang="en" sex="m">type of feat: Class
 Prerequisite: Hexblade level 1
-Once per day, as a free action, a hexblade can unleash a curse upon a foe. The target must be visible to the Hexblade and within 60 feet. The target of a Hexblade's curse takes a -2 penalty on attacks, saves, ability checks, skill checks and weapon damage rolls for one hour thereafter. A successful Will save (DC 10 + 1/2 Hexblade's class level + Hexblade's CHA mod)negates the effect. At every 4th level beyond 1st, a Hexblade gains the ability to use his curse one additional time per day.
+Once per day + the Hexblade's CHA modifier, as a free action, a hexblade can unleash a curse upon a foe. The target must be visible to the Hexblade and within 60 feet. The target of a Hexblade's curse takes a -2 penalty on attacks, saves, ability checks, skill checks and weapon damage rolls for one hour thereafter. A successful Will save (DC 10 + 1/2 Hexblade's class level + Hexblade's CHA mod)negates the effect. At every 4th level beyond 1st, a Hexblade gains the ability to use his curse one additional time per day.
 
 Greater Hexblade's Curse
 

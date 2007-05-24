@@ -129,6 +129,9 @@ void AddAppearanceChoice(int nType, int nOnlyChoice = FALSE);
 // adds the head choices based on race and gender
 void SetupHeadChoices();
 
+// maps the appearance to a bioware playable race
+int MapAppearanceToRace(int nAppearance);
+
 /* 2da cache functions */
 
 // loops through a 2da, using the cache
@@ -213,8 +216,8 @@ int DoLetoscriptTest(object oPC)
          && sResult != " "+sName)
          )
     {
-        SendMessageToPC(oPC, "Letoscript is not setup correctly or it cannot find your bic file. Check nwnx_leto.log for error messages.");
-        WriteTimestampedLogEntry("Letoscript is not setup correctly or it cannot find your bic file. Check nwnx_leto.log for error messages.");
+        SendMessageToPC(oPC, "Error: Letoscript is not setup correctly or it cannot find your bic file. Check nwnx_leto.log for error messages.");
+        WriteTimestampedLogEntry("Error: Letoscript is not setup correctly or it cannot find your bic file. Check nwnx_leto.log for error messages.");
         bBoot = TRUE;
     }
     
@@ -1085,6 +1088,20 @@ void SetupHeadChoices()
             else if (nGender == GENDER_FEMALE)
                 nHeadNumber = 10;
         }
+        else if (nAppearance == APPEARANCE_TYPE_CEP_BROWNIE)
+        {
+            if(nGender == GENDER_MALE)
+                nHeadNumber = 12;
+            else if (nGender == GENDER_FEMALE)
+                nHeadNumber = 11;
+        }
+        else if (nAppearance == APPEARANCE_TYPE_CEP_WEMIC)
+        {
+            if (nGender == GENDER_MALE)
+                nHeadNumber = 4;
+            else if (nGender == GENDER_FEMALE)
+                nHeadNumber = 2;
+        }
     }
     else
     {
@@ -1178,6 +1195,35 @@ void SetupHeadChoices()
             AddChoice(IntToString(181), 181);
         }
     }
+}
+
+int MapAppearanceToRace(int nAppearance)
+{
+    switch(nAppearance)
+    {
+        case APPEARANCE_TYPE_DWARF:
+            return RACIAL_TYPE_DWARF;
+            break;
+        case APPEARANCE_TYPE_ELF:
+            return RACIAL_TYPE_ELF;
+            break;
+        case APPEARANCE_TYPE_GNOME:
+            return RACIAL_TYPE_GNOME;
+            break;
+        case APPEARANCE_TYPE_HALFLING:
+            return RACIAL_TYPE_HALFLING;
+            break;
+        case APPEARANCE_TYPE_HALF_ORC:
+            return RACIAL_TYPE_HALFORC;
+            break;
+        case APPEARANCE_TYPE_HUMAN:
+        case APPEARANCE_TYPE_HALF_ELF: // half-elves get human portraits
+            return RACIAL_TYPE_HUMAN;
+            break;
+        default: 
+            return -1;
+    }
+    return -1; // silly compiler
 }
 
 void Do2daLoop(string s2da, string sColumnName, int nFileEnd)
@@ -1916,11 +1962,23 @@ void DoPortraitsLoop(int nGenderSort = TRUE)
     string sSQL;
     // get the gender and add it to the SQL statement
     string sGender = IntToString(GetLocalInt(OBJECT_SELF, "Gender"));
+    // get the race for ordering
+    string sRace;
+    // map the race to appearance for the PC appearances
+    // as eg. all drow portraits are labelled as elf portraits in bioware's portraits.2da
+    int nFakeRace = MapAppearanceToRace(GetLocalInt(OBJECT_SELF, "Appearance"));
+    if (nFakeRace != -1) // if the appearance was a default character model
+        sRace = IntToString(nFakeRace);
+    else // use the actual race
+        sRace = IntToString(GetLocalInt(OBJECT_SELF, "Race"));
+    
     // note: "BaseResRef != 'matron'" is because that portrait is referenced in bioware's
     // portraits.2da, but doesn't exist
     if (nGenderSort)
     {
-        sSQL = "SELECT "+q+"rowid"+q+", "+q+"BaseResRef"+q+" FROM "+q+"prc_cached2da_portraits"+q+" WHERE ("+q+"InanimateType"+q+" = '****') AND ("+q+"BaseResRef"+q+" != '****') AND ("+q+"BaseResRef"+q+" != 'matron') AND ("+q+"SEX"+q+" = '" + sGender + "') LIMIT 100 OFFSET "+IntToString(nReali);
+        // orders portraits of PC's race first, only PC's gender-specific portraits
+        sSQL = "SELECT "+q+"rowid"+q+", "+q+"BaseResRef"+q+", CASE Race WHEN  "+ sRace +" THEN 0 else 1 END AS column1 FROM "+q+"prc_cached2da_portraits"+q+" WHERE ("+q+"InanimateType"+q+" = '****') AND ("+q+"BaseResRef"+q+" != '****') AND ("+q+"BaseResRef"+q+" != 'matron') AND ("+q+"SEX"+q+" = '" + sGender 
+            + "') ORDER BY column1, Race LIMIT 100 OFFSET "+IntToString(nReali);
     }
     else
     {
@@ -2011,6 +2069,11 @@ void DoWingmodelLoop()
         AddChoice("Bird", 6);
     else if (GetPRCSwitch(PRC_CONVOCC_FEYRI_WINGS) && GetLocalInt(OBJECT_SELF, "Race") == RACIAL_TYPE_FEYRI)
         AddChoice("Bat", 3);
+    /* else if (GetPRCSwitch(PRC_CONVOCC_AASIMAR_WINGS) && GetLocalInt(OBJECT_SELF, "Race") == RACIAL_TYPE_AASIMAR) TODO add switch
+    {
+        AddChoice("None", 0);
+        AddChoice("Angel", 2);
+    }*/
     else if (GetPRCSwitch(PRC_CONVOCC_DISALLOW_CUSTOMISE_WINGS))
         AddChoice("None", 0);
     else
@@ -2034,6 +2097,11 @@ void DoTailmodelLoop()
 {
     if (GetPRCSwitch(PRC_CONVOCC_FEYRI_TAIL) && GetLocalInt(OBJECT_SELF, "Race") == RACIAL_TYPE_FEYRI)
         AddChoice("Devil", 3);
+    /* else if (GetPRCSwitch(PRC_CONVOCC_TIEFLING_TAIL) && GetLocalInt(OBJECT_SELF, "Race") == RACIAL_TYPE_TIEFLING)  TODO switch
+    {
+        AddChoice("None", 0);
+        AddChoice("Devil", 3);
+    } */
     else if (GetPRCSwitch(PRC_CONVOCC_DISALLOW_CUSTOMISE_TAIL))
         AddChoice("None", 0);
     else
@@ -2255,3 +2323,4 @@ void AddColourChoices(int nStage, int nCategory)
         i++;
     }
 }
+

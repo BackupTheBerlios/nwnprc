@@ -59,3 +59,13 @@ const int STAGE_TATTOO2_COLOUR_CHOICE   = 51;
 const int STAGE_TATTOO2_COLOUR_CHECK    = 52;
 
 const int FINAL_STAGE                   = 99;
+
+/**
+ * constants used in the convoCC that aren't convo stages
+ */
+ 
+// brownie model in the CEP
+const int APPEARANCE_TYPE_CEP_BROWNIE = 1002;
+
+// wemic model in the CEP
+const int APPEARANCE_TYPE_CEP_WEMIC = 1000;

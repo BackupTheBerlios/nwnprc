@@ -54,7 +54,7 @@ void main()
 	
 	//You die, make it spectacular
 	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVisLink, oPC);
-	SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oPC);
+	SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(TRUE), oPC);
 	
 	//Loop
 	while(GetIsObjectValid(oTarget))

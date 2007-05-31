@@ -46,7 +46,9 @@ void main()
 	object oItem = IPGetTargetedOrEquippedMeleeWeapon();
 	// Add the OnHit
 	IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 9999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-        effect eDur = ExtraordinaryEffect(EffectVisualEffect(VFX_DUR_BLOOD_FOUNTAIN));
-        SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eDur, oTarget);
+        effect eDur = EffectVisualEffect(VFX_DUR_BLOOD_FOUNTAIN);
+        if (GetHasDefensiveStance(oInitiator, DISCIPLINE_TIGER_CLAW))
+    		eDur = EffectLinkEffects(eDur, EffectSavingThrowIncrease(SAVING_THROW_ALL, 2, SAVING_THROW_TYPE_ALL));
+        SPApplyEffectToObject(DURATION_TYPE_PERMANENT, ExtraordinaryEffect(eDur), oTarget);
     }
 }

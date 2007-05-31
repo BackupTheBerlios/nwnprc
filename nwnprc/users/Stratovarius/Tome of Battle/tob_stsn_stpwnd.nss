@@ -62,6 +62,8 @@ void main()
        	       eLink = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_SLOW));
        	       eLink = EffectLinkEffects(eLink, EffectAttackIncrease(2));
        	       eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_ROOTED_TO_SPOT));
+       	       if (GetHasDefensiveStance(oInitiator, DISCIPLINE_SETTING_SUN))
+    			eLink = EffectLinkEffects(eLink, EffectSavingThrowIncrease(SAVING_THROW_ALL, 2, SAVING_THROW_TYPE_ALL));
        	       eLink = ExtraordinaryEffect(eLink);
        	       
        	ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);	

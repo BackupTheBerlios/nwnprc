@@ -8,6 +8,65 @@
 
 #include "prc_alterations"
 
+void AddWS(object oPC,object oSkin,int ip_feat_crit,int nFeat)
+{
+    // Do not add multiple instances of the same bonus feat iprop, it lags the game
+    if(GetHasFeat(nFeat,oPC))
+        return;
+    IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(ip_feat_crit), 0.0f,
+                          X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+}
+
+// Grants a weapon focus in the discipline weapons.
+void SwordSageDisciplineWeaponFocus(object oPC)
+{
+	object oSkin = GetPCSkin(oPC);
+	if (GetHasFeat(FEAT_SS_DF_WF_DW, oPC))
+	{
+		// Discipline Weapons
+		AddWS(oPC, oSkin, IP_CONST_FEAT_WEAPON_FOCUS_SCIMITAR,       FEAT_WEAPON_FOCUS_SCIMITAR);
+		AddWS(oPC, oSkin, IP_CONST_FEAT_WEAPON_FOCUS_LIGHT_MACE,     FEAT_WEAPON_FOCUS_LIGHT_MACE);
+		AddWS(oPC, oSkin, IP_CONST_FEAT_WEAPON_FOCUS_SPEAR,          FEAT_WEAPON_FOCUS_SPEAR);
+	}
+	else if (GetHasFeat(FEAT_SS_DF_WF_DM, oPC))
+	{
+		// Discipline Weapons
+		AddWS(oPC, oSkin, IP_CONST_FEAT_WEAPON_FOCUS_KATANA,         FEAT_WEAPON_FOCUS_KATANA);
+		AddWS(oPC, oSkin, IP_CONST_FEAT_WEAPON_FOCUS_RAPIER,         FEAT_WEAPON_FOCUS_RAPIER);
+		AddWS(oPC, oSkin, IP_CONST_FEAT_WEAPON_FOCUS_BASTARD_SWORD,  FEAT_WEAPON_FOCUS_BASTARD_SWORD);
+	}
+	else if (GetHasFeat(FEAT_SS_DF_WF_SS, oPC))
+	{
+		// Discipline Weapons
+		AddWS(oPC, oSkin, IP_CONST_FEAT_WEAPON_FOCUS_SHORT_SWORD,    FEAT_WEAPON_FOCUS_SHORT_SWORD);
+		AddWS(oPC, oSkin, IP_CONST_FEAT_WEAPON_FOCUS_STAFF,          FEAT_WEAPON_FOCUS_STAFF);
+		AddWS(oPC, oSkin, IP_CONST_FEAT_WEAPON_FOCUS_UNARMED_STRIKE, FEAT_WEAPON_FOCUS_UNARMED_STRIKE);
+	}
+	else if (GetHasFeat(FEAT_SS_DF_WF_SH, oPC))
+	{
+		// Discipline Weapons
+		AddWS(oPC, oSkin, IP_CONST_FEAT_WEAPON_FOCUS_SHORT_SWORD,    FEAT_WEAPON_FOCUS_SHORT_SWORD);
+		AddWS(oPC, oSkin, IP_CONST_FEAT_WEAPON_FOCUS_DAGGER,         FEAT_WEAPON_FOCUS_DAGGER);
+		AddWS(oPC, oSkin, IP_CONST_FEAT_WEAPON_FOCUS_UNARMED_STRIKE, FEAT_WEAPON_FOCUS_UNARMED_STRIKE);		
+	}
+	else if (GetHasFeat(FEAT_SS_DF_WF_SD, oPC))
+	{
+		// Discipline Weapons
+		AddWS(oPC, oSkin, IP_CONST_FEAT_WEAPON_FOCUS_UNARMED_STRIKE, FEAT_WEAPON_FOCUS_UNARMED_STRIKE);
+		AddWS(oPC, oSkin, IP_CONST_FEAT_WEAPON_FOCUS_GREAT_AXE,      FEAT_WEAPON_FOCUS_GREAT_AXE);
+		AddWS(oPC, oSkin, IP_CONST_FEAT_WEAPON_FOCUS_GREAT_SWORD,    FEAT_WEAPON_FOCUS_GREAT_SWORD);
+	}
+	else if (GetHasFeat(FEAT_SS_DF_WF_TC, oPC))
+	{
+		// Discipline Weapons
+		AddWS(oPC, oSkin, IP_CONST_FEAT_WEAPON_FOCUS_UNARMED_STRIKE, FEAT_WEAPON_FOCUS_UNARMED_STRIKE);
+		AddWS(oPC, oSkin, IP_CONST_FEAT_WEAPON_FOCUS_GREAT_AXE,      FEAT_WEAPON_FOCUS_GREAT_AXE);
+		AddWS(oPC, oSkin, IP_CONST_FEAT_WEAPON_FOCUS_KAMA,           FEAT_WEAPON_FOCUS_KAMA);
+		AddWS(oPC, oSkin, IP_CONST_FEAT_WEAPON_FOCUS_KUKRI,          FEAT_WEAPON_FOCUS_KUKRI);
+		AddWS(oPC, oSkin, IP_CONST_FEAT_WEAPON_FOCUS_HAND_AXE,       FEAT_WEAPON_FOCUS_HAND_AXE);
+	}
+}
+
 void main()
 {
 	object oPC = OBJECT_SELF;
@@ -25,4 +84,6 @@ void main()
 	{
 		SetCompositeBonus(oSkin, "SwordsageACBonus", GetAbilityModifier(ABILITY_WISDOM, oPC), ITEM_PROPERTY_AC_BONUS);
 	}
+	
+	SwordSageDisciplineWeaponFocus(oPC);
 }

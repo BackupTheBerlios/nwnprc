@@ -47,6 +47,8 @@ void main()
 	effect eScent = EffectLinkEffect(EffectSkillIncrease(SKILL_SPOT, 4), EffectSkillIncrease(SKILL_LISTEN, 4));
 	eScent = EffectLinkEffect(eScent, EffectSkillIncrease(SKILL_SEARCH, 4));
 	eScent = EffectLinkEffect(eScent, EffectVisualEffect(VFX_DUR_FREEDOM_MOVEMENT));
+	if (GetHasDefensiveStance(oInitiator, DISCIPLINE_TIGER_CLAW))
+    		eScent = EffectLinkEffects(eScent, EffectSavingThrowIncrease(SAVING_THROW_ALL, 2, SAVING_THROW_TYPE_ALL));
 	eScent = ExtraordinaryEffect(eScent);
 	SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eScent, oTarget);
     }

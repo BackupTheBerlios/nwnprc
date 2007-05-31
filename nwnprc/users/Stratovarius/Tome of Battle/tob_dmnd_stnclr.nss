@@ -45,6 +45,9 @@ void main()
 
     if(move.bCanManeuver)
     {
-	SPApplyEffectToObject(DURATION_TYPE_PERMANENT, ExtraordinaryEffect(EffectAreaOfEffect(AOE_PER_STANCE_OF_CLARITY)), oTarget);
+    	effect eLink = EffectAreaOfEffect(AOE_PER_STANCE_OF_CLARITY);
+    	if (GetHasDefensiveStance(oInitiator, DISCIPLINE_DIAMOND_MIND))
+    		eLink = EffectLinkEffects(eLink, EffectSavingThrowIncrease(SAVING_THROW_ALL, 2, SAVING_THROW_TYPE_ALL));
+	SPApplyEffectToObject(DURATION_TYPE_PERMANENT, ExtraordinaryEffect(eLink), oTarget);
     }
 }

@@ -48,7 +48,9 @@ void main()
     if(move.bCanManeuver)
     {    
 	// Apply a marker effect
-	eLink = ExtraordinaryEffect(EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));       	       
+	effect eLink = ExtraordinaryEffect(EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));   
+	if (GetHasDefensiveStance(oInitiator, DISCIPLINE_SHADOW_HAND))
+    		eLink = EffectLinkEffects(eLink, EffectSavingThrowIncrease(SAVING_THROW_ALL, 2, SAVING_THROW_TYPE_ALL));
        	ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);
        	
       	DoMeleeRangeCheck(oInitiator, move.nMoveId);

@@ -496,18 +496,20 @@ void UseManeuver(int nManeuver, int nClass, int nLevelOverride = 0)
     int nMoveDur       = StringToInt(Get2DACache("spells", "ConjTime", nManeuver)) + StringToInt(Get2DACache("spells", "CastTime", nManeuver));
 
     // Normally swift action maneuvers check
-    if(Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "SWIFT_ACTION" && // The maneuver is swift action to use
-       TakeSwiftAction(oInitiator)                                                                // And the initiator can take a swift action now
+    if((Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "SWIFT_ACTION" ||
+    	Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "MANEUVER_BOOST") && // The maneuver is swift action to use
+       TakeSwiftAction(oInitiator)                                                                        // And the initiator can take a swift action now
        )
     {
         nMoveDur = 0;
     }
-    // Quicken maneuver check
-    else if(nMoveDur <= 6000                                 && // If the maneuver could be quickened by having initiating time of 1 round or less
-            TakeSwiftAction(oInitiator)                         // And the initiator can take a swift action
+    // Dual Boost check
+    else if(Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "MANEUVER_BOOST" && // If the maneuver is a boost
+            GetLocalInt(oInitiator, "SSDualBoost")                         // And the initiator can Dual boost.
             )
     {
         // Set the maneuver time to 0 to skip VFX
+        DeleteLocalInt(oInitiator, "SSDualBoost");
         nMoveDur = 0;
     }
 

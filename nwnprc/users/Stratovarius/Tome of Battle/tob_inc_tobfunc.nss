@@ -351,6 +351,24 @@ int DoTrip(object oPC, object oTarget, int nExtraBonus, int nGenerateAoO = TRUE,
  */
 int GetIntToDamage(int nCheck);
 
+/**
+ * Returns true or false if the swordsage has Insightful Strike in the chosen discipline
+ * @param oInitiator    Person to check
+ *
+ * @return              TRUE or FALSE
+ */
+int GetHasInsightfulStrike(object oInitiator);
+
+/**
+ * Returns true or false if the swordsage has Defensive Stance
+ * ONLY CALL THIS FROM WITHIN STANCES
+ * @param oInitiator    Person to check
+ * @param nDiscipline   DISCIPLINE_ constant of the school of the maneuver.
+ *
+ * @return              TRUE or FALSE
+ */
+int GetHasDefensiveStance(object oInitiator, int nDiscipline);
+
 //////////////////////////////////////////////////
 /*                  Includes                    */
 //////////////////////////////////////////////////
@@ -1146,6 +1164,34 @@ int GetIntToDamage(int nCheck)
     }
 
     return IntToDam;
+}
+
+int GetHasInsightfulStrike(object oInitiator)
+{
+	// Always the swordsage
+	int nDiscToCheck = GetDisciplineByManeuver(PRCGetSpellId(), CLASS_TYPE_SWORDSAGE);
+	if      (GetHasFeat(FEAT_SS_DF_IS_DW, oInitiator) && nDiscToCheck == DISCIPLINE_DESERT_WIND)  return TRUE;
+	else if (GetHasFeat(FEAT_SS_DF_IS_DM, oInitiator) && nDiscToCheck == DISCIPLINE_DIAMOND_MIND) return TRUE;
+	else if (GetHasFeat(FEAT_SS_DF_IS_SS, oInitiator) && nDiscToCheck == DISCIPLINE_SETTING_SUN)  return TRUE;
+	else if (GetHasFeat(FEAT_SS_DF_IS_SH, oInitiator) && nDiscToCheck == DISCIPLINE_SHADOW_HAND)  return TRUE;
+	else if (GetHasFeat(FEAT_SS_DF_IS_SD, oInitiator) && nDiscToCheck == DISCIPLINE_STONE_DRAGON) return TRUE;
+	else if (GetHasFeat(FEAT_SS_DF_IS_TC, oInitiator) && nDiscToCheck == DISCIPLINE_TIGER_CLAW)   return TRUE;
+	
+	return FALSE;
+}
+
+int GetHasDefensiveStance(object oInitiator, int nDiscipline)
+{
+	// Because this is only called from inside the proper stances
+	// Its just a check to see if they should link in the save boost.
+	if      (GetHasFeat(FEAT_SS_DF_DS_DW, oInitiator) && nDiscipline == DISCIPLINE_DESERT_WIND)  return TRUE;
+	else if (GetHasFeat(FEAT_SS_DF_DS_DM, oInitiator) && nDiscipline == DISCIPLINE_DIAMOND_MIND) return TRUE;
+	else if (GetHasFeat(FEAT_SS_DF_DS_SS, oInitiator) && nDiscipline == DISCIPLINE_SETTING_SUN)  return TRUE;
+	else if (GetHasFeat(FEAT_SS_DF_DS_SH, oInitiator) && nDiscipline == DISCIPLINE_SHADOW_HAND)  return TRUE;
+	else if (GetHasFeat(FEAT_SS_DF_DS_SD, oInitiator) && nDiscipline == DISCIPLINE_STONE_DRAGON) return TRUE;
+	else if (GetHasFeat(FEAT_SS_DF_DS_TC, oInitiator) && nDiscipline == DISCIPLINE_TIGER_CLAW)   return TRUE;
+	
+	return FALSE;
 }
 
 // Test main

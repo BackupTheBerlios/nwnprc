@@ -55,7 +55,9 @@ void main()
     	else if (nSkill >= 19) eResist = EffectDamageImmunityIncrease(DAMAGE_TYPE_FIRE, 100);
     	effect eDur = EffectVisualEffect(VFX_DUR_PROTECTION_ELEMENTS);
     	effect eLink = EffectLinkEffects(eResist, eDur);
-    	       eLink = SupernaturalEffect(eLink);
+    	if (GetHasDefensiveStance(oInitiator, DISCIPLINE_DESERT_WIND))
+    		eLink = EffectLinkEffects(eLink, EffectSavingThrowIncrease(SAVING_THROW_ALL, 2, SAVING_THROW_TYPE_ALL));
+    	eLink = SupernaturalEffect(eLink);
     	ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oInitiator);
     }
 }

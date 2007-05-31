@@ -18,8 +18,10 @@ int LevelToDelayedDamage(int nLevel)
 void IndomitableSoul(object oPC)
 {
         int nSave = GetAbilityModifier(ABILITY_CHARISMA, oPC);
-        // Charisma to saves
-        effect eFort = ExtraordinaryEffect(EffectSavingThrowIncrease(SAVING_THROW_ALL, nSave));
+        // Can't be negative.
+        if (0 > nSave) nSave = 0;
+        // Charisma to Will saves
+        effect eFort = ExtraordinaryEffect(EffectSavingThrowIncrease(SAVING_THROW_WILL, nSave));
         ApplyEffectToObject(DURATION_TYPE_PERMANENT, eFort, oPC);
         if (DEBUG) DoDebug("Indomitable Soul applied.");
 }

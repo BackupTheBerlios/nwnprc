@@ -14338,8 +14338,8 @@ Epic Hexblade's Curse
 When a Hexblade attains 37th level, the penalties incurred by a target of his curse become -8 instead of -6.</entry>
   <entry id="48568" lang="en" sex="m">Mettle</entry>
   <entry id="48569" lang="en" sex="m">type of feat: Class
-Prerequisite: Hexblade level 3
-At 3rd level and higher, a Hexblade can resist magical and unusual attacks with great willpower or fortitude. If he makes a successful Will or Fortitude save against an attack that would normally have a lesser effect on a successful save, he instead completely negates the effect.</entry>
+Prerequisite: Hexblade level 3, Crusader level 13.
+A Hexblade or Crusader can resist magical and unusual attacks with great willpower or fortitude. If he makes a successful Will or Fortitude save against an attack that would normally have a lesser effect on a successful save, he instead completely negates the effect.</entry>
   <entry id="48570" lang="en" sex="m">Aura of Unluck</entry>
   <entry id="48571" lang="en" sex="m">type of feat: Class
 Prerequisite: Hexblade level 12
@@ -27432,6 +27432,35 @@ You crouch and set your feet flat on the ground, drawing the resilience of the e
 
 You gain a +2 bonus on Strength checks, and a +2 AC bonus against creatures larger than you.
 This stance ends if you move more than 5 feet for any reason.</entry>
+  <entry id="52518" lang="en" sex="m">Steely Resolve</entry>
+  <entry id="52519" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Crusader 1.
+Specifics: You have a delayed damage pool that allows you to forestall the effects of many injuries. When you are attacked, any damage is added to your delayed damage pool. At the end of the next round, you take damage equal to the total stored in the delayed damage pool. Any damage beyond the maximum delayed comes off of your normal hit points. This does not negate any special attack such as poison.
+
+At 1st level, your delayed damage pool can hold 5 points of damage. The maximum your pool can hold increases by 5 at 4th, 8th, 12th, 16th and 20th level to a maximum of 30.
+Use: Always</entry>
+  <entry id="52520" lang="en" sex="m">Furious Counterstrike</entry>
+  <entry id="52521" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Crusader 1.
+Specifics: During your turn, you gain a bonus on attack and damage rolls equal to the current value of your delayed damage pool divided by 5 (minimum of +1).
+Use: Always</entry>
+  <entry id="52522" lang="en" sex="m">Indomitable Soul</entry>
+  <entry id="52523" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Crusader 2.
+Specifics: You add your Charisma modifier (if positive) as a bonus to your will saves. This does not stack with the Paladin class.
+Use: Always</entry>
+  <entry id="52524" lang="en" sex="m">Zealous Surge</entry>
+  <entry id="52525" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Crusader 3.
+Specifics: Once per day, you can opt to reroll the next failed saving throw you make. This is a free action.
+Use: Specified</entry>
+  <entry id="52524" lang="en" sex="m">Smite</entry>
+  <entry id="52525" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Crusader 6.
+Specifics: Once per day, you can focus your determination into a single attack, gaining a bonus equal to your charisma modifier on the attack roll and equal to your crusader level on the damage roll.
+
+You gain an additional use of this ability at level 18.
+Use: Specified</entry>
   <entry id="52985" lang="en" sex="m">This feat opens the spellbook for this class. This is a conversation and feat driven version of the normal spellbook. Instead of appearing on the spell radial, they will appear on the class radial instead. Also, you may be able to use the spell after you have cast all your uses. No spell will result, but you will spend a round trying to cast it.</entry>
   <entry id="52986" lang="en" sex="m">Caster Level(s): Wizard / Sorcerer 9
 Innate Level: 9

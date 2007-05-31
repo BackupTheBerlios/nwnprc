@@ -46,6 +46,8 @@ void main()
     {
        	effect eLink =                          VersusSizeEffect(oInitiator, EffectACIncrease(2), 1);
        	       eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_ROOTED_TO_SPOT));
+       	       if (GetHasDefensiveStance(oInitiator, DISCIPLINE_STONE_DRAGON))
+    		   eLink = EffectLinkEffects(eLink, EffectSavingThrowIncrease(SAVING_THROW_ALL, 2, SAVING_THROW_TYPE_ALL));
        	       eLink = ExtraordinaryEffect(eLink);
        	       
        	InitiatorMovementCheck(oInitiator, move.nMoveId);

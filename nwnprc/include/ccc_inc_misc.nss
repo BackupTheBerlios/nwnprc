@@ -298,12 +298,8 @@ void DoSetRaceAppearance(object oPC)
     // appearance type switches go here
     if(nRace == RACIAL_TYPE_RAKSHASA
         && nSex == GENDER_FEMALE
-        && GetPRCSwitch(PRC_CONVOCC_RAKSHASHA_FEMALE_APPEARANCE))
+        && GetPRCSwitch(PRC_CONVOCC_RAKSHASA_FEMALE_APPEARANCE))
         SetCreatureAppearanceType(oPC, APPEARANCE_TYPE_RAKSHASA_TIGER_FEMALE);
-    else if(nRace == RACIAL_TYPE_DRIDER
-        && nSex == GENDER_FEMALE
-        && GetPRCSwitch(PRC_CONVOCC_DRIDER_FEMALE_APPEARANCE))
-        SetCreatureAppearanceType(oPC, APPEARANCE_TYPE_DRIDER_FEMALE);
     else
         SetCreatureAppearanceType(oPC, 
                     StringToInt(Get2DACache("racialtypes", "Appearance",
@@ -2069,11 +2065,11 @@ void DoWingmodelLoop()
         AddChoice("Bird", 6);
     else if (GetPRCSwitch(PRC_CONVOCC_FEYRI_WINGS) && GetLocalInt(OBJECT_SELF, "Race") == RACIAL_TYPE_FEYRI)
         AddChoice("Bat", 3);
-    /* else if (GetPRCSwitch(PRC_CONVOCC_AASIMAR_WINGS) && GetLocalInt(OBJECT_SELF, "Race") == RACIAL_TYPE_AASIMAR) TODO add switch
+    else if (GetPRCSwitch(PRC_CONVOCC_AASIMAR_WINGS) && GetLocalInt(OBJECT_SELF, "Race") == RACIAL_TYPE_AASIMAR)
     {
         AddChoice("None", 0);
         AddChoice("Angel", 2);
-    }*/
+    }
     else if (GetPRCSwitch(PRC_CONVOCC_DISALLOW_CUSTOMISE_WINGS))
         AddChoice("None", 0);
     else
@@ -2097,11 +2093,11 @@ void DoTailmodelLoop()
 {
     if (GetPRCSwitch(PRC_CONVOCC_FEYRI_TAIL) && GetLocalInt(OBJECT_SELF, "Race") == RACIAL_TYPE_FEYRI)
         AddChoice("Devil", 3);
-    /* else if (GetPRCSwitch(PRC_CONVOCC_TIEFLING_TAIL) && GetLocalInt(OBJECT_SELF, "Race") == RACIAL_TYPE_TIEFLING)  TODO switch
+    else if (GetPRCSwitch(PRC_CONVOCC_TIEFLING_TAIL) && GetLocalInt(OBJECT_SELF, "Race") == RACIAL_TYPE_TIEFLING)
     {
         AddChoice("None", 0);
         AddChoice("Devil", 3);
-    } */
+    }
     else if (GetPRCSwitch(PRC_CONVOCC_DISALLOW_CUSTOMISE_TAIL))
         AddChoice("None", 0);
     else

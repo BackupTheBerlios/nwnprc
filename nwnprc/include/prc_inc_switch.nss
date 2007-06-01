@@ -2222,9 +2222,21 @@ const string PRC_CONVOCC_AVARIEL_WINGS               = "PRC_CONVOCC_AVARIEL_WING
 const string PRC_CONVOCC_FEYRI_WINGS                 = "PRC_CONVOCC_FEYRI_WINGS";
 
 /**
+ * Aasimar characters have the option of angel wings
+ * Note: Not set by PRC_CONVOCC_ENFORCE_PNP_RACIAL as it isn't part of PnP
+ */
+ 
+const string PRC_CONVOCC_AASIMAR_WINGS               = "PRC_CONVOCC_AASIMAR_WINGS";
+
+/**
  * Fey'ri characters have a demonic tail.
  */
 const string PRC_CONVOCC_FEYRI_TAIL                  = "PRC_CONVOCC_FEYRI_TAIL";
+
+/**
+ * Teifling characters have the option of a demonic tail.
+ */
+const string PRC_CONVOCC_TIEFLING_TAIL               = "PRC_CONVOCC_TIEFLING_TAIL";
 
 /**
  * Force Drow characters to be of the correct gender for their race.
@@ -2238,19 +2250,26 @@ const string PRC_CONVOCC_DROW_ENFORCE_GENDER         = "PRC_CONVOCC_DROW_ENFORCE
 const string PRC_CONVOCC_GENASI_ENFORCE_DOMAINS      = "PRC_CONVOCC_GENASI_ENFORCE_DOMAINS";
 
 /**
- * Female Rakshasha use the female rakshasha model.
+ * Female Rakshasa use the female rakshasa model. Use together with PRC_CONVOCC_USE_RACIAL_APPEARANCES
+ * @see PRC_CONVOCC_USE_RACIAL_APPEARANCES
  */
-const string PRC_CONVOCC_RAKSHASHA_FEMALE_APPEARANCE = "PRC_CONVOCC_RAKSHASHA_FEMALE_APPEARANCE";
-
-/**
- * Female Driders use the female drider model.
- */
-const string PRC_CONVOCC_DRIDER_FEMALE_APPEARANCE    = "PRC_CONVOCC_DRIDER_FEMALE_APPEARANCE";
+const string PRC_CONVOCC_RAKSHASA_FEMALE_APPEARANCE = "PRC_CONVOCC_RAKSHASA_FEMALE_APPEARANCE";
 
 /**
  * A combination switch to turn on all the racial enforcement settings.
+ * @see PRC_CONVOCC_RAKSHASA_FEMALE_APPEARANCE
+ * @see PRC_CONVOCC_GENASI_ENFORCE_DOMAINS
+ * @see PRC_CONVOCC_DROW_ENFORCE_GENDER
+ * @see PRC_CONVOCC_TIEFLING_TAIL
+ * @see PRC_CONVOCC_FEYRI_TAIL
+ * @see PRC_CONVOCC_FEYRI_WINGS
+ * @see PRC_CONVOCC_AVARIEL_WINGS
  */
 const string PRC_CONVOCC_ENFORCE_PNP_RACIAL          = "PRC_CONVOCC_ENFORCE_PNP_RACIAL";
+
+/**
+ * Note: feat enforcement switches don't do anything (TODO?)
+ */
 
 /** Separate enforcement of feats with special restrictions. */
 const string PRC_CONVOCC_ENFORCE_BLOOD_OF_THE_WARLORD= "PRC_CONVOCC_ENFORCE_BLOOD_OF_THE_WARLORD";
@@ -2283,44 +2302,45 @@ const string PRC_CONVOCC_ENFORCE_FEAT_LOLTHS_MEAT   = "PRC_CONVOCC_ENFORCE_FEAT_
 
 
 /**
- * A combination switch to turn on all the feat enforcement settings.
+ * A combination switch to turn on all the feat enforcement settings. Doesn't do anything
  */
 const string PRC_CONVOCC_ENFORCE_FEATS               = "PRC_CONVOCC_ENFORCE_FEATS";
 
 /**
- * Stops players from changing their wings.
+ * Stops players from changing their wings. Turning this on gives players only the "none" choice
+ * at the wing stage of the convoCC. Use in conjuction with the wing switches.
+ * @see PRC_CONVOCC_AVARIEL_WINGS
+ * @see PRC_CONVOCC_FEYRI_WINGS
+ * @see PRC_CONVOCC_AASIMAR_WINGS
  */
 const string PRC_CONVOCC_DISALLOW_CUSTOMISE_WINGS    = "PRC_CONVOCC_DISALLOW_CUSTOMISE_WINGS";
 
 /**
- * Stops players from changing their tail.
+ * Stops players from changing their tail. Turning this on gives players only the "none" choice
+ * at the tail stage of the convoCC. Use in conjuction with the tail switches.
+ * @see PRC_CONVOCC_FEYRI_TAIL
+ * @see PRC_CONVOCC_TIEFLING_TAIL
  */
 const string PRC_CONVOCC_DISALLOW_CUSTOMISE_TAIL     = "PRC_CONVOCC_DISALLOW_CUSTOMISE_TAIL";
 
 /**
- * Stops players from changing their model at all.
+ * Stops players from changing their model at all. Doesn't do anything
  */
 const string PRC_CONVOCC_DISALLOW_CUSTOMISE_MODEL    = "PRC_CONVOCC_DISALLOW_CUSTOMISE_MODEL";
 
 /**
- * TODO: Write description.
+ * Players are only given a choice of appearances that match their race. For most races, this is the
+ * default appearance defined in racialtypes.2da.
+ * @see PRC_CONVOCC_RAKSHASA_FEMALE_APPEARANCE
  */
 const string PRC_CONVOCC_USE_RACIAL_APPEARANCES      = "PRC_CONVOCC_USE_RACIAL_APPEARANCES";
 /**
- * TODO: Write description.
+ * Player can only choose a portrait that matches their race as in portraits.2da. Because 
+ * Bioware's elf, dwarf etc. subrace portraits are labelled as eg. 'elf' not 'drow' and because
+ * half elves have no portraits, this is actually done on appearance and not on race for PCs using
+ * Bioware's PC appearance models. Doesn't do anything.
  */
 const string PRC_CONVOCC_USE_RACIAL_PORTRAIT         = "PRC_CONVOCC_USE_RACIAL_PORTRAIT";
-
-//this isnt actually used, removed to avoid confusion
-//const string PRC_CONVOCC_USE_RACIAL_SOUNDSET         = "PRC_CONVOCC_USE_RACIAL_SOUNDSET";
-
-/**
- * Players can only change their model / portrait / soundset to alternatives of
- * the same race. If you have extra content (e.g. from CEP) you must add them to
- * SetupRacialAppearances or SetupRacialPortraits or SetupRacialSoundsets in
- * prc_ccc_inc_e in order for them to be shown on the list.
- */
-const string PRC_CONVOCC_USE_RACIAL_VOICESET         = "PRC_CONVOCC_USE_RACIAL_VOICESET";
 
 /**
  * Players can only select from the player voicesets. NPC voicesets are not
@@ -2332,12 +2352,6 @@ const string PRC_CONVOCC_ONLY_PLAYER_VOICESETS       = "PRC_CONVOCC_ONLY_PLAYER_
  * Only allows players to select voiceset of the same gender as their character.
  */
 const string PRC_CONVOCC_RESTRICT_VOICESETS_BY_SEX   = "PRC_CONVOCC_RESTRICT_VOICESETS_BY_SEX";
-
-/**
- * Skips the select a voiceset step entirely, and players have to keep their
- * current voiceset.
- */
-const string PRC_CONVOCC_FORCE_KEEP_VOICESET         = "PRC_CONVOCC_FORCE_KEEP_VOICESET";
 
 /**
  * Allow players to keep their exisiting voiceset.
@@ -2356,12 +2370,6 @@ const string PRC_CONVOCC_ALLOW_TO_KEEP_VOICESET      = "PRC_CONVOCC_ALLOW_TO_KEE
 const string PRC_CONVOCC_ALLOW_TO_KEEP_PORTRAIT      = "PRC_CONVOCC_ALLOW_TO_KEEP_PORTRAIT";
 
 /**
- * Skips the select a portrait step entirely, and players have to keep their
- * current portrait
- */
-const string PRC_CONVOCC_FORCE_KEEP_PORTRAIT         = "PRC_CONVOCC_FORCE_KEEP_PORTRAIT";
-
-/**
  * Only allow players to select portraits of the same gender as their character.
  * Most of the NPC portraits do not have a gender so are also removed.
  */
@@ -2376,27 +2384,9 @@ const string PRC_CONVOCC_RESTRICT_PORTRAIT_BY_SEX    = "PRC_CONVOCC_RESTRICT_POR
  * This is not a complete ECL system, it merely gives players the racial hit
  * dice component of their race. It does not make any measure of the Level
  * Adjustment component. For example, a pixie has no racial hit dice, but has a
- * +4 level adjustment.
+ * +4 level adjustment. Doesn't do anything
  */
 const string PRC_CONVOCC_ENABLE_RACIAL_HITDICE       = "PRC_CONVOCC_ENABLE_RACIAL_HITDICE";
-
-/**
- * This enables players to select the hidden skin colours (metallics, matt
- * black, matt white).
- */
-const string PRC_CONVOCC_ALLOW_HIDDEN_SKIN_COLOURS   = "PRC_CONVOCC_ALLOW_HIDDEN_SKIN_COLOURS";
-
-/**
- * This enables players to select the hidden hair colours (metallics, matt
- * black, matt white).
- */
-const string PRC_CONVOCC_ALLOW_HIDDEN_HAIR_COLOURS   = "PRC_CONVOCC_ALLOW_HIDDEN_HAIR_COLOURS";
-
-/**
- * This enables players to select the hidden tattoo colours (metallics, matt
- * black, matt white).
- */
-const string PRC_CONVOCC_ALLOW_HIDDEN_TATTOO_COLOURS = "PRC_CONVOCC_ALLOW_HIDDEN_TATTOO_COLOURS";
 
 /**
  * This option allows players to keep their skillpoints from one level to
@@ -2407,6 +2397,7 @@ const string PRC_CONVOCC_ALLOW_SKILL_POINT_ROLLOVER  = "PRC_CONVOCC_ALLOW_SKILL_
 /**
  * This will identify new characters based on XP as in v1.3
  * This is less secure than using the encrypted key.
+ * @see PRC_CONVOCC_ENCRYPTION_KEY
  */
 const string PRC_CONVOCC_USE_XP_FOR_NEW_CHAR         = "PRC_CONVOCC_USE_XP_FOR_NEW_CHAR";
 
@@ -2417,6 +2408,11 @@ const string PRC_CONVOCC_USE_XP_FOR_NEW_CHAR         = "PRC_CONVOCC_USE_XP_FOR_N
  * If USE_XP_FOR_NEW_CHAR is true along with this, then returning characters
  * will be encrypted too, so once everone has logged on at least once,
  * USE_XP_FOR_NEW_CHAR can be set to false for greater security.
+ * 
+ * WARNING: Changing this value after some PCs have gone through the convoCC will
+ * cause them to have to go through it again. The encryption uses the player's 
+ * public CD key, so they won't be able to log into their account from different 
+ * NWN installs as the key won't match using this system
  */
 const string PRC_CONVOCC_ENCRYPTION_KEY              = "PRC_CONVOCC_ENCRYPTION_KEY";
 
@@ -2450,6 +2446,15 @@ const string PRC_CONVOCC_SKILL_MULTIPLIER            = "PRC_CONVOCC_SKILL_MULTIP
  * As requested, this will give a bonus to skill points after multiplication.
  */
 const string PRC_CONVOCC_SKILL_BONUS                 = "PRC_CONVOCC_SKILL_BONUS";
+
+/**
+ * When set, this switch causes a custom script to be executed at the last stage of the convoCC, 
+ * just before booting the player. The script must be named 'ccc_custom_exit'.
+ * Possible uses include: giving PCs gold and/or equipment, giving PCs PW items 
+ * (even plot items get removed at the start of the convoCC), setting a new persistant location
+ */
+ 
+const string PRC_CONVOCC_CUSTOM_EXIT_SCRIPT          = "PRC_CONVOCC_CUSTOM_EXIT_SCRIPT";
 
 /******************************************************************************\
 *                              Truenaming switches                             *
@@ -3460,7 +3465,12 @@ void CreateSwitchNameArray()
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_ENABLE);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_AVARIEL_WINGS);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_FEYRI_WINGS);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_AASIMAR_WINGS);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_FEYRI_TAIL);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_TIEFLING_TAIL);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_DROW_ENFORCE_GENDER);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_GENASI_ENFORCE_DOMAINS);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_RAKSHASA_FEMALE_APPEARANCE);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_ENFORCE_PNP_RACIAL);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_ENFORCE_FEATS);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_DISALLOW_CUSTOMISE_WINGS);
@@ -3468,18 +3478,12 @@ void CreateSwitchNameArray()
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_DISALLOW_CUSTOMISE_MODEL);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_USE_RACIAL_APPEARANCES);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_USE_RACIAL_PORTRAIT);
-    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_USE_RACIAL_VOICESET);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_ONLY_PLAYER_VOICESETS);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_RESTRICT_VOICESETS_BY_SEX);
-    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_FORCE_KEEP_VOICESET);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_ALLOW_TO_KEEP_VOICESET);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_ALLOW_TO_KEEP_PORTRAIT);
-    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_FORCE_KEEP_PORTRAIT);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_RESTRICT_PORTRAIT_BY_SEX);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_ENABLE_RACIAL_HITDICE);
-    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_ALLOW_HIDDEN_SKIN_COLOURS);
-    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_ALLOW_HIDDEN_HAIR_COLOURS);
-    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_ALLOW_HIDDEN_TATTOO_COLOURS);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_ALLOW_SKILL_POINT_ROLLOVER);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_USE_XP_FOR_NEW_CHAR);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_ENCRYPTION_KEY);
@@ -3488,6 +3492,7 @@ void CreateSwitchNameArray()
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_MAX_STAT);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_SKILL_MULTIPLIER);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_SKILL_BONUS);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_CUSTOM_EXIT_SCRIPT);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_TRUENAME_CR_MULTIPLIER);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_TRUENAME_LEVEL_BONUS);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_TRUENAME_DC_CONSTANT);

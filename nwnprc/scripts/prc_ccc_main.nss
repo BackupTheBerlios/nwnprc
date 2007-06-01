@@ -79,6 +79,7 @@ void main()
                 DelayCommand(14.0, FloatingTextStringOnCreature("2...", oPC, FALSE));
                 DelayCommand(15.0, FloatingTextStringOnCreature("1...", oPC, FALSE));
                 AssignCommand(oPC, DelayCommand(16.0, CheckAndBoot(oPC)));
+                return;
             }
             // now reserve the conversation slot - only one at a time
             SetLocalInt(GetModule(), "ccc_active", 1);

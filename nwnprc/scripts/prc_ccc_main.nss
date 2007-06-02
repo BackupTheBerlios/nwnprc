@@ -188,7 +188,7 @@ void main()
         // handles restoring the conversation in a transparent manner
         else if(nValue == DYNCONV_ABORTED)
         {
-            // shouldn't reach this stage as aboting isn't allowed
+            // shouldn't reach this stage as aborting isn't allowed
             AssignCommand(oPC, DelayCommand(1.0, CheckAndBoot(oPC)));
         }
         // Handle PC responses

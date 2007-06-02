@@ -2338,7 +2338,7 @@ const string PRC_CONVOCC_USE_RACIAL_APPEARANCES      = "PRC_CONVOCC_USE_RACIAL_A
  * Player can only choose a portrait that matches their race as in portraits.2da. Because 
  * Bioware's elf, dwarf etc. subrace portraits are labelled as eg. 'elf' not 'drow' and because
  * half elves have no portraits, this is actually done on appearance and not on race for PCs using
- * Bioware's PC appearance models. Doesn't do anything.
+ * Bioware's PC appearance models.
  */
 const string PRC_CONVOCC_USE_RACIAL_PORTRAIT         = "PRC_CONVOCC_USE_RACIAL_PORTRAIT";
 
@@ -2448,10 +2448,33 @@ const string PRC_CONVOCC_SKILL_MULTIPLIER            = "PRC_CONVOCC_SKILL_MULTIP
 const string PRC_CONVOCC_SKILL_BONUS                 = "PRC_CONVOCC_SKILL_BONUS";
 
 /**
+ * When set, the convoCC NO LONGER STARTS AUTOMATICALLY on logging in. It must be called 
+ * by a script in the module. This allows the module builder to start the convoCC from a 
+ * particular area or trigger's On Enter event. The script should call the convoCC with 
+ * ExecuteScript("prc_ccc_main", oPC) where oPC is the PC. It's advisable to check the 
+ * entering object is a PC and not a NPC or DM.
+ */
+
+const string PRC_CONVOCC_CUSTOM_START_LOCATION       = "PRC_CONVOCC_CUSTOM_START_LOCATION";
+
+/**
+ * When set, this switch causes a custom script to be used to determine whether a PC should go
+ * through the convoCC or not. The script must be named 'ccc_custom_enter'.
+ * This switch will completely bypass the convoCC methods for determining whether to run the 
+ * convoCC on an entering PC, so if necessary, your custom marker for 'done' would be set
+ * in 'ccc_custom_exit' - TODO
+ * @see PRC_CONVOCC_CUSTOM_EXIT_SCRIPT
+ */
+const string PRC_CONVOCC_CUSTOM_ENTER_SCRIPT          = "PRC_CONVOCC_CUSTOM_ENTER_SCRIPT";
+
+/**
  * When set, this switch causes a custom script to be executed at the last stage of the convoCC, 
  * just before booting the player. The script must be named 'ccc_custom_exit'.
  * Possible uses include: giving PCs gold and/or equipment, giving PCs PW items 
- * (even plot items get removed at the start of the convoCC), setting a new persistant location
+ * (even plot items get removed at the start of the convoCC), setting a new persistant location,
+ * setting a custom marker for having done the convoCC in conjunction with
+ * 'ccc_custom_enter'
+ * @see PRC_CONVOCC_CUSTOM_ENTER_SCRIPT
  */
  
 const string PRC_CONVOCC_CUSTOM_EXIT_SCRIPT          = "PRC_CONVOCC_CUSTOM_EXIT_SCRIPT";

@@ -167,7 +167,7 @@ void DoAppearanceLoop();
 void DoPortraitsLoop(int nGenderSort = TRUE);
 
 // loops through soundset.2da
-void DoSoundsetLoop();
+void DoSoundsetLoop(int nGenderSort = TRUE);
 
 // loops through wingmodel.2da
 void DoWingmodelLoop();
@@ -1972,13 +1972,29 @@ void DoPortraitsLoop(int nGenderSort = TRUE)
     // portraits.2da, but doesn't exist
     if (nGenderSort)
     {
-        // orders portraits of PC's race first, only PC's gender-specific portraits
-        sSQL = "SELECT "+q+"rowid"+q+", "+q+"BaseResRef"+q+", CASE Race WHEN  "+ sRace +" THEN 0 else 1 END AS column1 FROM "+q+"prc_cached2da_portraits"+q+" WHERE ("+q+"InanimateType"+q+" = '****') AND ("+q+"BaseResRef"+q+" != '****') AND ("+q+"BaseResRef"+q+" != 'matron') AND ("+q+"SEX"+q+" = '" + sGender 
-            + "') ORDER BY column1, Race LIMIT 100 OFFSET "+IntToString(nReali);
+        if(GetPRCSwitch(PRC_CONVOCC_USE_RACIAL_PORTRAIT)) // get only race specific ones
+        {
+            sSQL = "SELECT "+q+"rowid"+q+", "+q+"BaseResRef"+q+", FROM "+q+"prc_cached2da_portraits"+q+" WHERE ("+q+"InanimateType"+q+" = '****') AND ("+q+"BaseResRef"+q+" != '****') AND ("+q+"BaseResRef"+q+" != 'matron') AND ("+q+"SEX"+q+" = '" + sGender 
+                + "') AND ("+q+"Race"+q+" ='"+sRace+"') LIMIT 100 OFFSET "+IntToString(nReali);
+        }
+        else
+        {
+            // orders portraits of PC's race first, only PC's gender-specific portraits
+            sSQL = "SELECT "+q+"rowid"+q+", "+q+"BaseResRef"+q+", CASE Race WHEN  "+ sRace +" THEN 0 else 1 END AS column1 FROM "+q+"prc_cached2da_portraits"+q+" WHERE ("+q+"InanimateType"+q+" = '****') AND ("+q+"BaseResRef"+q+" != '****') AND ("+q+"BaseResRef"+q+" != 'matron') AND ("+q+"SEX"+q+" = '" + sGender 
+                + "') ORDER BY column1, Race LIMIT 100 OFFSET "+IntToString(nReali);
+        }
     }
     else
     {
-        sSQL = "SELECT "+q+"rowid"+q+", "+q+"BaseResRef"+q+" FROM "+q+"prc_cached2da_portraits"+q+" WHERE ("+q+"InanimateType"+q+" = '****') AND ("+q+"BaseResRef"+q+" != '****') AND ("+q+"BaseResRef"+q+" != 'matron') AND ("+q+"SEX"+q+" != '" + sGender + "') LIMIT 100 OFFSET "+IntToString(nReali);
+        if(GetPRCSwitch(PRC_CONVOCC_USE_RACIAL_PORTRAIT)) // get only race specific ones
+        {
+            sSQL = "SELECT "+q+"rowid"+q+", "+q+"BaseResRef"+q+", FROM "+q+"prc_cached2da_portraits"+q+" WHERE ("+q+"InanimateType"+q+" = '****') AND ("+q+"BaseResRef"+q+" != '****') AND ("+q+"BaseResRef"+q+" != 'matron') AND ("+q+"SEX"+q+" != '" + sGender 
+                + "') AND ("+q+"Race"+q+" ='"+sRace+"') LIMIT 100 OFFSET "+IntToString(nReali);
+        }
+        else
+        {
+            sSQL = "SELECT "+q+"rowid"+q+", "+q+"BaseResRef"+q+" FROM "+q+"prc_cached2da_portraits"+q+" WHERE ("+q+"InanimateType"+q+" = '****') AND ("+q+"BaseResRef"+q+" != '****') AND ("+q+"BaseResRef"+q+" != 'matron') AND ("+q+"SEX"+q+" != '" + sGender + "') LIMIT 100 OFFSET "+IntToString(nReali);
+        }
     }
     PRC_SQLExecDirect(sSQL);
     while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
@@ -2013,20 +2029,24 @@ void DoPortraitsLoop(int nGenderSort = TRUE)
     }
 }
 
-void DoSoundsetLoop()
+void DoSoundsetLoop(int nGenderSort = TRUE)
 {
     string q = PRC_SQLGetTick();
     // get the results 100 rows at a time to avoid TMI
     int nReali = GetLocalInt(OBJECT_SELF, "i");
     int nCounter = 0;
     string sSQL;
+    string sGender = IntToString(GetLocalInt(OBJECT_SELF, "Gender"));
     
     sSQL = "SELECT "+q+"rowid"+q+", "+q+"STRREF"+q+" FROM "+q+"prc_cached2da_soundset"+q+" WHERE ("+q+"RESREF"+q+" != '****')";
     
-    if(GetPRCSwitch(PRC_CONVOCC_RESTRICT_VOICESETS_BY_SEX))
+    if(nGenderSort)
     {
-        int nGender = GetLocalInt(OBJECT_SELF, "Gender");
-        sSQL += " AND ("+q+"GENDER"+q+" = '" + IntToString(nGender) + "')";
+        sSQL += " AND ("+q+"GENDER"+q+" = '" + sGender + "')";
+    }
+    else
+    {
+        sSQL += " AND ("+q+"GENDER"+q+" != '" + sGender + "')";
     }
     
     // make the SQL string
@@ -2051,11 +2071,21 @@ void DoSoundsetLoop()
     }
     else // end of the 2da
     {
-        if(DEBUG) DoDebug("Finished Soundsets");
-        FloatingTextStringOnCreature("Done", OBJECT_SELF, FALSE);
-        DeleteLocalInt(OBJECT_SELF, "i");
-        DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
-        return;
+        if (nGenderSort && !GetPRCSwitch(PRC_CONVOCC_RESTRICT_VOICESETS_BY_SEX)) // run again to select the rest of the voicesets
+        {
+            nGenderSort = FALSE;
+            if(DEBUG) DoDebug("Finished gender specific voicesets");
+            DeleteLocalInt(OBJECT_SELF, "i");
+            DelayCommand(0.01, DoPortraitsLoop(nGenderSort));
+        }
+        else // done
+        {
+            if(DEBUG) DoDebug("Finished Soundsets");
+            FloatingTextStringOnCreature("Done", OBJECT_SELF, FALSE);
+            DeleteLocalInt(OBJECT_SELF, "i");
+            DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
+            return;
+        }
     }
 }
 

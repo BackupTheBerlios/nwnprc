@@ -77,7 +77,7 @@ void main()
     if(GetPRCSwitch(PRC_USE_LETOSCRIPT) && !GetIsDM(oPC))
         LetoPCEnter(oPC);
     if(GetPRCSwitch(PRC_CONVOCC_ENABLE) && !GetIsDM(oPC)
-        && ExecuteScriptAndReturnInt("prc_ccc_main", OBJECT_SELF))
+        && !GetPRCSwitch(PRC_CONVOCC_CUSTOM_START_LOCATION) && ExecuteScriptAndReturnInt("prc_ccc_main", OBJECT_SELF))
         return;
 
     object oSkin = GetPCSkin(oPC);

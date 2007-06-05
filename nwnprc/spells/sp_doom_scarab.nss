@@ -50,6 +50,12 @@ void main()
 	int nDC;
 	float fDur = HoursToSeconds(1);
 	
+	//don't target the caster moron
+	if(oTarget == oPC)
+	{
+		oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 18.29f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
+	}		
+	
 	if(nMetaMagic == METAMAGIC_EXTEND)
 	{
 		fDur += fDur;
@@ -88,6 +94,7 @@ void main()
 			nBonusDice++;
 		}
 		
+		oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 18.29f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
 	}
 	
 	effect eBonus = EffectTemporaryHitpoints(d4(nBonusDice));

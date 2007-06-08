@@ -50,6 +50,8 @@ void main()
         string sEncrypt;
         sEncrypt= Encrypt(oPC);
         
+        // reset
+        DeleteLocalString(oPC, "CONVOCC_ENTER_BOOT_MESSAGE");
         int nPCStatus = CONVOCC_ENTER_BOOT_PC;
         if(GetPRCSwitch(PRC_CONVOCC_CUSTOM_ENTER_SCRIPT)) // custom entry script stuff here
         {
@@ -105,22 +107,7 @@ void main()
         /* kick the PC */
         if (nPCStatus == CONVOCC_ENTER_BOOT_PC)
         {
-            // Give a "helpful" message
-            string sMessage = GetLocalString(oPC, "CONVOCC_ENTER_BOOT_MESSAGE");
-            if (sMessage == "") // yes, you should have given your own message here
-                sMessage = "Eeek! Something's not right.";
-            // no avoiding the convoCC, so stop them running off
-            effect eParal = EffectCutsceneParalyze();
-            eParal = SupernaturalEffect(eParal);
-            ApplyEffectToObject(DURATION_TYPE_PERMANENT, eParal, oPC);
-            // floaty text info as we can't use the dynamic convo for this
-            DelayCommand(10.0, FloatingTextStringOnCreature(sMessage, oPC, FALSE));
-            DelayCommand(11.0, FloatingTextStringOnCreature("You will be booted in 5...", oPC, FALSE));
-            DelayCommand(12.0, FloatingTextStringOnCreature("4...", oPC, FALSE));
-            DelayCommand(13.0, FloatingTextStringOnCreature("3...", oPC, FALSE));
-            DelayCommand(14.0, FloatingTextStringOnCreature("2...", oPC, FALSE));
-            DelayCommand(15.0, FloatingTextStringOnCreature("1...", oPC, FALSE));
-            AssignCommand(oPC, DelayCommand(16.0, CheckAndBoot(oPC)));
+            CheckAndBootNicely(oPC);
             return;
         }
         /* new character */
@@ -155,7 +142,7 @@ void main()
             SetExecutedScriptReturnValue(X2_EXECUTE_SCRIPT_END);
         }
         /* returning character */
-        else
+        else if (nPCStatus == CONVOCC_ENTER_RETURNING_PC)
         {
             // if using XP or your own script for new characters, this sets returning characters' tags 
             // to encrypted then you can turn off using XP after all characters have logged on.
@@ -167,6 +154,14 @@ void main()
                 SetLocalString(oPC, "LetoScript", GetLocalString(oPC, "LetoScript")+sScript);
             }
             SetExecutedScriptReturnValue(X2_EXECUTE_SCRIPT_CONTINUE);
+        }
+        else /* ooops - should never get here */
+        {
+            if (DEBUG) { DoDebug("Error: invalid value for var nPCStatus");}
+            // kick just in case
+            SetLocalString(oPC, "CONVOCC_ENTER_BOOT_MESSAGE", "Error:I'm confused.");
+            CheckAndBootNicely(oPC);
+            return;
         }
     }
     else // in convo

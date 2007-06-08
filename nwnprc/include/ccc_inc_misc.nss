@@ -23,6 +23,9 @@ void DoStripPC(object oPC);
 // checks if oPC is valid and in an area then boots them
 void CheckAndBoot(object oPC);
 
+// 'nice' version of CheckAndBoot() that gives a warning and a 5 second countdown
+void CheckAndBootNicely(object oPC);
+
 /**
  * main cutscene function
  * letoscript changes to the PC clone are done via this function
@@ -287,6 +290,26 @@ void CheckAndBoot(object oPC)
 {
     if(GetIsObjectValid(GetAreaFromLocation(GetLocation(oPC))))
         BootPC(oPC);
+}
+
+void CheckAndBootNicely(object oPC)
+{
+    // Give a "helpful" message
+    string sMessage = GetLocalString(oPC, "CONVOCC_ENTER_BOOT_MESSAGE");
+    if (sMessage == "") // yes, you should have given your own message here
+        sMessage = "Eeek! Something's not right.";
+    // no avoiding the convoCC, so stop them running off
+    effect eParal = EffectCutsceneParalyze();
+    eParal = SupernaturalEffect(eParal);
+    ApplyEffectToObject(DURATION_TYPE_PERMANENT, eParal, oPC);
+    // floaty text info as we can't use the dynamic convo for this
+    DelayCommand(10.0, FloatingTextStringOnCreature(sMessage, oPC, FALSE));
+    DelayCommand(11.0, FloatingTextStringOnCreature("You will be booted in 5...", oPC, FALSE));
+    DelayCommand(12.0, FloatingTextStringOnCreature("4...", oPC, FALSE));
+    DelayCommand(13.0, FloatingTextStringOnCreature("3...", oPC, FALSE));
+    DelayCommand(14.0, FloatingTextStringOnCreature("2...", oPC, FALSE));
+    DelayCommand(15.0, FloatingTextStringOnCreature("1...", oPC, FALSE));
+    AssignCommand(oPC, DelayCommand(16.0, CheckAndBoot(oPC)));
 }
 
 void DoSetRaceAppearance(object oPC)

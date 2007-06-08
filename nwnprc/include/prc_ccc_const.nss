@@ -1,9 +1,22 @@
 /**
  * prc_ccc_const
  *
- * contains the constants for each stage in the convoCC
+ * contains the constants 
+ */
+
+/**
+ * Constants for determining whether a PC goes through the convoCC
  */
  
+const int CONVOCC_ENTER_BOOT_PC         =  0;
+const int CONVOCC_ENTER_NEW_PC          =  1;
+const int CONVOCC_ENTER_RETURNING_PC    =  2;
+
+ 
+/**
+ * Constants for each stage in the convoCC
+ */
+
 const int STAGE_INTRODUCTION            =  0;
 const int STAGE_GENDER                  =  1;
 const int STAGE_GENDER_CHECK            =  2;
@@ -69,3 +82,4 @@ const int APPEARANCE_TYPE_CEP_BROWNIE = 1002;
 
 // wemic model in the CEP
 const int APPEARANCE_TYPE_CEP_WEMIC = 1000;
+

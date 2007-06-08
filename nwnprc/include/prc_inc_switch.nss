@@ -2459,10 +2459,21 @@ const string PRC_CONVOCC_CUSTOM_START_LOCATION       = "PRC_CONVOCC_CUSTOM_START
 
 /**
  * When set, this switch causes a custom script to be used to determine whether a PC should go
- * through the convoCC or not. The script must be named 'ccc_custom_enter'.
+ * through the convoCC or not. 
+ * The script must:
+ * - be called "ccc_custom_enter"
+ * - set the local int "CONVOCC_LAST_STATUS" on the PC (OBJECT_SELF)
+ * - include prc_ccc_const (for the constants the local int can be set to)
+ * otherwise the PC will always be booted
+ *
+ * possible values for CONVOCC_LAST_STATUS:
+ * CONVOCC_ENTER_BOOT_PC (causes the PC to get kicked)
+ * CONVOCC_ENTER_NEW_PC (causes the PC to go through the convoCC)
+ * CONVOCC_ENTER_RETURNING_PC (causes the PC to skip the convoCC)
+ * 
  * This switch will completely bypass the convoCC methods for determining whether to run the 
  * convoCC on an entering PC, so if necessary, your custom marker for 'done' would be set
- * in 'ccc_custom_exit' - TODO
+ * in 'ccc_custom_exit'
  * @see PRC_CONVOCC_CUSTOM_EXIT_SCRIPT
  */
 const string PRC_CONVOCC_CUSTOM_ENTER_SCRIPT          = "PRC_CONVOCC_CUSTOM_ENTER_SCRIPT";

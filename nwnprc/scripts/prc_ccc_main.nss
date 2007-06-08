@@ -40,6 +40,7 @@ void main()
             return;
         
         // check letoscript is setup correctly
+        // if letoscript can't find the bic, the convoCC won't work. 
         // will boot the PC later if they should go through the convoCC but can't
         // otherwise ignore
         bBoot = DoLetoscriptTest(oPC);
@@ -49,38 +50,82 @@ void main()
         string sEncrypt;
         sEncrypt= Encrypt(oPC);
         
-        // if a new character...
-        if((GetPRCSwitch(PRC_CONVOCC_USE_XP_FOR_NEW_CHAR) && GetXP(oPC) == 0)
-        || (!GetPRCSwitch(PRC_CONVOCC_USE_XP_FOR_NEW_CHAR) && GetTag(oPC) != sEncrypt))
+        int nPCStatus = CONVOCC_ENTER_BOOT_PC;
+        if(GetPRCSwitch(PRC_CONVOCC_CUSTOM_ENTER_SCRIPT)) // custom entry script stuff here
         {
-            // if letoscript can't find the bic, the convoCC won't work
-            // so kick the PC now
-            if(bBoot) // if singleplayer game or letoscript not set up correctly
+            DeleteLocalInt(oPC,"CONVOCC_LAST_STATUS");
+            /**
+             * The custom script must:
+             * - be called "ccc_custom_enter"
+             * - set the local int "CONVOCC_LAST_STATUS" on the PC (OBJECT_SELF)
+             * - include prc_ccc_const (for the constants the local int can be set to)
+             * otherwise the PC will always be booted
+             *
+             * possible values for CONVOCC_LAST_STATUS:
+             * CONVOCC_ENTER_BOOT_PC (causes the PC to get kicked)
+             * CONVOCC_ENTER_NEW_PC (causes the PC to go through the convoCC)
+             * CONVOCC_ENTER_RETURNING_PC (causes the PC to skip the convoCC)
+             */
+            ExecuteScript("ccc_custom_enter", oPC);
+            nPCStatus = GetLocalInt(oPC,"CONVOCC_LAST_STATUS");
+            DeleteLocalInt(oPC,"CONVOCC_LAST_STATUS");
+        }
+        else // default handling of whether to send PCs through the convoCC
+        {
+            // if a new character...
+            if((GetPRCSwitch(PRC_CONVOCC_USE_XP_FOR_NEW_CHAR) && GetXP(oPC) == 0)
+            || (!GetPRCSwitch(PRC_CONVOCC_USE_XP_FOR_NEW_CHAR) && GetTag(oPC) != sEncrypt))
             {
-                effect eParal = EffectCutsceneParalyze();
-                eParal = SupernaturalEffect(eParal);
-                ApplyEffectToObject(DURATION_TYPE_PERMANENT, eParal, oPC);
-                AssignCommand(oPC, DelayCommand(10.0, CheckAndBoot(oPC)));
-                return;
+                nPCStatus = CONVOCC_ENTER_NEW_PC;
             }
-            // next see if someone has already started the convo
-            if(GetLocalInt(GetModule(), "ccc_active"))
+            else // returning PC
             {
-                // no avoiding the convoCC, so stop them running off
-                effect eParal = EffectCutsceneParalyze();
-                eParal = SupernaturalEffect(eParal);
-                ApplyEffectToObject(DURATION_TYPE_PERMANENT, eParal, oPC);
-                // floaty text info as we can't use the dynamic convo for this
-                DelayCommand(10.0, FloatingTextStringOnCreature(
-                    "The conversation Character Creator is in use, please try later.", oPC, FALSE));
-                DelayCommand(11.0, FloatingTextStringOnCreature("You will be booted in 5...", oPC, FALSE));
-                DelayCommand(12.0, FloatingTextStringOnCreature("4...", oPC, FALSE));
-                DelayCommand(13.0, FloatingTextStringOnCreature("3...", oPC, FALSE));
-                DelayCommand(14.0, FloatingTextStringOnCreature("2...", oPC, FALSE));
-                DelayCommand(15.0, FloatingTextStringOnCreature("1...", oPC, FALSE));
-                AssignCommand(oPC, DelayCommand(16.0, CheckAndBoot(oPC)));
-                return;
+                nPCStatus = CONVOCC_ENTER_RETURNING_PC;
             }
+        }
+        if (DEBUG) { DoDebug("**** nPCStatus: "+ IntToString(nPCStatus));}
+        /* Now to deal with some special cases that always override the custom script
+         * These only apply if the PC was supposed to be going through the convoCC, ie.
+         * where nPCStatus == CONVOCC_ENTER_NEW_PC.
+         */
+        if(nPCStatus == CONVOCC_ENTER_NEW_PC)
+        {
+            if(bBoot) // if singleplayer or letoscript not set up correctly
+                nPCStatus = CONVOCC_ENTER_BOOT_PC;
+            else if (GetLocalInt(GetModule(), "ccc_active")) // next see if someone has already started the convo
+            {
+                nPCStatus = CONVOCC_ENTER_BOOT_PC;
+                SetLocalString(oPC, "CONVOCC_ENTER_BOOT_MESSAGE", 
+                    "The conversation Character Creator is in use, please try later.");
+            }
+        }
+        if (DEBUG) { DoDebug("**** nPCStatus: "+ IntToString(nPCStatus));}
+        // end of decision making
+
+        /* kick the PC */
+        if (nPCStatus == CONVOCC_ENTER_BOOT_PC)
+        {
+            // Give a "helpful" message
+            string sMessage = GetLocalString(oPC, "CONVOCC_ENTER_BOOT_MESSAGE");
+            if (sMessage == "") // yes, you should have given your own message here
+                sMessage = "Eeek! Something's not right.";
+            // no avoiding the convoCC, so stop them running off
+            effect eParal = EffectCutsceneParalyze();
+            eParal = SupernaturalEffect(eParal);
+            ApplyEffectToObject(DURATION_TYPE_PERMANENT, eParal, oPC);
+            // floaty text info as we can't use the dynamic convo for this
+            DelayCommand(10.0, FloatingTextStringOnCreature(sMessage, oPC, FALSE));
+            DelayCommand(11.0, FloatingTextStringOnCreature("You will be booted in 5...", oPC, FALSE));
+            DelayCommand(12.0, FloatingTextStringOnCreature("4...", oPC, FALSE));
+            DelayCommand(13.0, FloatingTextStringOnCreature("3...", oPC, FALSE));
+            DelayCommand(14.0, FloatingTextStringOnCreature("2...", oPC, FALSE));
+            DelayCommand(15.0, FloatingTextStringOnCreature("1...", oPC, FALSE));
+            AssignCommand(oPC, DelayCommand(16.0, CheckAndBoot(oPC)));
+            return;
+        }
+        /* new character */
+        else if (nPCStatus == CONVOCC_ENTER_NEW_PC)
+        {
             // now reserve the conversation slot - only one at a time
             SetLocalInt(GetModule(), "ccc_active", 1);
             // remove equipped items and clear out inventory
@@ -109,12 +154,12 @@ void main()
             SetLocalInt(oPC, "CutsceneStage", 1);
             SetExecutedScriptReturnValue(X2_EXECUTE_SCRIPT_END);
         }
-        else // returning character
+        /* returning character */
+        else
         {
-        
-            //if using XP for new characters, set returning characters tags to encrypted
-            //then you can turn off using XP after all characters have logged on.
-            if(GetPRCSwitch(PRC_CONVOCC_USE_XP_FOR_NEW_CHAR)
+            // if using XP or your own script for new characters, this sets returning characters' tags 
+            // to encrypted then you can turn off using XP after all characters have logged on.
+            if((GetPRCSwitch(PRC_CONVOCC_USE_XP_FOR_NEW_CHAR) || GetPRCSwitch(PRC_CONVOCC_CUSTOM_ENTER_SCRIPT))
                 && GetTag(oPC) != sEncrypt
                 && GetXP(oPC) > 0)
             {

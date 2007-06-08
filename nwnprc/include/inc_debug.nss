@@ -23,7 +23,7 @@
  * Set this TRUE when we want to force debugging to be on irrespective
  * of the switch value.
  */
-const int DEBUG_HARDCODE = TRUE;
+const int DEBUG_HARDCODE = FALSE;
 
 /**
  * Prefix all your debug calls with an if(DEBUG) so that they get stripped away

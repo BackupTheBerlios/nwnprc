@@ -121,6 +121,7 @@ void CastDomainSpell(object oPC, int nSlot, int nLevel)
 
     int nDomain = GetBonusDomain(oPC, nSlot);
     int nSpell = GetDomainSpell(nDomain, nLevel, oPC);
+
     if (DEBUG) FloatingTextStringOnCreature("GetDomainSpell returned " + IntToString(nSpell), oPC, FALSE);
     // If there is no spell for that level, you cant cast it.
     if (nSpell == -1 && DEBUG)
@@ -132,19 +133,198 @@ void CastDomainSpell(object oPC, int nSlot, int nLevel)
     // Check to see if you can burn a spell of that slot or if the person has already
     // cast all of their level X spells for the day
     int nBurnSpell = GetBurnableSpell(oPC, nLevel);
+    
+// test CCox421
 
-    if (nBurnSpell == -1) //No spell left to burn? Can't heal! Tell the player that.
-    {
-        FloatingTextStringOnCreature("You have no spells left to trade for a domain spell.", oPC, FALSE);
+    if (nBurnSpell != -1)
+    { 
+        // Burn the spell off, then cast the domain spell
+        // Also, because of the iprop feats not having uses per day
+        // set it so they can't cast again from that level
+        SetLocalInt(oPC, "DomainCastSpell" + IntToString(nLevel), TRUE);
+        DecrementRemainingSpellUses(oPC, nBurnSpell);
+        ActionCastSpell(nSpell);
         return;
     }
+    
 
+// Case of other Divine Casting
+
+// Detection of Spontaneous Divine Casting with remaining slots
+
+    int nCount=-1;
+    int nClass = PRCGetClassByPosition(1, oPC);
+    
+    if (GetIsDivineClass(nClass, oPC) && (GetSpellbookTypeForClass(nClass)==SPELLBOOK_TYPE_SPONTANEOUS))
+    {
+        nCount=persistant_array_get_int(oPC, "NewSpellbookMem_" + IntToString(nClass), nLevel);
+    }
+
+    if (nCount<1)
+    {
+        nClass = PRCGetClassByPosition(2, oPC);
+        if (GetIsDivineClass(nClass, oPC) && (GetSpellbookTypeForClass(nClass)==SPELLBOOK_TYPE_SPONTANEOUS))
+        {
+            nCount=persistant_array_get_int(oPC, "NewSpellbookMem_" + IntToString(nClass), nLevel);
+        }
+    }
+    
+    if (nCount<1)
+    {
+        nClass = PRCGetClassByPosition(3, oPC);  
+        if (GetIsDivineClass(nClass, oPC) && (GetSpellbookTypeForClass(nClass)==SPELLBOOK_TYPE_SPONTANEOUS))
+        {
+            nCount=persistant_array_get_int(oPC, "NewSpellbookMem_" + IntToString(nClass), nLevel);
+        }
+    }
+
+    if (nCount>=1)
+    {
     // Burn the spell off, then cast the domain spell
     // Also, because of the iprop feats not having uses per day
     // set it so they can't cast again from that level
     SetLocalInt(oPC, "DomainCastSpell" + IntToString(nLevel), TRUE);
-    DecrementRemainingSpellUses(oPC, nBurnSpell);
+    persistant_array_set_int(oPC, "NewSpellbookMem_" + IntToString(nClass), nLevel, nCount - 1);
+    if (DEBUG) DoDebug("Spontaneous slot lost by class" + IntToString(nClass));
     ActionCastSpell(nSpell);
+    return;
+    }
+
+
+// Detection of Prepared Divine Casting with remaining slots
+
+    int nSpellbookID;
+    int nUses;
+    int nSpellLevel;
+    string sArrayName;
+    string sFile;
+    string sSpellLevel;
+
+    nClass = PRCGetClassByPosition(1, oPC);
+    if (GetIsDivineClass(nClass, oPC) && (GetSpellbookTypeForClass(nClass)==SPELLBOOK_TYPE_PREPARED))
+    {  
+       sFile = GetFileForClass(nClass);
+       sArrayName = "NewSpellbookMem_"+IntToString(nClass);
+       //sanity test
+       if(!persistant_array_exists(oPC, sArrayName))
+       {
+           DoDebug("ERROR: AddSpellUse: " + sArrayName + " array does not exist, creating");
+           persistant_array_create(oPC, sArrayName);
+       }
+       nSpellbookID=1;
+       nUses = 0;
+       nSpellLevel = 0;
+
+       while((nUses<1)&&(nSpellLevel>=0))
+       {   
+          nSpellbookID++;
+          sSpellLevel = Get2DACache(sFile, "Level", nSpellbookID);
+          if (sSpellLevel != "")
+          {
+             nSpellLevel = StringToInt(sSpellLevel);
+	    }
+          else
+          {
+             nSpellLevel=-1;
+          }
+          if(nSpellLevel==nLevel)
+          {
+             nUses = persistant_array_get_int(oPC, sArrayName, nSpellbookID);
+          }
+       }
+    }     
+    
+    if(nUses <1)
+    {
+      nClass = PRCGetClassByPosition(2, oPC);
+      if (GetIsDivineClass(nClass, oPC) && (GetSpellbookTypeForClass(nClass)==SPELLBOOK_TYPE_PREPARED))
+      {
+         sFile = GetFileForClass(nClass);
+         sArrayName = "NewSpellbookMem_"+IntToString(nClass);
+         //sanity test
+         if(!persistant_array_exists(oPC, sArrayName))
+         {
+             DoDebug("ERROR: AddSpellUse: " + sArrayName + " array does not exist, creating");
+             persistant_array_create(oPC, sArrayName);
+         }
+         nSpellbookID=1;
+         nUses = 0;
+         nSpellLevel = 0;
+
+         while((nUses<1)&&(nSpellLevel>=0))
+         {   
+            nSpellbookID++;
+            sSpellLevel = Get2DACache(sFile, "Level", nSpellbookID);
+            if (sSpellLevel != "")
+            {
+               nSpellLevel = StringToInt(sSpellLevel);
+	      }
+            else
+            {
+               nSpellLevel=-1;
+            }
+            if(nSpellLevel==nLevel)
+            {
+               nUses = persistant_array_get_int(oPC, sArrayName, nSpellbookID);
+            }
+         }
+      }
+    }     
+    
+    if(nUses <1)
+    {
+      nClass = PRCGetClassByPosition(3, oPC);
+      if (GetIsDivineClass(nClass, oPC) && (GetSpellbookTypeForClass(nClass)==SPELLBOOK_TYPE_PREPARED))
+      {
+         sFile = GetFileForClass(nClass);
+         sArrayName = "NewSpellbookMem_"+IntToString(nClass);
+         //sanity test
+         if(!persistant_array_exists(oPC, sArrayName))
+         {
+             DoDebug("ERROR: AddSpellUse: " + sArrayName + " array does not exist, creating");
+             persistant_array_create(oPC, sArrayName);
+         }
+         nSpellbookID=1;
+         nUses = 0;
+         nSpellLevel = 0;
+
+         while((nUses<1)&&(nSpellLevel>=0))
+         {   
+            nSpellbookID++;
+            sSpellLevel = Get2DACache(sFile, "Level", nSpellbookID);
+            if (sSpellLevel != "")
+            {
+               nSpellLevel = StringToInt(sSpellLevel);
+	      }
+            else
+            {
+               nSpellLevel=-1;
+            }
+            if(nSpellLevel==nLevel)
+            {
+               nUses = persistant_array_get_int(oPC, sArrayName, nSpellbookID);
+            }
+         }
+      }
+    }     
+
+    if(nUses>=1) 
+    {
+     if (DEBUG) DoDebug("Prepared slot lost by class" + IntToString(nClass));
+     // Burn the spell off, then cast the domain spell
+     // Also, because of the iprop feats not having uses per day
+     // set it so they can't cast again from that level
+    persistant_array_set_int(oPC, sArrayName, nSpellbookID, nUses-1);
+     SetLocalInt(oPC, "DomainCastSpell" + IntToString(nLevel), TRUE);
+     ActionCastSpell(nSpell);
+     return;
+    }
+
+    //No spell left to burn? Tell the player that.
+    FloatingTextStringOnCreature("You have no spells left to trade for a domain spell.", oPC, FALSE);
+    return;
+
+// End of test CCox421
 }
 
 int GetDomainSpell(int nDomain, int nLevel, object oPC)

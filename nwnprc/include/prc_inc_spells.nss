@@ -2033,6 +2033,12 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
     {
     	return GetIsSkillSuccessful(oTarget, SKILL_CONCENTRATION, nDC);
     }
+    
+    // This Maneuver allows people to use a skill check instead of a save on a Reflex save
+    if (nSavingThrow == SAVING_THROW_REFLEX && GetLocalInt(oTarget, "ActionBeforeThought"))
+    {
+    	return GetIsSkillSuccessful(oTarget, SKILL_CONCENTRATION, nDC);
+    }    
 
     int nSaveRoll = BWSavingThrow(nSavingThrow, oTarget, nDC, nSaveType, oSaveVersus, fDelay);
 
@@ -2130,6 +2136,17 @@ int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveTy
 
         return nDamage;
     }
+    // This Maneuver allows people to use a skill check instead of a save on a Reflex save
+    if (GetLocalInt(oTarget, "ActionBeforeThought"))
+    {
+        // return the damage cut in half
+        if (GetIsSkillSuccessful(oTarget, SKILL_CONCENTRATION, nDC))
+        {
+            return nDamage / 2;
+        }
+
+        return nDamage;
+    }    
 
     // Do save
     nDamage = GetReflexAdjustedDamage(nDamage, oTarget, nDC, nSaveType, oSaveVersus);

@@ -272,7 +272,23 @@ void main()
         	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectACIncrease(1), oSpellOrigin);
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_COM_BLOOD_CRT_YELLOW_HEAD), oSpellOrigin);
 	}
-    }    
+    } 
+
+    // Fire Riposte
+    if(GetHasSpellEffect(MOVE_DW_FIRE_RIPOSTE, oSpellOrigin) && GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
+    {    
+        int nTouchAttack = PRCDoMeleeTouchAttack(oSpellTarget);
+        if(nTouchAttack > 0)
+        {
+                // Apply the damage and VFX
+                ApplyTouchAttackDamage(oSpellOrigin, oSpellTarget, nTouchAttack, d6(4), DAMAGE_TYPE_FIRE);
+                effect eVis = EffectVisualEffect(VFX_COM_HIT_FIRE);
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oSpellTarget);
+                FloatingTextStringOnCreature("Fire Riposte Hit", oSpellOrigin, FALSE);
+                // Clean up
+                RemoveSpellEffects(MOVE_DW_FIRE_RIPOSTE, oSpellOrigin, oSpellOrigin);
+        }
+    }
 */
     /*//////////////////////////////////////////////////
     //////////////// Blade Magic ///////////////////////

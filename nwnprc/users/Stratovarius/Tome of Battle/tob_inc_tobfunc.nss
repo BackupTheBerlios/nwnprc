@@ -308,6 +308,7 @@ int GetIsCharging(object oPC);
  * @param oTarget       The Target
  * @param nDoAttack     Do an attack at the end of a charge or not
  * @param nGenerateAoO  Does the movement generate an AoO
+ * @param nDamage       A damage bonus on the charge
  * @param nBullRush     Do a Bull Rush at the end of a charge
  * @param nExtraBonus   An extra bonus to grant the PC on the Bull rush
  * @param nBullAoO      Does the bull rush attempt generate an AoO
@@ -315,7 +316,7 @@ int GetIsCharging(object oPC);
  *
  * @return              TRUE if the attack or Bull rush hits, else FALSE
  */
-int DoCharge(object oPC, object oTarget, int nDoAttack = TRUE, int nGenerateAoO = TRUE, int nBullRush = FALSE, int nExtraBonus = 0, int nBullAoO = TRUE, int nMustFollow = TRUE);
+int DoCharge(object oPC, object oTarget, int nDoAttack = TRUE, int nGenerateAoO = TRUE, int nDamage = 0, int nBullRush = FALSE, int nExtraBonus = 0, int nBullAoO = TRUE, int nMustFollow = TRUE);
 
 /**
  * This will do a complete PnP Bull rush
@@ -921,7 +922,7 @@ int GetIsCharging(object oPC)
 	return GetLocalInt(oPC, "PCIsCharging");
 }
 
-int DoCharge(object oPC, object oTarget, int nDoAttack = TRUE, int nGenerateAoO = TRUE, int nBullRush = FALSE, int nExtraBonus = 0, int nBullAoO = TRUE, int nMustFollow = TRUE)
+int DoCharge(object oPC, object oTarget, int nDoAttack = TRUE, int nGenerateAoO = TRUE, int nDamage = 0, int nBullRush = FALSE, int nExtraBonus = 0, int nBullAoO = TRUE, int nMustFollow = TRUE)
 {
 	if (!nGenerateAoO)
 	{

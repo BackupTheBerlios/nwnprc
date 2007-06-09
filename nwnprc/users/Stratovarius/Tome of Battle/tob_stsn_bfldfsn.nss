@@ -1,27 +1,27 @@
 /*
    ----------------
-   Wall of Blades
+   Baffling Defense
 
-   tob_irnh_wllblds.nss
+   tob_stsn_bfldfsn.nss
    ----------------
 
-    06/06/07 by Stratovarius
+    08/06/07 by Stratovarius
 */ /** @file
 
-    Wall of Blades
+    Baffling Defense
 
-    Iron Heart (Counter)
-    Level: Warblade 2
-    Initiation Action: 1 Swift Action
+    Setting Sun (Counter)
+    Level: Swordsage 2
+    Prerequisite: One Setting Sun maneuver
+    Initiation Action: 1 Immediate Action
     Range: Personal.
     Target: You.
     Duration: 1 Round
 
-    Your weapon sways back and forth in your hand, ready to block incoming blows.
-    With the speed of a thunderbolt, you clash your weapon against your foe's
-    blade as he attempts to attack.
+    You crouch balanced on one foot, hands held high over your head.
+    Your foe hesistates, unsure of how to attack you in this unlikely stance.
     
-    You make an attack roll against yourself. If it is higher than your armour class, the result
+    You make a Sense Motive. If it is higher than your armour class, the result
     of the roll becomes your armour class until the end of the round.
 */
 
@@ -46,7 +46,8 @@ void main()
     if(move.bCanManeuver)
     {
 	int nAC = GetDefenderAC(oInitiator, oTarget);
-	int nAttack = GetAttackRoll(oTarget, oInitiator, GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator));
+	// Skill check
+	int nAttack = GetSkillRank(SKILL_SENSE_MOTIVE, oInitiator) + d20();
 	// Add bonus if greater
 	if (nAttack > nAC)
 	{

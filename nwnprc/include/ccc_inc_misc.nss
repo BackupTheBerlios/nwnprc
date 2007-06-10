@@ -1400,8 +1400,10 @@ void DoSkillsLoop()
         // add the "store" option
         AddChoice("Store all remaining points.", -2);
     }
+    // get the class of the PC
+    int nClass = GetLocalInt(OBJECT_SELF, "Class");
     // get the cls_skill_*** 2da to use
-    string sFile = Get2DACache("classes", "SkillsTable", GetLocalInt(OBJECT_SELF, "Class"));
+    string sFile = Get2DACache("classes", "SkillsTable", nClass);
     // too convoluted to do via SQL..meh
     // set up the while
     int i = 0;
@@ -1416,7 +1418,8 @@ void DoSkillsLoop()
         int nSkillID = StringToInt(sSkillIndex); // line of skills.2da for the skill
         // get the skill name
         string sName = GetStringByStrRef(StringToInt(Get2DACache("skills", "Name", nSkillID)));
-        if (nClassSkill == 1) // class skill
+        // class skill or truespeak and PC is a truenamer
+        if (nClassSkill == 1 || (nSkillID == SKILL_TRUESPEAK && nClass == CLASS_TYPE_TRUENAMER))
         {
             sName += " " + GetStringByStrRef(52951); // (Class Skill)
             // check there's not already 4 points in there

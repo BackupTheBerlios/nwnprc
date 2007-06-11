@@ -87,7 +87,7 @@ void main()
 			int nNormHP = GetCurrentHitPoints(oTarget);
 			
 			//Make immune to pretty much everything
-			MakeImmune(oPC, fDur);			
+			MakeImmune(oTarget, fDur);			
 			
 			SarcMonitor(oPC, oTarget, nNormHP);
 		}

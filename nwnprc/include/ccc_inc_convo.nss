@@ -500,11 +500,13 @@ void DoHeaderAndChoices(int nStage)
             sText = GetStringByStrRef(5607) + "\n"; // Choose a Familiar for your Character
             sText += "(" + GetStringByStrRef(StringToInt(Get2DACache("classes", "Name", nClass))) + ")";
             SetHeader(sText);
+            SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
             // do choices
             if (nClass == CLASS_TYPE_DRUID)
                 Do2daLoop("hen_companion", "STRREF", GetPRCSwitch(FILE_END_ANIMALCOMP));
             else // wizard or sorc
                 Do2daLoop("hen_familiar", "STRREF", GetPRCSwitch(FILE_END_FAMILIAR));
+            SetLocalInt(OBJECT_SELF, "DynConv_Waiting", FALSE);
             MarkStageSetUp(nStage);
             SetDefaultTokens();
             break;

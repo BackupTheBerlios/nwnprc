@@ -45,66 +45,73 @@ Created:
 
 void main()
 {
-	SPSetSchool(SPELL_SCHOOL_CONJURATION);
-	
-	// Run the spellhook. 
-	if (!X2PreSpellCastCode()) return;
-	
-	//define vars
-	object oPC = OBJECT_SELF;
-	object oArea = GetArea(oPC);
-	int nDam;
-	int nDamType;
-	int nSpell = GetSpellId();
-	effect eVis;
-	
-	//Handle damage types
-	if(nSpell == SPELL_APOCALYPSE_FROM_THE_SKY_FIRE)
-	{
-		nDamType = DAMAGE_TYPE_FIRE;
-		eVis = EffectVisualEffect(VFX_FNF_METEOR_SWARM);
-	}
-	
-	if(nSpell == SPELL_APOCALYPSE_FROM_THE_SKY_ACID)
-	{
-		nDamType = DAMAGE_TYPE_ACID;
-		eVis = EffectVisualEffect(VFX_FNF_STORM);
-	}
-	
-	if(nSpell == SPELL_APOCALYPSE_FROM_THE_SKY_SONIC)
-	{
-		nDamType = DAMAGE_TYPE_SONIC;
-		eVis = EffectVisualEffect(VFX_FNF_SOUND_BURST);
-	}
-	
-	ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oPC);
-	
-	object oObject = GetFirstObjectInArea(oArea);
-	
-	//Loop
-	while(GetIsObjectValid(oObject))
-	{
-		nDam = d6(10);
-		effect eDam = EffectDamage(nDam, nDamType);
-		
-		//Apply
-		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oObject);
-		
-		oObject = GetNextObjectInArea();
-	}	
-	
-	SPEvilShift(oPC);
-	
-	//Corruption cost
-	int nDam1 = d6(3);
-	int nDam2 = d6(4);
-	
-	DoCorruptionCost(oPC, ABILITY_CONSTITUTION, nDam1, 0);
-	DoCorruptionCost(oPC, ABILITY_WISDOM, nDam2, 1);
-	
-	//Corrupt spells get mandatory 10 pt evil adjustment, regardless of switch
-	AdjustAlignment(oPC, ALIGNMENT_EVIL, 10);
-	
-	SPSetSchool();
+        SPSetSchool(SPELL_SCHOOL_CONJURATION);
+        
+        // Run the spellhook. 
+        if (!X2PreSpellCastCode()) return;
+        
+        //define vars
+        object oPC = OBJECT_SELF;
+        object oArea = GetArea(oPC);
+        int nDam;
+        int nDamType;
+        int nSpell = GetSpellId();
+        effect eVis;
+        
+        //Handle damage types
+        if(nSpell == SPELL_APOCALYPSE_FROM_THE_SKY_FIRE)
+        {
+                nDamType = DAMAGE_TYPE_FIRE;
+                eVis = EffectVisualEffect(VFX_FNF_METEOR_SWARM);
+        }
+        
+        if(nSpell == SPELL_APOCALYPSE_FROM_THE_SKY_ACID)
+        {
+                nDamType = DAMAGE_TYPE_ACID;
+                eVis = EffectVisualEffect(VFX_FNF_STORM);
+        }
+        
+        if(nSpell == SPELL_APOCALYPSE_FROM_THE_SKY_SONIC)
+        {
+                nDamType = DAMAGE_TYPE_SONIC;
+                eVis = EffectVisualEffect(VFX_FNF_SOUND_BURST);
+        }
+        
+        ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oPC);
+        
+        object oObject = GetFirstObjectInArea(oArea);
+        
+        //Loop
+        while(GetIsObjectValid(oObject))
+        {
+                nDam = d6(10);
+                
+                //if extra damage switch set, ndam=d4(40)
+                if(GetPRCSwitch("PRC_AFTS_EXTRA_DAMAGE"))
+                {
+                        nDam = d4(40);
+                }
+                
+                effect eDam = EffectDamage(nDam, nDamType);
+                
+                //Apply
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oObject);
+                
+                oObject = GetNextObjectInArea();
+        }       
+        
+        SPEvilShift(oPC);
+        
+        //Corruption cost
+        int nDam1 = d6(3);
+        int nDam2 = d6(4);
+        
+        DoCorruptionCost(oPC, ABILITY_CONSTITUTION, nDam1, 0);
+        DoCorruptionCost(oPC, ABILITY_WISDOM, nDam2, 1);
+        
+        //Corrupt spells get mandatory 10 pt evil adjustment, regardless of switch
+        AdjustAlignment(oPC, ALIGNMENT_EVIL, 10);
+        
+        SPSetSchool();
 }
-	
+        

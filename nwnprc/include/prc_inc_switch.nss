@@ -3535,4 +3535,5 @@ void CreateSwitchNameArray()
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_DEBUG);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_COMBAT_DEBUG);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_SPELLCASTITEM_OVERRIDE);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_AFTS_EXTRA_DAMAGE);
 }

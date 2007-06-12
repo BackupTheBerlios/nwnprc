@@ -51,9 +51,14 @@ void main()
                 fDuration = fDuration *2;    //Duration is +100%
         }
         
-        //Create an instance of the AOE Object using the Apply Effect function
+        //VFX
+        effect eVis = EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MINOR)
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oPC, fDuration);  
         
+        //Create an instance of the AOE Object using the Apply Effect function
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAOE, oPC, fDuration);
+        
+        
         
         //Sanctified spells get mandatory 10 pt good adjustment, regardless of switch
         AdjustAlignment(oPC, ALIGNMENT_GOOD, 10);

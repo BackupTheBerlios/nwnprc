@@ -43,7 +43,7 @@ void main()
 	{
 		if(GetIsFriend(oTarget, oPC) && !GetPlotFlag(oTarget))
 		{
-			AssignCommand(oTarget, JumpToObject(oPC));
+			DelayCommand(1.0f, AssignCommand(oTarget, JumpToObject(oPC)));
 			nCounter--;
 		}
 		oTarget = GetNextObjectInArea(oArea);

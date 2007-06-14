@@ -30,39 +30,39 @@ it or otherwise loses contact with it.
 
 void main()
 {
-	if(!X2PreSpellCastCode()) return;
-	
-	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
-	
-	object oPC = OBJECT_SELF;
-	object oTarget = IPGetTargetedOrEquippedMeleeWeapon();
-	int nCasterLvl = PRCGetCasterLevel(oPC);
-	int nSpell = PRCGetSpellId();
-	float fDur = RoundsToSeconds(nCasterLvl);	
-	int nMetaMagic = PRCGetMetaMagicFeat();
-	
-	if(nMetaMagic == METAMAGIC_EXTEND)
-	{
-			fDur += fDur;
-	}
-	
-	if(nSpell == SPELL_BLADE_OF_BLOOD_EMP)
-	{
-		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(5, DAMAGE_TYPE_MAGICAL), oPC);
-	}
-	
-	//Set local ints
-	SetLocalInt(oTarget, "PRC_BLADE_BLOOD_METAMAGIC", nMetaMagic);
-	SetLocalInt(oTarget, "PRC_BLADE_BLOOD_SPELLID", nSpell);
-		
-	//Set up removal
-	itemproperty ipHook = ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1);
-	object oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
-	
-	IPSafeAddItemProperty(oWeapon, ipHook, fDur);
-	
-	
-	AddEventScript(oWeapon, EVENT_ONHIT, "prc_evnt_bladeb", FALSE, FALSE);
-	
-	SPSetSchool();
+        if(!X2PreSpellCastCode()) return;
+        
+        SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+        
+        object oPC = OBJECT_SELF;
+        object oTarget = IPGetTargetedOrEquippedMeleeWeapon();
+        int nCasterLvl = PRCGetCasterLevel(oPC);
+        int nSpell = PRCGetSpellId();
+        float fDur = RoundsToSeconds(nCasterLvl);       
+        int nMetaMagic = PRCGetMetaMagicFeat();
+        
+        if(nMetaMagic == METAMAGIC_EXTEND)
+        {
+                        fDur += fDur;
+        }
+        
+        if(nSpell == SPELL_BLADE_OF_BLOOD_EMP)
+        {
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(5, DAMAGE_TYPE_MAGICAL), oPC);
+        }
+        
+        //Set local ints
+        SetLocalInt(oTarget, "PRC_BLADE_BLOOD_METAMAGIC", nMetaMagic);
+        SetLocalInt(oTarget, "PRC_BLADE_BLOOD_SPELLID", nSpell);
+                
+        //Set up removal
+        itemproperty ipHook = ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1);
+        object oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
+        
+        IPSafeAddItemProperty(oWeapon, ipHook, fDur);
+        
+        
+        AddEventScript(oWeapon, EVENT_ONHIT, "prc_event_bladeb", FALSE, FALSE);
+        
+        SPSetSchool();
 }

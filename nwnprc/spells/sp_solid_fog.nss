@@ -57,7 +57,7 @@ void main()
 		fDur += fDur;
 	}
 	
-	effect eAOE = EffectAreaOfEffect(AOE_PER_SOLID_FOG);
+	effect eAOE = EffectAreaOfEffect(AOE_PER_SOLID_FOG, "sp_solid_fogA", "", "sp_solid_fogB");
 			
 	// Duration Effects
 	ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAOE, GetSpellTargetLocation(),fDur);

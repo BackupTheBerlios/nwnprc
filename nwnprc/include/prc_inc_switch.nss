@@ -316,6 +316,13 @@ const string PRC_SPELLID_OVERRIDE                     = "PRC_SPELLID_OVERRIDE";
  * provided the new owner is not a friend/neutral and not to/from a store
  */
  const string PRC_AUTO_UNIDENTIFY_ON_UNACQUIRE              = "PRC_AUTO_UNIDENTIFY_ON_UNACQUIRE";
+ 
+/*
+ * Extra damage switch for Apocalypse from the Sky
+ * spell does 10d6 by default, 40d4 with this set
+ */
+ 
+const string PRC_AFTS_EXTRA_DAMAGE                         = "PRC_AFTS_EXTRA_DAMAGE";
 
 /******************************************************************************\
 *                                  Class switches                              *

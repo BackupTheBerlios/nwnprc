@@ -52,7 +52,7 @@ void main()
         }
         
         //VFX
-        effect eVis = EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MINOR)
+        effect eVis = EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MINOR);
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oPC, fDuration);  
         
         //Create an instance of the AOE Object using the Apply Effect function

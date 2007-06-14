@@ -75,7 +75,7 @@ void main()
                 object oObject = GetFirstObjectInArea(oArea);
                 
                 //Loop
-                RainOfBlood(oObject, eBuff, eDebuff);
+                RainOfBlood(oObject, eBuff, eDebuff, fDuration);
         }
         
         //Violet Rain   No divine spells/abilities for 24 hours
@@ -186,7 +186,7 @@ void RainOfFrogsOrFish(object oObject)
                 SetLocalObject(oObject,"PRC_RAIN_FROGS_FISH_AREA", GetArea(oObject));
                 
                 //Cast spell on target
-                AssignCommand(oObject, ActionCastSpellAtObject(SPELL_FROGS_OR_FISH, oObject, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+                AssignCommand(oObject, ActionCastSpellAtObject(SPELL_EVIL_WEATHER_RAIN_OF_FISH, oObject, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
                 
                 oObject = GetNextObjectInArea();
                 RainOfFrogsOrFish(oObject);

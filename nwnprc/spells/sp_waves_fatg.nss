@@ -47,6 +47,7 @@ void main()
 			       eLink = EffectLinkEffects(eLink, eSpeed);
 			
 			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(8));
+			SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE), oTarget);
 		}
 		oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 9.14f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
 	}

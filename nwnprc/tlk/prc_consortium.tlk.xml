@@ -18307,6 +18307,19 @@ Specifics:</entry>
   <entry id="49813" lang="en" sex="m">A Hexblade does not suffer a chance of spell failure when casting in light or medium armor or while using small shields.</entry>
   <entry id="49814" lang="en" sex="m">At 6th level, the hexblade can cast one hexblade spell per day as a swift action, as long as its original casting time is a standard action or faster. He gains an additional use of this power at levels 8, 11, 14, 18, 22, 26, 30, 34 and 38.</entry>
   <entry id="49815" lang="en" sex="m">Swift Cast</entry>
+  <entry id="49816" lang="en" sex="m">Caster Level(s): Bard 0, Cleric 0, Druid 0
+Innate Level: 0
+School: Conjuration
+Descriptor(s): 
+Component(s): Verbal, Somatic
+Range: Touch
+Area of Effect / Target: Single
+Duration: Instant
+Additional Counter Spells: Ghoul Touch
+Save: None
+Spell Resistance: Yes
+
+The target creature is healed for 1 point of damage. Healing spells have a reverse effect on undead, harming instead of healing them. A successful touch attack must first be made when this spell is used against undead.</entry>
   <entry id="49999" lang="en" sex="m">**** 50,000 - 50,500 reserved for Race Pack Feats ****</entry>
   <entry id="50000" lang="en" sex="m">Light Sensitivity</entry>
   <entry id="50001" lang="en" sex="m">Type of Feat: Racial

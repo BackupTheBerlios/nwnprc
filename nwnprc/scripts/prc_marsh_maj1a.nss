@@ -6,17 +6,17 @@ void main()
     object oPC = GetSpellTargetObject();
     object oTarget = GetEnteringObject();
     object PCMarshal = GetAreaOfEffectCreator();
-    object WeapMar = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget); 
-     
-    
+    object WeapMar = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget);
+
+
     int MarshRange = IPGetIsRangedWeapon(WeapMar);
     int MarshCha = GetAbilityModifier(ABILITY_CHARISMA, PCMarshal);
     int MarshLev = GetLevelByClass(CLASS_TYPE_MARSHAL, PCMarshal);
     int MarshBon;
     int MarshSpeed;
-    
 
-    
+
+
     if (MarshLev>1)
        {
        MarshBon = 1;
@@ -57,17 +57,17 @@ void main()
        MarshBon = 8;
        MarshSpeed = 99;
        }
-       
+
     if (GetHasFeat(FEAT_TYPE_ELEMENTAL, oPC) >= 10 && GetHasFeat(FEAT_BONDED_AIR,oPC))
         MarshSpeed += 30;
     if (MarshSpeed > 99) MarshSpeed = 99;
-    
-    if(GetIsFriend(oTarget, GetAreaOfEffectCreator()))   
+
+    if(GetIsFriend(oTarget, GetAreaOfEffectCreator()))
     {
             //Motivate Ardor
             if(GetHasSpellEffect(3511, PCMarshal))
               {
-              if (GetLocalInt(PCMarshal,"MarshalMajor")>0) 
+              if (GetLocalInt(oTarget,"MarshalMajor")>0)
                  {
                  return;
                  }
@@ -77,11 +77,11 @@ void main()
                  SetLocalInt(PCMarshal,"MarshalMajor",1);
                  }
               }
-              
+
             //Motivate Care
             if(GetHasSpellEffect(3512, PCMarshal))
               {
-              if (GetLocalInt(PCMarshal,"MarshalMajor")>0) 
+              if (GetLocalInt(oTarget,"MarshalMajor")>0)
                  {
                  return;
                  }
@@ -94,7 +94,7 @@ void main()
             //Resilient Troops
             if(GetHasSpellEffect(3513, PCMarshal))
               {
-              if (GetLocalInt(PCMarshal,"MarshalMajor")>0) 
+              if (GetLocalInt(oTarget,"MarshalMajor")>0)
                  {
                  return;
                  }
@@ -107,7 +107,7 @@ void main()
             //Motivate Urgency
             if(GetHasSpellEffect(3514, PCMarshal))
               {
-              if (GetLocalInt(PCMarshal,"MarshalMajor")>0) 
+              if (GetLocalInt(oTarget,"MarshalMajor")>0)
                  {
                  return;
                  }
@@ -120,7 +120,7 @@ void main()
             //Hardy Soldiers
             if(GetHasSpellEffect(3515, PCMarshal))
               {
-              if (GetLocalInt(PCMarshal,"MarshalMajor")>0) 
+              if (GetLocalInt(oTarget,"MarshalMajor")>0)
                  {
                  return;
                  }
@@ -133,9 +133,9 @@ void main()
                  }
               }
             //Motivate Attack
-            if(GetHasSpellEffect(3516, PCMarshal)) 
+            if(GetHasSpellEffect(3516, PCMarshal))
               {
-              if (GetLocalInt(PCMarshal,"MarshalMajor")>0) 
+              if (GetLocalInt(oTarget,"MarshalMajor")>0)
                  {
                  return;
                  }
@@ -151,7 +151,7 @@ void main()
             //Steady Hand
             if(GetHasSpellEffect(3517, PCMarshal))
               {
-              if (GetLocalInt(PCMarshal,"MarshalMajor")>0) 
+              if (GetLocalInt(oTarget,"MarshalMajor")>0)
                  {
                  return;
                  }
@@ -167,7 +167,7 @@ void main()
             //Major Charisma Boost
             if(GetHasSpellEffect(3519, PCMarshal))
               {
-              if (GetLocalInt(PCMarshal,"MarshalMajor")>0) 
+              if (GetLocalInt(oTarget,"MarshalMajor")>0)
                  {
                  return;
                  }
@@ -180,7 +180,7 @@ void main()
             //Major Constitution Boost
             if(GetHasSpellEffect(3520, PCMarshal))
               {
-              if (GetLocalInt(PCMarshal,"MarshalMajor")>0) 
+              if (GetLocalInt(oTarget,"MarshalMajor")>0)
                  {
                  return;
                  }
@@ -193,7 +193,7 @@ void main()
             //Major Dexterity Boost
             if(GetHasSpellEffect(3521, PCMarshal))
               {
-              if (GetLocalInt(PCMarshal,"MarshalMajor")>0) 
+              if (GetLocalInt(oTarget,"MarshalMajor")>0)
                  {
                  return;
                  }
@@ -206,7 +206,7 @@ void main()
             //Major Intelligence Boost
             if(GetHasSpellEffect(3522, PCMarshal))
               {
-              if (GetLocalInt(PCMarshal,"MarshalMajor")>0) 
+              if (GetLocalInt(oTarget,"MarshalMajor")>0)
                  {
                  return;
                  }
@@ -219,7 +219,7 @@ void main()
             //Major Strength Boost
             if(GetHasSpellEffect(3523, PCMarshal))
               {
-              if (GetLocalInt(PCMarshal,"MarshalMajor")>0) 
+              if (GetLocalInt(oTarget,"MarshalMajor")>0)
                  {
                  return;
                  }
@@ -232,7 +232,7 @@ void main()
             //Major Wisdom Boost
             if(GetHasSpellEffect(3524, PCMarshal))
               {
-              if (GetLocalInt(PCMarshal,"MarshalMajor")>0) 
+              if (GetLocalInt(oTarget,"MarshalMajor")>0)
                  {
                  return;
                  }

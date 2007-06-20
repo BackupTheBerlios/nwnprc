@@ -120,7 +120,7 @@ void KOTC(object oPC)
 {
      SetLocalInt(oPC, "PRC_PrereqKOTC", 1);
 
-
+     // to check if PC can cast protection from evil
      if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) >= 1)
      {
      SetLocalInt(oPC, "PRC_PrereqKOTC", 0);
@@ -128,6 +128,10 @@ void KOTC(object oPC)
      if (GetLevelByClass(CLASS_TYPE_PALADIN, oPC) >= 4)
      {
      SetLocalInt(oPC, "PRC_PrereqKOTC", 0);
+     }
+     if (PRCGetHasSpell(SPELL_PROTECTION_FROM_EVIL, oPC))
+     {
+         SetLocalInt(oPC, "PRC_PrereqKOTC", 0);
      }
 }
 

@@ -94,7 +94,7 @@ void main()
         {
             if(bBoot) // if singleplayer or letoscript not set up correctly
                 nPCStatus = CONVOCC_ENTER_BOOT_PC;
-            else if (GetLocalInt(GetModule(), "ccc_active")) // next see if someone has already started the convo
+            else if (GetIsObjectValid(GetLocalObject(GetModule(), "ccc_active_pc"))) // next see if someone has already started the convo
             {
                 nPCStatus = CONVOCC_ENTER_BOOT_PC;
                 SetLocalString(oPC, "CONVOCC_ENTER_BOOT_MESSAGE", 
@@ -114,7 +114,7 @@ void main()
         else if (nPCStatus == CONVOCC_ENTER_NEW_PC)
         {
             // now reserve the conversation slot - only one at a time
-            SetLocalInt(GetModule(), "ccc_active", 1);
+            SetLocalObject(GetModule(), "ccc_active_pc", oPC);
             // remove equipped items and clear out inventory
             DoStripPC(oPC);
             //rest them so that they loose cutscene invisible

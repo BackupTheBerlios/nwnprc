@@ -515,7 +515,7 @@ void CloneMasterCheck()
     if(!GetIsObjectValid(oMaster))
     {
         // free up the convoCC if they logged out
-        DeleteLocalInt(GetModule(), "ccc_active");
+        DeleteLocalObject(GetModule(), "ccc_active_pc");
         SetIsDestroyable(TRUE);
         DestroyObject(OBJECT_SELF);
     }
@@ -529,7 +529,7 @@ void DoRotatingCamera(object oPC)
     if(!GetIsObjectValid(oPC))
     {
         // then the ccc is free to use again
-        DeleteLocalInt(GetModule(), "ccc_active");
+        DeleteLocalInt(GetModule(), "ccc_active_pc");
         if (DEBUG) DoDebug("Invalid PC given to DoRotatingCamera()");
         return;
     }

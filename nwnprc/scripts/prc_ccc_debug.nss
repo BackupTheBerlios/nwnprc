@@ -1,6 +1,7 @@
 // get DoDebug()
 #include "inc_debug"
 #include "inc_array"
+#include "ccc_inc_misc"
 
 void main()
 {
@@ -45,5 +46,5 @@ void main()
     DoDebug("Head:  "+IntToString(GetLocalInt(oPC, "Head")));
     DoDebug("Points:  "+IntToString(GetLocalInt(oPC, "Points")));
     DoDebug("i:  "+IntToString(GetLocalInt(oPC, "i")));
-    DoDebug("ccc_active:  "+IntToString(GetLocalInt(GetModule(), "ccc_active")));
+    DoDebug("ccc_active_pc:  "+ DebugObject2Str(GetLocalObject(GetModule(), "ccc_active_pc")));
 }

@@ -238,7 +238,7 @@ void main()
     // removes the cutscene paralysis and invisibility
     ForceRest(oPC);
     // let the convoCC be used by someone else
-    DeleteLocalInt(GetModule(), "ccc_active");
+    DeleteLocalObject(GetModule(), "ccc_active_pc");
     // Here's where the custom PW script is run if the switch is set
     if(GetPRCSwitch(PRC_CONVOCC_CUSTOM_EXIT_SCRIPT))
     {

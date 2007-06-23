@@ -97,6 +97,7 @@ void DoBurst (int nCasterLvl, int nDieSize, int nBonusDam, int nDice, int nBurst
 
                               // Calculate base and bonus damage.
                               nDam = SPGetMetaMagicDamage(nDamageType, nDice, nDieSize, 0);
+                              nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
                               nDam2 = nDice * nBonusDam;
 
                               // Adjust damage for reflex save / evasion / imp evasion.  We need to

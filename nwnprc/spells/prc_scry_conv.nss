@@ -30,87 +30,91 @@ const int STAGE_CONFIRMATION      = 1;
 
 void StorePCForRecovery(object oPC, object oChoice, int nChoice)
 {
-	SetLocalObject(oPC, "ScryTarget" + IntToString(nChoice), oChoice);
+    SetLocalObject(oPC, "ScryTarget" + IntToString(nChoice), oChoice);
 }
 
 object RetrievePC(object oPC, int nChoice)
 {
-	return GetLocalObject(oPC, "ScryTarget" + IntToString(nChoice));
+    return GetLocalObject(oPC, "ScryTarget" + IntToString(nChoice));
 }
 
 void AddLegalTargets(object oPC)
 {
-         // This reads all of the legal choices 
-         int nSpellId = GetLocalInt(oPC, "ScrySpellId");
-         int nChoice = 1;
-	if (nSpellId == SPELL_LOCATE_OBJECT)
-	{
-        	// First, get all objects in the area you're in
-        	object oObject = GetFirstObjectInArea(GetArea(oPC));
-        	while (GetIsObjectValid(oObject) == TRUE)
-        	{
-        	    if(DEBUG) DoDebug("prc_scry_conv: Looping Object Targets");
-        	    // Don't target PCs using this
-        	    if (GetObjectType(oObject) == OBJECT_TYPE_PLACEABLE || GetObjectType(oObject) ==  OBJECT_TYPE_ITEM)
-        	    {
-        	    	// If its a legal object, target it for locating
-			AddChoice(GetName(oObject), nChoice, oPC);
-			StorePCForRecovery(oPC, oObject, nChoice);
-        	    }
-        	    nChoice += 1;
-        	    oObject = GetNextObjectInArea(GetArea(oPC));
-        	}	
-        } 
-        else
+    // This reads all of the legal choices
+    int nSpellId = GetLocalInt(oPC, "ScrySpellId");
+    int nChoice = 1;
+    if (nSpellId == SPELL_LOCATE_OBJECT)
+    {
+        // First, get all objects in the area you're in
+        object oObject = GetFirstObjectInArea(GetArea(oPC));
+        while (GetIsObjectValid(oObject) == TRUE)
         {
-        	// First, get all creatures in the area you're in
-        	object oCreature = GetFirstObjectInArea(GetArea(oPC));
-        	while (GetIsObjectValid(oCreature) == TRUE)
-        	{
-        	    if(DEBUG) DoDebug("prc_scry_conv: Looping Monster Targets");
-        	    // Don't target PCs using this
-        	    if (GetObjectType(oCreature) == OBJECT_TYPE_CREATURE)
-        	    {
-        	    	// This can target PCs in the area, but not in other areas
-        	    	if ((nSpellId == SPELL_CLAIRAUDIENCE_AND_CLAIRVOYANCE ||
-        	    	     nSpellId == SPELL_LOCATE_CREATURE ||
-        	    	     nSpellId == POWER_CLAIRVOYANT_SENSE) &&
-        	             oPC != oCreature)
-        	    	{
-				AddChoice(GetName(oCreature), nChoice, oPC);
-				StorePCForRecovery(oPC, oCreature, nChoice);
-			}
-			// Normally, the second part takes care of all PCs
-			else if (!GetIsPC(oCreature))
-			{
-				AddChoice(GetName(oCreature), nChoice, oPC);
-				StorePCForRecovery(oPC, oCreature, nChoice);
-			}
-        	    }
-        	    nChoice += 1;
-        	    oCreature = GetNextObjectInArea(GetArea(oPC));
-        	}
-        	// These only target in their own areas
-        	if (nSpellId != SPELL_CLAIRAUDIENCE_AND_CLAIRVOYANCE &&
-        	    nSpellId != SPELL_LOCATE_CREATURE &&
-        	    nSpellId != POWER_CLAIRVOYANT_SENSE)
-        	{
-        		// Now, loop through all of the PCs
- 			object oPCTarget = GetFirstPC();
- 			// Don't target yourself
- 			while (GetIsObjectValid(oPCTarget) && oPCTarget != oPC)
- 			{
- 			    if(DEBUG) DoDebug("prc_scry_conv: Looping PC Targets");
- 			    AddChoice(GetName(oPCTarget), nChoice, oPC);
-			    StorePCForRecovery(oPC, oPCTarget, nChoice);
- 			    
- 			    nChoice += 1;
- 			    oPCTarget = GetNextPC();
- 			}
- 		}
- 	}
-}	
-	
+            if(DEBUG) DoDebug("prc_scry_conv: Looping Object Targets");
+            // Don't target PCs using this
+            if (GetObjectType(oObject) == OBJECT_TYPE_PLACEABLE || GetObjectType(oObject) ==  OBJECT_TYPE_ITEM)
+            {
+                // If its a legal object, target it for locating
+                AddChoice(GetName(oObject), nChoice, oPC);
+                StorePCForRecovery(oPC, oObject, nChoice);
+            }
+            nChoice += 1;
+            oObject = GetNextObjectInArea(GetArea(oPC));
+        }
+    }
+    else
+    {
+        // First, get all creatures in the area you're in
+        object oCreature = GetFirstObjectInArea(GetArea(oPC));
+        while (GetIsObjectValid(oCreature) == TRUE)
+        {
+            if(DEBUG) DoDebug("prc_scry_conv: Looping Monster Targets");
+            // Don't target PCs using this
+            if (GetObjectType(oCreature) == OBJECT_TYPE_CREATURE)
+            {
+                // This can target PCs in the area, but not in other areas
+                if ((nSpellId == SPELL_CLAIRAUDIENCE_AND_CLAIRVOYANCE ||
+                     nSpellId == SPELL_LOCATE_CREATURE ||
+                     nSpellId == POWER_CLAIRVOYANT_SENSE) &&
+                     oPC != oCreature &&
+                     !GetIsDM(oCreature))
+                {
+                    AddChoice(GetName(oCreature), nChoice, oPC);
+                    StorePCForRecovery(oPC, oCreature, nChoice);
+                }
+                // Normally, the second part takes care of all PCs
+                else if ((!GetIsPC(oCreature) && !GetIsDM(oCreature)))
+                {
+                    AddChoice(GetName(oCreature), nChoice, oPC);
+                    StorePCForRecovery(oPC, oCreature, nChoice);
+                }
+            }
+            nChoice += 1;
+            oCreature = GetNextObjectInArea(GetArea(oPC));
+        }
+        // These only target in their own areas
+        if (nSpellId != SPELL_CLAIRAUDIENCE_AND_CLAIRVOYANCE &&
+            nSpellId != SPELL_LOCATE_CREATURE &&
+            nSpellId != POWER_CLAIRVOYANT_SENSE)
+        {
+            // Now, loop through all of the PCs
+            object oPCTarget = GetFirstPC();
+            // Don't target yourself
+            while (GetIsObjectValid(oPCTarget))
+            {
+                if(oPCTarget != oPC)
+                {
+                    if(DEBUG) DoDebug("prc_scry_conv: Looping PC Targets");
+                    AddChoice(GetName(oPCTarget), nChoice, oPC);
+                    StorePCForRecovery(oPC, oPCTarget, nChoice);
+
+                    nChoice += 1;
+                }
+                oPCTarget = GetNextPC();
+            }
+        }
+    }
+}
+
 //////////////////////////////////////////////////
 /* Main function                                */
 //////////////////////////////////////////////////
@@ -144,13 +148,13 @@ void main()
             // variable named nStage determines the current conversation node
             // Function SetHeader to set the text displayed to the PC
             // Function AddChoice to add a response option for the PC. The responses are show in order added
-	    if(nStage == STAGE_CHOOSE_TARGET)
+        if(nStage == STAGE_CHOOSE_TARGET)
             {
-               	// Set the header
-               	string sAmount = "Which creature would you like to scry?";
+                // Set the header
+                string sAmount = "Which creature would you like to scry?";
                 SetHeader(sAmount);
 
-		AddLegalTargets(oPC);	        
+        AddLegalTargets(oPC);
 
                 MarkStageSetUp(STAGE_CHOOSE_TARGET, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
                 SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
@@ -197,20 +201,20 @@ void main()
         int nChoice = GetChoice(oPC);
         if(nStage == STAGE_CHOOSE_TARGET)
         {
-        	SetLocalInt(oPC, "ScryChoice", nChoice);
-            	nStage = STAGE_CONFIRMATION;
+            SetLocalInt(oPC, "ScryChoice", nChoice);
+                nStage = STAGE_CONFIRMATION;
         }
         else if(nStage == STAGE_CONFIRMATION)//confirmation
         {
             // Scry and Exit
             if(nChoice == TRUE)
             {
-            	object oChoice = RetrievePC(oPC, GetLocalInt(oPC, "ScryChoice"));
-            	// The function will take it from here
-            	ScryMain(oPC, oChoice);
+                object oChoice = RetrievePC(oPC, GetLocalInt(oPC, "ScryChoice"));
+                // The function will take it from here
+                ScryMain(oPC, oChoice);
 
                 // And we're all done
-               	AllowExit(DYNCONV_EXIT_FORCE_EXIT);
+                AllowExit(DYNCONV_EXIT_FORCE_EXIT);
 
             }
             else
@@ -219,7 +223,7 @@ void main()
                 MarkStageNotSetUp(STAGE_CHOOSE_TARGET, oPC);
                 MarkStageNotSetUp(STAGE_CONFIRMATION, oPC);
             }
-	    DeleteLocalObject(oPC, "ScryTarget" + IntToString(GetLocalInt(oPC, "ScryChoice")));
+        DeleteLocalObject(oPC, "ScryTarget" + IntToString(GetLocalInt(oPC, "ScryChoice")));
             DeleteLocalInt(oPC, "ScryChoice");
         }
 

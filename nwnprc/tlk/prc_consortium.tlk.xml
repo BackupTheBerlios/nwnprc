@@ -27729,18 +27729,19 @@ Spell Resistance: No
 The caster targets a single creature with sonic orb. The orb deals 1d6/lvl dmg (max 15d6), deafening the target for 1 round on a failed save.
 </entry>
   <entry id="53010" lang="en" sex="m">Ice Burst</entry>
-  <entry id="53011" lang="en" sex="m">Caster Level(s): Sorc/Wiz 3
+  <entry id="53011" lang="en" sex="m">Caster Level(s): Wizard / Sorcerer 3
 Innate Level: 3
 School: Evocation
 Descriptor(s): Cold
 Component(s): Verbal, Somatic
-Range: Long
-Area of Effect / Target: Gargantuan
+Range: Medium
+Area of Effect / Target: Colossal
 Duration: Instant
 Additional Counter Spells:
-Save: Reflex Partial
+Save: Reflex half
 Spell Resistance: Yes
-The caster targets a single creature with ice. The pelting ice dmg from the spell is 1d4+1/lvl (max 10d4+10).</entry>
+
+A hail of magical ice chunks erupts from a point in space. The chunks fly in all directions, hitting everything within the burst. The pelting ice deals 1d4 points of cold damage +1 point of blunt damage per caster level, to a maximum of 10d4+10.</entry>
   <entry id="53012" lang="en" sex="m">Acid Storm</entry>
   <entry id="53013" lang="en" sex="m">Caster Level(s): Sorc/Wiz 6
 Innate Level: 6

@@ -742,6 +742,45 @@ void Virtuoso(object oPC)
         SetLocalInt(oPC, "PRC_PrereqVirtuoso", 0);
 }
 
+void FistRaziel(object oPC)
+{
+    /* The fist of Raziel can only be taken if the player is able to cast Divine Favor.
+     * Base classes:
+     * Cleric gets it at level 1. Paladin at level 4 (with wis > 11) to 6 (wis == 11)
+     */
+
+    SetLocalInt(oPC, "PRC_PrereqFistRaz", 1);
+    object oSkin = GetPCSkin(oPC);
+    int iWis = GetLocalInt(oSkin, "PRC_trueWIS");
+    // hard code it to work for Bioware classes
+    if (GetLevelByClass(CLASS_TYPE_CLERIC))
+    {
+        SetLocalInt(oPC, "PRC_PrereqFistRaz", 0);
+        return;
+    }
+    
+    if (GetLevelByClass(CLASS_TYPE_PALADIN))
+    {
+        if(iWis > 11 && GetLevelByClass(CLASS_TYPE_PALADIN) >= 4)
+        {
+            SetLocalInt(oPC, "PRC_PrereqFistRaz", 0);
+            return;
+        }
+        else if (GetLevelByClass(CLASS_TYPE_PALADIN) >= 6)
+        {
+            SetLocalInt(oPC, "PRC_PrereqFistRaz", 0);
+            return;
+        }
+    }
+    
+    if (PRCGetHasSpell(SPELL_DIVINE_FAVOR, oPC))
+    {
+        SetLocalInt(oPC, "PRC_PrereqCbtMed", 0);
+        return;
+    }    
+
+}
+
 void main()
 {
      //Declare Major Variables

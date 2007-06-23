@@ -6,7 +6,6 @@
 2 Lore        SKILL   7                5         
 3 PowerAtk    FEAT    28               ****      
 4 ScriptVar   VAR     PRC_DivSpell1    0         
-5 Cleric      CLASSOR 2                ****      
-6 Paladin     CLASSOR 6                ****      
+5 ScriptVar   VAR     PRC_PrereqFistRaz 0     
 7 TurnUndead  FEAT    294              ****      
 8 ScriptVar   VAR     PRC_AllowFistRaz 0         

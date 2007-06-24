@@ -319,11 +319,6 @@ void main()
     // Handle Rend. Creature weapon damage + 1.5x STR bonus.
     // Only happens when attacking with a creature weapon
     if(GetIsCreatureWeaponType(iItemBaseType) && GetHasFeat(FEAT_REND, oSpellOrigin))
-       (GetBaseItemType(oItem) == BASE_ITEM_CBLUDGWEAPON ||
-        GetBaseItemType(oItem) == BASE_ITEM_CPIERCWEAPON ||
-        GetBaseItemType(oItem) == BASE_ITEM_CSLASHWEAPON ||
-        GetBaseItemType(oItem) == BASE_ITEM_CSLSHPRCWEAP)
-      )
     {
         DoRend(oSpellTarget, oSpellOrigin, oItem);
     }

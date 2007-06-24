@@ -1449,8 +1449,6 @@ int HandleChoice(int nStage, int nChoice)
                 nStage = STAGE_DOMAIN;
                 MarkStageNotSetUp(STAGE_DOMAIN_CHECK1);
                 MarkStageNotSetUp(STAGE_DOMAIN);
-                // add domain feats
-                AddDomainFeats();
             }
             else
             {

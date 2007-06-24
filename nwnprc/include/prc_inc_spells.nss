@@ -14,271 +14,8 @@
    be necessary, except when new casting feats are created.
 */
 
-
-// -----------------
-// BEGIN ONHITCAST
-// -----------------
-
-/**
-// new functions for a highly flexible onhitcast system
-// added by motu99; April 15, 2007
-
-// most of this has been tested; some is still beta
-
-// in principle these functions should allow us to put any conceivable spell (and as many as we like) on an item
-// the spell(s) will be cast automatically, when the bearer of the item has scored a hit (item = weapon) or has received a hit (item= armor)
-// furthermore these functions will enable us to instantly cast *any* type of spell listed in spells.2da (e.g. we are not limited to "onhit" spells).
-// With the new function CastSpellAtObject() the spell will be cast instantly, without having to insert it into the action queue
-// (and thus not knowing when it will be done, if ever).
-*/
-
-/**
-Making your spells compatible with PRC instant spell casting
-using the provided function CastSpellAtObject()
-
-1) insert PRC wrappers into the spell script
-edit your spell script, replacing all
-calls to the spell information functions
-- GetSpellCastItem,
-- GetSpellTargetObject,
-- etc.
-with the respective PRC wrappers
-(just add "PRC" to the left of the function name)
-
-Nothing else needs to be done
-*/
-
-/**
-// Making your onhitcast spells compatible with PRC onhitcast:
-
-1) insert PRC wrappers into the impact spell script
-edit your spell script, replacing all
-calls to the spell information functions
-- GetSpellCastItem,
-- GetSpellTargetObject,
-- etc.
-with the respective PRC wrappers
-(just add "PRC" to the left of the function name)
-
-2) route the impact script through prc_onhitcast
-[only for onhitcast spells! Not for "normal" spells!]
-
-In order to circumvent the bioware bug, according to
-which only the first onhitcast spell on an item is executed,
-we must route all onhitcast spells through prc_onhitcast.
-
-This is done very conveniently by placing the following code
-into the body of the main function of your onhitcast impact spell script:
-
-	if(OnHitCastRouteToUniquePower()) return;
-
-Put this at the very beginning of the main()
-
-See "x2_s3_flamingd" for an example
-
-3) edit 2das
-[if your spell is operational, you probably have done this before]
-register your spell script in the appropriate 2das:
-- spells.2da
-- iprp_onhitspell.2da
-
-4) find a way to place your onhitcast spells on the item (armor or weapon)
-[if your spell is operational you might have done this before]
-usually done by a "normal" spell. For instance the "Flame Weapon"
-spell will put a special onhitcast item property on the weapon. The integer
-valued subtye of the item property defines what spell is to be called on a hit.
-The appropriate impact spell script "x2_s3_flamingd" is related to the
-integer valued subtype via "iprp_onhitspell.2da" and "spells.2da"
-
-See "x2_s0_enhweap" for an example how to put an onhitcast spell
-(as well as other item properties) on a weapon
-*/
-
-
-
-/**
-// ExecuteSpellScript:
-
-// instantly executes the spell script sScript via ExecuteScript in the context of oCaster (taking oCaster as the caster)
-// does not perform any checks, whether oCaster can actually cast the spell at all (or at the given level and metamagic)
-// will not call the spell hook PreSpellCastCode and does not perform any saving throws
-
-// Remark motu99:
-// no spellhook, no saves, no caster checks: This appears to be the general behavior of the onhitcast spells:
-// As far as I could tell, the onhitcast spells on weapon and armor are never routed through the spellhook by the
-// aurora engine (unless the spell script explicitly calls the hook), the target of the spell doesn't get a saving throw
-// (unless the spell script explicitly provideds for that), and - of course - the caster (or rather the item possessor)
-// must not necessarily have to ability to cast spells (a wizard can put "flame weapon" on a fighter's weapon) 
-
-// ExecuteSpellScript sets local override ints/objects on oCaster just before execution
-// (and deletes them immediately after execution),  so that the PRC-wrapper functions in the
-// spell scripts can determine
-//   - the target oTarget of the spell (accessed in the spell script via PRCGetSpellTargetObject),
-//   - the metamagic feat of the spell nMetamagic (accessed in the spell script via PRCGetMetaMagicFeat)
-//   - the casterlevel nCasterLevel (accessed in the spell script via PRCGetCasterLevel)
-//   - the spell cast item oItem (accessed in the spell script via PRCGetSpellCastItem)
-
-// if default values for the parameters oTarget, nMetaMagic, nCasterLevel and oItem are passed to ExecuteSpellScript,
-// it does not set any overrides for the PRC-wrapper functions. In this case you have to rely on the standard logic in
-// the wrapper functions (or on bioware's unreliable setup) to properly determine the correct values.
-// The standard logic generally works fine for nCasterLevel, but might it not work as expected for oTarget, nMetaMagic
-// and oItem - depending from where you call ExecuteSpellScript.
-// If you call ExecuteSpellScript from within a spell script or a spell hook (so that the PRC - or Bioware's - initialization
-// codes had a chance to set up things nicely) then the spell "information" functions PRCGetSpellTargetObject,
-// PRCGetMetaMagicFeat etc. will most likely return sensible values.
-// However, if you call ExecuteSpellScript outside of a spell script, nobody will have done any setup for you, so in this case
-// you are strongly advised to setup things manually, e.g. determine oTarget, nMetaMagic, nCasterLevel, oItem on your own and
-// pass them to ExecuteSpellScript without relying on the standard logic to do the guessing for you.
-
-// In principle ExecuteSpellScript(), in combination with the PRC-wrappers, is the only thing you really need.
-// To safely cycle through all onhitcast spells on an item one should use ApplyAllOnHitCastSpellsOnItemExcludingSubType()
-// This function is used in prc_onhitcast. As prc_onhitcast hides all the dirty work from us,  most likely that function will
-// never be needed outside of prc_onhitcast. 
-// The other functions are provided as a convenience. They all eventually call ExecuteSpellScript
-*/
-void ExecuteSpellScript(string sScript, object oTarget = OBJECT_INVALID, int nMetaMagic = METAMAGIC_ANY, int nCasterLevel = 0, object oItem = OBJECT_INVALID, object oCaster = OBJECT_SELF);
-
-/**
-// CastSpellAtObject:
-
-// Will instantly cast the spell with index iSpellNr at oTarget
-// Will look up the ImpactScript to execute via spells.2da
-// The spell is not inserted into the action queue of oCaster, no checks are performed whether oCaster can actually cast the spell!
-// oTarget is the target of the spell, oItem (if required) is the item from which the spell is cast, oCaster (or OBJECT_SELF) is considered to be the caster
-
-// so far this only works for spells cast on an object (oTarget). It is quite easy to write a similar function for AoE spells ( have to add a location)
-// tested for flame weapon and darkfire impact spell scripts, but should eventually work for all spells (see below)
-
-// in order to work, it requires the impact spell scripts to use the PRC-wrapper functions!!!
-// Besides the established wrappers (PRCGetSpellTargetObject, PRCGetCasterLevel, PRCGetMetaMagicFeat, PRCGetSpellID etc.)
-// we need a new PRC-wrapper function to replace SpellCastItem(). Not surprising the wrapper is named PRCGetSpellCastItem()
-// It would be a good idea to check all spell scripts, whether all calls to Bioware's spell information functions
-// have been replaced by the respective PRC wrapper functions. (So far, this is not done consistently!)
-
-// if default values for oTarget, nMetaMagic, nCasterLevel and oItem are supplied, no override variables are set, so that the PRC-wrapper functions
-// (or Bioware's functions) must determine the SpellTargetObject, the SpellCastItem etc. through their "standard" logic. This might or might not work.
-// For more information see the description in ExecuteSpellScript()
-
-*/
-void CastSpellAtObject(int iSpellNr, object oTarget = OBJECT_INVALID, int nMetaMagic = METAMAGIC_ANY, int nCasterLevel = 0, object oItem = OBJECT_INVALID, object oCaster = OBJECT_SELF);
-
-
-// instantly executes an AoE spell script, very similar to ExecuteSpellScript
-// will not set an override location, if the parameter bBioLocation = TRUE
-// in that case you will rely on Bioware's GetSpellTargetLocation to supply the correct location to the spell script
-// this might work, if called from *within* a spell script, but it generally doesn't work when called from *outside*
-// a spell script (which usually is the case for instant spells)
-void ExecuteAoESpellScript(string sScript, location lTargetLocation, int bBioLocation = FALSE, int nMetaMagic = METAMAGIC_ANY, int nCasterLevel = 0, object oItem = OBJECT_INVALID, object oCaster = OBJECT_SELF);
-
-// instantly casts an area of effect spell at location lTargetLocation
-// works similar to ActionCastSpellAtLocation, only casts spell instantly (without saving throw etc.)
-// See description of CastSpellAtObject, how instant spells work
-void CastSpellAtLocation(int iSpellNr, location lTargetLocation, int nMetaMagic = METAMAGIC_ANY, int nCasterLevel = 0, object oItem = OBJECT_INVALID, object oCaster = OBJECT_SELF);
-
-// applies to oTarget the onhitcast spell (situated on oItem) with subtype iSubType,  in the context of oCaster
-// will look up the spell script that must be executed in "iprp_onhitspell.2da" and "spells.2da"
-// if default values for oTarget, oItem are supplied, no override variables are set, so that the PRC-wrapper functions
-// (or Bioware's functions) must determine the SpellTargetObject and the SpellCastItem
-// for more information see the description in ExecuteSpellScript()
-void ApplyOnHitCastSpellSubType(int iSubType, object oTarget = OBJECT_INVALID, object oItem = OBJECT_INVALID, object oCaster = OBJECT_SELF);
-
-// applies to oTarget the onhitcast spell darkdire (situated on oItem), in the context of oCaster
-// will look up the spell script that must be executed in "iprp_onhitspell.2da" and "spells.2da"
-// if default values for oTarget, oItem are supplied, no override variables are set, so that the PRC-wrapper functions
-// (or Bioware's functions) must determine the SpellTargetObject and the SpellCastItem
-// for more information see the description in ExecuteSpellScript()
-void ApplyOnHitDarkfire(object oTarget = OBJECT_INVALID, object oItem = OBJECT_INVALID, object oCaster = OBJECT_SELF);
-
-// applies to oTarget the onhitcast spell flame weapon (situated on oItem), in the context of oCaster
-// will look up the spell script that must be executed in "iprp_onhitspell.2da" and "spells.2da"
-// if default values for oTarget, oItem are supplied, no override variables are set, so that the PRC-wrapper functions
-// (or Bioware's functions) must determine the SpellTargetObject and the SpellCastItem
-// for more information see the description in ExecuteSpellScript()
-void ApplyOnHitFlameWeapon(object oTarget = OBJECT_INVALID, object oItem = OBJECT_INVALID, object oCaster = OBJECT_SELF);
-
-// applies to oTarget the onhitcast spell unique power (situated on oItem), in the context of oCaster
-// actually this will call prc_onhitcast (hardcoded), e.g. it will not look up the 2das (as the above functions do)
-// if default values for oTarget, oItem are supplied, no override variables are set, so that the PRC-wrapper functions
-// (or Bioware's functions) must determine the SpellTargetObject and the SpellCastItem
-// for more information see the description in ExecuteSpellScript()
-void ApplyOnHitUniquePower(object oTarget = OBJECT_INVALID, object oItem = OBJECT_INVALID, object oCaster = OBJECT_SELF);
-
-// applies all on hit cast spells on oItem to oTarget in the context of oCaster
-// will look up the spell script that must be executed in "iprp_onhitspell.2da" and "spells.2da"
-// This is a safe way to do this, without interfering with any other loops over item properties in the spell scripts
-// Always use this function to cycle through and execute the onhitcast spells on an item!!
-// if default values for oTarget, oItem are supplied, no override variables are set, so that the PRC-wrapper functions
-// (or Bioware's functions) must determine the SpellTargetObject and the SpellCastItem
-// for more information see the description in ExecuteSpellScript()
-void ApplyAllOnHitCastSpellsOnItem(object oTarget = OBJECT_INVALID, object oItem = OBJECT_INVALID, object oCaster = OBJECT_SELF);
-
-// applies all on hit cast spells on oItem, excluding any spell-subtype given in iExcludeSubType, to oTarget in the context of oCaster
-// will look up the spell script that must be executed in "iprp_onhitspell.2da" and "spells.2da"
-// This is a safe way to do this, without interfering with any other loops over item properties in the spell scripts
-// Always use this function to cycle through and execute the onhitcast spells on an item!!
-// if default values for oTarget, oItem are supplied, no override variables are set, so that the PRC-wrapper functions
-// (or Bioware's functions) must determine the SpellTargetObject and the SpellCastItem
-// for more information see the description in ExecuteSpellScript()
-void ApplyAllOnHitCastSpellsOnItemExcludingSubType(int iExcludeSubType, object oTarget = OBJECT_INVALID, object oItem = OBJECT_INVALID, object oCaster = OBJECT_SELF);
-
-// returns true, if oItem has at least one onhitcast spell on it (can be any subtype)
-int GetHasOnHitCastSpell(object oItem);
-
-// returns true, if the oItem has an onhitcast spell with the given subtype
-int GetHasOnHitCastSpellSubType(int iSubType, object oItem);
-
-// returns True, if we have the onhit flame weapon spell on oItem
-int GetHasOnHitFlameWeapon(object oItem);
-
-// returns True, if we have the onhit darkfire spell on oItem
-int GetHasOnHitDarkfire(object oItem);
-
-// returns True, if we have the onhit unique power spell on oItem
-int GetHasOnHitUniquePower(object oItem);
-
-// to be used only in on-hit cast spell scripts, in order to route the spell through the unique power script (prc_onhitcast)
-// checks the local int "prc_ohc"; if it does not find the int, it assumes the spell script was called
-// directly be the aurora engine. In that case it will call prc_onhitcast and return TRUE (to signal to the caller, that
-// it should NOT further execute the spell script, as this will be done by prc_onhitcast)
-// if the function returns FALSE; the spell was not routed through prc_onhitcast, so the spell script should continue
-int OnHitCastRouteToUniquePower(object oSpellOrigin = OBJECT_SELF);
-
-// this will force the instant execution of any onhitcast spell script, even if it is set up to be
-// routed through prc_onhitcast (for more info on forced execution look at the code of OnHitCastRouteToUniquePower)
-// For more info on functionality, see the description/code of ExecuteSpellScript()
-void ForceExecuteSpellScript(string sScript, object oTarget = OBJECT_INVALID, int nMetaMagic = METAMAGIC_ANY, int nCasterLevel = 0, object oItem = OBJECT_INVALID, object oCaster = OBJECT_SELF);
-
-// this will force the instant execution of any onhitcast spell script with iSpellNr, as given in spells.2da
-// The spell script will be executed, even if it has been set up to be routed through prc_onhitcast
-// (for more info on forced execution look at the code of OnHitCastRouteToUniquePower)
-// for more info on functionality, see the description/code of CastSpellAtObject
-void ForceCastSpellAtObject(int iSpellNr, object oTarget = OBJECT_INVALID, int nMetaMagic = METAMAGIC_ANY, int nCasterLevel = 0, object oItem = OBJECT_INVALID, object oCaster = OBJECT_SELF);
-
-// forces the instant application of the onhitcast spell (situated on oItem) with subtype iSubType to oTarget,  in the context of oCaster
-// (for more info on forced execution look at the code of OnHitCastRouteToUniquePower)
-// for more info on functionality, see the description/code of ApplyOnHitCastSpellSubType
-void ForceApplyOnHitCastSpellSubType(int iSubType, object oTarget = OBJECT_INVALID, object oItem = OBJECT_INVALID, object oCaster = OBJECT_SELF);
-
-// instantly applies all on hit cast spells on oItem to oTarget in the context of oCaster
-// will force apply the spell scripts even if they have internally been set up to be routed through prc_onhitcast
-// (for more info on forced execution look at the code of OnHitCastRouteToUniquePower)
-// for more info on functionality, see the description/code of ApplyAllOnHitCastSpells
-// This is the safe way to loop through the item properties, without interfering with any other loops over item properties in the spell scripts
-void ForceApplyAllOnHitCastSpellsOnItem(object oTarget = OBJECT_INVALID, object oItem = OBJECT_INVALID, object oCaster = OBJECT_SELF);
-
-// most likely we will never need the following function:
-// instantly applies all on hit cast spells on oItem, excluding any spell-subtype given in iExcludeSubType, to oTarget in the context of oCaster
-// will force apply the spell scripts even if they have internally been set up to be routed through prc_onhitcast
-// (for more info on forced execution look at the code of OnHitCastRouteToUniquePower)
-// for more info on functionality, see the description/code of ApplyAllOnHitCastSpellsExcludingSubType
-// This is the safe way to loop through the item properties, without interfering with any other loops over item properties in the spell scripts
-void ForceApplyAllOnHitCastSpellsExcludingSubType(int iExcludeSubType, object oTarget = OBJECT_INVALID, object oItem = OBJECT_INVALID, object oCaster = OBJECT_SELF);
-
-
-// -----------------
-// END ONHITCAST
-// -----------------
-
+// this could also be put into in prc_inc_switches
+const string PRC_SAVEDC_OVERRIDE = "PRC_SAVEDC_OVERRIDE";
 
 // Returns the caster level when used in spells.  You can use PRCGetCasterLevel()
 // to determine a caster level from within a true spell script.  In spell-like-
@@ -567,540 +304,6 @@ const int  TYPE_DIVINE   = -2;
 // ---------------
 // BEGIN FUNCTIONS
 // ---------------
-
-/**
-// PRCGetSpellCastItem(object oCaster = OBJECT_SELF)
-// wrapper function (experimental) for GetSpellCastItem()
-
-// Note that we are giving preference for the local object, "PRC_SPELLCASTITEM_OVERRIDE", stored on oCaster
-// Therefore it is absolutely essential, in order to have this variable not interfere with "normal" spell casting,
-// to delete it *immediately after* the spell script executed. All of this is taken care of in the function ExecuteSpellScript(),
-// which should be used instead of any direct calls to the spell scripts (e.g. don't use ExecuteScript() directly)
-
-// Another possibility is to give preference to the GetSpellCastItem() call and only fetch the local object
-// "PRC_SPELLCASTITEM_OVERRIDE" when GetSpellCastItem() returns an invalid object.
-// This is how it is was done in the PRC 3.1c version of prc_onhitcast (lines 58-61), and in psi_sk_onhit, prc_evnt_bonebld, prc_evnt_strmtl
-// In those scripts the local (override) object was called "PRC_CombatSystem_OnHitCastSpell_Item". In order to be consistent with
-// the names of the other override variables, I changed the name of the override object to PRC_SPELLCASTITEM_OVERRIDE and
-// provided the wrapper PRCGetSpellCastItem for an easy to use onhitcast system
-
-// Possible caveats:
-
-// You should never cast spells as an action, when you need to set and delete the local object "PRC_SPELLCASTITEM_OVERRIDE" *outside* the action script.
-// This also pertains to other override variables, such as PRC_SPELL_TARGET_OBJECT_OVERRIDE, PRC_METAMAGIC_OVERRIDE, etc.
-// If you set (and delete) any local override (object or int) *within* the action script, thats ok. For instance putting ExecuteSpellScript() into an
-// ActionDoCommand, an AssignCommand or a DelayCommand will work; But setting "PRC_SPELLCASTITEM_OVERRIDE", then calling ActionCastSpellAt*
-// (which will insert the spell cast action into the action queue) and trying to delete the local object "PRC_SPELLCASTITEM_OVERRIDE" via a DelayCommand
-// or an AssignCommand(), often just guessing how long it takes the spell cast action to execute, will most likely break any other spell casting that is done between
-// setting the local override variable and deleting it. The problem becomes real, when you want to cast a spell, that requires a spell cast item (e.g. an onhit cast spell),
-// via any of the ActionCastSpellAt* commands provided by Bioware. First, the bioware ActionCastSpellAt* functions don't set up the SpellCastItem properly (simply
-// because you cannot supply the item as a parameter). So if the spell needs the item, you have to set it yourself. If bioware had provided a way to cast a spell *directly*, e.g.
-// not as an action, things would be quite easy. We could write a small three line function which i) sets the local object "PRC_SPELLCASTITEM_OVERRIDE", then ii) does
-// the spell directly, and iii) finally deletes the local object "PRC_SPELLCASTITEM_OVERRIDE". This single(!) three line function then can be inserted into the action
-// queue of oCaster via an AssignCommand or ActionDoCommand. But that is not possible, because Bioware only gave us Action* functions for spell casting. A workaround,
-// that might work in most cases, is to assign three consecutive actions to the caster's action queue: First insert an action that sets the local object
-// "PRC_SPELLCASTITEM_OVERRIDE", then insert the spell cast action into the queue via one of Bioware's ActionCastSpellAt* functions. Finally insert an action
-// into the queue that deletes the local object "PRC_SPELLCASTITEM_OVERRIDE". If the local object is stored on oCaster (not on the module!) this approach will
-// work most of the time. However, in the unfortunate event that an onhitcast spell (or another "instant" spell) is activated *between* the three consecutive
-// actions, trouble is certain to occur. 
-*/
-
-
-// wrapper function by motu99. Anything that depends on it will only be fully functional,
-// if the relevant spell scripts have been modified, replacing Bioware's GetSpellCastItem with PRCGetSpellCastItem
-object PRCGetSpellCastItem(object oCaster = OBJECT_SELF)
-{
-	// if the local object "PRC_SPELLCASTITEM_OVERRIDE" is valid, we take it without even looking for anything else
-	object oItem = GetLocalObject(oCaster, PRC_SPELLCASTITEM_OVERRIDE);
-	if (GetIsObjectValid(oItem))
-	{
-		if (DEBUG) DoDebug("PRCGetSpellCastItem: found override spell cast item = "+GetName(oItem)+", original item = " + GetName(GetSpellCastItem()));
-		return oItem;
-	}
-	
-	// otherwise simply return Bioware's GetSpellCastItem
-	return GetSpellCastItem();
-/*
-// motu99: disabled the old stuff; was only used in three scripts (changed them)
-		// if Bioware's functions doesn't return a valid object, maybe the scripted combat system will
-		if(!GetIsObjectValid(oItem))
-			oItem = GetLocalObject(oPC, "PRC_CombatSystem_OnHitCastSpell_Item");
-*/
-}
-
-/**
-// executes the spell script sScript via ExecuteScript in the context of oCaster (assuming oCaster is the caster)
-// sets local override ints/objects on oCaster before execution (and deletes them immediately after execution)
-// so that the PRC-wrapper functions in the spell scripts can determine
-//   - the target oTarget of the spell (accessed in the spell script via PRCGetSpellTargetObject),
-//   - the metamagic feat of the spell nMetamagic (accessed in the spell script via PRCGetMetaMagicFeat)
-//   - the casterlevel nCasterLevel (accessed in the spell script via PRCGetCasterLevel)
-//   - the spell cast item oItem (accessed in the spell script via PRCGetSpellCastItem)
-// if default values for the parameters oTarget, nMetaMagic, nCasterLevel and oItem are passed to ExecuteSpellScript,
-// it does not set any overrides for the PRC-wrapper functions. In this case you have to rely on the logic in
-// the wrapper functions to properly determine the correct values. This will generally work for nCasterLevel, but might not work
-// as expected for oTarget, nMetaMagic and oItem - depending from where you call ExecuteSpellScript. If you call it from
-// within a spell script (so that Bioware's initialization code - or any PRC code - had a chance to set up things nicely), then the spell "information" 
-// functions PRCGetSpellTargetObject, PRCGetMetaMagicFeat etc. will most likely return sensible values.
-// However, if you call ExecuteSpellScript outside of a spell script, nobody will have done any setup for you!
-// In such a case you are strongly advised to setup things manually, by explicitly passing non-default arguments to this function!
-
-// known caveats:
-// Using calls to PRCGetMetaMagicFeat() in onhitcast spells can be dangerous, because PRCGetMetaMagicFeat(), if given a valid spell cast item, will cycle through
-// the item properties on the spell cast item, in order to find out whether there are item properties of the type ITEM_PROPERTY_CAST_SPELL_METAMAGIC
-// on the item. This is problematic, because prc_onhitcast must also cycle through the item properties, in order to find out what onhitcast spells are on the item.
-// prc_onhitcast will execute all onhitcast spells it finds (besides itself) via ExecuteScript() or ExecuteSpellScript().
-// If we are not careful, we might find ourselves with two nested loops over item properties. But the current implementation
-// of GetFirstItemProperty and GetNextItemProperty does not allow nested loops. Nested loops generally result
-// in unpredictable behavior (such as infinitely returning the same item property on GetNextItemProperty)
-
-// The above described problem always occurs when there are nested loops over item properties or effects. Therefore generally it is a bad idea to call anything
-// complicated (e.g. a spell script) within a loop over item properties or effects, in particular if you don't know the internal logic of the complicated routine
-// you called (it could contain calls to GetFirst* or GetNext*)
-
-// I provided a "safe" function to cycle through all onhitcast spells on an item: ApplyAllOnHitCastSpellsExcludingSubType
-*/
-void ExecuteSpellScript(string sScript, object oTarget = OBJECT_INVALID, int nMetaMagic = METAMAGIC_ANY, int nCasterLevel = 0, object oItem = OBJECT_INVALID, object oCaster = OBJECT_SELF)
-{
-	if(DEBUG) DoDebug("ExecuteSpellScript: executing script "+sScript);
-
-	// tell the impact spell script who the target is
-	if (oTarget != OBJECT_INVALID)
-		SetLocalObject(oCaster, PRC_SPELL_TARGET_OBJECT_OVERRIDE, oTarget);
-
-	// tell the impact spell script what the spell cast item is
-	if (oItem != OBJECT_INVALID)
-		SetLocalObject(oCaster, PRC_SPELLCASTITEM_OVERRIDE, oItem);
-		
-	// override the caster level, but only if necessary
-	if (nCasterLevel)
-		SetLocalInt(oCaster, PRC_CASTERLEVEL_OVERRIDE, nCasterLevel);
-
-	// tell the impact spell script the metamagic we want to use
-	if (nMetaMagic != METAMAGIC_ANY)
-		SetLocalInt(oCaster, PRC_METAMAGIC_OVERRIDE, nMetaMagic);
-		
-	// execute the impact spell script in the context of oCaster
-	ExecuteScript(sScript, oCaster);
-
-/**
-// motu99: If we are paranoid, we could delete all local ints and objects, regardless if we set them beforehand,
-// This would prevent any accidental setting of these variables somewhere else, and then forgetting to delete them
-// However, as long as we route all of our stuff through ExecuteSpellScript(), we can be sure, that these variables
-// are not misused anywhere else. (And then Bioware does not seem to delete its variables either)
-// If we delete the local ints and objects indiscriminately, we MUST always call ExecuteScript with NON-DEFAULT values.
-// Otherwise we are in trouble when we do multiple calls to ExecuteScript from a loop: We might accidentally delete
-// any overrides that we set on some previous call to ExecuteSpellScript. At that point we are at the mercy of
-// Bioware's functions to provide the correct values, which does not always work.
-// Note that some measure of safety is provided through the fact, that we set these local ints / objects on oCaster, and not on the module
-*/
-	// cleanup (we only delete those local ints / objects that we set before
-	if (oItem != OBJECT_INVALID)
-		DeleteLocalObject(oCaster, PRC_SPELLCASTITEM_OVERRIDE);
-
-	if (oTarget != OBJECT_INVALID)
-		DeleteLocalObject(oCaster, PRC_SPELL_TARGET_OBJECT_OVERRIDE);
-
-	if (nMetaMagic != METAMAGIC_ANY)
-		DeleteLocalInt(oCaster, PRC_METAMAGIC_OVERRIDE);
-
-	if (nCasterLevel)
-		DeleteLocalInt(oCaster, PRC_CASTERLEVEL_OVERRIDE);
-
-//DoDebug("ExecuteSpellScript: done executing script "+sScript);
-}
-
-
-// will instantly cast the spell with index iSpellNr at oTarget by calling the ImpactScript listed in spells.2da
-// the spell is not inserted into the action queue of the caster, no checks are performed whether the caster can actually cast the spell!
-// oTarget is the target of the spell, oItem (if required) is the item from which the spell is cast, oPC (or OBJECT_SELF) is the caster
-// so far this only works for spells cast on an object (oTarget). It is quite easy to write a similar function for AoE spells ( have to add a location)
-// experimental; so far only tested for flame weapon and darkfire
-
-// in order to work, it requires modifications in the impact spell scripts!!!
-// We need a new PRC-wrapper function for the SpellCastItem, and replace any occurrence of GetSpellCastItem() with the new wrapper-function PRCGetSpellCastItem())
-// It would be a good idea to check all impact spell scripts, whether all calls to GetSpellCastItem(), GetCasterLevel(), GetMetaMagicFeat() and GetSpellTargetObject()
-// have been replaced by the respective PRC wrapper functions 
-
-// if default values for oTarget, oItem are supplied, no override variables are set, so that the PRC-wrapper functions
-// (or Bioware's functions) must determine the SpellTargetObject and the SpellCastItem
-// see the description in ExecuteSpellScript()
-void CastSpellAtObject(int iSpellNr, object oTarget = OBJECT_INVALID, int nMetaMagic = METAMAGIC_ANY, int nCasterLevel = 0, object oItem = OBJECT_INVALID, object oCaster = OBJECT_SELF)
-{
-	// get the name of the impact spell script (for ExecuteScript)
-	string sScript = Get2DACache("spells", "ImpactScript", iSpellNr);
-
-	if(sScript == "" || sScript == "****")
-		return;
-
-	ExecuteSpellScript(sScript, oTarget, nMetaMagic, nCasterLevel, oItem, oCaster);
-}
-
-// executes an AoE spell script, very similar to ExecuteSpellScript
-// will not set an override location, if the parameter bBioLocation = TRUE
-void ExecuteAoESpellScript(string sScript, location lTargetLocation, int bBioLocation = FALSE, int nMetaMagic = METAMAGIC_ANY, int nCasterLevel = 0, object oItem = OBJECT_INVALID, object oCaster = OBJECT_SELF)
-{
-	if(DEBUG) DoDebug("ExecuteAoESpellScript: executing script "+sScript);
-
-	// tell the impact spell script where the target area is
-	if (!bBioLocation)
-	{
-		SetLocalInt(oCaster, PRC_SPELL_TARGET_LOCATION_OVERRIDE, TRUE);
-		SetLocalLocation(oCaster, PRC_SPELL_TARGET_LOCATION_OVERRIDE, lTargetLocation);
-	}
-
-	// tell the impact spell script what the spell cast item is
-	if (oItem != OBJECT_INVALID)
-		SetLocalObject(oCaster, PRC_SPELLCASTITEM_OVERRIDE, oItem);
-		
-	// override the caster level, but only if necessary
-	if (nCasterLevel)
-		SetLocalInt(oCaster, PRC_CASTERLEVEL_OVERRIDE, nCasterLevel);
-
-	// tell the impact spell script the metamagic we want to use
-	if (nMetaMagic != METAMAGIC_ANY)
-		SetLocalInt(oCaster, PRC_METAMAGIC_OVERRIDE, nMetaMagic);
-		
-	// execute the impact spell script in the context of oCaster
-	ExecuteScript(sScript, oCaster);
-
-/**
-// motu99: If we are paranoid, we could delete all local ints and objects, regardless if we set them beforehand,
-// This would prevent any accidental setting of these variables somewhere else, and then forgetting to delete them
-// However, as long as we route all of our stuff through ExecuteSpellScript(), we can be sure, that these variables
-// are not misused anywhere else. (And then Bioware does not seem to delete its variables either)
-// If we delete the local ints and objects indiscriminately, we MUST always call ExecuteScript with NON-DEFAULT values.
-// Otherwise we are in trouble when we do multiple calls to ExecuteScript from a loop: We might accidentally delete
-// any overrides that we set on some previous call to ExecuteSpellScript. At that point we are at the mercy of
-// Bioware's functions to provide the correct values, which does not always work.
-// Note that some measure of safety is provided through the fact, that we set these local ints / objects on oCaster, and not on the module
-*/
-	// cleanup (we only delete those local ints / objects that we set before
-	if (!bBioLocation)
-	{
-		DeleteLocalInt(oCaster, PRC_SPELL_TARGET_LOCATION_OVERRIDE);
-		// DeleteLocalLocation(oCaster, PRC_SPELL_TARGET_LOCATION_OVERRIDE);
-	}
-
-	if (oItem != OBJECT_INVALID)
-		DeleteLocalObject(oCaster, PRC_SPELLCASTITEM_OVERRIDE);
-
-	if (nMetaMagic != METAMAGIC_ANY)
-		DeleteLocalInt(oCaster, PRC_METAMAGIC_OVERRIDE);
-
-	if (nCasterLevel)
-		DeleteLocalInt(oCaster, PRC_CASTERLEVEL_OVERRIDE);
-
-//DoDebug("ExecuteAoESpellScript: done executing script "+sScript);
-}
-
-// works similar to ActionCastSpellAtLocation, only casts spell instantly (without saving throw etc.
-// See description of CastSpellAtObject, how instant spells work
-void CastSpellAtLocation(int iSpellNr, location lTargetLocation, int nMetaMagic = METAMAGIC_ANY, int nCasterLevel = 0, object oItem = OBJECT_INVALID, object oCaster = OBJECT_SELF)
-{
-	// get the name of the impact spell script (for ExecuteScript)
-	string sScript = Get2DACache("spells", "ImpactScript", iSpellNr);
-
-	if(sScript == "" || sScript == "****")
-		return;
-
-	// we have to provide a location, so bBioLocation = FALSE
-	// if  bBioLocation were true, ExecuteAoESpellScript would have to rely on Bioware's GetSpellTargetLocation
-	// in order to supply the location for the spell script. That can work if you call CastSpellAtLocation from within
-	// a spell script, but usually you don't do that with instant spells, so mostly this would not work
-	ExecuteAoESpellScript(sScript, lTargetLocation, FALSE, nMetaMagic, nCasterLevel, oItem, oCaster);
-}
-
-
-// applies to oTarget the onhitcast spell (situated on oItem) with subtype iSubType,  in the context of oPC
-// if default values for oTarget, oItem are supplied, no override variables are set, so that the PRC-wrapper functions
-// (or Bioware's functions) must determine the SpellTargetObject and the SpellCastItem
-// see the description in ExecuteSpellScript()
-void ApplyOnHitCastSpellSubType(int iSubType, object oTarget = OBJECT_INVALID, object oItem = OBJECT_INVALID, object oCaster = OBJECT_SELF)
-{
-	// get the spellID of the onhitspell
-	int iSpellID = StringToInt( Get2DACache("iprp_onhitspell", "SpellIndex", iSubType) );
-
-	// now execute the impact spell script
-	CastSpellAtObject(iSpellID, oTarget, METAMAGIC_ANY, 0, oItem, oCaster);
-}
-
-// applies to oTarget the onhitcast spell darkdire (situated on oItem), in the context of oCaster
-// if default values for oTarget, oItem are supplied, no override variables are set, so that the PRC-wrapper functions
-// (or Bioware's functions) must determine the SpellTargetObject and the SpellCastItem
-// see the description in ExecuteSpellScript()
-void ApplyOnHitDarkfire(object oTarget = OBJECT_INVALID, object oItem = OBJECT_INVALID, object oCaster = OBJECT_SELF)
-{
-	ApplyOnHitCastSpellSubType(IP_CONST_ONHIT_CASTSPELL_ONHIT_DARKFIRE, oTarget, oItem, oCaster);
-}
-
-// applies to oTarget the onhitcast spell flame weapon (situated on oItem), in the context of oCaster
-// if default values for oTarget, oItem are supplied, no override variables are set, so that the PRC-wrapper functions
-// (or Bioware's functions) must determine the SpellTargetObject and the SpellCastItem
-// see the description in ExecuteSpellScript()
-void ApplyOnHitFlameWeapon(object oTarget = OBJECT_INVALID, object oItem = OBJECT_INVALID, object oCaster = OBJECT_SELF)
-{
-	ApplyOnHitCastSpellSubType(IP_CONST_ONHIT_CASTSPELL_ONHIT_FIREDAMAGE, oTarget, oItem, oCaster);
-}
-
-// applies to oTarget the onhitcast spell unique power (situated on oItem), in the context of oPC
-// if default values for oTarget, oItem are supplied, no override variables are set, so that the PRC-wrapper functions
-// (or Bioware's functions) must determine the SpellTargetObject and the SpellCastItem
-// see the description in ExecuteSpellScript()
-void ApplyOnHitUniquePower(object oTarget = OBJECT_INVALID, object oItem = OBJECT_INVALID, object oCaster = OBJECT_SELF)
-{
-//	ApplyOnHitCastSpellSubType(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, oTarget, oItem, oCaster);
-	ExecuteSpellScript("prc_onhitcast", oTarget, METAMAGIC_ANY, 0, oItem, oCaster);
-}
-
-// applies all on hit cast spells on oItem to oTarget in the context of oCaster
-// This is a safe way to do this, without interfering with any other loops over item properties in the spell scripts that are called
-// always use this function to cycle through and execute the onhitcast spells on an item
-// if default values for oTarget, oItem are supplied, no override variables are set, so that the PRC-wrapper functions
-// (or Bioware's functions) must determine the SpellTargetObject and the SpellCastItem
-// see the description in ExecuteSpellScript()
-void ApplyAllOnHitCastSpellsOnItem(object oTarget = OBJECT_INVALID, object oItem = OBJECT_INVALID, object oCaster = OBJECT_SELF)
-{
-	int iSubType;
-	int iNr = 0;
-
-	// remember the item that was passed to the function (in case it is invalid we pass it through to the spell cast functions)
-	object oItemPassed = oItem;
-	
-	// we need an item, so if OBJECT_INVALID was given, we must use the "standard" logic in PRCGetSpellCastItem to determine the item
-	if (oItem == OBJECT_INVALID)
-		oItem = PRCGetSpellCastItem(oCaster);
-
-	itemproperty ip = GetFirstItemProperty(oItem);
-
-	while(GetIsItemPropertyValid(ip))
-	{
-// DoDebug("ApplyAllOnHitCastSpellsExcludingSubType: found " + DebugStringItemProperty(ip));
-		if (GetItemPropertyType(ip) ==ITEM_PROPERTY_ONHITCASTSPELL)
-		{
-			// retrieve the spell ID
-			iSubType = GetItemPropertySubType(ip);
-			// we found a new onhit spell, so increment iNr
-			iNr++;
-			// store the spell ID in an array and execute the spell later, this is safer than trying to execute the spell script directly
-			// lets hope that nobody else uses our name "ohspl" for the array
-			SetLocalArrayInt(oCaster, "ohspl", iNr, iSubType);
-		}
-		ip = GetNextItemProperty(oItem);
-	}
-	
-	// now execute the spell scripts (note that the local array will not be deleted) 
-	while (iNr)
-	{
-		iSubType = GetLocalArrayInt(oCaster, "ohspl", iNr);
-//DoDebug("ApplyAllOnHitCastSpellsExcludingSubType: executing onhitcastspell subtype # " + IntToString(iSubType));
-		ApplyOnHitCastSpellSubType(iSubType, oTarget, oItemPassed, oCaster);
-		iNr--;
-	}	
-}
-
-// applies all on hit cast spells on oItem, excluding any spell-subtype given in iExcludeSubType, to oTarget in the context of oCaster
-// This is a safe way to do this, without interfering with any other loops over item properties in the spell scripts that are called
-// always use this function to cycle through and execute the onhitcast spells on an item
-// if default values for oTarget, oItem are supplied, no override variables are set, so that the PRC-wrapper functions
-// (or Bioware's functions) must determine the SpellTargetObject and the SpellCastItem
-// see the description in ExecuteSpellScript()
-void ApplyAllOnHitCastSpellsOnItemExcludingSubType(int iExcludeSubType, object oTarget = OBJECT_INVALID, object oItem = OBJECT_INVALID, object oCaster = OBJECT_SELF)
-{
-	int iSubType;
-	int iNr = 0;
-
-	// remember the item that was passed to the function (in case it is invalid we pass it through to the spell cast functions)
-	object oItemPassed = oItem;
-	
-	if (oItem == OBJECT_INVALID)
-		oItem = PRCGetSpellCastItem(oCaster);
-
-	itemproperty ip = GetFirstItemProperty(oItem);
-
-	while(GetIsItemPropertyValid(ip))
-	{
-// DoDebug("ApplyAllOnHitCastSpellsExcludingSubType: found " + DebugStringItemProperty(ip));
-		if (GetItemPropertyType(ip) ==ITEM_PROPERTY_ONHITCASTSPELL)
-		{
-			iSubType = GetItemPropertySubType(ip);
-			if(iSubType == iExcludeSubType) // if(iSubType ==IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER) // == 125
-            {
-                ip = GetNextItemProperty(oItem);
-                continue; //skip over OnHit:CastSpell:UniquePower otherwise it would TMI.
-            }
-			// we found a new onhit spell, so increment iNr
-			iNr++;
-			// store the spell ID in an array and execute the spell later, this is safer than trying to execute the spell script directly
-			// lets hope that nobody else uses our name "ohspl" for the array
-			SetLocalArrayInt(oCaster, "ohspl", iNr, iSubType);
-		}
-		ip = GetNextItemProperty(oItem);
-	}
-	
-	// now execute the spell scripts (note that the local array will not be deleted) 
-	while (iNr)
-	{
-		iSubType = GetLocalArrayInt(oCaster, "ohspl", iNr);
-//DoDebug("ApplyAllOnHitCastSpellsExcludingSubType: executing onhitcastspell subtype # " + IntToString(iSubType));
-		ApplyOnHitCastSpellSubType(iSubType, oTarget, oItemPassed, oCaster);
-		iNr--;
-	}	
-}
-
-// returns true, if oItem has at least one onhitcast spell (of any subtype)
-int GetHasOnHitCastSpell(object oItem)
-{	
-	itemproperty ip = GetFirstItemProperty(oItem);
-
-	while(GetIsItemPropertyValid(ip))
-	{
-		if (GetItemPropertyType(ip) ==ITEM_PROPERTY_ONHITCASTSPELL)
-		{
-				return TRUE;
-		}
-		ip = GetNextItemProperty(oItem);
-	}
-	return FALSE;
-}
-
-// returns true, if oItem has an onhitcast spell with the given subtype
-int GetHasOnHitCastSpellSubType(int iSubType, object oItem)
-{	
-	itemproperty ip = GetFirstItemProperty(oItem);
-
-	while(GetIsItemPropertyValid(ip))
-	{
-
-		if (GetItemPropertyType(ip) ==ITEM_PROPERTY_ONHITCASTSPELL
-			&& GetItemPropertySubType(ip) == iSubType)
-		{
-				return TRUE;
-		}
-		ip = GetNextItemProperty(oItem);
-	}
-	return FALSE;
-}
-
-// returns True, if we have the onhit flame weapon spell on the item
-int GetHasOnHitFlameWeapon(object oItem)
-{
-	return GetHasOnHitCastSpellSubType(IP_CONST_ONHIT_CASTSPELL_ONHIT_FIREDAMAGE, oItem);
-}
-
-// returns True, if we have the onhit darkfire spell on the item
-int GetHasOnHitDarkfire(object oItem)
-{
-	return GetHasOnHitCastSpellSubType(IP_CONST_ONHIT_CASTSPELL_ONHIT_DARKFIRE, oItem);
-}
-
-// returns True, if we have the onhit unique power spell on the item
-int GetHasOnHitUniquePower(object oItem)
-{
-	return GetHasOnHitCastSpellSubType(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, oItem);
-}
-
-// to be used only in on-hit cast spell scripts, in order to route the spell through the unique power script (prc_onhitcast)
-// checks the local int "prc_onhitcast_executing"; if it does not find the int, it assumes the spell script was called
-// directly be the aurora engine. In that case it will call prc_onhitcast and return TRUE (to signal to the caller, that
-// it should NOT execute the spell script, as this will be done by prc_onhitcast)
-// if the function returns FALSE; the spell is not routed through prc_onhitcast, so the spell script should continue
-int OnHitCastRouteToUniquePower(object oSpellOrigin = OBJECT_SELF)
-{
-	// if the local int "frc_ohc" is on, then we never route the spell through prc_onhitcast
-	// rather we force the execution of the onhitcast script; so return False in this case
-	if (GetLocalInt(oSpellOrigin, "frc_ohc"))
-	{
-		// signal to caller that it can continue execution (no rerouting to prc_onhitcast)
-		return FALSE;
-	}
-
-	// now check whether we were called from prc_onhitcast
-	int bNotCalledByPRC = !GetLocalInt(oSpellOrigin, "prc_ohc");
-
-	// if not, call prc_onhitcast
-	if (bNotCalledByPRC)
-	{
-		if (DEBUG) DoDebug("onhitcast spell script not called through prc_onhitcast - now routing to prc_onhitcast");
-		ExecuteScript("prc_onhitcast", oSpellOrigin);
-	}
-	// signal to calling function, whether it should terminate execution, because we rerouted the call (e.g. bNotCalledByPRC=TRUE)
-	// or whether it should continue execution, because we did not reroute (e.g. bNotCalledByPRC=FALSE)
-	return bNotCalledByPRC;
-}
-
-// this will force the execution of any onhitcast spell script, even if it is set up to be
-// routed through prc_onhitcast (see the description for the function OnHitCastRouteToUniquePower)
-void ForceExecuteSpellScript(string sScript, object oTarget = OBJECT_INVALID, int nMetaMagic = METAMAGIC_ANY, int nCasterLevel = 0, object oItem = OBJECT_INVALID, object oCaster = OBJECT_SELF)
-{
-	// set the local int, that tells the spell script that we want to force its execution
-	SetLocalInt(oCaster, "frc_ohc", TRUE);
-
-	// now call the spell script
-	ExecuteSpellScript(sScript, oTarget, nMetaMagic, nCasterLevel, oItem, oCaster);
-
-	// delete the local int for forced execution
-	DeleteLocalInt(oCaster, "frc_ohc");
-}
-
-// this will force the instant execution of any onhitcast spell script with iSpellNr, as given in spells.2da
-// The spell script will be executed, even if it has been set up to be routed through prc_onhitcast
-// (for more info, see the description of the function OnHitCastRouteToUniquePower)
-void ForceCastSpellAtObject(int iSpellNr, object oTarget = OBJECT_INVALID, int nMetaMagic = METAMAGIC_ANY, int nCasterLevel = 0, object oItem = OBJECT_INVALID, object oCaster = OBJECT_SELF)
-{
-	// get the name of the impact spell script (for ExecuteSpellScript)
-	string sScript = Get2DACache("spells", "ImpactScript", iSpellNr);
-
-	if(sScript == "" || sScript == "****")
-		return;
-
-	// now force-execute the spell script
-	ForceExecuteSpellScript(sScript, oTarget, nMetaMagic, nCasterLevel, oItem, oCaster);
-}
-
-// forces the application of the onhitcast spell (situated on oItem) with subtype iSubType to oTarget,  in the context of oPC
-void ForceApplyOnHitCastSpellSubType(int iSubType, object oTarget = OBJECT_INVALID, object oItem = OBJECT_INVALID, object oCaster = OBJECT_SELF)
-{
-	// get the spellID of the onhitspell
-	int iSpellID = StringToInt( Get2DACache("iprp_onhitspell", "SpellIndex", iSubType) );
-
-	// now force-execute the impact spell script
-	ForceCastSpellAtObject(iSpellID, oTarget, METAMAGIC_ANY, 0, oItem, oCaster);
-}
-
-// applies all on hit cast spells on oItem to oTarget in the context of oCaster
-// will force apply the spell scripts even if they have internally been set up to be routed through prc_onhitcast
-// (for more info, see the description of the function OnHitCastRouteToUniquePower)
-// This is the safe way to do this, without interfering with any other loops over item properties in the spell scripts that are called
-void ForceApplyAllOnHitCastSpellsOnItem(object oTarget = OBJECT_INVALID, object oItem = OBJECT_INVALID, object oCaster = OBJECT_SELF)
-{
-	// set the local int, that tells the spell scripts that we want to force their execution
-	SetLocalInt(oCaster, "frc_ohc", TRUE);
-
-	// now apply all onhitcast spells on the item
-	ApplyAllOnHitCastSpellsOnItem(oTarget, oItem, oCaster);
-
-	// delete the local int for forced execution
-	DeleteLocalInt(oCaster, "frc_ohc");	
-}
-
-// applies all on hit cast spells on oItem, excluding any spell-subtype given in iExcludeSubType, to oTarget in the context of oCaster
-// will force apply the spell scripts even if they have internally been set up to be routed through prc_onhitcast
-// (for more info, see the description of the function OnHitCastRouteToUniquePower)
-// This is the safe way to do this, without interfering with any other loops over item properties in the spell scripts that are called
-void ForceApplyAllOnHitCastSpellsOnItemExcludingSubType(int iExcludeSubType, object oTarget = OBJECT_INVALID, object oItem = OBJECT_INVALID, object oCaster = OBJECT_SELF)
-{
-	// set the local int, that tells the spell scripts that we want to force their execution
-	SetLocalInt(oCaster, "frc_ohc", TRUE);
-
-	// now apply all onhitcast spells on the item
-	ApplyAllOnHitCastSpellsOnItemExcludingSubType(iExcludeSubType, oTarget, oItem, oCaster);
-
-	// delete the local int for forced execution
-	DeleteLocalInt(oCaster, "frc_ohc");	
-}
-
-
 
 
 int GetArcanePRCLevels (object oCaster)
@@ -1488,14 +691,37 @@ int GetLevelByTypeDivineFeats(object oCaster = OBJECT_SELF, int iSpellID = -1)
 
 int PRCGetLastSpellCastClass(object oCaster = OBJECT_SELF)
 {
+	// note that a barbarian has a class type constant of zero. So nClass == 0 could in principle mean
+	// that a barbarian cast the spell, However, barbarians cannot cast spells, so it doesn't really matter
+	// beware of Barbarians with UMD, though. Also watch out for spell like abilities
+	// might have to provide a fix for these (for instance: if(nClass == -1) nClass = 0;
     int nClass = GetLocalInt(oCaster, PRC_CASTERCLASS_OVERRIDE);
     if(nClass)
 	{
 		if(DEBUG) DoDebug("PRCGetLastSpellCastClass: found override caster class = "+IntToString(nClass)+", original class = "+IntToString(GetLastSpellCastClass()));
         return nClass;
 	}
-    return GetLastSpellCastClass();
+	return GetLastSpellCastClass();
 }
+
+// looks up the spell level for the arcane caster classes (Wiz_Sorc, Bard) in spells.2da.
+// Caveat: some onhitcast spells don't have any spell-levels listed for any class
+int GetIsArcaneSpell (int iSpellId)
+{
+	return	Get2DACache("spells", "Wiz_Sorc", iSpellId) != ""
+			|| Get2DACache("spells", "Bard", iSpellId) != "";
+}
+
+// looks up the spell level for the divine caster classes (Cleric, Druid, Ranger, Paladin) in spells.2da.
+// Caveat: some onhitcast spells don't have any spell-levels listed for any class
+int GetIsDivineSpell (int iSpellId)
+{
+	return	Get2DACache("spells", "Cleric", iSpellId) != ""
+			|| Get2DACache("spells", "Druid", iSpellId) != ""
+			|| Get2DACache("spells", "Ranger", iSpellId) != ""
+			|| Get2DACache("spells", "Paladin", iSpellId) != "";
+}
+
 
 int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
 {
@@ -1522,30 +748,47 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
 	object oItem = PRCGetSpellCastItem(oCaster);
 
 	// Item Spells
-	if (GetItemPossessor(oItem) == oCaster)
+	// this check is unreliable because of Bioware's implementation (GetSpellCastItem returns 
+	// the last object from which a spell was cast, even if we are not casting from an item)
+	if (GetIsObjectValid(oItem))
 	{
-		//SendMessageToPC(oCaster, "Item casting at level " + IntToString(GetCasterLevel(oCaster)));
-		if(GetPRCSwitch(PRC_STAFF_CASTER_LEVEL)
-			&& ((GetBaseItemType(oItem) == BASE_ITEM_MAGICSTAFF) ||
-				(GetBaseItemType(oItem) == BASE_ITEM_CRAFTED_STAFF))
-			)
+		if (DEBUG) DoDebug("PRCGetCasterLevel: found valid item = "+GetName(oItem));
+		// double check, just to make sure
+		if (GetItemPossessor(oItem) == oCaster) // likely item casting
 		{
-			iCastingClass = GetFirstArcaneClass(oCaster);//sets it to an arcane class
-		}
-		else
-		{
-			//code for getting new ip type
-			itemproperty ipTest = GetFirstItemProperty(oItem);
-			while(GetIsItemPropertyValid(ipTest) && !iReturnLevel)
+			//SendMessageToPC(oCaster, "Item casting at level " + IntToString(GetCasterLevel(oCaster)));
+			if(GetPRCSwitch(PRC_STAFF_CASTER_LEVEL)
+				&& ((GetBaseItemType(oItem) == BASE_ITEM_MAGICSTAFF) ||
+					(GetBaseItemType(oItem) == BASE_ITEM_CRAFTED_STAFF))
+				)
 			{
-				if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_CAST_SPELL_CASTER_LEVEL)
+				iCastingClass = GetFirstArcaneClass(oCaster);//sets it to an arcane class
+			}
+			else
+			{
+				//code for getting new ip type
+				itemproperty ipTest = GetFirstItemProperty(oItem);
+				while(GetIsItemPropertyValid(ipTest))
 				{
-					int nSubType = GetItemPropertySubType(ipTest);
-					nSubType = StringToInt(Get2DACache("iprp_spells", "SpellIndex", nSubType));
-					if(nSubType == iSpellId)
-						iReturnLevel = GetItemPropertyCostTableValue (ipTest);
+					if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_CAST_SPELL_CASTER_LEVEL)
+					{
+						int nSubType = GetItemPropertySubType(ipTest);
+						nSubType = StringToInt(Get2DACache("iprp_spells", "SpellIndex", nSubType));
+						if(nSubType == iSpellId)
+						{
+							iReturnLevel = GetItemPropertyCostTableValue (ipTest);
+							if (DEBUG) DoDebug("PRCGetCasterLevel: caster level from item = "+IntToString(iReturnLevel));
+							break; // exit the while loop
+						}
+					}
+					ipTest = GetNextItemProperty(oItem);
 				}
-				ipTest = GetNextItemProperty(oItem);
+				// if we didn't find a caster level on the item, it must be Bioware item casting
+				if (!iReturnLevel)
+				{
+					iReturnLevel = GetCasterLevel(oCaster);
+					if (DEBUG) DoDebug("PRCGetCasterLevel: bioware item casting with caster level = "+IntToString(iReturnLevel));
+				}
 			}
 		}
 	}
@@ -1589,7 +832,10 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
 
 	//at this point it must be a SLA or similar
 	if(!iReturnLevel)
+	{
 		iReturnLevel = GetCasterLevel(oCaster);
+		if (DEBUG) DoDebug("PRCGetCasterLevel: bioware caster level = "+IntToString(iReturnLevel));
+	}
 
 	iReturnLevel += nAdjust;
 
@@ -2388,8 +1634,6 @@ location PRCGetSpellTargetLocation(object oCaster = OBJECT_SELF)
 	}
 
 
-	// motu99: the following code retrieves an override location on the caster
-	// this is when we want to cast area of effect spells instantly (e.g. not as an action), similar to CastSpellAtObject()
 	// check if there is an override location on the caster, and return that
 	// bioware did not define a LOCATION_INVALID const, so we signal a valid override location by setting a local int on oCaster
 	if (GetLocalInt(oCaster, PRC_SPELL_TARGET_LOCATION_OVERRIDE))
@@ -2398,12 +1642,24 @@ location PRCGetSpellTargetLocation(object oCaster = OBJECT_SELF)
 		return GetLocalLocation(oCaster, PRC_SPELL_TARGET_LOCATION_OVERRIDE);
 	}
 
-	// object oItem     = GetSpellCastItem();
-	object oItem     = PRCGetSpellCastItem(oCaster);
 
     // The rune always targets the one who activates it.
-    if(GetResRef(oItem) == "prc_rune_1") return GetLocation(GetItemPossessor(oItem));
+/*
+	// motu99: How do we know, whether we are really casting from a rune: Bioware's inadequate implementation
+	// of GetSpellCastItem will always return the last item from which a spell was cast, regardless how long ago that was
+	// So we might be doing a completely different (non-item) spell at the moment. For instance, it could be that some time
+	// ago we activated a multiple-use rune. GetSpellCastItem will return that rune (as long as we didn't do any other
+	// item casting inbetween) and the rune will still be a valid object (because it had multiple uses). But the spell we are
+	// casting now has nothing to do with the rune. Because of Bioware's inadequate implementation there is no way for us
+	// to know, whether we are doing a normal spell or wheter we are casting from a rune (or another item) at the moment. 
+	// Disabled the following code until we find a solution
+	object oItem     = PRCGetSpellCastItem(oCaster);
+	if(	GetIsObjectValid(oItem)
+		&& GetResRef(oItem) == "prc_rune_1")
+		return GetLocation(GetItemPossessor(oItem));
+*/
 
+	// if we made it here, we must use Bioware's function
     return GetSpellTargetLocation();
 }
 
@@ -2489,21 +1745,103 @@ object PRCGetSpellTargetObject(object oCaster   = OBJECT_SELF)
         return oTarget;
     }
 
-	// object oItem     = GetSpellCastItem();
-	object oItem     = PRCGetSpellCastItem(oCaster);
-
     // The rune always targets the one who activates it.
-    if(GetResRef(oItem) == "prc_rune_1")
-    {
-        if(DEBUG) DoDebug(GetName(oCaster) + " has cast a spell using a rune");
-        // Making sure that the owner of the item is correct
-        if (GetIsObjectValid(GetItemPossessor(oItem))) if(DEBUG) DoDebug(GetName(oCaster) + " is the owner of the Spellcasting item");
-        return GetItemPossessor(oItem);
-    }
-
+/*
+	// motu99: How do we know, whether we are really casting from a rune: Bioware's inadequate implementation
+	// of GetSpellCastItem will always return the last item from which a spell was cast, regardless how long ago that was
+	// So we might be doing a completely different (non-item) spell at the moment. For instance, it could be that some time
+	// ago we activated a multiple-use rune. GetSpellCastItem will return that rune (as long as we didn't do any other
+	// item casting inbetween) and the rune will still be a valid object (because it had multiple uses). But the spell we are
+	// casting now has nothing to do with the rune. Because of Bioware's inadequate implementation there is no way for us
+	// to know, whether we are doing a normal spell or wheter we are casting from a rune (or another item) at the moment. 
+	// Disabled the following code until we find a solution
+	object oItem     = PRCGetSpellCastItem(oCaster);
+	if(GetIsObjectValid(oItem) && GetResRef(oItem) == "prc_rune_1")
+	{
+		if(DEBUG) DoDebug(GetName(oCaster) + " has cast a spell using a rune");
+		// Making sure that the owner of the item is correct
+		if (GetIsObjectValid(GetItemPossessor(oItem)))
+		{
+			if(DEBUG) DoDebug(GetName(oCaster) + " is the owner of the Spellcasting item");
+			return GetItemPossessor(oItem);
+		}
+	}
+*/
+	
+	// return Bioware's target
     return oBWTarget;
 }
 
+/**
+ * PRCGetSpellCastItem(object oCaster = OBJECT_SELF)
+ * wrapper function for GetSpellCastItem()
+ *
+ * Note that we are giving preference for the local object, "PRC_SPELLCASTITEM_OVERRIDE", stored on oCaster
+ * Therefore it is absolutely essential, in order to have this variable not interfere with "normal" spell casting,
+ * to delete it *immediately after* the spell script executed. All of this is taken care of in the function
+ * ExecuteSpellScript(), which should be used instead of any direct calls to the spell scripts.
+ * In particular, NEVER MANUALLY set the overrides. You might ruin the whole spell casting system!
+ *
+ * Another possibility would have been, to give preference to the GetSpellCastItem() call and only fetch the
+ * local object "PRC_SPELLCASTITEM_OVERRIDE" when GetSpellCastItem() returns an invalid object.
+ * This is how it is was done in the PRC 3.1c version of prc_onhitcast (lines 58-61), and in psi_sk_onhit, prc_evnt_bonebld, prc_evnt_strmtl
+ * [In those scripts the local (override) object was called "PRC_CombatSystem_OnHitCastSpell_Item". In order to be consistent with
+ * the naming conventions of the other override variables, I changed the name of the override object to PRC_SPELLCASTITEM_OVERRIDE
+ * and provided the wrapper PRCGetSpellCastItem for an easy use of the onhitcast system]
+ * However, that approach DOES NOT WORK, because Bioware didn't bother to implement GetSpellCastItem() properly.
+ * In a proper implementation GetSpellCastItem() word return OBJECT_INVALID, when called outside of an item spell script,
+ * But this is not the case. GetSpellCastItem() will always return the item, from which (according to Bioware's knowledge)
+ * the last item spell was cast. As long as the item still exists, the call to GetSpellCastItem() will always return a valid item,
+ * even if the item spell long expired and we are casting a completely differnt spell. So GetSpellCastItem() practically
+ * NEVER returns an invalid object. [We only get an invalid object, when we didn't yet cast any item spell at all]
+ *
+ * Possible caveats:
+ * You should never cast spells as an action, when the local override object "PRC_SPELLCASTITEM_OVERRIDE"
+ * is set (and subsequently deleted) *outside* the action script. This also pertains to other override variables, such as
+ * PRC_SPELL_TARGET_OBJECT_OVERRIDE, PRC_METAMAGIC_OVERRIDE, etc.
+ * If you set (and delete) a local override (object or int) *within* one single action, thats ok. For instance putting
+ * ExecuteSpellScript() into an ActionDoCommand, an AssignCommand or a DelayCommand will work.
+ * But (manually) setting "PRC_SPELLCASTITEM_OVERRIDE", then calling ActionCastSpellAt*
+ * (which will insert the spell cast action into the action queue) and after that trying to delete the overrides
+ * via a DelayCommand or an AssignCommand(), often just guessing how long it takes the spell cast action to run,
+ * will most likely break any other spell casting that is done between manually setting the override and deleting it.
+ * So please follow the advise to never MANUALLY set the override variables. Use the functions provided here
+ * (ExecuteSpellScript, CastSpellAtObject, CastSpellAtLocation, etc. ) or - if you must - build your own
+ * functions by using the provided functions either directly or as templates (they show you how to do things right)
+ */
+
+
+// wrapper function for GetSpellCastItem. Anything that depends on it will only be fully functional,
+// if the relevant spell scripts have been modified, replacing Bioware's GetSpellCastItem with PRCGetSpellCastItem
+object PRCGetSpellCastItem(object oCaster = OBJECT_SELF)
+{
+	// if the local object "PRC_SPELLCASTITEM_OVERRIDE" is valid, we take it without even looking for anything else
+	object oItem = GetLocalObject(oCaster, PRC_SPELLCASTITEM_OVERRIDE);
+	if (GetIsObjectValid(oItem))
+	{
+		// OBJECT_SELF counts as invalid item
+		if (oItem == OBJECT_SELF)
+		{
+//DoDebug("PRCGetSpellCastItem: oItem == OBJECT_SELF = "+GetName(OBJECT_SELF)+", setting spell cast item to OBJECT_INVALID = "+GetName(OBJECT_INVALID));			
+			oItem = OBJECT_INVALID;
+		}
+	
+		if (DEBUG) DoDebug("PRCGetSpellCastItem: found override spell cast item = "+GetName(oItem)+", original item = " + GetName(GetSpellCastItem()));
+		return oItem;
+	}
+	
+	// otherwise simply return Bioware's GetSpellCastItem
+	oItem = GetSpellCastItem();
+	if (DEBUG) DoDebug("PRCGetSpellCastItem: no override, returning bioware spell cast item = "+GetName(oItem));
+	return oItem;
+/*
+// motu99: disabled the old stuff; was only used in three scripts (changed them)
+// and couldn't work anyway (because of Bioware's improper implementation of GetSpellCastItem)
+		// if Bioware's functions doesn't return a valid object, maybe the scripted combat system will
+		if(!GetIsObjectValid(oItem))
+			oItem = GetLocalObject(oPC, "PRC_CombatSystem_OnHitCastSpell_Item");
+*/
+}
 
 ////////////////Begin Spellsword//////////////////
 
@@ -2619,10 +1957,12 @@ int PRCGetMetaMagicFeat(object oCaster = OBJECT_SELF)
     if(nSSFeat)
         nFeat = nSSFeat;
 
+	int nClass = PRCGetLastSpellCastClass(oCaster);
+		
     // Suel Archanamach's Extend spells they cast on themselves.
     // Only works for Suel Spells, and not any other caster type they might have
     // Since this is a spellscript, it assumes OBJECT_SELF is the caster
-    if (GetLevelByClass(CLASS_TYPE_SUEL_ARCHANAMACH) >= 3 && PRCGetLastSpellCastClass(oCaster) == CLASS_TYPE_SUEL_ARCHANAMACH)
+    if (nClass == CLASS_TYPE_SUEL_ARCHANAMACH && GetLevelByClass(CLASS_TYPE_SUEL_ARCHANAMACH) >= 3)
     {
         // Check that they cast on themselves
         // if (oCaster == GetSpellTargetObject())
@@ -2638,56 +1978,60 @@ int PRCGetMetaMagicFeat(object oCaster = OBJECT_SELF)
         nFeat |= METAMAGIC_EXTEND;
     }
 
-	if(GetIsObjectValid(oItem))
+	// we assume that we are casting from an item, if the item is valid and the item belongs to oCaster
+	// however, we cannot be sure because of Bioware's inadequate implementation of GetSpellCastItem
+	if(GetIsObjectValid(oItem) && GetItemPossessor(oItem) == oCaster)
     {
-        // int iSpellId = PRCGetSpellId();
-        int iSpellId = PRCGetSpellId(oCaster);
+        // int nSpellId = PRCGetSpellId();
+		int nSpellID = PRCGetSpellId(oCaster);
 
-        //check item for metamagic
-        int nItemMetaMagic;
-        itemproperty ipTest = GetFirstItemProperty(oItem);
-        while(GetIsItemPropertyValid(ipTest))
-        {
-            if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_CAST_SPELL_METAMAGIC)
-            {
-                int nSubType = GetItemPropertySubType(ipTest);
-                nSubType = StringToInt(Get2DACache("iprp_spells", "SpellIndex", nSubType));
-                if(nSubType == iSpellId)
-                {
-                    int nCostValue = GetItemPropertyCostTableValue(ipTest);
-                    if(nCostValue == -1 && DEBUG)
-                        DoDebug("Problem examining itemproperty");
-                    switch(nCostValue)
-                    {
-                        //bitwise "addition" equivalent to nFeat = (nFeat | nSSFeat)
-                        case 0:
-                            nItemMetaMagic |= METAMAGIC_NONE;
-                            break;
-                        case 1:
-                            nItemMetaMagic |= METAMAGIC_QUICKEN;
-                            break;
-                        case 2:
-                            nItemMetaMagic |= METAMAGIC_EMPOWER;
-                            break;
-                        case 3:
-                            nItemMetaMagic |= METAMAGIC_EXTEND;
-                            break;
-                        case 4:
-                            nItemMetaMagic |= METAMAGIC_MAXIMIZE;
-                            break;
-                        case 5:
-                            nItemMetaMagic |= METAMAGIC_SILENT;
-                            break;
-                        case 6:
-                            nItemMetaMagic |= METAMAGIC_STILL;
-                            break;
-                    }
-                }
-            }
-            ipTest = GetNextItemProperty(oItem);
-        }
-        nFeat = nItemMetaMagic;
-    }
+		//check item for metamagic
+		int nItemMetaMagic;
+		itemproperty ipTest = GetFirstItemProperty(oItem);
+		while(GetIsItemPropertyValid(ipTest))
+		{
+			if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_CAST_SPELL_METAMAGIC)
+			{
+				int nSubType = GetItemPropertySubType(ipTest);
+				nSubType = StringToInt(Get2DACache("iprp_spells", "SpellIndex", nSubType));
+				if(nSubType == nSpellID)
+				{
+					int nCostValue = GetItemPropertyCostTableValue(ipTest);
+					if(nCostValue == -1 && DEBUG)
+						DoDebug("Problem examining itemproperty");
+					switch(nCostValue)
+					{
+						//bitwise "addition" equivalent to nFeat = (nFeat | nSSFeat)
+						case 0:
+							nItemMetaMagic |= METAMAGIC_NONE;
+							break;
+						case 1:
+							nItemMetaMagic |= METAMAGIC_QUICKEN;
+							break;
+						case 2:
+							nItemMetaMagic |= METAMAGIC_EMPOWER;
+							break;
+						case 3:
+							nItemMetaMagic |= METAMAGIC_EXTEND;
+							break;
+						case 4:
+							nItemMetaMagic |= METAMAGIC_MAXIMIZE;
+							break;
+						case 5:
+							nItemMetaMagic |= METAMAGIC_SILENT;
+							break;
+						case 6:
+							nItemMetaMagic |= METAMAGIC_STILL;
+							break;
+					}
+				}
+			}
+			ipTest = GetNextItemProperty(oItem);
+		}
+		if (DEBUG) DoDebug("PRCGetMetaMagicFeat: item casting with item = "+GetName(oItem)+", found metamagic = "+IntToString(nItemMetaMagic));
+		// we only replace nFeat, if we found something on the item
+		if (nItemMetaMagic) nFeat = nItemMetaMagic;
+	}
 	// if (DEBUG) DoDebug("PRCGetMetaMagicFeat: returning " +IntToString(nFeat));
     return nFeat;
 }

@@ -126,11 +126,11 @@ void DoNaturalAttack(object oWeapon)
 	// if not melee/ranged fighting, abort
 	if (!GetIsObjectValid(oTarget))
 		return;
-
-    //no point attacking plot
-    if(GetPlotFlag(oTarget))
-        return;
-
+/*
+	//no point attacking plot
+	if(GetPlotFlag(oTarget))
+		return;
+*/
 	object oPC = OBJECT_SELF;
 	
 	// natural attacks are (usually) not ranged attacks, so PerformAttack() will move to a target, if it is out of melee range
@@ -184,6 +184,8 @@ void DoNaturalAttack(object oWeapon)
 */
     //secondary attacks are half strength (we use offhand for this)
 
+	// set the prc combat mode
+	int bCombatMode = PRC_COMBATMODE_HB & PRC_COMBATMODE_ALLOW_TARGETSWITCH & PRC_COMBATMODE_ABORT_WHEN_OUT_OF_RANGE;
 
 	if (DEBUG) DoDebug(COLOR_WHITE + "initiating a secondary natural attack with "+GetName(oWeapon)+" and attack mod " + IntToString(nAttackMod));     
 
@@ -199,7 +201,8 @@ void DoNaturalAttack(object oWeapon)
         FALSE,              //int iTouchAttackType = FALSE
         oWeapon,      // we should have something in the right hand (might need it for some calculations)
         oWeapon,      // we put the creature weapon in the left hand slot 
-        1             //offhand override (for half strength)
+        1,             //offhand override (for half strength)
+		bCombatMode // prc scripted combat mode
         );        
 }
 
@@ -222,15 +225,14 @@ void DoOffhandAttack(int nAttackMod)
 	object oTarget = GetAttemptedAttackTarget(); 
 
 	// motu99: The following checks should be made by PerformAttack(), so they are somewhat redundant
-
-   //no point attacking plot
-    if(GetPlotFlag(oTarget))
-        return;
-
+/*
+	//no point attacking plot
+	if(GetPlotFlag(oTarget))
+		return;
+*/
 	// if not melee fighting, abort
 	if (!GetIsObjectValid(oTarget))
 		return;
-
 /*
 	//if not fighting, abort 
 	if(!GetIsFighting(oPC))
@@ -239,7 +241,6 @@ void DoOffhandAttack(int nAttackMod)
 		return;
 	}
 */
-
     string sMessageSuccess;
     string sMessageFailure;
 	if (DEBUG)
@@ -260,6 +261,9 @@ void DoOffhandAttack(int nAttackMod)
     //null effect
     effect eInvalid;
 
+	// set the prc combat mode
+	int bCombatMode = PRC_COMBATMODE_HB & PRC_COMBATMODE_ALLOW_TARGETSWITCH & PRC_COMBATMODE_ABORT_WHEN_OUT_OF_RANGE;
+
 	if (DEBUG) DoDebug(COLOR_WHITE + "initiating an overflow offhand attack with "+GetName(oWeapon)+" and attack mod "+IntToString(nAttackMod));  	
 
 	PerformAttack(oTarget, 
@@ -274,7 +278,8 @@ void DoOffhandAttack(int nAttackMod)
         FALSE,              //int iTouchAttackType = FALSE
         oWeapon,      //object oRightHandOverride = OBJECT_INVALID,
         oWeapon,      //object oLeftHandOverride = OBJECT_INVALID,
-        1                  // offhand attack 
+        1,                  // offhand attack 
+		bCombatMode		// prc combat mode
         );        
 }
 
@@ -285,15 +290,14 @@ void DoOffhandAttackRound(object oPC = OBJECT_SELF)
 	object oTarget = GetAttemptedAttackTarget(); 
 
 	// motu99: The following checks should be made by PerformAttack(), so they are somewhat redundant
-
-   //no point attacking plot
-    if(GetPlotFlag(oTarget))
-        return;
-
+/*
+	//no point attacking plot
+	if(GetPlotFlag(oTarget))
+		return;
+*/
 	// if not melee fighting, abort
 	if (!GetIsObjectValid(oTarget))
 		return;
-
 /*
 	//if not fighting, abort 
 	if(!GetIsFighting(oPC))
@@ -302,7 +306,6 @@ void DoOffhandAttackRound(object oPC = OBJECT_SELF)
 		return;
 	}
 */
-
     string sMessageSuccess;
     string sMessageFailure;
 	if (DEBUG)
@@ -323,6 +326,9 @@ void DoOffhandAttackRound(object oPC = OBJECT_SELF)
     //null effect
     effect eInvalid;
 
+	// set the prc combat mode
+	int bCombatMode = PRC_COMBATMODE_HB & PRC_COMBATMODE_ALLOW_TARGETSWITCH & PRC_COMBATMODE_ABORT_WHEN_OUT_OF_RANGE;
+
 	DoDebug(COLOR_WHITE + "initiating an overflow offhand attack round");  	
 
 	PerformAttackRound(oTarget, // object oDefender
@@ -332,12 +338,13 @@ void DoOffhandAttackRound(object oPC = OBJECT_SELF)
 		0, // int iAttackBonusMod = 0,
 		0, // int iDamageModifier = 0,
 		0, //    int iDamageType = 0,
-		0, // int bEffectAllAttacks = FALSE,
+		TRUE, // int bEffectAllAttacks = FALSE,
 		sMessageSuccess, // string sMessageSuccess = "",
 		sMessageFailure, // string sMessageFailure = "",
 		0, // int bApplyTouchToAll = FALSE,
 		0, // int iTouchAttackType = FALSE,
-		0 //int bInstantAttack = FALSE);
+		0, //int bInstantAttack = FALSE);
+		bCombatMode // CombatMode
 		);	
 }
 
@@ -354,11 +361,11 @@ void DoOverflowOnhandAttack(int nAttackMod)
     object oTarget = GetAttemptedAttackTarget(); 
 
 	// motu99: The following checks should be made by PerformAttack(), so they are somewhat redundant
-
-   //no point attacking plot
-    if(GetPlotFlag(oTarget))
-        return;
-
+/*
+	//no point attacking plot
+	if(GetPlotFlag(oTarget))
+		return;
+*/
 	// if not melee fighting, abort
 	if (!GetIsObjectValid(oTarget))
 		return;
@@ -370,7 +377,6 @@ void DoOverflowOnhandAttack(int nAttackMod)
 		return;
 	}
 */
-
 	string sMessageSuccess;
     string sMessageFailure;
 	if (DEBUG)
@@ -391,6 +397,9 @@ void DoOverflowOnhandAttack(int nAttackMod)
     //null effect
     effect eInvalid;
 
+	// set the prc combat mode
+	int bCombatMode = PRC_COMBATMODE_HB & PRC_COMBATMODE_ALLOW_TARGETSWITCH & PRC_COMBATMODE_ABORT_WHEN_OUT_OF_RANGE;
+
     if (DEBUG) DoDebug(COLOR_WHITE+"initiating an overflow onhand attack with "+GetName(oWeapon)+" and attack mod "+IntToString(nAttackMod));     
 
     PerformAttack(oTarget, 
@@ -405,7 +414,8 @@ void DoOverflowOnhandAttack(int nAttackMod)
         FALSE,              //int iTouchAttackType = FALSE
         oWeapon,            //object oRightHandOverride = OBJECT_INVALID,
         OBJECT_INVALID,      //object oLeftHandOverride = OBJECT_INVALID
-		0
+		0,
+		bCombatMode
         );        
 }
 
@@ -417,7 +427,7 @@ void DoNaturalWeaponHB(object oPC = OBJECT_SELF)
 	if (!GetIsInCombat(oPC))
 		return;
 		
-    float fDelay = 0.5 + IntToFloat(Random(10))/10.0;
+    float fDelay = 0.1 + IntToFloat(Random(10))/100.0;
 
     //no natural weapons, abort
     //in a different form, abort for now fix it later   

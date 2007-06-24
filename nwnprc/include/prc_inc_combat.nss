@@ -100,6 +100,28 @@
 //::
 //:://////////////////////////////////////////////
 
+// various modes for the prc-combat routines (these are bit-flags)
+
+// should be used when PerformAttack or PerformAttackRound are run from a heartbeat
+// and the aurora engine runs in parallel to prc scripted combat (such as for more than 2
+// offhand attacks or natural weapon attacks). Ensures that when we are not physically attacking
+// any more, the scripted combat is aborted
+const int PRC_COMBATMODE_HB = 1;
+
+// allows a switch of target (mostly used when scripted combat and aurora combat run in parallel)
+const int PRC_COMBATMODE_ALLOW_TARGETSWITCH = 2;
+
+// will not abort a scripted melee attack (or attack round), when the target is out of range and cannot be reached with a five foot step
+// not applicable for scripted ranged attacks (these are always executed, because so far the range of ranged weapons is not well implemented)
+const int PRC_COMBATMODE_ABORT_WHEN_OUT_OF_RANGE = 4;
+
+// if set, will issue an ActionAttack Command on the last attack of  a scripted attack round
+// if used in PerformAttack(). will issue an ActionAttack command after the (single) attack
+const int PRC_COMBATMODE_ACTIONATTACK_ON_LAST = 8;
+
+// will bypass damage reduction, if on 
+const int PRC_COMBATMODE_BYPASS_DR = 16; // not yet implemented
+
 // constant ints for touch attacks
 // using these helps determing which type of touch attack to perform.
 // using the spell versions if your spell does not use a weapon.
@@ -111,7 +133,11 @@ const int TOUCH_ATTACK_RANGED_SPELL = 4;
 // Distances
 const float MELEE_RANGE_FEET = 10.;
 const float MELEE_RANGE_METERS = 3.05;
-const float RANGE_15_FEET_IN_METERS = 4.57;
+const float RANGE_15_FEET_IN_METERS = 4.92;
+const float RANGE_5_FEET_IN_METERS = 1.64;
+
+// maximum distance (in meters) where we actually rush to do an attack
+const float fMaxAttackDistance = 20.;
 
 // Colors in String messages to PCs
 const string COLOR_BLUE         = "<cfÌþ>";    // used by saving throws.
@@ -204,6 +230,12 @@ int GetPnPMonkAttacks(int iMonklevel);
 //:://////////////////////////////////////////////
 //::  Weapon Information Functions
 //:://////////////////////////////////////////////
+
+// returns the value of the WeaponType column in  baseitem.2das
+// this number will be zero for any item that is not a weapon
+// it will have different (positive) numbers for different weapon types
+int GetIsWeaponType(int iBaseType);
+int GetIsWeapon(object oItem);
 
 // Returns DAMAGE_TYPE_* const of weapon
 int GetDamageTypeByWeaponType(int iWeaponType);
@@ -330,8 +362,13 @@ object GetAmmunitionFromWeapon(object oWeapon, object oAttacker);
 // motu99: This actually was (and is) 10 feet
 int GetMeleeAttackers15ft(object oPC = OBJECT_SELF);
 
+// estimates how much the range between oAttacker and oDefender is reduced due to the size of both creatures
+// will add  a meter for every size integer above CREATURE_SIZE_MEDIUM
+float GetSizeAdjustment(object oAttacker, object oDefender);
+
 // Returns true if melee attacker is in range to attack target (e.g. 10 feet)
-int GetIsInMeleeRange(object oDefender, object oAttacker);
+// if bSizeAdjustment is True, it will consider the creatures sizes 
+int GetIsInMeleeRange(object oDefender, object oAttacker, int bSizeAdjustment = TRUE);
 
 // returns the sum of all class levels that give an unarmed base attack bonus (UBAB)
 int GetUBABLevel(object oPC);
@@ -406,7 +443,7 @@ object FindNearestNewEnemy(object oAttacker, object oOldDefender);
 object FindNearestEnemy(object oAttacker);
 
 // clears all actions (but not the combat state) and moves to the location or oTarget
-void ClearAllActionsAndMoveToObject(object oTarget);
+void ClearAllActionsAndMoveToObject(object oTarget, float fRange = 2.0);
 
 // checksall equipped items of the oPC for the Haste property
 int GetHasHasteItemProperty(object oPC);
@@ -571,7 +608,7 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
 // utility function to apply any onhit-property (found on an item) to oTarget
 // assumes that the Item Property Type of ip is ITEM_PROPERTY_ON_HIT_PROPERTIES
 // cycles through all the known subtypes in order to properly perform the action
-void DoOnHitProperties(itemproperty ip, object oTarget);
+struct OnHitSpell DoOnHitProperties(itemproperty ip, object oTarget);
 
 // same as DoOnHitProperties, only cycles through on Monster hit subtypes
 // e.g. the item property type must be ITEM_PROPERTY_ON_MONSTER_HIT
@@ -640,13 +677,15 @@ void AttackLoopMain(object oDefender, object oAttacker,
  *
  * @param bInstantAttack    If TRUE, all attacks are performed at the same time, instead of over a round.
  *                          Default: FALSE
+ * @param bCombatModeFlags	various bit-wise flags that control the scripted combat
+ *                                                  see PRC_COMBATMODE_* constants for more info
  */
 void PerformAttackRound(object oDefender, object oAttacker,
 	effect eSpecialEffect, float eDuration = 0.0, int iAttackBonusMod = 0,
 	int iDamageModifier = 0, int iDamageType = 0, int bEffectAllAttacks = FALSE,
 	string sMessageSuccess = "", string sMessageFailure = "",
 	int bApplyTouchToAll = FALSE, int iTouchAttackType = FALSE,
-	int bInstantAttack = FALSE);
+	int bInstantAttack = FALSE, int bCombatModeFlags = 0);
 
 /**
 // Performs a single attack and can add in bonus damage damage/effects
@@ -670,6 +709,8 @@ void PerformAttackRound(object oDefender, object oAttacker,
 // oRightHandOverride - item to use as if in the right hand
 // oLeftHandOverride - item to use as if in the left hand
 // nHandednessOverride - if TRUE, count as offhand attack
+// bCombatModeFlags - various bit-wise flags that control the scripted combat
+// see PRC_COMBATMODE_* constants for more info
 */
 void PerformAttack(object oDefender, object oAttacker,
 	effect eSpecialEffect, float eDuration = 0.0, int iAttackBonusMod = 0,
@@ -677,7 +718,7 @@ void PerformAttack(object oDefender, object oAttacker,
 	string sMessageSuccess = "", string sMessageFailure = "",
 	int iTouchAttackType = FALSE,
 	object oRightHandOverride = OBJECT_INVALID, object oLeftHandOverride = OBJECT_INVALID,
-	int nHandednessOverride = 0); // motu99: changed default to FALSE (was -1) 
+	int nHandednessOverride = 0, int bCombatModeFlags = 0); // motu99: changed default of nHandednessOverride to FALSE (was -1) 
 
 //:://///////////////////////////////////////
 //::  Structs
@@ -751,6 +792,7 @@ struct AttackLoopVars
 	int bApplyTouchToAll; // duplicates the parameter of PerformAttackRound() for use in Attack logic functions
 	int iTouchAttackType; // duplicates the parameter of PerformAttack() and PerformAttackRound() for use in Attack logic functions
 	int bFiveFootStep; // determines whether we already did a five foot step in the full combat round
+	int bMode; // flag wit bitwise settings that determines various combat mode settings, such as offhand attack checks etc.
 };
 
 // used to calculate the BonusAttacks (due to spell effects such as Haste, One Strike Two Cuts or similar)
@@ -766,6 +808,13 @@ struct Dice
 {
 	int iNum;
 	int iSides;
+};
+
+// stores SpellID and DC of an onhit spell
+struct OnHitSpell
+{
+	int iSpellID;
+	int iDC;
 };
 
 // "quasi global" Vars needed to pass information between AttackLoopMain and AttackLoopLogic or other utitily functions used by these two
@@ -820,6 +869,7 @@ int iVorpalSaveDC = 0;
 #include "prc_feat_const"
 #include "inc_abil_damage"
 #include "inc_epicspelldef"
+#include "prc_inc_onhit"
 
 //:://///////////////////////////////////////////////////////////////////////////
 //::  Utility functions (BAB, # Attacks) - mostly used inline, but good to have them here to copy
@@ -888,6 +938,16 @@ int GetPnPMonkAttacks(int iMonkLevel)
 //:://////////////////////////////////////////////
 //::  Weapon Information Functions
 //:://////////////////////////////////////////////
+
+int GetIsWeaponType(int iBaseType)
+{
+	return StringToInt(Get2DACache("baseitems", "WeaponType", iBaseType));
+}
+
+int GetIsWeapon(object oItem)
+{
+	return GetIsWeaponType(GetBaseItemType(oItem));
+}
 
 // @TODO: include CEP stuff in the weapon information functions
 // maybe we should use the 2das instead of "hardwiring" everything
@@ -2154,18 +2214,23 @@ int GetMeleeAttackers15ft(object oPC = OBJECT_SELF)
 
 	if (oTarget == OBJECT_INVALID)
 		return FALSE;
-	float fBurningBrand = 0.0;
-	if (GetLocalInt(oPC, "DWBurningBrand")) fBurningBrand = FeetToMeters(5.0);
+	
+	float fDistance = GetDistanceBetween(oPC,oTarget);
+	if (GetLocalInt(oPC, "DWBurningBrand"))
+		fDistance -= RANGE_5_FEET_IN_METERS;
 
-	return GetDistanceBetween(oPC,oTarget) <= (MELEE_RANGE_METERS + fBurningBrand);
+	return fDistance <= MELEE_RANGE_METERS;
 }
 
-int GetIsInMeleeRange(object oDefender, object oAttacker)
+int GetIsInMeleeRange(object oDefender, object oAttacker, int bSizeAdjustment = TRUE)
 {
-	float fBurningBrand = 0.0;
-	if (GetLocalInt(oAttacker, "DWBurningBrand")) fBurningBrand = FeetToMeters(5.0);
+	float fDistance = GetDistanceBetween(oDefender, oAttacker);
+	if (bSizeAdjustment)
+		fDistance -= GetSizeAdjustment(oDefender, oAttacker);
+	if (GetLocalInt(oAttacker, "DWBurningBrand"))
+		fDistance -= RANGE_5_FEET_IN_METERS;
 
-	return GetDistanceBetween(oAttacker,oDefender) <= (MELEE_RANGE_METERS + fBurningBrand);
+	return fDistance <= MELEE_RANGE_METERS;
 }
 
 object GetUnarmedWeapon(object oPC)
@@ -5491,9 +5556,11 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
 			// @TODO: store weaponEnhancement value and make new function that takes this value
 			int iDamagePower = GetDamagePowerConstant(oWeapon, oDefender, oAttacker);
 			int iDamageType = GetDamageTypeByWeaponType(iWeaponType);
+
 			// When this maneuver is in effect, weapon damage is fire
 			// Also put here so it doesn't muck up things looking for weapon damage type
 			if (GetLocalInt(oAttacker, "DWBurningBrand")) iDamageType = DAMAGE_TYPE_FIRE;
+
 
 			// motu99: why do we store different physical damage types (Bludg, Pierc, Slash) in the WeaponBonusDamage struct
 			// when we sum up all physical damage here and only use the weapon base damage type?
@@ -5527,6 +5594,17 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
 //:://////////////////////////////////////////////
 //::  Attack Logic Functions
 //:://////////////////////////////////////////////
+
+// adapted from prc_alterations
+void ActionCastSpellFromPlaceable(int iSpell, object oTarget, int iCasterLvl, int nMetaMagic = METAMAGIC_ANY, object oCaster = OBJECT_SELF)
+{
+    object oCastingObject = CreateObject(OBJECT_TYPE_PLACEABLE, "x0_rodwonder", GetLocation(oCaster));
+
+    AssignCommand(oCastingObject, ActionCastSpellAtObject(iSpell, oTarget, nMetaMagic, TRUE, iCasterLvl, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+
+    DestroyObject(oCastingObject, 6.0);
+}
+
 
 void ApplyOnHitDurationAbiltiies(object oTarget, int iDurationVal, effect eAbility, effect eVis)
 {
@@ -5570,13 +5648,14 @@ void ApplyOnHitDurationAbiltiies(object oTarget, int iDurationVal, effect eAbili
 // the impact spell scripts, and delete them right after execution (so that they don't interfere with the normal spellcasting process)
 // See ExecuteSpellScript() in prc_inc_spells how this can be done
 */
-void DoOnHitProperties(itemproperty ip, object oTarget)
+struct OnHitSpell DoOnHitProperties(itemproperty ip, object oTarget)
 {
 	// covers poison, vorpal, stun, disease, etc.
 	// ipSubType = IP_CONST_ONHIT_*
 	// ipCostVal = IP_CONST_ONHIT_SAVEDC_*
 	
 //	int iType = GetItemPropertyType(ip);
+	struct OnHitSpell sSpell;
 	int iDC = GetItemPropertyCostTableValue(ip);
 	int iSubType = GetItemPropertySubType(ip);
 	int iParam1 = GetItemPropertyParam1Value(ip);
@@ -5679,27 +5758,32 @@ void DoOnHitProperties(itemproperty ip, object oTarget)
 		*/
 		case IP_CONST_ONHIT_KNOCK:
 		{
-			ActionCastSpellAtObject(SPELL_KNOCK, oTarget, METAMAGIC_ANY, TRUE, iDC, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
+			sSpell.iSpellID = SPELL_KNOCK;
+			// ActionCastSpellAtObject(SPELL_KNOCK, oTarget, METAMAGIC_ANY, TRUE, iDC, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
 			break;
 		}
 		case IP_CONST_ONHIT_LESSERDISPEL:
 		{
-			ActionCastSpellAtObject(SPELL_LESSER_DISPEL, oTarget, METAMAGIC_ANY, TRUE, iDC, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
+			sSpell.iSpellID = SPELL_LESSER_DISPEL;
+			// ActionCastSpellAtObject(SPELL_LESSER_DISPEL, oTarget, METAMAGIC_ANY, TRUE, iDC, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
 			break;
 		}
 		case IP_CONST_ONHIT_DISPELMAGIC:
 		{
-			ActionCastSpellAtObject(SPELL_DISPEL_MAGIC, oTarget, METAMAGIC_ANY, TRUE, iDC, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
+			sSpell.iSpellID = SPELL_DISPEL_MAGIC;
+			// ActionCastSpellAtObject(SPELL_DISPEL_MAGIC, oTarget, METAMAGIC_ANY, TRUE, iDC, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
 			break;
 		}
 		case IP_CONST_ONHIT_GREATERDISPEL:
 		{
-			ActionCastSpellAtObject(SPELL_GREATER_DISPELLING, oTarget, METAMAGIC_ANY, TRUE, iDC, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
+			sSpell.iSpellID = SPELL_GREATER_DISPELLING;
+			// ActionCastSpellAtObject(SPELL_GREATER_DISPELLING, oTarget, METAMAGIC_ANY, TRUE, iDC, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
 			break;
 		}
 		case IP_CONST_ONHIT_MORDSDISJUNCTION:
 		{
-			ActionCastSpellAtObject(SPELL_MORDENKAINENS_DISJUNCTION, oTarget, METAMAGIC_ANY, TRUE, iDC, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
+			sSpell.iSpellID = SPELL_MORDENKAINENS_DISJUNCTION;
+			// ActionCastSpellAtObject(SPELL_MORDENKAINENS_DISJUNCTION, oTarget, METAMAGIC_ANY, TRUE, iDC, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
 			break;
 		}
 		// iParam1 = iprp_abilities.2da
@@ -5929,6 +6013,11 @@ void DoOnHitProperties(itemproperty ip, object oTarget)
 			break;
 		}
 	}
+
+	if (sSpell.iSpellID)
+		sSpell.iDC = iDC;
+
+	return sSpell;
 }
 
 // motu99: added saving throws (most were missing)
@@ -6113,14 +6202,6 @@ void DoOnMonsterHit(itemproperty ip, object oTarget)
 	}
 }
 
-// experimental: not working!
-void ClearActionsAndCastSpell(int iSpellID, object oTarget, int iCasterLvl)
-{
-DoDebug("ClearActionsAndCastSpell: entered, clearing actions and casting spell # "+IntToString(iSpellID));
-	ClearAllActions(TRUE);
-	ActionCastSpellAtObject(iSpellID, oTarget, METAMAGIC_ANY, TRUE, iCasterLvl, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
-//	ActionAttack(oDefender, TRUE);
-}
 
 
 // motu99: modified function so that it does not produce a stack underflow error
@@ -6137,12 +6218,13 @@ void ApplyOnHitAbilities(object oTarget, object oItemWielder, object oItem)
 	// motu99: moved declaration of these variables outside of switch statement
 	// because it says in NWNLexicon that you cannot declare / initialize a variable in a case statement
 	// in the old version the function produced a stack underflow run-time error (hard to track down: compiler does not issue a compilation warning!)
+	int iNr;
 	int iType;
 	int iSubType;
-	int iSpellID;
 	int iCostVal;
 	int iParam1;
 	int bOnHitCastSpell = FALSE;
+	struct OnHitSpell sSpell;
 
 	effect eEffect;
 	
@@ -6172,7 +6254,18 @@ void ApplyOnHitAbilities(object oTarget, object oItemWielder, object oItem)
 			}
 			case ITEM_PROPERTY_ON_HIT_PROPERTIES:
 			{
-				DoOnHitProperties(ip, oTarget);
+				sSpell = DoOnHitProperties(ip, oTarget);
+
+				// was it a spell that must be cast?
+				if (sSpell.iSpellID)
+				{
+					iNr++;
+					// store the spell ID in an array and execute the spell later, this is safer than trying to execute the spell script directly
+					SetLocalArrayInt(oItemWielder, "ohspl", iNr, sSpell.iSpellID);
+
+					iNr++;
+					SetLocalArrayInt(oItemWielder, "ohspl", iNr, sSpell.iDC);
+				}
 				break;
 			}
 			// much like above but for creature weapons
@@ -6205,6 +6298,17 @@ void ApplyOnHitAbilities(object oTarget, object oItemWielder, object oItem)
 	if (bOnHitCastSpell)
 	{
 		ApplyOnHitUniquePower(oTarget, oItem, oItemWielder);
+	}
+
+	// now execute the spell scripts (note that the local array will not be deleted) 
+	while (iNr)
+	{
+		sSpell.iDC = GetLocalArrayInt(oItemWielder, "ohspl", iNr);
+		iNr--;
+		sSpell.iSpellID = GetLocalArrayInt(oItemWielder, "ohspl", iNr);
+		iNr--;
+		// we might have to determine an appropriate caster level (minimum for spell?) and an appropriate class from the spellID
+		CastSpellAtObject(sSpell.iSpellID, oTarget, METAMAGIC_NONE, 0, 0, sSpell.iDC, OBJECT_INVALID, oItemWielder);
 	}
 
 //	FloatingTextStringOnCreature(sMes, oAttacker);
@@ -6504,6 +6608,21 @@ int GetIsPhysicalCombatAction(int iAction)
 	return FALSE;
 }
 
+float GetSizeAdjustment(object oDefender, object oAttacker)
+{
+	int iSize = PRCGetCreatureSize(oAttacker) - CREATURE_SIZE_MEDIUM;
+//DoDebug("GetSizeAdjustment: attacker size = "+IntToString(iSize));
+	if (iSize < 0)
+		iSize = 0;
+
+	int iSize2 = PRCGetCreatureSize(oDefender) - CREATURE_SIZE_MEDIUM;
+//DoDebug("GetSizeAdjustment: defender size = "+IntToString(iSize2));
+	if (iSize2 < 0)
+		iSize2 = 0;
+	
+	// for size above medium add a meter per (size - creature_size_medium)
+	return(IntToFloat(iSize+iSize2));
+}
 
 // this function is needed in order to have the aurora combat system and scripted prc combat to run smoothly in parallel
 // oDefender is the target selected by the prc combat functions
@@ -6540,7 +6659,7 @@ object CheckForChangeOfTarget(object oAttacker, object oDefender, int bAllowSwit
 			oTarget = oDefender;
 		}
 		// if oTarget lives, we replace oTarget only if
-		else if	(	bAllowSwitchOfTarget // we have allowed a switch of targets (this will never be the case for a ranged attack)
+		else if	(	bAllowSwitchOfTarget // we have allowed a switch of targets (this should never be the case for a ranged attack)
 					&& !GetIsInMeleeRange(oTarget, oAttacker) // oTarget is not in melee range
 					&& GetIsObjectValid(oDefender) // oDefender is valid
 					&& !GetIsDead(oDefender) // oDefender lives
@@ -6598,7 +6717,7 @@ object CheckForChangeOfTarget(object oAttacker, object oDefender, int bAllowSwit
 
 				// oTarget and oDefender are both out of melee range.
 				// in this case our preference is still on oTarget! So we articially increase the distance to oDefender by 2 feet before we compare
-				if (GetDistanceBetween(oAttacker, oDefender) + 0.6 <= GetDistanceBetween(oAttacker, oTarget))
+				if (GetDistanceBetween(oAttacker, oDefender) + 0.67 <= GetDistanceBetween(oAttacker, oTarget))
 					oTarget = oDefender;
 			}
 		}
@@ -6613,14 +6732,32 @@ object CheckForChangeOfTarget(object oAttacker, object oDefender, int bAllowSwit
 // this might cancel any PerformAttack() actions that are still in the "pipeline"
 // so better change the order to DelayCommand(fDelay, AssignCommand(PerformAttack()))
 // or just don't use AssignCommand
-void ClearAllActionsAndMoveToObject(object oTarget)
+void ClearAllActionsAndMoveToLocation(object oTarget)
 {
 	ClearAllActions();
 	ActionMoveToLocation(GetLocation(oTarget), TRUE);
 }
 
-// AttackLoopLogic actually does the attack, e.g. it does all the rolls, and then calculates and applies the damage
+void ClearAllActionsAndAttack(object oTarget)
+{
+	ClearAllActions();
+	ActionAttack(oTarget);
+}
 
+void ClearAllActionsAndMoveToObject(object oTarget, float fRange = 2.0)
+{
+	ClearAllActions();
+	ActionMoveToObject(oTarget, TRUE, fRange);
+}
+
+void ClearAllActionsMoveToObjectAndAttack(object oTarget, float fRange = 2.0)
+{
+	ClearAllActions();
+	ActionMoveToObject(oTarget, TRUE, fRange);
+	ActionAttack(oTarget);
+}
+
+// AttackLoopLogic actually does the attack, e.g. it does all the rolls, and then calculates and applies the damage
 /**
 // INTERNAL LOGIC:
 
@@ -6672,6 +6809,7 @@ void AttackLoopLogic(object oDefender, object oAttacker,
 	bFirstAttack = !sAttackVars.iAttackNumber;
 
 	if (DEBUG) DoDebug("entered AttackLoopLogic: bFirstAttack = " + IntToString(bFirstAttack) + ", cleave = " + IntToString(bIsCleaveAttack) + ", current action = " + GetActionName(iAction));
+	if (DEBUG) DoDebug("AttackLoopLogic: iMainAttacks = " + IntToString(iMainAttacks) + ", iOffHandAttacks = " + IntToString(iOffHandAttacks) + ", iBonusAttacks = " + IntToString(iBonusAttacks));
 
 	int bIsRangedAttack = sAttackVars.bIsRangedWeapon || sAttackVars.iTouchAttackType == TOUCH_ATTACK_RANGED_SPELL || sAttackVars.iTouchAttackType == TOUCH_ATTACK_RANGED;
 
@@ -6679,8 +6817,9 @@ void AttackLoopLogic(object oDefender, object oAttacker,
 	if (!bIsCleaveAttack)
 	{
 		// if we are not attacking, abort (we loose all attacks which might be left in the round)
-		// we only abort, if the local int "prc_action_attack" is not set
-		if (!GetLocalInt(oAttacker, "prc_action_attack"))
+		// we only check for an abort, if we are in the heartbeat combat mode (such as natural weapon
+		// attacks, or offhand attacks scheduled from a HB and running in parallel with aurora physical combat)
+		if ((sAttackVars.bMode & PRC_COMBATMODE_HB))
 		{
 			// the following check only works, if PRC and aurora combat systems run in parallel, so that aurora sets the attack action properly
 			// we check the current action, and if it is not equal to ACTION_ATTACKOBJECT or ACTION_MOVETOPOINT, we return
@@ -6697,9 +6836,11 @@ void AttackLoopLogic(object oDefender, object oAttacker,
 		// now determine whether it makes sense to switch to a better target in the following function CheckForChangeOfTarget()
 		// if the original target lives, we only allow a switch to a better target, if it is not a ranged attack and we set the respective PRC switch 
 		int bAllowSwitchOfTarget = !bIsRangedAttack && GetPRCSwitch(PRC_ALLOW_SWITCH_OF_TARGET);
-
-		// now catch any changes in targeting that the parallell running aurora engine might have enforced and return the best target
-		oDefender = CheckForChangeOfTarget(oAttacker, oDefender, bAllowSwitchOfTarget);
+		if (sAttackVars.bMode & PRC_COMBATMODE_ALLOW_TARGETSWITCH)
+		{
+			// now catch any changes in targeting that the parallell running aurora engine might have enforced and return the best target
+			oDefender = CheckForChangeOfTarget(oAttacker, oDefender, bAllowSwitchOfTarget);
+		}
 
 		// if after all the trouble looking for a valid target we did not find one, abort the attack
 		if(oDefender == OBJECT_INVALID || GetIsDead(oDefender))
@@ -6713,31 +6854,64 @@ void AttackLoopLogic(object oDefender, object oAttacker,
 		if(!bIsRangedAttack && !GetIsInMeleeRange(oDefender, oAttacker))
 		{
 			// can we do a 5 foot step in order to get into melee range?
-			if (!sAttackVars.bFiveFootStep && GetDistanceBetween(oDefender, oAttacker) <= RANGE_15_FEET_IN_METERS)
+			float fDistance = GetDistanceBetween(oDefender, oAttacker) - GetSizeAdjustment(oDefender, oAttacker);
+			if (DEBUG) DoDebug(COLOR_WHITE + "AttackLoopLogic: target is out of melee range, size adjusted distance = "+FloatToString(fDistance)+", size adjustment = "+FloatToString(GetSizeAdjustment(oDefender, oAttacker)));
+			if (!sAttackVars.bFiveFootStep && fDistance <= RANGE_15_FEET_IN_METERS)
 			{
-				if (DEBUG) DoDebug(COLOR_WHITE + "AttackLoopLogic: doing 5 foot step to move to melee range of " + GetName(oDefender) + ", current action: " + GetActionName(GetCurrentAction(oAttacker)));
-				// motu99: actually we should move to the location that puts us in melee range, but there is practically no difference
-				AssignCommand(oAttacker, ClearAllActionsAndMoveToObject(oDefender));
+				if (DEBUG) DoDebug(COLOR_WHITE + "AttackLoopLogic: waiting for aurora engine to do 5 foot step to move to melee range of " + GetName(oDefender) + ", current action: " + GetActionName(GetCurrentAction(oAttacker)));
+
+				// motu99: The problem is, in order to move into range we must clear the attack action, otherwise the move will not be done
+				// If we clear the attack action, we must issue an ActionAttack after the move
+				// But this will initiate a new combat round (cutting off any attacks left from the old round)
+				// The ugly workaround is to just wait and hope the aurora engine does the move for us
+				// therefore the following statement is commented out
+				// ClearAllActionsMoveToObjectAndAttack(oDefender, MELEE_RANGE_METERS-1.);
+
 				sAttackVars.bFiveFootStep = TRUE; // remember that we did a five foot step
-				// now call attackLoopLogic with a delay and exactly the same parameters
-				// motu99: @TODO: calculate the appropriate delay depending on creature speed and update fDelay in sAttackVars
-				DelayCommand(0.5,
+
+				// now call attackLoopLogic with a delay and exactly the same parameters (and hope we are in range then)
+				DelayCommand(1.0,
 					AttackLoopLogic(oDefender, oAttacker, iBonusAttacks, iMainAttacks, iOffHandAttacks,
 						iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage,
 						iOffhand, bIsCleaveAttack));
 				// this return statement will not give up any pending attacks, because we called AttackLoopLogic in a DelayCommand beforehand
 				return;
 			}
-			else
+			else if (fDistance <= fMaxAttackDistance)
 			{
 				// Our closest enemy is out of melee range (e.g. more than 10 feet away) and we cannot do a 5 foot step to get into range
 				// This means we need a full move action, e.g. we must give up all remaining attacks in the round
 				// so we call ActionAttack() in order to move to our enemy and let the aurora engine start a new combat round
 				// against oDefender, whenever we are in range
 				if (DEBUG) DoDebug(COLOR_WHITE + "AttackLoopLogic: doing full move action to get into melee range of " + GetName(oDefender) + ", current action: " + GetActionName(GetCurrentAction(oAttacker)));
-				AssignCommand(oAttacker, ActionAttack(oDefender));
+
 				// Note that in general we do not wan't to use the ActionAttack() command within PRC combat, because this will initiate
 				// a new attack round by the aurora engine. But here the rules require us to start a new combat round anyway. 
+				// AssignCommand(oAttacker, ClearAllActionsAndAttack(oDefender));
+				ClearAllActions();
+				ActionAttack(oDefender);
+
+				// now determine whether we abort the scripted combat round, or if we just delay the next attack (and hope we are in range then)
+				if (sAttackVars.bMode & PRC_COMBATMODE_ABORT_WHEN_OUT_OF_RANGE)
+				{
+					// The following return statement will terminate the whole combat round
+					return;
+				}
+				else
+				{
+					// call attackLoopLogic with a delay and exactly the same parameters (and hope we are in range then)
+					DelayCommand(1.0,
+						AttackLoopLogic(oDefender, oAttacker, iBonusAttacks, iMainAttacks, iOffHandAttacks,
+							iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage,
+							iOffhand, bIsCleaveAttack));
+					// this return statement will not give up any pending attacks, because we called AttackLoopLogic in a DelayCommand beforehand
+					return;
+				}
+			}
+			else
+			{
+				// our closest enemy is so far away, it does not make sense to attack it; just drop the attack 
+				if (DEBUG) DoDebug(COLOR_WHITE + "AttackLoopLogic: target " + GetName(oDefender) + " is too far away, current action: " + GetActionName(GetCurrentAction(oAttacker)));
 				// The following return statement will terminate the whole combat round
 				return;
 			}
@@ -6946,13 +7120,14 @@ void AttackLoopLogic(object oDefender, object oAttacker,
 		bIsVorpalWeaponEquiped = FALSE;
 		iVorpalSaveDC = 0;
 
+		int bDoSpecialEffect = ( bFirstAttack || sAttackVars.bEffectAllAttacks );
 		// now do the messages
 		if(iAttackRoll)
 		{ // messages for *hit*
 			// motu99: moved this from special effects section to here
 			// Don't quite sure if the sMessageSuccess/sMessageFailure strings are only for special attacks, or all attacks
 			// I would assume all. If not correct, move this code to the "special effects" section
-			if(sAttackVars.sMessageSuccess != "")
+			if(bDoSpecialEffect && sAttackVars.sMessageSuccess != "")
 				FloatingTextStringOnCreature(sAttackVars.sMessageSuccess, oAttacker, FALSE);
 //			if (DEBUG)
 //				SendMessageToPC(oAttacker, sAttackVars.sMessageSuccess);
@@ -6977,7 +7152,7 @@ void AttackLoopLogic(object oDefender, object oAttacker,
 		}
 		else  // messages for *miss*
 		{
-			if(sAttackVars.sMessageFailure != "")
+			if(bDoSpecialEffect && sAttackVars.sMessageFailure != "")
 				FloatingTextStringOnCreature(sAttackVars.sMessageFailure, oAttacker, FALSE);
 //			if (DEBUG)	SendMessageToPC(oAttacker, sAttackVars.sMessageFailure);
 
@@ -7029,13 +7204,16 @@ void AttackLoopLogic(object oDefender, object oAttacker,
 					ApplyOnHitAbilities(oDefender, oAttacker, sAttackVars.oAmmo);
 			
 				// immediately apply any on hit abilities from defenders armor to attacker
+				// the bioware engine applies the onhit abilities of the armor in the context of the defender; we do it in the context of the attacker (so that we can apply the abilities instantly)
+				// If in the future we must do it the Bioware way, we have to use AssignCommand(oDefender, AppyOnHitAbilities(oAttacker, oDefender, oArmor)), which will apply the onhit
+				// capabilities of the armor in the context of oDefender. However, AssignCommands are executed AFTER the script is finished, so this will not be an instant application
 				object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oDefender);
 				if( GetIsObjectValid(oArmor) )
 					ApplyOnHitAbilities(oAttacker, oDefender, oArmor);
 			}
 
 			// we hit: now do special effect (either applies to all attacks or to the first attack)
-			if(bFirstAttack || sAttackVars.bEffectAllAttacks)
+			if(bDoSpecialEffect)
 			{
 // DoDebug("AttackLoopLogic: looking for special effects");
 				// motu99: don't know if this works with negative damage
@@ -7174,15 +7352,25 @@ void AttackLoopLogic(object oDefender, object oAttacker,
 			if(DEBUG) DoDebug(COLOR_WHITE + "No new valid targets to attack - Aborting");
 			return;
 		}
-		if (DEBUG) DoDebug("AttackLoopLogic: old target dead or invalid, found new target - " + GetName(oDefender));
+		if (DEBUG) DoDebug(COLOR_WHITE+"AttackLoopLogic: old target dead or invalid, found new target - " + GetName(oDefender));
 
 		if (!bIsRangedAttack) // if it is not a ranged attack, we check if we are in range for a cleave
-		{		
+		{
 			if(!GetIsInMeleeRange(oDefender, oAttacker))
 			{
-				if (DEBUG) DoDebug("AttackLoopLogic: new target not in melee range - move to new target; current action = " + GetActionName(GetCurrentAction(oAttacker)));
-				// if no enemy is close enough, move to the nearest target
-				AssignCommand(oAttacker, ClearAllActionsAndMoveToObject(oDefender));
+				if (GetDistanceBetween(oDefender, oAttacker) <= fMaxAttackDistance)
+				{
+					if (DEBUG) DoDebug(COLOR_WHITE+"AttackLoopLogic: new target not in melee range - move to and attack new target; current action = " + GetActionName(GetCurrentAction(oAttacker)));
+					// if no enemy is close enough, move to the nearest target and attack
+					// note that this will initiate a new combat round by the aurora engine
+					// ClearAllActionsMoveToObjectAndAttack(oDefender, MELEE_RANGE_METERS-1.);
+					ClearAllActions();
+					ActionAttack(oDefender);
+				}
+				else
+				{
+					if (DEBUG) DoDebug(COLOR_WHITE+"AttackLoopLogic: new target not in melee range and too far away - do nothing; current action = " + GetActionName(GetCurrentAction(oAttacker)));
+				}
 
 				// motu99: commented out the return statement, because we still want to continue fighting
 				// and hope that we are in melee range when the next attack within the current round actually occurs
@@ -7263,6 +7451,8 @@ void AttackLoopLogic(object oDefender, object oAttacker,
 	// go back to main part of loop, but only if there are still attacks left
 	if (iBonusAttacks > 0 || iOffHandAttacks + iMainAttacks > 0)
 		DelayCommand(sAttackVars.fDelay, AttackLoopMain(oDefender, oAttacker, iBonusAttacks, iMainAttacks, iOffHandAttacks, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage) );
+	else if ( sAttackVars.bMode & PRC_COMBATMODE_ACTIONATTACK_ON_LAST)
+		ActionAttack(oDefender);
 }
 
 void AttackLoopMain(object oDefender, object oAttacker,
@@ -7310,12 +7500,15 @@ void PerformAttackRound(object oDefender, object oAttacker,
 	int iDamageModifier = 0, int iDamageType = 0, int bEffectAllAttacks = FALSE,
 	string sMessageSuccess = "", string sMessageFailure = "",
 	int bApplyTouchToAll = FALSE, int iTouchAttackType = FALSE,
-	int bInstantAttack = FALSE)
+	int bInstantAttack = FALSE, int bCombatModeFlags = 0)
 {
 //	if (DEBUG) DoDebug("Entered PerformAttackRound");
 
 	// create struct for attack loop logic
 	struct AttackLoopVars sAttackVars;
+	
+	// store the combat mode flags
+	sAttackVars.bMode = bCombatModeFlags;
 
 	// set variables required in attack loop logic
 	sAttackVars.oWeaponR = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oAttacker);
@@ -7553,12 +7746,15 @@ void PerformAttack(object oDefender, object oAttacker,
 	string sMessageSuccess = "", string sMessageFailure = "",
 	int iTouchAttackType = FALSE,
 	object oRightHandOverride = OBJECT_INVALID, object oLeftHandOverride = OBJECT_INVALID,
-	int nHandednessOverride = 0)
+	int nHandednessOverride = 0, int bCombatModeFlags = 0)
 {
 //	if (DEBUG) DoDebug("Entered PerformAttack");
 
 	// create struct for attack loop logic
 	struct AttackLoopVars sAttackVars;
+
+	// store the combat mode flags
+	sAttackVars.bMode = bCombatModeFlags;
 
 	// set variables required in attack loop logic
 	// first for right hand

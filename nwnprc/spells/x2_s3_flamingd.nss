@@ -38,11 +38,10 @@ void main()
 
 	// route all onhit-cast spells through the unique power script (hardcoded to "prc_onhitcast")
 	// in order to fix the Bioware bug, that only executes the first onhitcast spell found on an item
-	// any onhitcast spell should have the check OnHitCastRouteToUniquePower() at the beginning of its code
+	// any onhitcast spell should have the check ContinueOnHitCast() at the beginning of its code
 	// if you want to force the execution of an onhitcast spell script, that has the check, without routing the call
 	// through prc_onhitcast, you must use ForceExecuteSpellScript(), to be found in prc_inc_spells
-	if(OnHitCastRouteToUniquePower(oSpellOrigin))
-		return;
+	if(!ContinueOnHitCastSpell(oSpellOrigin)) return;
 
 	// DeleteLocalInt(oSpellOrigin, "X2_L_LAST_SPELLSCHOOL_VAR");
 	SetLocalInt(oSpellOrigin, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
@@ -52,7 +51,7 @@ void main()
 
 	// find the target of the spell
 	object oTarget = PRCGetSpellTargetObject(oSpellOrigin);
-
+DoDebug("x2_s3_flamingd: caster level = "+IntToString(PRCGetCasterLevel(oSpellOrigin)));
 	// only do anything, if we have a valid weapon, and a valid living target
 	if (GetIsObjectValid(oWeapon) && GetIsObjectValid(oTarget)&& !GetIsDead(oTarget))
 	{

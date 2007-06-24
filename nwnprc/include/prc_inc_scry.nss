@@ -28,8 +28,6 @@
 const string COPY_LOCAL_NAME             = "Scry_Copy";
 const string ALREADY_IMMORTAL_LOCAL_NAME = "Scry_ImmortalAlready";
 const float  SCRY_HB_DELAY         = 1.0f;
-// Will be moved out when its created.
-const int SPELL_END_SCRY = -1;
 
 //////////////////////////////////////////////////
 /* Function prototypes                          */
@@ -318,9 +316,16 @@ void DoScryEnd(object oPC, object oCopy)
     if(!GetLocalInt(oPC, ALREADY_IMMORTAL_LOCAL_NAME))
         SetImmortal(oPC, FALSE);
 
-    // Remove the VFX and the attack penalty
-    RemoveSpellEffects(SPELL_SCRY, oPC, oPC);
-        
+    // Remove the VFX and the attack penalty from all spells.
+    RemoveSpellEffects(SPELL_SCRY            , oPC, oPC);
+    RemoveSpellEffects(SPELL_GREATER_SCRYING , oPC, oPC);
+    RemoveSpellEffects(SPELL_DISCERN_LOCATION, oPC, oPC);
+    RemoveSpellEffects(SPELL_LOCATE_CREATURE , oPC, oPC);
+    RemoveSpellEffects(SPELL_LOCATE_OBJECT   , oPC, oPC);
+    RemoveSpellEffects(SPELL_ARCANE_EYE      , oPC, oPC);
+    RemoveSpellEffects(SPELL_OBSCURE_OBJECT  , oPC, oPC);
+    RemoveSpellEffects(SPELL_SEQUESTER       , oPC, oPC);
+    
     // Remove the local signifying that the PC is a projection
     DeleteLocalInt(oPC, "Scry_Active");
 

@@ -18260,6 +18260,11 @@ through the use of devices. Creatures affected by sequester become comatose and 
 in a state of suspended animation until the spell wears off or is dispelled.
 
 Material Component: A basilisk eyelash, gum arabic, and a dram of whitewash.</entry>
+  <entry id="49773" lang="en" sex="m">End Scrying</entry>
+  <entry id="49774" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: None.
+Specifics: Using this feat will end all Scrying effects on the user.
+Use: Selected.</entry>
   <entry id="49790" lang="en" sex="m">Adaptive Style</entry>
   <entry id="49791" lang="en" sex="m">Type of Feat: Blade Magic Feat
 Prerequisites: Crusader, swordsage, or warblade level 1

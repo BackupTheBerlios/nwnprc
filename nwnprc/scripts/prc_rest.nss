@@ -12,6 +12,7 @@
 #include "prc_inc_domain"
 #include "true_inc_trufunc"
 #include "inc_epicspells"
+#include "prc_inc_scry"
 
 void PrcFeats(object oPC)
 {
@@ -174,6 +175,13 @@ void RestFinished(object oPC)
 void RestStarted(object oPC)
 {
     if(DEBUG) DoDebug("prc_rest: Rest started for " + DebugObject2Str(oPC));
+    
+    // Scrying cleanup
+    if (GetIsScrying(oPC))
+    {
+    	object oCopy = GetLocalObject(oPC, "Scry_Copy");
+    	DoScryEnd(oPC, oCopy);
+    }
 
     if (GetLevelByClass(CLASS_TYPE_DRUNKEN_MASTER, oPC)){
         SetLocalInt(oPC, "DRUNKEN_MASTER_IS_IN_DRUNKEN_RAGE", 0);

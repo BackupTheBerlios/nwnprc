@@ -18,118 +18,158 @@
 
 #include "spinc_common"
 
+float GetVFXLength(location lCaster, float fLength, float fAngle);
+
 void DoBolt(int nCasterLevel, int nDieSize, int nBonusDam, int nDice, int nBoltEffect,
      int nVictimEffect, int nDamageType, int nSaveType,
-     int nSchool = SPELL_SCHOOL_EVOCATION, int fDoKnockdown = FALSE, int nSpellID = -1)
+     int nSchool = SPELL_SCHOOL_EVOCATION, int nDoKnockdown = FALSE, int nSpellID = -1, float fRangeFt = 120.0f)
 {
      // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
      //if (!X2PreSpellCastCode()) return;
 
      SPSetSchool(nSchool);
+     
+     object oCaster = OBJECT_SELF;
 
      // Get the spell ID if it was not given.
      if (-1 == nSpellID) nSpellID = PRCGetSpellId();
 
-     // Adjust the damage type of necessary.
+     // Adjust the damage type if necessary.
      nDamageType = SPGetElementalDamageType(nDamageType, OBJECT_SELF);
 
     int nDamage;
+    int nSaveDC;
+    int bKnockdownTarget;
+    float fDelay;
 
     int nPenetr = nCasterLevel + SPGetPenetr();
 
-    // Set the lightning stream to start at the caster's hands
-    effect eBolt = EffectBeam(nBoltEffect, OBJECT_SELF, BODY_NODE_HAND);
+    // individual effect
     effect eVis  = EffectVisualEffect(nVictimEffect);
-     effect eKnockdown = EffectKnockdown();
+    effect eKnockdown = EffectKnockdown();
     effect eDamage;
+    
+    // where is the caster?
+    location lCaster = GetLocation(oCaster);
 
-    object oTarget = PRCGetSpellTargetObject();
-    location lTarget = GetLocation(oTarget);
-    object oNextTarget, oTarget2;
-    float fDelay;
-    int nCnt = 1;
-    int fKnockdownTarget = FALSE;
+    // where is the target?
+    location lTarget = PRCGetSpellTargetLocation();
+    vector vOrigin = GetPosition(oCaster);
+    float fLength = FeetToMeters(fRangeFt);
+    
+    // run away! Vector maths coming up...
+    // VFX length
+    float fAngle             = GetRelativeAngleBetweenLocations(lCaster, lTarget);
+    float fVFXLength         = GetVFXLength(lCaster, fLength, fAngle);
+    float fDuration          = 3.0f;
+    
 
-
-
-    oTarget2 = GetNearestObject(OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE, OBJECT_SELF, nCnt);
-    while(GetIsObjectValid(oTarget2) && GetDistanceToObject(oTarget2) <= 30.0)
+    BeamLineFromCenter(DURATION_TYPE_TEMPORARY, nBoltEffect, lCaster, fVFXLength, fAngle, fDuration, "prc_invisobj", 0.0f, "z", 0.0f, 0.0f,
+                      -1, -1, 0.0f, 1.0f, // no secondary VFX
+                      fDuration);
+                      
+    // spell damage effects
+    // Loop over targets in the spell shape
+    object oTarget = MyFirstObjectInShape(SHAPE_SPELLCYLINDER, fLength, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE, vOrigin);
+    while(GetIsObjectValid(oTarget))
     {
-        //Get first target in the lightning area by passing in the location of first target and the casters vector (position)
-        oTarget = MyFirstObjectInShape(SHAPE_SPELLCYLINDER, 30.0, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE, GetPosition(OBJECT_SELF));
-        while (GetIsObjectValid(oTarget))
+        if(oTarget != oCaster && spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oCaster))
         {
-               // Reset the knockdown target flag.
-               fKnockdownTarget = FALSE;
-
-               // Exclude the caster from the damage effects
-               if (oTarget != OBJECT_SELF && oTarget2 == oTarget)
-               {
-               if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
-               {
-                   //Fire cast spell at event for the specified target
-                   SPRaiseSpellCastAt(oTarget, TRUE, nSpellID);
-
-                   //Make an SR check
-                   if (!SPResistSpell(OBJECT_SELF, oTarget,nPenetr))
-                 {
-                    int nSaveDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
-                              // Roll damage for each target
-                              int nDamage = SPGetMetaMagicDamage(nDamageType, nDice, nDieSize, nBonusDam);
-
-                        //Adjust damage based on Reflex Save, Evasion and Improved Evasion
-                        int nFullDamage = nDamage;
-                        nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
-                        nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, nSaveDC, nSaveType);
-
-                        //Set damage effect
-                        eDamage = SPEffectDamage(nDamage, nDamageType);
-                        if(nDamage > 0)
-                        {
-                            // Apply VFX, damage effect and lightning effect
-                            //fDelay = GetSpellEffectDelay(GetLocation(oTarget), oTarget);
-                            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
-                            PRCBonusDamage(oTarget);
-                            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-                        }
-
-                              // Determine if the target needs to be knocked down.  The target is knocked down
-                              // if all of the following criteria are met:
-                              //    - Knockdown is enabled.
-                              //    - The damage from the spell didn't kill the creature
-                              //    - The creature is large or smaller
-                              //    - The creature failed it's reflex save.
-                              // If the spell does knockdown we need to figure out whether the target made or failed
-                              // the reflex save.  If the target doesn't have improved evasion this is easy, if the
-                              // damage is the same as the original damage then the target failed it's save.  If the
-                              // target has improved evasion then it's harder as the damage is halved even on a failed
-                              // save, so we have to catch that case.
-                              fKnockdownTarget = fDoKnockdown && !GetIsDead(oTarget) &&
-                                   PRCGetCreatureSize(oTarget) <= CREATURE_SIZE_LARGE &&
-                                   (nFullDamage == nDamage || (0 != nDamage && GetHasFeat(FEAT_IMPROVED_EVASION, oTarget)));
-                         }
-
-                         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBolt, oTarget, 1.0,FALSE);
-
-                         // If we're supposed to apply knockdown then do so for 1 round.
-                         if (fKnockdownTarget)
-                              SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eKnockdown, oTarget, RoundsToSeconds(1),TRUE,-1,nCasterLevel);
-
-                         //Set the currect target as the holder of the lightning effect
-                         oNextTarget = oTarget;
-                         eBolt = EffectBeam(nBoltEffect, oNextTarget, BODY_NODE_CHEST);
+            // Let the AI know
+            SPRaiseSpellCastAt(oTarget, TRUE, nSpellID, oCaster);
+            // Reset the knockdown target flag.
+            bKnockdownTarget = FALSE;
+            // Make an SR check
+            if(!MyPRCResistSpell(oCaster, oTarget, nPenetr))
+            {
+                // Roll damage
+                nDamage = SPGetMetaMagicDamage(nDamageType, nDice, nDieSize, nBonusDam);
+                int nFullDamage = nDamage;
+                
+                // Do save
+                nSaveDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
+                if(nSaveType == SAVING_THROW_TYPE_COLD)
+                {
+                    // Cold has a fort save for half
+                    if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nSaveDC, nSaveType))
+                    {
+                        if (GetHasMettle(oTarget, SAVING_THROW_FORT))
+                            nDamage = 0;
+                        nDamage /= 2;
                     }
-               }
+                }
+                else
+                    // Adjust damage according to Reflex Save, Evasion or Improved Evasion
+                    nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, nSaveDC, nSaveType);
 
-               //Get the next object in the lightning cylinder
-               oTarget = MyNextObjectInShape(SHAPE_SPELLCYLINDER, 30.0, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE, GetPosition(OBJECT_SELF));
-          }
+                if(nDamage > 0)
+                {
+                    fDelay = GetDistanceBetweenLocations(lCaster, GetLocation(oTarget)) / 20.0f;
+                    eDamage = EffectDamage(nDamage, nDamageType);
+                    DelayCommand(1.0f + fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
+                    DelayCommand(1.0f + fDelay, PRCBonusDamage(oTarget));
+                    DelayCommand(1.0f + fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+                }// end if - There was still damage remaining to be dealt after adjustments
+                                        
+                // Determine if the target needs to be knocked down.  The target is knocked down
+                // if all of the following criteria are met:
+                //    - Knockdown is enabled.
+                //    - The damage from the spell didn't kill the creature
+                //    - The creature is large or smaller
+                //    - The creature failed it's reflex save.
+                // If the spell does knockdown we need to figure out whether the target made or failed
+                // the reflex save.  If the target doesn't have improved evasion this is easy, if the
+                // damage is the same as the original damage then the target failed it's save.  If the
+                // target has improved evasion then it's harder as the damage is halved even on a failed
+                // save, so we have to catch that case.
+                bKnockdownTarget = nDoKnockdown && !GetIsDead(oTarget) &&
+                           PRCGetCreatureSize(oTarget) <= CREATURE_SIZE_LARGE &&
+                           (nFullDamage == nDamage || (0 != nDamage && GetHasFeat(FEAT_IMPROVED_EVASION, oTarget)));
+                // If we're supposed to apply knockdown then do so for 1 round.
+                 if (bKnockdownTarget)
+                      SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eKnockdown, oTarget, RoundsToSeconds(1),TRUE,-1,nCasterLevel);
+                
+            }// end if - SR check
+        }// end if - Target validity check
 
-          nCnt++;
-        oTarget2 = GetNearestObject(OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE, OBJECT_SELF, nCnt);
-     }
+       // Get next target
+        oTarget = MyNextObjectInShape(SHAPE_SPELLCYLINDER, fLength, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE, vOrigin);
+    }// end while - Target loop
 
      SPSetSchool();
+}
+
+// taken with minor modification from  psi_power_enbolt
+
+float GetVFXLength(location lCaster, float fLength, float fAngle)
+{
+    float fLowerBound = 0.0f;
+    float fUpperBound = fLength;
+    float fVFXLength  = fLength / 2;
+    vector vVFXOrigin = GetPositionFromLocation(lCaster);
+    vector vAngle     = AngleToVector(fAngle);
+    vector vVFXEnd;
+    int bConverged    = FALSE;
+    while(!bConverged)
+    {
+        // Create the test vector for this loop
+        vVFXEnd = vVFXOrigin + (fVFXLength * vAngle);
+
+        // Determine which bound to move.
+        if(LineOfSightVector(vVFXOrigin, vVFXEnd))
+            fLowerBound = fVFXLength;
+        else
+            fUpperBound = fVFXLength;
+
+        // Get the new middle point
+        fVFXLength = (fUpperBound + fLowerBound) / 2;
+
+        // Check if the locations have converged
+        if(fabs(fUpperBound - fLowerBound) < 2.5f)
+            bConverged = TRUE;
+    }
+
+    return fVFXLength;
 }
 
 

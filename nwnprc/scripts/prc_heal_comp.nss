@@ -24,7 +24,7 @@ void main()
     	sSummon = "prc_sum_unicorn";
     	nHD = 4;
     }
-    else if (HEALER_COMP_LAMMASU == nSpellId && nClass >= 14)      
+    else if (HEALER_COMP_LAMMASU == nSpellId && nClass >= 12)      
     {
     	sSummon = "prc_sum_lammasu";
     	nClass -= 4;

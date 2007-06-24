@@ -103,11 +103,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 //Make a faction check so that only enemies receieve the full brunt of the damage.
                 if(!GetIsFriend(oTarget))
                 {
-                    eHoly =  EffectDamage(nDamage2,DAMAGE_TYPE_DIVINE);
+                    eHoly =  PRCEffectDamage(nDamage2,DAMAGE_TYPE_DIVINE);
                     DelayCommand(0.6, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eHoly, oTarget));
                 }
                 // Apply effects to the currently selected target.
-                eFire =  EffectDamage(nDamage,EleDmg);
+                eFire =  PRCEffectDamage(nDamage,EleDmg);
                 if(nDamage > 0)
                 {
                     DelayCommand(0.6, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eFire, oTarget));

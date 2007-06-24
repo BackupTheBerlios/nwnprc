@@ -1,0 +1,17 @@
+//::///////////////////////////////////////////////
+//:: Sudden Widen
+//:: prc_ft_sudmax.nss
+//:://////////////////////////////////////////////
+//:: Applies Widen to next spell cast.
+//:://////////////////////////////////////////////
+//:: Created By: Stratovarius
+//:: Created On: 24/06/2007
+//:://////////////////////////////////////////////
+
+void main()
+{
+
+	object oPC = OBJECT_SELF;
+	SetLocalInt(oPC, "SuddenMetaWiden", TRUE);
+	FloatingTextStringOnCreature("Sudden Widen Activated", oPC, FALSE);
+}

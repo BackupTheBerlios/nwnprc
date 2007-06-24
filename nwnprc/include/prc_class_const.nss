@@ -160,3 +160,4 @@ const int CLASS_TYPE_COC                     = 92;
 const int CLASS_TYPE_CRUSADER                = 234;
 const int CLASS_TYPE_SWORDSAGE               = 235;
 const int CLASS_TYPE_WARBLADE                = 236;
+const int CLASS_TYPE_WARMAGE                 = 237;

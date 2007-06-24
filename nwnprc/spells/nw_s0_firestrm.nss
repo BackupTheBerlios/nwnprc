@@ -100,8 +100,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                     {
                           // Apply effects to the currently selected target.  For this spell we have used
                           //both Divine and Fire damage.
-                          effect eDivine = EffectDamage(nDamage2, DAMAGE_TYPE_DIVINE);
-                          effect eFire = EffectDamage(nDamage, EleDmg);
+                          effect eDivine = PRCEffectDamage(nDamage2, DAMAGE_TYPE_DIVINE);
+                          effect eFire = PRCEffectDamage(nDamage, EleDmg);
                           DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eFire, oTarget));
                           DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDivine, oTarget));
                           DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));

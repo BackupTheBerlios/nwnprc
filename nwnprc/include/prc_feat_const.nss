@@ -1627,8 +1627,15 @@ const int FAST_HEALING_2                         = 4146;
 const int FAST_HEALING_3                         = 4147;
 
 // General Feats
-const int FEAT_STORMMAGIC            = 4182;
+const int FEAT_STORMMAGIC                = 4182;
 const int FEAT_MAGICAL_APTITUDE          = 4416;
+
+// Warmage Feat
+const int FEAT_TYPE_EXTRA_EDGE           = 2779;
+const int FEAT_SUDDEN_EMPOWER            = 2830;
+const int FEAT_SUDDEN_EXTEND             = 2831;
+const int FEAT_SUDDEN_MAXIMIZE           = 2832;
+const int FEAT_SUDDEN_WIDEN              = 2833;
 
 // Size changes
 const int FEAT_SIZE_DECREASE_1          = 2287;

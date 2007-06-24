@@ -74,6 +74,9 @@ int Blightbringer(object oPC = OBJECT_SELF);
 // Stop people from taking crafting feats they don't have the caster level for
 int CraftingFeats(object oPC = OBJECT_SELF);
 
+// Stop people from taking Sudden Metamagic feats they don't have the prereqs
+int SuddenMetamagic(object oPC = OBJECT_SELF);
+
 // ---------------
 // BEGIN FUNCTIONS
 // ---------------
@@ -1079,6 +1082,20 @@ int LeadershipHD(object oPC)
     return TRUE;
 }
 
+int SuddenMetamagic(object oPC = OBJECT_SELF)
+{
+    int iFeat = GetHasFeat(FEAT_EMPOWER_SPELL, oPC)    + GetHasFeat(FEAT_EXTEND_SPELL, oPC) +
+            GetHasFeat(FEAT_MAXIMIZE_SPELL, oPC)   + GetHasFeat(FEAT_QUICKEN_SPELL, oPC) +
+            GetHasFeat(FEAT_SILENCE_SPELL, oPC)    + GetHasFeat(FEAT_STILL_SPELL, oPC);
+            
+	if (GetHasFeat(FEAT_SUDDEN_EMPOWER, oPC) || GetHasFeat(FEAT_SUDDEN_MAXIMIZE, oPC))
+	{
+		if (0 >= iFeat) return FALSE;
+	}
+	
+	return TRUE;
+}
+
 void main()
 {
         //Declare Major Variables
@@ -1106,6 +1123,7 @@ void main()
          || !RacialHD(oPC)
          || !LeadershipHD(oPC)
          || !FavouredSoul(oPC)
+         || !SuddenMetamagic(oPC)
        )
     {
        int nHD = GetHitDice(oPC);

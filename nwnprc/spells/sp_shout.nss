@@ -117,7 +117,7 @@ void main()
                     if(nDamage > 0)
                     {
                         DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_SONIC), oTarget));
-                        DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDamage, EleDmg), oTarget));
+                        DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(nDamage, EleDmg), oTarget));
                         PRCBonusDamage(oTarget);
                     }
                 }

@@ -76,7 +76,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                     if(nMetaMagic & METAMAGIC_EMPOWER)
                         nDamage += d6()/2;
                     nDamage += 4;
-                    effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_BLUDGEONING, DAMAGE_POWER_NORMAL);
+                    effect eDam = PRCEffectDamage(nDamage, DAMAGE_TYPE_BLUDGEONING, DAMAGE_POWER_NORMAL);
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
                 }
                 //now being grappled

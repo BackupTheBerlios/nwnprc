@@ -98,6 +98,14 @@ int SpellBetrayalDamage(object oTarget, object oCaster);
 //  Calculates damage to a spell for Spellstrike Ability
 int SpellStrikeDamage(object oTarget, object oCaster);
 
+// Create a Damage effect
+// - nDamageAmount: amount of damage to be dealt. This should be applied as an
+//   instantaneous effect.
+// - nDamageType: DAMAGE_TYPE_*
+// - nDamagePower: DAMAGE_POWER_*
+// Used to add Warmage's Edge to spells.
+effect PRCEffectDamage(int nDamageAmount, int nDamageType=DAMAGE_TYPE_MAGICAL, int nDamagePower=DAMAGE_POWER_NORMAL);
+
 //  Adds the bonus damage from both Spell Betrayal and Spellstrike together
 int ApplySpellBetrayalStrikeDamage(object oTarget, object oCaster, int bShowTextString = TRUE);
 
@@ -437,6 +445,7 @@ int GetIsArcaneClass(int nClass, object oCaster = OBJECT_SELF)
             nClass==CLASS_TYPE_SHADOWLORD ||
             nClass==CLASS_TYPE_HEXBLADE ||
             nClass==CLASS_TYPE_DUSKBLADE ||
+            nClass==CLASS_TYPE_WARMAGE ||
             (nClass==CLASS_TYPE_OUTSIDER
                 && GetRacialType(oCaster)==RACIAL_TYPE_RAKSHASA
                 && !GetLevelByClass(CLASS_TYPE_SORCERER))
@@ -1577,6 +1586,9 @@ int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)
 
 		case CLASS_TYPE_DUSKBLADE:
 			return GetCasterLvlArcaneFull(CLASS_TYPE_DUSKBLADE, oCaster);
+			
+		case CLASS_TYPE_WARMAGE:
+			return GetCasterLvlArcaneFull(CLASS_TYPE_WARMAGE, oCaster);			
 
 		case CLASS_TYPE_FAVOURED_SOUL:
 			return GetCasterLvlDivineFull(CLASS_TYPE_FAVOURED_SOUL, oCaster);
@@ -1865,6 +1877,13 @@ object MyNextObjectInShape(int nShape,
         // This allows it to affect the entire casting
         DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "WarWizardOfCormyr_Widen"));
     }
+    else if (GetLocalInt(OBJECT_SELF, "SuddenMetaWiden"))
+    {
+    	fSize *= 2;
+    	if (DEBUG) DoDebug("Sudden Widened Spell Size: " + FloatToString(fSize));
+        // This allows it to affect the entire casting
+        DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "SuddenMetaWiden"));
+    }
 
     int nChannel = GetLocalInt(OBJECT_SELF,"spellswd_aoe");
     if(nChannel != 1)
@@ -1908,6 +1927,13 @@ object MyFirstObjectInShape(int nShape,
         // This allows it to affect the entire casting
         DelayCommand(1.0, DeleteLocalInt(oCaster, "WarWizardOfCormyr_Widen"));
     }
+    else if (GetLocalInt(OBJECT_SELF, "SuddenMetaWiden"))
+    {
+    	fSize *= 2;
+    	if (DEBUG) DoDebug("Sudden Widened Spell Size: " + FloatToString(fSize));
+        // This allows it to affect the entire casting
+        DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "SuddenMetaWiden"));
+    }    
 
     int nChannel = GetLocalInt(oCaster,"spellswd_aoe");
     if(nChannel != 1)
@@ -1977,6 +2003,21 @@ int PRCGetMetaMagicFeat(object oCaster = OBJECT_SELF)
     {
         nFeat |= METAMAGIC_EXTEND;
     }
+    // Sudden Metamagic: Empower
+    if (GetLocalInt(oCaster, "SuddenMetaEmpower"))
+    {
+        nFeat |= METAMAGIC_EMPOWER;
+    }
+    // Sudden Metamagic: Extend
+    if (GetLocalInt(oCaster, "SuddenMetaExtend"))
+    {
+        nFeat |= METAMAGIC_EXTEND;
+    }
+    // Sudden Metamagic: Maximize
+    if (GetLocalInt(oCaster, "SuddenMetaMax"))
+    {
+        nFeat |= METAMAGIC_MAXIMIZE;
+    }    
 
 	// we assume that we are casting from an item, if the item is valid and the item belongs to oCaster
 	// however, we cannot be sure because of Bioware's inadequate implementation of GetSpellCastItem
@@ -2526,4 +2567,20 @@ int PRCGetSpellLevel(object oCreature, int nSpell)
 
     //return innate level?
     return -1;
+}
+
+effect PRCEffectDamage(int nDamageAmount, int nDamageType=DAMAGE_TYPE_MAGICAL, int nDamagePower=DAMAGE_POWER_NORMAL)
+{
+	if (PRCGetLastSpellCastClass(OBJECT_SELF) == CLASS_TYPE_WARMAGE)
+	{
+		// Warmage Edge
+		nDamageAmount += GetAbilityModifier(ABILITY_INTELLIGENCE, OBJECT_SELF);
+		if (GetHasFeat(FEAT_TYPE_EXTRA_EDGE, OBJECT_SELF))
+		{
+			// Extra Edge feat.
+			nDamageAmount += (GetLevelByClass(CLASS_TYPE_WARMAGE, OBJECT_SELF) / 4) + 1;
+		}
+	}
+	
+	return EffectDamage(nDamageAmount, nDamageType, nDamagePower);
 }

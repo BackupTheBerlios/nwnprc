@@ -168,6 +168,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_TRUENAMER, oPC) > 0)           ExecuteScript("true_truenamer", oPC);
     if(GetLevelByClass(CLASS_TYPE_DUSKBLADE, oPC) > 0)           ExecuteScript("prc_duskblade", oPC);
     if(GetLevelByClass(CLASS_TYPE_SCOUT, oPC) > 0)               ExecuteScript("prc_scout", oPC);
+    if(GetLevelByClass(CLASS_TYPE_WARMAGE, oPC) > 0)             ExecuteScript("prc_warmage", oPC);
 
     // Bonus Domain check
     // If there is a bonus domain, it will always be in the first slot, so just check that.
@@ -289,6 +290,7 @@ void EvalPRCFeats(object oPC)
        GetLevelByClass(CLASS_TYPE_FAVOURED_SOUL,    oPC) ||
        GetLevelByClass(CLASS_TYPE_HEXBLADE,         oPC) ||
        GetLevelByClass(CLASS_TYPE_DUSKBLADE,        oPC) ||
+       GetLevelByClass(CLASS_TYPE_WARMAGE,          oPC) ||
        // Truenaming
        GetLevelByClass(CLASS_TYPE_TRUENAMER,        oPC) ||
        // Tome of Battle

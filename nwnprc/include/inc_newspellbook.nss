@@ -23,7 +23,7 @@ Add class to GetAbilityForClass() below
 Add class to GetIsArcaneClass() or GetIsDivineClass() in prc_inc_spells as appropriate
 Add class to GetCasterLvl() in prc_inc_spells
 Add class to MakeLookupLoopMaster() in inc_lookups
-Add class to prc_spellgain if(CheckMissingSpells(oPC, CLASS_TYPE_SORCERER, MinimumSpellLevel, MaximumSpellLevel))
+Add class to prc_amagsys_gain if(CheckMissingSpells(oPC, CLASS_TYPE_SORCERER, MinimumSpellLevel, MaximumSpellLevel))
 Add class to ExecuteScript("prc_spellgain", oPC) list in EvalPRCFeats in prc_inc_function
 Run the assemble_spellbooks.bat file
 Make the prc_* scripts in newspellbook
@@ -125,7 +125,7 @@ int GetSpellbookTypeForClass(int nClass)
         case CLASS_TYPE_FAVOURED_SOUL:
         case CLASS_TYPE_HEXBLADE:
         case CLASS_TYPE_DUSKBLADE:
-
+	case CLASS_TYPE_WARMAGE:
             return SPELLBOOK_TYPE_SPONTANEOUS;
         //outsider HD count as sorc for raks
         case CLASS_TYPE_OUTSIDER: {
@@ -173,6 +173,7 @@ int GetAbilityForClass(int nClass, object oPC)
         case CLASS_TYPE_SUEL_ARCHANAMACH:
         case CLASS_TYPE_FAVOURED_SOUL:
         case CLASS_TYPE_HEXBLADE:
+        case CLASS_TYPE_WARMAGE:
             return GetAbilityScore(oPC, ABILITY_CHARISMA);
         //outsider HD count as sorc for raks
         case CLASS_TYPE_OUTSIDER: {

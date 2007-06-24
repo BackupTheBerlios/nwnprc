@@ -37794,6 +37794,319 @@ The goddess Shar is called the Mistress of the Night, the Lady of Loss, and the 
   <entry id="67258" lang="en" sex="m">Sohei Sunmantle</entry>
   <entry id="67259" lang="en" sex="m">Sohei Diamond Spray</entry>
   <entry id="67260" lang="en" sex="m">Sohei Absorb Strength</entry>
+  <entry id="67261" lang="en" sex="m">Bad StrRef Acid Splash</entry>
+  <entry id="67262" lang="en" sex="m">Bad StrRef Empowered Acid Splash</entry>
+  <entry id="67263" lang="en" sex="m">Bad StrRef Maximized Acid Splash</entry>
+  <entry id="67264" lang="en" sex="m">Bad StrRef Quickened Acid Splash</entry>
+  <entry id="67265" lang="en" sex="m">Bad StrRef Silent Acid Splash</entry>
+  <entry id="67266" lang="en" sex="m">Bad StrRef Still Acid Splash</entry>
+  <entry id="67267" lang="en" sex="m">Bad StrRef Light</entry>
+  <entry id="67268" lang="en" sex="m">Bad StrRef Extended Light</entry>
+  <entry id="67269" lang="en" sex="m">Bad StrRef Quickened Light</entry>
+  <entry id="67270" lang="en" sex="m">Bad StrRef Silent Light</entry>
+  <entry id="67271" lang="en" sex="m">Bad StrRef Ray of Frost</entry>
+  <entry id="67272" lang="en" sex="m">Bad StrRef Empowered Ray of Frost</entry>
+  <entry id="67273" lang="en" sex="m">Bad StrRef Maximized Ray of Frost</entry>
+  <entry id="67274" lang="en" sex="m">Bad StrRef Quickened Ray of Frost</entry>
+  <entry id="67275" lang="en" sex="m">Bad StrRef Silent Ray of Frost</entry>
+  <entry id="67276" lang="en" sex="m">Bad StrRef Still Ray of Frost</entry>
+  <entry id="67277" lang="en" sex="m">Bad StrRef Burning Hands</entry>
+  <entry id="67278" lang="en" sex="m">Bad StrRef Empowered Burning Hands</entry>
+  <entry id="67279" lang="en" sex="m">Bad StrRef Maximized Burning Hands</entry>
+  <entry id="67280" lang="en" sex="m">Bad StrRef Quickened Burning Hands</entry>
+  <entry id="67281" lang="en" sex="m">Bad StrRef Silent Burning Hands</entry>
+  <entry id="67282" lang="en" sex="m">Bad StrRef Still Burning Hands</entry>
+  <entry id="67283" lang="en" sex="m">Bad StrRef Chill Touch</entry>
+  <entry id="67284" lang="en" sex="m">Bad StrRef Empowered Chill Touch</entry>
+  <entry id="67285" lang="en" sex="m">Bad StrRef Extended Chill Touch</entry>
+  <entry id="67286" lang="en" sex="m">Bad StrRef Maximized Chill Touch</entry>
+  <entry id="67287" lang="en" sex="m">Bad StrRef Quickened Chill Touch</entry>
+  <entry id="67288" lang="en" sex="m">Bad StrRef Silent Chill Touch</entry>
+  <entry id="67289" lang="en" sex="m">Bad StrRef Still Chill Touch</entry>
+  <entry id="67290" lang="en" sex="m">Bad StrRef Hail of Stone</entry>
+  <entry id="67291" lang="en" sex="m">Bad StrRef Empowered Hail of Stone</entry>
+  <entry id="67292" lang="en" sex="m">Bad StrRef Maximized Hail of Stone</entry>
+  <entry id="67293" lang="en" sex="m">Bad StrRef Quickened Hail of Stone</entry>
+  <entry id="67294" lang="en" sex="m">Bad StrRef Silent Hail of Stone</entry>
+  <entry id="67295" lang="en" sex="m">Bad StrRef Still Hail of Stone</entry>
+  <entry id="67296" lang="en" sex="m">Bad StrRef Lesser Acid Orb</entry>
+  <entry id="67297" lang="en" sex="m">Bad StrRef Empowered Lesser Acid Orb</entry>
+  <entry id="67298" lang="en" sex="m">Bad StrRef Maximized Lesser Acid Orb</entry>
+  <entry id="67299" lang="en" sex="m">Bad StrRef Quickened Lesser Acid Orb</entry>
+  <entry id="67300" lang="en" sex="m">Bad StrRef Silent Lesser Acid Orb</entry>
+  <entry id="67301" lang="en" sex="m">Bad StrRef Still Lesser Acid Orb</entry>
+  <entry id="67302" lang="en" sex="m">Bad StrRef Lesser Cold Orb</entry>
+  <entry id="67303" lang="en" sex="m">Bad StrRef Empowered Lesser Cold Orb</entry>
+  <entry id="67304" lang="en" sex="m">Bad StrRef Maximized Lesser Cold Orb</entry>
+  <entry id="67305" lang="en" sex="m">Bad StrRef Quickened Lesser Cold Orb</entry>
+  <entry id="67306" lang="en" sex="m">Bad StrRef Silent Lesser Cold Orb</entry>
+  <entry id="67307" lang="en" sex="m">Bad StrRef Still Lesser Cold Orb</entry>
+  <entry id="67308" lang="en" sex="m">Bad StrRef Lesser Electric Orb</entry>
+  <entry id="67309" lang="en" sex="m">Bad StrRef Empowered Lesser Electric Orb</entry>
+  <entry id="67310" lang="en" sex="m">Bad StrRef Maximized Lesser Electric Orb</entry>
+  <entry id="67311" lang="en" sex="m">Bad StrRef Quickened Lesser Electric Orb</entry>
+  <entry id="67312" lang="en" sex="m">Bad StrRef Silent Lesser Electric Orb</entry>
+  <entry id="67313" lang="en" sex="m">Bad StrRef Still Lesser Electric Orb</entry>
+  <entry id="67314" lang="en" sex="m">Bad StrRef Lesser Fire Orb</entry>
+  <entry id="67315" lang="en" sex="m">Bad StrRef Empowered Lesser Fire Orb</entry>
+  <entry id="67316" lang="en" sex="m">Bad StrRef Maximized Lesser Fire Orb</entry>
+  <entry id="67317" lang="en" sex="m">Bad StrRef Quickened Lesser Fire Orb</entry>
+  <entry id="67318" lang="en" sex="m">Bad StrRef Silent Lesser Fire Orb</entry>
+  <entry id="67319" lang="en" sex="m">Bad StrRef Still Lesser Fire Orb</entry>
+  <entry id="67320" lang="en" sex="m">Bad StrRef Lesser Sonic Orb</entry>
+  <entry id="67321" lang="en" sex="m">Bad StrRef Empowered Lesser Sonic Orb</entry>
+  <entry id="67322" lang="en" sex="m">Bad StrRef Maximized Lesser Sonic Orb</entry>
+  <entry id="67323" lang="en" sex="m">Bad StrRef Quickened Lesser Sonic Orb</entry>
+  <entry id="67324" lang="en" sex="m">Bad StrRef Silent Lesser Sonic Orb</entry>
+  <entry id="67325" lang="en" sex="m">Bad StrRef Still Lesser Sonic Orb</entry>
+  <entry id="67326" lang="en" sex="m">Bad StrRef Magic Missile</entry>
+  <entry id="67327" lang="en" sex="m">Bad StrRef Empowered Magic Missile</entry>
+  <entry id="67328" lang="en" sex="m">Bad StrRef Maximized Magic Missile</entry>
+  <entry id="67329" lang="en" sex="m">Bad StrRef Quickened Magic Missile</entry>
+  <entry id="67330" lang="en" sex="m">Bad StrRef Silent Magic Missile</entry>
+  <entry id="67331" lang="en" sex="m">Bad StrRef Still Magic Missile</entry>
+  <entry id="67332" lang="en" sex="m">Bad StrRef True Strike</entry>
+  <entry id="67333" lang="en" sex="m">Bad StrRef Quickened True Strike</entry>
+  <entry id="67334" lang="en" sex="m">Bad StrRef Silent True Strike</entry>
+  <entry id="67335" lang="en" sex="m">Bad StrRef Shocking Grasp</entry>
+  <entry id="67336" lang="en" sex="m">Bad StrRef Empowered Shocking Grasp</entry>
+  <entry id="67337" lang="en" sex="m">Bad StrRef Maximized Shocking Grasp</entry>
+  <entry id="67338" lang="en" sex="m">Bad StrRef Quickened Shocking Grasp</entry>
+  <entry id="67339" lang="en" sex="m">Bad StrRef Silent Shocking Grasp</entry>
+  <entry id="67340" lang="en" sex="m">Bad StrRef Still Shocking Grasp</entry>
+  <entry id="67341" lang="en" sex="m">Bad StrRef Continual Flame</entry>
+  <entry id="67342" lang="en" sex="m">Bad StrRef Quickened Continual Flame</entry>
+  <entry id="67343" lang="en" sex="m">Bad StrRef Silent Continual Flame</entry>
+  <entry id="67344" lang="en" sex="m">Bad StrRef Still Continual Flame</entry>
+  <entry id="67345" lang="en" sex="m">Bad StrRef Fireburst</entry>
+  <entry id="67346" lang="en" sex="m">Bad StrRef Empowered Fireburst</entry>
+  <entry id="67347" lang="en" sex="m">Bad StrRef Maximized Fireburst</entry>
+  <entry id="67348" lang="en" sex="m">Bad StrRef Quickened Fireburst</entry>
+  <entry id="67349" lang="en" sex="m">Bad StrRef Silent Fireburst</entry>
+  <entry id="67350" lang="en" sex="m">Bad StrRef Still Fireburst</entry>
+  <entry id="67351" lang="en" sex="m">Bad StrRef Melf's Acid Arrow</entry>
+  <entry id="67352" lang="en" sex="m">Bad StrRef Empowered Melf's Acid Arrow</entry>
+  <entry id="67353" lang="en" sex="m">Bad StrRef Maximized Melf's Acid Arrow</entry>
+  <entry id="67354" lang="en" sex="m">Bad StrRef Quickened Melf's Acid Arrow</entry>
+  <entry id="67355" lang="en" sex="m">Bad StrRef Silent Melf's Acid Arrow</entry>
+  <entry id="67356" lang="en" sex="m">Bad StrRef Still Melf's Acid Arrow</entry>
+  <entry id="67357" lang="en" sex="m">Bad StrRef Scorching Ray</entry>
+  <entry id="67358" lang="en" sex="m">Bad StrRef Empowered Scorching Ray</entry>
+  <entry id="67359" lang="en" sex="m">Bad StrRef Maximized Scorching Ray</entry>
+  <entry id="67360" lang="en" sex="m">Bad StrRef Quickened Scorching Ray</entry>
+  <entry id="67361" lang="en" sex="m">Bad StrRef Silent Scorching Ray</entry>
+  <entry id="67362" lang="en" sex="m">Bad StrRef Still Scorching Ray</entry>
+  <entry id="67363" lang="en" sex="m">Bad StrRef Elemental Shield</entry>
+  <entry id="67364" lang="en" sex="m">Bad StrRef Extended Elemental Shield</entry>
+  <entry id="67365" lang="en" sex="m">Bad StrRef Quickened Elemental Shield</entry>
+  <entry id="67366" lang="en" sex="m">Bad StrRef Silent Elemental Shield</entry>
+  <entry id="67367" lang="en" sex="m">Bad StrRef Still Elemental Shield</entry>
+  <entry id="67368" lang="en" sex="m">Bad StrRef Fireball</entry>
+  <entry id="67369" lang="en" sex="m">Bad StrRef Empowered Fireball</entry>
+  <entry id="67370" lang="en" sex="m">Bad StrRef Maximized Fireball</entry>
+  <entry id="67371" lang="en" sex="m">Bad StrRef Quickened Fireball</entry>
+  <entry id="67372" lang="en" sex="m">Bad StrRef Silent Fireball</entry>
+  <entry id="67373" lang="en" sex="m">Bad StrRef Still Fireball</entry>
+  <entry id="67374" lang="en" sex="m">Bad StrRef Flame Arrow</entry>
+  <entry id="67375" lang="en" sex="m">Bad StrRef Empowered Flame Arrow</entry>
+  <entry id="67376" lang="en" sex="m">Bad StrRef Maximized Flame Arrow</entry>
+  <entry id="67377" lang="en" sex="m">Bad StrRef Quickened Flame Arrow</entry>
+  <entry id="67378" lang="en" sex="m">Bad StrRef Silent Flame Arrow</entry>
+  <entry id="67379" lang="en" sex="m">Bad StrRef Still Flame Arrow</entry>
+  <entry id="67380" lang="en" sex="m">Bad StrRef Gust of Wind</entry>
+  <entry id="67381" lang="en" sex="m">Bad StrRef Quickened Gust of Wind</entry>
+  <entry id="67382" lang="en" sex="m">Bad StrRef Silent Gust of Wind</entry>
+  <entry id="67383" lang="en" sex="m">Bad StrRef Still Gust of Wind</entry>
+  <entry id="67384" lang="en" sex="m">Bad StrRef Ice Storm</entry>
+  <entry id="67385" lang="en" sex="m">Bad StrRef Empowered Ice Storm</entry>
+  <entry id="67386" lang="en" sex="m">Bad StrRef Maximized Ice Storm</entry>
+  <entry id="67387" lang="en" sex="m">Bad StrRef Quickened Ice Storm</entry>
+  <entry id="67388" lang="en" sex="m">Bad StrRef Silent Ice Storm</entry>
+  <entry id="67389" lang="en" sex="m">Bad StrRef Still Ice Storm</entry>
+  <entry id="67390" lang="en" sex="m">Bad StrRef Lightning Bolt</entry>
+  <entry id="67391" lang="en" sex="m">Bad StrRef Empowered Lightning Bolt</entry>
+  <entry id="67392" lang="en" sex="m">Bad StrRef Maximized Lightning Bolt</entry>
+  <entry id="67393" lang="en" sex="m">Bad StrRef Quickened Lightning Bolt</entry>
+  <entry id="67394" lang="en" sex="m">Bad StrRef Silent Lightning Bolt</entry>
+  <entry id="67395" lang="en" sex="m">Bad StrRef Still Lightning Bolt</entry>
+  <entry id="67396" lang="en" sex="m">Bad StrRef Poison</entry>
+  <entry id="67397" lang="en" sex="m">Bad StrRef Empowered Poison</entry>
+  <entry id="67398" lang="en" sex="m">Bad StrRef Maximized Poison</entry>
+  <entry id="67399" lang="en" sex="m">Bad StrRef Quickened Poison</entry>
+  <entry id="67400" lang="en" sex="m">Bad StrRef Silent Poison</entry>
+  <entry id="67401" lang="en" sex="m">Bad StrRef Still Poison</entry>
+  <entry id="67402" lang="en" sex="m">Bad StrRef Stinking Cloud</entry>
+  <entry id="67403" lang="en" sex="m">Bad StrRef Extended Stinking Cloud</entry>
+  <entry id="67404" lang="en" sex="m">Bad StrRef Quickened Stinking Cloud</entry>
+  <entry id="67405" lang="en" sex="m">Bad StrRef Silent Stinking Cloud</entry>
+  <entry id="67406" lang="en" sex="m">Bad StrRef Still Stinking Cloud</entry>
+  <entry id="67407" lang="en" sex="m">Bad StrRef Acid Orb</entry>
+  <entry id="67408" lang="en" sex="m">Bad StrRef Empowered Acid Orb</entry>
+  <entry id="67409" lang="en" sex="m">Bad StrRef Maximized Acid Orb</entry>
+  <entry id="67410" lang="en" sex="m">Bad StrRef Quickened Acid Orb</entry>
+  <entry id="67411" lang="en" sex="m">Bad StrRef Silent Acid Orb</entry>
+  <entry id="67412" lang="en" sex="m">Bad StrRef Still Acid Orb</entry>
+  <entry id="67413" lang="en" sex="m">Bad StrRef Blast of Flame</entry>
+  <entry id="67414" lang="en" sex="m">Bad StrRef Empowered Blast of Flame</entry>
+  <entry id="67415" lang="en" sex="m">Bad StrRef Maximized Blast of Flame</entry>
+  <entry id="67416" lang="en" sex="m">Bad StrRef Quickened Blast of Flame</entry>
+  <entry id="67417" lang="en" sex="m">Bad StrRef Silent Blast of Flame</entry>
+  <entry id="67418" lang="en" sex="m">Bad StrRef Still Blast of Flame</entry>
+  <entry id="67419" lang="en" sex="m">Bad StrRef Cold Orb</entry>
+  <entry id="67420" lang="en" sex="m">Bad StrRef Empowered Cold Orb</entry>
+  <entry id="67421" lang="en" sex="m">Bad StrRef Maximized Cold Orb</entry>
+  <entry id="67422" lang="en" sex="m">Bad StrRef Quickened Cold Orb</entry>
+  <entry id="67423" lang="en" sex="m">Bad StrRef Silent Cold Orb</entry>
+  <entry id="67424" lang="en" sex="m">Bad StrRef Still Cold Orb</entry>
+  <entry id="67425" lang="en" sex="m">Bad StrRef Contagion</entry>
+  <entry id="67426" lang="en" sex="m">Bad StrRef Quickened Contagion</entry>
+  <entry id="67427" lang="en" sex="m">Bad StrRef Silent Contagion</entry>
+  <entry id="67428" lang="en" sex="m">Bad StrRef Still Contagion</entry>
+  <entry id="67429" lang="en" sex="m">Bad StrRef Electric Orb</entry>
+  <entry id="67430" lang="en" sex="m">Bad StrRef Empowered Electric Orb</entry>
+  <entry id="67431" lang="en" sex="m">Bad StrRef Maximized Electric Orb</entry>
+  <entry id="67432" lang="en" sex="m">Bad StrRef Quickened Electric Orb</entry>
+  <entry id="67433" lang="en" sex="m">Bad StrRef Silent Electric Orb</entry>
+  <entry id="67434" lang="en" sex="m">Bad StrRef Still Electric Orb</entry>
+  <entry id="67435" lang="en" sex="m">Bad StrRef Evard's Black Tentacles</entry>
+  <entry id="67436" lang="en" sex="m">Bad StrRef Empowered Evard's Black Tentacles</entry>
+  <entry id="67437" lang="en" sex="m">Bad StrRef Extended Evard's Black Tentacles</entry>
+  <entry id="67438" lang="en" sex="m">Bad StrRef Maximized Evard's Black Tentacles</entry>
+  <entry id="67439" lang="en" sex="m">Bad StrRef Quickened Evard's Black Tentacles</entry>
+  <entry id="67440" lang="en" sex="m">Bad StrRef Silent Evard's Black Tentacles</entry>
+  <entry id="67441" lang="en" sex="m">Bad StrRef Still Evard's Black Tentacles</entry>
+  <entry id="67442" lang="en" sex="m">Bad StrRef Fire Orb</entry>
+  <entry id="67443" lang="en" sex="m">Bad StrRef Empowered Fire Orb</entry>
+  <entry id="67444" lang="en" sex="m">Bad StrRef Maximized Fire Orb</entry>
+  <entry id="67445" lang="en" sex="m">Bad StrRef Quickened Fire Orb</entry>
+  <entry id="67446" lang="en" sex="m">Bad StrRef Silent Fire Orb</entry>
+  <entry id="67447" lang="en" sex="m">Bad StrRef Still Fire Orb</entry>
+  <entry id="67448" lang="en" sex="m">Bad StrRef Phantasmal Killer</entry>
+  <entry id="67449" lang="en" sex="m">Bad StrRef Empowered Phantasmal Killer</entry>
+  <entry id="67450" lang="en" sex="m">Bad StrRef Maximized Phantasmal Killer</entry>
+  <entry id="67451" lang="en" sex="m">Bad StrRef Quickened Phantasmal Killer</entry>
+  <entry id="67452" lang="en" sex="m">Bad StrRef Silent Phantasmal Killer</entry>
+  <entry id="67453" lang="en" sex="m">Bad StrRef Still Phantasmal Killer</entry>
+  <entry id="67454" lang="en" sex="m">Bad StrRef Shout</entry>
+  <entry id="67455" lang="en" sex="m">Bad StrRef Empowered Shout</entry>
+  <entry id="67456" lang="en" sex="m">Bad StrRef Maximized Shout</entry>
+  <entry id="67457" lang="en" sex="m">Bad StrRef Quickened Shout</entry>
+  <entry id="67458" lang="en" sex="m">Bad StrRef Silent Shout</entry>
+  <entry id="67459" lang="en" sex="m">Bad StrRef Sonic Orb</entry>
+  <entry id="67460" lang="en" sex="m">Bad StrRef Empowered Sonic Orb</entry>
+  <entry id="67461" lang="en" sex="m">Bad StrRef Maximized Sonic Orb</entry>
+  <entry id="67462" lang="en" sex="m">Bad StrRef Quickened Sonic Orb</entry>
+  <entry id="67463" lang="en" sex="m">Bad StrRef Silent Sonic Orb</entry>
+  <entry id="67464" lang="en" sex="m">Bad StrRef Still Sonic Orb</entry>
+  <entry id="67465" lang="en" sex="m">Bad StrRef Wall of Fire</entry>
+  <entry id="67466" lang="en" sex="m">Bad StrRef Empowered Wall of Fire</entry>
+  <entry id="67467" lang="en" sex="m">Bad StrRef Extended Wall of Fire</entry>
+  <entry id="67468" lang="en" sex="m">Bad StrRef Maximized Wall of Fire</entry>
+  <entry id="67469" lang="en" sex="m">Bad StrRef Quickened Wall of Fire</entry>
+  <entry id="67470" lang="en" sex="m">Bad StrRef Silent Wall of Fire</entry>
+  <entry id="67471" lang="en" sex="m">Bad StrRef Still Wall of Fire</entry>
+  <entry id="67472" lang="en" sex="m">Bad StrRef Cloudkill</entry>
+  <entry id="67473" lang="en" sex="m">Bad StrRef Empowered Cloudkill</entry>
+  <entry id="67474" lang="en" sex="m">Bad StrRef Extended Cloudkill</entry>
+  <entry id="67475" lang="en" sex="m">Bad StrRef Maximized Cloudkill</entry>
+  <entry id="67476" lang="en" sex="m">Bad StrRef Quickened Cloudkill</entry>
+  <entry id="67477" lang="en" sex="m">Bad StrRef Silent Cloudkill</entry>
+  <entry id="67478" lang="en" sex="m">Bad StrRef Still Cloudkill</entry>
+  <entry id="67479" lang="en" sex="m">Bad StrRef Cone of Cold</entry>
+  <entry id="67480" lang="en" sex="m">Bad StrRef Empowered Cone of Cold</entry>
+  <entry id="67481" lang="en" sex="m">Bad StrRef Maximized Cone of Cold</entry>
+  <entry id="67482" lang="en" sex="m">Bad StrRef Quickened Cone of Cold</entry>
+  <entry id="67483" lang="en" sex="m">Bad StrRef Silent Cone of Cold</entry>
+  <entry id="67484" lang="en" sex="m">Bad StrRef Still Cone of Cold</entry>
+  <entry id="67485" lang="en" sex="m">Bad StrRef Greater Fireburst</entry>
+  <entry id="67486" lang="en" sex="m">Bad StrRef Empowered Greater Fireburst</entry>
+  <entry id="67487" lang="en" sex="m">Bad StrRef Maximized Greater Fireburst</entry>
+  <entry id="67488" lang="en" sex="m">Bad StrRef Quickened Greater Fireburst</entry>
+  <entry id="67489" lang="en" sex="m">Bad StrRef Silent Greater Fireburst</entry>
+  <entry id="67490" lang="en" sex="m">Bad StrRef Still Greater Fireburst</entry>
+  <entry id="67491" lang="en" sex="m">Bad StrRef Flame Strike</entry>
+  <entry id="67492" lang="en" sex="m">Bad StrRef Empowered Flame Strike</entry>
+  <entry id="67493" lang="en" sex="m">Bad StrRef Maximized Flame Strike</entry>
+  <entry id="67494" lang="en" sex="m">Bad StrRef Quickened Flame Strike</entry>
+  <entry id="67495" lang="en" sex="m">Bad StrRef Silent Flame Strike</entry>
+  <entry id="67496" lang="en" sex="m">Bad StrRef Still Flame Strike</entry>
+  <entry id="67497" lang="en" sex="m">Bad StrRef Acid Fog</entry>
+  <entry id="67498" lang="en" sex="m">Bad StrRef Empowered Acid Fog</entry>
+  <entry id="67499" lang="en" sex="m">Bad StrRef Extended Acid Fog</entry>
+  <entry id="67500" lang="en" sex="m">Bad StrRef Maximized Acid Fog</entry>
+  <entry id="67501" lang="en" sex="m">Bad StrRef Silent Acid Fog</entry>
+  <entry id="67502" lang="en" sex="m">Bad StrRef Still Acid Fog</entry>
+  <entry id="67503" lang="en" sex="m">Bad StrRef Blade Barrier</entry>
+  <entry id="67504" lang="en" sex="m">Bad StrRef Empowered Blade Barrier</entry>
+  <entry id="67505" lang="en" sex="m">Bad StrRef Extended Blade Barrier</entry>
+  <entry id="67506" lang="en" sex="m">Bad StrRef Maximized Blade Barrier</entry>
+  <entry id="67507" lang="en" sex="m">Bad StrRef Silent Blade Barrier</entry>
+  <entry id="67508" lang="en" sex="m">Bad StrRef Still Blade Barrier</entry>
+  <entry id="67509" lang="en" sex="m">Bad StrRef Chain Lightning</entry>
+  <entry id="67510" lang="en" sex="m">Bad StrRef Empowered Chain Lightning</entry>
+  <entry id="67511" lang="en" sex="m">Bad StrRef Maximized Chain Lightning</entry>
+  <entry id="67512" lang="en" sex="m">Bad StrRef Silent Chain Lightning</entry>
+  <entry id="67513" lang="en" sex="m">Bad StrRef Still Chain Lightning</entry>
+  <entry id="67514" lang="en" sex="m">Bad StrRef Circle of Death</entry>
+  <entry id="67515" lang="en" sex="m">Bad StrRef Empowered Circle of Death</entry>
+  <entry id="67516" lang="en" sex="m">Bad StrRef Maximized Circle of Death</entry>
+  <entry id="67517" lang="en" sex="m">Bad StrRef Silent Circle of Death</entry>
+  <entry id="67518" lang="en" sex="m">Bad StrRef Still Circle of Death</entry>
+  <entry id="67519" lang="en" sex="m">Bad StrRef Disintegrate</entry>
+  <entry id="67520" lang="en" sex="m">Bad StrRef Empowered Disintegrate</entry>
+  <entry id="67521" lang="en" sex="m">Bad StrRef Maximized Disintegrate</entry>
+  <entry id="67522" lang="en" sex="m">Bad StrRef Silent Disintegrate</entry>
+  <entry id="67523" lang="en" sex="m">Bad StrRef Still Disintegrate</entry>
+  <entry id="67524" lang="en" sex="m">Bad StrRef Tenser's Transformation</entry>
+  <entry id="67525" lang="en" sex="m">Bad StrRef Empowered Tenser's Transformation</entry>
+  <entry id="67526" lang="en" sex="m">Bad StrRef Extended Tenser's Transformation</entry>
+  <entry id="67527" lang="en" sex="m">Bad StrRef Maximized Tenser's Transformation</entry>
+  <entry id="67528" lang="en" sex="m">Bad StrRef Silent Tenser's Transformation</entry>
+  <entry id="67529" lang="en" sex="m">Bad StrRef Still Tenser's Transformation</entry>
+  <entry id="67530" lang="en" sex="m">Bad StrRef Delayed Blast Fireball</entry>
+  <entry id="67531" lang="en" sex="m">Bad StrRef Empowered Delayed Blast Fireball</entry>
+  <entry id="67532" lang="en" sex="m">Bad StrRef Extended Delayed Blast Fireball</entry>
+  <entry id="67533" lang="en" sex="m">Bad StrRef Silent Delayed Blast Fireball</entry>
+  <entry id="67534" lang="en" sex="m">Bad StrRef Still Delayed Blast Fireball</entry>
+  <entry id="67535" lang="en" sex="m">Bad StrRef Earthquake</entry>
+  <entry id="67536" lang="en" sex="m">Bad StrRef Extended Earthquake</entry>
+  <entry id="67537" lang="en" sex="m">Bad StrRef Silent Earthquake</entry>
+  <entry id="67538" lang="en" sex="m">Bad StrRef Still Earthquake</entry>
+  <entry id="67539" lang="en" sex="m">Bad StrRef Finger of Death</entry>
+  <entry id="67540" lang="en" sex="m">Bad StrRef Empowered Finger of Death</entry>
+  <entry id="67541" lang="en" sex="m">Bad StrRef Silent Finger of Death</entry>
+  <entry id="67542" lang="en" sex="m">Bad StrRef Still Finger of Death</entry>
+  <entry id="67543" lang="en" sex="m">Bad StrRef Fire Storm</entry>
+  <entry id="67544" lang="en" sex="m">Bad StrRef Empowered Fire Storm</entry>
+  <entry id="67545" lang="en" sex="m">Bad StrRef Silent Fire Storm</entry>
+  <entry id="67546" lang="en" sex="m">Bad StrRef Still Fire Storm</entry>
+  <entry id="67547" lang="en" sex="m">Bad StrRef Prismatic Spray</entry>
+  <entry id="67548" lang="en" sex="m">Bad StrRef Silent Prismatic Spray</entry>
+  <entry id="67549" lang="en" sex="m">Bad StrRef Still Prismatic Spray</entry>
+  <entry id="67550" lang="en" sex="m">Bad StrRef Sunbeam</entry>
+  <entry id="67551" lang="en" sex="m">Bad StrRef Silent Sunbeam</entry>
+  <entry id="67552" lang="en" sex="m">Bad StrRef Still Sunbeam</entry>
+  <entry id="67553" lang="en" sex="m">Bad StrRef Horrid Wilting</entry>
+  <entry id="67554" lang="en" sex="m">Bad StrRef Silent Horrid Wilting</entry>
+  <entry id="67555" lang="en" sex="m">Bad StrRef Still Horrid Wilting</entry>
+  <entry id="67556" lang="en" sex="m">Bad StrRef Incendiary Cloud</entry>
+  <entry id="67557" lang="en" sex="m">Bad StrRef Extended Incendiary Cloud</entry>
+  <entry id="67558" lang="en" sex="m">Bad StrRef Silent Incendiary Cloud</entry>
+  <entry id="67559" lang="en" sex="m">Bad StrRef Still Incendiary Cloud</entry>
+  <entry id="67560" lang="en" sex="m">Bad StrRef Polar Ray</entry>
+  <entry id="67561" lang="en" sex="m">Bad StrRef Silent Polar Ray</entry>
+  <entry id="67562" lang="en" sex="m">Bad StrRef Still Polar Ray</entry>
+  <entry id="67563" lang="en" sex="m">Bad StrRef Sunburst</entry>
+  <entry id="67564" lang="en" sex="m">Bad StrRef Silent Sunburst</entry>
+  <entry id="67565" lang="en" sex="m">Bad StrRef Still Sunburst</entry>
+  <entry id="67566" lang="en" sex="m">Bad StrRef Greater Shout</entry>
+  <entry id="67567" lang="en" sex="m">Bad StrRef Silent Greater Shout</entry>
+  <entry id="67568" lang="en" sex="m">Bad StrRef Still Greater Shout</entry>
+  <entry id="67569" lang="en" sex="m">Bad StrRef Elemental Swarm</entry>
+  <entry id="67570" lang="en" sex="m">Bad StrRef Implosion</entry>
+  <entry id="67571" lang="en" sex="m">Bad StrRef Meteor Swarm</entry>
+  <entry id="67572" lang="en" sex="m">Bad StrRef Wail of the Banshee</entry>
+  <entry id="67573" lang="en" sex="m">Bad StrRef Weird</entry>
   <entry id="70000" lang="en" sex="m">####END_OF_NEW_SPELLBOOK_RESERVE</entry>
   <entry id="70001" lang="en" sex="m">START OF TEMPLATE SYSTEM RESERVE</entry>
   <entry id="70002" lang="en" sex="m">Type of Feat: Template

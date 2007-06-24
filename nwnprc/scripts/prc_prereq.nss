@@ -565,7 +565,7 @@ void RedWizard(object oPC)
     iFeat = GetHasFeat(FEAT_BREW_POTION, oPC)      + GetHasFeat(FEAT_CRAFT_WAND, oPC) +
             GetHasFeat(FEAT_EMPOWER_SPELL, oPC)    + GetHasFeat(FEAT_EXTEND_SPELL, oPC) +
             GetHasFeat(FEAT_MAXIMIZE_SPELL, oPC)   + GetHasFeat(FEAT_QUICKEN_SPELL, oPC) +
-            GetHasFeat(FEAT_SILENCE_SPELL, oPC)    + GetHasFeat(FEAT_QUICKEN_SPELL, oPC) +
+            GetHasFeat(FEAT_SILENCE_SPELL, oPC)    + 
             GetHasFeat(FEAT_CRAFT_WONDROUS, oPC)   + GetHasFeat(FEAT_CRAFT_STAFF, oPC) +
             GetHasFeat(FEAT_CRAFT_ARMS_ARMOR, oPC) + GetHasFeat(FEAT_FORGE_RING, oPC) +
             GetHasFeat(FEAT_CRAFT_ROD, oPC)        + GetHasFeat(FEAT_CRAFT_CONSTRUCT, oPC) +

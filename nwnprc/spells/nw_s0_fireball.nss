@@ -107,7 +107,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                     if(nDamage > 0)
                     {
 						//Set the damage effect
-						eDam = EffectDamage(nDamage, EleDmg);
+						eDam = PRCEffectDamage(nDamage, EleDmg);
                         // Apply effects to the currently selected target.
                         DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
                         PRCBonusDamage(oTarget);

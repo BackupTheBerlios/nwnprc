@@ -70,7 +70,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 nDamage = nDamage/2;
             }
             //Set damage effect
-            eDam = EffectDamage(nDamage, DAMAGE_TYPE_SLASHING);
+            eDam = PRCEffectDamage(nDamage, DAMAGE_TYPE_SLASHING);
             //Apply damage and VFX
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget); 
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);

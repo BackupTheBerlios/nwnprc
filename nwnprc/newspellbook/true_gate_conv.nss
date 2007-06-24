@@ -111,7 +111,7 @@ int SummonResrefToInt(string sSummon)
         else if (sSummon == "NW_S_CLANTERN")     return 5;
         else if (sSummon == "true_wordarch")     return 6;
         // Demons/Devils
-        else if (sSummon == "tog_balor")         return 7;
+        else if (sSummon == "NW_S_BALOR")        return 7;
         else if (sSummon == "prc_doa_hellcat")   return 8;
         else if (sSummon == "prc_sum_cornugon")  return 9;
         else if (sSummon == "erinyes")           return 10;

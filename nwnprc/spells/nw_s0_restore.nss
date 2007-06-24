@@ -50,6 +50,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     //Search for negative effects
     while(GetIsEffectValid(eBad))
     {
+        int nInt = GetEffectSpellId(eBad);
         if (GetEffectType(eBad) == EFFECT_TYPE_ABILITY_DECREASE ||
             GetEffectType(eBad) == EFFECT_TYPE_AC_DECREASE ||
             GetEffectType(eBad) == EFFECT_TYPE_ATTACK_DECREASE ||
@@ -64,7 +65,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             GetEffectType(eBad) == EFFECT_TYPE_NEGATIVELEVEL)
             {
                 //Remove effect if it is negative.
-                if(!GetIsSupernaturalCurse(eBad))
+                if(!GetIsSupernaturalCurse(eBad) && nInt != SPELL_INTUITIVE_ATK)
                     RemoveEffect(oTarget, eBad);
             }
         eBad = GetNextEffect(oTarget);

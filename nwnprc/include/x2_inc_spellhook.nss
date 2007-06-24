@@ -1257,7 +1257,7 @@ if(DEBUG) DoDebug("x2_inc_spellhook pre-X2CastOnItemWasAllowed "+IntToString(nCo
         	SetLocalInt(oComp, "HealerCompanionSpell", nCompCount + 1);
         	DelayCommand(3.0, DeleteLocalInt(oCaster, "HealerCompanionSpell"));
         	DelayCommand(3.0, DeleteLocalInt(oComp, "HealerCompanionSpell"));
-        	if (nHealCount < 2 ) ActionCastSpell(nSpellID, PRCGetCasterLevel(), 0, PRCGetSaveDC(oComp, oComp, nSpellID), PRCGetMetaMagicFeat(), CLASS_TYPE_INVALID, FALSE, TRUE, oComp);
+        	if (nHealCount < 1 ) ActionCastSpell(nSpellID, PRCGetCasterLevel(), 0, PRCGetSaveDC(oComp, oComp, nSpellID), PRCGetMetaMagicFeat(), CLASS_TYPE_INVALID, FALSE, TRUE, oComp);
         }
     }
 

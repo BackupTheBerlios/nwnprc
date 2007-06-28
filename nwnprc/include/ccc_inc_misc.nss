@@ -1247,15 +1247,23 @@ int MapAppearanceToRace(int nAppearance)
 
 void Do2daLoop(string s2da, string sColumnName, int nFileEnd)
 {
-    int i = 0;
-    string sName;
-    sName = Get2DACache(s2da, sColumnName, i);
-    while(i <= nFileEnd)
-    {
-        AddChoice(GetStringByStrRef(StringToInt(sName)), i);
-        i++;
-        sName = Get2DACache(s2da, sColumnName, i);
-    }
+    // get the table/column name quote mark
+    string q = PRC_SQLGetTick();
+    /* SELECT statement
+     * SELECT rowid, data FROM prc_cached2da
+     * WHERE file = <s2DA> AND columnid = <sColumnName> AND rowid >= <nFileEnd>
+     */
+     string sSQL = "SELECT "+q+"rowid"+q+", "+q+"data"+q+" FROM "+q+"prc_cached2da"+q+" WHERE "+q+"file"+q+" = '"+ s2da +"' AND "+q+"columnid"+q+" = '" + sColumnName +"' AND  "+q+"rowid"+q+" <= " + IntToString(nFileEnd);
+     PRC_SQLExecDirect(sSQL);
+     int i;
+     string sData;
+     while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
+     {
+         i = StringToInt(PRC_SQLGetData(1)); // rowid
+         sData = GetStringByStrRef(StringToInt(PRC_SQLGetData(2))); // data
+         AddChoice(sData, i);
+         
+     }
 }
 
 void DoRacialtypesLoop()
@@ -1905,7 +1913,7 @@ void  DoDomainsLoop()
     string sName;
     // get the first domain chosen if it's there
     int nDomain = GetLocalInt(OBJECT_SELF, "Domain1");
-    string sDomain = IntToString(nDomain);
+    
     // genasi elemental domain enforcement only is needed on the first domain
     if (!nDomain && GetPRCSwitch(PRC_CONVOCC_GENASI_ENFORCE_DOMAINS))
     {
@@ -1929,20 +1937,39 @@ void  DoDomainsLoop()
     }
     else // give them the full domain list
     {
+        // get the file end
+        int nFileEnd = GetPRCSwitch(FILE_END_DOMAINS);
+        // get the table/column name quote mark
+        string q = PRC_SQLGetTick();
+        /* SELECT statement
+         * SELECT rowid, data FROM prc_cached2da
+         * WHERE file = 'domains' AND columnid = 'name' AND data != '****' AND rowid >= <nFileEnd>
+         */
+         string sSQL = "SELECT "+q+"rowid"+q+", "+q+"data"+q+" FROM "+q+"prc_cached2da"+q+" WHERE "+q+"file"+q+" = 'domains' AND "+q+"columnid"+q+" = 'name' AND "+q+"data"+q+" != '****' AND "+q+"rowid"+q+" <= " + IntToString(nFileEnd);
+         PRC_SQLExecDirect(sSQL);
+        
         // fix for air domain being 0
-        if (sDomain == "-1")
-            sDomain = "0";
-        sName = Get2DACache("domains", "Name", i);
-        while(i <= GetPRCSwitch(FILE_END_DOMAINS))
-        {
-            if (sName != "" && IntToString(i) != sDomain)
+        // swap around -1 (actually air/0) and variable not set (0)
+        if (nDomain == -1) // air domain
+            nDomain = 0;
+        else if (nDomain == 0) // not set
+            nDomain = -1;
+        int i;
+        string sRowID;
+        string sName;
+         while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
+         {
+             i = StringToInt(PRC_SQLGetData(1)); // rowid
+             sName = GetStringByStrRef(StringToInt(PRC_SQLGetData(2))); // data
+             if (i != nDomain)
             {
-                AddChoice(GetStringByStrRef(StringToInt(sName)), i);
+                AddChoice(sName, i);
             }
-            i++;
-            sName = Get2DACache("domains", "Name", i);
-        }
+         }
+        
     }
+    DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
+    FloatingTextStringOnCreature("Done", OBJECT_SELF, FALSE);
 }
 
 void DoAppearanceLoop()

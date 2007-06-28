@@ -507,6 +507,7 @@ void DoHeaderAndChoices(int nStage)
             else // wizard or sorc
                 Do2daLoop("hen_familiar", "STRREF", GetPRCSwitch(FILE_END_FAMILIAR));
             SetLocalInt(OBJECT_SELF, "DynConv_Waiting", FALSE);
+            FloatingTextStringOnCreature("Done", OBJECT_SELF, FALSE);
             MarkStageSetUp(nStage);
             SetDefaultTokens();
             break;
@@ -540,6 +541,7 @@ void DoHeaderAndChoices(int nStage)
         case STAGE_DOMAIN: {
             sText = GetStringByStrRef(5982); // Pick Cleric Domain
             SetHeader(sText);
+            SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
             // choices
             DoDomainsLoop();
             MarkStageSetUp(nStage);

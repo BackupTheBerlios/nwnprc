@@ -75,7 +75,7 @@ void main()
         int nPen          = GetPsiPenetration(oManifester);
         int nExtraTargets = manif.nTimesAugOptUsed_3;
         effect eMindVFX  = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
-        effect eDominate = EffectDominated();
+        effect eDominate = EffectCutsceneDominated();   // Allows multiple dominated creatures
         effect eLink;
         location lTarget = PRCGetSpellTargetLocation();
         float fRadius = EvaluateWidenPower(manif, FeetToMeters(15.0f));
@@ -109,9 +109,13 @@ void main()
                     //Make a saving throw check
                     if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
                     {
-                        // Determine effect and apply it
-                        eLink = EffectLinkEffects(eMindVFX, GetScaledEffect(eDominate, oTarget));
-                        DelayCommand(1.0, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel));
+                        // Extra domination immunity check - using EffectCutsceneDominated(), which normally bypasses
+                        if(!GetIsImmune(oTarget, IMMUNITY_TYPE_DOMINATE) && !GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS))
+                        {
+                            // Determine effect and apply it
+                            eLink = EffectLinkEffects(eMindVFX, GetScaledEffect(eDominate, oTarget));
+                            DelayCommand(1.0, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel));
+                        }
                     }// end if - Save
                 }// end if - SR check
             }// end if - Target type check
@@ -138,9 +142,13 @@ void main()
                             //Make a saving throw check
                            if(!PRCMySavingThrow(SAVING_THROW_WILL, oExtraTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
                             {
-                                // Determine effect and apply it
-                                eLink = EffectLinkEffects(eMindVFX, GetScaledEffect(eDominate, oExtraTarget));
-                                DelayCommand(1.0, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oExtraTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel));
+                                // Extra domination immunity check - using EffectCutsceneDominated(), which normally bypasses
+                                if(!GetIsImmune(oTarget, IMMUNITY_TYPE_DOMINATE) && !GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS))
+                                {
+                                    // Determine effect and apply it
+                                    eLink = EffectLinkEffects(eMindVFX, GetScaledEffect(eDominate, oExtraTarget));
+                                    DelayCommand(1.0, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oExtraTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel));
+                                }
                             }// end if - Save
                         }// end if - SR check
 

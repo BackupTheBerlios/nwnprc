@@ -24,14 +24,15 @@ damage. Creating each beam deals you
 For every two caster levels beyond
 1st, you can create an additional ray, up
 to a maximum of five rays at 9th level.
-If you shoot multiple rays, you strike a 
-single creature. 
+
 
 Author:    Tenjac
 Created:   6/28/07
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
+
+int GetBolts(int nCasterLvl);
 
 void main()
 {
@@ -44,9 +45,67 @@ void main()
         int nType = MyPRCGetRacialType(oTarget);
         int nCasterLvl = PRCGetCasterLevel(oPC);
         int nSpell = GetSpellId();
-        int nDice = 1;
+        int nBolts = GetBolts(nCasterLvl);
         int nDam;
         int nOuch;
+        int nTouch = PRCDoRangedTouchAttack(oTarget);
+        
+        //Determine damage to caster
+        if(nSpell == LIFE_BOLT_5_BOLTS)
+        {
+                nOuch = 5;
+                if(nCasterLvl < 9)
+                {
+                        //Tell them they can't cast this yet
+                        SendMessageToPC(oPC, "You cannot create this many beams yet!");
+                        SPSetSchool();
+                        return;
+                }
+        }
+        
+        else if(nSpell == LIFE_BOLT_4_BOLTS)
+        {
+                nOuch = 4;
+                if(nCasterLvl < 7)
+                {
+                        //Tell them they can't cast this yet
+                        SendMessageToPC(oPC, "You cannot create this many beams yet!");
+                        SPSetSchool();
+                        return;
+                }
+        }
+        
+        else if(nSpell == LIFE_BOLT_3_BOLTS)
+        {
+                nOuch = 3;
+                if(nCasterLvl < 5)
+                {
+                        //Tell them they can't cast this yet
+                        SendMessageToPC(oPC, "You cannot create this many beams yet!");
+                        SPSetSchool();
+                        return;
+                }
+        }
+        
+        else if(nSpell == LIFE_BOLT_2_BOLTS)
+        {
+                nOuch = 2;
+                if(nCasterLvl < 3)
+                {
+                        //Tell them they can't cast this yet
+                        SendMessageToPC(oPC, "You cannot create this many beams yet!");
+                        SPSetSchool();
+                        return;
+                }
+        }
+        
+        else nOuch = 1;
+        
+        //Apply damage to caster
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nOuch, DAMAGE_TYPE_MAGICAL), oPC);
+        
+        //Beam VFX
+        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectBeam(VFX_BEAM_HOLY, oPC, BODY_NODE_HAND, !nTouch), oTarget, 1.0f); 
         
         //Must be undead
         if(nType != RACIAL_TYPE_UNDEAD)
@@ -55,60 +114,44 @@ void main()
                 return;
         }
         
-        //SR check
-        if(!MyPRCResistSpell(OBJECT_SELF, oTarget, (nCasterLevel + SPGetPenetr()))
+        //if touched
+        if(nTouch)
         {
-                //Determine damage to caster
-                if(nSpell == LIFE_BOLT_5_BOLTS)
+                //SR check
+                if(!MyPRCResistSpell(OBJECT_SELF, oTarget, (nCasterLevel + SPGetPenetr()))
                 {
-                        nOuch = 5;
-                        if(nCasterLvl < 9)
-                        {
-                                //Tell them they can't cast this yet
-                                SendMessageToPC(oPC, "You cannot create this many beams yet!");
-                                return;
-                        }
+                        nDam = d12(nBolts);
+                        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_POSITIVE), oTarget);
                 }
-                
-                else if(nSpell == LIFE_BOLT_4_BOLTS)
-                {
-                        nOuch = 4;
-                        if(nCasterLvl < 7)
-                        {
-                                //Tell them they can't cast this yet
-                                SendMessageToPC(oPC, "You cannot create this many beams yet!");
-                                return;
-                        }
-                }
-                
-                else if(nSpell == LIFE_BOLT_3_BOLTS)
-                {
-                        nOuch = 3;
-                        if(nCasterLvl < 5)
-                        {
-                                //Tell them they can't cast this yet
-                                SendMessageToPC(oPC, "You cannot create this many beams yet!");
-                                return;
-                        }
-                }
-                
-                else if(nSpell == LIFE_BOLT_2_BOLTS)
-                {
-                        nOuch = 2;
-                        if(nCasterLvl < 3)
-                        {
-                                //Tell them they can't cast this yet
-                                SendMessageToPC(oPC, "You cannot create this many beams yet!");
-                                return;
-                        }
-                }
-                
-                else nOuch = 1;
-                
-                //Apply damage to caster
-                SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nOuch, DAMAGE_TYPE_MAGICAL), oPC);
-                
-                
-                
-                
-             
+        }
+        SPSetSchool();
+}
+
+
+int GetBolts(int nCasterLvl)
+{
+        int nBolts = 5;
+        
+        if(nCasterLvl < 9)
+        {
+                nBolts--;
+        }
+        
+        if(nCasterLvl < 7)
+        {
+                nBolts--;
+        }
+        
+        if(nCasterLvl < 5)
+        {
+                nBolts--;
+        }
+        
+        if(nCasterLvl < 3)
+        {
+                nBolts--;
+        }
+        
+        return nBolts;
+}
+  

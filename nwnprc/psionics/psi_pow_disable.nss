@@ -96,6 +96,7 @@ void main()
             {
                 AddToTargetList(oTarget, oManifester, INSERTION_BIAS_HD, FALSE);
             }// end if - target is valid for this
+            oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, fWidth, lTarget, TRUE, OBJECT_TYPE_CREATURE);
         }// end while - target list generation
 
         // Now get targets until out of affectable HD or out of targets

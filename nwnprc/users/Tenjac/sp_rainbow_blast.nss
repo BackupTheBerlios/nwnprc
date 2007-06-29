@@ -27,7 +27,7 @@ die increases in size. At 7th level the
 spell deals 5d8 points of damage, at 9th
 level it deals 5d10 points of damage,
 and at 11th level it deals 5d12 points of
-damage—one die for each of the five
+damage; one die for each of the five
 energy types.
 Focus: A small clear gem or crystal
 prism worth at least 50 gp.
@@ -37,3 +37,63 @@ Created:   6/28/07
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
+
+#include "spinc_common"
+
+int GetDieType(int nCasterLevel)
+
+void main()
+{
+        if(!X2PreSpellCastCode()) return;
+        
+        SPSetSchool(SPELL_SCHOOL_EVOCATION);
+        
+        object oPC = OBJECT_SELF;
+        location lCaster = GetLocation(oPC);
+        location lTarget = PRCGetSpellTargetLocation();
+        int nCasterLevel = PRCGetCasterLevel(oPC);
+        vector vOrigin = GetPosition(oPC);
+        float fLength = FeetToMeters(120);
+        float fAngle = GetRelativeAngleBetweenLocations(lCaster, lTarget);
+        float fVFXLength = GetVFXLength(lCaster, fLength, fAngle);
+        float fDuration = 3.0f;
+        int nSwitch = GetDieType(nCasterLevel);
+        
+        
+        object oTarget = MyFirstObjectInShape(SHAPE_SPELLCYLINDER, fLength, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE, vOrigin);
+        
+        while(GetIsObjectValid(oTarget))
+        {
+                if(!MyPRCResistSpell(oPC, oTarget, (nCasterLevel + SPGetPenetr()))
+                {
+                        //Determine
+                        switch(nSwitch
+                        
+                }                
+        }
+        
+        SPSetSchool();
+}
+
+int GetDieType(int nCasterLevel)
+{
+        int nDice = 5;
+        
+        if(nCasterLevel < 9)
+        {
+                nDice--;
+        }
+        
+        if(nCasterLevel < 7)
+        {
+                nDice--;
+        }
+        
+        if(nCasterLevel < 5)
+        {
+                nDice--;
+        }
+        
+        return nDice;
+}
+ 

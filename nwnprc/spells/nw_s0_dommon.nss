@@ -44,7 +44,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
 
     //Declare major variables
     object oTarget = GetSpellTargetObject();
-    effect eDom = EffectDominated();
+    effect eDom = EffectCutsceneDominated();    // Allows multiple dominated creatures
     eDom = GetScaledEffect(eDom, oTarget);
     effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DOMINATED);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
@@ -59,7 +59,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     int nCasterLevel = CasterLvl;
     int nDuration = 3 + nCasterLevel/2;
     nCasterLevel +=SPGetPenetr();
-    
+
     nDuration = GetScaledDuration(nDuration, oTarget);
     int nRacial = MyPRCGetRacialType(oTarget);
     //Fire cast spell at event for the specified target
@@ -78,9 +78,13 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
                     {
                         nDuration = nDuration * 2;
                     }
-                    //Apply linked effects and VFX Impact
-                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, TurnsToSeconds(nDuration),TRUE,-1,CasterLvl);
-                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+                    // Extra domination immunity check - using EffectCutsceneDominated(), which normally bypasses
+                    if(!GetIsImmune(oTarget, IMMUNITY_TYPE_DOMINATE) && !GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS))
+                    {
+                        //Apply linked effects and VFX Impact
+                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, TurnsToSeconds(nDuration),TRUE,-1,CasterLvl);
+                        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+                    }
                 }
            }
      }

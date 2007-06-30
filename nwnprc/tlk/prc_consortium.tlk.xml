@@ -19268,7 +19268,111 @@ Saving Throw: No
 Spell Resistance: Yes
 
 Waves of negative energy render all living creatures in the spell's area fatigued. This spell has no effect on a creature that is already fatigued. </entry>
-  <entry id="50371" lang="en" sex="m">Waves of Fatigue (9)</entry>
+<entry id="50371" lang="en" sex="m">Waves of Fatigue (9)</entry>
+  <entry id="50372" lang="en" sex="m">Extra Edge</entry>
+  <entry id="50373" lang="en" sex="m">Type of Feat: General
+Prerequisite: Warmage 4.
+Specifics: You gain a +1 bonus on your warmage edge, plus an additional +1 bonus for every four warmage levels.
+Use: Automatic.</entry>
+  <entry id="50374" lang="en" sex="m">Sudden Empower</entry>
+  <entry id="50375" lang="en" sex="m">Type of Feat: Metamagic
+Prerequisite: Any metamagic feat.
+Specifics: Once per day, you can apply the Empower Spell feat to the next spell you cast.
+Use: Selected.</entry>
+  <entry id="50376" lang="en" sex="m">Sudden Extend</entry>
+  <entry id="50377" lang="en" sex="m">Type of Feat: Metamagic
+Prerequisite: None.
+Specifics: Once per day, you can apply the Extend Spell feat to the next spell you cast.
+Use: Selected.</entry>
+  <entry id="50378" lang="en" sex="m">Sudden Maximize</entry>
+  <entry id="50379" lang="en" sex="m">Type of Feat: Metamagic
+Prerequisite: Any metamagic feat.
+Specifics: Once per day, you can apply the Maximize Spell feat to the next spell you cast.
+Use: Selected.</entry>
+  <entry id="50380" lang="en" sex="m">Sudden Widen</entry>
+  <entry id="50381" lang="en" sex="m">Type of Feat: Metamagic
+Prerequisite: None.
+Specifics: Once per day, you can apply the Widen Spell feat to the next spell you cast.
+Use: Selected.</entry>
+  <entry id="50382" lang="en" sex="m">Armoured Mage</entry>
+  <entry id="50383" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Warmage 1.
+Specifics: The Warmage suffers no arcane spell failure while in light armour and a light shield. At level 8, this increases to medium armour.
+Use: Automatic.</entry>
+  <entry id="50384" lang="en" sex="m">Advanced Learning</entry>
+  <entry id="50385" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Warmage.
+Specifics: At 3rd, 6th, 11th, and 16th level, a warmage can add a new spell to his list. The spell must be a wizard spell of the evocation school, and of a level no higher than the highest level spell the warmage already knows.
+
+This feature is not yet operational.
+Use: Automatic.</entry>
+  <entry id="50386" lang="en" sex="m">Warmage Edge</entry>
+  <entry id="50387" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Warmage 1.
+Specifics: Whenever a Warmage casts a spell that does hit point damage, he adds his intelligence bonus to the damage dealt. Scrolls scribed and items used by the Warmage do not get this benefit. However, staffs do gain the benefit.
+Use: Automatic.</entry>
+<entry id="50388" lang="en" sex="m">Warmage</entry>
+<entry id="50389" lang="en" sex="m">Warmages</entry>
+<entry id="50390" lang="en" sex="m">warmage</entry>
+<entry id="50391" lang="en" sex="m">(BASE CLASS)
+Some spellcasters care for only one thing: war. They dream of steel and mighty blasts of devastating magic, the march of troops, and the unleashed destruction found on battlefields everywhere. Graduates of special arcane war colleges, those known as warmages are drilled only and utterly in the casting of spells most useful for laying down destruction, confusing an enemy, or screening an allied action. The utilitarian spells used by wizards and sorcerers have little importance to a warmage's way of thinking. What are support casters for, after all? A warmage cares only for success on the battlefield, or, in some cases, in a series of smaller campaigns favoured by adventuring companies.
+
+- Hit Die: d6
+- Proficiencies: A Warmage gains proficiencies.with Simple Weapons, Light Armour, and Shields.
+- Skill Points: 2 + Int Modifier
+
+ABILITIES:
+
+Level
+1: Armoured Mage - No Arcane Spell Failure in light armour
+Warmage Edge - Intelligence Modifier to spell damage
+2:
+3: Advanced Learning - Learn one new Evocation spell.
+4:
+5:
+6: Advanced Learning - Learn one new Evocation spell.
+7: Sudden Empower - Empower spell as a swift action.
+8: Armoured Mage - No arcane spell failure in medium armour.
+9:
+10: Sudden Extend - Extend spell as a swift action.
+11: Advanced Learning - Learn one new Evocation spell.
+12:
+13:
+14:
+15: Sudden Widen - Widen spell as a swift action.
+16: Advanced Learning - Learn one new Evocation spell.
+17:
+18:
+19:
+20: Sudden Maximize - Maximize spell as a swift action.
+
+SPELLCASTING
+
+To cast a spell, the Warmage must have a Charisma score of 10 + the spell level. The DC of a Warmage's spell is 10 + Spell Level + Charisma Modifier. A Warmage's caster level is equal to his class level. He is a spontaneous caster.
+
+Spells per day:
+Level: 0 1 2 3 4 5 6 7 8 9
+
+1:     5 3 - - - - - - - -
+2:     6 4 - - - - - - - -
+3:     6 5 - - - - - - - -
+4:     6 6 3 - - - - - - -
+5:     6 6 4 - - - - - - -
+6:     6 6 5 3 - - - - - -
+7:     6 6 6 4 - - - - - -
+8:     6 6 6 5 3 - - - - -
+9:     6 6 6 6 4 - - - - -
+10:    6 6 6 6 5 3 - - - -
+11:    6 6 6 6 6 4 - - - -
+12:    6 6 6 6 6 5 3 - - -
+13:    6 6 6 6 6 6 4 - - -
+14:    6 6 6 6 6 6 5 3 - -
+15:    6 6 6 6 6 6 6 4 - -
+16:    6 6 6 6 6 6 6 5 3 -
+17:    6 6 6 6 6 6 6 6 4 -
+18:    6 6 6 6 6 6 6 6 5 3
+19:    6 6 6 6 6 6 6 6 6 4
+20:    6 6 6 6 6 6 6 6 6 5</entry>
   <entry id="50501" lang="en" sex="m">***50,501 -&gt; 51,000 reserved for domains and spells***</entry>
   <entry id="50502" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Metal domain.

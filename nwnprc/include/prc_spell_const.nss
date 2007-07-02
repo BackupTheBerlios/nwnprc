@@ -715,6 +715,23 @@ const int SPELL_SURE_STRIKE                         = 1840;
 const int SPELL_TRUE_RESURRECTION                   = 1855;
 const int SPELL_CALM_EMOTIONS                       = 1852;
 
+//Spell Compendium - Tenjac
+
+const int SPELL_SARCOPHAGUS_OF_STONE                = 3662;
+const int SPELL_ARROW_OF_BONE                       = 3663;
+const int SPELL_DRACONIC_MIGHT                      = 3664;
+const int SPELL_EXTRACT_WATER_ELEMENTAL             = 3665;
+const int SPELL_HEART_RIPPER                        = 3666;
+const int SPELL_LIFE_BOLT                           = 3667;
+const int SPELL_RAINBOW_BLAST                       = 3668;
+const int SPELL_TOWERING_OAK                        = 3669;
+const int SPELL_LIFE_BOLT_1_BOLT                    = 3670;
+const int SPELL_LIFE_BOLT_2_BOLTS                   = 3671;
+const int SPELL_LIFE_BOLT_3_BOLTS                   = 3672;
+const int SPELL_LIFE_BOLT_4_BOLTS                   = 3673;
+const int SPELL_LIFE_BOLT_5_BOLTS                   = 3674;
+
+
 // Passive feats
 const int SPELL_FORCE_PERSONALITY                   = 1915;
 const int SPELL_INSIGHTFUL_REFLEXES                 = 1916;

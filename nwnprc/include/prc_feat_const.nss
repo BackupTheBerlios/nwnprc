@@ -2179,6 +2179,9 @@ const int FEAT_TEMPLATE_FIENDISH_SMITE_GOOD         = 22603;
  const int FEAT_EF_EXTRA_STUNNING              = 4396;
  const int FEAT_EF_FIST_OF_ENERGY_BURST        = 4397;
 
+// Knight Feats
+const int FEAT_FIGHT_CHALLENGE                 = 2834;
+
 /*//////////////////////////////////////////////////
 //////////////// TRUENAMING ////////////////////////
 //////////////////////////////////////////////////*/

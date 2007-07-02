@@ -19373,6 +19373,108 @@ Level: 0 1 2 3 4 5 6 7 8 9
 18:    6 6 6 6 6 6 6 6 5 3
 19:    6 6 6 6 6 6 6 6 6 4
 20:    6 6 6 6 6 6 6 6 6 5</entry>
+  <entry id="50392" lang="en" sex="m">Fighting Challenge</entry>
+  <entry id="50393" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Knight 1.
+Specifics: As a swift action, you utter a challenge against a single opponent. That foe must have a Challenge Rating equal to at least your level minus two, and an Intelligence of 5 or greater. If the target meets the conditions, you gain a +1 bonus to Will saves, Attack, and Damage against that creature. This lasts for five rounds plus your Charisma modifier.
+While this ability is in effect, you cannot use it again. The bonus rises to +2 at 7, +3 at 13, and +4 at 19.
+This costs one use of your Knight's Challenge.
+Use: Selected.</entry>
+  <entry id="50394" lang="en" sex="m">Test of Mettle</entry>
+  <entry id="50395" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Knight 4.
+Specifics: As a swift action, you shout a challenge against all opponents within 100'. Foes must have a Challenge Rating equal to at least your level minus two, and an Intelligence of 5 or greater to be affected. If they fail a Will save vs 10 + 1/2 class level + Charisma modifier, they close and attack with you.
+This costs one use of your Knight's Challenge.
+Use: Selected.</entry>
+  <entry id="50396" lang="en" sex="m">Call To Battle</entry>
+  <entry id="50397" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Knight 8.
+Specifics: As a swift action, you grant an ally the chance to reroll the next save against fear that she must attempt during this round.
+This costs one use of your Knight's Challenge.
+Use: Selected.</entry>
+  <entry id="50398" lang="en" sex="m">Daunting Challenge</entry>
+  <entry id="50399" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Knight 12.
+Specifics: As a swift action, you shout a challenge against all opponents within 100'. Foes must have a Challenge Rating equal to at least your level minus two, and an Intelligence of 5 or greater to be affected. If they fail a Will save vs 10 + 1/2 class level + Charisma modifier, your enemies are shaken.
+This costs one use of your Knight's Challenge.
+Use: Selected.</entry>
+  <entry id="50400" lang="en" sex="m">Bond of Loyalty</entry>
+  <entry id="50401" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Knight 16.
+Specifics: As a swift action, you gain the ability to reroll the next save against mind affecting spells that you must attempt during this round.
+This costs one use of your Knight's Challenge.
+Use: Selected.</entry>
+  <entry id="50402" lang="en" sex="m">Loyal Beyond Death</entry>
+  <entry id="50403" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Knight 2.
+Specifics: As a swift action, you shrug off all damage and other effects that would kill you. You do not die for one round.
+Use: Selected.</entry>
+  <entry id="50404" lang="en" sex="m">Shield Block</entry>
+  <entry id="50405" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Knight 20.
+Specifics: You designate a single foe during your round. You receive a +1 bonus to AC against that foe. At level 11, this increases to +2, and to +3 at 20th.
+Use: Selected.</entry>
+  <entry id="50406" lang="en" sex="m">Bulwark of Defense</entry>
+  <entry id="50407" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Knight 3.
+Specifics: An area 10' around you is treated as difficult terrain.
+Use: Selected.</entry>
+  <entry id="50408" lang="en" sex="m">Vigilant Defender</entry>
+  <entry id="50409" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Knight 5.
+Specifics: Any creature who attempts to tumble past you takes a penalty on tumble checks equal to your class level.
+Use: Selected.</entry>
+  <entry id="50410" lang="en" sex="m">Shield Ally</entry>
+  <entry id="50411" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Knight 6.
+Specifics: As a swift action, you share damage with one of your allies, taking 50% of all damage dealt to her. This lasts for one round.
+Use: Selected.</entry>
+  <entry id="50412" lang="en" sex="m">Improved Shield Ally</entry>
+  <entry id="50413" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Knight 14.
+Specifics: As a swift action, you share damage with one of your allies, taking 50% of all damage dealt to her. You also leap in front of a single blow, taking all damage from that strike. This lasts for one round.
+Use: Selected.</entry>
+  <entry id="50414" lang="en" sex="m">Impetuous Endurance</entry>
+  <entry id="50415" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Knight 17.
+Specifics: Whenever you are struck by a save requiring a Will or Fortitude save, you are able to reroll it should you fail.
+Use: Automatic.</entry>
+<entry id="50416" lang="en" sex="m">Knight</entry>
+<entry id="50417" lang="en" sex="m">Knights</entry>
+<entry id="50418" lang="en" sex="m">knight</entry>
+<entry id="50419" lang="en" sex="m">(BASE CLASS)
+A knight is a proud, skilled melee combatant who fights in the name of honour and chivalry. A knight relies on more than a sharp sword and stout suit of armour to defeat his foes. His drive, determination, and fighting spirit allow him to control the battlefield in ways that others cannot match. A knight can challenge an opponent to a duel, calling upon the foe's ego and pride to force his hand. The knight's talent with heavy armour, shields, and defensive tactics grant him the ability to disrupt his foe's plans. 
+
+- Hit Die: d12
+- Proficiencies: A Knight gains proficiencies.with Martial and Simple Weapons, Light, Medium and Heavy Armour, and Shields.
+- Skill Points: 2 + Int Modifier
+
+ABILITIES:
+
+Level
+1: Fighting Challenge - Challenge a foe to gain a bonus to attack and damage.
+2: Shield Block - Bonus to defense against a single foe.
+3: Bulwark of Defense - Difficult terrain surrounds you
+4: Test of Mettle - Cause creatures who are worthy to fight you
+5: Vigilant Defender - Prevent creatures from tumbling past you.
+   Bonus Feat
+6: Shield Ally - Take damage for an ally.
+7: 
+8: Call To Battle - Free a friend from the grips of fear.
+9:
+10: Bonus Feat
+11: 
+12: Daunting Challenge - Enemies shake before you.
+13: 
+14: Improved Shield Ally - Take damage for an ally, and stop a blow completely.
+15: Bonus Feat
+16: Bond of Loyalty - Resist controlling magics
+17: Impetuous Endurance - Shrug off failed spells
+18:
+19:
+20: Loyal Beyond Death - Not even death makes you fail at a challenge.
+
+Knight's Challenge abilities have uses per day equal to one half class level + Charisma modifier.</entry>
   <entry id="50501" lang="en" sex="m">***50,501 -&gt; 51,000 reserved for domains and spells***</entry>
   <entry id="50502" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Metal domain.

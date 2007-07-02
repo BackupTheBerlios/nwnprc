@@ -834,3 +834,8 @@ const int SPELL_ARCANE_EYE                          = 3659;
 const int SPELL_OBSCURE_OBJECT                      = 3660;
 const int SPELL_SEQUESTER                           = 3661;
 const int SPELL_END_SCRY                            = 1798;
+
+// Knight Spells
+const int SPELL_VIGILANT_DEFENDER                   = 1777;
+const int SPELL_BULWARK_DEFENSE                     = 1778;
+const int SPELL_FIGHT_CHALLENGE                     = 1770;

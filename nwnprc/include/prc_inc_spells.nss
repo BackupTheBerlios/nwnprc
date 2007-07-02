@@ -1322,6 +1322,18 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
 	DeleteLocalInt(oTarget, "ZealousSurge");
     }      
 
+    // Call To Battle Reroll
+    if(nSaveRoll == 0 &&     // Failed the save
+       GetLocalInt(oTarget, "CallToBattle") &&
+       nSaveType == SAVING_THROW_TYPE_FEAR)
+    {
+        // Reroll
+        nSaveRoll = BWSavingThrow(nSavingThrow, oTarget, nDC, nSaveType, oSaveVersus, fDelay);
+
+        // Ability Used
+	DeleteLocalInt(oTarget, "CallToBattle");
+    } 
+
     // Iron Mind Barbed Mind ability
     if(GetLevelByClass(CLASS_TYPE_IRONMIND, oTarget) >= 10)
     {
@@ -1335,6 +1347,27 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
             ApplyAbilityDamage(oSaveVersus, ABILITY_WISDOM, 1, DURATION_TYPE_TEMPORARY, TRUE, -1.0);
         }
     }
+    
+    // Impetuous Endurance
+    if(nSaveRoll == 0 && GetLevelByClass(CLASS_TYPE_KNIGHT, oTarget) >= 17)
+    {
+	// Reroll
+        nSaveRoll = BWSavingThrow(nSavingThrow, oTarget, nDC, nSaveType, oSaveVersus, fDelay);
+    }
+    
+    // Bond Of Loyalty
+    if(GetLocalInt(oTarget, "BondOfLoyalty"))
+    {
+        // Only works on Mind Spells 
+        if(nSaveType == SAVING_THROW_TYPE_MIND_SPELLS)
+        {
+       	 	// Reroll
+       	 	nSaveRoll = BWSavingThrow(nSavingThrow, oTarget, nDC, nSaveType, oSaveVersus, fDelay);
+
+        	// Ability Used
+		DeleteLocalInt(oTarget, "BondOfLoyalty");            
+        }
+    }    
 
     return nSaveRoll;
 }
@@ -1428,7 +1461,7 @@ int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveTy
 
         // Ability Used
 	DeleteLocalInt(oTarget, "ZealousSurge");
-    }    
+    }       
 
     return nDamage;
 }

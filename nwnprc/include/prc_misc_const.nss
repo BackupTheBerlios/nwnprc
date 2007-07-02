@@ -57,6 +57,10 @@ const int VFX_PER_40M_INVIS                     = 197;
 const int VFX_PER_45M_INVIS                     = 198;
 const int VFX_PER_50M_INVIS                     = 199;
 
+// Knight Area of Effects
+const int AOE_MOB_BULWARK_DEFENSE               = 162;
+const int AOE_MOB_VIGILANT_DEFENDER             = 163;
+
 
 //:://////////////////////////////////////////////
 //:: Disease Const

@@ -50,26 +50,16 @@ void main()
         SPSetSchool(SPELL_SCHOOL_EVOCATION);
         
         object oPC = OBJECT_SELF;
-        location lCaster = GetLocation(oPC);
-        location lTarget = PRCGetSpellTargetLocation();
         int nCasterLevel = PRCGetCasterLevel(oPC);
-        vector vOrigin = GetPosition(oPC);
-        float fLength = FeetToMeters(120);
-        float fAngle = GetRelativeAngleBetweenLocations(lCaster, lTarget);
-        float fVFXLength = GetVFXLength(lCaster, fLength, fAngle);
-        float fDuration = 3.0f;
         int nDieSides = GetDieType(nCasterLevel);
+       
+        //Dish out the damage
+        DoBolt(nCasterLevel, nDieSides, 0, VFX_BEAM_FIRE, VFX_IMP_FLAME_S, DAMAGE_TYPE_FIRE, SAVING_THROW_TYPE_FIRE);
+        DoBolt(nCasterLevel, nDieSides, 0, VFX_BEAM_DISINTEGRATE, VFX_IMP_ACID_S, DAMAGE_TYPE_ACID, SAVING_THROW_TYPE_ACID);
+        DoBolt(nCasterLevel, nDieSides, 0, VFX_BEAM_COLD, VFX_IMP_FROST_S, DAMAGE_TYPE_COLD, SAVING_THROW_TYPE_COLD);
+        DoBolt(nCasterLevel, nDieSides, 0, VFX_BEAM_LIGHTNING, VFX_IMP_LIGHTNING_S, DAMAGE_TYPE_ELECTRICAL, SAVING_THROW_TYPE_ELECTRICITY);
+        DoBolt(nCasterLevel, nDieSides, 0, VFX_BEAM_SPELLFIRE, VFX_IMP_SONIC, DAMAGE_TYPE_SONIC, SAVING_THROW_TYPE_SONIC);
                 
-        object oTarget = MyFirstObjectInShape(SHAPE_SPELLCYLINDER, fLength, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE, vOrigin);
-        {
-                //Dish out the damage
-                DoBolt(nCasterLevel, nDieSides, 0, VFX_BEAM_FIRE, VFX_IMP_FLAME_S, DAMAGE_TYPE_FIRE, SAVING_THROW_TYPE_FIRE);
-                DoBolt(nCasterLevel, nDieSides, 0, VFX_BEAM_DISINTEGRATE, VFX_IMP_ACID_S, DAMAGE_TYPE_ACID, SAVING_THROW_TYPE_ACID);
-                DoBolt(nCasterLevel, nDieSides, 0, VFX_BEAM_COLD, VFX_IMP_FROST_S, DAMAGE_TYPE_COLD, SAVING_THROW_TYPE_COLD);
-                DoBolt(nCasterLevel, nDieSides, 0, VFX_BEAM_LIGHTNING, VFX_IMP_LIGHTNING_S, DAMAGE_TYPE_ELECTRICAL, SAVING_THROW_TYPE_ELECTRICITY);
-                DoBolt(nCasterLevel, nDieSides, 0, VFX_BEAM_SPELLFIRE, VFX_IMP_SONIC, DAMAGE_TYPE_SONIC, SAVING_THROW_TYPE_SONIC);
-        }
-        
         SPSetSchool();
 }
 

@@ -39,6 +39,7 @@ Created:   6/28/07
 //:://////////////////////////////////////////////
 
 #include "spinc_common"
+#include "spinc_bolt"
 
 int GetDieType(int nCasterLevel)
 
@@ -57,19 +58,16 @@ void main()
         float fAngle = GetRelativeAngleBetweenLocations(lCaster, lTarget);
         float fVFXLength = GetVFXLength(lCaster, fLength, fAngle);
         float fDuration = 3.0f;
-        int nSwitch = GetDieType(nCasterLevel);
-        
-        
+        int nDieSides = GetDieType(nCasterLevel);
+                
         object oTarget = MyFirstObjectInShape(SHAPE_SPELLCYLINDER, fLength, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE, vOrigin);
-        
-        while(GetIsObjectValid(oTarget))
         {
-                if(!MyPRCResistSpell(oPC, oTarget, (nCasterLevel + SPGetPenetr()))
-                {
-                        //Determine
-                        switch(nSwitch
-                        
-                }                
+                //Dish out the damage
+                DoBolt(nCasterLevel, nDieSides, 0, VFX_BEAM_FIRE, VFX_IMP_FLAME_S, DAMAGE_TYPE_FIRE, SAVING_THROW_TYPE_FIRE);
+                DoBolt(nCasterLevel, nDieSides, 0, VFX_BEAM_DISINTEGRATE, VFX_IMP_ACID_S, DAMAGE_TYPE_ACID, SAVING_THROW_TYPE_ACID);
+                DoBolt(nCasterLevel, nDieSides, 0, VFX_BEAM_COLD, VFX_IMP_FROST_S, DAMAGE_TYPE_COLD, SAVING_THROW_TYPE_COLD);
+                DoBolt(nCasterLevel, nDieSides, 0, VFX_BEAM_LIGHTNING, VFX_IMP_LIGHTNING_S, DAMAGE_TYPE_ELECTRICAL, SAVING_THROW_TYPE_ELECTRICITY);
+                DoBolt(nCasterLevel, nDieSides, 0, VFX_BEAM_SPELLFIRE, VFX_IMP_SONIC, DAMAGE_TYPE_SONIC, SAVING_THROW_TYPE_SONIC);
         }
         
         SPSetSchool();
@@ -77,22 +75,22 @@ void main()
 
 int GetDieType(int nCasterLevel)
 {
-        int nDice = 5;
+        int nDice = 12;
+        
+        if(nCasterLevel < 11)
+        {
+                nDice = 10;
+        }
         
         if(nCasterLevel < 9)
         {
-                nDice--;
+                nDice = 8;
         }
         
         if(nCasterLevel < 7)
         {
-                nDice--;
-        }
-        
-        if(nCasterLevel < 5)
-        {
-                nDice--;
-        }
+                nDice = 6;
+        }  
         
         return nDice;
 }

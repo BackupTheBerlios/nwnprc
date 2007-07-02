@@ -54,11 +54,11 @@ void main()
         int nDieSides = GetDieType(nCasterLevel);
        
         //Dish out the damage
-        DoBolt(nCasterLevel, nDieSides, 0, VFX_BEAM_FIRE, VFX_IMP_FLAME_S, DAMAGE_TYPE_FIRE, SAVING_THROW_TYPE_FIRE);
-        DoBolt(nCasterLevel, nDieSides, 0, VFX_BEAM_DISINTEGRATE, VFX_IMP_ACID_S, DAMAGE_TYPE_ACID, SAVING_THROW_TYPE_ACID);
-        DoBolt(nCasterLevel, nDieSides, 0, VFX_BEAM_COLD, VFX_IMP_FROST_S, DAMAGE_TYPE_COLD, SAVING_THROW_TYPE_COLD);
-        DoBolt(nCasterLevel, nDieSides, 0, VFX_BEAM_LIGHTNING, VFX_IMP_LIGHTNING_S, DAMAGE_TYPE_ELECTRICAL, SAVING_THROW_TYPE_ELECTRICITY);
-        DoBolt(nCasterLevel, nDieSides, 0, VFX_BEAM_SPELLFIRE, VFX_IMP_SONIC, DAMAGE_TYPE_SONIC, SAVING_THROW_TYPE_SONIC);
+        DoBolt(nCasterLevel, nDieSides, 0, 1, VFX_BEAM_FIRE, VFX_IMP_FLAME_S, DAMAGE_TYPE_FIRE, SAVING_THROW_TYPE_FIRE);
+        DoBolt(nCasterLevel, nDieSides, 0, 1, VFX_BEAM_DISINTEGRATE, VFX_IMP_ACID_S, DAMAGE_TYPE_ACID, SAVING_THROW_TYPE_ACID);
+        DoBolt(nCasterLevel, nDieSides, 0, 1, VFX_BEAM_COLD, VFX_IMP_FROST_S, DAMAGE_TYPE_COLD, SAVING_THROW_TYPE_COLD);
+        DoBolt(nCasterLevel, nDieSides, 0, 1, VFX_BEAM_LIGHTNING, VFX_IMP_LIGHTNING_S, DAMAGE_TYPE_ELECTRICAL, SAVING_THROW_TYPE_ELECTRICITY);
+        DoBolt(nCasterLevel, nDieSides, 0, 1, VFX_BEAM_SPELLFIRE, VFX_IMP_SONIC, DAMAGE_TYPE_SONIC, SAVING_THROW_TYPE_SONIC);
                 
         SPSetSchool();
 }
@@ -67,21 +67,11 @@ int GetDieType(int nCasterLevel)
 {
         int nDice = 12;
         
-        if(nCasterLevel < 11)
-        {
-                nDice = 10;
-        }
+        if(nCasterLevel < 11) nDice = 10;
         
-        if(nCasterLevel < 9)
-        {
-                nDice = 8;
-        }
+        if(nCasterLevel < 9) nDice = 8;
         
-        if(nCasterLevel < 7)
-        {
-                nDice = 6;
-        }  
+        if(nCasterLevel < 7) nDice = 6;  
         
         return nDice;
 }
- 

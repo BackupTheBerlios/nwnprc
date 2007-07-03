@@ -22,3 +22,29 @@ Created:   6/28/07
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
+
+#include "spinc_common"
+
+void main()
+{
+        if(!X2PreSpellCastingCode()) return;
+        
+        SPSetSchool(SPELL_SCHOOL_ILLUSION);
+        
+        object oPC = OBJECT_SELF;
+        int nCasterLvl = PRCGetCasterLevel(oPC);
+        float fDur = RoundsToSeconds(nCasterLvl);
+                
+        effect eLink = EffectSkillIncrease(SKILL_INTIMIDATE, 10);
+        effect eSTR = EffectAbilityIncrease(ABILITY_STRENGTH, 2);
+               eLink = EffectLinkEffects(eLink, eSTR);
+               
+        //Apply VFX - Green impact with <3 second wood texture - use nature summoning anims
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_HEAD_NATURE), oPC);
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_PROT_BARKSKIN), oPC, 2.75f);
+        
+        //Apply bonuses
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, fDur);
+        
+        SPSetSchool();
+}

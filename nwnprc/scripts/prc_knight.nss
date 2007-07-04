@@ -32,6 +32,8 @@ void main()
         // Hook in the events, needed from level 1 for Knight's Challenge
         if(DEBUG) DoDebug("prc_knight: Adding eventhooks");
         AddEventScript(oPC, EVENT_ONPLAYERREST_FINISHED,   "prc_knight", TRUE, FALSE);
+        AddEventScript(oPC, EVENT_ONPLAYERLEVELUP,   "prc_knight", TRUE, FALSE);
+        AddEventScript(oPC, EVENT_ONCLIENTENTER,   "prc_knight", TRUE, FALSE);
     }
     // Restore Knight's Challenge
     else if(nEvent == EVENT_ONPLAYERREST_FINISHED)
@@ -40,4 +42,18 @@ void main()
         SetLocalInt(oPC, "KnightsChallenge", nBonus);
         FloatingTextStringOnCreature("You have " +IntToString(nBonus) + "uses of Knight's Challenge remaining", oPC, FALSE);
     }// end if - Running OnRest event
+    // Restore Knight's Challenge
+    else if(nEvent == EVENT_ONPLAYERLEVELUP)
+    {
+        if(DEBUG) DoDebug("prc_knight: OnRest:\n" + "oPC = " + DebugObject2Str(oPC));
+        SetLocalInt(oPC, "KnightsChallenge", nBonus);
+        FloatingTextStringOnCreature("You have " +IntToString(nBonus) + "uses of Knight's Challenge remaining", oPC, FALSE);
+    }// end if - Running OnRest event
+    // Restore Knight's Challenge
+    else if(nEvent == EVENT_ONCLIENTENTER)
+    {
+        if(DEBUG) DoDebug("prc_knight: OnRest:\n" + "oPC = " + DebugObject2Str(oPC));
+        SetLocalInt(oPC, "KnightsChallenge", nBonus);
+        FloatingTextStringOnCreature("You have " +IntToString(nBonus) + "uses of Knight's Challenge remaining", oPC, FALSE);
+    }// end if - Running OnRest event    
 }

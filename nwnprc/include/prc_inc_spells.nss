@@ -547,6 +547,10 @@ int GetLevelByTypeArcane(object oCaster = OBJECT_SELF)
     int iClass1Lev = PRCGetLevelByPosition(1, oCaster);
     int iClass2Lev = PRCGetLevelByPosition(2, oCaster);
     int iClass3Lev = PRCGetLevelByPosition(3, oCaster);
+    
+    if (iClass1 == CLASS_TYPE_HEXBLADE) iClass1Lev = (iClass1Lev >= 4) ? (iClass1Lev / 2) : 0;
+    if (iClass2 == CLASS_TYPE_HEXBLADE) iClass2Lev = (iClass2Lev >= 4) ? (iClass2Lev / 2) : 0;
+    if (iClass3 == CLASS_TYPE_HEXBLADE) iClass3Lev = (iClass3Lev >= 4) ? (iClass3Lev / 2) : 0;
 
     if (iClass1 == iFirstArcane) iClass1Lev += GetArcanePRCLevels(oCaster);
     if (iClass2 == iFirstArcane) iClass2Lev += GetArcanePRCLevels(oCaster);
@@ -578,9 +582,9 @@ int GetLevelByTypeDivine(object oCaster = OBJECT_SELF)
     int iClass2Lev = PRCGetLevelByPosition(2, oCaster);
     int iClass3Lev = PRCGetLevelByPosition(3, oCaster);
 
-    if (iClass1 == CLASS_TYPE_PALADIN || iClass1 == CLASS_TYPE_RANGER) iClass1Lev = iClass1Lev / 2;
-    if (iClass2 == CLASS_TYPE_PALADIN || iClass2 == CLASS_TYPE_RANGER) iClass2Lev = iClass2Lev / 2;
-    if (iClass3 == CLASS_TYPE_PALADIN || iClass3 == CLASS_TYPE_RANGER) iClass3Lev = iClass3Lev / 2;
+    if (iClass1 == CLASS_TYPE_PALADIN || iClass1 == CLASS_TYPE_RANGER) iClass1Lev = (iClass1Lev >= 4) ? (iClass1Lev / 2) : 0;
+    if (iClass2 == CLASS_TYPE_PALADIN || iClass2 == CLASS_TYPE_RANGER) iClass2Lev = (iClass2Lev >= 4) ? (iClass2Lev / 2) : 0;
+    if (iClass3 == CLASS_TYPE_PALADIN || iClass3 == CLASS_TYPE_RANGER) iClass3Lev = (iClass3Lev >= 4) ? (iClass3Lev / 2) : 0;
 
     if (iClass1 == iFirstDivine) iClass1Lev += GetDivinePRCLevels(oCaster);
     if (iClass2 == iFirstDivine) iClass2Lev += GetDivinePRCLevels(oCaster);
@@ -619,6 +623,10 @@ int GetLevelByTypeArcaneFeats(object oCaster = OBJECT_SELF, int iSpellID = -1)
                  FireAdept(oCaster, iSpellID) +
                  DomainPower(oCaster, iSpellID) +
                  StormMagic(oCaster);
+                 
+    if (iClass1 == CLASS_TYPE_HEXBLADE) iClass1Lev = (iClass1Lev >= 4) ? (iClass1Lev / 2) : 0;
+    if (iClass2 == CLASS_TYPE_HEXBLADE) iClass2Lev = (iClass2Lev >= 4) ? (iClass2Lev / 2) : 0;
+    if (iClass3 == CLASS_TYPE_HEXBLADE) iClass3Lev = (iClass3Lev >= 4) ? (iClass3Lev / 2) : 0;
 
     if (iClass1 == iFirstArcane) iClass1Lev += GetArcanePRCLevels(oCaster);
     if (iClass2 == iFirstArcane) iClass2Lev += GetArcanePRCLevels(oCaster);

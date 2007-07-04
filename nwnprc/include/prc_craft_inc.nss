@@ -1039,7 +1039,12 @@ itemproperty PropSpecialHandling(object oItem, string sFile, int nLine, int nInd
                         }
                     }
                     else if(nIndex == 2)
+                    {
+                        nSubType = nTemp;
                         nCostTableValue += IPGetWeaponEnhancementBonus(oItem);
+                        if(nCostTableValue > 20)
+                            nCostTableValue = 20;
+                    }
                     else if(nIndex == 3)
                         nParam1Value = nTemp;
                     break;

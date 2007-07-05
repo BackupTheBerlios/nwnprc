@@ -33,3 +33,84 @@ Created:   6/28/07
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
+
+void SummonElemental(object oTarget);
+
+#include "spinc_common"
+
+void main()
+{
+        if(!X2PreSpellCastCode()) return;
+        
+        SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+        
+        object oPC = OBJECT_SELF;
+        object oTarget = PRCGetTargetObject();
+        int nCasterLvl = PRCGetCasterLevel(oPC);
+        int nMetaMagic = PRCGetMetaMagicFeat();
+        int nDam = d6(min(nCasterLevel, 20));
+        int nSaveDC = PRCGetSaveDC(oTarget, oPC);
+        
+        if(nMetaMagic == METAMAGIC_MAXIMIZE)
+        {
+                nDam = 6*(min(nCasterLevel, 20));
+        }
+        
+        if(nMetaMagic == METAMAGIC_EMPOWER)
+        {
+                nDam += (nDam/2);
+        }
+        
+        //SR check
+        if(!MyPRCResistSpell(oPC, oTarget, (nCasterLvl + SPGetPenetr()))
+        {
+                //VFX
+                ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_PULSE_WATER), oTarget);
+                
+                if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nSaveDC, SAVING_THROW_TYPE_SPELL))
+                {
+                        nDam = nDam/2;
+                }
+                
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_MAGICAL), oTarget);
+                
+                if(GetIsDead(oTarget))
+                {
+                        SummonElemental(oTarget);
+                }
+        }
+        SPSetSchool();
+}
+
+void SummonElemental(object oTarget)
+{
+        location lLoc = GetLocation(oTarget);
+        int nSize = GetCreatureSize(oTarget);
+        string sResref;
+        
+        if(nSize == CREATURE_SIZE_HUGE) sResref = "nw_watergreat"
+        
+        else if (nSize == CREATURE_SIZE_LARGE) sResref = "nw_waterhuge"
+        
+        else if (nSize == CREATURE_SIZE_MEDIUM) sResref = "nw_water"
+        
+        else if (nSize == CREATURE_SIZE_SMALL) sResref = "nw_water"
+        
+        else if (nSize == CREATURE_SIZE_TINY) sResref = "nw_water"
+        
+        else
+        {
+                SendMessageToPC(oPC, "Creature Size Invalid");
+                return;
+        }
+        
+        MultisummonPreSummon();
+        
+        effect eSummon = EffectSummonCreature(sResref, VFX_FNF_SUMMON_EPIC_UNDEAD);
+        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, lLoc, 60.0f);
+}
+        
+        
+        
+               
+}

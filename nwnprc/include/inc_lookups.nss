@@ -299,7 +299,7 @@ void MakeLookupLoopMaster()
     DelayCommand(11.0, MakeSpellbookLevelLoop(CLASS_TYPE_HEALER,           0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "7"));
     DelayCommand(11.1, MakeSpellbookLevelLoop(CLASS_TYPE_HEALER,           0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "8"));
     DelayCommand(11.2, MakeSpellbookLevelLoop(CLASS_TYPE_HEALER,           0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "9"));
-    DelayCommand(10.3, MakeSpellbookLevelLoop(CLASS_TYPE_HEALER,           0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "0"));
+    DelayCommand(10.3, MakeSpellbookLevelLoop(CLASS_TYPE_WARMAGE,          0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "0"));
     DelayCommand(10.4, MakeSpellbookLevelLoop(CLASS_TYPE_WARMAGE,          0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "1"));
     DelayCommand(10.5, MakeSpellbookLevelLoop(CLASS_TYPE_WARMAGE,          0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "2"));
     DelayCommand(10.6, MakeSpellbookLevelLoop(CLASS_TYPE_WARMAGE,          0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "3"));

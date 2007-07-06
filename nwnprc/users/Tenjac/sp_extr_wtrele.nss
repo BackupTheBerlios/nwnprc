@@ -50,7 +50,18 @@ void main()
         int nMetaMagic = PRCGetMetaMagicFeat();
         int nDam = d6(min(nCasterLevel, 20));
         int nSaveDC = PRCGetSaveDC(oTarget, oPC);
+        int nType = MyPRCGetRacialType(oTarget);
+       
+        if(nType == RACIAL_TYPE_UNDEAD ||
+        nType == RACIAL_TYPE_ELEMENTAL ||
+        nType == RACIAL_TYPE_CONSTRUCT)
         
+        {
+               SendMessageToPC(oPC, "This spell must be cast on a living target")
+               SPSetSchool();
+               return;
+        }
+       
         if(nMetaMagic == METAMAGIC_MAXIMIZE)
         {
                 nDam = 6*(min(nCasterLevel, 20));

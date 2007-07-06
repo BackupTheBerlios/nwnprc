@@ -31,3 +31,59 @@ Created:   6/28/07
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
+
+#include "spinc_common"
+
+void main()
+{
+        if(!X2PreSpellCastCode()) return;
+        
+        SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+        
+        object oPC = OBJECT_SELF;
+        object oTarget = PRCGetSpellTargetObject();
+        int nCasterLvl = PRCGetCasterLevel(oPC);
+                
+        int nType = MyPRCGetRacialType(oTarget);
+        
+        if(nType == RACIAL_TYPE_UNDEAD ||
+        nType == RACIAL_TYPE_ELEMENTAL ||
+        nType == RACIAL_TYPE_CONSTRUCT ||
+        GetIsImmune(oTarget, IMMUNITY_TYPE_CRITICAL_HIT))
+        
+        {
+                SendMessageToPC(oPC, "Target creature is immune to the effects of this spell.")
+                SPSetSchool();
+                return;
+        }
+        
+        //SR check
+        if(!MyPRCResistSpell(oPC, oTarget, (nCasterLvl + SPGetPenetr()))
+        {
+                //Save
+                if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nSaveDC, SAVING_THROW_TYPE_DEATH))
+                {
+                        //Check HD
+                        int nHD = GetHitDice(oTarget);
+                        
+                        if(nHD > nCasterLvl)
+                        {
+                                int nStun = d4(1);
+                                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectStunned(), oTarget, RoundsToSeconds(nStun), TRUE, SPELL_HEART_RIPPER, nCasterLvl);
+                        }
+                        
+                        else
+                        {
+                                //Kill it.  Chunkaliciously.
+                                ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_COM_CHUNK_RED_MEDIUM), oTarget);
+                                
+                                effect eDeath = EffectDeath();
+                                SupernaturalEffect(eDeath);
+                                
+                                DeathlessFrenzyCheck(oTarget);
+                                ApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget);
+                        }
+                }
+        }
+        SPSetSchool();
+}

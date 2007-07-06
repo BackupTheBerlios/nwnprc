@@ -40,8 +40,8 @@ void main()
                eLink = EffectLinkEffects(eLink, eSTR);
                
         //Apply VFX - Green impact with <3 second wood texture - use nature summoning anims
-        SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_HEAD_NATURE), oPC);
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_PROT_BARKSKIN), oPC, 2.75f);
+        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_HEAD_NATURE), oPC);
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_PROT_BARKSKIN), oPC, 2.75f, TRUE, SPELL_TOWERING_OAK, nCasterLvl);
         
         //Apply bonuses
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, fDur);

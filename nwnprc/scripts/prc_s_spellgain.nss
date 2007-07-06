@@ -83,7 +83,7 @@ void main()
                     int nSpellsAvailable = GetSpellUnknownCurrentCount(oPC, i, nClass);
                     if(nSpellsKnownCurrent < nSpellsKnownMax)
                     {
-                        if(nSpellsAvailable >= (nSpellsKnownMax - nSpellsKnownCurrent))
+                        if(nSpellsAvailable > 0)
                         {
                             nAddedASpellLevel = TRUE;
                             AddChoice(GetStringByStrRef(7544)/*"Spell Level"*/ + " " + IntToString(i), i);
@@ -116,7 +116,7 @@ void main()
                 // Determine how many spells the character can select
                 int nSpellsKnownCurrent  = GetSpellKnownCurrentCount(oPC, nSpellLevel, nClass);
                 int nSpellsKnownMax      = GetSpellKnownMaxCount(nLevel, nSpellLevel, nClass, oPC);
-                int nSpellsKnownToSelect = nSpellsKnownMax - nSpellsKnownCurrent;
+                int nSpellsKnownToSelect = min(nSpellsKnownMax - nSpellsKnownCurrent, GetSpellUnknownCurrentCount(oPC, nSpellLevel, nClass));
 
                 // Set up header
                 // "You have <selectcount> level <spelllevel> spells remaining to select."

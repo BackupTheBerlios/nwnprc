@@ -78,7 +78,7 @@ void main()
     if(CheckMissingSpells(oPC, CLASS_TYPE_FAVOURED_SOUL, 0, 9))
         return;
     if(CheckMissingSpells(oPC, CLASS_TYPE_WARMAGE, 0, 9))
-        return;        
+        return;
     if(CheckMissingSpells(oPC, CLASS_TYPE_HEXBLADE, 1, 4))
         return;
     if(CheckMissingSpells(oPC, CLASS_TYPE_DUSKBLADE, 0, 5))
@@ -131,9 +131,8 @@ int CheckMissingSpells(object oPC, int nClass, int nMinLevel, int nMaxLevel)
         if(nMaxSpells > 0)
         {
             int nCurrentSpells = GetSpellKnownCurrentCount(oPC, i, nClass);
-            int nSpellsAvaliable = GetSpellUnknownCurrentCount(oPC, i, nClass);
-            if(nCurrentSpells < nMaxSpells &&
-               nSpellsAvaliable >= nMaxSpells - nCurrentSpells)
+            int nSpellsAvailable = GetSpellUnknownCurrentCount(oPC, i, nClass);
+            if(nCurrentSpells < nMaxSpells && nSpellsAvailable > 0)
             {
                 // Mark the class for which the PC is to gain powers and start the conversation
                 SetLocalInt(oPC, "SpellGainClass", nClass);

@@ -51,4 +51,75 @@ Created:   6/25/06
 
 #include "spinc_common"
 
-Use the convo from Power Leech... cutscene invis/ghost.  Only one sarc.
+void GaspGaspCroak(object oTarget, int nCounter);
+
+void SarcMonitor(object oSarc);
+
+void main()
+{
+        if(!X2PreSpellCastCode()) return;
+        
+        SPSetSchool(SPELL_SCHOOL_CONJURATION);
+        
+        object oPC = OBJECT_SELF;
+        object oTarget = PRCGetSpellTargetObject();
+        string sSarc = "x2_med_sarcoph";
+        int nDC = GetSpellSaveDC(oTarget, oPC);
+        int nCasterLvl = PRCGetCasterLevel(oPC);
+        
+        //Save
+        if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
+        {                               
+                effect eHide = EffectLinkEffects(EffectCutsceneGhost(), EffectCutsceneImmobilize());
+                effect eHide = EffectLinkEffects(eHide, EffectVisualEffect(VFX_DUR_CUTSCENE_INVISIBILITY));
+                effect eHide = EffectLinkEffects(eHide, EffectVisualEffect(VFX_DUR_BLIND));
+                
+                location lLoc = GetLocation(oTarget);
+                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHide, oTarget, HoursToSeconds(24), FALSE, SPELL_SARCOPHAGUS_OF_STONE, nCasterLvl);
+                
+                ///Create the sarcophagus
+                object oSarc = CreateObject(OBJECT_TYPE_PLACEABLE, sSarc, lLoc, FALSE);
+                
+                //Watch for sarcophagus destruction
+                SarcMonitor(oSarc);
+                
+                AssignCommand(oTarget, ClearAllActions(TRUE));
+                
+                //Start convo for Str check
+                StartDynamicConversation("sarc_stone", oTarget, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, oPC);
+                
+                //Set up 1 hour counter
+                int nCounter = HoursToSeconds(1) + RoundsToSeconds(3);
+                
+                //Start Suffocation function
+                GaspGaspCroak(oTarget, nCounter);                
+        }
+        SPSetSchool();
+}
+
+void GaspGaspCroak(object oTarget, int nCounter);
+{
+        if(nCounter <1)
+        {
+                //If living
+                if(nType != RACIAL_TYPE_UNDEAD &&
+                nType != RACIAL_TYPE_ELEMENTAL &&
+                nType != RACIAL_TYPE_CONSTRUCT)
+                {
+                        //Kill it.
+                        effect eDeath = EffectDeath();
+                        SupernaturalEffect(eDeath);
+                        DeathlessFrenzyCheck(oTarget);
+                        ApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget);
+                        return;
+                }
+        }
+        nCounter--;
+        DelayCommand(RoundsToSeconds(1),GaspGaspCroak(oTarget, nCounter));
+}
+                
+void SarcMonitor(object oSarc)
+{
+        
+}
+                

@@ -20,6 +20,7 @@ if(DEBUG) DoDebug("m1q0dmage7 running");
        GetLevelByClass(CLASS_TYPE_PSION,oPC) > 0 ||
        GetLevelByClass(CLASS_TYPE_HEALER,oPC) > 0 ||
        GetLevelByClass(CLASS_TYPE_SHUGENJA,oPC) > 0 ||
+       GetLevelByClass(CLASS_TYPE_WARMAGE,oPC) > 0 ||
        GetLevelByClass(CLASS_TYPE_WILDER,oPC) > 0 ||
        GetLevelByClass(CLASS_TYPE_WIZARD,oPC) > 0 )
     {

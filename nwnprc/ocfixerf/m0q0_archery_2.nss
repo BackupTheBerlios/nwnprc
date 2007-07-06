@@ -21,6 +21,7 @@ if(DEBUG) DoDebug("m0q0_archery_2 running");
                    GetLevelByClass(CLASS_TYPE_TRUENAMER,oAttacker) > 0 ||
                    GetLevelByClass(CLASS_TYPE_HEXBLADE,oAttacker) > 0 ||
                    GetLevelByClass(CLASS_TYPE_SOHEI,oAttacker) > 0 ||
+                   GetLevelByClass(CLASS_TYPE_KNIGHT,oAttacker) > 0 ||
                    GetLevelByClass(CLASS_TYPE_DUSKBLADE,oAttacker) > 0 ||
                    GetLevelByClass(CLASS_TYPE_MONK,oAttacker) > 0 ||
                    GetLevelByClass(CLASS_TYPE_PALADIN,oAttacker) > 0 ||

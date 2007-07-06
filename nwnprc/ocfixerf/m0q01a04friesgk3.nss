@@ -17,6 +17,7 @@ if(DEBUG) DoDebug("m0q01a04friesgk3 running");
 		     GetLevelByClass(CLASS_TYPE_DUSKBLADE, GetPCSpeaker()) > 0 ||
                      GetLevelByClass(CLASS_TYPE_CORRUPTER, GetPCSpeaker()) > 0 ||
                      GetLevelByClass(CLASS_TYPE_SOHEI, GetPCSpeaker()) > 0 ||
+                     GetLevelByClass(CLASS_TYPE_KNIGHT, GetPCSpeaker()) > 0 ||
 		     GetLevelByClass(CLASS_TYPE_BARD, GetPCSpeaker()) > 0 ||
                      GetLevelByClass(CLASS_TYPE_ARCHER, GetPCSpeaker()) > 0 ||
                      GetLevelByClass(CLASS_TYPE_BRAWLER, GetPCSpeaker()) > 0 ||

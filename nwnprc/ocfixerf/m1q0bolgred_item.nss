@@ -16,6 +16,7 @@ if(DEBUG) DoDebug("m1q0boldgred_item running");
 	   GetLevelByClass(CLASS_TYPE_TRUENAMER,oPC) > 0 ||
 	   GetLevelByClass(CLASS_TYPE_SCOUT,oPC) > 0 ||
 	   GetLevelByClass(CLASS_TYPE_HEXBLADE,oPC) > 0 ||
+	   GetLevelByClass(CLASS_TYPE_WARMAGE,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_SWASHBUCKLER,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_SOULKNIFE,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_ROGUE,oPC) > 0)

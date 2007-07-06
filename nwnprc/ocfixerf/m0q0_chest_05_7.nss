@@ -17,6 +17,7 @@ if(DEBUG) DoDebug("m0q0_chest_05_7 running");
            GetLevelByClass(CLASS_TYPE_ANTI_PALADIN,oAttacker) > 0 ||
            GetLevelByClass(CLASS_TYPE_SCOUT,oAttacker) > 0 ||
            GetLevelByClass(CLASS_TYPE_SOHEI,oAttacker) > 0 ||
+           GetLevelByClass(CLASS_TYPE_KNIGHT,oAttacker) > 0 ||
            GetLevelByClass(CLASS_TYPE_SAMURAI,oAttacker) > 0 ||
            GetLevelByClass(CLASS_TYPE_CORRUPTER,oAttacker) > 0 ||
            GetLevelByClass(CLASS_TYPE_ARCHER,oAttacker) > 0 ||

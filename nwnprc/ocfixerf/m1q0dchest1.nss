@@ -18,6 +18,7 @@ if(DEBUG) DoDebug("m1q0dchest1 running");
            GetLevelByClass(CLASS_TYPE_ARCHER,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_DUSKBLADE,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_SOHEI,oPC) > 0 ||
+           GetLevelByClass(CLASS_TYPE_KNIGHT,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_RANGER,oPC) > 0)
         {

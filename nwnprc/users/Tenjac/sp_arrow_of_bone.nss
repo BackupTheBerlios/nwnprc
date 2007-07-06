@@ -31,6 +31,7 @@ of damage +1 point per caster level
 the attack hits, the magic of the arrow
 of bone is discharged by the attack, and
 the missile is destroyed.
+
 Material Component: A tiny sliver
 of bone and an oil of magic weapon
 
@@ -39,3 +40,53 @@ Created:   6/28/07
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
+
+#include "spinc_common"
+
+void main()
+{
+        SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+        
+        if(!X2PreSpellCastCode()) return;
+        
+        object oPC = OBJECT_SELF;
+        object oStack = PRCGetSpellTargetObject();
+        string sBone;
+        int nType = GetBaseItemType(oStack);
+        int nCasterLevel = PRCGetCasterLevel(oPC);
+        
+        
+        if(nType == BASE_ITEM_ARROW)  sBone = "PRC_AB_ARROW";    
+        
+        else if (nType == BASE_ITEM_BOLT)  sBone = "PRC_AB_BOLT";
+        
+        else if (nType == BASE_ITEM_BULLET) sBone = "PRC_AB_BULLET";
+        
+        else if (nType == BASE_ITEM_DART)   sBone = "PRC_AB_DART";
+        
+        else if (nType == BASE_ITEM_THROWINGAXE) sBone = "PRC_AB_THRAXE";
+        
+        else
+        {
+                SendMessageToPC(oPC, "Invalid item type.");
+                return;
+        }       
+        
+        //Decrement the stack
+        int nNewStack = GetItemStackSize(oStack);
+        nNewStack--;
+        
+        SetItemStackSize(oStack, nNewStack);
+        
+        //create appropriate item
+        object oArrowBone = CreateItemOnObject(sBone, oPC, 1);
+                       
+        //Hook the onhit script
+        itemproperty ipHook = ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1);
+        IPSafeAddItemProperty(oArrowBone, ipHook, 0.0f);
+        AddEventScript(oArrowBone, EVENT_ONHIT, "prc_evnt_arrbone", FALSE, FALSE);
+        
+        SPSetSchool();
+}
+        
+        

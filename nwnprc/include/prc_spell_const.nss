@@ -714,8 +714,7 @@ const int SPELL_SONIC_SHIELD                        = 1839;
 const int SPELL_SURE_STRIKE                         = 1840;
 const int SPELL_TRUE_RESURRECTION                   = 1855;
 const int SPELL_CALM_EMOTIONS                       = 1852;
-
-//Spell Compendium - Tenjac
+const int SPELL_FROGS_AND_FISH                      = 2646;
 
 const int SPELL_SARCOPHAGUS_OF_STONE                = 3662;
 const int SPELL_ARROW_OF_BONE                       = 3663;
@@ -731,6 +730,28 @@ const int SPELL_LIFE_BOLT_3_BOLTS                   = 3672;
 const int SPELL_LIFE_BOLT_4_BOLTS                   = 3673;
 const int SPELL_LIFE_BOLT_5_BOLTS                   = 3674;
 
+const int SPELL_DISRUPT_UNDEAD                      = 3675;
+const int SPELL_ACCURACY                            = 3676;
+const int SPELL_FIST_OF_STONE                       = 3677;
+const int SPELL_BLADES_OF_FIRE                      = 3678;
+const int SPELL_FIRE_TRAP                           = 3679;
+const int SPELL_FLAMING_SPHERE                      = 3680;
+const int SPELL_ICE_KNIFE                           = 3681;
+const int SPELL_PYROTECHNICS                        = 3682;
+const int SPELL_SHATTER                             = 3683;
+const int SPELL_WHIRLING_BLADE                      = 3684;
+const int SPELL_PNP_FIRE_SHIELD                     = 3685;
+const int SPELL_RING_OF_BLADES                      = 3686;
+const int SPELL_SLEET_STORM                         = 3687;
+const int SPELL_ORB_OF_FORCE                        = 3688;
+const int SPELL_MASS_FIRE_SHIELD                    = 3689;
+const int SPELL_PRISMATIC_RAY                       = 3690;
+const int SPELL_FIRE_SEEDS                          = 3691;
+const int SPELL_OTILUKES_FREEZING_SPHERE            = 3692;
+const int SPELL_WAVES_OF_EXHAUSTION                 = 3693;
+const int SPELL_PRISMATIC_WALL                      = 3694;
+const int SPELL_SCINTILLATING_PATTERN               = 3695;
+const int SPELL_PRISMATIC_SPHERE                    = 3696;
 
 // Passive feats
 const int SPELL_FORCE_PERSONALITY                   = 1915;

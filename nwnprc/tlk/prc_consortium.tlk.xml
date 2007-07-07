@@ -19268,7 +19268,7 @@ Saving Throw: No
 Spell Resistance: Yes
 
 Waves of negative energy render all living creatures in the spell's area fatigued. This spell has no effect on a creature that is already fatigued. </entry>
-<entry id="50371" lang="en" sex="m">Waves of Fatigue (9)</entry>
+  <entry id="50371" lang="en" sex="m">Waves of Fatigue (9)</entry>
   <entry id="50372" lang="en" sex="m">Extra Edge</entry>
   <entry id="50373" lang="en" sex="m">Type of Feat: General
 Prerequisite: Warmage 4.
@@ -19311,10 +19311,10 @@ Use: Automatic.</entry>
 Prerequisite: Warmage 1.
 Specifics: Whenever a Warmage casts a spell that does hit point damage, he adds his intelligence bonus to the damage dealt. Scrolls scribed and items used by the Warmage do not get this benefit. However, staffs do gain the benefit.
 Use: Automatic.</entry>
-<entry id="50388" lang="en" sex="m">Warmage</entry>
-<entry id="50389" lang="en" sex="m">Warmages</entry>
-<entry id="50390" lang="en" sex="m">warmage</entry>
-<entry id="50391" lang="en" sex="m">(BASE CLASS)
+  <entry id="50388" lang="en" sex="m">Warmage</entry>
+  <entry id="50389" lang="en" sex="m">Warmages</entry>
+  <entry id="50390" lang="en" sex="m">warmage</entry>
+  <entry id="50391" lang="en" sex="m">(BASE CLASS)
 Some spellcasters care for only one thing: war. They dream of steel and mighty blasts of devastating magic, the march of troops, and the unleashed destruction found on battlefields everywhere. Graduates of special arcane war colleges, those known as warmages are drilled only and utterly in the casting of spells most useful for laying down destruction, confusing an enemy, or screening an allied action. The utilitarian spells used by wizards and sorcerers have little importance to a warmage's way of thinking. What are support casters for, after all? A warmage cares only for success on the battlefield, or, in some cases, in a series of smaller campaigns favoured by adventuring companies.
 
 - Hit Die: d6
@@ -19439,10 +19439,10 @@ Use: Selected.</entry>
 Prerequisite: Knight 17.
 Specifics: Whenever you are struck by a save requiring a Will or Fortitude save, you are able to reroll it should you fail.
 Use: Automatic.</entry>
-<entry id="50416" lang="en" sex="m">Knight</entry>
-<entry id="50417" lang="en" sex="m">Knights</entry>
-<entry id="50418" lang="en" sex="m">knight</entry>
-<entry id="50419" lang="en" sex="m">(BASE CLASS)
+  <entry id="50416" lang="en" sex="m">Knight</entry>
+  <entry id="50417" lang="en" sex="m">Knights</entry>
+  <entry id="50418" lang="en" sex="m">knight</entry>
+  <entry id="50419" lang="en" sex="m">(BASE CLASS)
 A knight is a proud, skilled melee combatant who fights in the name of honour and chivalry. A knight relies on more than a sharp sword and stout suit of armour to defeat his foes. His drive, determination, and fighting spirit allow him to control the battlefield in ways that others cannot match. A knight can challenge an opponent to a duel, calling upon the foe's ego and pride to force his hand. The knight's talent with heavy armour, shields, and defensive tactics grant him the ability to disrupt his foe's plans. 
 
 - Hit Die: d12
@@ -31158,6 +31158,133 @@ A moderate wind (11+ mph), such as from a gust of wind spell, disperses the fog 
 
 This spell does not function underwater.</entry>
   <entry id="54861" lang="en" sex="m">Obscuring Mist (1)</entry>
+  <entry id="54862" lang="en" sex="m">Sarcophagus of Stone</entry>
+  <entry id="54863" lang="en" sex="m">Sarcophagus of Stone
+Conjuration (Creation) [Earth]
+Level: Clr 6
+Components: V S M DF
+Casting Time: 1 standard action
+Duration: Instantaneous
+Range: Close (25 ft + 5 ft/2 lvls)
+Target: 1 medium or smaler creature
+Spell Resistance: No
+Saving Throw: Reflex negates
+
+This spell creates an airtight stone coffin that forms around the target. The stone is 1 inch thick, has hardness 8, and requires 15 points of damage to break through. Decreasing its size does not change the thickness of the walls; the coffin is always just large enough to hold the subject. This coffin is sealed upon formation and completely impervious to air and gas. A creature trapped within a sarcophagus of stone has 1 hour worth of air, and after that time begins to suffocate. A creature that has no need to breathe (such as a construct, elemental, or undead) needs not fear suffocation, but it remains trapped within the sarcophagus until it breaks free or is freed.
+
+A creature within the coffin can attack the stone with a natural weapon or light melee weapon. A creature can
+attempt a DC 26 Strength check to break free of the stone, and allies can also help to break the trapped creature
+free.
+</entry>
+  <entry id="54864" lang="en" sex="m">Arrow of Bone</entry>
+  <entry id="54865" lang="en" sex="m">Arrow of Bone
+Necromancy [Death]
+Level: Sorcerer/wizard 7
+Components: V, S, M
+Range: Touch
+Target: One projectile or thrown weapon touched
+Duration: 1 hour/level or until discharged
+Saving Throw: Fortitude partial
+Spell Resistance: Yes
+
+You complete the ritual needed to cast the spell, scribing arcane runes into the item. It changes before your eyes into an identical item made of bone. The runes glow with dark magic and the weapon feels cold to the touch.
+
+When thrown or fired at a creature as a normal ranged attack, the weapon gains a +4 enhancement bonus on attack
+rolls and damage rolls. In addition, any living creature struck by an arrow of bone must succeed on a Fortitude save or be instantly slain. A creature that makes its save instead takes 3d6 points of damage +1 point per caster level (maximum +20). Regardless of whether the attack hits, the magic of the arrow of bone is discharged by the attack, and the missile is destroyed.</entry>
+  <entry id="54866" lang="en" sex="m">Draconic Might
+</entry>
+  <entry id="54867" lang="en" sex="m">Draconic Might
+Transmutation
+Level: Paladin 4, sorcerer/wizard 5
+Components: V, S
+Casting Time: 1 standard action
+Range: Touch
+Target: Living creature touched
+Duration: 1 minute/level (D)
+Saving Throw: Fortitude negates
+(harmless)
+Spell Resistance: Yes (harmless)
+
+The subject of the spell gains a +4 enhancement bonus to Strength, Constitution, and Charisma. It also gains
+a +4 enhancement bonus to natural armor. Finally, it has immunity to magic sleep and paralysis effects. Special: Sorcerers cast this spell at +1 caster level.
+</entry>
+  <entry id="54868" lang="en" sex="m">Extract Water Elemental</entry>
+  <entry id="54869" lang="en" sex="m">Extract Water Elemental
+Transmutation [Water]
+Level: Druid 6, sorcerer/wizard 6
+Components: V, S
+Casting Time: 1 standard action
+Range: Close (25 ft. + 5 ft./level)
+Target: One living creature
+Duration: Instantaneous
+Saving Throw: Fortitude half
+Spell Resistance: Yes
+
+This brutal spell causes the targeted creature to dehydrate horribly as the moisture in its body is forcibly extracted through its eyes, nostrils, mouth, and pores. This deals 1d6 points of damage per caster level (maximum 20d6), or half damage on a successful Fortitude save. If the targeted creature is slain by this spell, the extracted moisture is transformed into a water elemental of a size equal to the slain creature (up to
+Huge). The water elemental is under your control, as if you summoned it, and disappears after 1 minute.
+</entry>
+  <entry id="54870" lang="en" sex="m">Heart Ripper
+</entry>
+  <entry id="54871" lang="en" sex="m">Heart Ripper
+Necromancy [Death]
+Level: Assassin 4
+Components: V, S
+Casting Time: 1 standard action
+Range: Close (25 ft. + 5 ft./2 levels)
+Target: One living creature
+Duration: Instantaneous
+Saving Throw: Fortitude negates
+Spell Resistance: Yes
+
+Invisible bolts of force instantly slay the target you designate by driving its heart from its body unless it succeeds on a Fortitude save. If the target has HD higher than your caster level, it does not die on a failed saving throw, but instead is stunned for 1d4 rounds. Creatures that don’t depend on their hearts for survival, creatures with no anatomy, and creatures immune to extra damage from critical hits are unaffected by the spell.
+</entry>
+  <entry id="54872" lang="en" sex="m">Life Bolt</entry>
+  <entry id="54873" lang="en" sex="m">Life Bolt
+Necromancy
+Level: Sorcerer/wizard 2
+Components: V, S
+Casting Time: 1 standard action
+Range: Medium (100 ft. + 10 ft./level)
+Effect: Up to five rays
+Duration: Instantaneous
+Saving Throw: None
+Spell Resistance: Yes
+
+You draw forth some of your own life force to create a beam of positive energy that harms undead. You must succeed on a ranged touch attack with the ray to strike a target. If the ray hits an undead creature, it deals 1d12 points of damage. Creating each beam deals you 1 point of nonlethal damage. For every two caster levels beyond 1st, you can create an additional ray, up to a maximum of five rays at 9th level.
+</entry>
+  <entry id="54874" lang="en" sex="m">Rainbow Blast</entry>
+  <entry id="54875" lang="en" sex="m">Rainbow Blast
+Evocation [Light]
+Level: Sorcerer/wizard 3
+Components: V, S, M
+Casting Time: 1 standard action
+Range: 120 ft.
+Area: 120-ft. line
+Duration: Instantaneous
+Saving Throw: Reflex half
+Spell Resistance: Yes
+
+This spell is a wide-spectrum blast of radiant energy composed of all five energy types. Rainbow blast deals 1d6 points of damage from each of the five energy types (acid, cold, electricity, fire, and sonic), for a total of 5d6 points of damage. Creatures apply resistance to energy separately for each type of damage. As you gain in levels, the damage die increases in size. At 7th level the spell deals 5d8 points of damage, at 9th level it deals 5d10 points of damage, and at 11th level it deals 5d12 points of damage; one die for each of the five
+energy types.</entry>
+  <entry id="54876" lang="en" sex="m">Towering Oak
+</entry>
+  <entry id="54877" lang="en" sex="m">Towering Oak
+Illusion (Glamer)
+Level: Ranger 1
+Components: V, S
+Casting Time: 1 swift action
+Range: Personal
+Target: You
+Duration: 1 round/level
+
+You draw on the oak’s strength to improve your ability to intimidate your enemies. You gain a +10 competence
+bonus on Intimidate checks and a +2 enhancement bonus to Strength.</entry>
+  <entry id="54878" lang="en" sex="m">1 Bolt</entry>
+  <entry id="54879" lang="en" sex="m">2 Bolts</entry>
+  <entry id="54880" lang="en" sex="m">3 Bolts</entry>
+  <entry id="54881" lang="en" sex="m">4 Bolts</entry>
+  <entry id="54882" lang="en" sex="m">5 Bolts
+</entry>
   <entry id="54898" lang="en" sex="m">You have not drained levels in the last 24 hours, Soul Blast does not work.</entry>
   <entry id="54899" lang="en" sex="m">Target is immune to negative levels.</entry>
   <entry id="54900" lang="en" sex="m">Soul Eater</entry>

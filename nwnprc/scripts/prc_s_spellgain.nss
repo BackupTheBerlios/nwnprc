@@ -180,12 +180,19 @@ void main()
     // End of conversation cleanup
     else if(nValue == DYNCONV_EXITED)
     {
+        int nClass   = GetLocalInt(oPC, "SpellGainClass");
         // Add any locals set through this conversation
         DeleteLocalInt(oPC, "SelectedLevel");
         DeleteLocalInt(oPC, "SpellGainClass");
         DeleteLocalInt(oPC, "SelectedSpell");
         DeleteLocalInt(oPC, "SpellbookMinSpelllevel");
         DeleteLocalInt(oPC, "SpellbookMaxSpelllevel");
+        // add empty spells memorised array for later use
+        if(!persistant_array_exists(oPC, "NewSpellbookMem_"+IntToString(nClass)))
+        {
+            if(DEBUG) DoDebug("GetSpellUses: NewSpellbookMem_" + IntToString(nClass) + " does not exist, creating.");
+            persistant_array_create(oPC, "NewSpellbookMem_"+IntToString(nClass));
+        }
         DelayCommand(1.0, EvalPRCFeats(oPC));
     }
     // Abort conversation cleanup.
@@ -194,12 +201,19 @@ void main()
     // handles restoring the conversation in a transparent manner
     else if(nValue == DYNCONV_ABORTED)
     {
+        int nClass   = GetLocalInt(oPC, "SpellGainClass");
         // Add any locals set through this conversation
         DeleteLocalInt(oPC, "SelectedLevel");
         DeleteLocalInt(oPC, "SelectedSpell");
         DeleteLocalInt(oPC, "SpellGainClass");
         DeleteLocalInt(oPC, "SpellbookMinSpelllevel");
         DeleteLocalInt(oPC, "SpellbookMaxSpelllevel");
+        // add empty spells memorised array for later use
+        if(!persistant_array_exists(oPC, "NewSpellbookMem_"+IntToString(nClass)))
+        {
+            if(DEBUG) DoDebug("GetSpellUses: NewSpellbookMem_" + IntToString(nClass) + " does not exist, creating.");
+            persistant_array_create(oPC, "NewSpellbookMem_"+IntToString(nClass));
+        }
         DelayCommand(1.0, EvalPRCFeats(oPC));
     }
     // Handle PC responses

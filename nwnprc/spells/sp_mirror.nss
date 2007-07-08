@@ -47,37 +47,54 @@ dead after being hit by a fireball).
 void CleanCopy(object oImage)
 {
     SetLootable(oImage, FALSE);
+    // remove inventory contents
     object oItem = GetFirstItemInInventory(oImage);
     while(GetIsObjectValid(oItem))
     {
-        SetDroppableFlag(oItem, FALSE);
-        SetItemCursedFlag(oItem, TRUE);
+        SetPlotFlag(oItem,FALSE);
+        if(GetHasInventory(oItem))
+        {
+            object oItem2 = GetFirstItemInInventory(oItem);
+            while(GetIsObjectValid(oItem2))
+            {
+                object oItem3 = GetFirstItemInInventory(oItem2);
+                while(GetIsObjectValid(oItem3))
+                {
+                    SetPlotFlag(oItem3,FALSE);
+                    DestroyObject(oItem3);
+                    oItem3 = GetNextItemInInventory(oItem2);
+                }
+                SetPlotFlag(oItem2,FALSE);
+                DestroyObject(oItem2);
+                oItem2 = GetNextItemInInventory(oItem);
+            }
+        }
+        DestroyObject(oItem);
         oItem = GetNextItemInInventory(oImage);
     }
+    // remove non-visible equipped items
     int i;
     for(i=0;i<NUM_INVENTORY_SLOTS;i++)//equipment
     {
         oItem = GetItemInSlot(i, oImage);
-        SetDroppableFlag(oItem, FALSE);
-        SetItemCursedFlag(oItem, TRUE);
+        if(GetIsObjectValid(oItem))
+        {
+            if(i == INVENTORY_SLOT_HEAD || i == INVENTORY_SLOT_CHEST ||
+                i == INVENTORY_SLOT_RIGHTHAND || i == INVENTORY_SLOT_LEFTHAND ||
+                i == INVENTORY_SLOT_CLOAK) // visible equipped items
+            {
+                SetDroppableFlag(oItem, FALSE);
+                SetItemCursedFlag(oItem, TRUE);
+            }
+            else // can't see it so destroy
+            {                
+                SetPlotFlag(oItem,FALSE);
+                DestroyObject(oItem);
+            }
+        }
+        
     }
     TakeGoldFromCreature(GetGold(oImage), oImage, TRUE);
-}
-
-void CleanAllCopies()
-{
-    string sImage1 = "PC_IMAGE"+ObjectToString(OBJECT_SELF)+"mirror";
-    string sImage2 = "PC_IMAGE"+ObjectToString(OBJECT_SELF)+"flurry";
-
-    object oCreature = GetFirstObjectInArea(GetArea(OBJECT_SELF));
-    while (GetIsObjectValid(oCreature))
-    {
-        if(GetTag(oCreature) == sImage1 || GetTag(oCreature) == sImage2)
-        {
-            CleanCopy(oCreature);
-        }
-        oCreature = GetNextObjectInArea(GetArea(OBJECT_SELF));;
-    }
 }
 
 void RemoveExtraImages()
@@ -124,27 +141,35 @@ void main2()
            eNoSpell = SupernaturalEffect(eNoSpell);
     //effect eCon = EffectAbilityDecrease(ABILITY_CONSTITUTION, iCon);
     //       eCon = SupernaturalEffect(eCon);
+    
+    // make, then clean up, first image and copy it, not the PC for subsequent images
+    object oImage = CopyObject(OBJECT_SELF, GetLocation(OBJECT_SELF), OBJECT_INVALID, sImage);
+    CleanCopy(oImage);
+    
+    // these need to be applied to every image
+    ApplyEffectToObject(DURATION_TYPE_PERMANENT, eImage, oImage);
+    ApplyEffectToObject(DURATION_TYPE_PERMANENT, eNoSpell, oImage);
+    ApplyAbilityDamage(oImage, ABILITY_CONSTITUTION, iCon, DURATION_TYPE_PERMANENT, TRUE);
+    ChangeToStandardFaction(oImage, STANDARD_FACTION_DEFENDER);
+    SetIsTemporaryFriend(OBJECT_SELF, oImage, FALSE);
+    DelayCommand(3.0f, ApplyEffectToObject(DURATION_TYPE_PERMANENT, eGhost, oImage));
+    DestroyObject(oImage, TurnsToSeconds(nDuration)); // they dissapear after a minute per level
+    
+    --iImages; // made one already
 
     int iPlus;
+    object oImage2;
     for (iPlus = 0; iPlus < iImages; iPlus++)
     {
-        object oImage = CopyObject(OBJECT_SELF, GetLocation(OBJECT_SELF), OBJECT_INVALID, sImage);
-
-        object oSkin = GetItemInSlot(INVENTORY_SLOT_CARMOUR, oImage);
-        ApplyEffectToObject(DURATION_TYPE_PERMANENT, eImage, oImage);
-        ApplyEffectToObject(DURATION_TYPE_PERMANENT, eNoSpell, oImage);
-        //ApplyEffectToObject(DURATION_TYPE_PERMANENT, eCon, oImage);
-        ApplyAbilityDamage(oImage, ABILITY_CONSTITUTION, iCon, DURATION_TYPE_PERMANENT, TRUE);
-        DelayCommand(3.0f, ApplyEffectToObject(DURATION_TYPE_PERMANENT, eGhost, oImage));
-
-        ChangeToStandardFaction(oImage, STANDARD_FACTION_DEFENDER);
-        SetIsTemporaryFriend(OBJECT_SELF, oImage, FALSE);
-
-        //DestroyObject(oSkin, 0.2); //why kill the skin?
-        DestroyObject(oImage, TurnsToSeconds(nDuration)); // they dissapear after a minute per level
+        object oImage2 = CopyObject(oImage, GetLocation(OBJECT_SELF), OBJECT_INVALID, sImage);
+        ApplyEffectToObject(DURATION_TYPE_PERMANENT, eImage, oImage2);
+        ApplyEffectToObject(DURATION_TYPE_PERMANENT, eNoSpell, oImage2);
+        ApplyAbilityDamage(oImage2, ABILITY_CONSTITUTION, iCon, DURATION_TYPE_PERMANENT, TRUE);
+        ChangeToStandardFaction(oImage2, STANDARD_FACTION_DEFENDER);
+        SetIsTemporaryFriend(OBJECT_SELF, oImage2, FALSE);
+        DelayCommand(3.0f, ApplyEffectToObject(DURATION_TYPE_PERMANENT, eGhost, oImage2));
+        DestroyObject(oImage2, TurnsToSeconds(nDuration)); // they dissapear after a minute per level
     }
-
-    CleanAllCopies();
 }
 
 void main()

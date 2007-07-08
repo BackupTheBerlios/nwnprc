@@ -9,10 +9,9 @@ void main()
     object oPC;
     switch(nEvent)
     {
-        case EVENT_ITEM_ONHIT:          oPC = OBJECT_SELF;               break;
-        case EVENT_ONPLAYEREQUIPITEM:   oPC = GetItemLastEquippedBy();   break;
-        case EVENT_ONPLAYERUNEQUIPITEM: oPC = GetItemLastUnequippedBy(); break;
-        case EVENT_ONHEARTBEAT:         oPC = OBJECT_SELF;               break;
+        case EVENT_ONPLAYERREST_FINISHED:   oPC = GetLastBeingRested();      break;
+        case EVENT_ONCLIENTENTER:           oPC = GetEnteringObject();       break;
+        case EVENT_ONPLAYERLEVELUP:         oPC = GetPCLevellingUp();        break;
 
         default:
             oPC = OBJECT_SELF;

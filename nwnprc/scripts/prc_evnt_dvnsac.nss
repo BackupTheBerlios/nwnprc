@@ -14,7 +14,7 @@ void main()
 	//if spell has expired, remove event hook
 	if(!GetHasSpellEffect(SPELL_DIVINE_SACRIFICE, oPC))
 	{
-		RemoveEventScript(oWeapon, EVENT_ONHIT, "prc_evnt_dvnsac");
+		RemoveEventScript(oPC, EVENT_ONHIT, "prc_evnt_dvnsac");
 		return;
 	}	
 	

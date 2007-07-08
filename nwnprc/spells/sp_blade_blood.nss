@@ -57,12 +57,11 @@ void main()
                 
         //Set up removal
         itemproperty ipHook = ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1);
-        object oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
         
-        IPSafeAddItemProperty(oWeapon, ipHook, fDur);
+        IPSafeAddItemProperty(oTarget, ipHook, fDur);
         
         
-        AddEventScript(oWeapon, EVENT_ONHIT, "prc_event_bladeb", FALSE, FALSE);
+        AddEventScript(oTarget, EVENT_ITEM_ONHIT, "prc_event_bladeb", FALSE, FALSE);
         
         SPSetSchool();
 }

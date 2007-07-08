@@ -81,7 +81,7 @@ void main()
 	
 	IPSafeAddItemProperty(oWeapon, ipHook, fDur);
 	
-	AddEventScript(oWeapon, EVENT_ONHIT, "prc_evnt_dvnsac", FALSE, FALSE);
+	AddEventScript(oPC, EVENT_ONHIT, "prc_evnt_dvnsac", FALSE, FALSE);
 	
 	SPSetSchool();
 }

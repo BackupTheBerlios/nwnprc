@@ -12,20 +12,8 @@ void main()
 	effect eTest = GetFirstEffect(oWeapon);
 	int nDamBonus;
 	
-	//if spell has expired, remove event hook
-	if(!GetHasSpellEffect(SPELL_BLADE_OF_BLOOD, oWielder))
-	{
-		RemoveEventScript(oWeapon, EVENT_ONHIT, "prc_evnt_bladeb");
-		return;
-	}
-	
 	int nMetaMagic = GetLocalInt(oWeapon, "PRC_BLADE_BLOOD_METAMAGIC");
 	int nSpell = GetLocalInt(oWeapon, "PRC_BLADE_BLOOD_SPELLID");
-	
-	if(nMetaMagic == METAMAGIC_MAXIMIZE)
-	{
-		nDamBonus = 6;
-	}
 	
 	if(nSpell == SPELL_BLADE_OF_BLOOD_EMP)
 	{		
@@ -38,12 +26,21 @@ void main()
 		
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_EVIL_HELP), oWielder);
 	}
+    else
+    {
+        nDamBonus = d6(1);
+        
+        if(nMetaMagic == METAMAGIC_MAXIMIZE)
+        {
+            nDamBonus = 6;
+        }
+    }
 	
 	if(nMetaMagic == METAMAGIC_EMPOWER)
 	{
 		nDamBonus += (nDamBonus/2);
 	}
-	
+	FloatingTextStringOnCreature("damage: "+IntToString(nDamBonus), oWielder);
 	//Deal bonus damage
 	SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDamBonus, DAMAGE_TYPE_MAGICAL), PRCGetSpellTargetObject());
 	

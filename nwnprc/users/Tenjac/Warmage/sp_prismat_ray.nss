@@ -58,6 +58,7 @@ void main()
        int nBeamVisualEffect;  
        int nSaveDC = SPGetSpellSaveDC(oTarget, oPC);
        int nTouch = PRCDoRangedTouchAttack(oTarget);
+       int nHD = GetHitDice(oTarget);
        
        switch(nRoll)
        {
@@ -82,9 +83,7 @@ void main()
                case 7: nBeamVisualEffect = VFX_BEAM_MIND; 
                        break;
                        
-               case 8: break; 
-                       
-                       
+               case 8: break;                  
        }
        
        //VFX
@@ -98,7 +97,7 @@ void main()
                 {
                         
                         //blind
-                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectBlindness(), oTarget, RoundsToSeconds(d4(2)));
+                        if(nHD < 7)  SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectBlindness(), oTarget, RoundsToSeconds(d4(2)));
                         
                         if nRoll = 8;
                         {

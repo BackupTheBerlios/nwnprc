@@ -731,7 +731,7 @@ const int SPELL_LIFE_BOLT_4_BOLTS                   = 3673;
 const int SPELL_LIFE_BOLT_5_BOLTS                   = 3674;
 
 const int SPELL_DISRUPT_UNDEAD                      = 3675;
-const int SPELL_ACCURACY                            = 3676;
+const int SPELL_OTILUKES_RESILIENT_SPHERE           = 3676;
 const int SPELL_FIST_OF_STONE                       = 3677;
 const int SPELL_BLADES_OF_FIRE                      = 3678;
 const int SPELL_FIRE_TRAP                           = 3679;

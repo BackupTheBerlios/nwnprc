@@ -40,7 +40,7 @@ Created:   7/6/07
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-void DoRay(object oTarget, int nSaveDC)
+void DoRay(object oTarget, int nSaveDC, int nRoll);
 
 #include "spinc_common"
 
@@ -81,6 +81,10 @@ void main()
                        
                case 7: nBeamVisualEffect = VFX_BEAM_MIND; 
                        break;
+                       
+               case 8: break; 
+                       
+                       
        }
        
        //VFX

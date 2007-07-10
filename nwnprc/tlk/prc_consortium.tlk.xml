@@ -31651,6 +31651,54 @@ Huge - 1d8
 Gigantic - 2d6
 Colossal - 3d6</entry>
   <entry id="55004" lang="en" sex="m">End of DD reserved</entry>
+  <entry id="55005" lang="en" sex="m">Disrupt Undead
+</entry>
+  <entry id="55007" lang="en" sex="m">Fist of Stone
+</entry>
+  <entry id="55009" lang="en" sex="m">Blades of Fire</entry>
+  <entry id="55011" lang="en" sex="m">Fire Trap</entry>
+  <entry id="55013" lang="en" sex="m">Pyrotechnics
+</entry>
+  <entry id="55015" lang="en" sex="m">Ice Knife</entry>
+  <entry id="55017" lang="en" sex="m">Shatter
+</entry>
+  <entry id="55019" lang="en" sex="m">Whirling Blade</entry>
+  <entry id="55021" lang="en" sex="m">Fire Shield (PnP)</entry>
+  <entry id="55023" lang="en" sex="m">Ring of Blades</entry>
+  <entry id="55025" lang="en" sex="m">Sleet Storm</entry>
+  <entry id="55027" lang="en" sex="m">Orb of Force</entry>
+  <entry id="55029" lang="en" sex="m">Mass Fire Shield
+</entry>
+  <entry id="55031" lang="en" sex="m">Prismatic Ray</entry>
+  <entry id="55032" lang="en" sex="m">Prismatic Ray
+Evocation
+Level: Sorcerer/wizard 5
+Components: V, S
+Casting Time: 1 standard action
+Range: Medium (100 ft. + 10 ft./level)
+Effect: Ray
+Duration: Instantaneous
+Saving Throw: See text
+Spell Resistance: Yes
+
+A single beam of brilliantly colored light shoots from your outstretched hand. You must succeed on a ranged touch attack with the ray to strike a target. On a successful attack, a creature with 6 Hit Dice or fewer is blinded for 2d4 rounds by the prismatic ray in addition to suffering a randomly determined effect:
+
+1d8    Color of Beam       Effect
+
+1      Red                 20 points fire damage(Reflex half)
+2      Orange              40 points acid damage(Reflex half)
+3      Yellow              80 points electricity damage (Reflex half)
+4      Green               Poison (Kills; Fortitude partial, take 1d6 Con damage instead)
+5      Blue                Turned to stone(Fortitude negates)
+6      Indigo              Insane, as insanity spell (Will negates)
+7      Violet              Sent to another plane(Will negates)
+8      Two effects; roll twice more, ignoring any '8' results</entry>
+  <entry id="55033" lang="en" sex="m">Fire Seeds</entry>
+  <entry id="55035" lang="en" sex="m">Otiluke's Freezing Sphere</entry>
+  <entry id="55037" lang="en" sex="m">Waves of Exhaustion</entry>
+  <entry id="55039" lang="en" sex="m">Prismatic Wall</entry>
+  <entry id="55041" lang="en" sex="m">Scintillating Pattern</entry>
+  <entry id="55043" lang="en" sex="m">Prismatic Sphere</entry>
   <entry id="55100" lang="en" sex="m">Ninja</entry>
   <entry id="55101" lang="en" sex="m">Ninjas</entry>
   <entry id="55102" lang="en" sex="m">ninja</entry>

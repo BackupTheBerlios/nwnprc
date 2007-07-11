@@ -39,7 +39,7 @@ void main()
     if(nStored > nMax)
     {
         nOverflow = nStored - nMax;
-        object oTarget = GetNearestCreature(CREATURE_TYPE_IS_ALIVE, TRUE, oPC, CREATURE_TYPE_PERCEPTION, PERCEPTION_SEEN);
+        object oTarget = GetNearestCreature(CREATURE_TYPE_IS_ALIVE, TRUE, oPC, 1, CREATURE_TYPE_PERCEPTION, PERCEPTION_SEEN);
         if((oTarget == OBJECT_INVALID) || (GetDistanceBetween(oPC, oTarget) > 40.0))   //no nearby targets, discharge on self
         {
             sMessage = "Spellfire levels stored exceeds maximum, discharging excess at self!";
@@ -74,7 +74,7 @@ void main()
         }
         if(nTimerMax == 1 && !PRCMySavingThrow(SAVING_THROW_WILL, oPC, 25))
         {
-            object oTarget = GetNearestCreature(CREATURE_TYPE_IS_ALIVE, TRUE, oPC, CREATURE_TYPE_PERCEPTION, PERCEPTION_SEEN);
+            object oTarget = GetNearestCreature(CREATURE_TYPE_IS_ALIVE, TRUE, oPC, 1, CREATURE_TYPE_PERCEPTION, PERCEPTION_SEEN);
             if((oTarget == OBJECT_INVALID) || (GetDistanceBetween(oPC, oTarget) > 10.0))   //no nearby targets, discharge on self
             {
                 sMessage = "Will save failed! Maximum strength blast directed at self!";

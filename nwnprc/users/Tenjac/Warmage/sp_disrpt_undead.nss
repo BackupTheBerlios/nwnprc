@@ -105,7 +105,7 @@ void main()
                                                 
                                                 while(GetIsObjectValid(oTarget2))
                                                 {
-                                                        if(GetRacialType(oTarget2) == RACIAL_TYPE_UNDEAD) && GetIsEnemy(oTarget2))
+                                                        if(GetRacialType(oTarget2) == RACIAL_TYPE_UNDEAD) && GetIsEnemy(oTarget2, oPC))
                                                         {
                                                                 //Black beam, origin chest of previous target
                                                                 ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectBeam(VFX_BEAM_BLACK, oTarget, BODY_NODE_CHEST), oTarget2);

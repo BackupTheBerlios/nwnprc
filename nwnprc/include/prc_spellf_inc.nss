@@ -302,21 +302,9 @@ int SpellfireDrainItem(object oPC, object oItem, int bCharged = TRUE, int bSingl
             int nExpend = GetPersistantLocalInt(oPC, "SpellfireLevelExpend");
             int nStored = GetPersistantLocalInt(oPC, "SpellfireLevelStored");
             int nCap = SpellfireMax(oPC) - nStored;
-            if((nBase == BASE_ITEM_POTIONS) ||
-                (nBase == BASE_ITEM_SCROLL) ||
-                (nBase == BASE_ITEM_BLANK_POTION) ||
-                (nBase == BASE_ITEM_BLANK_SCROLL)
-                )
-            {   //assume they only have the one castspell itemprop
-                int nStack = GetItemStackSize(oItem);
-                nExpend = min(min(nStack, nCap), nExpend); //capped by charges and capacity
-                if(nExpend == nStack)
-                    DestroyObject(oItem);
-                else
-                    SetItemStackSize(oItem, nStack - nExpend);  //modifies stack size as scrolls/potions are used up
-                AddSpellfireLevels(oPC, nExpend);   //adds 1 level/charge
-                return TRUE;
-            }
+            itemproperty ip;
+            int nSubType;
+            int nStack = GetItemStackSize(oItem);
             int nCharges = GetItemCharges(oItem);
             if(nCharges)   //charged item
             {
@@ -325,17 +313,23 @@ int SpellfireDrainItem(object oPC, object oItem, int bCharged = TRUE, int bSingl
                 AddSpellfireLevels(oPC, nExpend);   //adds 1 level/charge
                 return TRUE;
             }
-            itemproperty ip = GetFirstItemProperty(oItem);
-            int nSubType;
+            ip = GetFirstItemProperty(oItem);
             while(GetIsItemPropertyValid(ip))  //single use item
             {
                 if(GetItemPropertyType(ip) == ITEM_PROPERTY_CAST_SPELL &&
                     GetItemPropertyDurationType(ip) == DURATION_TYPE_PERMANENT &&
                     GetItemPropertyCostTableValue(ip) == IP_CONST_CASTSPELL_NUMUSES_SINGLE_USE)
                     {
+                        if(DEBUG)
+                        {
+                            DoDebug("SpellfireDrainItem(): nBase = " + IntToString(nBase), oPC);
+                            DoDebug("SpellfireDrainItem(): nStack = " + IntToString(nStack), oPC);
+                            DoDebug("SpellfireDrainItem(): nCap = " + IntToString(nCap), oPC);
+                            DoDebug("SpellfireDrainItem(): nExpend = " + IntToString(nExpend), oPC);
+                        }
                         nSubType = GetItemPropertySubType(ip);
                         //hardcoded filter
-                        if(
+                        if(!(
                             (nSubType >= 329 && nSubType <= 344) ||
                             (nSubType == 359) ||
                             (nSubType >= 400 && nSubType <= 409) ||
@@ -345,10 +339,33 @@ int SpellfireDrainItem(object oPC, object oItem, int bCharged = TRUE, int bSingl
                             (nSubType >= 521 && nSubType <= 537) ||
                             (nSubType >= 750 && nSubType <= 851) ||
                             (nSubType >= 1201)
-                        )
-                        RemoveItemProperty(oItem, ip);  //just removes the cast spell property
-                        AddSpellfireLevels(oPC, 1);     //adds 1 level
-                        return TRUE;
+                        ))
+                        {
+
+                            if((nBase == BASE_ITEM_POTIONS) ||
+                                (nBase == BASE_ITEM_SCROLL) ||
+                                (nBase == BASE_ITEM_SPELLSCROLL) ||
+                                (nBase == BASE_ITEM_BLANK_POTION) ||
+                                (nBase == BASE_ITEM_BLANK_SCROLL) ||
+                                (nBase == BASE_ITEM_ENCHANTED_POTION) ||
+                                (nBase == BASE_ITEM_ENCHANTED_SCROLL)
+                                )
+                            {
+                                nExpend = min(min(nStack, nCap), nExpend); //capped by charges and capacity
+                                if(nExpend == nStack)
+                                    DestroyObject(oItem);
+                                else
+                                    SetItemStackSize(oItem, nStack - nExpend);  //modifies stack size as scrolls/potions are used up
+                                AddSpellfireLevels(oPC, nExpend);   //adds 1 level/charge
+                                return TRUE;
+                            }
+                            else
+                            {
+                                RemoveItemProperty(oItem, ip);  //just removes the cast spell property
+                                AddSpellfireLevels(oPC, 1);     //adds 1 level
+                                return TRUE;
+                            }
+                        }
                     }
                 ip = GetNextItemProperty(oItem);
             }
@@ -440,12 +457,15 @@ void SpellfireDrain(object oPC, object oTarget, int bCharged = TRUE, int bExempt
                 }
             }
             oItem = GetFirstItemInInventory(oTarget);
-            while(GetIsObjectValid(oItem))
+            if(bFound != 1)
             {
-                if(SpellfireDrainItem(oPC, oItem, bCharged))
+                while(GetIsObjectValid(oItem))
                 {
-                    bFound = 1;
-                    break;
+                    if(SpellfireDrainItem(oPC, oItem, bCharged))
+                    {
+                        bFound = 1;
+                        break;
+                    }
                 }
             }
             //search function

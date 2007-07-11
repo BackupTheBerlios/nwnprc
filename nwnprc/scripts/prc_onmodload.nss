@@ -241,12 +241,12 @@ void OnLoad_Fresh(object oModule)
     //done differently now
 
     //check for letoscript dir
-    if(GetLocalString(oModule, PRC_LETOSCRIPT_NWN_DIR) == "")
+    /*    if(GetLocalString(oModule, PRC_LETOSCRIPT_NWN_DIR) == "")
     {
         string sDir = Get2DACache("directory", "Dir", 0);
         if(sDir != "")
             SetLocalString(oModule, PRC_LETOSCRIPT_NWN_DIR, sDir);
-    }
+    } */
 
     //delay the 2da lookup stuff
     DelayCommand(12.0, MakeLookupLoopMaster());

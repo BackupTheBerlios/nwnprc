@@ -751,6 +751,8 @@ const int SPELL_WAVES_OF_EXHAUSTION                 = 3693;
 const int SPELL_PRISMATIC_WALL                      = 3694;
 const int SPELL_SCINTILLATING_PATTERN               = 3695;
 const int SPELL_PRISMATIC_SPHERE                    = 3696;
+const int SPELL_PYROTECHNICS_FIREWORKS              = 3697;
+const int SPELL_PYROTECHNICS_SMOKE                  = 3698;
 
 // Passive feats
 const int SPELL_FORCE_PERSONALITY                   = 1915;

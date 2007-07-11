@@ -27,3 +27,34 @@ Created:   7/6/07
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
+
+void main()
+{
+        object oCaster = GetAreaOfEffectCreator();
+        object oTarget = GetExitingObject();
+        
+        SetAllAoEInts(SPELL_OTILUKES_RESILIENT_SPHERE, OBJECT_SELF, SPGetSpellSaveDC(oTarget, oCaster)); 
+        
+        if(GetLocalInt(oTarget, "PRC_OTILUKES_RS_TARGET"))
+        {
+                //Delete it
+                DeleteLocalInt(oTarget, "PRC_OTILUKES_RS_TARGET"));
+                
+                if(!GetLocalInt(oTarget, "PRC_OTILUKES_RS_ALREADYPLOT")
+                {
+                        SetPlotFlag(oTarget, 0);
+                }
+                
+                effect eToDispel = GetFirstEffect(oTarget);
+               
+               while(GetIsEffectValid(eToDispel))
+                {
+                        if(GetEffectSpellId(eToDispel) == SPELL_OTILUKES_RESILIENT_SPHERE)
+                        {
+                                RemoveEffect(oTarget, eToDispel);
+                        }
+                        
+                        eToDispel = GetNextEffect(oTarget);
+                }
+        }
+}

@@ -27,3 +27,40 @@ Created:   7/6/07
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
+
+#include "spinc_common"
+
+void main()
+{
+        if(!X2PreSpellCastCode()) return;
+        
+        SPSetSchool(SPELL_SCHOOL_EVOCATION);
+        
+        object oPC = OBJECT_SELF;
+        object oTarget = PRCGetSpellTargetObject();
+        effect eAoE = EffectAreaOfEffect(AOE_PER_OTILUKES_RESILIENT_SPHERE);
+        int nCasterLvl = PRCGetCasterLevel(oPC);
+        float fDur = TurnsToSeconds(nCasterLvl);
+        
+        int nMetaMagic = PRCGetMetaMagicFeat();
+        if (nMetaMagic == METAMAGIC_EXTEND) fDur += fDur;
+        
+        //Set local to signify the target
+        SetLocalInt(oTarget, "PRC_OTILUKES_RS_TARGET", 1);
+        
+        //Paralyze the target 
+        effect eLink = EffectCutsceneParalyze();
+               eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_RESILIENT_SPHERE));
+        
+        
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAoE, oTarget, fDur, TRUE, SPELL_OTILUKES_RESILIENT_SPHERE, nCasterLvl);
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur, TRUE, SPELL_OTILUKES_RESILIENT_SPHERE, nCasterLvl);
+        
+        //Check for plot flag, if it's there, mark it as existing plot so we don't
+        //have poeple using ORS to remove it and kill plot chars.
+        if(GetPlotFlag(oTarget))
+        {
+                SetLocalInt(oTarget, "PRC_OTILUKES_RS_ALREADYPLOT", 1);
+        }
+        
+        else SetPlotFlag(oTarget, TRUE);

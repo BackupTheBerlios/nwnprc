@@ -753,6 +753,7 @@ const int SPELL_SCINTILLATING_PATTERN               = 3695;
 const int SPELL_PRISMATIC_SPHERE                    = 3696;
 const int SPELL_PYROTECHNICS_FIREWORKS              = 3697;
 const int SPELL_PYROTECHNICS_SMOKE                  = 3698;
+const int SPELL_GREATER_DISRUPT_UNDEAD              = 3699;
 
 // Passive feats
 const int SPELL_FORCE_PERSONALITY                   = 1915;

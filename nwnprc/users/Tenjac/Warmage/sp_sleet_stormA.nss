@@ -1,8 +1,9 @@
 //::///////////////////////////////////////////////
-//:: Name      Sleet Storm
-//:: FileName  sp_sleet_storm.nss
+//:: Name      
+//:: FileName  sp_.nss
 //:://////////////////////////////////////////////
 /**@file Sleet Storm
+
 Conjuration (Creation) [Cold]
 Level: Drd 3, Sor/Wiz 3 
 Components: V, S, M/DF 
@@ -31,25 +32,3 @@ Created:   7/6/07
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
-
-int BalanceCheck(
-
-#include "spinc_common"
-
-void main()
-{
-        if(!X2PreSpellCastCode()) return;
-        
-        SPSetSchool(SPELL_SCHOOL_CONJURATION);
-        
-        object oPC = OBJECT_SELF;
-        location lLoc = GetSpellTargetLocation();
-        float fDur = RoundsToSeconds(PRCGetCasterLevel(oPC));
-        effect eAoE = EffectAreaOfEffect(AOE_PER_SLEET_STORM);
-        
-        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAoE, lLoc, fDur);
-        
-        SPSetSchool();
-}
-        
-        

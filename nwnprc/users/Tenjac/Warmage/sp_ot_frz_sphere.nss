@@ -21,18 +21,6 @@ dealing 1d6 points of cold damage per caster level
 elemental (water) creature instead takes 1d8 points
 of cold damage per caster level (maximum 15d8).
 
-If the freezing sphere strikes a body of water or 
-a liquid that is principally water (not including 
-water-based creatures), it freezes the liquid to a
-depth of 6 inches over an area equal to 100 square 
-feet (a 10- foot square) per caster level (maximum 
-1,500 square feet). This ice lasts for 1 round per
-caster level. Creatures that were swimming on the 
-surface of frozen water become trapped in the ice.
-Attempting to break free is a full-round action. A
-trapped creature must make a DC 25 Strength check
-or a DC 25 Escape Artist check to do so.
-
 You can refrain from firing the globe after 
 completing the spell, if you wish. Treat this as a
 touch spell for which you are holding the charge. 
@@ -50,4 +38,53 @@ Created:   7/6/07
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-VFX_FNF_OTIL_COLDSPHERE
+#include "spinc_common"
+
+void main()
+{
+        if(!X2PreSpellCastCode()) return;
+        
+        SPSetSchool(SPELL_SCHOOL_EVOCATION);
+        
+        object oPC = OBJECT_SELF;
+        object oTarget; 
+        location lTarget = PRCGetSpellTargetLocation();
+        effect eVis = EffectVisualEffect(VFX_FNF_OTIL_COLDSPHERE);
+        int nDC; 
+        int nCasterLvl = PRCGetCasterLevel(oPC);
+        int nDice = min(15, nCasterLvl);
+        int nMetaMagic = PRCGetMetaMagicFeat();
+        int nDam;
+        
+        //VFX
+        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, lTarget);
+        
+        oTarget = GetFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(10), lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+        
+        while(GetIsObjectValid(oTarget))
+        {
+                if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl))
+                {
+                        nDC = SPGetSpellSaveDC(oTarget, oPC);
+                        nDam = d6(nDice);
+                        
+                        if(nMetaMagic == METAMAGIC_MAXIMIZE) nDam = 6 * nDice;
+                        
+                        if(nMetaMagic == METAMAGIC_EMPOWER) nDam += (nDam/2);
+                        
+                        nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, nDC, SAVING_THROW_TYPE_COLD);
+                        
+                        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_FROST_S), oTarget);
+                        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_COLD), oTarget);
+                        
+                }
+                
+                oTarget = GetNextObjectInShape(SHAPE_SPHERE, FeetToMeters(10), lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+        }
+        SPSetSchool();
+}
+        
+                  
+                        
+                
+                

@@ -1,0 +1,9 @@
+
+1. Add AoEs and constants
+
+	-ORS
+	-Sleet Storm
+
+2. Check on feasibility of Fire Seeds
+
+3. Check on feasibility of Fire Trap

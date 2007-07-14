@@ -85,6 +85,13 @@ void CleanCopy(object oImage)
             {
                 SetDroppableFlag(oItem, FALSE);
                 SetItemCursedFlag(oItem, TRUE);
+                // remove all item properties
+                itemproperty ipLoop=GetFirstItemProperty(oItem);
+                while (GetIsItemPropertyValid(ipLoop))
+                {
+                    RemoveItemProperty(oItem, ipLoop);
+                    ipLoop=GetNextItemProperty(oItem);
+                }
             }
             else // can't see it so destroy
             {                
@@ -95,6 +102,29 @@ void CleanCopy(object oImage)
         
     }
     TakeGoldFromCreature(GetGold(oImage), oImage, TRUE);
+}
+
+void MakeMoreImages(object oImage, int iImages, int nDuration)
+{
+    string sImage = "PC_IMAGE"+ObjectToString(OBJECT_SELF)+"mirror";
+
+    effect eImage = EffectCutsceneParalyze();
+           eImage = SupernaturalEffect(eImage);
+    effect eGhost = EffectCutsceneGhost();
+           eGhost = SupernaturalEffect(eGhost);
+    effect eNoSpell = EffectSpellFailure(100);
+           eNoSpell = SupernaturalEffect(eNoSpell);
+    int iPlus;
+    for (iPlus = 0; iPlus < iImages; iPlus++)
+    {
+        object oImage2 = CopyObject(oImage, GetLocation(OBJECT_SELF), OBJECT_INVALID, sImage);
+        ApplyEffectToObject(DURATION_TYPE_PERMANENT, eImage, oImage2);
+        ApplyEffectToObject(DURATION_TYPE_PERMANENT, eNoSpell, oImage2);
+        ChangeToStandardFaction(oImage2, STANDARD_FACTION_DEFENDER);
+        SetIsTemporaryFriend(OBJECT_SELF, oImage2, FALSE);
+        DelayCommand(3.0f, ApplyEffectToObject(DURATION_TYPE_PERMANENT, eGhost, oImage2));
+        DestroyObject(oImage2, TurnsToSeconds(nDuration)); // they dissapear after a minute per level
+    }
 }
 
 void RemoveExtraImages()
@@ -127,9 +157,9 @@ void main2()
     {
         nDuration = nDuration *2; //Duration is +100%
     }
-
-    int iCon = GetAbilityScore(OBJECT_SELF, ABILITY_CONSTITUTION) - 1;
-    if (iCon > 10) iCon = 10;
+    // images will have only 1 HP
+    int iHP = GetCurrentHitPoints(OBJECT_SELF);
+    --iHP;
 
     string sImage = "PC_IMAGE"+ObjectToString(OBJECT_SELF)+"mirror";
 
@@ -139,8 +169,7 @@ void main2()
            eGhost = SupernaturalEffect(eGhost);
     effect eNoSpell = EffectSpellFailure(100);
            eNoSpell = SupernaturalEffect(eNoSpell);
-    //effect eCon = EffectAbilityDecrease(ABILITY_CONSTITUTION, iCon);
-    //       eCon = SupernaturalEffect(eCon);
+    effect eDamage = EffectDamage(iHP); // reduces image to 1 hp
     
     // make, then clean up, first image and copy it, not the PC for subsequent images
     object oImage = CopyObject(OBJECT_SELF, GetLocation(OBJECT_SELF), OBJECT_INVALID, sImage);
@@ -149,27 +178,14 @@ void main2()
     // these need to be applied to every image
     ApplyEffectToObject(DURATION_TYPE_PERMANENT, eImage, oImage);
     ApplyEffectToObject(DURATION_TYPE_PERMANENT, eNoSpell, oImage);
-    ApplyAbilityDamage(oImage, ABILITY_CONSTITUTION, iCon, DURATION_TYPE_PERMANENT, TRUE);
+    ApplyEffectToObject(DURATION_TYPE_PERMANENT, eDamage, oImage);
     ChangeToStandardFaction(oImage, STANDARD_FACTION_DEFENDER);
     SetIsTemporaryFriend(OBJECT_SELF, oImage, FALSE);
     DelayCommand(3.0f, ApplyEffectToObject(DURATION_TYPE_PERMANENT, eGhost, oImage));
     DestroyObject(oImage, TurnsToSeconds(nDuration)); // they dissapear after a minute per level
     
     --iImages; // made one already
-
-    int iPlus;
-    object oImage2;
-    for (iPlus = 0; iPlus < iImages; iPlus++)
-    {
-        object oImage2 = CopyObject(oImage, GetLocation(OBJECT_SELF), OBJECT_INVALID, sImage);
-        ApplyEffectToObject(DURATION_TYPE_PERMANENT, eImage, oImage2);
-        ApplyEffectToObject(DURATION_TYPE_PERMANENT, eNoSpell, oImage2);
-        ApplyAbilityDamage(oImage2, ABILITY_CONSTITUTION, iCon, DURATION_TYPE_PERMANENT, TRUE);
-        ChangeToStandardFaction(oImage2, STANDARD_FACTION_DEFENDER);
-        SetIsTemporaryFriend(OBJECT_SELF, oImage2, FALSE);
-        DelayCommand(3.0f, ApplyEffectToObject(DURATION_TYPE_PERMANENT, eGhost, oImage2));
-        DestroyObject(oImage2, TurnsToSeconds(nDuration)); // they dissapear after a minute per level
-    }
+    DelayCommand(0.2, MakeMoreImages(oImage, iImages, nDuration));
 }
 
 void main()

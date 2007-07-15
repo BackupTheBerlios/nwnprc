@@ -204,7 +204,7 @@
 200 FEAT_SPELLFIRE_DECREASE                        4370      0    99             1      
 201 FEAT_SPELLFIRE_QUICKSELECT                     4371      0    99             1      
 202 FEAT_DISCIPLE_OF_THE_SUN                       3127      0    -1             1      
-203 EndScrying                                     2468      0    -1             1      
+203 EndScrying                                     2468      0    99             1      
 204 ****                                           ****      **** ****           ****   
 205 **PsionicFeats**                               ****      **** ****           ****   
 206 Psionic_Focus                                  4818      0    99             1      

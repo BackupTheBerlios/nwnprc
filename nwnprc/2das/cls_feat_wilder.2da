@@ -513,7 +513,7 @@
 509 FEAT_SPELLFIRE_DECREASE                        4370      0    99             1      
 510 FEAT_SPELLFIRE_QUICKSELECT                     4371      0    99             1      
 511 FEAT_DISCIPLE_OF_THE_SUN                       3127      0    -1             1      
-512 EndScrying                                     2468      0    -1             1      
+512 EndScrying                                     2468      0    99             1      
 513 ****                                           ****      **** ****           ****   
 514 **PsionicFeats**                               ****      **** ****           ****   
 515 Invest_Armour                                  3643      0    -1             1      

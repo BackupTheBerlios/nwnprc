@@ -295,6 +295,32 @@ void main()
                 RemoveSpellEffects(MOVE_DW_FIRE_RIPOSTE, oSpellOrigin, oSpellOrigin);
         }
     }
+    
+    // Holocaust Cloak
+    if(GetHasSpellEffect(MOVE_DW_HOLOCAUST_CLOAK, oSpellOrigin) && GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
+    {    
+        if(GetIsInMeleeRange(oSpellOrigin, oSpellTarget))
+        {
+                // Apply the damage and VFX
+                effect eVis = EffectVisualEffect(VFX_COM_HIT_FIRE);
+                effect eDam = EffectDamage(5, DAMAGE_TYPE_FIRE);
+        	ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oSpellTarget);
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oSpellTarget);
+                FloatingTextStringOnCreature("Holocaust Cloak Hit", oSpellOrigin, FALSE);
+        }
+    }  
+    // Defensive Rebuke
+    if(GetHasSpellEffect(MOVE_DS_DEFENSIVE_REBUKE, oSpellOrigin) && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
+    {
+        SetLocalObject(oSpellTarget, "DefensiveRebuke", oSpellOrigin);
+        DelayCommand(3.0, ExecuteScript("tob_dvsp_defrbka", oSpellTarget));
+    }   
+    // Defensive Rebuke
+    if(GetHasSpellEffect(MOVE_DM_PEARL_BLACK_DOUBT, oSpellOrigin) && GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
+    {
+    	// Will reset to 0.
+        DeleteLocalInt(oSpellOrigin, "PearlOfBlackDoubtBonus");
+    }     
 */
     /*//////////////////////////////////////////////////
     //////////////// Blade Magic ///////////////////////

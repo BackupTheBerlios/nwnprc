@@ -137,27 +137,18 @@ int GetRogueSneak(object oPC)
       if (iClassLevel) iRogueSneak += (iClassLevel + 1) / 2;
    }
 
-   // Infiltrator
- /*iClassLevel = GetLevelByClass(CLASS_TYPE_INFILTRATOR, oPC);
-   if ((iClassLevel >= 1) && (iClassLevel < 5)) iRogueSneak++;
-   if (iClassLevel >= 5) iRogueSneak += 2;
-
-   // Fang of Lolth
-   iClassLevel = GetLevelByClass(CLASS_TYPE_FANG_OF_LOLTH, oPC);
-   if ((iClassLevel >= 2) && (iClassLevel < 5)) iRogueSneak++;
-   if ((iClassLevel >= 5) && (iClassLevel < 8)) iRogueSneak += 2;
-   if ((iClassLevel >= 8) && (iClassLevel < 12)) iRogueSneak += 3;
-   if ((iClassLevel >= 12) && (iClassLevel < 16)) iRogueSneak += 4;
-   if ((iClassLevel >= 16) && (iClassLevel < 20)) iRogueSneak += 5;
-   if (iClassLevel >= 20) iRogueSneak += 6;*/
-
    if (GetBaseItemType(oWeapon) == BASE_ITEM_WHIP)
    {
       // Lasher
       iClassLevel = GetLevelByClass(CLASS_TYPE_LASHER, oPC);
       if (iClassLevel > 0) iRogueSneak += ((iClassLevel - 1) / 4) + 1;
    }
-
+    /*
+   if(GetHasSpellEffect(MOVE_SH_ASSASSIN_STANCE, oPC))
+   {
+   	iRogueSneak += 2;
+   }
+   */
    // -----------------------------------------------------------------------------------------
    // Future PRC's go here.  DO NOT ADD ROGUE/BLACKGUARD/ASSASSIN SNEAK ATTACKS AS CLASS FEATS.
    // Placeholder feats are fine, even encouraged.  Example: "Ranged Sneak Attack +1d6".

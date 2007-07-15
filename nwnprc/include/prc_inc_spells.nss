@@ -1296,6 +1296,12 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
     {
     	return GetIsSkillSuccessful(oTarget, SKILL_CONCENTRATION, nDC);
     }
+
+    // This Maneuver allows people to use a skill check instead of a save on a Fort save
+    if (nSavingThrow == SAVING_THROW_FORT && GetLocalInt(oTarget, "MindOverBody"))
+    {
+    	return GetIsSkillSuccessful(oTarget, SKILL_CONCENTRATION, nDC);
+    }    
     
     // This Maneuver allows people to use a skill check instead of a save on a Reflex save
     if (nSavingThrow == SAVING_THROW_REFLEX && GetLocalInt(oTarget, "ActionBeforeThought"))

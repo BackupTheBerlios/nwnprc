@@ -23,6 +23,9 @@ void MakeLookupLoop(int nClass, int nMin, int nMax, string sSourceColumn,
 void MakeSpellbookLevelLoop(int nClass, int nMin, int nMax, string sVarNameBase,
     string sColumnName, string sColumnValue, int nLoopSize = 100, string sTag = "");
 
+void MakeSpellIDLoop(int nClass, int nMin, int nMax, string sRealColumn,
+    string sVarNameBase, int nLoopSize = 100, string sTag = "", int nTemp = 0);
+
 //this returns the real SpellID of "wrapper" spells cast by psionic or the new spellbooks
 int GetPowerFromSpellID(int nSpellID);
 
@@ -49,6 +52,28 @@ int GetClassFeatFromPower(int nPowerID, int nClass);
  *               returns -1 instead.
  */
 int SpellToSpellbookID(int nSpell);
+
+/**
+ * Determines cls_spell_*.2da index from a given spells.2da index.
+ *
+ * @param nClass The class in whose spellbook to search in
+ * @param nSpell The spell to search for
+ * @return       The cls_spell_*.2da index in whichever class's file that the
+ *               given spell belongs to.
+ *               If nSpell does not exist within the spellbook,
+ *               returns -1 instead.
+ */
+int RealSpellToSpellbookID(int nClass, int nSpell);
+
+/**
+ * Determines number of metamagics from a given spells.2da index.
+ *
+ * @param nClass The class in whose spellbook to search in
+ * @param nSpell The spell to search for
+ * @return       The number of metamagics in cls_spell_*.2da
+ *               for a particular spell.
+ */
+int RealSpellToSpellbookIDCount(int nClass, int nSpell);
 
 /**
  * Determines the name of the 2da file that defines the number of alternate magic
@@ -146,13 +171,13 @@ void MakeLookupLoopMaster()
     // Tome of Battle uses the same lookup loop style as the psionic classes. Time adjusted to put it after the last of the caster lookup loops
     DelayCommand(11.3, MakeLookupLoop(CLASS_TYPE_CRUSADER,         0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "RealSpellID", "GetPowerFromSpellID"));
     DelayCommand(11.4, MakeLookupLoop(CLASS_TYPE_CRUSADER,         0, GetPRCSwitch(FILE_END_CLASS_POWER), "RealSpellID", "FeatID",  "GetClassFeatFromPower_"+IntToString(CLASS_TYPE_CRUSADER)));
-    DelayCommand(11.5, MakeLookupLoop(CLASS_TYPE_CRUSADER,         0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "", "SpellIDToClsPsipw"));    
+    DelayCommand(11.5, MakeLookupLoop(CLASS_TYPE_CRUSADER,         0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "", "SpellIDToClsPsipw"));
     DelayCommand(11.6, MakeLookupLoop(CLASS_TYPE_SWORDSAGE,        0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "RealSpellID", "GetPowerFromSpellID"));
     DelayCommand(11.7, MakeLookupLoop(CLASS_TYPE_SWORDSAGE,        0, GetPRCSwitch(FILE_END_CLASS_POWER), "RealSpellID", "FeatID",  "GetClassFeatFromPower_"+IntToString(CLASS_TYPE_SWORDSAGE)));
-    DelayCommand(11.8, MakeLookupLoop(CLASS_TYPE_SWORDSAGE,        0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "", "SpellIDToClsPsipw"));        
+    DelayCommand(11.8, MakeLookupLoop(CLASS_TYPE_SWORDSAGE,        0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "", "SpellIDToClsPsipw"));
     DelayCommand(11.9, MakeLookupLoop(CLASS_TYPE_WARBLADE,         0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "RealSpellID", "GetPowerFromSpellID"));
     DelayCommand(12.0, MakeLookupLoop(CLASS_TYPE_WARBLADE,         0, GetPRCSwitch(FILE_END_CLASS_POWER), "RealSpellID", "FeatID",  "GetClassFeatFromPower_"+IntToString(CLASS_TYPE_WARBLADE)));
-    DelayCommand(12.1, MakeLookupLoop(CLASS_TYPE_WARBLADE,         0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "", "SpellIDToClsPsipw"));        
+    DelayCommand(12.1, MakeLookupLoop(CLASS_TYPE_WARBLADE,         0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "", "SpellIDToClsPsipw"));
     //add new psionic classes here
     //also add them later too
 
@@ -309,6 +334,27 @@ void MakeLookupLoopMaster()
     DelayCommand(11.0, MakeSpellbookLevelLoop(CLASS_TYPE_WARMAGE,          0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "7"));
     DelayCommand(11.1, MakeSpellbookLevelLoop(CLASS_TYPE_WARMAGE,          0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "8"));
     DelayCommand(11.2, MakeSpellbookLevelLoop(CLASS_TYPE_WARMAGE,          0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "9"));
+
+    DelayCommand(3.0, MakeSpellIDLoop(CLASS_TYPE_BLACKGUARD,            0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "RealSpellID", "GetRowFromRealSpellID"));
+    DelayCommand(3.1, MakeSpellIDLoop(CLASS_TYPE_ANTI_PALADIN,          0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "RealSpellID", "GetRowFromRealSpellID"));
+    DelayCommand(3.2, MakeSpellIDLoop(CLASS_TYPE_SOLDIER_OF_LIGHT,      0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "RealSpellID", "GetRowFromRealSpellID"));
+    DelayCommand(3.3, MakeSpellIDLoop(CLASS_TYPE_KNIGHT_MIDDLECIRCLE,   0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "RealSpellID", "GetRowFromRealSpellID"));
+    DelayCommand(3.4, MakeSpellIDLoop(CLASS_TYPE_KNIGHT_CHALICE,        0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "RealSpellID", "GetRowFromRealSpellID"));
+    DelayCommand(3.5, MakeSpellIDLoop(CLASS_TYPE_VIGILANT,              0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "RealSpellID", "GetRowFromRealSpellID"));
+    DelayCommand(3.6, MakeSpellIDLoop(CLASS_TYPE_VASSAL,                0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "RealSpellID", "GetRowFromRealSpellID"));
+    DelayCommand(3.7, MakeSpellIDLoop(CLASS_TYPE_OCULAR,                0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "RealSpellID", "GetRowFromRealSpellID"));
+    DelayCommand(3.8, MakeSpellIDLoop(CLASS_TYPE_ASSASSIN,              0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "RealSpellID", "GetRowFromRealSpellID"));
+    DelayCommand(3.9, MakeSpellIDLoop(CLASS_TYPE_SUEL_ARCHANAMACH,      0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "RealSpellID", "GetRowFromRealSpellID"));
+    DelayCommand(4.0, MakeSpellIDLoop(CLASS_TYPE_SHADOWLORD,            0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "RealSpellID", "GetRowFromRealSpellID"));
+    DelayCommand(4.1, MakeSpellIDLoop(CLASS_TYPE_BARD,                  0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "RealSpellID", "GetRowFromRealSpellID"));
+    DelayCommand(4.2, MakeSpellIDLoop(CLASS_TYPE_SORCERER,              0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "RealSpellID", "GetRowFromRealSpellID"));
+    DelayCommand(4.3, MakeSpellIDLoop(CLASS_TYPE_FAVOURED_SOUL,         0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "RealSpellID", "GetRowFromRealSpellID"));
+    DelayCommand(4.4, MakeSpellIDLoop(CLASS_TYPE_HEXBLADE,              0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "RealSpellID", "GetRowFromRealSpellID"));
+    DelayCommand(4.5, MakeSpellIDLoop(CLASS_TYPE_SOHEI,                 0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "RealSpellID", "GetRowFromRealSpellID"));
+    DelayCommand(4.6, MakeSpellIDLoop(CLASS_TYPE_SLAYER_OF_DOMIEL,      0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "RealSpellID", "GetRowFromRealSpellID"));
+    DelayCommand(4.7, MakeSpellIDLoop(CLASS_TYPE_DUSKBLADE,             0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "RealSpellID", "GetRowFromRealSpellID"));
+    DelayCommand(4.8, MakeSpellIDLoop(CLASS_TYPE_HEALER,                0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "RealSpellID", "GetRowFromRealSpellID"));
+    DelayCommand(4.9, MakeSpellIDLoop(CLASS_TYPE_WARMAGE,               0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "RealSpellID", "GetRowFromRealSpellID"));
 }
 
 void MakeSpellbookLevelLoop(int nClass, int nMin, int nMax, string sVarNameBase,
@@ -334,7 +380,7 @@ void MakeSpellbookLevelLoop(int nClass, int nMin, int nMax, string sVarNameBase,
        nClass == CLASS_TYPE_FIST_OF_ZUOKEN ||
        nClass == CLASS_TYPE_WARMIND        ||
        // Add new psionic classes here
-       
+
        // Tome of Battle
        nClass == CLASS_TYPE_CRUSADER       ||
        nClass == CLASS_TYPE_SWORDSAGE      ||
@@ -415,7 +461,7 @@ void MakeLookupLoop(int nClass, int nMin, int nMax, string sSourceColumn,
        nClass == CLASS_TYPE_FIST_OF_ZUOKEN ||
        nClass == CLASS_TYPE_WARMIND        ||
        // Add new psionic classes here
-       
+
        // Tome of Battle
        nClass == CLASS_TYPE_CRUSADER       ||
        nClass == CLASS_TYPE_SWORDSAGE      ||
@@ -488,6 +534,94 @@ void MakeLookupLoop(int nClass, int nMin, int nMax, string sSourceColumn,
         DelayCommand(0.0, MakeLookupLoop(nClass, i, nMax, sSourceColumn, sDestColumn, sVarNameBase, nLoopSize, sTag));
 }
 
+void MakeSpellIDLoop(int nClass, int nMin, int nMax, string sRealColumn,
+    string sVarNameBase, int nLoopSize = 100, string sTag = "", int nTemp = 0)
+{
+    if(DEBUG) DoDebug("MakeSpellIDLoop("
+                 +IntToString(nClass)+", "
+                 +IntToString(nMin)+", "
+                 +IntToString(nMax)+", "
+                 +sRealColumn+", "
+                 +sVarNameBase+", "
+                 +IntToString(nLoopSize)+", "
+                 +") : sTag = "+sTag);
+
+    string sFile;
+    // Stuff handled in GetAMSDefinitionFileName()
+    if(nClass == CLASS_TYPE_PSION          ||
+       nClass == CLASS_TYPE_PSYWAR         ||
+       nClass == CLASS_TYPE_WILDER         ||
+       nClass == CLASS_TYPE_FIST_OF_ZUOKEN ||
+       nClass == CLASS_TYPE_WARMIND        ||
+       // Add new psionic classes here
+
+       // Tome of Battle
+       nClass == CLASS_TYPE_CRUSADER       ||
+       nClass == CLASS_TYPE_SWORDSAGE      ||
+       nClass == CLASS_TYPE_WARBLADE       ||
+       // Other new caster types
+       nClass == CLASS_TYPE_TRUENAMER
+       )
+        sFile = GetAMSDefinitionFileName(nClass);
+    // New spellbook class
+    else
+    {
+        sFile = Get2DACache("classes", "FeatsTable", nClass);
+        //sFile = GetStringLeft(sFile, 4)+"spell"+GetStringRight(sFile, GetStringLength(sFile)-8);
+        sFile = "cls_spell" + GetStringRight(sFile, GetStringLength(sFile) - 8); // Hardcoded the cls_ part. It's not as if any class uses some other prefix - Ornedan, 20061210
+    }
+
+    // If on the first iteration, generate the storage token tag
+    if(sTag == "")
+        sTag = "PRC_" + sVarNameBase;
+
+    // Get the token to store the lookup table on. The token is piggybacked in the 2da cache creature's inventory
+    object oToken = _inc_lookups_GetCacheObject(sTag);
+    // Failed to obtain a valid token - nothing to store on
+    if(!GetIsObjectValid(oToken))
+        return;
+
+    // Starting a new run and the data is present already. Assume the whole thing is present and abort
+    if(nMin == 0
+        && GetLocalInt(oToken, IntToString(StringToInt(Get2DACache(sFile, sRealColumn, nMin + 1)))))//+1 cos 0 is always null
+    {
+        DoDebug("MakeSpellIDLevelLoop("+sTag+") restored from database");
+        return;
+    }
+
+    int i;
+    int nSource, nDest;
+    int nCount = 0;
+    for(i = nMin; i < nMin + nLoopSize; i++)
+    {
+        // None of the relevant 2da files have blank Label entries on rows other than 0. We can assume i is greater than 0 at this point
+        if(i > 0 && Get2DAString(sFile, "Label", i) == "") // Using Get2DAString() instead of Get2DACache() to avoid caching extra
+            return;
+
+        nSource = StringToInt(Get2DACache(sFile, sRealColumn, i));
+        if(i != 0)
+        {
+            if(nSource == nTemp)
+            {
+                nCount += 1;
+                continue;
+            }
+            else
+            {
+                nDest = i;
+                SetLocalInt(oToken, IntToString(nClass) + "_" + IntToString(nTemp) + "_Count", nCount);
+                nCount = 0;
+                nTemp = nSource;
+                SetLocalInt(oToken, IntToString(nClass) + "_" + IntToString(nSource) + "_Start", i);
+            }
+        }
+    }
+
+    // And delay continuation to avoid TMI
+    if(i < nMax)
+        DelayCommand(0.0, MakeSpellIDLoop(nClass, i, nMax, sRealColumn, sVarNameBase, nLoopSize, sTag, nTemp));
+}
+
 int GetPowerFromSpellID(int nSpellID)
 {
     object oWP = GetObjectByTag("PRC_GetPowerFromSpellID");
@@ -522,6 +656,20 @@ int SpellToSpellbookID(int nSpell)
         nOutSpellID = -1;
     //if(DEBUG) DoDebug("SpellToSpellbookID(" + IntToString(nSpell) + ", " + sFile + ") = " + IntToString(nOutSpellID));
     return nOutSpellID;
+}
+
+int RealSpellToSpellbookID(int nClass, int nSpell)
+{
+    object oWP = GetObjectByTag("PRC_GetRowFromRealSpellID");
+    int nOutSpellID = GetLocalInt(oWP, IntToString(nClass) + "_" + IntToString(nSpell) + "_Start");
+    if(nOutSpellID == 0)
+        nOutSpellID = -1;
+    return nOutSpellID;
+}
+
+int RealSpellToSpellbookIDCount(int nClass, int nSpell)
+{
+    return GetLocalInt(GetObjectByTag("PRC_GetRowFromRealSpellID"), IntToString(nClass) + "_" + IntToString(nSpell) + "_Count");
 }
 
 string GetAMSKnownFileName(int nClass)

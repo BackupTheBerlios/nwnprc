@@ -1,26 +1,30 @@
 /*
    ----------------
-   Disarming Strike
+   Exorcism of Steel
 
-   tob_irnh_dsrmstk
+   tob_irnh_exostl
    ----------------
 
-   06/06/07 by Stratovarius
+   15/07/07 by Stratovarius
 */ /** @file
 
-    Disarming Strike
+    Exorcism of Steel
 
     Iron Heart (Strike)
-    Level: Warblade 2
+    Level: Warblade 3
+    Prerequisite: One Iron Heart maneuver.
     Initiation Action: 1 Standard Action
     Range: Melee Attack
     Target: One Creatures
+    Duration: 1 minute.
+    Save: Will partial, see text.
 
     You chop at your foe's hand, causing a grievous injury
     and forcing him to drop his weapon.
     
     You make a single melee attack. If it is successful, you attempt
-    to disarm the target. This will not work against creatures that cannot be disarmed.
+    to damage the target's weapon. If you damage it successfully, it deals -4 damage.
+    If the target succeeds on a will save, it deals -2 damage.
 */
 
 #include "tob_inc_tobfunc"
@@ -45,19 +49,16 @@ void main()
     {
     	effect eNone;
     	object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, FALSE, "Disarming Strike Hit", "Disarming Strike Miss");
+	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, FALSE, "Exorcism of Steel Hit", "Exorcism of Steel Miss");
        
-        if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack") && GetIsCreatureDisarmable(oTarget))
+        if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
     	{
-    		int nAttack = GetAttackBonus(oTarget, oInitiator, oWeap) + d20();
-    		int nTargAttack = GetAttackBonus(oInitiator, oTarget, GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget)) + d20();
-    		
-    		if (nAttack >= nTargAttack)
-    		{
-    			// Drop the weapon
-    			AssignCommand(oTarget, ClearAllActions(TRUE));
-        		AssignCommand(oTarget, ActionPutDownItem(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget)));
-    		}
+    		int nDC = 13 + GetAbilityModifier(ABILITY_STRENGTH, oInitiator);
+    		int nDamage = 4;
+		if (PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_NONE))
+			nDamage = 2;
+		effect eDam = EffectDamageDecrease(nDamage, DAMAGE_TYPE_BASE_WEAPON);
+		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(eDam), oTarget, 60.0);
     	}
     }
 }

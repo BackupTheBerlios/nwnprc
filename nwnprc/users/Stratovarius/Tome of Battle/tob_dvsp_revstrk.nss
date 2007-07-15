@@ -1,28 +1,29 @@
 /*
    ----------------
-   Crusader's Strike
+   Revitalizing Strike
 
-   tob_dvsp_crustrk
+   tob_dvsp_revstrk
    ----------------
 
-   28/03/07 by Stratovarius
+   15/07/07 by Stratovarius
 */ /** @file
 
-    Crusader's Strike
+    Revitalizing Strike
 
     Devoted Spirit (Strike)
-    Level: Crusader 1
+    Level: Crusader 3
+    Prerequisite: One Devoted Spirit maneuver.
     Initiation Action: 1 Standard Action
     Range: Melee Attack
     Target: One Creature
 
-    Divine power surrounds your weapon as you strike, 
-    This power washes over you as your weapon finds its mark,
-    mending your wounds and giving you the strength to fight on.
+    As you rear back to strike your foe, an aura of divine energy surrounds you.
+    As your attack slams home, this aura dissipates in a flash, knitting your wounds
+    as it discharges.
     
     You make a single attack against an enemy who's alignment has at least one component
-    different from yours. If you hit, you or an ally with 10 feet is healed 1d6 + 1 per
-    initiator level (max of +5).
+    different from yours. If you hit, you or an ally with 10 feet is healed 3d6 + 1 per
+    initiator level (max of +10).
 */
 
 #include "tob_inc_tobfunc"
@@ -46,13 +47,13 @@ void main()
     if(move.bCanManeuver)
     {
     	effect eNone;
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Crusader's Strike Hit", "Crusader's Strike Miss");
+	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Revitalizing Strike Hit", "Revitalizing Strike Miss");
 	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
     	{
     		if (GetAlignmentGoodEvil(oInitiator) != GetAlignmentGoodEvil(oTarget) || 
     		    GetAlignmentLawChaos(oInitiator) != GetAlignmentLawChaos(oTarget))
     		{
-    			int nHeal = d6() + min(move.nInitiatorLevel, 5);
+    			int nHeal = d6(3) + min(move.nInitiatorLevel, 10);
     			object oHeal = GetCrusaderHealTarget(oPC, 10.0);
 			SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(nHeal), oHeal);
 			SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_HEALING_L_LAW), oHeal);

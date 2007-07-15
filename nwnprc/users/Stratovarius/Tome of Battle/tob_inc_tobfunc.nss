@@ -341,6 +341,7 @@ int DoBullRush(object oPC, object oTarget, int nExtraBonus, int nGenerateAoO = T
  * @param nCounterTrip  Can the target attempt a counter trip if you fail
  *
  * @return              TRUE if the Trip succeeds, else FALSE
+ *                      It sets a local int known as TripDifference that is the amount you succeeded or failed by.
  */
 int DoTrip(object oPC, object oTarget, int nExtraBonus, int nGenerateAoO = TRUE, int nCounterTrip = TRUE);
 
@@ -476,6 +477,15 @@ void _RecursiveStanceCheck(object oPC, object oTestWP, int nMoveId, float fFeet 
         	// Create waypoint for the movement for next round
 		CreateObject(OBJECT_TYPE_WAYPOINT, "nw_waypoint001", GetLocation(oPC), FALSE, sWPTag);        	
         }
+        else if (nMoveId = MOVE_IH_ABSOLUTE_STEEL)
+        {
+        	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(EffectACIncrease(2)), oPC, 6.0);
+        	if(DEBUG) DoDebug("_RecursiveStanceCheck: Applying bonuses.");
+        	// Clean up the test WP 
+        	DestroyObject(oTestWP);
+        	// Create waypoint for the movement for next round
+		CreateObject(OBJECT_TYPE_WAYPOINT, "nw_waypoint001", GetLocation(oPC), FALSE, sWPTag);        	
+        }        
         
     }
     // If they still have the spell, keep going
@@ -1058,6 +1068,8 @@ int DoTrip(object oPC, object oTarget, int nExtraBonus, int nGenerateAoO = TRUE,
 		// Knock em down
 		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(EffectKnockdown()), oTarget, 6.0);
 		nSucceed = TRUE;
+		SetLocalInt(oPC, "TripDifference", nPCCheck - nTargetCheck);
+		DeleteLocalInt(oPC, "TripDifference");
 	}
 	else // If you fail, enemy gets a counter trip attempt, using Strength
 	{
@@ -1073,6 +1085,8 @@ int DoTrip(object oPC, object oTarget, int nExtraBonus, int nGenerateAoO = TRUE,
 			// Knock em down
 			ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(EffectKnockdown()), oPC, 6.0);
 		}
+		SetLocalInt(oPC, "TripDifference", nTargetCheck - nPCCheck);
+		DeleteLocalInt(oPC, "TripDifference");
 	}
 	
 	// Let people know if we made the hit or not

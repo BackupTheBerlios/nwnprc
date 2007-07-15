@@ -32,3 +32,35 @@ Created:   7/6/07
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
+#include "spinc_common"
+
+void main()
+{
+	SPSetSchool(SPELL_SCHOOL_CONJURATION);
+	ActionDoCommand(SetAllAoEInts(SPELL_SLEET_STORM, OBJECT_SELF, GetSpellSaveDC()));
+	
+	//Declare major variables
+	//Get the object that is exiting the AOE
+	object oTarget = GetExitingObject();
+	effect eAOE;
+	if(GetHasSpellEffect(SPELL_SLEET_STORM, oTarget))
+	{
+		//Search through the valid effects on the target.
+		eAOE = GetFirstEffect(oTarget);
+		while (GetIsEffectValid(eAOE))
+		{
+			if (GetEffectCreator(eAOE) == GetAreaOfEffectCreator())
+			{
+				//If the effect was created by CotA then remove it
+				if(GetEffectSpellId(eAOE) == SPELL_SLEET_STORM)
+				{
+					RemoveEffect(oTarget, eAOE);					
+				}
+			}
+			//Get next effect on the target
+			eAOE = GetNextEffect(oTarget);
+		}
+	}	
+	SPSetSchool();
+}
+	

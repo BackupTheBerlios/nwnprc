@@ -1,6 +1,6 @@
 //::///////////////////////////////////////////////
-//:: Name      
-//:: FileName  sp_.nss
+//:: Name      Sleet Storm On Enter
+//:: FileName  sp_sleet_stormA.nss
 //:://////////////////////////////////////////////
 /**@file Sleet Storm
 
@@ -32,3 +32,18 @@ Created:   7/6/07
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
+
+#include "spinc_common"
+
+void main()
+{
+	SPSetSchool(SPELL_SCHOOL_CONJURATION);
+	
+	object oPC = GetAreaOfEffectCreator();
+	object oTarget = GetEnteringObject();
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	effect eLink = EffectLinkEffects(EffectBlindness(), EffectMovementSpeedDecrease(50));
+	
+	SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget, TRUE, SPELL_SLEET_STORM, nCasterLvl);
+}
+	

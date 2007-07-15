@@ -299,9 +299,9 @@ void CheckAndBootNicely(object oPC)
     if (sMessage == "") // yes, you should have given your own message here
         sMessage = "Eeek! Something's not right.";
     // no avoiding the convoCC, so stop them running off
-    effect eParal = EffectCutsceneParalyze();
+    effect eParal = EffectCutsceneImmobilize();
     eParal = SupernaturalEffect(eParal);
-    ApplyEffectToObject(DURATION_TYPE_PERMANENT, eParal, oPC);
+    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eParal, oPC, 9999.9);
     // floaty text info as we can't use the dynamic convo for this
     DelayCommand(10.0, FloatingTextStringOnCreature(sMessage, oPC, FALSE));
     DelayCommand(11.0, FloatingTextStringOnCreature("You will be booted in 5...", oPC, FALSE));
@@ -1690,10 +1690,42 @@ void DoBonusFeatLoop()
     string sSQL;
     object oPC = OBJECT_SELF;
     
+    int nFeatsRemaining = GetLocalInt(OBJECT_SELF, "Points");
+	int nClass = GetLocalInt(oPC, "Class");
+    
+    if (nClass == CLASS_TYPE_PSION && nFeatsRemaining == 2)
+    {
+        // then skip everything and just list the disciplines
+        /*
+        SELECT rowid, FEAT FROM prc_cached2da_feat
+        WHERE rowid >= 3554 AND rowid <= 3559
+        */
+        sSQL = "SELECT "+q+"rowid"+q+", "+q+"FEAT"+q+" FROM "+q+"prc_cached2da_feat"+q+
+               "WHERE "+q+"rowid"+q+" >= 3554 AND "+q+"rowid"+q+" <= 3559";
+        PRC_SQLExecDirect(sSQL);
+        // to keep track of where in the 25 rows we stop getting a result
+        int nCounter = 0;
+        while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
+        {
+            nCounter++;
+            int nRow = StringToInt(PRC_SQLGetData(1));
+            int nStrRef = StringToInt(PRC_SQLGetData(2));
+            string sName = GetStringByStrRef(nStrRef);
+            AddChoice(sName, nRow);
+        }
+        
+        AddChoicesFromCache();
+        if(DEBUG) DoDebug("Finished bonus feats");
+        FloatingTextStringOnCreature("Done", OBJECT_SELF, FALSE);
+        DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
+               
+        return;
+    }
+    
     // get the information needed to work out if the prereqs are met
     int nSex = GetLocalInt(oPC, "Gender");
 	int nRace = GetLocalInt(oPC, "Race");
-	int nClass = GetLocalInt(oPC, "Class");
+
     int nStr = GetLocalInt(oPC, "Str");
     int nDex = GetLocalInt(oPC, "Dex");
     int nCon = GetLocalInt(oPC, "Con");
@@ -1809,7 +1841,11 @@ void DoBonusFeatLoop()
                 {
                     // check they don't have it already
                     if(!PreReqFeatArrayLoop(nRow))
-                        AddChoice(sName, nRow);
+                    {
+                        // check it's not a psion discipline
+                        if (nClass != CLASS_TYPE_PSION || !(nRow >= 3554 && nRow <= 3559))
+                            AddChoice(sName, nRow);
+                    }
                     else
                     {
                         if(DEBUG) DoDebug("Already picked feat " + IntToString(nRow) + ". Not added!");

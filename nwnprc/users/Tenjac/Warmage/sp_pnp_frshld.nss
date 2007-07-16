@@ -32,11 +32,7 @@ When casting this spell, you appear to immolate
 yourself, but the flames are thin and wispy, 
 giving off light equal to only half the 
 illumination of a normal torch (10 feet). The 
-color of the flames is determined randomly 
-(50% chance of either color)—blue or green if 
-the chill shield is cast, violet or blue if the
-warm shield is employed. The special powers of 
-each version are as follows.
+special powers of each version are as follows.
 
 Warm Shield: The flames are warm to the touch. 
 You take only half damage from cold-based attacks.
@@ -58,28 +54,49 @@ Created:   7/6/07
 
 void main()
 {
-	if(!X2PreSpellCastCode()) return;
-	
-	SPSetSchool(SPELL_SCHOOL_EVOCATION);
-	
-	object oPC = OBJECT_SELF;
-	int nCasterLvl = PRCGetCasterLevel(oPC);
-	int nSpell = GetSpellId();
-	int nMetaMagic = PRCGetMetaMagicFeat();
-	float fDur = RoundsToSeconds(nCasterLvl);
-	effect eShield;
-	effect eVis;
-		
-	if(nSpell == SPELL_PNP_FIRE_SHIELD_RED)
-	{
-		eVis = EffectVisualEffect(VFX_DUR_ELEMENTAL_SHIELD);
-		eShield = EffectDamageShield(nDuration, DAMAGE_BONUS_1d6, ChangedElementalDamage(oPC, DAMAGE_TYPE_FIRE));
-		
-	}
-	
-	if(nSpell == SPELL_PNP_FIRE_SHIELD_BLUE)
-	{
-		eVis = EffectVisualEffect(VFX_DUR_CHILL_SHIELD);
-	}
-	
-	
+        if(!X2PreSpellCastCode()) return;
+        
+        SPSetSchool(SPELL_SCHOOL_EVOCATION);
+        
+        object oPC = OBJECT_SELF;
+        int nCasterLvl = PRCGetCasterLevel(oPC);
+        int nSpell = GetSpellId();
+        int nMetaMagic = PRCGetMetaMagicFeat();
+        int nDam = min(15,nCasterLvl);
+        float fDur = RoundsToSeconds(nCasterLvl);
+        effect eShield;
+        effect eVis;
+        effect eReduce;
+        
+        //Extend
+        if(nMetaMagic == METAMAGIC_EXTEND) fDur += fDur;
+                
+        if(nSpell == SPELL_PNP_FIRE_SHIELD_RED)
+        {
+                eVis = EffectVisualEffect(VFX_DUR_ELEMENTAL_SHIELD);
+                eShield = EffectDamageShield(nDam, DAMAGE_BONUS_1d6, ChangedElementalDamage(oPC, DAMAGE_TYPE_FIRE));
+                eReduce = EffectDamageImmunityIncrease(DAMAGE_TYPE_COLD, 50);
+                
+        }
+        
+        else if(nSpell == SPELL_PNP_FIRE_SHIELD_BLUE)
+        {
+                eVis = EffectVisualEffect(VFX_DUR_CHILL_SHIELD);
+                eShield = EffectDamageShield(nDam, DAMAGE_BONUS_1d6, ChangedElementalDamage(oPC, DAMAGE_TYPE_COLD));
+                eReduce = EffectDamageImmunityIncrease(DAMAGE_TYPE_FIRE, 50);
+        }
+                
+        else
+        {
+                SPSetSchool();
+                return;
+        }
+        
+        effect eLink = EffectLinkEffects(eShield, eVis);
+               eLink = EffectLinkEffects(eLink, eReduce);
+        
+        //apply
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, TRUE, nSpell, nCasterLvl);
+        
+        SPSetSchool();
+}

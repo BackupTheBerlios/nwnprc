@@ -498,15 +498,14 @@ effect CreateProtectionFromAlignmentLink(int nAlignment, int nPower = 1)
 
 effect CreateDoomEffectsLink()
 {
+    // this is the 'Shaken' effect
     //Declare major variables
     effect eSaves = EffectSavingThrowDecrease(SAVING_THROW_ALL, 2);
     effect eAttack = EffectAttackDecrease(2);
-    effect eDamage = EffectDamageDecrease(2);
     effect eSkill = EffectSkillDecrease(SKILL_ALL_SKILLS, 2);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
 
-    effect eLink = EffectLinkEffects(eAttack, eDamage);
-    eLink = EffectLinkEffects(eLink, eSaves);
+    effect eLink = EffectLinkEffects(eAttack, eSaves);
     eLink = EffectLinkEffects(eLink, eSkill);
     eLink = EffectLinkEffects(eLink, eDur);
 

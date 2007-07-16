@@ -13,15 +13,55 @@
 //:: Modified March 2003 to give -2 attack and damage penalties
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
+// modified by fluffyamoeba to make scare and cause fear
+
+/** 
+ * Cause Fear
+ * 
+ * Necromancy [Fear, Mind-Affecting]
+ * Level: Brd 1, Clr 1, Death 1, Sor/Wiz 1
+ * Components: V, S
+ * Casting Time: 1 standard action
+ * Range: Close (25 ft. + 5 ft./2 levels)
+ * Target: One living creature with 5 or fewer HD
+ * Duration: 1d4 rounds or 1 round; see text
+ * Saving Throw: Will partial
+ * Spell Resistance: Yes
+ * 
+ * The affected creature becomes frightened. If the subject succeeds on a Will save, it is shaken for 1 round. 
+ * Creatures with 6 or more Hit Dice are immune to this effect.
+ *
+ * Cause fear counters and dispels remove fear. 
+ *
+ *
+ * Scare
+ * Necromancy [Fear, Mind-Affecting]
+ * Level: Brd 2, Sor/Wiz 2
+ * Components: V, S, M
+ * Casting Time: 1 standard action
+ * Range: Medium (100 ft. + 10 ft./level)
+ * Targets: One living creature per three levels, no two of which can be more than 30 ft. apart
+ * Duration: 1 round/level or 1 round; see text for cause fear
+ * Saving Throw: Will partial
+ * Spell Resistance: Yes
+ *
+ * This spell functions like cause fear, except that it causes all targeted creatures of less than 6 HD to become frightened.
+ *
+ * Material Component: A bit of bone from an undead skeleton, zombie, ghoul, ghast, or mummy.
+ */
+
 #include "spinc_common"
 
 #include "X0_I0_SPELLS"
 #include "x2_inc_spellhook"
 
+// If the target fails their will save they are frightened, otherwise they are shaken
+void ApplyScare(object oTarget, int nDuration);
+
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
+    // Set the spell school
+    SPSetSchool(SPELL_SCHOOL_NECROMANCY);
 /*
   Spellcast Hook Code
   Added 2003-06-20 by Georg
@@ -38,55 +78,84 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
 
 // End of Spell Cast Hook
 
+    
 
-   //Declare major variables
-   object oTarget = GetSpellTargetObject();
-   int nMetaMagic = GetMetaMagicFeat();
-   int nDuration = d4();
-   effect eScare = EffectFrightened();
-   effect eSave = EffectSavingThrowDecrease(SAVING_THROW_WILL, 2, SAVING_THROW_TYPE_MIND_SPELLS);
-   effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_FEAR);
-   effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
-   int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-
-
-   effect eDamagePenalty = EffectDamageDecrease(2);
-   effect eAttackPenalty = EffectAttackDecrease(2);
-
-
-   effect eLink = EffectLinkEffects(eMind, eScare);
-   effect eLink2 = EffectLinkEffects(eSave, eDur);
-   eLink2 = EffectLinkEffects(eLink2, eDamagePenalty);
-   eLink2 = EffectLinkEffects(eLink2, eAttackPenalty);
-
-   //Check the Hit Dice of the creature
-   if ((GetHitDice(oTarget) < 6) && GetObjectType(oTarget) == OBJECT_TYPE_CREATURE)
-   {
-        // * added rep check April 2003
-        if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF) == TRUE)
-        {
-            //Fire cast spell at event for the specified target
-           SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_SCARE));
-           //Make SR check
-           if(!MyPRCResistSpell(OBJECT_SELF, oTarget))
-           {
-                //Make Will save versus fear
-                if(!/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (PRCGetSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_FEAR))
-                {
-                   //Do metamagic checks
-                   if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
-                   {
-                       nDuration *= 2;
-                   }
-                   //Apply linked effects and VFX impact
-                   SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration),TRUE,-1,CasterLvl);
-                   SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink2, oTarget, RoundsToSeconds(nDuration),TRUE,-1,CasterLvl);
-                }
-            }
-        }
+    //Declare major variables
+    object oTarget = GetSpellTargetObject();
+    int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
+    int nMetaMagic = GetMetaMagicFeat();
+    int nDuration = d4();
+    int nSpellID   = PRCGetSpellId();
+    //Do metamagic checks
+    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+    {
+        nDuration *= 2;
     }
 
+    //Check the Hit Dice of the creature
+    if ((GetHitDice(oTarget) < 6) && GetObjectType(oTarget) == OBJECT_TYPE_CREATURE)
+    {
+         // * added rep check April 2003
+         if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
+         {
+             //Fire cast spell at event for the specified target
+            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, nSpellID));
+            //Make SR check
+            if(!MyPRCResistSpell(OBJECT_SELF, oTarget))
+            {
+                 ApplyScare(oTarget, nDuration);
+            }
+         }
+     }
+     
+     if (nSpellID == SPELL_SCARE)
+     {
+         SPSetSchool();
+         return;
+     }
+     
+     // how many creatures (we've done one already)
+     int nCreatures = (CasterLvl/3)-1;
+     if (nCreatures >= 1)
+     {
+         object oNextTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetLocation(oTarget), TRUE); // only creatures
+         int nCount;
+         while (GetIsObjectValid(oNextTarget) && nCount < nCreatures)
+         {
+             if ((GetHitDice(oTarget) < 6) && (oNextTarget != oTarget) && spellsIsTarget(oNextTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF) 
+                 && oTarget != OBJECT_SELF)
+             {
+                 //Fire cast spell at event for the specified target
+                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, nSpellID));
+                 //Make SR check
+                 if(!MyPRCResistSpell(OBJECT_SELF, oTarget))
+                 {
+                     ApplyScare(oTarget, nDuration);
+                 }
+                 nCount++;
+             }
+             oNextTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetLocation(oTarget), TRUE); // only creatures
+         }
+     }
 
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-// Getting rid of the integer used to hold the spells spell school
+     SPSetSchool();
+}
+
+void ApplyScare(object oTarget, int nDuration)
+{
+    effect eScare = EffectFrightened();
+    effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_FEAR);
+    effect eLink = EffectLinkEffects(eMind, eScare);
+    
+    effect eShaken = CreateDoomEffectsLink();
+    int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
+    
+    //Make Will save versus fear
+    if(!/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (PRCGetSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_FEAR))
+    {
+       //Apply frightened effect on failed save
+       SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration),TRUE,-1,CasterLvl);
+    }
+    // apply shaken effect
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eShaken, oTarget, RoundsToSeconds(nDuration),TRUE,-1,CasterLvl);
 }

@@ -54,4 +54,32 @@ Created:   7/6/07
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-VFX_DUR_CHILL_SHIELD
+#include "spinc_common"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+	
+	object oPC = OBJECT_SELF;
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	int nSpell = GetSpellId();
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	float fDur = RoundsToSeconds(nCasterLvl);
+	effect eShield;
+	effect eVis;
+		
+	if(nSpell == SPELL_PNP_FIRE_SHIELD_RED)
+	{
+		eVis = EffectVisualEffect(VFX_DUR_ELEMENTAL_SHIELD);
+		eShield = EffectDamageShield(nDuration, DAMAGE_BONUS_1d6, ChangedElementalDamage(oPC, DAMAGE_TYPE_FIRE));
+		
+	}
+	
+	if(nSpell == SPELL_PNP_FIRE_SHIELD_BLUE)
+	{
+		eVis = EffectVisualEffect(VFX_DUR_CHILL_SHIELD);
+	}
+	
+	

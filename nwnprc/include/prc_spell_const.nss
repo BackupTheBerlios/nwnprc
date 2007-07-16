@@ -737,7 +737,7 @@ const int SPELL_BLADES_OF_FIRE                      = 3678;
 const int SPELL_FIRE_TRAP                           = 3679;
 const int SPELL_PYROTECHNICS                        = 3680;
 const int SPELL_ICE_KNIFE                           = 3681;
-
+const int SPELL_MASS_FIRE_SHIELD_RED                = 3682;
 const int SPELL_WHIRLING_BLADE                      = 3683;
 const int SPELL_PNP_FIRE_SHIELD                     = 3684;
 const int SPELL_RING_OF_BLADES                      = 3685;
@@ -756,6 +756,7 @@ const int SPELL_PYROTECHNICS_SMOKE                  = 3697;
 const int SPELL_GREATER_DISRUPT_UNDEAD              = 3698;
 const int SPELL_PNP_FIRE_SHIELD_RED                 = 3699;
 const int SPELL_PNP_FIRE_SHIELD_BLUE                = 3700;
+const int SPELL_MASS_FIRE_SHIELD_BLUE               = 3701;
 
 // Passive feats
 const int SPELL_FORCE_PERSONALITY                   = 1915;

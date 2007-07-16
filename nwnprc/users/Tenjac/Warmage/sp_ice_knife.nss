@@ -36,3 +36,38 @@ Created:   7/6/07
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
+
+#include "spinc_common"
+
+void main()
+{
+        if(!X2PreSpellCastCode()) return;
+        
+        SPSetSchool(SPELL_SCHOOL_CONJURATION);
+        
+        object oPC = OBJECT_SELF;
+        object oTarget = PRCGetSpellTargetObject();
+        location lTarget = GetLocation(oTarget);
+        int nCasterLvl = PRCGetCasterLevel(oPC);
+        int nTouch = PRCDoRangedTouchAttack(oTarget);
+        int nDam;
+        
+        if(nTouch)
+        {
+                if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nPenetr))
+                {
+                        int nSave = PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_COLD);
+                                          
+                        //if failed, ability damage
+                        if(nSave == 0) ApplyAbilityDamage(oTarget, ABILITY_DEXTERITY, 2, DURATION_TYPE_TEMPORARY, TRUE, -1.0f);                                                                
+                        
+                        nDam = d8(2);
+                        
+                        if (nMetaMagic == METAMAGIC_MAXIMIZE) nDam = 16;
+                        
+                        if (nMetaMagic == METAMAGIC_EMPOWER) nDam += (nDam/2);
+                        
+                }
+        }
+        
+        GenerateNewLocationFromLocation

@@ -431,6 +431,7 @@ const int SPELL_NONDETECTION                        = 2077;
 const int SPELL_RAINBOW_PATTERN                     = 2078;
 const int SPELL_MAGE_HAND                           = 2079;
 const int SPELL_DETECT_UNDEAD                       = 2080;
+const int SPELL_PNP_SCARE                           = 1789;
 
 //racial spell additions
 const int SPELL_RAKSHASA_DISGUISE                   = 1951;

@@ -53,6 +53,10 @@
 
 ///////////////////////////////////////////////////////////////////////////
 
+// returns TRUE if oTarget is alive
+// will return FALSE for non-creature objects
+int PRCGetIsAliveCreature(object oTarget);
+
 #include "prc_alterations"
 #include "prc_inc_function"
 #include "X2_I0_SPELLS"
@@ -232,7 +236,6 @@ void SPRaiseSpellCastAt(object oTarget, int bHostile = TRUE, int nSpellID = -1, 
     SignalEvent(oTarget, EventSpellCastAt(oCaster, nSpellID, bHostile));
 }
 
-
 // Function to return a damage effect.
 //      nDamageAmount - Amount of damage to apply.
 //      nDamageType - DAMAGE_TYPE_xxx for the type of damage.
@@ -278,4 +281,24 @@ effect SPEffectTemporaryHitpoints(int nHitPoints)
     // PRC pack does not use version 2.0 of Bumpkin's PRC script package, so there is no
     // EffectPRCTemporaryHitpoints() method.  So just call the bioware default.
     //return EffectPRCTemporaryHitpoints(nHitPoints);
+}
+
+int PRCGetIsAliveCreature(object oTarget)
+{
+        int bAlive = TRUE;
+        // non-creatures aren't alive
+        if (GetObjectType(oTarget) != OBJECT_TYPE_CREATURE)
+            return FALSE; // night of the living waypoints :p
+        
+        int nType = MyPRCGetRacialType(oTarget);
+        
+        //Non-living races
+        if(nType == RACIAL_TYPE_UNDEAD ||
+           nType == RACIAL_TYPE_CONSTRUCT) bAlive = FALSE;
+           
+        //If they're dead :P
+        if(GetIsDead(oTarget)) bAlive = FALSE;
+        
+        //return
+        return bAlive;
 }

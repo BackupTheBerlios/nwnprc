@@ -93,7 +93,7 @@ void main()
     }
 
     //Check the Hit Dice of the creature
-    if ((GetHitDice(oTarget) < 6) && GetObjectType(oTarget) == OBJECT_TYPE_CREATURE)
+    if ((GetHitDice(oTarget) < 6) && GetObjectType(oTarget) == OBJECT_TYPE_CREATURE && PRCGetIsAliveCreature(oTarget))
     {
          // * added rep check April 2003
          if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
@@ -122,13 +122,13 @@ void main()
          int nCount;
          while (GetIsObjectValid(oNextTarget) && nCount < nCreatures)
          {
-             if ((GetHitDice(oTarget) < 6) && (oNextTarget != oTarget) && spellsIsTarget(oNextTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF) 
-                 && oTarget != OBJECT_SELF)
+             if ((GetHitDice(oNextTarget) < 6) && (oNextTarget != oTarget) && spellsIsTarget(oNextTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF) 
+                 && oNextTarget != OBJECT_SELF && PRCGetIsAliveCreature(oNextTarget))
              {
                  //Fire cast spell at event for the specified target
                  SignalEvent(oNextTarget, EventSpellCastAt(OBJECT_SELF, nSpellID));
                  //Make SR check
-                 if(!MyPRCResistSpell(OBJECT_SELF, oTarget))
+                 if(!MyPRCResistSpell(OBJECT_SELF, oNextTarget))
                  {
                      ApplyScare(oNextTarget, nDuration);
                  }

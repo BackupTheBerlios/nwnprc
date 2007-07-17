@@ -54,7 +54,7 @@ void main()
         
         if(nTouch)
         {
-                if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nPenetr))
+                if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
                 {
                         int nSave = PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_COLD);
                                           
@@ -67,7 +67,40 @@ void main()
                         
                         if (nMetaMagic == METAMAGIC_EMPOWER) nDam += (nDam/2);
                         
-                }
+                        //Apply damage even if they are immune - can't hurt
+                        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_COLD);
+		}
         }
         
-        GenerateNewLocationFromLocation
+        else
+        {
+		//missed, so do AoE
+		float fDistance = IntToFloat(Random(9));   //random distance for new loc
+		float fAngle = IntToFloat(Random(359));   //random angle from original
+		
+		//Orientation doesn't matter, so make it 0.0f
+		location lAoE = GenerateNewLocationFromLocation(lTarget, fDistance, fAngle, 0.0f);
+		
+		oTarget = GetFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(10.0f), lAoE, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_PLACEABLE | OBJECT_TYPE_DOOR);
+		
+		while(GetIsObjectValid(oTarget))
+		{
+			if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+			{				
+				nDam = d8(1);
+				
+				if (nMetaMagic == METAMAGIC_MAXIMIZE) nDam = 8;
+				
+				if (nMetaMagic == METAMAGIC_EMPOWER) nDam += (nDam/2);
+				
+				if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_COLD))  nDam = nDam/2;
+				
+				ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_COLD), oTarget);
+			}
+			
+			oTarget = GetNextObjectInShape(SHAPE_SPHERE, FeetToMeters(10.0f), lAoE, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_PLACEABLE | OBJECT_TYPE_DOOR);
+		}
+	}	
+	SPSetSchool();
+}
+                        

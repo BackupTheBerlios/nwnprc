@@ -25,6 +25,8 @@ const int AOE_PER_REPULSION                     = 178;
 const int AOE_PER_CALM_EMOTIONS                 = 177;
 const int VFX_PER_AVASMASS                      = 141;
 const int VFX_PER_SICKEN_EVIL                   = 176;
+const int VFX_PER_SLEET_STORM                   = 175;
+const int VFX_PER_OTILUKES_RESILIENT_SPHERE     = 174;
 
 // Psionic Area of Effects
 const int AOE_PER_PSIGREASE                     = 131;

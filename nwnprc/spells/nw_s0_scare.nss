@@ -126,11 +126,11 @@ void main()
                  && oTarget != OBJECT_SELF)
              {
                  //Fire cast spell at event for the specified target
-                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, nSpellID));
+                 SignalEvent(oNextTarget, EventSpellCastAt(OBJECT_SELF, nSpellID));
                  //Make SR check
                  if(!MyPRCResistSpell(OBJECT_SELF, oTarget))
                  {
-                     ApplyScare(oTarget, nDuration);
+                     ApplyScare(oNextTarget, nDuration);
                  }
                  nCount++;
              }

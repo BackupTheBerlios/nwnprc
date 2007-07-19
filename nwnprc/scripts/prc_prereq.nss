@@ -129,7 +129,7 @@ void KOTC(object oPC)
      {
      SetLocalInt(oPC, "PRC_PrereqKOTC", 0);
      }
-     if (PRCGetHasSpell(SPELL_PROTECTION_FROM_EVIL, oPC))
+     if (PRCGetIsRealSpellKnown(SPELL_PROTECTION_FROM_EVIL, oPC))
      {
          SetLocalInt(oPC, "PRC_PrereqKOTC", 0);
      }
@@ -548,6 +548,11 @@ void CombatMedic(object oPC)
             SetLocalInt(oPC, "PRC_PrereqCbtMed", 0);
         }
     }
+    if (PRCGetIsRealSpellKnown(SPELL_CURE_LIGHT_WOUNDS, oPC))
+    {
+        SetLocalInt(oPC, "PRC_PrereqCbtMed", 0);
+        return;
+    }
 }
 
 void RedWizard(object oPC)
@@ -773,9 +778,9 @@ void FistRaziel(object oPC)
         }
     }
     
-    if (PRCGetHasSpell(SPELL_DIVINE_FAVOR, oPC))
+    if (PRCGetIsRealSpellKnown(SPELL_DIVINE_FAVOR, oPC))
     {
-        SetLocalInt(oPC, "PRC_PrereqCbtMed", 0);
+        SetLocalInt(oPC, "PRC_PrereqFistRaz", 0);
         return;
     }    
 

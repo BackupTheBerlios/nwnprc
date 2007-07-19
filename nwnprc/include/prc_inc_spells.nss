@@ -129,6 +129,10 @@ void PRCDecrementRemainingSpellUses(object oCreature, int nSpell);
 // should return 0 if called with a normal spell when a character should be using the newspellbook
 int PRCGetHasSpell(int nSpell, object oCreature = OBJECT_SELF);
 
+int PRCGetIsRealSpellKnown(int nRealSpellID, object oPC = OBJECT_SELF);
+
+int PRCGetIsRealSpellKnownByClass(int nRealSpellID, int nClass, object oPC = OBJECT_SELF);
+
 // returns the spelllevel of nSpell as it can be cast by oCreature
 int PRCGetSpellLevel(object oCreature, int nSpell);
 
@@ -2571,6 +2575,65 @@ int PRCGetHasSpell(int nSpell, object oCreature = OBJECT_SELF)
     }
     if(DEBUG) DoDebug("PRCGetHasSpell: " + IntToString(nSpell) + ", " + IntToString(nUses));
     return nUses;
+}
+
+// checks if oPC knows the specified spell
+// only works for classes that use the PRC spellbook, there is currently no way to do this for Bioware spellcasters
+int PRCGetIsRealSpellKnown(int nRealSpellID, object oPC = OBJECT_SELF)
+{
+    int nClass;
+    int nClassSlot = 1;
+    while(nClassSlot <= 3)
+    {
+        nClass = GetClassByPosition(nClassSlot, oPC);
+        if(GetIsDivineClass(nClass) || GetIsArcaneClass(nClass))
+            if(PRCGetIsRealSpellKnownByClass(nRealSpellID, nClass, oPC))
+                return TRUE;
+        nClassSlot++;
+    }
+    // got here means no match
+    return FALSE;
+}
+
+// checks if oPC knows the specified spell
+// only works for classes that use the PRC spellbook, there is currently no way to do this for Bioware spellcasters
+// this will only check the spellbook of the class specified
+int PRCGetIsRealSpellKnownByClass(int nRealSpellID, int nClass, object oPC = OBJECT_SELF)
+{
+    // check for whether bard and sorc are using the prc spellbooks
+    if (nClass == CLASS_TYPE_BARD || nClass == CLASS_TYPE_SORCERER)
+    {
+        if(!UseNewSpellBook(oPC))
+            return FALSE;
+    }
+    
+    // get the cls_spell_***.2da index for the real spell
+    int nSpellbookSpell = RealSpellToSpellbookID(nClass, nRealSpellID);
+    // if the spell does not exist in the spellbook, return FALSE
+    if (nSpellbookSpell == -1)
+        return FALSE;
+    // next check if the PC is high enough level to know the spell
+    string sFile    = GetFileForClass(nClass);
+    int nSpellLevel = -1;
+    string sSpellLevel  = Get2DACache(sFile, "Level", nSpellbookSpell);
+    if (sSpellLevel != "")
+        nSpellLevel = StringToInt(sSpellLevel);
+    if ((GetLevelByClass(nClass) < nSpellLevel) || nSpellLevel == -1)
+        return FALSE; // not high enough level
+    // at this stage, prepared casters know the spell and only spontaneous classes need checking
+    // there are exceptions and these need hardcoding:
+    // warmage knows all the spells in their spellbook, but are spontaneous
+    
+    if ((GetSpellbookTypeForClass(nClass) == SPELLBOOK_TYPE_PREPARED) || nClass == CLASS_TYPE_WARMAGE)
+        return TRUE;
+    
+    // spontaneous casters have all their known spells as hide feats
+    // get the featID of the spell
+    int nFeatID = StringToInt(Get2DACache(sFile, "FeatID", nSpellbookSpell));
+    if (GetHasFeat(nFeatID, oPC))
+        return TRUE;
+    
+    return FALSE;
 }
 
 // returns the spelllevel of nSpell as it can be cast by oCreature

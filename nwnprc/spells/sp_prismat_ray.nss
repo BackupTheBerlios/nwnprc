@@ -175,7 +175,7 @@ void DoRay(object oTarget, int nSaveDC, int nRoll, int nCasterLvl, object oPC)
                 
                 case 4: 
                 {
-                        if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nSaveDC, SAVING_THROW_TYPE_SPELL))
+                        if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nSaveDC, SAVING_THROW_TYPE_POISON))
                         {
                                 DeathlessFrenzyCheck(oTarget);
                                 ApplyEffectToObject(DURATION_TYPE_INSTANT, SupernaturalEffect(EffectDeath()), oTarget);                                        

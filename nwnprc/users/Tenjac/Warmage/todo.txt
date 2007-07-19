@@ -3,6 +3,7 @@
 
 	-ORS
 	-Sleet Storm
+	-Prismatic Sphere
 
 2. Check on feasibility of Fire Seeds
 

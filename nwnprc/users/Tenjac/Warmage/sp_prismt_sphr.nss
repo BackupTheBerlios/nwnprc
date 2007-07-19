@@ -31,7 +31,15 @@ the lower half is usually excluded by the floor surface
 you are standing on.
 
 The colors of the sphere have the same effects as the
-colors of a prismatic wall.
+colors of a prismatic wall:
+
+Red     1st     Deals 20 points of fire damage (Reflex half).  
+Orange  2nd     Deals 40 points of acid damage (Reflex half).
+Yellow  3rd     Deals 80 points of electricity damage (Reflex half).
+Green   4th     Poison (Kills; Fortitude partial for 1d6 points of Con damage instead).
+Blue    5th     Turned to stone (Fortitude negates). 
+Indigo  6th     Will save or become insane (as insanity spell). 
+Violet  7th     Creatures sent to another plane (Will negates). 
 
 Author:    Tenjac
 Created:   7/6/07
@@ -39,4 +47,65 @@ Created:   7/6/07
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-VFX_DUR_PRISMATIC_SPHERE
+#include "spinc_common"
+
+void main()
+{
+        if(!X2PreSpellCastCode()) return;
+        
+        SPSetSchool(SPELL_SCHOOL_ABJURATION);
+        
+        object oPC = OBJECT_SELF;
+        location lTarget = GetLocation(oPC);
+        object oTarget;
+        int nMetaMagic = PRCGetMetaMagicFeat();
+        int nCasterLvl = PRCGetCasterLevel(oPC);
+        float fDelay, fDuration;
+        float fDurAoE = TurnsToSeconds(nCasterLvl * 10);
+        if (nMetaMagic == METAMAGIC_EXTEND) fDurAoE += fDurAoE;
+        effect eAoE = EffectAreaOfEffect(VFX_PER_PRISMATIC_SPHERE);
+        
+        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAoE, lTarget, fDuration;
+                
+        // Declare blindness
+        effect eBlind = EffectBlindness();
+        
+        // Start cycling through the AOE Object for viable targets
+        oTarget = GetFirstObjectInShape(SHAPE_SPHERE, 10.0, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+        
+        while(GetIsObjectValid(oTarget))
+        {
+                // PvP check
+                if(!GetIsReactionTypeFriendly(oTarget, oPC) &&
+                // Make sure they are not immune to spells
+                !GetHasEffect(EffectSpellImmunity(), oTarget))
+                {
+                        // Check HD
+                        if(GetHitDice(oTarget) <= 8)
+                        {
+                                // Fire cast spell at event for the affected target
+                                SPRaiseSpellCastAt(oTarget, TRUE, SPELL_PRISMATIC_SPHERE, oPC);
+                                
+                                // Check if they can see
+                                if(!GetHasEffect(EffectBlindness, oTarget))
+                                {
+                                        // Check spell resistance
+                                        if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl))
+                                        {
+                                                // Get duration
+                                                fDuration = d4(2) * 10;
+                                                if(nMetaMagic == METAMAGIC_EXTEND) fDuration += fDuration;
+                                                
+                                                // Get a small delay
+                                                fDelay = GetDistanceToObject(oTarget)/20;
+                                                
+                                                // Apply blindness
+                                                DelayCommand(fDelay, PHS_ApplyDuration(oTarget, eBlind, fDuration));
+                                        }
+                                }
+                        }
+                }
+                //Get next target.
+                oTarget = GetNextObjectInShape(SHAPE_SPHERE, 10.0, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+        }
+}

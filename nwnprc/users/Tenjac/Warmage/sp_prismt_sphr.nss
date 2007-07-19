@@ -65,7 +65,8 @@ void main()
         if (nMetaMagic == METAMAGIC_EXTEND) fDurAoE += fDurAoE;
         effect eAoE = EffectAreaOfEffect(VFX_PER_PRISMATIC_SPHERE);
         
-        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAoE, lTarget, fDuration;
+        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_PRISMATIC_SPHERE), lTarget, fDuration);
+        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAoE, lTarget, fDuration);
                 
         // Declare blindness
         effect eBlind = EffectBlindness();

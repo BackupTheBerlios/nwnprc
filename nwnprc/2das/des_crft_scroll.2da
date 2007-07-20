@@ -156,7 +156,7 @@
 152  Restoration                                ****             prc_scr_238      nw_it_spdvscr401 nw_it_spdvscr401 ****         ****             
 153  Resurrection                               ****             prc_scr_239      nw_it_spdvscr702 nw_it_spdvscr702 ****         ****             
 154  Sanctuary                                  ****             prc_scr_240      ****             ****             ****         ****             
-155  Scare                                      prc_scr_241      prc_scr_241      ****             ****             ****         prc_scr_241      
+155  Cause_Fear                                 prc_scr_241      prc_scr_241      ****             ****             ****         prc_scr_241      
 156  Searing_Light                              ****             prc_scr_242      ****             ****             ****         ****             
 157  See_Invisibility                           prc_scr_243      ****             ****             ****             ****         prc_scr_243      
 158  Shades                                     prc_scr_244      ****             ****             ****             ****         ****             
@@ -1790,7 +1790,7 @@
 1786 ****                                       ****             ****             ****             ****             ****         ****             
 1787 ****                                       ****             ****             ****             ****             ****         ****             
 1788 ****                                       ****             ****             ****             ****             ****         ****             
-1789 ****                                       ****             ****             ****             ****             ****         ****             
+1789 Scare                                      ****             ****             ****             ****             ****         ****             
 1790 Animate_Object                             ****             prc_scr_1136     ****             ****             ****         prc_scr_1136     
 1791 Chill_Touch                                prc_scr_1137     ****             ****             ****             ****         ****             
 1792 Spellbook                                  ****             ****             ****             ****             ****         ****             

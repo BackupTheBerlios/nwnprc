@@ -641,8 +641,8 @@ void main()
                     sMessage = "As you wish.";
                 SetHeader(sMessage+" Do you want to change anything else?");
 
-                AddChoice("No, that is all.", 1, oPC);
-                AddChoice("Yes.", 2, oPC);
+                AddChoice("No, that is all.", 2, oPC);
+                AddChoice("Yes.", 1, oPC);
 
                 MarkStageSetUp(nStage, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
                 SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values

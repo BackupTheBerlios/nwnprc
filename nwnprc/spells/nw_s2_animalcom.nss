@@ -20,10 +20,14 @@ void main()
     //Yep thats it
     SummonAnimalCompanion();
     
+	//Get the companion
+	object oComp = GetAssociate(ASSOCIATE_TYPE_ANIMALCOMPANION);
+	//Get the companion's skin
+	object oCompSkin = GetPCSkin(oComp);
+    
     //Exalted Companion
     if (GetHasFeat(FEAT_EXALTED_COMPANION) && GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_GOOD)
     {
-    	object oComp = GetAssociate(ASSOCIATE_TYPE_ANIMALCOMPANION);
     	int nHD = GetHitDice(oComp);
     	int nResist;
     	effect eDR;
@@ -57,14 +61,12 @@ void main()
     	eLink = EffectLinkEffects(eLink, eVis);
     	eLink = SupernaturalEffect(eLink);
     	ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oComp);
+    	itemproperty ipIP = PRCItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_CELESTIAL_SMITE_EVIL);
+    	IPSafeAddItemProperty(oCompSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);  
     }
     //Talontar Blightlord's Illmaster
     if (GetLevelByClass(CLASS_TYPE_BLIGHTLORD, OBJECT_SELF) >= 2)
     {
-        //Get the companion
-        object oComp = GetAssociate(ASSOCIATE_TYPE_ANIMALCOMPANION);
-        //Get the companion's skin
-        object oCompSkin = GetPCSkin(oComp);
         //Give the companion Str +4, Con +2, Wis -2, and Cha -2
         effect eStr = EffectAbilityIncrease(ABILITY_STRENGTH, 4);
         effect eCon = EffectAbilityIncrease(ABILITY_CONSTITUTION, 2);

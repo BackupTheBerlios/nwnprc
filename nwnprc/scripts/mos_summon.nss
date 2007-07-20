@@ -78,7 +78,7 @@ void main()
     else if (nClass >= 9)    sSummon = "prc_mos_spectre2";
     else if (nClass >= 7)    sSummon = "prc_mos_spectre1";
     else if (nClass >= 5)    sSummon = "prc_mos_wraith";
-    else                    sSummon = "prc_mos_allip";
+    else                     sSummon = "prc_mos_allip";
 
    //MultisummonPreSummon(OBJECT_SELF);
    effect eCommand = EffectCutsceneDominated();//SupernaturalEffect(effectdominated doesnt work on mind-immune

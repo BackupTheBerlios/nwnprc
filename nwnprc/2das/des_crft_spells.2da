@@ -156,7 +156,7 @@
 152   Restoration                                               238             0        0      0        4     0           
 153   Resurrection                                              239             0        1      0        7     0           
 154   Sanctuary                                                 240             1        0      0        1     0           
-155   Scare                                                     241             1        0      0        1     0           
+155   Cause_Fear                                                241             1        0      0        1     0           
 156   Searing_Light                                             242             1        0      0        3     0           
 157   See_Invisibility                                          243             0        0      0        2     0           
 158   Shades                                                    244             1        1      0        6     0           
@@ -1790,7 +1790,7 @@
 1786  ****                                                      ****            1        1      1        ****  0           
 1787  ****                                                      ****            1        1      1        ****  0           
 1788  ****                                                      ****            1        1      1        ****  0           
-1789  ****                                                      ****            1        1      1        ****  0           
+1789  Scare                                                     ****            1        1      1        2     0           
 1790  Animate_Object                                            1136            1        0      0        6     1           
 1791  Chill_Touch                                               1137            0        0      0        1     0           
 1792  Spellbook                                                 ****            1        1      1        ****  0           

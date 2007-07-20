@@ -125,9 +125,18 @@ void KOTC(object oPC)
      {
      SetLocalInt(oPC, "PRC_PrereqKOTC", 0);
      }
-     if (GetLevelByClass(CLASS_TYPE_PALADIN, oPC) >= 4)
+     if (GetLevelByClass(CLASS_TYPE_PALADIN))
      {
-     SetLocalInt(oPC, "PRC_PrereqKOTC", 0);
+        if(iWis > 11 && GetLevelByClass(CLASS_TYPE_PALADIN) >= 4)
+        {
+            SetLocalInt(oPC, "PRC_PrereqKOTC", 0);
+            return;
+        }
+        else if (GetLevelByClass(CLASS_TYPE_PALADIN) >= 6)
+        {
+            SetLocalInt(oPC, "PRC_PrereqKOTC", 0);
+            return;
+        }
      }
      if (PRCGetIsRealSpellKnown(SPELL_PROTECTION_FROM_EVIL, oPC))
      {

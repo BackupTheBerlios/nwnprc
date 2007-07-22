@@ -32,18 +32,18 @@ void main()
 	
 	SPSetSchool(SPELL_SCHOOL_EVOCATION);
 	
-	object oPC = OBJECT_SELF
+	object oPC = OBJECT_SELF;
 	location lLoc = GetSpellTargetLocation();
 	int nSpell = GetSpellId();
-	float fRadius = FeetToMeters(15);
+	float fRadius = FeetToMeters(15.0);
 	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, fRadius, lLoc, FALSE, OBJECT_TYPE_CREATURE);
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	
 	int nSpellName;
 	
-	if(nSpell == MASS_FIRE_SHIELD_RED) nSpellName = SPELL_PNP_FIRE_SHIELD_RED;
+	if(nSpell == SPELL_MASS_FIRE_SHIELD_RED) nSpellName = SPELL_PNP_FIRE_SHIELD_RED;
 	
-	else if (nSpell == MASS_FIRE_SHIELD_BLUE) nSpellName = SPELL_PNP_FIRE_SHIELD_BLUE;
+	else if (nSpell == SPELL_MASS_FIRE_SHIELD_BLUE) nSpellName = SPELL_PNP_FIRE_SHIELD_BLUE;
 	
 	while(GetIsObjectValid(oTarget))
 	{
@@ -55,7 +55,7 @@ void main()
 		oTarget = GetNextObjectInShape(SHAPE_SPHERE, fRadius, lLoc, FALSE, OBJECT_TYPE_CREATURE);
 	}
 	
-	SPSetSchool()
+	SPSetSchool();
 }
 		
 	

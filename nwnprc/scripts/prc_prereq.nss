@@ -127,7 +127,7 @@ void KOTC(object oPC)
      }
      if (GetLevelByClass(CLASS_TYPE_PALADIN))
      {
-        if(iWis > 11 && GetLevelByClass(CLASS_TYPE_PALADIN) >= 4)
+        if(GetAbilityScore(oPC, ABILITY_WISDOM) > 11 && GetLevelByClass(CLASS_TYPE_PALADIN) >= 4)
         {
             SetLocalInt(oPC, "PRC_PrereqKOTC", 0);
             return;

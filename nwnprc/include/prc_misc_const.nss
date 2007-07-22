@@ -27,6 +27,9 @@ const int VFX_PER_AVASMASS                      = 141;
 const int VFX_PER_SICKEN_EVIL                   = 176;
 const int VFX_PER_SLEET_STORM                   = 175;
 const int VFX_PER_OTILUKES_RESILIENT_SPHERE     = 174;
+const int VFX_PER_PRISMATIC_SPHERE              = 173;
+const int VFX_MOB_RING_OF_BLADES                = 172;
+const int VFX_PER_PRISMATIC_WALL                = 171;
 
 // Psionic Area of Effects
 const int AOE_PER_PSIGREASE                     = 131;

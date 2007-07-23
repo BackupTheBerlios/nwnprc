@@ -36,7 +36,7 @@ void main()
 	
 	object oPC = OBJECT_SELF;
 	object oTarget = PRCGetSpellTargetObject();
-	int nCasterLv = PRCGetCasterLevel(oPC);
+	int nCasterLvl = PRCGetCasterLevel(oPC);
 	int nDice = min(10, nCasterLvl);
 	int nDam = d6(nDice);
 	int nTouch = PRCDoRangedTouchAttack(oTarget);

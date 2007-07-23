@@ -25,3 +25,33 @@ Created:   7/6/07
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
+
+#include "spinc_common"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_CONJURATION);
+	
+	object oPC = OBJECT_SELF;
+	object oTarget = PRCGetSpellTargetObject();
+	int nCasterLv = PRCGetCasterLevel(oPC);
+	int nDice = min(10, nCasterLvl);
+	int nDam = d6(nDice);
+	int nTouch = PRCDoRangedTouchAttack(oTarget);
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	
+	if(nMetaMagic == METAMAGIC_MAXIMIZE) nDam = 6 * nDice;
+	
+	if(nMetaMagic == METAMAGIC_EMPOWER) nDam += (nDam/2);
+	
+	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_ORB_OF_FORCE);
+	
+	if(nTouch)
+	{
+		ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_PULSE_BOMB), oTarget);
+		ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_MAGICAL), oTarget);
+	}
+}
+	

@@ -222,6 +222,8 @@ void RestStarted(object oPC)
     DeleteLocalInt(oPC, PRC_SPELL_HOLD);
     DeleteLocalInt(oPC, PRC_SPELL_METAMAGIC);
     DeleteLocalManifestation(oPC, PRC_POWER_HOLD_MANIFESTATION);
+    // run the prereq check here
+    ExecuteScript("prc_prereq", oPC);
     // Execute scripts hooked to this event for the player triggering it
     ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYERREST_STARTED);
 }

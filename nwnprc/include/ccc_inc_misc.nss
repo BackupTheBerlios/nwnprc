@@ -925,95 +925,52 @@ void SetupRacialAppearances()
 {
     int nRace = GetLocalInt(OBJECT_SELF, "Race");
     int nSex  = GetLocalInt(OBJECT_SELF, "Gender");
-    if(nRace == RACIAL_TYPE_RAKSHASA)
+    object oPC = OBJECT_SELF;
+    
+    // see if the PC's race and gender combination has an entry in racialappearances.2da
+    /*
+        SELECT appearance.data FROM prc_cached2da, prc_cached2da AS appearance, prc_cached2da AS gender
+        WHERE prc_cached2da.rowid = appearance.rowid 
+        AND prc_cached2da.rowid = gender.rowid
+        AND prc_cached2da.file = "racialappearance" AND appearance.file = "racialappearance" AND gender.file = "racialappearance"
+        AND prc_cached2da.columnid = "Race" AND appearance.columnid = "Appearance" AND gender.columnid = "Gender"
+        AND prc_cached2da.data = "<race>" AND (gender.data = "<gender>" OR gender.data = "2");
+     */
+    string q = PRC_SQLGetTick();
+    string sSQL = "SELECT appearance.data FROM prc_cached2da, prc_cached2da AS appearance, prc_cached2da AS gender " +
+    "WHERE prc_cached2da.rowid = appearance.rowid AND prc_cached2da.rowid = gender.rowid " +
+    "AND prc_cached2da.file = 'racialappearance' AND appearance.file = 'racialappearance' AND gender.file = 'racialappearance' " +
+    "AND prc_cached2da.columnid = 'Race' AND appearance.columnid = 'Appearance' AND gender.columnid = 'Gender' " +
+    "AND prc_cached2da.data = " + IntToString(nRace) + " AND (gender.data = " + IntToString(nSex) + " OR gender.data = '2')";
+    
+    PRC_SQLExecDirect(sSQL);
+    int i;
+    array_create(oPC, "AppearanceChoices");
+    while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
     {
-        if(nSex == GENDER_MALE)
+         i = StringToInt(PRC_SQLGetData(1)); // appearance
+         // as doing a Get2DACache() call here will overwrite the sql result, add to an array to do this later
+         array_set_int (oPC, "AppearanceChoices", array_get_size(oPC, "AppearanceChoices"), i);
+    }
+    // if there's any values in the array use those for choices
+    int nNumberOfChoices = array_get_size(oPC, "AppearanceChoices");
+    if (nNumberOfChoices)
+    {
+        // loop through the array and add all the choices
+        i = 0;
+        while (i < nNumberOfChoices)
         {
-            AddAppearanceChoice(APPEARANCE_TYPE_RAKSHASA_BEAR_MALE);
-            AddAppearanceChoice(APPEARANCE_TYPE_RAKSHASA_TIGER_MALE);
-            AddAppearanceChoice(APPEARANCE_TYPE_RAKSHASA_WOLF_MALE);
+            AddAppearanceChoice(array_get_int(oPC, "AppearanceChoices", i));
+            i++;
         }
-        else if(nSex == GENDER_FEMALE)
-            AddAppearanceChoice(APPEARANCE_TYPE_RAKSHASA_TIGER_FEMALE);
-    }
-    else if(nRace == RACIAL_TYPE_MINOTAUR)
-    {
-        AddAppearanceChoice(APPEARANCE_TYPE_MINOTAUR);
-        AddAppearanceChoice(APPEARANCE_TYPE_MINOTAUR_CHIEFTAIN);
-        AddAppearanceChoice(APPEARANCE_TYPE_MINOTAUR_SHAMAN);
-    }
-    else if(nRace == RACIAL_TYPE_OGRE)
-    {
-        AddAppearanceChoice(APPEARANCE_TYPE_OGRE);
-        AddAppearanceChoice(APPEARANCE_TYPE_OGRE_CHIEFTAIN);
-        AddAppearanceChoice(APPEARANCE_TYPE_OGRE_CHIEFTAINB);
-        AddAppearanceChoice(APPEARANCE_TYPE_OGRE_MAGE);
-        AddAppearanceChoice(APPEARANCE_TYPE_OGRE_MAGEB);
-        AddAppearanceChoice(APPEARANCE_TYPE_OGREB);
-    }
-    else if(nRace == RACIAL_TYPE_GOBLIN)
-    {
-        AddAppearanceChoice(APPEARANCE_TYPE_GOBLIN_A);
-        AddAppearanceChoice(APPEARANCE_TYPE_GOBLIN_B);
-        AddAppearanceChoice(APPEARANCE_TYPE_GOBLIN_CHIEF_A);
-        AddAppearanceChoice(APPEARANCE_TYPE_GOBLIN_CHIEF_B);
-        AddAppearanceChoice(APPEARANCE_TYPE_GOBLIN_SHAMAN_A);
-        AddAppearanceChoice(APPEARANCE_TYPE_GOBLIN_SHAMAN_B);
-    }
-    else if(nRace == RACIAL_TYPE_HOBGOBLIN)
-    {
-        AddAppearanceChoice(APPEARANCE_TYPE_HOBGOBLIN_WARRIOR);
-        AddAppearanceChoice(APPEARANCE_TYPE_HOBGOBLIN_WIZARD);
-    }
-    else if(nRace == RACIAL_TYPE_BUGBEAR)
-    {
-        AddAppearanceChoice(APPEARANCE_TYPE_BUGBEAR_A);
-        AddAppearanceChoice(APPEARANCE_TYPE_BUGBEAR_B);
-        AddAppearanceChoice(APPEARANCE_TYPE_BUGBEAR_CHIEFTAIN_A);
-        AddAppearanceChoice(APPEARANCE_TYPE_BUGBEAR_CHIEFTAIN_B);
-        AddAppearanceChoice(APPEARANCE_TYPE_BUGBEAR_SHAMAN_A);
-        AddAppearanceChoice(APPEARANCE_TYPE_BUGBEAR_SHAMAN_B);
-    }
-    else if(nRace == RACIAL_TYPE_GNOLL)
-    {
-        AddAppearanceChoice(APPEARANCE_TYPE_GNOLL_WARRIOR);
-        AddAppearanceChoice(APPEARANCE_TYPE_GNOLL_WIZ);
-    }
-    else if(nRace == RACIAL_TYPE_KOBOLD)
-    {
-        AddAppearanceChoice(APPEARANCE_TYPE_KOBOLD_A);
-        AddAppearanceChoice(APPEARANCE_TYPE_KOBOLD_B);
-        AddAppearanceChoice(APPEARANCE_TYPE_KOBOLD_CHIEF_A);
-        AddAppearanceChoice(APPEARANCE_TYPE_KOBOLD_CHIEF_B);
-        AddAppearanceChoice(APPEARANCE_TYPE_KOBOLD_SHAMAN_A);
-        AddAppearanceChoice(APPEARANCE_TYPE_KOBOLD_SHAMAN_B);
-    }
-    else if(nRace == RACIAL_TYPE_TROLL)
-    {
-        AddAppearanceChoice(APPEARANCE_TYPE_TROLL);
-        AddAppearanceChoice(APPEARANCE_TYPE_TROLL_CHIEFTAIN);
-        AddAppearanceChoice(APPEARANCE_TYPE_TROLL_SHAMAN);
-    }
-    else if(nRace == RACIAL_TYPE_ILLITHID)
-    {
-        AddAppearanceChoice(APPEARANCE_TYPE_MINDFLAYER);
-        AddAppearanceChoice(APPEARANCE_TYPE_MINDFLAYER_2);
-        AddAppearanceChoice(APPEARANCE_TYPE_MINDFLAYER_ALHOON);
-    }
-    else if(nRace == RACIAL_TYPE_LIZARDFOLK)
-    {
-        AddAppearanceChoice(APPEARANCE_TYPE_LIZARDFOLK_A);
-        AddAppearanceChoice(APPEARANCE_TYPE_LIZARDFOLK_B);
-        AddAppearanceChoice(APPEARANCE_TYPE_LIZARDFOLK_SHAMAN_A);
-        AddAppearanceChoice(APPEARANCE_TYPE_LIZARDFOLK_SHAMAN_B);
-        AddAppearanceChoice(APPEARANCE_TYPE_LIZARDFOLK_WARRIOR_A);
-        AddAppearanceChoice(APPEARANCE_TYPE_LIZARDFOLK_WARRIOR_B);
     }
     else // it is the appearance given at the race stage
     {
         // the only 'choice'
         AddAppearanceChoice(StringToInt(Get2DACache("racialtypes", "Appearance", nRace)), TRUE);
     }
+    // tidy up
+    array_delete(oPC, "AppearanceChoices");
 }
 
 void AddAppearanceChoice(int nType, int nOnlyChoice = FALSE)

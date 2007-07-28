@@ -51,30 +51,27 @@ void Kord(object oPC)
 
 void Shifter(object oPC, int iArcSpell, int iDivSpell)
 {
-
      SetLocalInt(oPC, "PRC_PrereqShift", 1);
 
      if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) && GetHasFeat(FEAT_ANIMAL_DOMAIN_POWER, oPC) && iDivSpell >= 5)
      {
           SetLocalInt(oPC, "PRC_PrereqShift", 0);
      }
-     if (GetLevelByClass(CLASS_TYPE_SORCERER, oPC) && iArcSpell >= 4)
+     if ((GetLevelByClass(CLASS_TYPE_SORCERER) && !UseNewSpellBook(oPC)) || GetLevelByClass(CLASS_TYPE_WIZARD))
      {
-          SetLocalInt(oPC, "PRC_PrereqShift", 0);
-     }
-     if (GetLevelByClass(CLASS_TYPE_WIZARD, oPC) && iArcSpell >= 4)
-     {
-          SetLocalInt(oPC, "PRC_PrereqShift", 0);
+        if(GetHasSpell(SPELL_POLYMORPH_SELF, oPC))
+        {
+            // done this way as it's the only way to see if a bioware spellcaster knows the spell
+            // actually checks if they have at least one use left
+            SetLocalInt(oPC, "PRC_PrereqShift", 0);
+            return;
+        }
      }
      if (GetLevelByClass(CLASS_TYPE_DRUID, oPC) >= 5)
      {
           SetLocalInt(oPC, "PRC_PrereqShift", 0);
      }
-     if (GetLevelByClass(CLASS_TYPE_RANGER, oPC) >= 15)
-     {
-          SetLocalInt(oPC, "PRC_PrereqShift", 0);
-     }
-     if (GetLevelByClass(CLASS_TYPE_HEXBLADE, oPC) >= 14)
+     if (GetLevelByClass(CLASS_TYPE_RANGER, oPC) && iDivSpell >= 4)
      {
           SetLocalInt(oPC, "PRC_PrereqShift", 0);
      }
@@ -93,6 +90,10 @@ void Shifter(object oPC, int iArcSpell, int iDivSpell)
      if (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oPC) >= 10)
      {
           SetLocalInt(oPC, "PRC_PrereqShift", 0);
+     }
+     if (PRCGetIsRealSpellKnown(SPELL_POLYMORPH_SELF, oPC))
+     {
+         SetLocalInt(oPC, "PRC_PrereqShift", 0);
      }
 
      // these races have an alternate form
@@ -534,6 +535,16 @@ void CombatMedic(object oPC)
                 SetLocalInt(oPC, "PRC_PrereqCbtMed", 0);
                 return;
             }
+    }
+    if (GetLevelByClass(CLASS_TYPE_BARD) && !UseNewSpellBook(oPC))
+    {
+        if(GetHasSpell(SPELL_CURE_LIGHT_WOUNDS, oPC))
+        {
+            // done this way as it's the only way to see if a bioware spellcaster knows the spell
+            // actually checks if they have at least one use left
+            SetLocalInt(oPC, "PRC_PrereqCbtMed", 0);
+            return;
+        }
     }
 
     if (GetLevelByClass(CLASS_TYPE_OCULAR))

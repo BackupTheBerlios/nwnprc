@@ -66,12 +66,13 @@ void main()
         if (WHO_CAN_RESEARCH == "DIVINE" &&
             (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC) || 
             GetIsEpicHealer(oPC) || GetIsEpicFavSoul(oPC))) nAllowed = TRUE;
-        if (WHO_CAN_RESEARCH == "ARCANE" && GetIsEpicSorcerer(oPC)) nAllowed = TRUE;
-        if (WHO_CAN_RESEARCH == "ARCANE" && GetIsEpicWizard(oPC)) nAllowed = TRUE;
+        if (WHO_CAN_RESEARCH == "ARCANE" && (GetIsEpicSorcerer(oPC) ||
+            GetIsEpicWizard(oPC) || GetIsEpicWarmage(oPC))) nAllowed = TRUE;
         if (WHO_CAN_RESEARCH == "ALL" &&
             (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC) ||
             GetIsEpicSorcerer(oPC) || GetIsEpicWizard(oPC) || 
-            GetIsEpicHealer(oPC) || GetIsEpicFavSoul(oPC))) nAllowed = TRUE;
+            GetIsEpicHealer(oPC) || GetIsEpicFavSoul(oPC) || 
+            GetIsEpicWarmage(oPC))) nAllowed = TRUE;
         if (nAllowed == TRUE)
         {
             // Make sure the player doesn't already know this spell.

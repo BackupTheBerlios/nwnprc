@@ -13,7 +13,8 @@ int StartingConditional()
 {
     object oPC = GetPCSpeaker();
     if (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC) ||
-        GetIsEpicSorcerer(oPC) || GetIsEpicWizard(oPC))
+        GetIsEpicSorcerer(oPC) || GetIsEpicWizard(oPC) ||
+        GetIsEpicWarmage(oPC) || GetIsEpicHealer(oPC) || GetIsEpicFavSoul(oPC))
         return TRUE;
     return FALSE;
 }

@@ -107,6 +107,15 @@ FUNCTION DECLARATIONS
 // Returns the combined caster level of oPC.
 int GetTotalCastingLevel(object oPC);
 
+// returns TRUE if oPC is an Epic level warmage
+int GetIsEpicWarmage(object oPC);
+
+// returns TRUE if oPC is an Epic level healer
+int GetIsEpicHealer(object oPC);
+
+// returns TRUE if oPC is an Epic level favored soul
+int GetIsEpicFavSoul(object oPC);
+
 // Returns TRUE if oPC is an Epic level cleric.
 int GetIsEpicCleric(object oPC);
 
@@ -212,6 +221,13 @@ void SetEpicSeedKnown(int nEpicSeed, object oPC, int nState = TRUE);
 FUNCTION BODIES
 ******************************************************************************/
 
+int GetIsEpicWarmage(object oPC)
+{
+    if (GetCasterLvl(CLASS_TYPE_WARMAGE, oPC) >= 18 && GetHitDice(oPC) >= 21 &&
+        GetAbilityScore(oPC, ABILITY_CHARISMA) >= 19)
+            return TRUE;
+        return FALSE;
+}
 
 int GetIsEpicHealer(object oPC)
 {
@@ -223,7 +239,7 @@ int GetIsEpicHealer(object oPC)
 
 int GetIsEpicFavSoul(object oPC)
 {
-    if (GetCasterLvl(CLASS_TYPE_FAVOURED_SOUL, oPC) >= 17 && GetHitDice(oPC) >= 21 &&
+    if (GetCasterLvl(CLASS_TYPE_FAVOURED_SOUL, oPC) >= 18 && GetHitDice(oPC) >= 21 &&
         GetAbilityScore(oPC, ABILITY_CHARISMA) >= 19)
             return TRUE;
     return FALSE;
@@ -280,7 +296,7 @@ int GetEpicSpellSlotLimit(object oPC)
     // Variant rule implementation.
     if (GetPRCSwitch(PRC_EPIC_PRIMARY_ABILITY_MODIFIER_RULE) == TRUE)
     {
-        if (GetIsEpicSorcerer(oPC) || GetIsEpicFavSoul(oPC))
+        if (GetIsEpicSorcerer(oPC) || GetIsEpicFavSoul(oPC) || GetIsEpicWarmage(oPC))
         {
             nLimit -= GetAbilityModifier(ABILITY_INTELLIGENCE, oPC);
             nLimit += GetAbilityModifier(ABILITY_CHARISMA, oPC);
@@ -376,7 +392,7 @@ int GetSpellcraftSkill(object oPC)
     // Variant rule implementation.
     if (GetPRCSwitch(PRC_EPIC_PRIMARY_ABILITY_MODIFIER_RULE) == TRUE)
     {
-        if (GetIsEpicSorcerer(oPC) || GetIsEpicFavSoul(oPC))
+        if (GetIsEpicSorcerer(oPC) || GetIsEpicFavSoul(oPC) || GetIsEpicWarmage(oPC))
         {
             nSkill -= GetAbilityModifier(ABILITY_INTELLIGENCE, oPC);
             nSkill += GetAbilityModifier(ABILITY_CHARISMA, oPC);
@@ -716,9 +732,10 @@ int GetDCSchoolFocusAdjustment(object oPC, string sChool)
 
 int GetEpicSpellSaveDC(object oCaster = OBJECT_SELF, object oTarget = OBJECT_INVALID, int nSpellID = -1)
 {
-    int iDiv = GetCasterLvl(TYPE_DIVINE,   oCaster);
-    int iWiz = GetCasterLvl(CLASS_TYPE_WIZARD,   oCaster);
-    int iSor = GetCasterLvl(CLASS_TYPE_SORCERER, oCaster);
+    int iDiv = GetCasterLvl(TYPE_DIVINE,   oCaster); // ie. wisdom determines DC
+    int iWiz = GetCasterLvl(CLASS_TYPE_WIZARD,   oCaster); // int determines DC
+    int iWMa = GetCasterLvl(CLASS_TYPE_WARMAGE, oCaster); // cha determines DC
+    int iSor = GetCasterLvl(CLASS_TYPE_SORCERER, oCaster); // cha determines DC
     int iBest = 0;
     int iAbility;
     if(nSpellID == -1)
@@ -726,6 +743,7 @@ int GetEpicSpellSaveDC(object oCaster = OBJECT_SELF, object oTarget = OBJECT_INV
 
     if (iDiv > iBest) { iAbility = ABILITY_WISDOM;       iBest = iDiv; }
     if (iWiz > iBest) { iAbility = ABILITY_INTELLIGENCE; iBest = iWiz; }
+    if (iWMa > iBest) { iAbility = ABILITY_CHARISMA;     iBest = iWMa; }
     if (iSor > iBest) { iAbility = ABILITY_CHARISMA;     iBest = iSor; }
 
     int nDC;

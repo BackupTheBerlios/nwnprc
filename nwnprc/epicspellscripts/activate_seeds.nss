@@ -67,7 +67,8 @@ void main()
                     GetIsEpicSorcerer(OBJECT_SELF) ||
                     GetIsEpicWizard(OBJECT_SELF)||
                     GetIsEpicFavSoul(OBJECT_SELF) ||
-                    GetIsEpicHealer(OBJECT_SELF))) nAllowed = TRUE;
+                    GetIsEpicHealer(OBJECT_SELF) ||
+                    GetIsEpicWarmage(OBJECT_SELF))) nAllowed = TRUE;
     // Give the seed if the player is able to comprehend it, doesn't already
     // have it, and is allowed to learn it.
     if (nAllowed == TRUE)

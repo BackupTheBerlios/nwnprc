@@ -2,8 +2,6 @@
 //:: FileName: "sc_epicradial_ok"
 /*   Purpose: Starting conditional check to make sure player has 7 or less
         spells assigned to their epic spell radial menu (prevents CRASH)
-	 NOTE: The Rest Dialog has been keyed to a feat on the same menu.
-	 This limits the spells to 6 now.
 */
 //:://////////////////////////////////////////////
 //:: Created By: Boneshank
@@ -14,7 +12,7 @@
 
 int StartingConditional()
 {
-    if (GetCastableFeatCount(GetPCSpeaker()) < 6)
+    if (GetCastableFeatCount(GetPCSpeaker()) < 7)
         return TRUE;
     return FALSE;
 }

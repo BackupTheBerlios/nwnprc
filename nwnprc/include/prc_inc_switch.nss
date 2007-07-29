@@ -17,7 +17,7 @@
  An example is below. Copy and paste it into a plain text file saved
  as personal_switch.2da
 
- If there is a file named personal_switchl.2da then it will be loaded
+ If there is a file named personal_switch.2da then it will be loaded
  at module load and the switches set accordingly.
 
 

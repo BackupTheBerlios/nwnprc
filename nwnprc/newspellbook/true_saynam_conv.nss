@@ -1,6 +1,6 @@
 //:://////////////////////////////////////////////
 //:: Say My Name and I am There Conversation
-//:: true_gate_conv
+//:: true_saynam_conv
 //:://////////////////////////////////////////////
 /** @file
     This allows you to teleport to any party member

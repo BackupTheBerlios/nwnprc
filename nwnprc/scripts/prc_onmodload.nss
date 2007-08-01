@@ -230,7 +230,8 @@ void OnLoad_Fresh(object oModule)
     if(GetPRCSwitch(PRC_USE_DATABASE))
     {
         PRC_SQLInit();
-        PRCMakeTables();
+        if(GetPRCSwitch(PRC_DB_PRECACHE)) // if mod builder is insane, make the 2da cache the painful way
+            PRCMakeTables();
         if(GetPRCSwitch(PRC_DB_SQLLITE))
             DelayCommand(IntToFloat(GetPRCSwitch(PRC_DB_SQLLITE_INTERVAL)), PRC_SQLCommit());
     }

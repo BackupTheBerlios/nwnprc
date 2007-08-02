@@ -29,6 +29,10 @@ void DumpCrafting2DAHB(string sFile, int nEnd, int i = 0)
     sDesc += IntToString(StringToInt(Get2DACache(sFile, "Description", i)) - 16777216);
     sDesc += sDoubleQuote + " lang=" + sDoubleQuote + "en" + sDoubleQuote + " sex=";
     sDesc += sDoubleQuote + "m" + sDoubleQuote + ">";
+    if(sFile == "craft_wondrous")
+    {
+        sDesc += "Base Item: " + GetStringByStrRef(StringToInt(Get2DACache("baseitems", "Name", StringToInt(Get2DACache(sFile, "BaseItem", i))))) + "\n\n";
+    }
     sDesc += "Description: \n\n";
     for(j = 1; j <= 6; j++)
     {
@@ -51,7 +55,7 @@ void DumpCrafting2DAHB(string sFile, int nEnd, int i = 0)
         sDesc += "Feat: " + GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", StringToInt(sTemp1)))) + "\n";
     sTemp1 = Get2DACache(sFile, "Skill", i);
     if(sTemp1 != "")
-        sDesc += "Skill: " + GetStringByStrRef(StringToInt(Get2DACache("skills", "Name", StringToInt(sTemp1)))) + " " + IntToString(Get2DACache(sFile, "SkillRanks", i)) + " ranks\n";
+        sDesc += "Skill: " + GetStringByStrRef(StringToInt(Get2DACache("skills", "Name", StringToInt(sTemp1)))) + " " + Get2DACache(sFile, "SkillRanks", i) + " ranks\n";
     sTemp1 = Get2DACache(sFile, "AlignGE", i);
     sTemp2 = Get2DACache(sFile, "AlignLC", i);
     if(sTemp1 != "" || sTemp2 != "")

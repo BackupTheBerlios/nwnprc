@@ -22698,1647 +22698,1806 @@ This spell functions like shout, except that the cone deals 10d6 points of sonic
   <entry id="51760" lang="en" sex="m">Periapt of Epic Wisdom +12</entry>
   <entry id="51761" lang="en" sex="m">Periapt of Wound Closure</entry>
   <entry id="51762" lang="en" sex="m">Robe of Eyes</entry>
-  <entry id="51763" lang="en" sex="m">Description:
+  <entry id="51763" lang="en" sex="m">Base Item: Amulet
 
-Enhancement Bonus: Constitution +2
+Description: 
 
-Prerequisites:
+Enhancement Bonus: Constitution +2 
+
+Prerequisites: 
 
 Caster Level: 8
 Spell(s): Endurance
 
-Cost:
+Cost: 
 
 +4000gp
 </entry>
-  <entry id="51764" lang="en" sex="m">Description:
+  <entry id="51764" lang="en" sex="m">Base Item: Amulet
 
-Enhancement Bonus: Constitution +4
+Description: 
 
-Prerequisites:
+Enhancement Bonus: Constitution +4 
+
+Prerequisites: 
 
 Caster Level: 8
 Spell(s): Endurance
 
-Cost:
+Cost: 
 
 +16000gp
 </entry>
-  <entry id="51765" lang="en" sex="m">Description:
+  <entry id="51765" lang="en" sex="m">Base Item: Amulet
 
-Enhancement Bonus: Constitution +6
+Description: 
 
-Prerequisites:
+Enhancement Bonus: Constitution +6 
+
+Prerequisites: 
 
 Caster Level: 8
 Spell(s): Endurance
 
-Cost:
+Cost: 
 
 +36000gp
 </entry>
-  <entry id="51766" lang="en" sex="m">Description:
+  <entry id="51766" lang="en" sex="m">Base Item: Amulet
 
-Armor Bonus: +1
+Description: 
 
-Prerequisites:
+Armor Bonus: +1 
+
+Prerequisites: 
 
 Caster Level: 5
 Spell(s): Barkskin
 
-Cost:
+Cost: 
 
 +2000gp
 </entry>
-  <entry id="51767" lang="en" sex="m">Description:
+  <entry id="51767" lang="en" sex="m">Base Item: Amulet
 
-Armor Bonus: +2
+Description: 
 
-Prerequisites:
+Armor Bonus: +2 
+
+Prerequisites: 
 
 Caster Level: 6
 Spell(s): Barkskin
 
-Cost:
+Cost: 
 
 +8000gp
 </entry>
-  <entry id="51768" lang="en" sex="m">Description:
+  <entry id="51768" lang="en" sex="m">Base Item: Amulet
 
-Armor Bonus: +3
+Description: 
 
-Prerequisites:
+Armor Bonus: +3 
+
+Prerequisites: 
 
 Caster Level: 9
 Spell(s): Barkskin
 
-Cost:
+Cost: 
 
 +18000gp
 </entry>
-  <entry id="51769" lang="en" sex="m">Description:
+  <entry id="51769" lang="en" sex="m">Base Item: Amulet
 
-Armor Bonus: +4
+Description: 
 
-Prerequisites:
+Armor Bonus: +4 
+
+Prerequisites: 
 
 Caster Level: 12
 Spell(s): Barkskin
 
-Cost:
+Cost: 
 
 +32000gp
 </entry>
-  <entry id="51770" lang="en" sex="m">Description:
+  <entry id="51770" lang="en" sex="m">Base Item: Amulet
 
-Armor Bonus: +5
+Description: 
 
-Prerequisites:
+Armor Bonus: +5 
+
+Prerequisites: 
 
 Caster Level: 15
 Spell(s): Barkskin
 
-Cost:
+Cost: 
 
 +50000gp
 </entry>
-  <entry id="51771" lang="en" sex="m">Description:
+  <entry id="51771" lang="en" sex="m">Base Item: Amulet
 
-Armor Bonus: +6
+Description: 
 
-Prerequisites:
+Armor Bonus: +6 
+
+Prerequisites: 
 
 Caster Level: 20
 Spell(s): Barkskin
 Epic
 
-Cost:
+Cost: 
 
 +720000gp
 </entry>
-  <entry id="51772" lang="en" sex="m">Description:
+  <entry id="51772" lang="en" sex="m">Base Item: Amulet
 
-Armor Bonus: +7
+Description: 
 
-Prerequisites:
+Armor Bonus: +7 
+
+Prerequisites: 
 
 Caster Level: 21
 Spell(s): Barkskin
 Epic
 
-Cost:
+Cost: 
 
 +980000gp
 </entry>
-  <entry id="51773" lang="en" sex="m">Description:
+  <entry id="51773" lang="en" sex="m">Base Item: Amulet
 
-Armor Bonus: +8
+Description: 
 
-Prerequisites:
+Armor Bonus: +8 
+
+Prerequisites: 
 
 Caster Level: 24
 Spell(s): Barkskin
 Epic
 
-Cost:
+Cost: 
 
 +1280000gp
 </entry>
-  <entry id="51774" lang="en" sex="m">Description:
+  <entry id="51774" lang="en" sex="m">Base Item: Amulet
 
-Armor Bonus: +9
+Description: 
 
-Prerequisites:
+Armor Bonus: +9 
+
+Prerequisites: 
 
 Caster Level: 27
 Spell(s): Barkskin
 Epic
 
-Cost:
+Cost: 
 
 +1620000gp
 </entry>
-  <entry id="51775" lang="en" sex="m">Description:
+  <entry id="51775" lang="en" sex="m">Base Item: Amulet
 
-Armor Bonus: +10
+Description: 
 
-Prerequisites:
+Armor Bonus: +10 
+
+Prerequisites: 
 
 Caster Level: 30
 Spell(s): Barkskin
 Epic
 
-Cost:
+Cost: 
 
 +2000000gp
 </entry>
-  <entry id="51776" lang="en" sex="m">Description:
+  <entry id="51776" lang="en" sex="m">Base Item: Belt
 
-Enhancement Bonus: Strength +4
+Description: 
 
-Prerequisites:
+Enhancement Bonus: Strength +4 
+
+Prerequisites: 
 
 Caster Level: 10
 Spell(s): Bull's Strength
 
-Cost:
+Cost: 
 
 +16000gp
 </entry>
-  <entry id="51777" lang="en" sex="m">Description:
+  <entry id="51777" lang="en" sex="m">Base Item: Belt
 
-Enhancement Bonus: Strength +6
+Description: 
 
-Prerequisites:
+Enhancement Bonus: Strength +6 
+
+Prerequisites: 
 
 Caster Level: 10
 Spell(s): Bull's Strength
 
-Cost:
+Cost: 
 
 +36000gp
 </entry>
-  <entry id="51778" lang="en" sex="m">Description:
+  <entry id="51778" lang="en" sex="m">Base Item: Belt
 
-Enhancement Bonus: Strength +8
+Description: 
 
-Prerequisites:
+Enhancement Bonus: Strength +8 
+
+Prerequisites: 
 
 Caster Level: 20
 Spell(s): Bull's Strength
 Epic
 
-Cost:
+Cost: 
 
 +640000gp
 </entry>
-  <entry id="51779" lang="en" sex="m">Description:
+  <entry id="51779" lang="en" sex="m">Base Item: Belt
 
-Enhancement Bonus: Strength +10
+Description: 
 
-Prerequisites:
+Enhancement Bonus: Strength +10 
+
+Prerequisites: 
 
 Caster Level: 20
 Spell(s): Bull's Strength
 Epic
 
-Cost:
+Cost: 
 
 +1000000gp
 </entry>
-  <entry id="51780" lang="en" sex="m">Description:
+  <entry id="51780" lang="en" sex="m">Base Item: Belt
 
-Enhancement Bonus: Strength +12
+Description: 
 
-Prerequisites:
+Enhancement Bonus: Strength +12 
+
+Prerequisites: 
 
 Caster Level: 20
 Spell(s): Bull's Strength
 Epic
 
-Cost:
+Cost: 
 
 +1440000gp
 </entry>
-  <entry id="51781" lang="en" sex="m">Description:
+  <entry id="51781" lang="en" sex="m">Base Item: Boots
 
-Skill Bonus: Move Silently +5
+Description: 
 
-Prerequisites:
+Skill Bonus: Move Silently +5 
+
+Prerequisites: 
 
 Caster Level: 5
 Race: Elf
 
-Cost:
+Cost: 
 
 +2500gp
 </entry>
-  <entry id="51782" lang="en" sex="m">Description:
+  <entry id="51782" lang="en" sex="m">Base Item: Boots
 
-Use: Haste (10) 1 Use/Day
+Description: 
 
-Prerequisites:
+Use: Haste (10) 1 Use/Day 
+
+Prerequisites: 
 
 Caster Level: 10
 Spell(s): Haste
 
-Cost:
+Cost: 
 
 +12000gp
 </entry>
-  <entry id="51783" lang="en" sex="m">Description:
+  <entry id="51783" lang="en" sex="m">Base Item: Boots
 
-Enhancement Bonus: Dexterity +6
-Bonus Feat: Evasion
-Skill Bonus: Tumble +20
-Skill Bonus: Jump +20
-Use: Haste (10) 3 Uses/Day
+Description: 
 
-Prerequisites:
+Enhancement Bonus: Dexterity +6 
+Bonus Feat: Evasion 
+Skill Bonus: Tumble +20 
+Skill Bonus: Jump +20 
+Use: Haste (10) 3 Uses/Day 
+
+Prerequisites: 
 
 Caster Level: 20
 Spell(s): Cat's Grace, Expeditious Retreat, Haste, Jump
 Epic
 
-Cost:
+Cost: 
 
 +256000gp
 </entry>
-  <entry id="51784" lang="en" sex="m">Description:
+  <entry id="51784" lang="en" sex="m">Base Item: Boots
 
-Use: Teleport (9) 3 Uses/Day
+Description: 
 
-Prerequisites:
+Use: Teleport (9) 3 Uses/Day 
+
+Prerequisites: 
 
 Caster Level: 9
 Spell(s): Teleport
 
-Cost:
+Cost: 
 
 +49000gp
 </entry>
-  <entry id="51785" lang="en" sex="m">Description:
+  <entry id="51785" lang="en" sex="m">Base Item: Boots
 
-Damage Resistance: Cold Resist 5 / -
-Damage Resistance: Fire Resist 5 / -
+Description: 
 
-Prerequisites:
+Damage Resistance: Cold Resist 5 / - 
+Damage Resistance: Fire Resist 5 / - 
+
+Prerequisites: 
 
 Caster Level: 5
 Spell(s): Cat's Grace, Endure Elements
 
-Cost:
+Cost: 
 
 +2500gp
 </entry>
-  <entry id="51786" lang="en" sex="m">Description:
+  <entry id="51786" lang="en" sex="m">Base Item: Bracer
 
-Armor Bonus: +1
+Description: 
 
-Prerequisites:
+Armor Bonus: +1 
+
+Prerequisites: 
 
 Caster Level: 7
 Spell(s): Mage Armor
 
-Cost:
+Cost: 
 
 +1000gp
 </entry>
-  <entry id="51787" lang="en" sex="m">Description:
+  <entry id="51787" lang="en" sex="m">Base Item: Bracer
 
-Armor Bonus: +2
+Description: 
 
-Prerequisites:
+Armor Bonus: +2 
+
+Prerequisites: 
 
 Caster Level: 7
 Spell(s): Mage Armor
 
-Cost:
+Cost: 
 
 +4000gp
 </entry>
-  <entry id="51788" lang="en" sex="m">Description:
+  <entry id="51788" lang="en" sex="m">Base Item: Bracer
 
-Armor Bonus: +3
+Description: 
 
-Prerequisites:
+Armor Bonus: +3 
+
+Prerequisites: 
 
 Caster Level: 7
 Spell(s): Mage Armor
 
-Cost:
+Cost: 
 
 +9000gp
 </entry>
-  <entry id="51789" lang="en" sex="m">Description:
+  <entry id="51789" lang="en" sex="m">Base Item: Bracer
 
-Armor Bonus: +4
+Description: 
 
-Prerequisites:
+Armor Bonus: +4 
+
+Prerequisites: 
 
 Caster Level: 8
 Spell(s): Mage Armor
 
-Cost:
+Cost: 
 
 +16000gp
 </entry>
-  <entry id="51790" lang="en" sex="m">Description:
+  <entry id="51790" lang="en" sex="m">Base Item: Bracer
 
-Armor Bonus: +5
+Description: 
 
-Prerequisites:
+Armor Bonus: +5 
+
+Prerequisites: 
 
 Caster Level: 10
 Spell(s): Mage Armor
 
-Cost:
+Cost: 
 
 +25000gp
 </entry>
-  <entry id="51791" lang="en" sex="m">Description:
+  <entry id="51791" lang="en" sex="m">Base Item: Bracer
 
-Armor Bonus: +6
+Description: 
 
-Prerequisites:
+Armor Bonus: +6 
+
+Prerequisites: 
 
 Caster Level: 12
 Spell(s): Mage Armor
 
-Cost:
+Cost: 
 
 +36000gp
 </entry>
-  <entry id="51792" lang="en" sex="m">Description:
+  <entry id="51792" lang="en" sex="m">Base Item: Bracer
 
-Armor Bonus: +7
+Description: 
 
-Prerequisites:
+Armor Bonus: +7 
+
+Prerequisites: 
 
 Caster Level: 14
 Spell(s): Mage Armor
 
-Cost:
+Cost: 
 
 +49000gp
 </entry>
-  <entry id="51793" lang="en" sex="m">Description:
+  <entry id="51793" lang="en" sex="m">Base Item: Bracer
 
-Armor Bonus: +8
+Description: 
 
-Prerequisites:
+Armor Bonus: +8 
+
+Prerequisites: 
 
 Caster Level: 16
 Spell(s): Mage Armor
 
-Cost:
+Cost: 
 
 +64000gp
 </entry>
-  <entry id="51794" lang="en" sex="m">Description:
+  <entry id="51794" lang="en" sex="m">Base Item: Bracer
 
-Armor Bonus: +11
+Description: 
 
-Prerequisites:
+Armor Bonus: +11 
+
+Prerequisites: 
 
 Caster Level: 22
 Spell(s): Mage Armor
 Epic
 
-Cost:
+Cost: 
 
 +1210000gp
 </entry>
-  <entry id="51795" lang="en" sex="m">Description:
+  <entry id="51795" lang="en" sex="m">Base Item: Bracer
 
-Armor Bonus: +12
+Description: 
 
-Prerequisites:
+Armor Bonus: +12 
+
+Prerequisites: 
 
 Caster Level: 24
 Spell(s): Mage Armor
 Epic
 
-Cost:
+Cost: 
 
 +1440000gp
 </entry>
-  <entry id="51796" lang="en" sex="m">Description:
+  <entry id="51796" lang="en" sex="m">Base Item: Bracer
 
-Armor Bonus: +13
+Description: 
 
-Prerequisites:
+Armor Bonus: +13 
+
+Prerequisites: 
 
 Caster Level: 26
 Spell(s): Mage Armor
 Epic
 
-Cost:
+Cost: 
 
 +1690000gp
 </entry>
-  <entry id="51797" lang="en" sex="m">Description:
+  <entry id="51797" lang="en" sex="m">Base Item: Bracer
 
-Armor Bonus: +14
+Description: 
 
-Prerequisites:
+Armor Bonus: +14 
+
+Prerequisites: 
 
 Caster Level: 28
 Spell(s): Mage Armor
 Epic
 
-Cost:
+Cost: 
 
 +1960000gp
 </entry>
-  <entry id="51798" lang="en" sex="m">Description:
+  <entry id="51798" lang="en" sex="m">Base Item: Bracer
 
-Armor Bonus: +15
+Description: 
 
-Prerequisites:
+Armor Bonus: +15 
+
+Prerequisites: 
 
 Caster Level: 30
 Spell(s): Mage Armor
 Epic
 
-Cost:
+Cost: 
 
 +2250000gp
 </entry>
-  <entry id="51799" lang="en" sex="m">Description:
+  <entry id="51799" lang="en" sex="m">Base Item: Bracer
 
-Enhancement Bonus: Constitution +8
+Description: 
 
-Prerequisites:
+Enhancement Bonus: Constitution +8 
+
+Prerequisites: 
 
 Caster Level: 20
 Spell(s): Endurance
 Epic
 
-Cost:
+Cost: 
 
 +640000gp
 </entry>
-  <entry id="51800" lang="en" sex="m">Description:
+  <entry id="51800" lang="en" sex="m">Base Item: Bracer
 
-Enhancement Bonus: Constitution +10
+Description: 
 
-Prerequisites:
+Enhancement Bonus: Constitution +10 
+
+Prerequisites: 
 
 Caster Level: 20
 Spell(s): Endurance
 Epic
 
-Cost:
+Cost: 
 
 +1000000gp
 </entry>
-  <entry id="51801" lang="en" sex="m">Description:
+  <entry id="51801" lang="en" sex="m">Base Item: Bracer
 
-Enhancement Bonus: Constitution +12
+Description: 
 
-Prerequisites:
+Enhancement Bonus: Constitution +12 
+
+Prerequisites: 
 
 Caster Level: 20
 Spell(s): Endurance
 Epic
 
-Cost:
+Cost: 
 
 +1440000gp
 </entry>
-  <entry id="51802" lang="en" sex="m">Description:
+  <entry id="51802" lang="en" sex="m">Base Item: Bracer
 
-Enhancement Bonus: Strength +12
-Enhancement Bonus: Constitution +12
-Use: Enlarge Person Unlimited Uses/Day
+Description: 
 
-Prerequisites:
+Enhancement Bonus: Strength +12 
+Enhancement Bonus: Constitution +12 
+Use: Enlarge Person Unlimited Uses/Day 
+
+Prerequisites: 
 
 Caster Level: 20
 Spell(s): Bull's Strength, Endurance, Enlarge Person
 Epic
 
-Cost:
+Cost: 
 
 +4384000gp
 </entry>
-  <entry id="51803" lang="en" sex="m">Description:
+  <entry id="51803" lang="en" sex="m">Base Item: Amulet
 
-Spell Immunity: Magic Missile
-Spell Immunity: Isaac's Lesser Missile Storm
-Spell Immunity: Isaac's Greater Missile Storm
+Description: 
 
-Prerequisites:
+Spell Immunity: Magic Missile 
+Spell Immunity: Isaac's Lesser Missile Storm 
+Spell Immunity: Isaac's Greater Missile Storm 
+
+Prerequisites: 
 
 Caster Level: 1
 Spell(s): Shield
 
-Cost:
+Cost: 
 
 +1500gp
 </entry>
-  <entry id="51804" lang="en" sex="m">Description:
+  <entry id="51804" lang="en" sex="m">Base Item: Helmet
 
-Use: Searing Light (5) 1 Use/Day
-Cast Spell: Caster Level: This item property modifies the Caster Level at which the associated spell is cast from this item. Can be used for Cast Spell and OnHit type item. Searing Light (5) 6
+Description: 
 
-Prerequisites:
+Use: Searing Light (5) 1 Use/Day 
+Cast Spell: Caster Level: Searing Light (5) 6 
+
+Prerequisites: 
 
 Caster Level: 6
 Spell(s): Searing Light
 
-Cost:
+Cost: 
 
 +6480gp
 </entry>
-  <entry id="51805" lang="en" sex="m">Description:
+  <entry id="51805" lang="en" sex="m">Base Item: Helmet
 
-Use: Searing Light (5) 1 Use/Day
-Cast Spell: Caster Level: This item property modifies the Caster Level at which the associated spell is cast from this item. Can be used for Cast Spell and OnHit type item. Searing Light (5) 10
-Cast Spell: Metamagic: Searing Light (5) Maximize Spell
+Description: 
 
-Prerequisites:
+Use: Searing Light (5) 1 Use/Day 
+Cast Spell: Caster Level: Searing Light (5) 10 
+Cast Spell: Metamagic: Searing Light (5) Maximize Spell 
+
+Prerequisites: 
 
 Caster Level: 17
 Spell(s): Searing Light
 
-Cost:
+Cost: 
 
 +23760gp
 </entry>
-  <entry id="51806" lang="en" sex="m">Description:
+  <entry id="51806" lang="en" sex="m">Base Item: Helmet
 
-Skill Bonus: Animal Empathy +3
-Skill Bonus: Perform +3
-Skill Bonus: Persuade +3
-Skill Bonus: Taunt +3
-Skill Bonus: Use Magic Device +3
-Skill Bonus: Bluff +3
-Skill Bonus: Intimidate +3
-Skill Bonus: Iaijutsu Focus +3
+Description: 
 
-Prerequisites:
+
+Prerequisites: 
 
 Caster Level: 5
 Spell(s): Eagle's Splendor
 
-Cost:
+Cost: 
 
 +4500gp
 </entry>
-  <entry id="51807" lang="en" sex="m">Description:
+  <entry id="51807" lang="en" sex="m">Base Item: Scimitar
 
-Bonus Spell Slot: Cleric Level 0
+Description: 
 
-Prerequisites:
+Bonus Spell Slot: Cleric Level 0 
+
+Prerequisites: 
 
 Caster Level: 6
 Spell(s): Web
 
-Cost:
+Cost: 
 
 +14000 Enhancement
 +80gp
 </entry>
-  <entry id="51808" lang="en" sex="m">School: Divination
-Level: Clr 1, Pal 1, Sor/Wiz 1
-Components: V, S, M/DF
-Casting Time: 1 standard action
-Range: 60 ft.
-Area: Cone-shaped emanation
-Duration: Concentration, up to 1 minute/ level (D)
-Saving Throw: None
-Spell Resistance: No
+  <entry id="51809" lang="en" sex="m">Base Item: Cloak
 
-You can detect the aura that surrounds undead creatures. The amount of information revealed depends on how long you study a particular area.
-1st Round: Presence or absence of undead auras.
-2nd Round: Number of undead auras in the area and the strength of the strongest undead aura present. If you are of good alignment, and the strongest undead aura's strength is overwhelming (see below), and the creature has HD of at least twice your character level, you are stunned for 1 round and the spell ends.
-3rd Round: The strength and location of each undead aura. If an aura is outside your line of sight, then you discern its direction but not its exact location.
-Aura Strength: The strength of an undead aura is determined by the HD of the undead creature, as given on the following table:
+Description: 
 
-HD              Strength
-1 or lower      Faint
-2 - 4           Moderate
-5 - 10          Strong
-11 or higher    Overwhelming
-Lingering Aura: An undead aura lingers after its original source is destroyed. If detect undead is cast and directed at such a location, the spell indicates an aura strength of dim (even weaker than a faint aura). How long the aura lingers at this dim level depends on its original power:
+Enhancement Bonus: Charisma +2 
 
-Original Strength   Duration of Lingering Aura
-Faint   1d6 rounds
-Moderate    1d6 minutes
-Strong  1d6x10 minutes
-Overwhelming    1d6 days
-Each round, you can turn to detect undead in a new area. The spell can penetrate barriers, but 1 foot of stone, 1 inch of common metal, a thin sheet of lead, or 3 feet of wood or dirt blocks it.
-
-Arcane Material Component: A bit of earth from a grave.
-</entry>
-  <entry id="51809" lang="en" sex="m">Description:
-
-Enhancement Bonus: Charisma +2
-
-Prerequisites:
+Prerequisites: 
 
 Caster Level: 8
 Spell(s): Eagle's Splendor
 
-Cost:
+Cost: 
 
 +4000gp
 </entry>
-  <entry id="51810" lang="en" sex="m">Description:
+  <entry id="51810" lang="en" sex="m">Base Item: Cloak
 
-Enhancement Bonus: Charisma +4
+Description: 
 
-Prerequisites:
+Enhancement Bonus: Charisma +4 
+
+Prerequisites: 
 
 Caster Level: 8
 Spell(s): Eagle's Splendor
 
-Cost:
+Cost: 
 
 +16000gp
 </entry>
-  <entry id="51811" lang="en" sex="m">Description:
+  <entry id="51811" lang="en" sex="m">Base Item: Cloak
 
-Enhancement Bonus: Charisma +6
+Description: 
 
-Prerequisites:
+Enhancement Bonus: Charisma +6 
+
+Prerequisites: 
 
 Caster Level: 8
 Spell(s): Eagle's Splendor
 
-Cost:
+Cost: 
 
 +36000gp
 </entry>
-  <entry id="51812" lang="en" sex="m">Description:
+  <entry id="51812" lang="en" sex="m">Base Item: Cloak
 
-Enhancement Bonus: Charisma +8
+Description: 
 
-Prerequisites:
+Enhancement Bonus: Charisma +8 
+
+Prerequisites: 
 
 Caster Level: 20
 Spell(s): Charm Monster
 Epic
 
-Cost:
+Cost: 
 
 +640000gp
 </entry>
-  <entry id="51813" lang="en" sex="m">Description:
+  <entry id="51813" lang="en" sex="m">Base Item: Cloak
 
-Enhancement Bonus: Charisma +10
+Description: 
 
-Prerequisites:
+Enhancement Bonus: Charisma +10 
+
+Prerequisites: 
 
 Caster Level: 20
 Spell(s): Charm Monster
 Epic
 
-Cost:
+Cost: 
 
 +1000000gp
 </entry>
-  <entry id="51814" lang="en" sex="m">Description:
+  <entry id="51814" lang="en" sex="m">Base Item: Cloak
 
-Enhancement Bonus: Charisma +12
+Description: 
 
-Prerequisites:
+Enhancement Bonus: Charisma +12 
+
+Prerequisites: 
 
 Caster Level: 20
 Spell(s): Charm Monster
 Epic
 
-Cost:
+Cost: 
 
 +1440000gp
 </entry>
-  <entry id="51815" lang="en" sex="m">Description:
+  <entry id="51815" lang="en" sex="m">Base Item: Cloak
 
-Use: Blur (5) Unlimited Uses/Day
+Description: 
 
-Prerequisites:
+Use: Blur (5) Unlimited Uses/Day 
+
+Prerequisites: 
 
 Caster Level: 3
 Spell(s): Displacement
 
-Cost:
+Cost: 
 
 +24000gp
 </entry>
-  <entry id="51816" lang="en" sex="m">Description:
+  <entry id="51816" lang="en" sex="m">Base Item: Cloak
 
-Use: Displacement (9) 1 Use/Day
-Cast Spell: Caster Level: This item property modifies the Caster Level at which the associated spell is cast from this item. Can be used for Cast Spell and OnHit type item. Displacement (9) 15
+Description: 
 
-Prerequisites:
+Use: Displacement (9) 1 Use/Day 
+Cast Spell: Caster Level: Displacement (9) 15 
+
+Prerequisites: 
 
 Caster Level: 7
 Feat: Extend Spell
 Spell(s): Displacement
 
-Cost:
+Cost: 
 
 +50000gp
 </entry>
-  <entry id="51817" lang="en" sex="m">Description:
+  <entry id="51817" lang="en" sex="m">Base Item: Cloak
 
-Skill Bonus: Hide +5
+Description: 
 
-Prerequisites:
+Skill Bonus: Hide +5 
+
+Prerequisites: 
 
 Caster Level: 6
 Race: Elf
 Spell(s): Invisibility
 
-Cost:
+Cost: 
 
 +2500gp
 </entry>
-  <entry id="51818" lang="en" sex="m">Description:
+  <entry id="51818" lang="en" sex="m">Base Item: Cloak
 
-Use: Greater Sanctuary (18) 1 Use/Day
+Description: 
 
-Prerequisites:
+Use: Greater Sanctuary (18) 1 Use/Day 
+
+Prerequisites: 
 
 Caster Level: 15
 Spell(s): Greater Sanctuary
 
-Cost:
+Cost: 
 
 +55000gp
 </entry>
-  <entry id="51819" lang="en" sex="m">Description:
+  <entry id="51819" lang="en" sex="m">Base Item: Cloak
 
-Improved Saving Throws: Universal +1
+Description: 
 
-Prerequisites:
+Improved Saving Throws: Universal +1 
+
+Prerequisites: 
 
 Caster Level: 5
 Spell(s): Resistance
 
-Cost:
+Cost: 
 
 +1000gp
 </entry>
-  <entry id="51820" lang="en" sex="m">Description:
+  <entry id="51820" lang="en" sex="m">Base Item: Cloak
 
-Improved Saving Throws: Universal +2
+Description: 
 
-Prerequisites:
+Improved Saving Throws: Universal +2 
+
+Prerequisites: 
 
 Caster Level: 6
 Spell(s): Resistance
 
-Cost:
+Cost: 
 
 +4000gp
 </entry>
-  <entry id="51821" lang="en" sex="m">Description:
+  <entry id="51821" lang="en" sex="m">Base Item: Cloak
 
-Improved Saving Throws: Universal +3
+Description: 
 
-Prerequisites:
+Improved Saving Throws: Universal +3 
+
+Prerequisites: 
 
 Caster Level: 9
 Spell(s): Resistance
 
-Cost:
+Cost: 
 
 +9000gp
 </entry>
-  <entry id="51822" lang="en" sex="m">Description:
+  <entry id="51822" lang="en" sex="m">Base Item: Cloak
 
-Improved Saving Throws: Universal +4
+Description: 
 
-Prerequisites:
+Improved Saving Throws: Universal +4 
+
+Prerequisites: 
 
 Caster Level: 12
 Spell(s): Resistance
 
-Cost:
+Cost: 
 
 +16000gp
 </entry>
-  <entry id="51823" lang="en" sex="m">Description:
+  <entry id="51823" lang="en" sex="m">Base Item: Cloak
 
-Improved Saving Throws: Universal +5
+Description: 
 
-Prerequisites:
+Improved Saving Throws: Universal +5 
+
+Prerequisites: 
 
 Caster Level: 15
 Spell(s): Resistance
 
-Cost:
+Cost: 
 
 +25000gp
 </entry>
-  <entry id="51824" lang="en" sex="m">Description:
+  <entry id="51824" lang="en" sex="m">Base Item: Cloak
 
-Improved Saving Throws: Universal +6
+Description: 
 
-Prerequisites:
+Improved Saving Throws: Universal +6 
+
+Prerequisites: 
 
 Caster Level: 20
 Spell(s): Resistance
 Epic
 
-Cost:
+Cost: 
 
 +360000gp
 </entry>
-  <entry id="51825" lang="en" sex="m">Description:
+  <entry id="51825" lang="en" sex="m">Base Item: Cloak
 
-Improved Saving Throws: Universal +7
+Description: 
 
-Prerequisites:
+Improved Saving Throws: Universal +7 
+
+Prerequisites: 
 
 Caster Level: 21
 Spell(s): Resistance
 Epic
 
-Cost:
+Cost: 
 
 +490000gp
 </entry>
-  <entry id="51826" lang="en" sex="m">Description:
+  <entry id="51826" lang="en" sex="m">Base Item: Cloak
 
-Improved Saving Throws: Universal +8
+Description: 
 
-Prerequisites:
+Improved Saving Throws: Universal +8 
+
+Prerequisites: 
 
 Caster Level: 24
 Spell(s): Resistance
 Epic
 
-Cost:
+Cost: 
 
 +640000gp
 </entry>
-  <entry id="51827" lang="en" sex="m">Description:
+  <entry id="51827" lang="en" sex="m">Base Item: Cloak
 
-Improved Saving Throws: Universal +9
+Description: 
 
-Prerequisites:
+Improved Saving Throws: Universal +9 
+
+Prerequisites: 
 
 Caster Level: 27
 Spell(s): Resistance
 Epic
 
-Cost:
+Cost: 
 
 +810000gp
 </entry>
-  <entry id="51828" lang="en" sex="m">Description:
+  <entry id="51828" lang="en" sex="m">Base Item: Cloak
 
-Improved Saving Throws: Universal +10
+Description: 
 
-Prerequisites:
+Improved Saving Throws: Universal +10 
+
+Prerequisites: 
 
 Caster Level: 30
 Spell(s): Resistance
 Epic
 
-Cost:
+Cost: 
 
 +1000000gp
 </entry>
-  <entry id="51829" lang="en" sex="m">Description:
+  <entry id="51829" lang="en" sex="m">Base Item: Helmet
 
-Use: Charm Person (10) Unlimited Uses/Day
-Cast Spell: DC: This item property modifies the DC at which the associated spell is cast from this item. Can be used for Cast Spell and OnHit type item. Charm Person (10) 16
+Description: 
 
-Prerequisites:
+Use: Charm Person (10) Unlimited Uses/Day 
+Cast spell: DC: Charm Person (2) 16 
+
+Prerequisites: 
 
 Caster Level: 7
 Spell(s): Charm Person
 
-Cost:
+Cost: 
 
 +56000gp
 </entry>
-  <entry id="51830" lang="en" sex="m">Description:
+  <entry id="51830" lang="en" sex="m">Base Item: Helmet
 
-Use: Doom (5) 1 Use/Day
-Use: Fear (5) 1 Use/Day
+Description: 
 
-Prerequisites:
+Use: Doom (5) 1 Use/Day 
+Use: Fear (5) 1 Use/Day 
+
+Prerequisites: 
 
 Caster Level: 11
 Spell(s): Doom, Fear
 
-Cost:
+Cost: 
 
 +25000gp
 </entry>
-  <entry id="51831" lang="en" sex="m">Description:
+  <entry id="51831" lang="en" sex="m">Base Item: Helmet
 
-Skill Bonus: Spot +5
+Description: 
 
-Prerequisites:
+Skill Bonus: Spot +5 
+
+Prerequisites: 
 
 Caster Level: 3
 Spell(s): Clairaudience/Clairvoyance
 
-Cost:
+Cost: 
 
 +2500gp
 </entry>
-  <entry id="51832" lang="en" sex="m">Description:
+  <entry id="51832" lang="en" sex="m">Base Item: Helmet
 
-Use: Flesh to Stone (5) 1 Use/Day
-Cast Spell: DC: This item property modifies the DC at which the associated spell is cast from this item. Can be used for Cast Spell and OnHit type item. Flesh to Stone (5) 19
+Description: 
 
-Prerequisites:
+Use: Flesh to Stone (5) 1 Use/Day 
+Cast spell: DC: Flesh to Stone (5) 19 
+
+Prerequisites: 
 
 Caster Level: 11
 Spell(s): Flesh to Stone
 
-Cost:
+Cost: 
 
 +98000gp
 </entry>
-  <entry id="51833" lang="en" sex="m">Description:
+  <entry id="51833" lang="en" sex="m">Base Item: Gauntlet
 
-Enhancement Bonus: Strength +2
+Description: 
 
-Prerequisites:
+Enhancement Bonus: Strength +2 
+
+Prerequisites: 
 
 Caster Level: 6
 Spell(s): Bull's Strength
 
-Cost:
+Cost: 
 
 +4000gp
 </entry>
-  <entry id="51834" lang="en" sex="m">Description:
+  <entry id="51834" lang="en" sex="m">Base Item: Gauntlet
 
-Enhancement Bonus: Dexterity +2
+Description: 
 
-Prerequisites:
+Enhancement Bonus: Dexterity +2 
+
+Prerequisites: 
 
 Caster Level: 8
 Spell(s): Cat's Grace
 
-Cost:
+Cost: 
 
 +4000gp
 </entry>
-  <entry id="51835" lang="en" sex="m">Description:
+  <entry id="51835" lang="en" sex="m">Base Item: Gauntlet
 
-Enhancement Bonus: Dexterity +4
+Description: 
 
-Prerequisites:
+Enhancement Bonus: Dexterity +4 
+
+Prerequisites: 
 
 Caster Level: 8
 Spell(s): Cat's Grace
 
-Cost:
+Cost: 
 
 +16000gp
 </entry>
-  <entry id="51836" lang="en" sex="m">Description:
+  <entry id="51836" lang="en" sex="m">Base Item: Gauntlet
 
-Enhancement Bonus: Dexterity +6
+Description: 
 
-Prerequisites:
+Enhancement Bonus: Dexterity +6 
+
+Prerequisites: 
 
 Caster Level: 8
 Spell(s): Cat's Grace
 
-Cost:
+Cost: 
 
 +36000gp
 </entry>
-  <entry id="51837" lang="en" sex="m">Description:
+  <entry id="51837" lang="en" sex="m">Base Item: Gauntlet
 
-Enhancement Bonus: Dexterity +8
+Description: 
 
-Prerequisites:
+Enhancement Bonus: Dexterity +8 
+
+Prerequisites: 
 
 Caster Level: 20
 Spell(s): Cat's Grace
 Epic
 
-Cost:
+Cost: 
 
 +640000gp
 </entry>
-  <entry id="51838" lang="en" sex="m">Description:
+  <entry id="51838" lang="en" sex="m">Base Item: Gauntlet
 
-Enhancement Bonus: Dexterity +10
+Description: 
 
-Prerequisites:
+Enhancement Bonus: Dexterity +10 
+
+Prerequisites: 
 
 Caster Level: 20
 Spell(s): Cat's Grace
 Epic
 
-Cost:
+Cost: 
 
 +1000000gp
 </entry>
-  <entry id="51839" lang="en" sex="m">Description:
+  <entry id="51839" lang="en" sex="m">Base Item: Gauntlet
 
-Enhancement Bonus: Dexterity +12
+Description: 
 
-Prerequisites:
+Enhancement Bonus: Dexterity +12 
+
+Prerequisites: 
 
 Caster Level: 20
 Spell(s): Cat's Grace
 Epic
 
-Cost:
+Cost: 
 
 +1440000gp
 </entry>
-  <entry id="51840" lang="en" sex="m">Description:
+  <entry id="51840" lang="en" sex="m">Base Item: Helmet
 
-Skill Bonus: Search +5
+Description: 
 
-Prerequisites:
+Skill Bonus: Search +5 
+
+Prerequisites: 
 
 Caster Level: 3
 Spell(s): True Seeing
 
-Cost:
+Cost: 
 
 +1250gp
 </entry>
-  <entry id="51841" lang="en" sex="m">Description:
+  <entry id="51841" lang="en" sex="m">Base Item: Helmet
 
-Darkvision
+Description: 
 
-Prerequisites:
+Darkvision 
+
+Prerequisites: 
 
 Caster Level: 3
 Spell(s): Ultravision
 
-Cost:
+Cost: 
 
 +12000gp
 </entry>
-  <entry id="51842" lang="en" sex="m">Description:
+  <entry id="51843" lang="en" sex="m">Base Item: Amulet
 
-Skill Bonus: Truespeak +5
+Description: 
 
-Prerequisites:
+Use: Mage Hand Unlimited Uses/Day 
 
-Caster Level: 7
-Skill: Truespeak 5 ranks
-Spell(s): Glibness
-
-Cost:
-
-+2500gp
-</entry>
-  <entry id="51843" lang="en" sex="m">Description:
-
-Use: Mage Hand Unlimited Uses/Day
-
-Prerequisites:
+Prerequisites: 
 
 Caster Level: 2
 Spell(s): Mage Hand
 
-Cost:
+Cost: 
 
 +900gp
 </entry>
-  <entry id="51844" lang="en" sex="m">Description:
+  <entry id="51844" lang="en" sex="m">Base Item: Helmet
 
-Enhancement Bonus: Intelligence +2
+Description: 
 
-Prerequisites:
+Enhancement Bonus: Intelligence +2 
+
+Prerequisites: 
 
 Caster Level: 8
 Spell(s): Fox's Cunning
 
-Cost:
+Cost: 
 
 +4000gp
 </entry>
-  <entry id="51845" lang="en" sex="m">Description:
+  <entry id="51845" lang="en" sex="m">Base Item: Helmet
 
-Enhancement Bonus: Intelligence +4
+Description: 
 
-Prerequisites:
+Enhancement Bonus: Intelligence +4 
+
+Prerequisites: 
 
 Caster Level: 8
 Spell(s): Fox's Cunning
 
-Cost:
+Cost: 
 
 +16000gp
 </entry>
-  <entry id="51846" lang="en" sex="m">Description:
+  <entry id="51846" lang="en" sex="m">Base Item: Helmet
 
-Enhancement Bonus: Intelligence +6
+Description: 
 
-Prerequisites:
+Enhancement Bonus: Intelligence +6 
+
+Prerequisites: 
 
 Caster Level: 8
 Spell(s): Fox's Cunning
 
-Cost:
+Cost: 
 
 +36000gp
 </entry>
-  <entry id="51847" lang="en" sex="m">Description:
+  <entry id="51847" lang="en" sex="m">Base Item: Helmet
 
-Enhancement Bonus: Intelligence +8
+Description: 
 
-Prerequisites:
+Enhancement Bonus: Intelligence +8 
+
+Prerequisites: 
 
 Caster Level: 20
 Spell(s): Legend Lore
 Epic
 
-Cost:
+Cost: 
 
 +640000gp
 </entry>
-  <entry id="51848" lang="en" sex="m">Description:
+  <entry id="51848" lang="en" sex="m">Base Item: Helmet
 
-Enhancement Bonus: Intelligence +10
+Description: 
 
-Prerequisites:
+Enhancement Bonus: Intelligence +10 
+
+Prerequisites: 
 
 Caster Level: 20
 Spell(s): Legend Lore
 Epic
 
-Cost:
+Cost: 
 
 +1000000gp
 </entry>
-  <entry id="51849" lang="en" sex="m">Description:
+  <entry id="51849" lang="en" sex="m">Base Item: Helmet
 
-Enhancement Bonus: Intelligence +12
+Description: 
 
-Prerequisites:
+Enhancement Bonus: Intelligence +12 
+
+Prerequisites: 
 
 Caster Level: 20
 Spell(s): Legend Lore
 Epic
 
-Cost:
+Cost: 
 
 +1440000gp
 </entry>
-  <entry id="51850" lang="en" sex="m">Description:
+  <entry id="51850" lang="en" sex="m">Base Item: Helmet
 
-Damage Resistance: Fire Resist 30 / -
-Use: Prismatic Spray (13) 5 Charges/Use
-Use: Wall of Fire (9) 2 Charges/Use
-Use: Fireball (10) 1 Charge/Use
-Use: Detect Undead Unlimited Uses/Day
+Description: 
 
-Prerequisites:
+Damage Resistance: Fire Resist 30 / - 
+Use: Prismatic Spray (13) 5 Charges/Use 
+Use: Wall of Fire (9) 2 Charges/Use 
+Use: Fireball (10) 1 Charge/Use 
+Use: Detect Undead Unlimited Uses/Day 
+
+Prerequisites: 
 
 Caster Level: 13
-Spell(s): Detect Undead, Fireball, Flame Weapon, Light, Prismatic Spray, Protection from Elements, Wall of Fire
+Spell(s): Acid Fog
 
-Cost:
+Cost: 
 
 +125000gp
 </entry>
-  <entry id="51851" lang="en" sex="m">Description:
+  <entry id="51851" lang="en" sex="m">Base Item: Helmet
 
-Use: Teleport (9) 3 Uses/Day
+Description: 
 
-Prerequisites:
+Use: Teleport (9) 3 Uses/Day 
+
+Prerequisites: 
 
 Caster Level: 9
 Spell(s): Teleport
 
-Cost:
+Cost: 
 
 +73500gp
 </entry>
-  <entry id="51852" lang="en" sex="m">Description:
+  <entry id="51852" lang="en" sex="m">Base Item: Cloak
 
-Spell Resistance: 21
+Description: 
 
-Prerequisites:
+Spell Resistance: 21 
+
+Prerequisites: 
 
 Caster Level: 9
 Spell(s): Spell Resistance
 
-Cost:
+Cost: 
 
 +90000gp
 </entry>
-  <entry id="51853" lang="en" sex="m">Description:
+  <entry id="51853" lang="en" sex="m">Base Item: Cloak
 
-Spell Resistance: 40
+Description: 
 
-Prerequisites:
+Spell Resistance: 40 
+
+Prerequisites: 
 
 Caster Level: 29
 Spell(s): Spell Resistance
 Epic
 
-Cost:
+Cost: 
 
 +290000gp
 </entry>
-  <entry id="51854" lang="en" sex="m">Description:
+  <entry id="51854" lang="en" sex="m">Base Item: Cloak
 
-Skill Bonus: Hide +30
-Skill Bonus: Move Silently +30
-Use: Blur (5) Unlimited Uses/Day
+Description: 
 
-Prerequisites:
+Skill Bonus: Hide +30 
+Skill Bonus: Move Silently +30 
+Use: Blur (5) Unlimited Uses/Day 
+
+Prerequisites: 
 
 Caster Level: 20
 Spell(s): Blur, Invisibility, Silence, Nondetection
 Epic
 
-Cost:
+Cost: 
 
 +242000gp
 </entry>
-  <entry id="51855" lang="en" sex="m">Description:
+  <entry id="51855" lang="en" sex="m">Base Item: Helmet
 
-Use: Finger of Death (13) 1 Use/Day
-Cast Spell: DC: This item property modifies the DC at which the associated spell is cast from this item. Can be used for Cast Spell and OnHit type item. Finger of Death (13) 20
+Description: 
 
-Prerequisites:
+Use: Finger of Death (13) 1 Use/Day 
+Cast spell: DC: Finger of Death (13) 20 
+
+Prerequisites: 
 
 Caster Level: 13
 Spell(s): Animate Objects, Finger of Death
 
-Cost:
+Cost: 
 
 +22000gp
 </entry>
-  <entry id="51856" lang="en" sex="m">Description:
+  <entry id="51857" lang="en" sex="m">Base Item: Amulet
 
-Skill Bonus: Truespeak +10
+Description: 
 
-Prerequisites:
+Use: Fireball (10) 5 Charges/Use 
+Cast Spell: Caster Level: Fireball (5) 4 
 
-Caster Level: 7
-Skill: Truespeak 10 ranks
-Spell(s): Glibness
-
-Cost:
-
-+10000gp
-</entry>
-  <entry id="51857" lang="en" sex="m">Description:
-
-Use: Fireball (10) 5 Charges/Use
-Cast Spell: Caster Level: This item property modifies the Caster Level at which the associated spell is cast from this item. Can be used for Cast Spell and OnHit type item. Fireball (10) 4
-
-Prerequisites:
+Prerequisites: 
 
 Caster Level: 10
 Spell(s): Fireball
 
-Cost:
+Cost: 
 
 +1650gp
 </entry>
-  <entry id="51858" lang="en" sex="m">Description:
+  <entry id="51858" lang="en" sex="m">Base Item: Amulet
 
-Use: Fireball (10) 5 Charges/Use
-Cast Spell: Caster Level: This item property modifies the Caster Level at which the associated spell is cast from this item. Can be used for Cast Spell and OnHit type item. Fireball (10) 5
+Description: 
 
-Prerequisites:
+Use: Fireball (10) 5 Charges/Use 
+Cast Spell: Caster Level: Fireball (5) 5 
+
+Prerequisites: 
 
 Caster Level: 11
 Spell(s): Fireball
 
-Cost:
+Cost: 
 
 +2700gp
 </entry>
-  <entry id="51859" lang="en" sex="m">Description:
+  <entry id="51859" lang="en" sex="m">Base Item: Amulet
 
-Use: Fireball (10) 5 Charges/Use
-Cast Spell: Caster Level: This item property modifies the Caster Level at which the associated spell is cast from this item. Can be used for Cast Spell and OnHit type item. Fireball (10) 6
+Description: 
 
-Prerequisites:
+Use: Fireball (10) 5 Charges/Use 
+Cast Spell: Caster Level: Fireball (5) 6 
+
+Prerequisites: 
 
 Caster Level: 12
 Spell(s): Fireball
 
-Cost:
+Cost: 
 
 +4350gp
 </entry>
-  <entry id="51860" lang="en" sex="m">Description:
+  <entry id="51860" lang="en" sex="m">Base Item: Amulet
 
-Use: Fireball (10) 5 Charges/Use
-Cast Spell: Caster Level: This item property modifies the Caster Level at which the associated spell is cast from this item. Can be used for Cast Spell and OnHit type item. Fireball (10) 7
+Description: 
 
-Prerequisites:
+Use: Fireball (10) 5 Charges/Use 
+Cast Spell: Caster Level: Fireball (5) 7 
+
+Prerequisites: 
 
 Caster Level: 13
 Spell(s): Fireball
 
-Cost:
+Cost: 
 
 +5400gp
 </entry>
-  <entry id="51861" lang="en" sex="m">Description:
+  <entry id="51861" lang="en" sex="m">Base Item: Amulet
 
-Use: Fireball (10) 5 Charges/Use
-Cast Spell: Caster Level: This item property modifies the Caster Level at which the associated spell is cast from this item. Can be used for Cast Spell and OnHit type item. Fireball (10) 8
+Description: 
 
-Prerequisites:
+Use: Fireball (10) 5 Charges/Use 
+Cast Spell: Caster Level: Fireball (5) 8 
+
+Prerequisites: 
 
 Caster Level: 14
 Spell(s): Fireball
 
-Cost:
+Cost: 
 
 +5850gp
 </entry>
-  <entry id="51862" lang="en" sex="m">Description:
+  <entry id="51862" lang="en" sex="m">Base Item: Amulet
 
-Use: Fireball (10) 5 Charges/Use
-Cast Spell: Caster Level: This item property modifies the Caster Level at which the associated spell is cast from this item. Can be used for Cast Spell and OnHit type item. Fireball (10) 9
+Description: 
 
-Prerequisites:
+Use: Fireball (10) 5 Charges/Use 
+Cast Spell: Caster Level: Fireball (5) 9 
+
+Prerequisites: 
 
 Caster Level: 15
 Spell(s): Fireball
 
-Cost:
+Cost: 
 
 +8100gp
 </entry>
-  <entry id="51863" lang="en" sex="m">Description:
+  <entry id="51863" lang="en" sex="m">Base Item: Amulet
 
-Use: Fireball (10) 5 Charges/Use
+Description: 
 
-Prerequisites:
+Use: Fireball (10) 5 Charges/Use 
+
+Prerequisites: 
 
 Caster Level: 16
 Spell(s): Fireball
 
-Cost:
+Cost: 
 
 +8700gp
 </entry>
-  <entry id="51864" lang="en" sex="m">Description:
+  <entry id="51864" lang="en" sex="m">Base Item: Amulet
 
-Immunity: Disease
+Description: 
 
-Prerequisites:
+Immunity: Disease 
+
+Prerequisites: 
 
 Caster Level: 5
 Spell(s): Remove Disease
 
-Cost:
+Cost: 
 
 +7500gp
 </entry>
-  <entry id="51865" lang="en" sex="m">Description:
+  <entry id="51865" lang="en" sex="m">Base Item: Amulet
 
-Immunity: Poison
+Description: 
 
-Prerequisites:
+Immunity: Poison 
+
+Prerequisites: 
 
 Caster Level: 5
 Spell(s): Neutralize Poison
 
-Cost:
+Cost: 
 
 +27000gp
 </entry>
-  <entry id="51866" lang="en" sex="m">Description:
+  <entry id="51866" lang="en" sex="m">Base Item: Amulet
 
-Enhancement Bonus: Wisdom +2
+Description: 
 
-Prerequisites:
+Enhancement Bonus: Wisdom +2 
+
+Prerequisites: 
 
 Caster Level: 8
 Spell(s): Owl's Wisdom
 
-Cost:
+Cost: 
 
 +4000gp
 </entry>
-  <entry id="51867" lang="en" sex="m">Description:
+  <entry id="51867" lang="en" sex="m">Base Item: Amulet
 
-Enhancement Bonus: Wisdom +4
+Description: 
 
-Prerequisites:
+Enhancement Bonus: Wisdom +4 
+
+Prerequisites: 
 
 Caster Level: 8
 Spell(s): Owl's Wisdom
 
-Cost:
+Cost: 
 
 +16000gp
 </entry>
-  <entry id="51868" lang="en" sex="m">Description:
+  <entry id="51868" lang="en" sex="m">Base Item: Amulet
 
-Enhancement Bonus: Wisdom +6
+Description: 
 
-Prerequisites:
+Enhancement Bonus: Wisdom +6 
+
+Prerequisites: 
 
 Caster Level: 8
 Spell(s): Owl's Wisdom
 
-Cost:
+Cost: 
 
 +36000gp
 </entry>
-  <entry id="51869" lang="en" sex="m">Description:
+  <entry id="51869" lang="en" sex="m">Base Item: Amulet
 
-Enhancement Bonus: Wisdom +8
+Description: 
 
-Prerequisites:
+Enhancement Bonus: Wisdom +8 
+
+Prerequisites: 
 
 Caster Level: 20
 Spell(s): Legend Lore
 Epic
 
-Cost:
+Cost: 
 
 +640000gp
 </entry>
-  <entry id="51870" lang="en" sex="m">Description:
+  <entry id="51870" lang="en" sex="m">Base Item: Amulet
 
-Enhancement Bonus: Wisdom +10
+Description: 
 
-Prerequisites:
+Enhancement Bonus: Wisdom +10 
+
+Prerequisites: 
 
 Caster Level: 20
 Spell(s): Legend Lore
 Epic
 
-Cost:
+Cost: 
 
 +1000000gp
 </entry>
-  <entry id="51871" lang="en" sex="m">Description:
+  <entry id="51871" lang="en" sex="m">Base Item: Amulet
 
-Enhancement Bonus: Wisdom +12
+Description: 
 
-Prerequisites:
+Enhancement Bonus: Wisdom +12 
+
+Prerequisites: 
 
 Caster Level: 20
 Spell(s): Legend Lore
 Epic
 
-Cost:
+Cost: 
 
 +1440000gp
 </entry>
-  <entry id="51872" lang="en" sex="m">Description:
+  <entry id="51872" lang="en" sex="m">Base Item: Amulet
 
-Regeneration: +1
+Description: 
 
-Prerequisites:
+Regeneration: +1 
+
+Prerequisites: 
 
 Caster Level: 10
 Spell(s): Heal
 
-Cost:
+Cost: 
 
 +15000gp
 </entry>
-  <entry id="51873" lang="en" sex="m">Description:
+  <entry id="51873" lang="en" sex="m">Base Item: Armor
 
-Armor Bonus: +5
-Spell Resistance: 18
-Improved Saving Throws: Universal +4
-Bonus Feat: Spell Penetration
-Only Useable By: Good
+Description: 
 
-Prerequisites:
+Armor Bonus: +5 
+Spell Resistance: 18 
+Improved Saving Throws: Universal +4 
+Bonus Feat: Spell Penetration 
+Only Useable By: Good 
+
+Prerequisites: 
 
 Caster Level: 14
 Alignment: Good
 Spell(s): Antimagic Field, Mage Armor or Shield of Faith
 
-Cost:
+Cost: 
 
 +75000gp
 </entry>
-  <entry id="51874" lang="en" sex="m">Description:
+  <entry id="51874" lang="en" sex="m">Base Item: Armor
 
-Armor Bonus: +5
-Spell Resistance: 18
-Improved Saving Throws: Universal +4
-Bonus Feat: Spell Penetration
-Only Useable By: Lawful Neutral
-Only Useable By: Chaotic Neutral
-Only Useable By: True Neutral
+Description: 
 
-Prerequisites:
+Armor Bonus: +5 
+Spell Resistance: 18 
+Improved Saving Throws: Universal +4 
+Bonus Feat: Spell Penetration 
+Only Useable By: Lawful Neutral 
+Only Useable By: Chaotic Neutral 
+
+Prerequisites: 
 
 Caster Level: 14
 Alignment: Neutral
 Spell(s): Antimagic Field, Mage Armor or Shield of Faith
 
-Cost:
+Cost: 
 
 +75000gp
 </entry>
-  <entry id="51875" lang="en" sex="m">Description:
+  <entry id="51875" lang="en" sex="m">Base Item: Armor
 
-Armor Bonus: +5
-Spell Resistance: 18
-Improved Saving Throws: Universal +4
-Bonus Feat: Spell Penetration
-Only Useable By: Evil
+Description: 
 
-Prerequisites:
+Armor Bonus: +5 
+Spell Resistance: 18 
+Improved Saving Throws: Universal +4 
+Bonus Feat: Spell Penetration 
+Only Useable By: Evil 
+
+Prerequisites: 
 
 Caster Level: 14
 Alignment: Evil
 Spell(s): Antimagic Field, Mage Armor or Shield of Faith
 
-Cost:
+Cost: 
 
 +75000gp
 </entry>
-  <entry id="51876" lang="en" sex="m">Description:
+  <entry id="51876" lang="en" sex="m">Base Item: Armor
 
-Darkvision
-True Seeing
-Skill Bonus: Search +10
-Skill Bonus: Spot +10
-Bonus Feat: Uncanny Dodge I
+Description: 
 
-Prerequisites:
+Darkvision 
+True Seeing 
+Skill Bonus: Search +10 
+Skill Bonus: Spot +10 
+Bonus Feat: Uncanny Dodge I 
+
+Prerequisites: 
 
 Caster Level: 11
 Spell(s): True Seeing
 
-Cost:
+Cost: 
 
 +120000gp
 </entry>
-  <entry id="51877" lang="en" sex="m">Description:
+  <entry id="51877" lang="en" sex="m">Base Item: Armor
 
-Use: Daze (1) Unlimited Uses/Day
-Use: Displacement (9) 1 Use/Day
-Light Bright (20m) Color Purple
+Description: 
 
-Prerequisites:
+Use: Daze (1) Unlimited Uses/Day 
+Use: Displacement (9) 1 Use/Day 
+Light Bright (20m) Color Purple 
+
+Prerequisites: 
 
 Caster Level: 11
 Spell(s): Blur, Rainbow Pattern
 
-Cost:
+Cost: 
 
 +27000gp
 </entry>
-  <entry id="51878" lang="en" sex="m">Description:
+  <entry id="51878" lang="en" sex="m">Base Item: Amulet
 
-Spell Resistance: 20
-Immunity: Level/Ability Drain
-Immunity: Death Magic
+Description: 
 
-Prerequisites:
+Spell Resistance: 20 
+Immunity: Level/Ability Drain 
+Immunity: Death Magic 
+
+Prerequisites: 
 
 Caster Level: 18
 Spell(s): Death Ward, Spell Resistance
 
-Cost:
+Cost: 
 
 +38000gp
 </entry>
-  <entry id="51879" lang="en" sex="m">Description:
+  <entry id="51879" lang="en" sex="m">Base Item: Armor
 
-Skill Bonus: Hide +4
-Skill Bonus: Tumble +6
+Description: 
 
-Prerequisites:
+Skill Bonus: Hide +4 
+Skill Bonus: Tumble +6 
+
+Prerequisites: 
 
 Caster Level: 4
 Spell(s): Grease, Knock
 
-Cost:
+Cost: 
 
 +5200gp
 </entry>

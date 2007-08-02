@@ -38,12 +38,13 @@ function openContent(type)
 		case "spells" : top.content.location = "../content/manual_content_blank.html"; top.contentmenu.location = "manual_menus_spells.html"; break;
 		case "epicspells" : top.content.location = "../content/manual_content_epicspell.html"; top.contentmenu.location = "manual_menus_epic_spells.html"; break;
 		case "modifiedspells" : top.content.location = "../content/manual_content_blank.html"; top.contentmenu.location = "manual_menus_modified_spells.html"; break;
-		case "itemcrafting" : top.content.location = "../content/itemcrafting/manual_itemcrafting_system.html"; top.contentmenu.location = "manual_menus_itemcrafting.html"; break;
+		case "itemcrafting" : top.content.location = "../content/modulebuilding/manual_modulebuilding_new_crafting.html"; top.contentmenu.location = "manual_menus_itemcrafting.html"; break;
 		case "modulebuilding" : top.content.location = "../content/modulebuilding/manual_modulebuilding_overridenfiles.html"; top.contentmenu.location = "manual_menus_modulebuilding.html"; break;
 		case "prcmaking" : top.content.location = "../content/prcmaking/manual_prcmaking_basics.html"; top.contentmenu.location = "manual_menus_prcmaking.html"; break;
 		case "installation" : top.content.location = "../content/installation/prc_pg01.htm"; top.contentmenu.location = "manual_menus_installation.html"; break;
 		case "playersguide" : top.content.location = "../content/manual_content_blank.html"; top.contentmenu.location = "manual_menus_playerguide.html"; break;
 		case "languages" : top.content.location = "../content/manual_content_blank.html"; top.contentmenu.location = "manual_menus_languages.html"; break;
+		case "crafting" : top.content.location = "../content/manual_content_blank.html"; top.contentmenu.location = "manual_menus_itemcrafting.html"; break;
 
 	}
 }

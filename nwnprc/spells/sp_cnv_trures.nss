@@ -82,7 +82,7 @@ void main()
 		while (GetIsObjectValid(oChoice)) // People in party
 		{
 			// If the selection is a PC
-			if (GetIsPC(oChoice) && oChoice != oPC && GetIsDead(oPC))
+			if (GetIsPC(oChoice) && oChoice != oPC && GetIsDead(oChoice))
 			{
 				AddChoice(GetName(oChoice), nChoice, oPC);
 				StorePCForRecovery(oPC, oChoice, nChoice);

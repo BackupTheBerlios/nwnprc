@@ -36,27 +36,19 @@ void main()
         effect eVisFail  = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
         // If the target is of a race that could be resurrected, go ahead.
         int bRaise = FALSE;
-        if (GetIsPC(oTarget)) 
-        {
-            if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD ||
-               (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_OUTSIDER && 
-                    (GetRacialType(oTarget) == RACIAL_TYPE_RAKSHASA || 
-                    GetRacialType(oTarget) == RACIAL_TYPE_AZER ||
-                    GetRacialType(oTarget) == RACIAL_TYPE_NERAPHIM ||
-                    GetRacialType(oTarget) == RACIAL_TYPE_SHADOWSWYFT)))
-                bRaise = FALSE;
-            else
-                bRaise = TRUE;
-        }
-        else // NPC
-        {
-            if(MyPRCGetRacialType(oTarget) != RACIAL_TYPE_CONSTRUCT &&
-            MyPRCGetRacialType(oTarget) != RACIAL_TYPE_OUTSIDER &&
-            MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD &&
-            MyPRCGetRacialType(oTarget) != RACIAL_TYPE_ELEMENTAL)
+
+        if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD ||
+           (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_OUTSIDER && // native outsiders, monks etc are raisable
+                (GetRacialType(oTarget) == RACIAL_TYPE_RAKSHASA || 
+                GetRacialType(oTarget) == RACIAL_TYPE_AZER ||
+                GetRacialType(oTarget) == RACIAL_TYPE_NERAPHIM ||
+                GetRacialType(oTarget) == RACIAL_TYPE_SHADOWSWYFT)) ||
+            MyPRCGetRacialType(oTarget) == RACIAL_TYPE_CONSTRUCT ||
+            (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_ELEMENTAL && GetRacialType(oTarget) == RACIAL_TYPE_ELEMENTAL)) // elemental savants are raisable
+            bRaise = FALSE;
+        else
             bRaise = TRUE;
-               
-        }
+
         
         if(bRaise)
         {

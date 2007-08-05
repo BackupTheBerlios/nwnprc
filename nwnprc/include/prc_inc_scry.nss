@@ -222,6 +222,9 @@ void ScryMain(object oPC, object oTarget)
     // Create the copy
     oCopy = CopyObject(oPC, GetLocation(oTarget), OBJECT_INVALID, GetName(oPC) + "_" + COPY_LOCAL_NAME);
     CleanCopy(oCopy);
+    // Attempted Fix to the Copy get's murdered problem.
+    AddHenchman(oPC, oCopy);
+    SetIsTemporaryFriend(oPC, oCopy, FALSE);
     // Set the copy to be undestroyable, so that it won't vanish to the ether
     // along with the PC's items.
     AssignCommand(oCopy, SetIsDestroyable(FALSE, FALSE, FALSE));

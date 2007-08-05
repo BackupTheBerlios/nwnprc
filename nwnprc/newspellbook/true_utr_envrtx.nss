@@ -46,7 +46,7 @@ void main()
 
     object oTrueSpeaker = OBJECT_SELF;
     object oTarget      = PRCGetSpellTargetObject();
-    struct utterance utter = EvaluateUtterance(oTrueSpeaker, oTarget, (METAUTTERANCE_EXTEND | METAUTTERANCE_EMPOWER), LEXICON_PERFECTED_MAP);
+    struct utterance utter = EvaluateUtterance(oTrueSpeaker, oTrueSpeaker, (METAUTTERANCE_EXTEND | METAUTTERANCE_EMPOWER), LEXICON_PERFECTED_MAP);
 
     if(utter.bCanUtter)
     {

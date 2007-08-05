@@ -143,6 +143,7 @@ SetLocalInt(oPC, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_DIVINATION);
         SetLocalInt(oPC, "ScrySpellDC", nDC);
         SetLocalFloat(oPC, "ScryDuration", fDur);      
         
+        //AssignCommand(oPC, ClearAllActions(TRUE));
         StartDynamicConversation("prc_scry_conv", oPC, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, oPC);
         
         // Apply the immunity effects

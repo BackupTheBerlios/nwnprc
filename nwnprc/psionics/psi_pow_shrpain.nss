@@ -46,8 +46,8 @@ void DispelMonitor(object oManifester, object oTarget, int nSpellID, int nManife
     if((--nBeatsRemaining == 0)                                            ||
        GetIsDead(oTarget)                                                  ||
        GZGetDelayedSpellEffectsExpired(nSpellID, oTarget, oManifester)     ||
-       GZGetDelayedSpellEffectsExpired(nSpellID, oManifester, oManifester) ||
-       GetDistanceBetween(oManifester, oTarget) > FeetToMeters(25.0f + (5.0f * (nManifesterLevel / 2)))
+       GZGetDelayedSpellEffectsExpired(nSpellID, oManifester, oManifester) /*||
+       GetDistanceBetween(oManifester, oTarget) > FeetToMeters(25.0f + (5.0f * (nManifesterLevel / 2))) This does not work in NWN */ 
        )
     {
         if(DEBUG) DoDebug("psi_pow_shrpain: Effect expired, clearing");

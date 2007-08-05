@@ -60,10 +60,11 @@ void ApplyScryEffects(object oPC)
        // Random stuff
        	       eLink      = EffectLinkEffects(eLink, EffectCutsceneGhost());
        	       //eLink      = EffectLinkEffects(eLink, EffectCutsceneImmobilize());
-       	       eLink      = EffectLinkEffects(eLink, EffectEthereal());
+        effect eEth       = EffectLinkEffects(eLink, EffectEthereal());
        	       eLink      = EffectLinkEffects(eLink, EffectAttackDecrease(50));
        	       eLink      = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_CUTSCENE_INVISIBILITY));
        	       // Permanent until Scry ends
+       	       ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(eLink), oPC, GetLocalFloat(oPC, "ScryDuration") + 6.0);
        	       ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(eLink), oPC, GetLocalFloat(oPC, "ScryDuration") + 6.0);
 
     // Create array for storing a list of the nerfed weapons in

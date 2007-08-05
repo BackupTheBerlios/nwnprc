@@ -90,6 +90,13 @@ void DiscernLocation(object oPC, object oTarget);
  */
 void LocateCreatureOrObject(object oPC, object oTarget);
 
+/**
+ * Prevents the copy from dropping goods when dead.
+ *
+ * @param oImage  The PC's copy.
+ */
+void CleanCopy(object oImage);
+
 //////////////////////////////////////////////////
 /* Function definitions                         */
 //////////////////////////////////////////////////
@@ -102,7 +109,7 @@ void ScryMain(object oPC, object oTarget)
     effect eGlow     = EffectVisualEffect(VFX_DUR_ETHEREAL_VISAGE, FALSE);
     // Use prestored variables because of time delay
     int nCasterLevel = GetLocalInt(oPC, "ScryCasterLevel");
-    int nSpell       = GetLocalInt(oPC, "ScrySpellId");
+    int nSpell       = PRCGetSpellId(); //GetLocalInt(oPC, "ScrySpellId");
     int nDC          = GetLocalInt(oPC, "ScrySpellDC");
     float fDur       = GetLocalFloat(oPC, "ScryDuration");
     if(DEBUG) DoDebug("prc_inc_scry: Beginning ScryMain. nSpell: " + IntToString(nSpell));
@@ -112,6 +119,7 @@ void ScryMain(object oPC, object oTarget)
     if(nSpell == SPELL_END_SCRY)
     {
 	  DoScryEnd(oPC, oCopy);
+	  if(DEBUG) DoDebug("prc_inc_scry: Spell End Scry");
 	  return;
     } 
     
@@ -188,8 +196,8 @@ void ScryMain(object oPC, object oTarget)
     	return;
     }     
     
-    if (nSpell != SPELL_CLAIRAUDIENCE_AND_CLAIRVOYANCE || nSpell != POWER_CLAIRTANGENT_HAND || 
-        nSpell != POWER_CLAIRVOYANT_SENSE)
+    if (nSpell != SPELL_CLAIRAUDIENCE_AND_CLAIRVOYANCE && nSpell != POWER_CLAIRTANGENT_HAND && 
+        nSpell != POWER_CLAIRVOYANT_SENSE && oPC != oTarget) // No save if you target yourself.
     {
     	//Make SR Check
     	if (MyPRCResistSpell(oPC, oTarget, nCasterLevel)) 
@@ -212,6 +220,7 @@ void ScryMain(object oPC, object oTarget)
 
     // Create the copy
     oCopy = CopyObject(oPC, GetLocation(oTarget), OBJECT_INVALID, GetName(oPC) + "_" + COPY_LOCAL_NAME);
+    CleanCopy(oCopy);
     // Set the copy to be undestroyable, so that it won't vanish to the ether
     // along with the PC's items.
     AssignCommand(oCopy, SetIsDestroyable(FALSE, FALSE, FALSE));
@@ -398,9 +407,10 @@ void ScryMonitor(object oPC, object oCopy)
     // Start the actual work by checking the copy's status. The death thing should take priority
     if(GetIsDead(oCopy))
     {
+    	if (DEBUG) DoDebug("prc_inc_scry: Copy is dead, killing PC");
         DoScryEnd(oPC, oCopy);
         effect eKill = EffectDamage(GetCurrentHitPoints(oPC), DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_ENERGY);
-        ApplyEffectToObject(DURATION_TYPE_INSTANT, eKill, oPC);
+        DelayCommand(3.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eKill, oPC));
     }
     else
     {
@@ -420,109 +430,6 @@ void ScryMonitor(object oPC, object oCopy)
 	}
     }
 }
-
-/*
-
-This has been moved to the individual spell scripts, because that way it is attached to SpellId.
-
-//Gives the PC -50 to attack and places No Damage iprop to all equipped weapons.
-void ApplyScryEffects(object oPC)
-{
-    if(DEBUG) DoDebug("prc_inc_scry: ApplyScryEffects():\n"
-                    + "oPC = '" + GetName(oPC) + "'"
-                      );
-    // The Scryer is not supposed to be visible, nor can he move or cast
-    // He also can't take damage from scrying
-        effect eLink    = EffectSpellImmunity(SPELL_ALL_SPELLS);
-        // Damage immunities
-               eLink    = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_ACID,        100));
-               eLink    = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_BLUDGEONING, 100));
-               eLink    = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_COLD,        100));
-               eLink    = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_DIVINE,      100));
-               eLink    = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_ELECTRICAL,  100));
-               eLink    = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_FIRE,        100));
-               eLink    = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_MAGICAL,     100));
-               eLink    = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_NEGATIVE,    100));
-               eLink    = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_PIERCING,    100));
-               eLink    = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_POSITIVE,    100));
-               eLink    = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_SLASHING,    100));
-               eLink    = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_SONIC,       100));
-        // Specific immunities
-               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_ABILITY_DECREASE));
-               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_BLINDNESS));
-               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_DEAFNESS));
-               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_CRITICAL_HIT));
-               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_DEATH));
-               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_DISEASE));
-               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_ENTANGLE));
-               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_SLOW));
-               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_KNOCKDOWN));
-               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_NEGATIVE_LEVEL));
-               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_PARALYSIS));
-               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_SILENCE));
-               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_SNEAK_ATTACK));
-               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_TRAP));
-               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_MIND_SPELLS));
-       // Random stuff
-       	       eLink      = EffectLinkEffects(eLink, EffectCutsceneGhost());
-       	       eLink      = EffectLinkEffects(eLink, EffectCutsceneImmobilize());
-       	       eLink      = EffectLinkEffects(eLink, EffectEthereal());
-       	       eLink      = EffectLinkEffects(eLink, EffectAttackDecrease(50));
-       	       eLink      = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_CUTSCENE_INVISIBILITY));
-       	       // Permanent until Scry ends
-       	       ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(eLink), oPC, GetLocalFloat(oPC, "ScryDuration") + 6.0);
-
-    // Create array for storing a list of the nerfed weapons in
-    array_create(oPC, "Scry_Nerfed");
-
-    object oWeapon;
-    itemproperty ipNoDam = ItemPropertyNoDamage();
-    oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
-    if(IPGetIsMeleeWeapon(oWeapon)){
-        if(!GetItemHasItemProperty(oWeapon, ITEM_PROPERTY_NO_DAMAGE)){
-            //SetLocalInt(oWeapon, "BaelnornProjection_NoDamage", TRUE);
-            AddItemProperty(DURATION_TYPE_PERMANENT, ipNoDam, oWeapon);
-            array_set_object(oPC, "Scry_Nerfed", array_get_size(oPC, "Scry_Nerfed"), oWeapon);
-        }
-        // Check left hand only if right hand had a weapon
-        oWeapon = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
-        if(IPGetIsMeleeWeapon(oWeapon)){
-            if(!GetItemHasItemProperty(oWeapon, ITEM_PROPERTY_NO_DAMAGE)){
-                //SetLocalInt(oWeapon, "BaelnornProjection_NoDamage", TRUE);
-                AddItemProperty(DURATION_TYPE_PERMANENT, ipNoDam, oWeapon);
-                array_set_object(oPC, "Scry_Nerfed", array_get_size(oPC, "Scry_Nerfed"), oWeapon);
-        }}
-    }else if(IPGetIsRangedWeapon(oWeapon)){
-        if(!GetItemHasItemProperty(oWeapon, ITEM_PROPERTY_NO_DAMAGE)){
-            //SetLocalInt(oWeapon, "BaelnornProjection_NoDamage", TRUE);
-            AddItemProperty(DURATION_TYPE_PERMANENT, ipNoDam, oWeapon);
-            array_set_object(oPC, "Scry_Nerfed", array_get_size(oPC, "Scry_Nerfed"), oWeapon);
-    }}
-
-    oWeapon = GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oPC);
-    if(GetIsObjectValid(oWeapon)){
-        if(!GetItemHasItemProperty(oWeapon, ITEM_PROPERTY_NO_DAMAGE)){
-            //SetLocalInt(oWeapon, "BaelnornProjection_NoDamage", TRUE);
-            AddItemProperty(DURATION_TYPE_PERMANENT, ipNoDam, oWeapon);
-            array_set_object(oPC, "Scry_Nerfed", array_get_size(oPC, "Scry_Nerfed"), oWeapon);
-    }}
-    oWeapon = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oPC);
-    if(GetIsObjectValid(oWeapon)){
-        if(!GetItemHasItemProperty(oWeapon, ITEM_PROPERTY_NO_DAMAGE)){
-            //SetLocalInt(oWeapon, "BaelnornProjection_NoDamage", TRUE);
-            AddItemProperty(DURATION_TYPE_PERMANENT, ipNoDam, oWeapon);
-            array_set_object(oPC, "Scry_Nerfed", array_get_size(oPC, "Scry_Nerfed"), oWeapon);
-    }}
-    oWeapon = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oPC);
-    if(GetIsObjectValid(oWeapon)){
-        if(!GetItemHasItemProperty(oWeapon, ITEM_PROPERTY_NO_DAMAGE)){
-            //SetLocalInt(oWeapon, "BaelnornProjection_NoDamage", TRUE);
-            AddItemProperty(DURATION_TYPE_PERMANENT, ipNoDam, oWeapon);
-            array_set_object(oPC, "Scry_Nerfed", array_get_size(oPC, "Scry_Nerfed"), oWeapon);
-    }}
-}
-*/
-
 
 //Undoes changes made in ApplyScryEffects().
 void RemoveScryEffects(object oPC)
@@ -586,4 +493,64 @@ void LocateCreatureOrObject(object oPC, object oTarget)
 	DeleteLocalInt(oPC, "ScrySpellId");
 	DeleteLocalInt(oPC, "ScrySpellDC");
 	DeleteLocalFloat(oPC, "ScryDuration"); 	
+}
+
+void CleanCopy(object oImage)
+{
+    SetLootable(oImage, FALSE);
+    // remove inventory contents
+    object oItem = GetFirstItemInInventory(oImage);
+    while(GetIsObjectValid(oItem))
+    {
+        SetPlotFlag(oItem,FALSE);
+        if(GetHasInventory(oItem))
+        {
+            object oItem2 = GetFirstItemInInventory(oItem);
+            while(GetIsObjectValid(oItem2))
+            {
+                object oItem3 = GetFirstItemInInventory(oItem2);
+                while(GetIsObjectValid(oItem3))
+                {
+                    SetPlotFlag(oItem3,FALSE);
+                    DestroyObject(oItem3);
+                    oItem3 = GetNextItemInInventory(oItem2);
+                }
+                SetPlotFlag(oItem2,FALSE);
+                DestroyObject(oItem2);
+                oItem2 = GetNextItemInInventory(oItem);
+            }
+        }
+        DestroyObject(oItem);
+        oItem = GetNextItemInInventory(oImage);
+    }
+    // remove non-visible equipped items
+    int i;
+    for(i=0;i<NUM_INVENTORY_SLOTS;i++)//equipment
+    {
+        oItem = GetItemInSlot(i, oImage);
+        if(GetIsObjectValid(oItem))
+        {
+            if(i == INVENTORY_SLOT_HEAD || i == INVENTORY_SLOT_CHEST ||
+                i == INVENTORY_SLOT_RIGHTHAND || i == INVENTORY_SLOT_LEFTHAND ||
+                i == INVENTORY_SLOT_CLOAK) // visible equipped items
+            {
+                SetDroppableFlag(oItem, FALSE);
+                SetItemCursedFlag(oItem, TRUE);
+                // remove all item properties
+                itemproperty ipLoop=GetFirstItemProperty(oItem);
+                while (GetIsItemPropertyValid(ipLoop))
+                {
+                    RemoveItemProperty(oItem, ipLoop);
+                    ipLoop=GetNextItemProperty(oItem);
+                }
+            }
+            else // can't see it so destroy
+            {                
+                SetPlotFlag(oItem,FALSE);
+                DestroyObject(oItem);
+            }
+        }
+        
+    }
+    TakeGoldFromCreature(GetGold(oImage), oImage, TRUE);
 }

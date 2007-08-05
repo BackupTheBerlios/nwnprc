@@ -125,7 +125,7 @@ int GetSpellbookTypeForClass(int nClass)
         case CLASS_TYPE_FAVOURED_SOUL:
         case CLASS_TYPE_HEXBLADE:
         case CLASS_TYPE_DUSKBLADE:
-	case CLASS_TYPE_WARMAGE:
+    case CLASS_TYPE_WARMAGE:
             return SPELLBOOK_TYPE_SPONTANEOUS;
         //outsider HD count as sorc for raks
         case CLASS_TYPE_OUTSIDER: {
@@ -503,57 +503,6 @@ void RemoveSpellUse(object oPC, int nSpellID, int nClass)
         if(nCount > 0)
             persistant_array_set_int(oPC, "NewSpellbookMem_" + IntToString(nClass), nSpellLevel, nCount - 1);
     }
-}
-
-int GetSpellUses(object oPC, int nSpellID, int nClass)
-{
-    string sFile = GetFileForClass(nClass);
-    int nSpellbookID = SpellToSpellbookID(nSpellID);
-    if(nSpellbookID == -1)
-    {
-        DoDebug("ERROR: GetSpellUses: Unable to resolve spell to spellbookID: "+IntToString(nSpellID)+" "+sFile);
-        return 0;
-    }
-
-    // check if this spell actually belong to this class
-    if (nSpellID != StringToInt(Get2DACache(sFile, "SpellID", nSpellbookID)))
-        return 0;
-
-    // check for the metamagic feat
-    string sReqFeat = Get2DACache(sFile, "ReqFeat", nSpellbookID);
-    if (sReqFeat != "" && !GetHasFeat(StringToInt(sReqFeat), oPC))
-        return 0;
-
-    if(!persistant_array_exists(oPC, "NewSpellbookMem_"+IntToString(nClass)))
-    {
-        if(DEBUG) DoDebug("GetSpellUses: NewSpellbookMem_" + IntToString(nClass) + " does not exist, creating.");
-        persistant_array_create(oPC, "NewSpellbookMem_"+IntToString(nClass));
-    }
-    int nSpellbookType = GetSpellbookTypeForClass(nClass);
-    //get uses remaining
-    int nCount;
-
-    if(nSpellbookType == SPELLBOOK_TYPE_PREPARED)
-    {
-        nCount = persistant_array_get_int(oPC, "NewSpellbookMem_"+IntToString(nClass), nSpellbookID);
-    }
-    else if(nSpellbookType == SPELLBOOK_TYPE_SPONTANEOUS)
-    {
-        int iSize = persistant_array_get_size(oPC, "Spellbook"+IntToString(nClass));
-        int i = 0;
-        int bHas = FALSE;
-        while (i < iSize && !bHas)
-        {
-            if (nSpellbookID == persistant_array_get_int(oPC, "Spellbook"+IntToString(nClass), i))
-                bHas = TRUE;
-            i++;
-        }
-        if (!bHas)
-            return 0;
-        int nSpellLevel = StringToInt(Get2DACache(sFile, "Level", nSpellbookID));
-        nCount = persistant_array_get_int(oPC, "NewSpellbookMem_"+IntToString(nClass), nSpellLevel);
-    }
-    return nCount;
 }
 
 int GetSpellLevel(object oPC, int nSpellID, int nClass)

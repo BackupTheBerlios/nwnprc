@@ -35,10 +35,30 @@ void main()
         effect eVis      = EffectVisualEffect(VFX_FNF_LOS_HOLY_20);
         effect eVisFail  = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
         // If the target is of a race that could be resurrected, go ahead.
-        if (MyPRCGetRacialType(oTarget) != RACIAL_TYPE_CONSTRUCT &&
+        int bRaise = FALSE;
+        if (GetIsPC(oTarget)) 
+        {
+            if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD ||
+               (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_OUTSIDER && 
+                    (GetRacialType(oTarget) == RACIAL_TYPE_RAKSHASA || 
+                    GetRacialType(oTarget) == RACIAL_TYPE_AZER ||
+                    GetRacialType(oTarget) == RACIAL_TYPE_NERAPHIM ||
+                    GetRacialType(oTarget) == RACIAL_TYPE_SHADOWSWYFT)))
+                bRaise = FALSE;
+            else
+                bRaise = TRUE;
+        }
+        else // NPC
+        {
+            if(MyPRCGetRacialType(oTarget) != RACIAL_TYPE_CONSTRUCT &&
             MyPRCGetRacialType(oTarget) != RACIAL_TYPE_OUTSIDER &&
             MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD &&
             MyPRCGetRacialType(oTarget) != RACIAL_TYPE_ELEMENTAL)
+            bRaise = TRUE;
+               
+        }
+        
+        if(bRaise)
         {
             ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, lTarget);
             PenalizeSpellSlotForCaster(oCaster);

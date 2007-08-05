@@ -138,6 +138,9 @@ const int SYLLABLE_AFFLICATION_TOUCH   = 3422;
 const int SYLLABLE_EXILE 	       = 3423;
 const int SYLLABLE_DISSOLUTION	       = 3424;
 const int SYLLABLE_ENERVATION	       = 3425;
+
+// Truenamer
+const int TRUE_SEE_THE_NAMED	   = 3415;
 				       
 // Brimstone Speaker
 const int BRIMSTONE_FIRE_3D6	   = 3426;

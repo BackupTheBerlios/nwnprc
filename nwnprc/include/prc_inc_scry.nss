@@ -20,6 +20,7 @@
 
 #include "psi_inc_psifunc"
 #include "inc_utility"
+#include "prc_utter_const"
 
 ///////////////////////
 /* Public Constants  */
@@ -197,7 +198,7 @@ void ScryMain(object oPC, object oTarget)
     }     
     
     if (nSpell != SPELL_CLAIRAUDIENCE_AND_CLAIRVOYANCE && nSpell != POWER_CLAIRTANGENT_HAND && 
-        nSpell != POWER_CLAIRVOYANT_SENSE && oPC != oTarget) // No save if you target yourself.
+        nSpell != POWER_CLAIRVOYANT_SENSE && nSpell != TRUE_SEE_THE_NAMED && oPC != oTarget) // No save if you target yourself.
     {
     	//Make SR Check
     	if (MyPRCResistSpell(oPC, oTarget, nCasterLevel)) 
@@ -421,7 +422,11 @@ void ScryMonitor(object oPC, object oCopy)
             DoScryEnd(oPC, oCopy);
         }
         else
+        {
+            // This makes sure you are invisible.
+            ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(EffectEthereal()), oPC, SCRY_HB_DELAY + 0.3);
             DelayCommand(SCRY_HB_DELAY, ScryMonitor(oPC, oCopy));
+        }
         
         //If duration expired, end effect
         if(GetLocalInt(oPC, "SCRY_EXPIRED"))

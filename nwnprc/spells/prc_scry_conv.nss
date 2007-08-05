@@ -210,8 +210,25 @@ void main()
             if(nChoice == TRUE)
             {
                 object oChoice = RetrievePC(oPC, GetLocalInt(oPC, "ScryChoice"));
-                // The function will take it from here
-                ScryMain(oPC, oChoice);
+                
+                // This is only used by See the Named, otherwise it should fail to fire.
+                if(GetLocalInt(oPC, "SeeTheNamed"))
+                {
+                	int nDC = 15 + (2 * FloatToInt(GetChallengeRating(oChoice)));
+                	if (GetIsSkillSuccessful(oPC, SKILL_TRUESPEAK, nDC))
+                	{	// The function will take it from here
+                		ScryMain(oPC, oChoice);
+                	}
+                	else // Clean up effects
+                	{
+                		RemoveSpellEffects(TRUE_SEE_THE_NAMED, oPC, oPC);
+                	}
+                }
+                else 
+                {
+                	// The function will take it from here
+                	ScryMain(oPC, oChoice);
+                }
 
                 // And we're all done
                 AllowExit(DYNCONV_EXIT_FORCE_EXIT);

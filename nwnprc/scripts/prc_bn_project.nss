@@ -55,7 +55,7 @@ void EndPosses(object oPC, object oCopy);
 void ProjectionMonitor(object oPC, object oCopy);
 void NerfWeapons(object oPC);
 void UnNerfWeapons(object oPC);
-
+void CleanCopy(object oImage);
 
 
 //////////////////////////////////////////////////
@@ -90,6 +90,7 @@ void main()
 
     // Create the copy
     oCopy = CopyObject(oPC, lTarget, OBJECT_INVALID, GetName(oPC) + "_" + COPY_LOCAL_NAME);
+    CleanCopy(oCopy);
     // Set the copy to be undestroyable, so that it won't vanish to the ether
     // along with the PC's items.
     AssignCommand(oCopy, SetIsDestroyable(FALSE, FALSE, FALSE));
@@ -268,7 +269,7 @@ void ProjectionMonitor(object oPC, object oCopy)
     {
         EndPosses(oPC, oCopy);
         effect eKill = EffectDamage(GetCurrentHitPoints(oPC), DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_ENERGY);
-        ApplyEffectToObject(DURATION_TYPE_INSTANT, eKill, oPC);
+        DelayCommand(3.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eKill, oPC));
     }
     // Transfer 1/2 damage taken by the "projection" to the "original"
     else
@@ -425,4 +426,64 @@ void UnNerfWeapons(object oPC)
         }
         oWeapon = GetNextItemInInventory(oPC);
     }*/
+}
+
+void CleanCopy(object oImage)
+{
+    SetLootable(oImage, FALSE);
+    // remove inventory contents
+    object oItem = GetFirstItemInInventory(oImage);
+    while(GetIsObjectValid(oItem))
+    {
+        SetPlotFlag(oItem,FALSE);
+        if(GetHasInventory(oItem))
+        {
+            object oItem2 = GetFirstItemInInventory(oItem);
+            while(GetIsObjectValid(oItem2))
+            {
+                object oItem3 = GetFirstItemInInventory(oItem2);
+                while(GetIsObjectValid(oItem3))
+                {
+                    SetPlotFlag(oItem3,FALSE);
+                    DestroyObject(oItem3);
+                    oItem3 = GetNextItemInInventory(oItem2);
+                }
+                SetPlotFlag(oItem2,FALSE);
+                DestroyObject(oItem2);
+                oItem2 = GetNextItemInInventory(oItem);
+            }
+        }
+        DestroyObject(oItem);
+        oItem = GetNextItemInInventory(oImage);
+    }
+    // remove non-visible equipped items
+    int i;
+    for(i=0;i<NUM_INVENTORY_SLOTS;i++)//equipment
+    {
+        oItem = GetItemInSlot(i, oImage);
+        if(GetIsObjectValid(oItem))
+        {
+            if(i == INVENTORY_SLOT_HEAD || i == INVENTORY_SLOT_CHEST ||
+                i == INVENTORY_SLOT_RIGHTHAND || i == INVENTORY_SLOT_LEFTHAND ||
+                i == INVENTORY_SLOT_CLOAK) // visible equipped items
+            {
+                SetDroppableFlag(oItem, FALSE);
+                SetItemCursedFlag(oItem, TRUE);
+                // remove all item properties
+                itemproperty ipLoop=GetFirstItemProperty(oItem);
+                while (GetIsItemPropertyValid(ipLoop))
+                {
+                    RemoveItemProperty(oItem, ipLoop);
+                    ipLoop=GetNextItemProperty(oItem);
+                }
+            }
+            else // can't see it so destroy
+            {                
+                SetPlotFlag(oItem,FALSE);
+                DestroyObject(oItem);
+            }
+        }
+        
+    }
+    TakeGoldFromCreature(GetGold(oImage), oImage, TRUE);
 }

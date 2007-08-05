@@ -85,7 +85,14 @@ void main()
 
 void TombLoop(object oPC, object oTarget)
 {
-	X2DoBreakConcentrationCheck();
+	// if target creature is dead/invalid, stop
+    if(GetIsDead(oTarget) || !GetIsObjectValid(oTarget))
+        return;
+    
+    // concentration check
+    if(GetBreakConcentrationCheck(oPC))
+        return;
+    
 	//Save
 	
 	if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, SPGetSpellSaveDC(oTarget, oPC), SAVING_THROW_TYPE_GOOD))

@@ -666,6 +666,10 @@ int GetBreakConcentrationCheck(object oConcentrator)
         }
         e1 = GetNextEffect(oConcentrator);
     }
+    // add to on damage event
+    AddEventScript(oConcentrator, EVENT_VIRTUAL_ONDAMAGED, "prc_od_conc", FALSE, FALSE);
+    if(GetLocalInt(oConcentrator, "CONC_BROKEN")) // won't be set first time around regardless
+        return TRUE;
     return FALSE;
 }
 

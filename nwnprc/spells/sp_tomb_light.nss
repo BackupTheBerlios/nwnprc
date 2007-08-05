@@ -63,6 +63,7 @@ void main()
 	object oPC = OBJECT_SELF;
 	object oTarget = GetSpellTargetObject();
 	int nCasterLvl = PRCGetCasterLevel(oPC);
+    int nSpellID = PRCGetSpellId();
 	
 	//Fire cast spell at event for the specified target
 	SignalEvent(oTarget, EventSpellCastAt(oPC, PRCGetSpellId()));
@@ -73,7 +74,8 @@ void main()
 		{
 			if((GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL) && (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_OUTSIDER))
 			{
-				TombLoop(oPC, oTarget);
+				SetLocalInt(oPC, "CONC_SPELL_LEVEL", PRCGetSpellLevel(oPC, nSpellID));
+                TombLoop(oPC, oTarget);
 			}
 		}
 	}
@@ -85,13 +87,13 @@ void main()
 
 void TombLoop(object oPC, object oTarget)
 {
-	// if target creature is dead/invalid, stop
-    if(GetIsDead(oTarget) || !GetIsObjectValid(oTarget))
+	// if target creature is dead/invalid, or if caster breaks concentration, stop
+    if(GetIsDead(oTarget) || !GetIsObjectValid(oTarget) || GetBreakConcentrationCheck(oPC))
+    {
+        RemoveEventScript(oPC, EVENT_VIRTUAL_ONDAMAGED, "prc_od_conc"); // double check it's gone
+        DeleteLocalInt(oPC, "CONC_SPELL_LEVEL");
         return;
-    
-    // concentration check
-    if(GetBreakConcentrationCheck(oPC))
-        return;
+    }
     
 	//Save
 	
@@ -110,6 +112,11 @@ void TombLoop(object oPC, object oTarget)
 		
 		DelayCommand(6.0f, TombLoop(oPC, oTarget));
 	}
+    else // tidy up
+    {
+        RemoveEventScript(oPC, EVENT_VIRTUAL_ONDAMAGED, "prc_od_conc"); // double check it's gone
+        DeleteLocalInt(oPC, "CONC_SPELL_LEVEL");
+    }
 }
 		
 		

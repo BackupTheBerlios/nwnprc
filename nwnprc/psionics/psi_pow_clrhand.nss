@@ -14,7 +14,7 @@ Power Resistance: No
 Power Points: 9
 Metapsionics: Extend
 
-You can see and hear some creature, which may be at any distance. Only Far Hand may be manifest while using this power.
+You can see and hear some creature, which may be at any distance. Only Far Hand may be manifested while using this power.
 
 Valid targets are any monster within the same area as the caster, or any PC.
 */

@@ -14099,7 +14099,7 @@
 14095 AnimalAffinity                                            ****            1        1      1        2     0           
 14096 StrengthOfMyEnemy                                         ****            1        1      1        2     0           
 14097 Chameleon                                                 ****            1        1      1        2     0           
-14098 **Level_2_Powers**                                        ****            1        1      1        ****  0           
+14098 ClairvoyantSense                                          ****            1        1      1        2     0           
 14099 **Level_2_Powers**                                        ****            1        1      1        ****  0           
 14100 **Level_3_Powers**                                        ****            1        1      1        ****  0           
 14101 BodyAdjustment                                            ****            1        1      1        3     0           
@@ -14148,13 +14148,13 @@
 14144 ClawOfTheVampire                                          ****            1        1      1        3     0           
 14145 DuodimensionalClaw                                        ****            1        1      1        3     0           
 14146 VampiricWeapon                                            ****            1        1      1        3     0           
-14147 **Level_3_Powers**                                        ****            1        1      1        ****  0           
+14147 EscapeDetection                                           ****            1        1      1        3     0           
 14148 **Level_3_Powers**                                        ****            1        1      1        ****  0           
 14149 **Level_3_Powers**                                        ****            1        1      1        ****  0           
 14150 **Level_4_Powers**                                        ****            1        1      1        ****  0           
 14151 InertialBar                                               ****            1        1      1        4     0           
 14152 SteadfastPercep                                           ****            1        1      1        4     0           
-14153 **Level_4_Powers**                                        ****            1        1      1        ****  0           
+14153 DetectRemoteViewing                                       ****            1        1      1        4     0           
 14154 EmpathicFeedback                                          ****            1        1      1        4     0           
 14155 EnergyAdaption                                            ****            1        1      1        4     0           
 14156 Freedom_of_Movement                                       ****            1        1      1        4     0           
@@ -14185,7 +14185,7 @@
 14181 WeaponofEnergyElec                                        ****            1        1      1        4     0           
 14182 WeaponofEnergyFire                                        ****            1        1      1        4     0           
 14183 IntellectFortress                                         ****            1        1      1        4     0           
-14184 **Level_4_Powers**                                        ****            1        1      1        ****  0           
+14184 RemoteViewing                                             ****            1        1      1        5     0           
 14185 **Level_4_Powers**                                        ****            1        1      1        ****  0           
 14186 **Level_4_Powers**                                        ****            1        1      1        ****  0           
 14187 **Level_4_Powers**                                        ****            1        1      1        ****  0           
@@ -14210,7 +14210,7 @@
 14206 EnergyCurrent_Sonic                                       ****            1        1      1        5     0           
 14207 PsionicRevivify                                           ****            1        1      1        5     0           
 14208 Psychofeedback                                            ****            1        1      1        5     0           
-14209 **Level_5_Powers**                                        ****            1        1      1        ****  0           
+14209 ClairtangentHand                                          ****            1        1      1        5     0           
 14210 **Level_5_Powers**                                        ****            1        1      1        ****  0           
 14211 **Level_5_Powers**                                        ****            1        1      1        ****  0           
 14212 **Level_5_Powers**                                        ****            1        1      1        ****  0           
@@ -14248,7 +14248,7 @@
 14244 DispellingBuffer                                          ****            1        1      1        6     0           
 14245 FormOfDoom                                                ****            1        1      1        6     0           
 14246 NullPsionicsField                                         ****            1        1      1        6     0           
-14247 **Level_6_Powers**                                        ****            1        1      1        ****  0           
+14247 RemoteViewTrap                                            ****            1        1      1        6     0           
 14248 **Level_6_Powers**                                        ****            1        1      1        ****  0           
 14249 **Level_6_Powers**                                        ****            1        1      1        ****  0           
 14250 **Level_6_Powers**                                        ****            1        1      1        ****  0           
@@ -14290,7 +14290,7 @@
 14286 EctoCocoonMass                                            ****            1        1      1        7     0           
 14287 EtherealJaunt                                             ****            1        1      1        7     0           
 14288 Reddopsi                                                  ****            1        1      1        7     0           
-14289 **Level_7_Powers**                                        ****            1        1      1        ****  0           
+14289 Sequester                                                 ****            1        1      1        7     0           
 14290 **Level_7_Powers**                                        ****            1        1      1        ****  0           
 14291 **Level_7_Powers**                                        ****            1        1      1        ****  0           
 14292 **Level_7_Powers**                                        ****            1        1      1        ****  0           
@@ -14460,7 +14460,7 @@
 14456 Energy_Missile_Sonic                                      ****            1        1      1        2     0           
 14457 AnimalAffinity                                            ****            1        1      1        2     0           
 14458 Chameleon                                                 ****            1        1      1        2     0           
-14459 **Level_2_Psion**                                         ****            1        1      1        ****  0           
+14459 ClairvoyantSense                                          ****            1        1      1        2     0           
 14460 **Level_3_Psion**                                         ****            1        1      1        ****  0           
 14461 BodyAdjustment                                            ****            1        1      1        3     0           
 14462 Greater_Amorpha                                           ****            1        1      1        3     0           
@@ -14508,7 +14508,7 @@
 14504 EnergyCone_Elec                                           ****            1        1      1        3     0           
 14505 EnergyCone_Fire                                           ****            1        1      1        3     0           
 14506 EnergyCone_Sonic                                          ****            1        1      1        3     0           
-14507 **Level_3_Psion**                                         ****            1        1      1        ****  0           
+14507 EscapeDetection                                           ****            1        1      1        3     0           
 14508 **Level_3_Psion**                                         ****            1        1      1        ****  0           
 14509 **Level_3_Psion**                                         ****            1        1      1        ****  0           
 14510 **Level_4_Psion**                                         ****            1        1      1        ****  0           
@@ -14526,7 +14526,7 @@
 14522 DimensionDoor_SelfOnly                                    ****            1        1      1        4     0           
 14523 DimensionDoor_Party                                       ****            1        1      1        4     0           
 14524 Dominate_Psionic                                          ****            1        1      1        4     0           
-14525 **Level_4_Psion**                                         ****            1        1      1        ****  0           
+14525 DetectRemoteViewing                                       ****            1        1      1        4     0           
 14526 DimensionDoor_DirDist_SelfOnly                            ****            1        1      1        4     0           
 14527 DimensionDoor_DirDist_Party                               ****            1        1      1        4     0           
 14528 EnergyBall_RadialMaster                                   ****            1        1      1        4     0           
@@ -14536,7 +14536,7 @@
 14532 EnergyBall_Sonic                                          ****            1        1      1        4     0           
 14533 PsychicVampire                                            ****            1        1      1        4     0           
 14534 IntellectFortress                                         ****            1        1      1        4     0           
-14535 **Level_4_Psion**                                         ****            1        1      1        ****  0           
+14535 RemoteViewing                                             ****            1        1      1        5     0           
 14536 **Level_4_Psion**                                         ****            1        1      1        ****  0           
 14537 **Level_4_Psion**                                         ****            1        1      1        ****  0           
 14538 **Level_4_Psion**                                         ****            1        1      1        ****  0           
@@ -14572,7 +14572,7 @@
 14568 EnergyCurrent_Sonic                                       ****            1        1      1        5     0           
 14569 PsionicRevivify                                           ****            1        1      1        5     0           
 14570 Psychofeedback                                            ****            1        1      1        5     0           
-14571 **Level_5_Psion**                                         ****            1        1      1        ****  0           
+14571 ClairtangentHand                                          ****            1        1      1        5     0           
 14572 **Level_5_Psion**                                         ****            1        1      1        ****  0           
 14573 **Level_5_Psion**                                         ****            1        1      1        ****  0           
 14574 **Level_5_Psion**                                         ****            1        1      1        ****  0           
@@ -14608,7 +14608,7 @@
 14604 RestorationPsionic                                        ****            1        1      1        6     0           
 14605 DispellingBuffer                                          ****            1        1      1        6     0           
 14606 NullPsionicsField                                         ****            1        1      1        6     0           
-14607 **Level_6_Psion**                                         ****            1        1      1        ****  0           
+14607 RemoteViewTrap                                            ****            1        1      1        6     0           
 14608 **Level_6_Psion**                                         ****            1        1      1        ****  0           
 14609 **Level_6_Psion**                                         ****            1        1      1        ****  0           
 14610 **Level_6_Psion**                                         ****            1        1      1        ****  0           
@@ -14652,7 +14652,7 @@
 14648 EctoCocoonMass                                            ****            1        1      1        7     0           
 14649 EtherealJaunt                                             ****            1        1      1        7     0           
 14650 Reddopsi                                                  ****            1        1      1        7     0           
-14651 **Level_7_Psion**                                         ****            1        1      1        ****  0           
+14651 Sequester                                                 ****            1        1      1        7     0           
 14652 **Level_7_Psion**                                         ****            1        1      1        ****  0           
 14653 **Level_7_Psion**                                         ****            1        1      1        ****  0           
 14654 **Level_7_Psion**                                         ****            1        1      1        ****  0           
@@ -14885,7 +14885,7 @@
 14881 DimensionDoor_DirDist_SelfOnly                            ****            1        1      1        4     0           
 14882 DimensionDoor_DirDist_Party                               ****            1        1      1        4     0           
 14883 IntellectFortress                                         ****            1        1      1        4     0           
-14884 **Level_4_Wilder**                                        ****            1        1      1        ****  0           
+14884 DetectRemoteViewing                                       ****            1        1      1        4     0           
 14885 **Level_4_Wilder**                                        ****            1        1      1        ****  0           
 14886 **Level_4_Wilder**                                        ****            1        1      1        ****  0           
 14887 **Level_4_Wilder**                                        ****            1        1      1        ****  0           
@@ -14957,7 +14957,7 @@
 14953 FuseFlesh                                                 ****            1        1      1        6     0           
 14954 Retrieve                                                  ****            1        1      1        6     1           
 14955 TemporalAcceleration                                      ****            1        1      1        6     0           
-14956 **Level_6_Wilder**                                        ****            1        1      1        ****  0           
+14956 RemoteViewTrap                                            ****            1        1      1        6     0           
 14957 **Level_6_Wilder**                                        ****            1        1      1        ****  0           
 14958 **Level_6_Wilder**                                        ****            1        1      1        ****  0           
 14959 **Level_6_Wilder**                                        ****            1        1      1        ****  0           
@@ -15008,7 +15008,7 @@
 15004 MomentOfPrescienceArmour                                  ****            1        1      1        7     0           
 15005 MomentOfPrescienceSaves                                   ****            1        1      1        7     0           
 15006 MomentOfPrescienceSkills                                  ****            1        1      1        7     0           
-15007 **Level_7_Wilder**                                        ****            1        1      1        ****  0           
+15007 Sequester                                                 ****            1        1      1        7     0           
 15008 **Level_7_Wilder**                                        ****            1        1      1        ****  0           
 15009 **Level_7_Wilder**                                        ****            1        1      1        ****  0           
 15010 **Level_7_Wilder**                                        ****            1        1      1        ****  0           
@@ -15195,7 +15195,7 @@
 15191 ClawOfTheVampire                                          ****            1        1      1        3     0           
 15192 DuodimensionalClaw                                        ****            1        1      1        3     0           
 15193 VampiricWeapon                                            ****            1        1      1        3     0           
-15194 **Level_3_PsyWar**                                        ****            1        1      1        ****  0           
+15194 EscapeDetection                                           ****            1        1      1        3     0           
 15195 **Level_3_PsyWar**                                        ****            1        1      1        ****  0           
 15196 **Level_3_PsyWar**                                        ****            1        1      1        ****  0           
 15197 **Level_3_PsyWar**                                        ****            1        1      1        ****  0           
@@ -15808,7 +15808,7 @@
 15804 DuodimensionalClaw                                        ****            1        1      1        3     ****        
 15805 VampiricWeapon                                            ****            1        1      1        3     ****        
 15806 Exhale_BlackDrag                                          ****            1        1      1        3     ****        
-15807 **Level_3_FistoZ**                                        ****            1        1      1        ****  ****        
+15807 EscapeDetection                                           ****            1        1      1        3     ****        
 15808 **Level_3_FistoZ**                                        ****            1        1      1        ****  ****        
 15809 **Level_3_FistoZ**                                        ****            1        1      1        ****  ****        
 15810 **Level_3_FistoZ**                                        ****            1        1      1        ****  ****        
@@ -15968,7 +15968,7 @@
 15964 DuodimensionalClaw                                        ****            1        1      1        3     ****        
 15965 VampiricWeapon                                            ****            1        1      1        3     ****        
 15966 Exhale_BlackDrag                                          ****            1        1      1        3     ****        
-15967 **Level_3_Warmnd**                                        ****            1        1      1        ****  ****        
+15967 EscapeDetection                                           ****            1        1      1        3     ****        
 15968 **Level_3_Warmnd**                                        ****            1        1      1        ****  ****        
 15969 **Level_3_Warmnd**                                        ****            1        1      1        ****  ****        
 15970 **Level_3_Warmnd**                                        ****            1        1      1        ****  ****        

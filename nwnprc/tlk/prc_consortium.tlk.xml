@@ -18985,7 +18985,7 @@ Use: Selected.</entry>
   <entry id="50295" lang="en" sex="m">See the Named</entry>
   <entry id="50296" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Truenamer level 9
-Specifics: You see the named creature for one round, as per the Scry spell.
+Specifics: You see the named creature for one round, as per the Scry spell. You must succeed on a Truespeak check at the normal DC versus the targeted creature. This can be used once per day.
 Use: Selected.</entry>
   <entry id="50297" lang="en" sex="m">Speak Unto The Masses</entry>
   <entry id="50298" lang="en" sex="m">Type of Feat: Class Specific

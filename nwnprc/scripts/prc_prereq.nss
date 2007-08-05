@@ -502,12 +502,12 @@ void CombatMedic(object oPC)
         SetLocalInt(oPC, "PRC_PrereqCbtMed", 0);
         return;
     }
-    
+
     if (GetLevelByClass(CLASS_TYPE_FAVOURED_SOUL) && PRCGetHasSpell(SPELL_CURE_LIGHT_WOUNDS, oPC))
     {
         SetLocalInt(oPC, "PRC_PrereqCbtMed", 0);
         return;
-    }    
+    }
 
     if (GetLevelByClass(CLASS_TYPE_PALADIN))
     {
@@ -590,11 +590,13 @@ void RedWizard(object oPC)
     iFeat = GetHasFeat(FEAT_BREW_POTION, oPC)      + GetHasFeat(FEAT_CRAFT_WAND, oPC) +
             GetHasFeat(FEAT_EMPOWER_SPELL, oPC)    + GetHasFeat(FEAT_EXTEND_SPELL, oPC) +
             GetHasFeat(FEAT_MAXIMIZE_SPELL, oPC)   + GetHasFeat(FEAT_QUICKEN_SPELL, oPC) +
-            GetHasFeat(FEAT_SILENCE_SPELL, oPC)    + 
+            GetHasFeat(FEAT_SILENCE_SPELL, oPC)    +
             GetHasFeat(FEAT_CRAFT_WONDROUS, oPC)   + GetHasFeat(FEAT_CRAFT_STAFF, oPC) +
             GetHasFeat(FEAT_CRAFT_ARMS_ARMOR, oPC) + GetHasFeat(FEAT_FORGE_RING, oPC) +
             GetHasFeat(FEAT_CRAFT_ROD, oPC)        + GetHasFeat(FEAT_CRAFT_CONSTRUCT, oPC) +
-            GetHasFeat(FEAT_SCRIBE_SCROLL, oPC)    + GetHasFeat(FEAT_STILL_SPELL, oPC);
+            GetHasFeat(FEAT_SCRIBE_SCROLL, oPC)    + GetHasFeat(FEAT_STILL_SPELL, oPC) +
+            GetHasFeat(FEAT_SUDDEN_EMPOWER, oPC) + GetHasFeat(FEAT_SUDDEN_MAXIMIZE, oPC) +
+            GetHasFeat(FEAT_SUDDEN_EXTEND, oPC) + GetHasFeat(FEAT_SUDDEN_WIDEN, oPC);
 
 
     // At least two arcane feats, one tattoo focus
@@ -655,9 +657,9 @@ void Thrallherd(object oPC)
     {
         // Technically, you must be able to manifest mindlink, and the only class that can do so is a Telepath Psion
         // Thus, this restriction.
-    	if (GetHasFeat(FEAT_PSION_DIS_TELEPATH, oPC))
-    	{
-        	SetLocalInt(oPC, "PRC_PrereqThrallherd", 0);
+        if (GetHasFeat(FEAT_PSION_DIS_TELEPATH, oPC))
+        {
+            SetLocalInt(oPC, "PRC_PrereqThrallherd", 0);
         }
     }
 }
@@ -783,7 +785,7 @@ void FistRaziel(object oPC)
         SetLocalInt(oPC, "PRC_PrereqFistRaz", 0);
         return;
     }
-    
+
     if (GetLevelByClass(CLASS_TYPE_PALADIN))
     {
         if(iWis > 11 && GetLevelByClass(CLASS_TYPE_PALADIN) >= 4)
@@ -797,12 +799,12 @@ void FistRaziel(object oPC)
             return;
         }
     }
-    
+
     if (PRCGetIsRealSpellKnown(SPELL_DIVINE_FAVOR, oPC))
     {
         SetLocalInt(oPC, "PRC_PrereqFistRaz", 0);
         return;
-    }    
+    }
 
 }
 

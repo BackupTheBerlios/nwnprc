@@ -47,7 +47,7 @@ void main()
                         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eRez, oTarget);
                         ExecuteScript("prc_pw_armyunfall", oTarget);
                         if(GetPRCSwitch(PRC_PW_DEATH_TRACKING) && GetIsPC(oTarget))
-                            SetPersistantLocalInt(oTarget, "persist_dead", TRUE);
+                            SetPersistantLocalInt(oTarget, "persist_dead", FALSE);
                     }                        
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink, oTarget);
                     nAlly++;

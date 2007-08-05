@@ -31,7 +31,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectResurrection(), oTarget);
             if(bRes) SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(GetMaxHitPoints(oTarget) + 10), oTarget);
             ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_RAISE_DEAD), GetLocation(oTarget));
-            ExecuteScript(bRes ? "prc_pw_ressurection" : "prc_pw_raisedead", oCaster);
+            ExecuteScript(bRes ? "prc_pw_res" : "prc_pw_raisedead", oCaster);
             if(GetPRCSwitch(PRC_PW_DEATH_TRACKING) && GetIsPC(oTarget))
                 SetPersistantLocalInt(oTarget, "persist_dead", FALSE);
         }

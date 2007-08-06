@@ -1730,6 +1730,11 @@ const string PRC_CRAFTING_TIME_SCALE                 = "PRC_CRAFTING_TIME_SCALE"
  * PRC_CRAFT_DISABLE_<name of crafting 2da file>_<line number of property>
  *
  * where the 2da files are named craft_* (lower case)
+ * or itempropdef in the case of arbitrary crafting
+ *
+ * eg. PRC_CRAFT_DISABLE_itempropdef_15
+ *
+ * disables all castspell properties in arbitrary crafting mode
  */
 
 /******************************************************************************\

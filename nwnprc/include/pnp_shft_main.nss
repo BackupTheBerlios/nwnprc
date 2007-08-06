@@ -51,6 +51,9 @@ int CanShift(object oPC);
 // Assumes oTarget is already a valid target
 // Return values: TRUE or FALSE
 int SetShiftEpic(object oPC, object oTarget);
+
+// helper function to SetVisualTrueForm() for DelayCommand() to work on
+void SetBodyPartTrueForm(object oPC, int i);
 // Transforms the oPC back to thier true form if they are shifted
 // Return values: TRUE or FALSE
 void SetShiftTrueForm(object oPC);
@@ -2134,6 +2137,14 @@ int SetShiftFromTemplateValidate(object oPC, string sTemplate, int iEpic)
     return bRetValue;
 }
 
+// helper function to SetVisualTrueForm() for DelayCommand() to work on
+void SetBodyPartTrueForm(object oPC, int i)
+{
+    int nBodyPartValue = GetPersistantLocalInt(oPC,    "AppearanceStoredPart"+IntToString(i));
+    if(GetCreatureBodyPart(i) != nBodyPartValue) // if the stored and current values are different
+        SetCreatureBodyPart(i, nBodyPartValue, oPC);
+}
+
 //returns the PC to their original form
 //purely visual
 void SetVisualTrueForm(object oPC)
@@ -2148,9 +2159,7 @@ void SetVisualTrueForm(object oPC)
         int i;
         for(i=0;i<=20;i++)
         {
-            DelayCommand(1.0,
-                SetCreatureBodyPart(i,
-                    GetPersistantLocalInt(oPC,    "AppearanceStoredPart"+IntToString(i)), oPC));
+            DelayCommand(1.0, SetBodyPartTrueForm(oPC, i));
         }
     }
     else

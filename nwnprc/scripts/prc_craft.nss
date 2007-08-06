@@ -301,7 +301,7 @@ void PopulateList(object oPC, int MaxValue, int bSort, string sTable, object oIt
             i = SkipLineItemprops(i);
             bValid = ValidProperty(oItem, i);
             if(bValid)
-                bValid = GetPRCSwitch("PRC_CRAFT_DISABLE_itempropdef_" + IntToString(i));
+                bValid = !GetPRCSwitch("PRC_CRAFT_DISABLE_itempropdef_" + IntToString(i));
         }
         else if(GetStringLeft(sTable, 6) == "craft_")
             bValid = array_get_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i);

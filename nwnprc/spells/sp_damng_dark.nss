@@ -5,7 +5,7 @@
 /**@file Damning Darkness
 Evocation [Darkness, Evil]
 Level: Clr 4, Darkness 4, Sor/Wiz 4
-Components: V, M/DF
+Components: V
 Casting Time: 1 action
 Range: Touch
 Target: Object touched
@@ -54,25 +54,21 @@ void main()
     int nMetaMagic = PRCGetMetaMagicFeat();
     float fDuration = (nCasterLvl * 600.0f);
     location lLoc = GetLocation(oTarget);
+   
+    //Make touch
+    int nTouch = PRCDoMeleeTouchAttack(oTarget);
     
-    //Check for Soul Rot
-    if(GetPersistantLocalInt(oPC, "PRC_Has_Soul_Rot"))
+    if(nTouch > 0)
     {
-        //Make touch
-        int nTouch = PRCDoMeleeTouchAttack(oTarget);
-        
-        if(nTouch > 0)
-        {
             //Check Extend metamagic feat.
             if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
             {
-                fDuration = fDuration *2;    //Duration is +100%
+                    fDuration = fDuration *2;    //Duration is +100%
             }
             
             //Create an instance of the AOE Object using the Apply Effect function
-            
             ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAOE, lLoc, fDuration);
-        }
+        
     }
     
     SPEvilShift(oPC);

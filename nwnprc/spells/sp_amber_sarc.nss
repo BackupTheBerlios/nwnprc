@@ -51,87 +51,87 @@ void MakeImmune(object oTarget, float fDur);
 
 void main()
 {
-	if(!X2PreSpellCastCode()) return;
-	
-	SPSetSchool(SPELL_SCHOOL_EVOCATION);
-			
-	object oPC = OBJECT_SELF;
-	object oTarget = GetSpellTargetObject();
-	int nCasterLvl = PRCGetCasterLevel(oPC);
-	int nMetaMagic = PRCGetMetaMagicFeat();
-	float fDur = HoursToSeconds(24 * nCasterLvl);
-		
-	if(nMetaMagic == METAMAGIC_EXTEND)
-	{
-		fDur += fDur;
-	}
-		
-	SPRaiseSpellCastAt(oTarget,TRUE, SPELL_AMBER_SARCOPHAGUS, oPC);
-	
-	//Make touch attack
-	int nTouch = PRCDoRangedTouchAttack(oTarget);
-		
-	if(nTouch)
-	{
-		//Sphere projectile VFX		
-		
-		if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
-		{
-			//Apply effects
-			effect eSarc = EffectLinkEffects(EffectTemporaryHitpoints(10 * min(20, nCasterLvl)), EffectCutsceneParalyze());
-			       eSarc = EffectLinkEffects(eSarc, EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MAJOR));
-				     			
-			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSarc, oTarget, fDur, TRUE, PRCGetSpellId(), nCasterLvl);
-			
-			//Get starting HP
-			int nNormHP = GetCurrentHitPoints(oTarget);
-			
-			//Make immune to pretty much everything
-			MakeImmune(oTarget, fDur);			
-			
-			SarcMonitor(oPC, oTarget, nNormHP);
-		}
-	}
-	SPSetSchool();
+        if(!X2PreSpellCastCode()) return;
+        
+        SPSetSchool(SPELL_SCHOOL_EVOCATION);
+                        
+        object oPC = OBJECT_SELF;
+        object oTarget = GetSpellTargetObject();
+        int nCasterLvl = PRCGetCasterLevel(oPC);
+        int nMetaMagic = PRCGetMetaMagicFeat();
+        float fDur = HoursToSeconds(24 * nCasterLvl);
+                
+        if(nMetaMagic == METAMAGIC_EXTEND)
+        {
+                fDur += fDur;
+        }
+                
+        SPRaiseSpellCastAt(oTarget,TRUE, SPELL_AMBER_SARCOPHAGUS, oPC);
+        
+        //Make touch attack
+        int nTouch = PRCDoRangedTouchAttack(oTarget);
+                
+        if(nTouch)
+        {
+                //Sphere projectile VFX         
+                
+                if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+                {
+                        //Get starting HP
+                        int nNormHP = GetCurrentHitPoints(oTarget);
+                        
+                        //Apply effects
+                        effect eSarc = EffectLinkEffects(EffectTemporaryHitpoints(10 * min(20, nCasterLvl)), EffectCutsceneParalyze());
+                               eSarc = EffectLinkEffects(eSarc, EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MAJOR));
+                                                        
+                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSarc, oTarget, fDur, TRUE, PRCGetSpellId(), nCasterLvl);
+                                                
+                        //Make immune to pretty much everything
+                        MakeImmune(oTarget, fDur);                      
+                        
+                        SarcMonitor(oPC, oTarget, nNormHP);
+                }
+        }
+        SPSetSchool();
 }
 
 void SarcMonitor(object oPC, object oTarget, int nNormHP)
 {
-	int nHP = GetCurrentHitPoints(oTarget);
-	
-	if(nHP <= nNormHP)
-	{
-		RemoveSarc(oTarget, oPC);						
-	}
-		
-	else
-	{
-		DelayCommand(3.0f, SarcMonitor(oPC, oTarget, nNormHP));
-		
-	}
+        int nHP = GetCurrentHitPoints(oTarget);
+        
+        if(nHP <= nNormHP)
+        {
+                RemoveSarc(oTarget, oPC);                                               
+        }
+                
+        else
+        {
+                DelayCommand(3.0f, SarcMonitor(oPC, oTarget, nNormHP));
+                
+        }
 }
 
 void RemoveSarc(object oTarget, object oPC)
 {
-	effect eTest = GetFirstEffect(oTarget);
-	
-	while(GetIsEffectValid(eTest))
-	{
-		if(GetEffectSpellId(eTest) == SPELL_AMBER_SARCOPHAGUS)
-		{
-			if(GetEffectCreator(eTest) == oPC)
-			{
-				RemoveEffect(oTarget, eTest);
-			}
-		}
-		eTest = GetNextEffect(oTarget);
-	}
+        effect eTest = GetFirstEffect(oTarget);
+        
+        while(GetIsEffectValid(eTest))
+        {
+                if(GetEffectSpellId(eTest) == SPELL_AMBER_SARCOPHAGUS)
+                {
+                        if(GetEffectCreator(eTest) == oPC)
+                        {
+                                RemoveEffect(oTarget, eTest);
+                        }
+                }
+                eTest = GetNextEffect(oTarget);
+        }
 }
 
 void MakeImmune(object oTarget, float fDur)
 {
-	effect eLink;
-	       eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_ABILITY_DECREASE));
+        effect eLink;
+               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_ABILITY_DECREASE));
                eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_BLINDNESS));
                eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_DEAFNESS));
                eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_CRITICAL_HIT));

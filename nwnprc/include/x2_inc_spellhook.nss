@@ -527,14 +527,14 @@ int Scrying()
 
     if (nScry == SPELL_GREATER_SCRYING)
     {
-	if (nSpellId == SPELL_DETECT_EVIL || nSpellId == SPELL_DETECT_GOOD || 
-	    nSpellId == SPELL_DETECT_LAW || nSpellId == SPELL_DETECT_CHAOS)
-		return TRUE;
+        if (nSpellId == SPELL_DETECT_EVIL || nSpellId == SPELL_DETECT_GOOD || 
+            nSpellId == SPELL_DETECT_LAW || nSpellId == SPELL_DETECT_CHAOS)
+                return TRUE;
     }
     if (nScry == POWER_CLAIRTANGENT_HAND)
     {
-	if (nSpellId == POWER_FARHAND)
-		return TRUE;
+        if (nSpellId == POWER_FARHAND)
+                return TRUE;
     }    
     
     return FALSE;
@@ -826,13 +826,13 @@ int X2PreSpellCastCode()
 {
     object oCaster = OBJECT_SELF;
 
-	// SetLocalInt(oCaster, "PSCC_Ret", 0);
-	ExecuteScript("prc_prespell", oCaster);
+        // SetLocalInt(oCaster, "PSCC_Ret", 0);
+        ExecuteScript("prc_prespell", oCaster);
 
-	int nReturn = GetLocalInt(oCaster, "PSCC_Ret");
-	// DeleteLocalInt(oCaster, "PSCC_Ret");
+        int nReturn = GetLocalInt(oCaster, "PSCC_Ret");
+        // DeleteLocalInt(oCaster, "PSCC_Ret");
 
-	return nReturn;
+        return nReturn;
 }
 
 //------------------------------------------------------------------------------
@@ -1021,6 +1021,7 @@ int X2PreSpellCastCode2()
                )
             {
                 nContinue = FALSE;
+                SendMessageToPC(oCaster, "Spontaneous casters cannot cast this spell!");
             }
         }    
             
@@ -1043,6 +1044,7 @@ int X2PreSpellCastCode2()
                nSpellID == SPELL_TWILIGHT_LUCK)
                {
                        nContinue = FALSE;
+                       SendMessageToPC(oCaster, "You do not meet the alignment requirements for this spell.");
                }
         }       
          
@@ -1063,7 +1065,8 @@ int X2PreSpellCastCode2()
                 nSpellID == SPELL_TOUCH_OF_JUIBLEX)
                 
                 {
-                        nContinue = FALSE;
+                        nContinue = FALSE;                        
+                        SendMessageToPC(oCaster, "You do not meet the alignment requirements for this spell.");
                 }                        
         }
     }
@@ -1275,11 +1278,11 @@ if(DEBUG) DoDebug("x2_inc_spellhook pre-X2CastOnItemWasAllowed "+IntToString(nCo
         
         if (GetIsObjectValid(oComp))
         {
-        	SetLocalInt(oCaster, "HealerCompanionSpell", nHealCount + 1);
-        	SetLocalInt(oComp, "HealerCompanionSpell", nCompCount + 1);
-        	DelayCommand(3.0, DeleteLocalInt(oCaster, "HealerCompanionSpell"));
-        	DelayCommand(3.0, DeleteLocalInt(oComp, "HealerCompanionSpell"));
-        	if (nHealCount < 1 ) ActionCastSpell(nSpellID, PRCGetCasterLevel(), 0, PRCGetSaveDC(oComp, oComp, nSpellID), PRCGetMetaMagicFeat(), CLASS_TYPE_INVALID, FALSE, TRUE, oComp);
+                SetLocalInt(oCaster, "HealerCompanionSpell", nHealCount + 1);
+                SetLocalInt(oComp, "HealerCompanionSpell", nCompCount + 1);
+                DelayCommand(3.0, DeleteLocalInt(oCaster, "HealerCompanionSpell"));
+                DelayCommand(3.0, DeleteLocalInt(oComp, "HealerCompanionSpell"));
+                if (nHealCount < 1 ) ActionCastSpell(nSpellID, PRCGetCasterLevel(), 0, PRCGetSaveDC(oComp, oComp, nSpellID), PRCGetMetaMagicFeat(), CLASS_TYPE_INVALID, FALSE, TRUE, oComp);
         }
     }
 

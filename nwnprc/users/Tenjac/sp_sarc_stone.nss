@@ -25,13 +25,12 @@ coffin is sealed upon formation and
 completely impervious to air and gas. A
 creature trapped within a sarcophagus of
 stone has 1 hour worth of air, and after
-that time must hold its breath or begin
-to suffocate (DMG 304). A creature that
-has no need to breathe (such as a construct,
-elemental, or undead) needs not
+that time will begin to suffocate. A creature 
+that has no need to breathe needs not
 fear suffocation, but it remains trapped
 within the sarcophagus until it breaks
 free or is freed.
+
 A creature within the coffin can
 attack the stone with a natural weapon
 or light melee weapon. A creature can
@@ -53,7 +52,7 @@ Created:   6/25/06
 
 void GaspGaspCroak(object oTarget, int nCounter);
 
-void SarcMonitor(object oSarc);
+void SarcMonitor(object oSarc, object oTarget);
 
 void main()
 {
@@ -63,7 +62,7 @@ void main()
         
         object oPC = OBJECT_SELF;
         object oTarget = PRCGetSpellTargetObject();
-        string sSarc = "x2_med_sarcoph";
+        string sSarc = "prc_sarc_stone";
         int nDC = GetSpellSaveDC(oTarget, oPC);
         int nCasterLvl = PRCGetCasterLevel(oPC);
         
@@ -80,8 +79,11 @@ void main()
                 ///Create the sarcophagus
                 object oSarc = CreateObject(OBJECT_TYPE_PLACEABLE, sSarc, lLoc, FALSE);
                 
+                //Make sure it's locked
+                SetLocked(oTarget, TRUE);
+                
                 //Watch for sarcophagus destruction
-                SarcMonitor(oSarc);
+                SarcMonitor(oSarc, oTarget);
                 
                 AssignCommand(oTarget, ClearAllActions(TRUE));
                 
@@ -102,9 +104,7 @@ void GaspGaspCroak(object oTarget, int nCounter);
         if(nCounter <1)
         {
                 //If living
-                if(nType != RACIAL_TYPE_UNDEAD &&
-                nType != RACIAL_TYPE_ELEMENTAL &&
-                nType != RACIAL_TYPE_CONSTRUCT)
+                if(PRCGetIsAliveCreature(oTarget))
                 {
                         //Kill it.
                         effect eDeath = EffectDeath();
@@ -118,8 +118,23 @@ void GaspGaspCroak(object oTarget, int nCounter);
         DelayCommand(RoundsToSeconds(1),GaspGaspCroak(oTarget, nCounter));
 }
                 
-void SarcMonitor(object oSarc)
+void SarcMonitor(object oSarc, object oTarget)
 {
-        
-}
+        //if sarc is destroyed
+        if(GetCurrentHitPoints(oSarc) < 1)
+        {
+                //remove spell effects
+                effect eTest = GetFirstEffect(oTarget);
                 
+                while(GetIsEffectValid(eTest))
+                {
+                        if(GetEffectSpellId(eTest) == SPELL_SARCOPHAGUS_OF_STONE)
+                        {
+                                RemoveEffect(oTarget, eTest);
+                        }
+                        eTest = GetNextEffect(oTarget);
+                }
+        }
+        
+        else DelayCommand(3.0f, SarcMonitor(oSarc, oTarget));
+}                

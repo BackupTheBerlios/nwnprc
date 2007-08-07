@@ -1,6 +1,6 @@
 //::///////////////////////////////////////////////
-//:: Name      
-//:: FileName  sp_.nss
+//:: Name      Pyrotechnics
+//:: FileName  sp_pyrotechnics.nss
 //:://////////////////////////////////////////////
 /**@file Pyrotechnics
 Transmutation
@@ -31,7 +31,7 @@ from the source, forming a choking cloud. The cloud
 spreads 20 feet in all directions and lasts for 1 
 round per caster level. All sight, even darkvision,
 is ineffective in or through the cloud. All within 
-the cloud take –4 penalties to Strength and Dexterity
+the cloud take -4 penalties to Strength and Dexterity
 (Fortitude negates). These effects last for 1d4+1 rounds 
 after the cloud dissipates or after the creature leaves 
 the area of the cloud. Spell resistance does not apply.
@@ -42,4 +42,53 @@ Created:   7/6/07
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-VFX_FNF_PYRO_FIREWORKS_REDORANGE
+#include "spinc_common"
+
+void main()
+{
+        if(!X2PreSpellCastCode()) return;
+        
+        SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+        
+        object oPC = OBJECT_SELF;
+        object oTarget;
+        location lLoc = GetSpellTargetLocation();
+        float fDur = RoundsToSeconds(d4(1) + 1);
+        int nSpell = GetSpellId();
+        int nMetaMagic = PRCGetMetaMagicFeat();
+        int nCasterLvl = PRCGetCasterLevel(oPC);
+        int nDC = SPGetSpellSaveDC(oTarget, oPC);
+        if(nMetaMagic == METAMAGIC_EXTEND) fDur += fDur;                
+        
+        //Fireworks
+        if(nSpell == SPELL_PYROTECHNICS_FIREWORKS)
+        {
+                effect eVis = EffectVisualEffect(VFX_FNF_PYRO_FIREWORKS_REDORANGE);
+                ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, lLoc);
+                
+                oTarget = GetFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(120.0), lLoc, TRUE, OBJECT_TYPE_CREATURE);
+                
+                while(GetIsObjectValid(oTarget))
+                {
+                        if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+                        {
+                                //Will save
+                                if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
+                                {
+                                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectBlindness(), oTarget, fDur, TRUE, SPELL_PYROTECHNICS_FIREWORKS, nCasterLvl);
+                                }
+                        }
+                        oTarget = GetNextObjectInShape(SHAPE_SPHERE, FeetToMeters(120.0), lLoc, TRUE, OBJECT_TYPE_CREATURE);
+                }                
+        }        
+        //Smoke
+        if(nSpell == SPELL_PYROTECHNICS_SMOKE)
+        {
+                fDur = RoundsToSeconds(nCasterLvl);
+                if(nMetaMagic == METAMAGIC_EXTEND) fDur += fDur;                
+                                
+                effect eAoE = EffectAreaOfEffect(AOE_PER_FIREWORKS_SMOKE);
+                ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAoE, lLoc, fDur);
+        }        
+        SPSetSchool();
+}

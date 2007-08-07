@@ -24,18 +24,17 @@ bonus (or 1-1/2 times your Strength
 bonus if you make no other attacks
 that round). You can make the slam
 attack as a natural secondary attack
-with the normal -5 penalty (or -2
-penalty if you have the Multiattack
-feat; see page 304 of the Monster
-Manual) as part of a full attack action.
+with the normal -5 penalty as part of a 
+full attack action.
 However, you cannot gain more than
 one slam attack per round with this
 spell due to a high base attack bonus
 (+6 or higher).
 Your fist undergoes no change in
-size or form, remaining as fl exible
+size or form, remaining as flexible
 and responsive as it would normally
 be while under the spell’s effect.
+
 Material Component: A pebble
 inscribed with a stylized fist design.
 
@@ -44,3 +43,18 @@ Created:   7/6/07
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
+
+#include "spinc_common"
+
+void main()
+{
+        if(!X2PreSpellCastCode()) return;
+        
+        SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+        
+        object oPC = OBJECT_SELF;
+        effect eBuff = EffectAbilityIncrease(ABILITY_STRENGTH, 6);
+        
+        AddNaturalSecondaryWeapon(oPC, "", 1)
+        
+        

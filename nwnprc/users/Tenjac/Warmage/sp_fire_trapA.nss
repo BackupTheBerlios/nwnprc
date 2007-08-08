@@ -86,6 +86,26 @@ void main()
                                                  nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
                                                  //Change damage according to Reflex, Evasion and Improved Evasion
                                                  nDam = PRCGetReflexAdjustedDamage(nDamage, oTarget, nDC, SAVING_THROW_TYPE_FIRE, GetAreaOfEffectCreator());
+                                                 //Set up the damage effect
+                                                 eDam = PRCEffectDamage(nDamage, EleDmg);
+                                                 if(nDam > 0)
+                                                 {
+                                                         //Apply VFX impact and damage effect
+                                                         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+                                                         DelayCommand(0.01, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+                                                         PRCBonusDamage(oTarget);
+                                                 }
+                                         }
+                                 }
+                                 //Get next target in the sequence
+                                 oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+                         }
+                         DestroyObject(OBJECT_SELF, 1.0);
+                 }
+         }
+         SPSetSchool();
+ }
+
                   
         
         

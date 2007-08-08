@@ -1,12 +1,11 @@
 //::///////////////////////////////////////////////
-//:: Name      
-//:: FileName  sp_.nss
+//:: Name      Fire Trap
+//:: FileName  sp_fire_trap.nss
 //:://////////////////////////////////////////////
 /**@file Fire Trap
 Abjuration [Fire]
 Level: Drd 2, Sor/Wiz 4 
 Components: V, S, M 
-Casting Time: 10 minutes 
 Range: Touch 
 Target: Area
 Duration: Permanent until discharged (D) 

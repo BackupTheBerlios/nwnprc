@@ -1,6 +1,6 @@
 //::///////////////////////////////////////////////
-//:: Name      
-//:: FileName  sp_.nss
+//:: Name      Ring of Blades
+//:: FileName  sp_ring_blds.nss
 //:://////////////////////////////////////////////
 /**@file Ring of Blades
 Conjuration (Creation)
@@ -33,3 +33,24 @@ Created:   7/6/07
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
+
+#include "spinc_common"
+
+void main()
+{
+        if(!X2PreSpellCastCode()) return;
+        
+        SPSetSchool(SPELL_SCHOOL_CONJURATION);
+        
+        object oPC = OBJECT_SELF;
+        effect eAoE = EffectAreaOfEffect(VFX_MOB_RING_OF_BLADES);
+        int nCasterLvl = PRCGetCasterLevel(oPC);
+        int nMetaMagic = PRCGetMetaMagicFeat();
+        float fDur = TurnsToSeconds(IntToFloat(nCasterLvl));
+        
+        if(nMetaMagic == METAMAGIC_EXTEND) fDur += fDur;
+        
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAoE, oPC, fDur);
+        
+        SPSetSchool();
+}

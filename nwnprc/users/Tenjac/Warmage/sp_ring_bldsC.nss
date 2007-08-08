@@ -41,4 +41,13 @@ void main()
         object oTarget = GetEnteringObject();
         object oPC = GetAreaOfEffectCreator();
         int nCasterLvl = PRCGetCasterLevel(oPC);
+        if(nCasterLvl > 10) nCasterLvl = 10;
+        int nDam = d6(1) + nCasterLvl;
+        
+        if(!GetIsReactionTypeFriendly(oTarget, oPC))
+        {
+                ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_SLASHING, nDam), oTarget);
+        }
+}
+        
         

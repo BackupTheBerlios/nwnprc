@@ -55,6 +55,7 @@ void main()
         object oPC = OBJECT_SELF;
         effect eBuff = EffectAbilityIncrease(ABILITY_STRENGTH, 6);
         
-        AddNaturalSecondaryWeapon(oPC, "", 1)
+        AddNaturalSecondaryWeapon(oPC, "nw_it_crewpb005", 1);
         
+        DelayCommand(TurnsToSeconds(1), 
         

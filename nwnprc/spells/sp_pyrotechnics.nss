@@ -88,7 +88,7 @@ void main()
                 fDur = RoundsToSeconds(nCasterLvl);
                 if(nMetaMagic == METAMAGIC_EXTEND) fDur += fDur;                
                                 
-                effect eAoE = EffectAreaOfEffect(AOE_PER_FIREWORKS_SMOKE);
+                effect eAoE = EffectAreaOfEffect(AOE_PER_PYROTECHNICS_SMOKE);
                 ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAoE, lLoc, fDur);
         }        
         SPSetSchool();

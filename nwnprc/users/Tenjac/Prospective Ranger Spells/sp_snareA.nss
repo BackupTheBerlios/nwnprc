@@ -55,6 +55,11 @@ void StrengthCheck(object oTarget, object oCreator)
         int nRoll = d20(1) + nStrBonus;
         effect eTest;
         
+        if(GetIsPC(oTarget))
+        {
+                SendMessageToPC(oTarget, "Strength check vs DC 23: " + IntToString(nRoll);
+        }
+        
         //DC23 STR check
         if(nRoll >22)
         {

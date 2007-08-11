@@ -1081,6 +1081,29 @@ int X2PreSpellCastCode2()
                     nContinue = FALSE;
             }
     }
+    
+    //Spell Barriers
+    if(nContinue)
+    {
+	    object oPC = OBJECT_SELF;
+	    object oTarget = PRCGetSpellTargetObject();
+	    
+	    if(GetHasSpellEffect(SPELL_OTILUKES_RESILIENT_SPHERE, oTarget))
+	    {
+		    if(GetDistanceBetween(oPC, oTarget) > 6.096)
+		    {
+			    nContinue = FALSE;
+		    }
+	    }
+	    
+	    if(GetHasSpellEffect(SPELL_PRISMATIC_SPHERE, oTarget))
+	    {
+		    if(GetDistanceBetween(oPC, oTarget) > 3.048)
+		    {
+			    nContinue = FALSE;
+		    }
+	    }
+    }
 
     //---------------------------------------------------------------------------
     // Break any spell require maintaining concentration (only black blade of

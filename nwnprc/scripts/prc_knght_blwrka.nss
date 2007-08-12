@@ -17,5 +17,5 @@ void main()
     effect eSlow = EffectMovementSpeedDecrease(50);
 
     // Cleaned up on exit
-    if (GetIsEnemy(oTarget, GetAreaOfEffectCreator()) SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eSlow, oTarget);
+    if (GetIsEnemy(oTarget, GetAreaOfEffectCreator())) SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eSlow, oTarget);
 }

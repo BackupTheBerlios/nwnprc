@@ -30,6 +30,10 @@ const int    DISCIPLINE_STONE_DRAGON   = 7;
 const int    DISCIPLINE_TIGER_CLAW     = 8;
 const int    DISCIPLINE_WHITE_RAVEN    = 9;
 
+const int    GRAPPLE_ATTACK          = 1;
+const int    GRAPPLE_OPPONENT_WEAPON = 2;
+const int    GRAPPLE_ESCAPE          = 3;
+
 //////////////////////////////////////////////////
 /*             Function prototypes              */
 //////////////////////////////////////////////////
@@ -539,6 +543,39 @@ void _DoBullRushKnockBack(object oTarget, object oPC, float fFeet)
             AssignCommand(oTarget, JumpToLocation(lTargetDestination));
 }
 
+int _DoGrappleCheck(object oPC, object oTarget, int nExtraBonus)
+{
+	// The basic modifiers
+	int nSucceed = FALSE;
+	int nPCStr = GetAbilityModifier(ABILITY_STRENGTH, oPC);
+	int nTargetStr = GetAbilityModifier(ABILITY_STRENGTH, oTarget);
+	int nPCBonus = GetSizeModifier(oPC);
+	int nTargetBonus = GetSizeModifier(oTarget);
+	// Other ability bonuses
+	nPCBonus += GetAbilityCheckBonus(oPC, ABILITY_STRENGTH);
+	// Extra bonus
+	nPCBonus += nExtraBonus;
+	
+	//cant grapple incorporeal or ethereal things
+	if((GetIsEthereal(oTarget) && !GetIsEthereal(oPC))
+	        || GetIsIncorporeal(oTarget))
+	{
+        	FloatingTextStringOnCreature("You cannot grapple an Ethereal or Incorporeal creature",oPC, FALSE);
+        	return;
+        }
+
+	int nPCCheck = nPCStr + nPCBonus + d20();
+	int nTargetCheck = nTargetStr + nTargetBonus + d20();
+	// Now roll the ability check
+	if (nPCCheck >= nTargetCheck)
+	{
+		return TRUE;
+	}
+	
+	// Didn't grapple successfully
+	return FALSE;
+}
+
 //////////////////////////////////////////////////
 /*             Function definitions             */
 //////////////////////////////////////////////////
@@ -991,6 +1028,8 @@ int DoBullRush(object oPC, object oTarget, int nExtraBonus, int nGenerateAoO = T
 	if (GetIsCharging(oPC)) nPCBonus += 2;
 	// Other ability bonuses
 	nPCBonus += GetAbilityCheckBonus(oPC, ABILITY_STRENGTH);
+	// Extra bonus
+	nPCBonus += nExtraBonus;
 	// Do the AoO for moving into the enemy square
 	if (nGenerateAoO)
 	{
@@ -1027,7 +1066,7 @@ int DoBullRush(object oPC, object oTarget, int nExtraBonus, int nGenerateAoO = T
 		if (nMustFollow) _DoBullRushKnockBack(oPC, oTarget, (fFeet - 5.0));
 	}
 	else
-		FloatingTextStringOnCreature("You have failed your Strength check for your Bull Rush Attempt",oPC);
+		FloatingTextStringOnCreature("You have failed your Strength check for your Bull Rush Attempt",oPC, FALSE);
 	
 	// Let people know if we made the hit or not
 	return nSucceed;
@@ -1064,7 +1103,7 @@ int DoTrip(object oPC, object oTarget, int nExtraBonus, int nGenerateAoO = TRUE,
 	// Now roll the ability check
 	if (nPCCheck >= nTargetCheck)
 	{
-		FloatingTextStringOnCreature("You have succeeded your ability check for your Trip attempt",oPC);
+		FloatingTextStringOnCreature("You have succeeded your ability check for your Trip attempt",oPC, FALSE);
 		// Knock em down
 		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(EffectKnockdown()), oTarget, 6.0);
 		nSucceed = TRUE;
@@ -1074,7 +1113,7 @@ int DoTrip(object oPC, object oTarget, int nExtraBonus, int nGenerateAoO = TRUE,
 	else // If you fail, enemy gets a counter trip attempt, using Strength
 	{
 		nTargetStat = GetAbilityModifier(ABILITY_STRENGTH, oTarget) + GetAbilityCheckBonus(oTarget, ABILITY_STRENGTH);
-		FloatingTextStringOnCreature("You have failed your ability check for your Trip attempt",oPC);
+		FloatingTextStringOnCreature("You have failed your ability check for your Trip attempt",oPC, FALSE);
 		// Roll counter trip attempt
 		nTargetCheck = nTargetStat + nTargetBonus + d20();
 		nPCCheck = nPCStat + nPCBonus + d20();
@@ -1207,6 +1246,132 @@ int GetHasDefensiveStance(object oInitiator, int nDiscipline)
 	else if (GetHasFeat(FEAT_SS_DF_DS_TC, oInitiator) && nDiscipline == DISCIPLINE_TIGER_CLAW)   return TRUE;
 	
 	return FALSE;
+}
+
+
+int DoGrapple(object oPC, object oTarget, int nExtraBonus, int nGenerateAoO = TRUE)
+{        
+	// Do the AoO for trying a grapple
+	if (nGenerateAoO)
+	{
+	        // Perform the Attack
+		PerformAttack(oPC, oTarget, eNone, 0.0, 0, 0, 0, FALSE, "Attack of Opportunity Hit", "Attack of Opportunity Miss");	
+	
+		if (GetLocalInt(oPC, "PRCCombat_StruckByAttack"))
+		{
+			FloatingTextStringOnCreature("You have failed at your Grapple Attempt.",oPC, FALSE);
+			return;
+		}
+	}
+
+	// Now roll the ability check
+	if (_DoGrappleCheck(oPC, oTarget, nExtraBonus))
+	{
+		FloatingTextStringOnCreature("You have successfully grappled " + GetName(oTarget), oPC, FALSE);
+		SetGrapple(oTarget);
+		effect eHold = EffectCutsceneImmobilize();
+		effect eEntangle = EffectVisualEffect(VFX_DUR_SPELLTURNING_R);
+		effect eLink = EffectLinkEffects(eHold, eEntangle);
+		//apply the effect
+		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, 9999.0);
+                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 9999.0);
+	}
+	else
+		FloatingTextStringOnCreature("You have failed your Strength check for your Grapple Attempt",oPC, FALSE);
+	
+	// Let people know if we made the hit or not
+	return nSucceed;
+}
+
+void SetGrapple(object oTarget)
+{
+	SetLocalInt(oTarget, "IsGrappled", TRUE);
+}
+
+int GetGrapple(object oTarget)
+{
+	return GetLocalInt(oTarget, "IsGrappled");
+}
+
+void EndGrapple(object oPC, object oTarget)
+{
+	DeleteLocalInt(oPC, "IsGrappled");
+	DeleteLocalInt(oTarget, "IsGrappled");
+	effect eBad = GetFirstEffect(oTarget);
+	//Search for negative effects
+	while(GetIsEffectValid(eBad))
+	{
+		int nInt = GetEffectSpellId(eBad);
+		if (GetEffectType(eBad) == EFFECT_TYPE_CUTSCENEIMMOBILIZE)
+		{
+			RemoveEffect(oTarget, eBad);
+		}
+		eBad = GetNextEffect(oTarget);
+	}
+	eBad = GetFirstEffect(oPC);
+	//Search for negative effects
+	while(GetIsEffectValid(eBad))
+	{
+		int nInt = GetEffectSpellId(eBad);
+		if (GetEffectType(eBad) == EFFECT_TYPE_CUTSCENEIMMOBILIZE)
+		{
+			RemoveEffect(oPC, eBad);
+		}
+		eBad = GetNextEffect(oPC);
+	}	
+}
+
+void DoGrappleOptions(object oPC, object oTarget, int nExtraBonus, int nSwitch = -1)
+{
+	effect eNone;
+		
+	if (nSwitch == -1 || GetGrapple(oPC) || GetGrapple(oTarget))
+	{
+		FloatingTextStringOnCreature("DoGrappleOptions: Error, invalid option passed to function",oPC, FALSE);
+		return;
+	}
+	else if (nSwitch == GRAPPLE_ATTACK)
+	{
+		// Must be a light weapon, and succeed at the grapple check
+		if (_DoGrappleCheck(oPC, oTarget, nExtraBonus) && GetIsLightWeapon(oPC))
+		{
+			// Attack with a -4 penalty
+			PerformAttack(oPC, oTarget, eNone, 0.0, -4, 0, 0, FALSE, "Grapple Attack Hit", "Grapple Attack Miss");	
+		}
+		else
+			FloatingTextStringOnCreature("You have failed your Strength check for your Grapple Attempt",oPC, FALSE);	
+	}
+	else if (nSwitch == GRAPPLE_OPPONENT_WEAPON)
+	{
+		// Must be a light weapon, and succeed at the grapple check
+		if (_DoGrappleCheck(oPC, oTarget, nExtraBonus) && GetIsLightWeapon(oTarget))
+		{
+			// Attack with a -4 penalty
+			object oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget);
+			PerformAttack(oPC, oTarget, eNone, 0.0, -4, 0, 0, FALSE, "Grapple Attack Hit", "Grapple Attack Miss", FALSE, oWeapon);	
+		}
+		else
+			FloatingTextStringOnCreature("You have failed your Strength check for your Grapple Attempt",oPC, FALSE);	
+	}
+	else if (nSwitch == GRAPPLE_ESCAPE)
+	{
+		// Must be a light weapon, and succeed at the grapple check
+		if (_DoGrappleCheck(oPC, oTarget, nExtraBonus))
+		{
+			EndGrapple(oPC, oTarget);
+		}
+		else
+			FloatingTextStringOnCreature("You have failed your Strength check for your Grapple Attempt",oPC, FALSE);	
+	}	
+}
+
+int GetIsLightWeapon(object oPC)
+{
+	int nSize   = PRCGetCreatureSize(oPC);
+	int nType = GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC));
+	int nWeaponSize = StringToInt(Get2DACache("baseitems", "WeaponSize", nType));
+	// is the size appropriate for a light weapon?
+	return nLight = (nWeaponSize < nSize);  
 }
 
 // Test main

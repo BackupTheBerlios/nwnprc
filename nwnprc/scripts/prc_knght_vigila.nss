@@ -18,5 +18,5 @@ void main()
     effect eSkill = EffectSkillDecrease(SKILL_TUMBLE, nKnight);
 
     // Cleaned up on exit
-    SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eSkill, oTarget);
+    if (GetIsEnemy(oTarget, GetAreaOfEffectCreator()) SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eSkill, oTarget);
 }

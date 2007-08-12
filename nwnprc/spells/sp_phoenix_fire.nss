@@ -76,7 +76,7 @@ void main()
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oPC);
             
     //Get first object in shape
-    object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lLoc, TRUE, OBJECT_TYPE_CREATURE);
+    object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lLoc, TRUE, OBJECT_TYPE_CREATURE);
     
     //While object valid
     while(GetIsObjectValid(oTarget))
@@ -134,7 +134,7 @@ void main()
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_FIRE), oTarget);            
         }
         //Get next object in shape
-        object oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lLoc, TRUE, OBJECT_TYPE_CREATURE);
+        object oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lLoc, TRUE, OBJECT_TYPE_CREATURE);
     }
     
     //Wait 10 minutes, then rebirth

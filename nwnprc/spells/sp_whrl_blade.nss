@@ -57,7 +57,7 @@ void main()
         vector vOrigin = GetPosition(oPC);
         location lTarget = GetSpellTargetLocation();
         effect eNone;
-        object oTarget = GetFirstObjectInShape(SHAPE_SPELLCYLINDER, FeetToMeters(60.0f), lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE, vOrigin);
+        object oTarget = MyFirstObjectInShape(SHAPE_SPELLCYLINDER, FeetToMeters(60.0f), lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE, vOrigin);
         
         while(GetIsObjectValid(oTarget))
         {
@@ -65,7 +65,7 @@ void main()
                 {
                         PerformAttack(oTarget, oPC, eNone);
                 }
-                oTarget = GetNextObjectInShape(SHAPE_SPELLCYLINDER, FeetToMeters(60.0f), lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE, vOrigin);
+                oTarget = MyNextObjectInShape(SHAPE_SPELLCYLINDER, FeetToMeters(60.0f), lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE, vOrigin);
         }
         SPSetSchool();
 }

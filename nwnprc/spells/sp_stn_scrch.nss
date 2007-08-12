@@ -53,7 +53,7 @@ void main()
 		PlaySound("sff_combansh");
 		
 		//loop
-		object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_GARGANTUAN, lLoc);
+		object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_GARGANTUAN, lLoc);
 		
 		while (GetIsObjectValid(oTarget))
 		{
@@ -73,7 +73,7 @@ void main()
 				}
 			}
 			
-                oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_GARGANTUAN, lLoc);
+                oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_GARGANTUAN, lLoc);
 		}
 	}
 	

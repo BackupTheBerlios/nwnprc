@@ -53,7 +53,7 @@ void main()
 	if(!X2PreSpellCastCode()) return;
 	SPSetSchool(SPELL_SCHOOL_EVOCATION);
 	
-	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lLoc, FALSE, OBJECT_TYPE_CREATURE);
+	object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lLoc, FALSE, OBJECT_TYPE_CREATURE);
 	
 	//VFX
 	ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eVis, lLoc, 3.0f);
@@ -122,7 +122,7 @@ void main()
 			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
 		}
 		
-		oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lLoc, FALSE, OBJECT_TYPE_CREATURE);
+		oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lLoc, FALSE, OBJECT_TYPE_CREATURE);
 	}
 	
 	SPEvilShift(oPC);

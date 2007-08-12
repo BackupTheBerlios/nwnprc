@@ -83,7 +83,7 @@ void main()
                 //Orientation doesn't matter, so make it 0.0f
                 location lAoE = GenerateNewLocationFromLocation(lTarget, fDistance, fAngle, 0.0f);
                 
-                oTarget = GetFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(10.0f), lAoE, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_PLACEABLE | OBJECT_TYPE_DOOR);
+                oTarget = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(10.0f), lAoE, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_PLACEABLE | OBJECT_TYPE_DOOR);
                 
                 while(GetIsObjectValid(oTarget))
                 {
@@ -100,7 +100,7 @@ void main()
                                 ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_COLD), oTarget);
                         }
                         
-                        oTarget = GetNextObjectInShape(SHAPE_SPHERE, FeetToMeters(10.0f), lAoE, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_PLACEABLE | OBJECT_TYPE_DOOR);
+                        oTarget = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(10.0f), lAoE, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_PLACEABLE | OBJECT_TYPE_DOOR);
                 }
         }       
         SPSetSchool();

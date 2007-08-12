@@ -55,7 +55,7 @@ void main()
 	//VFX
 	ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_HORRID_WILTING), lLoc); 
 		
-	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, (10.0f * nCasterLevel), lLoc, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+	object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, (10.0f * nCasterLevel), lLoc, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
 	
 	while(GetIsObjectValid(oTarget))
 	{
@@ -114,7 +114,7 @@ void main()
 			}
 		}
 		
-		oTarget = GetNextObjectInShape(SHAPE_SPHERE, (10.0f * nCasterLevel), lLoc, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+		oTarget = MyNextObjectInShape(SHAPE_SPHERE, (10.0f * nCasterLevel), lLoc, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
 	}
 	
 	SPEvilShift(oPC);

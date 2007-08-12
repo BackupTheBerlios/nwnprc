@@ -33,7 +33,7 @@ void main()
         
         object oPC = OBJECT_SELF;
         location lLoc = GetSpellTargetLocation();
-        object oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 18.29f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
+        object oTarget = MyFirstObjectInShape(SHAPE_SPELLCONE, 18.29f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
         int nCasterLevel = PRCGetCasterLevel(oPC);
         int nPenetr = nCasterLevel + SPGetPenetr();
         
@@ -53,7 +53,7 @@ void main()
                                 SendMessageToPC(oTarget, "You are exhausted. You need to rest.");
                         }
                 }
-                oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 18.29f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
+                oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, 18.29f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
         }
         SPSetSchool();
 }

@@ -49,7 +49,7 @@ void main()
 	
 	object oPC = OBJECT_SELF;
 	location lLoc = GetLocation(oPC);
-	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, 12.19f, lLoc, TRUE, OBJECT_TYPE_CREATURE); 
+	object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, 12.19f, lLoc, TRUE, OBJECT_TYPE_CREATURE); 
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	int nDC;
 	int nAlign;
@@ -97,7 +97,7 @@ void main()
 				SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eGoodLink, oTarget, fDur);
 			}
 		}
-		oTarget = GetNextObjectInShape(SHAPE_SPHERE, 12.19f, lLoc, TRUE, OBJECT_TYPE_CREATURE); 
+		oTarget = MyNextObjectInShape(SHAPE_SPHERE, 12.19f, lLoc, TRUE, OBJECT_TYPE_CREATURE); 
 	}			
 	SPGoodShift(oPC);
 	SPSetSchool();

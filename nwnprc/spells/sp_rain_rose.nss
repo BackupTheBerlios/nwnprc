@@ -50,7 +50,7 @@ void main()
 	effect eAOE = EffectAreaOfEffect(VFX_AOE_RAIN_OF_ROSES);
 	location lLoc = GetLocation(oPC);
 	int nMetaMagic = PRCGetMetaMagicFeat();
-	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, 24.38f, lLoc, FALSE, OBJECT_TYPE_CREATURE);
+	object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, 24.38f, lLoc, FALSE, OBJECT_TYPE_CREATURE);
 	float fDur = RoundsToSeconds(nCasterLvl);
 	
 	if(nMetaMagic == METAMAGIC_EXTEND)

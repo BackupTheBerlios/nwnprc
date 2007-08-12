@@ -59,7 +59,7 @@ void main()
 				effect eBlind = EffectBlindness();
 				SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eBlind, oTarget);
 				
-				oTarget = GetFirstObjectInShape(SHAPE_SPHERE, 5.0, lTarget, FALSE, OBJECT_TYPE_CREATURE);
+				oTarget = MyFirstObjectInShape(SHAPE_SPHERE, 5.0, lTarget, FALSE, OBJECT_TYPE_CREATURE);
 				
 				while(GetIsObjectValid(oTarget))
 				{
@@ -70,7 +70,7 @@ void main()
 					//apply damage
 					SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
 					
-					oTarget = GetNextObjectInShape(SHAPE_SPHERE, 5.0, lTarget, FALSE, OBJECT_TYPE_CREATURE);
+					oTarget = MyNextObjectInShape(SHAPE_SPHERE, 5.0, lTarget, FALSE, OBJECT_TYPE_CREATURE);
 				}
 				
 			}

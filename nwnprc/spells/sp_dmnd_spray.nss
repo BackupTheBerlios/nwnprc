@@ -43,7 +43,7 @@ void main()
 	int nDC;
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	location lLoc = GetSpellTargetLocation();	
-	object oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 18.28f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
+	object oTarget = MyFirstObjectInShape(SHAPE_SPELLCONE, 18.28f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
 	float fDur = RoundsToSeconds(d6(2));
 	
 	//VFX
@@ -53,7 +53,7 @@ void main()
 	//make sure it's not the PC
 	if(oTarget == oPC)
 	{
-		oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 18.28f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
+		oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, 18.28f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
 	}
 	
 	while(GetIsObjectValid(oTarget))
@@ -94,7 +94,7 @@ void main()
 				SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDazzle, oTarget, fDur);
 			}
 		}
-		oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 18.28f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
+		oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, 18.28f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
 	}
 	
 	//Sanctified spells get mandatory 10 pt good adjustment, regardless of switch

@@ -55,7 +55,7 @@ void main()
 	
 	object oPC = OBJECT_SELF;
 	location lLoc = GetLocation(oPC);
-	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(20.0f), lLoc, FALSE, OBJECT_TYPE_CREATURE);
+	object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(20.0f), lLoc, FALSE, OBJECT_TYPE_CREATURE);
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	int nCounter = nCasterLvl;
 	int nMetaMagic = PRCGetMetaMagicFeat();
@@ -80,7 +80,7 @@ void main()
 			nCounter--;
 			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur);
 		}
-		oTarget = GetNextObjectInShape(SHAPE_SPHERE, FeetToMeters(20.0f), lLoc, FALSE, OBJECT_TYPE_CREATURE);
+		oTarget = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(20.0f), lLoc, FALSE, OBJECT_TYPE_CREATURE);
 	}
 	
 	SPSetSchool();

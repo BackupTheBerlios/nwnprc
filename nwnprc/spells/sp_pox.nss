@@ -44,7 +44,7 @@ SPSetSchool(SPELL_SCHOOL_NECROMANCY);
 
 
     //Declare the spell shape, size and the location.  Capture the first target object in the shape.
-    object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, locTarget);
+    object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, locTarget);
     //Cycle through the targets within the spell shape until an invalid object is captured.
     while(oTarget != OBJECT_INVALID && nCount <= nMax)
     {

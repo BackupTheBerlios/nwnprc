@@ -44,14 +44,14 @@ void main()
 	int nDam;
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	location lLoc = GetSpellTargetLocation();	
-	object oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 18.28f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
+	object oTarget = MyFirstObjectInShape(SHAPE_SPELLCONE, 18.28f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
 	float fDur = 6.0f;
 	//effect eVis = EffectVisualEffect(?????); 
 	
 	//make sure it's not the PC
 	if(oTarget == oPC)
 	{
-		oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 18.28f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
+		oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, 18.28f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
 	}
 	
 	//Metamagic extend
@@ -96,7 +96,7 @@ void main()
 				}
 			}
 		}
-		oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 18.28f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
+		oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, 18.28f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
 	}
 	
 	//Bwahah... yes, it's secretly Corruption cost and not Sacrifice :P

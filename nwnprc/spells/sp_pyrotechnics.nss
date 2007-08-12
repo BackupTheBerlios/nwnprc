@@ -67,7 +67,7 @@ void main()
                 effect eVis = EffectVisualEffect(VFX_FNF_PYRO_FIREWORKS_REDORANGE);
                 ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, lLoc);
                 
-                oTarget = GetFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(120.0), lLoc, TRUE, OBJECT_TYPE_CREATURE);
+                oTarget = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(120.0), lLoc, TRUE, OBJECT_TYPE_CREATURE);
                 
                 while(GetIsObjectValid(oTarget))
                 {
@@ -79,7 +79,7 @@ void main()
                                         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectBlindness(), oTarget, fDur, TRUE, SPELL_PYROTECHNICS_FIREWORKS, nCasterLvl);
                                 }
                         }
-                        oTarget = GetNextObjectInShape(SHAPE_SPHERE, FeetToMeters(120.0), lLoc, TRUE, OBJECT_TYPE_CREATURE);
+                        oTarget = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(120.0), lLoc, TRUE, OBJECT_TYPE_CREATURE);
                 }                
         }        
         //Smoke

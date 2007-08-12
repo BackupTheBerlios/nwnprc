@@ -101,7 +101,7 @@ void main()
                                         if(nDam >= nHP)
                                         {
                                                 location lLoc = GetLocation(oTarget);
-                                                object oTarget2 = GetFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(15.0), lLoc, TRUE);
+                                                object oTarget2 = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(15.0), lLoc, TRUE);
                                                 
                                                 while(GetIsObjectValid(oTarget2))
                                                 {
@@ -115,7 +115,7 @@ void main()
                                                                 break;
                                                         }
                                                         
-                                                        oTarget2 = GetNextObjectInShape(SHAPE_SPHERE, FeetToMeters(15.0), lLoc, TRUE);
+                                                        oTarget2 = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(15.0), lLoc, TRUE);
                                                 }
                                         }                                                
                                 }

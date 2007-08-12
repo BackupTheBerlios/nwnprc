@@ -42,7 +42,7 @@ void main()
 	
 	object oPC = OBJECT_SELF;
 	location lLoc = GetSpellTargetLocation();
-	object oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 18.29f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
+	object oTarget = MyFirstObjectInShape(SHAPE_SPELLCONE, 18.29f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	int nBonusDice;
@@ -53,7 +53,7 @@ void main()
 	//don't target the caster moron
 	if(oTarget == oPC)
 	{
-		oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 18.29f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
+		oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, 18.29f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
 	}		
 	
 	if(nMetaMagic == METAMAGIC_EXTEND)
@@ -94,7 +94,7 @@ void main()
 			nBonusDice++;
 		}
 		
-		oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 18.29f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
+		oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, 18.29f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
 	}
 	
 	effect eBonus = EffectTemporaryHitpoints(d4(nBonusDice));

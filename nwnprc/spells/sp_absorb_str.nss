@@ -69,13 +69,13 @@ void main()
     int nMetaMagic = PRCGetMetaMagicFeat();
     int nCasterLvl = PRCGetCasterLevel(oPC);
     location lLoc = GetSpellTargetLocation();
-    object oTarget = GetFirstObjectInShape(SHAPE_CUBE, RADIUS_SIZE_SMALL, lLoc, FALSE, OBJECT_TYPE_CREATURE);
+    object oTarget = MyFirstObjectInShape(SHAPE_CUBE, RADIUS_SIZE_SMALL, lLoc, FALSE, OBJECT_TYPE_CREATURE);
     
     SPRaiseSpellCastAt(oTarget, TRUE, SPELL_ABSORB_STRENGTH, oPC);
         
         while(!GetIsDead(oTarget) && GetIsObjectValid(oTarget))
         {
-        oTarget = GetNextObjectInShape(SHAPE_CUBE, RADIUS_SIZE_SMALL, lLoc, FALSE, OBJECT_TYPE_CREATURE);
+        oTarget = MyNextObjectInShape(SHAPE_CUBE, RADIUS_SIZE_SMALL, lLoc, FALSE, OBJECT_TYPE_CREATURE);
     }
     
     //must be dead creature so check again for GetSpellTargetObject

@@ -59,7 +59,7 @@ void main()
 	{
 		if((MyPRCGetRacialType(oPC) == RACIAL_TYPE_OUTSIDER) || (GetHasTemplate(TEMPLATE_CELESTIAL)) || (GetHasTemplate(TEMPLATE_HALF_CELESTIAL)))
 		{
-			object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, 7.62, lLoc, FALSE, OBJECT_TYPE_CREATURE);
+			object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, 7.62, lLoc, FALSE, OBJECT_TYPE_CREATURE);
 			
 			while(GetIsObjectValid(oTarget))
 			{
@@ -106,7 +106,7 @@ void main()
 					}
 				}
 			}
-			oTarget = GetNextObjectInShape(SHAPE_SPHERE, 7.62, lLoc, FALSE, OBJECT_TYPE_CREATURE);			
+			oTarget = MyNextObjectInShape(SHAPE_SPHERE, 7.62, lLoc, FALSE, OBJECT_TYPE_CREATURE);			
 		}
 		
 		else SendMessageToPC(oPC, "You do not meet the casting requirements for this spell.");

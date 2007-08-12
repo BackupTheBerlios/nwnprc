@@ -40,7 +40,7 @@ void main()
 	
 	object oPC = OBJECT_SELF;
 	location lLoc = GetLocation(oPC);
-	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, 24.38f, lLoc, FALSE, OBJECT_TYPE_CREATURE);
+	object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, 24.38f, lLoc, FALSE, OBJECT_TYPE_CREATURE);
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	int nDC = SPGetSpellSaveDC(oTarget, oPC);
 	int nAlign;
@@ -82,7 +82,7 @@ void main()
 				SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_DIVINE), oTarget);
 			}
 		}
-		oTarget = GetNextObjectInShape(SHAPE_SPHERE, 24.38f, lLoc, FALSE, OBJECT_TYPE_CREATURE);
+		oTarget = MyNextObjectInShape(SHAPE_SPHERE, 24.38f, lLoc, FALSE, OBJECT_TYPE_CREATURE);
 	}
 	
 	//Sanctified spells get mandatory 10 pt good adjustment, regardless of switch

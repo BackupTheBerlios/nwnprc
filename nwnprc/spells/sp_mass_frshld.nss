@@ -36,7 +36,7 @@ void main()
 	location lLoc = GetSpellTargetLocation();
 	int nSpell = GetSpellId();
 	float fRadius = FeetToMeters(15.0);
-	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, fRadius, lLoc, FALSE, OBJECT_TYPE_CREATURE);
+	object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, fRadius, lLoc, FALSE, OBJECT_TYPE_CREATURE);
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	
 	int nSpellName;
@@ -52,7 +52,7 @@ void main()
 			ActionCastSpellAtObject(nSpellName, oTarget, nMetaMagic, TRUE);
 		}
 		
-		oTarget = GetNextObjectInShape(SHAPE_SPHERE, fRadius, lLoc, FALSE, OBJECT_TYPE_CREATURE);
+		oTarget = MyNextObjectInShape(SHAPE_SPHERE, fRadius, lLoc, FALSE, OBJECT_TYPE_CREATURE);
 	}
 	
 	SPSetSchool();

@@ -46,7 +46,7 @@ void RoundOne(object oPC, location lTarget);
 void RoundThree(object oPC, location lTarget)
 {
         //get first 
-        object oTest = GetFirstObjectInShape(SHAPE_SPELLCONE, 20.0, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+        object oTest = MyFirstObjectInShape(SHAPE_SPELLCONE, 20.0, lTarget, TRUE, OBJECT_TYPE_CREATURE);
         
         //loop
         while(GetIsObjectValid(oTest))
@@ -58,7 +58,7 @@ void RoundThree(object oPC, location lTarget)
                         FloatingTextStringOnCreature(GetName(oTest) + " " +  GetStringByStrRef(16829323) + ".", oPC, FALSE);
                 }
                 //get next
-                oTest = GetNextObjectInShape(SHAPE_SPELLCONE, 20.0, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+                oTest = MyNextObjectInShape(SHAPE_SPELLCONE, 20.0, lTarget, TRUE, OBJECT_TYPE_CREATURE);
         }
                 
         //Repeat from round one
@@ -70,7 +70,7 @@ void RoundTwo(object oPC, location lTarget)
         int nCount=0;
         
         //get first 
-        object oTest = GetFirstObjectInShape(SHAPE_SPELLCONE, 20.0, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+        object oTest = MyFirstObjectInShape(SHAPE_SPELLCONE, 20.0, lTarget, TRUE, OBJECT_TYPE_CREATURE);
         
         //loop to check all
         while(GetIsObjectValid(oTest))
@@ -81,7 +81,7 @@ void RoundTwo(object oPC, location lTarget)
                         nCount++;
                 }
                 //next object
-                oTest = GetNextObjectInShape(SHAPE_SPELLCONE, 20.0, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+                oTest = MyNextObjectInShape(SHAPE_SPELLCONE, 20.0, lTarget, TRUE, OBJECT_TYPE_CREATURE);
         }
                                      //You detect the presence of               count                         necrotic cysts
         FloatingTextStringOnCreature(GetStringByStrRef(16832001) + " " + IntToString(nCount) + " " + GetStringByStrRef(16829322) + ".", oPC, FALSE);
@@ -93,7 +93,7 @@ void RoundTwo(object oPC, location lTarget)
 void RoundOne(object oPC, location lTarget)
 {
         //get first 
-        object oTest = GetFirstObjectInShape(SHAPE_SPELLCONE, 20.0, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+        object oTest = MyFirstObjectInShape(SHAPE_SPELLCONE, 20.0, lTarget, TRUE, OBJECT_TYPE_CREATURE);
         
         //loop to check all
         while(GetIsObjectValid(oTest))

@@ -51,7 +51,7 @@ void main()
 	
 
 	ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, PRCGetSpellTargetLocation());
-	oTarget = GetFirstObjectInShape(SHAPE_SPHERE, 9.14f, lLocal, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_PLACEABLE );
+	oTarget = MyFirstObjectInShape(SHAPE_SPHERE, 9.14f, lLocal, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_PLACEABLE );
 	
 	//Set up for loop
 	int i = nCasterLevel;

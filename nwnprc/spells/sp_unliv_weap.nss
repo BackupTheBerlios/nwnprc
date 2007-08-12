@@ -90,7 +90,7 @@ void HiImABomb(object oTarget, int nCounter, int nHP, int nCasterLvl)
         
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
         
-        object oOuch = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_MEDIUM,lLoc, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+        object oOuch = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_MEDIUM,lLoc, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
         
         while(GetIsObjectValid(oOuch))
         {
@@ -111,7 +111,7 @@ void HiImABomb(object oTarget, int nCounter, int nHP, int nCasterLvl)
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_MAGICAL), oOuch);
             
             //Get next victim
-            oOuch = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_MEDIUM,lLoc, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+            oOuch = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_MEDIUM,lLoc, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
         }
     }
     nCounter--;

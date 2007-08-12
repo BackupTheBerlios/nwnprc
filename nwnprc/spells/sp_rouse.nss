@@ -37,12 +37,12 @@ void main()
 	
 	object oPC = OBJECT_SELF;
 	location lLoc = GetSpellTargetLocation();
-	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, 3.048f, lLoc, FALSE, OBJECT_TYPE_CREATURE);
+	object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, 3.048f, lLoc, FALSE, OBJECT_TYPE_CREATURE);
 	
 	while(GetIsObjectValid(oTarget))
 	{
 		RemoveSleep(oTarget);
-		oTarget = GetNextObjectInShape(SHAPE_SPHERE, 3.048f, lLoc, FALSE, OBJECT_TYPE_CREATURE);
+		oTarget = MyNextObjectInShape(SHAPE_SPHERE, 3.048f, lLoc, FALSE, OBJECT_TYPE_CREATURE);
 	}
 	
 	SPSetSchool();

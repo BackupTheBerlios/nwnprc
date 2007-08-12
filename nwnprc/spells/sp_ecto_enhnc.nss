@@ -45,7 +45,7 @@ void main()
 	
 	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
 	
-	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lLoc, FALSE, OBJECT_TYPE_CREATURE);
+	object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lLoc, FALSE, OBJECT_TYPE_CREATURE);
 		
 	//loop
 	while(GetIsObjectValid(oTarget))

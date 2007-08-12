@@ -39,7 +39,7 @@ void main()
 	object oPC = OBJECT_SELF;
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	location lLoc = GetSpellTargetLocation();	
-	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, 12.19f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
+	object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, 12.19f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
 	effect eVisLink = EffectLinkEffects(EffectVisualEffect(VFX_FNF_STRIKE_HOLY), EffectVisualEffect(VFX_FNF_SCREEN_BUMP));
 	       eVisLink = EffectLinkEffects(eVisLink, EffectVisualEffect(VFX_FNF_SUNBEAM));
 	int nCasterLvl = PRCGetCasterLevel(oPC);
@@ -71,7 +71,7 @@ void main()
 		}
 		
 		//cycle
-		oTarget = GetNextObjectInShape(SHAPE_SPHERE, 12.19f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
+		oTarget = MyNextObjectInShape(SHAPE_SPHERE, 12.19f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
 	}
 	
 	//Sanctified spells get mandatory 10 pt good adjustment, regardless of switch

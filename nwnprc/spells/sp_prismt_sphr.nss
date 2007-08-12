@@ -72,7 +72,7 @@ void main()
         effect eBlind = EffectBlindness();
         
         // Start cycling through the AOE Object for viable targets
-        oTarget = GetFirstObjectInShape(SHAPE_SPHERE, 10.0, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+        oTarget = MyFirstObjectInShape(SHAPE_SPHERE, 10.0, lTarget, TRUE, OBJECT_TYPE_CREATURE);
         
         while(GetIsObjectValid(oTarget))
         {
@@ -107,6 +107,6 @@ void main()
                         }
                 }
                 //Get next target.
-                oTarget = GetNextObjectInShape(SHAPE_SPHERE, 10.0, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+                oTarget = MyNextObjectInShape(SHAPE_SPHERE, 10.0, lTarget, TRUE, OBJECT_TYPE_CREATURE);
         }
 }

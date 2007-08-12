@@ -70,7 +70,7 @@ void main()
     effect eVis = EffectVisualEffect(VFX_IMP_DISEASE_S);
     int nDam = d8(1);
     int nRounds = 10;
-    object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lLoc);
+    object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lLoc);
     int nDC = SPGetSpellSaveDC(oTarget, oPC);
     int nCasterLvl = PRCGetCasterLevel(oTarget);
     int nMetaMagic = PRCGetMetaMagicFeat();
@@ -98,7 +98,7 @@ void main()
                 SporeLoop(oTarget, nMetaMagic, nRounds);                
             }
         }
-        oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lLoc);
+        oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lLoc);
     }
     SPEvilShift(oPC);
     SPSetSchool();

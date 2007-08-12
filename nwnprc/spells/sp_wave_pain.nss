@@ -32,7 +32,7 @@ void main()
 {
 	object oPC = OBJECT_SELF;
 	location lLoc = GetSpellTargetLocation();
-	object oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 7.62f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
+	object oTarget = MyFirstObjectInShape(SHAPE_SPELLCONE, 7.62f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
 	effect eStun = EffectStunned();
 	effect eVis = EffectVisualEffect(VFX_IMP_STUN);
 	int nCasterLvl = PRCGetCasterLevel(oPC);
@@ -64,7 +64,7 @@ void main()
 				}
 			}
 		}
-		oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 7.62f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
+		oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, 7.62f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
 	}
 	
 	SPEvilShift(oPC);

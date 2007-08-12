@@ -46,7 +46,7 @@ void main()
 	effect eAOE = EffectAreaOfEffect(VFX_AOE_RAIN_OF_BLACK_TULIPS);
 	location lLoc = GetSpellTargetLocation();
 	int nMetaMagic = PRCGetMetaMagicFeat();
-	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, 24.38f, lLoc, FALSE, OBJECT_TYPE_CREATURE);
+	object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, 24.38f, lLoc, FALSE, OBJECT_TYPE_CREATURE);
 	int nDam;
 	int nAlign;
 	float fDur = RoundsToSeconds(nCasterLvl);
@@ -82,7 +82,7 @@ void main()
 				SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_MAGICAL), oTarget);
 			}
 		}
-		oTarget = GetNextObjectInShape(SHAPE_SPHERE, 24.38f, lLoc, FALSE, OBJECT_TYPE_CREATURE);
+		oTarget = MyNextObjectInShape(SHAPE_SPHERE, 24.38f, lLoc, FALSE, OBJECT_TYPE_CREATURE);
 	}
 	SPGoodShift(oPC);
 	SPSetSchool();

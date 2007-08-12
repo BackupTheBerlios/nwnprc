@@ -79,7 +79,7 @@ void main()
 	
 void EmberLoop(int nCounter, int nCasterLvl, int nMetaMagic, object oPC, location lLoc)
 {
-	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, 12.19f, lLoc, FALSE, OBJECT_TYPE_CREATURE);
+	object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, 12.19f, lLoc, FALSE, OBJECT_TYPE_CREATURE);
 	int nDam;
 	int nDam2;
 		
@@ -117,7 +117,7 @@ void EmberLoop(int nCounter, int nCasterLvl, int nMetaMagic, object oPC, locatio
 				SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam2, DAMAGE_TYPE_DIVINE), oTarget);
 			}
 		}
-		oTarget = GetNextObjectInShape(SHAPE_SPHERE, 12.19f, lLoc, FALSE, OBJECT_TYPE_CREATURE);
+		oTarget = MyNextObjectInShape(SHAPE_SPHERE, 12.19f, lLoc, FALSE, OBJECT_TYPE_CREATURE);
 	}	
 	nCounter--;
 	

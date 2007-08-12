@@ -41,7 +41,7 @@ void main()
 	
 	object oPC = OBJECT_SELF;
 	location lLoc = GetSpellTargetLocation();
-	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, 6.10f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
+	object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, 6.10f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
 	float fDur;
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	int nCasterLvl = PRCGetCasterLevel(oPC);
@@ -87,7 +87,7 @@ void main()
 				}
 			}
 		}
-		oTarget = GetNextObjectInShape(SHAPE_SPHERE, 6.10f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
+		oTarget = MyNextObjectInShape(SHAPE_SPHERE, 6.10f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
 	}
 	
 	SPGoodShift(oPC);

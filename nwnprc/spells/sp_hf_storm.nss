@@ -43,7 +43,7 @@ void main()
         ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eExplode, lTarget);
         
         //Declare the spell shape, size and the location.  Capture the first target object in the shape.
-        object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+        object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
         
         //Cycle through the targets within the spell shape until an invalid object is captured.
         while (GetIsObjectValid(oTarget))
@@ -78,7 +78,7 @@ void main()
                         }
                 }
                 //Select the next target within the spell shape.
-                oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+                oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
         }       
         SPEvilShift(oPC);
         SPSetSchool();

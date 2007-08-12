@@ -36,7 +36,7 @@ void main()
 	
 	object oPC = OBJECT_SELF;
 	location lLoc = GetSpellTargetLocation();
-	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, 12.192, lLoc, TRUE, OBJECT_TYPE_CREATURE);
+	object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, 12.192, lLoc, TRUE, OBJECT_TYPE_CREATURE);
 	int nDC;
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	int nDam;
@@ -65,7 +65,7 @@ void main()
 				SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_SONIC), oTarget);
 			}
 		}
-		oTarget = GetNextObjectInShape(SHAPE_SPHERE, 12.192, lLoc, TRUE, OBJECT_TYPE_CREATURE);
+		oTarget = MyNextObjectInShape(SHAPE_SPHERE, 12.192, lLoc, TRUE, OBJECT_TYPE_CREATURE);
 	}	
 	//Holy Word
 	ActionCastSpellAtLocation(SPELL_HOLY_WORD, lLoc, nMetaMagic, TRUE, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);

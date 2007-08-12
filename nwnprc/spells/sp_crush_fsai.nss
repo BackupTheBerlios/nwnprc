@@ -10,7 +10,7 @@ void main()
 {
    if (DEBUG) DoDebug("Starting Crushing Fist AI");
    	
-    object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, 20.0, PRCGetSpellTargetLocation(), TRUE);
+    object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, 20.0, PRCGetSpellTargetLocation(), TRUE);
     while(GetIsObjectValid(oTarget))
     {
 	if (GetIsEnemy(oTarget, GetMaster()))
@@ -21,7 +21,7 @@ void main()
    		return;
 	}
         //Get next target in the spell cone
-        oTarget = GetNextObjectInShape(SHAPE_SPHERE, 20.0, PRCGetSpellTargetLocation(), TRUE);
+        oTarget = MyNextObjectInShape(SHAPE_SPHERE, 20.0, PRCGetSpellTargetLocation(), TRUE);
     }
    
    if (DEBUG) DoDebug("Ending Crushing Fist AI");

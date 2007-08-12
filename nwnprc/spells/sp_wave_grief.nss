@@ -32,7 +32,7 @@ void main()
 {
 	object oPC = OBJECT_SELF;
 	location lLoc = GetSpellTargetLocation();
-	object oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 7.62f, lLoc, TRUE, OBJECT_TYPE_CREATURE);	
+	object oTarget = MyFirstObjectInShape(SHAPE_SPELLCONE, 7.62f, lLoc, TRUE, OBJECT_TYPE_CREATURE);	
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	int nPenalty = 3;
@@ -66,7 +66,7 @@ void main()
 				SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur);
 			}
 		}
-		oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 7.62f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
+		oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, 7.62f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
 	}
 	
 	SPEvilShift(oPC);

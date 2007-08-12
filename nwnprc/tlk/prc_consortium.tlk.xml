@@ -31932,22 +31932,189 @@ Colossal - 3d6</entry>
   <entry id="55004" lang="en" sex="m">End of DD reserved</entry>
   <entry id="55005" lang="en" sex="m">Disrupt Undead
 </entry>
+  <entry id="55006" lang="en" sex="m">Disrupt Undead
+Necromancy
+Level:  Sor/Wiz 0
+Components:     V, S
+Casting Time:   1 standard action
+Range:  Close (25 ft. + 5 ft./2 levels)
+Effect:         Ray
+Duration:       Instantaneous
+Saving Throw:   None
+Spell Resistance:       Yes
+
+You direct a ray of positive energy. You must make a ranged touch attack to hit, and if the ray hits an undead creature, it deals 1d6 points of damage to it.</entry>
   <entry id="55007" lang="en" sex="m">Fist of Stone
 </entry>
+  <entry id="55008" lang="en" sex="m">Fist of Stone
+Transmutation [Earth]
+Level: Sorcerer/wizard 1, warmage 1
+Components: V, S
+Casting Time: 1 standard action
+Range: Personal
+Target: You
+Duration: 1 minute
+
+You transform one of your hands into a mighty fist of living stone, gaining a +6 enhancement bonus to Strength. In addition, you gain the ability to make one natural slam attack as a standard action, dealing 1d6 points of damage plus your new Strength bonus.  You can make the slam attack as a natural secondary attack with the normal -5 penalty as part of a full attack action.
+
+Your fist undergoes no change in size or form, remaining as flexible and responsive as it would normally be while under the spell’s effect.</entry>
   <entry id="55009" lang="en" sex="m">Blades of Fire</entry>
+  <entry id="55010" lang="en" sex="m">Blades of Fire
+Conjuration (Creation) [Fire]
+Level: Ranger 2, sorcerer/wizard 2, warmage 2
+Components: V
+Range: Touch
+Targets: Up to two melee weapons you are wielding
+Duration: 1 round
+Saving Throw: None
+Spell Resistence: None
+
+Flames sheathe your melee weapons, harming neither you nor the weapons but possibly burning your opponents. Your melee weapons each deal an extra 1d6 points of fire damage.</entry>
   <entry id="55011" lang="en" sex="m">Fire Trap</entry>
+  <entry id="55012" lang="en" sex="m">Fire Trap
+Abjuration [Fire]
+Level: Drd 2, Sor/Wiz 4 
+Components: V, S
+Range: Touch 
+Target: Area
+Duration: Permanent until discharged (D) 
+Saving Throw: Reflex half; see text 
+Spell Resistance: Yes
+
+Fire trap creates a fiery explosion when an intruder enters the area that the trap protects.  When casting fire trap, you select a point as the spells center. When someone other than you gets too close to that point, a fiery explosion fills the area within a 5-foot radius around the spell’s center. The flames deal 1d4 points of fire damage +1 point per caster level (maximum +20). 
+
+An unsuccessful dispel magic spell does not detonate the spell. Underwater, this ward deals half damage and creates a large cloud of steam.
+</entry>
   <entry id="55013" lang="en" sex="m">Pyrotechnics
 </entry>
+  <entry id="55014" lang="en" sex="m">Pyrotechnics
+Transmutation
+Level: Brd 2, Sor/Wiz 2 
+Components: V, S, M 
+Casting Time: 1 standard action 
+Range: Long (400 ft. + 40 ft./level) 
+Target: Area
+Duration: 1d4+1 rounds, or 1d4+1 rounds after creatures leave the smoke cloud; see text 
+Saving Throw: Will negates or Fortitude negates; see text 
+Spell Resistance: Yes or No; see text
+
+Pyrotechnics turns a fire into either a burst of blinding fireworks or a thick cloud of choking smoke, depending on the version you choose.
+
+Fireworks: The fireworks are a flashing, fiery, momentary burst of glowing, colored aerial lights. This effect causes creatures within 120 feet of the fire source to become blinded for 1d4+1 rounds (Will negates). These creatures must have line of sight to the fire to be affected. Spell resistance can prevent blindness.
+
+Smoke Cloud: A writhing stream of smoke billows out from the source, forming a choking cloud. The cloud spreads 20 feet in all directions and lasts for 1 round per caster level. All sight, even darkvision, is ineffective in or through the cloud. All within the cloud take -4 penalties to Strength and Dexterity (Fortitude negates). These effects last for 1d4+1 rounds after the cloud dissipates or after the creature leaves the area of the cloud. Spell resistance does not apply.</entry>
   <entry id="55015" lang="en" sex="m">Ice Knife</entry>
-  <entry id="55017" lang="en" sex="m">Shatter
+  <entry id="55016" lang="en" sex="m">Ice Knife
+Conjuration (Creation) [Cold]
+Level: Assassin 2, wu jen 2 (water),warmage 2
+Components: S, M
+Casting Time: 1 standard action
+Range: Long (400 ft. + 40 ft./level)
+Effect: One icy missile
+Duration: Instantaneous
+Saving Throw: See text
+Spell Resistance: Yes
+
+A magical shard of ice blasts from your hand and speeds to its target. You must succeed on a normal ranged attack to hit (with a +2 bonus on the attack roll for every two caster levels). If it hits, an ice knife deals 2d8 points of cold damage plus 2 points of Dexterity damage (no Dexterity damage on a successful Fortitude save). Creatures that have immunity to cold damage also take no Dexterity damage automatically.
+
+A knife that misses creates a shower of ice crystals in a 10-foot-radius burst. The icy burst deals 1d8 points of cold damage to all creatures within the area of the effect (Reflex half).</entry>
+  <entry id="55017" lang="en" sex="m">
 </entry>
   <entry id="55019" lang="en" sex="m">Whirling Blade</entry>
+  <entry id="55020" lang="en" sex="m">Whirling Blade
+Transmutation
+Level: Bard 2, sorcerer/wizard 2,warmage 2
+Components: V, S, F
+Casting Time: 1 standard action
+Range: 60 ft.
+Effect: 60-ft. line
+Duration: Instantaneous
+Saving Throw: None
+Spell Resistance: No
+
+As you cast this spell, you hurl a single weapon at your foes, magically striking at all enemies along a line to the extent of the spell’s range. You make a normal melee attack, just as if you attacked with the weapon in
+melee, against each foe in the weapon’s path, but you can choose to substitute your Intelligence or Charisma
+modifier (as appropriate for your spellcasting class) for your Strength modifier on the weapon’s attack rolls
+and damage rolls. Even if your base attack bonus would normally give you multiple attack rolls, a whirling
+blade gets only one attack (at your best attack bonus) against each target. The weapon deals damage just as if you had swung it in melee, including any bonuses you might have from ability scores or feats.
+
+No matter how many targets your weapon hits or misses, it instantly and unerringly returns to your hand after attempting the last of its attacks.
+</entry>
   <entry id="55021" lang="en" sex="m">Fire Shield (PnP)</entry>
+  <entry id="55022" lang="en" sex="m">Fire Shield
+Evocation [Fire or Cold]
+Level: Fire 5, Sor/Wiz 4, Sun 4 
+Components: V, S, M/DF 
+Casting Time: 1 standard action 
+Range: Personal 
+Target: You 
+Duration: 1 round/level (D)
+
+This spell wreathes you in flame and causes damage to each creature that attacks you in melee. The flames also protect you from either cold-based or fire-based attacks (your choice).
+
+Any creature striking you with its body or a handheld weapon deals normal damage, but at the same time the attacker takes 1d6 points of damage +1 point per caster level (maximum +15). This damage is either cold damage (if the shield protects against fire-based attacks) or fire damage (if the shield protects against cold-based
+attacks). If the attacker has spell resistance, it applies to this effect. Creatures wielding weapons with exceptional reach are not subject to this damage if they attack you.
+
+When casting this spell, you appear to immolate yourself, but the flames are thin and wispy, giving off light equal to only half the illumination of a normal torch (10 feet). The special powers of each version are as follows:
+
+Warm Shield: The flames are warm to the touch. You take only half damage from cold-based attacks. If such an attack allows a Reflex save for half damage, you take no damage on a successful save.
+
+Chill Shield: The flames are cool to the touch. You take only half damage from fire-based attacks. If such an attack allows a Reflex save for half damage, you take no damage on a successful save.</entry>
   <entry id="55023" lang="en" sex="m">Ring of Blades</entry>
+  <entry id="55024" lang="en" sex="m">Ring of Blades
+Conjuration (Creation)
+Level: Cleric 3, warmage 3
+Components: V,S, M
+Casting Time: 1 standard action
+Range: Personal
+Target: You
+Duration: 1 min./level
+
+This spell conjures a horizontal ring of swirling metal blades around you. The ring extends 5 feet from you, into all squares adjacent to your space, and it moves with you as you move. Each round on your turn, starting when you cast the spell, the blades deal 1d6 points of damage +1 point per caster level (maximum +10) to all creatures in the affected area.
+
+The blades conjured by a lawful-aligned cleric are cold iron, those conjured by a chaotic-aligned cleric are silver, and those conjured by a cleric who is neither lawful nor chaotic are steel.
+</entry>
   <entry id="55025" lang="en" sex="m">Sleet Storm</entry>
+  <entry id="55026" lang="en" sex="m">Sleet Storm
+Conjuration (Creation) [Cold]
+Level: Drd 3, Sor/Wiz 3 
+Components: V, S
+Casting Time: 1 standard action 
+Range: Long (400 ft. + 40 ft./level) 
+Area: Cylinder (40-ft. radius, 20 ft. high) 
+Duration: 1 round/level 
+Saving Throw: None 
+Spell Resistance: No
+
+Driving sleet blocks all sight (even darkvision) within it and causes the ground in the area to be icy. A creature can walk within or through the area of sleet at half normal speed with a DC 10 Balance check. Failure means it can’t move in that round, while failure by 5 or more means it falls (see the Balance skill for details).
+</entry>
   <entry id="55027" lang="en" sex="m">Orb of Force</entry>
+  <entry id="55028" lang="en" sex="m">Orb of Force
+Conjuration (Creation) [Force]
+Level: Sorcerer/wizard 4
+Components: V, S
+Casting Time: 1 standard action
+Range: Medium (100 ft. + 10 ft./level)
+Effect: One orb of force
+Duration: Instantaneous
+Saving Throw: None
+Spell Resistance: No
+
+You create a globe of force 3 inches across, which streaks from your palm toward your target. You must succeed on a ranged touch attack to hit the target. The orb deals 1d6 points of damage per caster level (maximum 10d6).</entry>
   <entry id="55029" lang="en" sex="m">Mass Fire Shield
 </entry>
+  <entry id="55030" lang="en" sex="m">Mass Fire Shield
+Evocation [Fire or Cold]
+Level: Sorcerer/wizard 5, warmage 5
+Components: V, S, M
+Casting Time: 1 standard action
+Range: Close (25 ft. + 5 ft./2 levels)
+Targets: One or more allied creatures, no two of which can be more than 30 ft. apart
+Duration: 1 round/level
+Save: Will negates (harmless)
+Spell Resistance: Yes (harmless)
+
+This spell functions like fire shield except as noted above.</entry>
   <entry id="55031" lang="en" sex="m">Prismatic Ray</entry>
   <entry id="55032" lang="en" sex="m">Prismatic Ray
 Evocation
@@ -31972,12 +32139,150 @@ A single beam of brilliantly colored light shoots from your outstretched hand. Y
 6      Indigo              Insane, as insanity spell (Will negates)
 7      Violet              Sent to another plane(Will negates)
 8      Two effects; roll twice more, ignoring any '8' results</entry>
-  <entry id="55033" lang="en" sex="m">Fire Seeds</entry>
   <entry id="55035" lang="en" sex="m">Otiluke's Freezing Sphere</entry>
+  <entry id="55036" lang="en" sex="m">Otiluke's Freezing Sphere
+Evocation [Cold]
+Level: Sor/Wiz 6 
+Components: V, S, F 
+Casting Time: 1 standard action 
+Range: Long (400 ft. + 40 ft./level) 
+Target, Effect, or Area: See text
+Duration: Instantaneous or 1 round/level; see text
+Saving Throw: Reflex half; see text
+Spell Resistance: Yes
+
+Freezing sphere creates a frigid globe of cold energy that streaks from your fingertips to the location you
+select, where it explodes in a 10-foot-radius burst, dealing 1d6 points of cold damage per caster level 
+(maximum 15d6) to each creature in the area. An elemental (water) creature instead takes 1d8 points
+of cold damage per caster level (maximum 15d8).
+
+You can refrain from firing the globe after completing the spell, if you wish. Treat this as a
+touch spell for which you are holding the charge. You can hold the charge for as long as 1 round per 
+level, at the end of which time the freezing sphere bursts centered on you (and you receive no saving 
+throw to resist its effect). Firing the globe in a later round is a standard action.
+</entry>
   <entry id="55037" lang="en" sex="m">Waves of Exhaustion</entry>
+  <entry id="55038" lang="en" sex="m">Waves of Exhaustion
+Necromancy
+Level: Sor/Wiz 7 
+Components: V, S 
+Casting Time: 1 standard action 
+Range: 60 ft. 
+Area: Cone-shaped burst 
+Duration: Instantaneous 
+Saving Throw: No 
+Spell Resistance: Yes
+
+Waves of negative energy cause all living creatures in the spell’s area to become exhausted. This spell has no effect on a creature that is already exhausted.</entry>
   <entry id="55039" lang="en" sex="m">Prismatic Wall</entry>
+  <entry id="55040" lang="en" sex="m">Prismatic Wall
+Abjuration
+Level: Sor/Wiz 8 
+Components: V, S 
+Casting Time: 1 standard action 
+Range: Close (25 ft. + 5 ft./2 levels) 
+Effect: Wall 4 ft./level wide, 2 ft./level high 
+Duration: 10 min./level (D) 
+Saving Throw: See text 
+Spell Resistance: See text
+
+Prismatic wall creates a vertical, opaque wall; a shimmering, multicolored plane of light that protects you from all forms of attack. The wall flashes with seven colors, each of which has a distinct power and purpose. The wall is immobile, and you can pass through and remain near the wall without harm. However, any other creature with less than 8 HD that is within 20 feet of the wall is blinded for 2d4 rounds by the colors if it 
+looks at the wall.
+
+Each color in the wall has a special effect. The accompanying table shows the seven colors of the
+wall, the order in which they appear, their  effects on creatures trying to attack you or pass
+through the wall, and the magic needed to negate each color.
+
+Spell resistance is effective against a prismatic wall, but the caster level check must be repeated for each 
+color present.
+
+Color   Order   Effect of Color         
+
+Red     1st     Deals 20 points of fire damage (Reflex half).  
+Orange  2nd     Deals 40 points of acid damage (Reflex half).
+Yellow  3rd     Deals 80 points of electricity damage (Reflex half).
+Green   4th     Poison (Kills; Fortitude partial for 1d6 points of Con damage instead).
+Blue    5th     Turned to stone (Fortitude negates). 
+Indigo  6th     Will save or become insane (as insanity spell). 
+Violet  7th     Creatures sent to another plane (Will negates). </entry>
   <entry id="55041" lang="en" sex="m">Scintillating Pattern</entry>
+  <entry id="55042" lang="en" sex="m">Scintillating Pattern
+Illusion (Pattern) [Mind-Affecting]
+Level: Sor/Wiz 8 
+Components: V, S, M 
+Casting Time: 1 standard action 
+Range: Close (25 ft. + 5 ft./2 levels) 
+Effect: Colorful lights in a 20-ft.-radius spread 
+Duration: Concentration + 2 rounds 
+Saving Throw: None 
+Spell Resistance: Yes
+
+A twisting pattern of discordant, coruscating colors weaves through the air, affecting creatures within it.
+The spell affects a total number of Hit Dice of creatures equal to your caster level (maximum 20). Creatures with the fewest HD are affected first; and, among creatures with equal HD, those who are closest to the spell’s point of origin are affected first. Hit Dice that are not sufficient to affect a creature are wasted. The spell affects each subject according to its Hit Dice.
+
+6 or less: Unconscious for 1d4 rounds, then stunned for 1d4 rounds, and then confused for 1d4 rounds. (Treat an unconscious result as stunned for nonliving creatures.)
+
+7 to 12: Stunned for 1d4 rounds, then confused for 1d4 rounds.
+
+13 or more: Confused for 1d4 rounds.
+
+Sightless creatures are not affected by scintillating pattern.
+</entry>
   <entry id="55043" lang="en" sex="m">Prismatic Sphere</entry>
+  <entry id="55044" lang="en" sex="m">Prismatic Sphere
+Abjuration
+Level: Protection 9, Sor/Wiz 9, Sun 9 
+Components: V 
+Range: 10 ft. 
+Effect: 10-ft.-radius sphere centered on you
+
+This spell functions like prismatic wall, except you conjure up an immobile, opaque globe of shimmering, 
+multicolored light that surrounds you and protects you from all forms of attack. The sphere flashes in
+all colors of the visible spectrum.  The sphere’s blindness effect on creatures with less than 8 HD lasts 2d4x10 minutes.
+
+You can pass into and out of the prismatic sphere and remain near it without harm. However, when you’re 
+inside it, the sphere blocks any attempt to project something through the sphere (including spells). Other
+creatures that attempt to attack you or pass through suffer the effects of each color, one at a time.
+
+Typically, only the upper hemisphere of the globe will exist, since you are at the center of the sphere, so 
+the lower half is usually excluded by the floor surface you are standing on.
+
+The colors of the sphere have the same effects as the colors of a prismatic wall:
+
+Red     1st     Deals 20 points of fire damage (Reflex half).  
+Orange  2nd     Deals 40 points of acid damage (Reflex half).
+Yellow  3rd     Deals 80 points of electricity damage (Reflex half).
+Green   4th     Poison (Kills; Fortitude partial for 1d6 points of Con damage instead).
+Blue    5th     Turned to stone (Fortitude negates). 
+Indigo  6th     Will save or become insane (as insanity spell). 
+Violet  7th     Creatures sent to another plane (Will negates). </entry>
+  <entry id="55045" lang="en" sex="m">Pyrotechnics: Fireworks
+</entry>
+  <entry id="55046" lang="en" sex="m">Pyrotechnics: Smoke
+</entry>
+  <entry id="55047" lang="en" sex="m">Mass Fire Shield: Red</entry>
+  <entry id="55048" lang="en" sex="m">Greater Disrupt Undead</entry>
+  <entry id="55049" lang="en" sex="m">Greater Disrupt Undead
+Necromancy
+Level: Sorcerer/wizard 3
+Components: V, S
+Casting Time: 1 standard action
+Range: Close (25 ft. + 5 ft./2 levels)
+Effect: Ray
+Duration: Instantaneous
+Saving Throw: None
+Spell Resistance: Yes
+
+You must succeed on a ranged touch attack with the ray to strike a target. This spell functions like disrupt
+undead (PH 223), except that this ray deals 1d8 points of damage per caster level to any undead, to a maximum
+of 10d8. If the damage is sufficient to destroy the first target, then you can redirect the ray to another
+undead target within 15 feet of the first target. If you make a successful ranged touch attack on the second
+target, that target takes half of the damage rolled for the first target.
+</entry>
+  <entry id="55050" lang="en" sex="m">Fire Shield (PnP): Blue</entry>
+  <entry id="55051" lang="en" sex="m">Mass Fire Shield: Blue
+</entry>
+  <entry id="55052" lang="en" sex="m">Fire Shield (PnP): Red</entry>
   <entry id="55100" lang="en" sex="m">Ninja</entry>
   <entry id="55101" lang="en" sex="m">Ninjas</entry>
   <entry id="55102" lang="en" sex="m">ninja</entry>

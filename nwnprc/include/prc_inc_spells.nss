@@ -2136,7 +2136,7 @@ int PRCMaximizeOrEmpower(int nDice, int nNumberOfDice, int nMeta, int nBonus = 0
     int i = 0;
     int nDamage = 0;
     int nChannel = GetLocalInt(OBJECT_SELF,"spellswd_aoe");
-    int nFeat = GetLocalInt(OBJECT_SELF,"spell_metamagic");
+    int nFeat = GetLocalInt(OBJECT_SELF,"PRC_SPELL_METAMAGIC");
     int nDiceDamage;
     for (i=1; i<=nNumberOfDice; i++)
     {
@@ -2155,6 +2155,22 @@ int PRCMaximizeOrEmpower(int nDice, int nNumberOfDice, int nMeta, int nBonus = 0
        nDamage = nDamage + nDamage / 2;
     }
     return nDamage + nBonus;
+}
+
+float PRCDoMetamagicDuration(float fDuration, int nMeta = -1)
+{
+    if (nMeta == -1) // no metamagic value was passed, so get it here
+    {
+        nMeta = PRCGetMetaMagicFeat();
+    }
+    int nFeat = GetLocalInt(OBJECT_SELF,"PRC_SPELL_METAMAGIC");
+    
+    if (nMeta & METAMAGIC_EXTEND || nFeat & METAMAGIC_EXTEND)
+    {
+        fDuration *= 2;
+    }
+    
+    return fDuration;
 }
 
 int PRCGetSpellId(object oCaster = OBJECT_SELF)

@@ -556,11 +556,25 @@ void SetupSpells(object oPC, int nClass)
         int nSpellbookID, nRealSpellID, nTestRealSpellID, nMetaFeat;
         for(i = 0; i < persistant_array_get_size(oPC, "Spellbook" + sClass); i++)
         {
-            nSpellbookID = persistant_array_get_int(oPC, "Spellbook" + sClass, i);
-            AddSpellUse(oPC, nSpellbookID, nClass, sFile, sArrayName, nSpellbookType, oSkin,
-                        StringToInt(Get2DACache(sFile, "FeatID", nSpellbookID)),
-                        StringToInt(Get2DACache(sFile, "IPFeatID", nSpellbookID))
-                        );
+            // DelayCommand fun
+            if (i >= 50)
+            {
+                float fDelay = (50 - IntToFloat(i))/ 100.0f ; // eg i == 51, fDelay == 0.01
+                nSpellbookID = persistant_array_get_int(oPC, "Spellbook" + sClass, i);
+                DelayCommand(fDelay,
+                    AddSpellUse(oPC, nSpellbookID, nClass, sFile, sArrayName, nSpellbookType, oSkin,
+                            StringToInt(Get2DACache(sFile, "FeatID", nSpellbookID)),
+                            StringToInt(Get2DACache(sFile, "IPFeatID", nSpellbookID))
+                            ));
+            }
+            else
+            {
+                nSpellbookID = persistant_array_get_int(oPC, "Spellbook" + sClass, i);
+                AddSpellUse(oPC, nSpellbookID, nClass, sFile, sArrayName, nSpellbookType, oSkin,
+                            StringToInt(Get2DACache(sFile, "FeatID", nSpellbookID)),
+                            StringToInt(Get2DACache(sFile, "IPFeatID", nSpellbookID))
+                            );
+            }
             //metamagic
             nRealSpellID = StringToInt(Get2DACache(sFile, "RealSpellID", nSpellbookID));
 

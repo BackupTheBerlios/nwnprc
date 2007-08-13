@@ -45,6 +45,8 @@ void main()
         float fDur = RoundsToSeconds(PRCGetCasterLevel(oPC));
         effect eAoE = EffectAreaOfEffect(VFX_PER_SLEET_STORM);
         
+        if(PRCGetMetaMagicFeat() == METAMAGIC_EXTEND) fDur += fDur;
+        
         ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAoE, lLoc, fDur);
         
         SPSetSchool();

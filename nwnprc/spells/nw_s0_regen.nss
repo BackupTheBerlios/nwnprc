@@ -32,6 +32,13 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     //Apply effects and VFX
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDur),TRUE,-1,nCasterLevel);
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+    
+    //Regrow fingers
+    if(GetPersistantLocalInt(oPC, "FINGERS_LEFT_HAND"))
+    {
+            SetPersistantLocalInt(oPC, "FINGERS_LEFT_HAND", 6);
+            SetPersistantLocalInt(oPC, "FINGERS_RIGHT_HAND", 6);
+    }
 
     return TRUE;    //return TRUE if spell charges should be decremented
 }

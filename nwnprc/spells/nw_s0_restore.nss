@@ -78,6 +78,13 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     
     //Spell Removal Check
     SpellRemovalCheck(OBJECT_SELF, oTarget);
+    
+     //Regrow fingers
+     if(GetPersistantLocalInt(oPC, "FINGERS_LEFT_HAND"))
+     {
+             SetPersistantLocalInt(oPC, "FINGERS_LEFT_HAND", 6);
+             SetPersistantLocalInt(oPC, "FINGERS_RIGHT_HAND", 6);
+     }
 }
 
 int GetIsSupernaturalCurse(effect eEff)

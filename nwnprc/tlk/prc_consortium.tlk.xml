@@ -26002,7 +26002,8 @@ bonus to the caster's Strength score, and one-quarter of the creature's Constitu
 Focus: A fresh or preserved (still bloody) 1-ounce portion of another creature's flesh.
 
 Corruption Cost: 2d6 points of Wisdom damage.
-</entry>
+
+Casters of good alignment cannot cast Corrupt spells.</entry>
   <entry id="52254" lang="en" sex="m">Abyssal Might</entry>
   <entry id="52255" lang="en" sex="m"> Abyssal Might
 Conjuration (Summoning) [Evil]
@@ -26047,7 +26048,8 @@ The caster calls upon the darkest forces in all existence to rain destruction do
 Material Component: An artifact, usually one of good perverted to this corrupt use.
 
 Corruption Cost: 3d6 points of Constitution damage and 4d6 points of Wisdom drain.
-</entry>
+
+Casters of good alignment cannot cast Corrupt spells.</entry>
   <entry id="52260" lang="en" sex="m">Apocalypse from the Sky: Fire</entry>
   <entry id="52261" lang="en" sex="m">Apocalypse from the Sky: Acid</entry>
   <entry id="52262" lang="en" sex="m">Apocalypse from the Sky: Sonic</entry>
@@ -26193,7 +26195,8 @@ The caster makes a grapple check whenever she hits with a claw attack, adding to
                 Colossal                    4d6
 
 Corruption Cost: 1d6 points of Dexterity damage.
-</entry>
+
+Casters of good alignment cannot cast Corrupt spells.</entry>
   <entry id="52280" lang="en" sex="m">Claws of the Savage</entry>
   <entry id="52281" lang="en" sex="m">Claws of the Savage
 Transmutation [Evil]
@@ -26332,7 +26335,9 @@ Spell Resistance: Yes
 
 The caster causes thorns to sprout from the insides of the subject creatures, which writhe in agony for 1d4 rounds, incapacitated, before dying. A wish or miracle spell cast on a subject during this time can eliminate the thorns and save that creature. Creatures that succeed at their Fortitude saving throws are still incapacitated for 1d4 rounds in horrible agony, taking 1d6 points of damage per round. At the end of the agony, however, the thorns disappear.
 
-Corruption Cost: 1d3 points of Wisdom drain.</entry>
+Corruption Cost: 1d3 points of Wisdom drain.
+
+Casters of good alignment cannot cast Corrupt spells.</entry>
   <entry id="52294" lang="en" sex="m">Demoncall</entry>
   <entry id="52295" lang="en" sex="m">Demoncall
 Divination [Evil]
@@ -26565,7 +26570,9 @@ Green Fog: Clouds of dark greenish mist roll across the countryside.  Any creatu
 
 Rain of Frogs or Fish: Thousands of animals fall from the sky, causing 1d3 pts per round of damage.  The rain lasts 2d6 rounds.
 
-Corruption Cost: 3d6 points of Constitution damage.</entry>
+Corruption Cost: 3d6 points of Constitution damage.
+
+Casters of good alignment cannot cast Corrupt spells.</entry>
   <entry id="52320" lang="en" sex="m">Rain of Blood</entry>
   <entry id="52321" lang="en" sex="m">Violet Rain</entry>
   <entry id="52322" lang="en" sex="m">Green Fog</entry>
@@ -26604,7 +26611,8 @@ Duration: 1 minute/level
 The caster grows vampirelike fangs that allow him to make bite attacks with an attack bonus of +10 plus the caster's Strength modifier. The caster's bite attack deals 1d6 points of damage and 1 point of Constitution damage.
 
 Corruption Cost: 1d6 points of Strength damage.
-</entry>
+
+Casters of good alignment cannot cast Corrupt spells.</entry>
   <entry id="52328" lang="en" sex="m">Fiendish Clarity</entry>
   <entry id="52329" lang="en" sex="m">Fiendish Clarity
 Divination [Evil]
@@ -26771,7 +26779,8 @@ For every three caster levels beyond 1st, the caster gains an additional dart by
 Fingers lost to this spell grow back with the use of a Restoration or Regeneration spell.
 
 Corruption Cost: 1 point of Strength damage per dart, plus the loss of one finger per dart. A hand with one or no fingers is useless.
-</entry>
+
+Casters of good alignment cannot cast Corrupt spells.</entry>
   <entry id="52350" lang="en" sex="m">Liquid Pain</entry>
   <entry id="52351" lang="en" sex="m">Liquid Pain
 Necromancy
@@ -26822,7 +26831,8 @@ The caster creates a conduit of evil energy between himself and another creature
 the caster's choosing, and the caster gains a +1 enhancement bonus to the same ability score per point drained during the casting of this spell. In other words, all points drained during this spell stack with each other to determine the enhancement bonus, but they don't stack with other castings of power leech or with other enhancement bonuses. The enhancement bonus lasts for 10 minutes per caster level.
 
 Corruption Cost: 1 point of Wisdom drain.
-</entry>
+
+Casters of good alignment cannot cast Corrupt spells.</entry>
   <entry id="52356" lang="en" sex="m">Rapture of Rupture</entry>
   <entry id="52357" lang="en" sex="m">Rapture of Rupture
 Transmutation [Evil]
@@ -26841,7 +26851,8 @@ When the caster touches a subject, his flesh bursts open suddenly in multiple pl
 
 Corruption Cost: 1 point of Strength damage per target
 touched.
-</entry>
+
+Casters of good alignment cannot cast Corrupt spells.</entry>
   <entry id="52358" lang="en" sex="m">Reality Blind</entry>
   <entry id="52359" lang="en" sex="m">Reality Blind
 Illusion (Phantasm) [Evil, Mind­Affecting]
@@ -26872,7 +26883,9 @@ Spell Resistance: Yes
 
 The subject's skin turns red and blisters. The blisters quickly turn into oozing wounds. Furthermore,the subject's sense of self becomes strangely clouded, diminishing her self-esteem. The subject takes 1d6 points of Strength damage and 1d4 points of Charisma damage.
 
-Corruption Cost: 1d6 points of Strength damage.</entry>
+Corruption Cost: 1d6 points of Strength damage.
+
+Casters of good alignment cannot cast Corrupt spells.</entry>
   <entry id="52362" lang="en" sex="m">Resonating Resistance</entry>
   <entry id="52363" lang="en" sex="m">Resonating Resistance
 Transmutation
@@ -26902,7 +26915,9 @@ Spell Resistance: Yes
 The subject's flesh and bones begin to rot. The subject takes 1d6 points of Constitution damage immediately, and a further 1d6 points of Constitution damage
 every hour until the subject dies or the curse is removed with a wish, miracle, or remove curse spell.
 
-Corruption Cost: 1d6 points of Strength damage.</entry>
+Corruption Cost: 1d6 points of Strength damage.
+
+Casters of good alignment cannot cast Corrupt spells.</entry>
   <entry id="52366" lang="en" sex="m">Seething Eyebane</entry>
   <entry id="52367" lang="en" sex="m">Eyebane
 Transmutation [Evil, Acid]
@@ -26918,6 +26933,8 @@ Spell Resistance: Yes
 The subject's eyes burst, spraying acid upon everyone within 5 feet. The subject is blinded and takes 1d6 points of acid damage. Those sprayed take 1d6 points of acid damage (Reflex save for half). Creatures without eyes can't be blinded, but they might take acid damage if someone nearby is the subject of seething eyebane.
 
 Corruption Cost: 1d6 points of Constitution damage
+
+Casters of good alignment cannot cast Corrupt spells.
 </entry>
   <entry id="52368" lang="en" sex="m">Shriveling</entry>
   <entry id="52369" lang="en" sex="m">Shriveling
@@ -27067,7 +27084,9 @@ Spell Resistance: Yes
 
 The subject turns into green slime over the course of 4 rounds. If a remove curse, polymorph other, heal, greater restoration, limited wish, miracle, or wish spell is cast during the 4 rounds of transformation, the subject is restored to normal but still takes 3d6 points of damage.
 
-Corruption Cost: 1d6 points of Strength damage.</entry>
+Corruption Cost: 1d6 points of Strength damage.
+
+Casters of good alignment cannot cast Corrupt spells.</entry>
   <entry id="52386" lang="en" sex="m">Unheavened</entry>
   <entry id="52387" lang="en" sex="m">Unheavened
 Abjuration [Evil]
@@ -27227,7 +27246,9 @@ Spell Resistance: Yes
 Shards of heavenly light spray from your fingertips, blinding evil creatures in their path for 1 round. A successful Fortitude save negates the blindness.
 The luminous shards also sear the flesh of evil creatures, dealing 1d6 points of damage per two caster levels (maximum 5d6). A successful Reflex save halves the damage, which is of divine origin.
 
-Sacrifice: 1d2 points of Strength damage.</entry>
+Sacrifice: 1d2 points of Strength damage.
+
+Casters of evil alignment cannot cast Sanctified spells.</entry>
   <entry id="52406" lang="en" sex="m">Brilliant Emanation</entry>
   <entry id="52407" lang="en" sex="m">Brilliant Emanation
 Evocation [Good]
@@ -27244,7 +27265,9 @@ This spell causes a divine glow to radiate from any reflective objects worn or c
 characters perceive the brilliant light emanating from the caster, but are not blinded by it and do not suffer any negative effects from it. Evil characters that make their saving throw are not blinded, but are distracted, taking a -1 penalty
 on any attacks made within the spell's area for the duration of the spell. Creatures must be able to see visible light to be affected by this spell.
 
-Sacrifice: 1d3 points of Strength damage. </entry>
+Sacrifice: 1d3 points of Strength damage. 
+
+Casters of evil alignment cannot cast Sanctified spells.</entry>
   <entry id="52408" lang="en" sex="m">Divine Inspiration</entry>
   <entry id="52409" lang="en" sex="m">Divine Inspiration
 Divination
@@ -27261,7 +27284,8 @@ This spell helps to tip the momentum of combat in the favor of good, granting li
 attack rolls made against evil creatures. This bonus does not apply to attacks made against non-evil creatures.
 
 Sacrifice: 1d2 points of Strength damage.
-</entry>
+
+Casters of evil alignment cannot cast Sanctified spells.</entry>
   <entry id="52410" lang="en" sex="m">Diamond Spray</entry>
   <entry id="52411" lang="en" sex="m">Diamond Spray
 Evocation [Good]
@@ -27275,7 +27299,9 @@ Saving Throw: Reflex half
 Spell Resistance: Yes
 
 A blast of diamond-like shards springs from your hand and extends outward in a glittering cone. The cone dazzles evil creatures in the area for 2d6 rounds. The spell also deals 1d6 points of damage per caster level (maximum 10d6). The damage
-affects only evil creatures. A successful Reflex save reduces the damage by half but does not negate the dazzling effect.</entry>
+affects only evil creatures. A successful Reflex save reduces the damage by half but does not negate the dazzling effect.
+
+Casters of evil alignment cannot cast Sanctified spells.</entry>
   <entry id="52412" lang="en" sex="m">Dragon Cloud</entry>
   <entry id="52413" lang="en" sex="m">Dragon Cloud
 Conjuration (Calling) [Air]
@@ -27295,6 +27321,8 @@ cloud speaks Auran.
 At the end of the spell's duration, the dragon cloud evaporates into nothingness as the bound elemental spirit returns to its home plane. The dragon cloud cannot pass through liquids or solid objects.
 
 Sacrifice: 1d3 points of Constitution damage.
+
+Casters of evil alignment cannot cast Sanctified spells.
 </entry>
   <entry id="52414" lang="en" sex="m">Exalted Fury</entry>
   <entry id="52415" lang="en" sex="m">Exalted Fury
@@ -27311,7 +27339,8 @@ Spell Resistance: Yes
 Uttering a single, awesomely powerful syllable of the Words of Creation, your body erupts in the same holy power that shaped the universe at its birth. All evil creatures within the area take damage equal to your current hit points +50.
 
 Sacrifice: You die. You can be raised or resurrected normally.
-</entry>
+
+Casters of evil alignment cannot cast Sanctified spells.</entry>
   <entry id="52416" lang="en" sex="m">Hammer of Righteousness</entry>
   <entry id="52417" lang="en" sex="m">Hammer of Righteousness
 Evocation [Force, Good]
@@ -27331,7 +27360,8 @@ or can split the damage evenly between the two types. How the damage is split mu
 halves the damage.
 
 Sacrifice: 1d3 points of Strength damage.
-</entry>
+
+Casters of evil alignment cannot cast Sanctified spells.</entry>
   <entry id="52418" lang="en" sex="m">Phieran's Resolve</entry>
   <entry id="52419" lang="en" sex="m">Phieran's Resolve
 Abjuration [Good]
@@ -27349,7 +27379,8 @@ Phieran's resolve (named after the exalted patron of suffering, endurance, and p
 targets a +4 sacred bonus on saving throws against spells with the evil descriptor.
 
 Sacrifice: 1d3 points of Strength damage.
-</entry>
+
+Casters of evil alignment cannot cast Sanctified spells.</entry>
   <entry id="52420" lang="en" sex="m">Phoenix Fire</entry>
   <entry id="52421" lang="en" sex="m">Phoenix Fire
 Necromancy [Fire, Good]
@@ -27365,8 +27396,9 @@ You immolate yourself, consuming your flesh in a cloud of flame 20 feet high and
 
 After 10 minutes, you rise from the ashes as if restored to life by a resurrection spell.
 
-Sacrifice: Your death and the level you lose when you
-return to life are the sacrifice cost for this spell.</entry>
+Sacrifice: Your death and the level you lose when you return to life are the sacrifice cost for this spell.
+
+Casters of evil alignment cannot cast Sanctified spells.</entry>
   <entry id="52422" lang="en" sex="m">Rain of Embers</entry>
   <entry id="52423" lang="en" sex="m">Rain of Embers
 Evocation [Fire, Good]
@@ -27385,6 +27417,8 @@ fire shield (chill shield), and similar magic. Creatures may leave the area to a
 A shield provides a cover bonus on the Reflex save, depending on its size small +2, large +4, tower +7. A shield spell oriented upward provides a +4 cover bonus on the Reflex save. A creature using its shield (or shield spell) to block the rain of embers cannot use it for defense in combat.
 
 Sacrifice: 1d2 points of Strength drain.
+
+Casters of evil alignment cannot cast Sanctified spells.
 </entry>
   <entry id="52424" lang="en" sex="m">Sicken Evil</entry>
   <entry id="52425" lang="en" sex="m">Sicken Evil
@@ -27400,7 +27434,9 @@ Spell Resistance: Yes
 
 You emanate a powerful aura that sickens evil creatures within the specified area.
 
-Sacrifice: 1d4 points of Strength damage.</entry>
+Sacrifice: 1d4 points of Strength damage.
+
+Casters of evil alignment cannot cast Sanctified spells.</entry>
   <entry id="52426" lang="en" sex="m">Storm of Shards</entry>
   <entry id="52427" lang="en" sex="m">Storm of Shards
 Evocation [Good]
@@ -27417,7 +27453,9 @@ Spell Resistance: Yes
 Shards of heavenly light rain down from above. Evil creatures within the spell's area that fail a Fortitude save are blinded permanently. The light shards also slice the flesh of evil creatures, dealing 1d6 points of damage per caster
 level (maximum 20d6). A successful Reflex save halves the damage, which is of divine origin.
 
-Sacrifice: 1d3 points of Strength drain. </entry>
+Sacrifice: 1d3 points of Strength drain. 
+
+Casters of evil alignment cannot cast Sanctified spells.</entry>
   <entry id="52428" lang="en" sex="m">Sunmantle</entry>
   <entry id="52429" lang="en" sex="m">Sunmantle
 Abjuration
@@ -27437,7 +27475,8 @@ The sunmantle grants the target damage reduction 5/-. Furthermore, if the target
 Because of the brilliance of the sunmantle, creatures sensitive to bright light (such as dark elves) take the usual attack penalties when in the light radius of the sunmantle.
 
 Sacrifice: 1d4 points of Strength damage.
-</entry>
+
+Casters of evil alignment cannot cast Sanctified spells.</entry>
   <entry id="52430" lang="en" sex="m">Twilight Luck</entry>
   <entry id="52431" lang="en" sex="m">Twilight Luck
 Abjuration [Good]
@@ -27450,7 +27489,9 @@ Duration: 1 minute/level
 Saving Throw: None
 Spell Resistance: Yes (harmless)
 
-By means of this spell, the caster can impart the luck of the fey to one non-evil being. The target gains a +1 luck bonus on all saving throws for the duration of the spell.</entry>
+By means of this spell, the caster can impart the luck of the fey to one non-evil being. The target gains a +1 luck bonus on all saving throws for the duration of the spell.
+
+Casters of evil alignment cannot cast Sanctified spells.</entry>
   <entry id="52432" lang="en" sex="m">Amber Sarcophagus</entry>
   <entry id="52433" lang="en" sex="m">Amber Sarcophagus
 Evocation
@@ -27729,7 +27770,9 @@ Level: Sanctified 4
 
 This spell functions like luminous armor, except that it imparts the benefits of full plate (+8 armor bonus to AC).
 
-Sacrifice: 1d3 points of Strength damage.</entry>
+Sacrifice: 1d3 points of Strength damage.
+
+Casters of evil alignment cannot cast Sanctified spells.</entry>
   <entry id="52466" lang="en" sex="m">Rain of Black Tulips</entry>
   <entry id="52467" lang="en" sex="m">Rain of Black Tulips
 Evocation [Good]
@@ -27889,7 +27932,9 @@ You imbue a robe, priestly garment, or outfit of regular clothing with divine po
 
      - Reduces ability damage due to spell casting by 1, to a minimum of 1 point          (but does not reduce the sacrifice cost of this spell).
 
-     Sacrifice: 1d4 points of Strength damage</entry>
+     Sacrifice: 1d4 points of Strength damage
+
+Casters of evil alignment cannot cast Sanctified spells.</entry>
   <entry id="52484" lang="en" sex="m">Stone Bones</entry>
   <entry id="52485" lang="en" sex="m">Stone Dragon (Strike)
 Level: Crusader 1, Swordsage 1, Warblade 1

@@ -1044,7 +1044,7 @@ int X2PreSpellCastCode2()
                nSpellID == SPELL_TWILIGHT_LUCK)
                {
                        nContinue = FALSE;
-                       SendMessageToPC(oCaster, "You do not meet the alignment requirements for this spell.");
+                       SendMessageToPC(oCaster, "You cannot cast Sanctified spells if you are evil.");
                }
         }       
          
@@ -1066,7 +1066,7 @@ int X2PreSpellCastCode2()
                 
                 {
                         nContinue = FALSE;                        
-                        SendMessageToPC(oCaster, "You do not meet the alignment requirements for this spell.");
+                        SendMessageToPC(oCaster, "You cannot cast Corrupt spells if you are good.");
                 }                        
         }
     }
@@ -1085,24 +1085,24 @@ int X2PreSpellCastCode2()
     //Spell Barriers
     if(nContinue)
     {
-	    object oPC = OBJECT_SELF;
-	    object oTarget = PRCGetSpellTargetObject();
-	    
-	    if(GetHasSpellEffect(SPELL_OTILUKES_RESILIENT_SPHERE, oTarget))
-	    {
-		    if(GetDistanceBetween(oPC, oTarget) > 6.096)
-		    {
-			    nContinue = FALSE;
-		    }
-	    }
-	    
-	    if(GetHasSpellEffect(SPELL_PRISMATIC_SPHERE, oTarget))
-	    {
-		    if(GetDistanceBetween(oPC, oTarget) > 3.048)
-		    {
-			    nContinue = FALSE;
-		    }
-	    }
+            object oPC = OBJECT_SELF;
+            object oTarget = PRCGetSpellTargetObject();
+            
+            if(GetHasSpellEffect(SPELL_OTILUKES_RESILIENT_SPHERE, oTarget))
+            {
+                    if(GetDistanceBetween(oPC, oTarget) > 6.096)
+                    {
+                            nContinue = FALSE;
+                    }
+            }
+            
+            if(GetHasSpellEffect(SPELL_PRISMATIC_SPHERE, oTarget))
+            {
+                    if(GetDistanceBetween(oPC, oTarget) > 3.048)
+                    {
+                            nContinue = FALSE;
+                    }
+            }
     }
 
     //---------------------------------------------------------------------------

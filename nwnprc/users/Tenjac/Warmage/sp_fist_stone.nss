@@ -54,8 +54,15 @@ void main()
         
         object oPC = OBJECT_SELF;
         effect eBuff = EffectAbilityIncrease(ABILITY_STRENGTH, 6);
+        float fDur = TurnsToSeconds(1);
+        
+        if(PRCGetMetaMagicFeat() == METAMAGIC_EXTEND) fDur += fDur;
         
         AddNaturalSecondaryWeapon(oPC, "nw_it_crewpb005", 1);
         
-        DelayCommand(TurnsToSeconds(1), 
+        DelayCommand(fDur, RemoveNaturalSecondaryWeapons(oPC, "nw_it_crewpb005"));
+        
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBuff, oTarget, fDur, TRUE, SPELL_FIST_OF_STONE, PRCGetCasterLevel(oPC));
+        SPSetSchool();
+}
         

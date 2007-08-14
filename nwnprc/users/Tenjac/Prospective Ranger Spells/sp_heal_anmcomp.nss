@@ -1,5 +1,8 @@
-HEAL ANIMAL
-COMPANION
+//::///////////////////////////////////////////////
+//:: Name      Heal Animal Companion
+//:: FileName  sp_heal_anmcomp.nss
+//:://////////////////////////////////////////////
+/**@file HEAL ANIMAL COMPANION
 Conjuration (Healing)
 Level: Druid 5, ranger 3
 Components: V, S
@@ -12,9 +15,31 @@ Saving Throw: Will negates
 (harmless)
 Spell Resistance: Yes (harmless)
 
-You lay your hand on your animal companion,
-and as you do, its eyes become clear and
-focused, and it breathes easier.
 This spell functions like heal (PH 239),
 except that it affects only your animal
 companion.
+*/
+//:://////////////////////////////////////////////
+//:://////////////////////////////////////////////
+
+#include "spinc_common"
+
+void main()
+{
+        if(!X2PreSpellCastCode()) return;
+        
+        SPSetSchool(SPELL_SCHOOL_CONJURATION);
+        
+        object oPC = OBJECT_SELF;
+        object oTarget = PRCGetSpellTarget();
+        
+        //Can only have one animal companion, so default is correct
+        object oComp = GetAssociate(ASSOCIATE_TYPE_ANIMALCOMPANION);
+                
+        //If it is your animal companion
+        if(oTarget == oComp)
+        {
+                AssignCommand(oPC, ActionCastSpellAtObject(SPELL_HEAL, oComp, METAMAGIC_NONE, TRUE, PRCGetCasterLevel(oPC));
+        }
+        SPSetSchool();
+}

@@ -1,5 +1,8 @@
-DETECT
-FAVORED ENEMY
+//::///////////////////////////////////////////////
+//:: Name      Detect Favored Enemy
+//:: FileName  sp_det_favenmy.nss
+//:://////////////////////////////////////////////
+/**@file Detect Favored Enemies
 Divination
 Level: Ranger 1
 Components: V, S, DF
@@ -31,3 +34,70 @@ can penetrate barriers, but 1 foot of
 stone, 1 inch of common metal, a thin
 sheet of lead, or 3 feet of wood or dirt
 blocks detection.
+*/
+//:://////////////////////////////////////////////
+//:://////////////////////////////////////////////
+
+#include "spinc_common"
+
+void main()
+{
+        object oPC = OBJECT_SELF;
+        int nCount = CountFavEnemies(oPC);
+        
+        //eval favored enemies
+                        
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+int CountFavEnemies(object oPC)
+{
+        int nCount;
+        
+        if(GetHasFeat(FEAT_FAVORED_ENEMY_ABERRATION ,oPC)) nCount++;
+        if(GetHasFeat(FEAT_FAVORED_ENEMY_ANIMAL ,oPC)) nCount++;
+        if(GetHasFeat(FEAT_FAVORED_ENEMY_BEAST ,oPC)) nCount++;
+        if(GetHasFeat(FEAT_FAVORED_ENEMY_CONSTRUCT ,oPC)) nCount++;
+        if(GetHasFeat(FEAT_FAVORED_ENEMY_DRAGON ,oPC)) nCount++;
+        if(GetHasFeat(FEAT_FAVORED_ENEMY_DWARF ,oPC)) nCount++;
+        if(GetHasFeat(FEAT_FAVORED_ENEMY_ELEMENTAL ,oPC)) nCount++;
+        if(GetHasFeat(FEAT_FAVORED_ENEMY_ELF ,oPC)) nCount++;
+        if(GetHasFeat(FEAT_FAVORED_ENEMY_FEY ,oPC)) nCount++;
+        if(GetHasFeat(FEAT_FAVORED_ENEMY_GIANT ,oPC)) nCount++;
+        if(GetHasFeat(FEAT_FAVORED_ENEMY_GNOME ,oPC)) nCount++;
+        if(GetHasFeat(FEAT_FAVORED_ENEMY_GOBLINOID ,oPC)) nCount++;
+        if(GetHasFeat(FEAT_FAVORED_ENEMY_HALFELF ,oPC)) nCount++;
+        if(GetHasFeat(FEAT_FAVORED_ENEMY_HALFLING ,oPC)) nCount++;
+        if(GetHasFeat(FEAT_FAVORED_ENEMY_HALFORC ,oPC)) nCount++;
+        if(GetHasFeat(FEAT_FAVORED_ENEMY_HUMAN ,oPC)) nCount++;
+        if(GetHasFeat(FEAT_FAVORED_ENEMY_MAGICAL_BEAST ,oPC)) nCount++;
+        if(GetHasFeat(FEAT_FAVORED_ENEMY_MONSTROUS ,oPC)) nCount++;
+        if(GetHasFeat(FEAT_FAVORED_ENEMY_ORC ,oPC)) nCount++;
+        if(GetHasFeat(FEAT_FAVORED_ENEMY_OUTSIDER ,oPC)) nCount++;
+        if(GetHasFeat(FEAT_FAVORED_ENEMY_REPTILIAN ,oPC)) nCount++;
+        if(GetHasFeat(FEAT_FAVORED_ENEMY_SHAPECHANGER ,oPC)) nCount++;
+        if(GetHasFeat(FEAT_FAVORED_ENEMY_UNDEAD ,oPC)) nCount++;
+        if(GetHasFeat(FEAT_FAVORED_ENEMY_VERMIN ,oPC)) nCount++;
+}
+        

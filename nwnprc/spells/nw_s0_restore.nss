@@ -80,10 +80,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     SpellRemovalCheck(OBJECT_SELF, oTarget);
     
      //Regrow fingers
-     if(GetPersistantLocalInt(oPC, "FINGERS_LEFT_HAND"))
+     if(GetPersistantLocalInt(OBJECT_SELF, "FINGERS_LEFT_HAND"))
      {
-             SetPersistantLocalInt(oPC, "FINGERS_LEFT_HAND", 6);
-             SetPersistantLocalInt(oPC, "FINGERS_RIGHT_HAND", 6);
+             SetPersistantLocalInt(OBJECT_SELF, "FINGERS_LEFT_HAND", 6);
+             SetPersistantLocalInt(OBJECT_SELF, "FINGERS_RIGHT_HAND", 6);
      }
 }
 

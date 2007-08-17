@@ -34,10 +34,10 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
     
     //Regrow fingers
-    if(GetPersistantLocalInt(oPC, "FINGERS_LEFT_HAND"))
+    if(GetPersistantLocalInt(OBJECT_SELF, "FINGERS_LEFT_HAND"))
     {
-            SetPersistantLocalInt(oPC, "FINGERS_LEFT_HAND", 6);
-            SetPersistantLocalInt(oPC, "FINGERS_RIGHT_HAND", 6);
+            SetPersistantLocalInt(OBJECT_SELF, "FINGERS_LEFT_HAND", 6);
+            SetPersistantLocalInt(OBJECT_SELF, "FINGERS_RIGHT_HAND", 6);
     }
 
     return TRUE;    //return TRUE if spell charges should be decremented

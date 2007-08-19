@@ -440,17 +440,10 @@ void AddSpellUse(object oPC, int nSpellbookID, int nClass, string sFile, string 
 
     // Add the spell use feats and set a marker local that tells for CheckAndRemoveFeat() to skip removing this feat
     string sIPFeatID = IntToString(nIPFeatID);
+    SetLocalInt(oSkin, "NewSpellbookTemp_" + sIPFeatID, TRUE);
     if(!GetHasFeat(nFeatID, oPC))
     {
         AddItemProperty(DURATION_TYPE_PERMANENT, PRCItemPropertyBonusFeat(nIPFeatID), oSkin);
-        SetLocalInt(oSkin, "NewSpellbookTemp_" + sIPFeatID, TRUE);
-        //if(DEBUG) DoDebug("AddSpellUse: SetLocalInt(oSkin, NewSpellbookTemp_" + sIPFeatID + ", TRUE);");
-    }
-    else
-    {
-        //they already have it but we need to tell the hide cleaner to keep it
-        //if(DEBUG) DoDebug("AddSpellUse: SetLocalInt(oSkin, NewSpellbookTemp_" + sIPFeatID + ", TRUE);");
-        SetLocalInt(oSkin, "NewSpellbookTemp_" + sIPFeatID, TRUE);
     }
     // Increase the current number of uses
     if(nSpellbookType == SPELLBOOK_TYPE_PREPARED)
@@ -529,6 +522,38 @@ int GetSpellLevel(object oPC, int nSpellID, int nClass)
     return nSpellLevel;
 }
 
+//called inside for loop in SetupSpells(), delayed to prevent TMI
+void SpontaneousSpellSetupLoop(object oPC, int nClass, string sFile, object oSkin, int i)
+{
+    int nMetaFeat;
+    int j;
+    int nSpellbookID = persistant_array_get_int(oPC, "Spellbook" + IntToString(nClass), i);
+    string sIPFeatID = Get2DACache(sFile, "IPFeatID", nSpellbookID);
+    int nIPFeatID = StringToInt(sIPFeatID);
+    int nFeatID = StringToInt(Get2DACache(sFile, "FeatID", nSpellbookID));
+    int nRealSpellID = StringToInt(Get2DACache(sFile, "RealSpellID", nSpellbookID));
+    SetLocalInt(oSkin, "NewSpellbookTemp_" + sIPFeatID, TRUE);
+
+    if(!GetHasFeat(nFeatID, oPC))   //more delay to minimise freezing
+        DelayCommand(0.01 * IntToFloat(i), AddItemProperty(DURATION_TYPE_PERMANENT, PRCItemPropertyBonusFeat(nIPFeatID), oSkin));
+
+    //metamagic
+    for(j = nSpellbookID + 1; j <= nSpellbookID + RealSpellToSpellbookIDCount(nClass, nRealSpellID); j++)
+    {
+        nMetaFeat = StringToInt(Get2DACache(sFile, "ReqFeat", j));
+        // See if the PC has the metafeat required by this variant of the spell
+        if(nMetaFeat == 0 || !GetHasFeat(nMetaFeat, oPC))
+            continue;
+        sIPFeatID = Get2DACache(sFile, "IPFeatID", j);
+        nIPFeatID = StringToInt(sIPFeatID);
+        nFeatID = StringToInt(Get2DACache(sFile, "FeatID", j));
+        SetLocalInt(oSkin, "NewSpellbookTemp_" + sIPFeatID, TRUE);
+
+        if(!GetHasFeat(nFeatID, oPC))   //more delay to minimise freezing
+            DelayCommand(0.02 * IntToFloat(i), AddItemProperty(DURATION_TYPE_PERMANENT, PRCItemPropertyBonusFeat(nIPFeatID), oSkin));
+    }
+}
+
 void SetupSpells(object oPC, int nClass)
 {
     string sFile = GetFileForClass(nClass);
@@ -541,6 +566,7 @@ void SetupSpells(object oPC, int nClass)
 
     // For spontaneous spellbooks, set up an array that tells how many spells of each level they can cast
     // And add casting feats for each spell known to the caster's hide
+
     if(nSpellbookType == SPELLBOOK_TYPE_SPONTANEOUS)
     {
         // Spell slots
@@ -551,52 +577,10 @@ void SetupSpells(object oPC, int nClass)
             persistant_array_set_int(oPC, sArrayName, nSpellLevel, nSlots);
         }
 
-        // Use feats
-        int i, j;
-        int nSpellbookID, nRealSpellID, nTestRealSpellID, nMetaFeat;
+        int i;
         for(i = 0; i < persistant_array_get_size(oPC, "Spellbook" + sClass); i++)
-        {
-            // DelayCommand fun
-            if (i >= 50)
-            {
-                float fDelay = (50 - IntToFloat(i))/ 100.0f ; // eg i == 51, fDelay == 0.01
-                nSpellbookID = persistant_array_get_int(oPC, "Spellbook" + sClass, i);
-                DelayCommand(fDelay,
-                    AddSpellUse(oPC, nSpellbookID, nClass, sFile, sArrayName, nSpellbookType, oSkin,
-                            StringToInt(Get2DACache(sFile, "FeatID", nSpellbookID)),
-                            StringToInt(Get2DACache(sFile, "IPFeatID", nSpellbookID))
-                            ));
-            }
-            else
-            {
-                nSpellbookID = persistant_array_get_int(oPC, "Spellbook" + sClass, i);
-                AddSpellUse(oPC, nSpellbookID, nClass, sFile, sArrayName, nSpellbookType, oSkin,
-                            StringToInt(Get2DACache(sFile, "FeatID", nSpellbookID)),
-                            StringToInt(Get2DACache(sFile, "IPFeatID", nSpellbookID))
-                            );
-            }
-            //metamagic
-            nRealSpellID = StringToInt(Get2DACache(sFile, "RealSpellID", nSpellbookID));
-
-            // Loop over all the possible metamagic versions of this spell
-            j = nSpellbookID + 1; // Metamagic variations start at the base spell's index + 1
-            // Metamagic variations are all in a continuous block after the base spell. We can therefore terminate the loop
-            // upon encountering the first entry related to another spell
-            while(StringToInt(Get2DACache(sFile, "RealSpellID", j)) == nRealSpellID)
-            {
-                // See if the PC has the metafeat required by this variant of the spell
-                nMetaFeat = StringToInt(Get2DACache(sFile, "ReqFeat", j));
-                if(nMetaFeat != 0 && GetHasFeat(nMetaFeat, oPC))
-                    DelayCommand(0.0f,
-                            AddSpellUse(oPC, j, nClass, sFile, sArrayName, nSpellbookType, oSkin,
-                                StringToInt(Get2DACache(sFile, "FeatID", j)),
-                                StringToInt(Get2DACache(sFile, "IPFeatID", j))
-                                )
-                            );
-
-                // Increment loop counter
-                j += 1;
-            }
+        {   //adding feats
+            DelayCommand(0.01 * IntToFloat(i), SpontaneousSpellSetupLoop(oPC, nClass, sFile, oSkin, i));
         }
     }// end if - Spontaneous spellbook
 

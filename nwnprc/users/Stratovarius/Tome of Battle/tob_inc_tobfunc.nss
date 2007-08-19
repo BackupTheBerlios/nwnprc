@@ -33,6 +33,7 @@ const int    DISCIPLINE_WHITE_RAVEN    = 9;
 const int    GRAPPLE_ATTACK          = 1;
 const int    GRAPPLE_OPPONENT_WEAPON = 2;
 const int    GRAPPLE_ESCAPE          = 3;
+const int    GRAPPLE_TOB_CRUSHING    = 4;
 
 //////////////////////////////////////////////////
 /*             Function prototypes              */
@@ -313,6 +314,7 @@ int GetIsCharging(object oPC);
  * @param nDoAttack     Do an attack at the end of a charge or not
  * @param nGenerateAoO  Does the movement generate an AoO
  * @param nDamage       A damage bonus on the charge
+ * @param nDamageType   Damage type of the bonus.
  * @param nBullRush     Do a Bull Rush at the end of a charge
  * @param nExtraBonus   An extra bonus to grant the PC on the Bull rush
  * @param nBullAoO      Does the bull rush attempt generate an AoO
@@ -320,7 +322,7 @@ int GetIsCharging(object oPC);
  *
  * @return              TRUE if the attack or Bull rush hits, else FALSE
  */
-int DoCharge(object oPC, object oTarget, int nDoAttack = TRUE, int nGenerateAoO = TRUE, int nDamage = 0, int nBullRush = FALSE, int nExtraBonus = 0, int nBullAoO = TRUE, int nMustFollow = TRUE);
+int DoCharge(object oPC, object oTarget, int nDoAttack = TRUE, int nGenerateAoO = TRUE, int nDamage = 0, int nDamageType = -1, int nBullRush = FALSE, int nExtraBonus = 0, int nBullAoO = TRUE, int nMustFollow = TRUE);
 
 /**
  * This will do a complete PnP Bull rush
@@ -374,6 +376,79 @@ int GetHasInsightfulStrike(object oInitiator);
  * @return              TRUE or FALSE
  */
 int GetHasDefensiveStance(object oInitiator, int nDiscipline);
+
+/**
+ * This will do a complete PnP Grapple
+ *
+ * @param oPC           The PC
+ * @param oTarget       The Target
+ * @param nExtraBonus   An extra bonus to grant the PC
+ * @param nGenerateAoO  Does the Grapple attempt generate an AoO
+ *
+ * @return              TRUE if the Trip succeeds, else FALSE
+ */
+int DoGrapple(object oPC, object oTarget, int nExtraBonus, int nGenerateAoO = TRUE);
+
+/**
+ * Marks a target as grappled.
+ *
+ * @param oTarget           The Target
+ */
+void SetGrapple(object oTarget);
+
+/**
+ * Returns true or false if the creature is grappled.
+ *
+ * @param oTarget       Person to check
+ *
+ * @return              TRUE or FALSE
+ */
+int GetGrapple(object oTarget);
+
+/**
+ * Ends a grapple between the two creatures
+ *
+ * @param oPC               The PC
+ * @param oTarget           The Target
+ */
+void EndGrapple(object oPC, object oTarget);
+
+/**
+ * The options that can be performed during a grapple.
+ *
+ * @param oPC           The PC
+ * @param oTarget       The Target
+ * @param nExtraBonus   An extra bonus to grant the PC
+ * @param nSwitch       The options to use. One of:  GRAPPLE_ATTACK, GRAPPLE_OPPONENT_WEAPON, GRAPPLE_ESCAPE, GRAPPLE_TOB_CRUSHING
+ *
+ * @return              TRUE if the Trip succeeds, else FALSE
+ */
+void DoGrappleOptions(object oPC, object oTarget, int nExtraBonus, int nSwitch = -1);
+
+/**
+ * Returns true or false if the creature's right hand weapon is light
+ *
+ * @param oPC           Person to check
+ *
+ * @return              TRUE or FALSE
+ */
+int GetIsLightWeapon(object oPC);
+
+/**
+ * This will do a complete PnP Overrun. See tob_stdr_bldrrll for an example of how to use.
+ * Overrun is part of a move action.
+ *
+ * @param oPC           The PC
+ * @param oTarget       The Target
+ * @param nExtraBonus   An extra bonus to grant the PC
+ * @param nGenerateAoO  Does the Overrun attempt generate an AoO
+ * @param nAvoid        Can the target avoid you
+ * @param nCounterTrip  Can the target attempt a counter if you fail
+ *
+ * @return              TRUE if the Overrun succeeds, else FALSE
+ *                      It sets a local int known as OverrunDifference that is the amount you succeeded or failed by.
+ */
+int DoOverrun(object oPC, object oTarget, int nGenerateAoO = TRUE, int nExtraBonus = 0, int nAvoid = TRUE, int nCounter = TRUE);
 
 //////////////////////////////////////////////////
 /*                  Includes                    */
@@ -472,6 +547,14 @@ void _RecursiveStanceCheck(object oPC, object oTestWP, int nMoveId, float fFeet 
 	        // Clean up the test WP as well
         	DestroyObject(oTestWP);
         }
+        // Stances that clean up
+        else if (nMoveId = MOVE_SD_ROOT_MOUNTAIN) 
+        {
+        	RemoveEffectsFromSpell(oPC, nMoveId);
+        	if(DEBUG) DoDebug("_RecursiveStanceCheck: Moved too far, cancelling stances.");
+	        // Clean up the test WP as well
+        	DestroyObject(oTestWP);
+        }        
         else if (nMoveId = MOVE_SH_CHILD_SHADOW)
         {
         	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, SupernaturalEffect(EffectConcealment(20)), oPC, 6.0);
@@ -888,6 +971,7 @@ int GetAbilityCheckBonus(object oPC, int nAbility)
 	{
 		if (GetHasSpellEffect(MOVE_SD_STONEFOOT_STANCE, oPC)) nBonus += 2;
 		if (GetHasSpellEffect(MOVE_SS_STEP_WIND,        oPC)) nBonus += 4;
+		if (GetHasSpellEffect(MOVE_SD_ROOT_MOUNTAIN,    oPC)) nBonus += 10;
 	}
 	else if (nAbility == ABILITY_DEXTERITY)
 	{
@@ -969,7 +1053,7 @@ int GetIsCharging(object oPC)
 	return GetLocalInt(oPC, "PCIsCharging");
 }
 
-int DoCharge(object oPC, object oTarget, int nDoAttack = TRUE, int nGenerateAoO = TRUE, int nDamage = 0, int nBullRush = FALSE, int nExtraBonus = 0, int nBullAoO = TRUE, int nMustFollow = TRUE)
+int DoCharge(object oPC, object oTarget, int nDoAttack = TRUE, int nGenerateAoO = TRUE, int nDamage = 0, int nDamageType = -1, int nBullRush = FALSE, int nExtraBonus = 0, int nBullAoO = TRUE, int nMustFollow = TRUE)
 {
 	if (!nGenerateAoO)
 	{
@@ -1003,7 +1087,12 @@ int DoCharge(object oPC, object oTarget, int nDoAttack = TRUE, int nGenerateAoO 
 	       		{
 	       			nDamage += GetInitiatorLevel(GetLocalObject(oPC, "LeadingTheCharge"));
 	       		}
-			PerformAttack(oPC, oAreaTarget, eNone, 0.0, 0, nDamage, 0, FALSE, "Charge Hit", "Charge Miss");
+	       		if (nDamageType == -1) // If the damage type isn't set
+	       		{
+	       			object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
+	       			nDamageType = GetWeaponDamageType(oWeap);
+	       		}
+			PerformAttack(oPC, oAreaTarget, eNone, 0.0, 0, nDamage, nDamageType, FALSE, "Charge Hit", "Charge Miss");
 			// Local int set when Perform Attack hits
 			nSucceed = GetLocalInt(oTarget, "PRCCombat_StruckByAttack");
 		}
@@ -1066,7 +1155,7 @@ int DoBullRush(object oPC, object oTarget, int nExtraBonus, int nGenerateAoO = T
 		if (nMustFollow) _DoBullRushKnockBack(oPC, oTarget, (fFeet - 5.0));
 	}
 	else
-		FloatingTextStringOnCreature("You have failed your Strength check for your Bull Rush Attempt",oPC, FALSE);
+		FloatingTextStringOnCreature("You have failed your Bull Rush Attempt",oPC, FALSE);
 	
 	// Let people know if we made the hit or not
 	return nSucceed;
@@ -1103,17 +1192,17 @@ int DoTrip(object oPC, object oTarget, int nExtraBonus, int nGenerateAoO = TRUE,
 	// Now roll the ability check
 	if (nPCCheck >= nTargetCheck)
 	{
-		FloatingTextStringOnCreature("You have succeeded your ability check for your Trip attempt",oPC, FALSE);
+		FloatingTextStringOnCreature("You have succeeded on your Trip attempt",oPC, FALSE);
 		// Knock em down
 		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(EffectKnockdown()), oTarget, 6.0);
 		nSucceed = TRUE;
 		SetLocalInt(oPC, "TripDifference", nPCCheck - nTargetCheck);
-		DeleteLocalInt(oPC, "TripDifference");
+		DelayCommand(2.0, DeleteLocalInt(oPC, "TripDifference"));
 	}
 	else // If you fail, enemy gets a counter trip attempt, using Strength
 	{
 		nTargetStat = GetAbilityModifier(ABILITY_STRENGTH, oTarget) + GetAbilityCheckBonus(oTarget, ABILITY_STRENGTH);
-		FloatingTextStringOnCreature("You have failed your ability check for your Trip attempt",oPC, FALSE);
+		FloatingTextStringOnCreature("You have failed on your Trip attempt",oPC, FALSE);
 		// Roll counter trip attempt
 		nTargetCheck = nTargetStat + nTargetBonus + d20();
 		nPCCheck = nPCStat + nPCBonus + d20();
@@ -1125,7 +1214,7 @@ int DoTrip(object oPC, object oTarget, int nExtraBonus, int nGenerateAoO = TRUE,
 			ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(EffectKnockdown()), oPC, 6.0);
 		}
 		SetLocalInt(oPC, "TripDifference", nTargetCheck - nPCCheck);
-		DeleteLocalInt(oPC, "TripDifference");
+		DelayCommand(2.0, DeleteLocalInt(oPC, "TripDifference"));
 	}
 	
 	// Let people know if we made the hit or not
@@ -1251,6 +1340,7 @@ int GetHasDefensiveStance(object oInitiator, int nDiscipline)
 
 int DoGrapple(object oPC, object oTarget, int nExtraBonus, int nGenerateAoO = TRUE)
 {        
+	int nSucceed = FALSE;
 	// Do the AoO for trying a grapple
 	if (nGenerateAoO)
 	{
@@ -1275,9 +1365,10 @@ int DoGrapple(object oPC, object oTarget, int nExtraBonus, int nGenerateAoO = TR
 		//apply the effect
 		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, 9999.0);
                 SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 9999.0);
+                nSucceed = TRUE;
 	}
 	else
-		FloatingTextStringOnCreature("You have failed your Strength check for your Grapple Attempt",oPC, FALSE);
+		FloatingTextStringOnCreature("You have failed your Grapple Attempt",oPC, FALSE);
 	
 	// Let people know if we made the hit or not
 	return nSucceed;
@@ -1335,11 +1426,21 @@ void DoGrappleOptions(object oPC, object oTarget, int nExtraBonus, int nSwitch =
 		// Must be a light weapon, and succeed at the grapple check
 		if (_DoGrappleCheck(oPC, oTarget, nExtraBonus) && GetIsLightWeapon(oPC))
 		{
-			// Attack with a -4 penalty
-			PerformAttack(oPC, oTarget, eNone, 0.0, -4, 0, 0, FALSE, "Grapple Attack Hit", "Grapple Attack Miss");	
+			// Bonuses to attack in a grapple from stance
+			if (GetHasSpellEffect(MOVE_TC_WOLVERINE_STANCE, oPC))
+			{
+				int nDam = 0;
+				if (PRCGetCreatureSize(oTarget) > PRCGetCreatureSize(oPC)) nDam = 4;
+				PerformAttack(oPC, oTarget, eNone, 0.0, 0, nDam, 0, FALSE, "Wolverine Stance Hit", "Wolverine Stance Miss");	
+			}
+			else
+			{
+				// Attack with a -4 penalty
+				PerformAttack(oPC, oTarget, eNone, 0.0, -4, 0, 0, FALSE, "Grapple Attack Hit", "Grapple Attack Miss");	
+			}
 		}
 		else
-			FloatingTextStringOnCreature("You have failed your Strength check for your Grapple Attempt",oPC, FALSE);	
+			FloatingTextStringOnCreature("You have failed your Grapple Attempt",oPC, FALSE);	
 	}
 	else if (nSwitch == GRAPPLE_OPPONENT_WEAPON)
 	{
@@ -1351,7 +1452,7 @@ void DoGrappleOptions(object oPC, object oTarget, int nExtraBonus, int nSwitch =
 			PerformAttack(oPC, oTarget, eNone, 0.0, -4, 0, 0, FALSE, "Grapple Attack Hit", "Grapple Attack Miss", FALSE, oWeapon);	
 		}
 		else
-			FloatingTextStringOnCreature("You have failed your Strength check for your Grapple Attempt",oPC, FALSE);	
+			FloatingTextStringOnCreature("You have failed your Grapple Attempt",oPC, FALSE);	
 	}
 	else if (nSwitch == GRAPPLE_ESCAPE)
 	{
@@ -1361,12 +1462,25 @@ void DoGrappleOptions(object oPC, object oTarget, int nExtraBonus, int nSwitch =
 			EndGrapple(oPC, oTarget);
 		}
 		else
-			FloatingTextStringOnCreature("You have failed your Strength check for your Grapple Attempt",oPC, FALSE);	
-	}	
+			FloatingTextStringOnCreature("You have failed your Grapple Attempt",oPC, FALSE);	
+	}
+	else if (nSwitch == GRAPPLE_TOB_CRUSHING && GetHasSpellEffect(MOVE_SD_CRUSHING_WEIGHT, oPC))
+	{
+		// Constrict for 2d6 + 1.5 Strength
+		if (_DoGrappleCheck(oPC, oTarget, nExtraBonus))
+		{
+			int nDam = d6(2) + (GetAbilityModifier(ABILITY_STRENGTH, oPC) * 1.5);
+			ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam), oTarget);
+		}
+		else
+			FloatingTextStringOnCreature("You have failed your Grapple Attempt",oPC, FALSE);	
+	}		
 }
 
 int GetIsLightWeapon(object oPC)
 {
+	// You may use any weapon in a grapple with this stance.
+	if (GetHasSpellEffect(MOVE_TC_WOLVERINE_STANCE, oPC)) return TRUE;
 	int nSize   = PRCGetCreatureSize(oPC);
 	int nType = GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC));
 	int nWeaponSize = StringToInt(Get2DACache("baseitems", "WeaponSize", nType));
@@ -1374,5 +1488,76 @@ int GetIsLightWeapon(object oPC)
 	return nLight = (nWeaponSize < nSize);  
 }
 
+int DoOverrun(object oPC, object oTarget, int nGenerateAoO = TRUE, int nExtraBonus = 0, int nAvoid = TRUE, int nCounter = TRUE)
+{
+	if (!nGenerateAoO)
+	{
+		// Huge bonus to tumble to prevent AoOs from movement
+		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectSkillIncrease(SKILL_TUMBLE, 50), oPC, 6.0);
+	}
+	// The basic modifiers
+	int nSucceed = FALSE;
+	int nPCStat, nTargetStat;
+	// Use the higher of the two mods
+	if (GetAbilityModifier(ABILITY_STRENGTH, oPC) > GetAbilityModifier(ABILITY_DEXTERITY, oPC))
+		nPCStat = GetAbilityModifier(ABILITY_STRENGTH, oPC) + GetAbilityCheckBonus(oPC, ABILITY_STRENGTH);
+	else
+		nPCStat = GetAbilityModifier(ABILITY_DEXTERITY, oPC) + GetAbilityCheckBonus(oPC, ABILITY_DEXTERITY);
+	// Use the higher of the two mods	
+	if (GetAbilityModifier(ABILITY_STRENGTH, oTarget) > GetAbilityModifier(ABILITY_DEXTERITY, oTarget))
+		nTargetStat = GetAbilityModifier(ABILITY_STRENGTH, oTarget) + GetAbilityCheckBonus(oTarget, ABILITY_STRENGTH);
+	else
+		nTargetStat = GetAbilityModifier(ABILITY_DEXTERITY, oTarget) + GetAbilityCheckBonus(oTarget, ABILITY_DEXTERITY);
+	// Get mods for size
+	int nPCBonus = GetSizeModifier(oPC);
+	int nTargetBonus = GetSizeModifier(oTarget);
+
+	// Do the AoO for a trip attempt
+	if (nGenerateAoO)
+	{
+		// Perform the Attack
+		effect eNone;
+		PerformAttack(oPC, oTarget, eNone, 0.0, 0, 0, 0, FALSE, "Attack of Opportunity Hit", "Attack of Opportunity Miss");	
+	}
+	int nPCCheck = nPCStat + nPCBonus + nExtraBonus + d20();
+	int nTargetCheck = nTargetStat + nTargetBonus + d20();
+	
+	// The target has the option to avoid. Smaller targets will avoid if allowed.
+	if (nPCBonus > nTargetBonus && nAvoid)
+	{
+		FloatingTextStringOnCreature(GetName(oTarget) + " has successfully avoided you", oPC, FALSE);
+		// You didn't knock down the target, but neither did it stop you. Keep on chugging.
+		return TRUE;
+	}	
+	// Now roll the ability check
+	if (nPCCheck >= nTargetCheck)
+	{
+		FloatingTextStringOnCreature("You have succeeded on your Overrun attempt",oPC, FALSE);
+		// Knock em down
+		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(EffectKnockdown()), oTarget, 6.0);
+		nSucceed = TRUE;
+		SetLocalInt(oPC, "OverrunDifference", nPCCheck - nTargetCheck);
+		DeleteLocalInt(oPC, "OverrunDifference");
+	}
+	else // If you fail, enemy gets a counter Overrun attempt, using Strength
+	{
+		nTargetStat = GetAbilityModifier(ABILITY_STRENGTH, oTarget) + GetAbilityCheckBonus(oTarget, ABILITY_STRENGTH);
+		FloatingTextStringOnCreature("You have failed on your Overrun attempt",oPC, FALSE);
+		// Roll counter Overrun attempt
+		nTargetCheck = nTargetStat + nTargetBonus + d20();
+		nPCCheck = nPCStat + nPCBonus + d20();
+		// If counters aren't allowed, don't knock em down
+		// Its down here to allow the text message to go through
+		if (nTargetCheck >= nPCCheck && nCounter)
+		{
+			// Knock em down
+			ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(EffectKnockdown()), oPC, 6.0);
+		}
+		SetLocalInt(oPC, "OverrunDifference", nTargetCheck - nPCCheck);
+		DelayCommand(2.0, DeleteLocalInt(oPC, "OverrunDifference"));
+	}	
+	
+	return nSucceed;
+}
 // Test main
 //void main(){}

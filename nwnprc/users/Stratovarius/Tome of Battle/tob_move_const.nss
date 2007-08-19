@@ -29,8 +29,15 @@ const int MOVE_WR_BOLSTERING_VOICE    = -1;
 // Level 2 Maneuvers
 
 // Level 3 Maneuvers
+const int MOVE_SD_CRUSHING_WEIGHT    = -1;
+const int MOVE_SD_ROOT_MOUNTAIN      = -1;
+const int MOVE_TC_LEAPING_DRAGON      = -1;
+const int MOVE_TC_WOLVERINE_STANCE      = -1;
+const int MOVE_WR_TACTICS_WOLF        = -1;
+
 
 // Level 4 Maneuvers
+const int MOVE_DW_SEARING_BLADE = -1;
 
 // Level 5 Maneuvers
 
@@ -47,3 +54,5 @@ const int AOE_PER_IRON_GUARD_GLARE              = 158;
 const int AOE_PER_STANCE_OF_CLARITY             = 159;
 const int AOE_PER_BOLSTERING_VOICE              = 160;
 const int AOE_PER_LEADING_CHARGE                = 161;
+const int AOE_PER_ROOT_MOUNTAIN                 = 164;
+const int AOE_PER_TACTICS_WOLF                  = 165;

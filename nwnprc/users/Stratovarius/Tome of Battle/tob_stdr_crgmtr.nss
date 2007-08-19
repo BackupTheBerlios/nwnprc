@@ -44,7 +44,7 @@ void main()
     if(move.bCanManeuver)
     {
     	// Charge and Bull rush are all taken care of in this function
-	int nSucceed = DoCharge(oInitiator, oTarget, FALSE, FALSE, 0, TRUE, 0, FALSE, FALSE);
+	int nSucceed = DoCharge(oInitiator, oTarget, FALSE, FALSE, 0, -1, TRUE, 0, FALSE, FALSE);
 	if (nSucceed)
 	{
 		// Deal the damage

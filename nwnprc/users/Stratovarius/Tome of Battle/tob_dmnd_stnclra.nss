@@ -2,7 +2,7 @@
    ----------------
    Stance of Clarity, On Heartbeat
 
-   tob_dvsp_stnclra.nss
+   tob_dmnd_stnclra.nss
    ----------------
 
     29/03/07 by Stratovarius

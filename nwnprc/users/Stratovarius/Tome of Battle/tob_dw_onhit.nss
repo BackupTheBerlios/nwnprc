@@ -33,6 +33,12 @@ void main()
 			if(DEBUG) DoDebug("tob_dw_onhit: MOVE_DW_BURNING_BLADE");
 			break;
 		}
+		case MOVE_DW_SEARING_BLADE:
+		{
+			eDam = EffectDamage(d6(2) + nLevel, DAMAGE_TYPE_FIRE);
+			if(DEBUG) DoDebug("tob_dw_onhit: MOVE_DW_BURNING_BLADE");
+			break;
+		}		
 	}
 	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
 }

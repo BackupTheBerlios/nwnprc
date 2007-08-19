@@ -1,27 +1,28 @@
 /*
    ----------------
-   Sapphire Nightmare Blade
+   Ruby Nightmare Blade
 
-   tob_dmnd_snhtbld
+   tob_dmnd_rubybld
    ----------------
 
-   29/03/07 by Stratovarius
+   19/08/07 by Stratovarius
 */ /** @file
 
-    Sapphire Nightmare Blade
+    Ruby Nightmare Blade
 
     Diamond Mind (Strike)
-    Level: Swordsage 1, Warblade 1
+    Level: Swordsage 4, Warblade 4
+    Prerequisite: Two Diamond Mind Maneuvers
     Initiation Action: 1 Standard Action
     Range: Melee Attack
     Target: One Creature
 
-    You study your opponent for a brief moment, watching his defensive
-    maneuvers and making a strike timed to take advantage of a lull in his vigilance.
+    With a moment's thought, you instantly perceive the deadliest place to strike your enemy
+    as you study her defences, note gaps in her armour, and read subtle but important clues
+    in how she carries herself or maintains her fighting stance.
     
     You make a Concentration check against the target's AC. If you succeed, the target
-    takes an extra 1d6 damage and is flat-footed vs your attack. If you fail, you take
-    a -2 penalty on the attack.
+    takes double normal damage. If you fail, you take a -2 penalty on the attack.
 */
 
 #include "tob_inc_tobfunc"
@@ -47,16 +48,10 @@ void main()
     	effect eNone;
     	int nDC = GetDefenderAC(oTarget, oInitiator);
     	int nAB = -2;
-    	int nDamage = 0;
-    	int nDamageType = 0;
     	if (GetIsSkillSuccessful(oInitiator, SKILL_CONCENTRATION, nDC)) 
-    	{
     		nAB = 0;
-    		nDamageType = DAMAGE_TYPE_MAGICAL;
-    		nDamage = d6();
-    		AssignCommand(oTarget, ClearAllActions(TRUE));
-    	}
-    	
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, nAB, nDamage, nDamageType, FALSE, "Sapphire Nightmare Blade Hit", "Sapphire Nightmare Blade Miss");
+    	SetLocalInt(oTarget, "NightmareBlade", 2);
+	PerformAttack(oTarget, oInitiator, eNone, 0.0, nAB, 0, 0, FALSE, "Ruby Nightmare Blade Hit", "Ruby Nightmare Blade Miss");
+	DelayCommand(1.0, DeleteLocalInt(oTarget, "NightmareBlade"));
     }
 }

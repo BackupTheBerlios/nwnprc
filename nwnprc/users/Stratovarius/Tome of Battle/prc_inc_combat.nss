@@ -3745,7 +3745,10 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iOffha
                                 DeleteLocalInt(oAttacker, "FistOfRazielSpecialSmiteCritical");
                         }
                         else
+                        {
                                 iCritThreatRoll = d20();
+                                if (GetLocalInt(oDefender, "BoneCrusher")) iCritThreatRoll += 10;
+                        }
                         
                         if(!GetIsImmune(oDefender, IMMUNITY_TYPE_CRITICAL_HIT) )
                         {
@@ -5461,6 +5464,8 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
 
                 // just in case damage is somehow less than 1
                 if(iWeaponDamage < 1) iWeaponDamage = 1;
+                // Nightmare Blades double to quadruple the damage dealt for the normal attack
+               if (GetLocalInt(oDefender, "NightmareBlade") > 0) iWeaponDamage = iWeaponDamage * GetLocalInt(oDefender, "NightmareBlade");
         
                 // create an invalid effect to return on a coup de grace
 

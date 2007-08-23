@@ -36,6 +36,7 @@ Created:
 void Burn(object oTarget, int nCounter, int nCasterLvl);
 
 #include "spinc_common"
+#include "prc_craft_inc"
 
 void main()
 {
@@ -55,6 +56,15 @@ void main()
            nType != BASE_ITEM_SHORTBOW &&
            nType != BASE_ITEM_LIGHTCROSSBOW && 
            nType != BASE_ITEM_HEAVYCROSSBOW)
+        {
+                SPSetSchool();
+                return;
+        }
+        
+        //Check for Masterwork or magical
+        string sMaterial = GetStringLeft(GetTag(oItem), 3);
+        
+        if((!(GetMaterialString(StringToInt(sMaterial)) == sMaterial && sMaterial != "000") && !GetIsMagicItem(oItem)))
         {
                 SPSetSchool();
                 return;

@@ -31,6 +31,7 @@ Created:
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 #include "spinc_common"
+#include "prc_craft_inc"
 
 int CountSpells(object oTarget);
 
@@ -44,7 +45,29 @@ void main()
        object oTarget = PRCGetSpellTargetObject();
        int nSpells = CountSpells(oTarget);
        int nCasterLvl = PRCGetCasterLevel(oPC);
+       object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
+       int nType = GetBaseItemType(oWeapon);
        
+       //Has to be a bow of some sort
+       if(nType != BASE_ITEM_LONGBOW &&
+          nType != BASE_ITEM_SHORTBOW &&
+          nType != BASE_ITEM_LIGHTCROSSBOW &&
+          nType != BASE_ITEM_HEAVYCROSSBOW)
+       {
+               SPSetSchool();
+               return;
+       }
+       
+       //Check for Masterwork or magical
+       string sMaterial = GetStringLeft(GetTag(oItem), 3);
+       
+       if((!(GetMaterialString(StringToInt(sMaterial)) == sMaterial && sMaterial != "000") && !GetIsMagicItem(oItem)))
+       {
+               SPSetSchool();
+               return;
+       }
+       
+       //The meat
        PerformAttack(oTarget, oPC, eVis);
        
        //if hit

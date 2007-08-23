@@ -77,7 +77,10 @@ void main()
         
         if(nTouch)
         {
-                ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, d6(1), DURATION_TYPE_TEMPORARY, TRUE, 0.0f, FALSE, SPELL_SHADOW_ARROW, nCasterLvl, oPC);
+                if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+                {
+                        ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, d6(1), DURATION_TYPE_TEMPORARY, TRUE, 0.0f, FALSE, SPELL_SHADOW_ARROW, nCasterLvl, oPC);
+                }
         }
         
         SPSetSchool();

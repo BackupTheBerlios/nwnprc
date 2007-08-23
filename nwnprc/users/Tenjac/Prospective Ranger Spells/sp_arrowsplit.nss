@@ -27,6 +27,7 @@ Created:   8/22/07
 //:://////////////////////////////////////////////
 
 #include "spinc_common"
+#include "prc_craft_inc"
 
 void main()
 {
@@ -54,7 +55,16 @@ void main()
         {
                 SPSetSchool();
                 return;
-        }           
+        }
+        
+        //Check for Masterwork or magical
+        string sMaterial = GetStringLeft(GetTag(oItem), 3);
+        
+        if((!(GetMaterialString(StringToInt(sMaterial)) == sMaterial && sMaterial != "000") && !GetIsMagicItem(oItem)))
+        {
+                SPSetSchool();
+                return;
+        }
                        
         int nSplit = d4(1) + 1;
         int nStack = GetItemStackSize(oAmmo);

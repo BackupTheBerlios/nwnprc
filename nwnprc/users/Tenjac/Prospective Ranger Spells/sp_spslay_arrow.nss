@@ -85,5 +85,6 @@ void main()
 
 int CountSpells(object oTarget)
 {
+        effect eTest = GetFirstEffect
         
 }

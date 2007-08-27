@@ -25827,6 +25827,131 @@ Description:  You grow an internal cyst of undead flesh called a mother cyst. Th
 </entry>
   <entry id="52120" lang="en" sex="m">You have been transported to the elemental plane of fire.  It's hard to swim in lava.</entry>
   <entry id="52121" lang="en" sex="m">You have been transported to Asmodeus's throne room.  You also interrupt a meeting with the archdukes.  You make a tasty dip.</entry>
+  <entry id="52122" lang="en" sex="m">Arrowstorm</entry>
+  <entry id="52123" lang="en" sex="m">Arrow Storm
+Transmutation
+Level: Ranger 3
+Components: V
+Casting Time: 1 swift action
+Range: Personal
+Target: You
+Duration: 1 round
+
+After casting arrow storm, you use a full-round action to make one ranged attack with a bow with which you are proficient against every foe within range. You can attack a maximum number of individual targets equal to your character level.</entry>
+  <entry id="52124" lang="en" sex="m">Arrow Split</entry>
+  <entry id="52125" lang="en" sex="m">Arrowsplit
+Conjuration (Creation)
+Level: Assassin 3, ranger 3
+Components: V, M
+Casting Time: 1 swift action
+Range: Long
+Target: One creature
+Duration: Instantaneous
+Saving Throw: None
+Spell Resistance: No
+
+You fire a masterwork or magical arrow at a target, and it splits in mid-flight into 1d4+1 identical arrows or bolts.  All the missiles strike the same target, and you must make a separate attack roll for each missile.  
+Material Component: Masterwork or magical arrow or bolt.</entry>
+  <entry id="52126" lang="en" sex="m">Bloodfreeze Arrow</entry>
+  <entry id="52127" lang="en" sex="m">Bloodfreeze Arrow
+Transmutation
+Level: Assassin 4, ranger 4
+Components: V, M
+Casting Time: 1 swift action
+Range: Long
+Target: One creature
+Duration: Instantaneous
+Saving Throw: Fortitude partial; see text
+Spell Resistance: Yes
+
+When you cast this spell, you fire a magical or masterwork arrow or bolt at the target and transform the missile's head into blue ice. In addition to taking normal damage from the missile, the target takes 2d6 points of cold damage and is paralyzed. A successful Fortitude save negates the paralysis, and the target can make a new save each round (at the start of the caster’s turn).
+
+Material Component: Masterwork or magical arrow or bolt.</entry>
+  <entry id="52128" lang="en" sex="m">Invoke the Cerulean Sign</entry>
+  <entry id="52129" lang="en" sex="m">Invoke The Cerulean Sign
+Evocation
+Level: Bard 3, cleric 3, druid 2, paladin 3, ranger 2, sorc/wiz 3
+Components: S
+Casting Time: 1 standard action
+Range: 30 ft.
+Area: Multiple aberrations whose combined total Hit Dice do not exceed twice caster level in a spread emanating from the character to the extreme of the range
+Duration: Instantaneous
+Saving Throw: Fortitude negates
+Spell Resistance: No
+
+The cerulean sign is an ancient symbol said to embody the purity of the natural world, and as such it is anathema to aberrations. While druids and rangers are the classes most often known to cast this ancient spell, its magic is nearly universal and can be mastered by all spellcasting classes.
+
+When you cast this spell, you trace the cerulean sign in the air with a hand, leaving a glowing blue rune in the air for a brief moment before it flashes and fills the area of effect with a pulse of cerulean light. Any aberration within the area must make a Fortitude saving throw or suffer the following ill effects. Closer aberrations are affected first.
+
+Aberration Hit Dice            Effect
+Up to caster level +10          None
+Up to caster level +5           Sickened
+Up to caster level              Nauseated
+Up to caster level -5           Dazed
+Up to caster level -10          Stunned
+
+Each effect lasts for 1 round.
+
+None: The aberration suffers no ill effect, even if it fails the saving throw.
+
+Sickened: The aberration takes a -2 penalty on attack rolls, saving throws, skill checks, and ability checks for 1 round.
+
+Nauseated: The aberration cannot attack, cast spells, concentrate on spells, or do anything but take a single move action for 1 round.
+
+Dazed: The aberration can take no actions, but has no penalty to its Armor Class, for 1 round.
+
+Stunned: The aberration drops everything held, can’t take actions, takes a -2 penalty to AC, and loses its Dexterity bonus to AC (if any) for 1 round.
+
+Once a creature recovers from an effect, it moves up one level on the table. Thus, a creature that is stunned by this spell is dazed the round after that, nauseated the round after that, sickened the round after that, and then recovers fully
+the next round.</entry>
+  <entry id="52130" lang="en" sex="m">Doublestrike Arrow</entry>
+  <entry id="52131" lang="en" sex="m">Doublestrike Arrow
+Transmutation
+Level: Ranger 4
+Components: V, S, M
+Casting Time: 1 swift action
+Range: Long
+Target: Two creatures within a 30 foot radius of each other.
+Duration: 1 round
+Saving Throw: None
+Spell Resistance: No
+
+When you cast this spell, you fire 1 masterwork or magical arrow or bolt and enable it to strike two targets instead of one. After striking or missing the first target, the arrow swerves and continues on course to the second target, which must be within 30 feet of the original. The attacker makes a separate attack roll against each target (using the same attack bonus). 
+
+A doublestrike missile cannot hit the same target twice, and it is destroyed even if it misses its intended targets.
+
+Material Component: Masterwork or magical arrow or bolt.</entry>
+  <entry id="52132" lang="en" sex="m">Detect Favored Enemy</entry>
+  <entry id="52133" lang="en" sex="m">Detect Favored Enemies
+Divination
+Level: Ranger 1
+Components: V, S
+Casting Time: 1 standard action
+Area: 60 ft radius around the caster
+Duration: Instantaneous
+Saving Throw: None
+Spell Resistance: No
+
+You can sense the types of favored enemies in the area and the number of each type.
+</entry>
+  <entry id="52134" lang="en" sex="m">Darkflame Arrow</entry>
+  <entry id="52135" lang="en" sex="m">Darkflame Arrow
+Evocation
+Level: Assassin 3, Ranger 3
+Components: V, M
+Casting Time: 1 swift action
+Range: Long
+Target: One creature
+Duration: Instantaneous; see text
+Saving Throw: None
+Spell Resistance: Yes
+
+Upon casting this spell, you fire a magical or masterwork arrow or bolt, engulfing its head in black fire. The arrow deals normal damage and wreaths the target in black flame that deals an extra 2d6 points of damage.
+
+The black flames continue to engulf the victim for 2 more rounds, dealing 2d6 points of damage each subsequent round, and they cannot be extinguished (although they can be dispelled). The arrow or bolt must be fired during the same round the spell is cast, or the magic dissipates and is lost. Creatures with immunity or resistance to fire take full damage from the black flames. 
+
+Material Component: Masterwork arrow or bolt.</entry>
+  <entry id="52136" lang="en" sex="m">Heal Animal Companion</entry>
   <entry id="52164" lang="en" sex="m">Aerie</entry>
   <entry id="52165" lang="en" sex="m">Ajantis</entry>
   <entry id="52166" lang="en" sex="m">Annah</entry>
@@ -32063,8 +32188,18 @@ Spell Resistance: Yes
 A magical shard of ice blasts from your hand and speeds to its target. You must succeed on a normal ranged attack to hit (with a +2 bonus on the attack roll for every two caster levels). If it hits, an ice knife deals 2d8 points of cold damage plus 2 points of Dexterity damage (no Dexterity damage on a successful Fortitude save). Creatures that have immunity to cold damage also take no Dexterity damage automatically.
 
 A knife that misses creates a shower of ice crystals in a 10-foot-radius burst. The icy burst deals 1d8 points of cold damage to all creatures within the area of the effect (Reflex half).</entry>
-  <entry id="55017" lang="en" sex="m">
+  <entry id="55017" lang="en" sex="m">Arrow Storm
 </entry>
+  <entry id="55018" lang="en" sex="m">Arrow Storm
+Transmutation
+Level: Ranger 3
+Components: V
+Casting Time: 1 swift action
+Range: Personal
+Target: You
+Duration: 1 round
+
+After casting arrow storm, you use a full-round action to make one ranged attack with a bow with which you are proficient against every foe within range. You can attack a maximum number of individual targets equal to your character level.</entry>
   <entry id="55019" lang="en" sex="m">Whirling Blade</entry>
   <entry id="55020" lang="en" sex="m">Whirling Blade
 Transmutation
@@ -32184,6 +32319,18 @@ A single beam of brilliantly colored light shoots from your outstretched hand. Y
 6      Indigo              Insane, as insanity spell (Will negates)
 7      Violet              Sent to another plane(Will negates)
 8      Two effects; roll twice more, ignoring any '8' results</entry>
+  <entry id="55033" lang="en" sex="m">Detect Favored Enemy</entry>
+  <entry id="55034" lang="en" sex="m">Detect Favored Enemies
+Divination
+Level: Ranger 1
+Components: V, S
+Casting Time: 1 standard action
+Area: 60 ft radius around the caster
+Saving Throw: None
+Spell Resistance: No
+
+You can sense the types of favored enemies in the area and the number of each type.
+</entry>
   <entry id="55035" lang="en" sex="m">Otiluke's Freezing Sphere</entry>
   <entry id="55036" lang="en" sex="m">Otiluke's Freezing Sphere
 Evocation [Cold]
@@ -32328,6 +32475,56 @@ target, that target takes half of the damage rolled for the first target.
   <entry id="55051" lang="en" sex="m">Mass Fire Shield: Blue
 </entry>
   <entry id="55052" lang="en" sex="m">Fire Shield (PnP): Red</entry>
+  <entry id="55053" lang="en" sex="m">Invoke the Cerulean Sign</entry>
+  <entry id="55054" lang="en" sex="m">Invoke The Cerulean Sign
+Evocation
+Level: Bard 3, cleric 3, druid 2, paladin 3, ranger 2, sorc/wiz 3
+Components: S
+Casting Time: 1 standard action
+Range: 30 ft.
+Area: Multiple aberrations whose combined total Hit Dice do not exceed twice caster level in a spread emanating from the character to the extreme of the range
+Duration: Instantaneous
+Saving Throw: Fortitude negates
+Spell Resistance: No
+
+The cerulean sign is an ancient symbol said to embody the purity of the natural world, and as such it is anathema to aberrations. While druids and rangers are the classes most often known to cast this ancient spell, its magic is nearly universal and can be mastered by all spellcasting classes.
+
+When you cast this spell, you trace the cerulean sign in the air with a hand, leaving a glowing blue rune in the air for a brief moment before it flashes and fills the area of effect with a pulse of cerulean light. Any aberration within the area must make a Fortitude saving throw or suffer the following ill effects. Closer aberrations are affected first.
+
+Aberration Hit Dice Effect
+Up to caster level +10 None
+Up to caster level +5 Sickened
+Up to caster level Nauseated
+Up to caster level -5 Dazed
+Up to caster level -10 Stunned
+
+Each effect lasts for 1 round.
+
+None: The aberration suffers no ill effect, even if it fails the saving throw.
+
+Sickened: The aberration takes a -2 penalty on attack rolls, saving throws, skill checks, and ability checks for 1 round.
+
+Nauseated: The aberration cannot attack, cast spells, concentrate on spells, or do anything but take a single move action for 1 round.
+
+Dazed: The aberration can take no actions, but has no penalty to its Armor Class, for 1 round.
+
+Stunned: The aberration drops everything held, can’t take actions, takes a -2 penalty to AC, and loses its Dexterity bonus to AC (if any) for 1 round.
+
+Once a creature recovers from an effect, it moves up one level on the table. Thus, a creature that is stunned by this spell is dazed the round after that, nauseated the round after that, sickened the round after that, and then recovers fully
+the next round.</entry>
+  <entry id="55055" lang="en" sex="m">Heal Animal Companion</entry>
+  <entry id="55056" lang="en" sex="m">Heal Animal Companion
+Conjuration (Healing)
+Level: Druid 5, ranger 3
+Components: V, S
+Casting Time: 1 standard action
+Range: Touch
+Target: Your animal companion touched
+Duration: Instantaneous
+Saving Throw: Will negates (harmless)
+Spell Resistance: Yes (harmless)
+
+This spell functions like heal, except that it affects only your animal companion.</entry>
   <entry id="55100" lang="en" sex="m">Ninja</entry>
   <entry id="55101" lang="en" sex="m">Ninjas</entry>
   <entry id="55102" lang="en" sex="m">ninja</entry>

@@ -25952,6 +25952,54 @@ The black flames continue to engulf the victim for 2 more rounds, dealing 2d6 po
 
 Material Component: Masterwork arrow or bolt.</entry>
   <entry id="52136" lang="en" sex="m">Heal Animal Companion</entry>
+  <entry id="52137" lang="en" sex="m">Shadow Arrow</entry>
+  <entry id="52138" lang="en" sex="m">Shadow Arrow
+Necromancy
+Level: Assassin 4, ranger 4
+Components: V, M
+Casting Time: 1 swift action
+Range: Long
+Target: One creature
+Duration: Instantaneous
+Saving Throw: None
+Spell Resistance: Yes
+
+This spell is cast upon a masterwork arrow or bolt, transforming it into pure black shadow. Make a ranged touch attack with the missile instead of a normal ranged attack. Instead of dealing normal damage, a shadow arrow deals 1d6 points of Strength damage. 
+
+Material Component: Masterwork or magical arrow or bolt.</entry>
+  <entry id="52139" lang="en" sex="m">Snare</entry>
+  <entry id="52140" lang="en" sex="m">Snare
+Transmutation
+Level: Rgr 2, Drd 3
+Components: V, S
+Range: Touch
+Target: Area with a 2 ft. diameter + 2 ft./level
+Duration: Until triggered or broken
+Saving Throw: None
+Spell Resistance: No
+
+This spell enables you to make a snare that functions as a magic trap. When you cast this spell, a cordlike object blends with its surroundings (Search DC 23 for a character with the trapfinding ability to locate). One end of the snare is tied in a loop that contracts around one or more of the limbs of any creature stepping inside the circle.
+
+When triggered, the cordlike object tightens around the creature, dealing no damage but causing it to be entangled.
+
+The snare is magical. To escape, a trapped creature must make a DC 23 Strength check that is a full-round action. A successful escape from the snare breaks the loop and ends the spell. 
+</entry>
+  <entry id="52141" lang="en" sex="m">Spellslayer Arrow</entry>
+  <entry id="52142" lang="en" sex="m">Spellslayer Arrow
+Transmutation
+Level: Assassin 2, ranger 2
+Components: V, S, M
+Casting Time: 1 swift action
+Range: Long
+Target: One creature
+Duration: Instantaneous
+Saving Throw: None
+Spell Resistance: Yes
+
+As you cast this spell, your fire a masterwork or magical arrow or bolt, and transform it into a glowing missile that destabilizes other forms of magic.In 
+addition to dealing normal damage, a spellslayer arrow deals an extra 1d4 points of damage for the highest level spell currently in effect on the target. 
+
+Material Component: Masterwork or magical arrow or bolt.</entry>
   <entry id="52164" lang="en" sex="m">Aerie</entry>
   <entry id="52165" lang="en" sex="m">Ajantis</entry>
   <entry id="52166" lang="en" sex="m">Annah</entry>
@@ -32525,6 +32573,56 @@ Saving Throw: Will negates (harmless)
 Spell Resistance: Yes (harmless)
 
 This spell functions like heal, except that it affects only your animal companion.</entry>
+  <entry id="55057" lang="en" sex="m">Shaddow Arrow</entry>
+  <entry id="55058" lang="en" sex="m">Shadow Arrow
+Necromancy
+Level: Assassin 4, ranger 4
+Components: V, M
+Casting Time: 1 swift action
+Range: Long
+Target: One creature
+Duration: Instantaneous
+Saving Throw: None
+Spell Resistance: Yes
+
+This spell is cast upon a masterwork arrow or bolt, transforming it into pure black shadow. Make a ranged touch attack with the missile instead of a normal ranged attack. Instead of dealing normal damage, a shadow arrow deals 1d6 points of Strength damage. 
+
+Material Component: Masterwork or magical arrow or bolt.</entry>
+  <entry id="55059" lang="en" sex="m">Snare</entry>
+  <entry id="55060" lang="en" sex="m">Snare
+Transmutation
+Level:   Rgr 2, Drd 3
+Components:       V, S, DF
+Range:            Touch
+Target:           Area with a 2 ft. diameter + 2 ft./level
+Duration:         Until triggered or broken
+Saving Throw:     None
+Spell Resistance: No
+
+This spell enables you to make a snare that functions as a magic trap. When you cast this spell, a cordlike object blends with its surroundings (Search DC 23 for a character with the trapfinding ability to locate). One end of the snare is tied in a loop that contracts around one or more of the limbs of any creature stepping inside the circle.
+
+When triggered, the cordlike object tightens around 
+the creature, dealing no damage but causing it to
+be entangled.
+
+The snare is magical. To escape, a trapped creature must make a DC 23 Strength check that is a full-round action. A successful escape from the snare breaks the loop and ends the spell. 
+</entry>
+  <entry id="55061" lang="en" sex="m">Spellslayer Arrow</entry>
+  <entry id="55062" lang="en" sex="m">Spellslayer Arrow
+Transmutation
+Level: Assassin 2, ranger 2
+Components: V, S, M
+Casting Time: 1 swift action
+Range: Long
+Target: One creature
+Duration: Instantaneous
+Saving Throw: None
+Spell Resistance: Yes
+
+As you cast this spell, your fire a masterwork or magical arrow or bolt, and transform it into a glowing missile that destabilizes other forms of magic.In 
+addition to dealing normal damage, a spellslayer arrow deals an extra 1d4 points of damage for the highest level spell currently in effect on the target. 
+
+Material Component: Masterwork or magical arrow or bolt.</entry>
   <entry id="55100" lang="en" sex="m">Ninja</entry>
   <entry id="55101" lang="en" sex="m">Ninjas</entry>
   <entry id="55102" lang="en" sex="m">ninja</entry>

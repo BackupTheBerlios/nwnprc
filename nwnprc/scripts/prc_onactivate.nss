@@ -6,6 +6,8 @@
 
 void main()
 {
+    if(DEBUG) DoDebug("prc_onactivate executing");
+
     object oItem = GetItemActivated();
     object oPC = GetItemActivator();
 
@@ -28,11 +30,11 @@ void main()
     // "Epic Spellcasting" item used to prepare epic spells
     if (GetTag(oItem) == "epicspellcast")
         ExecuteScript("_rest_button", oPC);
-    
+
         //rest kits
     if(GetPRCSwitch(PRC_SUPPLY_BASED_REST))
         ExecuteScript("sbr_onactivate", OBJECT_SELF);
-        
+
     // Execute scripts hooked to this event for the player and item triggering it
     ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONACTIVATEITEM);
     ExecuteAllScriptsHookedToEvent(oItem, EVENT_ITEM_ONACTIVATEITEM);

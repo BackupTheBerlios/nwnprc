@@ -14,10 +14,12 @@
 #include "inc_epicspells"
 void main()
 {
+    if(DEBUG) DoDebug("activate_epspell executing");
+
     object oBook = GetItemActivated();
     string sBook = GetTag(oBook);
     string sName, sDesc;
-    int nEpicSpell = GetSpellFromAbrev(sBook);       
+    int nEpicSpell = GetSpellFromAbrev(sBook);
     int nDC = GetDCForSpell(nEpicSpell);
     int nIP = GetResearchIPForSpell(nEpicSpell);
     int nFE = GetResearchFeatForSpell(nEpicSpell);

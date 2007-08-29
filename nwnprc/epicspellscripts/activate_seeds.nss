@@ -12,6 +12,8 @@
 #include "inc_epicspells"
 void main()
 {
+    if(DEBUG) DoDebug("activate_seeds executing");
+
     object oBook = GetItemActivated();
     string sBook = GetTag(oBook);
     int nSeed = GetSeedFromAbrev(sBook);

@@ -104,18 +104,22 @@ void main()
                                 {
                                     if(nAttack + d20() >= nDC)
                                     {
-                                        oCopy = CopyItem(oTarget, oPC);
+                                        oCopy = CopyItem(oEnemyWeapon, oPC);
                                         if(GetIsObjectValid(oCopy)) //wouldn't want to destroy objects that can't be copied
+                                        {
                                             sMessage = "Third Hand picked up " + GetName(oTarget);
+                                        }
                                         else
+                                        {
                                             sMessage = "DEBUG: CopyItem Failed (" + GetName(oTarget) + ")";
-                                        DestroyObject(oTarget);
+                                            CopyObject(oEnemyWeapon, GetLocation(oTarget));
+                                        }
                                     }
                                     else
                                     {
                                         CopyObject(oEnemyWeapon, GetLocation(oTarget));
-                                        DestroyObject(oEnemyWeapon);
                                     }
+                                    DestroyObject(oEnemyWeapon);
                                 }
                                 else
                                     sMessage = "This item is too heavy";

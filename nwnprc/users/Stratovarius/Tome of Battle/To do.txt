@@ -16,3 +16,18 @@ Withheld MAneuvers: write the process for granting moves when in combat.
 Add a radial feat with the various combat options on it. 
 
 There are a few places where GetLevelByClass is used. This will not work with PrCs. Update when those are added. tob_inc_recovery has at least some.
+
+Q: Dear Sage,
+If a martial maneuver states that it allows a save but doesn’t list the save DC, how do I calculate it?
+--Sammy
+A: If a maneuver doesn’t list a DC, it is equal to 10 + the maneuver’s level + an ability score modifier based on the discipline:
+
+    * Desert Wind: Wisdom
+    * Devoted Spirit: Charisma
+    * Diamond Mind: Strength
+    * Iron Heart: Strength
+    * Setting Sun: Strength
+    * Shadow Hand: Wisdom
+    * Stone Dragon: Strength
+    * Tiger Claw: Strength
+    * White Raven: Intelligence

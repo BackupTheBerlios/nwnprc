@@ -319,10 +319,11 @@ int GetIsCharging(object oPC);
  * @param nExtraBonus   An extra bonus to grant the PC on the Bull rush
  * @param nBullAoO      Does the bull rush attempt generate an AoO
  * @param nMustFollow   Does the Bull rush require the pushing PC to follow the target
+ * @param nAttack       Bonus to the attack roll // I forgot to add it before, I'm an idiot ok?
  *
  * @return              TRUE if the attack or Bull rush hits, else FALSE
  */
-int DoCharge(object oPC, object oTarget, int nDoAttack = TRUE, int nGenerateAoO = TRUE, int nDamage = 0, int nDamageType = -1, int nBullRush = FALSE, int nExtraBonus = 0, int nBullAoO = TRUE, int nMustFollow = TRUE);
+int DoCharge(object oPC, object oTarget, int nDoAttack = TRUE, int nGenerateAoO = TRUE, int nDamage = 0, int nDamageType = -1, int nBullRush = FALSE, int nExtraBonus = 0, int nBullAoO = TRUE, int nMustFollow = TRUE, int nAttack = 0);
 
 /**
  * This will do a complete PnP Bull rush
@@ -1053,7 +1054,7 @@ int GetIsCharging(object oPC)
 	return GetLocalInt(oPC, "PCIsCharging");
 }
 
-int DoCharge(object oPC, object oTarget, int nDoAttack = TRUE, int nGenerateAoO = TRUE, int nDamage = 0, int nDamageType = -1, int nBullRush = FALSE, int nExtraBonus = 0, int nBullAoO = TRUE, int nMustFollow = TRUE)
+int DoCharge(object oPC, object oTarget, int nDoAttack = TRUE, int nGenerateAoO = TRUE, int nDamage = 0, int nDamageType = -1, int nBullRush = FALSE, int nExtraBonus = 0, int nBullAoO = TRUE, int nMustFollow = TRUE, int nAttack = 0)
 {
 	if (!nGenerateAoO)
 	{
@@ -1092,7 +1093,7 @@ int DoCharge(object oPC, object oTarget, int nDoAttack = TRUE, int nGenerateAoO 
 	       			object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
 	       			nDamageType = GetWeaponDamageType(oWeap);
 	       		}
-			PerformAttack(oPC, oAreaTarget, eNone, 0.0, 0, nDamage, nDamageType, FALSE, "Charge Hit", "Charge Miss");
+			PerformAttack(oPC, oAreaTarget, eNone, 0.0, nAttack, nDamage, nDamageType, FALSE, "Charge Hit", "Charge Miss");
 			// Local int set when Perform Attack hits
 			nSucceed = GetLocalInt(oTarget, "PRCCombat_StruckByAttack");
 		}

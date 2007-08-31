@@ -759,6 +759,17 @@ const int SPELL_PNP_FIRE_SHIELD_RED                 = 3699;
 const int SPELL_PNP_FIRE_SHIELD_BLUE                = 3700;
 const int SPELL_MASS_FIRE_SHIELD_BLUE               = 3701;
 
+const int SPELL_ARROW_STORM                         = 3702;
+const int SPELL_ARROW_SPLIT                         = 3703;
+const int SPELL_BLOODFREEZE_ARROW                   = 3704;
+const int SPELL_DOUBLESTRIKE_ARROW                  = 3706;
+const int SPELL_DETECT_FAVORED_ENEMIES              = 3707;
+const int SPELL_DARKFLAME_ARROW                     = 3708;
+const int SPELL_HEAL_ANIMAL_COMPANION               = 3709;
+const int SPELL_SHADOW_ARROW                        = 3710;
+const int SPELL_SNARE                               = 3711;
+const int SPELL_SPELLSLAYER_ARROW                   = 3712;
+
 // Passive feats
 const int SPELL_FORCE_PERSONALITY                   = 1915;
 const int SPELL_INSIGHTFUL_REFLEXES                 = 1916;

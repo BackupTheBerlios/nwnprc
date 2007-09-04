@@ -25984,7 +25984,8 @@ When triggered, the cordlike object tightens around the creature, dealing no dam
 
 The snare is magical. To escape, a trapped creature must make a DC 23 Strength check that is a full-round action. A successful escape from the snare breaks the loop and ends the spell. 
 </entry>
-  <entry id="52141" lang="en" sex="m">Spellslayer Arrow</entry>
+  <entry id="52141" lang="en" sex="m">Spellslayer Arrow
+</entry>
   <entry id="52142" lang="en" sex="m">Spellslayer Arrow
 Transmutation
 Level: Assassin 2, ranger 2
@@ -26000,6 +26001,7 @@ As you cast this spell, your fire a masterwork or magical arrow or bolt, and tra
 addition to dealing normal damage, a spellslayer arrow deals an extra 1d4 points of damage for the highest level spell currently in effect on the target. 
 
 Material Component: Masterwork or magical arrow or bolt.</entry>
+  <entry id="52143" lang="en" sex="m">Discharge Crown</entry>
   <entry id="52164" lang="en" sex="m">Aerie</entry>
   <entry id="52165" lang="en" sex="m">Ajantis</entry>
   <entry id="52166" lang="en" sex="m">Annah</entry>

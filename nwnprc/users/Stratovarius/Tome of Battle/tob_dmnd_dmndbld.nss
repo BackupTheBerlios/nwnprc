@@ -22,7 +22,7 @@
     in how she carries herself or maintains her fighting stance.
     
     You make a Concentration check against the target's AC. If you succeed, the target
-    takes double normal damage. If you fail, you take a -2 penalty on the attack.
+    takes quadruple normal damage. If you fail, you take a -2 penalty on the attack.
 */
 
 #include "tob_inc_tobfunc"
@@ -48,9 +48,11 @@ void main()
         effect eNone;
         int nDC = GetDefenderAC(oTarget, oInitiator);
         int nAB = -2;
-        if (GetIsSkillSuccessful(oInitiator, SKILL_CONCENTRATION, nDC)) 
+        if (GetIsSkillSuccessful(oInitiator, SKILL_CONCENTRATION, nDC))
+        {
                 nAB = 0;
-        SetLocalInt(oTarget, "NightmareBlade", 4);
+        	SetLocalInt(oTarget, "NightmareBlade", 4);
+        }
         PerformAttack(oTarget, oInitiator, eNone, 0.0, nAB, 0, 0, FALSE, "Diamond Nightmare Blade Hit", "Diamond Nightmare Blade Miss");
         DelayCommand(1.0, DeleteLocalInt(oTarget, "NightmareBlade"));
     }

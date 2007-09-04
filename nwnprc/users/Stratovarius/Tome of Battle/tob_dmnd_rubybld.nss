@@ -48,9 +48,11 @@ void main()
     	effect eNone;
     	int nDC = GetDefenderAC(oTarget, oInitiator);
     	int nAB = -2;
-    	if (GetIsSkillSuccessful(oInitiator, SKILL_CONCENTRATION, nDC)) 
-    		nAB = 0;
-    	SetLocalInt(oTarget, "NightmareBlade", 2);
+        if (GetIsSkillSuccessful(oInitiator, SKILL_CONCENTRATION, nDC))
+        {
+                nAB = 0;
+        	SetLocalInt(oTarget, "NightmareBlade", 2);
+        }
 	PerformAttack(oTarget, oInitiator, eNone, 0.0, nAB, 0, 0, FALSE, "Ruby Nightmare Blade Hit", "Ruby Nightmare Blade Miss");
 	DelayCommand(1.0, DeleteLocalInt(oTarget, "NightmareBlade"));
     }

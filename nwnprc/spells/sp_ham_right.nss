@@ -42,69 +42,69 @@ Created:   6/14/06
 
 void main()
 {
-	if(!X2PreSpellCastCode()) return;
-	
-	SPSetSchool(SPELL_SCHOOL_EVOCATION);
-	
-	object oPC = OBJECT_SELF;
-	object oTarget = GetSpellTargetObject();
-	int nCasterLvl = PRCGetCasterLevel(oPC);
-	int nDC = SPGetSpellSaveDC(oTarget, oPC);
-	int nAlign = GetAlignmentGoodEvil(oTarget);
-	int nMetaMagic = PRCGetMetaMagicFeat();
-		
-	SPRaiseSpellCastAt(oTarget,TRUE, SPELL_HAMMER_OF_RIGHTEOUSNESS, oPC);
-	
-	if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
+        if(!X2PreSpellCastCode()) return;
+        
+        SPSetSchool(SPELL_SCHOOL_EVOCATION);
+        
+        object oPC = OBJECT_SELF;
+        object oTarget = GetSpellTargetObject();
+        int nCasterLvl = PRCGetCasterLevel(oPC);
+        int nDC = SPGetSpellSaveDC(oTarget, oPC);
+        int nAlign = GetAlignmentGoodEvil(oTarget);
+        int nMetaMagic = PRCGetMetaMagicFeat();
+                
+        SPRaiseSpellCastAt(oTarget,TRUE, SPELL_HAMMER_OF_RIGHTEOUSNESS, oPC);
+        
+        if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
         {
-		int nDam = d6(nCasterLvl);
-			
-		if(nMetaMagic == METAMAGIC_MAXIMIZE)
-		{
-			nDam = 6 * (nCasterLvl);
-		}
-		
-		if(nAlign == ALIGNMENT_EVIL)
-		{
-			nDam = d8(nCasterLvl);
-			
-			if(nMetaMagic == METAMAGIC_MAXIMIZE)
-			{
-				nDam = 8 * (nCasterLvl);
-			}
-		}
-		
-		if(nMetaMagic == METAMAGIC_EMPOWER)
-		{
-			nDam += (nDam/2);
-		}
-		
-		//Save for 1/2
-		if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_GOOD))
-		{
-			nDam = (nDam/2);
-			
-			if(GetHasMettle(oTarget, SAVING_THROW_FORT))
-			{
-				nDam = 0;
-			}
-		}
-		
-		//Play VFX
-		
-		
-		//Apply damage
-		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_MAGICAL), oTarget);
-	}
-	DoCorruptionCost(oPC, ABILITY_STRENGTH, d3(1), 0);
-	
-	//Sanctified spells get mandatory 10 pt good adjustment, regardless of switch
-	AdjustAlignment(oPC, ALIGNMENT_GOOD, 10);
-	
-	SPGoodShift(oPC);
-	
-	SPSetSchool();
+                int nDam = d6(nCasterLvl);
+                        
+                if(nMetaMagic == METAMAGIC_MAXIMIZE)
+                {
+                        nDam = 6 * (nCasterLvl);
+                }
+                
+                if(nAlign == ALIGNMENT_EVIL)
+                {
+                        nDam = d8(nCasterLvl);
+                        
+                        if(nMetaMagic == METAMAGIC_MAXIMIZE)
+                        {
+                                nDam = 8 * (nCasterLvl);
+                        }
+                }
+                
+                if(nMetaMagic == METAMAGIC_EMPOWER)
+                {
+                        nDam += (nDam/2);
+                }
+                
+                //Save for 1/2
+                if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_GOOD))
+                {
+                        nDam = (nDam/2);
+                        
+                        if(GetHasMettle(oTarget, SAVING_THROW_FORT))
+                        {
+                                nDam = 0;
+                        }
+                }
+                
+                //Play VFX
+                ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_STRIKE_HOLY), oTarget);
+                
+                //Apply damage
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_MAGICAL), oTarget);
+        }
+        DoCorruptionCost(oPC, ABILITY_STRENGTH, d3(1), 0);
+        
+        //Sanctified spells get mandatory 10 pt good adjustment, regardless of switch
+        AdjustAlignment(oPC, ALIGNMENT_GOOD, 10);
+        
+        SPGoodShift(oPC);
+        
+        SPSetSchool();
 }
-		
-		
-	
+                
+                
+        

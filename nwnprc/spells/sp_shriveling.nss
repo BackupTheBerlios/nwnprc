@@ -46,28 +46,33 @@ void main()
     SPRaiseSpellCastAt(oTarget,TRUE, SPELL_SHRIVELING, oPC);
     
     //Check for Soul rot
-    if(GetHasSoulRot(oPC))
+    if(!GetHasSoulRot(oPC))
     {
-        //SR
-        if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
-        {
+            SendMessageToPC(oPC, "This spell requires the caster to have the Soul Rot disease.");
+            SPSetSchool();
+            return;
+    }
+    
+    //SR
+    if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+    {
             int nDam = d4(min(nCasterLvl, 10));
             
             //eval metamagic
             if(nMetaMagic == METAMAGIC_MAXIMIZE)
             {
-                nDam = 4 * (min(nCasterLvl, 10));
+                    nDam = 4 * (min(nCasterLvl, 10));
             }
             
             if(nMetaMagic == METAMAGIC_EMPOWER)
             {
-                nDam += (nDam/2);
-            }           
+                    nDam += (nDam/2);
+            }
             
             //Check for save
             if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
             {
-                nDam = nDam/2;
+                    nDam = nDam/2;
             }
             
             effect eVis = EffectVisualEffect(VFX_FNF_GAS_EXPLOSION_GREASE);
@@ -75,11 +80,11 @@ void main()
             //Apply damage & visual
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_MAGICAL), oTarget);
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-        }
     }
     SPEvilShift(oPC);
     SPSetSchool();
 }
+
 
 int GetHasSoulRot(object oPC)
 {

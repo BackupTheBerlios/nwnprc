@@ -29,6 +29,9 @@ void main()
                 
                 SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, RoundsToSeconds(1), TRUE, SPELL_CROWN_OF_PROTECTION, -1);
         }
+        
+        //Remove the helm
+        DestroyObject(oHelm);
 }
         
         

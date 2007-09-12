@@ -24,17 +24,25 @@ damage in addition to your normal damage.
 
 void main()
 {
-    if (!PreManeuverCastCode())
-    {
-    // If code within the PreManeuverCastCode (i.e. UMD) reports FALSE, do not run this spell
-        return;
-    }
-
-// End of Spell Cast Hook
-
-    object oInitiator    = OBJECT_SELF;
-    object oTarget       = PRCGetSpellTargetObject();
-    struct maneuver move = EvaluateManeuver(oInitiator, oTarget);
-
-    if(move.bCanManeuver)
-    {
+        if (!PreManeuverCastCode())
+        {
+                // If code within the PreManeuverCastCode (i.e. UMD) reports FALSE, do not run this spell
+                return;
+        }
+        
+        // End of Spell Cast Hook
+        
+        object oInitiator    = OBJECT_SELF;
+        object oTarget       = PRCGetSpellTargetObject();
+        struct maneuver move = EvaluateManeuver(oInitiator, oTarget);
+        effect eNone;
+        
+        if(move.bCanManeuver)
+        {
+                PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Mountain Tombstone Strike Hit", "Mountain Tombstone Strike Miss");
+                if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
+                {
+                        ApplyAbilityDamage(oPC, ABILITY_CONSTITUTION, d6(2), DURATION_TYPE_PERMANENT);    
+                }
+        }
+}

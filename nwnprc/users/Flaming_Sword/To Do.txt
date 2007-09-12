@@ -1,6 +1,8 @@
-Lasher - Activating Placeables for Third Hand
+Antimagic/Null Psionics Field
 
-Spellfire Channeler - Making itemprops removed by Drain Permanent Item come back across logons
+Coding prestige class for lesserhellspawn
+
+Crafting tweaks for PWs
 
 Epic progression for miniatures handbook classes http://www.wizards.com/default.asp?x=dnd/ei/20031206a
 
@@ -21,7 +23,4 @@ magic of incarnum
 http://www.wizards.com/default.asp?x=dnd/psm/20050830a
 http://www.wizards.com/default.asp?x=dnd/psm/20050930a
 http://www.wizards.com/default.asp?x=dnd/psm/20060217a
-
-modify GetSpellUses() for spellid, metamagic
-
 

@@ -1,9 +1,33 @@
 //////////////////////////////////////////////////
-//  Giant's Stance
-//
-//
+//  Giant's Stance 
+//  tob_stdr_giants.nss
+//  Tenjac 9/12/07
 //////////////////////////////////////////////////
-/** @file
+/** @file Giant's Stance
+Stone Dragon (Stance)
+Level: Crusader 5, swordsage 5, warblade 5
+Prerequisite: Two Stone Dragon maneuvers
+Initiation Aciton: 1 swift action
+Range: Personal
+Target: You
+Duration: Stance
+
+You swing your weapon in an wide, deadly arc that slams into your foe with
+incredible force. Only your mastery of the Stone Dragon techniques allows you
+to make such reckless blows without losing your footing.
+
+Tapping into the power of the Stone Dragon, you strike with resolute, irresistable
+force. You learn to set the full weight of your body into each of your attacks. A
+warrior with less skill would lose his balance and fall to the ground when using 
+this fighting syle.
+
+While you are in this stance, you deal damage as if you were one size larger than
+normal, to a maximum of Large. This benefit improves your weapon and unarmed strike
+damage. If does not confer any of the other benefits or drawbacks of a change in 
+size, such as a modifier to ability scores or AC, or an improved reach.
+
+This stance immediately ends if you move more than 5 feet for any reason such as
+from a bull rush attack, a telekinesis spell, and so forth.
 
 */
 

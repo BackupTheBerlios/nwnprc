@@ -1,10 +1,21 @@
 //////////////////////////////////////////////////
-//
-//
-//
+// Mountain Tombstone Strike
+// tob_stdr_mttmbst.nss
+// Tenjac 9/12/07
 //////////////////////////////////////////////////
-/** @file
+/** @file Mountain Tombstone Strike
+Stone Dragon (Strike)
+Level: Crusader 9, swordsage 9, warblade 9
+Initiation Action: 1 standard action
+Range: Melee attack
+Target: One creature
 
+You slam into your foe, turning bones into dust and muscle into bloody pulp. Your foe's 
+body is left a crippled, twisted mockery.
+
+Your attack causes damage to the structure of your foe's body. As part of this maneuver, 
+you make a single melee attack. If this attack hits, you deal 2d6 points of Constitution
+damage in addition to your normal damage.
 */
 
 #include "tob_inc_tobfunc"

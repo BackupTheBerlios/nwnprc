@@ -1,10 +1,27 @@
 //////////////////////////////////////////////////
-//
-//
-//
+// Iron Bones
+// tob_stdr_irnbns.nss
+// Tenjac 9/12/07
 //////////////////////////////////////////////////
-/** @file
+/** @file Iron Bones
+Stone Dragon (Strike)
+Level: Crusader 6, swordsage 6, warblade 6
+Prerequisite: Two Stone Dragon maneuvers
+Inititation Action: 1 standard action
+Range: Personal
+Target: You
+Duration: 1 round
 
+As you make a successful attack, you enter a meditative state that leaves you almost
+invulnerable to harm. For a few brief moments, arrows bounce off your skin, and sword
+blows barely draw any blood.
+
+This maneuver is an evolution of the techniques and abilities coevered by the stone bones
+maneuver. Your meditative focus, ki, and training allow your mind to overcome matter.
+Weapons bounce from your skin and barely injure you.
+
+When you use this maneuver, you make a single melee attack. If this attack hits, you gain
+damage reduction 10/+5 for 1 round.
 */
 
 #include "tob_inc_tobfunc"

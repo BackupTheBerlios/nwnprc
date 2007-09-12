@@ -26,8 +26,6 @@ bull rush attack, a telekinesis spell, and so forth.
 #include "tob_movehook"
 #include "prc_alterations"
 
-void LocMon(object oInitiator, location lOrig);
-
 void main()
 {
         if (!PreManeuverCastCode())
@@ -45,45 +43,14 @@ void main()
         
         if(move.bCanManeuver)
         {
-                effect eImmune = EffectImmunity(IMMUNITY_TYPE_CRITICAL_HIT);
-                eImmune = SupernaturalEffect(eImmune);
-                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eImmune, oInitiator, HoursToSeconds(1));
-                lOrig = GetLocation(oInitiator);
-        }
-        
-        LocMon(oInitiator, lOrig);
-        
-}
-
-void LocMon(object oInitiator, location lOrig)
-{
-        float fDist = GetDistanceBetweenLocations(lOrig, GetLocation(oInitiator));
-        
-        if(fDist < FeetToMeters(5.0))
-        {
-                DelayCommand(1.0f, LocMon(oInitiator, lOrig));
-        }
-        
-        else
-        {
-                effect eTest = GetFirstEffect(oInitiator);
+                effect eLink =EffectVisualEffect(VFX_DUR_ROOTED_TO_SPOT);
+                if (GetHasDefensiveStance(oInitiator, DISCIPLINE_STONE_DRAGON))                
+                        eLink = EffectLinkEffects(EffectImmunity(IMMUNITY_TYPE_CRITICAL_HIT),eLink);
                 
-                while(GetIsEffectValid(eTest))
-                {
-                        if(GetEffectType(eTest == EFFECT_TYPE_IMMUNITY))
-                        {
-                                if(GetEffectSubType(eTest) == SUBTYPE_SUPERNATURAL)
-                                {
-                                        if(GetEffectDurationType(eTest) == DURATION_TYPE_TEMPORARY)
-                                        {
-                                                RemoveEffect(eTest);
-                                        }
-                                }
+                eLink = ExtraordinaryEffect(eLink);
                                 
-                        }
-                        eTest = GetNextEffect(oInitiator);
-                }
-        }
-}
-        
+                InitiatorMovementCheck(oInitiator, move.nMoveId);
                 
+                SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eImmune, oInitiator);        
+        }               
+}

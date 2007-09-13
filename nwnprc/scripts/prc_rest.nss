@@ -109,17 +109,17 @@ void RestFinished(object oPC)
     int i;
     string sMessage;
     for(i=1;i<nSpellCount;i++)
-    {
+    {   //WARNING! WILL DO BAD THINGS TO SPONTANEOUS CASTERS AFFECTED
         int nSpell = GetPRCSwitch(PRC_DISABLE_SPELL_+IntToString(i));
         int nMessage;
-        while(GetHasSpell(nSpell, oPC))
+        while(PRCGetHasSpell(nSpell, oPC))
         {
             if(!nMessage)
             {
                 sMessage += "You cannot use "+GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", nSpell)))+" in this module.\n";
                 nMessage = TRUE;
             }
-            DecrementRemainingSpellUses(oPC, nSpell);
+            PRCDecrementRemainingSpellUses(oPC, nSpell);
         }
     }
     if(sMessage != "")
@@ -175,12 +175,12 @@ void RestFinished(object oPC)
 void RestStarted(object oPC)
 {
     if(DEBUG) DoDebug("prc_rest: Rest started for " + DebugObject2Str(oPC));
-    
+
     // Scrying cleanup
     if (GetIsScrying(oPC))
     {
-    	object oCopy = GetLocalObject(oPC, "Scry_Copy");
-    	DoScryEnd(oPC, oCopy);
+        object oCopy = GetLocalObject(oPC, "Scry_Copy");
+        DoScryEnd(oPC, oCopy);
     }
 
     if (GetLevelByClass(CLASS_TYPE_DRUNKEN_MASTER, oPC)){
@@ -199,7 +199,7 @@ void RestStarted(object oPC)
         }
     }
     */
-    
+
     SetLocalInt(oPC, "PnP_Rest_InitialHP", GetCurrentHitPoints(oPC));
     //clean up bonded summon
     if(GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oPC))
@@ -233,7 +233,7 @@ void main()
     object oPC = GetLastBeingRested();
 
     if(DEBUG) DoDebug("prc_rest: Running for " + DebugObject2Str(oPC));
-    
+
     // return here for DMs as they don't need all this stuff
     if(GetIsDM(oPC))
         return;

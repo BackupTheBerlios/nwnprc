@@ -796,6 +796,8 @@ const string PRC_DISABLE_FEAT_COUNT                  = "PRC_DISABLE_FEAT_COUNT";
 const string PRC_DISABLE_FEAT_                       = "PRC_DISABLE_FEAT_";
 const string PRC_DISABLE_SKILL_COUNT                 = "PRC_DISABLE_SKILL_COUNT";
 const string PRC_DISABLE_SKILL_                      = "PRC_DISABLE_SKILL_";
+
+//WARNING! WILL DO BAD THINGS TO SPONTANEOUS CASTERS AFFECTED
 const string PRC_DISABLE_SPELL_COUNT                 = "PRC_DISABLE_SPELL_COUNT";
 const string PRC_DISABLE_SPELL_                      = "PRC_DISABLE_SPELL_";
 

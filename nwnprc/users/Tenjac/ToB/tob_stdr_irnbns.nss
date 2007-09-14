@@ -16,7 +16,7 @@ As you make a successful attack, you enter a meditative state that leaves you al
 invulnerable to harm. For a few brief moments, arrows bounce off your skin, and sword
 blows barely draw any blood.
 
-This maneuver is an evolution of the techniques and abilities coevered by the stone bones
+This maneuver is an evolution of the techniques and abilities covered by the stone bones
 maneuver. Your meditative focus, ki, and training allow your mind to overcome matter.
 Weapons bounce from your skin and barely injure you.
 
@@ -30,17 +30,25 @@ damage reduction 10/+5 for 1 round.
 
 void main()
 {
-    if (!PreManeuverCastCode())
-    {
-    // If code within the PreManeuverCastCode (i.e. UMD) reports FALSE, do not run this spell
-        return;
-    }
-
-// End of Spell Cast Hook
-
-    object oInitiator    = OBJECT_SELF;
-    object oTarget       = PRCGetSpellTargetObject();
-    struct maneuver move = EvaluateManeuver(oInitiator, oTarget);
-
-    if(move.bCanManeuver)
-    {
+        if (!PreManeuverCastCode())
+        {
+                // If code within the PreManeuverCastCode (i.e. UMD) reports FALSE, do not run this spell
+                return;
+        }
+        
+        // End of Spell Cast Hook
+        
+        object oInitiator    = OBJECT_SELF;
+        object oTarget       = PRCGetSpellTargetObject();
+        struct maneuver move = EvaluateManeuver(oInitiator, oTarget);
+        
+        if(move.bCanManeuver)
+        {
+                effect eNone;
+                PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Iron Bones Hit", "Iron Bones Miss");
+                if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
+                {
+                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectDamageReduction(10, DAMAGE_POWER_PLUS_FIVE, 0), oInitiator, RoundsToSeconds(1));
+                }
+        }
+}

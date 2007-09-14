@@ -19,8 +19,8 @@ surges out from you, causing the ground to shudder with a sharp tremor.
 You channel ki into the earth with your mighty strike, causing the ground to rumble
 and shake briefly. Anyone standing on the ground in this maneuver's area must make
 a successful Reflex save (DC 18 + your Str modifier) or be knocked prone. Any creature
-standing on the ground in this area that is currently castin a spell must succeed on a 
-Concentration check (DC 20 + spell level) or lose the spell.
+ in this area that is currently casting a spell must succeed on a Concentration check 
+ (DC 20 + spell level) or lose the spell.
 
 You are immune to the effect of the earthstrike quake maneuver. Your allies must still
 save as normal against its effect.
@@ -35,18 +35,43 @@ Walls and similar barriers don't block the line of effect of an earth-strike qua
 
 void main()
 {
-    if (!PreManeuverCastCode())
-    {
-    // If code within the PreManeuverCastCode (i.e. UMD) reports FALSE, do not run this spell
-        return;
-    }
-
-// End of Spell Cast Hook
-
-    object oInitiator    = OBJECT_SELF;
-    object oTarget       = PRCGetSpellTargetObject();
-    struct maneuver move = EvaluateManeuver(oInitiator, oTarget);
-
-    if(move.bCanManeuver)
-    {
-            
+        if (!PreManeuverCastCode())
+        {
+                // If code within the PreManeuverCastCode (i.e. UMD) reports FALSE, do not run this spell
+                return;
+        }
+        
+        // End of Spell Cast Hook
+        
+        object oInitiator    = OBJECT_SELF;
+        struct maneuver move = EvaluateManeuver(oInitiator, oTarget);
+        
+        if(move.bCanManeuver)
+        {
+                //Animation
+                PlayAnimation(ANIMATION_FIREFORGET_VICTORY1);
+                                                        
+                location lLoc = GetLocation(oInitiator);
+                int nDC = 18 + (GetAbilityModifier(ABILITY_STRENGTH, oInitiator);
+                
+                //Shaking
+                ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_SCREEN_SHAKE), lLoc);
+                
+                object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(20.0), lLoc, FALSE, OBJECT_TYPE_CREATURE);
+                
+                while(GetIsObjectValid(oTarget))
+                {                                                
+                        if(oTarget != oInitiator)
+                        {
+                                if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_NONE, oInitiator, 1.0))
+                                {
+                                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectKnockdown(), oTarget, RoundsToSeconds(1));
+                                }
+                        }
+                        oTarget = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(20.0), lLoc, FALSE, OBJECT_TYPE_CREATURE);
+                }
+        }
+}
+                                        
+                
+                

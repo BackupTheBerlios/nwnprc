@@ -35,17 +35,32 @@ damage.
 
 void main()
 {
-    if (!PreManeuverCastCode())
-    {
-    // If code within the PreManeuverCastCode (i.e. UMD) reports FALSE, do not run this spell
-        return;
-    }
-
-// End of Spell Cast Hook
-
-    object oInitiator    = OBJECT_SELF;
-    object oTarget       = PRCGetSpellTargetObject();
-    struct maneuver move = EvaluateManeuver(oInitiator, oTarget);
-
-    if(move.bCanManeuver)
-    {
+        if (!PreManeuverCastCode())
+        {
+                // If code within the PreManeuverCastCode (i.e. UMD) reports FALSE, do not run this spell
+                return;
+        }
+        
+        // End of Spell Cast Hook
+        
+        object oInitiator    = OBJECT_SELF;
+        object oTarget       = PRCGetSpellTargetObject();
+        struct maneuver move = EvaluateManeuver(oInitiator, oTarget);
+        
+        if(move.bCanManeuver)
+        {
+                effect eNone;
+                PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(4), GetWeaponDamageType(oWeap), "Iron Bones Hit", "Iron Bones Miss");
+                
+                if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
+                {
+                        //Save
+                        int nDC = 16 + GetAbilityModifier(ABILITY_STRENGTH, oInitiator);
+                        if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NONE, oInitiator, 1.0))
+                        {
+                                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectDazed(), oTarget, RoundsToSeconds(1));
+                        }
+                }
+        }
+}
+                                

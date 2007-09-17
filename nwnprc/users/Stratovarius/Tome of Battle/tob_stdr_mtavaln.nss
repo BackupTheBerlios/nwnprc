@@ -50,7 +50,7 @@ void main()
                 //Twice the speed
                 SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectMovementSpeedIncrease(99), oInitiator, RoundsToSeconds(1));
                 
-                SPApplyEffectTOObject(DURATION_TYPE_TEMPORARY, EffectAreaOfEffect(AOE_MOB_MOUNTAIN_AVALANCE), oInitiator, RoundsToSeonds(1));
+                SPApplyEffectTOObject(DURATION_TYPE_TEMPORARY, EffectAreaOfEffect(AOE_MOB_MOUNTAIN_AVALANCHE), oInitiator, RoundsToSeonds(1));
         }
 }
                 

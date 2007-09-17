@@ -49,7 +49,7 @@ void main()
                 
                 eLink = ExtraordinaryEffect(eLink);
                                 
-                InitiatorMovementCheck(oInitiator, move.nMoveId);
+                InitiatorMovementCheck(oInitiator, move.nMoveId, 5.0);
                 
                 SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eImmune, oInitiator);        
         }               

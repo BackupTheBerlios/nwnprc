@@ -33,6 +33,7 @@ const int VFX_PER_PRISMATIC_WALL                = 171;
 const int AOE_PER_FIRE_TRAP                     = 170;
 const int AOE_PER_PYROTECHNICS_SMOKE            = 169;
 const int VFX_PER_SNARE                         = 168;
+const int AOE_MOB_MOUNTAIN_AVALANCHE            = 167;
 
 // Psionic Area of Effects
 const int AOE_PER_PSIGREASE                     = 131;

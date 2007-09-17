@@ -578,6 +578,8 @@ void _RecursiveStanceCheck(object oPC, object oTestWP, int nMoveId, float fFeet 
         else if (nMoveId = MOVE_SD_GIANTSSTANCE)
         {
                 DeleteLocalInt(oPC, "DWGiantsStance");
+                DeleteLocalInt(oPC, "PRC_Power_Expansion_SizeIncrease");
+                RemoveEffectsFromSpell(oPC, nMoveId);
                 DestroyObject(oTestWP);        
         }
         

@@ -157,9 +157,7 @@ void main2()
     {
         nDuration = nDuration *2; //Duration is +100%
     }
-    // images will have only 1 HP
-    int iHP = GetCurrentHitPoints(OBJECT_SELF);
-    --iHP;
+    
 
     string sImage = "PC_IMAGE"+ObjectToString(OBJECT_SELF)+"mirror";
 
@@ -169,12 +167,16 @@ void main2()
            eGhost = SupernaturalEffect(eGhost);
     effect eNoSpell = EffectSpellFailure(100);
            eNoSpell = SupernaturalEffect(eNoSpell);
-    effect eDamage = EffectDamage(iHP); // reduces image to 1 hp
     
     // make, then clean up, first image and copy it, not the PC for subsequent images
     object oImage = CopyObject(OBJECT_SELF, GetLocation(OBJECT_SELF), OBJECT_INVALID, sImage);
     CleanCopy(oImage);
     
+    // images will have only 1 HP
+    int iHP = GetCurrentHitPoints(OBJECT_SELF);
+    --iHP;
+    effect eDamage = EffectDamage(iHP); // reduces image to 1 hp
+
     // these need to be applied to every image
     ApplyEffectToObject(DURATION_TYPE_PERMANENT, eImage, oImage);
     ApplyEffectToObject(DURATION_TYPE_PERMANENT, eNoSpell, oImage);

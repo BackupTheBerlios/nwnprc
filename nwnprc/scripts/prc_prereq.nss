@@ -147,7 +147,7 @@ void KOTC(object oPC)
 
 void Shadowlord(object oPC, int iArcSpell)
 {
-     int iShadLevel = GetLevelByClass(CLASS_TYPE_SHADOWLORD, oPC);
+     int iShadLevel = GetLevelByClass(CLASS_TYPE_SHADOWDANCER, oPC);
 
      int iShadItem;
      if(GetHasItem(oPC,"shadowwalkerstok"))

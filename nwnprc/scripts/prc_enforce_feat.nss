@@ -131,6 +131,7 @@ int ManAtArmsFeats(object oPC = OBJECT_SELF)
      if(GetHasFeat(FEAT_IMPROVED_CRITICAL_TWO_BLADED_SWORD, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_TWO_BLADED_SWORD, oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
      if(GetHasFeat(FEAT_IMPROVED_CRITICAL_UNARMED_STRIKE,   oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_UNARMED_STRIKE,   oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
      if(GetHasFeat(FEAT_IMPROVED_CRITICAL_WAR_HAMMER,       oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_WAR_HAMMER,       oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
+     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_WHIP,             oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_WHIP,             oPC) ) { iNumImpCrit++; bReturnVal = FALSE; }
 
      if(GetHasFeat(FEAT_IMPROVED_CRITICAL_MINDBLADE, oPC) && !GetHasFeat(FEAT_WEAPON_FOCUS_MINDBLADE, oPC)){
         iNumImpCrit++;
@@ -404,8 +405,9 @@ int FavouredSoul(object oPC = OBJECT_SELF)
     GetHasFeat(FEAT_WEAPON_FOCUS_STAFF,            oPC)           +
     GetHasFeat(FEAT_WEAPON_FOCUS_THROWING_AXE,     oPC)           +
     GetHasFeat(FEAT_WEAPON_FOCUS_TWO_BLADED_SWORD, oPC)           +
-        GetHasFeat(FEAT_WEAPON_FOCUS_UNARMED_STRIKE,   oPC)           +
-    GetHasFeat(FEAT_WEAPON_FOCUS_WAR_HAMMER,       oPC)           ;
+    GetHasFeat(FEAT_WEAPON_FOCUS_UNARMED_STRIKE,   oPC)           +
+    GetHasFeat(FEAT_WEAPON_FOCUS_WAR_HAMMER,       oPC)           +
+    GetHasFeat(FEAT_WEAPON_FOCUS_WHIP,             oPC)           ;
 
         if (nFocus >= 1 && nFS >= 3) { nCheck = TRUE; }
         else { nCheck = FALSE; }

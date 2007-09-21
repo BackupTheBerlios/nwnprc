@@ -65,7 +65,7 @@ void main()
                 
                 if(nHP <= nHalf)
                 {
-                        nBonus = 16;
+                        nBonus = 14;
                 }
                 
                 PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(nBonus), GetWeaponDamageType(oWeap), "Finishing Move Hit", "Finishing Move Miss");

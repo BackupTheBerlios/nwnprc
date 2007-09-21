@@ -39,8 +39,7 @@ void main()
         object oInitiator    = OBJECT_SELF;
         object oTarget       = PRCGetSpellTargetObject();
         struct maneuver move = EvaluateManeuver(oInitiator, oTarget);
-        location lOrig;
-        
+                
         if(move.bCanManeuver)
         {
                 effect eLink =EffectVisualEffect(VFX_DUR_ROOTED_TO_SPOT);

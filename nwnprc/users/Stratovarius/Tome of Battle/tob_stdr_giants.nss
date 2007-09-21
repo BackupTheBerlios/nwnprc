@@ -46,6 +46,7 @@ void main()
         // End of Spell Cast Hook
         
         object oInitiator    = OBJECT_SELF;
+        object oTarget       = PRCGetSpellTargetObject();
         struct maneuver move = EvaluateManeuver(oInitiator, oTarget);
         
         if(move.bCanManeuver)

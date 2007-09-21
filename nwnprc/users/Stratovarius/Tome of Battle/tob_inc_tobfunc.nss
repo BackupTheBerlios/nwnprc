@@ -583,6 +583,12 @@ void _RecursiveStanceCheck(object oPC, object oTestWP, int nMoveId, float fFeet 
                 DestroyObject(oTestWP);        
         }
         
+        else if (nMoveId = MOVE_DANCING_BLADE_FORM)
+        {
+                DeleteLocalInt(oPC, "DWDancingBladeForm");
+                DestroyObject(oTestWP);
+        }
+        
     }
     // If they still have the spell, keep going
     if (GetHasSpellEffect(nMoveId, oPC))

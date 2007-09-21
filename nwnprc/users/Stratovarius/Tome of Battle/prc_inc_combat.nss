@@ -2158,6 +2158,8 @@ int GetMeleeAttackers15ft(object oPC = OBJECT_SELF)
         if (GetLocalInt(oPC, "DWBurningBrand")) fBurningBrand = FeetToMeters(5.0);
         
         if(GetLocalInt(oPC, "DWGiantsStance")) fGiantsStance = FeetToMeters(5.0);
+        
+        if(GetLocalInt(oAttacker, "DWDancingBladeForm")) return GetDistanceBetween(oAttacker,oDefender) <= (MELEE_RANGE_METERS + FeetToMeters(5.0));
 
         return GetDistanceBetween(oPC,oTarget) <= (MELEE_RANGE_METERS + fBurningBrand + fGiantsStance);
 }
@@ -2167,7 +2169,9 @@ int GetIsInMeleeRange(object oDefender, object oAttacker)
         float fBurningBrand = 0.0;
         if (GetLocalInt(oAttacker, "DWBurningBrand")) fBurningBrand = FeetToMeters(5.0);
         
-        if(GetLocalInt(oAttacket, "DWGiantsStance")) fGiantsStance = FeetToMeters(5.0);
+        if(GetLocalInt(oAttacker, "DWGiantsStance")) fGiantsStance = FeetToMeters(5.0);
+        
+        if(GetLocalInt(oAttacker, "DWDancingBladeForm")) return GetDistanceBetween(oAttacker,oDefender) <= (MELEE_RANGE_METERS + FeetToMeters(5.0));
 
         return GetDistanceBetween(oAttacker,oDefender) <= (MELEE_RANGE_METERS + fBurningBrand + fGiantsStance);
 }

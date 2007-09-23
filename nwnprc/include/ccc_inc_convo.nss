@@ -1394,12 +1394,12 @@ int HandleChoice(int nStage, int nChoice)
                 MarkStageNotSetUp(STAGE_SPELLS_1, OBJECT_SELF);
                 MarkStageNotSetUp(STAGE_SPELLS_0, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "Points");
-                array_delete(OBJECT_SELF, "spellLvl1");
+                array_delete(OBJECT_SELF, "SpellLvl1");
                 if(nStage == STAGE_SPELLS_0)
                 {
                     // if the new value of nStage takes us back to picking cantrips,
                     // then also delete the level 0 array
-                    array_delete(OBJECT_SELF, "spellLvl0");
+                    array_delete(OBJECT_SELF, "SpellLvl0");
                 }
             }
             break;

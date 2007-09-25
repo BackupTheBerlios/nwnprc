@@ -843,6 +843,8 @@ void main()
 
                     if(GetGold(oPC) >= nCostDiff && (nCurrentXP - nMinXP) >= nXPDiff)
                         AddChoice(ActionString("Confirm"), CHOICE_CONFIRM, oPC);
+                    SetLocalInt(oPC, PRC_CRAFT_COST, nCostDiff);
+                    SetLocalInt(oPC, PRC_CRAFT_XP, nXPDiff);
                     DestroyObject(oNewItem);
                     MarkStageSetUp(nStage);
                     break;

@@ -2164,12 +2164,12 @@ float PRCDoMetamagicDuration(float fDuration, int nMeta = -1)
         nMeta = PRCGetMetaMagicFeat();
     }
     int nFeat = GetLocalInt(OBJECT_SELF,"PRC_SPELL_METAMAGIC");
-    
+
     if (nMeta & METAMAGIC_EXTEND || nFeat & METAMAGIC_EXTEND)
     {
         fDuration *= 2;
     }
-    
+
     return fDuration;
 }
 
@@ -2608,6 +2608,8 @@ void PRCDecrementRemainingSpellUses(object oCreature, int nSpell)
 // should return 0 if called with a normal spell when a character should be using the newspellbook
 int PRCGetHasSpell(int nRealSpellID, object oCreature = OBJECT_SELF)
 {
+    if(!PRCGetIsRealSpellKnown(nRealSpellID, oCreature))
+        return 0;
     int nUses = GetHasSpell(nRealSpellID, oCreature);
 
     int nClass, nSpellbookID, nCount, nMeta, i, j;

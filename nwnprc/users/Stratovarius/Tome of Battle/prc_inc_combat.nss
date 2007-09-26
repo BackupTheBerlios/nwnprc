@@ -3652,6 +3652,12 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iOffha
         }
         
         int iDiceRoll = d20();
+        // All rolls = 11 for this guy
+        if (GetLocalInt(oAttacker, "DSPerfectOrder") && GetHasSpellEffect(MOVE_DS_PERFECT_ORDER, oAttacker)) 
+        	iDiceRoll = 11;
+        else 	// Cleanup on aisle 5
+        	DeleteLocalInt(oAttacker, "DSPerfectOrder");
+        
         string sDebugFeedback;
         int bDebug = GetPRCSwitch(PRC_COMBAT_DEBUG);
         
@@ -5254,8 +5260,34 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
                 if(iNumSides == 10) iDiceRoll = d10(iNumDice);
                 if(iNumSides == 12) iDiceRoll = d12(iNumDice);
                 if(iNumSides == 20) iDiceRoll = d20(iNumDice);
-
+                
+                // Normal rolling
                 iWeaponDamage += iDiceRoll;
+                
+                // Aura of Chaos rerolls and adds if the dice rolled is max.
+                if (GetLocalInt(oAttacker, "DSChaos") && GetHasSpellEffect(MOVE_DS_PERFECT_ORDER, oAttacker)) 
+                {
+                	// Maximum possible result
+		        while ((iNumSides * iNumDice) == iDiceRoll)
+		        {
+		        	// This should cover things properly
+		                if(iNumSides == 2)  iDiceRoll = d2(iNumDice);
+		                if(iNumSides == 3)  iDiceRoll = d3(iNumDice);
+		                if(iNumSides == 4)  iDiceRoll = d4(iNumDice);
+		                if(iNumSides == 6)  iDiceRoll = d6(iNumDice);
+		                if(iNumSides == 8)  iDiceRoll = d8(iNumDice);
+		                if(iNumSides == 10) iDiceRoll = d10(iNumDice);
+		                if(iNumSides == 12) iDiceRoll = d12(iNumDice);
+                		if(iNumSides == 20) iDiceRoll = d20(iNumDice);
+                		
+                		// Chaos bonuses
+                		iWeaponDamage += iDiceRoll;
+		        }
+		}
+		else 	// Cleanup on aisle 5
+        		DeleteLocalInt(oAttacker, "DSChaos");
+
+                
                 if (bDebug) sDebugMessage += IntToString(iNumDice) + "d" + IntToString(iNumSides) + " (" + IntToString(iDiceRoll) + ")";
 
                 int iOCRoll = 0;

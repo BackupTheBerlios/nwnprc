@@ -108,6 +108,7 @@ const int POWER_ANIMAL_AFFINITY                 = 14095;
 const int POWER_STRENGTH_OF_MY_ENEMY            = 14096;
 const int POWER_CHAMELEON                       = 14097;
 const int POWER_CLAIRVOYANT_SENSE               = 14098;
+const int POWER_CLOUD_MIND                      = 14099;
 
 // Level 3 Powers
 const int POWER_BODYADJUST                      = 14101;
@@ -232,6 +233,7 @@ const int POWER_DISPELLING_BUFFER               = 14244;
 const int POWER_FORM_OF_DOOM                    = 14245;
 const int POWER_NULL_PSIONICS_FIELD             = 14246;
 const int POWER_REMOTE_VIEW_TRAP                = 14247;
+const int POWER_CLOUD_MIND_MASS                 = 14248;
 
 // Level 7 Powers
 const int POWER_CRISISLIFE                      = 14271;

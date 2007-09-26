@@ -664,6 +664,17 @@ void Thrallherd(object oPC)
     }
 }
 
+void Shadowmind(object oPC)
+{
+    SetLocalInt(oPC, "PRC_PrereqShadowmind", 1);
+
+    // @todo Replace with some mechanism that is not dependent on power enumeration. Maybe a set of variables that tell how many powers of each discipline a character knows <- requires hooking to power gain / loss
+    if (GetHasPower(POWER_CONCEALAMORPHA, oPC))
+    {
+	SetLocalInt(oPC, "PRC_PrereqShadowmind", 0);
+    }
+}
+
 void RangerURangerMutex(object oPC)
 {// Ranger and Ultimate Ranger are mutually exclusive. One can only take levels in one of them
 
@@ -956,6 +967,7 @@ void main()
      RangerURangerMutex(oPC);
      DragonDis(oPC);
      Thrallherd(oPC);
+     Shadowmind(oPC);
      Heartwarder(oPC);
      SoulEater(oPC);
      Tempus(oPC);

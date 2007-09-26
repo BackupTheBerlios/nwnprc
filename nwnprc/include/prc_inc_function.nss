@@ -170,6 +170,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_SCOUT, oPC) > 0)               ExecuteScript("prc_scout", oPC);
     if(GetLevelByClass(CLASS_TYPE_WARMAGE, oPC) > 0)             ExecuteScript("prc_warmage", oPC);
     if(GetLevelByClass(CLASS_TYPE_KNIGHT, oPC) > 0)              ExecuteScript("prc_knight", oPC);
+    if(GetLevelByClass(CLASS_TYPE_SHADOWMIND, oPC) > 0)          ExecuteScript("prc_shadowmind", oPC);
 
     // Bonus Domain check
     // If there is a bonus domain, it will always be in the first slot, so just check that.

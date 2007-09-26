@@ -26002,6 +26002,87 @@ addition to dealing normal damage, a spellslayer arrow deals an extra 1d4 points
 
 Material Component: Masterwork or magical arrow or bolt.</entry>
   <entry id="52143" lang="en" sex="m">Discharge Crown</entry>
+  <entry id="52144" lang="en" sex="m">Cloud Mind</entry>
+  <entry id="52145" lang="en" sex="m">Telepathy [Mind-Affecting]
+Level: Psion/wilder 2
+Manifesting Time: 1 standard action
+Range: Close (25 ft. + 5 ft./2 levels)
+Target: One creature
+Duration: 1 min./level
+Saving Throw: Will negates
+Power Resistance: Yes
+Power Points: 3
+Metapsionics: Extend, Twin
+
+You make yourself completely undetectable to the subject by erasing all awareness of your presence from its mind. However, if you attack the creature it becomes fully aware of your presence.</entry>
+  <entry id="52146" lang="en" sex="m">Cloud Mind, Mass</entry>
+  <entry id="52147" lang="en" sex="m">Telepathy [Mind-Affecting]
+Level: Psion/wilder 6
+Manifesting Time: 1 standard action
+Range: Close (25 ft. + 5 ft./2 levels)
+Target: One creature/level
+Duration: 1 min./level
+Saving Throw: Will negates
+Power Resistance: Yes
+Power Points: 11
+Metapsionics: Extend, Twin
+
+You make yourself completely undetectable to the subjects by erasing all awareness of your presence from their minds.
+However, if you attack any creature they becomes fully aware of your presence.</entry>
+  <entry id="52148" lang="en" sex="m">Shadowmind</entry>
+  <entry id="52149" lang="en" sex="m">Shadowminds</entry>
+  <entry id="52150" lang="en" sex="m">shadowmind</entry>
+  <entry id="52151" lang="en" sex="m">(PRESTIGE CLASS)
+A spectre in the thoughts of the unwary, the shadowmind moves through the twisting pathways of the mind as easily as she slides through the dark alleyways of the city. A shadowmind blends psionic powers and uncanny stealth into an effective whole. Although they can be capable spies or thieves, shadowminds view themselves as much more. Shadowminds see their training and psychic powers as an extension of a deep self-examination process that requires the knowledge of the innermost goals and motivations of others.
+
+- Hit Die: d6
+- Proficiencies: A Shadowmind gains no additional proficiencies.
+- Skill Points: 4 + Int Modifier
+
+REQUIREMENTS:
+
+Skills: Hide 5 ranks, Move Silently 5 ranks, Open Lock 3 ranks.
+Manifesting: Must be able to manifest 2nd level powers.
+Base Attack Bonus: +3.
+Special: Must be able to manifest Concealing Amorpha
+
+ABILITIES:
+
+Level
+1: Distract - Gain knowledge of the power, manifest at a reduced cost
+2: Sneak Attack +1d6
+3: Cloud Mind - Gain knowledge of the power, manifest at a reduced cost
+4:  
+5: Sneak Attack +2d6
+6: 
+7: 
+8: Sneak Attack +3d6
+9: Cloud Mind, Mass - Gain knowledge of the power, manifest at a reduced cost
+10: Mind Stab - Cloud Mind on a sneak attack
+
+MANIFESTING
+
+Upon reaching levels 1, 3, 4, 6, 7, 9, 10 the Shadowmind gains a new manifester level, increasing his power points, total powers known, and maximum power level.</entry>
+  <entry id="52152" lang="en" sex="m">Distract</entry>
+  <entry id="52153" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Shadowmind level 1.
+Specifics: Add the Distract power to the Shadowmind's power list, if he did not know it already. Once per day, the Shadowmind can manifest Distract at a reduced power point cost. The cost is reduced by 1 point per Shadowmind level, to a minimum of 1. This does not allow you to exceed the cap of power points you may spend on a power.
+Use: Selected.</entry>
+  <entry id="52154" lang="en" sex="m">Cloud Mind</entry>
+  <entry id="52155" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Shadowmind level 3.
+Specifics: Add the Cloud Mind power to the Shadowmind's power list, if he did not know it already. Once per day, the Shadowmind can manifest Cloud Mind at a reduced power point cost. The cost is reduced by 1 point per Shadowmind level, to a minimum of 1. This does not allow you to exceed the cap of power points you may spend on a power.
+Use: Selected.</entry>
+  <entry id="52156" lang="en" sex="m">Cloud Mind, Mass</entry>
+  <entry id="52157" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Shadowmind level 9.
+Specifics: Add the Cloud Mind, Mass power to the Shadowmind's power list, if he did not know it already. Once per day, the Thrallherd can manifest Cloud Mind, Mass at a reduced power point cost. The cost is reduced by 1 point per Shadowmind level, to a minimum of 1. This does not allow you to exceed the cap of power points you may spend on a power.
+Use: Selected.</entry>
+  <entry id="52158" lang="en" sex="m">Mind Stab</entry>
+  <entry id="52159" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Shadowmind level 10.
+Specifics: Once per round as a free action, immediately after successfully dealing sneak attack damage to an opponent, a shadowmind can manifest cloud mind against that opponent.Manifesting cloud mind in this way uses a reduced power point expenditure as described under the cloud mind ability above.
+Use: Selected.</entry>
   <entry id="52164" lang="en" sex="m">Aerie</entry>
   <entry id="52165" lang="en" sex="m">Ajantis</entry>
   <entry id="52166" lang="en" sex="m">Annah</entry>

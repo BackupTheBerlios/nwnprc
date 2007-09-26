@@ -113,7 +113,11 @@ int GetRogueSneak(object oPC)
    
    // Skullclan Hunter
    iClassLevel = GetLevelByClass(CLASS_TYPE_SKULLCLAN_HUNTER, oPC);
-   if (iClassLevel) iRogueSneak += iClassLevel / 3;      
+   if (iClassLevel) iRogueSneak += iClassLevel / 3;     
+   
+   // Shadowmind
+   iClassLevel = GetLevelByClass(CLASS_TYPE_SHADOWMIND, oPC);
+   if (iClassLevel) iRogueSneak += (iClassLevel + 1) / 2;    
 
    if (GetBaseItemType(oWeapon) == BASE_ITEM_LONGBOW || GetBaseItemType(oWeapon) == BASE_ITEM_SHORTBOW)
    {

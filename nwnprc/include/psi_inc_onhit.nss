@@ -15,6 +15,9 @@
 // Swings at the target closest to the one hit
 void SweepingStrike(object oCaster, object oTarget);
 
+// Shadow Mind 10th level ability. Manifests Cloud Mind
+void MindStab(object oPC, object oTarget);
+
 // ---------------
 // BEGIN FUNCTIONS
 // ---------------
@@ -50,4 +53,16 @@ void SweepingStrike(object oCaster, object oTarget)
             //Select the next target within the spell shape.
             oAreaTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lTarget, TRUE, OBJECT_TYPE_CREATURE);
         }// end while - Target loop
+}
+
+void MindStab(object oPC, object oTarget)
+{
+	SetLocalInt(oPC, "ShadowCloudMind", TRUE);
+	SetLocalObject(oPC, "PsionicTarget", oTarget);
+	int nClass = GetFirstPsionicClass(oPC);
+	//UsePower(POWER_CLOUD_MIND, nClass);
+	// Trying this for now
+	ActionCastSpell(POWER_CLOUD_MIND);
+	DelayCommand(1.0, DeleteLocalInt(oPC, "ShadowCloudMind"));
+	DelayCommand(1.0, DeleteLocalObject(oPC, "PsionicTarget"));
 }

@@ -245,6 +245,19 @@ void main()
     {
         SweepingStrike(oSpellOrigin, oSpellTarget);
     }
+    
+    // Mind Stab OnHit
+    if(iItemBaseType != BASE_ITEM_ARMOR && GetLocalInt(oItem, "ShadowMindStab") && !GetLocalInt(oSpellOrigin, "MindStabDelay"))
+    {
+    	// Only works when able to sneak attack a target
+    	if (GetCanSneakAttack(oSpellTarget, oSpellOrigin))
+    	{
+        	MindStab(oSpellOrigin, oSpellTarget);
+        	// Only once per round
+        	SetLocalInt(oSpellOrigin, "MindStabDelay", TRUE);
+        	DelayCommand(6.0, DeleteLocalInt(oSpellOrigin, "MindStabDelay"));
+        }
+    }    
 
     // Astral Construct's Poison Touch special ability
     if(GetLocalInt(oSpellOrigin, ASTRAL_CONSTRUCT_POISON_TOUCH))
@@ -330,6 +343,21 @@ void main()
         	ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nWolfDam), oSpellTarget);
         }
     }     
+    
+    // Aura of Triumph
+    if(GetHasSpellEffect(MOVE_DS_AURA_TRIUMPH, oSpellOrigin) && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
+    {
+    	// Heal both
+        object oHealTarget = GetLocalObject(oSpellOrigin, "DSTriumph");
+        // Must be within 10 feet
+        if (10.0 >= FeetToMeters(GetDistanceBetween(oSpellOrigin, oSpellOrigin)))
+        {
+        	SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(4), oHealTarget);
+		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_HEALING_L_LAW), oHealTarget);
+	}
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(4), oSpellOrigin);
+	SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_HEALING_L_LAW), oSpellOrigin);	
+    }    
 */
     /*//////////////////////////////////////////////////
     //////////////// Blade Magic ///////////////////////

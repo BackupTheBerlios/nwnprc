@@ -192,6 +192,7 @@ void DebugIgnoreConstraints(object oManifester);
 /** Internal function.
  * Calculates PP cost reduction from various factors. Currently accounts for:
  * - Thrallherd
+ * - Shadowmind
  *
  * @param manif The manifestation data relating to this particular manifesation
  * @retrun      The manifestation data, possibly with modified costs
@@ -200,6 +201,7 @@ struct manifestation _GetPPCostReduced(struct manifestation manif)
 {
     int nSpell   = PRCGetSpellId();
     int nThrall  = GetLevelByClass(CLASS_TYPE_THRALLHERD, manif.oManifester);
+    int nShadow  = GetLevelByClass(CLASS_TYPE_SHADOWMIND, manif.oManifester);
 
     if(nThrall > 0)
     {
@@ -213,6 +215,21 @@ struct manifestation _GetPPCostReduced(struct manifestation manif)
             DeleteLocalInt(manif.oManifester, "ThrallDom");
             manif.nPPCost -= nThrall;
         }
+        if(GetLocalInt(manif.oManifester, "ShadowDistract") && nSpell == POWER_DISTRACT)
+        {
+            DeleteLocalInt(manif.oManifester, "ShadowDistract");
+            manif.nPPCost -= nShadow;
+        }
+        if(GetLocalInt(manif.oManifester, "ShadowCloudMind") && nSpell == POWER_CLOUD_MIND)
+        {
+            DeleteLocalInt(manif.oManifester, "ShadowCloudMind");
+            manif.nPPCost -= nShadow;
+        } 
+        if(GetLocalInt(manif.oManifester, "ShadowCloudMindMass") && nSpell == POWER_CLOUD_MIND_MASS)
+        {
+            DeleteLocalInt(manif.oManifester, "ShadowCloudMindMass");
+            manif.nPPCost -= nShadow;
+        }        
 
         // Reduced cost for augmenting the Dominate power. These do not count for the DC increase
         if(nThrall >= 7 && nSpell == POWER_DOMINATE && manif.nTimesAugOptUsed_1 > 0)

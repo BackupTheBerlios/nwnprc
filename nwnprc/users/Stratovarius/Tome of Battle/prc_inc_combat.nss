@@ -2172,6 +2172,8 @@ int GetIsInMeleeRange(object oDefender, object oAttacker)
         if(GetLocalInt(oAttacker, "DWGiantsStance")) fGiantsStance = FeetToMeters(5.0);
         
         if(GetLocalInt(oAttacker, "DWDancingBladeForm")) return GetDistanceBetween(oAttacker,oDefender) <= (MELEE_RANGE_METERS + FeetToMeters(5.0));
+        
+        if(GetLocalInt(oAttacker, "DWLightningThrow")) return TRUE;
 
         return GetDistanceBetween(oAttacker,oDefender) <= (MELEE_RANGE_METERS + fBurningBrand + fGiantsStance);
 }
@@ -7678,6 +7680,9 @@ void PerformAttack(object oDefender, object oAttacker,
 
                 // Determine physical damage per round (cached for multiple use)
                 sAttackVars.iMainWeaponDamageRound = GetWeaponDamagePerRound(oDefender, oAttacker, sAttackVars.oWeaponR, 0);
+                
+                //if ToB half damage save made
+                if (GetLocalInt(oDefender, "ToBCombatSave")) sAttackVars.iMainWeaponDamageRound /= 2;
 
                 // variables that store extra damage dealt
                 sMainWeaponDamage = GetWeaponBonusDamage(sAttackVars.oWeaponR, oDefender);
@@ -7725,6 +7730,9 @@ void PerformAttack(object oDefender, object oAttacker,
                 sAttackVars.iOffHandAttackBonus = GetAttackBonus(oDefender, oAttacker, sAttackVars.oWeaponL, 1);
                 sOffHandWeaponDamage = GetWeaponBonusDamage(sAttackVars.oWeaponL, oDefender);
                 sAttackVars.iOffHandWeaponDamageRound = GetWeaponDamagePerRound(oDefender, oAttacker, sAttackVars.oWeaponL, 1);
+                
+                //if ToB half damage save made
+                if (GetLocalInt(oDefender, "ToBCombatSave")) sAttackVars.iOffHandWeaponDamageRound /= 2;
 
                 // we are using a weapon: get weapon information
                 if (GetIsCreatureWeaponType(iOffhandWeaponType))

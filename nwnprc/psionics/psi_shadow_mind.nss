@@ -1,3 +1,5 @@
+#include "x2_inc_itemprop"
+
 void main()
 {
     object oCaster = OBJECT_SELF;

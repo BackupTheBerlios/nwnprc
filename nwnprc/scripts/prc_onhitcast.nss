@@ -357,6 +357,16 @@ void main()
 	}
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(4), oSpellOrigin);
 	SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_HEALING_L_LAW), oSpellOrigin);	
+    } 
+    
+    // Immortal Fortitude
+    if(GetHasSpellEffect(MOVE_DS_IMMORTAL_FORTITUDE, oSpellOrigin) && GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
+    {
+    	// He's immortal, so now we run a script to see if he should/would have died (Saving, etc)
+	if(GetCurrentHitPoints(oSpellOrigin) == 1)
+        {
+            DelayCommand(0.01, ExecuteScript("tob_dvsp_imfrtoh", oSpellOrigin));
+        }
     }    
 */
     /*//////////////////////////////////////////////////

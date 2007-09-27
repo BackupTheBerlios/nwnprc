@@ -47,6 +47,6 @@ void main()
         if(move.bCanManeuver)
         {
                 InitiatorMovementCheck(oInitiator, move.nMoveId, 5.0);
-                SetLocalInt(oInitiator, "DWDancingBladeForm", 1);
+                SetLocalInt(oInitiator, "IHDancingBladeForm", 1);
         }
 }

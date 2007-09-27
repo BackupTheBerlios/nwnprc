@@ -51,7 +51,7 @@ void main()
         
         if(move.bCanManeuver)
         {
-                SetLocalInt(oInitiator, "DWGiantsStance", 1);
+                SetLocalInt(oInitiator, "SDGiantsStance", 1);
                 SPApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectAttackDecrease(1), oInitiator);
                 // Set local int for PRCGetCreatureSize()
                 SetLocalInt(oTarget, "PRC_Power_Expansion_SizeIncrease", 1);

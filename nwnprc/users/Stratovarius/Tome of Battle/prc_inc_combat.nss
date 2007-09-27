@@ -2157,9 +2157,9 @@ int GetMeleeAttackers15ft(object oPC = OBJECT_SELF)
         float fBurningBrand = 0.0;
         if (GetLocalInt(oPC, "DWBurningBrand")) fBurningBrand = FeetToMeters(5.0);
         
-        if(GetLocalInt(oPC, "DWGiantsStance")) fGiantsStance = FeetToMeters(5.0);
+        if(GetLocalInt(oPC, "SDGiantsStance")) fGiantsStance = FeetToMeters(5.0);
         
-        if(GetLocalInt(oAttacker, "DWDancingBladeForm")) return GetDistanceBetween(oAttacker,oDefender) <= (MELEE_RANGE_METERS + FeetToMeters(5.0));
+        if(GetLocalInt(oAttacker, "IHDancingBladeForm")) return GetDistanceBetween(oAttacker,oDefender) <= (MELEE_RANGE_METERS + FeetToMeters(5.0));
 
         return GetDistanceBetween(oPC,oTarget) <= (MELEE_RANGE_METERS + fBurningBrand + fGiantsStance);
 }
@@ -2169,11 +2169,11 @@ int GetIsInMeleeRange(object oDefender, object oAttacker)
         float fBurningBrand = 0.0;
         if (GetLocalInt(oAttacker, "DWBurningBrand")) fBurningBrand = FeetToMeters(5.0);
         
-        if(GetLocalInt(oAttacker, "DWGiantsStance")) fGiantsStance = FeetToMeters(5.0);
+        if(GetLocalInt(oAttacker, "SDGiantsStance")) fGiantsStance = FeetToMeters(5.0);
         
-        if(GetLocalInt(oAttacker, "DWDancingBladeForm")) return GetDistanceBetween(oAttacker,oDefender) <= (MELEE_RANGE_METERS + FeetToMeters(5.0));
+        if(GetLocalInt(oAttacker, "IHDancingBladeForm")) return GetDistanceBetween(oAttacker,oDefender) <= (MELEE_RANGE_METERS + FeetToMeters(5.0));
         
-        if(GetLocalInt(oAttacker, "DWLightningThrow")) return TRUE;
+        if(GetLocalInt(oAttacker, "IHLightningThrow")) return TRUE;
 
         return GetDistanceBetween(oAttacker,oDefender) <= (MELEE_RANGE_METERS + fBurningBrand + fGiantsStance);
 }

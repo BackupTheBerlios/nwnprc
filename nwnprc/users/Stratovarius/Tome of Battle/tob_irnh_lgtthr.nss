@@ -55,7 +55,7 @@ void main()
         if(move.bCanManeuver)
         {
                 int nDC = d20(1) + GetAttackBonus(oTarget, oInitiator, oWeap);
-                SetLocalInt(oInitiator, "DWLightningThrow", 1);
+                SetLocalInt(oInitiator, "IHLightningThrow", 1);
                 
                 while(GetIsObjectValid(oTarget))
                 {
@@ -73,6 +73,6 @@ void main()
                         }
                         oTarget = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), lLoc, FALSE, OBJECT_TYPE_CREATURE);
                 }
-                DelayCommand(1.0f, DeleteLocalInt(oInitiator, "DWLightningThrow"));
+                DelayCommand(1.0f, DeleteLocalInt(oInitiator, "IHLightningThrow"));
         }
 }

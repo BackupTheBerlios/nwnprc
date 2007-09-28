@@ -367,6 +367,25 @@ void main()
         {
             DelayCommand(0.01, ExecuteScript("tob_dvsp_imfrtoh", oSpellOrigin));
         }
+    }   
+    // Immortal Fortitude
+    if(GetHasSpellEffect(MOVE_WR_CLARION_CALL, oSpellOrigin) && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
+    {
+    	// Check to see if the target is dead, triggers each time
+	if(GetIsDead(oSpellTarget))
+        {
+            location lTarget = GetLocation(oSpellOrigin);
+            object oAreaTarget = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(60.0), lTarget, TRUE, OBJECT_TYPE_CREATURE);
+            while(GetIsObjectValid(oAreaTarget))
+            {
+                if(GetIsFriend(oAreaTarget, oSpellOrigin))
+                {
+                	// Apply extra attack for one round	
+                	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(EffectModifyAttacks(1)), oAreaTarget, 6.0);
+                }
+                oAreaTarget = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(60.0), lTarget, TRUE, OBJECT_TYPE_CREATURE);
+            }
+        }
     }    
 */
     /*//////////////////////////////////////////////////

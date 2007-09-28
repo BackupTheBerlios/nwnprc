@@ -1,25 +1,27 @@
 /*
    ----------------
-   Battle Leader's Charge
+   War Leader's Charge
 
-   tob_wtrn_btlldrc.nss
+   tob_wtrn_warldrc.nss
    ----------------
 
    08/06/07 by Stratovarius
 */ /** @file
 
-    Battle Leader's Charge
+    War Leader's Charge
 
     White Raven (Strike)
-    Level: Crusader 2, Warblade 2
+    Level: Crusader 6, Warblade 6
+    Prerequisite: Two White Raven maneuvers
     Initiation Action: 1 Full-round Action
     Range: Melee Attack
     Target: One Creature
 
-    You lead from the front, charging your enemies so that your allies
-    can follow in your wake.
+    You summon a great fury within your lungs, releasing it in a titantic shout
+    as you charge forward. Your reckless move startles your foes and puts greater
+    force behind your attack.
     
-    You charge your opponent, dealing an extra 10 damage if you hit. You take no
+    You charge your opponent, dealing an extra 35 damage if you hit. You take no
     AoOs from the movement.
 */
 
@@ -43,6 +45,6 @@ void main()
 
     if(move.bCanManeuver)
     {
-	DoCharge(oInitiator, oTarget, TRUE, FALSE, 10);
+	DoCharge(oInitiator, oTarget, TRUE, FALSE, 35);
     }
 }

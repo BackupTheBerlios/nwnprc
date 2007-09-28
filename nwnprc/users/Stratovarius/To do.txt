@@ -20,23 +20,15 @@ Fiendbinder - Unstarted
 
 Utterances: Incarnation of Angels skipped, needs Primo to work on templates.
 
-Spells: Update Gate to use the new code
-            
-Base Classes:
-Duskblade - Spellbook: Spells to add: Shocking Grasp, Scorching Ray, Ray of Exhaustion, Waves of Fatigue
-Healer - Newspellbook scripts, Update Companion SpellIds
-
 -----------------------------------------------------
 Secondary
 -----------------------------------------------------
 
 Base Classes:
-Warmage - All to do, Spells
 Dread Necromancer - All to do, Spells
 Beguiler - All to do, Spells
 
 Psionic PrCs:
-Shadowmind - All to do, (Mass) Cloud Mind powers
 Metamind - All to do
 Psion Uncarnate - All to do
 Pyrokineticist - All to do

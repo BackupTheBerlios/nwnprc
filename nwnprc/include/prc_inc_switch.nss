@@ -4492,7 +4492,7 @@ void SetDefaultFileEnds()
     SetPRCSwitch("PRC_FILE_END_polymorph", 155);
     SetPRCSwitch("PRC_FILE_END_portraits", 1068);
     SetPRCSwitch("PRC_FILE_END_prc_craft_gen_it", 201);
-    SetPRCSwitch("PRC_FILE_END_prc_rune_craft", 4);
+    SetPRCSwitch("PRC_FILE_END_prc_rune_craft", 10);
     SetPRCSwitch("PRC_FILE_END_precacherows", 9464);
     SetPRCSwitch("PRC_FILE_END_race_feat_aas", 8);
     SetPRCSwitch("PRC_FILE_END_race_feat_agen", 4);

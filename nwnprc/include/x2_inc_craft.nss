@@ -101,6 +101,9 @@ const int PRC_RUNE_CHARGES         = 1;
 const int PRC_RUNE_PERDAY          = 2;
 const int PRC_RUNE_MAXCHARGES      = 3;
 const int PRC_RUNE_MAXUSESPERDAY   = 4;
+// Attune Gem constants 
+const int PRC_GEM_BASECOST         = 5;
+const int PRC_GEM_PERLEVEL         = 6;
 
 // *  Returns TRUE if an item is a Craft Base Item
 // *  to be used in spellscript that can be cast on items - i.e light
@@ -134,6 +137,12 @@ int   CIGetSpellWasUsedForItemCreation(object oSpellTarget);
 // This will also cause the spell to fail if turned on.
 int InscribeRune();
 
+// This function checks whether Attune Gem is turned on
+// and if so, deducts the appropriate experience and gold
+// then creates the gem in the caster's inventory.
+// This will also cause the spell to fail if turned on.
+int AttuneGem();
+
 
 //////////////////////////////////////////////////
 /* Include section                              */
@@ -141,7 +150,6 @@ int InscribeRune();
 
 #include "x2_inc_itemprop"
 #include "x2_inc_switches"
-//#include "inc_utility"
 #include "prc_inc_newip"
 #include "prc_inc_spells"
 
@@ -1213,6 +1221,170 @@ int InscribeRune()
     }
 
     // If we have made it this far, they have crafted the rune and the spell has been used up, so it returns false.
+    return FALSE;
+}
+
+int AttuneGem()
+{
+    object oCaster = OBJECT_SELF;
+    // Get the item used to cast the spell
+    object oItem = GetSpellCastItem();
+    if (GetTag(oItem) == "prc_attunegem")
+    {
+        string sName = GetName(GetItemPossessor(oItem));
+        if (DEBUG) FloatingTextStringOnCreature(sName + " has just cast a gem spell", oCaster, FALSE);
+
+        DoDebug("Checking for One Use Gems");
+        // This check is used to clear up the one use Gems
+        itemproperty ip = GetFirstItemProperty(oItem);
+    	while(GetIsItemPropertyValid(ip))
+    	{
+            if(GetItemPropertyType(ip) == ITEM_PROPERTY_CAST_SPELL)
+            {
+                DoDebug("Gem can cast spells");
+                if (GetItemPropertyCostTableValue(ip) == 5) // Only one use Gems have 2 charges per use
+                {
+                    DoDebug("Gem has 2 charges a use, marking it a one use Gem");
+                    // Give it enough time for the spell to finish casting
+                    DestroyObject(oItem, 1.0);
+                    DoDebug("Gem destroyed.");
+                }
+            }
+
+    	ip = GetNextItemProperty(oItem);
+        }
+    }
+
+    // If Inscribing is turned off, the spell functions as normal
+    if(!GetLocalInt(oCaster, "AttuneGem")) return TRUE;
+
+    // No point being in here if you don't have Gems.
+    if (!GetHasFeat(FEAT_ATTUNE_GEM, oCaster)) return TRUE;
+
+        // No point scribing Gems from items, and its not allowed.
+        if (oItem != OBJECT_INVALID)
+        {
+            FloatingTextStringOnCreature("You cannot scribe a Gem from an item.", oCaster, FALSE);
+            return TRUE;
+        }
+    // oTarget here should be the gem. If it's not, fail.
+    object oTarget = PRCGetSpellTargetObject();
+    // Only accepts bioware gems
+    if (GetStringLeft(GetResRef(oTarget), 5) == "it_gem")
+    {
+        FloatingTextStringOnCreature("Spell target is not a valid gem.", oCaster, FALSE);
+        // And out we go
+        return TRUE;
+    }    
+    
+    int nCaster = PRCGetCasterLevel(oCaster);
+    int nDC = PRCGetSaveDC(oTarget, oCaster);
+    int nSpell = PRCGetSpellId();
+    int nSpellLevel;
+
+    if (PRCGetLastSpellCastClass() == CLASS_TYPE_CLERIC) nSpellLevel = StringToInt(lookup_spell_cleric_level(nSpell));
+    else if (PRCGetLastSpellCastClass() == CLASS_TYPE_DRUID) nSpellLevel = StringToInt(lookup_spell_druid_level(nSpell));
+    else if (PRCGetLastSpellCastClass() == CLASS_TYPE_WIZARD || PRCGetLastSpellCastClass() == CLASS_TYPE_SORCERER) nSpellLevel = StringToInt(lookup_spell_level(nSpell));
+    // If none of these work, check the innate level of the spell
+    if (nSpellLevel == 0) nSpellLevel = StringToInt(lookup_spell_innate(nSpell));
+    // Minimum level.
+    if (nSpellLevel == 0) nSpellLevel = 1;
+
+    int nCharges = 1;
+
+    FloatingTextStringOnCreature("Spell Level: " + IntToString(nSpellLevel), OBJECT_SELF, FALSE);
+    FloatingTextStringOnCreature("Caster Level: " + IntToString(nCaster), OBJECT_SELF, FALSE);
+    FloatingTextStringOnCreature("Number of Charges: " + IntToString(nCharges), OBJECT_SELF, FALSE);
+
+    // Gold cost multipler, varies depending on the ability used to craft
+    int nMultiplier = StringToInt(Get2DACache("prc_rune_craft", "Cost", PRC_GEM_BASECOST));
+
+    // Cost of the Gem in gold and XP
+    int nGoldCost = nSpellLevel * nCaster * nMultiplier;
+    int nXPCost = nGoldCost/25;
+
+    FloatingTextStringOnCreature("XP Cost: " + IntToString(nXPCost), OBJECT_SELF, FALSE);
+    
+    // Gold cost for crafting is one half the base price. See Magic of Faerun p22
+    nGoldCost /= 2;
+    FloatingTextStringOnCreature("Gold Cost: " + IntToString(nGoldCost), OBJECT_SELF, FALSE);
+
+    // See if the caster has enough gold and XP to scribe a Gem, and that he passes the skill check.
+    int nHD = GetHitDice(oCaster);
+    int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
+    int nNewXP = GetXP(oCaster) - nXPCost;
+    int nGold = GetGold(oCaster);
+    int nNewGold = nGold - nGoldCost;
+    int nCheck = FALSE;
+
+    if (!GetHasGPToSpend(oCaster, nGoldCost))
+    {
+        FloatingTextStringOnCreature("You do not have enough gold to scribe this Gem.", oCaster, FALSE);
+        // Since they don't have enough, the spell casts normally
+        return TRUE;
+    }
+    if (!GetHasXPToSpend(oCaster, nXPCost) )
+    {
+        FloatingTextStringOnCreature("You do not have enough experience to scribe this Gem.", oCaster, FALSE);
+        // Since they don't have enough, the spell casts normally
+        return TRUE;
+    }
+    
+    // Is the gem worth enough?
+    int nGemGold = GetGoldPieceValue(oTarget);
+    int nGemLevel = nGemGold / StringToInt(Get2DACache("prc_rune_craft", "Cost", PRC_GEM_PERLEVEL));
+    if (nGemLevel > 9) nGemLevel = 9;       
+    if (nSpellLevel > nGemLevel)
+    {
+        FloatingTextStringOnCreature("Gem is not high enough level for this spell", oCaster, FALSE);
+        // The spell casts normally
+        return TRUE;
+    }    
+
+    // Steal all the code from craft wand.
+    int nPropID = IPGetIPConstCastSpellFromSpellID(nSpell);
+
+    // * GZ 2003-09-11: If the current spell cast is not acid fog, and
+    // *                returned property ID is 0, bail out to prevent
+    // *                creation of acid fog items.
+    if (nPropID == 0 && nSpell != 0)
+    {
+        FloatingTextStrRefOnCreature(84544,oCaster);
+        return TRUE;
+    }
+
+    if (nPropID != -1)
+    {
+        itemproperty ipLevel = ItemPropertyCastSpellCasterLevel(nSpell, PRCGetCasterLevel());
+        AddItemProperty(DURATION_TYPE_PERMANENT,ipLevel,oTarget);
+        itemproperty ipMeta = ItemPropertyCastSpellMetamagic(nSpell, PRCGetMetaMagicFeat());
+        AddItemProperty(DURATION_TYPE_PERMANENT,ipMeta,oTarget);
+        itemproperty ipDC = ItemPropertyCastSpellDC(nSpell, PRCGetSaveDC(PRCGetSpellTargetObject(), OBJECT_SELF));
+        AddItemProperty(DURATION_TYPE_PERMANENT,ipDC,oTarget);
+
+        if (nCharges == 1) // This is to handle one use Gems so the spellhooking works
+        {
+            itemproperty ipProp = ItemPropertyCastSpell(nPropID,IP_CONST_CASTSPELL_NUMUSES_2_CHARGES_PER_USE);
+            AddItemProperty(DURATION_TYPE_PERMANENT,ipProp,oTarget);
+            // This is done so the item exists when it is used for the game to read data off of
+            nCharges = 3;
+        }
+
+        SetItemCharges(oTarget, nCharges);
+        SetXP(oCaster, nNewXP);
+        TakeGoldFromCreature(nGoldCost, oCaster, TRUE);
+
+        string sName;
+        sName = Get2DACache("spells", "Name", nSpell);
+        sName = "Gem of "+GetStringByStrRef(StringToInt(sName));
+        SetName(oTarget, sName);
+        
+        // This is done to allow the item to be set properly, and then alter the tag
+        CopyObject(oTarget, GetLocation(oCaster), oCaster, "prc_attunegem");
+        DestroyObject(oTarget, 0.1);
+    }
+
+    // If we have made it this far, they have crafted the Gem and the spell has been used up, so it returns false.
     return FALSE;
 }
 

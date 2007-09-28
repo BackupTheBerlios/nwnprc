@@ -935,9 +935,15 @@ int CasterFeats(object oPC = OBJECT_SELF)
     if(DEBUG) DoDebug("GetCasterLevel: " + IntToString(nCaster));
     if (nCaster < 3 && GetHasFeat(FEAT_INSCRIBE_RUNE, oPC))
     {
-            FloatingTextStringOnCreature("Inscribe Rune requires Level 2 Divine Spells", oPC, FALSE);
+            FloatingTextStringOnCreature("Inscribe Rune requires level 2 Divine Spells", oPC, FALSE);
             return FALSE;
     }
+    nCaster = GetCasterLvl(TYPE_ARCANE, oPC);
+    if (nCaster < 3 && GetHasFeat(FEAT_ATTUNE_GEM, oPC))
+    {
+            FloatingTextStringOnCreature("Attune Gem requires level 2 Arcane Spells", oPC, FALSE);
+            return FALSE;
+    }    
 
     return TRUE;
 }

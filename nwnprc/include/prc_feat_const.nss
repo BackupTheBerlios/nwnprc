@@ -275,6 +275,7 @@ const int FEAT_REQUIEM                                 = 2455;
 
 // Magic of Faerun
 const int FEAT_SPELL_GIRDING                           = 2456;
+const int FEAT_ATTUNE_GEM                              = 2472;
 
 // Complete Adventurer
 const int FEAT_FORCE_PERSONALITY                       = 2457;

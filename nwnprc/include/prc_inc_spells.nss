@@ -1706,21 +1706,12 @@ location PRCGetSpellTargetLocation(object oCaster = OBJECT_SELF)
     }
 
 
-    // The rune always targets the one who activates it.
-/*
-    // motu99: How do we know, whether we are really casting from a rune: Bioware's inadequate implementation
-    // of GetSpellCastItem will always return the last item from which a spell was cast, regardless how long ago that was
-    // So we might be doing a completely different (non-item) spell at the moment. For instance, it could be that some time
-    // ago we activated a multiple-use rune. GetSpellCastItem will return that rune (as long as we didn't do any other
-    // item casting inbetween) and the rune will still be a valid object (because it had multiple uses). But the spell we are
-    // casting now has nothing to do with the rune. Because of Bioware's inadequate implementation there is no way for us
-    // to know, whether we are doing a normal spell or wheter we are casting from a rune (or another item) at the moment.
-    // Disabled the following code until we find a solution
+    // The rune/gem always targets the one who activates it.
     object oItem     = PRCGetSpellCastItem(oCaster);
     if( GetIsObjectValid(oItem)
-        && GetResRef(oItem) == "prc_rune_1")
+        && (GetResRef(oItem) == "prc_rune_1" ||
+            GetTag(oItem) == "prc_attunegem"))
         return GetLocation(GetItemPossessor(oItem));
-*/
 
     // if we made it here, we must use Bioware's function
     return GetSpellTargetLocation();
@@ -1808,18 +1799,10 @@ object PRCGetSpellTargetObject(object oCaster   = OBJECT_SELF)
         return oTarget;
     }
 
-    // The rune always targets the one who activates it.
-/*
-    // motu99: How do we know, whether we are really casting from a rune: Bioware's inadequate implementation
-    // of GetSpellCastItem will always return the last item from which a spell was cast, regardless how long ago that was
-    // So we might be doing a completely different (non-item) spell at the moment. For instance, it could be that some time
-    // ago we activated a multiple-use rune. GetSpellCastItem will return that rune (as long as we didn't do any other
-    // item casting inbetween) and the rune will still be a valid object (because it had multiple uses). But the spell we are
-    // casting now has nothing to do with the rune. Because of Bioware's inadequate implementation there is no way for us
-    // to know, whether we are doing a normal spell or wheter we are casting from a rune (or another item) at the moment.
-    // Disabled the following code until we find a solution
+    // The rune/gem always targets the one who activates it.
     object oItem     = PRCGetSpellCastItem(oCaster);
-    if(GetIsObjectValid(oItem) && GetResRef(oItem) == "prc_rune_1")
+    if(GetIsObjectValid(oItem) && (GetResRef(oItem) == "prc_rune_1" ||
+            GetTag(oItem) == "prc_attunegem"))
     {
         if(DEBUG) DoDebug(GetName(oCaster) + " has cast a spell using a rune");
         // Making sure that the owner of the item is correct
@@ -1829,7 +1812,7 @@ object PRCGetSpellTargetObject(object oCaster   = OBJECT_SELF)
             return GetItemPossessor(oItem);
         }
     }
-*/
+
 
     // return Bioware's target
     return oBWTarget;

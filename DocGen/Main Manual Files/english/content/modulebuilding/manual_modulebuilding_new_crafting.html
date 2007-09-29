@@ -211,8 +211,18 @@ These are all &quot;int&quot; type switches<p>
 <td><b>FALSE</b></td>
 </tr>
 <tr>
+<td><b>PRC_DISABLE_CRAFT_EPIC</b></td>
+<td><b>Disables epic crafting</b></td>
+<td><b>FALSE</b></td>
+</tr>
+<tr>
 <td><b>PRC_AREA_DISABLE_CRAFTING</b></td>
 <td><b>Set in area, disables crafting in that area.</b></td>
+<td><b>FALSE</b></td>
+</tr>
+<tr>
+<td><b>PRC_AREA_DISABLE_CRAFTING_INVERT</b></td>
+<td><b>Inverts the behavior of previous switch. Will disable crafting on all areas BUT ones with the PRC_AREA_DISABLE_CRAFTING switch set.</b></td>
 <td><b>FALSE</b></td>
 </tr>
 <tr>
@@ -241,6 +251,11 @@ These are all &quot;int&quot; type switches<p>
 <td><b>100</b></td>
 </tr>
 <tr>
+<td><b>PRC_CRAFTING_MUNDANE_COST_SCALE</b></td>
+<td><b>Scales the gp cost for non-magical crafting by this value/100</b></td>
+<td><b>100</b></td>
+</tr>
+<tr>
 <td><b>PRC_CRAFTING_TIME_SCALE</b></td>
 <td><b>Sets crafting time per 1000gp in market price:
 <ol>
@@ -254,7 +269,13 @@ These are all &quot;int&quot; type switches<p>
 </tr>
 </table><p>
 To disable a specific item/special ability in PnP crafting, set a switch with this name:<p>
-<b>PRC_CRAFT_DISABLE_&lt;name of crafting 2da file&gt;_&lt;line number of property&gt;</b><p>
+<b>PRC_CRAFT_DISABLE_&lt;name of crafting 2da file&gt;_&lt;line number of property&gt;</b>
+where the 2da files are named craft_* (lower case) or itempropdef in the case of arbitrary crafting
+<p>
+eg. <b>PRC_CRAFT_DISABLE_itempropdef_15</b>
+<p>
+disables all castspell properties in arbitrary crafting mode
+<p>
 <a href="#top">Back to Top</a><p><hr><p>
 <a name="2da"><b>2DAs</b></a><p>
 When adding lines to 2das used, modify SetDefaultFileEnds() within prc_inc_switch.nss to allow the scripts to read the required number of lines. Code will be in the form:<p>
@@ -291,14 +312,20 @@ Used to store items/special abilities and their prerequisites<p>
 <td><b>Integer</b></td>
 </tr>
 <tr>
-<td><b>Race</b></td>
-<td><b>Race prerequisite, line in racialtypes.2da (evaluated using MyPRCGetRacialType())</b></td>
-<td><b>Integer</b></td>
-</tr>
-<tr>
-<td><b>Feat</b></td>
-<td><b>Feat prerequisite, line in feat.2da</b></td>
-<td><b>Integer</b></td>
+<td><b>PrereqMisc</b></td>
+<td><b>Underscore delimited string with 5 values:<p>
+Format:<br>
+&lt;Race&gt;_&lt;Feat&gt;_&lt;AlignGE&gt;_&lt;AlignLC&gt;_&lt;Class&gt;<p>
+Use a single asterisk (*) for blank, or four asterisks (****) for all blank<p>
+<ul>
+<li>Race - Race prerequisite, line in racialtypes.2da (evaluated using MyPRCGetRacialType())</li>
+<li>Feat - Feat prerequisite, line in feat.2da</li>
+<li>AlignGE - Alignment prerequisite, &quot;G&quot; for good, &quot;E&quot; for evil, &quot;N&quot; for neutral, blank for any</li>
+<li>AlignLC - Alignment prerequisite, &quot;L&quot; for lawful, &quot;C&quot; for chaotic, &quot;N&quot; for neutral, blank for any</li>
+<li>Class - Class prerequisite, line in classes.2da</li>
+</ul>
+</b></td>
+<td><b>String (Underscore delimited, contains Integers)</b></td>
 </tr>
 <tr>
 <td><b>Skill</b></td>
@@ -311,44 +338,20 @@ Used to store items/special abilities and their prerequisites<p>
 <td><b>Integer</b></td>
 </tr>
 <tr>
-<td><b>SpellPattern</b></td>
-<td><b>Bitfield, tells the scripts which of the following columns to check</b></td>
-<td><b>Integer</b></td>
-</tr>
-<tr>
-<td><b>Spell1</b></td>
-<td><b>Spell prerequisite, line in spells.2da</b></td>
-<td><b>Integer</b></td>
-</tr>
-<tr>
-<td><b>Spell2</b></td>
-<td><b>Spell prerequisite, line in spells.2da</b></td>
-<td><b>Integer</b></td>
-</tr>
-<tr>
-<td><b>Spell3</b></td>
-<td><b>Spell prerequisite, line in spells.2da</b></td>
-<td><b>Integer</b></td>
-</tr>
-<tr>
-<td><b>SpellOR1</b></td>
-<td><b>Spell prerequisite, crafter must have one of SpellOR1 or SpellOR2, line in spells.2da</b></td>
-<td><b>Integer</b></td>
-</tr>
-<tr>
-<td><b>SpellOR2</b></td>
-<td><b>Spell prerequisite, crafter must have one of SpellOR1 or SpellOR2, line in spells.2da</b></td>
-<td><b>Integer</b></td>
-</tr>
-<tr>
-<td><b>AlignGE</b></td>
-<td><b>Alignment prerequisite, &quot;G&quot; for good, &quot;E&quot; for evil, &quot;N&quot; for neutral, blank for any</b></td>
-<td><b>Character</b></td>
-</tr>
-<tr>
-<td><b>AlignLC</b></td>
-<td><b>Alignment prerequisite, &quot;L&quot; for lawful, &quot;C&quot; for chaotic, &quot;N&quot; for neutral, blank for any</b></td>
-<td><b>Character</b></td>
+<td><b>Spells</b></td>
+<td><b>Underscore delimited string with 5 values:<p>
+Format:<br>
+&lt;Spell1&gt;_&lt;Spell2&gt;_&lt;Spell3&gt;_&lt;SpellOR1&gt;_&lt;SpellOR2&gt;<p>
+Use a single asterisk (*) for blank, or four asterisks (****) for all blank<p>
+<ul>
+<li>Spell1 - Spell prerequisite, line in spells.2da</li>
+<li>Spell2 - Spell prerequisite, line in spells.2da</li>
+<li>Spell3 - Spell prerequisite, line in spells.2da</li>
+<li>SpellOR1 - Spell prerequisite, crafter must have one of SpellOR1 or SpellOR2, line in spells.2da</li>
+<li>SpellOR2 - Spell prerequisite, crafter must have one of SpellOR1 or SpellOR2, line in spells.2da. If SpellOR2 is blank crafter must have SpellOR1</li>
+</ul>
+</b></td>
+<td><b>String (Underscore delimited, contains Integers)</b></td>
 </tr>
 <tr>
 <td><b>Enhancement</b></td>
@@ -371,24 +374,19 @@ Used to store items/special abilities and their prerequisites<p>
 <td><b>Integer</b></td>
 </tr>
 <tr>
-<td><b>TypeN</b></td>
-<td><b>Type of the Nth itemproperty to add (up to 6)</b></td>
-<td><b>Integer</b></td>
-</tr>
-<tr>
-<td><b>SubTypeN</b></td>
-<td><b>SubType of the Nth itemproperty to add (up to 6)</b></td>
-<td><b>Integer</b></td>
-</tr>
-<tr>
-<td><b>CostTableValueN</b></td>
-<td><b>CostTableValue of the Nth itemproperty to add (up to 6)</b></td>
-<td><b>Integer</b></td>
-</tr>
-<tr>
-<td><b>Param1ValueN</b></td>
-<td><b>Param1Value of the Nth itemproperty to add (up to 6)</b></td>
-<td><b>Integer</b></td>
+<td><b>IPN</b></td>
+<td><b>Underscore delimited string with 4 values, Nth itemproperty to add (up to 6):<p>
+Format:<br>
+&lt;Type&gt;_&lt;SubType&gt;_&lt;CostTableValue&gt;_&lt;Param1Value&gt;<p>
+Use a single asterisk (*) for blank, or four asterisks (****) for all blank<p>
+<ul>
+<li>Type - Type of the Nth itemproperty to add</li>
+<li>SubType - SubType of the Nth itemproperty to add</li>
+<li>CostTableValue - CostTableValue of the Nth itemproperty to add</li>
+<li>Param1Value - Param1Value of the Nth itemproperty to add</li>
+</ul>
+</b></td>
+<td><b>String (Underscore delimited, contains Integers)</b></td>
 </tr>
 <tr>
 <td><b>Epic</b></td>
@@ -448,7 +446,7 @@ Weapon/armour/shield crafting, disallows special abilities that are similar to e
 <b>PrereqSpecialHandling()</b><p>
 Extra rules for handling prerequisites.<p>
 <b>CheckCraftingSpells()</b><p>
-Section near the beginning of this function handles spell prerequisites.<p>
+Section handles unusual spell prerequisites.<p>
 <b>GetItemVars()</b><p>
 A portion of this function disables some special abilities for ranged weapons, listed here.<p>
 <blockquote>

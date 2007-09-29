@@ -2646,6 +2646,8 @@ int PRCGetHasSpell(int nRealSpellID, object oCreature = OBJECT_SELF)
 // only works for classes that use the PRC spellbook, there is currently no way to do this for Bioware spellcasters
 int PRCGetIsRealSpellKnown(int nRealSpellID, object oPC = OBJECT_SELF)
 {
+    if(GetHasSpell(nRealSpellID, oPC))  //FUGLY HACK: bioware class having uses of the spell
+        return TRUE;                    //  means they know the spell (close enough)
     int nClass;
     int nClassSlot = 1;
     while(nClassSlot <= 3)

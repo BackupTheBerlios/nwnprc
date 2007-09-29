@@ -768,7 +768,14 @@ void main()
                     AllowExit(DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, FALSE, oPC);
                     struct itemvars strTemp;
                     strTemp.item = oNewItem;
-                    nTemp = GetPnPItemCost(strTemp) / 3;
+                    nTemp = GetPnPItemCost(strTemp);
+                    int nScale = GetPRCSwitch(PRC_CRAFTING_MUNDANE_COST_SCALE);
+                    if(nScale > 0)
+                    {
+                        nTemp = FloatToInt(IntToFloat(nTemp) * IntToFloat(nScale) / 100.0);
+                    }
+                    nTemp /= 3;
+
                     if(nTemp < 1) nTemp = 1;
                     SetLocalInt(oPC, PRC_CRAFT_COST, nTemp);
                     SetHeader("You have chosen to craft:\n\n" + ItemStats(oNewItem) + "\nPrice: " + IntToString(nTemp) + "gp");
@@ -1197,7 +1204,7 @@ void main()
                     int nSkill = GetCraftingSkill(oNewItem);
                     int bCheck = FALSE;
                     TakeGold(GetLocalInt(oPC, PRC_CRAFT_COST), oPC);
-                    if(GetCraftingFeat(oItem) != FEAT_CRAFT_ARMS_ARMOR)
+                    if(GetCraftingFeat(oNewItem) != FEAT_CRAFT_ARMS_ARMOR)
                         CopyItem(oNewItem, oPC, TRUE);
                     else if(GetIsSkillSuccessful(oPC, nSkill, GetCraftingDC(oNewItem)))
                     {

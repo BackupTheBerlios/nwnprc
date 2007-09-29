@@ -31,6 +31,8 @@ int GetCraftingFeat(object oItem);
 
 string GetItemPropertyString(itemproperty ip);
 
+struct ipstruct GetIpStructFromString(string sIp);
+
 #include "psi_inc_psifunc"
 #include "inc_newspellbook"
 #include "prc_inc_spells"
@@ -84,6 +86,7 @@ const string PRC_CRAFT_SPECIAL_BANE_RACE    = "PRC_CRAFT_SPECIAL_BANE_RACE";
 const string PRC_CRAFT_LISTEN               = "PRC_CRAFT_LISTEN";
 
 const string PRC_CRAFT_APPEARANCE_ARRAY     = "PRC_CRAFT_APPEARANCE_ARRAY";
+const string PRC_IP_ARRAY                   = "PRC_IP_ARRAY";
 
 const int PRC_CRAFT_LISTEN_SETNAME          = 1;
 const int PRC_CRAFT_LISTEN_SETAPPEARANCE    = 2;
@@ -103,6 +106,14 @@ struct itemvars
     int enhancement;
     int additionalcost;
     int epic;
+};
+
+struct ipstruct
+{
+    int type;
+    int subtype;
+    int costtablevalue;
+    int param1value;
 };
 
 int GetCraftingTime(int nCost)
@@ -593,9 +604,59 @@ int PrereqSpecialHandling(string sFile, object oItem, int nLine)
 int CheckCraftingSpells(object oPC, string sFile, int nLine, int bDecrement = FALSE)
 {
     if(nLine == -1) return FALSE;
-    int nSpellPattern = StringToInt(Get2DACache(sFile, "SpellPattern", nLine));
+    string sTemp = Get2DACache(sFile, "Spells", nLine);
+    if(sTemp == "")
+        return TRUE;    //no prereqs, always true
+    int nSpellPattern = 0;
     int nSpell1, nSpell2, nSpell3, nSpellOR1, nSpellOR2;
     int bOR = FALSE;
+    string sSub;
+    int nLength = GetStringLength(sTemp);
+    int nPosition;
+    int nTemp;
+    int i;
+
+    for(i = 0; i < 5; i++)
+    {
+        nPosition = FindSubString(sTemp, "_");
+        sSub = (nPosition == -1) ? sTemp : GetStringLeft(sTemp, nPosition);
+        nLength -= (nPosition + 1);
+        if(sSub != "*")
+        {
+            nTemp = StringToInt(sSub);
+            nSpellPattern += FloatToInt(pow(2.0, IntToFloat(i)));
+            switch(i)
+            {
+                case 0:
+                {
+                    nSpell1 = nTemp;
+                    break;
+                }
+                case 1:
+                {
+                    nSpell2 = nTemp;
+                    break;
+                }
+                case 2:
+                {
+                    nSpell3 = nTemp;
+                    break;
+                }
+                case 3:
+                {
+                    nSpellOR1 = nTemp;
+                    break;
+                }
+                case 4:
+                {
+                    nSpellOR2 = nTemp;
+                    break;
+                }
+            }
+        }
+        sTemp = GetSubString(sTemp, nPosition + 1, nLength);
+    }
+
     if(nSpellPattern)
     {
         if(nSpellPattern & 1)
@@ -628,30 +689,25 @@ int CheckCraftingSpells(object oPC, string sFile, int nLine, int bDecrement = FA
                     }
                 }
             }
-            nSpell1 = StringToInt(Get2DACache(sFile, "Spell1", nLine));
             if(!PRCGetHasSpell(nSpell1, oPC))
                 return FALSE;
         }
         if(nSpellPattern & 2)
         {
-            nSpell2 = StringToInt(Get2DACache(sFile, "Spell2", nLine));
             if(!PRCGetHasSpell(nSpell2, oPC))
                 return FALSE;
         }
         if(nSpellPattern & 4)
         {
-            nSpell3 = StringToInt(Get2DACache(sFile, "Spell3", nLine));
             if(!PRCGetHasSpell(nSpell3, oPC))
                 return FALSE;
         }
         if(nSpellPattern & 8)
         {
-            nSpellOR1 = StringToInt(Get2DACache(sFile, "SpellOR1", nLine));
             if(!PRCGetHasSpell(nSpellOR1, oPC))
                 if(nSpellPattern & 16)
                 {
                     bOR = TRUE;
-                    nSpellOR2 = StringToInt(Get2DACache(sFile, "SpellOR2", nLine));
                     if(!PRCGetHasSpell(nSpellOR2, oPC))
                         return FALSE;
                 }
@@ -660,7 +716,6 @@ int CheckCraftingSpells(object oPC, string sFile, int nLine, int bDecrement = FA
         }
         else if(nSpellPattern & 16)
         {
-            nSpellOR2 = StringToInt(Get2DACache(sFile, "SpellOR2", nLine));
             if(!PRCGetHasSpell(nSpellOR2, oPC))
                 return FALSE;
         }
@@ -685,46 +740,90 @@ int CheckCraftingSpells(object oPC, string sFile, int nLine, int bDecrement = FA
 int CheckCraftingPowerPoints(object oPC, string sFile, int nLine, int bDecrement = FALSE)
 {
     if(nLine == -1) return FALSE;
-    int nSpellPattern = StringToInt(Get2DACache(sFile, "SpellPattern", nLine));
-    int nPower;
-    int bOR = TRUE;
+    string sTemp = Get2DACache(sFile, "Spells", nLine);
+    if(sTemp == "")
+        return TRUE;    //no prereqs, always true
+    int nSpellPattern = 0;
+    int nSpell1, nSpell2, nSpell3, nSpellOR1, nSpellOR2;
+    int bOR = FALSE;
+    string sSub;
+    int nLength = GetStringLength(sTemp);
+    int nPosition;
+    int nTemp;
+    int i;
     int nLoss = 0;
+
+    for(i = 0; i < 5; i++)
+    {
+        nPosition = FindSubString(sTemp, "_");
+        sSub = (nPosition == -1) ? sTemp : GetStringLeft(sTemp, nPosition);
+        nLength -= (nPosition + 1);
+        if(sSub != "*")
+        {
+            nTemp = StringToInt(sSub);
+            nSpellPattern += FloatToInt(pow(2.0, IntToFloat(i)));
+            switch(i)
+            {
+                case 0:
+                {
+                    nSpell1 = nTemp;
+                    break;
+                }
+                case 1:
+                {
+                    nSpell2 = nTemp;
+                    break;
+                }
+                case 2:
+                {
+                    nSpell3 = nTemp;
+                    break;
+                }
+                case 3:
+                {
+                    nSpellOR1 = nTemp;
+                    break;
+                }
+                case 4:
+                {
+                    nSpellOR2 = nTemp;
+                    break;
+                }
+            }
+        }
+        sTemp = GetSubString(sTemp, nPosition + 1, nLength);
+    }
     if(nSpellPattern)
     {
         if(nSpellPattern & 1)
         {
-            nPower = StringToInt(Get2DACache(sFile, "Spell1", nLine));
-            if(GetHasPower(nPower, oPC))
-                nLoss += (StringToInt(lookup_spell_innate(nPower)) * 2 - 1);
+            if(GetHasPower(nSpell1, oPC))
+                nLoss += (StringToInt(lookup_spell_innate(nSpell1)) * 2 - 1);
             else
                 return FALSE;
         }
         if(nSpellPattern & 2)
         {
-            nPower = StringToInt(Get2DACache(sFile, "Spell2", nLine));
-            if(GetHasPower(nPower, oPC))
-                nLoss += (StringToInt(lookup_spell_innate(nPower)) * 2 - 1);
+            if(GetHasPower(nSpell2, oPC))
+                nLoss += (StringToInt(lookup_spell_innate(nSpell2)) * 2 - 1);
             else
                 return FALSE;
         }
         if(nSpellPattern & 4)
         {
-            nPower = StringToInt(Get2DACache(sFile, "Spell3", nLine));
-            if(GetHasPower(nPower, oPC))
-                nLoss += (StringToInt(lookup_spell_innate(nPower)) * 2 - 1);
+            if(GetHasPower(nSpell3, oPC))
+                nLoss += (StringToInt(lookup_spell_innate(nSpell3)) * 2 - 1);
             else
                 return FALSE;
         }
         if(nSpellPattern & 8)
         {
-            nPower = StringToInt(Get2DACache(sFile, "SpellOR1", nLine));
-            if(GetHasPower(nPower, oPC))
-                nLoss += (StringToInt(lookup_spell_innate(nPower)) * 2 - 1);
+            if(GetHasPower(nSpellOR1, oPC))
+                nLoss += (StringToInt(lookup_spell_innate(nSpellOR1)) * 2 - 1);
             else if(nSpellPattern & 16)
             {
-                nPower = StringToInt(Get2DACache(sFile, "SpellOR2", nLine));
-                if(GetHasPower(nPower, oPC))
-                    nLoss += (StringToInt(lookup_spell_innate(nPower)) * 2 - 1);
+                if(GetHasPower(nSpellOR2, oPC))
+                    nLoss += (StringToInt(lookup_spell_innate(nSpellOR2)) * 2 - 1);
                 else
                     return FALSE;
             }
@@ -733,9 +832,8 @@ int CheckCraftingPowerPoints(object oPC, string sFile, int nLine, int bDecrement
         }
         else if(nSpellPattern & 16)
         {
-            nPower = StringToInt(Get2DACache(sFile, "SpellOR2", nLine));
-            if(GetHasPower(nPower, oPC))
-                nLoss += (StringToInt(lookup_spell_innate(nPower)) * 2 - 1);
+            if(GetHasPower(nSpellOR2, oPC))
+                nLoss += (StringToInt(lookup_spell_innate(nSpellOR2)) * 2 - 1);
             else
                 return FALSE;
         }
@@ -752,7 +850,7 @@ int CheckCraftingPowerPoints(object oPC, string sFile, int nLine, int bDecrement
 struct itemvars GetItemVars(object oPC, object oItem, string sFile, int bEpic = 0, int bSet = 0)
 {
     struct itemvars strTemp;
-    int i;
+    int i, bBreak, nTemp;
     int j, k, bEnhanced, count;
     int nEnhancement;
     int nSpellPattern;
@@ -766,6 +864,9 @@ struct itemvars GetItemVars(object oPC, object oItem, string sFile, int bEpic = 
     int bArmsArmour = nFeat == FEAT_CRAFT_ARMS_ARMOR;
     string sPropertyType;
     strTemp.item = oItem;
+    string sSub;
+    int nLength;
+    int nPosition;
     if(bSet)
     {
         if(array_exists(oPC, PRC_CRAFT_ITEMPROP_ARRAY))
@@ -877,6 +978,7 @@ struct itemvars GetItemVars(object oPC, object oItem, string sFile, int bEpic = 
         {   //will skip over properties already disallowed
             if(array_get_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i))
             {
+                bBreak = FALSE;
                 sPropertyType = Get2DACache(sFile, "PropertyType", i);
                 if(sPropertyType == "M")
                     nLevel = nCasterLevel;
@@ -892,52 +994,91 @@ struct itemvars GetItemVars(object oPC, object oItem, string sFile, int bEpic = 
                     array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
                 else
                 {
-                    if(StringToInt(Get2DACache(sFile, "SpellPattern", i)))
+                    if(
+                        (sPropertyType == "M") &&
+                        !CheckCraftingSpells(oPC, sFile, i)
+                        )
                     {
-                        if(
-                            (sPropertyType == "M") &&
-                            !CheckCraftingSpells(oPC, sFile, i)
-                            )
+                        array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                        continue;
+                    }
+                    if(
+                        (sPropertyType == "P") &&
+                        !CheckCraftingPowerPoints(oPC, sFile, i)
+                        )
+                    {
+                        array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                        continue;
+                    }
+
+                    sTemp = Get2DACache(sFile, "PrereqMisc", i);
+                    if(sTemp == "")
+                        bBreak = TRUE;
+                    nLength = GetStringLength(sTemp);
+                    for(j = 0; j < 5; j++)
+                    {
+                        if(bBreak)
+                            break;
+                        nPosition = FindSubString(sTemp, "_");
+                        sSub = (nPosition == -1) ? sTemp : GetStringLeft(sTemp, nPosition);
+                        nLength -= (nPosition + 1);
+                        if(sSub == "*")
+                            nTemp = -1;
+                        else
+                            nTemp = StringToInt(sSub);
+                        switch(j)
                         {
-                            array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
-                            continue;
-                        }
-                        if(
-                            (sPropertyType == "P") &&
-                            !CheckCraftingPowerPoints(oPC, sFile, i)
-                            )
-                        {
-                            array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
-                            continue;
-                        }
-                    }
-                    sTemp = Get2DACache(sFile, "Race", i);
-                    if(sTemp != "" && nRace != StringToInt(sTemp))
-                    {
-                        array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
-                        continue;
-                    }
-                    sTemp = Get2DACache(sFile, "Feat", i);
-                    if(sTemp != "" && !GetHasFeat(StringToInt(sTemp)))
-                    {
-                        array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
-                        continue;
-                    }
-                    sTemp = Get2DACache(sFile, "AlignGE", i);
-                    if((sTemp == "G" && GetAlignmentGoodEvil(oPC) != ALIGNMENT_GOOD) ||
-                        (sTemp == "E" && GetAlignmentGoodEvil(oPC) != ALIGNMENT_EVIL) ||
-                        (sTemp == "N" && GetAlignmentGoodEvil(oPC) != ALIGNMENT_NEUTRAL))
-                    {
-                        array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
-                        continue;
-                    }
-                    sTemp = Get2DACache(sFile, "AlignLC", i);
-                    if((sTemp == "L" && GetAlignmentLawChaos(oPC) != ALIGNMENT_LAWFUL) ||
-                        (sTemp == "C" && GetAlignmentLawChaos(oPC) != ALIGNMENT_CHAOTIC) ||
-                        (sTemp == "N" && GetAlignmentLawChaos(oPC) != ALIGNMENT_NEUTRAL))
-                    {
-                        array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
-                        continue;
+                            case 0:
+                            {
+                                if(nTemp != -1 && nRace != nTemp)
+                                {
+                                    array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                                    bBreak = TRUE;
+                                }
+                                break;
+                            }
+                            case 1:
+                            {
+                                if(nTemp != -1 && !GetHasFeat(nTemp))
+                                {
+                                    array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                                    bBreak = TRUE;
+                                }
+                                break;
+                            }
+                            case 2:
+                            {
+                                if((sSub == "G" && GetAlignmentGoodEvil(oPC) != ALIGNMENT_GOOD) ||
+                                    (sSub == "E" && GetAlignmentGoodEvil(oPC) != ALIGNMENT_EVIL) ||
+                                    (sSub == "N" && GetAlignmentGoodEvil(oPC) != ALIGNMENT_NEUTRAL))
+                                {
+                                    array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                                    bBreak = TRUE;
+                                }
+                                break;
+                            }
+                            case 3:
+                            {
+                                if((sSub == "L" && GetAlignmentLawChaos(oPC) != ALIGNMENT_LAWFUL) ||
+                                    (sSub == "C" && GetAlignmentLawChaos(oPC) != ALIGNMENT_CHAOTIC) ||
+                                    (sSub == "N" && GetAlignmentLawChaos(oPC) != ALIGNMENT_NEUTRAL))
+                                {
+                                    array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                                    bBreak = TRUE;
+                                }
+                                break;
+                            }
+                            case 4:
+                            {
+                                if(nTemp != -1 && !GetLevelByClass(nTemp, oPC))
+                                {
+                                    array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                                    bBreak = TRUE;
+                                }
+                                break;
+                            }
+                         }
+                        sTemp = GetSubString(sTemp, nPosition + 1, nLength);
                     }
                     sTemp = Get2DACache(sFile, "Skill", i);
                     if(sTemp != "" && (GetSkillRank(StringToInt(sTemp), oPC) < StringToInt(Get2DACache(sFile, "SkillRanks", i))))
@@ -1003,19 +1144,19 @@ itemproperty PropSpecialHandling(object oItem, string sFile, int nLine, int nInd
 {
     itemproperty ip;
     int nTemp;
-    string sTemp = Get2DACache(sFile, "Type" + IntToString(nIndex), nLine);
-    if(sTemp == "") return ip;
-    int nType = StringToInt(sTemp);
-    int nSubType = StringToInt(Get2DACache(sFile, "SubType" + IntToString(nIndex), nLine));
-    int nCostTableValue = StringToInt(Get2DACache(sFile, "CostTableValue" + IntToString(nIndex), nLine));
-    int nParam1Value = StringToInt(Get2DACache(sFile, "Param1Value" + IntToString(nIndex), nLine));
+    string sEntry = Get2DACache(sFile, "IP" + IntToString(nIndex), nLine);
+    if(DEBUG) DoDebug("PropSpecialHandling(object, " + sFile + ", " + IntToString(nLine) + ", " + IntToString(nIndex) + ")");
+    if(DEBUG) DoDebug("Get2DACache: IP" + IntToString(nIndex) + ", " + sEntry);
+    struct ipstruct iptemp = GetIpStructFromString(sEntry);
+    string sTemp;
+
     int nBase = GetBaseItemType(oItem);
     if(StringToInt(Get2DACache(sFile, "Special", nLine)))
     {
         if(sFile == "craft_armour")
         {
-            if(nType == ITEM_PROPERTY_SKILL_BONUS && SkillHasACPenalty(nSubType))
-                nCostTableValue += GetArmourCheckPenaltyReduction(oItem);
+            if(iptemp.type == ITEM_PROPERTY_SKILL_BONUS && SkillHasACPenalty(iptemp.subtype))
+                iptemp.costtablevalue += GetArmourCheckPenaltyReduction(oItem);
         }
         else if(sFile == "craft_weapon")
         {
@@ -1027,39 +1168,39 @@ itemproperty PropSpecialHandling(object oItem, string sFile, int nLine, int nInd
                     nTemp = GetLocalInt(GetItemPossessor(oItem), PRC_CRAFT_SPECIAL_BANE_RACE);
                     if(nIndex == 1)
                     {
-                        nSubType = nTemp;
+                        iptemp.subtype = nTemp;
                         nTemp = StringToInt(Get2DACache("baseitems", "WeaponType", nBase));
                         switch(nTemp)
                         {
-                            case 1: nParam1Value = IP_CONST_DAMAGETYPE_PIERCING; break;
+                            case 1: iptemp.param1value = IP_CONST_DAMAGETYPE_PIERCING; break;
                             case 2:
-                            case 5: nParam1Value = IP_CONST_DAMAGETYPE_BLUDGEONING; break;
+                            case 5: iptemp.param1value = IP_CONST_DAMAGETYPE_BLUDGEONING; break;
                             case 3:
-                            case 4: nParam1Value = IP_CONST_DAMAGETYPE_SLASHING; break;
+                            case 4: iptemp.param1value = IP_CONST_DAMAGETYPE_SLASHING; break;
                         }
                     }
                     else if(nIndex == 2)
                     {
-                        nSubType = nTemp;
-                        nCostTableValue += IPGetWeaponEnhancementBonus(oItem);
-                        if(nCostTableValue > 20)
-                            nCostTableValue = 20;
+                        iptemp.subtype = nTemp;
+                        iptemp.costtablevalue += IPGetWeaponEnhancementBonus(oItem);
+                        if(iptemp.costtablevalue > 20)
+                            iptemp.costtablevalue = 20;
                     }
                     else if(nIndex == 3)
-                        nParam1Value = nTemp;
+                        iptemp.param1value = nTemp;
                     break;
                 }
             }
-            if(nType == ITEM_PROPERTY_ENHANCEMENT_BONUS &&
+            if(iptemp.type == ITEM_PROPERTY_ENHANCEMENT_BONUS &&
                 StringToInt(Get2DACache("prc_craft_gen_it", "Type", nBase)) == PRC_CRAFT_ITEM_TYPE_AMMO)
             {
-                nType = ITEM_PROPERTY_DAMAGE_BONUS;
-                nSubType = (nBase == BASE_ITEM_BULLET) ? DAMAGE_TYPE_BLUDGEONING : DAMAGE_TYPE_PIERCING;
+                iptemp.type = ITEM_PROPERTY_DAMAGE_BONUS;
+                iptemp.subtype = (nBase == BASE_ITEM_BULLET) ? DAMAGE_TYPE_BLUDGEONING : DAMAGE_TYPE_PIERCING;
             }
         }
     }
-
-    return ConstructIP(nType, nSubType, nCostTableValue, nParam1Value);
+    if(DEBUG) DoDebug("Reconstructed: IP" + IntToString(nIndex) + ", " + IntToString(iptemp.type)+"_"+IntToString(iptemp.subtype)+"_"+IntToString(iptemp.costtablevalue)+"_"+IntToString(iptemp.param1value));
+    return ConstructIP(iptemp.type, iptemp.subtype, iptemp.costtablevalue, iptemp.param1value);
 }
 
 void ApplyItemProps(object oItem, string sFile, int nLine)
@@ -1091,14 +1232,18 @@ void ApplyItemProps(object oItem, string sFile, int nLine)
             }
         }
     }
+    i = 1;  //FUGLY HACK: i doesn't initialise properly in for loop
     for(i == 1; i <= 6; i++)
     {
+        if(DEBUG) DoDebug("ApplyItemProps: i = " + IntToString(i));
         ip = PropSpecialHandling(oItem, sFile, nLine, i);
         if(GetIsItemPropertyValid(ip))
         {
             if(DEBUG) DoDebug(GetItemPropertyString(ip));
             IPSafeAddItemProperty(oItem, ip, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
         }
+        else
+            break;  //no more itemprops, no gaps, assuming no errors
     }
     if(sFile != "craft_weapon" && sFile != "craft_armour")
         SetName(oItem, GetStringByStrRef(StringToInt(Get2DACache(sFile, "Name", nLine))));
@@ -2327,6 +2472,38 @@ itemproperty ConstructIP(int nType, int nSubTypeValue = 0, int nCostTableValue =
         */
     }
     return ip;
+}
+
+struct ipstruct GetIpStructFromString(string sIp)
+{
+    struct ipstruct iptemp;
+    //initialise variables
+    string sTemp = sIp;
+    string sSub;
+    int nLength = GetStringLength(sTemp);
+    int nPosition;
+    int nTemp;
+    int i;
+
+    for(i = 0; i < 4; i++)
+    {
+        nPosition = FindSubString(sTemp, "_");
+        sSub = (nPosition == -1) ? sTemp : GetStringLeft(sTemp, nPosition);
+        nLength -= (nPosition + 1);
+        if(sSub == "*")
+            nTemp = -1;
+        else
+            nTemp = StringToInt(sSub);
+        switch(i)
+        {
+            case 0: iptemp.type = nTemp; break;
+            case 1: iptemp.subtype = nTemp; break;
+            case 2: iptemp.costtablevalue = nTemp; break;
+            case 3: iptemp.param1value = nTemp; break;
+        }
+        sTemp = GetSubString(sTemp, nPosition + 1, nLength);
+    }
+    return iptemp;
 }
 
 string PRCGetItemAppearanceString(object oPC, object oItem)

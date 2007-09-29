@@ -1714,6 +1714,12 @@ const string PRC_CRAFTING_ARBITRARY                 = "PRC_CRAFTING_ARBITRARY";
 const string PRC_CRAFTING_COST_SCALE                 = "PRC_CRAFTING_COST_SCALE";
 
 /**
+ * Scales the item costs for mundane item crafting
+ * defaults to 100
+ */
+const string PRC_CRAFTING_MUNDANE_COST_SCALE        = "PRC_CRAFTING_MUNDANE_COST_SCALE";
+
+/**
  * Sets crafting time per 1000gp in market price:
  * 1 - off, no time required
  * 2 - round

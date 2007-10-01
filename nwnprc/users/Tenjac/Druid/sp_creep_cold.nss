@@ -29,7 +29,7 @@ snow, or water.
 
 #include "spinc_common"
 
-void ColdLoop(object oTarget, int nSave, int nCount);
+void ColdLoop(object oTarget, int nSave, int nCount, int nMetaMagic);
 
 void main()
 {
@@ -45,20 +45,21 @@ void main()
         
         if(!MyPRCResistSpell(oTarget, oPC, nCasterLvl + SPGetPenetr()))
         {
-                ColdLoop(oTarget, nDC, 1);
+                ColdLoop(oTarget, nDC, 1, PRCGetMetaMagicFeat());
         }
         SPSetSchool();
 }
 
-void ColdLoop(object oTarget, int nSave, int nCount)
+void ColdLoop(object oTarget, int nSave, int nCount, int nMetaMagic)
 {
         int nDam = d6(nCount);
         
+        if(nMetaMagic == METAMAGIC_MAXIMIZE) nDam = 6 * nCount;
+        
         //Save for 1/2
-        if(nSave)
-        {
-                nDam /= 2;
-        }
+        if(nSave) nDam /= 2;
+        
+        if(nMetaMagic == METAMAGIC_EMPOWER) nDam += (nDam/2);
         
         ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_FROST_S), oTarget);
         
@@ -68,8 +69,6 @@ void ColdLoop(object oTarget, int nSave, int nCount)
         
         if(nCount < 3)
         {
-                DelayCommand(RoundsToSeconds(1), ColdLoop(oTarget, nSave, nCount));
+                DelayCommand(RoundsToSeconds(1), ColdLoop(oTarget, nSave, nCount, nMetaMagic));
         }
-}
-
-                
+}            

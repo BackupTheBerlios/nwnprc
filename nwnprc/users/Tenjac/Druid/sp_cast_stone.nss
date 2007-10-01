@@ -1,4 +1,8 @@
-CAST IN STONE
+////////////////////////////////////////////////////
+//  Cast In Stone
+//  sp_cast_stone.nss
+////////////////////////////////////////////////////
+/** @file Cast In Stone
 Transmutation
 Level: Druid 9
 Components: V, S
@@ -6,21 +10,14 @@ Casting Time: 1 standard action
 Range: Personal
 Target: You
 Duration: 1 round/level (D)
-Saving Throw: None and Fortitude
-negates; see text
+Saving Throw: None and Fortitude negates; see text
 Spell Resistance: No
-Your eyes become like gray stone orbs traced
-with golden veins. The change catches the
-foes fighting you by surprise, and they turn
-to stone.
+
 Any creature within 30 feet that meets
 your gaze is permanently turned into a
 mindless, inert statue (as flesh to stone),
 unless it succeeds on a Fortitude save.
-You can free the victim of your own
-cast in stone at any time by speaking a
-command word you establish during
-the casting.
+
 Each creature within range of the
 gaze must attempt a saving throw
 against the gaze effect each round at
@@ -39,3 +36,17 @@ within range, and that target must
 attempt a saving throw. A target that is
 averting or shutting its eyes gains the
 above benefits.
+*/
+//////////////////////////////////////////////////
+//  Tenjac   10/1/07
+//////////////////////////////////////////////////
+
+#include "spinc_common"
+
+void main()
+{
+        object oPC = OBJECT_SELF;
+        location lLoc = GetSpellTargetLocation();
+        object oTarget = MyFirstObjectInShape(SHAPE_CONE, FeetToMeters(30.0), lLoc, TRUE, OBJECT_TYPE_CREATURE);
+        
+        

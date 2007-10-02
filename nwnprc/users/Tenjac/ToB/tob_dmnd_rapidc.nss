@@ -27,3 +27,4 @@ void main()
         
         if(move.bCanManeuver)
         {
+                //it's basically a free attack as an immediate action

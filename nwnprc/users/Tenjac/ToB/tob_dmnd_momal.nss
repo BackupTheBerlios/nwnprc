@@ -27,3 +27,4 @@ void main()
         
         if(move.bCanManeuver)
         {
+                //probably a couple second timestop on self

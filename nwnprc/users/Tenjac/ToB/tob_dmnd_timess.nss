@@ -27,3 +27,4 @@ void main()
         
         if(move.bCanManeuver)
         {
+                //Double PerformAttackRound

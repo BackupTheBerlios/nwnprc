@@ -1266,6 +1266,13 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
         if (nHexCha < 1) nHexCha = 1;
         nDC -= nHexCha;
     }
+    
+    //Diamond Defense
+    if(GetLocalInt(oTarget, "PRC_TOB_DIAMOND_DEFENSE"))
+    {
+            int nBonus = GetLocalInt(oTarget, "PRC_TOB_DIAMOND_DEFENSE");
+            nDC -= nBonus;
+    }
 
     // This is done here because it is possible to tell the saving throw type here
     // Tyranny Domain increases the DC of mind spells by +2.
@@ -1430,6 +1437,13 @@ int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveTy
         nDC -= 3;
     else if(nSaveType == SAVING_THROW_TYPE_ACID && GetHasFeat(FEAT_HARD_EARTH, oTarget))
         nDC -= 1+(GetHitDice(oTarget)/5);
+        
+    //Diamond Defense
+    if(GetLocalInt(oTarget, "PRC_TOB_DIAMOND_DEFENSE"))
+    {
+            int nBonus = GetLocalInt(oTarget, "PRC_TOB_DIAMOND_DEFENSE");
+            nDC -= nBonus;
+    }  
 
     // This ability removes evasion from the target
     if (GetLocalInt(oTarget, "TrueConfoundingResistance"))

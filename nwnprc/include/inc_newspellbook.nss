@@ -181,7 +181,7 @@ int GetAbilityForClass(int nClass, object oPC)
             return GetAbilityScore(oPC, ABILITY_CHARISMA);
         }
     }
-    return 0;
+    return ABILITY_CHARISMA;    //default for SLAs?
 }
 
 int GetDCAbilityModForClass(int nClass, object oPC)

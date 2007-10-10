@@ -1,19 +1,14 @@
 #include "prc_alterations"
+#include "prc_craft_inc"
 
 void main()
 {
-    /*
-    int i;
-    object oTest;
-    for(i = 0; i <= 9; i++)
-    {
-        oTest = GetObjectByTag("SpellLvl_9_Level_" + IntToString(i));
-        DoDebug("Name: " + GetName(oTest));
-        DoDebug("Tag: " + GetTag(oTest));
-        DoDebug("Resref: " + GetResRef(oTest));
-        DoDebug(IntToString(array_get_size(oTest, GetTag(oTest))));
-    }
-    */
-    object oPC = GetFirstPC();
-    DoDebug(IntToString(PRCGetHasSpell(368, oPC)));
+    struct ipstruct iptemp = GetIpStructFromString("1_*_1_*");
+    itemproperty ip = ConstructIP(iptemp.type, iptemp.subtype, iptemp.costtablevalue, iptemp.param1value);
+    PrintString(GetItemPropertyString(ip));
+    DoDebug("fs_test: starting");
+    //DoDebug(GetItemPropertyString(ip));
+    //object oPC = GetFirstPC();
+    //DoDebug(IntToString(PRCGetHasSpell(368, oPC)));
+    DoDebug("fs_test: ending");
 }

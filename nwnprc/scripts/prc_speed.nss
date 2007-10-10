@@ -44,13 +44,14 @@ void main()
     if(GetPRCSwitch(PRC_PNP_ARMOR_SPEED))
     {
         object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oPC);
+        int nCoc = (GetLevelByClass(CLASS_TYPE_COC, oPC));
         //in an onunequip event the armor is still in the slot
         if(GetItemLastUnequipped() == oArmor && GetLocalInt(oPC, "ONEQUIP") == 1)
             oArmor = OBJECT_INVALID;
         int nArmorType = GetArmorType(oArmor);
-        if(nArmorType == ARMOR_TYPE_MEDIUM)
+        if(nArmorType == ARMOR_TYPE_MEDIUM && nCoc < 5)
             nNewSpeed = FloatToInt(IntToFloat(nNewSpeed) * 0.75);
-        else if(nArmorType == ARMOR_TYPE_HEAVY)
+        else if(nArmorType == ARMOR_TYPE_HEAVY && nCoc < 5)
             nNewSpeed = FloatToInt(IntToFloat(nNewSpeed) * 0.666);
     }
 

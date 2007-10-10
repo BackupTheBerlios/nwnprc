@@ -171,6 +171,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_WARMAGE, oPC) > 0)             ExecuteScript("prc_warmage", oPC);
     if(GetLevelByClass(CLASS_TYPE_KNIGHT, oPC) > 0)              ExecuteScript("prc_knight", oPC);
     if(GetLevelByClass(CLASS_TYPE_SHADOWMIND, oPC) > 0)          ExecuteScript("prc_shadowmind", oPC);
+    if(GetLevelByClass(CLASS_TYPE_COC, oPC) > 0)                 ExecuteScript("prc_coc", oPC);
 
     // Bonus Domain check
     // If there is a bonus domain, it will always be in the first slot, so just check that.
@@ -260,7 +261,7 @@ void EvalPRCFeats(object oPC)
         IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(IP_CONST_FEAT_EPIC_REST), 0.0f,
                               X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
     }*/
-    
+
     // Miscellaneous
     ExecuteScript("prc_sneak_att", oPC);
     ExecuteScript("race_skin", oPC);
@@ -751,6 +752,7 @@ void FeatSpecialUsePerDay(object oPC)
     FeatUsePerDay(oPC, FEAT_DOMAIN_POWER_SCALEYKIND, ABILITY_CHARISMA, 3);
     FeatUsePerDay(oPC, FEAT_PLANT_DOMAIN_POWER, ABILITY_CHARISMA, 3);
     FeatUsePerDay(oPC, FEAT_WWOC_WIDEN_SPELL, ABILITY_CHARISMA, GetLevelByClass(CLASS_TYPE_WAR_WIZARD_OF_CORMYR, oPC));
+    FeatUsePerDay(oPC, FEAT_COC_WRATH, ABILITY_CHARISMA, 3);
 
     if(GetPersistantLocalInt(oPC, "PRC_SLA_Uses_1"))
         FeatUsePerDay(oPC, FEAT_SPELL_LIKE_ABILITY_1, -1, GetPersistantLocalInt(oPC, "PRC_SLA_Uses_1"));

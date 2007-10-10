@@ -2183,6 +2183,12 @@ const int FEAT_TEMPLATE_FIENDISH_SMITE_GOOD         = 22603;
 // Knight Feats
 const int FEAT_FIGHT_CHALLENGE                 = 2834;
 
+// Champion of Corellon Feats
+const int FEAT_COC_ELEGANT_STRIKE              = 3812;
+const int FEAT_COC_WRATH                       = 3815;
+
+
+
 /*//////////////////////////////////////////////////
 //////////////// TRUENAMING ////////////////////////
 //////////////////////////////////////////////////*/

@@ -37,34 +37,34 @@ void DoImprovedRicochet(object oPC, object oTarget);
 
 void main()
 {
-	object oSpellOrigin = OBJECT_SELF; // On a weapon: The one wielding the weapon. On an armor: The one wearing an armor
+    object oSpellOrigin = OBJECT_SELF; // On a weapon: The one wielding the weapon. On an armor: The one wearing an armor
 
     // Call the normal OnHitCastSpell: Unique script
-	if (DEBUG) DoDebug("prc_onhitcast: entered, executing normal onhitcastspell unique power script x2_s3_onhitcast for "+GetName(oSpellOrigin));
+    if (DEBUG) DoDebug("prc_onhitcast: entered, executing normal onhitcastspell unique power script x2_s3_onhitcast for "+GetName(oSpellOrigin));
     ExecuteScript("x2_s3_onhitcast", oSpellOrigin);
 
-	// motu99: setting a local int, so that onhitcast impact spell scripts can find out, whether they were called from prc_onhitcast
-	// or from somewhere else (presumably the aurora engine). This local int will be deleted just before we exit prc_onhitcast
-	// Note that any scripts that are called by a DelayCommand (or AssignCommand) from prc_onhitcast will not find this local int
-	SetLocalInt(oSpellOrigin, "prc_ohc", TRUE);
+    // motu99: setting a local int, so that onhitcast impact spell scripts can find out, whether they were called from prc_onhitcast
+    // or from somewhere else (presumably the aurora engine). This local int will be deleted just before we exit prc_onhitcast
+    // Note that any scripts that are called by a DelayCommand (or AssignCommand) from prc_onhitcast will not find this local int
+    SetLocalInt(oSpellOrigin, "prc_ohc", TRUE);
 
-	object oSpellTarget = PRCGetSpellTargetObject(oSpellOrigin); // On a weapon: The one being hit. On an armor: The one hitting the armor
+    object oSpellTarget = PRCGetSpellTargetObject(oSpellOrigin); // On a weapon: The one being hit. On an armor: The one hitting the armor
 
-	// motu99: replacing call to Bioware's GetSpellCastItem with new PRC wrapper function
-	// will ensure that we retrieve a valid item when we are called from scripted combat (prc_inc_combat) or
-	object oItem = PRCGetSpellCastItem(oSpellOrigin); // The item casting triggering this spellscript
-	int iItemBaseType = GetBaseItemType(oItem);
+    // motu99: replacing call to Bioware's GetSpellCastItem with new PRC wrapper function
+    // will ensure that we retrieve a valid item when we are called from scripted combat (prc_inc_combat) or
+    object oItem = PRCGetSpellCastItem(oSpellOrigin); // The item casting triggering this spellscript
+    int iItemBaseType = GetBaseItemType(oItem);
 
 
 // DEBUG code, remove
-	if (DEBUG)
-	{
-		if(!GetIsOnHitCastSpell(oSpellTarget, oItem, oSpellOrigin))
-			DoDebug("prc_onhitcast: Warning, the currently running instance of prc_onhitcast was not recognized as an onhitcastspell");
-	}
+    if (DEBUG)
+    {
+        if(!GetIsOnHitCastSpell(oSpellTarget, oItem, oSpellOrigin))
+            DoDebug("prc_onhitcast: Warning, the currently running instance of prc_onhitcast was not recognized as an onhitcastspell");
+    }
 // DEBUG code, remove
 
-	if (DEBUG) DoDebug("prc_onhitcast: now executing prc specific routines with item = "+ GetName(oItem)+", target = "+GetName(oSpellTarget)+", caller = "+GetName(oSpellOrigin));
+    if (DEBUG) DoDebug("prc_onhitcast: now executing prc specific routines with item = "+ GetName(oItem)+", target = "+GetName(oSpellTarget)+", caller = "+GetName(oSpellOrigin));
 
     int nVassal;         //Vassal Level
     int nBArcher;        // Blood Archer level
@@ -78,6 +78,10 @@ void main()
     //// Swashbuckler Weakening and Wounding Criticals
     if(GetHasFeat(INSIGHTFUL_STRIKE, oSpellOrigin))
         ExecuteScript("prc_swashweak", oSpellOrigin);
+
+    //// Champion of Corellon damage healing for sneak/critical immune creatures
+    if(GetHasFeat(FEAT_COC_ELEGANT_STRIKE, oSpellOrigin))
+        ExecuteScript("prc_coc_heal", oSpellOrigin);
 
     //// Stormlord Shocking & Thundering Spear
 
@@ -137,7 +141,7 @@ void main()
         {
             DelayCommand(0.01, ExecuteScript("prc_fb_auto_fre", oSpellOrigin) );
         }
-		else if(GetCurrentHitPoints(oSpellOrigin) == 1 && GetHasFeat(FEAT_DEATHLESS_FRENZY, oSpellOrigin))
+        else if(GetCurrentHitPoints(oSpellOrigin) == 1 && GetHasFeat(FEAT_DEATHLESS_FRENZY, oSpellOrigin))
         {
             DelayCommand(0.01, ExecuteScript("prc_fb_deathless", oSpellOrigin) );
         }
@@ -145,8 +149,8 @@ void main()
 
     // Warsling Sniper Improved Ricochet
     if (iItemBaseType == BASE_ITEM_BULLET
-		&& GetLevelByClass(CLASS_TYPE_HALFLING_WARSLINGER, oSpellOrigin) == 6
-		&& GetLocalInt(oSpellOrigin, "CanRicochet") != 2)
+        && GetLevelByClass(CLASS_TYPE_HALFLING_WARSLINGER, oSpellOrigin) == 6
+        && GetLocalInt(oSpellOrigin, "CanRicochet") != 2)
     {
         DoImprovedRicochet(oSpellOrigin, oSpellTarget);
 
@@ -189,8 +193,8 @@ void main()
     // Foe Hunter Rancor Attack
     if(iItemBaseType != BASE_ITEM_ARMOR && nFoeHunter > 0)
     {
-        if(	GetLocalInt(oSpellOrigin, "PRC_CanUseRancor") != 2
-			&& GetLocalInt(oSpellOrigin, "HatedFoe") == MyPRCGetRacialType(oSpellTarget) )
+        if( GetLocalInt(oSpellOrigin, "PRC_CanUseRancor") != 2
+            && GetLocalInt(oSpellOrigin, "HatedFoe") == MyPRCGetRacialType(oSpellTarget) )
         {
             int iFHLevel = GetLevelByClass(CLASS_TYPE_FOE_HUNTER, oSpellOrigin);
             int iRancorDice = FloatToInt( (( iFHLevel + 1.0 ) /2) );
@@ -245,19 +249,19 @@ void main()
     {
         SweepingStrike(oSpellOrigin, oSpellTarget);
     }
-    
+
     // Mind Stab OnHit
     if(iItemBaseType != BASE_ITEM_ARMOR && GetLocalInt(oItem, "ShadowMindStab") && !GetLocalInt(oSpellOrigin, "MindStabDelay"))
     {
-    	// Only works when able to sneak attack a target
-    	if (GetCanSneakAttack(oSpellTarget, oSpellOrigin))
-    	{
-        	MindStab(oSpellOrigin, oSpellTarget);
-        	// Only once per round
-        	SetLocalInt(oSpellOrigin, "MindStabDelay", TRUE);
-        	DelayCommand(6.0, DeleteLocalInt(oSpellOrigin, "MindStabDelay"));
+        // Only works when able to sneak attack a target
+        if (GetCanSneakAttack(oSpellTarget, oSpellOrigin))
+        {
+            MindStab(oSpellOrigin, oSpellTarget);
+            // Only once per round
+            SetLocalInt(oSpellOrigin, "MindStabDelay", TRUE);
+            DelayCommand(6.0, DeleteLocalInt(oSpellOrigin, "MindStabDelay"));
         }
-    }    
+    }
 
     // Astral Construct's Poison Touch special ability
     if(GetLocalInt(oSpellOrigin, ASTRAL_CONSTRUCT_POISON_TOUCH))
@@ -268,7 +272,7 @@ void main()
     /*//////////////////////////////////////////////////
     //////////////// END PSIONICS //////////////////////
     //////////////////////////////////////////////////*/
-    
+
     /*//////////////////////////////////////////////////
     //////////////// Blade Magic ///////////////////////
     //////////////////////////////////////////////////*/
@@ -278,24 +282,24 @@ void main()
     {
         object oHealTarget = GetCrusaderHealTarget(oSpellOrigin, 30.0);
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(2), oHealTarget);
-	SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_HEALING_L_LAW), oHealTarget);
+    SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_HEALING_L_LAW), oHealTarget);
     }
-    
+
     // Blood in the Water
     if(GetHasSpellEffect(MOVE_TC_BLOOD_WATER, oSpellOrigin) && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
     {
-    	// Fake critical hit check
-    	if (d20() >= GetWeaponCriticalRange(oSpellOrigin, oItem))
-    	{
-        	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectAttackIncrease(1), oSpellOrigin);
-        	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectACIncrease(1), oSpellOrigin);
-		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_COM_BLOOD_CRT_YELLOW_HEAD), oSpellOrigin);
-	}
-    } 
+        // Fake critical hit check
+        if (d20() >= GetWeaponCriticalRange(oSpellOrigin, oItem))
+        {
+            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectAttackIncrease(1), oSpellOrigin);
+            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectACIncrease(1), oSpellOrigin);
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_COM_BLOOD_CRT_YELLOW_HEAD), oSpellOrigin);
+    }
+    }
 
     // Fire Riposte
     if(GetHasSpellEffect(MOVE_DW_FIRE_RIPOSTE, oSpellOrigin) && GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
-    {    
+    {
         int nTouchAttack = PRCDoMeleeTouchAttack(oSpellTarget);
         if(nTouchAttack > 0)
         {
@@ -308,71 +312,71 @@ void main()
                 RemoveSpellEffects(MOVE_DW_FIRE_RIPOSTE, oSpellOrigin, oSpellOrigin);
         }
     }
-    
+
     // Holocaust Cloak
     if(GetHasSpellEffect(MOVE_DW_HOLOCAUST_CLOAK, oSpellOrigin) && GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
-    {    
+    {
         if(GetIsInMeleeRange(oSpellOrigin, oSpellTarget))
         {
                 // Apply the damage and VFX
                 effect eVis = EffectVisualEffect(VFX_COM_HIT_FIRE);
                 effect eDam = EffectDamage(5, DAMAGE_TYPE_FIRE);
-        	ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oSpellTarget);
+            ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oSpellTarget);
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oSpellTarget);
                 FloatingTextStringOnCreature("Holocaust Cloak Hit", oSpellOrigin, FALSE);
         }
-    }  
+    }
     // Defensive Rebuke
     if(GetHasSpellEffect(MOVE_DS_DEFENSIVE_REBUKE, oSpellOrigin) && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
     {
         SetLocalObject(oSpellTarget, "DefensiveRebuke", oSpellOrigin);
         DelayCommand(3.0, ExecuteScript("tob_dvsp_defrbka", oSpellTarget));
-    }   
+    }
     // Defensive Rebuke
     if(GetHasSpellEffect(MOVE_DM_PEARL_BLACK_DOUBT, oSpellOrigin) && GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
     {
-    	// Will reset to 0.
+        // Will reset to 0.
         DeleteLocalInt(oSpellOrigin, "PearlOfBlackDoubtBonus");
-    }   
+    }
     // Defensive Rebuke
     if(GetHasSpellEffect(MOVE_WR_TACTICS_WOLF, oSpellOrigin) && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
     {
         if (GetIsFlanked(oSpellTarget, oSpellOrigin))
-        {	
-        	int nWolfDam = GetLocalInt(oTarget, "TacticsWolf");
-        	ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nWolfDam), oSpellTarget);
+        {
+            int nWolfDam = GetLocalInt(oTarget, "TacticsWolf");
+            ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nWolfDam), oSpellTarget);
         }
-    }     
-    
+    }
+
     // Aura of Triumph
     if(GetHasSpellEffect(MOVE_DS_AURA_TRIUMPH, oSpellOrigin) && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
     {
-    	// Heal both
+        // Heal both
         object oHealTarget = GetLocalObject(oSpellOrigin, "DSTriumph");
         // Must be within 10 feet
         if (10.0 >= FeetToMeters(GetDistanceBetween(oSpellOrigin, oSpellOrigin)))
         {
-        	SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(4), oHealTarget);
-		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_HEALING_L_LAW), oHealTarget);
-	}
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(4), oHealTarget);
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_HEALING_L_LAW), oHealTarget);
+    }
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(4), oSpellOrigin);
-	SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_HEALING_L_LAW), oSpellOrigin);	
-    } 
-    
+    SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_HEALING_L_LAW), oSpellOrigin);
+    }
+
     // Immortal Fortitude
     if(GetHasSpellEffect(MOVE_DS_IMMORTAL_FORTITUDE, oSpellOrigin) && GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
     {
-    	// He's immortal, so now we run a script to see if he should/would have died (Saving, etc)
-	if(GetCurrentHitPoints(oSpellOrigin) == 1)
+        // He's immortal, so now we run a script to see if he should/would have died (Saving, etc)
+    if(GetCurrentHitPoints(oSpellOrigin) == 1)
         {
             DelayCommand(0.01, ExecuteScript("tob_dvsp_imfrtoh", oSpellOrigin));
         }
-    }   
+    }
     // Immortal Fortitude
     if(GetHasSpellEffect(MOVE_WR_CLARION_CALL, oSpellOrigin) && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
     {
-    	// Check to see if the target is dead, triggers each time
-	if(GetIsDead(oSpellTarget))
+        // Check to see if the target is dead, triggers each time
+    if(GetIsDead(oSpellTarget))
         {
             location lTarget = GetLocation(oSpellOrigin);
             object oAreaTarget = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(60.0), lTarget, TRUE, OBJECT_TYPE_CREATURE);
@@ -380,17 +384,17 @@ void main()
             {
                 if(GetIsFriend(oAreaTarget, oSpellOrigin))
                 {
-                	// Apply extra attack for one round	
-                	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(EffectModifyAttacks(1)), oAreaTarget, 6.0);
+                    // Apply extra attack for one round
+                    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(EffectModifyAttacks(1)), oAreaTarget, 6.0);
                 }
                 oAreaTarget = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(60.0), lTarget, TRUE, OBJECT_TYPE_CREATURE);
             }
         }
-    }    
+    }
 */
     /*//////////////////////////////////////////////////
     //////////////// Blade Magic ///////////////////////
-    //////////////////////////////////////////////////*/    
+    //////////////////////////////////////////////////*/
 
     if(iItemBaseType != BASE_ITEM_ARMOR && GetLocalInt(oSpellOrigin,"doarcstrike"))
     {
@@ -415,28 +419,28 @@ void main()
         DoRend(oSpellTarget, oSpellOrigin, oItem);
     }
 
-	// now cycle through all onhitcast spells on the item
-	// we must exclude unique power (which is associated with prc_onhitcast), because otherwise we would get infinite recursions
-	// it is of utmost importance to devise a *safe* way to cycle through all onhitcast spells on the item. The safe way is provided
-	// by the function ApplyAllOnHitCastSpellsOnItemExcludingSubType defined in prc_inc_spells
+    // now cycle through all onhitcast spells on the item
+    // we must exclude unique power (which is associated with prc_onhitcast), because otherwise we would get infinite recursions
+    // it is of utmost importance to devise a *safe* way to cycle through all onhitcast spells on the item. The safe way is provided
+    // by the function ApplyAllOnHitCastSpellsOnItemExcludingSubType defined in prc_inc_spells
 
-	// There are two ways to call this function: Either with all necessary parameters passed explicitly to the function
-	// or with no parameters passed to the function (in this case default values are used, which also works, at least in prc_onhitcast)
+    // There are two ways to call this function: Either with all necessary parameters passed explicitly to the function
+    // or with no parameters passed to the function (in this case default values are used, which also works, at least in prc_onhitcast)
 
-	// VERSION 1:
-	// generally it is more efficient to call ApplyAllOnHitCastSpellsOnItemExcludingSubType by explicitly passing the parameters to the function
-	// this will set up the overrides in the PRC-wrappers for the spell information functions, which generally is much faster
-	// ApplyAllOnHitCastSpellsOnItemExcludingSubType(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, oSpellTarget, oItem, oSpellOrigin);
+    // VERSION 1:
+    // generally it is more efficient to call ApplyAllOnHitCastSpellsOnItemExcludingSubType by explicitly passing the parameters to the function
+    // this will set up the overrides in the PRC-wrappers for the spell information functions, which generally is much faster
+    // ApplyAllOnHitCastSpellsOnItemExcludingSubType(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, oSpellTarget, oItem, oSpellOrigin);
 
-	// VERSION 2:
-	// motu99: It might be safer to call this only with defaults in order disallow overrides being set.
-	// (they could have been set beforehand, though - in fact they *are* if we were called from prc_inc_combat)
-	// VERSION 2 has also been tested to work; however, if Bioware changes its implementation the code below is more likely to break
-	ApplyAllOnHitCastSpellsOnItemExcludingSubType(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER); 
+    // VERSION 2:
+    // motu99: It might be safer to call this only with defaults in order disallow overrides being set.
+    // (they could have been set beforehand, though - in fact they *are* if we were called from prc_inc_combat)
+    // VERSION 2 has also been tested to work; however, if Bioware changes its implementation the code below is more likely to break
+    ApplyAllOnHitCastSpellsOnItemExcludingSubType(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER);
 
-	// ONLY FOR TESTING
-	// if(GetPRCSwitch(PRC_TIMESTOP_LOCAL)) CastSpellAtLocation(SPELL_FIREBALL, GetLocation(oSpellTarget) /*, METAMAGIC_ANY, GetLevelByTypeArcane(oSpellOrigin), CLASS_TYPE_WIZARD */);
-	// if(GetPRCSwitch(PRC_PNP_TRUESEEING)) CastSpellAtObject(SPELL_FIREBALL, oSpellTarget /*, METAMAGIC_ANY, GetLevelByTypeArcane(oSpellOrigin), CLASS_TYPE_WIZARD */);
+    // ONLY FOR TESTING
+    // if(GetPRCSwitch(PRC_TIMESTOP_LOCAL)) CastSpellAtLocation(SPELL_FIREBALL, GetLocation(oSpellTarget) /*, METAMAGIC_ANY, GetLevelByTypeArcane(oSpellOrigin), CLASS_TYPE_WIZARD */);
+    // if(GetPRCSwitch(PRC_PNP_TRUESEEING)) CastSpellAtObject(SPELL_FIREBALL, oSpellTarget /*, METAMAGIC_ANY, GetLevelByTypeArcane(oSpellOrigin), CLASS_TYPE_WIZARD */);
 /*
 // motu99: This is the old (unsafe) way to cycle through the onhitcast spells.
 // This method fails, whenever one of the called impact spell script cycles through the item properties of the SpellCastItem on its own
@@ -450,30 +454,30 @@ void main()
 // into your Spell script. How could you possibly know that you just broke your script, because of an unsafe implementation
 // in a *different* script (here: prc_onhitcast)? You might not even know, that this different scripts exists.
 
-	//handle other OnHit:CastSpell properties
+    //handle other OnHit:CastSpell properties
 DoDebug("prc_onhitcast: now doing other OnHitCastSpell properties on item = "+GetName(oItem));
-	itemproperty ipTest = GetFirstItemProperty(oItem);
-	while(GetIsItemPropertyValid(ipTest))
-	{
-		if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_ONHITCASTSPELL)
-		{
-			int nIPSpell = GetItemPropertySubType(ipTest);
-			if(nIPSpell == 125)
-			{
-				ipTest = GetNextItemProperty(oItem);
-				continue; //abort if its OnHit:CastSpell:UniquePower otherwise it would TMI.
-			}
-			int nSpell   = StringToInt(Get2DACache("iprp_onhitspell", "SpellIndex", nIPSpell));
-			// int nLevel   = GetItemPropertyCostTableValue(ipTest);
-			string sScript = Get2DACache("spells", "ImpactScript", nSpell);
+    itemproperty ipTest = GetFirstItemProperty(oItem);
+    while(GetIsItemPropertyValid(ipTest))
+    {
+        if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_ONHITCASTSPELL)
+        {
+            int nIPSpell = GetItemPropertySubType(ipTest);
+            if(nIPSpell == 125)
+            {
+                ipTest = GetNextItemProperty(oItem);
+                continue; //abort if its OnHit:CastSpell:UniquePower otherwise it would TMI.
+            }
+            int nSpell   = StringToInt(Get2DACache("iprp_onhitspell", "SpellIndex", nIPSpell));
+            // int nLevel   = GetItemPropertyCostTableValue(ipTest);
+            string sScript = Get2DACache("spells", "ImpactScript", nSpell);
 DoDebug("prc_onhitcast: Now executing Impact spell script "+sScript);
-			// motu99: Never execute complicated scripts within an GetFirst* / GetNext* loop !!!
-			// The code will break, whenever the script does a loop over item properties (or effects) on its own 
-			// rather store all found scripts in a local array, and execute the scripts in a separate loop
-			ExecuteScript(sScript,oSpellOrigin);
-		}
-		ipTest = GetNextItemProperty(oItem);
-	}
+            // motu99: Never execute complicated scripts within an GetFirst* / GetNext* loop !!!
+            // The code will break, whenever the script does a loop over item properties (or effects) on its own
+            // rather store all found scripts in a local array, and execute the scripts in a separate loop
+            ExecuteScript(sScript,oSpellOrigin);
+        }
+        ipTest = GetNextItemProperty(oItem);
+    }
 */
 
     /*//////////////////////////////////////////////////
@@ -519,19 +523,19 @@ DoDebug("prc_onhitcast: Now executing Impact spell script "+sScript);
                     if(!MyPRCResistSpell(oSpellOrigin, oFlareTarget, nSpellfire))
                     {
                         if (PRCMySavingThrow(SAVING_THROW_FORT, oFlareTarget, nDC))
-                    	{
-				if (GetHasMettle(oFlareTarget, SAVING_THROW_FORT))
-				// This script does nothing if it has Mettle, bail
-					return;  		                    	
-                    	    SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_FLAME_S), oFlareTarget);
-                    	    //EffectDazzled from race_hb
-                    	    effect eAttack = EffectAttackDecrease(1);
-                    	    effect eSearch = EffectSkillDecrease(SKILL_SEARCH, 1);
-                    	    effect eSpot   = EffectSkillDecrease(SKILL_SPOT,   1);
-                    	    effect eLink   = EffectLinkEffects(eAttack, eSearch);
-                    	    eLink          = EffectLinkEffects(eLink,   eSpot);
-                    	    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oFlareTarget, 60.0);
-                    	}
+                        {
+                if (GetHasMettle(oFlareTarget, SAVING_THROW_FORT))
+                // This script does nothing if it has Mettle, bail
+                    return;
+                            SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_FLAME_S), oFlareTarget);
+                            //EffectDazzled from race_hb
+                            effect eAttack = EffectAttackDecrease(1);
+                            effect eSearch = EffectSkillDecrease(SKILL_SEARCH, 1);
+                            effect eSpot   = EffectSkillDecrease(SKILL_SPOT,   1);
+                            effect eLink   = EffectLinkEffects(eAttack, eSearch);
+                            eLink          = EffectLinkEffects(eLink,   eSpot);
+                            ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oFlareTarget, 60.0);
+                        }
                     }
                 }
                 oFlareTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lTarget, TRUE, OBJECT_TYPE_CREATURE);
@@ -580,12 +584,12 @@ DoDebug("prc_onhitcast: Now executing Impact spell script "+sScript);
     }
     */
     // Execute scripts hooked to this event for the player triggering it
-	if (DEBUG) DoDebug("prc_onhitcast: executing all scripts hooked to onhit events of attacker and item");
+    if (DEBUG) DoDebug("prc_onhitcast: executing all scripts hooked to onhit events of attacker and item");
     ExecuteAllScriptsHookedToEvent(oSpellOrigin, EVENT_ONHIT);
     ExecuteAllScriptsHookedToEvent(oItem, EVENT_ITEM_ONHIT);
 
-	DeleteLocalInt(oSpellOrigin, "prc_ohc");
-	
+    DeleteLocalInt(oSpellOrigin, "prc_ohc");
+
 }
 
 void SetRancorVar(object oPC)

@@ -282,123 +282,81 @@ void DemiLich(object oPC)
 
 void EOG(object oPC)
 {
-     int iCleric = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
-
-
-     if (iCleric)
-     {
-     SetLocalInt(oPC, "PRC_PrereqEOG", 1);
-     int iEOG = GetHasFeat(FEAT_WAR_DOMAIN_POWER,oPC)
-        +GetHasFeat(FEAT_STRENGTH_DOMAIN_POWER,oPC)
-        +GetHasFeat(FEAT_EVIL_DOMAIN_POWER,oPC);
-          {
-          if (iEOG>1)
-               {
-               SetLocalInt(oPC, "PRC_PrereqEOG", 0);
-               }
-          }
-     }
+    if(GetLevelByClass(CLASS_TYPE_CLERIC, oPC))
+    {
+        SetLocalInt(oPC, "PRC_PrereqEOG", 1);
+        if(GetHasFeat(FEAT_WAR_DOMAIN_POWER, oPC) +
+            GetHasFeat(FEAT_STRENGTH_DOMAIN_POWER, oPC) +
+            GetHasFeat(FEAT_EVIL_DOMAIN_POWER, oPC) >= 2)
+                SetLocalInt(oPC, "PRC_PrereqEOG", 0);
+    }
 }
 
 void Stormlord(object oPC)
 {
-     if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) > 0)
-     {
+    if(GetLevelByClass(CLASS_TYPE_CLERIC, oPC))
+    {
         SetLocalInt(oPC, "PRC_PrereqStormL", 1);
-        int nStorm = GetHasFeat(FEAT_FIRE_DOMAIN_POWER, oPC) +
-                     GetHasFeat(FEAT_DESTRUCTION_DOMAIN_POWER, oPC) +
-                     GetHasFeat(FEAT_EVIL_DOMAIN_POWER, oPC) +
-                     GetHasFeat(FEAT_DOMAIN_POWER_STORM, oPC);
-
-        if (nStorm >= 2)
-        {
-            SetLocalInt(oPC, "PRC_PrereqStormL", 0);
-        }
-     }
+        if(GetHasFeat(FEAT_FIRE_DOMAIN_POWER, oPC) +
+            GetHasFeat(FEAT_DESTRUCTION_DOMAIN_POWER, oPC) +
+            GetHasFeat(FEAT_EVIL_DOMAIN_POWER, oPC) +
+            GetHasFeat(FEAT_DOMAIN_POWER_STORM, oPC) >= 2)
+                SetLocalInt(oPC, "PRC_PrereqStormL", 0);
+    }
 }
 
 void Tempus(object oPC)
 {
-     if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) > 0)
-     {
+    if(GetLevelByClass(CLASS_TYPE_CLERIC, oPC))
+    {
         SetLocalInt(oPC, "PRC_PrereqTempus", 1);
-        int nTempus = GetHasFeat(FEAT_PROTECTION_DOMAIN_POWER, oPC) +
-                     GetHasFeat(FEAT_STRENGTH_DOMAIN_POWER, oPC);
-
-        if (nTempus >= 1 && GetHasFeat(FEAT_WAR_DOMAIN_POWER, oPC))
-        {
-            SetLocalInt(oPC, "PRC_PrereqTempus", 0);
-        }
-     }
+        if(GetHasFeat(FEAT_PROTECTION_DOMAIN_POWER, oPC) +
+            GetHasFeat(FEAT_STRENGTH_DOMAIN_POWER, oPC) >= 1 &&
+            GetHasFeat(FEAT_WAR_DOMAIN_POWER, oPC))
+                SetLocalInt(oPC, "PRC_PrereqTempus", 0);
+    }
 }
 
 void Heartwarder(object oPC)
 {
-     if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) > 0)
-     {
+    if(GetLevelByClass(CLASS_TYPE_CLERIC, oPC))
+    {
         SetLocalInt(oPC, "PRC_PrereqHeartW", 1);
-        int nStorm = GetHasFeat(FEAT_GOOD_DOMAIN_POWER, oPC) +
-                     GetHasFeat(FEAT_PROTECTION_DOMAIN_POWER, oPC) +
-                     GetHasFeat(FEAT_DOMAIN_POWER_CHARM, oPC);
-
-        if (nStorm >= 2)
-        {
-            SetLocalInt(oPC, "PRC_PrereqHeartW", 0);
-        }
-     }
+        if(GetHasFeat(FEAT_GOOD_DOMAIN_POWER, oPC) +
+            GetHasFeat(FEAT_PROTECTION_DOMAIN_POWER, oPC) +
+            GetHasFeat(FEAT_DOMAIN_POWER_CHARM, oPC) >= 2)
+                SetLocalInt(oPC, "PRC_PrereqHeartW", 0);
+    }
 }
 
 void Blightlord(object oPC)
 {
-     int iCleric = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
-
-
-     if (iCleric)
-     {
-     SetLocalInt(oPC, "PRC_PrereqBlightL", 1);
-     int iBlight = GetHasFeat(FEAT_DESTRUCTION_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_EVIL_DOMAIN_POWER,oPC);
-          {
-          if (iBlight>1)
-               {
-               SetLocalInt(oPC, "PRC_PrereqBlightL", 0);
-               }
-          }
-     }
+    if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC))
+    {
+        SetLocalInt(oPC, "PRC_PrereqBlightL", 1);
+        if (GetHasFeat(FEAT_DESTRUCTION_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_EVIL_DOMAIN_POWER,oPC)>1)
+            SetLocalInt(oPC, "PRC_PrereqBlightL", 0);
+    }
 }
 
 void ShadowAdept(object oPC)
 {
-     int iCleric = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
-
-
-     if (iCleric)
-     {
-     SetLocalInt(oPC, "PRC_PrereqShadAd", 1);
-     int iShad = GetHasFeat(FEAT_EVIL_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_KNOWLEDGE_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_DARKNESS_DOMAIN,oPC);
-          {
-          if (iShad>1)
-               {
-               SetLocalInt(oPC, "PRC_PrereqShadAd", 0);
-               }
-          }
-     }
+    if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC))
+    {
+        SetLocalInt(oPC, "PRC_PrereqShadAd", 1);
+        if (GetHasFeat(FEAT_EVIL_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_KNOWLEDGE_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_DARKNESS_DOMAIN,oPC)>1)
+            SetLocalInt(oPC, "PRC_PrereqShadAd", 0);
+    }
 }
 
 void ThrallOfGrazzt(object oPC)
 {
-     int iCleric = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
-
-     if (iCleric)
-     {
-          SetLocalInt(oPC, "PRC_PrereqTOG", 1);
-          int iThrall = GetHasFeat(FEAT_EVIL_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_DARKNESS_DOMAIN,oPC);
-          {
-          if (iThrall>1)
-               {
-               SetLocalInt(oPC, "PRC_PrereqTOG", 0);
-               }
-          }
-     }
+    if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC))
+    {
+        SetLocalInt(oPC, "PRC_PrereqTOG", 1);
+        if (GetHasFeat(FEAT_EVIL_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_DARKNESS_DOMAIN,oPC)>1)
+            SetLocalInt(oPC, "PRC_PrereqTOG", 0);
+    }
 }
 
 void Asmodeus(object oPC)
@@ -671,7 +629,7 @@ void Shadowmind(object oPC)
     // @todo Replace with some mechanism that is not dependent on power enumeration. Maybe a set of variables that tell how many powers of each discipline a character knows <- requires hooking to power gain / loss
     if (GetHasPower(POWER_CONCEALAMORPHA, oPC))
     {
-	SetLocalInt(oPC, "PRC_PrereqShadowmind", 0);
+    SetLocalInt(oPC, "PRC_PrereqShadowmind", 0);
     }
 }
 
@@ -817,6 +775,21 @@ void FistRaziel(object oPC)
         return;
     }
 
+}
+
+void CoC(object oPC)
+{
+    if(GetLevelByClass(CLASS_TYPE_CLERIC, oPC))
+    {
+        SetLocalInt(oPC, "PRC_AllowCoC", 1);
+        if(GetHasFeat(FEAT_DOMAIN_POWER_ELF, oPC) +
+            //GetHasFeat(FEAT_DOMAIN_POWER_CHAOS, oPC) +    //chaos domain not yet implemented
+            GetHasFeat(FEAT_GOOD_DOMAIN_POWER, oPC) +
+            GetHasFeat(FEAT_MAGIC_DOMAIN_POWER, oPC) +
+            GetHasFeat(FEAT_PROTECTION_DOMAIN_POWER, oPC) +
+            GetHasFeat(FEAT_WAR_DOMAIN_POWER, oPC) >= 2)
+                SetLocalInt(oPC, "PRC_AllowCoC", 0);
+    }
 }
 
 void main()
@@ -975,6 +948,7 @@ void main()
      RacialHD(oPC);
      Virtuoso(oPC);
      Brimstone(oPC);
+     CoC(oPC);
      // Truly massive debug message flood if activated.
      /*
 

@@ -45,7 +45,7 @@ const int SPELL_THAYANKNIGHT_DAMAGE         = 2730;
 const int SPELL_MANATARMS_DAMAGE            = 2731;
 const int SPELL_KNIGHTCHALICE_DAMAGE        = 2733;
 const int SPELL_SWASH_DAMAGE                = 3210;
-const int SPELL_SWASH_DAMAGE_B              = 3211;
+const int SPELL_COC_DAMAGE                  = 3211;
 const int SPELL_OOTBI_GREATER_WEAPON_FOCUS  = 2436;
 const int SPELL_INTUITIVE_ATK               = 2090;
 const int SPELL_SHIFTING_EFFECTS            = 1918;
@@ -878,7 +878,7 @@ const int SPELL_MASS_HARM                           = 3218;
  const int SPELL_EF_SPELL_SELECT_QUICK4              = 2509;
  const int SPELL_EF_ARCANE_FIST                      = 2510;
  const int SPELL_EF_ARCANE_REJUVENATION              = 2511;
- 
+
 // Scrying Spells
 const int SPELL_SCRY                                = 3219;
 const int SPELL_GREATER_SCRYING                     = 3655;

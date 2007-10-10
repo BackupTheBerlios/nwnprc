@@ -26,9 +26,9 @@ void main()
     // If yes, +2 to Charisma Score during casting Lay On Hands
     // i.e. +1 bonus to Charisma Modifier
     if (GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_GOOD){
-       if (GetHasFeat(FEAT_HAND_HEALER)){
-          nChr = nChr + 1;
-       }
+        if (GetHasFeat(FEAT_HAND_HEALER)){
+            nChr = nChr + 1;
+        }
     }
     // End of Hand of Healer Code
 
@@ -41,12 +41,13 @@ void main()
     //--------------------------------------------------------------------------
     // July 2003: Add Divine Champion levels to lay on hands ability
     //--------------------------------------------------------------------------
-    nLevel = nLevel + GetLevelByClass(CLASS_TYPE_DIVINECHAMPION);
+    nLevel += GetLevelByClass(CLASS_TYPE_DIVINECHAMPION);
+    nLevel += GetLevelByClass(CLASS_TYPE_HOSPITALER);
+    nLevel += GetLevelByClass(CLASS_TYPE_COC);
 
     //--------------------------------------------------------------------------
     // March 2004: Add Hospitaler levels to lay on hands ability
     //--------------------------------------------------------------------------
-    nLevel = nLevel + GetLevelByClass(CLASS_TYPE_HOSPITALER);
 
     //--------------------------------------------------------------------------
     // Caluclate the amount to heal, min is 1 hp
@@ -106,9 +107,9 @@ void main()
     // A good-aligned paladin can use his lay on hands ability to damage undead creatures
     // having undead class levels qualifies as undead as well
     //--------------------------------------------------------------------------
- 
+
 if (GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_GOOD || GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_NEUTRAL)
-{   
+{
     if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD || GetLevelByClass(CLASS_TYPE_UNDEAD,oTarget)>0)
     {
         //Fire cast spell at event for the specified target

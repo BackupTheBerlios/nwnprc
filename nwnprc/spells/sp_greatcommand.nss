@@ -13,11 +13,11 @@ AoE: 30' Burst
 Duration: 1 Round/level
 Saving Throw: Will Negates
 Spell Resistance: Yes
- 
+
 You give the subjects a single command, which they obey to the best of their ability. At the beginning of each round, the targets get a new saving throw to end the effect.
 
 Approach - The target runs directly towards you for the duration of the spell.
-Drop - The target drops what it is holding (This will not work on creatures that cannot be disarmed). 
+Drop - The target drops what it is holding (This will not work on creatures that cannot be disarmed).
 Fall - The target falls to the ground for the duration of the spell.
 Flee - The target runs away from the caster for the duration of the spell.
 Halt - The target stands in place and takes no action for the duration of the spell.
@@ -35,28 +35,26 @@ void DoGreaterCommandRecursion(object oCaster, object oTarget, int nSpellId, int
     // Check for expiration
     if(nCurrentBeat <= nLastBeat && !GZGetDelayedSpellEffectsExpired(nSpellId, oTarget, oCaster))
     {
-    // On the first beat, just apply the Command effects
-    if (nCurrentBeat == 0)
-    {
-        // The duration is only one because this gets called every six seconds and reapplied if they fail the save)
-        DoCommandSpell(oCaster, oTarget, nSpellId, 1, nCaster);
-    }
-    else // They get a new saving throw to beat the spell
-    {
-        // Do the saving throw
-        if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
-        {       
-            // Apply the effects
-            DoCommandSpell(oCaster, oTarget, nSpellId, 1, nCaster);
-            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0, TRUE,-1,nCaster);
-        }
-        else // The spell fizzles, and this will shutdown on the next beat
+        // On the first beat, just apply the Command effects
+        if (nCurrentBeat == 0)
         {
-            RemoveEffectsFromSpell(oTarget, nSpellId);
+            // The duration is only one because this gets called every six seconds and reapplied if they fail the save)
+            DoCommandSpell(oCaster, oTarget, nSpellId, 1, nCaster);
         }
-    }
-
-
+        else // They get a new saving throw to beat the spell
+        {
+            // Do the saving throw
+            if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+            {
+                // Apply the effects
+                DoCommandSpell(oCaster, oTarget, nSpellId, 1, nCaster);
+                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0, TRUE,-1,nCaster);
+            }
+            else // The spell fizzles, and this will shutdown on the next beat
+            {
+                RemoveEffectsFromSpell(oTarget, nSpellId);
+            }
+        }
         // Schedule next impact
         DelayCommand(6.0f, DoGreaterCommandRecursion(oCaster, oTarget, nSpellId, nLastBeat, eLink, nDC, nCaster, (nCurrentBeat + 1)));
     }
@@ -65,51 +63,51 @@ void DoGreaterCommandRecursion(object oCaster, object oTarget, int nSpellId, int
 void main()
 {
     SPSetSchool(SPELL_SCHOOL_ENCHANTMENT);
-    
-    // Run the spellhook. 
+
+    // Run the spellhook.
     if (!X2PreSpellCastCode()) return;
-    
+
     //Define vars
-        object oCaster = OBJECT_SELF;
-        location lTarget = GetSpellTargetLocation();
-        int nSpellId = PRCGetSpellId();
-        int nMetaMagic = GetMetaMagicFeat();
-        int nCaster = PRCGetCasterLevel(OBJECT_SELF);
-        int nDuration = nCaster;
-        //Enter Metamagic conditions
+    object oCaster = OBJECT_SELF;
+    location lTarget = GetSpellTargetLocation();
+    int nSpellId = PRCGetSpellId();
+    int nMetaMagic = GetMetaMagicFeat();
+    int nCaster = PRCGetCasterLevel(OBJECT_SELF);
+    int nDuration = nCaster;
+    //Enter Metamagic conditions
     if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
     {
             nDuration = nDuration * 2; //Duration is +100%
     }
-    
-        effect eVis = EffectVisualEffect(VFX_IMP_CONFUSION_S);
-        effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DISABLED);
-        effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
-        effect eLink = EffectLinkEffects(eMind, eDur);
 
-        //Declare the spell shape, size and the location.  Capture the first target object in the shape.
-        object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), lTarget, TRUE, OBJECT_TYPE_CREATURE);
-        //Cycle through the targets within the spell shape until an invalid object is captured.
-        while (GetIsObjectValid(oTarget))
+    effect eVis = EffectVisualEffect(VFX_IMP_CONFUSION_S);
+    effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DISABLED);
+    effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
+    effect eLink = EffectLinkEffects(eMind, eDur);
+
+    //Declare the spell shape, size and the location.  Capture the first target object in the shape.
+    object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), lTarget, TRUE, OBJECT_TYPE_CREATURE);
+    //Cycle through the targets within the spell shape until an invalid object is captured.
+    while (GetIsObjectValid(oTarget))
+    {
+        if (spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE, OBJECT_SELF))
         {
-            if (spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE, OBJECT_SELF))
+            //Fire cast spell at event for the specified target
+            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
+            if (!MyPRCResistSpell(OBJECT_SELF, oTarget, nCaster+SPGetPenetr()))
             {
-                    //Fire cast spell at event for the specified target
-                    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
-                    if (!MyPRCResistSpell(OBJECT_SELF, oTarget, nCaster+SPGetPenetr()))
-                    {
-                            int nDC = PRCGetSaveDC(oTarget, oCaster);
-                    if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
-                    {                   
-                DoGreaterCommandRecursion(oCaster, oTarget, nSpellId, nDuration, eLink, nDC, nCaster);
-                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0, TRUE,-1,nCaster);
-                        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);                
+                int nDC = PRCGetSaveDC(oTarget, oCaster);
+                if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+                {
+                    DoGreaterCommandRecursion(oCaster, oTarget, nSpellId, nDuration, eLink, nDC, nCaster);
+                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0, TRUE,-1,nCaster);
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
                 }
-                }               
             }
-           //Select the next target within the spell shape.
-           oTarget = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), lTarget, TRUE, OBJECT_TYPE_CREATURE);
-        }   
-    
+        }
+       //Select the next target within the spell shape.
+       oTarget = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), lTarget, TRUE, OBJECT_TYPE_CREATURE);
+    }
+
     SPSetSchool();
-}   
+}

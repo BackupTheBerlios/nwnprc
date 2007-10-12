@@ -1,7 +1,7 @@
 2DA V2.0
 
    LABEL            ReqType ReqParam1    ReqParam2 
-0  Persuade         SKILL   45           4         
+0  Persuade         SKILL   12           4         
 1  Lore             SKILL   7            2         
 2  WeapProfMar      FEAT    45           ****      
 3  ArmProfHvy       FEAT    2            ****      

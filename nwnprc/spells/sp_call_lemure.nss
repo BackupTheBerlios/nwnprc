@@ -65,7 +65,7 @@ void main()
         while(nTotalControlled < nMaxHDControlled
             && i < nTotalCount)
         {
-            ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, lLoc, HoursToSeconds(24*12*30));
+            ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eSummon, lLoc);
             i++;    
             nTotalControlled = GetControlledFiendTotalHD(oPC);
         }
@@ -76,7 +76,7 @@ void main()
         //non-multisummon
         //this has a swarm type effect since dretches are useless individually        
         effect eSummon = EffectSwarm(TRUE, sResRef);
-        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, lLoc, HoursToSeconds(24));
+        ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eSummon, lLoc);
     }
     SPEvilShift(oPC);
     SPSetSchool();

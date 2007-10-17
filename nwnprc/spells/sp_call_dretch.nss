@@ -40,15 +40,15 @@ Created:   5/7/2006
 void main()
 {
     if(!X2PreSpellCastCode()) return;
-	  
+          
      SPSetSchool(SPELL_SCHOOL_CONJURATION);
-	  
-	  
+          
+          
     object oPC = OBJECT_SELF;
     int nCasterLvl = PRCGetCasterLevel(oPC);
     location lLoc = GetSpellTargetLocation();
     string sResRef = "prc_sum_dretch";
-    effect eModify = EffectModifyAttacks(2);	  
+    effect eModify = EffectModifyAttacks(2);      
 
     MultisummonPreSummon();
     if(GetPRCSwitch(PRC_MULTISUMMON))
@@ -65,7 +65,7 @@ void main()
         while(nTotalControlled < nMaxHDControlled
             && i < nTotalCount)
         {
-            ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, lLoc, HoursToSeconds(24*12*30));
+            ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, lLoc, HoursToSeconds(30));
             i++;    
             nTotalControlled = GetControlledFiendTotalHD(oPC);
         }
@@ -76,7 +76,7 @@ void main()
         //non-multisummon
         //this has a swarm type effect since dretches are useless individually        
         effect eSummon = EffectSwarm(TRUE, sResRef);
-        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, lLoc, HoursToSeconds(24));
+        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, lLoc, HoursToSeconds(30));
     }
     SPEvilShift(oPC);
     SPSetSchool();

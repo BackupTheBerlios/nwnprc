@@ -126,18 +126,18 @@ void CastDomainSpell(object oPC, int nSlot, int nLevel)
     // If there is no spell for that level, you cant cast it.
     if (nSpell == -1 && DEBUG)
     {
-    	FloatingTextStringOnCreature("GetDomainSpell returned an invalid spell", oPC, FALSE);
-    	return;
+        FloatingTextStringOnCreature("GetDomainSpell returned an invalid spell", oPC, FALSE);
+        return;
     }
 
     // Check to see if you can burn a spell of that slot or if the person has already
     // cast all of their level X spells for the day
     int nBurnSpell = GetBurnableSpell(oPC, nLevel);
-    
+
 // test CCox421
 
     if (nBurnSpell != -1)
-    { 
+    {
         // Burn the spell off, then cast the domain spell
         // Also, because of the iprop feats not having uses per day
         // set it so they can't cast again from that level
@@ -146,7 +146,7 @@ void CastDomainSpell(object oPC, int nSlot, int nLevel)
         ActionCastSpell(nSpell);
         return;
     }
-    
+
 
 // Case of other Divine Casting
 
@@ -154,7 +154,7 @@ void CastDomainSpell(object oPC, int nSlot, int nLevel)
 
     int nCount=-1;
     int nClass = PRCGetClassByPosition(1, oPC);
-    
+
     if (GetIsDivineClass(nClass, oPC) && (GetSpellbookTypeForClass(nClass)==SPELLBOOK_TYPE_SPONTANEOUS))
     {
         nCount=persistant_array_get_int(oPC, "NewSpellbookMem_" + IntToString(nClass), nLevel);
@@ -168,10 +168,10 @@ void CastDomainSpell(object oPC, int nSlot, int nLevel)
             nCount=persistant_array_get_int(oPC, "NewSpellbookMem_" + IntToString(nClass), nLevel);
         }
     }
-    
+
     if (nCount<1)
     {
-        nClass = PRCGetClassByPosition(3, oPC);  
+        nClass = PRCGetClassByPosition(3, oPC);
         if (GetIsDivineClass(nClass, oPC) && (GetSpellbookTypeForClass(nClass)==SPELLBOOK_TYPE_SPONTANEOUS))
         {
             nCount=persistant_array_get_int(oPC, "NewSpellbookMem_" + IntToString(nClass), nLevel);
@@ -202,7 +202,7 @@ void CastDomainSpell(object oPC, int nSlot, int nLevel)
 
     nClass = PRCGetClassByPosition(1, oPC);
     if (GetIsDivineClass(nClass, oPC) && (GetSpellbookTypeForClass(nClass)==SPELLBOOK_TYPE_PREPARED))
-    {  
+    {
        sFile = GetFileForClass(nClass);
        sArrayName = "NewSpellbookMem_"+IntToString(nClass);
        //sanity test
@@ -216,13 +216,13 @@ void CastDomainSpell(object oPC, int nSlot, int nLevel)
        nSpellLevel = 0;
 
        while((nUses<1)&&(nSpellLevel>=0))
-       {   
+       {
           nSpellbookID++;
           sSpellLevel = Get2DACache(sFile, "Level", nSpellbookID);
           if (sSpellLevel != "")
           {
              nSpellLevel = StringToInt(sSpellLevel);
-	    }
+        }
           else
           {
              nSpellLevel=-1;
@@ -232,8 +232,8 @@ void CastDomainSpell(object oPC, int nSlot, int nLevel)
              nUses = persistant_array_get_int(oPC, sArrayName, nSpellbookID);
           }
        }
-    }     
-    
+    }
+
     if(nUses <1)
     {
       nClass = PRCGetClassByPosition(2, oPC);
@@ -252,13 +252,13 @@ void CastDomainSpell(object oPC, int nSlot, int nLevel)
          nSpellLevel = 0;
 
          while((nUses<1)&&(nSpellLevel>=0))
-         {   
+         {
             nSpellbookID++;
             sSpellLevel = Get2DACache(sFile, "Level", nSpellbookID);
             if (sSpellLevel != "")
             {
                nSpellLevel = StringToInt(sSpellLevel);
-	      }
+          }
             else
             {
                nSpellLevel=-1;
@@ -269,8 +269,8 @@ void CastDomainSpell(object oPC, int nSlot, int nLevel)
             }
          }
       }
-    }     
-    
+    }
+
     if(nUses <1)
     {
       nClass = PRCGetClassByPosition(3, oPC);
@@ -289,13 +289,13 @@ void CastDomainSpell(object oPC, int nSlot, int nLevel)
          nSpellLevel = 0;
 
          while((nUses<1)&&(nSpellLevel>=0))
-         {   
+         {
             nSpellbookID++;
             sSpellLevel = Get2DACache(sFile, "Level", nSpellbookID);
             if (sSpellLevel != "")
             {
                nSpellLevel = StringToInt(sSpellLevel);
-	      }
+          }
             else
             {
                nSpellLevel=-1;
@@ -306,9 +306,9 @@ void CastDomainSpell(object oPC, int nSlot, int nLevel)
             }
          }
       }
-    }     
+    }
 
-    if(nUses>=1) 
+    if(nUses>=1)
     {
      if (DEBUG) DoDebug("Prepared slot lost by class" + IntToString(nClass));
      // Burn the spell off, then cast the domain spell
@@ -316,7 +316,7 @@ void CastDomainSpell(object oPC, int nSlot, int nLevel)
      // set it so they can't cast again from that level
     persistant_array_set_int(oPC, sArrayName, nSpellbookID, nUses-1);
      SetLocalInt(oPC, "DomainCastSpell" + IntToString(nLevel), TRUE);
-     ActionCastSpell(nSpell);
+     ActionCastSpell(nSpell, GetLevelByTypeDivine(oPC));
      return;
     }
 
@@ -452,75 +452,75 @@ int GetBurnableSpell(object oPC, int nLevel)
 
 int GetDomainFeat(int nDomain)
 {
-	// The -1 on nDomain is to adjust from a base 1 to a base 0 system.
-	// Returns the domain power feat
-	return StringToInt(Get2DACache("domains", "GrantedFeat", nDomain - 1));
+    // The -1 on nDomain is to adjust from a base 1 to a base 0 system.
+    // Returns the domain power feat
+    return StringToInt(Get2DACache("domains", "GrantedFeat", nDomain - 1));
 }
 
 int GetDomainFeatUsesPerDay(int nFeat, object oPC)
 {
-	int nUses = StringToInt(Get2DACache("feat", "USESPERDAY", nFeat));
-	// These are the domains that have ability based uses per day
-	if (nUses == -1)
-	{
-		// The Strength domain, which uses Strength when the Cleric has Kord levels
-		// Without Kord levels, its 1 use per day
-		if (nFeat == FEAT_STRENGTH_DOMAIN_POWER)
-		{
-			nUses = 1;
-			if (GetLevelByClass(CLASS_TYPE_MIGHTY_CONTENDER_KORD, oPC) > 0) nUses = GetAbilityModifier(ABILITY_STRENGTH, oPC);
-			// Catching exceptions
-			if (nUses < 1) nUses = 1;
-		}
-	
-		// All other ones so far are the Charisma based turning domains
-		nUses = 3 + GetAbilityModifier(ABILITY_CHARISMA, oPC);
-	}
-	
-	return nUses;
+    int nUses = StringToInt(Get2DACache("feat", "USESPERDAY", nFeat));
+    // These are the domains that have ability based uses per day
+    if (nUses == -1)
+    {
+        // The Strength domain, which uses Strength when the Cleric has Kord levels
+        // Without Kord levels, its 1 use per day
+        if (nFeat == FEAT_STRENGTH_DOMAIN_POWER)
+        {
+            nUses = 1;
+            if (GetLevelByClass(CLASS_TYPE_MIGHTY_CONTENDER_KORD, oPC) > 0) nUses = GetAbilityModifier(ABILITY_STRENGTH, oPC);
+            // Catching exceptions
+            if (nUses < 1) nUses = 1;
+        }
+
+        // All other ones so far are the Charisma based turning domains
+        nUses = 3 + GetAbilityModifier(ABILITY_CHARISMA, oPC);
+    }
+
+    return nUses;
 }
 
 int DecrementDomainUses(int nDomain, object oPC)
 {
-	int nReturn = TRUE;
-	int nUses = GetLocalInt(oPC, "BonusDomainUsesPerDay" + GetDomainName(nDomain));
-	// If there is still a valid use left, remove it
-	if (nUses >= 1) SetLocalInt(oPC, "BonusDomainUsesPerDay" + GetDomainName(nDomain), (nUses - 1));
-	// Tell the player how many uses he has left
-	else // He has no more uses for the day
-	{
-		nReturn = FALSE;
-	}
-	
-	FloatingTextStringOnCreature("You have " + IntToString(nUses - 1) + " uses per day left of the " + GetDomainName(nDomain) + " power.", oPC, FALSE);
+    int nReturn = TRUE;
+    int nUses = GetLocalInt(oPC, "BonusDomainUsesPerDay" + GetDomainName(nDomain));
+    // If there is still a valid use left, remove it
+    if (nUses >= 1) SetLocalInt(oPC, "BonusDomainUsesPerDay" + GetDomainName(nDomain), (nUses - 1));
+    // Tell the player how many uses he has left
+    else // He has no more uses for the day
+    {
+        nReturn = FALSE;
+    }
 
-	return nReturn;	
+    FloatingTextStringOnCreature("You have " + IntToString(nUses - 1) + " uses per day left of the " + GetDomainName(nDomain) + " power.", oPC, FALSE);
+
+    return nReturn;
 }
 
 int GetTurningDomain(int nSpell)
 {
-	int nDomain;
-	if (nSpell == SPELL_TURN_REPTILE) nDomain = DOMAIN_SCALEYKIND;
-	else if (nSpell == SPELL_TURN_OOZE) nDomain = DOMAIN_SLIME;
-	else if (nSpell == SPELL_TURN_SPIDER) nDomain = DOMAIN_SPIDER;
-	else if (nSpell == SPELL_TURN_PLANT) nDomain = DOMAIN_PLANT;
-	else if (nSpell == SPELL_TURN_AIR) nDomain = DOMAIN_AIR;
-	else if (nSpell == SPELL_TURN_EARTH) nDomain = DOMAIN_EARTH;
-	else if (nSpell == SPELL_TURN_FIRE) nDomain = DOMAIN_FIRE;
-	else if (nSpell == SPELL_TURN_WATER) nDomain = DOMAIN_WATER;
-	else if (nSpell == SPELL_TURN_BLIGHTSPAWNED) nDomain = DOMAIN_BLIGHTBRINGER;
-	
-	return nDomain;
+    int nDomain;
+    if (nSpell == SPELL_TURN_REPTILE) nDomain = DOMAIN_SCALEYKIND;
+    else if (nSpell == SPELL_TURN_OOZE) nDomain = DOMAIN_SLIME;
+    else if (nSpell == SPELL_TURN_SPIDER) nDomain = DOMAIN_SPIDER;
+    else if (nSpell == SPELL_TURN_PLANT) nDomain = DOMAIN_PLANT;
+    else if (nSpell == SPELL_TURN_AIR) nDomain = DOMAIN_AIR;
+    else if (nSpell == SPELL_TURN_EARTH) nDomain = DOMAIN_EARTH;
+    else if (nSpell == SPELL_TURN_FIRE) nDomain = DOMAIN_FIRE;
+    else if (nSpell == SPELL_TURN_WATER) nDomain = DOMAIN_WATER;
+    else if (nSpell == SPELL_TURN_BLIGHTSPAWNED) nDomain = DOMAIN_BLIGHTBRINGER;
+
+    return nDomain;
 }
 
 int GetHasDomain(object oPC, int nDomain)
 {
-	// Get the domain power feat for the appropriate domain
-	int nFeat = GetDomainFeat(nDomain);
-	// If they have the feat, return true
-	if (GetHasFeat(nFeat, oPC)) return TRUE;
-	
-	return FALSE;
+    // Get the domain power feat for the appropriate domain
+    int nFeat = GetDomainFeat(nDomain);
+    // If they have the feat, return true
+    if (GetHasFeat(nFeat, oPC)) return TRUE;
+
+    return FALSE;
 }
 
 void BonusDomainRest(object oPC)
@@ -531,17 +531,17 @@ void BonusDomainRest(object oPC)
     {
         DeleteLocalInt(oPC, "DomainCastSpell" + IntToString(i));
     }
-    
+
     // This is code to stop you from using the Domain per day abilities more than you should be able to
     int i2;
     // Highest domain constant is 59
     for (i2 = 1; i2 < 60; i2++)
     {
-    	// This is to ensure they only get the ints set for the domains they do have
-    	if (GetHasDomain(oPC, i2))
-    	{
-    		// Store the number of uses a day here
-        	SetLocalInt(oPC, "BonusDomainUsesPerDay" + GetDomainName(i2), GetDomainFeatUsesPerDay(GetDomainFeat(i2), oPC));
+        // This is to ensure they only get the ints set for the domains they do have
+        if (GetHasDomain(oPC, i2))
+        {
+            // Store the number of uses a day here
+            SetLocalInt(oPC, "BonusDomainUsesPerDay" + GetDomainName(i2), GetDomainFeatUsesPerDay(GetDomainFeat(i2), oPC));
         }
-    }    
+    }
 }

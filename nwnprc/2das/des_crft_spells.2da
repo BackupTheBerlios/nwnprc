@@ -3212,7 +3212,7 @@
 3208  Blur                                                      1163            0        0      0        2     0           
 3209  MirrorImage                                               1164            0        0      0        2     0           
 3210  Swashbuckler_damage                                       ****            1        1      1        0     0           
-3211  Swashbuckler_damage_2                                     ****            1        1      1        0     0           
+3211  CoC_damage                                                ****            1        1      1        0     0           
 3212  Insanity                                                  1165            1        1      0        7     0           
 3213  Mass_Inflict_Light_Wounds                                 929             0        0      0        5     0           
 3214  Mass_Inflict_Moderate_Wounds                              930             0        0      0        6     0           

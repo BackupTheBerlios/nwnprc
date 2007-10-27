@@ -3212,7 +3212,7 @@
 3208 Blur                                       prc_scr_1163     ****             ****             ****             ****         prc_scr_1163     
 3209 MirrorImage                                prc_scr_1164     ****             ****             ****             ****         prc_scr_1164     
 3210 Swashbuckler_damage                        ****             ****             ****             ****             ****         ****             
-3211 Swashbuckler_damage_2                      ****             ****             ****             ****             ****         ****             
+3211 CoC_damage                                 ****             ****             ****             ****             ****         ****             
 3212 Insanity                                   prc_scr_1165     ****             ****             ****             ****         ****             
 3213 Mass_Inflict_Light_Wounds                  ****             prc_scr_929      ****             ****             ****         ****             
 3214 Mass_Inflict_Moderate_Wounds               ****             prc_scr_930      ****             ****             ****         ****             

@@ -5,7 +5,7 @@
 
     By: Flaming_Sword
     Created: Oct 10, 2007
-    Modified: Oct 11, 2007
+    Modified: Oct 27, 2007
 
 */
 
@@ -22,6 +22,6 @@ void main()
     int nLevel = (GetLevelByClass(CLASS_TYPE_COC, oPC));
     effect eLink = EffectLinkEffects(EffectAttackIncrease(2, ATTACK_BONUS_ONHAND), EffectDamageIncrease(DAMAGE_BONUS_2d6, DAMAGE_TYPE_DIVINE));
     ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_SUPER_HEROISM), oPC);
-    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, 1.0);
+    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, 6.0);
 
 }

@@ -1025,8 +1025,8 @@ void DoDesertWindBoost(object oPC)
         DelayCommand(6.0, RemoveEventScript(oItem, EVENT_ITEM_ONHIT, "tob_dw_onhit", TRUE, FALSE));
         // Add the OnHit
         IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 6.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-        SetLocalInt(oPC, "DesertWindBoot", PRCGetSpellId());
-        DelayCommand(6.0, DeleteLocalInt(oPC, "DesertWindBoot"));
+        SetLocalInt(oPC, "DesertWindBoost", PRCGetSpellId());
+        DelayCommand(6.0, DeleteLocalInt(oPC, "DesertWindBoost"));
 }
 
 object GetCrusaderHealTarget(object oPC, float fDistance)

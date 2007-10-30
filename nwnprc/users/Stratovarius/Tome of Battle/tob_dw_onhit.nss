@@ -22,7 +22,7 @@ void main()
 	object oTarget = PRCGetSpellTargetObject();
 	object oItem   = GetSpellCastItem();
 	int nLevel     = GetInitiatorLevel(oPC, CLASS_TYPE_SWORDSAGE);
-	int nSpellId   = GetLocalInt(oPC, "DesertWindBoot");
+	int nSpellId   = GetLocalInt(oPC, "DesertWindBoost");
 	if(DEBUG) DoDebug("tob_dw_onhit: nSpellId " + IntToString(nSpellId));
 	effect eDam;
 	switch(nSpellId)
@@ -36,7 +36,13 @@ void main()
 		case MOVE_DW_SEARING_BLADE:
 		{
 			eDam = EffectDamage(d6(2) + nLevel, DAMAGE_TYPE_FIRE);
-			if(DEBUG) DoDebug("tob_dw_onhit: MOVE_DW_BURNING_BLADE");
+			if(DEBUG) DoDebug("tob_dw_onhit: MOVE_DW_SEARING_BLADE");
+			break;
+		}
+		case MOVE_DW_INFERNO_BLADE:
+		{
+			eDam = EffectDamage(d6(3) + nLevel, DAMAGE_TYPE_FIRE);
+			if(DEBUG) DoDebug("tob_dw_onhit: MOVE_DW_INFERNO_BLADE");
 			break;
 		}		
 	}

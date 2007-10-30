@@ -56,3 +56,4 @@ const int AOE_PER_BOLSTERING_VOICE              = 160;
 const int AOE_PER_LEADING_CHARGE                = 161;
 const int AOE_PER_ROOT_MOUNTAIN                 = 164;
 const int AOE_PER_TACTICS_WOLF                  = 165;
+const int AOE_PER_DESERT_TEMPEST                = 166;

@@ -11,6 +11,7 @@
     Holocaust Cloak
 
     Desert Wind (Stance) [Fire]
+    Level: Swordsage 3
     Prerequisite: One Desert Wind Maneuver
     Initiation Action: 1 Swift Action
     Range: Personal

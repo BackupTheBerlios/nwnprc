@@ -39,7 +39,7 @@
                          manifesting it.
 */
 
-#include "prc_alterations"
+#include "prc_craft_inc"
 
 int GetIsAlcohol(object oItem)
 {
@@ -147,38 +147,102 @@ int GetIsExempt(object oItem)
     return (GetIsAlcohol(oItem) || GetIsPoisonAmmo(oItem) || GetIsDyeKit(oItem));
 }
 
-void StoreObjects(object oCreature)
+
+//Stores the itemprops of an item in a persistent array
+void StoreItemprops(object oCreature, object oItem, int nObjectCount, int bRemove)
+{
+    string sItem = ObjectToString(oItem);
+    string sIP;
+    int nIpCount = 0;
+    itemproperty ip = GetFirstItemProperty(oItem);
+    persistant_array_set_object(oCreature, "PRC_NPF_ItemList_obj", nObjectCount, oItem);
+    persistant_array_set_string(oCreature, "PRC_NPF_ItemList_str", nObjectCount, sItem);
+    persistant_array_create(oCreature, "PRC_NPF_ItemList_" + sItem); //stores object strings
+    if(DEBUG) DoDebug("StoreItemprops: " + GetName(oCreature) + ", " + GetName(oItem) + ", " + sItem);
+    while(GetIsItemPropertyValid(ip))
+    {
+        if(GetItemPropertyDurationType(ip) == DURATION_TYPE_PERMANENT)
+        {   //only store the permanent ones as underscore delimited strings
+            sIP = IntToString(GetItemPropertyType(ip)) + "_" +
+                    IntToString(GetItemPropertySubType(ip)) + "_" +
+                    IntToString(GetItemPropertyCostTableValue(ip)) + "_" +
+                    IntToString(GetItemPropertyParam1Value(ip));
+            if(DEBUG) DoDebug("StoreItemprops: " + GetName(oCreature) + ", " + GetName(oItem) + ", " + sIP);
+            persistant_array_set_string(oCreature, "PRC_NPF_ItemList_" + sItem, nIpCount++, GetItemPropertyString(ip));
+        }
+        if(bRemove)
+            RemoveItemProperty(oItem, ip);
+        ip = GetNextItemProperty(oItem);
+    }
+}
+
+//Stores an array of objects and their itemprops
+void StoreObjects(object oCreature, int bRemove = TRUE)
 {
     int nSlotMax = INVENTORY_SLOT_CWEAPON_L;    //max slot number, to exempt creature items
     int i;
     int nObjectCount = 0;
     object oItem;
-    //SetPersistantLocalInt(oCreature, "PRC_NPF", TRUE);
-    persistant_array_create(oCreature, "PRC_NPF_ItemList");
+    persistant_array_create(oCreature, "PRC_NPF_ItemList_obj"); //stores objects
+    persistant_array_create(oCreature, "PRC_NPF_ItemList_str"); //stores object strings
 
-    for(i = 0; i < nSlotMax; i++)
+    for(i = 0; i < nSlotMax; i++)   //equipped items
     {
         oItem = GetItemInSlot(i, oCreature);
         if(GetIsObjectValid(oItem) && !GetIsExempt(oItem))
         {
             if((i < INVENTORY_SLOT_ARROWS && i > INVENTORY_SLOT_BOLTS) || !GetIsPoisonAmmo(oItem))  //ammo placeholders
             {
-                //stuff here;
+                StoreItemprops(oCreature, oItem, nObjectCount++, bRemove);
             }
         }
     }
+    oItem = GetFirstItemInInventory(oCreature);
+    while(GetIsObjectValid(oItem) && !GetIsExempt(oItem))
+    {
+        StoreItemprops(oCreature, oItem, nObjectCount++, bRemove);
+        oItem = GetNextItemInInventory(oCreature);
+    }
 }
 
-
+//Restores object itemprops
+void RestoreObjects(object oCreature)
+{
+    int i = 0;
+    int j = 0;
+    int nIP = 0;
+    object oItem;
+    string sItem;
+    itemproperty ip;
+    struct ipstruct iptemp;
+    int nSize = persistant_array_get_size(oCreature, "PRC_NPF_ItemList_obj");
+    for(i = 0; i < nSize; i++)
+    {
+        oItem = persistant_array_get_object(oCreature, "PRC_NPF_ItemList_obj", i);
+        sItem = persistant_array_get_string(oCreature, "PRC_NPF_ItemList_str", i);
+        if(DEBUG) DoDebug("RestoreObjects: " + GetName(oCreature) + ", " + GetName(oItem) + ", " + sItem);
+        nIP = persistant_array_get_size(oCreature, "PRC_NPF_ItemList_" + sItem);
+        for(j = 0; j < nIP; j++)
+        {
+            iptemp = GetIpStructFromString(persistant_array_get_string(oCreature, "PRC_NPF_ItemList_" + sItem, j));
+            ip = ConstructIP(iptemp.type, iptemp.subtype, iptemp.costtablevalue, iptemp.param1value);
+            IPSafeAddItemProperty(oItem, ip, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+            if(DEBUG) DoDebug("RestoreObjects: " + GetName(oCreature) + ", " + GetName(oItem) + ", " + GetItemPropertyString(ip));
+        }
+        persistant_array_delete(oCreature, "PRC_NPF_ItemList_" + sItem);
+    }
+    persistant_array_delete(oCreature, "PRC_NPF_ItemList_obj");
+    persistant_array_delete(oCreature, "PRC_NPF_ItemList_str");
+}
 
 void main()
-{
-    object oEnter = GetEnteringObject();
-    if(GetObjectType(oEnter) == OBJECT_TYPE_CREATURE && GetPersistentLocalInt(oEnter, "NullPsionicsField"))
+{   //testing code
+    object oEnter = GetFirstPC();   //GetEnteringObject();
+    if(GetObjectType(oEnter) == OBJECT_TYPE_CREATURE && !GetPlotFlag(oEnter) && !GetIsDM(oEnter) && !GetPersistantLocalInt(oEnter, "NullPsionicsField"))
     {
         if(DEBUG) DoDebug("psi_pow_npfent: Creatured entered Null Psionics Field: " + DebugObject2Str(oEnter));
-
-        SetPersistentLocalInt(oEnter, "NullPsionicsField", TRUE);
+        /*
+        SetPersistantLocalInt(oEnter, "NullPsionicsField", TRUE);
 
         // Set the marker variable
         SetLocalInt(oEnter, "NullPsionicsField", TRUE);
@@ -189,9 +253,11 @@ void main()
         // Apply absolute spell failure
         effect eSpellFailure = EffectSpellFailure(100, SPELL_SCHOOL_GENERAL);
         ApplyEffectToObject(DURATION_TYPE_PERMANENT, eSpellFailure, oEnter);
-
+        */
         // Store itemproperties and remove them from objects
         StoreObjects(oEnter);
 
+        // Restore objects
+        RestoreObjects(oEnter);
     }
 }

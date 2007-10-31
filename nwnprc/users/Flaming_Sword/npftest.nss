@@ -168,7 +168,7 @@ void StoreItemprops(object oCreature, object oItem, int nObjectCount, int bRemov
                     IntToString(GetItemPropertyCostTableValue(ip)) + "_" +
                     IntToString(GetItemPropertyParam1Value(ip));
             if(DEBUG) DoDebug("StoreItemprops: " + GetName(oCreature) + ", " + GetName(oItem) + ", " + sIP);
-            persistant_array_set_string(oCreature, "PRC_NPF_ItemList_" + sItem, nIpCount++, GetItemPropertyString(ip));
+            persistant_array_set_string(oCreature, "PRC_NPF_ItemList_" + sItem, nIpCount++, sIP);
         }
         if(bRemove)
             RemoveItemProperty(oItem, ip);

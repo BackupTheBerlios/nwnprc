@@ -6,6 +6,10 @@
    ----------------
 
    6/10/05 by Stratovarius
+
+   Null Psionics Field Testing Code
+   Modified: Nov 1, 2007 - Flaming_Sword
+
 */ /** @file
 
     Null Psionics Field - OnEnter

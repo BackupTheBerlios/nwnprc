@@ -6,6 +6,7 @@
    ----------------
 
    6/10/05 by Stratovarius
+   Modified: Nov 1, 2007 - Flaming_Sword
 */ /** @file
 
     Null Psionics Field - OnEnter
@@ -147,7 +148,6 @@ int GetIsExempt(object oItem)
     return (GetIsAlcohol(oItem) || GetIsPoisonAmmo(oItem) || GetIsDyeKit(oItem));
 }
 
-
 //Stores the itemprops of an item in a persistent array
 void StoreItemprops(object oCreature, object oItem, int nObjectCount, int bRemove)
 {
@@ -207,51 +207,13 @@ void StoreObjects(object oCreature, int bRemove = TRUE)
     }
 }
 
-//Restores object itemprops
-void RestoreObjects(object oCreature)
-{
-    int i = 0;
-    int j = 0;
-    int nIP = 0;
-    object oItem;
-    string sItem;
-    itemproperty ip;
-    string sIP;
-    struct ipstruct iptemp;
-    string sCreature = GetName(oCreature);
-    string sItemName;
-    int nSize = persistant_array_get_size(oCreature, "PRC_NPF_ItemList_obj");
-    for(i = 0; i < nSize; i++)
-    {
-        oItem = persistant_array_get_object(oCreature, "PRC_NPF_ItemList_obj", i);
-        sItem = persistant_array_get_string(oCreature, "PRC_NPF_ItemList_str", i);
-        sItemName = GetName(oItem);
-        if(DEBUG)
-        {
-            DoDebug("RestoreObjects: " + sCreature + ", " + sItemName + ", " + sItem + ", " + ObjectToString(oItem));
-        }
-        nIP = persistant_array_get_size(oCreature, "PRC_NPF_ItemList_" + sItem);
-        for(j = 0; j < nIP; j++)
-        {
-            sIP = persistant_array_get_string(oCreature, "PRC_NPF_ItemList_" + sItem, j);
-            iptemp = GetIpStructFromString(sIP);
-            ip = ConstructIP(iptemp.type, iptemp.subtype, iptemp.costtablevalue, iptemp.param1value);
-            IPSafeAddItemProperty(oItem, ip, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
-            if(DEBUG) DoDebug("RestoreObjects: " + sCreature + ", " + sItem + ", " + sIP);
-        }
-        persistant_array_delete(oCreature, "PRC_NPF_ItemList_" + sItem);
-    }
-    persistant_array_delete(oCreature, "PRC_NPF_ItemList_obj");
-    persistant_array_delete(oCreature, "PRC_NPF_ItemList_str");
-}
-
 void main()
 {   //testing code
     object oEnter = GetFirstPC();   //GetEnteringObject();
     if(GetObjectType(oEnter) == OBJECT_TYPE_CREATURE && !GetPlotFlag(oEnter) && !GetIsDM(oEnter) && !GetPersistantLocalInt(oEnter, "NullPsionicsField"))
     {
         if(DEBUG) DoDebug("psi_pow_npfent: Creatured entered Null Psionics Field: " + DebugObject2Str(oEnter));
-        /*
+
         SetPersistantLocalInt(oEnter, "NullPsionicsField", TRUE);
 
         // Set the marker variable
@@ -263,11 +225,9 @@ void main()
         // Apply absolute spell failure
         effect eSpellFailure = EffectSpellFailure(100, SPELL_SCHOOL_GENERAL);
         ApplyEffectToObject(DURATION_TYPE_PERMANENT, eSpellFailure, oEnter);
-        */
+
         // Store itemproperties and remove them from objects
         StoreObjects(oEnter);
 
-        // Restore objects
-        RestoreObjects(oEnter);
     }
 }

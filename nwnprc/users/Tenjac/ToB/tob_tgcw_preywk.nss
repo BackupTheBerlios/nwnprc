@@ -1,10 +1,25 @@
 //////////////////////////////////////////////////
-//
-//
-//
+//  Prey on the Weak
+//  tob_tgcw_preywk.nss
+//  Tenjac  10/19/07
 //////////////////////////////////////////////////
-/** @file 
+/** @file Prey on the Weak
+Tiger Claw (Stance)
+Level: Swordsage 7, warblade 7
+Prerequisite: Two Tiger Claw maneuvers
+Initiation Action: 1 swift action
+Range: Personal
+Target: You
+Duration: Stance
 
+You scythe through weaker foes like a mighty predator turned loose among a herd of prey.
+
+With each foe you strike, your bloodlust and battle fury rises ever higher. After a brief
+moment of explosive rage, the foes around you are left bloodied, torn, and moaning.
+
+Whenever an opponent within 10 feet of you drops to -1 or fewer hit points, whether from your
+attack, an ally's strike, or some other cause, you can immediately make an attack of opportunity
+against any opponent within your threatened area.
 */
 
 #include "tob_inc_tobfunc"

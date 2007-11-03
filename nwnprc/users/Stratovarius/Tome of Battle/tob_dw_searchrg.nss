@@ -1,6 +1,6 @@
 /*
    ----------------
-   Searing Blade
+   Searing Charge
 
    tob_dw_searchrg.nss
    ----------------
@@ -8,11 +8,11 @@
     19/08/07 by Stratovarius
 */ /** @file
 
-    Searing Blade
+    Searing Charge
 
     Desert Wind (Strike) [Fire]
     Level: Swordsage 4
-    Prerequisite: One Desert Wind Maneuvers
+    Prerequisite: One Desert Wind maneuver
     Initiation Action: 1 Full-round action
     Range: Personal.
     Target: You.

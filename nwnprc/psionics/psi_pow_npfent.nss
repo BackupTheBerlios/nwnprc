@@ -6,6 +6,7 @@
    ----------------
 
    6/10/05 by Stratovarius
+   Modified: Nov 1, 2007 - Flaming_Sword
 */ /** @file
 
     Null Psionics Field - OnEnter
@@ -20,38 +21,26 @@
     Power Resistance: See text
     Power Points: 11
     Metapsionics: Extend, Widen
-    
-    An invisible barrier surrounds you and moves with you. The space within this 
-    barrier is impervious to most psionic effects, including powers, psi-like 
-    abilities, and supernatural abilities. Likewise, it prevents the functioning 
-    of any psionic items or powers within its confines. A null psionics field 
-    negates any power or psionic effect used within, brought into, or manifested 
+
+    An invisible barrier surrounds you and moves with you. The space within this
+    barrier is impervious to most psionic effects, including powers, psi-like
+    abilities, and supernatural abilities. Likewise, it prevents the functioning
+    of any psionic items or powers within its confines. A null psionics field
+    negates any power or psionic effect used within, brought into, or manifested
     into its area.
-    
-    Dispel psionics does not remove the field. Two or more null psionics fields 
-    sharing any of the same space have no effect on each other. Certain powers 
-    may be unaffected by null psionics field (see the individual power 
+
+    Dispel psionics does not remove the field. Two or more null psionics fields
+    sharing any of the same space have no effect on each other. Certain powers
+    may be unaffected by null psionics field (see the individual power
     descriptions).
-    
-    
-    Implementation note: To dismiss the power, use the control feat again. If 
-                         the power is active, that will end it instead of 
+
+
+    Implementation note: To dismiss the power, use the control feat again. If
+                         the power is active, that will end it instead of
                          manifesting it.
 */
 
-#include "prc_alterations"
-
-object GetChest(object oCreature)
-{
-    object oChest = GetObjectByTag("npf_chest" + ObjectToString(oCreature));
-    if(oChest == OBJECT_INVALID)
-    {
-        object oWP = GetWaypointByTag("npf_wp_chest_sp");
-        oChest = CreateObject(OBJECT_TYPE_PLACEABLE, "npf_keep_chest", GetLocation(oWP), FALSE,
-                    "npf_chest" + ObjectToString(oCreature));
-    }
-    return oChest;
-}
+#include "prc_craft_inc"
 
 int GetIsAlcohol(object oItem)
 {
@@ -96,56 +85,6 @@ int GetIsDyeKit(object oItem)
         return FALSE;
     }
     return FALSE;
-}
-
-void RemoveAllProperties(object oItem, object oPC)
-{
-    if(DEBUG) DoDebug("psi_pow_npfent: About to remove properties from item: " + DebugObject2Str(oItem));
-
-    int nType = GetBaseItemType(oItem);
-    if(nType == BASE_ITEM_TORCH ||
-       nType == BASE_ITEM_TRAPKIT ||
-       nType == BASE_ITEM_HEALERSKIT ||
-       nType == BASE_ITEM_GRENADE ||
-       nType == BASE_ITEM_THIEVESTOOLS ||
-       nType == 109 || // crafting stuff
-       nType == 110 ||
-       nType == 112)
-        return;
-
-    if(GetIsAlcohol(oItem) || GetIsPoisonAmmo(oItem) || GetIsDyeKit(oItem))
-        return;
-    if(oItem == OBJECT_INVALID)
-        return;
-
-    object oWP = GetWaypointByTag("npf_wp_chest_sp");
-
-    // Generate UID
-    int nKey = GetLocalInt(GetModule(), "PRC_NullPsionicsField_Item_UID_Counter") + 1;
-               SetLocalInt(GetModule(), "PRC_NullPsionicsField_Item_UID_Counter", nKey);
-    string sKey = IntToString(nKey);
-    if(DEBUG) DoDebug("prc_pow_npfent: Removing itemproperties from item " + DebugObject2Str(oItem) + " with key value of '" + sKey + "' of creature " + DebugObject2Str(oPC));
-
-    //object oChest = GetChest(oPC);
-    //object oCopy = CopyObject(oItem, GetLocation(oChest), oChest);
-
-    // copying  original item to a secluded waypoint in the area
-    // and giving it a tag that contains the key string
-    object oCopy = CopyObject(oItem, GetLocation(oWP), OBJECT_INVALID, "npf_item" + sKey);
-
-    //storing the key value on the original item (key value would point to the copy item)
-    SetLocalString(oItem, "PRC_NullPsionicsField_Item_UID", sKey);
-
-    //SetLocalObject(oItem, "ITEM_CHEST", oChest); // so the chest can be found
-    //SetLocalObject(oChest, sKey, oCopy); // and referenced in the chest
-
-    // Stripping original item from all properties
-    itemproperty ip = GetFirstItemProperty(oItem);
-    while(GetIsItemPropertyValid(ip))
-    {
-        RemoveItemProperty(oItem, ip);
-        ip = GetNextItemProperty(oItem);
-    }
 }
 
 void RemoveEffectsNPF(object oObject)
@@ -199,64 +138,96 @@ void RemoveEffectsNPF(object oObject)
             )
            )
             RemoveEffect(oObject, eEff);
-        
+
         eEff = GetNextEffect(oObject);
     }
 }
 
-void main()
+int GetIsExempt(object oItem)
 {
-    object oEnter = GetEnteringObject();
+    return (GetIsAlcohol(oItem) || GetIsPoisonAmmo(oItem) || GetIsDyeKit(oItem));
+}
 
-    if(GetObjectType(oEnter) == OBJECT_TYPE_CREATURE)
+//Stores the itemprops of an item in a persistent array
+void StoreItemprops(object oCreature, object oItem, int nObjectCount, int bRemove)
+{
+    string sItem = ObjectToString(oItem);
+    string sIP;
+    int nIpCount = 0;
+    itemproperty ip = GetFirstItemProperty(oItem);
+    string sCreature = GetName(oCreature);
+    string sItemName = GetName(oItem);
+    persistant_array_set_object(oCreature, "PRC_NPF_ItemList_obj", nObjectCount, oItem);
+    persistant_array_set_string(oCreature, "PRC_NPF_ItemList_str", nObjectCount, sItem);
+    persistant_array_create(oCreature, "PRC_NPF_ItemList_" + sItem); //stores object strings
+    if(DEBUG) DoDebug("StoreItemprops: " + sCreature + ", " + sItemName + ", " + sItem);
+    while(GetIsItemPropertyValid(ip))
+    {
+        if(GetItemPropertyDurationType(ip) == DURATION_TYPE_PERMANENT)
+        {   //only store the permanent ones as underscore delimited strings
+            sIP = IntToString(GetItemPropertyType(ip)) + "_" +
+                    IntToString(GetItemPropertySubType(ip)) + "_" +
+                    IntToString(GetItemPropertyCostTableValue(ip)) + "_" +
+                    IntToString(GetItemPropertyParam1Value(ip));
+            if(DEBUG) DoDebug("StoreItemprops: " + sCreature + ", " + sItem + ", " + sIP);
+            persistant_array_set_string(oCreature, "PRC_NPF_ItemList_" + sItem, nIpCount++, sIP);
+        }
+        if(bRemove)
+            RemoveItemProperty(oItem, ip);
+        ip = GetNextItemProperty(oItem);
+    }
+}
+
+//Stores an array of objects and their itemprops
+void StoreObjects(object oCreature, int bRemove = TRUE)
+{
+    int nSlotMax = INVENTORY_SLOT_CWEAPON_L;    //max slot number, to exempt creature items
+    int i;
+    int nObjectCount = 0;
+    object oItem;
+    persistant_array_create(oCreature, "PRC_NPF_ItemList_obj"); //stores objects
+    persistant_array_create(oCreature, "PRC_NPF_ItemList_str"); //stores object strings
+
+    for(i = 0; i < nSlotMax; i++)   //equipped items
+    {
+        oItem = GetItemInSlot(i, oCreature);
+        if(GetIsObjectValid(oItem) && !GetIsExempt(oItem))
+        {
+            if((i < INVENTORY_SLOT_ARROWS && i > INVENTORY_SLOT_BOLTS) || !GetIsPoisonAmmo(oItem))  //ammo placeholders
+            {
+                StoreItemprops(oCreature, oItem, nObjectCount++, bRemove);
+            }
+        }
+    }
+    oItem = GetFirstItemInInventory(oCreature);
+    while(GetIsObjectValid(oItem) && !GetIsExempt(oItem))
+    {
+        StoreItemprops(oCreature, oItem, nObjectCount++, bRemove);
+        oItem = GetNextItemInInventory(oCreature);
+    }
+}
+
+void main()
+{   //testing code
+    object oEnter = GetFirstPC();   //GetEnteringObject();
+    if(GetObjectType(oEnter) == OBJECT_TYPE_CREATURE && !GetPlotFlag(oEnter) && !GetIsDM(oEnter) && !GetPersistantLocalInt(oEnter, "NullPsionicsField"))
     {
         if(DEBUG) DoDebug("psi_pow_npfent: Creatured entered Null Psionics Field: " + DebugObject2Str(oEnter));
-        
+
+        SetPersistantLocalInt(oEnter, "NullPsionicsField", TRUE);
+
         // Set the marker variable
         SetLocalInt(oEnter, "NullPsionicsField", TRUE);
-        
+
         // Remove all non-extraordinary effects
         RemoveEffectsNPF(oEnter);
-        
+
         // Apply absolute spell failure
         effect eSpellFailure = EffectSpellFailure(100, SPELL_SCHOOL_GENERAL);
         ApplyEffectToObject(DURATION_TYPE_PERMANENT, eSpellFailure, oEnter);
-        
-        
-        // Handle all items in inventory:
-        object oItem = GetFirstItemInInventory(oEnter);
-        while(oItem != OBJECT_INVALID)
-        {
-            RemoveAllProperties(oItem, oEnter);
-            oItem = GetNextItemInInventory(oEnter);
-        }
-        oItem = GetItemInSlot(INVENTORY_SLOT_ARMS, oEnter);
-        RemoveAllProperties(oItem, oEnter);
-        oItem = GetItemInSlot(INVENTORY_SLOT_ARROWS, oEnter);
-        RemoveAllProperties(oItem, oEnter);
-        oItem = GetItemInSlot(INVENTORY_SLOT_BELT, oEnter);
-        RemoveAllProperties(oItem, oEnter);
-        oItem = GetItemInSlot(INVENTORY_SLOT_BOLTS, oEnter);
-        RemoveAllProperties(oItem, oEnter);
-        oItem = GetItemInSlot(INVENTORY_SLOT_BOOTS, oEnter);
-        RemoveAllProperties(oItem, oEnter);
-        oItem = GetItemInSlot(INVENTORY_SLOT_BULLETS, oEnter);
-        RemoveAllProperties(oItem, oEnter);
-        oItem = GetItemInSlot(INVENTORY_SLOT_CHEST, oEnter);
-        RemoveAllProperties(oItem, oEnter);
-        oItem = GetItemInSlot(INVENTORY_SLOT_CLOAK, oEnter);
-        RemoveAllProperties(oItem, oEnter);
-        oItem = GetItemInSlot(INVENTORY_SLOT_HEAD, oEnter);
-        RemoveAllProperties(oItem, oEnter);
-        oItem = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oEnter);
-        RemoveAllProperties(oItem, oEnter);
-        oItem = GetItemInSlot(INVENTORY_SLOT_LEFTRING, oEnter);
-        RemoveAllProperties(oItem, oEnter);
-        oItem = GetItemInSlot(INVENTORY_SLOT_NECK, oEnter);
-        RemoveAllProperties(oItem, oEnter);
-        oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oEnter);
-        RemoveAllProperties(oItem, oEnter);
-        oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTRING, oEnter);
-        RemoveAllProperties(oItem, oEnter);
+
+        // Store itemproperties and remove them from objects
+        StoreObjects(oEnter);
+
     }
 }

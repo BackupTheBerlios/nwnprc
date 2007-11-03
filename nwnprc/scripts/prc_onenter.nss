@@ -1,3 +1,4 @@
+/*
 #include "prc_alterations"
 #include "inc_leto_prc"
 #include "x2_inc_switches"
@@ -6,6 +7,8 @@
 #include "prc_inc_domain"
 #include "prc_inc_shifting"
 #include "true_inc_trufunc"
+*/
+#include "prc_craft_inc"
 
 /**
  * Reads the 2da file onenter_locals.2da and sets local variables
@@ -255,6 +258,9 @@ void main()
 
     // Set up local variables based on a 2da file
     DoAutoLocals(oPC);
+
+    if(GetPersistantLocalInt(oPC, "NullPsionicsField")) //NPF persistence
+        RestoreObjects(oPC);
 
     // Execute scripts hooked to this event for the player triggering it
     //How can this work? The PC isnt a valid object before this. - Primogenitor

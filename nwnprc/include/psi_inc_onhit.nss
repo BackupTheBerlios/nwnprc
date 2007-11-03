@@ -24,9 +24,9 @@ void MindStab(object oPC, object oTarget);
 
 void SweepingStrike(object oCaster, object oTarget)
 {
-	int nValidTarget = FALSE;
-	location lTarget = GetLocation(oTarget);
-	// Use the function to get the closest creature as a target
+    int nValidTarget = FALSE;
+    location lTarget = GetLocation(oTarget);
+    // Use the function to get the closest creature as a target
         object oAreaTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lTarget, TRUE, OBJECT_TYPE_CREATURE);
         while(GetIsObjectValid(oAreaTarget) && !nValidTarget && !GetLocalInt(oCaster, "SweepingStrikeDelay"))
         {
@@ -36,18 +36,18 @@ void SweepingStrike(object oCaster, object oTarget)
             if(oAreaTarget != oCaster &&
                GetIsInMeleeRange(oAreaTarget, oCaster) &&
                GetIsInMeleeRange(oAreaTarget, oTarget) &&
-               GetIsEnemy(oTarget) && 
+               GetIsReactionTypeHostile(oTarget, oCaster) &&
                oAreaTarget != oTarget)
             {
                 // Perform the Attack
- 		effect eVis = EffectVisualEffect(VFX_IMP_STUN);
- 		object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oCaster);
-		PerformAttack(oAreaTarget, oCaster, eVis, 0.0, 0, 0, GetWeaponDamageType(oWeap), "Sweeping Strike Hit", "Sweeping Strike Miss");
-		if(DEBUG) DoDebug("psi_onhit: Sweeping Strike Loop Running");
-		// End the loop, and prevent the death attack
-		SetLocalInt(oCaster, "SweepingStrikeDelay", TRUE);
-    		DelayCommand(2.0, DeleteLocalInt(oCaster, "SweepingStrikeDelay"));
-		nValidTarget = TRUE;
+        effect eVis = EffectVisualEffect(VFX_IMP_STUN);
+        object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oCaster);
+        PerformAttack(oAreaTarget, oCaster, eVis, 0.0, 0, 0, GetWeaponDamageType(oWeap), "Sweeping Strike Hit", "Sweeping Strike Miss");
+        if(DEBUG) DoDebug("psi_onhit: Sweeping Strike Loop Running");
+        // End the loop, and prevent the death attack
+        SetLocalInt(oCaster, "SweepingStrikeDelay", TRUE);
+            DelayCommand(2.0, DeleteLocalInt(oCaster, "SweepingStrikeDelay"));
+        nValidTarget = TRUE;
             }
 
             //Select the next target within the spell shape.
@@ -57,12 +57,12 @@ void SweepingStrike(object oCaster, object oTarget)
 
 void MindStab(object oPC, object oTarget)
 {
-	SetLocalInt(oPC, "ShadowCloudMind", TRUE);
-	SetLocalObject(oPC, "PsionicTarget", oTarget);
-	int nClass = GetFirstPsionicClass(oPC);
-	//UsePower(POWER_CLOUD_MIND, nClass);
-	// Trying this for now
-	ActionCastSpell(POWER_CLOUD_MIND);
-	DelayCommand(1.0, DeleteLocalInt(oPC, "ShadowCloudMind"));
-	DelayCommand(1.0, DeleteLocalObject(oPC, "PsionicTarget"));
+    SetLocalInt(oPC, "ShadowCloudMind", TRUE);
+    SetLocalObject(oPC, "PsionicTarget", oTarget);
+    int nClass = GetFirstPsionicClass(oPC);
+    //UsePower(POWER_CLOUD_MIND, nClass);
+    // Trying this for now
+    ActionCastSpell(POWER_CLOUD_MIND);
+    DelayCommand(1.0, DeleteLocalInt(oPC, "ShadowCloudMind"));
+    DelayCommand(1.0, DeleteLocalObject(oPC, "PsionicTarget"));
 }

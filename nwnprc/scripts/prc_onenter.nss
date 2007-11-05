@@ -297,7 +297,7 @@ void main()
 
     if(GetPersistantLocalInt(oPC, "NullPsionicsField")) //NPF persistence
     {
-        DeleteLocalInt(oExit, "NullPsionicsField");
+        DeleteLocalInt(oPC, "NullPsionicsField");
         RestoreObjects(oPC);
     }
 

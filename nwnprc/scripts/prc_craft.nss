@@ -6,7 +6,7 @@
 
     By: Flaming_Sword
     Created: Jul 12, 2006
-    Modified: Mar 11, 2007
+    Modified: Nov 5, 2007
 
     LIMITATIONS:
         ITEM_PROPERTY_BONUS_FEAT
@@ -791,15 +791,15 @@ void main()
                     AllowExit(DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, FALSE, oPC);
                     int nCostDiff;
                     int nXPDiff = 0;
+                    struct itemvars strTempOld, strTempNew;
                     if(GetCraftingFeat(oItem) == FEAT_CRAFT_ARMS_ARMOR)
                     {
                         ApplyItemProps(oNewItem, sFile, nLine);
-                        struct itemvars strTempOld;
                         strTempOld.item = oItem;
                         strTempOld.enhancement = nEnhancement;
                         strTempOld.additionalcost = nAdditional;
                         strTempOld.epic = nEpic;
-                        struct itemvars strTempNew = GetItemVars(oPC, oNewItem, sFile);
+                        strTempNew = GetItemVars(oPC, oNewItem, sFile);
                         if(nEnhancement > 10 || strTempNew.enhancement > 10) strTempNew.epic = TRUE;
                         int nCostOld = GetPnPItemCost(strTempOld);
                         int nCostNew = GetPnPItemCost(strTempNew);
@@ -848,7 +848,7 @@ void main()
                     int nMinXP = nHD * (nHD - 1) * 500;
                     int nCurrentXP = GetXP(oPC);
 
-                    if(GetGold(oPC) >= nCostDiff && (nCurrentXP - nMinXP) >= nXPDiff)
+                    if(GetGold(oPC) >= nCostDiff && (nCurrentXP - nMinXP) >= nXPDiff && CheckPrereq(oPC, nLine, nEpic, sFile, strTempNew))
                         AddChoice(ActionString("Confirm"), CHOICE_CONFIRM, oPC);
                     SetLocalInt(oPC, PRC_CRAFT_COST, nCostDiff);
                     SetLocalInt(oPC, PRC_CRAFT_XP, nXPDiff);

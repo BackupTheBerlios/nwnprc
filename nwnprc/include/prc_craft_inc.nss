@@ -5,7 +5,7 @@
 
     By: Flaming_Sword
     Created: Jul 12, 2006
-    Modified: Mar 11, 2007
+    Modified: Nov 5, 2007
 
     GetItemPropertySubType() returns 0 or 65535, not -1
         on no subtype as in Lexicon
@@ -846,6 +846,106 @@ int CheckCraftingPowerPoints(object oPC, string sFile, int nLine, int bDecrement
     return TRUE;
 }
 
+int CheckPrereq(object oPC, int nLine, int bEpic, string sFile, struct itemvars strTemp)
+{
+    if(GetLocalInt(oPC, PRC_CRAFT_TOKEN))
+        return TRUE;
+    int bBreak = FALSE;
+    int nLevel;
+    int j = 0;
+    int nCasterLevel = max(GetLevelByTypeArcane(oPC), GetLevelByTypeDivine(oPC));
+    int nManifesterLevel = GetManifesterLevel(oPC);
+    int nTemp, nLength, nPosition;
+    string sPropertyType = Get2DACache(sFile, "PropertyType", nLine);
+    string sTemp, sSub;
+    if(sPropertyType == "M")
+        nLevel = nCasterLevel;
+    else if(sPropertyType == "P")
+        nLevel = nManifesterLevel;
+    else
+        nLevel = max(nCasterLevel, nManifesterLevel);
+    if(!bEpic && Get2DACache(sFile, "Epic", nLine) == "1")
+        return FALSE;
+    else if(nLevel < StringToInt(Get2DACache(sFile, "Level", nLine)))
+        return FALSE;
+    else if(!bEpic && ((StringToInt(Get2DACache(sFile, "Enhancement", nLine)) + strTemp.enhancement) > 10))
+        return FALSE;
+    else
+    {
+        if(
+            (sPropertyType == "M") &&
+            !CheckCraftingSpells(oPC, sFile, nLine)
+            )
+            return FALSE;
+        if(
+            (sPropertyType == "P") &&
+            !CheckCraftingPowerPoints(oPC, sFile, nLine)
+            )
+            return FALSE;
+
+        sTemp = Get2DACache(sFile, "PrereqMisc", nLine);
+        if(sTemp == "")
+            bBreak = TRUE;
+        nLength = GetStringLength(sTemp);
+        for(j = 0; j < 5; j++)
+        {
+            if(bBreak)
+                break;
+            nPosition = FindSubString(sTemp, "_");
+            sSub = (nPosition == -1) ? sTemp : GetStringLeft(sTemp, nPosition);
+            nLength -= (nPosition + 1);
+            if(sSub == "*")
+                nTemp = -1;
+            else
+                nTemp = StringToInt(sSub);
+            switch(j)
+            {
+                case 0:
+                {
+                    if(nTemp != -1 && MyPRCGetRacialType(oPC) != nTemp)
+                        return FALSE;
+                    break;
+                }
+                case 1:
+                {
+                    if(nTemp != -1 && !GetHasFeat(nTemp, oPC))
+                        return FALSE;
+                    break;
+                }
+                case 2:
+                {
+                    if((sSub == "G" && GetAlignmentGoodEvil(oPC) != ALIGNMENT_GOOD) ||
+                        (sSub == "E" && GetAlignmentGoodEvil(oPC) != ALIGNMENT_EVIL) ||
+                        (sSub == "N" && GetAlignmentGoodEvil(oPC) != ALIGNMENT_NEUTRAL))
+                            return FALSE;
+                    break;
+                }
+                case 3:
+                {
+                    if((sSub == "L" && GetAlignmentLawChaos(oPC) != ALIGNMENT_LAWFUL) ||
+                        (sSub == "C" && GetAlignmentLawChaos(oPC) != ALIGNMENT_CHAOTIC) ||
+                        (sSub == "N" && GetAlignmentLawChaos(oPC) != ALIGNMENT_NEUTRAL))
+                            return FALSE;
+                    break;
+                }
+                case 4:
+                {
+                    if(nTemp != -1 && !GetLevelByClass(nTemp, oPC))
+                        return FALSE;
+                    break;
+                }
+            }
+            sTemp = GetSubString(sTemp, nPosition + 1, nLength);
+        }
+        sTemp = Get2DACache(sFile, "Skill", nLine);
+        if(sTemp != "" && (GetSkillRank(StringToInt(sTemp), oPC) < StringToInt(Get2DACache(sFile, "SkillRanks", nLine))))
+        {
+            return FALSE;
+        }
+    }
+    return TRUE;
+}
+
 //Returns a struct containing enhancement and additional cost values, don't bother with array when bSet == 0
 struct itemvars GetItemVars(object oPC, object oItem, string sFile, int bEpic = 0, int bSet = 0)
 {
@@ -974,6 +1074,7 @@ struct itemvars GetItemVars(object oPC, object oItem, string sFile, int bEpic = 
     //Checking available spells, epic flag, caster level
     if(!GetLocalInt(oPC, PRC_CRAFT_TOKEN))
     {
+        /* - moved check to confirmation stage
         for(i = 0; i <= nFileEnd; i++)
         {   //will skip over properties already disallowed
             if(array_get_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i))
@@ -1089,6 +1190,7 @@ struct itemvars GetItemVars(object oPC, object oItem, string sFile, int bEpic = 
                 }
             }
         }
+        */
     }
     else if(GetPRCSwitch(PRC_DISABLE_CRAFT_EPIC))
     {   //disabling epic crafting at npc facilities

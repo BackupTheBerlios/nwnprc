@@ -1,4 +1,3 @@
-/*
 #include "prc_alterations"
 #include "inc_leto_prc"
 #include "x2_inc_switches"
@@ -7,7 +6,6 @@
 #include "prc_inc_domain"
 #include "prc_inc_shifting"
 #include "true_inc_trufunc"
-*/
 #include "prc_craft_inc"
 
 /**
@@ -39,6 +37,44 @@ void DoAutoLocals(object oPC)
         // Increment loop counter
         i += 1;
     }
+}
+
+//Restores object itemprops
+void RestoreObjects(object oCreature)
+{
+    int i = 0;
+    int j = 0;
+    int nIP = 0;
+    object oItem;
+    string sItem;
+    itemproperty ip;
+    string sIP;
+    struct ipstruct iptemp;
+    string sCreature = GetName(oCreature);
+    string sItemName;
+    int nSize = persistant_array_get_size(oCreature, "PRC_NPF_ItemList_obj");
+    for(i = 0; i < nSize; i++)
+    {
+        oItem = persistant_array_get_object(oCreature, "PRC_NPF_ItemList_obj", i);
+        sItem = persistant_array_get_string(oCreature, "PRC_NPF_ItemList_str", i);
+        sItemName = GetName(oItem);
+        if(DEBUG)
+        {
+            DoDebug("RestoreObjects: " + sCreature + ", " + sItemName + ", " + sItem + ", " + ObjectToString(oItem));
+        }
+        nIP = persistant_array_get_size(oCreature, "PRC_NPF_ItemList_" + sItem);
+        for(j = 0; j < nIP; j++)
+        {
+            sIP = persistant_array_get_string(oCreature, "PRC_NPF_ItemList_" + sItem, j);
+            iptemp = GetIpStructFromString(sIP);
+            ip = ConstructIP(iptemp.type, iptemp.subtype, iptemp.costtablevalue, iptemp.param1value);
+            IPSafeAddItemProperty(oItem, ip, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+            if(DEBUG) DoDebug("RestoreObjects: " + sCreature + ", " + sItem + ", " + sIP);
+        }
+        persistant_array_delete(oCreature, "PRC_NPF_ItemList_" + sItem);
+    }
+    persistant_array_delete(oCreature, "PRC_NPF_ItemList_obj");
+    persistant_array_delete(oCreature, "PRC_NPF_ItemList_str");
 }
 
 void main()

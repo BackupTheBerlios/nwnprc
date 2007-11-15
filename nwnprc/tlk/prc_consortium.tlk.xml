@@ -39933,4 +39933,63 @@ Increase from the base creature as follows: Str +4, Dex +2, Con +4, Int +2, Wis 
 
 Level Adjustment
 Same as base creature +4.</entry>
+    <entry id="70010" lang="en" sex="m">Template: Baelnorn</entry>
+    <entry id="70011" lang="en" sex="m">Baelnorns are elves who have sought undeath to serve their families, communities, or other purposes (usually to see a wrong righted or to achieve a certain magical discovery or deed).  They are lich-like creatures that appear as impressive-looking elves with shriveled skin and glowing white eyes.
+
+REQUIREMENTS:
+
+Race: Elf.
+Skills: Concentration 5, Spellcraft 14.
+Class : 11 levels in Sorceror, Wizard, or Cleric
+Alignment: Any Good
+Must not have any levels in Lich.
+
+ABILITIES:
+Baelnorn Properties: +8 bonus to Hide, Listen, Move Silently, Search, Persuade, and Spot.
+         Baelnorn Touch: Touch attack causes 1d8 + 5 damage and permanent paralyzation.
+         Baelnorn Defense:  Damage Reduction 15/+2, Natural Armor + 5, immunity to cold and electricity, Turning Resistance +4.
+         Turn Undead:  Can turn undead 3 times per day as a cleric of the same level.
+         Turning Immunity:  Cannot be turned by Good or Neutral characters.
+         Animate Dead :  5 times per day the Baelnorn animate dead as per the spell of the same name.
+         Projection:  Three times per day the Baelnorn may create a projection of itself.
+         Wisdom +2
+         Intelligence +2.
+         Charisma +2
+         Undeath
+
+     Note:  The Baelnorn is fully undead, and therefore is immune to sneak attacks, critical hits, level drain, poison, and disease.  An undead creature has no Constitution score.  However, this is not possible in Neverwinter Nights.  The player will gain +12 to constitution in order to simulate the increase of the Baelnorn's HD to d12.</entry>
+     <entry id="70012" lang="en" sex="m">Feat Type:  Template Feat
+Prerequisite:  Baelnorn Template
+
+Description:  By touching an enemy, a Baelnorn may cause negative energy damage and possibly paralyze the target.  The effects are as follows:
+1d8 + 5 negative energy damage, paralyzation permanent.
+
+The character can make a Will save for half damage, and a Fortitude save against mind spells to avoid paralyzation (DC  10 + 1/2 Character's HD + CHA mod).</entry>
+<entry id="70013" lang="en" sex="m">Feat Type:  Template Feat
+Prerequisite:  Baelnorn Template
+
+Description:  Three times per day, the baelnorn can create a wraith-like projection of itself.  The baelnorn can see, hear, speak, and even cast spells through the projection.  The baelnorn takes 1/2 of the damage dealt to the projection, and it has none of the special abilities of the baelnorn.  It is also capable of pushing or picking up small objects, but it cannot carry physical items.</entry>
+<entry id="70014" lang="en" sex="m">Feat Type:  Template Feat
+Prerequisite:  Undead
+Description:  This undead creature has a bonus to its hit dice for the purpose of resisting Turn Undead attempts.</entry>
+<entry id="70015" lang="en" sex="m">Feat Type:  Template Feat
+Prerequisite:  Undead
+Description:  You have a better than normal chance to resist turning. When resolving
+a turn, rebuke, or command attempt, you add +4 to your character level.</entry>
+<entry id="70016" lang="en" sex="m">Feat Type:  Template Feat
+Prerequisite:  Baelnorn Template
+Description: This allows the baelnorn to end the projection effect at will.</entry>
+<entry id="70017" lang="en" sex="m">Feat Type:  Template Feat
+Prerequisite:  Baelnorn Template
+Description: Once a day, a Baelnorn can animate dead.</entry>
+<entry id="70018" lang="en" sex="m">Feat Type:  Template Feat
+Prerequisite:  Baelnorn Template
+
+Description: The baelnorn is immune to turning attempts by good or neutral clerics. If rebuked or commanded by an evil cleric, the baelnorn is instead turned or destroyed.</entry>
+<entry id="70019" lang="en" sex="m">Feat Type:  Template Feat
+
+Description: This allows the character to turn undead as a cleric of the same level.</entry>
+<entry id="70020" lang="en" sex="m">Feat Type:  Template Feat
+
+Description: This allows the character to see in the dark.</entry>
 </tlk>

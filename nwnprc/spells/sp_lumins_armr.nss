@@ -59,65 +59,68 @@ Created:   6/20/06
 
 void main()
 {
-	if(!X2PreSpellCastCode()) return;
-	
-	SPSetSchool(SPELL_SCHOOL_ABJURATION);
-	
-	object oPC = OBJECT_SELF;
-	object oTarget = GetSpellTargetObject();
-	int nSpell = GetSpellId();
-	int nCasterLvl = PRCGetCasterLevel(oPC);
-	int nAlign = GetAlignmentGoodEvil(oTarget);
-	int nMetaMagic = PRCGetMetaMagicFeat();
-	float fDur = HoursToSeconds(nCasterLvl);
-	
-	if(nAlign == ALIGNMENT_GOOD)
-	{
-		if(nMetaMagic == METAMAGIC_EXTEND)
-		{
-			fDur += fDur;
-		}
-		
-		//VFX
-	        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_SUPER_HEROISM), oTarget);
-		
-		//Light as a daylight spell
-		
-		//-4 penalty to enemy attacks
-		
-		
-		int nArmor;
-		if(nSpell == SPELL_LUMINOUS_ARMOR)
-		{
-			nArmor = 5;
-			DoCorruptionCost(oPC, ABILITY_STRENGTH, d2(1), 0);
-		}
-		
-		else if(nSpell == SPELL_GREATER_LUMINOUS_ARMOR)
-		{
-			nArmor = 8;
-			DoCorruptionCost(oPC, ABILITY_STRENGTH, d3(), 0);
-		}
-		
-		else
-		{
-			return;
-		}
-		
-		effect eArmor = EffectACIncrease(nArmor, AC_ARMOUR_ENCHANTMENT_BONUS, AC_VS_DAMAGE_TYPE_ALL);
-		
-		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eArmor, oTarget, fDur);
-	}
-	SPSetSchool();
-	
-	//Sanctified spells get mandatory 10 pt good adjustment, regardless of switch
-	AdjustAlignment(oPC, ALIGNMENT_GOOD, 10);
-	
-	SPGoodShift(oPC);
-	
+        if(!X2PreSpellCastCode()) return;
+        
+        SPSetSchool(SPELL_SCHOOL_ABJURATION);
+        
+        object oPC = OBJECT_SELF;
+        object oTarget = GetSpellTargetObject();
+        int nSpell = GetSpellId();
+        int nCasterLvl = PRCGetCasterLevel(oPC);
+        int nAlign = GetAlignmentGoodEvil(oTarget);
+        int nMetaMagic = PRCGetMetaMagicFeat();
+        float fDur = HoursToSeconds(nCasterLvl);
+        
+        if(nAlign == ALIGNMENT_GOOD)
+        {
+                if(nMetaMagic == METAMAGIC_EXTEND)
+                {
+                        fDur += fDur;
+                }
+                
+                //VFX
+                ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_SUPER_HEROISM), oTarget);
+                
+                //Light as a daylight spell
+                effect eLight = EffectLinkEffects(EffectVisualEffect(VFX_DUR_LIGHT_WHITE_20), EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
+                                
+                //-4 penalty to enemy attacks
+                effect ePenalty = EffectACIncrease(4, AC_DODGE_BONUS, AC_VS_DAMAGE_TYPE_ALL);
+                
+                int nArmor;
+                if(nSpell == SPELL_LUMINOUS_ARMOR)
+                {
+                        nArmor = 5;
+                        DoCorruptionCost(oPC, ABILITY_STRENGTH, d2(1), 0);
+                }
+                
+                else if(nSpell == SPELL_GREATER_LUMINOUS_ARMOR)
+                {
+                        nArmor = 8;
+                        DoCorruptionCost(oPC, ABILITY_STRENGTH, d3(), 0);
+                }
+                
+                else
+                {
+                        return;
+                }
+                
+                effect eArmor = EffectACIncrease(nArmor, AC_DEFLECTION_BONUS, AC_VS_DAMAGE_TYPE_ALL);
+                       eArmor = EffectLinkEffects(eArmor, ePenalty);
+                       eArmor = EffectLinkEffects(eArmor, eLight);
+                
+                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eArmor, oTarget, fDur);
+        }
+        SPSetSchool();
+        
+        //Sanctified spells get mandatory 10 pt good adjustment, regardless of switch
+        AdjustAlignment(oPC, ALIGNMENT_GOOD, 10);
+        
+        SPGoodShift(oPC);
+        
 }
-		
-		
-			
-		
-		
+                
+                
+                        
+                
+                

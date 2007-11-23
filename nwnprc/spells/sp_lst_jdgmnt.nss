@@ -75,7 +75,6 @@ void main()
 					nType != RACIAL_TYPE_ANIMAL    &&
 					nType != RACIAL_TYPE_ABERRATION &&
 					nType != RACIAL_TYPE_BEAST)
-					
 					{
 						if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL)
 						{
@@ -105,8 +104,8 @@ void main()
 						}
 					}
 				}
-			}
-			oTarget = MyNextObjectInShape(SHAPE_SPHERE, 7.62, lLoc, FALSE, OBJECT_TYPE_CREATURE);			
+			oTarget = MyNextObjectInShape(SHAPE_SPHERE, 7.62, lLoc, FALSE, OBJECT_TYPE_CREATURE);
+			}			
 		}
 		
 		else SendMessageToPC(oPC, "You do not meet the casting requirements for this spell.");

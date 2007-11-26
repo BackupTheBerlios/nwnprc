@@ -23,7 +23,7 @@
 <li> <a href="#comp"> Script Compiler </a> </li>
 <!-- <li> <a href="#cvs"> CVS Information </a> </li> -->
 <!-- <li> <a href="#make"> The Make System </a> </li> -->
-<li> <a href="#folder"> Hak Overview </a> </li>
+<li> <a href="#folder"> CVS Information </a> </li>
 <li> <a href="#file"> File Overview </a> </li>
 <li> <a href="#start"> Getting Started </a> </li>
 <li> <a href="#rules"> PRC Rules and General Guidelines </a> </li>
@@ -81,7 +81,7 @@ The following is a list of utility programs that are quite handy for making PrC'
 
 <tr><td valign="top" align="center"> TextPad </td>
 <td valign="top">Another text editor.  Can be found <a href="http://www.textpad.com/" target="_new"> here</a>.
-This text editor can mass replace text in many files rather quickly.  Excellent when making mass replaces.  You can also use C++ language highlighting and it is much like using the NwN Toolset when scripting.</td></tr>
+This text editor can mass replace text in many files rather quickly.  Excellent when making mass replaces.  Syntax highlighting for NWN can be found on the internet.</td></tr>
 
 <tr><td valign="top" align="center"> NwN Toolset </td>
 <td valign="top">Occasionally the toolset is useful.  Especially, if you are making summonable critters or dialogues.</td></tr>
@@ -141,6 +141,8 @@ Additionally, if you want to automatically join a channel on startup you can aga
 
 Feel free to visit us in the IRC channel sometime.
 
+You can also join #prc-help for help with issues or simply to ask questions about custom content creation.
+
 <br><br><a href="#top">Back to Top</a>
 <br><br><a name="comp">
 <div><h2>Script Compiler</h2></div>
@@ -190,52 +192,105 @@ though the system may look for your compile file in there as well if you are els
 on the top of the list in the module properties.</li>
 </ul>
 
-For more compiler information you can check the orginal developer's website:
-<br><a href="http://www.torlack.com/index.html?topics=nwnnsscomp_readme" target="_blank">http://www.torlack.com/index.html?topics=nwnnsscomp_readme</a>
-
 <br><br><a href="#top">Back to Top</a>
 <br><br><a name="folder">
-<div><h2>Hak Overview</h2></div>
+<div><h2>CVS Information</h2></div>
 </a>
 <br>
+<b>Accessing the PRC Bug Report Tracker:<br />
+</b><ul><li><a href="https://developer.berlios.de/bugs/index.php?group_id=1655" target="_blank">PRC Bug Tracker</a></li><li>You will not be able to add bugs to this, only PRC members can do so.</li><li><i><b>Place CVS bug reports in </b></i><i><b>the <a href="http://www.dladventures.com/forum/vB/forumdisplay.php?f=177" target="_blank">PRC Custom Content Help forum</a>.</b></i></li><li><i><b>See <a href="http://www.dladventures.com/forum/vB/showthread.php?t=6214" target="_blank">this thread</a> for bug reporting guidelines.</b></i></li></ul><b>Directions on how to access the PRC CVS:  </b><ul><li><font color="White"><i><b>Because several of the important PRC files are .exes, they are known to work fully only on Windows. Sorry, Linux and Mac users.</b></i></font></li><li>Download and install <i><a href="http://www.tortoisecvs.org/download.shtml" target="_blank">Tortoise CVS</a>. <font color="White"><b>Follow their install instructions completely.</b></font><br />
 
-If you open up your hak folder you should find quite a few hak files.
-Here is a brief overview of those haks.
-Most of them are rather self explanatory, but we might as well explain them anyways.
+</i></li><li>Right click on your desktop or other folder where you wish to download the PRC CVS. This will take roughly <font color="White"><i><b>750 megs</b></i></font>, more if you download both the NWN1 and NWN2 repositories.</li><li>Select CVS, and then Preferences on the opened menu.</li><li>Under the Advanced tab, change the Network Compression to &quot;6 - Good&quot;. Hit ok.</li><li>Select CVS Checkout</li><li>Place this line in the CVS Root: &quot;:pserver:anonymous@cvs.nwnprc.berlios.de:/cvsroot/nwnprc&quot;</li><li>Place either &quot;nwnprc&quot; or &quot;nwn2prc&quot; in the module line.</li><li>Select ok. It will begin to check out. This will take a long time. Simply wait until it is complete.</li><li>Open the nwnprc or nwn2prc.</li><li>Create a text file called config.make (.make is the file extension).</li><li>Open this file, and type in these three lines for NWN1: <div style="margin:20px; margin-top:5px">
+
+	<div class="smallfont" style="margin-bottom:2px">Code:</div>
+	<pre class="alt2" style="margin:0px; padding:4px; border:1px inset; width:640px; height:66px; overflow:auto"><div dir="ltr" style="text-align:left;">NWN_DIR = C:\NWN
+PRC_VERSION = 31d
+PRC_INSTALLVERSION = 3.1d</div></pre>
+</div>Replace the NWN_DIR with where your NWN1 directory is located</li><li>Open this file, and type in these three lines for NWN2: <div style="margin:20px; margin-top:5px">
+	<div class="smallfont" style="margin-bottom:2px">Code:</div>
+	<pre class="alt2" style="margin:0px; padding:4px; border:1px inset; width:640px; height:82px; overflow:auto"><div dir="ltr" style="text-align:left;">NWN_DIR = C:\NWN
+PRC_VERSION = 31d
+PRC_INSTALLVERSION = 3.1d
+MY_DOCS = C:\Documents and Settings\Username\My Documents\Neverwinter Nights 2</div></pre>
+</div>Replace the NWN_DIR with where your NWN1 directory is located (Yes, still NWN1, unfortunately).<br />
+
+Replace MY_DOCS with the location of your NWN2 directory in your My Documents folder.</li><li>Your installation should now be complete. To test this, double click make.bat. This is the file that will compile the entire PRC. It will only compile files that have been modified, or have had their includes modified, since the last compile.</li><li>Upon a finished compile, the program will copy all PRC files into your NWN dir's hak, tlk, and erf folder. <font color="White"><i><b>This will overwrite any existing files, including public release PRC files. Please be aware of this fact.</b></i></font></li><li><i><b><font color="White">This will have more errors than a standard release. Follow instructions below to report them.</font><br />
+</b></i></li><li>Compile all files and test them before submitting to the PRC.</li><li>Enjoy. If you have any questions, comments, or concerns with this process or with adding content to the PRC, post them in the  <a href="http://www.dladventures.com/forum/vB/forumdisplay.php?f=177" target="_blank">PRC Custom Content Help forum</a>. <i><b>Place all bug reports regarding CVS in this same forum. See <a href="http://www.dladventures.com/forum/vB/showthread.php?t=6214" target="_blank">this thread</a> for bug reporting guidelines.<br />
+</b></i></li></ul><b>Directions on Submitting to the PRC:</b><ul><li><font color="White"><b><i>All files and emails should have PRC CVS in the title.</i></b></font></li><li>Compress the file and email to <a href="mailto:PRCDev@GMail.com">PRCDev@GMail.com</a>.</li><li><b>OR:</b> Use <a href="http://www.yousendit.com/" target="_blank">YouSendIt.com</a></li><li><b>OR:</b> Another electronic submission format (RapidShare, providing a download link, etc).</li></ul>
+
+
+
+Some directories within the repository are self explanatory, some are not. They are listed below.
 
 <br><br>
 <table cellpadding="0" cellspacing="0" align="center" border="1" bordercolor="#6c6c6c" class="table_contenttable">
 	<tr>
-		<td valign="top">prc_2das</td>
-		<td valign="top">Location of almost all 2da files for the PrC.</td>
+		<td valign="top">2das</td>
+		<td valign="top">2das go here</td>
 	</tr>
 	<tr>
-		<td valign="top">prc_Craft2das</td>
-		<td valign="top">2da files specifically for the crafting system.</td>
+		<td valign="top">Craft2das</td>
+		<td valign="top">2da files specifically for the crafting systems</td>
 	</tr>
 	<tr>
-		<td valign="top">prc_epicspellscripts</td>
-		<td valign="top">Scripts for the Epic Spell System are in here</td>
+		<td valign="top">DevNotes</td>
+		<td valign="top">Developer notes</td>
 	</tr>
 	<tr>
-		<td valign="top">prc_misc</td>
-		<td valign="top">All icons, textures, dialogues creature templates, etc go in here.</td>
+		<td valign="top">epicspellscripts</td>
+		<td valign="top">Epic spell scripts</td>
 	</tr>
 	<tr>
-		<td valign="top">prc_include</td>
-		<td valign="top">All include scripts go in here.  One of the most important folders.</td>
+		<td valign="top">erf</td>
+		<td valign="top">Files that go into the erf</td>
 	</tr>
 	<tr>
-		<td valign="top">prc_race</td>
-		<td valign="top">2da files and scripts for the race pack.</td>
+		<td valign="top">gfx</td>
+		<td valign="top">graphics - icons and the like</td>
 	</tr>
 	<tr>
-		<td valign="top">prc_scripts</td>
-		<td valign="top">Custom scripts for PrC's go in here.</td>
+		<td valign="top">include</td>
+		<td valign="top">Includes go here</td>
 	</tr>
 	<tr>
-		<td valign="top">prc_spells</td>
-		<td valign="top">This directory is for all the official Bioware spell scripts.</td>
+		<td valign="top">newspellbook</td>
+		<td valign="top">Newspellbook files</td>
+	</tr>
+	<tr>
+		<td valign="top">ocfixerf</td>
+		<td valign="top">Files that go into the ocfix erf</td>
+	</tr>
+	<tr>
+		<td valign="top">others</td>
+		<td valign="top">Item and creature blueprints, some vfx</td>
+	</tr>
+	<tr>
+		<td valign="top">psionics</td>
+		<td valign="top">Psionics files</td>
+	</tr>
+	<tr>
+		<td valign="top">race2das</td>
+		<td valign="top">2das used by races</td>
+	</tr>
+	<tr>
+		<td valign="top">scripts</td>
+		<td valign="top">General code</td>
+	</tr>
+	<tr>
+		<td valign="top">spells</td>
+		<td valign="top">Spell code</td>
+	</tr>
+	<tr>
+		<td valign="top">tlk</td>
+		<td valign="top">TLK files</td>
+	</tr>
+	<tr>
+		<td valign="top">tools</td>
+		<td valign="top">Tools used by the PRC (can be very helpful for other projects)</td>
+	</tr>
+	<tr>
+		<td valign="top">users</td>
+		<td valign="top">Personal directories used by PRC members, mostly to store works in progress before merging with the rest of the code</td>
 	</tr>
 </table>
 <br><br>
@@ -459,9 +514,7 @@ The reason this is important is because you will want to make sure you are using
 If you are not, then either another PRC member or yourself will need to move a lot of data around to add your PrC.
 <br><br>
 
-For the most current list of open 2da / tlk slots <a href="http://nwnprc.netgamers.co.uk/cgi-bin/tlk_2da_info.cgi" target="_blank">click here</a>.
-[Note: Link requires active internet connection to work]
-<br><br>
+Free 2da entries can be seen in the 2das in cvs. Free tlk entries can be found using the tlksearch utility in the tools directory. See the header block in the source code (tlksearch.c) for information on how to use the tool.
 
 The first thing I usually do is make a text file.
 I store a main text file for each PrC I make.

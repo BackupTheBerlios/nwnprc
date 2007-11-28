@@ -18451,6 +18451,45 @@ Save: None
 Spell Resistance: Yes
 
 The target creature is healed for 1 point of damage. Healing spells have a reverse effect on undead, harming instead of healing them. A successful touch attack must first be made when this spell is used against undead.</entry>
+  <entry id="49817" lang="en" sex="m">Fist of Dal Quor</entry>
+  <entry id="49818" lang="en" sex="m">Fists of Dal Quor</entry>
+  <entry id="49819" lang="en" sex="m">fist of dal quor</entry>
+  <entry id="49820" lang="en" sex="m">(PRESTIGE CLASS)
+The Inspired are the lords of Riedra and the physical presence of the Dreaming Dark in Eberron, but their numbers are limited and their importance too great to be risked in common combat. When battle must be done, they turn to Chosen fists of dal quor. In response, the kalashtar of Adar have developed warriors who use similar techniques.
+
+- Hit Die: d10.
+- Proficiencies: A Fist of Dal Quor gains no additional proficiencies.
+- Skill Points: 2 + Int Modifier.
+
+REQUIREMENTS:
+Base Attack Bonus: +4.
+Feats: Exotic or Martial Weapon Proficiency, any one psionic feat.
+Skills: Lore 4 ranks.
+
+ABILITIES:
+
+Level
+1: Stunning Strike - A stunning blow with a weapon. One use per level.
+   Sneak Attack +1d6
+2: Resilient Mind - Bonus against mind-affecting abilities
+3: Sneak Attack +2d6
+4: Resilient Body - Bonus against psionic abilities
+5: Sneak Attack +3d6</entry>
+  <entry id="49821" lang="en" sex="m">Stunning Strike</entry>
+  <entry id="49822" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Fist of Dal Quor level 1
+Specifics: This feat works as per Stunning Fist, but instead works with any melee weapon. The Fist of Dal Quor gains one use per class level.
+Use: Selected</entry>
+  <entry id="49823" lang="en" sex="m">Resilient Mind</entry>
+  <entry id="49824" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Fist of Dal Quor level 2
+Specifics: The Fist of Dal Quor gains a +2 bonus on all saves against mind-affecting spells, powers, and abilities.
+Use: Automatic</entry>
+  <entry id="49825" lang="en" sex="m">Resilient Soul</entry>
+  <entry id="49826" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Fist of Dal Quor level 4
+Specifics: The Fist of Dal Quor gains a +2 bonus on all saves against psionic powers and abilities.
+Use: Automatic</entry>
   <entry id="49999" lang="en" sex="m">**** 50,000 - 50,500 reserved for Race Pack Feats ****</entry>
   <entry id="50000" lang="en" sex="m">Light Sensitivity</entry>
   <entry id="50001" lang="en" sex="m">Type of Feat: Racial

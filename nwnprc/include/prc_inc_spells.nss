@@ -1278,6 +1278,9 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
     // Tyranny Domain increases the DC of mind spells by +2.
     if(nSaveType == SAVING_THROW_TYPE_MIND_SPELLS && GetHasFeat(FEAT_DOMAIN_POWER_TYRANNY, oSaveVersus))
         nDC += 2;
+    // +2 bonus on saves against mind affecting, done here    
+    if(nSaveType == SAVING_THROW_TYPE_MIND_SPELLS && GetLevelByClass(CLASS_TYPE_FIST_DAL_QUOR, oTarget) >= 2)
+        nDC -= 2;        
 
     //racial pack code
     //this works by lowering the DC rather than adding to the save

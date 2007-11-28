@@ -753,6 +753,7 @@ void FeatSpecialUsePerDay(object oPC)
     FeatUsePerDay(oPC, FEAT_PLANT_DOMAIN_POWER, ABILITY_CHARISMA, 3);
     FeatUsePerDay(oPC, FEAT_WWOC_WIDEN_SPELL, ABILITY_CHARISMA, GetLevelByClass(CLASS_TYPE_WAR_WIZARD_OF_CORMYR, oPC));
     FeatUsePerDay(oPC, FEAT_COC_WRATH, ABILITY_CHARISMA, 3);
+    FeatUsePerDay(oPC, FEAT_FIST_DAL_QUOR_STUNNING_STRIKE, -1, GetLevelByClass(CLASS_TYPE_FIST_DAL_QUOR, oPC));
 
     if(GetPersistantLocalInt(oPC, "PRC_SLA_Uses_1"))
         FeatUsePerDay(oPC, FEAT_SPELL_LIKE_ABILITY_1, -1, GetPersistantLocalInt(oPC, "PRC_SLA_Uses_1"));

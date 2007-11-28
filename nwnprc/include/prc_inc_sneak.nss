@@ -117,7 +117,11 @@ int GetRogueSneak(object oPC)
    
    // Shadowmind
    iClassLevel = GetLevelByClass(CLASS_TYPE_SHADOWMIND, oPC);
-   if (iClassLevel) iRogueSneak += (iClassLevel + 1) / 2;    
+   if (iClassLevel) iRogueSneak += (iClassLevel + 1) / 2;  
+   
+   // Fist of Dal Quor
+   iClassLevel = GetLevelByClass(CLASS_TYPE_FIST_DAL_QUOR, oPC);
+   if (iClassLevel) iRogueSneak += (iClassLevel + 1) / 2; 
 
    if (GetBaseItemType(oWeapon) == BASE_ITEM_LONGBOW || GetBaseItemType(oWeapon) == BASE_ITEM_SHORTBOW)
    {

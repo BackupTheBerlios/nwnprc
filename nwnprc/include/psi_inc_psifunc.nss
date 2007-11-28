@@ -415,8 +415,15 @@ int GetManifesterDC(object oManifester = OBJECT_SELF)
         }
     }
 
-    /// Other DC adjustments
+    // Needed to do some adjustments here.
+    object oTarget = PRCGetSpellTargetObject();
+
+    // Other DC adjustments
     nDC += (GetLocalInt(oManifester, "PRC_SoulEater_HasDrained") && GetLevelByClass(CLASS_TYPE_SOUL_EATER, oManifester) >= 10) ? 2 : 0;
+    // Closed Mind
+    if(GetHasFeat(FEAT_CLOSED_MIND, oTarget)) nDC -= 2;
+    // Fist of Dal Quor
+    if(GetLevelByClass(CLASS_TYPE_FIST_DAL_QUOR, oTarget) >= 4) nDC -= 2; 
 
 
     return nDC;

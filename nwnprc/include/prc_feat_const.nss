@@ -1966,6 +1966,9 @@ const int FEAT_QUICKEN_POWER                        = 4944;
 // Sanctified Mind
 const int FEAT_SANCMIND_PARTITION_MIND              = 2231;
 
+// Fist of Dal Quor
+const int FEAT_FIST_DAL_QUOR_STUNNING_STRIKE        = 2475;
+
 /*//////////////////////////////////////////////////
 //////////////// END PSIONICS //////////////////////
 //////////////////////////////////////////////////*/

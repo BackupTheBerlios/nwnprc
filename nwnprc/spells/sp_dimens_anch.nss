@@ -57,7 +57,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     int nSpellID = PRCGetSpellId();
     int nPenetr = nCasterLevel + SPGetPenetr();
     effect eVis    = EffectVisualEffect(VFX_DUR_GLOBE_INVULNERABILITY);
-    float fDur     = 20.0f;//SPGetMetaMagicDuration(60.0 * nCasterLevel);
+    float fDur     = SPGetMetaMagicDuration(60.0 * nCasterLevel);
 
     // Let the AI know
     SPRaiseSpellCastAt(oTarget, TRUE, nSpellID, oCaster);

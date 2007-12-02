@@ -429,6 +429,7 @@ void CheckBonusDomains(object oPC)
     if (GetHasFeat(FEAT_BONUS_DOMAIN_SPELLS,        oPC)) AddBonusDomain(oPC, DOMAIN_SPELLS);
     if (GetHasFeat(FEAT_BONUS_DOMAIN_SCALEYKIND,    oPC)) AddBonusDomain(oPC, DOMAIN_SCALEYKIND);
     if (GetHasFeat(FEAT_BONUS_DOMAIN_BLIGHTBRINGER, oPC)) AddBonusDomain(oPC, DOMAIN_BLIGHTBRINGER);
+    if (GetHasFeat(FEAT_BONUS_DOMAIN_DRAGON,        oPC)) AddBonusDomain(oPC, DOMAIN_DRAGON);
 
     if (DEBUG) FloatingTextStringOnCreature("Check Bonus Domains is running", oPC, FALSE);
 }

@@ -280,6 +280,7 @@ int DeathKnell(object oCaster);
 int ShadowWeave (object oCaster, int iSpellID);
 string GetChangedElementalType(int spell_id, object oCaster = OBJECT_SELF);
 int FireAdept (object oCaster, int iSpellID);
+int DraconicPower (object oCaster);
 int BWSavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE, object oSaveVersus = OBJECT_SELF, float fDelay = 0.0);
 
 // ---------------
@@ -346,6 +347,7 @@ int GetArcanePRCLevels (object oCaster)
            +  GetLevelByClass(CLASS_TYPE_ENLIGHTENEDFIST, oCaster)
            +  GetLevelByClass(CLASS_TYPE_VIRTUOSO,        oCaster)
            +  GetLevelByClass(CLASS_TYPE_WAR_WIZARD_OF_CORMYR, oCaster)
+           +  GetLevelByClass(CLASS_TYPE_DRAGONHEART_MAGE, oCaster)
 
            +  (GetLevelByClass(CLASS_TYPE_ACOLYTE,            oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_BLADESINGER,        oCaster) + 1) / 2
@@ -406,6 +408,7 @@ int GetDivinePRCLevels (object oCaster)
            +  GetLevelByClass(CLASS_TYPE_BLIGHTLORD,        oCaster)
            +  GetLevelByClass(CLASS_TYPE_CONTEMPLATIVE,     oCaster)
            +  GetLevelByClass(CLASS_TYPE_RUNECASTER,        oCaster)
+           +  GetLevelByClass(CLASS_TYPE_SWIFT_WING,        oCaster)
 
            +  (GetLevelByClass(CLASS_TYPE_OLLAM,                 oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_BRIMSTONE_SPEAKER,     oCaster) + 1) / 2
@@ -626,7 +629,8 @@ int GetLevelByTypeArcaneFeats(object oCaster = OBJECT_SELF, int iSpellID = -1)
                  ShadowWeave(oCaster, iSpellID) +
                  FireAdept(oCaster, iSpellID) +
                  DomainPower(oCaster, iSpellID) +
-                 StormMagic(oCaster);
+                 StormMagic(oCaster) +
+                 DraconicPower(oCaster);
 
     if (iClass1 == CLASS_TYPE_HEXBLADE) iClass1Lev = (iClass1Lev >= 4) ? (iClass1Lev / 2) : 0;
     if (iClass2 == CLASS_TYPE_HEXBLADE) iClass2Lev = (iClass2Lev >= 4) ? (iClass2Lev / 2) : 0;
@@ -828,7 +832,8 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
             +  FireAdept(oCaster, iSpellId)
             +  StormMagic(oCaster)
             +  DomainPower(oCaster, iSpellId)
-            +  DeathKnell(oCaster);
+            +  DeathKnell(oCaster)
+            +  DraconicPower(oCaster);
 
         iReturnLevel += PractisedSpellcasting(oCaster, iCastingClass, iReturnLevel); //gotta be the last one
     }
@@ -1031,6 +1036,13 @@ int FireAdept (object oCaster, int iSpellID)
         return 0;
 }
 
+int DraconicPower (object oCaster = OBJECT_SELF)
+{
+    if (GetHasFeat(FEAT_DRACONIC_POWER, oCaster))
+        return 1;
+    else
+        return 0;
+}
 
 int BWSavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE, object oSaveVersus = OBJECT_SELF, float fDelay = 0.0)
 {
@@ -1266,7 +1278,7 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
         if (nHexCha < 1) nHexCha = 1;
         nDC -= nHexCha;
     }
-    
+
     //Diamond Defense
     if(GetLocalInt(oTarget, "PRC_TOB_DIAMOND_DEFENSE"))
     {
@@ -1278,9 +1290,9 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
     // Tyranny Domain increases the DC of mind spells by +2.
     if(nSaveType == SAVING_THROW_TYPE_MIND_SPELLS && GetHasFeat(FEAT_DOMAIN_POWER_TYRANNY, oSaveVersus))
         nDC += 2;
-    // +2 bonus on saves against mind affecting, done here    
+    // +2 bonus on saves against mind affecting, done here
     if(nSaveType == SAVING_THROW_TYPE_MIND_SPELLS && GetLevelByClass(CLASS_TYPE_FIST_DAL_QUOR, oTarget) >= 2)
-        nDC -= 2;        
+        nDC -= 2;
 
     //racial pack code
     //this works by lowering the DC rather than adding to the save
@@ -1440,13 +1452,13 @@ int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveTy
         nDC -= 3;
     else if(nSaveType == SAVING_THROW_TYPE_ACID && GetHasFeat(FEAT_HARD_EARTH, oTarget))
         nDC -= 1+(GetHitDice(oTarget)/5);
-        
+
     //Diamond Defense
     if(GetLocalInt(oTarget, "PRC_TOB_DIAMOND_DEFENSE"))
     {
             int nBonus = GetLocalInt(oTarget, "PRC_TOB_DIAMOND_DEFENSE");
             nDC -= nBonus;
-    }  
+    }
 
     // This ability removes evasion from the target
     if (GetLocalInt(oTarget, "TrueConfoundingResistance"))
@@ -1618,6 +1630,7 @@ int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)
                 iTemp = GetLevelByClass(CLASS_TYPE_OUTSIDER, oCaster);
 
             iTemp += PractisedSpellcasting(oCaster, CLASS_TYPE_SORCERER, iTemp);
+            iTemp += DraconicPower(oCaster);
             return iTemp;
         }
 
@@ -2531,8 +2544,9 @@ int UseNewSpellBook(object oCreature)
     //check they have bard/sorc in first arcane slot
     if(nFirstArcane != CLASS_TYPE_BARD && nFirstArcane != CLASS_TYPE_SORCERER)
         return FALSE;
-    //check they have arcane PrC
-    if(!GetArcanePRCLevels(oCreature))
+    //check they have arcane PrC or Draconic Breath/Arcane Grace
+    if(!GetArcanePRCLevels(oCreature)
+      && !(GetHasFeat(FEAT_DRACONIC_GRACE, oCreature) || GetHasFeat(FEAT_DRACONIC_BREATH, oCreature)))
         return FALSE;
     //check if the newspellbooks are disabled
     if((GetPRCSwitch(PRC_SORC_DISALLOW_NEWSPELLBOOK) && nFirstArcane == CLASS_TYPE_SORCERER) ||

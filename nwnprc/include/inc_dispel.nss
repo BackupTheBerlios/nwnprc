@@ -294,7 +294,7 @@ void DispelMagicBestMod(object oTarget, int nCasterLevel)
   int Weave = GetHasFeat(FEAT_SHADOWWEAVE,OBJECT_SELF)+ GetLocalInt(OBJECT_SELF, "X2_AoE_SpecDispel");
   if (GetLocalInt(oTarget, "PRC_Power_DispellingBuffer_Active")) nBonus += 5;
   if (GetHasFeat(FEAT_SPELL_GIRDING, oTarget)) nBonus += 2;
-  if (GetLevelByClass(CLASS_TYPE_SUEL_ARCHANAMACH, oTarget) >= 1) nBonus += 6;  
+  if (GetLevelByClass(CLASS_TYPE_SUEL_ARCHANAMACH, oTarget) >= 1) nBonus += 6;
 
 
   for(nCurrentEntry = 0; nCurrentEntry <= nLastEntry; nCurrentEntry++)
@@ -327,17 +327,17 @@ void DispelMagicBestMod(object oTarget, int nCasterLevel)
                     if(GetEffectCreator(eToDispel) == oEffectCaster)
                     {
                       RemoveEffect(oTarget, eToDispel);
-                      
+
                       if(GetSpellId() == SPELL_SLASHING_DISPEL)
                       {
-			      //Get spell level
-			      int nEffectSpellLevel = StringToInt(Get2DACache("spells", "Innate", nEffectSpellID));
-			      //Damage = 2 * spell level
-			      effect eSlashDam = EffectDamage(DAMAGE_TYPE_MAGICAL, 2 * nEffectSpellLevel);
-			      
-			      SPApplyEffectToObject(DURATION_TYPE_INSTANT, eSlashDam, oTarget);
-		      }
-                      
+                  //Get spell level
+                  int nEffectSpellLevel = StringToInt(Get2DACache("spells", "Innate", nEffectSpellID));
+                  //Damage = 2 * spell level
+                  effect eSlashDam = EffectDamage(DAMAGE_TYPE_MAGICAL, 2 * nEffectSpellLevel);
+
+                  SPApplyEffectToObject(DURATION_TYPE_INSTANT, eSlashDam, oTarget);
+              }
+
                     }// end if effect comes from this caster
                 }// end if effect comes from this spell
                 eToDispel = GetNextEffect(oTarget);
@@ -365,11 +365,11 @@ void DispelMagicBestMod(object oTarget, int nCasterLevel)
         //:: Since the effect has been removed, delete the references to it.
         //:: This will help out the sweeping function when it gets called next (not now, though)
         // These are stored for one round for Spell Rebirth
-        SetLocalInt(oTarget, "TrueSpellRebirthSpellId", GetLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nCurrentEntry))); 
+        SetLocalInt(oTarget, "TrueSpellRebirthSpellId", GetLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nCurrentEntry)));
         SetLocalInt(oTarget, "TrueSpellRebirthCasterLvl", GetLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nCurrentEntry)));
         DelayCommand(6.0, DeleteLocalInt(oTarget, "TrueSpellRebirthSpellId"));
         DelayCommand(6.0, DeleteLocalInt(oTarget, "TrueSpellRebirthCasterLvl"));
-        
+
         DeleteLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nCurrentEntry));
         DeleteLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nCurrentEntry));
         DeleteLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nCurrentEntry));
@@ -386,11 +386,11 @@ void DispelMagicBestMod(object oTarget, int nCasterLevel)
     else
     {
         // These are stored for one round for Spell Rebirth
-        SetLocalInt(oTarget, "TrueSpellRebirthSpellId", GetLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nCurrentEntry))); 
+        SetLocalInt(oTarget, "TrueSpellRebirthSpellId", GetLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nCurrentEntry)));
         SetLocalInt(oTarget, "TrueSpellRebirthCasterLvl", GetLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nCurrentEntry)));
         DelayCommand(6.0, DeleteLocalInt(oTarget, "TrueSpellRebirthSpellId"));
         DelayCommand(6.0, DeleteLocalInt(oTarget, "TrueSpellRebirthCasterLvl"));
-        
+
       // If it's not a real effect anymore, then delete the variables that refer to it.
       DeleteLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nCurrentEntry));
       DeleteLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nCurrentEntry));
@@ -471,16 +471,16 @@ void DispelMagicAllMod(object oTarget, int nCasterLevel)
             if(GetEffectCreator(eToDispel) == oEffectCaster)
             {
               RemoveEffect(oTarget, eToDispel);
-              
+
               if(GetSpellId() == SPELL_SLASHING_DISPEL)
               {
-		      //Get spell level
-		      int nEffectSpellLevel = StringToInt(Get2DACache("spells", "Innate", nEffectSpellID));
-		      //Damage = 2 * spell level
-		      effect eSlashDam = EffectDamage(DAMAGE_TYPE_MAGICAL, 2 * nEffectSpellLevel);
-		      
-		      SPApplyEffectToObject(DURATION_TYPE_INSTANT, eSlashDam, oTarget);
-	      }
+              //Get spell level
+              int nEffectSpellLevel = StringToInt(Get2DACache("spells", "Innate", nEffectSpellID));
+              //Damage = 2 * spell level
+              effect eSlashDam = EffectDamage(DAMAGE_TYPE_MAGICAL, 2 * nEffectSpellLevel);
+
+              SPApplyEffectToObject(DURATION_TYPE_INSTANT, eSlashDam, oTarget);
+          }
 
               //Spell Removal Check
               SpellRemovalCheck(oEffectCaster, oTarget);
@@ -491,12 +491,12 @@ void DispelMagicAllMod(object oTarget, int nCasterLevel)
         }// end of while loop
 
 
-	// These are stored for one round for Spell Rebirth
-        SetLocalInt(oTarget, "TrueSpellRebirthSpellId", GetLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nIndex))); 
+    // These are stored for one round for Spell Rebirth
+        SetLocalInt(oTarget, "TrueSpellRebirthSpellId", GetLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nIndex)));
         SetLocalInt(oTarget, "TrueSpellRebirthCasterLvl", GetLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nIndex)));
         DelayCommand(6.0, DeleteLocalInt(oTarget, "TrueSpellRebirthSpellId"));
         DelayCommand(6.0, DeleteLocalInt(oTarget, "TrueSpellRebirthCasterLvl"));
-        
+
         // Delete the saved references to the spell's effects.
         // This will save some time when reordering things a bit.
         DeleteLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nIndex));
@@ -695,9 +695,14 @@ void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, fl
        int nIndex = ReorderEffects(nCasterLevel, nSpellID, oTarget, oCaster);
        // Add this new effect to the slot after the last effect already on the character.
 
-
+       //check if Master's Gift applies
+       if(GetHasFeat(FEAT_MASTERS_GIFT, oTarget) && GetIsArcaneClass(PRCGetLastSpellCastClass(), oCaster))
+       {
+           int bHostileSpell = StringToInt(Get2DACache("spells", "HostileSetting", GetSpellId()));
+           if(!bHostileSpell) fDuration = fDuration * 2;
+       }
        ApplyEffectToObject(nDurationType, eEffect, oTarget, fDuration);
-       // may have code travers the lists right here and not add the new effect
+       // may have code traverse the lists right here and not add the new effect
        // if an identical one already appears in the list somewhere
 
        SetLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nIndex), nSpellID);

@@ -391,6 +391,8 @@ int GetAbilityOfClass(int nClass){
             return ABILITY_WISDOM;
         case CLASS_TYPE_WARMIND:
             return ABILITY_WISDOM;
+        case CLASS_TYPE_DIAMOND_DRAGON:
+            return ABILITY_INTELLIGENCE;
         default:
             return ABILITY_CHARISMA;
     }
@@ -423,7 +425,7 @@ int GetManifesterDC(object oManifester = OBJECT_SELF)
     // Closed Mind
     if(GetHasFeat(FEAT_CLOSED_MIND, oTarget)) nDC -= 2;
     // Fist of Dal Quor
-    if(GetLevelByClass(CLASS_TYPE_FIST_DAL_QUOR, oTarget) >= 4) nDC -= 2; 
+    if(GetLevelByClass(CLASS_TYPE_FIST_DAL_QUOR, oTarget) >= 4) nDC -= 2;
 
 
     return nDC;
@@ -585,6 +587,12 @@ int GetPsionicPRCLevels(object oCreature)
     {
         nLevel += GetLevelByClass(CLASS_TYPE_IRONMIND, oCreature) - 1;
         if(GetLevelByClass(CLASS_TYPE_IRONMIND, oCreature) >= 6) nLevel -= 1;
+    }
+    // No manifester level boost at level 1 and 6 for Diamond Dragon
+    if(GetLevelByClass(CLASS_TYPE_DIAMOND_DRAGON, oCreature))
+    {
+        nLevel += GetLevelByClass(CLASS_TYPE_DIAMOND_DRAGON, oCreature) - 1;
+        if(GetLevelByClass(CLASS_TYPE_DIAMOND_DRAGON, oCreature) >= 6) nLevel -= 1;
     }
     // No manifester level boost at level 1 for Sanctified Mind
     if(GetLevelByClass(CLASS_TYPE_SANCTIFIED_MIND, oCreature))

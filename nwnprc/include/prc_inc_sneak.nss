@@ -54,6 +54,9 @@ int GetCanSneakAttack(object oDefender, object oAttacker);
 // Returns Sneak Attack Damage
 int GetSneakAttackDamage(int iSneakAttackDice);
 
+//Returns applicable elemental type for Dragonfire Strike
+int GetDragonfireDamageType(object oPC);
+
 //:://////////////////////////////////////////////
 //::  Definintions
 //:://////////////////////////////////////////////
@@ -106,22 +109,37 @@ int GetRogueSneak(object oPC)
    // Ninja
    iClassLevel = GetLevelByClass(CLASS_TYPE_NINJA, oPC);
    if (iClassLevel) iRogueSneak += (iClassLevel + 1) / 2;
-   
+
    // Slayer of Domiel
    iClassLevel = GetLevelByClass(CLASS_TYPE_SLAYER_OF_DOMIEL, oPC);
-   if (iClassLevel) iRogueSneak += (iClassLevel + 1) / 2;   
-   
+   if (iClassLevel) iRogueSneak += (iClassLevel + 1) / 2;
+
    // Skullclan Hunter
    iClassLevel = GetLevelByClass(CLASS_TYPE_SKULLCLAN_HUNTER, oPC);
-   if (iClassLevel) iRogueSneak += iClassLevel / 3;     
-   
+   if (iClassLevel) iRogueSneak += iClassLevel / 3;
+
    // Shadowmind
    iClassLevel = GetLevelByClass(CLASS_TYPE_SHADOWMIND, oPC);
-   if (iClassLevel) iRogueSneak += (iClassLevel + 1) / 2;  
-   
+   if (iClassLevel) iRogueSneak += (iClassLevel + 1) / 2;
+
    // Fist of Dal Quor
    iClassLevel = GetLevelByClass(CLASS_TYPE_FIST_DAL_QUOR, oPC);
-   if (iClassLevel) iRogueSneak += (iClassLevel + 1) / 2; 
+   if (iClassLevel) iRogueSneak += (iClassLevel + 1) / 2;
+
+   //Dragon Devotee and Hand of the Winged Masters
+   int nBonusFeatDice = 0;
+   int nCount;
+   for(nCount = FEAT_SPECIAL_SNEAK_ATTACK_5D6; nCount >= FEAT_SPECIAL_SNEAK_ATTACK_1D6; nCount--)
+   {
+      if (GetHasFeat(nCount,oPC))
+      {
+         nBonusFeatDice = nCount - FEAT_SPECIAL_SNEAK_ATTACK_1D6 + 1;
+         if (DEBUG) DoDebug("prc_inc_sneak: Bonus Sneak Dice: " + IntToString(nBonusFeatDice));
+         break;
+      }
+   }
+   if(iRogueSneak > 0) //the feats only apply if you already have Sneak Attack
+       iRogueSneak += nBonusFeatDice;
 
    if (GetBaseItemType(oWeapon) == BASE_ITEM_LONGBOW || GetBaseItemType(oWeapon) == BASE_ITEM_SHORTBOW)
    {
@@ -154,7 +172,7 @@ int GetRogueSneak(object oPC)
     /*
    if(GetHasSpellEffect(MOVE_SH_ASSASSIN_STANCE, oPC))
    {
-   	iRogueSneak += 2;
+    iRogueSneak += 2;
    }
    */
    // -----------------------------------------------------------------------------------------
@@ -473,10 +491,10 @@ int GetCanSneakAttack(object oDefender, object oAttacker)
      int bIsInRange = FALSE;
      int bIsFlanked = GetIsFlanked(oDefender, oAttacker);
      int bIsDeniedDex = GetIsDeniedDexBonusToAC(oDefender, oAttacker);
-     
+
      float fDistance = GetDistanceBetween(oAttacker, oDefender);
      if(fDistance <= FeetToMeters(30.0f) )     bIsInRange = TRUE;
-     
+
      // Is only run if enemy is indeed flanked or denied dex bonus to AC
      // otherwise there is no reason to check further
      if(bIsFlanked || bIsDeniedDex && bIsInRange)
@@ -500,4 +518,61 @@ int GetSneakAttackDamage(int iSneakAttackDice)
 {
      int iSneakAttackDamage = d6(iSneakAttackDice);
      return iSneakAttackDamage;
+}
+
+int GetDragonfireDamageType(object oPC)
+{
+     //Elemental Immunities for various dragon types.
+    int iType = GetHasFeat(FEAT_BLACK_DRAGON, oPC)          ? DAMAGE_TYPE_ACID :
+                GetHasFeat(FEAT_BROWN_DRAGON, oPC)          ? DAMAGE_TYPE_ACID :
+                GetHasFeat(FEAT_COPPER_DRAGON, oPC)         ? DAMAGE_TYPE_ACID :
+                GetHasFeat(FEAT_GREEN_DRAGON, oPC)          ? DAMAGE_TYPE_ACID :
+                GetHasFeat(FEAT_BRASS_DRAGON, oPC)          ? DAMAGE_TYPE_FIRE :
+                GetHasFeat(FEAT_GOLD_DRAGON, oPC)           ? DAMAGE_TYPE_FIRE :
+                GetHasFeat(FEAT_RED_DRAGON, oPC)            ? DAMAGE_TYPE_FIRE :
+                GetHasFeat(FEAT_LUNG_WANG_DRAGON, oPC)      ? DAMAGE_TYPE_FIRE :
+                GetHasFeat(FEAT_BATTLE_DRAGON, oPC)         ? DAMAGE_TYPE_SONIC :
+                GetHasFeat(FEAT_EMERALD_DRAGON, oPC)        ? DAMAGE_TYPE_SONIC :
+                GetHasFeat(FEAT_HOWLING_DRAGON, oPC)        ? DAMAGE_TYPE_SONIC :
+                GetHasFeat(FEAT_BLUE_DRAGON, oPC)           ? DAMAGE_TYPE_ELECTRICAL :
+                GetHasFeat(FEAT_BRONZE_DRAGON, oPC)         ? DAMAGE_TYPE_ELECTRICAL :
+                GetHasFeat(FEAT_OCEANUS_DRAGON, oPC)        ? DAMAGE_TYPE_ELECTRICAL :
+                GetHasFeat(FEAT_SAPPHIRE_DRAGON, oPC)       ? DAMAGE_TYPE_ELECTRICAL :
+                GetHasFeat(FEAT_SONG_DRAGON, oPC)           ? DAMAGE_TYPE_ELECTRICAL :
+                GetHasFeat(FEAT_SHEN_LUNG_DRAGON, oPC)      ? DAMAGE_TYPE_ELECTRICAL :
+                GetHasFeat(FEAT_CRYSTAL_DRAGON, oPC)        ? DAMAGE_TYPE_COLD :
+                GetHasFeat(FEAT_TOPAZ_DRAGON, oPC)          ? DAMAGE_TYPE_COLD :
+                GetHasFeat(FEAT_SILVER_DRAGON, oPC)         ? DAMAGE_TYPE_COLD :
+                GetHasFeat(FEAT_WHITE_DRAGON, oPC)          ? DAMAGE_TYPE_COLD :
+                GetHasFeat(FEAT_DRACONIC_HERITAGE_BK, oPC)  ? DAMAGE_TYPE_ACID :
+                GetHasFeat(FEAT_DRACONIC_HERITAGE_CP, oPC)  ? DAMAGE_TYPE_ACID :
+                GetHasFeat(FEAT_DRACONIC_HERITAGE_GR, oPC)  ? DAMAGE_TYPE_ACID :
+                GetHasFeat(FEAT_DRACONIC_HERITAGE_BS, oPC)  ? DAMAGE_TYPE_FIRE :
+                GetHasFeat(FEAT_DRACONIC_HERITAGE_GD, oPC)  ? DAMAGE_TYPE_FIRE :
+                GetHasFeat(FEAT_DRACONIC_HERITAGE_RD, oPC)  ? DAMAGE_TYPE_FIRE :
+                GetHasFeat(FEAT_DRACONIC_HERITAGE_EM, oPC)  ? DAMAGE_TYPE_SONIC :
+                GetHasFeat(FEAT_DRACONIC_HERITAGE_BL, oPC)  ? DAMAGE_TYPE_ELECTRICAL :
+                GetHasFeat(FEAT_DRACONIC_HERITAGE_BZ, oPC)  ? DAMAGE_TYPE_ELECTRICAL :
+                GetHasFeat(FEAT_DRACONIC_HERITAGE_SA, oPC)  ? DAMAGE_TYPE_ELECTRICAL :
+                GetHasFeat(FEAT_DRACONIC_HERITAGE_CR, oPC)  ? DAMAGE_TYPE_COLD :
+                GetHasFeat(FEAT_DRACONIC_HERITAGE_TP, oPC)  ? DAMAGE_TYPE_COLD :
+                GetHasFeat(FEAT_DRACONIC_HERITAGE_SR, oPC)  ? DAMAGE_TYPE_COLD :
+                GetHasFeat(FEAT_DRACONIC_HERITAGE_WH, oPC)  ? DAMAGE_TYPE_COLD :
+                GetHasFeat(FEAT_KOB_DRAGONWROUGHT_BK, oPC)  ? DAMAGE_TYPE_ACID :
+                GetHasFeat(FEAT_KOB_DRAGONWROUGHT_CP, oPC)  ? DAMAGE_TYPE_ACID :
+                GetHasFeat(FEAT_KOB_DRAGONWROUGHT_GR, oPC)  ? DAMAGE_TYPE_ACID :
+                GetHasFeat(FEAT_KOB_DRAGONWROUGHT_BS, oPC)  ? DAMAGE_TYPE_FIRE :
+                GetHasFeat(FEAT_KOB_DRAGONWROUGHT_GD, oPC)  ? DAMAGE_TYPE_FIRE :
+                GetHasFeat(FEAT_KOB_DRAGONWROUGHT_RD, oPC)  ? DAMAGE_TYPE_FIRE :
+                GetHasFeat(FEAT_KOB_DRAGONWROUGHT_EM, oPC)  ? DAMAGE_TYPE_SONIC :
+                GetHasFeat(FEAT_KOB_DRAGONWROUGHT_BL, oPC)  ? DAMAGE_TYPE_ELECTRICAL :
+                GetHasFeat(FEAT_KOB_DRAGONWROUGHT_BZ, oPC)  ? DAMAGE_TYPE_ELECTRICAL :
+                GetHasFeat(FEAT_KOB_DRAGONWROUGHT_SA, oPC)  ? DAMAGE_TYPE_ELECTRICAL :
+                GetHasFeat(FEAT_KOB_DRAGONWROUGHT_CR, oPC)  ? DAMAGE_TYPE_COLD :
+                GetHasFeat(FEAT_KOB_DRAGONWROUGHT_TP, oPC)  ? DAMAGE_TYPE_COLD :
+                GetHasFeat(FEAT_KOB_DRAGONWROUGHT_SR, oPC)  ? DAMAGE_TYPE_COLD :
+                GetHasFeat(FEAT_KOB_DRAGONWROUGHT_WH, oPC)  ? DAMAGE_TYPE_COLD :
+                DAMAGE_TYPE_FIRE; // If none match, make the itemproperty invalid
+
+      return iType;
 }

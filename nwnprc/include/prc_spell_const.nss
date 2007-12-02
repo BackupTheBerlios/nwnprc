@@ -894,3 +894,99 @@ const int SPELL_END_SCRY                            = 1798;
 const int SPELL_VIGILANT_DEFENDER                   = 1778;
 const int SPELL_BULWARK_DEFENSE                     = 1777;
 const int SPELL_FIGHT_CHALLENGE                     = 1770;
+
+//Draconic Feat Spells
+const int SPELL_DRACONIC_GRACE_1                    = 1862;
+const int SPELL_DRACONIC_GRACE_2                    = 1863;
+const int SPELL_DRACONIC_GRACE_3                    = 1864;
+const int SPELL_DRACONIC_GRACE_4                    = 1865;
+const int SPELL_DRACONIC_GRACE_5                    = 1866;
+const int SPELL_DRACONIC_GRACE_6                    = 1867;
+const int SPELL_DRACONIC_GRACE_7                    = 1868;
+const int SPELL_DRACONIC_GRACE_8                    = 1869;
+const int SPELL_DRACONIC_GRACE_9                    = 1870;
+const int SPELL_DRACONIC_BREATH_1                   = 1871;
+const int SPELL_DRACONIC_BREATH_2                   = 1872;
+const int SPELL_DRACONIC_BREATH_3                   = 1873;
+const int SPELL_DRACONIC_BREATH_4                   = 1874;
+const int SPELL_DRACONIC_BREATH_5                   = 1875;
+const int SPELL_DRACONIC_BREATH_6                   = 1876;
+const int SPELL_DRACONIC_BREATH_7                   = 1877;
+const int SPELL_DRACONIC_BREATH_8                   = 1878;
+const int SPELL_DRACONIC_BREATH_9                   = 1879;
+const int SPELL_DRAGONFIRE_STRIKE_TOGGLE            = 1890;
+
+//Swift Wing Abilities
+const int SPELL_BREATH_OF_LIFE                      = 1880;
+const int SPELL_SWIFT_WING_WINGS                    = 1881;
+
+//Talon of Tiamat Abilities
+const int SPELL_TOT_FRIGHTFUL_PRESENCE              = 1882;
+const int SPELL_TOT_DOMINATE_DRAGON                 = 1883;
+const int SPELL_TOT_COLD_CONE                       = 1885;
+const int SPELL_TOT_ACID_LINE                       = 1886;
+const int SPELL_TOT_ACID_CONE                       = 1887;
+const int SPELL_TOT_ELEC_LINE                       = 1888;
+const int SPELL_TOT_FIRE_CONE                       = 1889;
+
+//Hand of the Winged Masters Abilites
+const int SPELL_TRUE_STEALTH                        = 1891;
+
+//Dragon Shaman Abilities
+const int SPELL_DRAGON_SHAMAN_TOUCH                 = 3767;
+const int SPELL_DRAGON_SHAMAN_TOUCH_MINOR           = 3768;
+const int SPELL_DRAGON_SHAMAN_TOUCH_RESTORE         = 3769;
+const int SPELL_DRAGON_SHAMAN_TOUCH_MAJOR           = 3770;
+const int SPELL_DRACONIC_AURA_PRESENCE              = 3760;
+const int SPELL_DRACONIC_AURA_VIGOR                 = 3761;
+const int SPELL_DRACONIC_AURA_TOUGHNESS             = 3762;
+const int SPELL_DRACONIC_AURA_ENERGY_SHIELD         = 3763;
+const int SPELL_DRACONIC_AURA_RESISTANCE            = 3764;
+const int SPELL_DRACONIC_AURA_POWER                 = 3765;
+const int SPELL_DRACONIC_AURA_SENSES                = 3766;
+const int SPELL_DRACONIC_AURA_INSIGHT               = 3772;
+const int SPELL_DRACONIC_AURA_RESOLVE               = 3773;
+const int SPELL_DRACONIC_AURA_STAMINA               = 3774;
+const int SPELL_DRACONIC_AURA_SWIFTNESS             = 3775;
+
+//Other Draconic Auras
+const int SPELL_MARSHAL_AURA_SENSES                 = 3787;
+const int SPELL_MARSHAL_AURA_PRESENCE               = 3781;
+const int SPELL_MARSHAL_AURA_RESISTACID             = 3782;
+const int SPELL_MARSHAL_AURA_RESISTCOLD             = 3783;
+const int SPELL_MARSHAL_AURA_RESISTELEC             = 3784;
+const int SPELL_MARSHAL_AURA_RESISTFIRE             = 3785;
+const int SPELL_MARSHAL_AURA_TOUGHNESS              = 3790;
+const int SPELL_MARSHAL_AURA_INSIGHT                = 3780;
+const int SPELL_MARSHAL_AURA_RESOLVE                = 3786;
+const int SPELL_MARSHAL_AURA_STAMINA                = 3788;
+const int SPELL_MARSHAL_AURA_SWIFTNESS              = 3789;
+const int SPELL_SECOND_AURA_PRESENCE                = 3791;
+const int SPELL_SECOND_AURA_VIGOR                   = 3792;
+const int SPELL_SECOND_AURA_TOUGHNESS               = 3793;
+const int SPELL_SECOND_AURA_ENERGY_SHIELD           = 3794;
+const int SPELL_SECOND_AURA_RESISTANCE              = 3795;
+const int SPELL_SECOND_AURA_POWER                   = 3796;
+const int SPELL_SECOND_AURA_SENSES                  = 3797;
+const int SPELL_SECOND_AURA_INSIGHT                 = 3798;
+const int SPELL_SECOND_AURA_RESOLVE                 = 3799;
+const int SPELL_SECOND_AURA_STAMINA                 = 3800;
+const int SPELL_SECOND_AURA_SWIFTNESS               = 3801;
+const int SPELL_SECOND_AURA_RESISTACID              = 3802;
+const int SPELL_SECOND_AURA_RESISTCOLD              = 3803;
+const int SPELL_SECOND_AURA_RESISTELEC              = 3804;
+const int SPELL_SECOND_AURA_RESISTFIRE              = 3805;
+const int SPELL_BONUS_AURA_RESISTACID               = 3776;
+const int SPELL_BONUS_AURA_RESISTCOLD               = 3777;
+const int SPELL_BONUS_AURA_RESISTELEC               = 3778;
+const int SPELL_BONUS_AURA_RESISTFIRE               = 3779;
+const int SPELL_BONUS_AURA_INSIGHT                  = 3806;
+const int SPELL_BONUS_AURA_PRESENCE                 = 3807;
+const int SPELL_BONUS_AURA_RESOLVE                  = 3808;
+const int SPELL_BONUS_AURA_SENSES                   = 3809;
+const int SPELL_BONUS_AURA_STAMINA                  = 3810;
+const int SPELL_BONUS_AURA_SWIFTNESS                = 3811;
+const int SPELL_BONUS_AURA_TOUGHNESS                = 3812;
+
+// Dragon Magic Spells
+const int SPELL_DRAGON_ALLY                         = 3388;

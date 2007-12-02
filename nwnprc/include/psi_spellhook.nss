@@ -25,6 +25,39 @@
 // and the spellscript will not run
 int PsiPrePowerCastCode();
 
+//This function handles the "free swipe when manifesting" ability of the Diamond Dragon
+void Dragonswipe()
+{
+    object oPC = OBJECT_SELF;
+    // If claws are not activated, exit
+    if(!GetLocalInt(oPC, "DiamondClawsOn")) return;
+    object oTarget = PRCGetSpellTargetObject();
+
+    // Get the item used to cast the spell
+    object oItem = GetSpellCastItem();
+
+    // Clawswipes only work on powers manifested by the Diamond Dragon, not by items he uses.
+    if (oItem != OBJECT_INVALID)
+    {
+        FloatingTextStringOnCreature("You do not gain clawswipes from Items.", OBJECT_SELF, FALSE);
+        return;
+    }
+
+    effect eInvalid;
+
+    if(TakeSwiftAction(oPC))
+    {
+        //grab the closest enemy to swipe at
+        oTarget = GetNearestCreature(CREATURE_TYPE_PERCEPTION, PERCEPTION_SEEN, oPC, 1,
+            CREATURE_TYPE_REPUTATION, REPUTATION_TYPE_ENEMY);
+        if (oTarget != oPC && GetDistanceToObject(oTarget) < FeetToMeters(15.0))
+        {
+            object oClaw = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oPC);
+           PerformAttack(oTarget, oPC, eInvalid, 0.0, 0, 0, DAMAGE_TYPE_SLASHING, "*Clawswipe Hit*", "*Clawswipe Missed*", FALSE, oClaw);
+        }
+    }
+
+}
 
 //------------------------------------------------------------------------------
 // if FALSE is returned by this function, the spell will not be cast
@@ -82,12 +115,12 @@ int PsiPrePowerCastCode()
     //---------------------------------------------------------------------------
     if (nContinue)
         nContinue = NullPsionicsField();
-        
+
     //---------------------------------------------------------------------------
     // Run Scrying Check
     //---------------------------------------------------------------------------
     if (nContinue)
-        nContinue = Scrying();          
+        nContinue = Scrying();
 
     if (nContinue)
     {
@@ -115,6 +148,9 @@ int PsiPrePowerCastCode()
         SendMessageToPC(oManifester, "You cannot use "+GetName(GetSpellCastItem()));
         nContinue = FALSE;
     }
+
+    //perform the clawswipe
+    Dragonswipe();
 
     //---------------------------------------------------------------------------
     // The following code is only of interest if an item was targeted

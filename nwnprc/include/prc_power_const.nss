@@ -279,3 +279,14 @@ const int POWER_PSYCHICCHIR_TRANSFER            = 14339;
 const int POWER_TELEPORTATIONCIRCLE_VISIBLE     = 14337;
 const int POWER_TELEPORTATIONCIRCLE_HIDDEN      = 14338;
 const int POWER_TORNADO_BLAST                   = 14340;
+
+//Diamond Dragon Powers
+const int POWER_DIADRAG_CLAWS                   = 2459;
+const int POWER_DIADRAG_WINGS                   = 2460;
+const int POWER_DIADRAG_TAIL                    = 2462;
+const int POWER_DIADRAG_DRAGONFEAR              = 2463;
+const int POWER_DIADRAG_BREATH_COLD             = 2464;
+const int POWER_DIADRAG_BREATH_ELEC             = 2465;
+const int POWER_DIADRAG_BREATH_FIRE             = 2466;
+const int POWER_DIADRAG_BREATH_SONIC            = 2467;
+const int POWER_DIADRAG_IMMUNITY                = 2468;

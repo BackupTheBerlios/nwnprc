@@ -338,7 +338,8 @@ int GetSpellKnownMaxCount(int nLevel, int nSpellLevel, int nClass, object oPC)
     // Bard and Sorcerer only have new spellbook spells known if they have taken prestige classes that increase spellcasting
     if(nClass == CLASS_TYPE_SORCERER || nClass == CLASS_TYPE_BARD)
     {
-        if(GetLevelByClass(nClass) == nLevel)
+        if((GetLevelByClass(nClass) == nLevel) //no PrC
+          && !(GetHasFeat(FEAT_DRACONIC_GRACE, oPC) || GetHasFeat(FEAT_DRACONIC_BREATH, oPC))) //no Draconic feats that apply
             return 0;
     }
     return nKnown;

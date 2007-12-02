@@ -623,7 +623,7 @@ const int IP_CONST_FEAT_SUN_DOMAIN              =  168;
 const int IP_CONST_FEAT_TRAVEL_DOMAIN           =  169;
 const int IP_CONST_FEAT_TRICKERY_DOMAIN         =  170;
 const int IP_CONST_FEAT_WATER_DOMAIN            =  171;
-const int IP_CONST_FEAT_DARKNESS_DOMAIN             =  172;
+const int IP_CONST_FEAT_DARKNESS_DOMAIN         =  172;
 const int IP_CONST_FEAT_METAL_DOMAIN            =  173;
 const int IP_CONST_FEAT_STORM_DOMAIN            =  174;
 const int IP_CONST_FEAT_PORTAL_DOMAIN           =  175;
@@ -652,6 +652,7 @@ const int IP_CONST_FEAT_SPIDER_DOMAIN           =  197;
 const int IP_CONST_FEAT_TYRANNY_DOMAIN          =  198;
 const int IP_CONST_FEAT_OCEAN_DOMAIN            =  199;
 const int IP_CONST_FEAT_BLIGHTBRINGER           =  200;
+const int IP_CONST_FEAT_DRAGON_DOMAIN           =  397;
 
 // Domain Feats
 const int IP_CONST_FEAT_GREAT_FORTITUDE         =  202;
@@ -667,6 +668,35 @@ const int IP_CONST_FEAT_SPELLFIRE_INCREASE      =  266;
 const int IP_CONST_FEAT_SPELLFIRE_DECREASE      =  267;
 const int IP_CONST_FEAT_SPELLFIRE_QUICKSELECT   =  268;
 
+//RotD & Dragon Magic
+const int IP_CONST_FEAT_DRAGON                  = 396;
+const int IP_CONST_FEAT_DRAGON_IMMUNE           = 395;
+const int IP_CONST_FEAT_TOUGHNESS               = 394;
+const int IP_CONST_FEAT_DRACONIC_GRACE_1_5      = 223;
+const int IP_CONST_FEAT_DRACONIC_GRACE_6_9      = 224;
+const int IP_CONST_FEAT_DRACONIC_BREATH_1_5     = 225;
+const int IP_CONST_FEAT_DRACONIC_BREATH_6_9     = 226;
+
+//Draconic Auras
+const int IP_CONST_FEAT_BONUS_AURA_1            = 15980;
+const int IP_CONST_FEAT_BONUS_AURA_2            = 15981;
+const int IP_CONST_FEAT_BONUS_AURA_3            = 15982;
+const int IP_CONST_FEAT_BONUS_AURA_4            = 15983;
+const int IP_CONST_FEAT_2ND_AURA_POWER          = 15984;
+const int IP_CONST_FEAT_2ND_AURA_ENERGYSHLD     = 15985;
+const int IP_CONST_FEAT_2ND_AURA_TOUGHNESS      = 15986;
+const int IP_CONST_FEAT_2ND_AURA_SENSES         = 15987;
+const int IP_CONST_FEAT_2ND_AURA_VIGOR          = 15988;
+const int IP_CONST_FEAT_2ND_AURA_RESISTANCE     = 15989;
+const int IP_CONST_FEAT_2ND_AURA_PRESENCE       = 15990;
+const int IP_CONST_FEAT_2ND_AURA_INSIGHT        = 15991;
+const int IP_CONST_FEAT_2ND_AURA_RESOLVE        = 15992;
+const int IP_CONST_FEAT_2ND_AURA_STAMINA        = 15993;
+const int IP_CONST_FEAT_2ND_AURA_SWIFTNESS      = 15994;
+const int IP_CONST_FEAT_2ND_AURA_RESISTACID     = 15995;
+const int IP_CONST_FEAT_2ND_AURA_RESISTCOLD     = 15996;
+const int IP_CONST_FEAT_2ND_AURA_RESISTELEC     = 15997;
+const int IP_CONST_FEAT_2ND_AURA_RESISTFIRE     = 15998;
 
 // Status markers
 const int IP_CONST_FEAT_INCORPOREAL             = 227;

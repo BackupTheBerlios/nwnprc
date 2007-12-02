@@ -44,6 +44,10 @@ int WardOfPeace();
 // from working
 int DuskbladeArcaneChanneling();
 
+// Handles the "When spell is cast do this" effects from the Draconic
+// series of feats
+void DraconicFeatsOnSpell();
+
 // Bard / Sorc PrC handling
 // returns FALSE if it is a bard or a sorcerer spell from a character
 // with an arcane PrC via bioware spellcasting rather than via PrC spellcasting
@@ -232,8 +236,8 @@ int DuskbladeArcaneChanneling()
 
         // Don't channel from objects
         if(oItem != OBJECT_INVALID)
-            return TRUE;    
-    
+            return TRUE;
+
         //dont cast
         nReturn = FALSE;
         int nSpell     = PRCGetSpellId();
@@ -297,6 +301,136 @@ int DuskbladeArcaneChanneling()
 
 }
 
+void DraconicFeatsOnSpell()
+{
+    object oPC = OBJECT_SELF;
+
+    //ensure the spell is arcane
+    if(!GetIsArcaneClass(PRCGetLastSpellCastClass(), oPC))
+        return;
+
+    int nSpellLevel = PRCGetSpellLevel(oPC, PRCGetSpellId());
+
+    ///////Draconic Vigor////
+    if(GetHasFeat(FEAT_DRACONIC_VIGOR, oPC))
+    {
+            effect eHeal = EffectHeal(nSpellLevel);
+            ApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oPC);
+
+    }
+
+    ///////Draconic Armor////
+    if(GetHasFeat(FEAT_DRACONIC_ARMOR, oPC))
+    {
+            effect eDamRed = EffectDamageReduction(nSpellLevel, DAMAGE_POWER_PLUS_ONE);
+            ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDamRed, oPC, 6.0f);
+
+    }
+
+    ///////Draconic Persuasion////
+    if(GetHasFeat(FEAT_DRACONIC_PERSUADE, oPC))
+    {
+           int nBonus = FloatToInt(1.5f * IntToFloat(nSpellLevel));
+            effect eCha = EffectSkillIncrease(SKILL_BLUFF, nBonus);
+            effect eCha2 = EffectSkillIncrease(SKILL_PERFORM, nBonus);
+            effect eCha3 = EffectSkillIncrease(SKILL_INTIMIDATE, nBonus);
+            effect eLink = EffectLinkEffects(eCha, eCha2);
+            eLink = EffectLinkEffects(eLink, eCha3);
+            ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, 6.0f);
+
+    }
+
+    ///////Draconic Presence////
+    if(GetHasFeat(FEAT_DRACONIC_PRESENCE, oPC))
+    {
+       //set up checks
+        object oScare;
+        int bCreaturesLeft = TRUE;
+        int nNextCreature = 1;
+
+        //set up fear effects
+        effect eVis = EffectVisualEffect(VFX_IMP_FEAR_S);
+        effect eDur = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_FEAR);
+        effect eDur2 = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
+
+        effect eAttackD = EffectAttackDecrease(2);
+        effect eDmgD = EffectDamageDecrease(2,DAMAGE_TYPE_BLUDGEONING|DAMAGE_TYPE_PIERCING|DAMAGE_TYPE_SLASHING);
+        effect SaveD = EffectSavingThrowDecrease(SAVING_THROW_ALL,2);
+
+        effect eLink = EffectLinkEffects(eDmgD, eDur2);
+               eLink = EffectLinkEffects(eLink, eAttackD);
+               eLink = EffectLinkEffects(eLink, SaveD);
+
+        int nHD = GetHitDice(oPC);
+        int nDC = 10 + nSpellLevel + GetAbilityModifier(ABILITY_CHARISMA, oPC);
+        int nDuration = 6 * nSpellLevel;
+
+        //cycle through creatures within the AoE
+        while(bCreaturesLeft == TRUE)
+        {
+
+            oScare = GetNearestCreature(CREATURE_TYPE_IS_ALIVE, TRUE, oPC, nNextCreature,
+                CREATURE_TYPE_REPUTATION, REPUTATION_TYPE_ENEMY);
+            if(oScare == OBJECT_INVALID) bCreaturesLeft = FALSE;
+            if (oScare != oPC && GetDistanceToObject(oScare) < FeetToMeters(15.0))
+            {
+               //dragons are immune, so make sure it's not a dragon
+               if(MyPRCGetRacialType(oScare)!= RACIAL_TYPE_DRAGON)
+               {
+                   //Fire cast spell at event for the specified target
+                    SignalEvent(oScare, EventSpellCastAt(oPC, SPELLABILITY_AURA_FEAR));
+                    //Make a saving throw check
+                    if(!PRCMySavingThrow(SAVING_THROW_WILL, oScare, nDC, SAVING_THROW_TYPE_FEAR) && !GetIsImmune(oScare, IMMUNITY_TYPE_FEAR) && !GetIsImmune(oScare, IMMUNITY_TYPE_MIND_SPELLS))
+                    {
+                        //Apply the VFX impact and effects
+                        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oScare, RoundsToSeconds(nDuration));
+                        ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oScare);
+                    }//end will save processing
+                } //end dragon check
+                nNextCreature++;
+            }//end target check
+            //if no more creatures within range, end it
+            else
+                bCreaturesLeft = FALSE;
+        }//end while
+    }
+
+    ///////Draconic Claw////
+    if(GetHasFeat(FEAT_DRACONIC_CLAW, oPC))
+    {
+        object oTarget = PRCGetSpellTargetObject();
+
+        // Get the item used to cast the spell
+        object oItem = GetSpellCastItem();
+
+        //get the proper sized claw
+        string sResRef = "prc_claw_1d6m_";
+        sResRef += GetAffixForSize(PRCGetCreatureSize(oPC));
+        object oClaw = GetObjectByTag(sResRef);
+
+        // Clawswipes only work on powers manifested by the Diamond Dragon, not by items he uses.
+        if (oItem != OBJECT_INVALID)
+        {
+            FloatingTextStringOnCreature("You do not gain clawswipes from Items.", OBJECT_SELF, FALSE);
+            return;
+        }
+
+        effect eInvalid;
+
+        if(TakeSwiftAction(oPC))
+        {
+            //grab the closest enemy to swipe at
+            oTarget = GetNearestCreature(CREATURE_TYPE_PERCEPTION, PERCEPTION_SEEN, oPC, 1,
+                CREATURE_TYPE_REPUTATION, REPUTATION_TYPE_ENEMY);
+            if (oTarget != oPC && GetDistanceToObject(oTarget) < FeetToMeters(15.0))
+            {
+               PerformAttack(oTarget, oPC, eInvalid, 0.0, 0, 0, DAMAGE_TYPE_SLASHING, "*Clawswipe Hit*", "*Clawswipe Missed*", FALSE, oClaw);
+           }
+       }
+    }
+
+}
+
 int BardSorcPrCCheck()
 {
     //check its a bard/sorc spell
@@ -311,8 +445,9 @@ int BardSorcPrCCheck()
     if(GetFirstArcaneClass() != CLASS_TYPE_BARD
         && GetFirstArcaneClass() != CLASS_TYPE_SORCERER)
         return TRUE;
-    //check they have arcane PrC
-    if(!GetArcanePRCLevels(OBJECT_SELF))
+    //check they have arcane PrC or Draconic Arcane Grace/Breath
+    if(!GetArcanePRCLevels(OBJECT_SELF)
+      && !(GetHasFeat(FEAT_DRACONIC_GRACE, OBJECT_SELF) || GetHasFeat(FEAT_DRACONIC_BREATH, OBJECT_SELF)))
         return TRUE;
     //check if the newspellbooks are disabled
     if((GetPRCSwitch(PRC_SORC_DISALLOW_NEWSPELLBOOK)
@@ -527,7 +662,7 @@ int Scrying()
 
     if (nScry == SPELL_GREATER_SCRYING)
     {
-        if (nSpellId == SPELL_DETECT_EVIL || nSpellId == SPELL_DETECT_GOOD || 
+        if (nSpellId == SPELL_DETECT_EVIL || nSpellId == SPELL_DETECT_GOOD ||
             nSpellId == SPELL_DETECT_LAW || nSpellId == SPELL_DETECT_CHAOS)
                 return TRUE;
     }
@@ -535,8 +670,8 @@ int Scrying()
     {
         if (nSpellId == POWER_FARHAND)
                 return TRUE;
-    }    
-    
+    }
+
     return FALSE;
 }
 
@@ -1023,8 +1158,8 @@ int X2PreSpellCastCode2()
                 nContinue = FALSE;
                 SendMessageToPC(oCaster, "Spontaneous casters cannot cast this spell!");
             }
-        }    
-            
+        }
+
         //Check for alignment restrictions
         if(GetAlignmentGoodEvil(oCaster) == ALIGNMENT_EVIL)
         {
@@ -1046,8 +1181,8 @@ int X2PreSpellCastCode2()
                        nContinue = FALSE;
                        SendMessageToPC(oCaster, "You cannot cast Sanctified spells if you are evil.");
                }
-        }       
-         
+        }
+
         if(GetAlignmentGoodEvil(oCaster) == ALIGNMENT_GOOD)
         {
                 if(nSpellID == SPELL_ABSORB_STRENGTH        ||
@@ -1063,31 +1198,31 @@ int X2PreSpellCastCode2()
                 nSpellID == SPELL_ROTTING_CURSE_OF_URFESTRA ||
                 nSpellID == SPELL_SEETHING_EYEBANE          ||
                 nSpellID == SPELL_TOUCH_OF_JUIBLEX)
-                
+
                 {
-                        nContinue = FALSE;                        
+                        nContinue = FALSE;
                         SendMessageToPC(oCaster, "You cannot cast Corrupt spells if you are good.");
-                }                        
+                }
         }
     }
-    
+
     //Violet Rain check
     if(GetHasSpellEffect(SPELL_EVIL_WEATHER_VIOLET_RAIN, oCaster))
     {
             int nClass = PRCGetLastSpellCastClass();
-            
+
             if(GetIsDivineClass(nClass, oCaster))
             {
                     nContinue = FALSE;
             }
     }
-    
+
     //Spell Barriers
     if(nContinue)
     {
             object oPC = OBJECT_SELF;
             object oTarget = PRCGetSpellTargetObject();
-            
+
             if(GetHasSpellEffect(SPELL_OTILUKES_RESILIENT_SPHERE, oTarget))
             {
                     if(GetDistanceBetween(oPC, oTarget) > 6.096)
@@ -1095,7 +1230,7 @@ int X2PreSpellCastCode2()
                             nContinue = FALSE;
                     }
             }
-            
+
             if(GetHasSpellEffect(SPELL_PRISMATIC_SPHERE, oTarget))
             {
                     if(GetDistanceBetween(oPC, oTarget) > 3.048)
@@ -1127,12 +1262,12 @@ int X2PreSpellCastCode2()
     //---------------------------------------------------------------------------
     if (nContinue)
         nContinue = NullPsionicsField();
-        
+
     //---------------------------------------------------------------------------
     // Run Scrying Check
     //---------------------------------------------------------------------------
     if (nContinue)
-        nContinue = Scrying();      
+        nContinue = Scrying();
 
     //---------------------------------------------------------------------------
     // Run WardOfPeace Check
@@ -1174,12 +1309,12 @@ int X2PreSpellCastCode2()
     //---------------------------------------------------------------------------
     if (nContinue)
         nContinue = InscribeRune();
-        
+
     //---------------------------------------------------------------------------
     // Run Attune Gem Check
     //---------------------------------------------------------------------------
     if (nContinue)
-        nContinue = AttuneGem();        
+        nContinue = AttuneGem();
 
     //---------------------------------------------------------------------------
     // Run Class Spell-like-ability Check
@@ -1299,12 +1434,12 @@ if(DEBUG) DoDebug("x2_inc_spellhook pre-X2CastOnItemWasAllowed "+IntToString(nCo
     {
         object oComp = GetLocalObject(oCaster, "HealerCompanion");
         int nHealCount = GetLocalInt(oCaster, "HealerCompanionSpell");
-        int nCompCount = GetLocalInt(oComp, "HealerCompanionSpell");        
+        int nCompCount = GetLocalInt(oComp, "HealerCompanionSpell");
         if(DEBUG) DoDebug("x2_inc_spellhook: nHealCount: " + IntToString(nHealCount));
         if(DEBUG) DoDebug("x2_inc_spellhook: nCompCount: " + IntToString(nCompCount));
         if(DEBUG) DoDebug("x2_inc_spellhook: oCaster Name: " + GetName(oCaster));
         // Allow the spell twice, once to affect target and once to affect companion
-        
+
         if (GetIsObjectValid(oComp))
         {
                 SetLocalInt(oCaster, "HealerCompanionSpell", nHealCount + 1);
@@ -1335,6 +1470,10 @@ if(DEBUG) DoDebug("x2_inc_spellhook pre-X2CastOnItemWasAllowed "+IntToString(nCo
     // Havoc Mage Battlecast
     if(nContinue && GetLevelByClass(CLASS_TYPE_HAVOC_MAGE))
         Battlecast();
+
+    //Draconic Feat effects
+    if(nContinue)
+        DraconicFeatsOnSpell();
 
     //casting from staffs uses caster DC calculations
     if(nContinue

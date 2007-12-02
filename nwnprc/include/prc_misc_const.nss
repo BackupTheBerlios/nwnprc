@@ -253,7 +253,7 @@ const int DOMAIN_RUNE          = 56;
 const int DOMAIN_SPELLS        = 57;
 const int DOMAIN_SCALEYKIND    = 58;
 const int DOMAIN_BLIGHTBRINGER = 59;
-
+const int DOMAIN_DRAGON        = 60;
 
 //:://////////////////////////////////////////////
 //:: Trap Const

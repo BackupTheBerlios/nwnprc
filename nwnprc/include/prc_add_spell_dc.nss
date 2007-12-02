@@ -365,6 +365,51 @@ int SoulEaterSoulPower(object oCaster)
     return (GetLocalInt(oCaster, "PRC_SoulEater_HasDrained") && GetLevelByClass(CLASS_TYPE_SOUL_EATER, oCaster) >= 10) ? 2 : 0;
 }
 
+//Draconic Power's elemental boost to spell DCs
+int DraconicPowerDC(int spell_id, object oCaster = OBJECT_SELF)
+{
+    int nDC = 0;
+
+    if (GetHasFeat(FEAT_DRACONIC_POWER, oCaster)) {
+        // get spell elemental type
+        string element = ChangedElementalType(spell_id, oCaster);
+        //if(DEBUG) FloatingTextStringOnCreature("Elemental type: " + element, oCaster, FALSE);
+
+        // Compare heritage type and elemental type
+        if (element == "Fire" && (GetHasFeat(FEAT_DRACONIC_HERITAGE_BS, oCaster)
+               || GetHasFeat(FEAT_DRACONIC_HERITAGE_GD, oCaster)
+               || GetHasFeat(FEAT_DRACONIC_HERITAGE_RD, oCaster)))
+        {
+            return 1;
+        }
+        else if (element == "Cold" && (GetHasFeat(FEAT_DRACONIC_HERITAGE_CR, oCaster)
+               || GetHasFeat(FEAT_DRACONIC_HERITAGE_SR, oCaster)
+               || GetHasFeat(FEAT_DRACONIC_HERITAGE_TP, oCaster)
+               || GetHasFeat(FEAT_DRACONIC_HERITAGE_WH, oCaster)))
+        {
+            return 1;
+        }
+        else if (element == "Electricity" && (GetHasFeat(FEAT_DRACONIC_HERITAGE_BL, oCaster)
+               || GetHasFeat(FEAT_DRACONIC_HERITAGE_BZ, oCaster)
+               || GetHasFeat(FEAT_DRACONIC_HERITAGE_SA, oCaster)))
+        {
+            return 1;
+        }
+        else if (element == "Acid" && (GetHasFeat(FEAT_DRACONIC_HERITAGE_BK, oCaster)
+               || GetHasFeat(FEAT_DRACONIC_HERITAGE_CP, oCaster)
+               || GetHasFeat(FEAT_DRACONIC_HERITAGE_GR, oCaster)))
+        {
+            return 1;
+        }
+        else if (element == "Sonic" && GetHasFeat(FEAT_DRACONIC_HERITAGE_EM, oCaster))
+        {
+            return 1;
+        }
+    }
+
+    //if it gets here, the caster does not have the feat, or is a heritage type without a NWN element (e.g. Amethyst)
+    return nDC;
+}
 
 int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1)
 {
@@ -538,6 +583,7 @@ int GetChangesToSaveDC(object oTarget, object oCaster = OBJECT_SELF, int nSpellI
     nDC += RunecasterRunePowerDC(oCaster);
     nDC += UnheavenedAdjustment(oTarget, oCaster);
     nDC += SoulEaterSoulPower(oCaster);
+    nDC += DraconicPowerDC(nSpellID, oCaster);
     nDC += GetLocalInt(oCaster, PRC_DC_ADJUSTMENT);//this is for builder use
     return nDC;
 

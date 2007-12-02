@@ -9,7 +9,7 @@
 5  MaxSpell    FEATOR  25               ****      
 6  Empower     FEATOR  11               ****      
 7  ExtSpell    FEATOR  12               ****      
-7  Quicken     FEATOR  29               ****      
-8  ScriptVar   VAR     PRC_AllowShadAde 0         
-9  ScriptVar   VAR     PRC_ArcSpell3    0         
-10 ScriptVar   VAR     PRC_PrereqShadAd 0         
+8  Quicken     FEATOR  29               ****      
+9  ScriptVar   VAR     PRC_AllowShadAde 0         
+10 ScriptVar   VAR     PRC_ArcSpell3    0         
+11 ScriptVar   VAR     PRC_PrereqShadAd 0         

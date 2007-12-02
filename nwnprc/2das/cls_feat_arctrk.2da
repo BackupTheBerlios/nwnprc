@@ -101,3 +101,4 @@
 97  FEAT_EPIC_SELF_CONCEALMENT_50       752       1    -1             0      
 98  FEAT_EPIC_DODGE                     856       1    -1             0      
 99  FEAT_EPIC_SPELL_PENETRATION         618       0    -1             0      
+100 FEAT_DRAGONFIRE_STRIKE              3949      0    -1             1      

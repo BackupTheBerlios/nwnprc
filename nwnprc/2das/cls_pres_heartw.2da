@@ -1,12 +1,12 @@
 2DA V2.0
 
-   LABEL                   ReqType ReqParam1       ReqParam2 
-2  Dodge                   FEAT    10              ****      
-3  Mobility                FEAT    26              ****      
-4  Persuade                SKILL   12              6         
-5  Bluff                   SKILL   23              3         
-6  SpellFocusEnc           FEAT    168             ****      
-7  WeapProfEx              FEAT    44              ****      
-8  ScriptVar               VAR     PRC_DivSpell3   0         
-9  ScriptVar               VAR     PRC_AllowHeartW 0         
-9  ScriptVar               VAR     PRC_PrereqHeartW 0         
+  LABEL         ReqType ReqParam1        ReqParam2 
+0 Dodge         FEAT    10               ****      
+1 Mobility      FEAT    26               ****      
+2 Persuade      SKILL   12               6         
+3 Bluff         SKILL   23               3         
+4 SpellFocusEnc FEAT    168              ****      
+5 WeapProfEx    FEAT    44               ****      
+6 ScriptVar     VAR     PRC_DivSpell3    0         
+7 ScriptVar     VAR     PRC_AllowHeartW  0         
+8 ScriptVar     VAR     PRC_PrereqHeartW 0         

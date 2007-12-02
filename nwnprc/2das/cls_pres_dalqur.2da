@@ -1,9 +1,9 @@
 2DA V2.0
 
-  LABEL      ReqType ReqParam1            ReqParam2 
-0 Lore       SKILL   7                    4
-1 BaseAttack BAB     4                    ****      
-2 ScriptVar  VAR     PRC_PrereqDalQuor    0         
-3 ScriptVar  VAR     PRC_AllowDalQuor     0      
-4 WeapProfMar FEATOR    45              ****      
-4 WeapProfEx  FEATOR    44              ****      
+  LABEL       ReqType ReqParam1         ReqParam2 
+0 Lore        SKILL   7                 4         
+1 BaseAttack  BAB     4                 ****      
+2 ScriptVar   VAR     PRC_PrereqDalQuor 0         
+3 ScriptVar   VAR     PRC_AllowDalQuor  0         
+4 WeapProfMar FEATOR  45                ****      
+5 WeapProfEx  FEATOR  44                ****      

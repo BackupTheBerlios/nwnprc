@@ -68,3 +68,4 @@
 64 FEAT_NS_WEB                          2972      3    8              1      
 65 FEAT_NS_SHADOWWALK                   2973      3    10             1      
 66 FEAT_LINGERING_DAMAGE                3099      0    -1             0      
+67 FEAT_DRAGONFIRE_STRIKE               3949      0    3              1      

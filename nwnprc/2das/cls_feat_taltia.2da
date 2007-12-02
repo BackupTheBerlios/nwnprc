@@ -1,0 +1,22 @@
+2DA V2.0
+
+   FeatLabel                    FeatIndex List GrantedOnLevel OnMenu 
+0  **Class_feats**              ****      **** ****           ****   
+1  WeapProfSim                  46        3    1              0      
+2  ArmProfLgt                   3         3    1              0      
+3  ArmProfMed                   4         3    1              0      
+4  ArmProfHvy                   2         3    1              0      
+5  Shield                       32        3    1              0      
+6  WeapProfMar                  45        3    1              0      
+7  Breath_Weapons               3936      3    1              1      
+8  Voice_of_the_Dragon          3928      3    2              0      
+9  Keen_Senses                  3931      3    4              0      
+10 FEAT_DRAGON_IMMUNE_PARALYSIS 963       3    6              0      
+11 FrightfulPresence            3938      3    8              1      
+12 Dominate_Dragon              3937      3    10             1      
+13 ****                         ****      **** ****           ****   
+14 **Bonus_Feats**              ****      **** ****           ****   
+15 Fire_Immunity                3932      2    6              0      
+16 Cold_Immunity                3933      2    6              0      
+17 Acid_Immunity                3934      2    6              0      
+18 Electric_Immunity            3935      2    6              0      

@@ -1,4 +1,5 @@
 #include "prc_alterations"
+#include "prc_inc_sneak"
 
 int SkirmishDamage(object oPC, object oTarget, int nClass)
 {
@@ -8,7 +9,25 @@ int SkirmishDamage(object oPC, object oTarget, int nClass)
     {
         // Increased Dice every 4 levels (1, 5, 9 and so on)
         int nDice = (nClass + 3) / 4;
+
+        //Dragon Devotee and Hand of the Winged Masters damage bonus feats
+        int nBonusFeatDice = 0;
+        int nCount;
+        for(nCount = FEAT_SPECIAL_SKIRMISH_5D6; nCount >= FEAT_SPECIAL_SKIRMISH_1D6; nCount--)
+        {
+            if (GetHasFeat(nCount,oPC))
+            {
+                nBonusFeatDice = nCount - FEAT_SPECIAL_SKIRMISH_1D6 + 1;
+                if (DEBUG) DoDebug("prc_scout: Bonus Skirmish Dice: " + IntToString(nBonusFeatDice));
+                break;
+            }
+        }
+        nDice += nBonusFeatDice;
+
         nDamage = d6(nDice);
+
+        if(GetHasFeat(FEAT_IMP_DRAGONFIRE_STRIKE, oPC) && GetLocalInt(oPC, "DragonFireOn"))
+            nDamage += nDice;
     }
 
     return nDamage;
@@ -132,6 +151,11 @@ void main()
         {
             // Calculate Skirmish damage and apply
             int nDamageType = GetWeaponDamageType(oItem);
+
+            //Dragonfire Strike Handling
+            if(GetHasFeat(FEAT_DRAGONFIRE_STRIKE, oPC) && GetLocalInt(oPC, "DragonFireOn"))
+                nDamageType = GetDragonfireDamageType(oPC);
+
             effect eDam = EffectDamage(SkirmishDamage(oPC, oTarget, nClass), nDamageType);
             ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
             FloatingTextStrRefOnCreature(16828412, oPC); // "* Skirmish *"

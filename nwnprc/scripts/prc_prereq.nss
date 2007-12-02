@@ -28,6 +28,46 @@ void SneakRequirement(object oPC)
    }
 }
 
+void SkirmishRequirement(object oPC)
+{
+   int nLevel = GetLevelByClass(CLASS_TYPE_SCOUT, oPC);
+   int iCount;
+   string sVariable;
+
+   int nDice = (nLevel + 3) / 4;
+   for (iCount = 1; iCount <= 30; iCount++)
+   {
+      sVariable = "PRC_SkirmishLevel" + IntToString(iCount);
+      if (nDice >= iCount)
+         SetLocalInt(oPC, sVariable, 0);
+   }
+
+}
+
+//for requirements that Skirmish and Sneak both apply to
+void SpecialAttackRequirement(object oPC)
+{
+   int nLevel = GetLevelByClass(CLASS_TYPE_SCOUT, oPC);
+   string sVariable;
+   int iSneak = GetTotalSneakAttackDice(oPC);
+   int iCount;
+   //Skirmish
+   int nDice = (nLevel + 3) / 4;
+   for (iCount = 1; iCount <= 30; iCount++)
+   {
+      sVariable = "PRC_SplAtkLevel" + IntToString(iCount);
+      if (nDice >= iCount)
+         SetLocalInt(oPC, sVariable, 0);
+   }
+   //Sneak
+   for (iCount = 1; iCount <= 30; iCount++)
+   {
+      sVariable = "PRC_SplAtkLevel" + IntToString(iCount);
+      if (iSneak >= iCount)
+         SetLocalInt(oPC, sVariable, 0);
+   }
+}
+
 void Hathran(object oPC)
 {
 
@@ -569,38 +609,38 @@ void DalQuor(object oPC)
 
     SetLocalInt(oPC, "PRC_PrereqDalQuor", 1);
 
-	// Psionic feats
-    int iFeat = GetHasFeat(FEAT_COMBAT_MANIFESTATION        , oPC) + 
-    		GetHasFeat(FEAT_MENTAL_LEAP                 , oPC) +
-            	GetHasFeat(FEAT_NARROW_MIND                 , oPC) + 
-            	GetHasFeat(FEAT_POWER_PENETRATION           , oPC) +
-            	GetHasFeat(FEAT_GREATER_POWER_PENETRATION   , oPC) + 
-            	GetHasFeat(FEAT_POWER_SPECIALIZATION        , oPC) +
-            	GetHasFeat(FEAT_GREATER_POWER_SPECIALIZATION, oPC) +
-            	GetHasFeat(FEAT_PSIONIC_DODGE               , oPC) + 
-            	GetHasFeat(FEAT_PSIONIC_ENDOWMENT           , oPC) +
-            	GetHasFeat(FEAT_GREATER_PSIONIC_ENDOWMENT   , oPC) + 
-            	GetHasFeat(FEAT_PSIONIC_FIST                , oPC) +
-            	GetHasFeat(FEAT_GREATER_PSIONIC_FIST        , oPC) + 
-            	GetHasFeat(FEAT_PSIONIC_WEAPON              , oPC) +
-            	GetHasFeat(FEAT_GREATER_PSIONIC_WEAPON      , oPC) + 
-            	GetHasFeat(FEAT_PSIONIC_SHOT                , oPC) +
-            	GetHasFeat(FEAT_GREATER_PSIONIC_SHOT        , oPC) + 
-            	GetHasFeat(FEAT_OVERCHANNEL                 , oPC) +
-            	GetHasFeat(FEAT_PSIONIC_MEDITATION          , oPC) + 
-            	GetHasFeat(FEAT_RAPID_METABOLISM            , oPC) +
-            	GetHasFeat(FEAT_TALENTED                    , oPC) + 
-    		GetHasFeat(FEAT_UNAVOIDABLE_STRIKE          , oPC) +
-            	GetHasFeat(FEAT_WILD_TALENT                 , oPC) + 
-            	GetHasFeat(FEAT_WOUNDING_ATTACK             , oPC) +
-            	GetHasFeat(FEAT_BOOST_CONSTRUCT             , oPC) + 
-            	GetHasFeat(FEAT_SPEED_OF_THOUGHT            , oPC) +
-            	GetHasFeat(FEAT_PSIONIC_TALENT_1            , oPC) +
-            	GetHasFeat(FEAT_METAMORPHIC_TRANSFER_1      , oPC) + 
-            	GetHasFeat(FEAT_DEEP_IMPACT         	    , oPC) +
-            	GetHasFeat(FEAT_FELL_SHOT                   , oPC) + 
-            	GetHasFeat(FEAT_EXPANDED_KNOWLEDGE_1        , oPC) +
-            	GetHasFeat(FEAT_INVEST_ARMOUR               , oPC);
+    // Psionic feats
+    int iFeat = GetHasFeat(FEAT_COMBAT_MANIFESTATION        , oPC) +
+            GetHasFeat(FEAT_MENTAL_LEAP                 , oPC) +
+                GetHasFeat(FEAT_NARROW_MIND                 , oPC) +
+                GetHasFeat(FEAT_POWER_PENETRATION           , oPC) +
+                GetHasFeat(FEAT_GREATER_POWER_PENETRATION   , oPC) +
+                GetHasFeat(FEAT_POWER_SPECIALIZATION        , oPC) +
+                GetHasFeat(FEAT_GREATER_POWER_SPECIALIZATION, oPC) +
+                GetHasFeat(FEAT_PSIONIC_DODGE               , oPC) +
+                GetHasFeat(FEAT_PSIONIC_ENDOWMENT           , oPC) +
+                GetHasFeat(FEAT_GREATER_PSIONIC_ENDOWMENT   , oPC) +
+                GetHasFeat(FEAT_PSIONIC_FIST                , oPC) +
+                GetHasFeat(FEAT_GREATER_PSIONIC_FIST        , oPC) +
+                GetHasFeat(FEAT_PSIONIC_WEAPON              , oPC) +
+                GetHasFeat(FEAT_GREATER_PSIONIC_WEAPON      , oPC) +
+                GetHasFeat(FEAT_PSIONIC_SHOT                , oPC) +
+                GetHasFeat(FEAT_GREATER_PSIONIC_SHOT        , oPC) +
+                GetHasFeat(FEAT_OVERCHANNEL                 , oPC) +
+                GetHasFeat(FEAT_PSIONIC_MEDITATION          , oPC) +
+                GetHasFeat(FEAT_RAPID_METABOLISM            , oPC) +
+                GetHasFeat(FEAT_TALENTED                    , oPC) +
+            GetHasFeat(FEAT_UNAVOIDABLE_STRIKE          , oPC) +
+                GetHasFeat(FEAT_WILD_TALENT                 , oPC) +
+                GetHasFeat(FEAT_WOUNDING_ATTACK             , oPC) +
+                GetHasFeat(FEAT_BOOST_CONSTRUCT             , oPC) +
+                GetHasFeat(FEAT_SPEED_OF_THOUGHT            , oPC) +
+                GetHasFeat(FEAT_PSIONIC_TALENT_1            , oPC) +
+                GetHasFeat(FEAT_METAMORPHIC_TRANSFER_1      , oPC) +
+                GetHasFeat(FEAT_DEEP_IMPACT                 , oPC) +
+                GetHasFeat(FEAT_FELL_SHOT                   , oPC) +
+                GetHasFeat(FEAT_EXPANDED_KNOWLEDGE_1        , oPC) +
+                GetHasFeat(FEAT_INVEST_ARMOUR               , oPC);
 
 
     // At least one psionic feat
@@ -996,6 +1036,8 @@ void main()
      Brimstone(oPC);
      CoC(oPC);
      DalQuor(oPC);
+     SkirmishRequirement(oPC);
+     SpecialAttackRequirement(oPC);
      // Truly massive debug message flood if activated.
      /*
 

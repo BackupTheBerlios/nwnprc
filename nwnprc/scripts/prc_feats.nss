@@ -73,6 +73,64 @@ void main()
     if(GetHasFeat(FEAT_ULTRAVISION, oPC))                        ExecuteScript("prc_ultravis", oPC);
     if(GetHasFeat(FEAT_TWO_WEAPON_REND, oPC))                    ExecuteScript("prc_tw_rend", oPC);
 
+    //Races of the Dragon feats
+    if(GetHasFeat(FEAT_KOB_DRAGON_TAIL, oPC)
+        || GetHasFeat(FEAT_KOB_DRAGON_WING_A, oPC)
+        || GetHasFeat(FEAT_KOB_DRAGON_WING_BC, oPC)
+        || GetHasFeat(FEAT_KOB_DRAGON_WING_BG, oPC)
+        || GetHasFeat(FEAT_KOB_DRAGON_WING_BM, oPC)
+        || GetHasFeat(FEAT_KOB_DRAGONWROUGHT_BK, oPC)
+        || GetHasFeat(FEAT_KOB_DRAGONWROUGHT_BL, oPC)
+        || GetHasFeat(FEAT_KOB_DRAGONWROUGHT_GR, oPC)
+        || GetHasFeat(FEAT_KOB_DRAGONWROUGHT_RD, oPC)
+        || GetHasFeat(FEAT_KOB_DRAGONWROUGHT_WH, oPC)
+        || GetHasFeat(FEAT_KOB_DRAGONWROUGHT_AM, oPC)
+        || GetHasFeat(FEAT_KOB_DRAGONWROUGHT_CR, oPC)
+        || GetHasFeat(FEAT_KOB_DRAGONWROUGHT_EM, oPC)
+        || GetHasFeat(FEAT_KOB_DRAGONWROUGHT_SA, oPC)
+        || GetHasFeat(FEAT_KOB_DRAGONWROUGHT_TP, oPC)
+        || GetHasFeat(FEAT_KOB_DRAGONWROUGHT_BS, oPC)
+        || GetHasFeat(FEAT_KOB_DRAGONWROUGHT_BZ, oPC)
+        || GetHasFeat(FEAT_KOB_DRAGONWROUGHT_CP, oPC)
+        || GetHasFeat(FEAT_KOB_DRAGONWROUGHT_GD, oPC)
+        || GetHasFeat(FEAT_KOB_DRAGONWROUGHT_SR, oPC))              ExecuteScript("prc_rotdfeat", oPC);
+
+    //Draconic Feats
+    if(GetHasFeat(FEAT_DRACONIC_HERITAGE_BK, oPC)
+        || GetHasFeat(FEAT_DRACONIC_HERITAGE_BL, oPC)
+        || GetHasFeat(FEAT_DRACONIC_HERITAGE_GR, oPC)
+        || GetHasFeat(FEAT_DRACONIC_HERITAGE_RD, oPC)
+        || GetHasFeat(FEAT_DRACONIC_HERITAGE_WH, oPC)
+        || GetHasFeat(FEAT_DRACONIC_HERITAGE_AM, oPC)
+        || GetHasFeat(FEAT_DRACONIC_HERITAGE_CR, oPC)
+        || GetHasFeat(FEAT_DRACONIC_HERITAGE_EM, oPC)
+        || GetHasFeat(FEAT_DRACONIC_HERITAGE_SA, oPC)
+        || GetHasFeat(FEAT_DRACONIC_HERITAGE_TP, oPC)
+        || GetHasFeat(FEAT_DRACONIC_HERITAGE_BS, oPC)
+        || GetHasFeat(FEAT_DRACONIC_HERITAGE_BZ, oPC)
+        || GetHasFeat(FEAT_DRACONIC_HERITAGE_CP, oPC)
+        || GetHasFeat(FEAT_DRACONIC_HERITAGE_GD, oPC)
+        || GetHasFeat(FEAT_DRACONIC_HERITAGE_SR, oPC)
+        || GetHasFeat(FEAT_DRACONIC_SENSES, oPC)
+        || GetHasFeat(FEAT_DRAGONTOUCHED, oPC))                    ExecuteScript("prc_dracfeat", oPC);
+
+    //Dragonfire xxxx Feats
+    if(GetHasFeat(FEAT_DRAGONFIRE_STRIKE, oPC))                    ExecuteScript("prc_dragfire_atk", oPC);
+
+    //Draconic Aura feats
+    if(GetHasFeat(FEAT_DOUBLE_DRACONIC_AURA, oPC))                 ExecuteScript("prc_dbldracaura", oPC);
+    if(GetHasFeat(FEAT_BONUS_AURA_INSIGHT, oPC)
+       || GetHasFeat(FEAT_BONUS_AURA_PRESENCE, oPC)
+       || GetHasFeat(FEAT_BONUS_AURA_RESISTACID, oPC)
+       || GetHasFeat(FEAT_BONUS_AURA_RESISTCOLD, oPC)
+       || GetHasFeat(FEAT_BONUS_AURA_RESISTELEC, oPC)
+       || GetHasFeat(FEAT_BONUS_AURA_RESISTFIRE, oPC)
+       || GetHasFeat(FEAT_BONUS_AURA_RESOLVE, oPC)
+       || GetHasFeat(FEAT_BONUS_AURA_STAMINA, oPC)
+       || GetHasFeat(FEAT_BONUS_AURA_SENSES, oPC)
+       || GetHasFeat(FEAT_BONUS_AURA_SWIFTNESS, oPC)
+       || GetHasFeat(FEAT_BONUS_AURA_TOUGHNESS, oPC))             ExecuteScript("prc_xtradracaura", oPC);
+
     // Feats that require OnHitCastSpell: Unique on armor
     /* Commented out until needed
     if(GetHasFeat(FEAT_, oPC)

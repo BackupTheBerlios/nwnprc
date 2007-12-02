@@ -54,6 +54,7 @@ void AddDomainPower(object oPC, object oSkin)
     if (GetHasFeat(FEAT_BONUS_DOMAIN_SPELLS, oPC))        IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(IP_CONST_FEAT_SPELLS_DOMAIN     ), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
     if (GetHasFeat(FEAT_BONUS_DOMAIN_SCALEYKIND, oPC))    IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(IP_CONST_FEAT_SCALEYKIND_DOMAIN ), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
     if (GetHasFeat(FEAT_BONUS_DOMAIN_BLIGHTBRINGER, oPC)) IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(IP_CONST_FEAT_BLIGHTBRINGER     ), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+    if (GetHasFeat(FEAT_BONUS_DOMAIN_DRAGON, oPC))        IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(IP_CONST_FEAT_DRAGON_DOMAIN     ), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
 }
 
 void AddDomainFeat(object oPC, object oSkin)
@@ -73,51 +74,56 @@ void AddDomainFeat(object oPC, object oSkin)
     // +2 Conc and Spellcraft
     if (GetHasFeat(FEAT_DOMAIN_POWER_SPELLS, oPC))
     {
-    	if(GetLocalInt(oSkin, "SpellDomainPowerConc") == 2) return;
+        if(GetLocalInt(oSkin, "SpellDomainPowerConc") == 2) return;
 
-    	SetCompositeBonus(oSkin, "SpellDomainPowerConc", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_CONCENTRATION);
-    	SetCompositeBonus(oSkin, "SpellDomainPowerSpell", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_SPELLCRAFT);
+        SetCompositeBonus(oSkin, "SpellDomainPowerConc", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_CONCENTRATION);
+        SetCompositeBonus(oSkin, "SpellDomainPowerSpell", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_SPELLCRAFT);
     }
     // Electrical resist 5
-    if (GetHasFeat(FEAT_DOMAIN_POWER_STORM, oPC))         
+    if (GetHasFeat(FEAT_DOMAIN_POWER_STORM, oPC))
     {
-	if(GetLocalInt(oSkin, "StormDomainPower")) return;
-	
-	RemoveSpecificProperty(oSkin, ITEM_PROPERTY_DAMAGE_RESISTANCE, IP_CONST_DAMAGETYPE_ELECTRICAL, IP_CONST_DAMAGERESIST_5);
-	AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageResistance(IP_CONST_DAMAGETYPE_ELECTRICAL, IP_CONST_DAMAGERESIST_5),oSkin);
-	SetLocalInt(oSkin, "StormDomainPower",TRUE);
+    if(GetLocalInt(oSkin, "StormDomainPower")) return;
+
+    RemoveSpecificProperty(oSkin, ITEM_PROPERTY_DAMAGE_RESISTANCE, IP_CONST_DAMAGETYPE_ELECTRICAL, IP_CONST_DAMAGERESIST_5);
+    AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageResistance(IP_CONST_DAMAGETYPE_ELECTRICAL, IP_CONST_DAMAGERESIST_5),oSkin);
+    SetLocalInt(oSkin, "StormDomainPower",TRUE);
     }
     if (GetHasFeat(FEAT_WAR_DOMAIN_POWER, oPC))
     {
-    	int nWarFocus = GetPersistantLocalInt(oPC, "WarDomainWeaponPersistent");
-    	// If they've already chosen a weapon, reapply the feats if they dont have it
-    	if (nWarFocus > 0)
-    	{
-    		int nWarWFIprop = FeatToIprop(nWarFocus);
-    		if (!GetHasFeat(nWarFocus, oPC))    IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(nWarWFIprop), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-    		if (!GetHasFeat(FEAT_WEAPON_PROFICIENCY_MARTIAL, oPC))    IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_MARTIAL), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-    	}
-    	else
-    	{
-    		 DelayCommand(1.5, StartDynamicConversation("prc_domain_war", oPC, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, oPC));
-    	}
+        int nWarFocus = GetPersistantLocalInt(oPC, "WarDomainWeaponPersistent");
+        // If they've already chosen a weapon, reapply the feats if they dont have it
+        if (nWarFocus > 0)
+        {
+            int nWarWFIprop = FeatToIprop(nWarFocus);
+            if (!GetHasFeat(nWarFocus, oPC))    IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(nWarWFIprop), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+            if (!GetHasFeat(FEAT_WEAPON_PROFICIENCY_MARTIAL, oPC))    IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_MARTIAL), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+        }
+        else
+        {
+             DelayCommand(1.5, StartDynamicConversation("prc_domain_war", oPC, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, oPC));
+        }
 
     }
     if (GetHasFeat(FEAT_DOMAIN_POWER_METAL, oPC))
     {
-    	int nWFocus = GetPersistantLocalInt(oPC, "MetalDomainWeaponPersistent");
-    	// If they've already chosen a weapon, reapply the feats if they dont have it
-    	if (nWFocus > 0)
-    	{
-    		int nWFIprop = FeatToIprop(nWFocus);
-    		if (!GetHasFeat(nWFocus, oPC))    IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(nWFIprop), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-    		if (!GetHasFeat(FEAT_WEAPON_PROFICIENCY_MARTIAL, oPC))    IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_MARTIAL), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-    	}
-    	else
-    	{
-    		 DelayCommand(1.5, StartDynamicConversation("prc_domain_metal", oPC, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, oPC));
-    	}
+        int nWFocus = GetPersistantLocalInt(oPC, "MetalDomainWeaponPersistent");
+        // If they've already chosen a weapon, reapply the feats if they dont have it
+        if (nWFocus > 0)
+        {
+            int nWFIprop = FeatToIprop(nWFocus);
+            if (!GetHasFeat(nWFocus, oPC))    IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(nWFIprop), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+            if (!GetHasFeat(FEAT_WEAPON_PROFICIENCY_MARTIAL, oPC))    IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_MARTIAL), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+        }
+        else
+        {
+             DelayCommand(1.5, StartDynamicConversation("prc_domain_metal", oPC, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, oPC));
+        }
 
+    }// +2 Bluff and Intimidate - since adding to class skills isn't allowed
+    if (GetHasFeat(FEAT_DOMAIN_POWER_DRAGON, oPC))
+    {
+       SetCompositeBonus(oSkin, "DragonDomainBluff", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_BLUFF);
+       SetCompositeBonus(oSkin, "DragonDomainIntim", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_INTIMIDATE);
     }
 /*
     // Domain powers that need to be created
@@ -168,8 +174,8 @@ void main()
     // The first domain begins at 1
     if (GetBonusDomain(oPC, 1) <= 0)
     {
-    	if(DEBUG) FloatingTextStringOnCreature("You have no bonus domains, exiting prc_domain_skin", oPC, FALSE);
-    	return;
+        if(DEBUG) FloatingTextStringOnCreature("You have no bonus domains, exiting prc_domain_skin", oPC, FALSE);
+        return;
     }
 
     // The prereq variables use 0 as true and 1 as false, becuase they are used in class prereqs

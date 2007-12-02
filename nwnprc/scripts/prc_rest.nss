@@ -13,6 +13,7 @@
 #include "true_inc_trufunc"
 #include "inc_epicspells"
 #include "prc_inc_scry"
+#include "prc_inc_dragsham"
 
 void PrcFeats(object oPC)
 {
@@ -165,6 +166,10 @@ void RestFinished(object oPC)
         //school for each spell level
         //also need to remove spells of prohibited schools
     }
+
+    //for Touch of Vitality point resetting
+    ResetTouchOfVitality(oPC);
+
     //skip time forward if applicable
     AdvanceTimeForPlayer(oPC, HoursToSeconds(8));
 

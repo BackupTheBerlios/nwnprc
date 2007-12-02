@@ -7,6 +7,7 @@
 #include "prc_inc_shifting"
 #include "true_inc_trufunc"
 #include "prc_craft_inc"
+#include "prc_inc_dragsham"
 
 /**
  * Reads the 2da file onenter_locals.2da and sets local variables
@@ -139,6 +140,7 @@ void main()
     // through the .2da's, the entering player already meets.
     ExecuteScript("prc_prereq", oPC);
     ExecuteScript("prc_psi_ppoints", oPC);
+    ResetTouchOfVitality(oPC);
     DelayCommand(0.15, DeleteLocalInt(oPC,"ONENTER"));
 
     //remove effects from hides, can stack otherwise

@@ -841,6 +841,32 @@ int DraDisFeats(object oPC = OBJECT_SELF)
             return FALSE;
         }
     }
+    if (bLd == 1)
+    {
+        //if(DEBUG) FloatingTextStringOnCreature("Checking Heritage.", oPC, FALSE);
+        //make sure you don't take a DD heritage that doesn't match your heritage
+        if(((GetHasFeat(FEAT_KOB_DRAGONWROUGHT_BK, oPC) || GetHasFeat(FEAT_DRACONIC_HERITAGE_BK, oPC)) && !(GetHasFeat(FEAT_BLACK_DRAGON, oPC)))
+         || ((GetHasFeat(FEAT_KOB_DRAGONWROUGHT_BL, oPC) || GetHasFeat(FEAT_DRACONIC_HERITAGE_BL, oPC)) && !(GetHasFeat(FEAT_BLUE_DRAGON, oPC)))
+         || ((GetHasFeat(FEAT_KOB_DRAGONWROUGHT_GR, oPC) || GetHasFeat(FEAT_DRACONIC_HERITAGE_GR, oPC)) && !(GetHasFeat(FEAT_GREEN_DRAGON, oPC)))
+         || ((GetHasFeat(FEAT_KOB_DRAGONWROUGHT_RD, oPC) || GetHasFeat(FEAT_DRACONIC_HERITAGE_RD, oPC)) && !(GetHasFeat(FEAT_RED_DRAGON, oPC)))
+         || ((GetHasFeat(FEAT_KOB_DRAGONWROUGHT_WH, oPC) || GetHasFeat(FEAT_DRACONIC_HERITAGE_WH, oPC)) && !(GetHasFeat(FEAT_WHITE_DRAGON, oPC)))
+         || ((GetHasFeat(FEAT_KOB_DRAGONWROUGHT_AM, oPC) || GetHasFeat(FEAT_DRACONIC_HERITAGE_AM, oPC)) && !(GetHasFeat(FEAT_AMETHYST_DRAGON, oPC)))
+         || ((GetHasFeat(FEAT_KOB_DRAGONWROUGHT_CR, oPC) || GetHasFeat(FEAT_DRACONIC_HERITAGE_CR, oPC)) && !(GetHasFeat(FEAT_CRYSTAL_DRAGON, oPC)))
+         || ((GetHasFeat(FEAT_KOB_DRAGONWROUGHT_EM, oPC) || GetHasFeat(FEAT_DRACONIC_HERITAGE_EM, oPC)) && !(GetHasFeat(FEAT_EMERALD_DRAGON, oPC)))
+         || ((GetHasFeat(FEAT_KOB_DRAGONWROUGHT_SA, oPC) || GetHasFeat(FEAT_DRACONIC_HERITAGE_SA, oPC)) && !(GetHasFeat(FEAT_SAPPHIRE_DRAGON, oPC)))
+         || ((GetHasFeat(FEAT_KOB_DRAGONWROUGHT_TP, oPC) || GetHasFeat(FEAT_DRACONIC_HERITAGE_TP, oPC)) && !(GetHasFeat(FEAT_TOPAZ_DRAGON, oPC)))
+         || ((GetHasFeat(FEAT_KOB_DRAGONWROUGHT_BS, oPC) || GetHasFeat(FEAT_DRACONIC_HERITAGE_BS, oPC)) && !(GetHasFeat(FEAT_BRASS_DRAGON, oPC)))
+         || ((GetHasFeat(FEAT_KOB_DRAGONWROUGHT_BZ, oPC) || GetHasFeat(FEAT_DRACONIC_HERITAGE_BZ, oPC)) && !(GetHasFeat(FEAT_BRONZE_DRAGON, oPC)))
+         || ((GetHasFeat(FEAT_KOB_DRAGONWROUGHT_CP, oPC) || GetHasFeat(FEAT_DRACONIC_HERITAGE_CP, oPC)) && !(GetHasFeat(FEAT_COPPER_DRAGON, oPC)))
+         || ((GetHasFeat(FEAT_KOB_DRAGONWROUGHT_GD, oPC) || GetHasFeat(FEAT_DRACONIC_HERITAGE_GD, oPC)) && !(GetHasFeat(FEAT_GOLD_DRAGON, oPC)))
+         || ((GetHasFeat(FEAT_KOB_DRAGONWROUGHT_SR, oPC) || GetHasFeat(FEAT_DRACONIC_HERITAGE_SR, oPC)) && !(GetHasFeat(FEAT_SILVER_DRAGON, oPC)))
+         )
+        {
+         FloatingTextStringOnCreature("You must take a Dragon Disciple Heritage that matches yours.", oPC, FALSE);
+         return FALSE;
+        }
+    }
+
     return TRUE;
 }
 
@@ -869,7 +895,18 @@ int MarshalAuraLimit(object oPC = OBJECT_SELF)
                      GetHasFeat(MAJ_AUR_MOT_URGE, oPC) +
                      GetHasFeat(MAJ_AUR_HARD_SOLDIER, oPC) +
                      GetHasFeat(MAJ_AUR_MOT_ATTACK, oPC) +
-                     GetHasFeat(MAJ_AUR_STEAD_HAND, oPC);
+                     GetHasFeat(MAJ_AUR_STEAD_HAND, oPC)+
+                     GetHasFeat(FEAT_MARSHAL_AURA_PRESENCE, oPC) +
+                     GetHasFeat(FEAT_MARSHAL_AURA_SENSES, oPC) +
+                     GetHasFeat(FEAT_MARSHAL_AURA_TOUGHNESS, oPC) +
+                     GetHasFeat(FEAT_MARSHAL_AURA_INSIGHT, oPC) +
+                     GetHasFeat(FEAT_MARSHAL_AURA_RESOLVE, oPC) +
+                     GetHasFeat(FEAT_MARSHAL_AURA_STAMINA, oPC) +
+                     GetHasFeat(FEAT_MARSHAL_AURA_SWIFTNESS, oPC) +
+                     GetHasFeat(FEAT_MARSHAL_AURA_RESISTACID, oPC) +
+                     GetHasFeat(FEAT_MARSHAL_AURA_RESISTCOLD, oPC) +
+                     GetHasFeat(FEAT_MARSHAL_AURA_RESISTELEC, oPC) +
+                     GetHasFeat(FEAT_MARSHAL_AURA_RESISTFIRE, oPC);
         /*
         FloatingTextStringOnCreature("Marshal Level: " + IntToString(mArsh), oPC, FALSE);
         FloatingTextStringOnCreature("Minor Aura: " + IntToString(MinAur), oPC, FALSE);
@@ -943,7 +980,7 @@ int CasterFeats(object oPC = OBJECT_SELF)
     {
             FloatingTextStringOnCreature("Attune Gem requires level 2 Arcane Spells", oPC, FALSE);
             return FALSE;
-    }    
+    }
 
     return TRUE;
 }
@@ -1107,6 +1144,297 @@ int SuddenMetamagic(object oPC = OBJECT_SELF)
     return TRUE;
 }
 
+int DraconicFeats(object oPC = OBJECT_SELF)
+{
+
+    int bDragonblooded;
+    int bHeritage;
+
+    //make sure they qualify for Draconic Heritage
+    if((GetHasFeat(FEAT_DRACONIC_HERITAGE_BK, oPC)
+      || GetHasFeat(FEAT_DRACONIC_HERITAGE_BL, oPC)
+      || GetHasFeat(FEAT_DRACONIC_HERITAGE_GR, oPC)
+      || GetHasFeat(FEAT_DRACONIC_HERITAGE_RD, oPC)
+      || GetHasFeat(FEAT_DRACONIC_HERITAGE_WH, oPC)
+      || GetHasFeat(FEAT_DRACONIC_HERITAGE_AM, oPC)
+      || GetHasFeat(FEAT_DRACONIC_HERITAGE_CR, oPC)
+      || GetHasFeat(FEAT_DRACONIC_HERITAGE_EM, oPC)
+      || GetHasFeat(FEAT_DRACONIC_HERITAGE_SA, oPC)
+      || GetHasFeat(FEAT_DRACONIC_HERITAGE_TP, oPC)
+      || GetHasFeat(FEAT_DRACONIC_HERITAGE_BS, oPC)
+      || GetHasFeat(FEAT_DRACONIC_HERITAGE_BZ, oPC)
+      || GetHasFeat(FEAT_DRACONIC_HERITAGE_CP, oPC)
+      || GetHasFeat(FEAT_DRACONIC_HERITAGE_GD, oPC)
+      || GetHasFeat(FEAT_DRACONIC_HERITAGE_SR, oPC)
+      ) && !( GetLevelByClass(CLASS_TYPE_SORCERER, oPC) > 1 || GetHasFeat(FEAT_DRAGONTOUCHED, oPC))
+     )
+     {
+        FloatingTextStringOnCreature("You need Dragontouched or a level of Sorcerer for Heritage.", oPC, FALSE);
+         return FALSE;
+     }
+
+    //Check for dragonblood subtype
+    if(GetRacialType(oPC) == RACIAL_TYPE_KOBOLD)  bDragonblooded = TRUE;
+    if(GetHasFeat(FEAT_DRAGONTOUCHED, oPC))  bDragonblooded = TRUE;
+    if(GetHasFeat(FEAT_DRACONIC_DEVOTEE, oPC))  bDragonblooded = TRUE;
+    if(GetLevelByClass(CLASS_TYPE_DRAGON_DISCIPLE, oPC) > 9)  bDragonblooded = TRUE;
+
+    //Draconic Heritage qualifies for dragonblood
+    if((GetHasFeat(FEAT_DRACONIC_HERITAGE_BK, oPC))
+          || (GetHasFeat(FEAT_DRACONIC_HERITAGE_BL, oPC))
+          || (GetHasFeat(FEAT_DRACONIC_HERITAGE_GR, oPC))
+          || (GetHasFeat(FEAT_DRACONIC_HERITAGE_RD, oPC))
+          || (GetHasFeat(FEAT_DRACONIC_HERITAGE_WH, oPC))
+          || (GetHasFeat(FEAT_DRACONIC_HERITAGE_AM, oPC))
+          || (GetHasFeat(FEAT_DRACONIC_HERITAGE_CR, oPC))
+          || (GetHasFeat(FEAT_DRACONIC_HERITAGE_EM, oPC))
+          || (GetHasFeat(FEAT_DRACONIC_HERITAGE_SA, oPC))
+          || (GetHasFeat(FEAT_DRACONIC_HERITAGE_TP, oPC))
+          || (GetHasFeat(FEAT_DRACONIC_HERITAGE_BS, oPC))
+          || (GetHasFeat(FEAT_DRACONIC_HERITAGE_BZ, oPC))
+          || (GetHasFeat(FEAT_DRACONIC_HERITAGE_CP, oPC))
+          || (GetHasFeat(FEAT_DRACONIC_HERITAGE_GD, oPC))
+          || (GetHasFeat(FEAT_DRACONIC_HERITAGE_SR, oPC))
+         )
+        {
+            bHeritage = TRUE; //record that they have heritage, for checking Draconic prereqs
+            bDragonblooded = TRUE;
+        }
+
+        int nNumHeritage = 0;
+
+        if(bHeritage)
+            nNumHeritage +=   GetHasFeat(FEAT_DRACONIC_HERITAGE_BK, oPC) +
+            GetHasFeat(FEAT_DRACONIC_HERITAGE_BL, oPC) +
+            GetHasFeat(FEAT_DRACONIC_HERITAGE_GR, oPC) +
+            GetHasFeat(FEAT_DRACONIC_HERITAGE_RD, oPC) +
+            GetHasFeat(FEAT_DRACONIC_HERITAGE_WH, oPC) +
+            GetHasFeat(FEAT_DRACONIC_HERITAGE_AM, oPC) +
+            GetHasFeat(FEAT_DRACONIC_HERITAGE_CR, oPC) +
+            GetHasFeat(FEAT_DRACONIC_HERITAGE_EM, oPC) +
+            GetHasFeat(FEAT_DRACONIC_HERITAGE_SA, oPC) +
+            GetHasFeat(FEAT_DRACONIC_HERITAGE_TP, oPC) +
+            GetHasFeat(FEAT_DRACONIC_HERITAGE_BS, oPC) +
+            GetHasFeat(FEAT_DRACONIC_HERITAGE_BZ, oPC) +
+            GetHasFeat(FEAT_DRACONIC_HERITAGE_CP, oPC) +
+            GetHasFeat(FEAT_DRACONIC_HERITAGE_GD, oPC) +
+            GetHasFeat(FEAT_DRACONIC_HERITAGE_SR, oPC);
+
+       if(nNumHeritage > 1)
+       {
+               FloatingTextStringOnCreature("You cannot select more than one Draconic Heritage.", oPC, FALSE);
+            return FALSE;
+       }
+
+
+
+     //check for Draconic Feats that only need heritage
+     if((GetHasFeat(FEAT_DRACONIC_SKIN, oPC)
+       || GetHasFeat(FEAT_DRACONIC_ARMOR, oPC)
+       || GetHasFeat(FEAT_DRACONIC_BREATH, oPC)
+       || GetHasFeat(FEAT_DRACONIC_CLAW, oPC)
+       || GetHasFeat(FEAT_DRACONIC_GRACE, oPC)
+       || GetHasFeat(FEAT_DRACONIC_KNOWLEDGE, oPC)
+       || GetHasFeat(FEAT_DRACONIC_PERSUADE, oPC)
+       || GetHasFeat(FEAT_DRACONIC_POWER, oPC)
+       || GetHasFeat(FEAT_DRACONIC_PRESENCE, oPC)
+       || GetHasFeat(FEAT_DRACONIC_RESISTANCE, oPC)
+       || GetHasFeat(FEAT_DRACONIC_VIGOR, oPC))
+       && !bHeritage)
+    {
+            FloatingTextStringOnCreature("You must take a Dragon Heritage first.", oPC, FALSE);
+         return FALSE;
+    }
+
+    //special test for Draconic Senses
+    if(GetHasFeat(FEAT_DRACONIC_SENSES, oPC)
+       && !(bDragonblooded
+            || (GetLevelByClass(CLASS_TYPE_SWIFT_WING, oPC) > 1)
+            || (GetLevelByClass(CLASS_TYPE_HANDOTWM, oPC) > 0)))
+    {
+             FloatingTextStringOnCreature("You must be dragonblood subtype.", oPC, FALSE);
+          return FALSE;
+    }
+
+    //special test for Dragonfire Strike
+    if(GetHasFeat(FEAT_DRAGONFIRE_STRIKE, oPC)
+       && !(bDragonblooded || (GetLevelByClass(CLASS_TYPE_HANDOTWM, oPC) > 2)))
+    {
+             FloatingTextStringOnCreature("You must be dragonblood subtype.", oPC, FALSE);
+          return FALSE;
+    }
+
+    //Swift Wing Dragon Affinity test - make sure only one is taken
+    int nSWLevel = (GetLevelByClass(CLASS_TYPE_SWIFT_WING, oPC));
+
+     int nAffinities = 0;
+
+     if (nSWLevel > 1)
+     {
+
+        nAffinities +=   GetHasFeat(FEAT_DRAGON_AFFINITY_BK, oPC) +
+            GetHasFeat(FEAT_DRAGON_AFFINITY_BL, oPC) +
+            GetHasFeat(FEAT_DRAGON_AFFINITY_GR, oPC) +
+            GetHasFeat(FEAT_DRAGON_AFFINITY_RD, oPC) +
+            GetHasFeat(FEAT_DRAGON_AFFINITY_WH, oPC) +
+            GetHasFeat(FEAT_DRAGON_AFFINITY_AM, oPC) +
+            GetHasFeat(FEAT_DRAGON_AFFINITY_CR, oPC) +
+            GetHasFeat(FEAT_DRAGON_AFFINITY_EM, oPC) +
+            GetHasFeat(FEAT_DRAGON_AFFINITY_SA, oPC) +
+            GetHasFeat(FEAT_DRAGON_AFFINITY_TP, oPC) +
+            GetHasFeat(FEAT_DRAGON_AFFINITY_BS, oPC) +
+            GetHasFeat(FEAT_DRAGON_AFFINITY_BZ, oPC) +
+            GetHasFeat(FEAT_DRAGON_AFFINITY_CP, oPC) +
+            GetHasFeat(FEAT_DRAGON_AFFINITY_GD, oPC) +
+            GetHasFeat(FEAT_DRAGON_AFFINITY_SR, oPC);
+
+        if (nAffinities >1)
+        {
+            FloatingTextStringOnCreature("You cannot select more than one Dragon Affinity.", oPC, FALSE);
+            return FALSE;
+        }
+
+    }
+
+    //Draconic Surge test
+    int nPSurge = 0;
+    int nMSurge = 0;
+
+    if (nSWLevel > 9)
+     {
+        nPSurge += GetHasFeat(FEAT_DRACONIC_SURGE_STR, oPC) +
+            GetHasFeat(FEAT_DRACONIC_SURGE_DEX, oPC) +
+            GetHasFeat(FEAT_DRACONIC_SURGE_CON, oPC);
+
+        nMSurge += GetHasFeat(FEAT_DRACONIC_SURGE_INT, oPC) +
+            GetHasFeat(FEAT_DRACONIC_SURGE_WIS, oPC) +
+            GetHasFeat(FEAT_DRACONIC_SURGE_CHA, oPC);
+
+        if (nPSurge > 1 || nMSurge > 1)
+        {
+            FloatingTextStringOnCreature("You must select one Mental and one Physical Surge.", oPC, FALSE);
+            return FALSE;
+        }
+     }
+
+    //racial tests - make sure user is Dragonblooded subtype
+    if((GetHasFeat(FEAT_KOB_DRAGON_WING_A, oPC)
+           || GetHasFeat(FEAT_KOB_DRAGON_TAIL, oPC))
+        && !(bDragonblooded))
+        return FALSE;
+
+     //Make sure only kobolds take Dragonwrought
+     if(!(GetRacialType(oPC) == RACIAL_TYPE_KOBOLD) &&
+         ((GetHasFeat(FEAT_KOB_DRAGONWROUGHT_BK, oPC))
+          || (GetHasFeat(FEAT_KOB_DRAGONWROUGHT_BL, oPC))
+          || (GetHasFeat(FEAT_KOB_DRAGONWROUGHT_GR, oPC))
+          || (GetHasFeat(FEAT_KOB_DRAGONWROUGHT_RD, oPC))
+          || (GetHasFeat(FEAT_KOB_DRAGONWROUGHT_WH, oPC))
+          || (GetHasFeat(FEAT_KOB_DRAGONWROUGHT_AM, oPC))
+          || (GetHasFeat(FEAT_KOB_DRAGONWROUGHT_CR, oPC))
+          || (GetHasFeat(FEAT_KOB_DRAGONWROUGHT_EM, oPC))
+          || (GetHasFeat(FEAT_KOB_DRAGONWROUGHT_SA, oPC))
+          || (GetHasFeat(FEAT_KOB_DRAGONWROUGHT_TP, oPC))
+          || (GetHasFeat(FEAT_KOB_DRAGONWROUGHT_BS, oPC))
+          || (GetHasFeat(FEAT_KOB_DRAGONWROUGHT_BZ, oPC))
+          || (GetHasFeat(FEAT_KOB_DRAGONWROUGHT_CP, oPC))
+          || (GetHasFeat(FEAT_KOB_DRAGONWROUGHT_GD, oPC))
+          || (GetHasFeat(FEAT_KOB_DRAGONWROUGHT_SR, oPC))
+         )
+     )
+        return FALSE;
+
+    return TRUE;
+}
+
+int DragonShamanFeats(object oPC)
+{
+    int nLevel = GetLevelByClass(CLASS_TYPE_DRAGON_SHAMAN, oPC);
+    if (nLevel == 0) return TRUE;
+    int nNumAuras;
+    int nNumDragonTotem;
+    int nNumOfSkillFocus;
+
+    nNumDragonTotem +=   GetHasFeat(FEAT_RED_DRAGON, oPC) +
+                         GetHasFeat(FEAT_SILVER_DRAGON, oPC) +
+                         GetHasFeat(FEAT_BLACK_DRAGON, oPC) +
+                         GetHasFeat(FEAT_BLUE_DRAGON, oPC) +
+                         GetHasFeat(FEAT_GREEN_DRAGON, oPC) +
+                         GetHasFeat(FEAT_WHITE_DRAGON, oPC) +
+                         GetHasFeat(FEAT_BRASS_DRAGON, oPC) +
+                         GetHasFeat(FEAT_BRONZE_DRAGON, oPC) +
+                         GetHasFeat(FEAT_COPPER_DRAGON, oPC) +
+                         GetHasFeat(FEAT_GOLD_DRAGON, oPC);
+
+    nNumAuras +=         GetHasFeat(FEAT_DRAGONSHAMAN_AURA_POWER, oPC) +
+                         GetHasFeat(FEAT_DRAGONSHAMAN_AURA_PRESENCE, oPC) +
+                         GetHasFeat(FEAT_DRAGONSHAMAN_AURA_ENERGYSHLD, oPC) +
+                         GetHasFeat(FEAT_DRAGONSHAMAN_AURA_SENSES, oPC) +
+                         GetHasFeat(FEAT_DRAGONSHAMAN_AURA_RESISTANCE, oPC) +
+                         GetHasFeat(FEAT_DRAGONSHAMAN_AURA_VIGOR, oPC) +
+                         GetHasFeat(FEAT_DRAGONSHAMAN_AURA_TOUGHNESS, oPC)+
+                         GetHasFeat(FEAT_DRAGONSHAMAN_AURA_INSIGHT, oPC)+
+                         GetHasFeat(FEAT_DRAGONSHAMAN_AURA_RESOLVE, oPC)+
+                         GetHasFeat(FEAT_DRAGONSHAMAN_AURA_STAMINA, oPC)+
+                         GetHasFeat(FEAT_DRAGONSHAMAN_AURA_SWIFTNESS, oPC);
+
+    nNumOfSkillFocus +=  GetHasFeat(FEAT_SKILL_FOCUS_HIDE) +
+                         GetHasFeat(FEAT_SKILL_FOCUS_MOVE_SILENTLY) +
+                         GetHasFeat(FEAT_SKILL_FOCUS_BLUFF);
+
+    if(nNumDragonTotem > 1)
+    {
+        FloatingTextStringOnCreature("You cannot take more than one Dragon Totem, please reselect your feats.", oPC, FALSE);
+        return FALSE;
+    }
+    if(nLevel == 1 && nNumDragonTotem < 1)
+    {
+        FloatingTextStringOnCreature("You must take one Dragon Totem, please reselect your feats.", oPC, FALSE);
+        return FALSE;
+    }
+    if(nLevel <= 2 && nNumAuras != 3)
+    {
+        FloatingTextStringOnCreature("You must have 3 auras, please reselect your feats.", oPC, FALSE);
+        return FALSE;
+    }
+    else if((nLevel == 3 || nLevel == 4) && nNumAuras != 4)
+    {
+        FloatingTextStringOnCreature("You must have 4 auras, please reselect your feats.", oPC, FALSE);
+        return FALSE;
+    }
+    else if((nLevel == 5 || nLevel == 6) && nNumAuras != 5)
+    {
+        FloatingTextStringOnCreature("You must have 5 auras, please reselect your feats.", oPC, FALSE);
+        return FALSE;
+    }
+    else if((nLevel == 7 || nLevel == 8) && nNumAuras != 6)
+    {
+        FloatingTextStringOnCreature("You must have 6 auras, please reselect your feats.", oPC, FALSE);
+        return FALSE;
+    }
+    else if(nLevel >= 9 && nNumAuras != 7)
+    {
+        FloatingTextStringOnCreature("You must have 7 auras, please reselect your feats.", oPC, FALSE);
+        return FALSE;
+    }
+    if(nLevel == 2 && nNumOfSkillFocus != 1)
+    {
+        FloatingTextStringOnCreature("You must have 1 class skill focus, please reselect your feats.", oPC, FALSE);
+        return FALSE;
+    }
+    if(nLevel == 8 && nNumOfSkillFocus != 2)
+    {
+        FloatingTextStringOnCreature("You must have 2 class skill focuses, please reselect your feats.", oPC, FALSE);
+        return FALSE;
+    }
+    if(nLevel == 16 && nNumOfSkillFocus < 3)
+    {
+        FloatingTextStringOnCreature("You must have 3 class skill focuses, please reselect your feats.", oPC, FALSE);
+        return FALSE;
+    }
+    return TRUE;
+}
+
 void main()
 {
         //Declare Major Variables
@@ -1135,6 +1463,8 @@ void main()
          || !LeadershipHD(oPC)
          || !FavouredSoul(oPC)
          || !SuddenMetamagic(oPC)
+         || !DraconicFeats(oPC)
+         || !DragonShamanFeats(oPC)
        )
     {
        int nHD = GetHitDice(oPC);

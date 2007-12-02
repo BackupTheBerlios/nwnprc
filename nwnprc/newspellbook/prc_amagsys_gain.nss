@@ -121,7 +121,8 @@ int CheckMissingSpells(object oPC, int nClass, int nMinLevel, int nMaxLevel)
         return FALSE;
     if(nClass == CLASS_TYPE_BARD || nClass == CLASS_TYPE_SORCERER)
     {
-        if(GetLevelByClass(nClass, oPC) == nLevel) //no PrC
+        if((GetLevelByClass(nClass, oPC) == nLevel) //no PrC
+            && !(GetHasFeat(FEAT_DRACONIC_GRACE, oPC) || GetHasFeat(FEAT_DRACONIC_BREATH, oPC))) //no Draconic feats that apply
             return FALSE;
     }
     int i;

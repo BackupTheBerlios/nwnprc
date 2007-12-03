@@ -1,28 +1,30 @@
 /*
    ----------------
-   Hatchling's Flame
+   Inferno Blast
 
-   tob_dw_htchflm.nss
+   tob_dw_infrnblst.nss
    ----------------
 
-    04/06/07 by Stratovarius
+    01/11/07 by Stratovarius
 */ /** @file
 
-    Hatchling's Flame
+    Inferno Blast
 
     Desert Wind (Strike) [Fire]
-    Level: Swordsage 2
-    Prerequisite: One Desert Wind Maneuver
-    Initiation Action: 1 Standard Action
-    Range: 30ft.
-    Area: Cone
+    Level: Swordsage 9
+    Prerequisite: Five Desert Wind maneuvers
+    Initiation Action: 1 Full-round action
+    Range: 60ft.
+    Area: Burst
     Duration: Instantaneous
     Saving Throw: Reflex half
 
-    You focus a burning aura of energy at the end of your blade.
-    It forms a seething sphere that, after a moment, bursts into a torrent of energy.
+    Hot winds swirl around you, and a faint aroma of brimstone sweeps over the area.
+    A flickering yellow aura surrounds you and grows in intensity, shedding tremendous
+    heat and light. Creatures around you stumble back from the heat. With a howling
+    roar, you unleash a hellish blast of fire that melts steel and warps stone.
     
-    You create a cone of fire that does 2d6 damage.
+    You create a blast of fire that deals 100 damage to all creatures in the area.
     This is a supernatural maneuver.
 */
 
@@ -47,14 +49,14 @@ void main()
     if(move.bCanManeuver)
     {
     	location lTarget = GetLocation(oInitiator);
-    	int nDC = 12 + GetAbilityModifier(ABILITY_WISDOM, oInitiator);
+    	int nDC = 19 + GetAbilityModifier(ABILITY_WISDOM, oInitiator);
     	effect eVis = EffectVisualEffect(VFX_IMP_FLAME_S);
     	//Get the first target in the radius around the caster
-    	oTarget = MyFirstObjectInShape(SHAPE_SPELLCONE, FeetToMeters(30.0), GetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+    	oTarget = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(60.0), GetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
     	while(GetIsObjectValid(oTarget) && oTarget != oInitiator)
     	{
     		SignalEvent(oTarget, PRCGetSpellId());
-    		int nDamage = d6(2);
+    		int nDamage = 100;
                 //Run the damage through the various reflex save and evasion feats
                 nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, nDC, SAVING_THROW_TYPE_FIRE);
                 eFire = EffectDamage(nDamage, DAMAGE_TYPE_FIRE);
@@ -65,7 +67,7 @@ void main()
 			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
                 }
         	//Get the next target in the specified area around the caster
-        	oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, FeetToMeters(30.0), GetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+        	oTarget = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(60.0), GetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
     	}
     }
 }

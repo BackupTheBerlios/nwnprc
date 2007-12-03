@@ -47,7 +47,7 @@ void main()
 	object oItem = GetItemInSlot(INVENTORY_SLOT_CHEST, oInitiator);
 	// Add the OnHit
 	IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 9999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-        effect eDur = SupernaturalEffect(EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
+        effect eDur = SupernaturalEffect(EffectVisualEffect(VFX_DUR_ELEMENTAL_SHIELD));
         SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eDur, oTarget);
     }
 }

@@ -1,28 +1,29 @@
 /*
    ----------------
-   Hatchling's Flame
+   Wyrm's Flame
 
-   tob_dw_htchflm.nss
+   tob_dw_wyrmflm.nss
    ----------------
 
     04/06/07 by Stratovarius
 */ /** @file
 
-    Hatchling's Flame
+    Wyrm's Flame
 
     Desert Wind (Strike) [Fire]
-    Level: Swordsage 2
-    Prerequisite: One Desert Wind Maneuver
+    Level: Swordsage 8
+    Prerequisite: Three Desert Wind maneuvers
     Initiation Action: 1 Standard Action
     Range: 30ft.
     Area: Cone
     Duration: Instantaneous
     Saving Throw: Reflex half
 
-    You focus a burning aura of energy at the end of your blade.
-    It forms a seething sphere that, after a moment, bursts into a torrent of energy.
+    You spin your blade in a whirling arc. With each revolution, seathing flames build upon its length.
+    With a flourish, you bring your blade to a halt, pointing it at your foe, and unleashing a roaring 
+    wall of flame.
     
-    You create a cone of fire that does 2d6 damage.
+    You create a cone of fire that does 10d6 damage.
     This is a supernatural maneuver.
 */
 
@@ -47,14 +48,14 @@ void main()
     if(move.bCanManeuver)
     {
     	location lTarget = GetLocation(oInitiator);
-    	int nDC = 12 + GetAbilityModifier(ABILITY_WISDOM, oInitiator);
+    	int nDC = 18 + GetAbilityModifier(ABILITY_WISDOM, oInitiator);
     	effect eVis = EffectVisualEffect(VFX_IMP_FLAME_S);
     	//Get the first target in the radius around the caster
     	oTarget = MyFirstObjectInShape(SHAPE_SPELLCONE, FeetToMeters(30.0), GetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
     	while(GetIsObjectValid(oTarget) && oTarget != oInitiator)
     	{
     		SignalEvent(oTarget, PRCGetSpellId());
-    		int nDamage = d6(2);
+    		int nDamage = d6(10);
                 //Run the damage through the various reflex save and evasion feats
                 nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, nDC, SAVING_THROW_TYPE_FIRE);
                 eFire = EffectDamage(nDamage, DAMAGE_TYPE_FIRE);

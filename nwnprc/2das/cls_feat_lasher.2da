@@ -273,4 +273,9 @@
 269 FEAT_TEMPLATE_HALF_CELESTIAL_MASS_CHARM        22618     0    99             1      
 270 FEAT_TEMPLATE_HALF_CELESTIAL_SUMMON_IX         22619     0    99             1      
 271 FEAT_TEMPLATE_HALF_CELESTIAL_RESURRECTION      22620     0    99             1      
-272 ###cls_feat_allBaseClasses_END###              ****      **** ****           ****   
+272 FEAT_TEMPLATE_BAELNORN_TOUCH                   22623     0    99             1      
+273 FEAT_TEMPLATE_END_PROJECTION                   22624     0    99             1      
+274 FEAT_TEMPLATE_PROJECTION                       22625     0    99             1      
+275 FEAT_TBAEL_ANIMATE_DEAD                        22631     0    99             1      
+276 FEAT_TBAEL_TURN_UNDEAD                         22632     0    99             1      
+277 ###cls_feat_allBaseClasses_END###              ****      **** ****           ****   

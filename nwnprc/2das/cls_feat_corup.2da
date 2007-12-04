@@ -411,6 +411,11 @@
 407 FEAT_TEMPLATE_HALF_CELESTIAL_MASS_CHARM        22618     0    99             1      
 408 FEAT_TEMPLATE_HALF_CELESTIAL_SUMMON_IX         22619     0    99             1      
 409 FEAT_TEMPLATE_HALF_CELESTIAL_RESURRECTION      22620     0    99             1      
-410 ###cls_feat_allBaseClasses_END###              ****      **** ****           ****   
-411 ####START_OF_NEW_SPELLBOOK_RESERVE             ****      **** ****           ****   
-412 ####END_OF_NEW_SPELLBOOK_RESERVE               ****      **** ****           ****   
+410 FEAT_TEMPLATE_BAELNORN_TOUCH                   22623     0    99             1      
+411 FEAT_TEMPLATE_END_PROJECTION                   22624     0    99             1      
+412 FEAT_TEMPLATE_PROJECTION                       22625     0    99             1      
+413 FEAT_TBAEL_ANIMATE_DEAD                        22631     0    99             1      
+414 FEAT_TBAEL_TURN_UNDEAD                         22632     0    99             1      
+415 ###cls_feat_allBaseClasses_END###              ****      **** ****           ****   
+416 ####START_OF_NEW_SPELLBOOK_RESERVE             ****      **** ****           ****   
+417 ####END_OF_NEW_SPELLBOOK_RESERVE               ****      **** ****           ****   

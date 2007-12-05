@@ -1,6 +1,22 @@
 #include "prc_alterations"
 #include "prc_inc_sneak"
 
+int GetIsShield(object oItem)
+{
+    int bReturn = FALSE;
+    switch(GetBaseItemType(oItem))
+    {
+        case BASE_ITEM_LARGESHIELD:
+        case BASE_ITEM_SMALLSHIELD:
+        case BASE_ITEM_TOWERSHIELD:
+        {
+            bReturn = TRUE;
+        }
+        break;
+    }
+    return bReturn;
+}
+
 int SkirmishDamage(object oPC, object oTarget, int nClass)
 {
     int nDamage = 0;
@@ -166,11 +182,23 @@ void main()
     {
         oPC   = GetItemLastEquippedBy();
         oItem = GetItemLastEquipped();
-        if(DEBUG) DoDebug("prc_scout - OnEquip");
+        if(DEBUG) DoDebug("prc_scout - OnEquip\n"
+                        + "oPC = " + DebugObject2Str(oPC) + "\n"
+                        + "oItem = " + DebugObject2Str(oItem) + "\n"
+                          );
 
         // Only applies to weapons
-        if(IPGetIsMeleeWeapon(oItem) || GetWeaponRanged(oItem))
+        // IPGetIsMeleeWeapon is bugged and returns true on items it should not
+        if(oItem == GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC) || 
+           (oItem == GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC) && !GetIsShield(oItem)) ||
+           GetWeaponRanged(oItem))
         {
+        
+            if (DEBUG)
+            {
+            	if (IPGetIsMeleeWeapon(oItem)) DoDebug("IPGetIsMeleeWeapon: TRUE");
+                if (GetWeaponRanged(oItem))    DoDebug("GetWeaponRanged: TRUE");
+            }
             // Add eventhook to the item
             AddEventScript(oItem, EVENT_ITEM_ONHIT, "prc_scout", TRUE, FALSE);
 
@@ -193,7 +221,10 @@ void main()
     {
         oPC   = GetItemLastUnequippedBy();
         oItem = GetItemLastUnequipped();
-        if(DEBUG) DoDebug("prc_scout - OnUnEquip");
+        if(DEBUG) DoDebug("prc_scout - OnUnEquip\n"
+                        + "oPC = " + DebugObject2Str(oPC) + "\n"
+                        + "oItem = " + DebugObject2Str(oItem) + "\n"
+                          );
 
         // Only applies to weapons
         if(IPGetIsMeleeWeapon(oItem) || GetWeaponRanged(oItem))

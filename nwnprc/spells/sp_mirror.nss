@@ -173,7 +173,7 @@ void main2()
     CleanCopy(oImage);
     
     // images will have only 1 HP
-    int iHP = GetCurrentHitPoints(OBJECT_SELF);
+    int iHP = GetCurrentHitPoints(oImage);
     --iHP;
     effect eDamage = EffectDamage(iHP); // reduces image to 1 hp
 

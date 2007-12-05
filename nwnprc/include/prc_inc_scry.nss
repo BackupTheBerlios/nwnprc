@@ -305,7 +305,7 @@ void DoScryBegin(object oPC, object oCopy, object oTarget)
     AddEventScript(oPC, EVENT_ONCLIENTENTER,        "prc_scry_event", TRUE, FALSE); //OnClientEnter
     
     // Adjust reputation so the target monster doesn't attack you
-    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(EffectCharmed()), oTarget, GetLocalFloat(oPC, "ScryDuration"));
+    //ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(EffectCharmed()), oTarget, GetLocalFloat(oPC, "ScryDuration"));
     // Swap the copy and PC
     location lPC   = GetLocation(oPC);
     location lCopy = GetLocation(oCopy);
@@ -427,6 +427,7 @@ void ScryMonitor(object oPC, object oCopy)
         else
         {
             // This makes sure you are invisible.
+            AssignCommand(oPC, ClearAllActions(TRUE));
             ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(EffectEthereal()), oPC, SCRY_HB_DELAY + 0.3);
             DelayCommand(SCRY_HB_DELAY, ScryMonitor(oPC, oCopy));
         }

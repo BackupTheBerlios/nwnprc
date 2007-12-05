@@ -68,6 +68,7 @@ void main()
                 
                 if(iJumpRoll >= nDC)
                 {
+                        AssignCommand(oTarget, ClearAllActions(TRUE));
                         effect eJump = EffectDisappearAppear(GetLocation(oTarget));
                         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eJump, oPC, 3.1);
                         
@@ -82,8 +83,7 @@ void main()
                                 {
                                         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectStunned(), oTarget, RoundsToSeconds(1));
                                 }
-                        }
-                        
+                        }                        
                 }
                 
                 else

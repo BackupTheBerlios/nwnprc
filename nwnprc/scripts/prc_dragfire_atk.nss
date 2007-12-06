@@ -26,6 +26,22 @@ struct DamageReducers
 	int nPercentReductions;
 };
 
+int GetIsShield(object oItem)
+{
+    int bReturn = FALSE;
+    switch(GetBaseItemType(oItem))
+    {
+        case BASE_ITEM_LARGESHIELD:
+        case BASE_ITEM_SMALLSHIELD:
+        case BASE_ITEM_TOWERSHIELD:
+        {
+            bReturn = TRUE;
+        }
+        break;
+    }
+    return bReturn;
+}
+
 struct DamageReducers GetTotalReduction(object oPC, object oTarget, object oWeapon)
 {
 	int nDamageType = GetWeaponDamageType(oWeapon);
@@ -286,8 +302,10 @@ void main()
         oItem = GetItemLastEquipped();
         if(DEBUG) DoDebug("prc_dragfire_atk - OnEquip");
 
-        // Only applies to weapons - Note: if statement still returns true for armor/shield? o.O
-        if(IPGetIsMeleeWeapon(oItem) || GetWeaponRanged(oItem))
+        // Only applies to weapons - Note: IPGetIsMeleeWeapon is bugged and returns true on items it should not
+        if(oItem == GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC) || 
+           (oItem == GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC) && !GetIsShield(oItem)) ||
+           GetWeaponRanged(oItem))
         {
             // Add eventhook to the item
             AddEventScript(oItem, EVENT_ITEM_ONHIT, "prc_dragfire_atk", TRUE, FALSE);

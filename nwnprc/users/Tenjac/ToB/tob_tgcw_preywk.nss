@@ -43,3 +43,7 @@ void main()
         
         if(move.bCanManeuver)
         {
+                effect eVis = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+                ApplyEffectToObject(DURATION_TYPE_PERMANENT, eVis, oTarget);
+        }
+}

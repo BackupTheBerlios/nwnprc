@@ -1355,16 +1355,16 @@ int DragonShamanFeats(object oPC)
     int nNumDragonTotem;
     int nNumOfSkillFocus;
 
-    nNumDragonTotem +=   GetHasFeat(FEAT_RED_DRAGON, oPC) +
-                         GetHasFeat(FEAT_SILVER_DRAGON, oPC) +
-                         GetHasFeat(FEAT_BLACK_DRAGON, oPC) +
-                         GetHasFeat(FEAT_BLUE_DRAGON, oPC) +
-                         GetHasFeat(FEAT_GREEN_DRAGON, oPC) +
-                         GetHasFeat(FEAT_WHITE_DRAGON, oPC) +
-                         GetHasFeat(FEAT_BRASS_DRAGON, oPC) +
-                         GetHasFeat(FEAT_BRONZE_DRAGON, oPC) +
-                         GetHasFeat(FEAT_COPPER_DRAGON, oPC) +
-                         GetHasFeat(FEAT_GOLD_DRAGON, oPC);
+    nNumDragonTotem +=   GetHasFeat(FEAT_DRAGONSHAMAN_RED, oPC) +
+                         GetHasFeat(FEAT_DRAGONSHAMAN_BLACK, oPC) +
+                         GetHasFeat(FEAT_DRAGONSHAMAN_BLUE, oPC) +
+                         GetHasFeat(FEAT_DRAGONSHAMAN_SILVER, oPC) +
+                         GetHasFeat(FEAT_DRAGONSHAMAN_BRASS, oPC) +
+                         GetHasFeat(FEAT_DRAGONSHAMAN_GOLD, oPC) +
+                         GetHasFeat(FEAT_DRAGONSHAMAN_GREEN, oPC) +
+                         GetHasFeat(FEAT_DRAGONSHAMAN_COPPER, oPC) +
+                         GetHasFeat(FEAT_DRAGONSHAMAN_WHITE, oPC) +
+                         GetHasFeat(FEAT_DRAGONSHAMAN_BRONZE, oPC);
 
     nNumAuras +=         GetHasFeat(FEAT_DRAGONSHAMAN_AURA_POWER, oPC) +
                          GetHasFeat(FEAT_DRAGONSHAMAN_AURA_PRESENCE, oPC) +
@@ -1382,16 +1382,12 @@ int DragonShamanFeats(object oPC)
                          GetHasFeat(FEAT_SKILL_FOCUS_MOVE_SILENTLY) +
                          GetHasFeat(FEAT_SKILL_FOCUS_BLUFF);
 
-    if(nNumDragonTotem > 1)
+    if(nNumDragonTotem != 1)
     {
         FloatingTextStringOnCreature("You cannot take more than one Dragon Totem, please reselect your feats.", oPC, FALSE);
         return FALSE;
     }
-    if(nLevel == 1 && nNumDragonTotem < 1)
-    {
-        FloatingTextStringOnCreature("You must take one Dragon Totem, please reselect your feats.", oPC, FALSE);
-        return FALSE;
-    }
+    
     if(nLevel <= 2 && nNumAuras != 3)
     {
         FloatingTextStringOnCreature("You must have 3 auras, please reselect your feats.", oPC, FALSE);

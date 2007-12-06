@@ -93,12 +93,12 @@ int GetDragonDamageType(object oPC)
 void ResetTouchOfVitality(object oPC)
 {
 	int nDSLevel = GetLevelByClass(CLASS_TYPE_DRAGON_SHAMAN, oPC);
-	if(GetHasFeat(FEAT_DRAGONSHAMAN_TOUCHVITALITY, OBJECT_SELF))
+	if(GetHasFeat(FEAT_DRAGONSHAMAN_TOUCHVITALITY, oPC))
 	{
 	        int nChaBonus = GetAbilityModifier(ABILITY_CHARISMA, oPC);
 	        if(nChaBonus < 0) nChaBonus = 0;
 	        int nVitPoints = 2 * nDSLevel * nChaBonus;
-	        SetLocalInt(OBJECT_SELF, "DRAGON_SHAMAN_TOUCH_REMAIN", nVitPoints);
+	        SetLocalInt(oPC, "DRAGON_SHAMAN_TOUCH_REMAIN", nVitPoints);
 	        string sMes = "Healing power: " + IntToString(nVitPoints) + " points.";
 	        FloatingTextStringOnCreature(sMes, oPC, FALSE);
 	}	

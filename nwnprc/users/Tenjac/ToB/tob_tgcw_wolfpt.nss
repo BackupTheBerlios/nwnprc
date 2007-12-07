@@ -16,6 +16,8 @@ With each stinging attack that connects against a foe, you slip arround him, usi
 the distraction provided by your attacks to prevent him from hindering your 
 movement.
 
+For the next round, each successful hit increases your movement speed next round by 5 feet.
+
 */
 void DoSpeedBoost(object oInitiator);
 

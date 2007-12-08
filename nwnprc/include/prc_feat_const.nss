@@ -2094,6 +2094,25 @@ const int FEAT_SANCMIND_PARTITION_MIND              = 2231;
 // Fist of Dal Quor
 const int FEAT_FIST_DAL_QUOR_STUNNING_STRIKE        = 2475;
 
+// Pyrokineticist
+const int FEAT_PYRO_PYROKINETICIST                  = 2846;
+const int FEAT_PYRO_CRYOKINETICIST                  = 2847;
+const int FEAT_PYRO_SONOKINETICIST                  = 2848;
+const int FEAT_PYRO_ELECTROKINETICIST               = 2849;
+const int FEAT_PYRO_ACETOKINETICIST                 = 2850;
+const int FEAT_PYRO_FIRE_LASH                       = 2851;
+const int FEAT_PYRO_FIRE_ADAPTATION                 = 2852;
+const int FEAT_PYRO_HAND_AFIRE                      = 2853;
+const int FEAT_PYRO_BOLT_OF_FIRE                    = 2854;
+const int FEAT_PYRO_WEAPON_AFIRE                    = 2855;
+const int FEAT_PYRO_NIMBUS                          = 2856;
+const int FEAT_PYRO_NIMBUS_TOUCH_ATTACK             = 2857;
+const int FEAT_PYRO_FIREWALK                        = 2858;
+const int FEAT_PYRO_FEAR_NO_FIRE                    = 2859;
+const int FEAT_PYRO_GREATER_WEAPON_AFIRE            = 2860;
+const int FEAT_PYRO_HEAT_DEATH                      = 2861;
+const int FEAT_PYRO_CONFLAGRATION                   = 2862;
+
 /*//////////////////////////////////////////////////
 //////////////// END PSIONICS //////////////////////
 //////////////////////////////////////////////////*/

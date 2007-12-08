@@ -878,6 +878,13 @@ void CoC(object oPC)
     }
 }
 
+void Pyro(object oPC)
+{
+    SetLocalInt(oPC, "PRC_AllowPyro", 1);
+    if(GetIsPsionicCharacter(oPC))
+        SetLocalInt(oPC, "PRC_AllowPyro", 0);
+}
+
 void main()
 {
      //Declare Major Variables
@@ -1036,6 +1043,7 @@ void main()
      Brimstone(oPC);
      CoC(oPC);
      DalQuor(oPC);
+     Pyro(oPC);
      SkirmishRequirement(oPC);
      SpecialAttackRequirement(oPC);
      // Truly massive debug message flood if activated.

@@ -143,7 +143,7 @@ void main()
     object oWeapon;
     int iEquip = GetLocalInt(oPC,"ONEQUIP");  //2 = equip, 1 = unequip
     int iRest = GetLocalInt(oPC,"ONREST");  //1 = rest finished
-    int iEnter = GetLocalInt(oPC,"ONENTER");  //1 = rest finished
+    int iEnter = GetLocalInt(oPC,"ONENTER");  //1 = entering
 
     if(iEquip == 2) //OnEquip
     {

@@ -269,6 +269,51 @@ void main()
         ExecuteScript("psi_ast_con_ptch", oSpellOrigin);
     }
 
+    // Pyrokineticist bonus damage
+    int nPyroLevel = GetLevelByClass(CLASS_TYPE_PYROKINETICIST, oSpellOrigin);
+    if(nPyroLevel)
+    {
+        int iElement = GetPersistantLocalInt(oSpellOrigin, "PyroDamageType");
+        int nDam1 = 0;
+        int nDam2 = 0;
+        int nDam = 0;
+        int nDice = 0;
+
+        if(iItemBaseType == BASE_ITEM_ARMOR)
+        {   //Nimbus Onhit
+            if(nPyroLevel >= 5 && GetHasSpellEffect(SPELL_NIMBUS, oSpellOrigin))
+            {
+                nDice = 2;
+                nDam = (iElement == DAMAGE_TYPE_SONIC) ? d4(nDice) : d6(nDice);    //reduced damage dice
+                if((iElement == DAMAGE_TYPE_COLD) || (iElement == DAMAGE_TYPE_ELECTRICAL) || (iElement == DAMAGE_TYPE_ACID))
+                    nDam = max(nDice, nDam - nDice);   //minimum of 1 per die
+            }
+        }
+        else
+        {   //Assume unarmed/weapon damage
+            if(nPyroLevel >= 2)
+            {
+                nDice = (GetLevelByClass(CLASS_TYPE_PYROKINETICIST, oSpellOrigin) >= 8) ? 4 : 2;
+                nDam1 = (iElement == DAMAGE_TYPE_SONIC) ? d4(nDice) : d6(nDice);    //reduced damage dice
+                if((iElement == DAMAGE_TYPE_COLD) || (iElement == DAMAGE_TYPE_ELECTRICAL) || (iElement == DAMAGE_TYPE_ACID))
+                    nDam1 = max(nDice, nDam1 - nDice);   //minimum of 1 per die
+            }
+            if(GetTag(oItem) == "PRC_PYRO_LASH_WHIP")
+            {   //Extra damage from whip
+                nDam2 += (iElement == DAMAGE_TYPE_SONIC) ? d6(1) : d8(1);   //reduced damage dice
+                if((iElement == DAMAGE_TYPE_COLD) || (iElement == DAMAGE_TYPE_ELECTRICAL) || (iElement == DAMAGE_TYPE_ACID))
+                    nDam2 = max(1, nDam2 - 1);   //minimum of 1
+            }
+            nDam = nDam1 + nDam2;
+        }
+        if(nDam > 0)
+        {
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, iElement), oSpellTarget);
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(GetPersistantLocalInt(oSpellOrigin, "PyroImpactVFX")), oSpellTarget);
+        }
+    }
+
+
     /*//////////////////////////////////////////////////
     //////////////// END PSIONICS //////////////////////
     //////////////////////////////////////////////////*/

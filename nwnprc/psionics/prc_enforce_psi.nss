@@ -80,7 +80,7 @@ int PsionDiscipline(object oPC = OBJECT_SELF)
 
      if (nPsion > 0)
      {
-          nDisc    += 	 (GetHasFeat(FEAT_PSION_DIS_EGOIST, oPC))
+          nDisc    +=    (GetHasFeat(FEAT_PSION_DIS_EGOIST, oPC))
                    +     (GetHasFeat(FEAT_PSION_DIS_KINETICIST, oPC))
                    +     (GetHasFeat(FEAT_PSION_DIS_NOMAD, oPC))
                    +     (GetHasFeat(FEAT_PSION_DIS_SEER, oPC))
@@ -256,13 +256,13 @@ int SplitPsionicRay(object oPC)
 
 int Thrallherd(object oPC)
 {
-	if (GetLevelByClass(CLASS_TYPE_THRALLHERD, oPC) > 0 && GetHasFeat(FEAT_LEADERSHIP, oPC))
-	{ 
-	        FloatingTextStringOnCreature("You cannot take the Thrallherd class if you have the Leadership feat.", oPC, FALSE);
-	        return TRUE;
-    	}
-    	
-    	return FALSE;
+    if (GetLevelByClass(CLASS_TYPE_THRALLHERD, oPC) > 0 && GetHasFeat(FEAT_LEADERSHIP, oPC))
+    {
+            FloatingTextStringOnCreature("You cannot take the Thrallherd class if you have the Leadership feat.", oPC, FALSE);
+            return TRUE;
+        }
+
+        return FALSE;
 }
 
 int Recitations(object oPC)
@@ -275,12 +275,35 @@ int Recitations(object oPC)
                    GetHasFeat(FEAT_RECITATION_VITAL,         oPC);
     // Need 2 at level 15, 1 at level 8
     if((nTrue >= 15 && 2 > nRec) || (nTrue >= 8 && 1 > nRec))
-    {   
+    {
         FloatingTextStringOnCreature("You must select a Recitation feat.", oPC, FALSE);
         return TRUE;
     }
 
     return FALSE;
+}
+
+int PyroElement(object oPC = OBJECT_SELF)
+{
+     int nLevel = GetLevelByClass(CLASS_TYPE_PYROKINETICIST, oPC);
+     int nSum;
+     if (nLevel > 0)
+     {
+          nSum +=    (GetHasFeat(FEAT_PYRO_PYROKINETICIST,      oPC))
+               +     (GetHasFeat(FEAT_PYRO_CRYOKINETICIST,      oPC))
+               +     (GetHasFeat(FEAT_PYRO_SONOKINETICIST,      oPC))
+               +     (GetHasFeat(FEAT_PYRO_ELECTROKINETICIST,   oPC))
+               +     (GetHasFeat(FEAT_PYRO_ACETOKINETICIST,     oPC));
+
+          if (nSum != 1)
+          {
+               //                           "You may only have 1 Discipline."
+               FloatingTextStringOnCreature("You may only have 1 element as a Pyrokineticist.", oPC, FALSE);
+               return TRUE;
+          }
+     }
+
+     return FALSE;
 }
 
 void main()
@@ -296,7 +319,9 @@ void main()
     // Cross class cap on TrueSpeech
     bRelevel |= CheckTrueSpeechSkill(oPC);
     // Recitations
-    bRelevel |= Recitations(oPC);    
+    bRelevel |= Recitations(oPC);
+    // Recitations
+    bRelevel |= PyroElement(oPC);
 
 
     if(GetIsPsionicCharacter(oPC))

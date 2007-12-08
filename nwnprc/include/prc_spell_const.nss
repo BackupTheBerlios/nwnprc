@@ -990,3 +990,12 @@ const int SPELL_BONUS_AURA_TOUGHNESS                = 3812;
 
 // Dragon Magic Spells
 const int SPELL_DRAGON_ALLY                         = 3388;
+
+// Pyrokineticist
+const int SPELL_FIRE_LASH                           = 1892;
+const int SPELL_BOLT_OF_FIRE                        = 1893;
+const int SPELL_NIMBUS                              = 1894;
+const int SPELL_NIMBUS_TOUCH_ATTACK                 = 1895;
+const int SPELL_FIREWALK                            = 1896;
+const int SPELL_HEAT_DEATH                          = 1897;
+const int SPELL_CONFLAGRATION                       = 1898;

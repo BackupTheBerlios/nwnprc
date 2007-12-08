@@ -171,3 +171,4 @@ const int CLASS_TYPE_TALON_OF_TIAMAT         = 241;
 const int CLASS_TYPE_DRAGON_DEVOTEE          = 242;
 const int CLASS_TYPE_HANDOTWM                = 240;
 const int CLASS_TYPE_DRAGON_SHAMAN           = 143;
+const int CLASS_TYPE_PYROKINETICIST          = 208;

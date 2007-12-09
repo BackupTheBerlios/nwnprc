@@ -177,7 +177,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_DRAGON_DEVOTEE, oPC) > 0)      ExecuteScript("prc_dragdev", oPC);
     if(GetLevelByClass(CLASS_TYPE_TALON_OF_TIAMAT, oPC) > 0)     ExecuteScript("prc_talontiamat", oPC);
     if(GetLevelByClass(CLASS_TYPE_DRAGON_SHAMAN, oPC) > 0)       ExecuteScript("prc_dragonshaman", oPC);
-    if(GetLevelByClass(CLASS_TYPE_PYROKINETICIST, oPC) > 0)      ExecuteScript("prc_pyro", oPC);
+    if(GetLevelByClass(CLASS_TYPE_PYROKINETICIST, oPC) > 0)      ExecuteScript("psi_pyro", oPC);
 
     // Bonus Domain check
     // If there is a bonus domain, it will always be in the first slot, so just check that.

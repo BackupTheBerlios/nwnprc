@@ -9,6 +9,7 @@
 */
 
 #include "prc_alterations"
+#include "psi_inc_psifunc"
 #include "psi_inc_ppoints"
 
 void WalkHB(object oPC)
@@ -32,6 +33,11 @@ void WalkHB(object oPC)
 void main()
 {
     object oPC = OBJECT_SELF;
+    if(!UsePsionicFocus(oPC))
+    {
+        SendMessageToPC(oPC, "You must be psionically focused to use this feat");
+        return;
+    }
     int nLevel = (GetLevelByClass(CLASS_TYPE_PYROKINETICIST, oPC));
     string sString = GetPersistantLocalString(oPC, "PyroString");
     if(GetHasSpellEffect(SPELL_FIREWALK, oPC))

@@ -9,10 +9,16 @@
 */
 
 #include "prc_alterations"
+#include "psi_inc_psifunc"
 
 void main()
 {
     object oPC = OBJECT_SELF;
+    if(!UsePsionicFocus(oPC))
+    {
+        SendMessageToPC(oPC, "You must be psionically focused to use this feat");
+        return;
+    }
     object oTarget = GetSpellTargetObject();
     int nDamageType = GetPersistantLocalInt(oPC, "PyroDamageType");
     int nImpactVFX = GetPersistantLocalInt(oPC, "PyroImpactVFX");

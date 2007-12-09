@@ -192,6 +192,9 @@ void EvalPRCFeats(object oPC)
     // Feats
     //these are here so if templates add them the if check runs after the template was applied
     ExecuteScript("prc_feats", oPC);
+    
+    //Tome of Battle feats
+    if(GetHasFeat(FEAT_DEVOTED_BULWARK, oPC))                     ExecuteScript("tob_devote_blwk", oPC);    
 
     if(GetLevelByClass(CLASS_TYPE_ARCANE_ARCHER, oPC) >= 2
         && !GetHasFeat(FEAT_PRESTIGE_IMBUE_ARROW, oPC)

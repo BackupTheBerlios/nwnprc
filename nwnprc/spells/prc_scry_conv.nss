@@ -101,7 +101,7 @@ void AddLegalTargets(object oPC)
             // Don't target yourself
             while (GetIsObjectValid(oPCTarget))
             {
-                if(oPCTarget != oPC)
+                if(oPCTarget != oPC && !GetIsDM(oPCTarget))
                 {
                     if(DEBUG) DoDebug("prc_scry_conv: Looping PC Targets");
                     AddChoice(GetName(oPCTarget), nChoice, oPC);

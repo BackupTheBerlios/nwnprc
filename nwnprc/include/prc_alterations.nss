@@ -137,6 +137,7 @@ const int ERROR_CODE_5_FIX_YET_ANOTHER_TIME = 1;
 #include "prc_racial_const"
 #include "prc_ipfeat_const"
 #include "prc_misc_const"
+#include "tob_move_const"
 #include "inc_acp"
 //#include "prc_inc_leadersh"
 

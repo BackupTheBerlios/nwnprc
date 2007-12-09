@@ -57,6 +57,10 @@ int BardSorcPrCCheck();
 // Returns false if Scrying except for a few specialized spells.
 int Scrying();
 
+// Grappling
+// Rolls a Concentrationc check to cast a spell while grappling.
+int GrappleConc();
+
 // Use Magic Device Check.
 // Returns TRUE if the Spell is allowed to be cast, either because the
 // character is allowed to cast it or he has won the required UMD check
@@ -118,6 +122,7 @@ int PRCGetUserSpecificSpellScriptFinished();
 #include "inc_newspellbook"
 #include "prc_sp_func"
 #include "psi_inc_manifest"
+#include "tob_inc_tobfunc"
 
 int RedWizRestrictedSchool()
 {
@@ -673,6 +678,17 @@ int Scrying()
     }
 
     return FALSE;
+}
+
+int GrappleConc()
+{
+	object oPC = OBJECT_SELF;
+	if (GetGrapple(oPC))
+	{
+	        string nSpellLevel = lookup_spell_level(PRCGetSpellId());
+	        return GetIsSkillSuccessful(oPC, SKILL_CONCENTRATION, (20 + StringToInt(nSpellLevel)));
+	}
+	return TRUE;
 }
 
 int X2UseMagicDeviceCheck()
@@ -1280,6 +1296,12 @@ int X2PreSpellCastCode2()
     //---------------------------------------------------------------------------
     if (nContinue)
         nContinue = EShamConc();
+        
+    //---------------------------------------------------------------------------
+    // Run Grappling Concentration Check
+    //---------------------------------------------------------------------------
+    if (nContinue)
+        nContinue = GrappleConc();        
 
     //---------------------------------------------------------------------------
     // Baelnorn attempting to use items while projection

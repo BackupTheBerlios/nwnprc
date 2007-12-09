@@ -1,0 +1,28 @@
+//::///////////////////////////////////////////////
+//:: Name      Devoted Bulwark Onhit
+//:: FileName  tob_onht_dvtbwk.nss
+//:://////////////////////////////////////////////7
+/** If an enemy deals damage to you with a melee 
+attack, you gain a +1 morale bonus to your AC until 
+the end of the your next turn.
+**/
+//////////////////////////////////////////////////////
+// Author: Tenjac
+// Date:   24.4.07
+//////////////////////////////////////////////////////
+
+#include "tob_inc_tobfunc"
+
+void main()
+{
+        object oSpellOrigin = OBJECT_SELF;
+        object oSpellTarget = PRCGetSpellTargetObject();
+        
+        //only trigger if it was a melee weapon
+        if(IPGetIsMeleeWeapon(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oSpellTarget)))
+        {
+                ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectACIncrease(1, AC_DODGE_BONUS), oSpellOrigin, 6.0f);
+        }
+}
+
+        

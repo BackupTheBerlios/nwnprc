@@ -2218,17 +2218,28 @@ int GetMeleeAttackers15ft(object oPC = OBJECT_SELF)
 	float fDistance = GetDistanceBetween(oPC,oTarget);
 	if (GetLocalInt(oPC, "DWBurningBrand"))
 		fDistance -= RANGE_5_FEET_IN_METERS;
+	if (GetLocalInt(oPC, "SDGiantsStance"))
+		fDistance -= RANGE_5_FEET_IN_METERS;
+	if (GetLocalInt(oPC, "IHDancingBladeForm"))
+		fDistance -= RANGE_5_FEET_IN_METERS;		
 
 	return fDistance <= MELEE_RANGE_METERS;
 }
 
 int GetIsInMeleeRange(object oDefender, object oAttacker, int bSizeAdjustment = TRUE)
 {
+	// Throw attack
+	if(GetLocalInt(oAttacker, "IHLightningThrow")) return TRUE;
+	
 	float fDistance = GetDistanceBetween(oDefender, oAttacker);
 	if (bSizeAdjustment)
 		fDistance -= GetSizeAdjustment(oDefender, oAttacker);
 	if (GetLocalInt(oAttacker, "DWBurningBrand"))
 		fDistance -= RANGE_5_FEET_IN_METERS;
+	if (GetLocalInt(oAttacker, "SDGiantsStance"))
+		fDistance -= RANGE_5_FEET_IN_METERS;
+	if (GetLocalInt(oAttacker, "IHDancingBladeForm"))
+		fDistance -= RANGE_5_FEET_IN_METERS;		
 
 	return fDistance <= MELEE_RANGE_METERS;
 }
@@ -3705,8 +3716,14 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iOffha
 	{
 		iAttackBonus = GetAttackBonus(oDefender, oAttacker, oWeapon, iOffhand, iTouchAttackType);
 	}
-	
-	int iDiceRoll = d20();
+        
+        int iDiceRoll = d20();
+        // All rolls = 11 for this guy
+        if (GetLocalInt(oAttacker, "DSPerfectOrder") && GetHasSpellEffect(MOVE_DS_PERFECT_ORDER, oAttacker)) 
+        	iDiceRoll = 11;
+        else 	// Cleanup on aisle 5
+        	DeleteLocalInt(oAttacker, "DSPerfectOrder");
+        	
 	string sDebugFeedback;
 	int bDebug = GetPRCSwitch(PRC_COMBAT_DEBUG);
 	
@@ -3810,7 +3827,10 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iOffha
 				DeleteLocalInt(oAttacker, "FistOfRazielSpecialSmiteCritical");
 			}
 			else
-				iCritThreatRoll = d20();
+                        {
+                                iCritThreatRoll = d20();
+                                if (GetLocalInt(oDefender, "BoneCrusher")) iCritThreatRoll += 10;
+                        }
 			
 			if(!GetIsImmune(oDefender, IMMUNITY_TYPE_CRITICAL_HIT) )
 			{
@@ -5298,17 +5318,43 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
 
 		int iDiceRoll = 0;
 		//Roll the base damage dice.
-		if(iNumSides == 2)  iDiceRoll = d2(iNumDice);
-		if(iNumSides == 3)  iDiceRoll = d3(iNumDice);
-		if(iNumSides == 4)  iDiceRoll = d4(iNumDice);
-		if(iNumSides == 6)  iDiceRoll = d6(iNumDice);
-		if(iNumSides == 8)  iDiceRoll = d8(iNumDice);
-		if(iNumSides == 10) iDiceRoll = d10(iNumDice);
-		if(iNumSides == 12) iDiceRoll = d12(iNumDice);
-		if(iNumSides == 20) iDiceRoll = d20(iNumDice);
+                if(iNumSides == 2)  iDiceRoll = d2(iNumDice);
+                if(iNumSides == 3)  iDiceRoll = d3(iNumDice);
+                if(iNumSides == 4)  iDiceRoll = d4(iNumDice);
+                if(iNumSides == 6)  iDiceRoll = d6(iNumDice);
+                if(iNumSides == 8)  iDiceRoll = d8(iNumDice);
+                if(iNumSides == 10) iDiceRoll = d10(iNumDice);
+                if(iNumSides == 12) iDiceRoll = d12(iNumDice);
+                if(iNumSides == 20) iDiceRoll = d20(iNumDice);
+                
+                // Normal rolling
+                iWeaponDamage += iDiceRoll;
+                
+                // Aura of Chaos rerolls and adds if the dice rolled is max.
+                if (GetLocalInt(oAttacker, "DSChaos") && GetHasSpellEffect(MOVE_DS_AURA_CHAOS, oAttacker)) 
+                {
+                	// Maximum possible result
+		        while ((iNumSides * iNumDice) == iDiceRoll)
+		        {
+		        	// This should cover things properly
+		                if(iNumSides == 2)  iDiceRoll = d2(iNumDice);
+		                if(iNumSides == 3)  iDiceRoll = d3(iNumDice);
+		                if(iNumSides == 4)  iDiceRoll = d4(iNumDice);
+		                if(iNumSides == 6)  iDiceRoll = d6(iNumDice);
+		                if(iNumSides == 8)  iDiceRoll = d8(iNumDice);
+		                if(iNumSides == 10) iDiceRoll = d10(iNumDice);
+		                if(iNumSides == 12) iDiceRoll = d12(iNumDice);
+                		if(iNumSides == 20) iDiceRoll = d20(iNumDice);
+                		
+                		// Chaos bonuses
+                		iWeaponDamage += iDiceRoll;
+		        }
+		}
+		else 	// Cleanup on aisle 5
+        		DeleteLocalInt(oAttacker, "DSChaos");
 
-		iWeaponDamage += iDiceRoll;
-		if (bDebug) sDebugMessage += IntToString(iNumDice) + "d" + IntToString(iNumSides) + " (" + IntToString(iDiceRoll) + ")";
+                
+                if (bDebug) sDebugMessage += IntToString(iNumDice) + "d" + IntToString(iNumSides) + " (" + IntToString(iDiceRoll) + ")";
 
 		int iOCRoll = 0;
 		// Determine Massive Critical Bonuses
@@ -5526,6 +5572,8 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
 
 		// just in case damage is somehow less than 1
 		if(iWeaponDamage < 1) iWeaponDamage = 1;
+		// Nightmare Blades double to quadruple the damage dealt for the normal attack
+                if (GetLocalInt(oDefender, "NightmareBlade") > 0) iWeaponDamage = iWeaponDamage * GetLocalInt(oDefender, "NightmareBlade");
 	
 		// create an invalid effect to return on a coup de grace
 
@@ -7591,6 +7639,8 @@ void PerformAttackRound(object oDefender, object oAttacker,
 
 		// Determine physical damage per round (cached for multiple use)
 		sAttackVars.iMainWeaponDamageRound = GetWeaponDamagePerRound(oDefender, oAttacker, sAttackVars.oWeaponR, 0);
+		
+		
 
 		// variables that store extra damage dealt
 		sMainWeaponDamage = GetWeaponBonusDamage(sAttackVars.oWeaponR, oDefender);

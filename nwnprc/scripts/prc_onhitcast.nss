@@ -29,6 +29,7 @@
 #include "inc_rend"
 #include "psi_inc_ac_const"
 #include "prc_inc_onhit"
+#include "tob_inc_tobfunc"
 
 void SetRancorVar(object oPC);
 void SetImprovedRicochetVar(object oPC);
@@ -321,7 +322,7 @@ void main()
     /*//////////////////////////////////////////////////
     //////////////// Blade Magic ///////////////////////
     //////////////////////////////////////////////////*/
-/*
+
     // Martial Spirit
     if(GetHasSpellEffect(MOVE_DS_MARTIAL_SPIRIT, oSpellOrigin) && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
     {
@@ -383,12 +384,12 @@ void main()
         // Will reset to 0.
         DeleteLocalInt(oSpellOrigin, "PearlOfBlackDoubtBonus");
     }
-    // Defensive Rebuke
+    // Tactics of the Wolf
     if(GetHasSpellEffect(MOVE_WR_TACTICS_WOLF, oSpellOrigin) && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
     {
         if (GetIsFlanked(oSpellTarget, oSpellOrigin))
         {
-            int nWolfDam = GetLocalInt(oTarget, "TacticsWolf");
+            int nWolfDam = GetLocalInt(oSpellOrigin, "TacticsWolf");
             ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nWolfDam), oSpellTarget);
         }
     }
@@ -436,7 +437,7 @@ void main()
             }
         }
     }
-*/
+
     /*//////////////////////////////////////////////////
     //////////////// Blade Magic ///////////////////////
     //////////////////////////////////////////////////*/

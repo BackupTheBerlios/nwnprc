@@ -1,5 +1,5 @@
 // The error code 5 prevention entry. Comment out or uncomment as necessary
-// const int COMPILER_BREAKS_ON_ME_OR_NOT = 0xffffffff;
+ const int COMPILER_BREAKS_ON_ME_OR_NOT = 0xffffffff;
 
 
 //missing bioware ones
@@ -2492,4 +2492,45 @@ const int FEAT_FOCUSED_LEXICON_VERMIN                   = 2154;
 
 /*//////////////////////////////////////////////////
 //////////////// END TRUENAMING/////////////////////
+//////////////////////////////////////////////////*/
+
+/*//////////////////////////////////////////////////
+//////////////// BEGIN TOME OF BATTLE///////////////
+//////////////////////////////////////////////////*/
+
+const int FEAT_EXTRA_GRANTED_MANEUVER                   = 4096;
+const int FEAT_EXTRA_READIED_MANEUVER                   = 4097;
+const int FEAT_ADAPTIVE_STYLE                           = 4098;
+const int FEAT_BLADE_MEDITATION                         = 4099;
+const int FEAT_DESERT_FIRE                              = 4178;
+const int FEAT_DESERT_WIND_DODGE                        = 4179;
+const int FEAT_DEVOTED_BULWARK                          = 4180;
+const int FEAT_AVENGING_STRIKE                          = 4297;
+const int FEAT_RAPID_ASSAULT                            = 4299;
+const int FEAT_SUPERIOR_UNARMED_STRIKE                  = 4386;
+const int FEAT_SNAP_KICK                                = 4398;
+
+const int FEAT_SS_DF_IS_DW                  = 4179;
+const int FEAT_SS_DF_IS_DM                  = 4180;
+const int FEAT_SS_DF_IS_SS                  = 4297;
+const int FEAT_SS_DF_IS_SH                  = 4299;
+const int FEAT_SS_DF_IS_SD                  = 4386;
+const int FEAT_SS_DF_IS_TC                  = 4398;
+
+const int FEAT_SS_DF_DS_DW                  = 4179;
+const int FEAT_SS_DF_DS_DM                  = 4180;
+const int FEAT_SS_DF_DS_SS                  = 4297;
+const int FEAT_SS_DF_DS_SH                  = 4299;
+const int FEAT_SS_DF_DS_SD                  = 4386;
+const int FEAT_SS_DF_DS_TC                  = 4398;
+
+const int FEAT_SS_DF_WF_DW                  = 4179;
+const int FEAT_SS_DF_WF_DM                  = 4180;
+const int FEAT_SS_DF_WF_SS                  = 4297;
+const int FEAT_SS_DF_WF_SH                  = 4299;
+const int FEAT_SS_DF_WF_SD                  = 4386;
+const int FEAT_SS_DF_WF_TC                  = 4398;
+
+/*//////////////////////////////////////////////////
+//////////////// END TOME OF BATTLE/////////////////
 //////////////////////////////////////////////////*/

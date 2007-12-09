@@ -25,7 +25,7 @@
 #include "psi_inc_psifunc"
 #include "inc_newspellbook"
 #include "true_inc_trufunc"
-
+#include "tob_inc_tobfunc"
 
 //////////////////////////////////////////////////
 /*             Function prototypes              */
@@ -34,7 +34,7 @@
 int CheckMissingPowers(object oPC, int nClass);
 int CheckMissingSpells(object oPC, int nClass, int nMinLevel, int nMaxLevel);
 int CheckMissingUtterances(object oPC, int nClass, int nLexicon);
-
+int CheckMissingManeuvers(object oPC, int nClass);
 
 //////////////////////////////////////////////////
 /*             Function definitions             */
@@ -91,6 +91,14 @@ void main()
         return;
     if(CheckMissingUtterances(oPC, CLASS_TYPE_TRUENAMER, LEXICON_PERFECTED_MAP))
         return;
+        
+    // Handle Tome of Battle
+    if(CheckMissingManeuvers(oPC, CLASS_TYPE_CRUSADER))
+        return;
+    if(CheckMissingManeuvers(oPC, CLASS_TYPE_SWORDSAGE))
+        return;
+    if(CheckMissingManeuvers(oPC, CLASS_TYPE_WARBLADE))
+        return;        
 }
 
 
@@ -163,6 +171,28 @@ int CheckMissingUtterances(object oPC, int nClass, int nLexicon)
         // Mark the class for which the PC is to gain Utterances and start the conversation
         SetLocalInt(oPC, "nClass", nClass);
         StartDynamicConversation("true_utterconv", oPC, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, oPC);
+
+        return TRUE;
+    }
+    return FALSE;
+}
+
+int CheckMissingManeuvers(object oPC, int nClass)
+{
+    int nLevel = GetLevelByClass(nClass, oPC);
+    if(!nLevel)
+        return FALSE;
+
+    int nCurrentManeuvers = GetManeuverCount(oPC, nClass, MANEUVER_TYPE_MANEUVER);
+    int nMaxManeuvers = GetMaxManeuverCount(oPC, nClass, MANEUVER_TYPE_MANEUVER);
+    int nCurrentStances = GetManeuverCount(oPC, nClass, MANEUVER_TYPE_STANCE);
+    int nMaxStances = GetMaxManeuverCount(oPC, nClass, MANEUVER_TYPE_STANCE);    
+
+    if(nCurrentManeuvers < nMaxManeuvers || nCurrentStances < nMaxStances)
+    {
+        // Mark the class for which the PC is to gain powers and start the conversation
+        SetLocalInt(oPC, "nClass", nClass);
+        StartDynamicConversation("tob_moveconv", oPC, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, oPC);
 
         return TRUE;
     }

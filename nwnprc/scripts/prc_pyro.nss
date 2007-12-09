@@ -23,10 +23,6 @@ void main()
     int iRest = GetLocalInt(oPC,"ONREST");  //1 = rest finished
     int iEnter = GetLocalInt(oPC,"ONENTER");  //1 = entering
 
-    if(DEBUG) DoDebug("prc_pyro: Adding event hooks");
-    AddEventScript(oPC, EVENT_ONPLAYEREQUIPITEM, "prc_pyro", TRUE, FALSE);
-    AddEventScript(oPC, EVENT_ONPLAYERUNEQUIPITEM, "prc_pyro", TRUE, FALSE);
-    AddEventScript(oPC, EVENT_ONUNAQUIREITEM,      "prc_pyro", TRUE, FALSE);
     if(iEquip == 2) //equip
     {
         if(DEBUG) DoDebug("prc_pyro: Equip event, Proficiency check for other whips");
@@ -165,5 +161,4 @@ void main()
             IPSafeAddItemProperty(GetItemInSlot(INVENTORY_SLOT_CHEST, oPC), ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 99999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
         }
     }
-
 }

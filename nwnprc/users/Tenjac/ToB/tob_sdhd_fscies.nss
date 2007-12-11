@@ -64,7 +64,7 @@ void main()
         {
                 object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
                 effect eNone = EffectVisualEffect(VFX_FNF_GAS_EXPLOSION_GREASE);
-                PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(15), GetWeaponDamageType(oWeap), "Bone Splitting Strike Hit", "Bone Splitting Strike Miss");
+                PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(15), GetWeaponDamageType(oWeap), "Five-Shadow Creeping Ice Enervation Strike", "Five-Shadow Creeping Ice Enervation Strike");
                 
                 if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
                 {

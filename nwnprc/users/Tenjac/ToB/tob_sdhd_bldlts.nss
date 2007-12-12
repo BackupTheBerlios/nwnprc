@@ -19,7 +19,6 @@ opponent takes 4 points of Constitution damage in addition to your attack’s norm
 A successful Fortitude save (DC 15 + your Wis modifier) reduces this Constitution damage
 to 2 points, although the foe still takes full normal melee damage.
 */
-void DoSpeedBoost(object oInitiator);
 
 #include "tob_inc_tobfunc"
 #include "tob_movehook"

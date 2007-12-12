@@ -39,7 +39,6 @@ and takes half the indicated ability damage (but still takes normal melee damage
 15d6 points of damage). Each of the special effects lasts for 1d6 rounds.
 This maneuver is a supernatural ability.
 */
-void DoSpeedBoost(object oInitiator);
 
 #include "tob_inc_tobfunc"
 #include "tob_movehook"

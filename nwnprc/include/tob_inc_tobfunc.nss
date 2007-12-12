@@ -320,10 +320,11 @@ int GetIsCharging(object oPC);
  * @param nBullAoO      Does the bull rush attempt generate an AoO
  * @param nMustFollow   Does the Bull rush require the pushing PC to follow the target
  * @param nAttack       Bonus to the attack roll // I forgot to add it before, I'm an idiot ok?
+ * @param nPounce	FALSE for normal behaviour, TRUE to do a full attack at the end of a charge // Same comment as above
  *
  * @return              TRUE if the attack or Bull rush hits, else FALSE
  */
-int DoCharge(object oPC, object oTarget, int nDoAttack = TRUE, int nGenerateAoO = TRUE, int nDamage = 0, int nDamageType = -1, int nBullRush = FALSE, int nExtraBonus = 0, int nBullAoO = TRUE, int nMustFollow = TRUE, int nAttack = 0);
+int DoCharge(object oPC, object oTarget, int nDoAttack = TRUE, int nGenerateAoO = TRUE, int nDamage = 0, int nDamageType = -1, int nBullRush = FALSE, int nExtraBonus = 0, int nBullAoO = TRUE, int nMustFollow = TRUE, int nAttack = 0, int nPounce = FALSE);
 
 /**
  * This will do a complete PnP Bull rush
@@ -1074,7 +1075,7 @@ int GetIsCharging(object oPC)
         return GetLocalInt(oPC, "PCIsCharging");
 }
 
-int DoCharge(object oPC, object oTarget, int nDoAttack = TRUE, int nGenerateAoO = TRUE, int nDamage = 0, int nDamageType = -1, int nBullRush = FALSE, int nExtraBonus = 0, int nBullAoO = TRUE, int nMustFollow = TRUE, int nAttack = 0)
+int DoCharge(object oPC, object oTarget, int nDoAttack = TRUE, int nGenerateAoO = TRUE, int nDamage = 0, int nDamageType = -1, int nBullRush = FALSE, int nExtraBonus = 0, int nBullAoO = TRUE, int nMustFollow = TRUE, int nAttack = 0, int nPounce = FALSE)
 {
         if (!nGenerateAoO)
         {
@@ -1113,7 +1114,10 @@ int DoCharge(object oPC, object oTarget, int nDoAttack = TRUE, int nGenerateAoO 
                                 object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
                                 nDamageType = GetWeaponDamageType(oWeap);
                         }
-                        PerformAttack(oPC, oTarget, eNone, 0.0, nAttack, nDamage, nDamageType, "Charge Hit", "Charge Miss");
+                        if (nPounce) // Uses instant attack in order to make sure they all go off in the alloted period of time.
+                        	PerformAttackRound(oPC, oTarget, eNone, 0.0, nAttack, nDamage, nDamageType, FALSE, "Charge Hit", "Charge Miss", FALSE, FALSE, TRUE);
+                        else
+                        	PerformAttack(oPC, oTarget, eNone, 0.0, nAttack, nDamage, nDamageType, "Charge Hit", "Charge Miss");
                         // Local int set when Perform Attack hits
                         nSucceed = GetLocalInt(oTarget, "PRCCombat_StruckByAttack");
                 }

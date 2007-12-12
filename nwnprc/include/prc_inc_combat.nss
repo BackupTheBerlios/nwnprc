@@ -5608,6 +5608,8 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
 			// When this maneuver is in effect, weapon damage is fire
 			// Also put here so it doesn't muck up things looking for weapon damage type
 			if (GetLocalInt(oAttacker, "DWBurningBrand")) iDamageType = DAMAGE_TYPE_FIRE;
+			// This is for the Lightning Throw Maneuver.
+			if (GetLocalInt(oAttacker, "LightningThrowSave")) iWeaponDamage /= 2;
 
 
 			// motu99: why do we store different physical damage types (Bludg, Pierc, Slash) in the WeaponBonusDamage struct

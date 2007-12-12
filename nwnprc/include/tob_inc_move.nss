@@ -464,7 +464,7 @@ struct maneuver EvaluateManeuver(object oInitiator, object oTarget)
     	FloatingTextStringOnCreature(GetManeuverName(move.nMoveId) + " is not a granted maneuver.", oInitiator, FALSE);
     }     
     
-    // Skip doing anything if something has prevented successfull maneuver already by this point
+    // Skip doing anything if something has prevented a successful maneuver already by this point
     if(move.bCanManeuver)
     {
 	// If you're this far in, you always succeed, there are very few checks.
@@ -513,6 +513,15 @@ void UseManeuver(int nManeuver, int nClass, int nLevelOverride = 0)
         DeleteLocalInt(oInitiator, "SSDualBoost");
         nMoveDur = 0;
     }
+    // Stance of Alacrity check
+    // Only works on Counters, not Boosts
+    else if(Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) != "MANEUVER_BOOST" && // If the maneuver is NOT a boost
+            GetHasSpellEffect(MOVE_DM_STANCE_ALACRITY, oInitiator)                        // And the initiator has the stance
+            )
+    {
+        // Set the maneuver time to 0 to skip VFX
+        nMoveDur = 0;
+    }    
 
     if(DEBUG) DoDebug("UseManeuver(): initiator is " + DebugObject2Str(oInitiator) + "\n"
                     + "nManeuver = " + IntToString(nManeuver) + "\n"
@@ -546,7 +555,7 @@ void UseManeuver(int nManeuver, int nClass, int nLevelOverride = 0)
     }
 
     // Action queue the function that will cheatcast the actual maneuver
-    DelayCommand(0.5, AssignCommand(oInitiator, ActionDoCommand(_UseManeuverAux(oInitiator, oMoveToken, nSpellID, oTarget, lTarget, nManeuver, nClass, nLevelOverride))));
+    DelayCommand(IntToFloat(nMoveDur), AssignCommand(oInitiator, ActionDoCommand(_UseManeuverAux(oInitiator, oMoveToken, nSpellID, oTarget, lTarget, nManeuver, nClass, nLevelOverride))));
 }
 
 string DebugManeuver2Str(struct maneuver move)

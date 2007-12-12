@@ -62,6 +62,8 @@ const int MOVE_DW_INFERNO_BLADE = -1;
 const int MOVE_DS_IMMORTAL_FORTITUDE = -1;
 const int MOVE_DW_RISING_PHOENIX = -1;
 const int MOVE_DS_SWARM_TACTICS = -1;
+const int MOVE_DM_STANCE_ALACRITY = -1;
+const int MOVE_TC_WOLF_PACK_TACTICS = -1;
 
 // Level 9 Maneuvers
 

@@ -44,34 +44,33 @@ void main()
         // End of Spell Cast Hook
         
         object oInitiator    = OBJECT_SELF;
-        location lLoc = GetSpellTargetLocation();
-        object oTarget       = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), lLoc, FALSE, OBJECT_TYPE_CREATURE);
+        object oTarget       = PRCGetSpellTargetObject();
         struct maneuver move = EvaluateManeuver(oInitiator, oTarget);
-        object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
-        int nDam;
-        int nBonusDam;
-        effect eVis;
         
         if(move.bCanManeuver)
         {
+        	object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
                 int nDC = d20(1) + GetAttackBonus(oTarget, oInitiator, oWeap);
-                SetLocalInt(oInitiator, "IHLightningThrow", 1);
+                SetLocalInt(oInitiator, "IHLightningThrow", TRUE);
+                float fLength = FeetToMeters(30.0);
+                location lTarget = PRCGetSpellTargetLocation();
+                vector vOrigin = GetPosition(oInitiator);
+                effect eVis;
                 
+                oTarget = MyFirstObjectInShape(SHAPE_SPELLCYLINDER, fLength, lTarget, TRUE, OBJECT_TYPE_CREATURE, vOrigin);
                 while(GetIsObjectValid(oTarget))
                 {
                         if(oTarget != oInitiator)
                         {
-                                nBonusDam = d6(12);
                                 if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC))
                                 {
-                                        SetLocalInt(oTarget, "ToBCombatSave", 1);
-                                        DelayCommand(1.0, DeleteLocalInt(oTarget, "ToBCombatSave"));                                        
-                                        nBonusDam /= 2;
+                                        SetLocalInt(oTarget, "LightningThrowSave", TRUE);
+                                        DelayCommand(1.0, DeleteLocalInt(oTarget, "LightningThrowSave"));                                        
                                 }
                                                       
-                                PerformAttack(oTarget, oInitiator, eVis, 0.0, 100, nBonusDam, GetWeaponDamageType(oWeap));
+                                PerformAttack(oTarget, oInitiator, eVis, 0.0, 100, d6(12), 0, "Lightning Throw Hit", "Lightning Throw Miss");
                         }
-                        oTarget = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), lLoc, FALSE, OBJECT_TYPE_CREATURE);
+                        oTarget = MyNextObjectInShape(SHAPE_SPELLCYLINDER, fLength, lTarget, TRUE, OBJECT_TYPE_CREATURE, vOrigin);
                 }
                 DelayCommand(1.0f, DeleteLocalInt(oInitiator, "IHLightningThrow"));
         }

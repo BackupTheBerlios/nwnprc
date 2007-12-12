@@ -58,7 +58,7 @@ void main()
    
                  //Apply the VFX impact and damage effect
                  int nDC = 13 + GetAbilityModifier(ABILITY_WISDOM, oInitiator);
-		 if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NONE))
+                 if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NONE))
                  AssignCommand(oTarget, ClearAllActions(TRUE));
                  SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eRay, oTarget, 1.7,FALSE);
         }

@@ -63,7 +63,7 @@ void main()
         {
                 object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
                 effect eNone = EffectVisualEffect(VFX_FNF_GAS_EXPLOSION_GREASE);
-                PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(15), GetWeaponDamageType(oWeap), "Five-Shadow Creeping Ice Enervation Strike", "Five-Shadow Creeping Ice Enervation Strike");
+                PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(15), GetWeaponDamageType(oWeap), "Five-Shadow Creeping Ice Enervation Strike Hit", "Five-Shadow Creeping Ice Enervation Strike Miss");
                 
                 if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
                 {

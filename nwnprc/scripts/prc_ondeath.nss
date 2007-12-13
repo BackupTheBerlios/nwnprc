@@ -5,6 +5,7 @@
 /*
     This is also triggered by the NPC OnDeath event.
 */
+
 #include "prc_alterations"
 #include "prc_inc_clsfunc"
 #include "psi_inc_psifunc"
@@ -54,7 +55,45 @@ void main()
             AssignCommand(oDead, ApplyEffectToObject(DURATION_TYPE_INSTANT, SupernaturalEffect(EffectDeath()), oDead));
         }
     }
-
+    
+    //Prey on the Weak
+    object oPrey = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(10.0), GetLocation(oDead), FALSE, OBJECT_TYPE_CREATURE);
+    
+    while(GetIsObjectValid(oPrey))
+    {
+            if(!GetIsReactionTypeFriendly(oPrey, oDead))
+            {
+                    if(GetHasSpellEffect(MOVE_TC_PREY_ON_THE_WEAK, oPrey))
+                    {
+                            if(!GetLocalInt(oPrey, "PRC_POTW_HAS_ATTACKED"))
+                            {                             
+                                    //GetNearestEnemy
+                                    object oAoOTarget = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(5.0), GetLocation(oPrey), TRUE, OBJECT_TYPE_CREATURE);
+                                    
+                                    while(GetIsObjectValid(oAoOTarget))
+                                    {
+                                            if(!GetIsReactionTypeFriendly(oAoOTarget))
+                                            {
+                                                    if(!GetIsDead(oAoOTarget))
+                                                    {
+                                                            effect eNone;
+                                                            object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPrey);
+                                                            //SetLocalInt
+                                                            SetLocalInt(oPrey, "PRC_POTW_HAS_ATTACKED", 1);
+                                                            
+                                                            PerformAttack(oAoOTarget, oPrey, eNone, 0.0, 0, 0, GetWeaponDamageType(oWeap), "Prey on the Weak Hit", "Prey on the Weak Miss");
+                                                            
+                                                            //Set up removal
+                                                            DelayCommand(RoundsToSeconds(1), DeleteLocalInt(oPrey, "PRC_POTW_HAS_ATTACKED"));
+                                                    }
+                                            }
+                                            oAoOTarget = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(5.0), GetLocation(oPrey), TRUE, OBJECT_TYPE_CREATURE);
+                                    }                               
+                            }
+                    }
+            }
+            oPrey = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(10.0), GetLocation(oDead), FALSE, OBJECT_TYPE_CREATURE);
+    }//End Prey on the Weak
 
     if(GetPRCSwitch(PRC_PW_DEATH_TRACKING) && GetIsPC(oDead))
         SetPersistantLocalInt(oDead, "persist_dead", TRUE);

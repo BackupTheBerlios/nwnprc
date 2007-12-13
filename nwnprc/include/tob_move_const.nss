@@ -57,6 +57,7 @@ const int MOVE_DS_PERFECT_ORDER = -1;
 // Level 7 Maneuvers
 const int MOVE_WR_CLARION_CALL = -1;
 const int MOVE_DW_INFERNO_BLADE = -1;
+const int MOVE_TC_PREY_ON_THE_WEAK = -1;
 
 // Level 8 Maneuvers
 const int MOVE_DS_IMMORTAL_FORTITUDE = -1;

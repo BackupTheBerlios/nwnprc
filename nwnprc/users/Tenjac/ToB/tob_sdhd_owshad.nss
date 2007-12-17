@@ -44,7 +44,9 @@ void main()
                object oSkin = GetPCSkin(oTarget);
                
                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eInc, oTarget, 6.0);           
-               itemproperty ipIncorp = PRCItemPropertyBonusFeat(FEAT_INCORPOREAL);
-               AddItemProperty(DURATION_TYPE_TEMPORARY, ipIncorp, oSkin, 6.0);                
+               itemproperty ipIncorp = PRCItemPropertyBonusFeat(FEAT_INCORPOREAL_ATTACK);
+               itemproperty ipIncorp2 = PRCItemPropertyBonusFeat(FEAT_INCORPOREAL);
+               AddItemProperty(DURATION_TYPE_TEMPORARY, ipIncorp, oSkin, 6.0);
+               AddItemProperty(DURATION_TYPE_TEMPORARY, ipIncorp2, oSkin, 6.0);
        }
 }

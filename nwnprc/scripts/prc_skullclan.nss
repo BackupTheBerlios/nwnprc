@@ -13,6 +13,97 @@
 
 #include "prc_alterations"
 
+//modification of GetWeaponAttackBonusProperty - hardcoded to NE Undead
+//Used to make reduction adjust to match weapon, due to +20/-20 cap
+int GetUndeadAttackBonusItemProperty(object oWeap)
+{
+	int iBonus = 0;
+	int iPenalty = 0;
+	int iTemp;
+
+	int iRace = RACIAL_TYPE_UNDEAD;
+
+	int iGoodEvil = 0;
+	int iLawChaos = 50;
+	int iAlignSpecific = GetItemPropAlignment(iGoodEvil, iLawChaos);
+	int iAlignGroup;
+
+	itemproperty ip = GetFirstItemProperty(oWeap);
+	while(GetIsItemPropertyValid(ip))
+	{
+		iTemp = 0;
+		int iIpType=GetItemPropertyType(ip);
+		switch(iIpType)
+		{
+            case ITEM_PROPERTY_ATTACK_BONUS:
+            case ITEM_PROPERTY_ENHANCEMENT_BONUS:
+                iTemp = GetItemPropertyCostTableValue(ip);
+                break;
+
+            case ITEM_PROPERTY_DECREASED_ATTACK_MODIFIER:
+            case ITEM_PROPERTY_DECREASED_ENHANCEMENT_MODIFIER:
+                iTemp - GetItemPropertyCostTableValue(ip);
+                break;
+
+            case ITEM_PROPERTY_ATTACK_BONUS_VS_ALIGNMENT_GROUP:
+            case ITEM_PROPERTY_ENHANCEMENT_BONUS_VS_ALIGNMENT_GROUP:
+                iAlignGroup = GetItemPropertySubType(ip);
+
+                if (iAlignGroup == ALIGNMENT_NEUTRAL)
+                {
+                   if (iAlignGroup == iLawChaos)   iTemp = GetItemPropertyCostTableValue(ip);
+                }
+                else if (iAlignGroup == iGoodEvil || iAlignGroup == iLawChaos || iAlignGroup == IP_CONST_ALIGNMENTGROUP_ALL)
+                {
+                   iTemp = GetItemPropertyCostTableValue(ip);
+                }
+                break;
+
+            case ITEM_PROPERTY_ATTACK_BONUS_VS_RACIAL_GROUP:
+            case ITEM_PROPERTY_ENHANCEMENT_BONUS_VS_RACIAL_GROUP:
+                if(GetItemPropertySubType(ip) == iRace )
+                {
+                     iTemp = GetItemPropertyCostTableValue(ip);
+                 }
+                 break;
+
+            case ITEM_PROPERTY_ATTACK_BONUS_VS_SPECIFIC_ALIGNMENT:
+                if(GetItemPropertySubType(ip) == iAlignSpecific )
+                {
+                     iTemp = GetItemPropertyCostTableValue(ip);
+                }
+                break;
+        }
+
+		if (iTemp > iBonus)
+			iBonus = iTemp;
+		else if(iTemp < iPenalty)
+			iPenalty = iTemp;
+
+		ip = GetNextItemProperty(oWeap);
+    }
+	iBonus -= iPenalty;
+    return iBonus;
+}
+
+//function to clear old penalty vs Undead
+void ClearOldPenalties(object oPC)
+{
+   effect eLoop=GetFirstEffect(oPC);
+
+   while (GetIsEffectValid(eLoop))
+   {
+      if (GetEffectType(eLoop)==EFFECT_TYPE_ATTACK_DECREASE 
+          && GetEffectSubType(eLoop)==SUBTYPE_EXTRAORDINARY
+          && GetEffectDurationType(eLoop)==DURATION_TYPE_PERMANENT
+          && GetEffectSpellId(eLoop) == -1)
+         RemoveEffect(oPC, eLoop);
+
+      eLoop=GetNextEffect(oPC);
+   }
+}
+
+
 // * Applies the Skullclan Hunters's immunities on the object's skin.
 // * iType = IP_CONST_IMMUNITYMISC_*
 // * sFlag = Flag to check whether the property has already been added
@@ -52,18 +143,27 @@ void SkullClanProtectionEvil(object oPC, object oSkin, string sFlag)
 // This is supposed to pierce all DR on undead only
 void SkullClanSwordLight(object oPC, object oSkin, string sFlag)
 {
-	if(GetLocalInt(oSkin, sFlag) == TRUE) return;
+	//if(GetLocalInt(oSkin, sFlag) == TRUE) return;
 
 	object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
+	RemoveSpecificProperty(oItem, ITEM_PROPERTY_ATTACK_BONUS_VS_RACIAL_GROUP, RACIAL_TYPE_UNDEAD, 20, -1, "", -1, DURATION_TYPE_TEMPORARY);
+	int nBonusVsTarget = GetUndeadAttackBonusItemProperty(oItem);
 	// Because there is no negative item property for attack vs race, we need to use a permanent effect.
 	IPSafeAddItemProperty(oItem, ItemPropertyAttackBonusVsRace(RACIAL_TYPE_UNDEAD, 20), 99999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
 	// Now we check for left hand for duel wielders
 	oItem = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
 	if(IPGetIsMeleeWeapon(oItem)) IPSafeAddItemProperty(oItem, ItemPropertyAttackBonusVsRace(RACIAL_TYPE_UNDEAD, 20), 99999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-	effect eAB = VersusRacialTypeEffect(EffectAttackDecrease(20), RACIAL_TYPE_UNDEAD);
+	ClearOldPenalties(oPC);
+	if (DEBUG) DoDebug("Bonus vs Undead: " + IntToString(nBonusVsTarget));
+	
+	SetLocalInt(oSkin, sFlag, TRUE);
+	
+	//if they're not getting any bonuses on weapons, they shouldn't get any penalties either.
+	oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
+	if(oItem == OBJECT_INVALID) return;
+	effect eAB = VersusRacialTypeEffect(EffectAttackDecrease(20 - nBonusVsTarget), RACIAL_TYPE_UNDEAD);
 	eAB = ExtraordinaryEffect(eAB);
 	ApplyEffectToObject(DURATION_TYPE_PERMANENT, eAB, oPC);
-	SetLocalInt(oSkin, sFlag, TRUE);
 }
 
 void main()
@@ -143,7 +243,7 @@ void main()
     {
         oPC   = GetItemLastEquippedBy();
         oItem = GetItemLastEquipped();
-        if(DEBUG) DoDebug("prc_skullclan - OnEquip");
+        if(DEBUG) DoDebug("prc_skullclan - OnEquip");if(DEBUG) DoDebug("Is Ranged? " + IntToString(GetWeaponRanged(oItem)));
 
         // Only applies to weapons
         if(IPGetIsMeleeWeapon(oItem) || GetWeaponRanged(oItem))
@@ -156,13 +256,13 @@ void main()
             IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 99999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
 
             oAmmo = GetItemInSlot(INVENTORY_SLOT_BOLTS, oPC);
-            IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 99999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+            IPSafeAddItemProperty(oAmmo, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 99999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
 
             oAmmo = GetItemInSlot(INVENTORY_SLOT_BULLETS, oPC);
-            IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 99999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+            IPSafeAddItemProperty(oAmmo, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 99999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
 
             oAmmo = GetItemInSlot(INVENTORY_SLOT_ARROWS, oPC);
-            IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 99999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+            IPSafeAddItemProperty(oAmmo, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 99999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
         }
     }
     // We are called from the OnPlayerUnEquipItem eventhook. Remove OnHitCast: Unique Power from oPC's weapon
@@ -180,16 +280,17 @@ void main()
 
             // Remove the temporary OnHitCastSpell: Unique
             // Makes sure to get ammo if its a ranged weapon
-            RemoveSpecificProperty(oItem, ITEM_PROPERTY_ONHITCASTSPELL, IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 0, 1, "", 1, DURATION_TYPE_TEMPORARY);
+            RemoveSpecificProperty(oItem, ITEM_PROPERTY_ONHITCASTSPELL, IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 0, -1, "", -1, DURATION_TYPE_TEMPORARY);
+            RemoveSpecificProperty(oItem, ITEM_PROPERTY_ATTACK_BONUS_VS_RACIAL_GROUP, RACIAL_TYPE_UNDEAD, 20, -1, "", -1, DURATION_TYPE_TEMPORARY);
 
             oAmmo = GetItemInSlot(INVENTORY_SLOT_BOLTS, oPC);
-            RemoveSpecificProperty(oAmmo, ITEM_PROPERTY_ONHITCASTSPELL, IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 0, 1, "", 1, DURATION_TYPE_TEMPORARY);
+            RemoveSpecificProperty(oAmmo, ITEM_PROPERTY_ONHITCASTSPELL, IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 0, -1, "", -1, DURATION_TYPE_TEMPORARY);
 
             oAmmo = GetItemInSlot(INVENTORY_SLOT_BULLETS, oPC);
-            RemoveSpecificProperty(oAmmo, ITEM_PROPERTY_ONHITCASTSPELL, IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 0, 1, "", 1, DURATION_TYPE_TEMPORARY);
+            RemoveSpecificProperty(oAmmo, ITEM_PROPERTY_ONHITCASTSPELL, IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 0, -1, "", -1, DURATION_TYPE_TEMPORARY);
 
             oAmmo = GetItemInSlot(INVENTORY_SLOT_ARROWS, oPC);
-            RemoveSpecificProperty(oAmmo, ITEM_PROPERTY_ONHITCASTSPELL, IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 0, 1, "", 1, DURATION_TYPE_TEMPORARY);
+            RemoveSpecificProperty(oAmmo, ITEM_PROPERTY_ONHITCASTSPELL, IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 0, -1, "", -1, DURATION_TYPE_TEMPORARY);
         }
     }
     if(DEBUG) DoDebug("prc_skullclan: Exiting");

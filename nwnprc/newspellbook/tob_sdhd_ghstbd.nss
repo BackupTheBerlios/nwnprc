@@ -39,6 +39,7 @@ void main()
         object oInitiator    = OBJECT_SELF;
         object oTarget       = PRCGetSpellTargetObject();
         struct maneuver move = EvaluateManeuver(oInitiator, oTarget);
+        effect eNone;
         
         if(move.bCanManeuver)
         {

@@ -15,6 +15,7 @@ This maneuver functions as the shadow jaunt maneuver, except that it can be init
 
 #include "tob_inc_tobfunc"
 #include "tob_movehook"
+#include "prc_inc_teleport"
 #include "prc_alterations"
 
 void main()

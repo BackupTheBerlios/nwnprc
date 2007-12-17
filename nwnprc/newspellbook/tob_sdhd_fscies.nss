@@ -70,7 +70,7 @@ void main()
                         // Saving Throw
                         int nSave = PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (19 + GetAbilityModifier(ABILITY_WISDOM, oInitiator)));
                         int nRoll = d20(1);
-                        int nDam
+                        int nDam;
                         
                         //Legs
                         if(nRoll < 8)

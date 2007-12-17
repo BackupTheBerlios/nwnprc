@@ -58,7 +58,7 @@ void main()
                 
                 if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
                 {
-                        if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (18 + GetAbilityModifier(ABILITY_WISDOM, oInitiator)))
+                        if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (18 + GetAbilityModifier(ABILITY_WISDOM, oInitiator))))
                         {
                                 int nLevels = d4();
                                 

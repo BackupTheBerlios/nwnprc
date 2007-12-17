@@ -36,6 +36,7 @@ void main()
         object oInitiator    = OBJECT_SELF;
         object oTarget       = PRCGetSpellTargetObject();
         struct maneuver move = EvaluateManeuver(oInitiator, oTarget);
+        effect eNone;
         
         if(move.bCanManeuver)
         {
@@ -44,7 +45,7 @@ void main()
                 {
                         int nDam = d6(15);
                         
-                        if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (15 + GetAbilityModifier(ABILITY_WISDOM, oInitiator))) nDam = 5d6;
+                        if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (15 + GetAbilityModifier(ABILITY_WISDOM, oInitiator)))) nDam = d6(5);
                         
                         if(!GetIsImmune(oTarget, IMMUNITY_TYPE_CRITICAL_HIT))
                         {

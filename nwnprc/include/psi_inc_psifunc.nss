@@ -582,6 +582,14 @@ int GetPsionicPRCLevels(object oCreature)
         nLevel += GetLevelByClass(CLASS_TYPE_THRALLHERD, oCreature) - 1;
         if(GetLevelByClass(CLASS_TYPE_THRALLHERD, oCreature) >= 10) nLevel -= 1;
     }
+    // No manifester level boost at levels 2, 5 and 8 for Shadow Mind
+    if(GetLevelByClass(CLASS_TYPE_SHADOWMIND, oCreature))
+    {
+        nLevel += GetLevelByClass(CLASS_TYPE_SHADOWMIND, oCreature);
+        if(GetLevelByClass(CLASS_TYPE_SHADOWMIND, oCreature) >= 2) nLevel -= 1;
+        if(GetLevelByClass(CLASS_TYPE_SHADOWMIND, oCreature) >= 5) nLevel -= 1;
+        if(GetLevelByClass(CLASS_TYPE_SHADOWMIND, oCreature) >= 8) nLevel -= 1;
+    }    
     // No manifester level boost at level 1 and 6 for Iron Mind
     if(GetLevelByClass(CLASS_TYPE_IRONMIND, oCreature))
     {

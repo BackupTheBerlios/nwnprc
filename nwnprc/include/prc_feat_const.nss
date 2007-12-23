@@ -356,6 +356,8 @@ const int FEAT_SPECIAL_SKIRMISH_5D6                    = 3948;
 const int FEAT_IMP_DRAGONFIRE_STRIKE                   = 3950;
 const int FEAT_MASTERS_GIFT                            = 3951;
 const int FEAT_TRUE_STEALTH                            = 3952;
+const int FEAT_DRAGONFRIEND                            = 3988;
+const int FEAT_DRAGONTHRALL                            = 3989;
 
 //Draconic Feats(from Dragon Magic and RotD)
 const int FEAT_DRAGONTOUCHED                           = 3889;

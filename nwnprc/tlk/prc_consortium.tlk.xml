@@ -33798,7 +33798,7 @@ REQUIREMENTS:
 Alignment: Any evil.
 Base Attack Bonus: +4.
 Skills: Bluff 4 ranks, Intimidate 4 ranks, Lore 4 ranks.
-Feats: Disciple of Darkness
+Feats: Dragonthrall
 
 Abilities:
 1: Breath Weapon - You can breathe a cone of cold that does 3d6 cold damage, with a Reflex save of DC 10 + class level + Con modifier for half damage.  You can only use this breath weapon once every 1d4 rounds.
@@ -34306,6 +34306,19 @@ This aura grants you and your allies damage resistance to this element, equal to
   <entry id="55621" lang="en" sex="m">Draconic Marshal Aura: Resolve</entry>
   <entry id="55622" lang="en" sex="m">Draconic Marshal Aura: Stamina</entry>
   <entry id="55623" lang="en" sex="m">Draconic Marshal Aura: Swiftness</entry>
+  <entry id="55624" lang="en" sex="m">Dragonfriend</entry>
+  <entry id="55625" lang="en" sex="m">Type of Feat: General
+Prerequisite: Cha 11
+
+You are a known and respected ally of good dragons.  You gain a +4 bonus to Persuade checks vs dragons, and a +4 to save vs fear effects of good dragons.
+
+Note: You cannot take this feat if you have already taken Dragonthrall.  If you try to do this at first level you will be unable to level.</entry>
+  <entry id="55626" lang="en" sex="m">Dragonthrall</entry>
+  <entry id="55627" lang="en" sex="m">Type of Feat: General
+
+You have pledged your life to the service of evil dragonkind.  You gain a +4 bonus to Bluff checks vs dragons, and a +4 to save vs fear effects of evil dragons.  You have a -2 penalty vs mind spells cast by dragons.
+
+Note: You cannot take this feat if you have already taken Dragonfriend.  If you try to do this at first level you will be unable to level.</entry>
   <entry id="55964" lang="en" sex="m">1</entry>
   <entry id="55965" lang="en" sex="m">2</entry>
   <entry id="55966" lang="en" sex="m">3</entry>

@@ -125,6 +125,10 @@ void RestFinished(object oPC)
     }
     if(sMessage != "")
         FloatingTextStringOnCreature(sMessage, oPC, TRUE);
+        
+    //clear Dragonfriend/Dragonthrall flag so effect properly reapplies
+    if (GetHasFeat(FEAT_DRAGONFRIEND, oPC)
+       || GetHasFeat(FEAT_DRAGONTHRALL, oPC)) DeleteLocalInt(GetPCSkin(oPC), "DragonThrall");
 
     //DelayCommand(1.0,PrcFeats(oPC));
     PrcFeats(oPC);

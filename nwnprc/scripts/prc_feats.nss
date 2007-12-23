@@ -130,6 +130,10 @@ void main()
        || GetHasFeat(FEAT_BONUS_AURA_SENSES, oPC)
        || GetHasFeat(FEAT_BONUS_AURA_SWIFTNESS, oPC)
        || GetHasFeat(FEAT_BONUS_AURA_TOUGHNESS, oPC))             ExecuteScript("prc_xtradracaura", oPC);
+       
+    //Dragonfriend/thrall
+    if (GetHasFeat(FEAT_DRAGONFRIEND, oPC)
+       || GetHasFeat(FEAT_DRAGONTHRALL, oPC))                     ExecuteScript("prc_drgnthrall", oPC);
 
     // Feats that require OnHitCastSpell: Unique on armor
     /* Commented out until needed

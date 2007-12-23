@@ -1146,6 +1146,12 @@ int SuddenMetamagic(object oPC = OBJECT_SELF)
 
 int DraconicFeats(object oPC = OBJECT_SELF)
 {
+    //Dragonfriend and Dragonthrall exclude each other
+    if(GetHasFeat(FEAT_DRAGONFRIEND, oPC) && GetHasFeat(FEAT_DRAGONTHRALL, oPC))
+    {
+        FloatingTextStringOnCreature("You cannot take both Dragonfriend and Dragonthrall.", oPC, FALSE);
+         return FALSE;
+    }
 
     int bDragonblooded;
     int bHeritage;

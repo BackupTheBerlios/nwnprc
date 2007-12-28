@@ -1396,27 +1396,27 @@ int DragonShamanFeats(object oPC)
     
     if(nLevel <= 2 && nNumAuras != 3)
     {
-        FloatingTextStringOnCreature("You must have 3 auras, please reselect your feats.", oPC, FALSE);
+        FloatingTextStringOnCreature("You may only have 3 auras at this level, please reselect your feats.", oPC, FALSE);
         return FALSE;
     }
     else if((nLevel == 3 || nLevel == 4) && nNumAuras != 4)
     {
-        FloatingTextStringOnCreature("You must have 4 auras, please reselect your feats.", oPC, FALSE);
+        FloatingTextStringOnCreature("You may only have 4 auras at this level, please reselect your feats.", oPC, FALSE);
         return FALSE;
     }
     else if((nLevel == 5 || nLevel == 6) && nNumAuras != 5)
     {
-        FloatingTextStringOnCreature("You must have 5 auras, please reselect your feats.", oPC, FALSE);
+        FloatingTextStringOnCreature("You may only have 5 auras at this level, please reselect your feats.", oPC, FALSE);
         return FALSE;
     }
     else if((nLevel == 7 || nLevel == 8) && nNumAuras != 6)
     {
-        FloatingTextStringOnCreature("You must have 6 auras, please reselect your feats.", oPC, FALSE);
+        FloatingTextStringOnCreature("You may only have 6 auras at this level, please reselect your feats.", oPC, FALSE);
         return FALSE;
     }
     else if(nLevel >= 9 && nNumAuras != 7)
     {
-        FloatingTextStringOnCreature("You must have 7 auras, please reselect your feats.", oPC, FALSE);
+        FloatingTextStringOnCreature("You may only have 7 auras at this level, please reselect your feats.", oPC, FALSE);
         return FALSE;
     }
     if(nLevel == 2 && nNumOfSkillFocus != 1)

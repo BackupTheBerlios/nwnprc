@@ -141,6 +141,10 @@ void main()
     ExecuteScript("prc_prereq", oPC);
     ExecuteScript("prc_psi_ppoints", oPC);
     ResetTouchOfVitality(oPC);
+    if (GetLevelByClass(CLASS_TYPE_WEREWOLF, oPC) > 0)
+    {
+        ExecuteScript("prc_wwunpoly", oPC);
+    }
     DelayCommand(0.15, DeleteLocalInt(oPC,"ONENTER"));
 
     //remove effects from hides, can stack otherwise

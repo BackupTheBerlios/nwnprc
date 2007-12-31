@@ -22,6 +22,10 @@ void PrcFeats(object oPC)
     SetLocalInt(oPC,"ONREST",1);
     DeletePRCLocalIntsT(oPC);
     EvalPRCFeats(oPC);
+    if (GetLevelByClass(CLASS_TYPE_WEREWOLF, oPC) > 0)
+    {
+        ExecuteScript("prc_wwunpoly", oPC);
+    }
     DelayCommand(1.0, DeleteLocalInt(oPC,"ONREST"));
     FeatSpecialUsePerDay(oPC);
 }
@@ -125,7 +129,7 @@ void RestFinished(object oPC)
     }
     if(sMessage != "")
         FloatingTextStringOnCreature(sMessage, oPC, TRUE);
-        
+
     //clear Dragonfriend/Dragonthrall flag so effect properly reapplies
     if (GetHasFeat(FEAT_DRAGONFRIEND, oPC)
        || GetHasFeat(FEAT_DRAGONTHRALL, oPC)) DeleteLocalInt(GetPCSkin(oPC), "DragonThrall");

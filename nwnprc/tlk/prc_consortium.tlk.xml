@@ -32809,9 +32809,34 @@ target, that target takes half of the damage rolled for the first target.
   <entry id="55051" lang="en" sex="m">Mass Fire Shield: Blue
 </entry>
   <entry id="55052" lang="en" sex="m">Fire Shield (PnP): Red</entry>
+  <entry id="55090" lang="en" sex="m">Whisper Gnome</entry>
+  <entry id="55091" lang="en" sex="m">Whisper Gnomish</entry>
+  <entry id="55092" lang="en" sex="m">whisper gnomish</entry>
+  <entry id="55093" lang="en" sex="m">Whisper Gnomes</entry>
+  <entry id="55094" lang="en" sex="m">Whisper gnomes are creatures of stealth and suspicion. In profession and behavior they range from peaceful recluses to dangerous spies, lacking their cousins' jovial nature and easy outlook on life. Whisper gnomes are slightly taller than other gnomes, standing 3 1/2 to 4 feet tall, with a thin, almost gaunt build.  Their skin ranges from light grey to light green, though the variation is rarely noticable without careful attention. Their hair is dark, and their eyes are often some shade of blue or grey, though rarely bright or striking. Gnomes live 350 to 500 years.
+
+Whisper Gnomish Ability Adjustments: +2 Dex, +2 Con, -2 Str, -2 Cha.
+Favored Class (Rogue): A multiclass whisper gnome's rogue class does not count when determining whether he suffers an XP penalty for multiclassing.
+
+Special Abilities:
+
+- Small Stature
++1 size bonus to attack rolls.
++1 size bonus to AC.
++4 size bonus to Hide checks. 
+- 30' base speed
+- Darkvision: Whisper gnomes are able to see in the dark.
+- Defensive Training vs. Giants: +4 dodge bonus to AC against giants.
+- Skill Affinity (Hide): +4 racial bonus to Hide checks. 
+- Skill Affinity (Move Silently): +4 racial bonus to Move Silently checks. 
+- Skill Affinity (Listen): +2 racial bonus to Listen checks. 
+- Skill Affinity (Spot): +2 racial bonus to Spot checks. 
+- Spell-Like Abilities: 1/day - Silence, Mage Hand.
+- Gnomish: Whisper Gnomes count as Gnomes for the purpose of spells.</entry>
+  <entry id="55095" lang="en" sex="m">You grew up in a hidden community with others of your kind.  However, no one knows what threats may lay over the horizon, and so you left home, determined to make sure that you would be strong enough to protect it if that threat ever materialized.</entry>
   <entry id="55096" lang="en" sex="m">Catfolk</entry>
   <entry id="55097" lang="en" sex="m">catfolk</entry>
-  <entry id="55098" lang="en" sex="m">Catfolk are a race of nomadic feline humanoids who typically roam grassy plains.  Physically they resemble a cross between a human and a large predatory cat, with a lightly furred humanoid body and the head and mane of a feline.  They lack a tail and actual claws, simply having thicker nails instead, but they do walk on their toes rather than flatfooted like other humanoids.  The most common catfolk resemble lions, but there are other tribes that resemble leopards, tigers, or cheetahs.
+  <entry id="55098" lang="en" sex="m">Catfolk are a race of nomadic feline humanoids who typically roam grassy plains.  Physically they resemble a cross between a human and a large predatory cat, with a lightly furred humanoid body and the head and mane of a feline.  They lack a tail and actual claws, simply having thicker nails instead, but they do walk on their toes rather than flatfooted like other humanoids.  The most common catfolk resemble lions, but there are other tribes that resemble leopards, tigers, or cheetahs.  Catfolk have a lifespan similar to that of humans.
 
 Catfolk Ability Adjustments: +4 Dexterity, +2 Charisma
 Favored Class (Ranger): A multiclass catfolk's ranger class does not count when determining whether he suffers an XP penalty for multiclassing. 

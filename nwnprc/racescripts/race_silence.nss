@@ -7,5 +7,5 @@ void main()
 {
     int CasterLvl = GetHitDice(OBJECT_SELF);
 
-    DoRacialSLA(SPELL_BLESS, CasterLvl);
+    DoRacialSLA(SPELL_SILENCE, CasterLvl);
 }

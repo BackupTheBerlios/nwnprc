@@ -50,6 +50,8 @@ const int FEAT_FEYRI_REVERT        = 4680;
 const int FEAT_DUERGAR_INVIS       = 4681;
 const int FEAT_DROW_DARKNESS       = 4682;
 const int FEAT_DROW_FAERIE_FIRE         = 4683;
+const int FEAT_WGNOME_MAGEHAND     = 4519;
+const int FEAT_WGNOME_SILENCE      = 4555;
 
 const int FEAT_LTSENSE = 4700;
 const int FEAT_LTBLIND = 4701;

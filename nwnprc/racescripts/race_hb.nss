@@ -61,19 +61,34 @@ void main()
 
     // imaskari underground hide bonus
     //this is in addition to the normal bonus
-    if(GetIsAreaAboveGround(oArea) == AREA_UNDERGROUND && GetHasFeat(FEAT_SA_HIDEU, oPC) )
+    if(GetHasFeat(FEAT_SA_HIDEU, oPC))
     {
-        SetCompositeBonus(oSkin, "SA_Hide_Underground", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE);       
+    	if(GetIsAreaAboveGround(oArea) == AREA_UNDERGROUND)
+            SetCompositeBonus(oSkin, "SA_Hide_Underground", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE); 
+        else      
+            SetCompositeBonus(oSkin, "SA_Hide_Underground", 0, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE); 
     }
 
     // forest gnomes bonus to hide in the woods
     //this is in addition to the normal bonus
-    if(GetHasFeat(FEAT_SA_HIDEF, oPC) &&
-       GetIsAreaNatural(oArea) == AREA_NATURAL && 
-       GetIsAreaAboveGround(oArea) == AREA_ABOVEGROUND)
+    if(GetHasFeat(FEAT_SA_HIDEF, oPC))
     {
-        SetCompositeBonus(oSkin, "SA_Hide_Forest", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE); 
+       if(GetIsAreaNatural(oArea) == AREA_NATURAL && 
+          GetIsAreaAboveGround(oArea) == AREA_ABOVEGROUND)
+           SetCompositeBonus(oSkin, "SA_Hide_Forest", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE);
+       else
+           SetCompositeBonus(oSkin, "SA_Hide_Forest", 0, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE);
     }   
+    
+    //Chameleon Skin Hide bonus for Poison Dusk Lizardfolk
+    //+5 to Hide if most of skin is uncovered
+    if(GetHasFeat(FEAT_CHAMELEON))
+    {
+    	if(GetItemInSlot(INVENTORY_SLOT_CHEST, oPC) == OBJECT_INVALID)
+            SetCompositeBonus(oSkin, "Chameleon", 5, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE);
+        else
+            SetCompositeBonus(oSkin, "Chameleon", 0, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE);
+    }
 }
 
 void EffectDazzled(object oPC, float fDelay)

@@ -377,12 +377,6 @@ void main()
         SetCompositeBonus(oSkin, "SA_Hide_4", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE);
     }
 
-    // Chameleon Skin, +5 to hide
-    if(GetHasFeat(FEAT_CHAMELEON))
-    {
-        SetCompositeBonus(oSkin, "Chameleon", 5, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE);
-    }
-
     // Skill Affinity, +2 to appraise
     // dwarves and deep halfings get racial +2 to appraise checks.
     if(GetHasFeat(FEAT_SA_APPRAISE))
@@ -526,7 +520,7 @@ void main()
     if(GetHasFeat(FEAT_WEMIC_JUMP_8))
     {
         SetCompositeBonus(oSkin, "WEMIC_JUMP_8", 8, ITEM_PROPERTY_SKILL_BONUS, 28);
-    }    
+    } 
     
     //natural weapons
     //replace with a feat check
@@ -596,6 +590,17 @@ void main()
     {
         string sResRef = "prc_cent_hoof_";
         int nSize = PRCGetCreatureSize(oPC);
+        sResRef += GetAffixForSize(nSize);
+        AddNaturalPrimaryWeapon(oPC, sResRef, 2);
+    }
+    else if(nRace==RACIAL_TYPE_POISON_DUSK)
+    {
+        string sResRef = "prc_lizf_bite_";
+        int nSize = PRCGetCreatureSize(oPC);
+        sResRef += GetAffixForSize(nSize);
+        AddNaturalSecondaryWeapon(oPC, sResRef);
+        //primary weapon
+        sResRef = "prc_claw_1d6l_";
         sResRef += GetAffixForSize(nSize);
         AddNaturalPrimaryWeapon(oPC, sResRef, 2);
     }

@@ -2210,6 +2210,7 @@ int GetWeaponCritcalMultiplier(object oPC, object oWeap)
 int GetMeleeAttackers15ft(object oPC = OBJECT_SELF)
 // motu99: this is (and was) actually 10 feet
 {
+	if (DEBUG) DoDebug("Entering GetMeleeAttackers15ft");
 	object oTarget = GetNearestCreature(CREATURE_TYPE_REPUTATION,REPUTATION_TYPE_ENEMY,oPC,1,CREATURE_TYPE_IS_ALIVE,TRUE);
 
 	if (oTarget == OBJECT_INVALID)
@@ -2223,11 +2224,13 @@ int GetMeleeAttackers15ft(object oPC = OBJECT_SELF)
 	if (GetLocalInt(oPC, "IHDancingBladeForm"))
 		fDistance -= RANGE_5_FEET_IN_METERS;		
 
+	if (DEBUG) DoDebug("Exiting GetMeleeAttackers15ft");
 	return fDistance <= MELEE_RANGE_METERS;
 }
 
 int GetIsInMeleeRange(object oDefender, object oAttacker, int bSizeAdjustment = TRUE)
 {
+	if (DEBUG) DoDebug("Entering GetIsInMeleeRange");
 	// Throw attack
 	if(GetLocalInt(oAttacker, "IHLightningThrow")) return TRUE;
 	
@@ -2241,6 +2244,7 @@ int GetIsInMeleeRange(object oDefender, object oAttacker, int bSizeAdjustment = 
 	if (GetLocalInt(oAttacker, "IHDancingBladeForm"))
 		fDistance -= RANGE_5_FEET_IN_METERS;		
 
+	if (DEBUG) DoDebug("Exiting GetIsInMeleeRange");
 	return fDistance <= MELEE_RANGE_METERS;
 }
 
@@ -3718,12 +3722,13 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iOffha
 	}
         
         int iDiceRoll = d20();
+        if (DEBUG) DoDebug("Starting DSPerfectOrder");
         // All rolls = 11 for this guy
         if (GetLocalInt(oAttacker, "DSPerfectOrder") && GetHasSpellEffect(MOVE_DS_PERFECT_ORDER, oAttacker)) 
         	iDiceRoll = 11;
         else 	// Cleanup on aisle 5
         	DeleteLocalInt(oAttacker, "DSPerfectOrder");
-        	
+        if (DEBUG) DoDebug("Ending DSPerfectOrder");	
 	string sDebugFeedback;
 	int bDebug = GetPRCSwitch(PRC_COMBAT_DEBUG);
 	
@@ -3829,7 +3834,9 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iOffha
 			else
                         {
                                 iCritThreatRoll = d20();
+                                if (DEBUG) DoDebug("Starting BoneCrusher");
                                 if (GetLocalInt(oDefender, "BoneCrusher")) iCritThreatRoll += 10;
+                                if (DEBUG) DoDebug("Ending DSPerfectOrder");
                         }
 			
 			if(!GetIsImmune(oDefender, IMMUNITY_TYPE_CRITICAL_HIT) )
@@ -5329,7 +5336,7 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
                 
                 // Normal rolling
                 iWeaponDamage += iDiceRoll;
-                
+                if (DEBUG) DoDebug("Ending Aura of Chaos");
                 // Aura of Chaos rerolls and adds if the dice rolled is max.
                 if (GetLocalInt(oAttacker, "DSChaos") && GetHasSpellEffect(MOVE_DS_AURA_CHAOS, oAttacker)) 
                 {
@@ -5352,7 +5359,7 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
 		}
 		else 	// Cleanup on aisle 5
         		DeleteLocalInt(oAttacker, "DSChaos");
-
+		if (DEBUG) DoDebug("Ending Aura of Chaos");
                 
                 if (bDebug) sDebugMessage += IntToString(iNumDice) + "d" + IntToString(iNumSides) + " (" + IntToString(iDiceRoll) + ")";
 
@@ -5572,9 +5579,10 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
 
 		// just in case damage is somehow less than 1
 		if(iWeaponDamage < 1) iWeaponDamage = 1;
+		if (DEBUG) DoDebug("Starting NightmareBlade");
 		// Nightmare Blades double to quadruple the damage dealt for the normal attack
                 if (GetLocalInt(oDefender, "NightmareBlade") > 0) iWeaponDamage = iWeaponDamage * GetLocalInt(oDefender, "NightmareBlade");
-	
+		if (DEBUG) DoDebug("Ending NightmareBlade");
 		// create an invalid effect to return on a coup de grace
 
 		// the rest of the code for a Coup De Grace
@@ -5604,13 +5612,13 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
 			// @TODO: store weaponEnhancement value and make new function that takes this value
 			int iDamagePower = GetDamagePowerConstant(oWeapon, oDefender, oAttacker);
 			int iDamageType = GetDamageTypeByWeaponType(iWeaponType);
-
+			if (DEBUG) DoDebug("Starting LightningThrowSave");
 			// When this maneuver is in effect, weapon damage is fire
 			// Also put here so it doesn't muck up things looking for weapon damage type
 			if (GetLocalInt(oAttacker, "DWBurningBrand")) iDamageType = DAMAGE_TYPE_FIRE;
 			// This is for the Lightning Throw Maneuver.
 			if (GetLocalInt(oAttacker, "LightningThrowSave")) iWeaponDamage /= 2;
-
+			if (DEBUG) DoDebug("Ending LightningThrowSave");
 
 			// motu99: why do we store different physical damage types (Bludg, Pierc, Slash) in the WeaponBonusDamage struct
 			// when we sum up all physical damage here and only use the weapon base damage type?

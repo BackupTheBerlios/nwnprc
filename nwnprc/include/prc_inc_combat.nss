@@ -3196,7 +3196,7 @@ int GetDefenderAC(object oDefender, object oAttacker, int bIsTouchAttack = FALSE
 	{
 		iAC -= 5;
 	}
-
+	if (DEBUG) DoDebug("GetDefenderAC: End Section #1");
 	// remove the dexterity modifier to AC, based on armor limits
 	if(bGetIsDeniedDexBonus || bIsHelpless )
 	{
@@ -3225,7 +3225,7 @@ int GetDefenderAC(object oDefender, object oAttacker, int bIsTouchAttack = FALSE
 
 		// if their dex mod exceeds the max for their current armor
 		if(iDexMod > iDexMax) iDexMod = iDexMax;
-
+		if (DEBUG) DoDebug("GetDefenderAC: End Section #2");
 		// remove any dex bonus to AC
 		iAC -= iDexMod;
 
@@ -3261,6 +3261,7 @@ int GetDefenderAC(object oDefender, object oAttacker, int bIsTouchAttack = FALSE
 			else if( GetHasFeat(FEAT_NATARM_20) ) iAC += 20;
 			else if( GetHasFeat(FEAT_NATARM_21) ) iAC += 21;
 			else if( GetHasFeat(FEAT_NATARM_22) ) iAC += 22;
+			if (DEBUG) DoDebug("GetDefenderAC: End Section #3");
 		}
 	}
 
@@ -3274,6 +3275,7 @@ int GetDefenderAC(object oDefender, object oAttacker, int bIsTouchAttack = FALSE
 	// no shield, armor, or natural armor bonuses apply.
 	if(bIsTouchAttack)
 	{
+		if (DEBUG) DoDebug("GetDefenderAC: End Section #4");
 		// Temporary storage, needed for Elude Touch
 		int nNormalAC = iAC;
 
@@ -3295,7 +3297,7 @@ int GetDefenderAC(object oDefender, object oAttacker, int bIsTouchAttack = FALSE
 		if(GetHasFeat(FEAT_WILDER_ELUDE_TOUCH, oDefender))
 			iAC = min(iAC + GetAbilityModifier(ABILITY_CHARISMA, oDefender), nNormalAC);
 	}
-
+	if (DEBUG) DoDebug("GetDefenderAC: End Section #5");
 	return iAC;
 }
 
@@ -3645,7 +3647,7 @@ int GetAttackModVersusDefender(object oDefender, object oAttacker, object oWeapo
 		iAttackMod += 2;
 // DoDebug("GetAttackModVersusDefender: Defender flanked");
 	}
-
+	if (DEBUG) DoDebug("GetAttackModVersusDefender: End Section #1");
 	if	(	(	GetHasEffect(EFFECT_TYPE_INVISIBILITY, oAttacker)
 				|| GetHasEffect(EFFECT_TYPE_IMPROVEDINVISIBILITY, oAttacker)
 				&& !GetHasFeat(FEAT_BLIND_FIGHT, oDefender)
@@ -3661,7 +3663,7 @@ int GetAttackModVersusDefender(object oDefender, object oAttacker, object oWeapo
 		iAttackMod += 2;
 // DoDebug("GetAttackModVersusDefender: Defender frightened or stunned");
 	}
-
+	if (DEBUG) DoDebug("GetAttackModVersusDefender: End Section #2");
 	int bIsMeleeWeapon = !GetWeaponRanged(oWeapon);
 	int bIsRangedTouchAttack = iTouchAttackType == TOUCH_ATTACK_RANGED || iTouchAttackType == TOUCH_ATTACK_RANGED_SPELL;
 	if(bIsRangedTouchAttack)
@@ -3677,6 +3679,7 @@ int GetAttackModVersusDefender(object oDefender, object oAttacker, object oWeapo
 		// +4 attack bonus to a prone target (in melee) / -4 in ranged combat
 		if(bIsKnockedDown)  iAttackMod += 4;
 	}
+	if (DEBUG) DoDebug("GetAttackModVersusDefender: End Section #3");
 	else // ranged combat
 	{
 		// -4 attack bonus to a prone target in ranged combat
@@ -3697,7 +3700,7 @@ int GetAttackModVersusDefender(object oDefender, object oAttacker, object oWeapo
 		if(bGobTrain && iEnemyRace == RACIAL_TYPE_HUMANOID_GOBLINOID)   iAttackMod += 1;
 		if(bLizTrain && iEnemyRace == RACIAL_TYPE_HUMANOID_REPTILIAN)	iAttackMod += 1;
 	}
-
+	if (DEBUG) DoDebug("GetAttackModVersusDefender: End Section #4");
 //	 if( GetHasFeat(FEAT_SMALL, oAttacker) ||  GetHasFeat(FEAT_LARGE, oAttacker) )  // don't really need the feat, just check for size difference
 	{
 		int iDefenderSize = PRCGetCreatureSize(oDefender);
@@ -3708,6 +3711,7 @@ int GetAttackModVersusDefender(object oDefender, object oAttacker, object oWeapo
 			iAttackMod--;
 	}
 // DoDebug("GetAttackModVersusDefender() returns " + IntToString(iAttackMod));	 
+	if (DEBUG) DoDebug("GetAttackModVersusDefender: End Section #5");
 	return iAttackMod;
 }
 
@@ -3730,25 +3734,28 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iOffha
         	DeleteLocalInt(oAttacker, "DSPerfectOrder");
         if (DEBUG) DoDebug("Ending DSPerfectOrder");	
 	string sDebugFeedback;
+	if (DEBUG) DoDebug("GetAttackRoll: Line #1");
 	int bDebug = GetPRCSwitch(PRC_COMBAT_DEBUG);
-	
-	if (bDebug) sDebugFeedback = "d20 ("  + IntToString(iDiceRoll) + ")";
+	if (DEBUG) DoDebug("GetAttackRoll: Line #2");
+	if (bDebug) sDebugFeedback += "d20 ("  + IntToString(iDiceRoll) + ")";
+	if (DEBUG) DoDebug("GetAttackRoll: Line #3");
 	if (bDebug) sDebugFeedback += " + AB (" + IntToString(iAttackBonus) + ")";
-
+	if (DEBUG) DoDebug("GetAttackRoll: Line #4");
 	iAttackBonus += iMod;
-
-	if(bDebug) sDebugFeedback += " - APR penalty ("  + IntToString(-iMod) + ")";
-
+	if (DEBUG) DoDebug("GetAttackRoll: Line #5");
+	if(bDebug) sDebugFeedback += " - APR penalty ("  + IntToString(iMod * -1) + ")";
+	if (DEBUG) DoDebug("Starting GetAttackModVersusDefender");	
 	int iDefenderMod = GetAttackModVersusDefender(oDefender, oAttacker, oWeapon, iTouchAttackType);
 	iAttackBonus += iDefenderMod;
 
 	if(bDebug) sDebugFeedback += " + Atk vs Def Adj ("  + IntToString(iDefenderMod) + ")";
 
+	if (DEBUG) DoDebug("Starting GetDefenderAC");	
 	int iEnemyAC = GetDefenderAC(oDefender, oAttacker, iTouchAttackType);
 
 	if (bDebug) sDebugFeedback += " *versus* AC ("  + IntToString(iEnemyAC) + ")";
 	if (bDebug) sDebugFeedback = COLOR_WHITE + "Attack Roll = " + IntToString(iAttackBonus + iDiceRoll) + ": " + sDebugFeedback;
-
+	if (DEBUG) DoDebug("GetAttackRoll: End Section #1");
 	int iWeaponType = GetBaseItemType(oWeapon);
 	int iCritThreat = GetWeaponCriticalRange(oAttacker, oWeapon);
 
@@ -3781,7 +3788,7 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iOffha
 		sFeedback += COLOR_ORANGE + " attacks ";
 
 	sFeedback +=  GetName(oDefender) + ": ";
-
+	if (DEBUG) DoDebug("GetAttackRoll: End Section #2");
 	int iReturn = 0;
 	// roll concealment check
 	int iConcealment = GetIsConcealed(oDefender, oAttacker);
@@ -3803,7 +3810,7 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iOffha
 			iReturn = 0;
 		}
 	}
-
+	if (DEBUG) DoDebug("GetAttackRoll: End Section #3");
 	if (!bEnemyIsConcealed)
 	{
 		// Autmatically dodge the first attack of each round
@@ -3831,12 +3838,13 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iOffha
 				iCritThreatRoll = 10000;
 				DeleteLocalInt(oAttacker, "FistOfRazielSpecialSmiteCritical");
 			}
+			if (DEBUG) DoDebug("GetAttackRoll: End Section #4");
 			else
                         {
                                 iCritThreatRoll = d20();
                                 if (DEBUG) DoDebug("Starting BoneCrusher");
                                 if (GetLocalInt(oDefender, "BoneCrusher")) iCritThreatRoll += 10;
-                                if (DEBUG) DoDebug("Ending DSPerfectOrder");
+                                if (DEBUG) DoDebug("Ending BoneCrusher");
                         }
 			
 			if(!GetIsImmune(oDefender, IMMUNITY_TYPE_CRITICAL_HIT) )
@@ -3863,6 +3871,7 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iOffha
 			sFeedback += "*miss*: (" + IntToString(iDiceRoll) + " + " + IntToString(iAttackBonus) + " = " + IntToString(iDiceRoll + iAttackBonus) + ")";
 			iReturn = 0;
 		}
+		if (DEBUG) DoDebug("GetAttackRoll: End Section #5");
 	}
 	//arrow VFX
 	//this is done with crossbows and other ranged weapons
@@ -3882,6 +3891,7 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iOffha
 		SendMessageToPC(oAttacker, sFeedback); // DelayCommand(fDelay, SendMessageToPC(oAttacker, sFeedback));
 		if (bDebug) SendMessageToPC(oAttacker, sDebugFeedback);		
 	}
+	if (DEBUG) DoDebug("GetAttackRoll: End Section #6");
 	return iReturn;
 }
 

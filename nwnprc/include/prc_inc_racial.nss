@@ -25,12 +25,10 @@ int MyPRCGetRacialType(object oCreature)
         return RACIAL_TYPE_OUTSIDER;
     if (GetLevelByClass(CLASS_TYPE_CONTEMPLATIVE,oCreature) >= 10)
         return RACIAL_TYPE_OUTSIDER;
-    if (GetLevelByClass(CLASS_TYPE_OOZEMASTER,oCreature) >= 10)
-        return RACIAL_TYPE_OOZE;
-    if (GetLevelByClass(CLASS_TYPE_DRAGONDISCIPLE,oCreature) >= 10)
-        return RACIAL_TYPE_DRAGON;
     if (GetLevelByClass(CLASS_TYPE_ACOLYTE,oCreature) >= 10)
         return RACIAL_TYPE_OUTSIDER;
+    if (GetLevelByClass(CLASS_TYPE_OOZEMASTER,oCreature) >= 10)
+        return RACIAL_TYPE_OOZE;
     if (GetLevelByClass(CLASS_TYPE_ES_FIRE,oCreature) >= 10)
         return RACIAL_TYPE_ELEMENTAL;
     if (GetLevelByClass(CLASS_TYPE_ES_COLD,oCreature) >= 10)
@@ -47,10 +45,12 @@ int MyPRCGetRacialType(object oCreature)
         return RACIAL_TYPE_ELEMENTAL;
     if (GetLevelByClass(CLASS_TYPE_DIVESA,oCreature) >= 10)
         return RACIAL_TYPE_ELEMENTAL;
-    if (GetLevelByClass(CLASS_TYPE_HEARTWARDER,oCreature) >= 10)
-        return RACIAL_TYPE_FEY;
+    if (GetLevelByClass(CLASS_TYPE_DRAGONDISCIPLE,oCreature) >= 10)
+        return RACIAL_TYPE_DRAGON;
     if (GetLevelByClass(CLASS_TYPE_WEREWOLF,oCreature) >= 10)
         return RACIAL_TYPE_SHAPECHANGER;
+    if (GetLevelByClass(CLASS_TYPE_HEARTWARDER,oCreature) >= 10)
+        return RACIAL_TYPE_FEY;
 
     // PRC Shifting Polymorph -caused racial type override. Stored with offset +1 to differentiate value 0 from non-existence
     int nShiftingOverrideRace = GetLocalInt(oCreature, "PRC_ShiftingOverride_Race");
@@ -62,6 +62,20 @@ int MyPRCGetRacialType(object oCreature)
         return RACIAL_TYPE_OUTSIDER;
     if(GetHasFeat(FEAT_UNDEAD, oCreature))
         return RACIAL_TYPE_UNDEAD;
+    if(GetHasFeat(FEAT_ELEMENTAL, oCreature))
+        return RACIAL_TYPE_ELEMENTAL;
+    if(GetHasFeat(FEAT_ABERRATION, oCreature))
+        return RACIAL_TYPE_ABERRATION;
+    if(GetHasFeat(FEAT_DRAGON, oCreature))
+        return RACIAL_TYPE_DRAGON;
+    if(GetHasFeat(FEAT_GIANT, oCreature))
+        return RACIAL_TYPE_GIANT;
+    if(GetHasFeat(FEAT_FEY, oCreature))
+        return RACIAL_TYPE_FEY;
+    if(GetHasFeat(FEAT_MONSTEROUS, oCreature))
+        return RACIAL_TYPE_HUMANOID_MONSTROUS;
+    if(GetHasFeat(FEAT_BEAST, oCreature))
+        return RACIAL_TYPE_BEAST;
     if(GetHasFeat(FEAT_DWARVEN, oCreature))
         return RACIAL_TYPE_DWARF;
     if(GetHasFeat(FEAT_ELVEN, oCreature))
@@ -78,22 +92,8 @@ int MyPRCGetRacialType(object oCreature)
         return RACIAL_TYPE_HUMANOID_GOBLINOID;
     if(GetHasFeat(FEAT_REPTILIAN, oCreature))
         return RACIAL_TYPE_HUMANOID_REPTILIAN;
-    if(GetHasFeat(FEAT_MONSTEROUS, oCreature))
-        return RACIAL_TYPE_HUMANOID_MONSTROUS;
-    if(GetHasFeat(FEAT_BEAST, oCreature))
-        return RACIAL_TYPE_BEAST;
     if(GetHasFeat(FEAT_VERMIN, oCreature))
         return RACIAL_TYPE_VERMIN;
-    if(GetHasFeat(FEAT_DRAGON, oCreature))
-        return RACIAL_TYPE_DRAGON;
-    if(GetHasFeat(FEAT_ELEMENTAL, oCreature))
-        return RACIAL_TYPE_ELEMENTAL;
-    if(GetHasFeat(FEAT_GIANT, oCreature))
-        return RACIAL_TYPE_GIANT;
-    if(GetHasFeat(FEAT_FEY, oCreature))
-        return RACIAL_TYPE_FEY;
-    if(GetHasFeat(FEAT_ABERRATION, oCreature))
-        return RACIAL_TYPE_ABERRATION;
 
     return GetRacialType(oCreature);
 }

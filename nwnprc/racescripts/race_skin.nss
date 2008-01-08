@@ -593,6 +593,31 @@ void main()
         sResRef += GetAffixForSize(nSize);
         AddNaturalPrimaryWeapon(oPC, sResRef, 2);
     }
+    else if(nRace==RACIAL_TYPE_ASABI)
+    {
+        string sResRef = "prc_lizf_bite_";
+        int nSize = PRCGetCreatureSize(oPC);
+        sResRef += GetAffixForSize(nSize);
+        AddNaturalSecondaryWeapon(oPC, sResRef);
+    }
+    else if(nRace==RACIAL_TYPE_KHAASTA)
+    {
+        string sResRef = "prc_lizf_bite_";
+        int nSize = PRCGetCreatureSize(oPC);
+        sResRef += GetAffixForSize(nSize);
+        AddNaturalSecondaryWeapon(oPC, sResRef);
+    }
+    else if(nRace==RACIAL_TYPE_NEZUMI)
+    {
+        string sResRef = "prc_lizf_bite_";
+        int nSize = PRCGetCreatureSize(oPC);
+        sResRef += GetAffixForSize(nSize);
+        AddNaturalSecondaryWeapon(oPC, sResRef);
+        //primary weapon
+        sResRef = "prc_claw_1d6l_";
+        sResRef += GetAffixForSize(nSize);
+        AddNaturalPrimaryWeapon(oPC, sResRef, 2);
+    }
     else if(nRace==RACIAL_TYPE_POISON_DUSK)
     {
         string sResRef = "prc_lizf_bite_";

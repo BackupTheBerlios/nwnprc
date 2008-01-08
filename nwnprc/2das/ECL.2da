@@ -48,7 +48,7 @@
 44  Chitine                **** ****               ****      ****   
 45  Cloud_Giant            **** ****               ****      ****   
 46  Dargonesti             **** ****               ****      ****   
-47  Dark_Dwarf             **** ****               ****      ****   
+47  Dark_Dwarf             0    ****               ****      ****   
 48  Dark_Sun_HalfGiant     **** ****               ****      ****   
 49  Derro                  **** ****               ****      ****   
 50  Desert_Dwarf_M         **** ****               ****      ****   
@@ -95,7 +95,7 @@
 91  Kapak                  **** ****               ****      ****   
 92  Karakhul               **** ****               ****      ****   
 93  Kender                 **** ****               ****      ****   
-94  Khaasta                **** ****               ****      ****   
+94  Khaasta                3    Outsider           24        3   
 95  Khinasi                **** ****               ****      ****   
 96  Kuo_toa                **** ****               ****      ****   
 97  Little_Folk            **** ****               ****      ****   
@@ -180,7 +180,7 @@
 176 Rock_Gnome             0    ****               ****      ****   
 177 Tinker_Gnome           0    ****               ****      ****   
 178 Korobokuru             **** ****               ****      ****   
-179 Whisper_Gnome          **** ****               ****      ****   
+179 Whisper_Gnome          0    ****               ****      ****   
 180 Adult_Bronze_Dragon    **** ****               ****      ****   
 181 Dark_Sun_HalfElf       **** ****               ****      ****   
 182 Scro                   **** ****               ****      ****   
@@ -242,13 +242,13 @@
 238 Buommans               **** ****               ****      ****   
 239 Mortif                 **** ****               ****      ****   
 240 Dekanter_Goblin        **** ****               ****      ****   
-241 Asabi                  **** ****               ****      ****   
+241 Asabi                  0    Humanoid           14        3   
 242 Half_Vistani           **** ****               ****      ****   
 243 Spirit_Folk            **** ****               ****      ****   
 244 Trollborn              **** ****               ****      ****   
 245 Asura                  **** ****               ****      ****   
-246 Nezumi                 **** ****               ****      ****   
-247 Flind                  **** ****               ****      ****   
+246 Nezumi                 0    ****               ****      ****   
+247 Flind                  2    Humanoid           14        2   
 248 Poison_Dusk            **** ****               ****      ****   
 249 Drider                 4    Abberation         11        6      
 250 Nymph                  **** ****               ****      ****   

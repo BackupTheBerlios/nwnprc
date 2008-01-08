@@ -32809,6 +32809,93 @@ target, that target takes half of the damage rolled for the first target.
   <entry id="55051" lang="en" sex="m">Mass Fire Shield: Blue
 </entry>
   <entry id="55052" lang="en" sex="m">Fire Shield (PnP): Red</entry>
+  <entry id="55066" lang="en" sex="m">Nezumi</entry>
+  <entry id="55067" lang="en" sex="m">nezumi</entry>
+  <entry id="55068" lang="en" sex="m">Nezumi, or "ratlings" as the humans call them, hail from the far east.  They used to control a large empire, which was destroyed in a great cataclysm, leaving the survivors to eke out an existence in the badlands left behind.  They are not physically large, bewing around 5'5" and 155 pounds in height and weight.  In shape they are humanoid, with a ratlike head, humanlike hands, and long hairless tails.  Their bodies are covered in a rough fur that varies from white, through grey and brown, to black.
+
+Nezumi Ability Adjustments: +2 Con, -2 Cha
+Favored Class (Rogue): A multiclass Nezumi's rogue class does not count when determining whether he suffers an XP penalty for multiclassing. 
+
+Special Abilities:
+
+- Low-Light Vision: Allows them to see better than normal in the dark. 
+- Hardiness vs. Poisons: +2 racial bonus on saving throws against poisons. 
+- 40' Movement 
+- Skill Affinity (Hide): +2 racial bonus to Hide checks. 
+- Skill Affinity (Move Silently): +2 racial bonus to Move Silently checks. 
+- Natural Weapon: Can make a natural bite or claw attack(1d4).
+- Scent: Gains Track as a bonus feat, and can track by smell.
+- Monstrous: Flinds count as Monstrous Humanoids for the purpose of spells.</entry>
+  <entry id="55069" lang="en" sex="m">Khaasta</entry>
+  <entry id="55070" lang="en" sex="m">Khaastan</entry>
+  <entry id="55071" lang="en" sex="m">khaasta</entry>
+  <entry id="55072" lang="en" sex="m">Khaastas</entry>
+  <entry id="55073" lang="en" sex="m">Khaasta are a race of reptillian humanoids that roam the Outlands and the chaotic planes.  Outwardly they reselmble lizardfolk, but they are stronger, tougher, and more agressive.  They have tough, small scales and crests in wild color patterns, and long tails used for balance rather than combat.  They are infamous for being raiders, plunderers, raiders, and slavers.  They will hire themselves out to anyone that seems powerful, and backstab their patron at the first sign of weakness.
+
+Khaasta Ability Adjustments: +8 Str, +2 Dex, +4 Con, +2 Int
+Favored Class (Fighter): A multiclass Khaasta's fighter class does not count when determining whether he suffers an XP penalty for multiclassing. 
+
+Special Abilities:
+
+- Darkvision: Allows them to see farther in the dark. 
+- Natural Armor Bonus: Racial natural armor bonus of 5.
+- Natural Weapon: Can make a natural bite attack(1d4).
+- Weapon Proficiency: Proficient with all simple and martial weapons. 
+- Armor Proficiency: Proficient with medium armor and shields. 
+- Bonus Feats: Gains Point-blank Shot and Power Attack as racial feats.
+- Outsider: Khaastas count as Outsiders for the purpose of spells.</entry>
+  <entry id="55074" lang="en" sex="m">Flind</entry>
+  <entry id="55075" lang="en" sex="m">flind</entry>
+  <entry id="55076" lang="en" sex="m">Flinds</entry>
+  <entry id="55077" lang="en" sex="m">Flinds are hyena-headed humanoids similar to gnolls. Most have dirty yellow or reddish fur and grayish skin. Flinds are a bit shorter and broader, standing roughly 7 feet tall and typically weighing 300-350 pounds.  They are clever tacticians and have no qualms about sacrificing their "cousins" in battle.
+
+Flind Ability Adjustments: +6 Str, +2 Dex, +4 Con
+Favored Class (Ranger): A multiclass flind's ranger class does not count when determining whether he suffers an XP penalty for multiclassing.
+
+Special Abilities:
+
+- Darkvision: Flinds are able to see in the dark.
+- Natural Armor Bonus: Racial natural armor bonus of 2.
+- Monstrous: Flinds count as Monstrous Humanoids for the purpose of spells.</entry>
+  <entry id="55078" lang="en" sex="m">Dark Dwarf</entry>
+  <entry id="55079" lang="en" sex="m">dark dwarf</entry>
+  <entry id="55080" lang="en" sex="m">Dark Dwarves</entry>
+  <entry id="55081" lang="en" sex="m">Dark Dwarven</entry>
+  <entry id="55082" lang="en" sex="m">Native to the world of Krynn, these dwarves prefer to live compeltely in darkness, and are considered mad by other Krynn dwarves.  They have a reputation for evil and murderous acts, and have betrayed their own kind in the past, but still they claim loyalty to the High Thane and the dwarven race.  Physically they are extremely fair, with the occasional albino being born to them.
+
+Dark Dwarf Ability Adjustments: +2 Con, -4 Cha.
+Favored Class (Rogue): A multiclass dark dwarf's rogue class does not count when determining whether he suffers an XP penalty for multiclassing.
+
+- Stonecunning: +2 racial bonus on Search checks made in subterranean areas.
+- Darkvision: Duergar are able to see in the dark.
+- Hardiness vs. Poisons: +2 racial bonus on saving throws against poisons. 
+- Hardiness vs. Spells: +2 racial bonus on saving throws against spells.
+- Offensive Training vs. Orcs: +1 racial bonus on attack rolls against orcs.
+- Offensive Training vs. Goblinoids: +1 racial bonus on attack rolls against goblinoids.
+- Defensive Training vs. Giants: +4 dodge bonus to AC against giants.
+- Skill Affinity (Lore): +2 racial bonus to Lore checks.
+- Skill Affinity (Hide): +2 racial bonus to Hide.
+- Skill Affinity (Move Silently): +2 racial bonus to Move Silently.
+- Skill Affinity (Craft): +2 racial bonus to Craft Armor and Craft Weapon checks.
+- Skill Affinity (Appraise): +2 racial bonus to Appraise checks.
+- Skill Affinity (Listen): +2 racial bonus to Listen checks.
+- Light Sensitivity: Dark Dwarves suffer -2 penalty to attack rolls, saves and checks while operating in bright light.
+- Dwarven: Dark Dwarves count as Dwarves for the purpose of spells.</entry>
+  <entry id="55083" lang="en" sex="m">asabi</entry>
+  <entry id="55084" lang="en" sex="m">Asabi are desert-dwelling reptillian humanoids, near 7' tall, and with pebbly skin that varies from brown to grey.  They are promarily found within and beneath the Great Desert of Anauroch. They are a warlike race, and are happy to fight for masters, or for gold.  They are accustomed to fighting in disciplined ranks, and seldom hold grudges, except in cases of betrayal.
+
+Asabi Ability Adjustments: +2 Dex, +2 Int, +2 Wis
+Favored Class (Fighter): A multiclass Asabi's fighter class does not count when determining whether he suffers an XP penalty for multiclassing. 
+
+Special Abilities:
+
+- 50' base speed
+- Darkvision: Allows them to see farther in the dark. 
+- Skill Affinity (Jump): +4 racial bonus to Jump checks. 
+- Natural Armor Bonus: Racial natural armor bonus of 2.
+- Natural Weapon: Can make a natural bite attack(1d4).
+- Weapon Proficiency: Proficient with all simple weapons and shields. 
+- Reptilian: Asabi count as Reptilian for the purpose of spells.</entry>
   <entry id="55085" lang="en" sex="m">Chameleon Skin</entry>
   <entry id="55086" lang="en" sex="m">Type of Feat: Racial
 Prerequisite: Poison Dusk Lizardfolk

@@ -59,7 +59,7 @@
 55  Dimernesti             **** ****               ****      ****   
 56  Djinni                 6    Outsider           24        7      
 57  Dog_People             **** ****               ****      ****   
-58  Dragonkin              **** ****               ****      ****   
+58  Dragonkin              2    Monstrous_Humanoid 15        7   
 59  Dream_Dwarf            **** ****               ****      ****   
 60  Dromite                **** ****               ****      ****   
 61  Dryad                  **** ****               ****      ****   
@@ -85,7 +85,7 @@
 81  HalfOgre_Krynn         **** ****               ****      ****   
 82  Hengeyokai             **** ****               ****      ****   
 83  Hill_Giant             4    Giant              22        12     
-84  Hound_Archon           **** ****               ****      ****   
+84  Hound_Archon           5    Outsider           24        6   
 85  Hurwaeti               **** ****               ****      ****   
 86  Ice_Gnome              **** ****               ****      ****   
 87  Irda                   **** ****               ****      ****   
@@ -141,7 +141,7 @@
 137 Stonechild             **** ****               ****      ****   
 138 Storm_Giant            **** ****               ****      ****   
 139 Taer                   **** ****               ****      ****   
-140 Tasloi                 **** ****               ****      ****   
+140 Tasloi                 0    ****               ****      ****   
 141 Tortle                 **** ****               ****      ****   
 142 Tren                   **** ****               ****      ****   
 143 Uldra                  **** ****               ****      ****   
@@ -166,7 +166,7 @@
 162 Avariel                3    ****               ****      ****   
 163 Drow_Female            2    ****               ****      ****   
 164 Drow_Male              2    ****               ****      ****   
-165 Snow_Elf               **** ****               ****      ****   
+165 Snow_Elf               0    ****               ****      ****   
 166 Sun_Elf                0    ****               ****      ****   
 167 Wild_Elf               0    ****               ****      ****   
 168 Wood_Elf               0    ****               ****      ****   
@@ -183,7 +183,7 @@
 179 Whisper_Gnome          0    ****               ****      ****   
 180 Adult_Bronze_Dragon    **** ****               ****      ****   
 181 Dark_Sun_HalfElf       **** ****               ****      ****   
-182 Scro                   **** ****               ****      ****   
+182 Scro                   1    ****               ****      ****   
 183 Half_Drow              1    ****               ****      ****   
 184 Gray_Orc               1    ****               ****      ****   
 185 Caliban                **** ****               ****      ****   
@@ -192,7 +192,7 @@
 188 Kir_Lanan              **** ****               ****      ****   
 189 Adult_Silver_Dragon    **** ****               ****      ****   
 190 Ghostwise_Halfling     1    ****               ****      ****   
-191 Tundra_Halfling        **** ****               ****      ****   
+191 Tundra_Halfling        0    ****               ****      ****   
 192 Strongheart_Halfling   0    ****               ****      ****   
 193 Tallfellow_Halfling    0    ****               ****      ****   
 194 Deep_Halfling          0    ****               ****      ****   
@@ -239,7 +239,7 @@
 235 Neraphim               0    ****               ****      ****   
 236 Shadowswyft            1    ****               ****      ****   
 237 Half_Giant             **** ****               ****      ****   
-238 Buommans               **** ****               ****      ****   
+238 Buommans               0    ****               ****      ****   
 239 Mortif                 **** ****               ****      ****   
 240 Dekanter_Goblin        **** ****               ****      ****   
 241 Asabi                  0    Humanoid           14        3   

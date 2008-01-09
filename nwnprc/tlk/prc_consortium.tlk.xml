@@ -17223,11 +17223,26 @@ Special Abilities:
 - Keen Senses: Aquatic Elves make active Search checks automatically and with no movement penalties.
 - Low-Light Vision: Allows them to see better than normal in the dark.
 - Elven: Aquatic Elves are considered Elven for the purpose of spells.</entry>
-  <entry id="49538" lang="en" sex="m">Moon Elf</entry>
-  <entry id="49539" lang="en" sex="m">Moon Elven</entry>
-  <entry id="49540" lang="en" sex="m">moon elven</entry>
-  <entry id="49541" lang="en" sex="m">Moon Elves</entry>
-  <entry id="49542" lang="en" sex="m">**identical to base Elves. Not activated as PC race**</entry>
+  <entry id="49538" lang="en" sex="m">Snow Elf</entry>
+  <entry id="49539" lang="en" sex="m">Snow Elven</entry>
+  <entry id="49540" lang="en" sex="m">snow elven</entry>
+  <entry id="49541" lang="en" sex="m">Snow Elves</entry>
+  <entry id="49542" lang="en" sex="m">Snow elves are much like their southern brethren.  They make their home wihtin nature, building grand cities of ice on the tops of distant mountaintops, only rarely leaving them to visit the outside world.  They have no special resistance to the cold, but their cities and magic protects them.  One of their few differences is their eyes and hair, both white as the snow surrounding them.
+
+Snow Elven Ability Adjustments: +2 Dex, -2 Cha.
+Favored Class (Wizard): A multiclass snow elf's wizard class does not count when determining whether he suffers an XP penalty for multiclassing.
+
+Special Abilities:
+
+- Sleeplessness: Immune to spells and effects of the 'Sleep' subtype.
+- Hardiness vs. Enchantments: +2 racial bonus on saving throws against mind-affecting spells.
+- Bonus Proficiencies (Longsword, Rapier, Shortbow, Longbow)
+- Skill Affinity (Listen): +2 racial bonus to Listen checks.
+- Skill Affinity (Search): +2 racial bonus to Search checks.
+- Skill Affinity (Spot): +2 racial bonus to Spot checks.
+- Keen Senses: Snow Elves make active Search checks automatically and with no movement penalties.
+- Low-Light Vision: Allows them to see better than normal in the dark.
+- Elven: Snow Elves are considered Elven for the purpose of spells.</entry>
   <entry id="49543" lang="en" sex="m">Sun Elf</entry>
   <entry id="49544" lang="en" sex="m">Sun Elven</entry>
   <entry id="49545" lang="en" sex="m">sun elven</entry>
@@ -17376,11 +17391,20 @@ Special: Rock Gnomes are small creatures and as such they can never use the foll
   <entry id="49578" lang="en" sex="m">tinker gnomish</entry>
   <entry id="49579" lang="en" sex="m">Tinker Gnomes</entry>
   <entry id="49580" lang="en" sex="m">**not included in first release**</entry>
-  <entry id="49581" lang="en" sex="m">Aquatic Half-Elf</entry>
-  <entry id="49582" lang="en" sex="m">Aquatic Half-Elven</entry>
-  <entry id="49583" lang="en" sex="m">aquatic half-elven</entry>
-  <entry id="49584" lang="en" sex="m">Aquatic Half-Elves</entry>
-  <entry id="49585" lang="en" sex="m">**not included in first release**</entry>
+  <entry id="49581" lang="en" sex="m">Scro</entry>
+  <entry id="49582" lang="en" sex="m">scro</entry>
+  <entry id="49583" lang="en" sex="m">Scro are a race that has only recently begun to reappear in Wildspace.  They are highly militaristic and violent.  After their defeat in the First Unhuman Wars by the Elven spelljammer fleet, they sequested themselves on a far crystal sphere and are now on a holy crusade to drive all non-scro out of Wildspace.  Physically they resemble orcs, standing tall and straight, with skin colors ranging from gray to burnt orange, to moss green, or even jet black or albino.
+
+Scro Ability Adjustments: +4 Str, +2 Dex, +2 Con, -2 Cha.
+Favored Class (Fighter): A multiclass scro's fighter class does not count when determining whether he suffers an XP penalty for multiclassing.
+
+Special Abilities:
+
+- Darkvision: Scro are able to see in the dark.
+- Racial Training: Scro are proficient in light armor and simple weapons.
+- Orcish: Gray Orcs are considered Orcish for the purpose of spells.</entry>
+  <entry id="49584" lang="en" sex="m">You grew up among the frozen lands of the north, surrounded by cold and ice.  It was inhospitible to some, yet to you it always held a certain charm.  Now however, you find yourself far from your home, and wonder what these strange, warm lands will bring you.</entry>
+  <entry id="49585" lang="en" sex="m">Once, you wandered the spaceways on a spelljamming ship.  You had always imagined gaining your own spelljamming ship and wandering Wildspace with a crew by your side.  Now however you are trapped on the ground, and wonder what else your time in this strange Crystal Sphere will bring you.</entry>
   <entry id="49586" lang="en" sex="m">Half-Drow</entry>
   <entry id="49587" lang="en" sex="m">half-drow</entry>
   <entry id="49588" lang="en" sex="m">In most lands, half-drow are quite rare. Since many drow are irredeemably evil, they only mate with humans by way of rape or slavery. Half-drow are often as dark-hearted as their elven parents, but with a bitter resentment that comes from being treated as inferior members of drow society. Despite this, good half-drow are much less rare than good drow. Half-drow have dusky skin, silver or white hair and a broad range of eye colors.
@@ -17454,10 +17478,29 @@ Special Abilities:
 - Halfling: Ghostwise Halflings are considered Halflings for the purpose of spells.
 
 Special: Halflings are small creatures and as such they can never use the following Large weapons: bastard sword, dire mace, two-bladed sword, double axe, greataxe, greatsword, halberd, heavy flail, quarterstaff, scythe and spear.</entry>
-  <entry id="49602" lang="en" sex="m">Lightfoot Halfling</entry>
-  <entry id="49603" lang="en" sex="m">lightfoot halfling</entry>
-  <entry id="49604" lang="en" sex="m">Lightfoot Halflings</entry>
-  <entry id="49605" lang="en" sex="m">**identical to base Elves. Not activated as PC race**</entry>
+  <entry id="49602" lang="en" sex="m">Tundra Halfling</entry>
+  <entry id="49603" lang="en" sex="m">tundra halfling</entry>
+  <entry id="49604" lang="en" sex="m">Tundra Halflings</entry>
+  <entry id="49605" lang="en" sex="m">Halflings native to the frostfell and far northern regions are known as tundra halflings.  They are like the typical halfling in both appearance and lifestyle, but supplement their nomadic ways with permanent structures along their normal paths of wandering.  It's not uncommon for tundra halflings to move from empty village to empty village along with the change in seasons.
+
+Tundra Halfling Ability Adjustments: +2 Dex, -2 Str.
+Favored Class (Ranger): A multiclass tundra halfling's ranger class does not count when determining whether he suffers an XP penalty for multiclassing.
+
+Special Abilities:
+
+- Small Stature:
+ +1 size bonus to attack rolls.
+ +1 size bonus to AC.
+ +4 size bonus to Hide checks.
+- Skill Affinity (Move Silently): +2 racial bonus to Move Silently checks.
+- Skill Affinity (Listen): +2 racial bonus to Listen checks.
+- Skill Affinity (Jump): +2 racial bonus to Jump checks.
+- Lucky: +1 luck bonus to all saving throws.
+- Fearless: +2 morale bonus to saving throws against spells and effects of the 'Fear' subtype.
+- Good Aim: +1 racial bonus to attack rolls made with throwing weapons.
+- Halfling: Tundra Halflings are considered Halflings for the purpose of spells.
+
+Special: Halflings are small creatures and as such they can never use the following Large weapons: bastard sword, dire mace, two-bladed sword, double axe, greataxe, greatsword, halberd, heavy flail, quarterstaff, scythe and spear.</entry>
   <entry id="49606" lang="en" sex="m">Strongheart Halfling</entry>
   <entry id="49607" lang="en" sex="m">strongfoot halfling</entry>
   <entry id="49608" lang="en" sex="m">Strongfoot Halflings</entry>
@@ -19755,6 +19798,18 @@ Level
 20: Loyal Beyond Death - Not even death makes you fail at a challenge.
 
 Knight's Challenge abilities have uses per day equal to one half class level + Charisma modifier.</entry>
+  <entry id="50420" lang="en" sex="m">Vow of Silence</entry>
+  <entry id="50421" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Buomman
+
+At a young age you took a vow of silence, and you no longer speak in words.  If you are a spellcaster, you must use the Silent Spell metamagic feat to cast spells with verbal components.
+Use: Automatic.</entry>
+  <entry id="50422" lang="en" sex="m">Skill Affinity (Perform)</entry>
+  <entry id="50423" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Appropriate race
+
+This feat grants a +2 racial bonus to Perform checks.
+Use: Automatic.</entry>
   <entry id="50501" lang="en" sex="m">***50,501 -&gt; 51,000 reserved for domains and spells***</entry>
   <entry id="50502" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Metal domain.
@@ -32809,6 +32864,54 @@ target, that target takes half of the damage rolled for the first target.
   <entry id="55051" lang="en" sex="m">Mass Fire Shield: Blue
 </entry>
   <entry id="55052" lang="en" sex="m">Fire Shield (PnP): Red</entry>
+  <entry id="55056" lang="en" sex="m">Buomman</entry>
+  <entry id="55057" lang="en" sex="m">buomman</entry>
+  <entry id="55058" lang="en" sex="m">Buommans</entry>
+  <entry id="55059" lang="en" sex="m">Buommans are a race of humanoids native to the Astral plane, presumably decended from humans.  They are known by some as the "moaning monks" and do not speak conventionally, only through voiceless melody.  They make their homes in temples and shrines made of astral debris, which they believe to be the mortal forms of long forgotton or dead deities.  Physically they resemble stretched-out humans, despite actually being slightly shorter and heavier.
+
+Buomman Ability Adjustments: +2 Wis, -2 Cha
+Favored Class (Monk): A multiclass buomman's monk class does not count when determining whether he suffers an XP penalty for multiclassing. 
+
+Special Abilities:
+
+- Low-Light Vision: Allows them to see better than normal in the dark.
+- Skill Affinity (Listen): +2 racial bonus to Listen checks. 
+- Skill Affinity (Perform): +2 racial bonus to Perform checks. 
+- Vow of Silence: Buommans take a vow of silence at an early age, and thereafter do not ever speak conventionally again.  A Buomman spellcaster who wishes to cast spells with verbal components must have the Silent Spell feat to do so.
+- Outsider: Buommans count as Outsiders for the purpose of spells.</entry>
+  <entry id="55060" lang="en" sex="m">Dragonkin</entry>
+  <entry id="55061" lang="en" sex="m">dragonkin</entry>
+  <entry id="55062" lang="en" sex="m">Dragonkin are large humanoid creatures believed to be cousins to dragons.  Standing 8 to 9 feet tall, they are covered with a scaled hide that could be colored anywhere from dark yellow ochre to reddish brown, sometimes with darker spots or bands.  Their heads are decidedly draconic in shape, with a mane of thick hair behind small horns.  Their wings vary from gold and green, to colors that match their scales.  They tend to either live in barbarian tribes or serve human masters.
+
+Dragonkin Ability Adjustments: +8 Str, +2 Dex, +2 Con, +4 Wis, +2 Cha
+Favored Class (Barbarian): A multiclass dragonkin's barbarian class does not count when determining whether he suffers an XP penalty for multiclassing. 
+
+Special Abilities:
+
+- Large Creature: Dragonkin suffer -1 penalties to their Attack and Armor Class, and -4 to their Hide skill. 
+- 20' movement
+- Darkvision: Allows them to see farther in the dark. 
+- Natural Armor Bonus: Racial natural armor bonus of 7.
+- Natural Weapon: Can make natural claw attacks(1d6 each).
+- Dive: +2 attack while suffering -2 to armor class. A successful attack does double damage if using a piercing weapon. 
+- Reptilian: Dragonkin count as Reptilian for the purpose of spells.</entry>
+  <entry id="55063" lang="en" sex="m">Tasloi</entry>
+  <entry id="55064" lang="en" sex="m">tasloi</entry>
+  <entry id="55065" lang="en" sex="m">Tasloi are a race of small jungle dwellers that live among the trees.  These green-skinned creatures walk in a crouching posture, their catlike eyes enabling them to see in the gloom of the canopy.  Cowardly, they will flee when outmatched, and prefer ambushes, feasting on any humanoids they kill.
+
+Tasloi Ability Adjustments: +2 Dex, -2 Str, -2 Cha
+Favored Class (Rogue): A multiclass tasloi's rogue class does not count when determining whether he suffers an XP penalty for multiclassing.
+
+Special Abilities:
+
+- Small Stature:
+- +1 size bonus to attack rolls.
+- +1 size bonus to AC.
+- +4 size bonus to Hide checks.
+- Low-Light Vision: Allows them to see better than normal in the dark. 
+- Light Sensitivity: Tasloi suffer -2 penalty to attack rolls, saves and checks while operating in bright light.
+- Skill Affinity (Move Silently): +4 racial bonus to Move Silently checks.
+- Goblinoid: Tasloi count as Goblinoids for the purpose of spells.</entry>
   <entry id="55066" lang="en" sex="m">Nezumi</entry>
   <entry id="55067" lang="en" sex="m">nezumi</entry>
   <entry id="55068" lang="en" sex="m">Nezumi, or "ratlings" as the humans call them, hail from the far east.  They used to control a large empire, which was destroyed in a great cataclysm, leaving the survivors to eke out an existence in the badlands left behind.  They are not physically large, bewing around 5'5" and 155 pounds in height and weight.  In shape they are humanoid, with a ratlike head, humanlike hands, and long hairless tails.  Their bodies are covered in a rough fur that varies from white, through grey and brown, to black.
@@ -32833,7 +32936,7 @@ Special Abilities:
   <entry id="55073" lang="en" sex="m">Khaasta are a race of reptillian humanoids that roam the Outlands and the chaotic planes.  Outwardly they reselmble lizardfolk, but they are stronger, tougher, and more agressive.  They have tough, small scales and crests in wild color patterns, and long tails used for balance rather than combat.  They are infamous for being raiders, plunderers, raiders, and slavers.  They will hire themselves out to anyone that seems powerful, and backstab their patron at the first sign of weakness.
 
 Khaasta Ability Adjustments: +8 Str, +2 Dex, +4 Con, +2 Int
-Favored Class (Fighter): A multiclass Khaasta's fighter class does not count when determining whether he suffers an XP penalty for multiclassing. 
+Favored Class (Fighter): A multiclass khaasta's fighter class does not count when determining whether he suffers an XP penalty for multiclassing. 
 
 Special Abilities:
 

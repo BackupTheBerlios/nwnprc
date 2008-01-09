@@ -18983,8 +18983,11 @@ Extract/Suck Brain: Illithid have a chance to extract the brain of a victim on a
   <entry id="50166" lang="en" sex="m">Spell-Like Abilities: At Will - Invisibility; 1/day - Confusion, Entangle, Lesser Dispel, Polymorph Self. Caster level 8th, except Confusion, which is caster level 4th. The DC is Charisma-based.</entry>
   <entry id="50167" lang="en" sex="m">Special Abilities - Yuan-ti Pureblood</entry>
   <entry id="50168" lang="en" sex="m">Spell-Like Abilities: 1/day - Charm Person, Darkness, Entangle, Fear. Caster level 3rd. The DC is Charisma-based.</entry>
-  <entry id="50169" lang="en" sex="m">Special Abilities - Rakshasa</entry>
-  <entry id="50170" lang="en" sex="m">Spell-Like Abilities: At will - Disguise.</entry>
+  <entry id="50169" lang="en" sex="m">Immunity to Electricity</entry>
+  <entry id="50170" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: The creature is immune to electric damage.
+Use: Automatic.</entry>
   <entry id="50171" lang="en" sex="m">Special Abilities - Svirfneblin</entry>
   <entry id="50172" lang="en" sex="m">Spell-Like Abilities: 1/day - Blindness and Deafness (DC 16), Blur, Disguise Self. Caster level is equal to the svirfneblin's character level, DC is Charisma-based with +4 racial bonus.</entry>
   <entry id="50173" lang="en" sex="m">Special Abilities - Tiefling</entry>
@@ -19810,6 +19813,63 @@ Prerequisite: Appropriate race
 
 This feat grants a +2 racial bonus to Perform checks.
 Use: Automatic.</entry>
+  <entry id="50424" lang="en" sex="m">Hound Archon</entry>
+  <entry id="50425" lang="en" sex="m">hound archon</entry>
+  <entry id="50426" lang="en" sex="m">Hound Archons</entry>
+  <entry id="50427" lang="en" sex="m">Hound Archons look like well-muscled humans with canine heads.  They are the hunters and stalkers among the Lawful Good celestials.  They try to avoid harming good and innocent creatures, and only attack when provoked.  Their extreme lawful good tendancies however often facilitates that.  They generally meet a foe head-on, but if the odds are against them they will take steps to even the odds, such as hit-and-run tactics.
+
+Hound Archon Ability Adjustments: +4 Str, +2 Con, +2 Wis, +2 Cha.
+Favored Class (Ranger): A multiclass hound archon's ranger class does not count when determining whether he suffers an XP penalty for multiclassing.
+
+Special Abilities:
+
+- Darkvision: Hound Archons are able to see in the dark.
+- Base movement of 40.
+- Weapon Proficiency (Simple): All hound archons are proficient with simple weapons.
+- Weapon Proficiency (Martial): All hound archons are proficient with martial weapons.
+- Weapon Proficiency (Creature): Hound Archons can attack with a bite(1d8) or a slam(1d4).
+- Spell Resistance: Innate spell resistance of 16, plus 1 per character level.
+- Natural Armor Bonus: Racial natural armor bonus of 9.
+- Damage Reduction: Innate damage reduction of 10/+1
+- Immunities: Immune to Electricity and Petrification
+- Hardiness vs Poison: +4 racial bonus to save vs poison
+- Spell-Like Abilities: At will - Aid, Detect Evil, Teleport.
+- Change Shape: Hound Archons can assume other mundane canine shapes at will.
+- Auras: Hound Archons can activate a constant Magic Circle vs Evil, as the spell, and a aura to frighten(Will, DC:16+Cha) their enemies.
+- Outsider: Hound Archons are considered Outsiders for the purpose of spells.</entry>
+  <entry id="50428" lang="en" sex="m">Immunity to Petrification</entry>
+  <entry id="50429" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: The creature is immune to petrification.
+Use: Automatic.</entry>
+  <entry id="50430" lang="en" sex="m">Spell Resistance 16</entry>
+  <entry id="50431" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: The creature has an innate spell resistance of 16, plus 1 per level.
+Use: Automatic.</entry>
+  <entry id="50432" lang="en" sex="m">Aura of Menace</entry>
+  <entry id="50433" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: The creature has a righteous aura around it. Any creature that fails its will save(DC:16+Cha) is shaken.
+Use: Selected.</entry>
+  <entry id="50434" lang="en" sex="m">Hound Archon Aid</entry>
+  <entry id="50435" lang="en" sex="m">Hound Archon Detect Evil</entry>
+  <entry id="50436" lang="en" sex="m">Hound Archon Magic Circle</entry>
+  <entry id="50437" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: A magic circle effect surrounds this creature.  This adds +2 AC, immunity to mind spells and +2 saves versus all evil to all good creatures in the circle. 
+Use: Selected.</entry>
+  <entry id="50438" lang="en" sex="m">Teleport</entry>
+  <entry id="50439" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: This creature can instantly teleport to a designated location.  He can only take himself and any objects he may be carrying.
+Use: Selected.</entry>
+  <entry id="50440" lang="en" sex="m">Hound Archon Continual Flame</entry>
+  <entry id="50441" lang="en" sex="m">Change Shape(Canine)</entry>
+  <entry id="50442" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: Hound Archons can take the form of normal canines.
+Use: Selected.</entry>
   <entry id="50501" lang="en" sex="m">***50,501 -&gt; 51,000 reserved for domains and spells***</entry>
   <entry id="50502" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Metal domain.

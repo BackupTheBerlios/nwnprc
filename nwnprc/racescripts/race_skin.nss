@@ -637,4 +637,15 @@ void main()
         sResRef += GetAffixForSize(nSize);
         AddNaturalPrimaryWeapon(oPC, sResRef, 2);
     }
+    else if(nRace==RACIAL_TYPE_HOUND_ARCHON)
+    {
+        string sResRef = "prc_hdarc_bite_";
+        int nSize = PRCGetCreatureSize(oPC);
+        sResRef += GetAffixForSize(nSize);
+        AddNaturalSecondaryWeapon(oPC, sResRef);
+        //primary weapon
+        sResRef = "prc_hdarc_slam_";
+        sResRef += GetAffixForSize(nSize);
+        AddNaturalPrimaryWeapon(oPC, sResRef, 1);
+    }
 }

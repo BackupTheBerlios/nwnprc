@@ -47,6 +47,8 @@ PRCGetPowerResistance(object oTarget, object oCaster)
         iRacialPowerRes += 25+GetHitDice(oTarget);
     else if(GetHasFeat(FEAT_SPELL18, oTarget))
         iRacialPowerRes += 18+GetHitDice(oTarget);
+    else if(GetHasFeat(FEAT_SPELL16, oTarget))
+        iRacialPowerRes += 16+GetHitDice(oTarget);
     else if(GetHasFeat(FEAT_SPELL15, oTarget))
         iRacialPowerRes += 15+GetHitDice(oTarget);
     else if(GetHasFeat(FEAT_SPELL14, oTarget))

@@ -1502,6 +1502,9 @@ int spellsIsImmuneToPetrification(object oCreature)
         case RACIAL_TYPE_UNDEAD:
         bImmune = TRUE;
     }
+    
+    // 01/08/07 Racial feat for petrification immunity
+    if(GetHasFeat(FEAT_IMMUNE_PETRIFICATION)) bImmune = TRUE;
 
     // 03/07/2005 CraigW - Petrification immunity can also be granted as an item property.
     if ( ResistSpell(OBJECT_SELF,oCreature) == 2 )

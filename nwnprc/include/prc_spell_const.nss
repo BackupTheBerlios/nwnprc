@@ -400,6 +400,7 @@ const int SPELL_DIMENSIONAL_ANCHOR                  = 2889;
 const int SPELL_DIMENSION_DOOR                      = 2890;
 const int SPELL_MAZE                                = 2888;
 const int SPELL_GREATER_TELEPORT                    = 2893;
+const int SPELL_GREATER_TELEPORT_SELF               = 2894;
 const int SPELL_TELEPORTATION_CIRCLE                = 2877;
 const int SPELL_DIMENSIONAL_LOCK                    = 2898;
 const int SPELL_TELEPORT                            = 2874;
@@ -461,6 +462,13 @@ const int SPELL_PIXIE_CONFUSION                     = 1974;
 const int SPELL_PIXIE_IMPINVIS                      = 1975;
 const int SPELL_PIXIE_DISPEL                        = 1976;
 const int SPELL_RACE_CHILLTOUCH                     = 1977;
+const int SPELL_HOUND_AURAMENACE                    = 2905;
+const int SPELL_HOUND_AID                           = 2930;
+const int SPELL_HOUND_CONTFLAME                     = 2932;
+const int SPELL_HOUND_DETECTEVIL                    = 2933;
+const int SPELL_HOUND_DISGUISE                      = 2936;
+const int SPELL_HOUND_MAGICCIRCLE                   = 2934;
+const int SPELL_HOUND_TELEPORT                      = 2935;
 
 
 // Poison system spells

@@ -52,6 +52,13 @@ const int FEAT_DROW_DARKNESS       = 4682;
 const int FEAT_DROW_FAERIE_FIRE         = 4683;
 const int FEAT_WGNOME_MAGEHAND     = 4519;
 const int FEAT_WGNOME_SILENCE      = 4555;
+const int FEAT_HOUND_AURAMENACE    = 4548;
+const int FEAT_HOUND_AID           = 4574;
+const int FEAT_HOUND_CONTFLAME     = 4514;
+const int FEAT_HOUND_DETECTEVIL    = 4618;
+const int FEAT_HOUND_DISGUISE      = 4613;
+const int FEAT_HOUND_MAGICCIRCLE   = 4515;
+const int FEAT_HOUND_TELEPORT      = 4516;
 
 const int FEAT_LTSENSE = 4700;
 const int FEAT_LTBLIND = 4701;

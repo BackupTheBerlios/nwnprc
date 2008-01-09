@@ -1,0 +1,21 @@
+2DA V2.0
+
+   FeatLabel              FeatIndex 
+0  darkvision             228       
+1  Natural_Armor_9        4738      
+2  Damage_Reduction_10    4747      
+3  Immunity_Electricity   4786      
+4  Hardiness_Poison4      4768      
+5  WeapProfSim            46        
+6  WeapProfMar            45        
+7  WeaponProfCreature     289       
+8  Immunity_Petrification 4643      
+9  Spell_Resist_16        4616      
+10 FEAT_HOUND_AURAMENACE  4548     
+11 FEAT_HOUND_AID         4574       
+12 FEAT_HOUND_DETECTEVIL  4618      
+13 Magic_Circle_vs_evil   4515      
+14 houndarch_teleport     4516       
+15 hound_continual_flame  4514       
+16 FEAT_HOUND_DISGUISE    4513      
+17 Race_Outsider          4716      

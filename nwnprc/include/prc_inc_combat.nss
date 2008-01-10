@@ -3733,17 +3733,17 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iOffha
         else 	// Cleanup on aisle 5
         	DeleteLocalInt(oAttacker, "DSPerfectOrder");
         if (DEBUG) DoDebug("Ending DSPerfectOrder");	
-	string sDebugFeedback;
+	string sDebugFeedback = "";
 	if (DEBUG) DoDebug("GetAttackRoll: Line #1");
 	int bDebug = GetPRCSwitch(PRC_COMBAT_DEBUG);
 	if (DEBUG) DoDebug("GetAttackRoll: Line #2");
-	if (bDebug) sDebugFeedback += "d20 ("  + IntToString(iDiceRoll) + ")";
+	//if (bDebug) sDebugFeedback += "d20 ("  + IntToString(iDiceRoll) + ")";
 	if (DEBUG) DoDebug("GetAttackRoll: Line #3");
-	if (bDebug) sDebugFeedback += " + AB (" + IntToString(iAttackBonus) + ")";
+	//if (bDebug) sDebugFeedback += " + AB (" + IntToString(iAttackBonus) + ")";
 	if (DEBUG) DoDebug("GetAttackRoll: Line #4");
 	iAttackBonus += iMod;
 	if (DEBUG) DoDebug("GetAttackRoll: Line #5");
-	if(bDebug) sDebugFeedback += " - APR penalty ("  + IntToString(iMod * -1) + ")";
+	//if(bDebug) sDebugFeedback += " - APR penalty ("  + IntToString(iMod * -1) + ")";
 	if (DEBUG) DoDebug("Starting GetAttackModVersusDefender");	
 	int iDefenderMod = GetAttackModVersusDefender(oDefender, oAttacker, oWeapon, iTouchAttackType);
 	iAttackBonus += iDefenderMod;

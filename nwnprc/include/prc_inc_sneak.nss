@@ -263,6 +263,7 @@ int GetEpicFeatSneak(object oPC)
 int GetIsFlanked(object oDefender, object oAttacker)
 {
     int bReturnVal = FALSE;
+    if (DEBUG) DoDebug("Starting GetIsFlanked");
 
     if(GetIsObjectValid(oAttacker) && GetIsObjectValid(oDefender))
     {
@@ -273,7 +274,7 @@ int GetIsFlanked(object oDefender, object oAttacker)
         vector vDefender = AngleToVector(GetFacing(oDefender));
         vector vAttacker = AngleToVector(GetFacing(oAttacker));
         vector vResult = vDefender + vAttacker;
-
+	if (DEBUG) DoDebug("GetIsFlanked: End Section #1");
         float iMagDefender = VectorMagnitude(vDefender);
         float iMagResult = VectorMagnitude(vResult);
 
@@ -286,7 +287,7 @@ int GetIsFlanked(object oDefender, object oAttacker)
              bReturnVal = TRUE;
         }
     }
-
+if (DEBUG) DoDebug("GetIsFlanked: End Section #2");
     return bReturnVal;
 }
 

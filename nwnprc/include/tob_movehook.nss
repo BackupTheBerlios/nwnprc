@@ -36,7 +36,7 @@ int PreManeuverCastCode()
     int nContinue;
 
     DeleteLocalInt(oInitiator, "SpellConc");
-    nContinue = !ExecuteScriptAndReturnInt("premovecode",oInitiator);
+    nContinue = !ExecuteScriptAndReturnInt("premovecode", oInitiator);
 
     //---------------------------------------------------------------------------
     // Run NullPsionicsField Check - Adjust so only Supernatural Maneuvers are affected
@@ -50,7 +50,7 @@ int PreManeuverCastCode()
     //---------------------------------------------------------------------------
     if (GetLevelByClass(CLASS_TYPE_SWORDSAGE, oInitiator) >= 4) 
     {
-	if (GetHasInsightfulStrike(oAttacker)) SetLocalInt(oInitiator, "InsightfulStrike", TRUE);
+	if (GetHasInsightfulStrike(oInitiator)) SetLocalInt(oInitiator, "InsightfulStrike", TRUE);
 	DelayCommand(2.0, DeleteLocalInt(oInitiator, "InsightfulStrike"));
     }        
 

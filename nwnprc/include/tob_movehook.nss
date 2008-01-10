@@ -43,6 +43,16 @@ int PreManeuverCastCode()
     //---------------------------------------------------------------------------
     if (nContinue && GetIsManeuverSupernatural(nMoveId))
         nContinue = NullPsionicsField();
+    
+    //---------------------------------------------------------------------------    
+    // Swordsage Insightful Strike, grants wisdom to damage on maneuvers
+    // Test and local to avoid spaghetti monster
+    //---------------------------------------------------------------------------
+    if (GetLevelByClass(CLASS_TYPE_SWORDSAGE, oInitiator) >= 4) 
+    {
+	if (GetHasInsightfulStrike(oAttacker)) SetLocalInt(oInitiator, "InsightfulStrike", TRUE);
+	DelayCommand(2.0, DeleteLocalInt(oInitiator, "InsightfulStrike"));
+    }        
 
     return nContinue;
 }

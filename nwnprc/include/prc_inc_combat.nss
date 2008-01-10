@@ -848,17 +848,6 @@ int bUseMonkAttackMod;
 int bIsVorpalWeaponEquiped = FALSE;
 int iVorpalSaveDC = 0;
 
-
-// #include "prc_feat_const"   <-- Inherited
-// #include "prc_class_const"  <-- Inherited
-// #include "prc_spell_const"  <-- Inherited
-// #include "x2_inc_switches"  <-- Inherited
-// #include "prc_alterations"  <-- Inherited
-// #include "X2_I0_SPELLS"     <-- Inherited
-// #include "x2_inc_spellhook" <-- Inherited
-// #include "prc_ipfeat_const" <-- Inherited
-// #include "nw_i0_generic"    <-- Inherited
-
 #include "x2_inc_itemprop"
 #include "prc_inc_racial"
 #include "prc_inc_function"
@@ -866,7 +855,6 @@ int iVorpalSaveDC = 0;
 #include "prc_inc_unarmed"
 #include "prc_inc_util"
 #include "inc_utility"
-#include "prc_feat_const"
 #include "inc_abil_damage"
 #include "inc_epicspelldef"
 #include "prc_inc_onhit"
@@ -874,28 +862,6 @@ int iVorpalSaveDC = 0;
 //:://///////////////////////////////////////////////////////////////////////////
 //::  Utility functions (BAB, # Attacks) - mostly used inline, but good to have them here to copy
 //:://///////////////////////////////////////////////////////////////////////////
-
-/*
-// motu99: unfortunately nwn script does not even know macros
-
-#define MIN(X,Y) (((X) > (Y)) ? (Y) : (X))
-#define MAX(X,Y) (((X) > (Y)) ? (X) : (Y))
-
-// assumes character level is above 20
-#define LEVEL_20_BAB(iBAB,iHD)	((iBAB) - ((iHD)-19)/2)
-
-// calculates the BAB that is relevant for calculating the number of attacks
-#define BAB_FOR_ATTACK_COUNT(iBAB,iHD) (((iHD)> 20) ? (LEVEL_20_BAB(iBAB,iHD)) : (iBAB))
-
-// calculates the BAB that a pure fighter with the Hit Dice (character level)  would have
-#define FIGHTER_BAB(iHD) (((iHD) > 20) ? (20 + ((iHD)-19)/2) : (iHD))
-
-// calculates the # attacks, for normal weapons (non-monk)
-#define ATTACKS(iBAB,iHD) (((iHD) > 20) ? (((iBAB) - ((iHD)-17)/2)/5 +1) : (((iBAB)-1) / 5 +1))
-
-// calculates the number of attacks for an unarmed monk
-#define MONK_ATTACKS(iBAB,iHD) (((iHD) > 20) ? (MIN(6,(((iBAB) - ((iHD)-17)/2)/3 +1))) : (MIN(6,(((iBAB)-1) / 3 +1))))
-*/
 
 // calculates the BAB that a pure fighter with the Hit Dice (characer level)  would have
 int GetFighterBAB(int iHD)
@@ -5626,6 +5592,11 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
 			// When this maneuver is in effect, weapon damage is fire
 			// Also put here so it doesn't muck up things looking for weapon damage type
 			if (GetLocalInt(oAttacker, "DWBurningBrand")) iDamageType = DAMAGE_TYPE_FIRE;
+			// Swordsage Insightful Strike, grants wisdom to damage on maneuvers
+			if (GetLocalInt(oAttacker, "InsightfulStrike")) 
+			{
+				iWeaponDamage += GetAbilityModifier(ABILITY_WISDOM, oAttacker);
+			}
 			// This is for the Lightning Throw Maneuver.
 			if (GetLocalInt(oAttacker, "LightningThrowSave")) iWeaponDamage /= 2;
 			if (DEBUG) DoDebug("Ending LightningThrowSave");

@@ -6,6 +6,7 @@
 //:: Created On: 1/24/2004 9:30:45 AM
 //:://////////////////////////////////////////////
 #include "prc_alterations"
+#include "inc_epicspells"
 
 // Determines if the the lich is able to start the process of becoming a demilich
 
@@ -16,9 +17,7 @@ int StartingConditional()
     int iPassed = FALSE;
 	
     if((GetLevelByClass(CLASS_TYPE_LICH, GetPCSpeaker()) >= 4) &&
-       ((GetCasterLvl(CLASS_TYPE_CLERIC,GetPCSpeaker()) >= 21) ||
-        (GetCasterLvl(CLASS_TYPE_WIZARD,GetPCSpeaker()) >= 21) ||
-        (GetCasterLvl(CLASS_TYPE_SORCERER,GetPCSpeaker()) >= 21)) )
+        GetIsEpicSpellcaster(GetPCSpeaker())) // if is an epic caster, meets prereq
         iPassed = TRUE;
 
     return iPassed;

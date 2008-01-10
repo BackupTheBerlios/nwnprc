@@ -128,6 +128,9 @@ int GetIsEpicSorcerer(object oPC);
 // Returns TRUE if oPC is an Epic level wizard.
 int GetIsEpicWizard(object oPC);
 
+// returns TRUE if oPC is an Epic spellcaster
+int GetIsEpicSpellcaster(object oPC);
+
 // Performs a check on the book to randomly destroy it or not when used.
 void DoBookDecay(object oBook, object oPC);
 
@@ -274,6 +277,16 @@ int GetIsEpicWizard(object oPC)
     if (GetCasterLvl(CLASS_TYPE_WIZARD, oPC) >= 17 && GetHitDice(oPC) >= 21 &&
         GetAbilityScore(oPC, ABILITY_INTELLIGENCE) >= 19)
             return TRUE;
+    return FALSE;
+}
+
+int GetIsEpicSpellcaster(object oPC)
+{
+    object oPC = GetPCSpeaker();
+    if (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC) ||
+        GetIsEpicSorcerer(oPC) || GetIsEpicWizard(oPC) ||
+        GetIsEpicWarmage(oPC) || GetIsEpicHealer(oPC) || GetIsEpicFavSoul(oPC))
+        return TRUE;
     return FALSE;
 }
 

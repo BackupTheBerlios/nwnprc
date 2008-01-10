@@ -3692,35 +3692,35 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iOffha
 	}
         
         int iDiceRoll = d20();
-        if (DEBUG) DoDebug("Starting DSPerfectOrder");
+/*        if (DEBUG) DoDebug("Starting DSPerfectOrder");
         // All rolls = 11 for this guy
         if (GetLocalInt(oAttacker, "DSPerfectOrder") && GetHasSpellEffect(MOVE_DS_PERFECT_ORDER, oAttacker)) 
         	iDiceRoll = 11;
         else 	// Cleanup on aisle 5
         	DeleteLocalInt(oAttacker, "DSPerfectOrder");
-        if (DEBUG) DoDebug("Ending DSPerfectOrder");	
-	string sDebugFeedback = "";
-	if (DEBUG) DoDebug("GetAttackRoll: Line #1");
-	int bDebug = GetPRCSwitch(PRC_COMBAT_DEBUG);
-	if (DEBUG) DoDebug("GetAttackRoll: Line #2");
+        if (DEBUG) DoDebug("Ending DSPerfectOrder");	*/
+	//string sDebugFeedback = "";
+	//if (DEBUG) DoDebug("GetAttackRoll: Line #1");
+	//int bDebug = GetPRCSwitch(PRC_COMBAT_DEBUG);
+	//if (DEBUG) DoDebug("GetAttackRoll: Line #2");
 	//if (bDebug) sDebugFeedback += "d20 ("  + IntToString(iDiceRoll) + ")";
-	if (DEBUG) DoDebug("GetAttackRoll: Line #3");
+	//if (DEBUG) DoDebug("GetAttackRoll: Line #3");
 	//if (bDebug) sDebugFeedback += " + AB (" + IntToString(iAttackBonus) + ")";
-	if (DEBUG) DoDebug("GetAttackRoll: Line #4");
+	//if (DEBUG) DoDebug("GetAttackRoll: Line #4");
 	iAttackBonus += iMod;
-	if (DEBUG) DoDebug("GetAttackRoll: Line #5");
+	//if (DEBUG) DoDebug("GetAttackRoll: Line #5");
 	//if(bDebug) sDebugFeedback += " - APR penalty ("  + IntToString(iMod * -1) + ")";
 	if (DEBUG) DoDebug("Starting GetAttackModVersusDefender");	
 	int iDefenderMod = GetAttackModVersusDefender(oDefender, oAttacker, oWeapon, iTouchAttackType);
 	iAttackBonus += iDefenderMod;
 
-	if(bDebug) sDebugFeedback += " + Atk vs Def Adj ("  + IntToString(iDefenderMod) + ")";
+	//if(bDebug) sDebugFeedback += " + Atk vs Def Adj ("  + IntToString(iDefenderMod) + ")";
 
 	if (DEBUG) DoDebug("Starting GetDefenderAC");	
 	int iEnemyAC = GetDefenderAC(oDefender, oAttacker, iTouchAttackType);
 
-	if (bDebug) sDebugFeedback += " *versus* AC ("  + IntToString(iEnemyAC) + ")";
-	if (bDebug) sDebugFeedback = COLOR_WHITE + "Attack Roll = " + IntToString(iAttackBonus + iDiceRoll) + ": " + sDebugFeedback;
+	//if (bDebug) sDebugFeedback += " *versus* AC ("  + IntToString(iEnemyAC) + ")";
+	//if (bDebug) sDebugFeedback = COLOR_WHITE + "Attack Roll = " + IntToString(iAttackBonus + iDiceRoll) + ": " + sDebugFeedback;
 	if (DEBUG) DoDebug("GetAttackRoll: End Section #1");
 	int iWeaponType = GetBaseItemType(oWeapon);
 	int iCritThreat = GetWeaponCriticalRange(oAttacker, oWeapon);
@@ -3855,7 +3855,7 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iOffha
 	if(bShowFeedback)
 	{
 		SendMessageToPC(oAttacker, sFeedback); // DelayCommand(fDelay, SendMessageToPC(oAttacker, sFeedback));
-		if (bDebug) SendMessageToPC(oAttacker, sDebugFeedback);		
+		//if (bDebug) SendMessageToPC(oAttacker, sDebugFeedback);		
 	}
 	if (DEBUG) DoDebug("GetAttackRoll: End Section #6");
 	return iReturn;

@@ -3447,7 +3447,7 @@ The effect will last for charisma modifier rounds.
 Use: Automatic.</entry>
   <entry id="45759" lang="en" sex="m">Die Hard</entry>
   <entry id="45760" lang="en" sex="m">Type of Feat: General
-Prerequisite: Base Attack Bonus 2, Iron Will, Toughness or Battleguard of Tempus level 7
+Prerequisite: Base Attack Bonus 2, Iron Will, Toughness, Crusader level 10 or Battleguard of Tempus level 7
 Specifics: When your hit points are reduced to 0 or below, you automatically become stable. You heal to 1 HP. Your bonus attack decreases and your spells fail.
 Use: Automatic.</entry>
   <entry id="45761" lang="en" sex="m">Enchant Weapon +1</entry>
@@ -28489,7 +28489,60 @@ You gain DR 5/Adamantium (+5) for 1 round.</entry>
   <entry id="52486" lang="en" sex="m">Crusader</entry>
   <entry id="52487" lang="en" sex="m">Crusaders</entry>
   <entry id="52488" lang="en" sex="m">crusader</entry>
-  <entry id="52489" lang="en" sex="m">Crusader Description</entry>
+  <entry id="52489" lang="en" sex="m">(BASE CLASS)
+Devoted knight, divine agent, instrument of vengeance, peerless fighting machine - the crusader is a warrior dedicated to good, evil, law, chaos, or some other cause. She seeks out and destroys the enemies of her chosen faith. Strengthened by prayer or absolute devotion to a principle, armoured by unshakable faith, and driven by her convictions, a good crusader is a mighty weapon against injustice and malice. An evil crusader, on the other hand, is a cruel and fearsome warrior of darkness.
+
+- Hit Die: d10
+- Proficiencies: A Crusader gains proficiencies.with Martial and Simple Weapons, Light, Medium and Heavy Armour, and Shields.
+- Skill Points: 4 + Int Modifier
+- Alignment: A Crusader cannot be neutral.
+
+ABILITIES:
+
+Level
+1: Furious Counterstrike - Bonus to attack when wounded.
+   Steely Resolve 5 - Delays damage until the next round.
+2: Indomitable Soul - You gain charisma to saves
+3: Zealous Surge - Reroll a failed save
+4: Steely Resolve 10
+5: 
+6: Smite 1/day
+7: 
+8: Steely Resolve 15
+9:
+10: Die Hard
+11: 
+12: Steely Resolve 20
+13: Mettle
+14: 
+15: 
+16: Steely Resolve 25
+17: 
+18: Smite 2/day
+19:
+20: Steely Resolve 30
+
+Level  Maneuvers Known   Maneuvers Readied   Stances Known
+1      5                 5 (2)               1
+2      5                 5 (2)               2
+3      6                 5 (2)               2
+4      6                 5 (2)               2
+5      7                 5 (2)               2
+6      7                 5 (2)               2
+7      8                 5 (2)               2
+8      8                 5 (2)               3
+9      9                 5 (2)               3
+10     9                 6 (3)               3
+11     10                6 (3)               3
+12     10                6 (3)               3
+13     11                6 (3)               3
+14     11                6 (3)               4
+15     12                6 (3)               4
+16     12                6 (3)               4
+17     13                6 (3)               4
+18     13                6 (3)               4
+19     14                6 (3)               4
+20     14                7 (4)               4</entry>
   <entry id="52490" lang="en" sex="m">Swordsage</entry>
   <entry id="52491" lang="en" sex="m">Swordsages</entry>
   <entry id="52492" lang="en" sex="m">swordsage</entry>
@@ -28551,6 +28604,12 @@ Prerequisites: Crusader 6.
 Specifics: Once per day, you can focus your determination into a single attack, gaining a bonus equal to your charisma modifier on the attack roll and equal to your crusader level on the damage roll.
 
 You gain an additional use of this ability at level 18.
+Use: Specified</entry>
+  <entry id="52526" lang="en" sex="m">Zealous Surge</entry>
+  <entry id="52527" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Crusader 4.
+Specifics: Once per day, you can opt to reroll your next failed saving throw that round. You must take the result of the reroll, even if it is worse.
+
 Use: Specified</entry>
   <entry id="52985" lang="en" sex="m">This feat opens the spellbook for this class. This is a conversation and feat driven version of the normal spellbook. Instead of appearing on the spell radial, they will appear on the class radial instead. Also, you may be able to use the spell after you have cast all your uses. No spell will result, but you will spend a round trying to cast it.</entry>
   <entry id="52986" lang="en" sex="m">Caster Level(s): Wizard / Sorcerer 9

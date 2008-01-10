@@ -23,6 +23,7 @@
 
 #include "prc_alterations"
 #include "inc_addragebonus"
+#include "prc_inc_sneak"  //for Dragonfire damage type resolving
 
 /*
 const int SINGLE_START = 2171;
@@ -146,6 +147,7 @@ void main()
 
         // All checks are done, initialize variables for calculating the effect.
         int nDamageBonusType = GetDamageTypeOfWeapon(INVENTORY_SLOT_RIGHTHAND, oUser);
+        if(GetLocalInt(oUser, "DragonFireAssOn")) nDamageBonusType = GetDragonfireDamageType(oUser);
         int nDmg, nHit, nDex, nTemp;
         effect eDamage;
         effect eToHit;

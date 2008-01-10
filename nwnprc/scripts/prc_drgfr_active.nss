@@ -20,11 +20,11 @@ void main()
 	if(GetLocalInt(oPC, "DragonFireOn"))
 	{
 	    SetLocalInt(oPC, "DragonFireOn", FALSE);
-	    FloatingTextStringOnCreature("*Dragonfire Ability Deactivated*", oPC, FALSE);
+	    FloatingTextStringOnCreature("*Dragonfire Strike Deactivated*", oPC, FALSE);
 	}
 	else
 	{
 	    SetLocalInt(oPC, "DragonFireOn", TRUE);
-	    FloatingTextStringOnCreature("*Dragonfire Ability Activated*", oPC, FALSE);
+	    FloatingTextStringOnCreature("*Dragonfire Strike Activated*", oPC, FALSE);
         }
 }

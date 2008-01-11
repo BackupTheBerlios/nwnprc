@@ -21,6 +21,87 @@ bugfix by Kovi 2002.07.30
 #include "prc_alterations"
 #include "prc_class_const"
 #include "prc_inc_clsfunc"
+#include "prc_inc_sneak"  //for Dragonfire type getting
+
+int GetIsShield(object oItem)
+{
+    int bReturn = FALSE;
+    switch(GetBaseItemType(oItem))
+    {
+        case BASE_ITEM_LARGESHIELD:
+        case BASE_ITEM_SMALLSHIELD:
+        case BASE_ITEM_TOWERSHIELD:
+        {
+            bReturn = TRUE;
+        }
+        break;
+    }
+    return bReturn;
+}
+
+void ApplyDragonfire(int nAmount, int nDuration, object oPC, object oCaster)
+{
+	int nAppearanceType;
+        int nDamageType = GetDragonfireDamageType(oPC);
+        //find primary weapon to add to
+        object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
+        switch(nDamageType)
+        {
+		case DAMAGE_TYPE_ACID: nAppearanceType = ITEM_VISUAL_ACID; break;
+		case DAMAGE_TYPE_COLD: nAppearanceType = ITEM_VISUAL_COLD; break;
+		case DAMAGE_TYPE_ELECTRICAL: nAppearanceType = ITEM_VISUAL_ELECTRICAL; break;
+		case DAMAGE_TYPE_SONIC: nAppearanceType = ITEM_VISUAL_SONIC; break;
+		case DAMAGE_TYPE_FIRE: nAppearanceType = ITEM_VISUAL_FIRE; break;
+        }
+        SetLocalInt(oItem, "Insp_Dam_Type", nDamageType);
+	SetLocalInt(oItem, "Insp_Dam_Dice", nAmount);
+	IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_DRAGONFIRE, nAmount), RoundsToSeconds(nDuration), X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+        IPSafeAddItemProperty(oItem, ItemPropertyVisualEffect(nAppearanceType), RoundsToSeconds(nDuration), X2_IP_ADDPROP_POLICY_REPLACE_EXISTING,FALSE,TRUE);
+        
+        //add to gloves and claws too
+        oItem = GetItemInSlot(INVENTORY_SLOT_ARMS, oPC);
+        SetLocalInt(oItem, "Insp_Dam_Type", nDamageType);
+	SetLocalInt(oItem, "Insp_Dam_Dice", nAmount);
+        IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_DRAGONFIRE, nAmount), RoundsToSeconds(nDuration), X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+        oItem = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oPC);
+        SetLocalInt(oItem, "Insp_Dam_Type", nDamageType);
+	SetLocalInt(oItem, "Insp_Dam_Dice", nAmount);
+        IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_DRAGONFIRE, nAmount), RoundsToSeconds(nDuration), X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+        
+        //do ammo for ranged attacks
+        object oAmmo = GetItemInSlot(INVENTORY_SLOT_BOLTS, oPC);
+        SetLocalInt(oAmmo, "Insp_Dam_Type", nDamageType);
+	SetLocalInt(oAmmo, "Insp_Dam_Dice", nAmount);
+        IPSafeAddItemProperty(oAmmo, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_DRAGONFIRE, nAmount), RoundsToSeconds(nDuration), X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+
+        oAmmo = GetItemInSlot(INVENTORY_SLOT_BULLETS, oPC);
+        SetLocalInt(oAmmo, "Insp_Dam_Type", nDamageType);
+	SetLocalInt(oAmmo, "Insp_Dam_Dice", nAmount);
+        IPSafeAddItemProperty(oAmmo, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_DRAGONFIRE, nAmount), RoundsToSeconds(nDuration), X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+
+        oAmmo = GetItemInSlot(INVENTORY_SLOT_ARROWS, oPC);
+        SetLocalInt(oAmmo, "Insp_Dam_Type", nDamageType);
+	SetLocalInt(oAmmo, "Insp_Dam_Dice", nAmount);
+        IPSafeAddItemProperty(oAmmo, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_DRAGONFIRE, nAmount), RoundsToSeconds(nDuration), X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+        
+        //now check offhand and bite
+        oItem = GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oPC);
+        SetLocalInt(oItem, "Insp_Dam_Type", nDamageType);
+	SetLocalInt(oItem, "Insp_Dam_Dice", nAmount);
+        IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_DRAGONFIRE, nAmount), RoundsToSeconds(nDuration), X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+        oItem = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
+        if(!GetIsShield(oItem) && oItem != OBJECT_INVALID)
+        {
+             SetLocalInt(oItem, "Insp_Dam_Type", nDamageType);
+	     SetLocalInt(oItem, "Insp_Dam_Dice", nAmount);
+             IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_DRAGONFIRE, nAmount), RoundsToSeconds(nDuration), X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+             IPSafeAddItemProperty(oItem, ItemPropertyVisualEffect(nAppearanceType), RoundsToSeconds(nDuration), X2_IP_ADDPROP_POLICY_REPLACE_EXISTING,FALSE,TRUE);
+        }
+        oItem = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oPC);
+        SetLocalInt(oItem, "Insp_Dam_Type", nDamageType);
+	SetLocalInt(oItem, "Insp_Dam_Dice", nAmount);
+        IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_DRAGONFIRE, nAmount), RoundsToSeconds(nDuration), X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+}
 
 void main()
 {
@@ -351,10 +432,22 @@ void main()
         nSkill = 0;
     }
     effect eVis = EffectVisualEffect(VFX_DUR_BARD_SONG);
+    effect eLink;
 
     eAttack = EffectAttackIncrease(nAttack);
     eDamage = EffectDamageIncrease(nDamage, DAMAGE_TYPE_BLUDGEONING);
-    effect eLink = EffectLinkEffects(eAttack, eDamage);
+    
+    
+    if(GetLocalInt(OBJECT_SELF, "DragonFireInspOn"))
+    {
+    	eLink = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+    }
+    else
+    {
+    	 effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+         eLink = EffectLinkEffects(eAttack, eDamage);
+         eLink = EffectLinkEffects(eLink, eDur);
+    }
 
     if(nWill > 0)
     {
@@ -387,8 +480,6 @@ void main()
         eSkill = EffectSkillIncrease(SKILL_ALL_SKILLS, nSkill);
         eLink = EffectLinkEffects(eLink, eSkill);
     }
-    effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-    eLink = EffectLinkEffects(eLink, eDur);
 
     effect eImpact = EffectVisualEffect(VFX_IMP_HEAD_SONIC);
     effect eFNF = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
@@ -426,6 +517,10 @@ void main()
                         {
                             ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, oTarget, RoundsToSeconds(nDuration));
                         }
+                        if(GetLocalInt(OBJECT_SELF, "DragonFireInspOn"))
+                        {
+                            ApplyDragonfire(nAttack, nDuration, OBJECT_SELF, OBJECT_SELF);
+                        }
                     }
                     else if(GetIsFriend(oTarget))
                     {
@@ -435,6 +530,10 @@ void main()
                         if (nHP > 0)
                         {
                             ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, oTarget, RoundsToSeconds(nDuration));
+                        }
+                        if(GetLocalInt(OBJECT_SELF, "DragonFireInspOn"))
+                        {
+                            ApplyDragonfire(nAttack, nDuration, oTarget, OBJECT_SELF);
                         }
                     }
                 }

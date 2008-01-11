@@ -34350,13 +34350,15 @@ When you perform a sneak attack or skirmish, if this feat is activated, your sne
 You can take this feat if you do not have sneak attack or skirmish, but it will do nothing until you do.
 
 Also note that due to engine limitations the sneak attack implementation is a bit iffy, and may not always behave as expected.
+Use: Selected.
 
 *Note: The dragonblood subtype consists of the following: kobolds, dragons, anyone with the half-dragon template, or the Dragontouched or Dragon Heritage feats.  If you take this feat and are not one of the above, you will be deleveled.</entry>
   <entry id="55476" lang="en" sex="m">Improved Dragonfire Strike</entry>
   <entry id="55477" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Hand of the Winged Masters 9
 
-When Dragonfire Strike is activated, you do an extra point of damage per die of sneak attack or skirmish.</entry>
+When Dragonfire Strike is activated, you do an extra point of damage per die of sneak attack or skirmish.
+Use: Automatic.</entry>
   <entry id="55478" lang="en" sex="m">Hand of the Winged Masters</entry>
   <entry id="55479" lang="en" sex="m">Hands of the Winged Masters</entry>
   <entry id="55480" lang="en" sex="m">hand of the winged masters</entry>
@@ -34695,6 +34697,32 @@ Note: You cannot take this feat if you have already taken Dragonthrall.  If you 
 You have pledged your life to the service of evil dragonkind.  You gain a +4 bonus to Bluff checks vs dragons, and a +4 to save vs fear effects of evil dragons.  You have a -2 penalty vs mind spells cast by dragons.
 
 Note: You cannot take this feat if you have already taken Dragonfriend.  If you try to do this at first level you will be unable to level.</entry>
+  <entry id="55628" lang="en" sex="m">Dragonfire Inspiration</entry>
+  <entry id="55629" lang="en" sex="m">Type of Feat: Draconic
+Prerequisite: Cha 11, Dragonblood subtype*, bard songs
+
+When you perform your bard song(if this feat is activated) instead of granting an attack and damage bonus, you grant a number of d6 of bonus elemental damage equal to the attack bonus you would normally give.  The element of the damage is the element related to your draconic ancestry.  If that dragon type is not associated with one of the 5 main elements, the damage type is fire.
+
+All other effects your bard song causes are unchanged.
+Use: Selected.
+
+*Note: The dragonblood subtype consists of the following: kobolds, dragons, anyone with the half-dragon template, or the Dragontouched or Dragon Heritage feats.  If you take this feat and are not one of the above, you will be deleveled.</entry>
+  <entry id="55630" lang="en" sex="m">Dragonfire Assault</entry>
+  <entry id="55631" lang="en" sex="m">Type of Feat: Draconic
+Prerequisite: Str 13, Cha 11, Dragonblood subtype*, Power Attack
+
+When you use your Power Attack ability, if this feat is activated, your extra damage from Power Attack is the element related to your draconic ancestry.  If that dragon type is not associated with one of the 5 main elements, the damage type is fire.
+Use: Selected.
+
+*Note: The dragonblood subtype consists of the following: kobolds, dragons, anyone with the half-dragon template, or the Dragontouched or Dragon Heritage feats.  If you take this feat and are not one of the above, you will be deleveled.</entry>
+  <entry id="55632" lang="en" sex="m">Dragonfire Channeling</entry>
+  <entry id="55633" lang="en" sex="m">Type of Feat: Draconic
+Prerequisite: Cha 11, Dragonblood subtype*, Turn Undead
+
+When you activate this feat, you use up a Turn Undead use for the day and breathe a 15' cone of an element related your draconic ancestry.  If your dragon type is not related to one of the 5 main elements, or you are not related to a specific dragon, the damage defaults to fire.  The damage is a number of d6 equal to your turning level divided by 2, and the save is a Reflex save vs 10 + your Charisma modifier + your turning level divided by 2.
+Use: Selected.
+
+*Note: The dragonblood subtype consists of the following: kobolds, dragons, anyone with the half-dragon template, or the Dragontouched or Dragon Heritage feats.  If you take this feat and are not one of the above, you will be deleveled.</entry>
   <entry id="55964" lang="en" sex="m">1</entry>
   <entry id="55965" lang="en" sex="m">2</entry>
   <entry id="55966" lang="en" sex="m">3</entry>

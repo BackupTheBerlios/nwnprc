@@ -1,5 +1,5 @@
 // The error code 5 prevention entry. Comment out or uncomment as necessary
- const int COMPILER_BREAKS_ON_ME_OR_NOT = 0xffffffff;
+// const int COMPILER_BREAKS_ON_ME_OR_NOT = 0xffffffff;
 
 
 //missing bioware ones
@@ -367,6 +367,9 @@ const int FEAT_MASTERS_GIFT                            = 3951;
 const int FEAT_TRUE_STEALTH                            = 3952;
 const int FEAT_DRAGONFRIEND                            = 3988;
 const int FEAT_DRAGONTHRALL                            = 3989;
+const int FEAT_DRAGONFIRE_ASSAULT                      = 1842;
+const int FEAT_DRAGONFIRE_CHANNELING                   = 1843;
+const int FEAT_DRAGONFIRE_INSPIRATION                  = 1844;
 
 //Draconic Feats(from Dragon Magic and RotD)
 const int FEAT_DRAGONTOUCHED                           = 3889;

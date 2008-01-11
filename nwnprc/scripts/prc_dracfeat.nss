@@ -36,20 +36,23 @@ int CalculateDraconic(object oPC)
           || (GetHasFeat(FEAT_DRACONIC_HERITAGE_CP, oPC))
           || (GetHasFeat(FEAT_DRACONIC_HERITAGE_GD, oPC))
           || (GetHasFeat(FEAT_DRACONIC_HERITAGE_SR, oPC))
-         )                                          nDraconicFeats++;
-      if(GetHasFeat(FEAT_DRACONIC_SKIN, oPC))       nDraconicFeats++;
-      if(GetHasFeat(FEAT_DRACONIC_KNOWLEDGE, oPC))  nDraconicFeats++;
-      if(GetHasFeat(FEAT_DRACONIC_VIGOR, oPC))      nDraconicFeats++;
-      if(GetHasFeat(FEAT_DRACONIC_ARMOR, oPC))      nDraconicFeats++;
-      if(GetHasFeat(FEAT_DRACONIC_PERSUADE, oPC))   nDraconicFeats++;
-      if(GetHasFeat(FEAT_DRACONIC_CLAW, oPC))       nDraconicFeats++;
-      if(GetHasFeat(FEAT_DRACONIC_PRESENCE, oPC))   nDraconicFeats++;
-      if(GetHasFeat(FEAT_DRACONIC_POWER, oPC))      nDraconicFeats++;
-      if(GetHasFeat(FEAT_DRACONIC_RESISTANCE, oPC)) nDraconicFeats++;
-      if(GetHasFeat(FEAT_DRACONIC_SENSES, oPC))     nDraconicFeats++;
-      if(GetHasFeat(FEAT_DRACONIC_GRACE, oPC))      nDraconicFeats++;
-      if(GetHasFeat(FEAT_DRACONIC_BREATH, oPC))     nDraconicFeats++;
-      if(GetHasFeat(FEAT_DRAGONFIRE_STRIKE, oPC))   nDraconicFeats++;
+         )                                               nDraconicFeats++;
+      if(GetHasFeat(FEAT_DRACONIC_SKIN, oPC))            nDraconicFeats++;
+      if(GetHasFeat(FEAT_DRACONIC_KNOWLEDGE, oPC))       nDraconicFeats++;
+      if(GetHasFeat(FEAT_DRACONIC_VIGOR, oPC))           nDraconicFeats++;
+      if(GetHasFeat(FEAT_DRACONIC_ARMOR, oPC))           nDraconicFeats++;
+      if(GetHasFeat(FEAT_DRACONIC_PERSUADE, oPC))        nDraconicFeats++;
+      if(GetHasFeat(FEAT_DRACONIC_CLAW, oPC))            nDraconicFeats++;
+      if(GetHasFeat(FEAT_DRACONIC_PRESENCE, oPC))        nDraconicFeats++;
+      if(GetHasFeat(FEAT_DRACONIC_POWER, oPC))           nDraconicFeats++;
+      if(GetHasFeat(FEAT_DRACONIC_RESISTANCE, oPC))      nDraconicFeats++;
+      if(GetHasFeat(FEAT_DRACONIC_SENSES, oPC))          nDraconicFeats++;
+      if(GetHasFeat(FEAT_DRACONIC_GRACE, oPC))           nDraconicFeats++;
+      if(GetHasFeat(FEAT_DRACONIC_BREATH, oPC))          nDraconicFeats++;
+      if(GetHasFeat(FEAT_DRAGONFIRE_STRIKE, oPC))        nDraconicFeats++;
+      if(GetHasFeat(FEAT_DRAGONFIRE_ASSAULT, oPC))       nDraconicFeats++;
+      if(GetHasFeat(FEAT_DRAGONFIRE_CHANNELING, oPC))    nDraconicFeats++;
+      if(GetHasFeat(FEAT_DRAGONFIRE_INSPIRATION, oPC))   nDraconicFeats++;
          
       return nDraconicFeats;
 }

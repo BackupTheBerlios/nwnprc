@@ -265,3 +265,7 @@ const int TRAP_BASE_TYPE_TELECIRCLE = 101;
 // BaseItems
 
 const int BASE_ITEM_CRAFTED_STAFF   = 201;
+
+
+// Dragon Fire Inspiration ONHIT
+const int IP_CONST_ONHIT_CASTSPELL_DRAGONFIRE = 203;

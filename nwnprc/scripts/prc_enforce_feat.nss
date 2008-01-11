@@ -1269,6 +1269,16 @@ int DraconicFeats(object oPC = OBJECT_SELF)
              FloatingTextStringOnCreature("You must be dragonblood subtype.", oPC, FALSE);
           return FALSE;
     }
+    
+    //testing for Dragonblood only
+    if((GetHasFeat(FEAT_DRAGONFIRE_ASSAULT, oPC) 
+         || GetHasFeat(FEAT_DRAGONFIRE_CHANNELING, oPC)
+         || GetHasFeat(FEAT_DRAGONFIRE_INSPIRATION, oPC))
+       && !bDragonblooded)
+    {
+             FloatingTextStringOnCreature("You must be dragonblood subtype.", oPC, FALSE);
+          return FALSE;
+    }
 
     //Swift Wing Dragon Affinity test - make sure only one is taken
     int nSWLevel = (GetLevelByClass(CLASS_TYPE_SWIFT_WING, oPC));

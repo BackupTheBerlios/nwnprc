@@ -37,6 +37,9 @@ void main()
     	nHD = 12;
     }
     
+    if ((HEALER_COMP_LAMMASU == nSpellId && nClass < 12) || (HEALER_COMP_ANDRO == nSpellId && nClass < 16)) 
+    	FloatingTextStringOnCreature("You are too low level to summon this companion", oCaster, FALSE);
+    
     int nMax = GetMaxHenchmen();
     int i = 1;
     object oHench = GetAssociate(ASSOCIATE_TYPE_HENCHMAN, oCaster, i);

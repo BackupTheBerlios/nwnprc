@@ -54,6 +54,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     effect eExplode = EffectVisualEffect(VFX_FNF_ICESTORM); //USE THE ICESTORM FNF
     effect eVis = EffectVisualEffect(VFX_IMP_FROST_S);
     effect eDam,eDam2, eDam3;
+    // These last for one round. Added as they are in the 3.5 PHB
+    effect eLink = EffectLinkEffects(EffectSkillDecrease(SKILL_LISTEN, 4), EffectMovementSpeedDecrease(50));
     //Get the spell target location as opposed to the spell target.
     location lTarget = GetSpellTargetLocation();
     CasterLvl +=SPGetPenetr();
@@ -101,6 +103,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 //This visual effect is applied to the target object not the location as above.  This visual effect
                 //represents the impact that erupts on the target not on the ground.
                 DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0,TRUE,-1,CasterLvl);
              }
         }
        //Select the next target within the spell shape.

@@ -245,7 +245,9 @@ int DuskbladeArcaneChanneling()
 
         //dont cast
         nReturn = FALSE;
-        int nSpell     = PRCGetSpellId();
+        int nSpell = PRCGetSpellId();
+        int nClass = GetLevelByClass(CLASS_TYPE_DUSKBLADE, oPC);
+        effect eNone;
         //channeling active
         //find the item
         oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
@@ -269,7 +271,7 @@ int DuskbladeArcaneChanneling()
             int nMax = 1;
             int nVal = 1;
             float fDelay = 60.0;
-            if(GetLevelByClass(CLASS_TYPE_DUSKBLADE, oPC) >= 13)
+            if(nClass >= 13)
             {
                 nMax = 5;
                 nVal = 2;
@@ -299,7 +301,10 @@ int DuskbladeArcaneChanneling()
             DelayCommand(fDelay, DeleteLocalInt(oItem, "DuskbladeChannelDischarge"));
             //make attack
             ClearAllActions();
-            ActionAttack(PRCGetSpellTargetObject());
+            if (nClass >= 13) PerformAttackRound(PRCGetSpellTargetObject(), oPC, eNone, 0.0, 0, 0, 0, FALSE, "Arcane Channelling Hit", "Arcane Channelling Miss");
+            else if (nClass >= 13) PerformAttack(PRCGetSpellTargetObject(), oPC, eNone, 0.0, 0, 0, 0, "Arcane Channelling Hit", "Arcane Channelling Miss");
+            FloatingTextStringOnCreature("Duskblade Channeling Deactivated", oPC, FALSE);
+            DeleteLocalInt(oPC, "DuskbladeChannelActive");
         }
     }
     return nReturn;

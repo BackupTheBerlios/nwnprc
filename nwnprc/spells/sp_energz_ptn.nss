@@ -130,7 +130,7 @@ void main()
                 case 3: sStrength = "Strong";
         }
         
-        SetName(oPotion, sStrength + " " + "Energized" + " " + sDamageType + " " + "Potion");   
+        SetName(oGrenade, sStrength + " " + "Energized" + " " + sDamageType + " " + "Potion");   
         
         SPSetSchool();
 }

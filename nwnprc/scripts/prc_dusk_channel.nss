@@ -39,7 +39,7 @@ void DisableDuskbladeChanneling()
         ipTest = GetNextItemProperty(oSkin);
     }
     //send a message
-    FloatingTextStringOnCreature("Duskblade Channeling Deactivated", oPC);
+    FloatingTextStringOnCreature("Duskblade Channeling Deactivated", oPC, FALSE);
 }
 
 void main()
@@ -67,7 +67,7 @@ void main()
         ipTest = PRCItemPropertyBonusFeat(IP_CONST_FEAT_EPIC_AUTO_QUICKEN_III);
         IPSafeAddItemProperty(oSkin, ipTest, 60.0);
         //send a message
-        FloatingTextStringOnCreature("Duskblade Channeling Activated", oPC);
+        FloatingTextStringOnCreature("Duskblade Channeling Activated", oPC, FALSE);
         
         //disable after 1 minute
         DelayCommand(60.0, DisableDuskbladeChanneling());

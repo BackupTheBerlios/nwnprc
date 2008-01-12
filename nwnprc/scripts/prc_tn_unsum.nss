@@ -29,10 +29,7 @@ object oMaster = GetMaster(oTarget);
             sRes == "prc_hath_rash6" || sRes == "prc_hath_rash7" || sRes == "prc_hath_rash8" || sRes == "prc_hath_rash9" ||
             sRes == "prc_hath_rash10" || sRes == "prc_sum_unicorn" || sRes == "prc_sum_lammasu" || sRes == "prc_sum_andro")
         {
-        DestroyObject(oTarget);
+		DestroyObject(oTarget);
         }
-	// Healer is a subradial and shouldn't cost a use.
-	if (PRCGetSpellId() == 1848)
-		IncrementRemainingFeatUses(OBJECT_SELF, 3795);
     }
 }

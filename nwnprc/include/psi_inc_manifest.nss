@@ -943,7 +943,7 @@ void UsePower(int nPower, int nClass, int bIsPsiLike = FALSE, int nLevelOverride
     }
 
     // Action queue the function that will cheatcast the actual power
-    DelayCommand(0.5, AssignCommand(oManifester, ActionDoCommand(_UsePowerAux(oManifester, oMfToken, nSpellID, oTarget, lTarget, nPower, nClass, bIsPsiLike, nLevelOverride, bQuicken))));
+    DelayCommand(nManifDur / 1000.0f, AssignCommand(oManifester, ActionDoCommand(_UsePowerAux(oManifester, oMfToken, nSpellID, oTarget, lTarget, nPower, nClass, bIsPsiLike, nLevelOverride, bQuicken))));
 }
 
 string DebugManifestation2Str(struct manifestation manif)

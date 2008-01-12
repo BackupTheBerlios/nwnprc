@@ -180,9 +180,6 @@ void main()
 		default: break;
 	}
 	
-	//Set up Cleric req
-	itemproperty ipCleric = ItemPropertyLimitUseByClass(IP_CONST_CLASS_CLERIC);
-	
 	//Add props
 	IPSafeAddItemProperty(oTargetWand, ipSpell, fDur, X2_IP_ADDPROP_POLICY_IGNORE_EXISTING);
 	IPSafeAddItemProperty(oTargetWand, ipCleric, fDur, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);

@@ -194,6 +194,12 @@ void Shadowlord(object oPC, int iArcSpell)
      {
      iShadItem = 1;
      }
+     
+     // shadowwalker 'token' int on hide
+     if(GetPersistantLocalInt(oPC, "shadowwalkerstok"))
+     {
+         iShadItem = 1;
+     }
 
      SetLocalInt(oPC, "PRC_PrereqTelflam", 1);
 

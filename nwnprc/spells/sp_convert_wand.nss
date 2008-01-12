@@ -182,11 +182,9 @@ void main()
 	
 	//Add props
 	IPSafeAddItemProperty(oTargetWand, ipSpell, fDur, X2_IP_ADDPROP_POLICY_IGNORE_EXISTING);
-	IPSafeAddItemProperty(oTargetWand, ipCleric, fDur, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
-	
+		
 	//Mark the item with a local variable
 	SetLocalInt(oTargetWand, "PRC_IsConvertedWand", 1);
-	
 }
 
 

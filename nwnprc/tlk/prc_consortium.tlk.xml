@@ -26346,7 +26346,10 @@ Level
 
 MANIFESTING
 
-Upon reaching levels 1, 3, 4, 6, 7, 9, 10 the Shadowmind gains a new manifester level, increasing his power points, total powers known, and maximum power level.</entry>
+Upon reaching levels 1, 3, 4, 6, 7, 9, 10 the Shadowmind gains a new manifester level, increasing his power points, total powers known, and maximum power level.
+
+NOTE:
+Only a manifester with Cloud Mind and Cloud Mind, Mass on his class list will gain access to those powers.</entry>
   <entry id="52152" lang="en" sex="m">Distract</entry>
   <entry id="52153" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Shadowmind level 1.

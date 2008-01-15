@@ -70,27 +70,27 @@ effect SetSummonEffect(int nSpellID)
     int nRoll = d3();
     string sSummon;
     {
-        if(nSpell == SPELL_SUMMON_UNDEAD_1)
+        if(nSpellID == SPELL_SUMMON_UNDEAD_1)
         {
             nFNF_Effect = VFX_FNF_SUMMON_MONSTER_1;
             sSummon = "wo_skel";
         }
-        else if(nSpell == SPELL_SUMMON_UNDEAD_2)
+        else if(nSpellID == SPELL_SUMMON_UNDEAD_2)
         {
             nFNF_Effect = VFX_FNF_SUMMON_MONSTER_1;
             sSummon = "wo_zombie_bugb";
         }
-        else if(nSpell == SPELL_SUMMON_UNDEAD_3)
+        else if(nSpellID == SPELL_SUMMON_UNDEAD_3)
         {
             nFNF_Effect = VFX_FNF_SUMMON_MONSTER_1;
             sSummon = "wo_zombie_ogre";
         }
-        else if(nSpell == SPELL_SUMMON_UNDEAD_4)
+        else if(nSpellID == SPELL_SUMMON_UNDEAD_4)
         {
             nFNF_Effect = VFX_FNF_SUMMON_MONSTER_2;
             sSummon = "wo_zombie_wyv";
         }
-        else if(nSpell == SPELL_SUMMON_UNDEAD_5)
+        else if(nSpellID == SPELL_SUMMON_UNDEAD_5)
         {
             nFNF_Effect = VFX_FNF_SUMMON_MONSTER_2;
             sSummon = "wo_mummy";

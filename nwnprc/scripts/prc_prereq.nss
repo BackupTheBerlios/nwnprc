@@ -743,20 +743,6 @@ void RangerURangerMutex(object oPC)
     }
 }
 
-void DragonDis(object oPC)
-{
-     int dBlud = GetLevelByClass(CLASS_TYPE_BARD, oPC) +
-                 GetLevelByClass(CLASS_TYPE_SORCERER, oPC) +
-                 GetHasFeat(DRAGON_BLOODED,oPC);
-
-     SetLocalInt(oPC, "PRC_DraAllow", 0);
-
-     if ( dBlud >= 1)
-     {
-        SetLocalInt(oPC, "PRC_DraAllow", 1);
-     }
-}
-
 void SoulEater(object oPC)
 {
     SetLocalInt(oPC, "PRC_PrereqSoulEater", 1);
@@ -1037,7 +1023,6 @@ void main()
      CombatMedic(oPC);
      Alaghar(oPC);
      RangerURangerMutex(oPC);
-     DragonDis(oPC);
      Thrallherd(oPC);
      Shadowmind(oPC);
      Heartwarder(oPC);

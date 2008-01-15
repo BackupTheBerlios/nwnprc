@@ -1007,3 +1007,10 @@ const int SPELL_NIMBUS_TOUCH_ATTACK                 = 1895;
 const int SPELL_FIREWALK                            = 1896;
 const int SPELL_HEAT_DEATH                          = 1897;
 const int SPELL_CONFLAGRATION                       = 1898;
+
+// Heroes of Horror
+const int SPELL_SUMMON_UNDEAD_1                     = 1784;
+const int SPELL_SUMMON_UNDEAD_2                     = 1785;
+const int SPELL_SUMMON_UNDEAD_3                     = 1786;
+const int SPELL_SUMMON_UNDEAD_4                     = 1787;
+const int SPELL_SUMMON_UNDEAD_5                     = 1788;

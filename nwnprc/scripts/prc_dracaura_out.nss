@@ -605,5 +605,12 @@ void main()
             eAOE = GetNextEffect(oTarget);
         }
     }
+    if((GetHasSpellEffect(SPELL_DRACONIC_AURA_MAGICPOWER, PCShaman)
+        || GetHasSpellEffect(SPELL_MARSHAL_AURA_MAGICPOWER, PCShaman)
+        ||GetHasSpellEffect(SPELL_BONUS_AURA_MAGICPOWER, PCShaman))
+      && (GetLocalInt(oTarget,"MagicPowerAura") == GetLocalInt(PCShaman,"MagicPowerAura")))
+    {
+    	DeleteLocalInt(oTarget,"MagicPowerAura");
+    }
 
 }

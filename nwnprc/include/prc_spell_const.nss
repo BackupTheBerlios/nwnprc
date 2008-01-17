@@ -956,6 +956,7 @@ const int SPELL_DRACONIC_AURA_INSIGHT               = 3772;
 const int SPELL_DRACONIC_AURA_RESOLVE               = 3773;
 const int SPELL_DRACONIC_AURA_STAMINA               = 3774;
 const int SPELL_DRACONIC_AURA_SWIFTNESS             = 3775;
+const int SPELL_DRACONIC_AURA_MAGICPOWER            = 3813;
 
 //Other Draconic Auras
 const int SPELL_MARSHAL_AURA_SENSES                 = 3787;
@@ -995,6 +996,9 @@ const int SPELL_BONUS_AURA_SENSES                   = 3809;
 const int SPELL_BONUS_AURA_STAMINA                  = 3810;
 const int SPELL_BONUS_AURA_SWIFTNESS                = 3811;
 const int SPELL_BONUS_AURA_TOUGHNESS                = 3812;
+const int SPELL_MARSHAL_AURA_TOUGHNESS              = 3814;
+const int SPELL_BONUS_AURA_TOUGHNESS                = 3815;
+const int SPELL_SECOND_AURA_TOUGHNESS               = 3816;
 
 // Dragon Magic Spells
 const int SPELL_DRAGON_ALLY                         = 3388;

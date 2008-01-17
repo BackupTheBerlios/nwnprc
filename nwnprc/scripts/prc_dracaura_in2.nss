@@ -289,6 +289,20 @@ void main()
                  ApplyEffectToObject(DURATION_TYPE_PERMANENT, eResist, oTarget);
                  SetLocalInt(PCShaman,"SecondDraconicAura",1);
                  }
-              }            
+              }        
+            //Magic Power
+            if(GetHasSpellEffect(SPELL_SECOND_AURA_MAGICPOWER, PCShaman)
+              && (nExtraAuraBonus > GetLocalInt(oTarget,"MagicPowerAura")))
+              {
+              if (GetLocalInt(oTarget,"SecondDraconicAura")>0)
+                 {
+                 return;
+                 }
+              else
+                 {
+                 SetLocalInt(oTarget,"MagicPowerAura",nExtraAuraBonus);
+                 SetLocalInt(PCShaman,"SecondDraconicAura",1);
+                 }
+              }         
     }
 }

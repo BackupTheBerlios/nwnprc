@@ -367,9 +367,6 @@ const int FEAT_MASTERS_GIFT                            = 3951;
 const int FEAT_TRUE_STEALTH                            = 3952;
 const int FEAT_DRAGONFRIEND                            = 3988;
 const int FEAT_DRAGONTHRALL                            = 3989;
-const int FEAT_DRAGONFIRE_ASSAULT                      = 1842;
-const int FEAT_DRAGONFIRE_CHANNELING                   = 1843;
-const int FEAT_DRAGONFIRE_INSPIRATION                  = 1844;
 
 //Draconic Feats(from Dragon Magic and RotD)
 const int FEAT_DRAGONTOUCHED                           = 3889;
@@ -405,6 +402,9 @@ const int FEAT_DRACONIC_BREATH_6_9                     = 3903;
 const int FEAT_DRACONIC_GRACE_1_5                      = 3900;
 const int FEAT_DRACONIC_GRACE_6_9                      = 3902;
 const int FEAT_DRAGONFIRE_STRIKE                       = 3949;
+const int FEAT_DRAGONFIRE_ASSAULT                      = 1842;
+const int FEAT_DRAGONFIRE_CHANNELING                   = 1843;
+const int FEAT_DRAGONFIRE_INSPIRATION                  = 1844;
 
 
 // Libris Mortis
@@ -2366,6 +2366,7 @@ const int FEAT_DRAGONSHAMAN_AURA_INSIGHT          = 1895;
 const int FEAT_DRAGONSHAMAN_AURA_RESOLVE          = 1896;
 const int FEAT_DRAGONSHAMAN_AURA_STAMINA          = 1897;
 const int FEAT_DRAGONSHAMAN_AURA_SWIFTNESS        = 1898;
+const int FEAT_DRAGONSHAMAN_AURA_MAGICPOWER       = 1838;
 const int FEAT_DRAGONSHAMAN_ARMOR                 = 3960;
 const int FEAT_DRAGONSHAMAN_ENERGY_IMMUNITY       = 3966;
 const int FEAT_DRAGONSHAMAN_WINGS                 = 3978;
@@ -2402,6 +2403,7 @@ const int FEAT_BONUS_AURA_INSIGHT                 = 1884;
 const int FEAT_BONUS_AURA_RESOLVE                 = 1890;
 const int FEAT_BONUS_AURA_STAMINA                 = 1892;
 const int FEAT_BONUS_AURA_SWIFTNESS               = 1893;
+const int FEAT_BONUS_AURA_MAGICPOWER              = 1840;
 const int FEAT_MARSHAL_DRACONIC_AURA_LEVEL_1      = 1845;
 const int FEAT_MARSHAL_DRACONIC_AURA_LEVEL_2      = 1846;
 const int FEAT_MARSHAL_DRACONIC_AURA_LEVEL_3      = 1847;
@@ -2421,6 +2423,7 @@ const int FEAT_MARSHAL_AURA_INSIGHT               = 1872;
 const int FEAT_MARSHAL_AURA_RESOLVE               = 1878;
 const int FEAT_MARSHAL_AURA_STAMINA               = 1880;
 const int FEAT_MARSHAL_AURA_SWIFTNESS             = 1881;
+const int FEAT_MARSHAL_AURA_MAGICPOWER            = 1839;
 const int FEAT_BONUS_DRACONIC_AURA_LEVEL_1        = 1868;
 const int FEAT_BONUS_DRACONIC_AURA_LEVEL_2        = 1869;
 const int FEAT_BONUS_DRACONIC_AURA_LEVEL_3        = 1870;
@@ -2440,6 +2443,7 @@ const int FEAT_SECOND_AURA_RESISTACID             = 1864;
 const int FEAT_SECOND_AURA_RESISTCOLD             = 1865;
 const int FEAT_SECOND_AURA_RESISTELEC             = 1866;
 const int FEAT_SECOND_AURA_RESISTFIRE             = 1867;
+const int FEAT_SECOND_AURA_MAGICPOWER             = 1841;
 
 
 /*//////////////////////////////////////////////////

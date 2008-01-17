@@ -216,6 +216,21 @@ void main()
                  }
               }
               
+            //Magic Power
+            if(GetHasSpellEffect(SPELL_DRACONIC_AURA_MAGICPOWER, PCShaman)
+              && (nAuraBonus > GetLocalInt(oTarget,"MagicPowerAura")))
+              {
+              if (GetLocalInt(oTarget,"DraconicAura")>0)
+                 {
+                 return;
+                 }
+              else
+                 {
+                 SetLocalInt(oTarget,"MagicPowerAura",nAuraBonus);
+                 SetLocalInt(PCShaman,"DraconicAura",1);
+                 }
+              }
+              
             /////////////////END SHAMAN, BEGIN MARSHAL/////////////
             
             //Resist Acid
@@ -400,6 +415,21 @@ void main()
                  }
               }
               
+            //Magic Power
+            if(GetHasSpellEffect(SPELL_MARSHAL_AURA_MAGICPOWER, PCShaman)
+              && (nMarshalBonus > GetLocalInt(oTarget,"MagicPowerAura")))
+              {
+              if (GetLocalInt(oTarget,"DraconicAura")>0)
+                 {
+                 return;
+                 }
+              else
+                 {
+                 SetLocalInt(oTarget,"MagicPowerAura",nMarshalBonus);
+                 SetLocalInt(PCShaman,"DraconicAura",1);
+                 }
+              }
+              
             /////////////////END MARSHAL, BEGIN EXTRA/////////////
             
             //Resist Acid
@@ -580,6 +610,21 @@ void main()
 	         effect eSpeed  = ExtraordinaryEffect( EffectMovementSpeedIncrease(nExtraBonus * 5) );
                  effect eLink   = ExtraordinaryEffect( EffectLinkEffects(eJump, eSpeed) );
                  ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);
+                 SetLocalInt(PCShaman,"DraconicAura",1);
+                 }
+              }
+              
+            //Magic Power
+            if(GetHasSpellEffect(SPELL_BONUS_AURA_MAGICPOWER, PCShaman)
+              && (nExtraBonus > GetLocalInt(oTarget,"MagicPowerAura")))
+              {
+              if (GetLocalInt(oTarget,"DraconicAura")>0)
+                 {
+                 return;
+                 }
+              else
+                 {
+                 SetLocalInt(oTarget,"MagicPowerAura",nExtraBonus);
                  SetLocalInt(PCShaman,"DraconicAura",1);
                  }
               }

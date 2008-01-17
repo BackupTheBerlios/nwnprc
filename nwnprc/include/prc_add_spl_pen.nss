@@ -35,6 +35,8 @@ int MarshalDeterminedCaster(object oCaster);
 
 int DuskbladeSpellPower(object oCaster);
 
+int DraconicMagicPower(object oCaster);
+
 // Use this function to get the adjustments to a spell or SLAs spell penetration
 // from the various class effects
 // Update this function if any new classes change spell pentration
@@ -327,6 +329,14 @@ int DuskbladeSpellPower(object oCaster)
     	return nSP;
 }
 
+int DraconicMagicPower(object oCaster)
+{
+    int nSP = 0;
+    if (GetLocalInt(oCaster,"MagicPowerAura") > 0) nSP = GetLocalInt(oCaster,"MagicPowerAura");
+    
+    return nSP;
+}
+
 int add_spl_pen(object oCaster = OBJECT_SELF)
 {
     int spell_id = PRCGetSpellId();
@@ -340,6 +350,7 @@ int add_spl_pen(object oCaster = OBJECT_SELF)
     nSP += RunecasterRunePowerSP(oCaster);
     nSP += MarshalDeterminedCaster(oCaster);
     nSP += DuskbladeSpellPower(oCaster);
+    nSP += DraconicMagicPower(oCaster);
 
     return nSP;
 }

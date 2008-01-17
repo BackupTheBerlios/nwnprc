@@ -5,6 +5,8 @@ void main()
     //Declare major variables
     //Get the object that is exiting the AOE
     object oTarget = GetExitingObject();
+    object PCShaman = GetAreaOfEffectCreator();
+    
     int bValid = FALSE;
     effect eAOE;
     if(GetHasSpellEffect(SPELL_SECOND_AURA_TOUGHNESS, oTarget))
@@ -276,6 +278,11 @@ void main()
             //Get next effect on the target
             eAOE = GetNextEffect(oTarget);
         }
+    }
+    if(GetHasSpellEffect(SPELL_SECOND_AURA_MAGICPOWER, PCShaman)
+      && (GetLocalInt(oTarget,"MagicPowerAura") == GetLocalInt(PCShaman,"MagicPowerAura")))
+    {
+    	DeleteLocalInt(oTarget,"MagicPowerAura");
     }
 
 }

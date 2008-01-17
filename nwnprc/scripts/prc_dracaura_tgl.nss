@@ -21,7 +21,8 @@ void main()
      	   || (nOtherAura == SPELL_SECOND_AURA_INSIGHT && GetSpellId() == SPELL_DRACONIC_AURA_INSIGHT)
      	   || (nOtherAura == SPELL_SECOND_AURA_RESOLVE && GetSpellId() == SPELL_DRACONIC_AURA_RESOLVE)
      	   || (nOtherAura == SPELL_SECOND_AURA_STAMINA && GetSpellId() == SPELL_DRACONIC_AURA_STAMINA)
-     	   || (nOtherAura == SPELL_SECOND_AURA_SWIFTNESS && GetSpellId() == SPELL_DRACONIC_AURA_SWIFTNESS))
+     	   || (nOtherAura == SPELL_SECOND_AURA_SWIFTNESS && GetSpellId() == SPELL_DRACONIC_AURA_SWIFTNESS)
+     	   || (nOtherAura == SPELL_SECOND_AURA_MAGICAURA && GetSpellId() == SPELL_DRACONIC_AURA_MAGICAURA))
      	     sMes = "That aura is already active.";
      	   
      	else if(TakeSwiftAction(oPC))

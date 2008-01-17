@@ -28549,7 +28549,58 @@ Level  Maneuvers Known   Maneuvers Readied   Stances Known
   <entry id="52490" lang="en" sex="m">Swordsage</entry>
   <entry id="52491" lang="en" sex="m">Swordsages</entry>
   <entry id="52492" lang="en" sex="m">swordsage</entry>
-  <entry id="52493" lang="en" sex="m">Swordsage Description</entry>
+  <entry id="52493" lang="en" sex="m">(BASE CLASS)
+  A master of martial maneuvers, the swordsage is a physical adept - a blade wizard whose knowledge of the Sublime Way lets him unlock potent abilities, many of which are overtly supernatural or magical in nature. Depending on which disciplines he chooses to study, a swordsage might be capable of walking through walls, leaping dozens of feet into the air, shattering boulders with a single touch, or even mastering the elements of fire or shadow. Whatever his specific training, a swordsage blurs the line between martial prowess and magical skill.
+  
+  - Hit Die: d8
+  - Proficiencies: A Swordsage gains proficiencies.with Martial and Simple Weapons, and Light armour.
+  - Skill Points: 6 + Int Modifier
+  
+  ABILITIES:
+  
+  Level
+  1: Discipline Focus (Weapon Focus) - You gain weapon focus for weapons in the chosen discipline
+  2: AC Bonus - You get your wisdom bonus to AC in light armour
+  3: 
+  4: Discipline Focus (Insightful Strike) - You gain your wisdom modifier as a bonus to damage for strikes from the chosen discipline
+  5: Initiative Bonus - +2
+  6: 
+  7: Sense Magic - Identify magical weapons
+  8: Discipline Focus (Defensive Stance) - You gain a +2 bonus to saves using a stance from the chosen discipline
+  9: Evasion
+  10: 
+  11: 
+  12: Discipline Focus (Insightful Strike)
+  13: 
+  14: 
+  15: Initiative Bonus - +4 
+  16: Discipline Focus (Defensive Stance)
+  17: Improved Evasion
+  18: 
+  19:
+  20: Dual Boost - Can use two boosts in the same round
+  
+  Level  Maneuvers Known   Maneuvers Readied   Stances Known
+  1      6                 4                   1
+  2      7                 4                   2
+  3      8                 5                   2
+  4      9                 5                   2
+  5      10                6                   3
+  6      11                6                   3
+  7      12                6                   3
+  8      13                7                   3
+  9      14                7                   4
+  10     15                8                   4
+  11     16                8                   4
+  12     17                8                   4
+  13     18                9                   4
+  14     19                9                   5
+  15     20                10                  5
+  16     21                10                  5
+  17     22                10                  5
+  18     23                11                  5
+  19     24                11                  5
+  20     25                12                  6</entry>
   <entry id="52494" lang="en" sex="m">Warblade</entry>
   <entry id="52495" lang="en" sex="m">Warblades</entry>
   <entry id="52496" lang="en" sex="m">warblade</entry>
@@ -28590,17 +28641,17 @@ Prerequisites: Crusader 1.
 Specifics: You have a delayed damage pool that allows you to forestall the effects of many injuries. When you are attacked, any damage is added to your delayed damage pool. At the end of the next round, you take damage equal to the total stored in the delayed damage pool. Any damage beyond the maximum delayed comes off of your normal hit points. This does not negate any special attack such as poison.
 
 At 1st level, your delayed damage pool can hold 5 points of damage. The maximum your pool can hold increases by 5 at 4th, 8th, 12th, 16th and 20th level to a maximum of 30.
-Use: Always</entry>
+Use: Automatic</entry>
   <entry id="52520" lang="en" sex="m">Furious Counterstrike</entry>
   <entry id="52521" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisites: Crusader 1.
 Specifics: During your turn, you gain a bonus on attack and damage rolls equal to the current value of your delayed damage pool divided by 5 (minimum of +1).
-Use: Always</entry>
+Use: Automatic</entry>
   <entry id="52522" lang="en" sex="m">Indomitable Soul</entry>
   <entry id="52523" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisites: Crusader 2.
 Specifics: You add your Charisma modifier (if positive) as a bonus to your will saves. This does not stack with the Paladin class.
-Use: Always</entry>
+Use: Automatic</entry>
   <entry id="52524" lang="en" sex="m">Smite</entry>
   <entry id="52525" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisites: Crusader 6.
@@ -28614,6 +28665,58 @@ Prerequisites: Crusader 4.
 Specifics: Once per day, you can opt to reroll your next failed saving throw that round. You must take the result of the reroll, even if it is worse.
 
 Use: Specified</entry>
+  <entry id="52528" lang="en" sex="m">AC Bonus</entry>
+  <entry id="52529" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Swordsage 2.
+Specifics: You gain your Wisdom modifier as a bonus to your armour class when wearing light armour.
+Use: Automatic</entry>
+  <entry id="52530" lang="en" sex="m">Sense Magic</entry>
+  <entry id="52531" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Swordsage 7.
+Specifics: You can attempt a Lore check to identify a weapon, shield or suit of armour.
+Use: Selected</entry>
+  <entry id="52532" lang="en" sex="m">Dual Boost</entry>
+  <entry id="52533" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Swordsage 20.
+Specifics: Three times per day, you may use two boost maneuvers in the same round.
+Use: Specified</entry>
+  <entry id="52534" lang="en" sex="m">Discipline Focus (Weapon Focus): Desert Wind</entry>
+  <entry id="52535" lang="en" sex="m">Discipline Focus (Weapon Focus): Diamond Mind</entry>
+  <entry id="52536" lang="en" sex="m">Discipline Focus (Weapon Focus): Setting Sun</entry>
+  <entry id="52537" lang="en" sex="m">Discipline Focus (Weapon Focus): Shadow Hand</entry>
+  <entry id="52538" lang="en" sex="m">Discipline Focus (Weapon Focus): Stone Dragon</entry>
+  <entry id="52539" lang="en" sex="m">Discipline Focus (Weapon Focus): Tiger Claw</entry>
+  <entry id="52540" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Swordsage 1.
+Specifics: You gain Weapon Focus in all discipline weapons.
+
+Desert Wind: Scimitar, Light Mace, Spear.
+Diamond Mind: Katana, Rapier, Bastard Sword
+Setting Sun: Short Sword, Staff, Unarmed Strike
+Shadow Hand: Short Sword, Dagger, Unarmed Strike
+Stone Dragon: Unarmed Strike, Great Sword, Great Axe
+Tiger Claw: Unarmed Strike, Great Axe, Kama, Kukri, Hand Axe
+Use: Automatic</entry>
+  <entry id="52541" lang="en" sex="m">Discipline Focus (Insightful Strike): Desert Wind</entry>
+  <entry id="52542" lang="en" sex="m">Discipline Focus (Insightful Strike): Diamond Mind</entry>
+  <entry id="52543" lang="en" sex="m">Discipline Focus (Insightful Strike): Setting Sun</entry>
+  <entry id="52544" lang="en" sex="m">Discipline Focus (Insightful Strike): Shadow Hand</entry>
+  <entry id="52545" lang="en" sex="m">Discipline Focus (Insightful Strike): Stone Dragon</entry>
+  <entry id="52546" lang="en" sex="m">Discipline Focus (Insightful Strike): Tiger Claw</entry>
+  <entry id="52547" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Swordsage 4.
+Specifics: You gain your wisdom bonus to damage when using a strike from the chosen discipline. At level 12, choose a second discipline.
+Use: Automatic</entry>
+<entry id="52548" lang="en" sex="m">Discipline Focus (Insightful Strike): Desert Wind</entry>
+  <entry id="52549" lang="en" sex="m">Discipline Focus (Defensive Stance): Diamond Mind</entry>
+  <entry id="52550" lang="en" sex="m">Discipline Focus (Defensive Stance): Setting Sun</entry>
+  <entry id="52551" lang="en" sex="m">Discipline Focus (Defensive Stance): Shadow Hand</entry>
+  <entry id="52552" lang="en" sex="m">Discipline Focus (Defensive Stance): Stone Dragon</entry>
+  <entry id="52553" lang="en" sex="m">Discipline Focus (Defensive Stance): Tiger Claw</entry>
+  <entry id="52554" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Swordsage 8.
+Specifics: You gain a +2 bonus to saves when in a stance from the chosen discipline. At level 16, choose a second discipline.
+Use: Automatic</entry>
   <entry id="52985" lang="en" sex="m">This feat opens the spellbook for this class. This is a conversation and feat driven version of the normal spellbook. Instead of appearing on the spell radial, they will appear on the class radial instead. Also, you may be able to use the spell after you have cast all your uses. No spell will result, but you will spend a round trying to cast it.</entry>
   <entry id="52986" lang="en" sex="m">Caster Level(s): Wizard / Sorcerer 9
 Innate Level: 9

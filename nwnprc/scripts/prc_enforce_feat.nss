@@ -1447,6 +1447,60 @@ int DragonShamanFeats(object oPC)
     return TRUE;
 }
 
+int Swordsage(object oPC = OBJECT_SELF)
+{
+
+     int nClass = GetLevelByClass(CLASS_TYPE_SWORDSAGE, oPC);
+
+     if (iRedWizard > 0)
+     {
+	     int nWF   =     (GetHasFeat(FEAT_SS_DF_WF_DW, oPC))
+	               +     (GetHasFeat(FEAT_SS_DF_WF_DM, oPC))
+	               +     (GetHasFeat(FEAT_SS_DF_WF_SS, oPC))
+	               +     (GetHasFeat(FEAT_SS_DF_WF_SH, oPC))
+	               +     (GetHasFeat(FEAT_SS_DF_WF_SD, oPC))
+	               +     (GetHasFeat(FEAT_SS_DF_WF_TC, oPC));
+
+	      if (nWF > 1)
+	      {
+	
+	           FloatingTextStringOnCreature("You may only have one Discipline Focus (Weapon Focus). Please reselect your feats.", oPC, FALSE);
+	           return FALSE;
+	      }
+
+	     int nIS   =     (GetHasFeat(FEAT_SS_DF_IS_DW, oPC))
+	               +     (GetHasFeat(FEAT_SS_DF_IS_DM, oPC))
+	               +     (GetHasFeat(FEAT_SS_DF_IS_SS, oPC))
+	               +     (GetHasFeat(FEAT_SS_DF_IS_SH, oPC))
+	               +     (GetHasFeat(FEAT_SS_DF_IS_SD, oPC))
+	               +     (GetHasFeat(FEAT_SS_DF_IS_TC, oPC));
+
+	      if ((nIS > 1 && nClass >= 4 && nClass < 12) || (nIS > 2 && nClass >= 12))
+	      {
+	
+	           FloatingTextStringOnCreature("You do not have the correct amount of Discipline Focus (Insightful Strike). Please reselect your feats.", oPC, FALSE);
+	           return FALSE;
+	      }
+	     
+	     int nDS   =     (GetHasFeat(FEAT_SS_DF_DS_DW, oPC))
+	               +     (GetHasFeat(FEAT_SS_DF_DS_DM, oPC))
+	               +     (GetHasFeat(FEAT_SS_DF_DS_SS, oPC))
+	               +     (GetHasFeat(FEAT_SS_DF_DS_SH, oPC))
+	               +     (GetHasFeat(FEAT_SS_DF_DS_SD, oPC))
+	               +     (GetHasFeat(FEAT_SS_DF_DS_TC, oPC));
+
+	      if ((nDS > 1 && nClass >= 8 && nClass < 16) || (nDS > 2 && nClass >= 16))
+	      {
+	
+	           FloatingTextStringOnCreature("You do not have the correct amount of Discipline Focus (Defensive Stance). Please reselect your feats.", oPC, FALSE);
+	           return FALSE;
+	      }	      
+
+     }
+     return TRUE;
+}
+
+
 void main()
 {
         //Declare Major Variables
@@ -1477,6 +1531,7 @@ void main()
          || !SuddenMetamagic(oPC)
          || !DraconicFeats(oPC)
          || !DragonShamanFeats(oPC)
+         || !Swordsage(oPC)
        )
     {
        int nHD = GetHitDice(oPC);

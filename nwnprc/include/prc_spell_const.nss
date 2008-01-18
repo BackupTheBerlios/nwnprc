@@ -996,9 +996,9 @@ const int SPELL_BONUS_AURA_SENSES                   = 3809;
 const int SPELL_BONUS_AURA_STAMINA                  = 3810;
 const int SPELL_BONUS_AURA_SWIFTNESS                = 3811;
 const int SPELL_BONUS_AURA_TOUGHNESS                = 3812;
-const int SPELL_MARSHAL_AURA_TOUGHNESS              = 3814;
-const int SPELL_BONUS_AURA_TOUGHNESS                = 3815;
-const int SPELL_SECOND_AURA_TOUGHNESS               = 3816;
+const int SPELL_MARSHAL_AURA_MAGICPOWER             = 3814;
+const int SPELL_BONUS_AURA_MAGICPOWER               = 3815;
+const int SPELL_SECOND_AURA_MAGICPOWER              = 3816;
 
 // Dragon Magic Spells
 const int SPELL_DRAGON_ALLY                         = 3388;

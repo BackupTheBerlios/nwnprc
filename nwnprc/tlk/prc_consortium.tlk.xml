@@ -34829,6 +34829,13 @@ When you activate this feat, you use up a Turn Undead use for the day and breath
 Use: Selected.
 
 *Note: The dragonblood subtype consists of the following: kobolds, dragons, anyone with the half-dragon template, or the Dragontouched or Dragon Heritage feats.  If you take this feat and are not one of the above, you will be deleveled.</entry>
+  <entry id="55634" lang="en" sex="m">Draconic Aura: Magic Power</entry>
+  <entry id="55635" lang="en" sex="m">Extra Draconic Aura: Magic Power</entry>
+  <entry id="55636" lang="en" sex="m">Draconic Marshal Aura: Magic Power</entry>
+  <entry id="55637" lang="en" sex="m">Second Draconic Aura: Magic Power</entry>
+  <entry id="55638" lang="en" sex="m">Type of Feat: Draconic Aura
+
+This aura grants you and your allies a bonus to overcoming spell resistance equal to your aura level.</entry>
   <entry id="55964" lang="en" sex="m">1</entry>
   <entry id="55965" lang="en" sex="m">2</entry>
   <entry id="55966" lang="en" sex="m">3</entry>

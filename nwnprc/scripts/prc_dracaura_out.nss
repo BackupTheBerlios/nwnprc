@@ -5,6 +5,8 @@ void main()
     //Declare major variables
     //Get the object that is exiting the AOE
     object oTarget = GetExitingObject();
+    object PCShaman = GetAreaOfEffectCreator();
+    
     int bValid = FALSE;
     effect eAOE;
     if(GetHasSpellEffect(SPELL_DRACONIC_AURA_TOUGHNESS, oTarget))

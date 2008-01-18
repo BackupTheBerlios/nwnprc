@@ -26,7 +26,7 @@ void main()
      	   || (nOtherAura == SPELL_SECOND_AURA_RESISTANCE && GetSpellId() == SPELL_MARSHAL_AURA_RESISTCOLD)
      	   || (nOtherAura == SPELL_SECOND_AURA_RESISTANCE && GetSpellId() == SPELL_MARSHAL_AURA_RESISTELEC)
      	   || (nOtherAura == SPELL_SECOND_AURA_RESISTANCE && GetSpellId() == SPELL_MARSHAL_AURA_RESISTFIRE)
-     	   || (nOtherAura == SPELL_SECOND_AURA_MAGICAURA && GetSpellId() == SPELL_MARSHAL_AURA_MAGICAURA))
+     	   || (nOtherAura == SPELL_SECOND_AURA_MAGICPOWER && GetSpellId() == SPELL_MARSHAL_AURA_MAGICPOWER))
      	     sMes = "That aura is already active.";
      	   
      	else if(TakeSwiftAction(oPC))

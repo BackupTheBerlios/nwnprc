@@ -3490,7 +3490,11 @@ Use: Automatic.</entry>
   <entry id="45777" lang="en" sex="m">Telflammar Shadowlords</entry>
   <entry id="45778" lang="en" sex="m">Telflammar shadowlord</entry>
   <entry id="45779" lang="en" sex="m">(PRESTIGE CLASS)
-The Shadowmasters of Telflammar are a notorious thieves' guild. The Shadowmasters are made up of burglars, murderers and thugs.
+The Shadowmasters of Telflamm are one of Faerûn’s most notorious thieves’ guilds, a secret society every bit as grasping and ruthless as the Night Masks of Westgate or the Shadow Thieves of Amn. Under their subtle and cloaked rule, Thesk’s
+port city of Telflamm is a prime center of trade in both legal and illicit goods.
+The Shadowmasters are made up of burglars, murderers, and thugs with a variety of talents, including assassins, experts, fighters, rogues, shadowdancers, and warriors. A small number of clerics devoted to Mask belong to the guild, as do
+some arcane spellcasters whose greed outweighs their scruples. Above all these criminals stand the Telflammar shadowlords, the secret captains of iniquity who demand unquestioned obedience from their numerous minions. Characters of other
+classes may hold important positions in the guild, but the shadowlords call the shots.
 
 - Hit Die: d6.
 - Proficiencies: The Shadowmasters of Telflammar gains no proficiency in any weapons and armors.
@@ -28707,7 +28711,7 @@ Use: Automatic</entry>
 Prerequisites: Swordsage 4.
 Specifics: You gain your wisdom bonus to damage when using a strike from the chosen discipline. At level 12, choose a second discipline.
 Use: Automatic</entry>
-<entry id="52548" lang="en" sex="m">Discipline Focus (Insightful Strike): Desert Wind</entry>
+  <entry id="52548" lang="en" sex="m">Discipline Focus (Insightful Strike): Desert Wind</entry>
   <entry id="52549" lang="en" sex="m">Discipline Focus (Defensive Stance): Diamond Mind</entry>
   <entry id="52550" lang="en" sex="m">Discipline Focus (Defensive Stance): Setting Sun</entry>
   <entry id="52551" lang="en" sex="m">Discipline Focus (Defensive Stance): Shadow Hand</entry>

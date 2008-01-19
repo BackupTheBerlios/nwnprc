@@ -1452,7 +1452,7 @@ int Swordsage(object oPC = OBJECT_SELF)
 
      int nClass = GetLevelByClass(CLASS_TYPE_SWORDSAGE, oPC);
 
-     if (iRedWizard > 0)
+     if (nClass > 0)
      {
 	     int nWF   =     (GetHasFeat(FEAT_SS_DF_WF_DW, oPC))
 	               +     (GetHasFeat(FEAT_SS_DF_WF_DM, oPC))

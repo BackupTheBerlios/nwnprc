@@ -34840,6 +34840,12 @@ Use: Selected.
   <entry id="55638" lang="en" sex="m">Type of Feat: Draconic Aura
 
 This aura grants you and your allies a bonus to overcoming spell resistance equal to your aura level.</entry>
+  <entry id="55639" lang="en" sex="m">Full Dragon Breath</entry>
+  <entry id="55640" lang="en" sex="m">Type of Feat: General
+Prerequisite: half-dragon, 6HD, breath weapon
+
+Your breath weapon is no longer limited uses per day, and can be used every 1d4 rounds.
+Use: Automatic.</entry>
   <entry id="55964" lang="en" sex="m">1</entry>
   <entry id="55965" lang="en" sex="m">2</entry>
   <entry id="55966" lang="en" sex="m">3</entry>

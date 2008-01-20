@@ -579,5 +579,8 @@ void main()
     //breath VFX
     effect eVis = EffectVisualEffect(VFX_FNF_DRAGBREATHGROUND);
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, PRCGetSpellTargetLocation());
+    
+    if(GetHasFeat(FEAT_FULL_DRAGON_BREATH, oPC))
+    	IncrementRemainingFeatUses(oPC, FEAT_DRAGON_DIS_BREATH);
 }
 

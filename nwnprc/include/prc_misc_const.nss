@@ -262,6 +262,15 @@ const int DOMAIN_DRAGON        = 60;
 const int TRAP_BASE_TYPE_PRGT       = 100;
 const int TRAP_BASE_TYPE_TELECIRCLE = 101;
 
+//:://////////////////////////////////////////////
+//:: Breath Const
+//:://////////////////////////////////////////////
+
+const int BREATH_NORMAL      = 0;
+const int BREATH_PYROCLASTIC = 1;
+const int BREATH_SHADOW      = 2;
+const int BREATH_SWIFT_WING  = 3;
+
 // BaseItems
 
 const int BASE_ITEM_CRAFTED_STAFF   = 201;

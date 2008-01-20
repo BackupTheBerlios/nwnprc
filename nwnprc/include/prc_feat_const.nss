@@ -367,6 +367,21 @@ const int FEAT_MASTERS_GIFT                            = 3951;
 const int FEAT_TRUE_STEALTH                            = 3952;
 const int FEAT_DRAGONFRIEND                            = 3988;
 const int FEAT_DRAGONTHRALL                            = 3989;
+const int FEAT_FULL_DRAGON_BREATH                      = 3111;
+
+//Metabreath and Breath Channeling
+const int FEAT_CLINGING_BREATH                         = 4966;
+const int FEAT_LINGERING_BREATH                        = 4967;
+const int FEAT_ENLARGE_BREATH                          = 4968;
+const int FEAT_HEIGHTEN_BREATH                         = 4969;
+const int FEAT_MAXIMIZE_BREATH                         = 4970;
+const int FEAT_RECOVER_BREATH                          = 4971;
+const int FEAT_SHAPE_BREATH                            = 4972;
+const int FEAT_SPREAD_BREATH                           = 4973;
+const int FEAT_TEMPEST_BREATH                          = 4974;
+const int FEAT_ENTANGLING_EXHALATION                   = 4975;
+const int FEAT_EXHALED_BARRIER                         = 4976;
+const int FEAT_EXHALED_IMMUNITY                        = 4977;
 
 //Draconic Feats(from Dragon Magic and RotD)
 const int FEAT_DRAGONTOUCHED                           = 3889;

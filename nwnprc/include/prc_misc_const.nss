@@ -270,6 +270,11 @@ const int BREATH_NORMAL      = 0;
 const int BREATH_PYROCLASTIC = 1;
 const int BREATH_SHADOW      = 2;
 const int BREATH_SWIFT_WING  = 3;
+const int BREATH_TOPAZ       = 4;
+const int BREATH_PARALYZE    = 5;
+const int BREATH_SLEEP       = 6;
+const int BREATH_SLOW        = 7;
+const int BREATH_WEAKENING   = 8;
 
 // BaseItems
 

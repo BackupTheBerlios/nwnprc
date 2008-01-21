@@ -11,55 +11,45 @@
 //:: Created By: Preston Watamaniuk
 //:: Created On: May 9, 2001
 //:://////////////////////////////////////////////
+
+const string DRAGBREATHLOCK = "DragonBreathLock";
+
+
+//modified to use the breath include - Fox
 #include "prc_alterations"
+#include "prc_inc_breath"
 
 void main()
 {
-    //Declare major variables
-    int nDamage, nDC, nDamStrike;
-    float fDelay;
-    object oTarget;
-    effect eVis, eBreath;
-
-    nDamage = 7;
-    nDC = 28;
-
-    PlayDragonBattleCry();
-    //Get first target in spell area
-    oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 14.0, GetSpellTargetLocation(), TRUE);
-    while(GetIsObjectValid(oTarget))
+    // Check the dragon breath delay lock
+    if(GetLocalInt(OBJECT_SELF, DRAGBREATHLOCK))
     {
-        if(oTarget != OBJECT_SELF && !GetIsReactionTypeFriendly(oTarget))
-        {
-            //Reset the damage to full
-            nDamStrike = nDamage;
-            //Fire cast spell at event for the specified target
-            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELLABILITY_DRAGON_BREATH_GAS));
-            //Determine effect delay
-            fDelay = GetDistanceBetween(OBJECT_SELF, oTarget)/20;
-            //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.
-            if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_ACID))
-            {
-                nDamStrike = 0;
-            }
-            else if(GetHasFeat(FEAT_IMPROVED_EVASION, oTarget))
-            {
-                nDamStrike = nDamStrike/2;
-            }
-
-            if (nDamStrike > 0)
-            {
-                //Set Damage and VFX
-                //eBreath = EffectAbilityDecrease(ABILITY_STRENGTH,nDamStrike);
-                eVis = EffectVisualEffect(VFX_IMP_POISON_L);
-
-                //Apply the VFX impact and effects
-                DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-                //DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eBreath, oTarget));
-                DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, nDamStrike, DURATION_TYPE_PERMANENT, TRUE));
-             }
-        }
-        //Get next target in spell area
-        oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 14.0, GetSpellTargetLocation(), TRUE);
+        SendMessageToPC(OBJECT_SELF, "You cannot use your breath weapon again so soon");
+        return;
     }
+	
+    //Declare major variables
+    int nDCBoost = 11; //mature adult form
+    nDCBoost += 7; //adjustment for incorrect Con in shifted form.
+    int nDamage = 7;
+    struct breath WeakBreath;
+    
+    //create the breath - Huge dragon, so 50'
+    WeakBreath = CreateBreath(OBJECT_SELF, FALSE, 50.0, -1, 10, nDamage, ABILITY_CONSTITUTION, nDCBoost, BREATH_WEAKENING);
+    
+    //Apply the breath
+    PlayDragonBattleCry();
+    ApplyBreath(WeakBreath, GetSpellTargetLocation());
+    
+    //Apply the recharge lock
+    SetLocalInt(OBJECT_SELF, DRAGBREATHLOCK, TRUE);
+
+    // Schedule opening the delay lock
+    float fDelay = RoundsToSeconds(WeakBreath.nRoundsUntilRecharge);
+    SendMessageToPC(OBJECT_SELF, "Your breath weapon will be ready again in " + IntToString(WeakBreath.nRoundsUntilRecharge) + " rounds.");
+
+    DelayCommand(fDelay, DeleteLocalInt(OBJECT_SELF, DRAGBREATHLOCK));
+    DelayCommand(fDelay, SendMessageToPC(OBJECT_SELF, "Your breath weapon is ready now"));
 }
+
+

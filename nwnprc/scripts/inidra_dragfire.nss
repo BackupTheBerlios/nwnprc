@@ -11,64 +11,54 @@
 //:: Created By: Preston Watamaniuk
 //:: Created On: May 9, 2001
 //:://////////////////////////////////////////////
+
+const string DRAGBREATHLOCK = "DragonBreathLock";
+
+
+//modified to use the breath include - Fox
 #include "prc_alterations"
+#include "prc_inc_breath"
 
 void main()
 {
-  //Declare major variables
-    int nDamage, nDC, nDamStrike;
-    float fDelay;
-    object oTarget;
-    effect eVis, eBreath;
+    // Check the dragon breath delay lock
+    if(GetLocalInt(OBJECT_SELF, DRAGBREATHLOCK))
+    {
+        SendMessageToPC(OBJECT_SELF, "You cannot use your breath weapon again so soon");
+        return;
+    }
+	
+    //Declare major variables
+    int nDCBoost = 11; //mature adult form
+    int nDamageDice = 14;
+    struct breath FireBreath;
 
+    //shifted Con is 10, should be 19 for Gold and 21 for Red.  Comment this section out if/when this is fixed.
     if (GetAppearanceType(OBJECT_SELF)==APPEARANCE_TYPE_DRAGON_GOLD)
     {
-      nDamage = d10(14);
-      nDC = 29;
+        nDCBoost += 7; //adjustment for incorrect Con in shifted form.
     }
     else if (GetAppearanceType(OBJECT_SELF)==APPEARANCE_TYPE_DRAGON_RED)
     {
-      nDamage = d10(14);
-      nDC = 28;
+        nDCBoost += 8; //adjustment for incorrect Con in shifted form.
     }
-
+   
+    //create the breath - Huge dragon, so 50'
+    FireBreath = CreateBreath(OBJECT_SELF, FALSE, 50.0, DAMAGE_TYPE_FIRE, 10, nDamageDice, ABILITY_CONSTITUTION, nDCBoost);
+    
+    //Apply the breath
     PlayDragonBattleCry();
-    //Get first target in spell area
-    oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 14.0, GetSpellTargetLocation(), TRUE);
-    while(GetIsObjectValid(oTarget))
-    {
-        if(oTarget != OBJECT_SELF && !GetIsReactionTypeFriendly(oTarget))
-        {
-            //Reset the damage to full
-            nDamStrike = nDamage;
-            //Fire cast spell at event for the specified target
-            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELLABILITY_DRAGON_BREATH_FIRE));
-            //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.
-            if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_FIRE))
-            {
-                nDamStrike = nDamStrike/2;
-                if(GetHasFeat(FEAT_EVASION, oTarget) || GetHasFeat(FEAT_IMPROVED_EVASION, oTarget))
-                {
-                    nDamStrike = 0;
-                }
-            }
-            else if(GetHasFeat(FEAT_IMPROVED_EVASION, oTarget))
-            {
-                nDamStrike = nDamStrike/2;
-            }
-            if (nDamStrike > 0)
-            {
-                //Set Damage and VFX
-                eBreath = EffectDamage(nDamStrike, DAMAGE_TYPE_FIRE);
-                eVis = EffectVisualEffect(VFX_IMP_FLAME_M);
-                //Determine effect delay
-                fDelay = GetDistanceBetween(OBJECT_SELF, oTarget)/20;
-                //Apply the VFX impact and effects
-                DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-                DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eBreath, oTarget));
-             }
-        }
-        //Get next target in spell area
-        oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 14.0, GetSpellTargetLocation(), TRUE);
-    }
+    ApplyBreath(FireBreath, GetSpellTargetLocation());
+    
+    //Apply the recharge lock
+    SetLocalInt(OBJECT_SELF, DRAGBREATHLOCK, TRUE);
+
+    // Schedule opening the delay lock
+    float fDelay = RoundsToSeconds(FireBreath.nRoundsUntilRecharge);
+    SendMessageToPC(OBJECT_SELF, "Your breath weapon will be ready again in " + IntToString(FireBreath.nRoundsUntilRecharge) + " rounds.");
+
+    DelayCommand(fDelay, DeleteLocalInt(OBJECT_SELF, DRAGBREATHLOCK));
+    DelayCommand(fDelay, SendMessageToPC(OBJECT_SELF, "Your breath weapon is ready now"));
 }
+
+

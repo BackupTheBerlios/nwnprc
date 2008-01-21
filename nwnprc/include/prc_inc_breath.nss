@@ -392,8 +392,96 @@ void ApplyBreath(struct breath BreathUsed, location lTargetArea)
             //Determine effect delay
             fDelay = GetDistanceBetween(BreathUsed.oDragon, oTarget)/20;
             
+            //Brass alternate breath - sleep
+            if(BreathUsed.nOverrideSpecial == BREATH_SLEEP)
+            {
+            	//prepare effects
+               effect eBreath = EffectSleep();
+               effect eVis = EffectVisualEffect(VFX_IMP_SLEEP);
+               effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
+               effect eLink = EffectLinkEffects(eBreath, eDur);
+                
+                //get duration
+                int nSleepDuration = BreathUsed.nDiceNumber;
+            	
+            	//Fire cast spell at event for the specified target
+                SignalEvent(oTarget, EventSpellCastAt(BreathUsed.oDragon, GetSpellId()));
+	        
+	        if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nSaveDC, SAVING_THROW_TYPE_NONE))
+                {
+                    //Apply the VFX impact and effects
+                    DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+                    DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nSleepDuration)));
+                }
+            }
+            
+            //Copper alternate breath - slow
+            else if(BreathUsed.nOverrideSpecial == BREATH_SLOW)
+            {
+            	//prepare effects
+                effect eBreath = EffectSlow();
+                effect eVis = EffectVisualEffect(VFX_IMP_SLOW);
+                effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
+                effect eLink = EffectLinkEffects(eBreath, eDur);
+                
+                //get duration
+                int nSlowDuration = BreathUsed.nDiceNumber;
+            	
+            	//Fire cast spell at event for the specified target
+                SignalEvent(oTarget, EventSpellCastAt(BreathUsed.oDragon, GetSpellId()));
+	        
+	        if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nSaveDC, SAVING_THROW_TYPE_NONE))
+                {
+                    //Apply the VFX impact and effects
+                    DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+                    DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nSlowDuration)));
+                }
+            }
+            
+            //Gold alternate breath - drains strength
+            else if(BreathUsed.nOverrideSpecial == BREATH_WEAKENING)
+            {
+            	//Fire cast spell at event for the specified target
+                SignalEvent(oTarget, EventSpellCastAt(BreathUsed.oDragon, GetSpellId()));
+	        
+	        if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nSaveDC, SAVING_THROW_TYPE_NONE))
+                {
+                    //Set Damage and VFX - Bioware Gold used VFX_IMP_REDUCE_ABILITY_SCORE originally
+                    eVis = EffectVisualEffect(VFX_IMP_POISON_L);
+                    //Apply the VFX impact and effects
+                    DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+                    DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, BreathUsed.nDiceNumber, DURATION_TYPE_PERMANENT, TRUE));
+                }
+            }
+            
+            //Silver alternate breath - paralyze
+            else if(BreathUsed.nOverrideSpecial == BREATH_PARALYZE)
+            {
+            	//prepare effects
+                effect eBreath = EffectParalyze();
+                effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
+                effect eDur2 = EffectVisualEffect(VFX_DUR_PARALYZE_HOLD);
+                effect eParal = EffectVisualEffect(VFX_DUR_PARALYZED);
+    
+                effect eLink = EffectLinkEffects(eBreath, eDur);
+                eLink = EffectLinkEffects(eLink, eDur2);
+                eLink = EffectLinkEffects(eLink, eParal);
+                
+                //get duration
+                int nParalDuration = BreathUsed.nDiceNumber;
+            	
+            	//Fire cast spell at event for the specified target
+                SignalEvent(oTarget, EventSpellCastAt(BreathUsed.oDragon, GetSpellId()));
+	        
+	        if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nSaveDC, SAVING_THROW_TYPE_NONE))
+                {
+                    //Apply the VFX impact and effects
+                    DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nParalDuration)));
+                }
+            }
+            
             //Shadow Dragon breath - drains levels
-            if(BreathUsed.nOverrideSpecial == BREATH_SHADOW)
+            else if(BreathUsed.nOverrideSpecial == BREATH_SHADOW)
             {
             	//Fire cast spell at event for the specified target
                 SignalEvent(oTarget, EventSpellCastAt(BreathUsed.oDragon, GetSpellId()));

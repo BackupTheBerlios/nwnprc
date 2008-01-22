@@ -1,0 +1,25 @@
+49c49
+<     int nRand;
+---
+>     int nRand, nNumDice;
+61a62,68
+> 
+>     nNumDice = nCasterLevel / 5;
+>     if(nNumDice == 0)
+>     {
+>         nNumDice = 1;
+>     }
+> 
+97,102c104
+<                       nCasterLevel /= 5;
+<                       if(nCasterLevel == 0)
+<                       {
+<                         nCasterLevel = 1;
+<                       }
+<                       nRand = d4(nCasterLevel);
+---
+>                       nRand = d4(nNumDice);
+106c108
+<                          nRand = 4 * nCasterLevel;//Damage is at max
+---
+>                          nRand = 4 * nNumDice;//Damage is at max

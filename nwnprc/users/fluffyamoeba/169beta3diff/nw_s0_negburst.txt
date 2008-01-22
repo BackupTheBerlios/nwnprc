@@ -1,0 +1,18 @@
+43a44
+>     int nAdditionalLevelDamage;
+53a55,61
+> 
+>     nAdditionalLevelDamage = nCasterLvl;
+>     if ( nAdditionalLevelDamage > 20 )
+>     {
+>        nAdditionalLevelDamage = 20;
+>     }
+> 
+74c82
+<             nDamage = d8() + nCasterLvl;
+---
+>             nDamage = d8() + nAdditionalLevelDamage;
+78c86
+<                 nDamage = 8 + nCasterLvl;
+---
+>                 nDamage = 8 + nAdditionalLevelDamage;

@@ -1,0 +1,26 @@
+126c126
+<                             nDieDam = d6();
+---
+>                             nDieDam = d6() + 4;
+130,133c130
+<                                 nDieDam = 6;//Damage is at max
+<                             }
+<                             nDamage = nDamage + nDieDam + 4;
+<                         }
+---
+>                                 nDieDam = 10;//Damage is at max 6+4=10
+137c135,142
+<                         nDamage = nDamage + (nDamage/2); //Damage/Healing is +50%
+---
+>                                 nDieDam = nDieDam + (nDieDam/2); //Damage/Healing is +50%
+>                             }
+>                             nDamage = nDamage + nDieDam;
+> 
+>                             eDam = EffectDamage(nDieDam, DAMAGE_TYPE_BLUDGEONING, DAMAGE_POWER_PLUS_TWO);
+>                             fDelay = GetRandomDelay(0.75, 1.5);
+>                             DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+>                         }
+144,146d148
+<                 eDam = EffectDamage(nDamage, DAMAGE_TYPE_BLUDGEONING, DAMAGE_POWER_PLUS_TWO);
+<                 fDelay = GetRandomDelay(0.75, 1.5);
+<                 DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));

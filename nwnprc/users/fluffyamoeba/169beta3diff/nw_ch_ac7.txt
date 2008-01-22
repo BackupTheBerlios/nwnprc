@@ -1,0 +1,39 @@
+19a20,24
+> //:://////////////////////////////////////////////////
+> //:: Modified By: Deva Winblood
+> //:: Modified On: Jan 6th, 2008
+> //:: Added Support for Dying Wile Mounted
+> //:://///////////////////////////////////////////////
+22a28,44
+> #include "x3_inc_horse"
+> 
+> void DismountWrapper()
+> { // Wrap
+>     object oNPC=OBJECT_SELF;
+>     if (HorseGetIsMounted(oNPC))
+>     { // make sure dismount
+>         DelayCommand(0.1,HORSE_SupportResetUnmountedAppearance(oNPC));
+>         DelayCommand(0.5,HORSE_SupportCleanVariables(oNPC));
+>         DelayCommand(0.6,HORSE_SupportRemoveACBonus(oNPC));
+>         DelayCommand(0.7,HORSE_SupportRemoveHPBonus(oNPC));
+>         DelayCommand(0.8,HORSE_SupportRemoveMountedSkillDecreases(oNPC));
+>         DelayCommand(0.9,HORSE_SupportAdjustMountedArcheryPenalty(oNPC));
+>         DelayCommand(1.0,HORSE_SupportOriginalSpeed(oNPC));
+>         DelayCommand(2.0,DismountWrapper());
+>     } // make sure dismount
+> } // DismountWrapper()
+61a84,90
+> 
+>     // * if mounted make sure dismounted
+>     if (HorseGetIsMounted(OBJECT_SELF))
+>     { // dismount
+>         DelayCommand(3.0,AssignCommand(OBJECT_SELF,DismountWrapper()));
+>     } // dismount
+> 
+97a128,133
+>     if (GetLocalInt(GetModule(),"X3_ENABLE_MOUNT_DB")&&GetIsObjectValid(GetMaster(OBJECT_SELF))) SetLocalInt(GetMaster(OBJECT_SELF),"bX3_STORE_MOUNT_INFO",TRUE);
+>     if (HorseGetIsAMount(OBJECT_SELF))
+>     { // horse
+>         return;  // horse should not respawn like other henchmen
+>     } // horse
+> 

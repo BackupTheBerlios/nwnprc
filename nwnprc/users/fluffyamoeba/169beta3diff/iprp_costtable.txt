@@ -1,0 +1,4 @@
+31a32,34
+> 28         IPRP_MATCOST         Material                0
+> 29         IPRP_QUALCOST        Quality                 0
+> 30         IPRP_ADDCOST         Additional_Property     0

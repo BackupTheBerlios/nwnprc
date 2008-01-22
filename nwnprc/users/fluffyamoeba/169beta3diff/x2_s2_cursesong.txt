@@ -1,0 +1,8 @@
+256c256
+<     else if(nPerform >= 18 && nLevel >= 12)
+---
+>     else if(nPerform >= 18 && nLevel >= 11)
+382c382
+<             if (!GetHasEffect(EFFECT_TYPE_DEAF,oTarget))
+---
+>             if (!GetHasEffect(EFFECT_TYPE_SILENCE,oTarget) && !GetHasEffect(EFFECT_TYPE_DEAF,oTarget))

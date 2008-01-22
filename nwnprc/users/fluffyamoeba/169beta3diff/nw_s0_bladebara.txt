@@ -1,0 +1,9 @@
+55,58c55,57
+<             if(MySavingThrow(SAVING_THROW_REFLEX, oTarget, GetSpellSaveDC()))
+<             {
+<                 nDamage = nDamage/2;
+<             }
+---
+>             //Adjust damage according to Reflex Save, Evasion or Improved Evasion
+>             nDamage = GetReflexAdjustedDamage(nDamage, oTarget, GetSpellSaveDC());
+> 

@@ -1,0 +1,2 @@
+30a31
+> 27  Ride            111889    111890       isk_x3_ride     1          DEX         0                  1                 ****      ****   SKILL_RIDE              0

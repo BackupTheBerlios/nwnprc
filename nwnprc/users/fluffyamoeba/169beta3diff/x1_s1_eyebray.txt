@@ -1,0 +1,14 @@
+33,35c33,41
+<         case 710:  nDamage = d4(nCount) + (nLevel /2);
+<         case 711:  nDamage = d6(2) + (nCount*2);
+<         case 712:  nDamage = d6(nCount) + (nCount);
+---
+>         case 710:
+>             nDamage = d4(nCount) + (nLevel /2);
+>             break;
+>         case 711:
+>             nDamage = d6(2) + (nCount*2);
+>             break;
+>         case 712:
+>             nDamage = d6(nCount) + (nCount);
+>             break;

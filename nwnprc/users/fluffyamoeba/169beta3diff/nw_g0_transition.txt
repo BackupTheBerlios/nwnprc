@@ -1,0 +1,180 @@
+14a15,31
+> //:: Modified By: Deva Winblood
+> //:: Modified On: Jan 16th, 2008
+> //:: Added Support for Keeping mounts ount of no mount areas
+> //::////////////////////////////////////////////////////////
+> 
+> #include "x3_inc_horse"
+> #include "x0_inc_henai"
+> 
+> ////////////////////////////////
+> // PROTOTYPES
+> ////////////////////////////////
+> 
+> void DismountWrapper(int bAnimate,int bSetOwner); // wraps a function
+> void HitchHorses(object oHitch,object oClicker,location lPreJump);
+> void ForceJump(object oJumper,object oDestination,float fRange=2.0,int nTimeOut=10);
+> void MoveAssociates(object oMaster);
+> 
+19a37,73
+>   location lPreJump = GetLocation(oClicker); // location before jump
+>   int nN=1;
+>   object oOb;
+>   object oAreaHere=GetArea(oClicker);
+>   object oAreaTarget=GetArea(oTarget);
+>   float fDelay=0.1;
+>   object oHitch;
+>   //SendMessageToPC(oClicker,"nw_g0_transition");
+>   if (GetLocalInt(oAreaTarget,"X3_NO_MOUNTING")||GetLocalInt(oAreaTarget,"X3_NO_HORSES"))
+>   { // make sure all transitioning are not mounted
+>      //SendMessageToPC(oClicker,"nw_g0_transition:No Mounting");
+>       if (HorseGetIsMounted(oClicker))
+>       { // dismount clicker
+>           AssignCommand(oClicker,DismountWrapper(FALSE,TRUE));
+>           fDelay=fDelay+0.5;
+>       } // dismount clicker
+>       oOb=GetAssociate(ASSOCIATE_TYPE_HENCHMAN,oClicker,nN);
+>       while(GetIsObjectValid(oOb))
+>       { // check each associate to see if mounted
+>           if (HorseGetIsMounted(oOb))
+>           { // dismount associate
+>               DelayCommand(fDelay,AssignCommand(oOb,DismountWrapper(FALSE,TRUE)));
+>               fDelay=fDelay+0.2;
+>           } // dismount associate
+>           nN++;
+>           oOb=GetAssociate(ASSOCIATE_TYPE_HENCHMAN,oClicker,nN);
+>       } // check each associate to see if mounted
+>       if (fDelay>0.1) SendMessageToPCByStrRef(oClicker,111989);
+>       fDelay=fDelay+1.0;
+>   } // make sure all transitioning are not mounted
+>   if (GetLocalInt(oAreaTarget,"X3_NO_HORSES"))
+>   { // make sure no horses/mounts follow the clicker to this area
+>       //SendMessageToPC(oClicker,"nw_g0_transition:No Horses");
+>       oHitch=GetNearestObjectByTag("X3_HITCHING_POST",oClicker);
+>       DelayCommand(fDelay,HitchHorses(oHitch,oClicker,lPreJump));
+>       fDelay=fDelay+0.5;
+>   } // make sure no horses/mounts follow the clicker to this area
+20a75
+>   //SendMessageToPC(oClicker,"nw_g0_transition:Jump  fDelay="+FloatToString(fDelay));
+23c78,79
+<   AssignCommand(oClicker,JumpToObject(oTarget));
+---
+>   DelayCommand(fDelay,AssignCommand(oClicker,ForceJump(oClicker,oTarget)));
+>   DelayCommand(fDelay+5.0,MoveAssociates(oClicker));
+24a81,196
+> 
+> ////////////////////////////////
+> // FUNCTIONS
+> ////////////////////////////////
+> 
+> void DismountWrapper(int bAnimate,int bSetOwner)
+> { // Wrap
+>     object oHorse=HorseDismount(bAnimate,bSetOwner);
+>     object oNPC=OBJECT_SELF;
+>     if (bSetOwner) SetLocalObject(oNPC,"oAssignedHorse",oHorse);
+> } // DismountWrapper()
+> 
+> 
+> void HitchHorses(object oHitch,object oClicker,location lPreJump)
+> { // PURPOSE: Hitch all associates to clicker
+>     int nN=1;
+>     object oOb;
+>     object oHench;
+>     int nNN;
+>     int bNotAllowed=FALSE;
+>     oOb=GetAssociate(ASSOCIATE_TYPE_HENCHMAN,oClicker,nN);
+>     while(GetIsObjectValid(oOb))
+>     { // traverse henchmen
+>         if (HorseGetIsAMount(oOb))
+>         { // is a mount
+>             bNotAllowed=TRUE;
+>             if (GetIsObjectValid(oHitch))
+>             { // jump to hitch
+>                 DelayCommand(0.2,RemoveHenchman(oClicker,oOb));
+>                 AssignCommand(oOb,ClearAllActions(TRUE));
+>                 AssignCommand(oOb,JumpToObject(oHitch));
+>                 SetAssociateState(NW_ASC_MODE_STAND_GROUND,TRUE,oOb);
+>             } // jump to hitch
+>             else
+>             { // stand where you are
+>                 DelayCommand(0.2,RemoveHenchman(oClicker,oOb));
+>                 AssignCommand(oOb,ClearAllActions(TRUE));
+>                 SetAssociateState(NW_ASC_MODE_STAND_GROUND,TRUE,oOb);
+>                 AssignCommand(oOb,ActionMoveAwayFromLocation(lPreJump,FALSE,7.0));
+>             } // stand where you are
+>         } // is a mount
+>         else
+>         { // check for mounts for this henchman
+>             oHench=oOb;
+>             nNN=1;
+>             oOb=GetAssociate(ASSOCIATE_TYPE_HENCHMAN,oHench,nNN);
+>             while(GetIsObjectValid(oOb))
+>             { // traverse henchmen
+>                 if (HorseGetIsAMount(oOb))
+>                 { // is a mount
+>                     bNotAllowed=TRUE;
+>                     if (GetIsObjectValid(oHitch))
+>                     { // jump to hitch
+>                         DelayCommand(0.3,RemoveHenchman(oHench,oOb));
+>                         AssignCommand(oOb,ClearAllActions(TRUE));
+>                         AssignCommand(oOb,JumpToObject(oHitch));
+>                         SetAssociateState(NW_ASC_MODE_STAND_GROUND,TRUE,oOb);
+>                      } // jump to hitch
+>                      else
+>                      { // stand where you are
+>                          DelayCommand(0.3,RemoveHenchman(oHench,oOb));
+>                          AssignCommand(oOb,ClearAllActions(TRUE));
+>                          SetAssociateState(NW_ASC_MODE_STAND_GROUND,TRUE,oOb);
+>                          AssignCommand(oOb,ActionMoveAwayFromLocation(lPreJump,FALSE,7.0));
+>                       } // stand where you are
+>                   } // is a mount
+>                   nNN++;
+>                  oOb=GetAssociate(ASSOCIATE_TYPE_HENCHMAN,oHench,nNN);
+>              } // traverse henchmen
+>         } // check for mounts for this henchman
+>         nN++;
+>         oOb=GetAssociate(ASSOCIATE_TYPE_HENCHMAN,oClicker,nN);
+>     } // traverse henchmen
+>     if (bNotAllowed) SendMessageToPCByStrRef(oClicker,111990);
+> } // HitchHorses()
+> 
+> 
+> void ForceJump(object oJumper,object oDestination,float fRange=2.0,int nTimeOut=10)
+> { // PURPOSE: Make sure jump
+>     //SendMessageToPC(oJumper,"nw_g0_transition:ForceJump("+IntToString(nTimeOut)+")");
+>     if (nTimeOut>0&&(GetArea(oJumper)!=GetArea(oDestination)||GetDistanceBetween(oJumper,oDestination)>fRange))
+>     { // jump
+>         AssignCommand(oJumper,ClearAllActions(TRUE));
+>         AssignCommand(oJumper,JumpToObject(oDestination));
+>         DelayCommand(0.6,ForceJump(oJumper,oDestination,fRange,nTimeOut-1));
+>     } // jump
+> } // ForceJump()
+> 
+> 
+> void MoveAssociates(object oMaster)
+> { // PURPOSE: Give the PC some breathing room
+>     int nN=1;
+>     object oAssociate=GetAssociate(ASSOCIATE_TYPE_HENCHMAN,oMaster,nN);
+>     while(GetIsObjectValid(oAssociate))
+>     { // move associates
+>         if (GetArea(oAssociate)==GetArea(oMaster)&&GetDistanceBetween(oMaster,oAssociate)<6.0)
+>         { // move away
+>             AssignCommand(oAssociate,ClearAllActions());
+>             AssignCommand(oAssociate,ActionMoveAwayFromObject(oMaster,FALSE,6.0));
+>         } // move away
+>         nN++;
+>         oAssociate=GetAssociate(ASSOCIATE_TYPE_HENCHMAN,oMaster,nN);
+>     } // move associates
+>     nN=1;
+>     oAssociate=GetAssociate(ASSOCIATE_TYPE_SUMMONED,oMaster,nN);
+>     while(GetIsObjectValid(oAssociate))
+>     { // move associates
+>         if (GetArea(oAssociate)==GetArea(oMaster)&&GetDistanceBetween(oMaster,oAssociate)<6.0)
+>         { // move away
+>             AssignCommand(oAssociate,ClearAllActions());
+>             AssignCommand(oAssociate,ActionMoveAwayFromObject(oMaster,FALSE,6.0));
+>         } // move away
+>         nN++;
+>         oAssociate=GetAssociate(ASSOCIATE_TYPE_SUMMONED,oMaster,nN);
+>     } // move associates
+> } // MoveAssociates()

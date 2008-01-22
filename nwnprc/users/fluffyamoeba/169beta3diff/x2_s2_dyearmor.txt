@@ -1,0 +1,4 @@
+139c139
+<   if (nTest > 0 && nTest < DYE_MAX_COLOR_INDEX )
+---
+>   if (nTest > 0 && nTest <= DYE_MAX_COLOR_INDEX )

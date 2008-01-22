@@ -1,0 +1,263 @@
+40a41,42
+> int    TALKVOLUME_PARTY         = 5;
+> int    TALKVOLUME_TELL          = 6;
+659a662,665
+> int ITEM_PROPERTY_MATERIAL                                 = 85;
+> int ITEM_PROPERTY_QUALITY                                  = 86;
+> int ITEM_PROPERTY_UNKNOWN                                  = 87;
+> 
+1097a1104,1129
+> int VFX_EYES_YEL_HUMAN_MALE            = 373;
+> int VFX_EYES_YEL_HUMAN_FEMALE          = 374;
+> int VFX_EYES_YEL_DWARF_MALE            = 375;
+> int VFX_EYES_YEL_DWARF_FEMALE          = 376;
+> int VFX_EYES_YEL_ELF_MALE              = 377;
+> int VFX_EYES_YEL_ELF_FEMALE            = 378;
+> int VFX_EYES_YEL_GNOME_MALE            = 379;
+> int VFX_EYES_YEL_GNOME_FEMALE          = 380;
+> int VFX_EYES_YEL_HALFLING_MALE         = 381;
+> int VFX_EYES_YEL_HALFLING_FEMALE       = 382;
+> int VFX_EYES_YEL_HALFORC_MALE          = 383;
+> int VFX_EYES_YEL_HALFORC_FEMALE        = 384;
+> int VFX_EYES_YEL_TROGLODYTE            = 385;
+> int VFX_EYES_ORG_HUMAN_MALE            = 386;
+> int VFX_EYES_ORG_HUMAN_FEMALE          = 387;
+> int VFX_EYES_ORG_DWARF_MALE            = 388;
+> int VFX_EYES_ORG_DWARF_FEMALE          = 389;
+> int VFX_EYES_ORG_ELF_MALE              = 390;
+> int VFX_EYES_ORG_ELF_FEMALE            = 391;
+> int VFX_EYES_ORG_GNOME_MALE            = 392;
+> int VFX_EYES_ORG_GNOME_FEMALE          = 393;
+> int VFX_EYES_ORG_HALFLING_MALE         = 394;
+> int VFX_EYES_ORG_HALFLING_FEMALE       = 395;
+> int VFX_EYES_ORG_HALFORC_MALE          = 396;
+> int VFX_EYES_ORG_HALFORC_FEMALE        = 397;
+> int VFX_EYES_ORG_TROGLODYTE            = 398;
+1119a1152
+> int VFX_BEAM_DISINTEGRATE              = 447;
+1222,1223c1255,1313
+< 
+< 
+---
+> int VFX_EYES_PUR_HUMAN_MALE            = 580;
+> int VFX_EYES_PUR_HUMAN_FEMALE          = 581;
+> int VFX_EYES_PUR_DWARF_MALE            = 582;
+> int VFX_EYES_PUR_DWARF_FEMALE          = 583;
+> int VFX_EYES_PUR_ELF_MALE              = 584;
+> int VFX_EYES_PUR_ELF_FEMALE            = 585;
+> int VFX_EYES_PUR_GNOME_MALE            = 586;
+> int VFX_EYES_PUR_GNOME_FEMALE          = 587;
+> int VFX_EYES_PUR_HALFLING_MALE         = 588;
+> int VFX_EYES_PUR_HALFLING_FEMALE       = 589;
+> int VFX_EYES_PUR_HALFORC_MALE          = 590;
+> int VFX_EYES_PUR_HALFORC_FEMALE        = 591;
+> int VFX_EYES_PUR_TROGLODYTE            = 592;
+> int VFX_EYES_CYN_HUMAN_MALE            = 593;
+> int VFX_EYES_CYN_HUMAN_FEMALE          = 594;
+> int VFX_EYES_CYN_DWARF_MALE            = 595;
+> int VFX_EYES_CYN_DWARF_FEMALE          = 596;
+> int VFX_EYES_CYN_ELF_MALE              = 597;
+> int VFX_EYES_CYN_ELF_FEMALE            = 598;
+> int VFX_EYES_CYN_GNOME_MALE            = 599;
+> int VFX_EYES_CYN_GNOME_FEMALE          = 600;
+> int VFX_EYES_CYN_HALFLING_MALE         = 601;
+> int VFX_EYES_CYN_HALFLING_FEMALE       = 602;
+> int VFX_EYES_CYN_HALFORC_MALE          = 603;
+> int VFX_EYES_CYN_HALFORC_FEMALE        = 604;
+> int VFX_EYES_CYN_TROGLODYTE            = 605;
+> int VFX_EYES_WHT_HUMAN_MALE            = 606;
+> int VFX_EYES_WHT_HUMAN_FEMALE          = 607;
+> int VFX_EYES_WHT_DWARF_MALE            = 608;
+> int VFX_EYES_WHT_DWARF_FEMALE          = 609;
+> int VFX_EYES_WHT_ELF_MALE              = 610;
+> int VFX_EYES_WHT_ELF_FEMALE            = 611;
+> int VFX_EYES_WHT_GNOME_MALE            = 612;
+> int VFX_EYES_WHT_GNOME_FEMALE          = 613;
+> int VFX_EYES_WHT_HALFLING_MALE         = 614;
+> int VFX_EYES_WHT_HALFLING_FEMALE       = 615;
+> int VFX_EYES_WHT_HALFORC_MALE          = 616;
+> int VFX_EYES_WHT_HALFORC_FEMALE        = 617;
+> int VFX_EYES_WHT_TROGLODYTE            = 618;
+> int VFX_IMP_PDK_GENERIC_PULSE          = 623;
+> int VFX_IMP_PDK_GENERIC_HEAD_HIT       = 624;
+> int VFX_IMP_PDK_RALLYING_CRY           = 625;
+> int VFX_IMP_PDK_HEROIC_SHIELD          = 626;
+> int VFX_IMP_PDK_INSPIRE_COURAGE        = 627;
+> int VFX_DUR_PDK_FEAR                   = 628;
+> int VFX_IMP_PDK_WRATH                  = 629;
+> int VFX_IMP_PDK_OATH                   = 630;
+> int VFX_IMP_PDK_FINAL_STAND            = 631;
+> int VFX_DUR_ARROW_IN_STERNUM           = 632;
+> int VFX_DUR_ARROW_IN_CHEST_LEFT        = 633;
+> int VFX_DUR_ARROW_IN_CHEST_RIGHT       = 634;
+> int VFX_DUR_ARROW_IN_BACK              = 635;
+> int VFX_DUR_ARROW_IN_TEMPLES           = 636;
+> int VFX_DUR_ARROW_IN_FACE              = 637;
+> int VFX_DUR_ARROW_IN_HEAD              = 638;
+> int VFX_DUR_QUILL_IN_CHEST             = 639;
+> int VFX_IMP_STARBURST_GREEN            = 644;
+> int VFX_IMP_STARBURST_RED              = 645;
+> int VFX_IMP_NIGHTMARE_HEAD_HIT         = 670;
+1872a1963,1970
+> int SPELL_HORSE_MENU                       = 812;
+> int SPELL_HORSE_DISMOUNT                   = 813;
+> int SPELL_HORSE_MOUNT                      = 814;
+> int SPELL_HORSE_PARTY_MOUNT                = 815;
+> int SPELL_HORSE_PARTY_DISMOUNT             = 816;
+> int SPELL_HORSE_ASSIGN_MOUNT               = 817;
+> int SPELL_PALADIN_SUMMON_MOUNT             = 818;
+> 
+2010a2109
+> int CLASS_TYPE_PURPLE_DRAGON_KNIGHT = 41;
+2183a2283
+> int SKILL_RIDE             = 27;
+3200a3301,3335
+> int FEAT_WEAPON_FOCUS_TRIDENT               = 1072;
+> int FEAT_WEAPON_SPECIALIZATION_TRIDENT      = 1073;
+> int FEAT_IMPROVED_CRITICAL_TRIDENT          = 1074;
+> int FEAT_EPIC_DEVASTATING_CRITICAL_TRIDENT  = 1075;
+> int FEAT_EPIC_WEAPON_FOCUS_TRIDENT          = 1076;
+> int FEAT_EPIC_WEAPON_SPECIALIZATION_TRIDENT = 1077;
+> int FEAT_EPIC_OVERWHELMING_CRITICAL_TRIDENT = 1078;
+> int FEAT_WEAPON_OF_CHOICE_TRIDENT           = 1079;
+> int FEAT_PDK_RALLY                          = 1080;
+> int FEAT_PDK_SHIELD                         = 1081;
+> int FEAT_PDK_FEAR                           = 1082;
+> int FEAT_PDK_WRATH                          = 1083;
+> int FEAT_PDK_STAND                          = 1084;
+> int FEAT_PDK_INSPIRE_1                      = 1085;
+> int FEAT_PDK_INSPIRE_2                      = 1086;
+> int FEAT_MOUNTED_COMBAT                     = 1087;
+> int FEAT_MOUNTED_ARCHERY                    = 1088;
+> int FEAT_HORSE_MENU                         = 1089;
+> int FEAT_HORSE_DISMOUNT                     = 1090;
+> int FEAT_HORSE_MOUNT                        = 1091;
+> int FEAT_HORSE_PARTY_MOUNT                  = 1092;
+> int FEAT_HORSE_PARTY_DISMOUNT               = 1093;
+> int FEAT_HORSE_ASSIGN_MOUNT                 = 1094;
+> int FEAT_PALADIN_SUMMON_MOUNT               = 1095;
+> int FEAT_PLAYER_TOOL_01                     = 1106;
+> int FEAT_PLAYER_TOOL_02                     = 1107;
+> int FEAT_PLAYER_TOOL_03                     = 1108;
+> int FEAT_PLAYER_TOOL_04                     = 1109;
+> int FEAT_PLAYER_TOOL_05                     = 1110;
+> int FEAT_PLAYER_TOOL_06                     = 1111;
+> int FEAT_PLAYER_TOOL_07                     = 1112;
+> int FEAT_PLAYER_TOOL_08                     = 1113;
+> int FEAT_PLAYER_TOOL_09                     = 1114;
+> int FEAT_PLAYER_TOOL_10                     = 1115;
+> 
+5517a5653
+> int FOOTSTEP_TYPE_HORSE                         = 17;
+5560a5697,5701
+> int COLOR_CHANNEL_SKIN                          = 0;
+> int COLOR_CHANNEL_HAIR                          = 1;
+> int COLOR_CHANNEL_TATTOO_1                      = 2;
+> int COLOR_CHANNEL_TATTOO_2                      = 3;
+> 
+5994a6136
+> // - nStart: The character position to start searching at (from the left end of the string). 
+5996c6138
+< int FindSubString(string sString, string sSubString);
+---
+> int FindSubString(string sString, string sSubString, int nStart=0);
+6723a6866,6868
+> // - bAllPartyMembers: when TRUE the alignment shift of oSubject also has a 
+> //                     diminished affect all members of oSubject's party (if oSubject is a Player).
+> //                     When FALSE the shift only affects oSubject.
+6725c6870
+< void AdjustAlignment(object oSubject, int nAlignment, int nShift);
+---
+> void AdjustAlignment(object oSubject, int nAlignment, int nShift, int bAllPartyMembers=TRUE);
+10485c10630,10718
+< void SetUseableFlag(object oPlaceable, int nUseableFlag);
+---
+> void SetUseableFlag(object oPlaceable, int nUseableFlag);
+> 
+> // Get the description of oObject.
+> // - oObject: the object from which you are obtaining the description. 
+> //            Can be a creature, item, placeable, door, trigger or module object.
+> // - bOriginalDescription:  if set to true any new description specified via a SetDescription scripting command
+> //                   is ignored and the original object's description is returned instead.
+> // - bIdentified: If oObject is an item, setting this to TRUE will return the identified description,
+> //                setting this to FALSE will return the unidentified description. This flag has no
+> //                effect on objects other than items.
+> string GetDescription(object oObject, int bOriginalDescription=FALSE, int bIdentifiedDescription=TRUE);
+> 
+> // Set the description of oObject.
+> // - oObject: the object for which you are changing the description 
+> //            Can be a creature, placeable, item, door, or trigger.
+> // - sNewDescription: the new description that the object will use.
+> // - bIdentified: If oObject is an item, setting this to TRUE will set the identified description,
+> //                setting this to FALSE will set the unidentified description. This flag has no
+> //                effect on objects other than items.
+> // Note: Setting an object's description to "" will make the object
+> //       revert to using the description it originally had before any
+> //       SetDescription() calls were made on the object.
+> void SetDescription(object oObject, string sNewDescription="", int bIdentifiedDescription=TRUE);
+> 
+> // Get the PC that sent the last player chat(text) message.
+> // Should only be called from a module's OnPlayerChat event script.
+> // * Returns OBJECT_INVALID on error.
+> // Note: Private tells do not trigger a OnPlayerChat event.
+> object GetPCChatSpeaker();
+> 
+> // Get the last player chat(text) message that was sent.
+> // Should only be called from a module's OnPlayerChat event script.
+> // * Returns empty string "" on error.
+> // Note: Private tells do not trigger a OnPlayerChat event.
+> string GetPCChatMessage();
+> 
+> // Get the volume of the last player chat(text) message that was sent.
+> // Returns one of the following TALKVOLUME_* constants based on the volume setting
+> // that the player used to send the chat message.
+> //                TALKVOLUME_TALK
+> //                TALKVOLUME_WHISPER
+> //                TALKVOLUME_SHOUT
+> //                TALKVOLUME_SILENT_SHOUT (used for DM chat channel)
+> //                TALKVOLUME_PARTY
+> // Should only be called from a module's OnPlayerChat event script.
+> // * Returns -1 on error.
+> // Note: Private tells do not trigger a OnPlayerChat event.
+> int GetPCChatVolume();
+> 
+> // Set the last player chat(text) message before it gets sent to other players.
+> // - sNewChatMessage: The new chat text to be sent onto other players.
+> //                    Setting the player chat message to an empty string "",
+> //                    will cause the chat message to be discarded 
+> //                    (i.e. it will not be sent to other players).
+> // Note: The new chat message gets sent after the OnPlayerChat script exits.
+> void SetPCChatMessage(string sNewChatMessage="");
+> 
+> // Set the last player chat(text) volume before it gets sent to other players.
+> // - nTalkVolume: The new volume of the chat text to be sent onto other players.
+> //                TALKVOLUME_TALK
+> //                TALKVOLUME_WHISPER
+> //                TALKVOLUME_SHOUT
+> //                TALKVOLUME_SILENT_SHOUT (used for DM chat channel)
+> //                TALKVOLUME_PARTY
+> //                TALKVOLUME_TELL (sends the chat message privately back to the original speaker)
+> // Note: The new chat message gets sent after the OnPlayerChat script exits.
+> void SetPCChatVolume(int nTalkVolume=TALKVOLUME_TALK);
+> 
+> // Get the Color of oObject from the color channel specified.
+> // - oObject: the object from which you are obtaining the color. 
+> //            Can be a creature that has color information (i.e. the playable races).
+> // - nColorChannel: The color channel that you want to get the color value of.
+> //                   COLOR_CHANNEL_SKIN
+> //                   COLOR_CHANNEL_HAIR
+> //                   COLOR_CHANNEL_TATTOO_1
+> //                   COLOR_CHANNEL_TATTOO_2
+> // * Returns -1 on error.
+> int GetColor(object oObject, int nColorChannel);
+> 
+> // Set the color channel of oObject to the color specified.
+> // - oObject: the object for which you are changing the color.
+> //            Can be a creature that has color information (i.e. the playable races).
+> // - nColorChannel: The color channel that you want to set the color value of.
+> //                   COLOR_CHANNEL_SKIN
+> //                   COLOR_CHANNEL_HAIR
+> //                   COLOR_CHANNEL_TATTOO_1
+> //                   COLOR_CHANNEL_TATTOO_2
+> // - nColorValue: The color you want to set (0-175).
+> void SetColor(object oObject, int nColorChannel, int nColorValue);

@@ -1,0 +1,29 @@
+48c48
+<   int nDamagen, nModify, nHurt, nHP;
+---
+>   int nDamagen, nModify, nHP;
+82a83,87
+>                     if (nMetaMagic == METAMAGIC_EMPOWER)
+>                     {
+>                         nModify = nModify + (nModify/2); //Damage/Healing is +50%
+>                     }
+> 
+88,89c93
+<                     //Calculate damage
+<                     nHurt =  nModify;
+---
+> 
+91c95
+<                     eKill = EffectDamage(nHurt, DAMAGE_TYPE_POSITIVE);
+---
+>                     eKill = EffectDamage(nModify, DAMAGE_TYPE_POSITIVE);
+105c109
+<                 nHP = d8();
+---
+>                 nHP = d8() + nCasterLvl;
+109c113
+<                     nHP =8;//Damage is at max
+---
+>                     nHP = 8 + nCasterLvl;//Damage is at max
+116d119
+<                 nHP = nHP + nCasterLvl;

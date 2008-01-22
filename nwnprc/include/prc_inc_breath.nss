@@ -151,7 +151,7 @@ void ExhaleImmunity(object oDragon, int nDamageType, location lTargetArea)
         {
         	
              //Fire cast spell at event for the specified target
-             SignalEvent(oTarget, EventSpellCastAt(oDragon, GetSpellId()));
+             SignalEvent(oTarget, EventSpellCastAt(oDragon, GetSpellId(), FALSE));
              //Determine effect delay
              float fDelay = GetDistanceBetween(oDragon, oTarget)/20;
              float fDuration = RoundsToSeconds(d4());
@@ -214,10 +214,10 @@ struct breath CreateBreath(object oDragon, int bLine, float fRange, int nDamageT
 	if(GetLocalInt(oDragon, "EntangleBreath"))
 	   BreathUsed.bEntangling = TRUE;
         // Whether Exhaled Barrier was used
-	if(GetLocalInt(oDragon, "EntangleBreath"))
+	if(GetLocalInt(oDragon, "ExhaleBarrier"))
 	   BreathUsed.bBarrier = TRUE;
         // Whether Exhaled Immunity was used
-	if(GetLocalInt(oDragon, "EntangleBreath"))
+	if(GetLocalInt(oDragon, "ExhaleImmunity"))
 	   BreathUsed.bExhaleImmune = TRUE;
 	   
         //breaths without recharge times can't use metabreath

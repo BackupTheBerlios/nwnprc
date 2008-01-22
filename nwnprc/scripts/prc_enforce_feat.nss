@@ -1273,7 +1273,10 @@ int DraconicFeats(object oPC = OBJECT_SELF)
     //testing for Dragonblood only
     if((GetHasFeat(FEAT_DRAGONFIRE_ASSAULT, oPC) 
          || GetHasFeat(FEAT_DRAGONFIRE_CHANNELING, oPC)
-         || GetHasFeat(FEAT_DRAGONFIRE_INSPIRATION, oPC))
+         || GetHasFeat(FEAT_DRAGONFIRE_INSPIRATION, oPC)
+         || GetHasFeat(FEAT_ENTANGLING_EXHALATION, oPC)
+         || GetHasFeat(FEAT_EXHALED_BARRIER, oPC)
+         || GetHasFeat(FEAT_EXHALED_IMMUNITY, oPC))
        && !bDragonblooded)
     {
              FloatingTextStringOnCreature("You must be dragonblood subtype.", oPC, FALSE);
@@ -1360,6 +1363,56 @@ int DraconicFeats(object oPC = OBJECT_SELF)
      )
         return FALSE;
 
+    return TRUE;
+}
+
+int MetabreathFeats(object oPC)
+{
+    int bRechargeBreath;
+    int bBreath;
+    
+    //sources of breaths with recharge rounds
+    if((GetLevelByClass(CLASS_TYPE_DRAGON_DISCIPLE, oPC) > 9)
+       || (GetLevelByClass(CLASS_TYPE_DRAGON_SHAMAN, oPC) > 3)
+       || (GetLevelByClass(CLASS_TYPE_TALON_OF_TIAMAT, oPC) > 0)
+       || (GetLevelByClass(CLASS_TYPE_INITIATE_DRACONIC, oPC) > 9)
+       || (GetLevelByClass(CLASS_TYPE_SHIFTER, oPC) > 6)
+       || (GetRacialType(oPC) == RACIAL_TYPE_DRAGON))
+       bRechargeBreath = TRUE;
+       
+    if(bRechargeBreath
+       || (GetLevelByClass(CLASS_TYPE_SWIFT_WING, oPC) > 2)
+       || (GetLevelByClass(CLASS_TYPE_DIAMOND_DRAGON, oPC) > 3)
+       || (GetLevelByClass(CLASS_TYPE_DRUNKEN_MASTER, oPC) > 9)
+       || GetHasFeat(FEAT_DRACONIC_BREATH, oPC))
+       bBreath = TRUE;
+       
+    //metabreath requires breath weapons with a recharge time
+    if((GetHasFeat(FEAT_CLINGING_BREATH, oPC)
+           || GetHasFeat(FEAT_LINGERING_BREATH, oPC)
+           || GetHasFeat(FEAT_ENLARGE_BREATH, oPC)
+           || GetHasFeat(FEAT_HEIGHTEN_BREATH, oPC)
+           || GetHasFeat(FEAT_MAXIMIZE_BREATH, oPC)
+           || GetHasFeat(FEAT_RECOVER_BREATH, oPC)
+           || GetHasFeat(FEAT_SHAPE_BREATH, oPC)
+           || GetHasFeat(FEAT_SPREAD_BREATH, oPC)
+           || GetHasFeat(FEAT_TEMPEST_BREATH, oPC))
+        && !(bRechargeBreath))
+    {
+        FloatingTextStringOnCreature("You must have a breath weapon with a recharge time.", oPC, FALSE);
+        return FALSE;
+    }
+        
+    //breath channeling works with any breath weapon
+    if((GetHasFeat(FEAT_ENTANGLING_EXHALATION, oPC)
+           || GetHasFeat(FEAT_EXHALED_BARRIER, oPC)
+           || GetHasFeat(FEAT_EXHALED_IMMUNITY, oPC))
+        && !(bBreath))
+    {
+        FloatingTextStringOnCreature("You must have a breath weapon.", oPC, FALSE);
+        return FALSE;
+    }
+        
     return TRUE;
 }
 
@@ -1530,6 +1583,7 @@ void main()
          || !FavouredSoul(oPC)
          || !SuddenMetamagic(oPC)
          || !DraconicFeats(oPC)
+         || !MetabreathFeats(oPC)
          || !DragonShamanFeats(oPC)
          || !Swordsage(oPC)
        )

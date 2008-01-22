@@ -15,6 +15,7 @@ int DecrementSpellLevel(int nLevel, object oPC = OBJECT_SELF);
 
 #include "prc_alterations"
 #include "spinc_common"
+#include "prc_inc_breath"
 
 void ActivateSavingThrow(int nSpellLevel, object oPC = OBJECT_SELF)
 {
@@ -41,8 +42,7 @@ void ActivateBreath(int nSpellLevel, object oPC = OBJECT_SELF)
 	if(!bCanUse) return;
 	
 	int nDamageType;
-	int nSaveType;
-        effect eVis;
+        struct breath DracBreath;
 	
 	//Acid
             if(GetHasFeat(FEAT_DRACONIC_HERITAGE_BK, oPC)
@@ -50,8 +50,6 @@ void ActivateBreath(int nSpellLevel, object oPC = OBJECT_SELF)
                || GetHasFeat(FEAT_DRACONIC_HERITAGE_GR, oPC))
             {
                  nDamageType = DAMAGE_TYPE_ACID;
-                 nSaveType = SAVING_THROW_TYPE_ACID;
-                 eVis = EffectVisualEffect(VFX_IMP_ACID_L);
             }
              
             //Cold
@@ -61,8 +59,6 @@ void ActivateBreath(int nSpellLevel, object oPC = OBJECT_SELF)
                || GetHasFeat(FEAT_DRACONIC_HERITAGE_WH, oPC))
             {
                  nDamageType = DAMAGE_TYPE_COLD;
-                 nSaveType = SAVING_THROW_TYPE_COLD;
-                 eVis = EffectVisualEffect(VFX_IMP_FROST_L);
             }
             //Electric
             if(GetHasFeat(FEAT_DRACONIC_HERITAGE_BL, oPC)
@@ -70,8 +66,6 @@ void ActivateBreath(int nSpellLevel, object oPC = OBJECT_SELF)
                || GetHasFeat(FEAT_DRACONIC_HERITAGE_SA, oPC))
             {
                  nDamageType = DAMAGE_TYPE_ELECTRICAL;
-                 nSaveType = SAVING_THROW_TYPE_ELECTRICITY;
-                 eVis = EffectVisualEffect(VFX_IMP_LIGHTNING_S);
             }
             //Fire
             if(GetHasFeat(FEAT_DRACONIC_HERITAGE_BS, oPC)
@@ -79,31 +73,18 @@ void ActivateBreath(int nSpellLevel, object oPC = OBJECT_SELF)
                || GetHasFeat(FEAT_DRACONIC_HERITAGE_RD, oPC))
             {
                  nDamageType = DAMAGE_TYPE_FIRE;
-                 nSaveType = SAVING_THROW_TYPE_FIRE;
-                 eVis = EffectVisualEffect(VFX_IMP_FLAME_M);
             }
             //Sonic
             if(GetHasFeat(FEAT_DRACONIC_HERITAGE_EM, oPC))
             {
                  nDamageType = DAMAGE_TYPE_SONIC;
-                 nSaveType = SAVING_THROW_TYPE_SONIC;
-                 eVis = EffectVisualEffect(VFX_IMP_SONIC);
             }
 	
 	
-        int nDC              = 10 + GetAbilityModifier(ABILITY_CHARISMA, oPC) + nSpellLevel;
+        int nSaveDCBonus     = nSpellLevel;
         int nNumberOfDice    = 2;
         int nDieSize         = 6;
-        int nDamage;
-        location lPC         = GetLocation(oPC);
         location lTarget     = PRCGetSpellTargetLocation();
-        float fWidth         = FeetToMeters(30.0f);
-        float fLength        = FeetToMeters(60.0f);
-        float fDelay;
-        vector vOrigin       = GetPosition(oPC);
-        effect eDamage;
-        object oTarget;
-        int nSpellID         = GetSpellId();
         
         //check for Dragonheart Mage abilities
         int nHeartLevel = GetLevelByClass(CLASS_TYPE_DRAGONHEART_MAGE, oPC);
@@ -144,78 +125,16 @@ void ActivateBreath(int nSpellLevel, object oPC = OBJECT_SELF)
             || (nDamageType == DAMAGE_TYPE_FIRE) 
             || (nDamageType == DAMAGE_TYPE_SONIC))
         {
-            // Loop over targets in the cone shape
-            oTarget = MyFirstObjectInShape(SHAPE_SPELLCONE, fWidth, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
-            while(GetIsObjectValid(oTarget))
-            {
-                if(oTarget != oPC &&
-                   spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oPC)
-                   )
-                {
-                    // Let the AI know
-                    SPRaiseSpellCastAt(oTarget, TRUE, nSpellID, oPC);
-                    // Roll damage
-                    nDamage = 0;
-                    int i;
-                    for (i = 0; i < nNumberOfDice; i++)
-                           nDamage += Random(nDieSize) + 1;
-                    // Target-specific stuff
-                    nDamage = GetTargetSpecificChangesToDamage(oTarget, oPC, nDamage, TRUE, TRUE);
-
-                    // Adjust damage according to Reflex Save, Evasion or Improved Evasion
-                    nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, nDC, nSaveType);
-
-                    if(nDamage > 0)
-                    {
-                        fDelay = GetDistanceBetweenLocations(lPC, GetLocation(oTarget)) / 20.0f;
-                        eDamage = EffectDamage(nDamage, nDamageType);
-                        DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
-                        DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-                    }// end if - There was still damage remaining to be dealt after adjustments
-                }// end if - Target validity check
-
-                // Get next target
-                oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, fWidth, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
-            }// end while - Target loop
+            DracBreath = CreateBreath(oPC, FALSE, 30.0, nDamageType, nDieSize, nNumberOfDice, ABILITY_CHARISMA, nSaveDCBonus, BREATH_NORMAL, 0);
         }//end cone handling
             
         //otherwise do a line
         else
         {
-             // Loop over targets in the line shape
-            oTarget = MyFirstObjectInShape(SHAPE_SPELLCYLINDER, fLength, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE, vOrigin);
-            while(GetIsObjectValid(oTarget))
-            {
-                if(oTarget != oPC &&
-                   spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oPC)
-                   )
-                {
-                    // Let the AI know
-                    SPRaiseSpellCastAt(oTarget, TRUE, nSpellID, oPC);
-                    // Roll damage
-                    nDamage = 0;
-                    int i;
-                    for (i = 0; i < nNumberOfDice; i++)
-                           nDamage += Random(nDieSize) + 1;
-                    // Target-specific stuff
-                    nDamage = GetTargetSpecificChangesToDamage(oTarget, oPC, nDamage, TRUE, TRUE);
-                    
-                    // Do save
-                    nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, nDC, nSaveType);
-
-                    if(nDamage > 0)
-                    {
-                        fDelay = GetDistanceBetweenLocations(lPC, GetLocation(oTarget)) / 20.0f;
-                        eDamage = EffectDamage(nDamage, nDamageType);
-                        DelayCommand(1.0f + fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
-                        DelayCommand(1.0f + fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-                    }// end if - There was still damage remaining to be dealt after adjustments
-                }// end if - Target validity check
-
-               // Get next target
-                oTarget = MyNextObjectInShape(SHAPE_SPELLCYLINDER, fLength, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE, vOrigin);
-            }// end while - Target loop
+            DracBreath = CreateBreath(oPC, TRUE, 60.0, nDamageType, nDieSize, nNumberOfDice, ABILITY_CHARISMA, nSaveDCBonus, BREATH_NORMAL, 0);
         }//end Electric line breath handling
+        
+        ApplyBreath(DracBreath, lTarget);
 }
 
 int DecrementSpellLevel(int nLevel, object oPC = OBJECT_SELF)

@@ -11939,7 +11939,7 @@ Use: Selected.</entry>
   <entry id="47902" lang="en" sex="m">Breath of Flame</entry>
   <entry id="47903" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Drunken Master Level 10
-Specifics: You can use your ki to ignite the alcohol within you and spew it forth from your mouth in a breath of flame. Breath of flame deals 3d12 points of fire damage to all within the 20-foot cone (Reflex save DC 18 for half). Each time you use breath of flame, it consumes one drinks worth of alcohol. First your inventory is searched for alcohol and if none is found it uses the alcohol within you removing the effects it gives you.
+Specifics: You can use your ki to ignite the alcohol within you and spew it forth from your mouth in a breath of flame. Breath of flame deals 3d12 points of fire damage to all within the 20-foot cone (Reflex save DC 10 + class level + Con modifier for half). Each time you use breath of flame, it consumes one drinks worth of alcohol. First your inventory is searched for alcohol and if none is found it uses the alcohol within you removing the effects it gives you.
 Use: Selected.</entry>
   <entry id="47904" lang="en" sex="m">Brew Ale</entry>
   <entry id="47905" lang="en" sex="m">Type of Feat: Class Specific
@@ -34846,6 +34846,43 @@ Prerequisite: half-dragon, 6HD, breath weapon
 
 Your breath weapon is no longer limited uses per day, and can be used every 1d4 rounds.
 Use: Automatic.</entry>
+  <entry id="55641" lang="en" sex="m">Enlarge Breath</entry>
+  <entry id="55642" lang="en" sex="m">Type of Feat: Metabreath
+Prerequisite: Con 13, breath weapon with a recharge time
+
+When activated, your breath weapon will increase in range by 50%.
+This increases your recharge time by one round when used.
+Use: Selected.</entry>
+  <entry id="55643" lang="en" sex="m">Maximize Breath</entry>
+  <entry id="55644" lang="en" sex="m">Type of Feat: Metabreath
+Prerequisite: Con 17, breath weapon with a recharge time
+
+When activated, all damage dice on your breath (or duration dice for the alternate metallic breaths) are maximized.
+This increases your recharge time by three rounds when used.
+Use: Selected.</entry>
+  <entry id="55645" lang="en" sex="m">Recover Breath</entry>
+  <entry id="55646" lang="en" sex="m">Type of Feat: Metabreath
+Prerequisite: Con 17, breath weapon with a recharge time
+
+Your breath weapon recovers one round sooner, to a minimum recharge time of 1 round.
+Use: Automatic.</entry>
+  <entry id="55647" lang="en" sex="m">Shape Breath</entry>
+  <entry id="55648" lang="en" sex="m">Type of Feat: Metabreath
+Prerequisite: Con 13, breath weapon with a recharge time
+
+When activated, your breath weapon turns from a line to a cone and doubles in size, or from a cone to a line and shrinks in half.
+This increases your recharge time by one round when used.
+Use: Selected.</entry>
+  <entry id="55649" lang="en" sex="m">Exhale Immunity</entry>
+  <entry id="55650" lang="en" sex="m">Type of Feat: Breath Channeling
+Prerequisite: dragonblood subtype, breath weapon
+
+When activated, your breath weapon instead of dealing damage, will grant immunity to it's energy type for 1d4 rounds to a specified target.  If your breath does not do energy damage, it grants immunity to fire.
+Use: Selected.</entry>
+  <entry id="55651" lang="en" sex="m">Metabreath Feats</entry>
+  <entry id="55652" lang="en" sex="m">This series of feats allows you to enhance a breath weapon at the cost of increasing the recharge time.  Thus, these feats are only usable on breath weapons with a recharge time.</entry>
+  <entry id="55653" lang="en" sex="m">Breath Channeling Feats</entry>
+  <entry id="55654" lang="en" sex="m">This series of feats allows you to modify a breath weapon's effect to entangle, block, or grant immunity.  You must have a breath weapon of some type to take these.</entry>
   <entry id="55964" lang="en" sex="m">1</entry>
   <entry id="55965" lang="en" sex="m">2</entry>
   <entry id="55966" lang="en" sex="m">3</entry>

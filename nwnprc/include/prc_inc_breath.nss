@@ -12,6 +12,7 @@
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
+
 //////////////////////////////////////////////////
 /*                 Structures                   */
 //////////////////////////////////////////////////
@@ -110,9 +111,13 @@ struct breath CreateBreath(object oDragon, int bLine, float fRange, int nDamageT
  *
  * @param BreathUsed    A struct describing the details of the breath weapon
  * @param lTargetArea   The targeted location for the breath.
+ * @param bLinger       Determines if this breath was applied by Lingering Breath metabreath.
+ *                      Defaults to FALSE.
+ * @param vSource       The source of a Lingering breath.  This does not matter except when 
+ *                      bLinger is set to TRUE.
  *
  */
-void ApplyBreath(struct breath BreathUsed, location lTargetArea);
+void ApplyBreath(struct breath BreathUsed, location lTargetArea, int bLinger = FALSE, float vSourceX = 0.0, float vSourceY = 0.0, float vSourceZ = 0.0);
 
 //////////////////////////////////////////////////
 /*                  Includes                    */
@@ -283,7 +288,7 @@ struct breath CreateBreath(object oDragon, int bLine, float fRange, int nDamageT
 	return BreathUsed;
 }
 
-void ApplyBreath(struct breath BreathUsed, location lTargetArea)
+void ApplyBreath(struct breath BreathUsed, location lTargetArea, int bLinger = FALSE, float vSourceX = 0.0, float vSourceY = 0.0, float vSourceZ = 0.0)
 {
     //if using Exhaled Immunity, jump straight to it and ignore the rest
     if(BreathUsed.bExhaleImmune)
@@ -300,9 +305,12 @@ void ApplyBreath(struct breath BreathUsed, location lTargetArea)
     int nAdjustedDamage;
     int nSaveDamageType = -1;
     int nVisualType = -1;
+    int bCanCling;
     int nBreathShape = BreathUsed.bLine ? SHAPE_SPELLCYLINDER : SHAPE_SPELLCONE;
     float fRange = FeetToMeters(BreathUsed.fRange);
     int nKnockdownDC = 0;
+    vector vSource = Vector(vSourceX, vSourceY, vSourceZ);
+    vector vSourceOfBreath = bLinger ? vSource : GetPosition(BreathUsed.oDragon);
     
     //Saving Throw setup
     int nSaveDC = 10 + max(GetAbilityModifier(BreathUsed.nDCStat), 0) + BreathUsed.nOtherDCMod;
@@ -346,6 +354,37 @@ void ApplyBreath(struct breath BreathUsed, location lTargetArea)
     if(BreathUsed.nOverrideSpecial == BREATH_TOPAZ)
         nVisualType = VFX_IMP_POISON_L;
         
+    if(BreathUsed.bBarrier)
+    {   
+    	//2d6 fire damage if the breath doesn't do damage
+    	if(BreathUsed.nOverrideSpecial == BREATH_SHADOW
+    	   || BreathUsed.nOverrideSpecial == BREATH_SLEEP
+    	   || BreathUsed.nOverrideSpecial == BREATH_SLOW
+    	   || BreathUsed.nOverrideSpecial == BREATH_PARALYZE
+    	   || BreathUsed.nOverrideSpecial == BREATH_WEAKENING)
+        {
+    	    BreathUsed.nDiceType = 6;
+    	    BreathUsed.nDiceNumber = 2;
+    	    BreathUsed.nDamageType = DAMAGE_TYPE_FIRE;
+    	}
+    	
+    	//fire damage if damage isn't energy damage
+    	if(BreathUsed.nDamageType == DAMAGE_TYPE_MAGICAL)
+    	    BreathUsed.nDamageType = DAMAGE_TYPE_FIRE;
+    	
+    	//get the breath parameters and pass to the wall's scripts
+    	SetLocalInt(BreathUsed.oDragon, "BarrierDiceType", BreathUsed.nDiceType);
+    	SetLocalInt(BreathUsed.oDragon, "BarrierDiceNumber", BreathUsed.nDiceNumber);
+    	SetLocalInt(BreathUsed.oDragon, "BarrierDamageType", BreathUsed.nDamageType);
+    	
+    	//create the wall
+    	effect eAOE = EffectAreaOfEffect(AOE_PER_WALLBREATH);
+    	ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAOE, lTargetArea, RoundsToSeconds(d4()));
+    	
+    	//this overrides all other breath effects, so exit
+    	return;
+    }
+        
     
     //roll damage
     switch(BreathUsed.nDiceType)
@@ -384,6 +423,13 @@ void ApplyBreath(struct breath BreathUsed, location lTargetArea)
         ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, lTargetArea);
     }
     
+    //Lingering Breath's effects are 1/2 of normal when lingering
+    if(bLinger)
+    {
+    	nDamage /= 2;
+    	BreathUsed.nDiceNumber /= 2;
+    }
+    
     //DCs for Tempest Breath  
     switch(PRCGetCreatureSize(BreathUsed.oDragon))
     {
@@ -411,7 +457,7 @@ void ApplyBreath(struct breath BreathUsed, location lTargetArea)
     //Get first target in spell area
     object oTarget = GetFirstObjectInShape(nBreathShape, fRange, lTargetArea, TRUE,
                                     OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE,
-                                    GetPosition(BreathUsed.oDragon));
+                                    vSourceOfBreath);
 
     while(GetIsObjectValid(oTarget))
     {
@@ -484,6 +530,7 @@ void ApplyBreath(struct breath BreathUsed, location lTargetArea)
                     DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, BreathUsed.nDiceNumber, DURATION_TYPE_PERMANENT, TRUE));
                     SetLocalInt(oTarget, "AffectedByBreath", TRUE);
                 }
+                bCanCling = TRUE;
             }
             
             //Silver alternate breath - paralyze
@@ -552,6 +599,7 @@ void ApplyBreath(struct breath BreathUsed, location lTargetArea)
 	                DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
 	                DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eBreath, oTarget));
                         SetLocalInt(oTarget, "AffectedByBreath", TRUE);
+                        bCanCling = TRUE;
 	            }
                 }
             }
@@ -613,6 +661,7 @@ void ApplyBreath(struct breath BreathUsed, location lTargetArea)
 		     DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
 		     DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eBreath, oTarget));
                      SetLocalInt(oTarget, "AffectedByBreath", TRUE);
+                     bCanCling = TRUE;
 	         }  
 	     }
 	     
@@ -672,10 +721,62 @@ void ApplyBreath(struct breath BreathUsed, location lTargetArea)
 	
 	DeleteLocalInt(oTarget, "AffectedByBreath");
 	
+	//Clinging Breath check
+	if(BreathUsed.nClinging > 0 && bCanCling)
+	{
+	    int nCount;
+	    int AdjustedAbilityDamage = BreathUsed.nDiceNumber;
+    	    for(nCount = 0; nCount < BreathUsed.nClinging; nCount++)
+	    {
+	        float fNewDelay = RoundsToSeconds(nCount + 1);
+	        if(BreathUsed.nOverrideSpecial == BREATH_WEAKENING)
+	        {
+	            AdjustedAbilityDamage /= 2;
+	            DelayCommand(fNewDelay, ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, BreathUsed.nDiceNumber, DURATION_TYPE_PERMANENT, TRUE));
+	            if(AdjustedAbilityDamage = 1) nCount = BreathUsed.nClinging;
+	        }
+	        nAdjustedDamage /= 2;
+	        if(BreathUsed.nOverrideSpecial == BREATH_PYROCLASTIC)
+	        {
+	            if(nAdjustedDamage < 3) nCount = BreathUsed.nClinging;
+	            effect eBreath1 = EffectDamage(nAdjustedDamage/2, DAMAGE_TYPE_FIRE);
+		    effect eBreath2 = EffectDamage(nAdjustedDamage/2, DAMAGE_TYPE_SONIC);
+		    effect eAfterBreath = EffectLinkEffects(eBreath1, eBreath2);
+	            DelayCommand(fNewDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eAfterBreath, oTarget));
+	        }
+	        else
+	        {
+	            if(nAdjustedDamage < 2) nCount = BreathUsed.nClinging;
+	            effect eAfterBreath = EffectDamage(nAdjustedDamage, BreathUsed.nDamageType);
+	            DelayCommand(fNewDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eAfterBreath, oTarget));
+	        }
+	        DelayCommand(fNewDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+	    }
+	}
+	
+	
+	
         //Get next target in spell area
         oTarget = GetNextObjectInShape(nBreathShape, fRange, lTargetArea, TRUE,  
                          OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE, 
-                         GetPosition(BreathUsed.oDragon));
+                         vSourceOfBreath);
+    }
+    
+    //Lingering Breath check
+    if(BreathUsed.nLingering > 0)
+    {
+        int nCount;
+    	int nLingerDuration = BreathUsed.nLingering;
+    	BreathUsed.nLingering = 0;
+    	vector vOrigin = GetPosition(BreathUsed.oDragon);
+    	effect eGroundVis = EffectVisualEffect(VFX_FNF_DRAGBREATHGROUND);
+    
+    	for(nCount = 0; nCount < nLingerDuration; nCount++)
+	{
+	    float fNewDelay = RoundsToSeconds(nCount + 1);
+	    DelayCommand(fNewDelay, ApplyBreath(BreathUsed, lTargetArea, TRUE, vOrigin.x, vOrigin.y, vOrigin.z));
+	    DelayCommand(fNewDelay, ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eGroundVis, lTargetArea));
+	}
     }
     
      

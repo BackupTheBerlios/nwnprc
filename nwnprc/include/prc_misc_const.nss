@@ -70,6 +70,9 @@ const int VFX_PER_50M_INVIS                     = 199;
 const int AOE_MOB_BULWARK_DEFENSE               = 162;
 const int AOE_MOB_VIGILANT_DEFENDER             = 163;
 
+//Exhaled Barrier Area of Effect
+const int AOE_PER_WALLBREATH                    = 152;
+
 
 //:://////////////////////////////////////////////
 //:: Disease Const

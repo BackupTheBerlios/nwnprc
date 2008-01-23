@@ -34883,6 +34883,26 @@ Use: Selected.</entry>
   <entry id="55652" lang="en" sex="m">This series of feats allows you to enhance a breath weapon at the cost of increasing the recharge time.  Thus, these feats are only usable on breath weapons with a recharge time.</entry>
   <entry id="55653" lang="en" sex="m">Breath Channeling Feats</entry>
   <entry id="55654" lang="en" sex="m">This series of feats allows you to modify a breath weapon's effect to entangle, block, or grant immunity.  You must have a breath weapon of some type to take these.</entry>
+  <entry id="55655" lang="en" sex="m">Entangling Exhalation</entry>
+  <entry id="55656" lang="en" sex="m">Type of Feat: Breath Channeling
+Prerequisite: dragonblood subtype, breath weapon
+
+When activated, your breath weapon does half-damage, if it does damage.  Any creature affected by your breath weapon will be entangled for 1d4 rounds.  If your breath weapon does energy damage, those entangled will take 1d6 damage per round of that type for the duration of the entanglement.
+Use: Selected.</entry>
+  <entry id="55657" lang="en" sex="m">Spreading Breath</entry>
+  <entry id="55658" lang="en" sex="m">Type of Feat: Metabreath
+Prerequisite: Con 15, Shape Breath, breath weapon with a recharge time
+
+When activated, your breath weapon, instead of being a cone or line, expands in a cloud around your head.  The radius is 10' for Small creatures, 15' for Medium, and increases by 5' for each size catagory larger the creature is.
+This increases your recharge time by two rounds when used.
+Use: Selected.</entry>
+  <entry id="55659" lang="en" sex="m">Tempest Breath</entry>
+  <entry id="55660" lang="en" sex="m">Type of Feat: Metabreath
+Prerequisite: Str 13, Power Attack, breath weapon with a recharge time
+
+When activated, your breath weapon increases in force, acting like a strong wind on those within.  Affected creatures must roll a Fort save or be knocked down.  The DC of the save depends solely on your size, starting at 15 for Large.  This knockdown effect also only works on those 2 or more size categories smaller than you.
+This increases your recharge time by one round when used.
+Use: Selected.</entry>
   <entry id="55964" lang="en" sex="m">1</entry>
   <entry id="55965" lang="en" sex="m">2</entry>
   <entry id="55966" lang="en" sex="m">3</entry>

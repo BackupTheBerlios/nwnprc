@@ -302,6 +302,7 @@ void ApplyBreath(struct breath BreathUsed, location lTargetArea)
     int nVisualType = -1;
     int nBreathShape = BreathUsed.bLine ? SHAPE_SPELLCYLINDER : SHAPE_SPELLCONE;
     float fRange = FeetToMeters(BreathUsed.fRange);
+    int nKnockdownDC = 0;
     
     //Saving Throw setup
     int nSaveDC = 10 + max(GetAbilityModifier(BreathUsed.nDCStat), 0) + BreathUsed.nOtherDCMod;
@@ -344,6 +345,7 @@ void ApplyBreath(struct breath BreathUsed, location lTargetArea)
     
     if(BreathUsed.nOverrideSpecial == BREATH_TOPAZ)
         nVisualType = VFX_IMP_POISON_L;
+        
     
     //roll damage
     switch(BreathUsed.nDiceType)
@@ -371,6 +373,33 @@ void ApplyBreath(struct breath BreathUsed, location lTargetArea)
         nSaveDC += BreathUsed.nHeighten;
     if(BreathUsed.bMaximize)
         nDamage = BreathUsed.nDiceType * BreathUsed.nDiceNumber;
+    if(BreathUsed.bSpread)
+    {
+    	fRange = PRCGetCreatureSize(BreathUsed.oDragon) * 5.0;
+    	if(fRange < 1.0) fRange = 5.0;
+    	fRange = FeetToMeters(fRange);
+        nBreathShape = SHAPE_SPHERE;
+        lTargetArea = GetLocation(BreathUsed.oDragon);
+        eVis = EffectVisualEffect(VFX_FNF_DRAGBREATHGROUND);
+        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, lTargetArea);
+    }
+    
+    //DCs for Tempest Breath  
+    switch(PRCGetCreatureSize(BreathUsed.oDragon))
+    {
+    	case CREATURE_SIZE_LARGE:
+    	    nKnockdownDC = 15; break;
+    	    
+    	case CREATURE_SIZE_HUGE:
+    	    nKnockdownDC = 18; break;
+    	    
+    	case CREATURE_SIZE_GARGANTUAN:
+    	    nKnockdownDC = 20; break;
+    	    
+    	case CREATURE_SIZE_COLOSSAL:
+    	    nKnockdownDC = 30; break;
+    	
+    }
         
     //adjust for breath channeling
     if(BreathUsed.bEntangling)
@@ -412,6 +441,7 @@ void ApplyBreath(struct breath BreathUsed, location lTargetArea)
                     //Apply the VFX impact and effects
                     DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
                     DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nSleepDuration)));
+                    SetLocalInt(oTarget, "AffectedByBreath", TRUE);
                 }
             }
             
@@ -435,6 +465,7 @@ void ApplyBreath(struct breath BreathUsed, location lTargetArea)
                     //Apply the VFX impact and effects
                     DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
                     DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nSlowDuration)));
+                    SetLocalInt(oTarget, "AffectedByBreath", TRUE);
                 }
             }
             
@@ -451,6 +482,7 @@ void ApplyBreath(struct breath BreathUsed, location lTargetArea)
                     //Apply the VFX impact and effects
                     DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
                     DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, BreathUsed.nDiceNumber, DURATION_TYPE_PERMANENT, TRUE));
+                    SetLocalInt(oTarget, "AffectedByBreath", TRUE);
                 }
             }
             
@@ -477,6 +509,7 @@ void ApplyBreath(struct breath BreathUsed, location lTargetArea)
                 {
                     //Apply the VFX impact and effects
                     DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nParalDuration)));
+                    SetLocalInt(oTarget, "AffectedByBreath", TRUE);
                 }
             }
             
@@ -496,6 +529,7 @@ void ApplyBreath(struct breath BreathUsed, location lTargetArea)
                     //Apply the VFX impact and effects
                     DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
                     DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eBreath, oTarget));
+                    SetLocalInt(oTarget, "AffectedByBreath", TRUE);
                 }
             }
             
@@ -517,6 +551,7 @@ void ApplyBreath(struct breath BreathUsed, location lTargetArea)
 	                //Apply the VFX impact and effects
 	                DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
 	                DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eBreath, oTarget));
+                        SetLocalInt(oTarget, "AffectedByBreath", TRUE);
 	            }
                 }
             }
@@ -577,7 +612,19 @@ void ApplyBreath(struct breath BreathUsed, location lTargetArea)
 		     //Apply the VFX impact and effects
 		     DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
 		     DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eBreath, oTarget));
+                     SetLocalInt(oTarget, "AffectedByBreath", TRUE);
 	         }  
+	     }
+	     
+	     //Knockdown check for Tempest Breath
+             if(BreathUsed.bTempest && (PRCGetCreatureSize(BreathUsed.oDragon) > CREATURE_SIZE_MEDIUM))
+	     {
+	     	 if(PRCGetCreatureSize(BreathUsed.oDragon) - PRCGetCreatureSize(oTarget) > 1)
+	     	     if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nKnockdownDC, SAVING_THROW_TYPE_NONE))
+                     {
+                     	 effect eWindblown = EffectKnockdown();
+                     	 DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eWindblown, oTarget, 6.0));
+                     }
 	     }
 	}
 	
@@ -596,6 +643,34 @@ void ApplyBreath(struct breath BreathUsed, location lTargetArea)
             DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eBreath, oTarget));
             DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eHealVis, oTarget));
 	}
+	
+	//Entangling Exhalation
+	if(GetLocalInt(oTarget, "AffectedByBreath") && BreathUsed.bEntangling)
+	{
+	    effect eEntangled = EffectEntangle();
+	    int nEntangleRounds = d4();
+	    //only does damage if the original breath did damage
+	    if(BreathUsed.nDamageType > 0)
+	    {
+	        effect eDamage = EffectDamage(d6(), BreathUsed.nDamageType);
+	        switch(nEntangleRounds)
+	        {
+	    	    case 4:
+	    	        DelayCommand(fDelay + RoundsToSeconds(4), ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
+	    	    case 3:
+	    	        DelayCommand(fDelay + RoundsToSeconds(3), ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
+	    	    case 2:
+	    	        DelayCommand(fDelay + RoundsToSeconds(2), ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
+	    	    case 1:
+	    	        DelayCommand(fDelay + RoundsToSeconds(1), ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget)); break;
+	        }
+	    }
+	    
+	    //but always entangles if the breath affects the target
+	    DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eEntangled, oTarget, RoundsToSeconds(nEntangleRounds)));
+	}
+	
+	DeleteLocalInt(oTarget, "AffectedByBreath");
 	
         //Get next target in spell area
         oTarget = GetNextObjectInShape(nBreathShape, fRange, lTargetArea, TRUE,  

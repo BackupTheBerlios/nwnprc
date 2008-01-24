@@ -1003,6 +1003,22 @@ const int SPELL_SECOND_AURA_MAGICPOWER              = 3816;
 // Dragon Magic Spells
 const int SPELL_DRAGON_ALLY                         = 3388;
 
+//Metabreath
+const int SPELL_HEIGHTEN_CONV                       = 2985;
+const int SPELL_HEIGHTEN_OFF                        = 2986;
+const int SPELL_HEIGHTEN_QS1                        = 2987;
+const int SPELL_HEIGHTEN_QS2                        = 2988;
+const int SPELL_CLINGING_CONV                       = 2973;
+const int SPELL_CLINGING_OFF                        = 2974;
+const int SPELL_CLINGING_QS1                        = 2975;
+const int SPELL_CLINGING_QS2                        = 2976;
+const int SPELL_CLINGING_QS3                        = 2977;
+const int SPELL_LINGERING_CONV                      = 2979;
+const int SPELL_LINGERING_OFF                       = 2980;
+const int SPELL_LINGERING_QS1                       = 2981;
+const int SPELL_LINGERING_QS2                       = 2982;
+const int SPELL_LINGERING_QS3                       = 2983;
+
 // Pyrokineticist
 const int SPELL_FIRE_LASH                           = 1892;
 const int SPELL_BOLT_OF_FIRE                        = 1893;

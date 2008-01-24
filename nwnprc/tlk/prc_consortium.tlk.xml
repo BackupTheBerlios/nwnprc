@@ -34903,6 +34903,48 @@ Prerequisite: Str 13, Power Attack, breath weapon with a recharge time
 When activated, your breath weapon increases in force, acting like a strong wind on those within.  Affected creatures must roll a Fort save or be knocked down.  The DC of the save depends solely on your size, starting at 15 for Large.  This knockdown effect also only works on those 2 or more size categories smaller than you.
 This increases your recharge time by one round when used.
 Use: Selected.</entry>
+  <entry id="55661" lang="en" sex="m">Heighten Breath</entry>
+  <entry id="55662" lang="en" sex="m">Type of Feat: Metabreath
+Prerequisite: Con 13, breath weapon with a recharge time
+
+When activated, your breath weapon becomes mroe effective.  Your Save DC for your breath increases by the selected amount, to a maximum of your Con modifier.
+This increases your recharge time by one round per point of DC increase when used.
+Use: Selected.</entry>
+  <entry id="55663" lang="en" sex="m">Clinging Breath</entry>
+  <entry id="55664" lang="en" sex="m">Type of Feat: Metabreath
+Prerequisite: Con 13, breath weapon with a recharge time
+
+When activated, your breath weapon clings to those affected.  Every round after the initial blast, up to the duration selected, those that failed their save take damage equal to half the amount they took the previous round from this breath.  Clinging breath can only be used on breaths that deal energy damage.
+For example a breath that initially did 72 damage will do 36 damage the following round, 18 the next, and so on.
+This increases your recharge time by one round for each round of the duration selected when used.
+Use: Selected.</entry>
+  <entry id="55665" lang="en" sex="m">Lingering Breath</entry>
+  <entry id="55666" lang="en" sex="m">Type of Feat: Metabreath
+Prerequisite: Con 15, Clinging Breath, breath weapon with a recharge time
+
+When activated, your breath weapon lasts for a time after you stop breathing.  Until the selected duration ends, your breath persists in a cloud identical in size and shape to your normal breath, continuing to affect those within.  Those in the cloud must roll a save against each round of breath, until they leave that area.
+If used with Clinging Breath, only the initial round of the breath clings.
+This increases your recharge time by two rounds for each round of duration when used.
+Use: Selected.</entry>
+  <entry id="55667" lang="en" sex="m">Exhale Barrier</entry>
+  <entry id="55668" lang="en" sex="m">Type of Feat: Breath Channeling
+Prerequisite: dragonblood subtype, breath weapon
+
+When activated, your breath weapon, instead of doing its normal blast, is formed into a 10' long wall of the same energy type, which lasts for 1d4 rounds.  ANyone passing through this wall takes the same amount of damage your breath does normally.  If your breath does not do energy damage, the wall does fire damage.  If your breath does not damage at all, the wall does 2d6 fire damage.
+Use: Selected.</entry>
+  <entry id="55669" lang="en" sex="m">Off</entry>
+  <entry id="55670" lang="en" sex="m">Maximum</entry>
+  <entry id="55671" lang="en" sex="m">Quickslot 1</entry>
+  <entry id="55672" lang="en" sex="m">Quickslot 2</entry>
+  <entry id="55673" lang="en" sex="m">Quickslot 3</entry>
+  <entry id="55674" lang="en" sex="m">Configure Metabreath</entry>
+  <entry id="55675" lang="en" sex="m">This conversation manages your quickslots for your metabreath feats.</entry>
+  <entry id="55676" lang="en" sex="m">Raise value by</entry>
+  <entry id="55677" lang="en" sex="m">Lower value by</entry>
+  <entry id="55678" lang="en" sex="m">Clear value</entry>
+  <entry id="55679" lang="en" sex="m">Save value</entry>
+  <entry id="55680" lang="en" sex="m">Current feat: </entry>
+  <entry id="55681" lang="en" sex="m">Current value: </entry>
   <entry id="55964" lang="en" sex="m">1</entry>
   <entry id="55965" lang="en" sex="m">2</entry>
   <entry id="55966" lang="en" sex="m">3</entry>

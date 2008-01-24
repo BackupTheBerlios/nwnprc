@@ -191,13 +191,15 @@ struct breath CreateBreath(object oDragon, int bLine, float fRange, int nDamageT
 	BreathUsed.nDiceNumber = nDiceNumber;
 	BreathUsed.nDCStat = nDCStat;
 	BreathUsed.nOtherDCMod = nOtherDCMod;
+	int nFinalRecharge;
 	switch(nBaseRecharge)
 	{
 	     case 4: 
-	          BreathUsed.nRoundsUntilRecharge = d4(); break;
+	          nFinalRecharge = d4(); break;
 	     default: 
-	          BreathUsed.nRoundsUntilRecharge = 0; break;
+	          nFinalRecharge = 0; break;
 	}
+	BreathUsed.nRoundsUntilRecharge = nFinalRecharge;
 	BreathUsed.nSaveUsed = nSaveUsed;
 	BreathUsed.nOverrideSpecial = nOverrideSpecial;
 	
@@ -241,7 +243,7 @@ struct breath CreateBreath(object oDragon, int bLine, float fRange, int nDamageT
 	if(GetLocalInt(oDragon, "LingeringBreath") > 0)
 	{
 	   BreathUsed.nLingering = GetLocalInt(oDragon, "LingeringBreath");
-	   BreathUsed.nRoundsUntilRecharge += BreathUsed.nLingering;
+	   BreathUsed.nRoundsUntilRecharge += (BreathUsed.nLingering * 2);
 	}
 	//Enlarge breath
 	if(GetLocalInt(oDragon, "EnlargeBreath"))
@@ -285,6 +287,11 @@ struct breath CreateBreath(object oDragon, int bLine, float fRange, int nDamageT
 	  && (BreathUsed.nRoundsUntilRecharge > 1))
 	   BreathUsed.nRoundsUntilRecharge += -1;
 	   
+	
+        // Exhaled Barrier and Immunity don't apply Metabreath feats, so recharge time should be unaffected
+	if(BreathUsed.bBarrier || BreathUsed.bExhaleImmune)
+	   BreathUsed.nRoundsUntilRecharge = nFinalRecharge;
+	
 	return BreathUsed;
 }
 
@@ -768,6 +775,7 @@ void ApplyBreath(struct breath BreathUsed, location lTargetArea, int bLinger = F
         int nCount;
     	int nLingerDuration = BreathUsed.nLingering;
     	BreathUsed.nLingering = 0;
+    	BreathUsed.nClinging = 0;
     	vector vOrigin = GetPosition(BreathUsed.oDragon);
     	effect eGroundVis = EffectVisualEffect(VFX_FNF_DRAGBREATHGROUND);
     

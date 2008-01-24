@@ -172,6 +172,13 @@ void SpellfireDamage(object oCaster, object oTarget, int nRoll, int nDamage, int
 void SpellfireAttackRoll(object oCaster, object oTarget, int nExpend, int iMod = 0, int nDC = 20, int bBeam = FALSE, int bMaelstrom = FALSE)
 {
     int nRoll, nDamage;
+    
+    //Account for Energy Draconic Aura
+    if (GetLocalInt(oCaster, "FireEnergyAura") > 0)
+    {
+        nDC += GetLocalInt(oCaster, "FireEnergyAura");
+    }
+    
     //Weapon Focus (spellfire) applies to spellfire only
     if(GetHasFeat(FEAT_WEAPON_FOCUS_SPELLFIRE, oCaster)) iMod++;
     if(GetHasFeat(FEAT_EPIC_WEAPON_FOCUS_SPELLFIRE, oCaster)) iMod += 2;
@@ -246,6 +253,13 @@ void SpellfireMaelstrom(object oCaster)
     int nLevel = GetLevelByClass(CLASS_TYPE_SPELLFIRE, oCaster);
     int nCHA = GetAbilityModifier(ABILITY_CHARISMA, oCaster);
     int nDC = 10 + nLevel + nCHA;
+    
+    //Account for Energy Draconic Aura
+    if (GetLocalInt(oCaster, "FireEnergyAura") > 0)
+    {
+        nDC += GetLocalInt(oCaster, "FireEnergyAura");
+    }
+    
     //expend once, hit multiple targets
     int nExpend = ExpendSpellfire(oCaster);
     float fDelay;

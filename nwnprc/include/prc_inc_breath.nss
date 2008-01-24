@@ -312,6 +312,7 @@ void ApplyBreath(struct breath BreathUsed, location lTargetArea, int bLinger = F
     int nAdjustedDamage;
     int nSaveDamageType = -1;
     int nVisualType = -1;
+    int nEnergyAura = 0;
     int bCanCling;
     int nBreathShape = BreathUsed.bLine ? SHAPE_SPELLCYLINDER : SHAPE_SPELLCONE;
     float fRange = FeetToMeters(BreathUsed.fRange);
@@ -327,19 +328,23 @@ void ApplyBreath(struct breath BreathUsed, location lTargetArea, int bLinger = F
     {
     	case DAMAGE_TYPE_ACID:
     	     nSaveDamageType = SAVING_THROW_TYPE_ACID;
-    	     nVisualType = VFX_IMP_ACID_S; break;
+    	     nVisualType = VFX_IMP_ACID_S; 
+    	     nEnergyAura = GetLocalInt(BreathUsed.oDragon, "AcidEnergyAura"); break;
     	
     	case DAMAGE_TYPE_COLD:
     	     nSaveDamageType = SAVING_THROW_TYPE_COLD;
-    	     nVisualType = VFX_IMP_FROST_S; break;
+    	     nVisualType = VFX_IMP_FROST_S; 
+    	     nEnergyAura = GetLocalInt(BreathUsed.oDragon, "ColdEnergyAura"); break;
     	
     	case DAMAGE_TYPE_ELECTRICAL:
     	     nSaveDamageType = SAVING_THROW_TYPE_ELECTRICITY;
-    	     nVisualType = VFX_IMP_LIGHTNING_S; break;
+    	     nVisualType = VFX_IMP_LIGHTNING_S; 
+    	     nEnergyAura = GetLocalInt(BreathUsed.oDragon, "ElecEnergyAura"); break;
     	
     	case DAMAGE_TYPE_FIRE:
     	     nSaveDamageType = SAVING_THROW_TYPE_FIRE;
-    	     nVisualType = VFX_IMP_FLAME_M; break;
+    	     nVisualType = VFX_IMP_FLAME_M; 
+    	     nEnergyAura = GetLocalInt(BreathUsed.oDragon, "FireEnergyAura"); break;
     	
     	case DAMAGE_TYPE_MAGICAL:
     	     nSaveDamageType = SAVING_THROW_TYPE_NONE;
@@ -357,6 +362,10 @@ void ApplyBreath(struct breath BreathUsed, location lTargetArea, int bLinger = F
     	     nSaveDamageType = SAVING_THROW_TYPE_SONIC;
     	     nVisualType = VFX_IMP_SILENCE; break;
     }
+    
+    //apply Energy Draconic Aura bonus
+    if(nEnergyAura < 0) nEnergyAura = 0;
+    nSaveDC += nEnergyAura;
     
     if(BreathUsed.nOverrideSpecial == BREATH_TOPAZ)
         nVisualType = VFX_IMP_POISON_L;

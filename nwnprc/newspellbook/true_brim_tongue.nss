@@ -42,6 +42,13 @@ void main()
     	nDC = 35;
     	nDamage = d6(8);
     }
+    
+    //Account for Energy Draconic Aura
+    if (GetLocalInt(oTrueSpeaker, "FireEnergyAura") > 0)
+    {
+        nDC += GetLocalInt(oTrueSpeaker, "FireEnergyAura");
+    }
+    
     // Account for the law of resistance
     nDC += GetLawOfResistanceDCIncrease(oTrueSpeaker, nSpellId);
 

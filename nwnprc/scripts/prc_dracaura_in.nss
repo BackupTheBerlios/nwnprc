@@ -243,6 +243,35 @@ void main()
                  }
               }
               
+            //Energy
+            if(GetHasSpellEffect(SPELL_DRACONIC_AURA_ENERGY, PCShaman))
+              {
+              if (GetLocalInt(oTarget,"DraconicAura")>0)
+                 {
+                 return;
+                 }
+              else
+                 {
+	         nDamageType = GetDragonDamageType(PCShaman);
+	         switch(nDamageType)
+	             {
+	         	case DAMAGE_TYPE_ACID:
+	         	    if(nAuraBonus > GetLocalInt(oTarget,"AcidEnergyAura"))
+	         	        SetLocalInt(oTarget,"AcidEnergyAura",nAuraBonus); break;
+	         	case DAMAGE_TYPE_COLD:
+	         	    if(nAuraBonus > GetLocalInt(oTarget,"ColdEnergyAura"))
+	         	        SetLocalInt(oTarget,"ColdEnergyAura",nAuraBonus); break;
+	         	case DAMAGE_TYPE_ELECTRICAL:
+	         	    if(nAuraBonus > GetLocalInt(oTarget,"ElecEnergyAura"))
+	         	        SetLocalInt(oTarget,"ElecEnergyAura",nAuraBonus); break;
+	         	case DAMAGE_TYPE_FIRE:
+	         	    if(nAuraBonus > GetLocalInt(oTarget,"FireEnergyAura"))
+	         	        SetLocalInt(oTarget,"FireEnergyAura",nAuraBonus); break;
+	             }
+                 SetLocalInt(PCShaman,"DraconicAura",1);
+                 }
+              }
+              
             /////////////////END SHAMAN, BEGIN MARSHAL/////////////
             
             //Resist Acid
@@ -442,6 +471,63 @@ void main()
                  }
               }
               
+            //Energy - Acid
+            if(GetHasSpellEffect(SPELL_MARSHAL_AURA_ENERGYACID, PCShaman)
+              && (nMarshalBonus > GetLocalInt(oTarget,"AcidEnergyAura")))
+              {
+              if (GetLocalInt(oTarget,"DraconicAura")>0)
+                 {
+                 return;
+                 }
+              else
+                 {
+	         SetLocalInt(oTarget,"AcidEnergyAura",nMarshalBonus);
+	         SetLocalInt(PCShaman,"DraconicAura",1);
+                 }
+              }
+            //Energy - Cold
+            if(GetHasSpellEffect(SPELL_MARSHAL_AURA_ENERGYCOLD, PCShaman)
+              && (nMarshalBonus > GetLocalInt(oTarget,"ColdEnergyAura")))
+              {
+              if (GetLocalInt(oTarget,"DraconicAura")>0)
+                 {
+                 return;
+                 }
+              else
+                 {
+	         SetLocalInt(oTarget,"ColdEnergyAura",nMarshalBonus);
+	         SetLocalInt(PCShaman,"DraconicAura",1);
+                 }
+              }
+            //Energy - Electric
+            if(GetHasSpellEffect(SPELL_MARSHAL_AURA_ENERGYELEC, PCShaman)
+              && (nMarshalBonus > GetLocalInt(oTarget,"ElecEnergyAura")))
+              {
+              if (GetLocalInt(oTarget,"DraconicAura")>0)
+                 {
+                 return;
+                 }
+              else
+                 {
+	         SetLocalInt(oTarget,"ElecEnergyAura",nMarshalBonus);
+	         SetLocalInt(PCShaman,"DraconicAura",1);
+                 }
+              }
+            //Energy - Fire
+            if(GetHasSpellEffect(SPELL_MARSHAL_AURA_ENERGYFIRE, PCShaman)
+              && (nMarshalBonus > GetLocalInt(oTarget,"FireEnergyAura")))
+              {
+              if (GetLocalInt(oTarget,"DraconicAura")>0)
+                 {
+                 return;
+                 }
+              else
+                 {
+	         SetLocalInt(oTarget,"FireEnergyAura",nMarshalBonus);
+	         SetLocalInt(PCShaman,"DraconicAura",1);
+                 }
+              }
+              
             /////////////////END MARSHAL, BEGIN EXTRA/////////////
             
             //Resist Acid
@@ -638,6 +724,63 @@ void main()
                  {
                  SetLocalInt(oTarget,"MagicPowerAura",nExtraBonus);
                  SetLocalInt(PCShaman,"DraconicAura",1);
+                 }
+              }
+              
+            //Energy - Acid
+            if(GetHasSpellEffect(SPELL_BONUS_AURA_ENERGYACID, PCShaman)
+              && (nExtraBonus > GetLocalInt(oTarget,"AcidEnergyAura")))
+              {
+              if (GetLocalInt(oTarget,"DraconicAura")>0)
+                 {
+                 return;
+                 }
+              else
+                 {
+	         SetLocalInt(oTarget,"AcidEnergyAura",nExtraBonus);
+	         SetLocalInt(PCShaman,"DraconicAura",1);
+                 }
+              }
+            //Energy - Cold
+            if(GetHasSpellEffect(SPELL_BONUS_AURA_ENERGYCOLD, PCShaman)
+              && (nExtraBonus > GetLocalInt(oTarget,"ColdEnergyAura")))
+              {
+              if (GetLocalInt(oTarget,"DraconicAura")>0)
+                 {
+                 return;
+                 }
+              else
+                 {
+	         SetLocalInt(oTarget,"ColdEnergyAura",nExtraBonus);
+	         SetLocalInt(PCShaman,"DraconicAura",1);
+                 }
+              }
+            //Energy - Electric
+            if(GetHasSpellEffect(SPELL_BONUS_AURA_ENERGYELEC, PCShaman)
+              && (nExtraBonus > GetLocalInt(oTarget,"ElecEnergyAura")))
+              {
+              if (GetLocalInt(oTarget,"DraconicAura")>0)
+                 {
+                 return;
+                 }
+              else
+                 {
+	         SetLocalInt(oTarget,"ElecEnergyAura",nExtraBonus);
+	         SetLocalInt(PCShaman,"DraconicAura",1);
+                 }
+              }
+            //Energy - Fire
+            if(GetHasSpellEffect(SPELL_BONUS_AURA_ENERGYFIRE, PCShaman)
+              && (nExtraBonus > GetLocalInt(oTarget,"FireEnergyAura")))
+              {
+              if (GetLocalInt(oTarget,"DraconicAura")>0)
+                 {
+                 return;
+                 }
+              else
+                 {
+	         SetLocalInt(oTarget,"FireEnergyAura",nExtraBonus);
+	         SetLocalInt(PCShaman,"DraconicAura",1);
                  }
               }
     }

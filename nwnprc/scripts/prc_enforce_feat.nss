@@ -1445,7 +1445,9 @@ int DragonShamanFeats(object oPC)
                          GetHasFeat(FEAT_DRAGONSHAMAN_AURA_INSIGHT, oPC)+
                          GetHasFeat(FEAT_DRAGONSHAMAN_AURA_RESOLVE, oPC)+
                          GetHasFeat(FEAT_DRAGONSHAMAN_AURA_STAMINA, oPC)+
-                         GetHasFeat(FEAT_DRAGONSHAMAN_AURA_SWIFTNESS, oPC);
+                         GetHasFeat(FEAT_DRAGONSHAMAN_AURA_SWIFTNESS, oPC)+
+                         GetHasFeat(FEAT_DRAGONSHAMAN_AURA_MAGICPOWER, oPC)+
+                         GetHasFeat(FEAT_DRAGONSHAMAN_AURA_ENERGY, oPC);
 
     nNumOfSkillFocus +=  GetHasFeat(FEAT_SKILL_FOCUS_HIDE) +
                          GetHasFeat(FEAT_SKILL_FOCUS_MOVE_SILENTLY) +

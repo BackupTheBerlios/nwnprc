@@ -34907,7 +34907,7 @@ Use: Selected.</entry>
   <entry id="55662" lang="en" sex="m">Type of Feat: Metabreath
 Prerequisite: Con 13, breath weapon with a recharge time
 
-When activated, your breath weapon becomes mroe effective.  Your Save DC for your breath increases by the selected amount, to a maximum of your Con modifier.
+When activated, your breath weapon becomes more effective.  Your Save DC for your breath increases by the selected amount, to a maximum of your Con modifier.
 This increases your recharge time by one round per point of DC increase when used.
 Use: Selected.</entry>
   <entry id="55663" lang="en" sex="m">Clinging Breath</entry>
@@ -34945,6 +34945,26 @@ Use: Selected.</entry>
   <entry id="55679" lang="en" sex="m">Save value</entry>
   <entry id="55680" lang="en" sex="m">Current feat: </entry>
   <entry id="55681" lang="en" sex="m">Current value: </entry>
+  <entry id="55682" lang="en" sex="m">Draconic Aura: Energy</entry>
+  <entry id="55683" lang="en" sex="m">Type of Feat: Draconic Aura
+
+This aura grants you and your allies a DC bonus on any elemental abilities matching your dragon type, equal to your aura level.</entry>
+  <entry id="55684" lang="en" sex="m">Bonus Draconic Aura: Acid Energy</entry>
+  <entry id="55685" lang="en" sex="m">Bonus Draconic Aura: Cold Energy</entry>
+  <entry id="55686" lang="en" sex="m">Bonus Draconic Aura: Electric Energy</entry>
+  <entry id="55687" lang="en" sex="m">Bonus Draconic Aura: Fire Energy</entry>
+  <entry id="55688" lang="en" sex="m">Type of Feat: Draconic Aura
+
+This aura grants you and your allies a DC bonus on any abilities relating to this element, equal to your aura level.</entry>
+  <entry id="55689" lang="en" sex="m">Draconic Marshal Aura: Acid Energy</entry>
+  <entry id="55690" lang="en" sex="m">Draconic Marshal Aura: Cold Energy</entry>
+  <entry id="55691" lang="en" sex="m">Draconic Marshal Aura: Electric Energy</entry>
+  <entry id="55692" lang="en" sex="m">Draconic Marshal Aura: Fire Energy</entry>
+  <entry id="55693" lang="en" sex="m">Second Draconic Aura: Acid Energy</entry>
+  <entry id="55694" lang="en" sex="m">Second Draconic Aura: Cold Energy</entry>
+  <entry id="55695" lang="en" sex="m">Second Draconic Aura: Electric Energy</entry>
+  <entry id="55696" lang="en" sex="m">Second Draconic Aura: Fire Energy</entry>
+  <entry id="55697" lang="en" sex="m">Second Draconic Aura: Energy</entry>
   <entry id="55964" lang="en" sex="m">1</entry>
   <entry id="55965" lang="en" sex="m">2</entry>
   <entry id="55966" lang="en" sex="m">3</entry>

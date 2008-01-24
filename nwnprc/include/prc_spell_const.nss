@@ -957,6 +957,7 @@ const int SPELL_DRACONIC_AURA_RESOLVE               = 3773;
 const int SPELL_DRACONIC_AURA_STAMINA               = 3774;
 const int SPELL_DRACONIC_AURA_SWIFTNESS             = 3775;
 const int SPELL_DRACONIC_AURA_MAGICPOWER            = 3813;
+const int SPELL_DRACONIC_AURA_ENERGY                = 3817;
 
 //Other Draconic Auras
 const int SPELL_MARSHAL_AURA_SENSES                 = 3787;
@@ -970,6 +971,11 @@ const int SPELL_MARSHAL_AURA_INSIGHT                = 3780;
 const int SPELL_MARSHAL_AURA_RESOLVE                = 3786;
 const int SPELL_MARSHAL_AURA_STAMINA                = 3788;
 const int SPELL_MARSHAL_AURA_SWIFTNESS              = 3789;
+const int SPELL_MARSHAL_AURA_MAGICPOWER             = 3814;
+const int SPELL_MARSHAL_AURA_ENERGYACID             = 3818;
+const int SPELL_MARSHAL_AURA_ENERGYCOLD             = 3819;
+const int SPELL_MARSHAL_AURA_ENERGYELEC             = 3820;
+const int SPELL_MARSHAL_AURA_ENERGYFIRE             = 3821;
 const int SPELL_SECOND_AURA_PRESENCE                = 3791;
 const int SPELL_SECOND_AURA_VIGOR                   = 3792;
 const int SPELL_SECOND_AURA_TOUGHNESS               = 3793;
@@ -985,6 +991,12 @@ const int SPELL_SECOND_AURA_RESISTACID              = 3802;
 const int SPELL_SECOND_AURA_RESISTCOLD              = 3803;
 const int SPELL_SECOND_AURA_RESISTELEC              = 3804;
 const int SPELL_SECOND_AURA_RESISTFIRE              = 3805;
+const int SPELL_SECOND_AURA_MAGICPOWER              = 3816;
+const int SPELL_SECOND_AURA_ENERGYACID              = 3827;
+const int SPELL_SECOND_AURA_ENERGYCOLD              = 3828;
+const int SPELL_SECOND_AURA_ENERGYELEC              = 3829;
+const int SPELL_SECOND_AURA_ENERGYFIRE              = 3830;
+const int SPELL_SECOND_AURA_ENERGY                  = 3826;
 const int SPELL_BONUS_AURA_RESISTACID               = 3776;
 const int SPELL_BONUS_AURA_RESISTCOLD               = 3777;
 const int SPELL_BONUS_AURA_RESISTELEC               = 3778;
@@ -996,9 +1008,11 @@ const int SPELL_BONUS_AURA_SENSES                   = 3809;
 const int SPELL_BONUS_AURA_STAMINA                  = 3810;
 const int SPELL_BONUS_AURA_SWIFTNESS                = 3811;
 const int SPELL_BONUS_AURA_TOUGHNESS                = 3812;
-const int SPELL_MARSHAL_AURA_MAGICPOWER             = 3814;
 const int SPELL_BONUS_AURA_MAGICPOWER               = 3815;
-const int SPELL_SECOND_AURA_MAGICPOWER              = 3816;
+const int SPELL_BONUS_AURA_ENERGYACID               = 3822;
+const int SPELL_BONUS_AURA_ENERGYCOLD               = 3823;
+const int SPELL_BONUS_AURA_ENERGYELEC               = 3824;
+const int SPELL_BONUS_AURA_ENERGYFIRE               = 3825;
 
 // Dragon Magic Spells
 const int SPELL_DRAGON_ALLY                         = 3388;

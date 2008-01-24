@@ -411,6 +411,37 @@ int DraconicPowerDC(int spell_id, object oCaster = OBJECT_SELF)
     return nDC;
 }
 
+//Energy Draconc Aura's elemental boost to spell DCs
+int EnergyAuraDC(int spell_id, object oCaster = OBJECT_SELF)
+{
+    int nDC = 0;
+
+    // get spell elemental type
+    string element = ChangedElementalType(spell_id, oCaster);
+    //if(DEBUG) FloatingTextStringOnCreature("Elemental type: " + element, oCaster, FALSE);
+
+    // Compare aura type and elemental type
+    if (element == "Fire" && (GetLocalInt(oCaster, "FireEnergyAura") > 0))
+    {
+            return GetLocalInt(oCaster, "FireEnergyAura");
+    }
+    else if (element == "Cold" && (GetLocalInt(oCaster, "ColdEnergyAura") > 0))
+    {
+            return GetLocalInt(oCaster, "ColdEnergyAura");
+    }
+    else if (element == "Electricity" && (GetLocalInt(oCaster, "ElecEnergyAura") > 0))
+    {
+            return GetLocalInt(oCaster, "ElecEnergyAura");
+    }
+    else if (element == "Acid" && (GetLocalInt(oCaster, "AcidEnergyAura") > 0))
+    {
+            return GetLocalInt(oCaster, "AcidEnergyAura");
+    }
+
+    //if it gets here, the caster is not in this type of Draconic Aura
+    return nDC;
+}
+
 int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1)
 {
     object oItem = GetSpellCastItem();
@@ -584,6 +615,7 @@ int GetChangesToSaveDC(object oTarget, object oCaster = OBJECT_SELF, int nSpellI
     nDC += UnheavenedAdjustment(oTarget, oCaster);
     nDC += SoulEaterSoulPower(oCaster);
     nDC += DraconicPowerDC(nSpellID, oCaster);
+    nDC += EnergyAuraDC(nSpellID, oCaster);
     nDC += GetLocalInt(oCaster, PRC_DC_ADJUSTMENT);//this is for builder use
     return nDC;
 

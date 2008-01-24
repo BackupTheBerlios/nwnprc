@@ -12,6 +12,7 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
+#include "prc_inc_dragsham"
 
 void main()
 {
@@ -626,6 +627,47 @@ void main()
       && (GetLocalInt(oTarget,"MagicPowerAura") == GetLocalInt(PCShaman,"MagicPowerAura")))
     {
     	DeleteLocalInt(oTarget,"MagicPowerAura");
+    }
+    
+    if(GetHasSpellEffect(SPELL_DRACONIC_AURA_ENERGY, PCShaman))
+    {
+    	if((GetLocalInt(oTarget,"AcidEnergyAura") == GetLocalInt(PCShaman,"AcidEnergyAura"))
+    	   && GetDragonDamageType(PCShaman) == DAMAGE_TYPE_ACID)
+    	    DeleteLocalInt(oTarget,"AcidEnergyAura");
+    	if((GetLocalInt(oTarget,"ColdEnergyAura") == GetLocalInt(PCShaman,"ColdEnergyAura"))
+    	   && GetDragonDamageType(PCShaman) == DAMAGE_TYPE_COLD)
+    	    DeleteLocalInt(oTarget,"ColdEnergyAura");
+    	if((GetLocalInt(oTarget,"ElecEnergyAura") == GetLocalInt(PCShaman,"ElecEnergyAura"))
+    	   && GetDragonDamageType(PCShaman) == DAMAGE_TYPE_ELECTRICAL)
+    	    DeleteLocalInt(oTarget,"ElecEnergyAura");
+    	if((GetLocalInt(oTarget,"FireEnergyAura") == GetLocalInt(PCShaman,"FireEnergyAura"))
+    	   && GetDragonDamageType(PCShaman) == DAMAGE_TYPE_FIRE)
+    	    DeleteLocalInt(oTarget,"FireEnergyAura");
+    }
+    
+    if((GetHasSpellEffect(SPELL_MARSHAL_AURA_ENERGYACID, PCShaman)
+        ||GetHasSpellEffect(SPELL_BONUS_AURA_ENERGYACID, PCShaman))
+      && (GetLocalInt(oTarget,"AcidEnergyAura") == GetLocalInt(PCShaman,"AcidEnergyAura")))
+    {
+    	DeleteLocalInt(oTarget,"AcidEnergyAura");
+    }    
+    if((GetHasSpellEffect(SPELL_MARSHAL_AURA_ENERGYCOLD, PCShaman)
+        ||GetHasSpellEffect(SPELL_BONUS_AURA_ENERGYCOLD, PCShaman))
+      && (GetLocalInt(oTarget,"ColdEnergyAura") == GetLocalInt(PCShaman,"ColdEnergyAura")))
+    {
+    	DeleteLocalInt(oTarget,"ColdEnergyAura");
+    }    
+    if((GetHasSpellEffect(SPELL_MARSHAL_AURA_ENERGYELEC, PCShaman)
+        ||GetHasSpellEffect(SPELL_BONUS_AURA_ENERGYELEC, PCShaman))
+      && (GetLocalInt(oTarget,"ElecEnergyAura") == GetLocalInt(PCShaman,"ElecEnergyAura")))
+    {
+    	DeleteLocalInt(oTarget,"ElecEnergyAura");
+    }    
+    if((GetHasSpellEffect(SPELL_MARSHAL_AURA_ENERGYFIRE, PCShaman)
+        ||GetHasSpellEffect(SPELL_BONUS_AURA_ENERGYFIRE, PCShaman))
+      && (GetLocalInt(oTarget,"FireEnergyAura") == GetLocalInt(PCShaman,"FireEnergyAura")))
+    {
+    	DeleteLocalInt(oTarget,"FireEnergyAura");
     }
 
 }

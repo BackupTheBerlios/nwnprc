@@ -124,6 +124,24 @@ struct energy_adjustments EvaluateEnergy(int nSpellID, int nSpellID_Cold, int nS
         if(DEBUG) DoDebug(sErr);
         else      WriteTimestampedLogEntry(sErr);
     }
+    
+    //Energy Draconic Aura boosts
+    if (eaRet.nDamageType == DAMAGE_TYPE_FIRE && (GetLocalInt(OBJECT_SELF, "FireEnergyAura") > 0))
+    {
+            eaRet.nDCMod += GetLocalInt(OBJECT_SELF, "FireEnergyAura");
+    }
+    else if (eaRet.nDamageType == DAMAGE_TYPE_COLD && (GetLocalInt(OBJECT_SELF, "ColdEnergyAura") > 0))
+    {
+            eaRet.nDCMod +=  GetLocalInt(OBJECT_SELF, "ColdEnergyAura");
+    }
+    else if (eaRet.nDamageType == DAMAGE_TYPE_ELECTRICAL && (GetLocalInt(OBJECT_SELF, "ElecEnergyAura") > 0))
+    {
+            eaRet.nDCMod +=  GetLocalInt(OBJECT_SELF, "ElecEnergyAura");
+    }
+    else if (eaRet.nDamageType == DAMAGE_TYPE_ACID && (GetLocalInt(OBJECT_SELF, "AcidEnergyAura") > 0))
+    {
+            eaRet.nDCMod +=  GetLocalInt(OBJECT_SELF, "AcidEnergyAura");
+    }
 
     return eaRet;
 }

@@ -494,11 +494,14 @@ void UseManeuver(int nManeuver, int nClass, int nLevelOverride = 0)
     object oMoveToken;
     location lTarget   = PRCGetSpellTargetLocation();
     int nSpellID       = PRCGetSpellId();
-    int nMoveDur       = StringToInt(Get2DACache("spells", "ConjTime", nManeuver)) + StringToInt(Get2DACache("spells", "CastTime", nManeuver));
+    //int nMoveDur       = StringToInt(Get2DACache("spells", "ConjTime", nManeuver)) + StringToInt(Get2DACache("spells", "CastTime", nManeuver));
+    // This is a test case to speed up the impact of the melee attacks, as PerformAttackRound takes the full 6 second.
+    int nMoveDur       = 0;
 
     // Normally swift action maneuvers check
     if((Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "SWIFT_ACTION" ||
-    	Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "MANEUVER_BOOST") && // The maneuver is swift action to use
+    	Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "MANEUVER_BOOST" ||
+    	Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "MANEUVER_COUNTER") && // The maneuver is swift action to use
        TakeSwiftAction(oInitiator)                                                                        // And the initiator can take a swift action now
        )
     {
@@ -515,7 +518,7 @@ void UseManeuver(int nManeuver, int nClass, int nLevelOverride = 0)
     }
     // Stance of Alacrity check
     // Only works on Counters, not Boosts
-    else if(Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) != "MANEUVER_BOOST" && // If the maneuver is NOT a boost
+    else if(Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "MANEUVER_COUNTER" && // If the maneuver is NOT a boost
             GetHasSpellEffect(MOVE_DM_STANCE_ALACRITY, oInitiator)                        // And the initiator has the stance
             )
     {

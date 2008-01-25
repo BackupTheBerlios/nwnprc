@@ -48,7 +48,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     {
         nDuration = 1;
     }
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     //Make metamagic check for extend
     if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
     {

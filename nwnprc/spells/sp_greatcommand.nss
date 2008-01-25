@@ -71,7 +71,7 @@ void main()
     object oCaster = OBJECT_SELF;
     location lTarget = GetSpellTargetLocation();
     int nSpellId = PRCGetSpellId();
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nCaster = PRCGetCasterLevel(OBJECT_SELF);
     int nDuration = nCaster;
     //Enter Metamagic conditions

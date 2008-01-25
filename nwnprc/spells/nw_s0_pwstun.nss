@@ -57,7 +57,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_DIVINATION);
     effect eVis = EffectVisualEffect(VFX_IMP_STUN);
     effect eWord = EffectVisualEffect(VFX_FNF_PWSTUN);
     int nDuration;
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nMeta;
     //Apply the VFX impact
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eWord, GetSpellTargetLocation());

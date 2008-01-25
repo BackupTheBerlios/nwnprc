@@ -52,7 +52,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
         nIncrease = 2;
         nSave = 1;
 
-        int nMetaMagic = GetMetaMagicFeat();
+        int nMetaMagic = PRCGetMetaMagicFeat();
         if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
         {
             nDuration = nDuration * 2;

@@ -46,7 +46,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     int nDuration = 2 + PRCGetCasterLevel(OBJECT_SELF) / 2;
     effect eImpact = EffectVisualEffect(262);
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, lTarget);
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     //Check Extend metamagic feat.
     if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
     {

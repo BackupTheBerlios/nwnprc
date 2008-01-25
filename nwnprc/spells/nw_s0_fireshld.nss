@@ -45,7 +45,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     effect eVis = EffectVisualEffect(VFX_DUR_ELEMENTAL_SHIELD);
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nDuration = CasterLvl;
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     object oTarget = OBJECT_SELF;
     effect eShield = EffectDamageShield(nDuration, DAMAGE_BONUS_1d6, ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_FIRE));
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);

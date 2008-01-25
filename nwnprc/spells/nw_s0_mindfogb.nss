@@ -33,7 +33,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     eLink = EffectLinkEffects(eLink, eVis);
 
     int nDuration = d6(2);
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int bValid = FALSE;
     //Get the object that is exiting the AOE
     object oTarget = GetExitingObject();

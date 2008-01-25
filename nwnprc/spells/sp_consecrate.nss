@@ -41,7 +41,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     effect eAOE = EffectAreaOfEffect(115,"sp_consecratea","sp_consecratec","sp_consecrateb");
 
     int nDuration = PRCGetCasterLevel(OBJECT_SELF);
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     //Make sure duration does no equal 0
     if (nDuration < 1)
     {

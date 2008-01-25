@@ -42,7 +42,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     //Declare major variables
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     float fDuration = RoundsToSeconds(CasterLvl);
     int nDamage;
     effect eVis = EffectVisualEffect(VFX_IMP_FEAR_S);

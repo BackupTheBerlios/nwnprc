@@ -47,7 +47,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
     //Declare major variables
     object oTarget = OBJECT_SELF;
     effect eVis = EffectVisualEffect(VFX_IMP_AC_BONUS);
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
 
     effect eArmor = EffectACIncrease(4, AC_SHIELD_ENCHANTMENT_BONUS);
     effect eSpell = EffectSpellImmunity(SPELL_MAGIC_MISSILE);

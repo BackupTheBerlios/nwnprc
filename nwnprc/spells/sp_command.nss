@@ -40,7 +40,7 @@ void main()
     	object oCaster = OBJECT_SELF;
     	object oTarget = PRCGetSpellTargetObject();
     	int nSpellId = PRCGetSpellId();
-    	int nMetaMagic = GetMetaMagicFeat();
+    	int nMetaMagic = PRCGetMetaMagicFeat();
     	int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
     	int nCaster = PRCGetCasterLevel(OBJECT_SELF);
     	int nDuration = 1;

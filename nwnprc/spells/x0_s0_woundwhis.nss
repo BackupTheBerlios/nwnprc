@@ -48,7 +48,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nDuration = CasterLvl; 
     int nBonus = nDuration;
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     object oTarget = OBJECT_SELF;
     effect eShield = EffectDamageShield(d6(1) + nBonus, 0, ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_SONIC));
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);

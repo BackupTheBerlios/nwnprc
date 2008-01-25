@@ -26,7 +26,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 ActionDoCommand(SetAllAoEInts(SPELL_GREAT_WALL_OF_DISPEL,OBJECT_SELF, GetSpellSaveDC(),GetHasFeat(FEAT_SHADOWWEAVE,GetAreaOfEffectCreator()) ));
 
     //Declare major variables
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     object oTarget;
     
     //Declare and assign personal impact visual effect.

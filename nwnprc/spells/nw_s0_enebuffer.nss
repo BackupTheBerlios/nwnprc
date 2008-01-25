@@ -45,7 +45,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nDuration = CasterLvl;
     int nAmount = 60;
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     effect eCold = EffectDamageResistance(DAMAGE_TYPE_COLD, 40, nAmount);
     effect eFire = EffectDamageResistance(DAMAGE_TYPE_FIRE, 40, nAmount);
     effect eAcid = EffectDamageResistance(DAMAGE_TYPE_ACID, 40, nAmount);

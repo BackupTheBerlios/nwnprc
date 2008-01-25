@@ -45,7 +45,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     effect eAOE = EffectAreaOfEffect(AOE_PER_WALLBLADE);
     location lTarget = GetSpellTargetLocation();
     int nDuration = PRCGetCasterLevel(OBJECT_SELF);
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
 
     //Check Extend metamagic feat.
     if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))

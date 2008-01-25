@@ -47,7 +47,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     //Declare major variables
     object oTarget = GetSpellTargetObject();
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-    int nMeta = GetMetaMagicFeat();
+    int nMeta = PRCGetMetaMagicFeat();
     int nDuration = CasterLvl;
     nDuration = GetScaledDuration(nDuration, oTarget);
     effect eParal = EffectParalyze();

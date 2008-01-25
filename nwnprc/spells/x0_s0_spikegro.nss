@@ -47,7 +47,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     effect eAOE = EffectAreaOfEffect(AOE_PER_ENTANGLE, "x0_s0_spikegroEN", "x0_s0_spikegroHB", "x0_s0_dirgeEX");
     location lTarget = GetSpellTargetLocation();
     int nDuration = PRCGetCasterLevel(OBJECT_SELF);
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
 //    effect eImpact = EffectVisualEffect(257);
 //    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, lTarget);
     //Make sure duration does no equal 0

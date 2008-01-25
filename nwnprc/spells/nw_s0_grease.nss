@@ -46,7 +46,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     int nDuration = 2 + PRCGetCasterLevel(OBJECT_SELF) / 3;
     effect eImpact = EffectVisualEffect(VFX_FNF_GAS_EXPLOSION_GREASE);
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, lTarget);
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     //Check Extend metamagic feat.
     if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
     {

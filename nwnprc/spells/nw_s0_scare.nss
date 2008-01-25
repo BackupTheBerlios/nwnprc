@@ -83,7 +83,7 @@ void main()
     //Declare major variables
     object oTarget = GetSpellTargetObject();
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nDuration = d4();
     int nSpellID   = PRCGetSpellId();
     //Do metamagic checks

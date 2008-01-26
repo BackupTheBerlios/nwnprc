@@ -174,6 +174,30 @@ void ExhaleImmunity(object oDragon, int nDamageType, location lTargetArea)
         }
 }
 
+//fucntion to check for Adept breath
+int IsAdeptBreath()
+{
+	int nBreath = GetSpellId();
+	if(nBreath == BREATH_FIRE_CONE 
+            || nBreath == BREATH_FIRE_LINE
+            || nBreath == BREATH_FROST_CONE
+            || nBreath == BREATH_ELECTRIC_LINE
+            || nBreath == BREATH_SICKENING_CONE
+            || nBreath == BREATH_ACID_CONE
+            || nBreath == BREATH_ACID_LINE
+            || nBreath == BREATH_SLOW_CONE
+            || nBreath == BREATH_WEAKENING_CONE
+            || nBreath == BREATH_SLEEP_CONE
+            || nBreath == BREATH_THUNDER_CONE
+            || nBreath == BREATH_BAHAMUT_LINE
+            || nBreath == BREATH_FORCE_LINE
+            || nBreath == BREATH_PARALYZE_CONE
+            || nBreath == BREATH_FIVEFOLD_TIAMAT)
+            return TRUE;
+            
+        return FALSE;
+}
+
 //////////////////////////////////////////////////
 /*             Function definitions             */
 //////////////////////////////////////////////////
@@ -230,6 +254,39 @@ struct breath CreateBreath(object oDragon, int bLine, float fRange, int nDamageT
         //breaths without recharge times can't use metabreath
         if(BreathUsed.nRoundsUntilRecharge == 0)
            return BreathUsed;
+           
+        //breath effect checks
+        
+        //Cloud only works with 1 other effect applied
+        //this one handles combination with damage effects and enduring
+        if(GetLocalInt(oDragon, "AdeptCloudBreath") 
+           && !GetLocalInt(oDragon, "AdeptShapedBreath")
+           && (GetSpellId() == BREATH_FIRE_CONE 
+               || GetSpellId() == BREATH_FROST_CONE
+               || GetSpellId() == BREATH_SICKENING_CONE
+               || GetSpellId() == BREATH_ACID_CONE
+               || GetSpellId() == BREATH_SLOW_CONE
+               || GetSpellId() == BREATH_WEAKENING_CONE
+               || GetSpellId() == BREATH_SLEEP_CONE
+               || GetSpellId() == BREATH_THUNDER_CONE
+               || GetSpellId() == BREATH_PARALYZE_CONE))
+        {
+           BreathUsed.bSpread = TRUE;
+        }
+        //this one is Cloud + Shaped
+        if(GetLocalInt(oDragon, "AdeptCloudBreath") 
+           && GetLocalInt(oDragon, "AdeptShapedBreath")
+           && !GetLocalInt(oDragon, "AdeptEnduringBreath")
+           && GetSpellId() == BREATH_FIRE_CONE)
+        {
+           BreathUsed.bSpread = TRUE;
+        }
+        if(GetLocalInt(oDragon, "AdeptEnduringBreath")
+           && !(GetLocalInt(oDragon, "AdeptCloudBreath") && GetLocalInt(oDragon, "AdeptShapedBreath")) 
+           && (GetSpellId() == BREATH_FIRE_CONE || GetSpellId() == BREATH_FIRE_LINE))
+        {
+           BreathUsed.nLingering = 1;
+        }
 	
 	/* metabreath calculation*/
 	
@@ -314,6 +371,7 @@ void ApplyBreath(struct breath BreathUsed, location lTargetArea, int bLinger = F
     int nVisualType = -1;
     int nEnergyAura = 0;
     int bCanCling;
+    int nShapedSpotsUsed = GetLocalInt(BreathUsed.oDragon, "AdeptShapedBreath") ? 0 : 4;
     int nBreathShape = BreathUsed.bLine ? SHAPE_SPELLCYLINDER : SHAPE_SPELLCONE;
     float fRange = FeetToMeters(BreathUsed.fRange);
     int nKnockdownDC = 0;
@@ -468,12 +526,13 @@ void ApplyBreath(struct breath BreathUsed, location lTargetArea, int bLinger = F
         nDamage = nDamage / 2;
         
     /* Begin application */
-    
+    int nObjectFilter = OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE;
+    //Adept's Breath of Bahamut does not affect objects
+    if(GetSpellId() == BREATH_BAHAMUT_LINE) nObjectFilter = OBJECT_TYPE_CREATURE;
     
     //Get first target in spell area
     object oTarget = GetFirstObjectInShape(nBreathShape, fRange, lTargetArea, TRUE,
-                                    OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE,
-                                    vSourceOfBreath);
+                                    nObjectFilter, vSourceOfBreath);
 
     while(GetIsObjectValid(oTarget))
     {
@@ -483,8 +542,45 @@ void ApplyBreath(struct breath BreathUsed, location lTargetArea, int bLinger = F
             //Determine effect delay
             fDelay = GetDistanceBetween(BreathUsed.oDragon, oTarget)/20;
             
+            //check for Shaped Breath effect
+            if(IsAdeptBreath() && nShapedSpotsUsed < 4 && !GetIsReactionTypeHostile(oTarget))
+                nShapedSpotsUsed++;
+                
+            //Adept's Sickening Breath breath effect
+            else if(BreathUsed.nOverrideSpecial == BREATH_SICKENING)
+            {
+            	//set up sickened effect
+            	effect eAtt = EffectAttackDecrease(2);
+            	effect eDam = EffectDamageDecrease(2);
+            	effect eSkill = EffectSkillDecrease(SKILL_ALL_SKILLS, 2);
+            	effect eSave = EffectSavingThrowDecrease(SAVING_THROW_ALL, 2);
+            	effect eLink = EffectLinkEffects(eAtt, eDam);
+            	eLink = EffectLinkEffects(eLink, eSkill);
+            	eLink = EffectLinkEffects(eLink, eSave);
+            	//Set VFX
+                eVis = EffectVisualEffect(VFX_IMP_POISON_L);
+            	
+            	//Fire cast spell at event for the specified target
+                SignalEvent(oTarget, EventSpellCastAt(BreathUsed.oDragon, GetSpellId()));
+	        
+	        //2 rounds on a failed save
+	        if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nSaveDC, SAVING_THROW_TYPE_NONE))
+                {
+                    //Apply the VFX impact and effects
+                    DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+                    DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 12.0));
+                }
+                //1 round otherwise
+                else
+                {
+                    //Apply the VFX impact and effects
+                    DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+                    DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0));
+                }
+            }
+            
             //Brass alternate breath - sleep
-            if(BreathUsed.nOverrideSpecial == BREATH_SLEEP)
+            else if(BreathUsed.nOverrideSpecial == BREATH_SLEEP)
             {
             	//prepare effects
                effect eBreath = EffectSleep();
@@ -529,6 +625,14 @@ void ApplyBreath(struct breath BreathUsed, location lTargetArea, int bLinger = F
                     DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nSlowDuration)));
                     SetLocalInt(oTarget, "AffectedByBreath", TRUE);
                 }
+                //Adept breath effect still lasts for one round if save is made
+                else if(IsAdeptBreath())
+                {
+                    //Apply the VFX impact and effects
+                    DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+                    DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(1)));
+                    SetLocalInt(oTarget, "AffectedByBreath", TRUE);
+                }
             }
             
             //Gold alternate breath - drains strength
@@ -543,7 +647,21 @@ void ApplyBreath(struct breath BreathUsed, location lTargetArea, int bLinger = F
                     eVis = EffectVisualEffect(VFX_IMP_POISON_L);
                     //Apply the VFX impact and effects
                     DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-                    DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, BreathUsed.nDiceNumber, DURATION_TYPE_PERMANENT, TRUE));
+                    //adept breath penalty only last 4 rounds on failure, gold breath has no duration
+                    if(IsAdeptBreath())
+                        DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectAbilityDecrease(ABILITY_STRENGTH, BreathUsed.nDiceNumber), oTarget, 24.0));
+                    else
+                        DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, BreathUsed.nDiceNumber, DURATION_TYPE_PERMANENT, TRUE));
+                    SetLocalInt(oTarget, "AffectedByBreath", TRUE);
+                }
+                //Adept breath still happens for 2 rounds on successful save
+                else if(IsAdeptBreath())
+                {
+                    //Set Damage and VFX - Bioware Gold used VFX_IMP_REDUCE_ABILITY_SCORE originally
+                    eVis = EffectVisualEffect(VFX_IMP_POISON_L);
+                    //Apply the VFX impact and effects
+                    DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+                    DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectAbilityDecrease(ABILITY_STRENGTH, BreathUsed.nDiceNumber), oTarget, 12.0));
                     SetLocalInt(oTarget, "AffectedByBreath", TRUE);
                 }
                 bCanCling = TRUE;
@@ -774,8 +892,7 @@ void ApplyBreath(struct breath BreathUsed, location lTargetArea, int bLinger = F
 	
         //Get next target in spell area
         oTarget = GetNextObjectInShape(nBreathShape, fRange, lTargetArea, TRUE,  
-                         OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE, 
-                         vSourceOfBreath);
+                         nObjectFilter, vSourceOfBreath);
     }
     
     //Lingering Breath check

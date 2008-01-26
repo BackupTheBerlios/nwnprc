@@ -34965,6 +34965,174 @@ This aura grants you and your allies a DC bonus on any abilities relating to thi
   <entry id="55695" lang="en" sex="m">Second Draconic Aura: Electric Energy</entry>
   <entry id="55696" lang="en" sex="m">Second Draconic Aura: Fire Energy</entry>
   <entry id="55697" lang="en" sex="m">Second Draconic Aura: Energy</entry>
+  <entry id="55698" lang="en" sex="m">Dragonfire Adept</entry>
+  <entry id="55699" lang="en" sex="m">Dragonfire Adepts</entry>
+  <entry id="55700" lang="en" sex="m">dragonfire adept</entry>
+  <entry id="55701" lang="en" sex="m">(BASE CLASS)
+ABle to call upon a dragon's fiery breath and augment themselves with spell-like abilities, dragonfire adepts are imposing figures who command the magic of dragonkind.  They have no arcane or divine magic, nor do they rely on physical prowess.  Instead, they draw upon a direct link with the nature of draconic existance, infusing their souls wiht the raw magic of dragons.  The most obvious incarnation of this link is their breath weapon, but as the link deepends they also learn powerful invocations that allow them to access different draconic abilities.
+
+- Hit Die: d8
+- Proficiencies: Dragonfire adepts are proficient with simple weapons only.
+- Skill Points: 4 + Int Modifier(x4 at 1st level)
+
+CLASS SKILLS: 
+
+Abilities:
+Base Attack Bonus: +1/2
+Strong Saves: Fortitude, Will
+
+Breath Weapon: At 1st level, you gain a breath weapon you can use at will as a standard action.  Each time, you can choose between a 15' cone or a 30' line.  It has a Reflex save DC of 10 + half your class level + your Con modifier for half damage, and does 1d6 of fire damage, increasing by 1d6 every 2 levels.  You are immune to your own breath weapon, but not to other breath weapons of the same type.  At level 10, the breath range doubles.
+
+Dragontouched:  At 1st level you gain this feat as a bonus feat.
+
+Breath Effects: At 2nd, 5th, 10th, 12th, 15th, and 20th levels you can choose a breath effect, which allows you to modify your breath weapon's damage type, area, or even replace the damage with another effect.  Some only work with cones, while others only work with lines, and those of the same type cannot stack.
+
+Scales: At second level you develop a hide of fine scales, the color usually matching the adept's outlook and alignment.  These give you a +2 to AC, and improve by 1 AC at levels 8, 13, and 18.
+
+Damage Reduction: You gain DR 2/+1 at level 6, which increases to 5/+1 at level 16.
+
+Immunities: At level 19 you become immune to sleep and paralysis spells.
+
+Invocations: These are spell-like abilities tapping into the adept's draconic energy.  Any of them that are known can be used at will, but otherwise act like spells, such as in regards to casting in combat, or spell resistance.  Casting level is the adept's class level, and those that grant saves have a DC of 10 + the equivalent spell level + the adept's Cha modifier.
+They come in 4 grades: least(2nd), lesser(4th), greater(6th), and dark(8th).  Adepts start with knowledge of a single least invocation, and gain access to more at levels 3, 6, 8, 11, 13, 16, and 18.  At levels 6, 11, and 16 they also unlock the next level of invocation, but they can select invocations of any level equal to or less than their highest level of access.
+Invocations are also subject to arcane spell failure.
+
+EPIC DRAGONFIRE ADEPT
+
+As your draconic powers continue to grow, you continue to gain breath effects at levels 22, 25, 30, 32, 35, and 40.  Your scales' thickness also increases by 1 at levels 23, 28, 33, and 38.  Your DR also increases to 7/+5 at level 26, and 10/+5 at 36.</entry>
+  <entry id="55702" lang="en" sex="m">Adept Scales</entry>
+  <entry id="55703" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Dragonfire Adept level 2
+
+You gain +2 AC to your natural armor.  This increases to +3 at Dragonfire Adept 8, and increases by 1 every 5 levels thereafter.
+Use: Automatic</entry>
+  <entry id="55704" lang="en" sex="m">Adept Damage Reduction</entry>
+  <entry id="55705" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Dragonfire Adept level 6
+
+You gain DR 2/+1.  This increases to 5/+1 at level 16, 7/+5 at 26, and 10/+5 at level 36.
+Use: Automatic</entry>
+  <entry id="55706" lang="en" sex="m">Breath Effects</entry>
+  <entry id="55707" lang="en" sex="m">These effects modify your Dragonfire Adept breath weapon, by changing damage types, replacing the damage with other effects, or affecting the manner in which it is applied.</entry>
+  <entry id="55708" lang="en" sex="m">Adept Fire Breath</entry>
+  <entry id="55709" lang="en" sex="m">Type of Feat: Breath Effect
+Prerequisite: Dragonfire Adept level 1
+You gain a breath weapon you can use at will as a standard action.  Each time, you can choose between a 15' cone or a 30' line, with the distance doubling at level 10.  It has a Reflex save DC of 10 + half your class level + your Con modifier for half damage, and does 1d6 of energy damage, increasing by 1d6 every 2 levels.  You are immune to your own breath weapon, but not to other breath weapons of the same type.
+
+You can breathe either a cone of fire or a line of fire.
+Use: Selected</entry>
+  <entry id="55710" lang="en" sex="m">Adept Fire Breath - Cone</entry>
+  <entry id="55711" lang="en" sex="m">Adept Fire Breath - Line</entry>
+  <entry id="55712" lang="en" sex="m">Adept Frost Breath - Cone</entry>
+  <entry id="55713" lang="en" sex="m">Type of Feat: Breath Effect
+Prerequisite: Dragonfire Adept level 2
+
+You can breathe a cone of cold.
+Use: Selected</entry>
+  <entry id="55714" lang="en" sex="m">Adept Electric Breath - Line</entry>
+  <entry id="55715" lang="en" sex="m">Type of Feat: Breath Effect
+Prerequisite: Dragonfire Adept level 2
+
+You can breathe a line of electricity.
+Use: Selected</entry>
+  <entry id="55716" lang="en" sex="m">Adept Sickness Breath - Cone</entry>
+  <entry id="55717" lang="en" sex="m">Type of Feat: Breath Effect
+Prerequisite: Dragonfire Adept level 2
+
+You can breathe a cone of sickness.  Those who fail a fort save are sickened for two rounds, and those who make it are sickened for 1 round.
+Use: Selected</entry>
+  <entry id="55718" lang="en" sex="m">Adept Acid Breath</entry>
+  <entry id="55719" lang="en" sex="m">Type of Feat: Breath Effect
+Prerequisite: Dragonfire Adept level 5
+
+You can breathe either a cone of acid or a line of acid.
+Use: Selected</entry>
+  <entry id="55720" lang="en" sex="m">Adept Acid Breath - Cone</entry>
+  <entry id="55721" lang="en" sex="m">Adept Acid Breath - Line</entry>
+  <entry id="55722" lang="en" sex="m">Adept Shaped Breath</entry>
+  <entry id="55723" lang="en" sex="m">Type of Feat: Breath Effect
+Prerequisite: Dragonfire Adept level 5
+
+The first four non-hostile targets caught in your breath are not affected by it.
+You can apply any one other breath effect you know to this breath.  If used with Cloud Breath, you can only use the fire breaths.  Any other breath used with both active will apply this effect only.
+Use: Selected</entry>
+  <entry id="55724" lang="en" sex="m">Adept Slow Breath - Cone</entry>
+  <entry id="55725" lang="en" sex="m">Type of Feat: Breath Effect
+Prerequisite: Dragonfire Adept level 5
+
+You can breathe a cone of slowness.  Those who fail a fort save are slowed for 2 rounds, or for 1 round if they succeed.
+Use: Selected</entry>
+  <entry id="55726" lang="en" sex="m">Adept Weakening Breath - Cone</entry>
+  <entry id="55727" lang="en" sex="m">Type of Feat: Breath Effect
+Prerequisite: Dragonfire Adept level 5
+
+You can breathe either a cone of weakness.  Those who fail a fort save are given a -6 Strength penalty for four rounds.  Sucess reduces the duration to 2 rounds.
+Use: Selected</entry>
+  <entry id="55728" lang="en" sex="m">Adept Cloud Breath</entry>
+  <entry id="55729" lang="en" sex="m">Type of Feat: Breath Effect
+Prerequisite: Dragonfire Adept level 10
+
+Instead of a cone, your breath expands in a cloud around you for 20'.  This cannot be applied to line breath weapons.
+You can apply any one other breath effect you know to this breath.  If used with Shaped Breath, you can only use the fire breaths.  Any other breath used with both active will apply Shaped Breath only.
+Use: Selected</entry>
+  <entry id="55730" lang="en" sex="m">Adept Enduring Breath</entry>
+  <entry id="55731" lang="en" sex="m">Type of Feat: Breath Effect
+Prerequisite: Dragonfire Adept level 10
+
+Any creature damaged by your breath with this effect applied takes half the initial damage again on the following round.
+This effect can only be applied to a fire breath.
+Use: Selected</entry>
+  <entry id="55732" lang="en" sex="m">Adept Sleep Breath - Cone</entry>
+  <entry id="55733" lang="en" sex="m">Type of Feat: Breath Effect
+Prerequisite: Dragonfire Adept level 10
+
+You can breathe a cone of sleep.  Those who fail a will save are put to sleep for 1 round.
+Use: Selected</entry>
+  <entry id="55734" lang="en" sex="m">Adept Thunder Breath - Cone</entry>
+  <entry id="55735" lang="en" sex="m">Type of Feat: Breath Effect
+Prerequisite: Dragonfire Adept level 10
+
+You can breathe a cone of thunder.  The save for this breath is Fortitude, rather than Reflex.
+Use: Selected</entry>
+  <entry id="55736" lang="en" sex="m">Discorporating Breath of Bahamut - Line</entry>
+  <entry id="55737" lang="en" sex="m">Type of Feat: Breath Effect
+Prerequisite: Dragonfire Adept level 15
+
+You can breathe a line of pure energy.  Damage is doubled, and this requires a Fortitude save instead of Reflex.  This breath also cannot affect objects.
+When you use this breath, you take damage equal to twice your class level, which can't be lessened or reduced.  Those who are neutral take four times their adept class level.
+This effect can only be learned by non-evil adepts.
+Use: Selected</entry>
+  <entry id="55738" lang="en" sex="m">Adept Force Breath - Line</entry>
+  <entry id="55739" lang="en" sex="m">Type of Feat: Breath Effect
+Prerequisite: Dragonfire Adept level 15
+
+You can breathe a line of force.
+Use: Selected</entry>
+  <entry id="55740" lang="en" sex="m">Adept Paralyzation Breath - Cone</entry>
+  <entry id="55741" lang="en" sex="m">Type of Feat: Breath Effect
+Prerequisite: Dragonfire Adept level 15
+
+You can breathe a cone of paralyzation.  Those who fail a fort save are paralyzed for 1 round.
+Use: Selected</entry>
+  <entry id="55742" lang="en" sex="m">Fivefold Breath of Tiamat</entry>
+  <entry id="55743" lang="en" sex="m">Type of Feat: Breath Effect
+Prerequisite: Dragonfire Adept level 15
+
+As a full round action, you breathe 5 different breaths: a cone of acid, a cone of cold, a cone of fire, a line of acid, and a line of electricity.  Each one has its own reflex save, and each one does your full normal damage.
+When you use this breath, you take damage equal to twice your class level, which can't be lessened or reduced.  Those who are neutral take four times their adept class level.  In addition, you cannot use any breaths the following round.
+This effect can only be learned by non-good adepts.
+Use: Selected</entry>
+  <entry id="55744" lang="en" sex="m">&lt;CUSTOM0&gt; breathes a blast of fire.</entry>
+  <entry id="55745" lang="en" sex="m">&lt;CUSTOM0&gt; breathes a blast of acid.</entry>
+  <entry id="55746" lang="en" sex="m">&lt;CUSTOM0&gt; breathes a blast of pure force.</entry>
+  <entry id="55747" lang="en" sex="m">&lt;CUSTOM0&gt; breathes a blast of coruscating blue-white energy.</entry>
+  <entry id="55748" lang="en" sex="m">&lt;CUSTOM0&gt; breathes a cone of nauseating gas.</entry>
+  <entry id="55749" lang="en" sex="m">&lt;CUSTOM0&gt; breathes a cone of gas, slowing movements within.</entry>
+  <entry id="55750" lang="en" sex="m">&lt;CUSTOM0&gt; breathes a cone of gas that seems to sap strength.</entry>
+  <entry id="55751" lang="en" sex="m">&lt;CUSTOM0&gt; breathes a cone of paralyzing gas.</entry>
+  <entry id="55752" lang="en" sex="m">&lt;CUSTOM0&gt; breathes a cone of acid.</entry>
+  <entry id="55753" lang="en" sex="m">&lt;CUSTOM0&gt; breathes a tempest of mingling cold, fire, acid, and electricity.</entry>
+  <entry id="55754" lang="en" sex="m">&lt;CUSTOM0&gt; breathes a cone of sleep gas.</entry>
   <entry id="55964" lang="en" sex="m">1</entry>
   <entry id="55965" lang="en" sex="m">2</entry>
   <entry id="55966" lang="en" sex="m">3</entry>

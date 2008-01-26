@@ -278,6 +278,7 @@ const int BREATH_PARALYZE    = 5;
 const int BREATH_SLEEP       = 6;
 const int BREATH_SLOW        = 7;
 const int BREATH_WEAKENING   = 8;
+const int BREATH_SICKENING   = 9;
 
 // BaseItems
 

@@ -1033,6 +1033,26 @@ const int SPELL_LINGERING_QS1                       = 2981;
 const int SPELL_LINGERING_QS2                       = 2982;
 const int SPELL_LINGERING_QS3                       = 2983;
 
+//Breath Effects
+const int BREATH_FIRE_CONE                          = 2102;
+const int BREATH_FIRE_LINE                          = 2103;
+const int BREATH_FROST_CONE                         = 2104;
+const int BREATH_ELECTRIC_LINE                      = 2105;
+const int BREATH_SICKENING_CONE                     = 2106;
+const int BREATH_ACID_CONE                          = 2108;
+const int BREATH_ACID_LINE                          = 2109;
+const int BREATH_SHAPED_BREATH                      = 2110;
+const int BREATH_SLOW_CONE                          = 2111;
+const int BREATH_WEAKENING_CONE                     = 2112;
+const int BREATH_CLOUD_BREATH                       = 2113;
+const int BREATH_ENDURING_BREATH                    = 2114;
+const int BREATH_SLEEP_CONE                         = 2115;
+const int BREATH_THUNDER_CONE                       = 2116;
+const int BREATH_BAHAMUT_LINE                       = 2117;
+const int BREATH_FORCE_LINE                         = 2118;
+const int BREATH_PARALYZE_CONE                      = 2119;
+const int BREATH_FIVEFOLD_TIAMAT                    = 2120;
+
 // Pyrokineticist
 const int SPELL_FIRE_LASH                           = 1892;
 const int SPELL_BOLT_OF_FIRE                        = 1893;

@@ -368,6 +368,26 @@ const int FEAT_TRUE_STEALTH                            = 3952;
 const int FEAT_DRAGONFRIEND                            = 3988;
 const int FEAT_DRAGONTHRALL                            = 3989;
 const int FEAT_FULL_DRAGON_BREATH                      = 3111;
+const int FEAT_ADEPT_SCALES                            = 3002;
+const int FEAT_ADEPT_REDUCTION                         = 3003;
+
+//Dragonfire Adept breath effects
+const int FEAT_FIRE_ADEPTBREATH                        = 4979;
+const int FEAT_FROST_ADEPTBREATH                       = 4980;
+const int FEAT_ELECTRIC_ADEPTBREATH                    = 4981;
+const int FEAT_SICK_ADEPTBREATH                        = 4982;
+const int FEAT_ACID_ADEPTBREATH                        = 4983;
+const int FEAT_SHAPED_ADEPTBREATH                      = 4984;
+const int FEAT_SLOW_ADEPTBREATH                        = 4985;
+const int FEAT_WEAK_ADEPTBREATH                        = 4986;
+const int FEAT_CLOUD_ADEPTBREATH                       = 4987;
+const int FEAT_ENDURE_ADEPTBREATH                      = 4988;
+const int FEAT_SLEEP_ADEPTBREATH                       = 4989;
+const int FEAT_THUNDER_ADEPTBREATH                     = 4990;
+const int FEAT_BAHAMUT_ADEPTBREATH                     = 4991;
+const int FEAT_FORCE_ADEPTBREATH                       = 4992;
+const int FEAT_PARALYZE_ADEPTBREATH                    = 4993;
+const int FEAT_TIAMAT_ADEPTBREATH                      = 4994;
 
 //Metabreath and Breath Channeling
 const int FEAT_CLINGING_BREATH                         = 4966;

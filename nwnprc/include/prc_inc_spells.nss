@@ -475,6 +475,7 @@ int GetIsDivineClass (int nClass, object oCaster = OBJECT_SELF)
             nClass==CLASS_TYPE_FAVOURED_SOUL ||
             nClass==CLASS_TYPE_SOHEI ||
             nClass==CLASS_TYPE_HEALER ||
+            nClass==CLASS_TYPE_SHAMAN ||
             nClass==CLASS_TYPE_SLAYER_OF_DOMIEL ||
             nClass==CLASS_TYPE_OCULAR);
 }
@@ -1679,6 +1680,9 @@ int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)
 
         case CLASS_TYPE_HEALER:
             return GetCasterLvlDivineFull(CLASS_TYPE_HEALER, oCaster);
+            
+        case CLASS_TYPE_SHAMAN:
+            return GetCasterLvlDivineFull(CLASS_TYPE_SHAMAN, oCaster);            
 
         case CLASS_TYPE_SLAYER_OF_DOMIEL:
             return GetCasterLvlDivineFull(CLASS_TYPE_SLAYER_OF_DOMIEL, oCaster);

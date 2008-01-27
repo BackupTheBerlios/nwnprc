@@ -36223,13 +36223,7 @@ Saving Throw: None (harmless)
 Spell Resistance: No (harmless)
 
 The goddess Shar is called the Mistress of the Night, the Lady of Loss, and the Dark Goddess. She is shadow; dark and secret. It is with little surprise that a gift from her to the caster of this spell would encompass such things. Upon completion of this spell, you receive an immensely powerful whip, created by the hands of Shar herself. It holds powerful enchantments, and also blinds its targets. In addition, shadow settles upon the battlefield wherever this whip is used. When the duration ends, the whip is left as a reminder to you, though all of its enchantments are stripped from it. </entry>
-  <entry id="56314" lang="en" sex="m">##START_OF_EPIC_SPELL_AND_ISC_RESERVE</entry>
-  <entry id="60000" lang="en" sex="m">##EPIC_SPELL_AND_ISC_RESERVE</entry>
-  <entry id="60500" lang="en" sex="m">##EPIC_SPELL_AND_ISC_RESERVE</entry>
-  <entry id="61000" lang="en" sex="m">##EPIC_SPELL_AND_ISC_RESERVE</entry>
-  <entry id="61500" lang="en" sex="m">##EPIC_SPELL_AND_ISC_RESERVE</entry>
-  <entry id="62000" lang="en" sex="m">##END_OF_EPIC_SPELL_AND_ISC_RESERVE</entry>
-  <entry id="62001" lang="en" sex="m">####START_OF_NEW_SPELLBOOK_RESERVE</entry>
+  <entry id="56314" lang="en" sex="m">####START_OF_NEW_SPELLBOOK_RESERVE</entry>
   <entry id="62002" lang="en" sex="m">Sorcerer Silent Fireball</entry>
   <entry id="62003" lang="en" sex="m">Sorcerer Still Fireball</entry>
   <entry id="62004" lang="en" sex="m">Sorcerer Flame Arrow</entry>

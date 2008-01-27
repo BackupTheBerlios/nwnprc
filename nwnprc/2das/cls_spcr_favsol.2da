@@ -1,6 +1,7 @@
 2DA V2.0
 
     Label                          Level SpellID 
+    0   True_Resurrection             9     1855
 0   Storm_of_Vengeance             9     173     
 1   Summon_Creature_IX             9     178     
 2   Implosion                      9     87      
@@ -250,6 +251,7 @@
 246 EyesoftheAvoral                1     2632    
 247 RayofHope                      1     2640    
 248 SummonUndeadI                  1     1784    
+210 Obscuring_Mist                      1     3085
 249 Inflict_Minor_Wounds           0     431     
 250 Virtue                         0     189     
 251 Light                          0     100     

@@ -35210,6 +35210,16 @@ Use: Selected</entry>
   <entry id="55752" lang="en" sex="m">&lt;CUSTOM0&gt; breathes a cone of acid.</entry>
   <entry id="55753" lang="en" sex="m">&lt;CUSTOM0&gt; breathes a tempest of mingling cold, fire, acid, and electricity.</entry>
   <entry id="55754" lang="en" sex="m">&lt;CUSTOM0&gt; breathes a cone of sleep gas.</entry>
+  <entry id="55755" lang="en" sex="m">Return to invocation level selection.</entry>
+  <entry id="55756" lang="en" sex="m">Select level of invocation to gain.\n\nNOTE:\nThis may take a while when first browsing a particular level of invocations.</entry>
+  <entry id="55757" lang="en" sex="m">Select an invocation to gain.\nYou can select</entry>
+  <entry id="55758" lang="en" sex="m">more invocations</entry>
+  <entry id="55759" lang="en" sex="m">You will be able to select more invocations after you gain the appropriate level in an invocation caster class.</entry>
+  <entry id="55760" lang="en" sex="m">Dark</entry>
+  <entry id="55761" lang="en" sex="m">Greater</entry>
+  <entry id="55762" lang="en" sex="m">Lesser</entry>
+  <entry id="55763" lang="en" sex="m">Least</entry>
+  <entry id="55764" lang="en" sex="m">You have lost concentration on the invocation you were attempting to cast!</entry>
   <entry id="55964" lang="en" sex="m">1</entry>
   <entry id="55965" lang="en" sex="m">2</entry>
   <entry id="55966" lang="en" sex="m">3</entry>

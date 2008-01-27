@@ -178,6 +178,10 @@ void MakeLookupLoopMaster()
     DelayCommand(11.9, MakeLookupLoop(CLASS_TYPE_WARBLADE,         0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "RealSpellID", "GetPowerFromSpellID"));
     DelayCommand(12.0, MakeLookupLoop(CLASS_TYPE_WARBLADE,         0, GetPRCSwitch(FILE_END_CLASS_POWER), "RealSpellID", "FeatID",  "GetClassFeatFromPower_"+IntToString(CLASS_TYPE_WARBLADE)));
     DelayCommand(12.1, MakeLookupLoop(CLASS_TYPE_WARBLADE,         0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "", "SpellIDToClsPsipw"));
+    // Invokers use the same lookup loop style as the psionic classes. Time adjusted to put it after the last of the caster lookup loops
+    DelayCommand(12.2, MakeLookupLoop(CLASS_TYPE_DRAGONFIRE_ADEPT, 0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "RealSpellID", "GetPowerFromSpellID"));
+    DelayCommand(12.3, MakeLookupLoop(CLASS_TYPE_DRAGONFIRE_ADEPT, 0, GetPRCSwitch(FILE_END_CLASS_POWER), "RealSpellID", "FeatID",  "GetClassFeatFromPower_"+IntToString(CLASS_TYPE_DRAGONFIRE_ADEPT)));
+    DelayCommand(12.4, MakeLookupLoop(CLASS_TYPE_DRAGONFIRE_ADEPT, 0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "", "SpellIDToClsPsipw"));
     //add new psionic classes here
     //also add them later too
 
@@ -387,19 +391,20 @@ void MakeSpellbookLevelLoop(int nClass, int nMin, int nMax, string sVarNameBase,
     int bNewSpellbook = FALSE;
     string sFile;
     // Stuff handled in GetAMSDefinitionFileName()
-    if(nClass == CLASS_TYPE_PSION          ||
-       nClass == CLASS_TYPE_PSYWAR         ||
-       nClass == CLASS_TYPE_WILDER         ||
-       nClass == CLASS_TYPE_FIST_OF_ZUOKEN ||
-       nClass == CLASS_TYPE_WARMIND        ||
+    if(nClass == CLASS_TYPE_PSION            ||
+       nClass == CLASS_TYPE_PSYWAR           ||
+       nClass == CLASS_TYPE_WILDER           ||
+       nClass == CLASS_TYPE_FIST_OF_ZUOKEN   ||
+       nClass == CLASS_TYPE_WARMIND          ||
        // Add new psionic classes here
 
        // Tome of Battle
-       nClass == CLASS_TYPE_CRUSADER       ||
-       nClass == CLASS_TYPE_SWORDSAGE      ||
-       nClass == CLASS_TYPE_WARBLADE       ||
+       nClass == CLASS_TYPE_CRUSADER         ||
+       nClass == CLASS_TYPE_SWORDSAGE        ||
+       nClass == CLASS_TYPE_WARBLADE         ||
        // Other new caster types
-       nClass == CLASS_TYPE_TRUENAMER
+       nClass == CLASS_TYPE_TRUENAMER        ||
+       nClass == CLASS_TYPE_DRAGONFIRE_ADEPT
        )
         sFile = GetAMSDefinitionFileName(nClass);
     // New spellbook class
@@ -468,19 +473,20 @@ void MakeLookupLoop(int nClass, int nMin, int nMax, string sSourceColumn,
 
     string sFile;
     // Stuff handled in GetAMSDefinitionFileName()
-    if(nClass == CLASS_TYPE_PSION          ||
-       nClass == CLASS_TYPE_PSYWAR         ||
-       nClass == CLASS_TYPE_WILDER         ||
-       nClass == CLASS_TYPE_FIST_OF_ZUOKEN ||
-       nClass == CLASS_TYPE_WARMIND        ||
+    if(nClass == CLASS_TYPE_PSION            ||
+       nClass == CLASS_TYPE_PSYWAR           ||
+       nClass == CLASS_TYPE_WILDER           ||
+       nClass == CLASS_TYPE_FIST_OF_ZUOKEN   ||
+       nClass == CLASS_TYPE_WARMIND          ||
        // Add new psionic classes here
 
        // Tome of Battle
-       nClass == CLASS_TYPE_CRUSADER       ||
-       nClass == CLASS_TYPE_SWORDSAGE      ||
-       nClass == CLASS_TYPE_WARBLADE       ||
+       nClass == CLASS_TYPE_CRUSADER         ||
+       nClass == CLASS_TYPE_SWORDSAGE        ||
+       nClass == CLASS_TYPE_WARBLADE         ||
        // Other new caster types
-       nClass == CLASS_TYPE_TRUENAMER
+       nClass == CLASS_TYPE_TRUENAMER        ||
+       nClass == CLASS_TYPE_DRAGONFIRE_ADEPT
        )
         sFile = GetAMSDefinitionFileName(nClass);
     // New spellbook class
@@ -561,19 +567,20 @@ void MakeSpellIDLoop(int nClass, int nMin, int nMax, string sRealColumn,
 
     string sFile;
     // Stuff handled in GetAMSDefinitionFileName()
-    if(nClass == CLASS_TYPE_PSION          ||
-       nClass == CLASS_TYPE_PSYWAR         ||
-       nClass == CLASS_TYPE_WILDER         ||
-       nClass == CLASS_TYPE_FIST_OF_ZUOKEN ||
-       nClass == CLASS_TYPE_WARMIND        ||
+    if(nClass == CLASS_TYPE_PSION            ||
+       nClass == CLASS_TYPE_PSYWAR           ||
+       nClass == CLASS_TYPE_WILDER           ||
+       nClass == CLASS_TYPE_FIST_OF_ZUOKEN   ||
+       nClass == CLASS_TYPE_WARMIND          ||
        // Add new psionic classes here
 
        // Tome of Battle
-       nClass == CLASS_TYPE_CRUSADER       ||
-       nClass == CLASS_TYPE_SWORDSAGE      ||
-       nClass == CLASS_TYPE_WARBLADE       ||
+       nClass == CLASS_TYPE_CRUSADER         ||
+       nClass == CLASS_TYPE_SWORDSAGE        ||
+       nClass == CLASS_TYPE_WARBLADE         ||
        // Other new caster types
-       nClass == CLASS_TYPE_TRUENAMER
+       nClass == CLASS_TYPE_TRUENAMER        ||
+       nClass == CLASS_TYPE_DRAGONFIRE_ADEPT
        )
         sFile = GetAMSDefinitionFileName(nClass);
     // New spellbook class
@@ -696,6 +703,9 @@ string GetAMSKnownFileName(int nClass)
     // ToB
     else if(nClass == CLASS_TYPE_CRUSADER || nClass == CLASS_TYPE_SWORDSAGE || nClass == CLASS_TYPE_WARBLADE)
         sFile = "cls_mvkn" + GetStringRight(sFile, GetStringLength(sFile) - 8); // Hardcoded the cls_ part. It's not as if any class uses some other prefix - Ornedan, 20061210
+    // Invocations
+    if(nClass == CLASS_TYPE_DRAGONFIRE_ADEPT)
+        sFile = "cls_invkn" + GetStringRight(sFile, GetStringLength(sFile) - 8); // Hardcoded the cls_ part. It's not as if any class uses some other prefix - Ornedan, 20061210
     // Assume psionics if no other match
     else
         sFile = "cls_psbk" + GetStringRight(sFile, GetStringLength(sFile) - 8); // Hardcoded the cls_ part. It's not as if any class uses some other prefix - Ornedan, 20061210
@@ -714,6 +724,9 @@ string GetAMSDefinitionFileName(int nClass)
     // ToB
     else if(nClass == CLASS_TYPE_CRUSADER || nClass == CLASS_TYPE_SWORDSAGE || nClass == CLASS_TYPE_WARBLADE)
         sFile = "cls_move" + GetStringRight(sFile, GetStringLength(sFile) - 8); // Hardcoded the cls_ part. It's not as if any class uses some other prefix - Ornedan, 20061210
+    // ToB
+    else if(nClass == CLASS_TYPE_DRAGONFIRE_ADEPT)
+        sFile = "cls_inv" + GetStringRight(sFile, GetStringLength(sFile) - 8); // Hardcoded the cls_ part. It's not as if any class uses some other prefix - Ornedan, 20061210
     // Assume psionics if no other match
     else
         sFile = "cls_psipw" + GetStringRight(sFile, GetStringLength(sFile) - 8); // Hardcoded the cls_ part. It's not as if any class uses some other prefix - Ornedan, 20061210

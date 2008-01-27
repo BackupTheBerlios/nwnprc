@@ -17,15 +17,27 @@ void main()
 {
 	object oPC = OBJECT_SELF;
 	int nClass = GetLevelByClass(CLASS_TYPE_DRAGONFIRE_ADEPT, oPC);
+	//PrC arcane spellcasting levels grant damage dice and DC
+	nClass += GetArcanePRCLevels(oPC);
 	int nDice = (nClass + 1) / 2;
 	int nSaveDCBonus = nClass / 2;
 	float fRange = nClass < 10 ? 15.0 : 30.0;
 	int nAlignment = GetAlignmentGoodEvil(oPC);
+	int nLastEffectUsed = GetLocalInt(oPC, "LastBreathEffect");
 	struct breath BaseBreath;
 	
 	if(GetLocalInt(oPC, "AdeptTiamatLock"))
 	{
 		SendMessageToPC(oPC, "You cannot use your breath weapon again until next round");
+		return;
+	}
+	
+	if(nLastEffectUsed == GetSpellId() 
+	   && GetSpellId() != BREATH_SHAPED_BREATH
+	   && GetSpellId() != BREATH_CLOUD_BREATH
+	   && GetSpellId() != BREATH_ENDURING_BREATH)
+	{
+		SendMessageToPC(oPC, "You cannot use the same breath effect two rounds in a row.");
 		return;
 	}
 	
@@ -147,5 +159,14 @@ void main()
 		     DelayCommand(6.0, DeleteLocalInt(oPC, "AdeptTiamatLock"));
 		     break;
 		     
+	}
+	
+	//Mark the breath effect as used.
+	if(GetSpellId() != BREATH_SHAPED_BREATH
+	   && GetSpellId() != BREATH_CLOUD_BREATH
+	   && GetSpellId() != BREATH_ENDURING_BREATH)
+	{
+	   SetLocalInt(oPC, "LastBreathEffect", GetSpellId());
+	   DelayCommand(6.0, DeleteLocalInt(oPC, "LastBreathEffect"));
 	}
 }

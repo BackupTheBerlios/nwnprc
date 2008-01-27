@@ -26,6 +26,7 @@
 #include "inc_newspellbook"
 #include "true_inc_trufunc"
 #include "tob_inc_tobfunc"
+#include "inv_inc_invfunc"
 
 //////////////////////////////////////////////////
 /*             Function prototypes              */
@@ -35,6 +36,7 @@ int CheckMissingPowers(object oPC, int nClass);
 int CheckMissingSpells(object oPC, int nClass, int nMinLevel, int nMaxLevel);
 int CheckMissingUtterances(object oPC, int nClass, int nLexicon);
 int CheckMissingManeuvers(object oPC, int nClass);
+int CheckMissingInvocations(object oPC, int nClass);
 
 //////////////////////////////////////////////////
 /*             Function definitions             */
@@ -98,7 +100,11 @@ void main()
     if(CheckMissingManeuvers(oPC, CLASS_TYPE_SWORDSAGE))
         return;
     if(CheckMissingManeuvers(oPC, CLASS_TYPE_WARBLADE))
-        return;        
+        return;
+        
+    // Handle Invocations
+    if(CheckMissingInvocations(oPC, CLASS_TYPE_DRAGONFIRE_ADEPT))
+        return;   
 }
 
 
@@ -193,6 +199,27 @@ int CheckMissingManeuvers(object oPC, int nClass)
         // Mark the class for which the PC is to gain powers and start the conversation
         SetLocalInt(oPC, "nClass", nClass);
         StartDynamicConversation("tob_moveconv", oPC, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, oPC);
+
+        return TRUE;
+    }
+    return FALSE;
+}
+
+
+int CheckMissingInvocations(object oPC, int nClass)
+{
+    int nLevel = GetLevelByClass(nClass, oPC);
+    if(!nLevel)
+        return FALSE;
+
+    int nCurrentInvocations = GetInvocationCount(oPC, nClass);
+    int nMaxInvocations = GetMaxInvocationCount(oPC, nClass);
+
+    if(nCurrentInvocations < nMaxInvocations)
+    {
+        // Mark the class for which the PC is to gain invocations and start the conversation
+        SetLocalInt(oPC, "nClass", nClass);
+        StartDynamicConversation("inv_invokeconv", oPC, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, oPC);
 
         return TRUE;
     }

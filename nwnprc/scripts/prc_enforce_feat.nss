@@ -1555,6 +1555,83 @@ int Swordsage(object oPC = OBJECT_SELF)
      return TRUE;
 }
 
+int Shaman(object oPC = OBJECT_SELF)
+{
+     int nClass = GetLevelByClass(CLASS_TYPE_SHAMAN, oPC);
+
+     if (nClass > 0)
+     {
+	     int nDomain = (GetHasFeat(FEAT_BONUS_DOMAIN_AIR,           oPC))
+	                + (GetHasFeat(FEAT_BONUS_DOMAIN_ANIMAL,        oPC))
+	                + (GetHasFeat(FEAT_BONUS_DOMAIN_DEATH,         oPC))
+	                + (GetHasFeat(FEAT_BONUS_DOMAIN_DESTRUCTION,   oPC))
+	                + (GetHasFeat(FEAT_BONUS_DOMAIN_EARTH,         oPC))
+	                + (GetHasFeat(FEAT_BONUS_DOMAIN_EVIL,          oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_FIRE,          oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_GOOD,          oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_HEALING,       oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_KNOWLEDGE,     oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_MAGIC,         oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_PLANT,         oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_PROTECTION,    oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_STRENGTH,      oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_SUN,           oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_TRAVEL,        oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_TRICKERY,      oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_WAR,           oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_WATER,         oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_DARKNESS,      oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_STORM,         oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_METAL,         oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_PORTAL,        oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_FORCE,         oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_SLIME,         oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_TYRANNY,       oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_DOMINATION,    oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_SPIDER,        oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_UNDEATH,       oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_TIME,          oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_DWARF,         oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_CHARM,         oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_ELF,           oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_FAMILY,        oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_FATE,          oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_GNOME,         oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_ILLUSION,      oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_HATRED,        oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_HALFLING,      oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_NOBILITY,      oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_OCEAN,         oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_ORC,           oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_RENEWAL,       oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_RETRIBUTION,   oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_RUNE,          oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_SPELLS,        oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_SCALEYKIND,    oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_BLIGHTBRINGER, oPC))
+			+ (GetHasFeat(FEAT_BONUS_DOMAIN_DRAGON,        oPC));
+			
+	      if ((nDomain > 2 && nClass < 11) || (nDomain > 3 && nClass >= 11))
+	      {
+	
+	           FloatingTextStringOnCreature("You have the wrong among of domains. Please reselect your feats.", oPC, FALSE);
+	           return FALSE;
+	      }
+
+	     int nIS   =     (GetHasFeat(FEAT_DODGE, oPC))
+	               +     (GetHasFeat(FEAT_STUNNING_FIST, oPC))
+	               +     (GetHasFeat(FEAT_EXPERTISE, oPC))
+	               +     (GetHasFeat(FEAT_IMPROVED_EXPERTISE, oPC))
+	               +     (GetHasFeat(FEAT_DEFLECT_ARROWS, oPC));
+
+	      if (nIS != (nClass/4))
+	      {
+	           FloatingTextStringOnCreature("You do not have the correct amount of bonus feats. Please reselect your feats.", oPC, FALSE);
+	           return FALSE;
+	      }
+     }
+     return TRUE;
+}
 
 void main()
 {
@@ -1588,6 +1665,7 @@ void main()
          || !MetabreathFeats(oPC)
          || !DragonShamanFeats(oPC)
          || !Swordsage(oPC)
+         || !Shaman(oPC)
        )
     {
        int nHD = GetHitDice(oPC);

@@ -1,5 +1,20 @@
-#include "prc_alterations"
-#include "prc_inc_sneak"
+#include "tob_inc_tobfunc"
+
+int GetIsShield(object oItem)
+{
+    int bReturn = FALSE;
+    switch(GetBaseItemType(oItem))
+    {
+        case BASE_ITEM_LARGESHIELD:
+        case BASE_ITEM_SMALLSHIELD:
+        case BASE_ITEM_TOWERSHIELD:
+        {
+            bReturn = TRUE;
+        }
+        break;
+    }
+    return bReturn;
+}
 
 void main()
 {
@@ -21,7 +36,7 @@ void main()
 
     object oItem;
     int nClass = GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL, oInitiator);
-    int nMoveTotal = GetKnownManeuversModifier(oPC, nClass);
+    int nMoveTotal = GetKnownManeuversModifier(oInitiator, nClass, MANEUVER_TYPE_MANEUVER);
 
     // We aren't being called from any event, instead from EvalPRCFeats
     if(nEvent == FALSE)
@@ -34,69 +49,69 @@ void main()
         
         // Allows gaining of maneuvers by prestige classes
         // It's not pretty, but it works
-        if (GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL,oPC) >= 1 &&
-           !GetPersistantLocalInt(oPC, "ToBDeepstone1")
+        if (GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL,oInitiator) >= 1 &&
+           !GetPersistantLocalInt(oInitiator, "ToBDeepstone1")
             )
         {
             if(DEBUG) DoDebug("tob_deepstone: Adding Maneuver 1");
-            SetKnownManeuversModifier(oPC, GetFirstBladeMagicClass(oInitiator), ++nMoveTotal);
-            SetPersistantLocalInt(oPC, "ToBDeepstone1", TRUE);
-            SetPersistantLocalInt(oPC, "RestrictedDiscipline1", DISCIPLINE_STONE_DRAGON);
+            SetKnownManeuversModifier(oInitiator, GetFirstBladeMagicClass(oInitiator), ++nMoveTotal, MANEUVER_TYPE_MANEUVER);
+            SetPersistantLocalInt(oInitiator, "ToBDeepstone1", TRUE);
+            SetPersistantLocalInt(oInitiator, "RestrictedDiscipline1", DISCIPLINE_STONE_DRAGON);
         }  
         
-        if (GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL,oPC) >= 3 &&
-           !GetPersistantLocalInt(oPC, "ToBDeepstone3")
+        if (GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL,oInitiator) >= 3 &&
+           !GetPersistantLocalInt(oInitiator, "ToBDeepstone3")
             )
         {
             if(DEBUG) DoDebug("tob_deepstone: Adding Maneuver 3");
-            SetKnownManeuversModifier(oPC, GetFirstBladeMagicClass(oInitiator), ++nMoveTotal);
-            SetPersistantLocalInt(oPC, "ToBDeepstone3", TRUE);
-            SetPersistantLocalInt(oPC, "RestrictedDiscipline1", DISCIPLINE_STONE_DRAGON);
+            SetKnownManeuversModifier(oInitiator, GetFirstBladeMagicClass(oInitiator), ++nMoveTotal, MANEUVER_TYPE_MANEUVER);
+            SetPersistantLocalInt(oInitiator, "ToBDeepstone3", TRUE);
+            SetPersistantLocalInt(oInitiator, "RestrictedDiscipline1", DISCIPLINE_STONE_DRAGON);
         } 
         
-        if (GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL,oPC) >= 5 &&
-           !GetPersistantLocalInt(oPC, "ToBDeepstone5")
+        if (GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL,oInitiator) >= 5 &&
+           !GetPersistantLocalInt(oInitiator, "ToBDeepstone5")
             )
         {
             if(DEBUG) DoDebug("tob_deepstone: Adding Maneuver 5");
-            SetKnownManeuversModifier(oPC, GetFirstBladeMagicClass(oInitiator), ++nMoveTotal);
-            SetPersistantLocalInt(oPC, "ToBDeepstone5", TRUE);
-            SetPersistantLocalInt(oPC, "RestrictedDiscipline1", DISCIPLINE_STONE_DRAGON);
+            SetKnownManeuversModifier(oInitiator, GetFirstBladeMagicClass(oInitiator), ++nMoveTotal, MANEUVER_TYPE_MANEUVER);
+            SetPersistantLocalInt(oInitiator, "ToBDeepstone5", TRUE);
+            SetPersistantLocalInt(oInitiator, "RestrictedDiscipline1", DISCIPLINE_STONE_DRAGON);
         }         
         
         // Hook to OnLevelDown to remove the maneuver slots granted here
-        AddEventScript(oPC, EVENT_ONPLAYERLEVELDOWN, "tob_deepstone", TRUE, FALSE);        
+        AddEventScript(oInitiator, EVENT_ONPLAYERLEVELDOWN, "tob_deepstone", TRUE, FALSE);        
     }
     else if(nEvent == EVENT_ONPLAYERLEVELDOWN)
     {
         // Has lost MAneuver, but the slot is still present
-        if(GetPersistantLocalInt(oPC, "ToBDeepstone1") &&
-           GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL,oPC) < 1
+        if(GetPersistantLocalInt(oInitiator, "ToBDeepstone1") &&
+           GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL,oInitiator) < 1
            )
         {
-            DeletePersistantLocalInt(oPC, "PRC_Thrallherd_CharmGained");
-            SetKnownManeuversModifier(oPC, nClass, --nMoveTotal);
+            DeletePersistantLocalInt(oInitiator, "PRC_Thrallherd_CharmGained");
+            SetKnownManeuversModifier(oInitiator, nClass, --nMoveTotal, MANEUVER_TYPE_MANEUVER);
         }
         // Has lost MAneuver, but the slot is still present
-        if(GetPersistantLocalInt(oPC, "ToBDeepstone3") &&
-           GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL,oPC) < 3
+        if(GetPersistantLocalInt(oInitiator, "ToBDeepstone3") &&
+           GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL,oInitiator) < 3
            )
         {
-            DeletePersistantLocalInt(oPC, "ToBDeepstone3");
-            SetKnownManeuversModifier(oPC, nClass, --nMoveTotal);
+            DeletePersistantLocalInt(oInitiator, "ToBDeepstone3");
+            SetKnownManeuversModifier(oInitiator, nClass, --nMoveTotal, MANEUVER_TYPE_MANEUVER);
         }
         // Has lost MAneuver, but the slot is still present
-        if(GetPersistantLocalInt(oPC, "ToBDeepstone3") &&
-           GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL,oPC) < 5
+        if(GetPersistantLocalInt(oInitiator, "ToBDeepstone3") &&
+           GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL,oInitiator) < 5
            )
         {
-            DeletePersistantLocalInt(oPC, "ToBDeepstone5");
-            SetKnownManeuversModifier(oPC, nClass, --nMoveTotal);
+            DeletePersistantLocalInt(oInitiator, "ToBDeepstone5");
+            SetKnownManeuversModifier(oInitiator, nClass, --nMoveTotal, MANEUVER_TYPE_MANEUVER);
         }        
 
         // Remove eventhook if the character no longer has levels in Deepstone
-        if(GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL,oPC) == 0)
-            RemoveEventScript(oPC, EVENT_ONPLAYERLEVELDOWN, "tob_deepstone", TRUE, FALSE);
+        if(GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL,oInitiator) == 0)
+            RemoveEventScript(oInitiator, EVENT_ONPLAYERLEVELDOWN, "tob_deepstone", TRUE, FALSE);
     }    
     else if(nEvent == EVENT_ITEM_ONHIT && nClass >= 4)
     {
@@ -112,7 +127,7 @@ void main()
         if(oItem == GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator))
         {
 		// Saving Throw
-		if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (10 + GetHitDice(oIniatitor)/2 + GetAbilityModifier(ABILITY_STRENGTH, oInitiator))))
+		if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (10 + GetHitDice(oInitiator)/2 + GetAbilityModifier(ABILITY_STRENGTH, oInitiator))))
 		{
 			effect eLink = ExtraordinaryEffect(EffectLinkEffects(EffectCutsceneImmobilize(), EffectVisualEffect(VFX_IMP_DOOM)));
 			ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0);

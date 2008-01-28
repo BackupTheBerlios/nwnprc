@@ -601,7 +601,7 @@ void UseUtterance(int nUtter, int nClass, int nLevelOverride = 0)
     }
 
     // Action queue the function that will cheatcast the actual utterance
-    DelayCommand(0.5, AssignCommand(oTrueSpeaker, ActionDoCommand(_UseUtteranceAux(oTrueSpeaker, oUtrToken, nSpellID, oTarget, lTarget, nUtter, nClass, nLevelOverride, bQuicken))));
+    DelayCommand(nUtterDur / 1000.0f, AssignCommand(oTrueSpeaker, ActionDoCommand(_UseUtteranceAux(oTrueSpeaker, oUtrToken, nSpellID, oTarget, lTarget, nUtter, nClass, nLevelOverride, bQuicken))));
 }
 
 string DebugUtterance2Str(struct utterance utter)

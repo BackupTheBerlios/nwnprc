@@ -31,7 +31,7 @@ void main()
     		while(GetIsObjectValid(oProneTarget))
     		{
        	                // Save check
-			if (!PRCMySavingThrow(SAVING_THROW_WILL, oProneTarget, (10 + GetHitDice(oIniatitor)/2 + GetAbilityModifier(ABILITY_STRENGTH, oInitiator))) &&
+			if (!PRCMySavingThrow(SAVING_THROW_WILL, oProneTarget, (10 + GetHitDice(oInitiator)/2 + GetAbilityModifier(ABILITY_STRENGTH, oInitiator))) &&
 			    GetIsEnemy(oProneTarget, oInitiator))
 			{
 				ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(EffectKnockdown()), oProneTarget, 6.0);

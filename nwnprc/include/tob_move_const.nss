@@ -80,6 +80,7 @@ const int AOE_PER_SALAMANDER_CHARGE             = 157;
 const int AOE_PER_THICKET_BLADES                = -1;
 const int AOE_PER_AURA_TYRANNY                  = -1;
 const int AOE_PER_SWARM_TACTICS = -1;
+const int AOE_PER_MOUNTAIN_FORTRESS             = 149;
 
 // Misc Constants
 const int SPELL_AVENGING_STRIKE = -1;

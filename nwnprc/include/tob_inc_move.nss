@@ -562,7 +562,7 @@ void UseManeuver(int nManeuver, int nClass, int nLevelOverride = 0)
     }
 
     // Action queue the function that will cheatcast the actual maneuver
-    DelayCommand(IntToFloat(nMoveDur), AssignCommand(oInitiator, ActionDoCommand(_UseManeuverAux(oInitiator, oMoveToken, nSpellID, oTarget, lTarget, nManeuver, nClass, nLevelOverride))));
+    DelayCommand(nMoveDur / 1000.0f, AssignCommand(oInitiator, ActionDoCommand(_UseManeuverAux(oInitiator, oMoveToken, nSpellID, oTarget, lTarget, nManeuver, nClass, nLevelOverride))));
 }
 
 string DebugManeuver2Str(struct maneuver move)

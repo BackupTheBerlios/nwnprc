@@ -1384,6 +1384,7 @@ int MetabreathFeats(object oPC)
        || (GetLevelByClass(CLASS_TYPE_SWIFT_WING, oPC) > 2)
        || (GetLevelByClass(CLASS_TYPE_DIAMOND_DRAGON, oPC) > 3)
        || (GetLevelByClass(CLASS_TYPE_DRUNKEN_MASTER, oPC) > 9)
+       || (GetLevelByClass(CLASS_TYPE_DRAGONFIRE_ADEPT, oPC) > 0)
        || GetHasFeat(FEAT_DRACONIC_BREATH, oPC))
        bBreath = TRUE;
        
@@ -1410,6 +1411,14 @@ int MetabreathFeats(object oPC)
         && !(bBreath))
     {
         FloatingTextStringOnCreature("You must have a breath weapon.", oPC, FALSE);
+        return FALSE;
+    }
+    
+    //Fivefold Tiamat and Bahamut breath alignment restrictions
+    if((GetAlignmentGoodEvil(oPC) == ALIGNMENT_EVIL && GetHasFeat(FEAT_BAHAMUT_ADEPTBREATH))
+       || (GetAlignmentGoodEvil(oPC) == ALIGNMENT_GOOD && GetHasFeat(FEAT_TIAMAT_ADEPTBREATH)))
+    {
+        FloatingTextStringOnCreature("Your alignment does not allow you to take this breath effect.", oPC, FALSE);
         return FALSE;
     }
         

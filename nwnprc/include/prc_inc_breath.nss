@@ -543,8 +543,11 @@ void ApplyBreath(struct breath BreathUsed, location lTargetArea, int bLinger = F
             fDelay = GetDistanceBetween(BreathUsed.oDragon, oTarget)/20;
             
             //check for Shaped Breath effect
-            if(IsAdeptBreath() && nShapedSpotsUsed < 4 && !GetIsReactionTypeHostile(oTarget))
+            if(IsAdeptBreath() && (nShapedSpotsUsed < 4) && !GetIsReactionTypeHostile(oTarget))
+            {
+            	if(DEBUG) DoDebug("prc_in_breath: Entering Shaped Breath.  Slots used: " + IntToString(nShapedSpotsUsed));
                 nShapedSpotsUsed++;
+            }
                 
             //Adept's Sickening Breath breath effect
             else if(BreathUsed.nOverrideSpecial == BREATH_SICKENING)

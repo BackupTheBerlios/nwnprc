@@ -242,6 +242,7 @@ void main()
                     sFeatID = Get2DACache(sInvocationFile, "FeatID", i);
                     if(sFeatID != ""                                           // Non-blank row
                      && !GetHasFeat(StringToInt(sFeatID), oPC)                 // PC does not already posses the power
+                     && !StringToInt(Get2DACache(sInvocationFile, "HasPrereqs", i)) // and INvocation is completed.  This flag in the 2da can be used to disable invocations.
                        )
                     {
                         if(SORT) AddToTempList(oPC, GetStringByStrRef(StringToInt(Get2DACache(sInvocationFile, "Name", i))), i);

@@ -314,6 +314,8 @@ void EvalPRCFeats(object oPC)
        GetLevelByClass(CLASS_TYPE_CRUSADER,         oPC) ||
        GetLevelByClass(CLASS_TYPE_SWORDSAGE,        oPC) ||
        GetLevelByClass(CLASS_TYPE_WARBLADE,         oPC) ||
+       // Invocations
+       GetLevelByClass(CLASS_TYPE_DRAGONFIRE_ADEPT, oPC) ||
        // Racial casters
        (GetLevelByClass(CLASS_TYPE_OUTSIDER, oPC) && GetRacialType(oPC) == RACIAL_TYPE_RAKSHASA)
         )

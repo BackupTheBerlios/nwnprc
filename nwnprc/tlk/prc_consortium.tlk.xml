@@ -19874,6 +19874,83 @@ Use: Selected.</entry>
 Prerequisite: Race-Specific.
 Specifics: Hound Archons can take the form of normal canines.
 Use: Selected.</entry>
+  <entry id="50443" lang="en" sex="m">Shaman</entry>
+  <entry id="50444" lang="en" sex="m">Shamans</entry>
+  <entry id="50445" lang="en" sex="m">shaman</entry>
+  <entry id="50446" lang="en" sex="m">(BASE CLASS)
+If a cleric's basic creed is that the handiwork of the dieties is everywhere, a shaman's simple assertion is that the dieties themselves are everywhere. Shamans are intermediares between the world of the living and the realm of spirits - the vast multitude of living beings that infuse the world with a divine essence. The shaman offers prayers, sacrifices and services to the spirits, and in return gain the favour of patron spirits who bestow spells and other magical abilities upon him.  
+
+- Hit Die: d6
+- Proficiencies: A Shaman gains proficiencies.with simple weapons and light armour.
+- Skill Points: 4 + Int Modifier
+
+ABILITIES:
+
+Level
+1: Unarmed Strike
+   Domains - Gain two domains
+   Animal Companion - Gain a 2 HD animal companion
+2: Spirit Sight - See invisible creatures
+3: Turn Undead
+4: Bonus Feat
+5: Spirit's Favour - Charisma to Saves
+6:
+7:
+8: Bonus Feat
+9:
+10: 
+11: Third Domain
+12: Bonus Feat
+13:
+14:
+15: 
+16: Bonus Feat
+17: 
+18:
+19:
+20: Bonus Feat
+
+SPELLCASTING
+
+To cast a spell, the Shaman must have a Wisdom score of 10 + the spell level. The DC of a Shaman's spell is 10 + Spell Level + Wisdom Modifier. A Shaman's caster level is equal to his class level. He has access to any spell from the Shaman spell list, and casts spells as a Cleric does.
+
+Spells per day:
+Level: 0 1 2 3 4 5 6 7 8 9
+
+1:     3 2 - - - - - - - -
+2:     4 3 - - - - - - - -
+3:     4 3 2 - - - - - - -
+4:     5 4 3 - - - - - - -
+5:     5 4 3 2 - - - - - -
+6:     5 4 4 3 - - - - - -
+7:     6 5 4 3 2 - - - - -
+8:     6 5 4 4 3 - - - - -
+9:     6 5 5 4 3 2 - - - -
+10:    6 5 5 4 4 3 - - - -
+11:    6 6 5 5 4 3 2 - - -
+12:    6 6 5 5 4 4 3 - - -
+13:    6 6 6 5 5 4 3 2 - -
+14:    6 6 6 5 5 4 4 3 - -
+15:    6 6 6 6 5 5 4 3 2 -
+16:    6 6 6 6 5 5 4 4 3 -
+17:    6 6 6 6 6 5 5 4 3 2
+18:    6 6 6 6 6 5 5 4 4 3
+19:    6 6 6 6 6 6 5 5 4 4
+20:    6 6 6 6 6 6 5 5 5 5</entry>
+<entry id="50447" lang="en" sex="m">Type of Feat: Class specific
+Prerequisite: Shaman level 1
+Specifics: You gain a 2 Hit Dice Animal Companion.
+Use: Selected.</entry>
+  <entry id="50448" lang="en" sex="m">Spirit Sight</entry>
+<entry id="50449" lang="en" sex="m">Type of Feat: Class specific
+Prerequisite: Shaman level 2
+Specifics: You gain the ability to see invisible creatures.
+Use: Selected.</entry>
+  <entry id="50450" lang="en" sex="m">Spirit's Favour</entry>
+<entry id="50451" lang="en" sex="m">Type of Feat: Class specific
+Prerequisite: Shaman level 5
+Specifics: You gain your Charisma modifier to all saving throws.
+Use: Selected.</entry>
   <entry id="50501" lang="en" sex="m">***50,501 -&gt; 51,000 reserved for domains and spells***</entry>
   <entry id="50502" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Metal domain.
@@ -34977,7 +35054,7 @@ This aura grants you and your allies a DC bonus on any abilities relating to thi
   <entry id="55699" lang="en" sex="m">Dragonfire Adepts</entry>
   <entry id="55700" lang="en" sex="m">dragonfire adept</entry>
   <entry id="55701" lang="en" sex="m">(BASE CLASS)
-ABle to call upon a dragon's fiery breath and augment themselves with spell-like abilities, dragonfire adepts are imposing figures who command the magic of dragonkind.  They have no arcane or divine magic, nor do they rely on physical prowess.  Instead, they draw upon a direct link with the nature of draconic existance, infusing their souls wiht the raw magic of dragons.  The most obvious incarnation of this link is their breath weapon, but as the link deepends they also learn powerful invocations that allow them to access different draconic abilities.
+Able to call upon a dragon's fiery breath and augment themselves with spell-like abilities, dragonfire adepts are imposing figures who command the magic of dragonkind.  They have no arcane or divine magic, nor do they rely on physical prowess.  Instead, they draw upon a direct link with the nature of draconic existance, infusing their souls wiht the raw magic of dragons.  The most obvious incarnation of this link is their breath weapon, but as the link deepends they also learn powerful invocations that allow them to access different draconic abilities.
 
 - Hit Die: d8
 - Proficiencies: Dragonfire adepts are proficient with simple weapons only.
@@ -35141,6 +35218,146 @@ Use: Selected</entry>
   <entry id="55752" lang="en" sex="m">&lt;CUSTOM0&gt; breathes a cone of acid.</entry>
   <entry id="55753" lang="en" sex="m">&lt;CUSTOM0&gt; breathes a tempest of mingling cold, fire, acid, and electricity.</entry>
   <entry id="55754" lang="en" sex="m">&lt;CUSTOM0&gt; breathes a cone of sleep gas.</entry>
+  <entry id="55755" lang="en" sex="m">Return to invocation level selection.</entry>
+  <entry id="55756" lang="en" sex="m">Select level of invocation to gain.\n\nNOTE:\nThis may take a while when first browsing a particular level of invocations.</entry>
+  <entry id="55757" lang="en" sex="m">Select an invocation to gain.\nYou can select</entry>
+  <entry id="55758" lang="en" sex="m">more invocations</entry>
+  <entry id="55759" lang="en" sex="m">You will be able to select more invocations after you gain the appropriate level in an invocation caster class.</entry>
+  <entry id="55760" lang="en" sex="m">Dark</entry>
+  <entry id="55761" lang="en" sex="m">Greater</entry>
+  <entry id="55762" lang="en" sex="m">Lesser</entry>
+  <entry id="55763" lang="en" sex="m">Least</entry>
+  <entry id="55764" lang="en" sex="m">You have lost concentration on the invocation you were attempting to cast!</entry>
+  <entry id="55765" lang="en" sex="m">Beguiling Influence</entry>
+  <entry id="55766" lang="en" sex="m">Least Invocation
+  2nd Level Spell
+  
+  You can invoke this ability to beguile and bewitch your foe.  You gain a +6 to Bluff, Persuade, and Indimidate checks for 24 hours.</entry>
+  <entry id="55767" lang="en" sex="m">Breath of the Night</entry>
+  <entry id="55768" lang="en" sex="m">Least Invocation
+  1st Level Spell
+  
+  A misty cloud expands around you, granting 20% concealment to any within.  This cloud lasts for 1 minute before dispersing.</entry>
+  <entry id="55769" lang="en" sex="m">Darkness</entry>
+  <entry id="55770" lang="en" sex="m">Least Invocation
+  2nd Level Spell
+  
+  You can create magical darkness in a 20' radius.  All creatures within the darkness can only see in it using Ultravision, True Seeing, blindsense, or blindsight.</entry>
+  <entry id="55771" lang="en" sex="m">Deafening Roar</entry>
+  <entry id="55772" lang="en" sex="m">Least Invocation
+  2nd Level Spell
+  
+  You utter a loud roar within a 30' cone.  Those within must make a Fortitude save or be deafened for 1 hour.</entry>
+  <entry id="55773" lang="en" sex="m">Draconic Knowledge</entry>
+  <entry id="55774" lang="en" sex="m">Least Invocation
+  2nd Level Spell
+  
+  This invocation grants you access to the great ancestral memories of dragonkind.  You gain a +6 bonus to Spellcraft and Lore for 24 hours.</entry>
+  <entry id="55775" lang="en" sex="m">Endure Exposure</entry>
+  <entry id="55776" lang="en" sex="m">Least Invocation
+  3rd Level Spell
+  
+  With a touch, you grant a creature(or yourself) the ability to withstand hot or cold environments, but doesn't protect against actual fire or cold damage.  In addition, the target is immune to your breath weapon's effects.  This invocation lasts for 24 hours.</entry>
+  <entry id="55777" lang="en" sex="m">Magic Insight</entry>
+  <entry id="55778" lang="en" sex="m">Least Invocation
+  2nd Level Spell
+  
+  Over the next two rounds, the caster gains a bonus of 10 +1 per caster level to their Lore skill.</entry>
+  <entry id="55779" lang="en" sex="m">Scalding Gust</entry>
+  <entry id="55780" lang="en" sex="m">Least Invocation
+  2nd Level Spell
+  
+  You create a strong blast of searing wind in a 60' line before you.  Creatures smaller than medium must make a Fortitude save or be knocked down, and all creatures within the area of effect regardless take 1 point of fire damage per caster level.</entry>
+  <entry id="55781" lang="en" sex="m">See the Unseen</entry>
+  <entry id="55782" lang="en" sex="m">Least Invocation
+  2nd Level Spell
+  
+  You grant yourself great powers of vision, allowing you to see invisible creatures and objects.  You also gain darvision.  This invocation lasts for 24 hours.</entry>
+  <entry id="55783" lang="en" sex="m">Charm</entry>
+  <entry id="55784" lang="en" sex="m">Lesser Invocation
+  4th Level Spell
+  
+  You can beguile a creature within 60'.  They must make a Will save or regard you as an ally.  The charm lasts for 1 round per 2 caster levels.</entry>
+  <entry id="55785" lang="en" sex="m">Energy Resistance</entry>
+  <entry id="55786" lang="en" sex="m">Lesser Invocation
+  3rd Level Spell
+  
+  You gain resistance 10 to acid, cold, electricity, fire or energy, chosen when you cast the invocation.  If you cast this invocation again before the duration ends, the new effect and duration replace the old.  This invocation lasts for 24 hours.</entry>
+  <entry id="55787" lang="en" sex="m">Energy Resistance: Acid</entry>
+  <entry id="55788" lang="en" sex="m">Energy Resistance: Cold</entry>
+  <entry id="55789" lang="en" sex="m">Energy Resistance: Electricity</entry>
+  <entry id="55790" lang="en" sex="m">Energy Resistance: Fire</entry>
+  <entry id="55791" lang="en" sex="m">Energy Resistance: Sonic</entry>
+  <entry id="55792" lang="en" sex="m">Frightful Presence</entry>
+  <entry id="55793" lang="en" sex="m">Lesser Invocation
+  3rd Level Spell
+  
+  You can cast this invocation as a swift action.  Any enemies who are within 30' and fail a Will save are shaken for 10 minutes.  This is a mind-affecting effect.</entry>
+  <entry id="55794" lang="en" sex="m">Humanoid Shape</entry>
+  <entry id="55795" lang="en" sex="m">Lesser Invocation
+  3rd Level Spell
+  
+  You can take on any humanoid form for 24 hours, or until you return to your normal shape.</entry>
+  <entry id="55796" lang="en" sex="m">Voidsense</entry>
+  <entry id="55797" lang="en" sex="m">Lesser Invocation
+  4th Level Spell
+  
+  You sharpen your hearing and sight, gaining blindsense for 24 hours.</entry>
+  <entry id="55798" lang="en" sex="m">Voracious Dispelling</entry>
+  <entry id="55799" lang="en" sex="m">Lesser Invocation
+  4th Level Spell
+  
+  You attempt to strip all magical effects from a single target. You can also target a group of creatures, attempting to remove the most powerful spell effect from each creature. To remove an effect, the caster makes a dispel check of 1d20 +1 per caster level (to a maximum of +10) against a DC of 11 + the spell effect's caster level.  Anyone who has an active spell effect dispeled in this way takes 1 point of damage per level of the spell effect.</entry>
+  <entry id="55800" lang="en" sex="m">Walk Unseen</entry>
+  <entry id="55801" lang="en" sex="m">Lesser Invocation
+  2nd Level Spell
+  
+  You gain the ability to fade from view.  You become invisible for 24 hours, or until you perform a hostile action.</entry>
+  <entry id="55802" lang="en" sex="m">Aura of Flame</entry>
+  <entry id="55803" lang="en" sex="m">Greater Invocation
+  6th Level Spell
+  
+  You become wreathed in an aura of orange fire.  Any creature striking you in melee takes a number of points of fire damage equal to your caster level.  Spell resistance can prevent this damage.</entry>
+  <entry id="55804" lang="en" sex="m">Chilling Fog</entry>
+  <entry id="55805" lang="en" sex="m">Greater Invocation
+  6th Level Spell
+  
+  A misty cloud expands around a point you designate, granting 20% concealment to any within.  The cloud si so thick any within are slowed to a crawl, and attacks by those within are at a -2 penalty.  In addition, any wihtin take 2d6 points of cold damage per round.  This cloud lasts for 1 minute per level before dispersing.</entry>
+  <entry id="55806" lang="en" sex="m">Devour Magic</entry>
+  <entry id="55807" lang="en" sex="m">Greater Invocation
+  6th Level Spell
+  
+  You attempt to strip all magical effects from a single target. You can also target a group of creatures, attempting to remove the most powerful spell effect from each creature. To remove an effect, the caster makes a dispel check of 1d20, +1 per caster level (to a maximum of +20) against a DC of 11 + the spell effect's caster level.  You gain 5 temporary HP per spell level of any spell dispelled for 1 minute, and if you devour a new spell the new temporary hit points replace the old.</entry>
+  <entry id="55808" lang="en" sex="m">Draconic Toughness</entry>
+  <entry id="55809" lang="en" sex="m">Greater Invocation
+  5th Level Spell
+  
+  You gain temporary hit poitns equal to your caster level.  These hit points last for 24 hours or until the invocation is cast again, in which case the new effect replaces the old.</entry>
+  <entry id="55810" lang="en" sex="m">Terrifying Roar</entry>
+  <entry id="55811" lang="en" sex="m">Greater Invocation
+  5th Level Spell
+  
+  You utter a powerful roar that fills a 30' cone.  All creatures whose hit dice are equal to or less than your caster level become panicked for 1 round.  If they succeed on a Will save they are shaken for one round.  This is a mind-affecting fear effect.</entry>
+  <entry id="55812" lang="en" sex="m">Energy Immunity</entry>
+  <entry id="55813" lang="en" sex="m">Dark Invocation
+  8th Level Spell
+  
+  You gain immunity to acid, cold, electricity, fire or energy, chosen when you cast the invocation.  If you cast this invocation again before the duration ends, the new effect and duration replace the old.  This invocation lasts for 24 hours.</entry>
+  <entry id="55814" lang="en" sex="m">Energy Immunity: Acid</entry>
+  <entry id="55815" lang="en" sex="m">Energy Immunity: Cold</entry>
+  <entry id="55816" lang="en" sex="m">Energy Immunity: Electricity</entry>
+  <entry id="55817" lang="en" sex="m">Energy Immunity: Fire</entry>
+  <entry id="55818" lang="en" sex="m">Energy Immunity: Sonic</entry>
+  <entry id="55819" lang="en" sex="m">Instill Vulnerability</entry>
+  <entry id="55820" lang="en" sex="m">Dark Invocation
+  7th Level Spell
+  
+  You imbue a single creature within 30' with 100% vulnerability to acid, cold, electricity, fire or energy, chosen when you cast the invocation.  If you cast this invocation again before the duration ends, the new effect and duration replace the old.  This invocation lasts for 24 hours.</entry>
+  <entry id="55821" lang="en" sex="m">Instill Vulnerability: Acid</entry>
+  <entry id="55822" lang="en" sex="m">Instill Vulnerability: Cold</entry>
+  <entry id="55823" lang="en" sex="m">Instill Vulnerability: Electricity</entry>
+  <entry id="55824" lang="en" sex="m">Instill Vulnerability: Fire</entry>
+  <entry id="55825" lang="en" sex="m">Instill Vulnerability: Sonic</entry>
   <entry id="55964" lang="en" sex="m">1</entry>
   <entry id="55965" lang="en" sex="m">2</entry>
   <entry id="55966" lang="en" sex="m">3</entry>

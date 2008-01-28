@@ -44,7 +44,7 @@ void main()
 
     if(move.bCanManeuver)
     {
-       	effect eLink =                          EffectAreaOfEffect(AOE_PER_IRON_GUARD_GLARE);
+       	effect eLink =                          EffectAreaOfEffect(AOE_PER_ROOT_MOUNTAIN);
        	       eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_ROOTED_TO_SPOT));
        	       eLink = EffectLinkEffects(eLink, EffectDamageResistance(DAMAGE_TYPE_SLASHING,    2));
 	       eLink = EffectLinkEffects(eLink, EffectDamageResistance(DAMAGE_TYPE_PIERCING,    2));

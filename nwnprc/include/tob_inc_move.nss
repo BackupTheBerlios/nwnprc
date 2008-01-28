@@ -408,6 +408,10 @@ void _StanceSpecificChecks(object oInitiator)
 	{
 		nStanceToKeep = GetHasActiveStance(oInitiator);	
 	}
+	if (GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL, oInitiator) >= 3 && GetHasSpellEffect(MOVE_MOUNTAIN_FORTRESS, oInitiator))
+	{
+		nStanceToKeep = GetHasActiveStance(oInitiator);	
+	}	
 	
 	// Can only have one stance active, except for a level 20+ Warblade
 	ClearStances(oInitiator, nStanceToKeep);

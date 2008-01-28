@@ -10,6 +10,10 @@ if(DEBUG) DoDebug("m0q01a05herbsck3 running");
            GetLevelByClass(CLASS_TYPE_SAMURAI, GetPCSpeaker()) > 0 ||
 	   GetLevelByClass(CLASS_TYPE_TRUENAMER, GetPCSpeaker()) > 0 ||
 	   GetLevelByClass(CLASS_TYPE_SOHEI, GetPCSpeaker()) > 0 ||
+           GetLevelByClass(CLASS_TYPE_WARBLADE, GetPCSpeaker()) > 0 ||
+           GetLevelByClass(CLASS_TYPE_SWORDSAGE, GetPCSpeaker()) > 0 ||
+           GetLevelByClass(CLASS_TYPE_CRUSADER, GetPCSpeaker()) > 0 ||
+           GetLevelByClass(CLASS_TYPE_DRAGON_SHAMAN, GetPCSpeaker()) > 0 ||
 	   GetLevelByClass(CLASS_TYPE_KNIGHT, GetPCSpeaker()) > 0 ||
            GetLevelByClass(CLASS_TYPE_DUSKBLADE, GetPCSpeaker()) > 0 ||
 	   GetLevelByClass(CLASS_TYPE_HEXBLADE, GetPCSpeaker()) > 0 ||

@@ -40,6 +40,10 @@ if(DEBUG) DoDebug("m1q0bdendy_5 running");
                GetLevelByClass(CLASS_TYPE_ARCHER,oAttacker) > 0 ||
                GetLevelByClass(CLASS_TYPE_SCOUT,oAttacker) > 0 ||
 	       GetLevelByClass(CLASS_TYPE_TRUENAMER,oAttacker) > 0 ||
+               GetLevelByClass(CLASS_TYPE_WARBLADE,oAttacker) > 0 ||
+               GetLevelByClass(CLASS_TYPE_SWORDSAGE,oAttacker) > 0 ||
+               GetLevelByClass(CLASS_TYPE_CRUSADER,oAttacker) > 0 ||
+               GetLevelByClass(CLASS_TYPE_DRAGON_SHAMAN,oAttacker) > 0 ||
 	       GetLevelByClass(CLASS_TYPE_SOHEI,oAttacker) > 0 ||
 	       GetLevelByClass(CLASS_TYPE_KNIGHT,oAttacker) > 0 ||
 	       GetLevelByClass(CLASS_TYPE_DUSKBLADE,oAttacker) > 0 ||

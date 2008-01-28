@@ -16,6 +16,8 @@ if(DEBUG) DoDebug("m1q0dchest1 running");
         SetLocalInt(oPC,"NW_L_M1Q0Item3",TRUE);
         if(GetLevelByClass(CLASS_TYPE_BARBARIAN,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_ARCHER,oPC) > 0 ||
+           GetLevelByClass(CLASS_TYPE_WARBLADE,oPC) > 0 ||
+           GetLevelByClass(CLASS_TYPE_SWORDSAGE,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_DUSKBLADE,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_SOHEI,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_KNIGHT,oPC) > 0 ||
@@ -26,6 +28,7 @@ if(DEBUG) DoDebug("m1q0dchest1 running");
         }
         else if(GetLevelByClass(CLASS_TYPE_BARD,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_SAMURAI,oPC) > 0 ||
+                GetLevelByClass(CLASS_TYPE_CRUSADER,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_CW_SAMURAI,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_SCOUT,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_SWASHBUCKLER,oPC) > 0 ||
@@ -42,7 +45,8 @@ if(DEBUG) DoDebug("m1q0dchest1 running");
         {
             sItemTemplate = "NW_IT_MBELT011"; //archer's belt
         }*/
-        else if(GetLevelByClass(CLASS_TYPE_DRUID,oPC) > 0)
+        else if(GetLevelByClass(CLASS_TYPE_DRUID,oPC) > 0 ||
+                GetLevelByClass(CLASS_TYPE_DRAGON_SHAMAN,oPC) > 0)
         {
             sItemTemplate = "nw_aarcl012"; //chainshirt
         }

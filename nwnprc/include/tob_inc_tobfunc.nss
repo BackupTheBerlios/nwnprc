@@ -116,12 +116,13 @@ string GetDisciplineName(int nDiscipline);
 
 /**
  * Returns the Discipline the maneuver is in
- * @param nSpellId   maneuver to check
+ * @param nMoveId    maneuver to check
  * @param nClass     Class to check with (no class has all maneuvers)
+ # @param nSpellFeat Whether nMoveId is a feat or a spell id
  *
  * @return           DISCIPLINE_*
  */
-int GetDisciplineByManeuver(int nSpellId, int nClass);
+int GetDisciplineByManeuver(int nMoveId, int nClass, int nSpellFeat = -1);
 
 /**
  * Returns true or false if the initiator has the Discipline
@@ -549,6 +550,14 @@ void _RecursiveStanceCheck(object oPC, object oTestWP, int nMoveId, float fFeet 
                 DestroyObject(oTestWP);
         }
         // Stances that clean up
+        else if (nMoveId = MOVE_MOUNTAIN_FORTRESS) 
+        {
+                RemoveEffectsFromSpell(oPC, nMoveId);
+                if(DEBUG) DoDebug("_RecursiveStanceCheck: Moved too far, cancelling stances.");
+                // Clean up the test WP as well
+                DestroyObject(oTestWP);
+        }        
+        // Stances that clean up
         else if (nMoveId = MOVE_SD_ROOT_MOUNTAIN) 
         {
                 RemoveEffectsFromSpell(oPC, nMoveId);
@@ -674,6 +683,24 @@ int _DoGrappleCheck(object oPC, object oTarget, int nExtraBonus)
         return FALSE;
 }
 
+int _RestrictedDiscipline(object oInitiator, int nDiscipline)
+{
+	// There's no restrictions
+	if (GetPersistantLocalInt(oInitiator, "RestrictedDiscipline1") == 0) return TRUE;
+	
+	string sString = "RestrictedDiscipline";
+	int i;
+     	for(i = 1; i < 6; i++)
+     	{
+     		// Cycle through the local ints
+     		sString += IntToString(i);
+     		if (nDiscipline == GetPersistantLocalInt(oInitiator, sString)) return TRUE;
+	}
+	
+	// Down here, every check is failed
+	return FALSE;
+}
+
 //////////////////////////////////////////////////
 /*             Function definitions             */
 //////////////////////////////////////////////////
@@ -797,17 +824,20 @@ string GetDisciplineName(int nDiscipline)
         return sName;
 }
 
-int GetDisciplineByManeuver(int nSpellId, int nClass)
+int GetDisciplineByManeuver(int nMoveId, int nClass, int nSpellFeat = -1)
 {
      // Get the class-specific base
      string sFile = Get2DACache("classes", "FeatsTable", nClass);
      sFile = "cls_move" + GetStringRight(sFile, GetStringLength(sFile) - 8);
      
+     string sSearch = "SpellID";
+     if (nSpellFeat != -1) sSearch = "FeatID";
+     
      int i, nManeuver;
      for(i = 0; i < GetPRCSwitch(FILE_END_CLASS_POWER) ; i++)
      {
-         nManeuver = StringToInt(Get2DACache(sFile, "SpellID", i));
-         if(nManeuver == nSpellId)
+         nManeuver = StringToInt(Get2DACache(sFile, sSearch, i));
+         if(nManeuver == nMoveId)
          {
              return StringToInt(Get2DACache(sFile, "Discipline", i));
          }
@@ -873,13 +903,12 @@ int CheckManeuverPrereqs(int nClass, int nFeat, object oPC)
     // This does NOT use these slots properly
     // FEAT1 is the DISCIPLINE that is required
     // FEAT2 is the NUMBER of Maneuvers from the Discipline required
-    if(Get2DACache("feat", "PREREQFEAT1", nFeat) != "")
-    {
-        int nDiscipline = StringToInt(Get2DACache("feat", "PREREQFEAT1", nFeat));
-        int nCount      = StringToInt(Get2DACache("feat", "PREREQFEAT2", nFeat));
-        // if it returns false, exit, otherwise they can take the maneuver
-        if (!_CheckPrereqsByDiscipline(oPC, nDiscipline, nCount, nClass)) return FALSE;
-    }
+    int nDiscipline = StringToInt(Get2DACache("feat", "PREREQFEAT1", nFeat));
+    if (!_RestrictedDiscipline(oPC, nDiscipline)) return FALSE;
+    int nCount      = StringToInt(Get2DACache("feat", "PREREQFEAT2", nFeat));
+    // if it returns false, exit, otherwise they can take the maneuver
+    if (!_CheckPrereqsByDiscipline(oPC, nDiscipline, nCount, nClass)) return FALSE;
+
 
     // if you've reached this far then return TRUE
     return TRUE;

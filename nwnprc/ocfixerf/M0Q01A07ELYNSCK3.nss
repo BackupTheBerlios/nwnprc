@@ -7,6 +7,7 @@ int StartingConditional()
     int bCondition = GetLocalInt(OBJECT_SELF, "NW_L_TALKLEVEL") == 1 &&
                      (GetLevelByClass(CLASS_TYPE_CLERIC, GetPCSpeaker()) > 0 ||
 		      GetLevelByClass(CLASS_TYPE_FAVOURED_SOUL, GetPCSpeaker()) > 0 ||
+  		      GetLevelByClass(CLASS_TYPE_SHAMAN, GetPCSpeaker()) > 0 ||
 		      GetLevelByClass(CLASS_TYPE_BARD, GetPCSpeaker()) > 0 ||
 		      GetLevelByClass(CLASS_TYPE_SHUGENJA, GetPCSpeaker()) > 0 ||
 		      GetLevelByClass(CLASS_TYPE_HEALER, GetPCSpeaker()) > 0 ||

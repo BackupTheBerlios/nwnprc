@@ -22,6 +22,9 @@ if(DEBUG) DoDebug("m1q0dchest2 running");
         if(GetLevelByClass(CLASS_TYPE_CLERIC,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_FIGHTER,oPC) > 0 ||
 	   GetLevelByClass(CLASS_TYPE_FAVOURED_SOUL,oPC) > 0 ||
+           GetLevelByClass(CLASS_TYPE_WARBLADE,oPC) > 0 ||
+           GetLevelByClass(CLASS_TYPE_SWORDSAGE,oPC) > 0 ||
+           GetLevelByClass(CLASS_TYPE_CRUSADER,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_CORRUPTER,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_SOHEI,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_KNIGHT,oPC) > 0 ||
@@ -34,13 +37,14 @@ if(DEBUG) DoDebug("m1q0dchest2 running");
             sItemTemplate1 = "NW_AARCL005"; //Splintmail
         }
         else if(GetLevelByClass(CLASS_TYPE_ARCHER,oPC) > 0 ||
-                GetLevelByClass(CLASS_TYPE_SOULKNIFE,oPC) > 0 ||
+                GetLevelByClass(CLASS_TYPE_DRAGON_SHAMAN,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_HEXBLADE,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_BARBARIAN,oPC) > 0)
         {
             sItemTemplate1 = "NW_IT_MBELT010"; //Brawler's belt
         }
         else if(GetLevelByClass(CLASS_TYPE_DRUID,oPC) > 0 ||
+                GetLevelByClass(CLASS_TYPE_SHAMAN,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_SAMURAI,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_CW_SAMURAI,oPC) > 0)
         {

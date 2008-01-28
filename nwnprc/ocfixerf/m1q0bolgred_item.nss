@@ -12,7 +12,9 @@ if(DEBUG) DoDebug("m1q0boldgred_item running");
         SetLocalInt(oPC,"NW_L_M1Q0Item1",TRUE);
         if(GetLevelByClass(CLASS_TYPE_BARD,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_DRUID,oPC) > 0 ||
+           GetLevelByClass(CLASS_TYPE_SHAMAN,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_HEALER,oPC) > 0 ||
+           GetLevelByClass(CLASS_TYPE_DRAGON_SHAMAN,oPC) > 0 ||
 	   GetLevelByClass(CLASS_TYPE_TRUENAMER,oPC) > 0 ||
 	   GetLevelByClass(CLASS_TYPE_SCOUT,oPC) > 0 ||
 	   GetLevelByClass(CLASS_TYPE_HEXBLADE,oPC) > 0 ||

@@ -414,7 +414,18 @@ void main()
             if(DEBUG) DoDebug("tob_moveconv: nCountStance: " + IntToString(nCountStance));
             if(DEBUG) DoDebug("tob_moveconv: nMaxStance: " + IntToString(nMaxStance));
             if(nCountStance >= nMaxStance && nCountMove >= nMaxMove)
+            {
                 nStage = STAGE_ALL_MANEUVERS_SELECTED;
+                // Clean up all of these
+		string sString = "RestrictedDiscipline";
+		int i;
+     		for(i = 1; i < 6; i++)
+     		{
+     			// Cycle through the local ints
+     			sString += IntToString(i);
+     			DeletePersistantLocalInt(oPC, sString);
+		}                
+            }
             else
                 nStage = STAGE_SELECT_STANCE_MOVE;
         }

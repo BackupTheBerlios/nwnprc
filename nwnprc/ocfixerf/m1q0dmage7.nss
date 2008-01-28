@@ -35,7 +35,8 @@ if(DEBUG) DoDebug("m1q0dmage7 running");
     {
         sItemTemplate = "NW_IT_MGLOVE005"; //Gloves of the Minstrel
     }
-    else if(GetLevelByClass(CLASS_TYPE_DRUID,oPC) > 0)
+    else if(GetLevelByClass(CLASS_TYPE_DRUID,oPC) > 0 ||
+            GetLevelByClass(CLASS_TYPE_DRAGON_SHAMAN,oPC) > 0)
     {
         sItemTemplate = "NW_ASHMSW010"; //Shield of Dawn
     }
@@ -46,6 +47,7 @@ if(DEBUG) DoDebug("m1q0dmage7 running");
     else if(GetLevelByClass(CLASS_TYPE_SAMURAI,oPC) > 0 ||
             GetLevelByClass(CLASS_TYPE_CW_SAMURAI,oPC) > 0 ||
 	    GetLevelByClass(CLASS_TYPE_TRUENAMER,oPC) > 0 ||
+            GetLevelByClass(CLASS_TYPE_SHAMAN,oPC) > 0 ||
 	    GetLevelByClass(CLASS_TYPE_SCOUT,oPC) > 0 ||
             GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER,oPC) > 0 ||
             GetLevelByClass(CLASS_TYPE_RANGER,oPC) > 0)

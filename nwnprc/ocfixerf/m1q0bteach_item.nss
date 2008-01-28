@@ -11,6 +11,7 @@ if(DEBUG) DoDebug("m1q0bteach_item running");
     {
         SetLocalInt(oPC,"NW_L_M1Q0Item2",TRUE);
         if(GetLevelByClass(CLASS_TYPE_DRUID,oPC) > 0 ||
+           GetLevelByClass(CLASS_TYPE_SWORDSAGE,oPC) > 0 ||
 	   GetLevelByClass(CLASS_TYPE_SCOUT,oPC) > 0 ||
 	   GetLevelByClass(CLASS_TYPE_TRUENAMER,oPC) > 0)
         {
@@ -24,8 +25,12 @@ if(DEBUG) DoDebug("m1q0bteach_item running");
         else if(GetLevelByClass(CLASS_TYPE_BARBARIAN,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_MONK,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_SWASHBUCKLER,oPC) > 0 ||
+                GetLevelByClass(CLASS_TYPE_WARBLADE,oPC) > 0 ||
+                GetLevelByClass(CLASS_TYPE_CRUSADER,oPC) > 0 ||
+                GetLevelByClass(CLASS_TYPE_DRAGON_SHAMAN,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_ARCHER,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_SOHEI,oPC) > 0 ||
+                GetLevelByClass(CLASS_TYPE_SHAMAN,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_HEALER,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_HEXBLADE,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_CW_SAMURAI,oPC) > 0 ||

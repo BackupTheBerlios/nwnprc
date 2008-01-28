@@ -83,3 +83,6 @@ const int AOE_PER_SWARM_TACTICS = -1;
 
 // Misc Constants
 const int SPELL_AVENGING_STRIKE = -1;
+
+// Class Specific Constants
+const int MOVE_MOUNTAIN_FORTRESS = -1;

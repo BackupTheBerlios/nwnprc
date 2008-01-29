@@ -198,6 +198,22 @@ int IsAdeptBreath()
         return FALSE;
 }
 
+int IsBreathProtected(object oDragon, object oTarget)
+{
+    int nBPIndex = 0;
+    while(array_get_object(oTarget, "BreathProtected", nBPIndex) != OBJECT_INVALID)
+    {
+    	if(array_get_object(oTarget, "BreathProtected", nBPIndex) == oDragon)
+    	{
+              return TRUE;
+        }
+        else
+              nBPIndex++;
+    }
+    
+    return FALSE;
+}
+
 //////////////////////////////////////////////////
 /*             Function definitions             */
 //////////////////////////////////////////////////
@@ -536,7 +552,7 @@ void ApplyBreath(struct breath BreathUsed, location lTargetArea, int bLinger = F
 
     while(GetIsObjectValid(oTarget))
     {
-        if(oTarget != BreathUsed.oDragon && !GetIsReactionTypeFriendly(oTarget))
+        if(oTarget != BreathUsed.oDragon && !GetIsReactionTypeFriendly(oTarget) && !IsBreathProtected(BreathUsed.oDragon, oTarget))
         {
             //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.
             //Determine effect delay

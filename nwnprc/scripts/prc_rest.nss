@@ -133,6 +133,12 @@ void RestFinished(object oPC)
     //clear Dragonfriend/Dragonthrall flag so effect properly reapplies
     if (GetHasFeat(FEAT_DRAGONFRIEND, oPC)
        || GetHasFeat(FEAT_DRAGONTHRALL, oPC)) DeleteLocalInt(GetPCSkin(oPC), "DragonThrall");
+       
+    //Clear Invocation-related variables
+    if(GetLocalInt(OBJECT_SELF, "ChillingFogLock")) //Chilling Fog lock
+        DeleteLocalInt(OBJECT_SELF, "ChillingFogLock");
+    if(array_exists(OBJECT_SELF, "BreathProtected")) //Endure Exposure wearing off
+        array_delete(OBJECT_SELF, "BreathProtected");
 
     //DelayCommand(1.0,PrcFeats(oPC));
     PrcFeats(oPC);

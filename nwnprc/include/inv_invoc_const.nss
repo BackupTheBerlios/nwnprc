@@ -4,33 +4,51 @@
 */ 
 
 // Least Draconic Invocations
-const int INVOKE_BEGUILING_INFLUENCE   = -1;
-const int INVOKE_BREATH_OF_THE_NIGHT   = -1;
-const int INVOKE_DARKNESS              = -1;
-const int INVOKE_DEAFENING_ROAR        = -1;
-const int INVOKE_DRACONIC_KNOWLEDGE    = -1;
-const int INVOKE_ENDURE_EXPOSURE       = -1;
-const int INVOKE_MAGIC_INSIGHT         = -1;
-const int INVOKE_SCALDING_GUST         = -1;
-const int INVOKE_SEE_THE_UNSEEN        = -1;
+const int INVOKE_BEGUILING_INFLUENCE     = 18001;
+const int INVOKE_BREATH_OF_THE_NIGHT     = 18002;
+const int INVOKE_DARKNESS                = 18003;
+const int INVOKE_DEAFENING_ROAR          = 18004;
+const int INVOKE_DRACONIC_KNOWLEDGE      = 18005;
+const int INVOKE_ENDURE_EXPOSURE         = 18006;
+const int INVOKE_MAGIC_INSIGHT           = 18007;
+const int INVOKE_SCALDING_GUST           = 18008;
+const int INVOKE_SEE_THE_UNSEEN          = 18009;
 
 // Lesser Draconic Invocations
-const int INVOKE_CHARM                 = -1;
-const int INVOKE_ENERGY_RESISTANCE     = -1;
-const int INVOKE_ENTHRALLING_VOICE     = -1;
-const int INVOKE_FRIGHTFUL_PRESENCE    = -1;
-const int INVOKE_VOIDSENSE             = -1;
-const int INVOKE_VORACIOUS_DISPELLING  = -1;
-const int INVOKE_WALK_UNSEEN           = -1;
+const int INVOKE_CHARM                   = 18010;
+const int INVOKE_ENERGY_RESISTANCE       = 18011;
+const int INVOKE_ENERGY_RESISTANCE_ACID  = 18012;
+const int INVOKE_ENERGY_RESISTANCE_COLD  = 18013;
+const int INVOKE_ENERGY_RESISTANCE_ELEC  = 18014;
+const int INVOKE_ENERGY_RESISTANCE_FIRE  = 18015;
+const int INVOKE_ENERGY_RESISTANCE_SONIC = 18016;
+const int INVOKE_FRIGHTFUL_PRESENCE      = 18017;
+const int INVOKE_HUMANOID_SHAPE          = 18018;
+const int INVOKE_VOIDSENSE               = 18019;
+const int INVOKE_VORACIOUS_DISPELLING    = 18020;
+const int INVOKE_WALK_UNSEEN             = 18021;
 
 // Greater Draconic Invocations
-const int INVOKE_AURA_OF_FLAME         = -1;
-const int INVOKE_CHILLING_FOG          = -1;
-const int INVOKE_DEVOUR_MAGIC          = -1;
-const int INVOKE_DRACONIC_TOUGHNESS    = -1;
-const int INVOKE_TERRIFYING_ROAR       = -1;
+const int INVOKE_AURA_OF_FLAME           = 18022;
+const int INVOKE_CHILLING_FOG            = 18023;
+const int INVOKE_DEVOUR_MAGIC            = 18024;
+const int INVOKE_DRACONIC_TOUGHNESS      = 18025;
+const int INVOKE_TERRIFYING_ROAR         = 18026;
 
 // Dark Draconic Invocations
-const int INVOKE_ENERGY_IMMUNITY       = -1;
-const int INVOKE_INSTILL_VULNERABILITY = -1;
-const int INVOKE_PERILOUS_VEIL         = -1;
+const int INVOKE_ENERGY_IMMUNITY         = 18027;
+const int INVOKE_ENERGY_IMMUNITY_ACID    = 18028;
+const int INVOKE_ENERGY_IMMUNITY_COLD    = 18029;
+const int INVOKE_ENERGY_IMMUNITY_ELEC    = 18030;
+const int INVOKE_ENERGY_IMMUNITY_FIRE    = 18031;
+const int INVOKE_ENERGY_IMMUNITY_SONIC   = 18032;
+const int INVOKE_INSTILL_VULNERABILITY   = 18033;
+const int INVOKE_INSTILL_VULNERABIL_ACID = 18034;
+const int INVOKE_INSTILL_VULNERABIL_COLD = 18035;
+const int INVOKE_INSTILL_VULNERABIL_ELEC = 18036;
+const int INVOKE_INSTILL_VULNERABIL_FIRE = 18037;
+const int INVOKE_INSTILL_VULNERABIL_SON  = 18038;
+
+//AOEs
+const int INVOKE_AOE_CHILLFOG            = 224;
+const int INVOKE_AOE_BREATH_OF_NIGHT     = 142;

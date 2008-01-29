@@ -74,6 +74,7 @@ void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, fl
 #include "nw_i0_spells"
 #include "x2_i0_spells"
 #include "spinc_remeffct"
+#include "inv_invoc_const"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -327,16 +328,42 @@ void DispelMagicBestMod(object oTarget, int nCasterLevel)
                     if(GetEffectCreator(eToDispel) == oEffectCaster)
                     {
                       RemoveEffect(oTarget, eToDispel);
-
-                      if(GetSpellId() == SPELL_SLASHING_DISPEL)
+                      
+                      if(GetSpellId() == INVOKE_VORACIOUS_DISPELLING)
                       {
-                  //Get spell level
-                  int nEffectSpellLevel = StringToInt(Get2DACache("spells", "Innate", nEffectSpellID));
-                  //Damage = 2 * spell level
-                  effect eSlashDam = EffectDamage(DAMAGE_TYPE_MAGICAL, 2 * nEffectSpellLevel);
+                          //Get spell level
+                          int nEffectSpellLevel = StringToInt(Get2DACache("spells", "Innate", nEffectSpellID));
+                          //Damage = spell level
+                          effect eSlashDam = EffectDamage(DAMAGE_TYPE_MAGICAL, nEffectSpellLevel);
 
-                  SPApplyEffectToObject(DURATION_TYPE_INSTANT, eSlashDam, oTarget);
-              }
+                          SPApplyEffectToObject(DURATION_TYPE_INSTANT, eSlashDam, oTarget);
+                      }
+                      
+                      else if(GetSpellId() == INVOKE_DEVOUR_MAGIC)
+                      {
+                          //Get spell level
+                          int nEffectSpellLevel = StringToInt(Get2DACache("spells", "Innate", nEffectSpellID));
+                          //HP = 5 * spell level
+                          effect eDracHP = EffectTemporaryHitpoints(5 * nEffectSpellLevel);
+
+                          //can't stack HP from multiple dispels
+                          if (GetHasSpellEffect(GetSpellId(),OBJECT_SELF))
+                          {
+                              RemoveSpellEffects(GetSpellId(), OBJECT_SELF, OBJECT_SELF);
+                          }
+                  
+                          SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDracHP, OBJECT_SELF, 60.0);
+                      }
+
+                      else if(GetSpellId() == SPELL_SLASHING_DISPEL)
+                      {
+                          //Get spell level
+                          int nEffectSpellLevel = StringToInt(Get2DACache("spells", "Innate", nEffectSpellID));
+                          //Damage = 2 * spell level
+                          effect eSlashDam = EffectDamage(DAMAGE_TYPE_MAGICAL, 2 * nEffectSpellLevel);
+
+                          SPApplyEffectToObject(DURATION_TYPE_INSTANT, eSlashDam, oTarget);
+                      }
 
                     }// end if effect comes from this caster
                 }// end if effect comes from this spell
@@ -472,7 +499,33 @@ void DispelMagicAllMod(object oTarget, int nCasterLevel)
             {
               RemoveEffect(oTarget, eToDispel);
 
-              if(GetSpellId() == SPELL_SLASHING_DISPEL)
+              if(GetSpellId() == INVOKE_VORACIOUS_DISPELLING)
+              {
+                  //Get spell level
+                  int nEffectSpellLevel = StringToInt(Get2DACache("spells", "Innate", nEffectSpellID));
+                  //Damage = spell level
+                  effect eSlashDam = EffectDamage(DAMAGE_TYPE_MAGICAL, nEffectSpellLevel);
+
+                  SPApplyEffectToObject(DURATION_TYPE_INSTANT, eSlashDam, oTarget);
+              }
+                      
+              else if(GetSpellId() == INVOKE_DEVOUR_MAGIC)
+              {
+                  //Get spell level
+                  int nEffectSpellLevel = StringToInt(Get2DACache("spells", "Innate", nEffectSpellID));
+                  //HP = 5 * spell level
+                  effect eDracHP = EffectTemporaryHitpoints(5 * nEffectSpellLevel);
+                  
+                  //can't stack HP from multiple dispels
+                  if (GetHasSpellEffect(GetSpellId(),OBJECT_SELF))
+                  {
+                      RemoveSpellEffects(GetSpellId(), OBJECT_SELF, OBJECT_SELF);
+                  }
+
+                  SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDracHP, OBJECT_SELF, 60.0);
+              }
+
+              else if(GetSpellId() == SPELL_SLASHING_DISPEL)
               {
               //Get spell level
               int nEffectSpellLevel = StringToInt(Get2DACache("spells", "Innate", nEffectSpellID));

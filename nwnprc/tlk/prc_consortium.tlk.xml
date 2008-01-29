@@ -28806,6 +28806,44 @@ Use: Automatic</entry>
 Prerequisites: Swordsage 8.
 Specifics: You gain a +2 bonus to saves when in a stance from the chosen discipline. At level 16, choose a second discipline.
 Use: Automatic</entry>
+  <entry id="52555" lang="en" sex="m">Deepstone Sentinel</entry>
+  <entry id="52556" lang="en" sex="m">Deepstone Sentinels</entry>
+  <entry id="52557" lang="en" sex="m">deepstone sentinel</entry>
+  <entry id="52558" lang="en" sex="m">(PRESTIGE CLASS)
+The Stone Dragon discipline traces its root back to an ancient order of dwarves that used the power of the earth to enhance their combat style. A deepstone sentinel immerses himself in those ancient teachings to link himself to the power of stone. Most deepstone sentinels use this power in the defence of their fellow dwarves, although some take a more active approach to battling the enemies of their people. In combat, a deepstone sentinel is a living mountain, a stony redoubt that provides shelter to his allies while crashing like an avalanche upon his enemies. The ground shifts and churns under his feet. One moment he stands atop a small, earthen mound that blocks his enemies - the next he summons an earthquake to knock his foes to the ground.
+
+- Hit Die: d10
+- Proficiencies: A Deepstone Sentinel gains no additional proficiencies.
+- Skill Points: 2 + Int Modifier
+
+REQUIREMENTS:
+
+Race: Dwarf.
+Base Attack Bonus: +10.
+Skills: Balance 13 ranks.
+Feats: Power Attack or Stone Power.
+Maneuvers: Must know at least two Stone Dragon maneuvers and one Stone Dragon stance.
+
+ABILITIES:
+
+Level
+1: Mountain Fortress Stance - Create a small fortress of stone
+2: Crashing Mountain Juggernaught - Knock enemies to the ground charging a foe
+3: Indomitable Redoubt - Use a second Stone Dragon stance
+4: Stone Curse - Pin an enemy to the ground
+   Dragon's Tooth - Form a pillar of rock
+5: Awaken the Stone Dragon - Cause a localized earthquake
+
+Maneuvers
+
+The Deepstone Sentinel may only select maneuvers from the Stone Dragon discipline. He adds his full clas level to his initiator level. He gains new maneuvers known and readied at the indicated levels.
+
+Level  Maneuvers Known   Maneuvers Readied
+1      1                 0                 
+2      0                 0                 
+3      1                 1                 
+4      0                 0                 
+5      1                 0</entry>
   <entry id="52985" lang="en" sex="m">This feat opens the spellbook for this class. This is a conversation and feat driven version of the normal spellbook. Instead of appearing on the spell radial, they will appear on the class radial instead. Also, you may be able to use the spell after you have cast all your uses. No spell will result, but you will spend a round trying to cast it.</entry>
   <entry id="52986" lang="en" sex="m">Caster Level(s): Wizard / Sorcerer 9
 Innate Level: 9

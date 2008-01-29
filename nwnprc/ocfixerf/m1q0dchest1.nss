@@ -40,6 +40,7 @@ if(DEBUG) DoDebug("m1q0dchest1 running");
      /*   else if(GetLevelByClass(CLASS_TYPE_SORCERER,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_PSION,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_HEALER,oPC) > 0 ||
+                GetLevelByClass(CLASS_TYPE_DRAGONFIRE_ADEPT,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_WILDER,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_WIZARD,oPC) > 0)
         {

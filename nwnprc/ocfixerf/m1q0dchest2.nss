@@ -60,6 +60,7 @@ if(DEBUG) DoDebug("m1q0dchest2 running");
         else if(GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER,oPC) > 0 ||
 		GetLevelByClass(CLASS_TYPE_SCOUT,oPC) > 0 ||
 		GetLevelByClass(CLASS_TYPE_SHUGENJA,oPC) > 0 ||
+		GetLevelByClass(CLASS_TYPE_DRAGONFIRE_ADEPT,oPC) > 0 ||
 		GetLevelByClass(CLASS_TYPE_HEALER,oPC) > 0 ||
 		GetLevelByClass(CLASS_TYPE_RANGER,oPC) > 0)
         {

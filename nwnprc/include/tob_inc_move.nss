@@ -477,7 +477,7 @@ struct maneuver EvaluateManeuver(object oInitiator, object oTarget)
     {
 	// If you're this far in, you always succeed, there are very few checks.
 	// Deletes any active stances, and allows a Warblade 20 to have his two stances active.
-	if (GetIsStance(move.nMoveId)) _StanceSpecificChecks(oInitiator);
+	if (GetIsStance(move.nMoveId)) _StanceSpecificChecks(oInitiator, move.nMoveId);
 	// Expend the Maneuver until recovered
 	ExpendManeuver(move.oInitiator, nClass, move.nMoveId);
 	// Do Martial Lore data

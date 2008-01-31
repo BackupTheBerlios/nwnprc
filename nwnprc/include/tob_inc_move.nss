@@ -401,14 +401,18 @@ int _GetIsManeuverWeaponAppropriate(object oInitiator)
 	return FALSE;
 }
 
-void _StanceSpecificChecks(object oInitiator)
+void _StanceSpecificChecks(object oInitiator, int nMoveId)
 {
 	int nStanceToKeep = -1;
 	if (GetLevelByClass(CLASS_TYPE_WARBLADE, oInitiator) >= 20)
 	{
 		nStanceToKeep = GetHasActiveStance(oInitiator);	
 	}
-	if (GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL, oInitiator) >= 3 && GetHasSpellEffect(MOVE_MOUNTAIN_FORTRESS, oInitiator))
+	// Uses Crusader because all classes have Stone Dragon
+	// And Crusader has the smallest 2da to search
+	if (GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL, oInitiator) >= 3 && 
+	    GetHasSpellEffect(MOVE_MOUNTAIN_FORTRESS, oInitiator) &&
+	    GetDisciplineByManeuver(nMoveId, CLASS_TYPE_CRUSADER) == DISCIPLINE_STONE_DRAGON)
 	{
 		nStanceToKeep = GetHasActiveStance(oInitiator);	
 	}	
@@ -473,7 +477,7 @@ struct maneuver EvaluateManeuver(object oInitiator, object oTarget)
     {
 	// If you're this far in, you always succeed, there are very few checks.
 	// Deletes any active stances, and allows a Warblade 20 to have his two stances active.
-	_StanceSpecificChecks(oInitiator);
+	if (GetIsStance(move.nMoveId)) _StanceSpecificChecks(oInitiator);
 	// Expend the Maneuver until recovered
 	ExpendManeuver(move.oInitiator, nClass, move.nMoveId);
 	// Do Martial Lore data

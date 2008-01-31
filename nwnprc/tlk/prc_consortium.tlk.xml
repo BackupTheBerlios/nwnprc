@@ -28844,6 +28844,40 @@ Level  Maneuvers Known   Maneuvers Readied
 3      1                 1                 
 4      0                 0                 
 5      1                 0</entry>
+  <entry id="52559" lang="en" sex="m">Mountain Fortress Stance</entry>
+  <entry id="52560" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Deepstone Sentinel 1.
+Specifics: You create a small fortress of rock and stone upon which you stand, granting you a +1 bonus to attack, and forcing all foes entering melee combat with you to make DC 10 Balance checks or fall prone.
+
+You cannot move more than 5 feet or lose the benefits of this stance. 
+Use: Selected</entry>
+  <entry id="52561" lang="en" sex="m">Crashing Mountain Juggernaught</entry>
+  <entry id="52562" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Deepstone Sentinel 2.
+Specifics: You end your Mountain Fortress Stance, crashing down upon the foes near to you. All foes in melee range must make a DC 15 balance check or fall prone, and you charge a single foe with a +2d6 damage bonus.
+
+You must be in Mountain Fortress Stance to use this ability. 
+Use: Selected</entry>
+  <entry id="52563" lang="en" sex="m">Indomitable Redoubt</entry>
+  <entry id="52564" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Deepstone Sentinel 3.
+Specifics: While under the effects of Mountain Fortress Stance, you may activate another stance from the Stone Dragon discipline.
+Use: Automatic</entry>
+  <entry id="52565" lang="en" sex="m">Stone Curse</entry>
+  <entry id="52566" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Deepstone Sentinel 4.
+Specifics: On your first successful strike of the round in melee combat, if the target fails a DC 10 + 1/2 Character level + Strength Modifier Will save, they become unable to move.
+Use: Automatic</entry>
+  <entry id="52567" lang="en" sex="m">Dragon's Tooth</entry>
+  <entry id="52568" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Deepstone Sentinel 4.
+Specifics: You create a 10 foot tall pillar of stone, knocking all those who fail a DC 10 + 1/2 Character level + Strength Modifier Reflex save prone.
+Use: Selected</entry>
+  <entry id="52569" lang="en" sex="m">Awaken the Stone Dragon</entry>
+  <entry id="52570" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Deepstone Sentinel 5.
+Specifics: You cause the ground to shake, forcing all enemies to make a DC 10 + 1/2 Character level + Strength Modifier Reflex save or take 12d6 damage and fall prone. A successful save deals half damage and they remain standing.
+Use: Selected</entry>
   <entry id="52985" lang="en" sex="m">This feat opens the spellbook for this class. This is a conversation and feat driven version of the normal spellbook. Instead of appearing on the spell radial, they will appear on the class radial instead. Also, you may be able to use the spell after you have cast all your uses. No spell will result, but you will spend a round trying to cast it.</entry>
   <entry id="52986" lang="en" sex="m">Caster Level(s): Wizard / Sorcerer 9
 Innate Level: 9

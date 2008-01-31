@@ -113,7 +113,7 @@ void main()
         if(GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL,oInitiator) == 0)
             RemoveEventScript(oInitiator, EVENT_ONPLAYERLEVELDOWN, "tob_deepstone", TRUE, FALSE);
     }    
-    else if(nEvent == EVENT_ITEM_ONHIT && nClass >= 4)
+    else if(nEvent == EVENT_ITEM_ONHIT && nClass >= 4 && !GetLocalInt(oInitiator, "DSPStoneCurse"))
     {
         oItem          = GetSpellCastItem();
         object oTarget = PRCGetSpellTargetObject();
@@ -131,7 +131,10 @@ void main()
 		{
 			effect eLink = ExtraordinaryEffect(EffectLinkEffects(EffectCutsceneImmobilize(), EffectVisualEffect(VFX_IMP_DOOM)));
 			ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0);
-		}		
+		}
+		// Once a round
+		SetLocalInt(oInitiator, "DSPStoneCurse", TRUE);
+		DelayCommand(6.0, DeleteLocalInt(oInitiator, "DSPStoneCurse"));
         }// end if - Item is a melee weapon
     }// end if - Running OnHit event
     // We are called from the OnPlayerEquipItem eventhook. Add OnHitCast: Unique Power to oInitiator's weapon

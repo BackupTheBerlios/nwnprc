@@ -393,7 +393,14 @@ int GetCasterAbilityModifier(object oCaster)
 int GetSizeModifier(object oCreature)
 {
     int nSize = PRCGetCreatureSize(oCreature);
+    
+    //Powerful Build bonus
+    if(GetHasFeat(FEAT_RACE_POWERFUL_BUILD, oCreature))
+        nSize++;
+    //Make sure it doesn't overflow
+    if(nSize > CREATURE_SIZE_COLOSSAL) nSize = CREATURE_SIZE_COLOSSAL;
     int nModifier = 0;
+    
     switch (nSize)
     {
     case CREATURE_SIZE_TINY: nModifier = -8;  break;
@@ -401,6 +408,8 @@ int GetSizeModifier(object oCreature)
     case CREATURE_SIZE_MEDIUM: nModifier = 0; break;
     case CREATURE_SIZE_LARGE: nModifier = 4;  break;
     case CREATURE_SIZE_HUGE: nModifier = 8;   break;
+    case CREATURE_SIZE_GARGANTUAN: nModifier = 12;   break;
+    case CREATURE_SIZE_COLOSSAL: nModifier = 16;   break;
     }
     return nModifier;
 }

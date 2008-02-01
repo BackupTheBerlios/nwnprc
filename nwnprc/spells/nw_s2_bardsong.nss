@@ -23,22 +23,6 @@ bugfix by Kovi 2002.07.30
 #include "prc_inc_clsfunc"
 #include "prc_inc_sneak"  //for Dragonfire type getting
 
-int GetIsShield(object oItem)
-{
-    int bReturn = FALSE;
-    switch(GetBaseItemType(oItem))
-    {
-        case BASE_ITEM_LARGESHIELD:
-        case BASE_ITEM_SMALLSHIELD:
-        case BASE_ITEM_TOWERSHIELD:
-        {
-            bReturn = TRUE;
-        }
-        break;
-    }
-    return bReturn;
-}
-
 void ApplyDragonfire(int nAmount, int nDuration, object oPC, object oCaster)
 {
 	int nAppearanceType;

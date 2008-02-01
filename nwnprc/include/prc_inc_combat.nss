@@ -354,6 +354,13 @@ int GetAmmunitionInventorySlotFromWeaponType(int iWeaponType);
 object GetAmmunitionFromWeaponType(int iWeaponType, object oAttacker);
 object GetAmmunitionFromWeapon(object oWeapon, object oAttacker);
 
+//Gets weapon size
+int GetWeaponSize(object oWeapon);
+
+//Gets if item is a shield
+int GetIsShield(object oItem);
+
+
 //:://////////////////////////////////////////////
 //::  Combat Information Functions
 //:://////////////////////////////////////////////
@@ -455,6 +462,10 @@ struct BonusAttacks GetBonusAttacks(object oAttacker);
 // equips the first ammunition it finds in the inventory that works with the (ranged) weapon in the right hand
 // returns the equipped new ammunition
 object EquipAmmunition(object oPC);
+
+//Gets the total damage reduction of a creature for a given weapon
+//if any new damage reduction spells/powers/etc are added, add to this function
+struct DamageReducers GetTotalReduction(object oPC, object oTarget, object oWeapon);
 
 //:://////////////////////////////////////////////
 //::  Debug Functions
@@ -815,6 +826,22 @@ struct OnHitSpell
 {
 	int iSpellID;
 	int iDC;
+};
+
+//internal struct to store damage reduction
+struct DamReduction
+{
+	int nRedLevel;
+	int nRedAmount;
+};
+
+//struct of damage reduction/resistance.  
+//First value is for static reduction like DR 5/-
+//second value is for persent immunities like 25% Slashing Immunity
+struct DamageReducers
+{
+	int nStaticReductions;
+	int nPercentReductions;
 };
 
 // "quasi global" Vars needed to pass information between AttackLoopMain and AttackLoopLogic or other utitily functions used by these two
@@ -2093,6 +2120,98 @@ object GetAmmunitionFromWeaponType(int iWeaponType, object oAttacker)
 object GetAmmunitionFromWeapon(object oWeapon, object oAttacker)
 {
 	return GetAmmunitionFromWeaponType(GetBaseItemType(oWeapon), oAttacker);
+}
+
+//returns the weapon size
+int GetWeaponSize(object oWeapon)
+{
+    int bReturn = 1;
+    switch(GetBaseItemType(oWeapon))
+    {
+        case BASE_ITEM_SHORTSWORD:
+        case BASE_ITEM_LIGHTCROSSBOW:
+        case BASE_ITEM_LIGHTMACE:
+        case BASE_ITEM_DART:
+        case BASE_ITEM_LIGHTHAMMER:
+        case BASE_ITEM_HANDAXE:
+        case BASE_ITEM_KAMA:
+        case BASE_ITEM_SICKLE:
+        case BASE_ITEM_SLING:
+        case BASE_ITEM_THROWINGAXE:
+        case BASE_ITEM_WHIP:
+        case BASE_ITEM_ELF_LIGHTBLADE:
+        {
+            bReturn = 2;
+        }
+        break;
+        
+        case BASE_ITEM_LONGSWORD:
+        case BASE_ITEM_BATTLEAXE:
+        case BASE_ITEM_BASTARDSWORD:
+        case BASE_ITEM_LIGHTFLAIL:
+        case BASE_ITEM_WARHAMMER:
+        case BASE_ITEM_HEAVYCROSSBOW:
+        case BASE_ITEM_SHORTBOW:
+        case BASE_ITEM_CLUB:
+        case BASE_ITEM_KATANA:
+        case BASE_ITEM_MAGICSTAFF:
+        case BASE_ITEM_MORNINGSTAR:
+        case BASE_ITEM_RAPIER:
+        case BASE_ITEM_SCIMITAR:
+        case BASE_ITEM_CSLASHWEAPON:
+        case BASE_ITEM_CPIERCWEAPON:
+        case BASE_ITEM_CBLUDGWEAPON:
+        case BASE_ITEM_CSLSHPRCWEAP:
+        case BASE_ITEM_DWARVENWARAXE:
+        case 201:  //crafted magic staff
+        case BASE_ITEM_ELF_THINBLADE:
+        {
+            bReturn = 3;
+        }
+        break;
+        
+        case BASE_ITEM_LONGBOW:
+        case BASE_ITEM_HALBERD:
+        case BASE_ITEM_TWOBLADEDSWORD:
+        case BASE_ITEM_GREATSWORD:
+        case BASE_ITEM_GREATAXE:
+        case BASE_ITEM_DIREMACE:
+        case BASE_ITEM_DOUBLEAXE:
+        case BASE_ITEM_HEAVYFLAIL:
+        case BASE_ITEM_QUARTERSTAFF:
+        case BASE_ITEM_SCYTHE:
+        case BASE_ITEM_HALBERD:
+        case BASE_ITEM_SHORTSPEAR:
+        case BASE_ITEM_LONGBOW:
+        case BASE_ITEM_HALBERD:
+        case 95: //trident
+        case BASE_ITEM_ELF_COURTBLADE:
+        {
+            bReturn = 4;
+        }
+        break;
+    }
+    if(!GetIsWeapon(oWeapon))
+        bReturn = -1;
+    
+    return bReturn;
+}
+
+//returns TRUE if item is a shield
+int GetIsShield(object oItem)
+{
+    int bReturn = FALSE;
+    switch(GetBaseItemType(oItem))
+    {
+        case BASE_ITEM_LARGESHIELD:
+        case BASE_ITEM_SMALLSHIELD:
+        case BASE_ITEM_TOWERSHIELD:
+        {
+            bReturn = TRUE;
+        }
+        break;
+    }
+    return bReturn;
 }
 
 int GetWeaponCriticalRange(object oPC, object oWeap)
@@ -6479,6 +6598,7 @@ object EquipAmmunition(object oPC)
 }
 
 
+
 object FindNearestEnemy(object oAttacker)
 {
 	return GetNearestCreature(CREATURE_TYPE_IS_ALIVE, TRUE, oAttacker, 1, CREATURE_TYPE_REPUTATION, REPUTATION_TYPE_ENEMY, -1, -1);	
@@ -6599,6 +6719,208 @@ string GetActionName(int iAction)
 	}
 	return "unknown";
 }
+
+//returns a struct describing the applicable damage reductions with the given weapon and target
+struct DamageReducers GetTotalReduction(object oPC, object oTarget, object oWeapon)
+{
+	int nDamageType = GetWeaponDamageType(oWeapon);
+	//Note: DamageType is a bitwise number. 1 is B, 2 is P, 4 is S.
+	//if(DEBUG) DoDebug("Damage Type: " + IntToString(nDamageType));
+	int nAttackBonus = GetMonkEnhancement(oWeapon, oTarget, oPC);
+	
+	//handling for ammo
+	if(oWeapon == GetItemInSlot(INVENTORY_SLOT_BOLTS, oPC)
+	   || oWeapon == GetItemInSlot(INVENTORY_SLOT_BULLETS, oPC)
+	   || oWeapon == GetItemInSlot(INVENTORY_SLOT_ARROWS, oPC))
+	      nAttackBonus = GetWeaponAttackBonusItemProperty(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC), oTarget);
+	
+	if(DEBUG) DoDebug("Weapon Atk Bonus: " + IntToString(nAttackBonus));
+	
+	struct DamReduction nBestDamageReduction;
+	int nBestDamageResistance = 0;
+	int nApplicableReduction;
+	int nBestImmunutyLevel;
+	struct DamReduction nCurrentReduction;
+	nCurrentReduction.nRedLevel = DAMAGE_POWER_NORMAL;
+	nCurrentReduction.nRedAmount = 0;
+	nBestDamageReduction = nCurrentReduction;
+	
+	if(nAttackBonus < 1) nApplicableReduction = DAMAGE_POWER_NORMAL;
+	else nApplicableReduction = IPGetDamageBonusConstantFromNumber(nAttackBonus);
+	
+	
+	//loop through spell/power effects first
+	effect eLoop=GetFirstEffect(oTarget);
+
+	while (GetIsEffectValid(eLoop))
+   	{
+   		int nSpellID = GetEffectSpellId(eLoop);
+   		
+   		//Stoneskin
+   		if( nSpellID == 172
+   		   || nSpellID == 342
+   		   || nSpellID == SPELL_FOM_DIVINE_SONG_STONESKIN
+   		   || nSpellID == SPELL_URDINNIR_STONESKIN)
+   		{
+   		     nCurrentReduction.nRedLevel = DAMAGE_POWER_PLUS_FIVE;
+   		     nCurrentReduction.nRedAmount = 10;    
+   		}
+   		//GreaterStoneskin
+   		if( nSpellID == 74)
+   		{
+   		     nCurrentReduction.nRedLevel = DAMAGE_POWER_PLUS_FIVE;
+   		     nCurrentReduction.nRedAmount = 20;
+   		}
+   		//Premonition
+   		if( nSpellID == 134)
+   		{
+   		     nCurrentReduction.nRedLevel = DAMAGE_POWER_PLUS_FIVE;
+   		     nCurrentReduction.nRedAmount = 30;
+   		}
+   		//Ghostly Visage
+   		if( nSpellID == 351
+   		   || nSpellID == 605
+   		   || nSpellID == 120)
+   		{
+   		     nCurrentReduction.nRedLevel = DAMAGE_POWER_PLUS_ONE;
+   		     nCurrentReduction.nRedAmount = 5;
+   		}
+   		//Ethereal Visage
+   		if( nSpellID == 121)
+   		{
+   		     nCurrentReduction.nRedLevel = DAMAGE_POWER_PLUS_THREE;
+   		     nCurrentReduction.nRedAmount = 20;
+   		}
+   		//Shadow Shield and Shadow Evade(best case)
+   		if( nSpellID == 160
+   		   || nSpellID == 477
+   		   || nSpellID == SPELL_SHADOWSHIELD)
+   		{
+   		     nCurrentReduction.nRedLevel = DAMAGE_POWER_PLUS_THREE;
+   		     nCurrentReduction.nRedAmount = 10;
+   		}
+   		//Iron Body
+   		if( nSpellID == POWER_IRONBODY)
+   		{
+   		     nCurrentReduction.nRedLevel = DAMAGE_POWER_PLUS_FIVE;
+   		     nCurrentReduction.nRedAmount = 15;
+   		}
+   		//Oak Body
+   		if( nSpellID == POWER_OAKBODY && nDamageType == DAMAGE_TYPE_SLASHING)
+   		{
+   		     nBestDamageResistance = 10;
+   		}
+   		//Shadow Body
+   		if( nSpellID == POWER_SHADOWBODY)
+   		{
+   		     nCurrentReduction.nRedLevel = DAMAGE_POWER_PLUS_ONE;
+   		     nCurrentReduction.nRedAmount = 10;
+   		}
+   		
+   		//if it applies and prevents more damage, replace
+   		if(nCurrentReduction.nRedLevel > nApplicableReduction
+   		   && nCurrentReduction.nRedAmount > nBestDamageReduction.nRedAmount)
+   		       nBestDamageReduction = nCurrentReduction;
+   		   
+		        
+   		eLoop=GetNextEffect(oTarget);
+   	}
+   	
+   	//now loop through items
+   	int nSlot;
+   	object oItem;
+   	itemproperty ipResist = ItemPropertyDamageResistance(nDamageType, IP_CONST_DAMAGERESIST_5);
+   	int nSubType;
+
+        for (nSlot=0; nSlot<NUM_INVENTORY_SLOTS; nSlot++)
+        {
+           oItem=GetItemInSlot(nSlot, oTarget);
+           
+           //check props if valid
+           if(GetIsObjectValid(oItem))
+           {
+               /*if(GetItemHasItemProperty(oItem, ITEM_PROPERTY_DAMAGE_RESISTANCE) 
+                  || GetItemHasItemProperty(oItem, ITEM_PROPERTY_DAMAGE_REDUCTION))
+               {*/
+           	      itemproperty ipLoop=GetFirstItemProperty(oItem);
+
+                      //Loop for as long as the ipLoop variable is valid
+                      while (GetIsItemPropertyValid(ipLoop))
+                      {
+                      	    //if(DEBUG) DoDebug("Item: " + GetName(oItem));
+                      	    //if(DEBUG) DoDebug("Item Property: " + IntToString(GetItemPropertyType(ipLoop)));
+                      	    //if(DEBUG) DoDebug("Item Property Subtype: " + IntToString(GetItemPropertySubType(ipLoop)));
+                      	    if(GetItemPropertyType(ipLoop) == ITEM_PROPERTY_DAMAGE_RESISTANCE)
+                      	    {   
+                      	        nSubType = GetItemPropertySubType(ipLoop);
+                      	        //convert IP Const numbers to the appropriate bitmask
+                      	        if(nSubType == 0) nSubType = 1;
+                      	        if(nSubType == 1) nSubType = 2;
+                      	        if(nSubType == 2) nSubType = 4;
+                      	        //See if Damage type is in the weapon's damage type bitmask
+                      	        if((nSubType & nDamageType) == nSubType)
+                                {
+                                   int nResist = 5 * GetItemPropertyCostTableValue(ipLoop);
+                            
+                                   if(nResist > nBestDamageResistance) nBestDamageResistance = nResist;
+                                }
+                            }
+                            
+                            if(GetItemPropertyType(ipLoop) == ITEM_PROPERTY_DAMAGE_REDUCTION
+                      	       && GetItemPropertySubType(ipLoop) > nApplicableReduction)
+                            {
+                            	int nReduce = GetItemPropertyCostTableValue(ipLoop) * 5;
+                            	if (nReduce > nBestDamageReduction.nRedAmount)
+                            	     nBestDamageReduction.nRedAmount = nReduce;
+                            }
+                            
+                            if(GetItemPropertyType(ipLoop) == ITEM_PROPERTY_IMMUNITY_DAMAGE_TYPE)
+                      	    {   
+                      	        nSubType = GetItemPropertySubType(ipLoop);
+                      	        if(nSubType == 0) nSubType = 1;
+                      	        if(nSubType == 1) nSubType = 2;
+                      	        if(nSubType == 2) nSubType = 4;
+                      	        if((nSubType & nDamageType) == nSubType)
+                                {
+                            	    int nImmune = 0;
+                                    if(GetItemPropertyCostTableValue(ipLoop) == 1)
+                            	        nImmune = 5;
+                            	    else if(GetItemPropertyCostTableValue(ipLoop) == 2)
+                            	        nImmune = 10;
+                              	    else if(GetItemPropertyCostTableValue(ipLoop) == 3)
+                            	        nImmune = 25;
+                            	    else if(GetItemPropertyCostTableValue(ipLoop) == 4)
+                            	        nImmune = 50;
+                            	    else if(GetItemPropertyCostTableValue(ipLoop) == 5)
+                            	        nImmune = 75;
+                            	    else if(GetItemPropertyCostTableValue(ipLoop) == 6)
+                            	        nImmune = 90;
+                            	    else if(GetItemPropertyCostTableValue(ipLoop) == 7)
+                            	        nImmune = 100;
+
+                                    if(nImmune > nBestImmunutyLevel) nBestImmunutyLevel = nImmune;
+                                }
+                            }
+
+                            //Next itemproperty on the list...
+                            ipLoop=GetNextItemProperty(oItem);
+                      }
+
+           	//}//end item prop check 
+             
+           }//end validity check
+        }//end for
+        if(DEBUG) DoDebug("Best Resistance: " + IntToString(nBestDamageResistance));
+        if(DEBUG) DoDebug("Best Reduction: " + IntToString(nBestDamageReduction.nRedAmount));
+        if(DEBUG) DoDebug("Best Percent Immune: " + IntToString(nBestImmunutyLevel));
+   	
+   	struct DamageReducers drOverallReduced;
+   	drOverallReduced.nStaticReductions = nBestDamageResistance + nBestDamageReduction.nRedAmount;
+   	drOverallReduced.nPercentReductions = nBestImmunutyLevel;
+   	
+   	return drOverallReduced;
+}
+	
 
 // experimental: not functional
 // checks the action type (to be determined by a call to GetCurrentAction()) and returns TRUE,

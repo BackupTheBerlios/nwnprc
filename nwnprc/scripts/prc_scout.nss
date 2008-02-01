@@ -1,22 +1,6 @@
 #include "prc_alterations"
 #include "prc_inc_sneak"
 
-int GetIsShield(object oItem)
-{
-    int bReturn = FALSE;
-    switch(GetBaseItemType(oItem))
-    {
-        case BASE_ITEM_LARGESHIELD:
-        case BASE_ITEM_SMALLSHIELD:
-        case BASE_ITEM_TOWERSHIELD:
-        {
-            bReturn = TRUE;
-        }
-        break;
-    }
-    return bReturn;
-}
-
 int SkirmishDamage(object oPC, object oTarget, int nClass)
 {
     int nDamage = 0;

@@ -1313,6 +1313,12 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
         nDC -= 3;
     else if(nSaveType == SAVING_THROW_TYPE_ACID && GetHasFeat(FEAT_HARD_EARTH, oTarget))
         nDC -= 1 + (GetHitDice(oTarget) / 5);
+        
+    //Psionic race save boosts - +2 vs fire for Halfgiant, +1 vs all spells for Xeph
+    if(nSaveType == SAVING_THROW_TYPE_FIRE && GetHasFeat(FEAT_ACCLIMATED_FIRE, oTarget))
+        nDC -= 2;
+    if(GetHasFeat(FEAT_XEPH_SPELLHARD, oTarget))
+        nDC -= 1;
 
     // Necrotic Cyst penalty on Necromancy spells
     if(GetPersistantLocalInt(oTarget, NECROTIC_CYST_MARKER) && (GetSpellSchool(nSpell) == SPELL_SCHOOL_NECROMANCY))

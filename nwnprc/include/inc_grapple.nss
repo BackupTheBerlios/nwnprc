@@ -15,6 +15,7 @@
 
 int GetGrappleSizeMod(int nSize)
 {
+    
     switch(nSize)
     {
         case CREATURE_SIZE_FINE:            return -16;
@@ -36,7 +37,16 @@ int GetGrappleMod(object oTarget)
     if(!GetIsObjectValid(oTarget))
         return 0;
     nGrapple += GetBaseAttackBonus(oTarget);
-    nGrapple += GetGrappleSizeMod(PRCGetCreatureSize(oTarget));
+    
+    int nSize = PRCGetCreatureSize(oTarget);
+    //Powerful Build bonus
+    if(GetHasFeat(FEAT_RACE_POWERFUL_BUILD, oTarget))
+        nSize++;
+    //Make sure it doesn't overflow
+    if(nSize > CREATURE_SIZE_COLOSSAL) nSize = CREATURE_SIZE_COLOSSAL;
+    
+    
+    nGrapple += GetGrappleSizeMod(nSize);
     nGrapple += GetAbilityModifier(ABILITY_STRENGTH, oTarget);
     //drunken masters drunken embrace
     if(GetHasFeat(FEAT_PRESTIGE_DRUNKEN_EMBRACE, oTarget))

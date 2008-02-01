@@ -1,21 +1,5 @@
 #include "tob_inc_tobfunc"
 
-int GetIsShield(object oItem)
-{
-    int bReturn = FALSE;
-    switch(GetBaseItemType(oItem))
-    {
-        case BASE_ITEM_LARGESHIELD:
-        case BASE_ITEM_SMALLSHIELD:
-        case BASE_ITEM_TOWERSHIELD:
-        {
-            bReturn = TRUE;
-        }
-        break;
-    }
-    return bReturn;
-}
-
 void main()
 {
     int nEvent = GetRunningEvent();

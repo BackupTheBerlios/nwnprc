@@ -81,6 +81,8 @@ void EvalPRCFeats(object oPC)
     // special add atk bonus equal to Enhancement
     ExecuteScript("ft_sanctmartial", oPC);
 
+    //hook in the weapon size restrictions script
+    ExecuteScript("prc_restwpnsize", oPC);
 
     //Route the event to the appropriate class specific scripts
     if(GetLevelByClass(CLASS_TYPE_DUELIST, oPC) > 0)             ExecuteScript("prc_duelist", oPC);

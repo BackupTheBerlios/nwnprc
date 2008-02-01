@@ -156,6 +156,12 @@ int _GetFeatBonusPP(object oChar){
     nBonusPP += nImpManifestations * (18 + nImpManifestations);
 
     // Racial boni
+    if(GetHasFeat(FEAT_NATPSIONIC_1, oChar))
+        nBonusPP += 1;
+    if(GetHasFeat(FEAT_NATPSIONIC_2, oChar))
+        nBonusPP += 2;
+    if(GetHasFeat(FEAT_NATPSIONIC_3, oChar))
+        nBonusPP += 3;
 
     return nBonusPP;
 }

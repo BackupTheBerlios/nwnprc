@@ -60,6 +60,15 @@ const int FEAT_HOUND_DISGUISE      = 4613;
 const int FEAT_HOUND_MAGICCIRCLE   = 4515;
 const int FEAT_HOUND_TELEPORT      = 4516;
 
+const int FEAT_RACE_ENERGYRAY      = 4856;
+const int FEAT_RACE_ENERGYRAYSONIC = 4520;
+const int FEAT_ELAN_RESISTANCE     = 4521;
+const int FEAT_ELAN_RESILIANCE     = 4522;
+const int FEAT_PSIRACE_STOMP       = 4524;
+const int FEAT_MAENAD_OUTBURST     = 4525;
+const int FEAT_XEPH_SPELLHARD      = 4527;
+const int FEAT_XEPH_BURST          = 4526;
+
 const int FEAT_LTSENSE = 4700;
 const int FEAT_LTBLIND = 4701;
 
@@ -99,6 +108,7 @@ const int FEAT_HARD_WATER = 4726;
 const int FEAT_HARD_ELEC  = 4727;
 const int FEAT_POISON_3   = 4728;
 const int FEAT_POISON_4   = 4768;
+const int FEAT_ACCLIMATED_FIRE  = 4523;
 
 const int FEAT_IMM_COLD     = 4729;
 const int FEAT_IMM_PHANT    = 4730;
@@ -231,6 +241,7 @@ const int FEAT_NATPSIONIC_2        = 4797;
 const int FEAT_NATPSIONIC_3        = 4798;
 const int FEAT_HUGE           = 4799;
 const int FEAT_SMALL          = 375;
+const int FEAT_RACE_POWERFUL_BUILD = 4512;
 
 //Passive Feats
 const int FEAT_ETERNAL_FREEDOM                         = 4298;

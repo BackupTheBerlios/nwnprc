@@ -19951,6 +19951,171 @@ Use: Selected.</entry>
 Prerequisite: Shaman level 5
 Specifics: You gain your Charisma modifier to all saving throws.
 Use: Selected.</entry>
+  <entry id="50452" lang="en" sex="m">Dromite</entry>
+  <entry id="50453" lang="en" sex="m">dromite</entry>
+  <entry id="50454" lang="en" sex="m">Dromites</entry>
+  <entry id="50455" lang="en" sex="m">Dromites might be mistaken for halflings at a distance, but close scrutiny reveals chitin-encrusted skin, compound eyes, and small antennae protuding from their brows.  These insect-resembling humanoids stand 3' tall.  They have no body hair, but a complicated arrangement of chitin mimics hair on the head.  As a race, they have a slight natural tendancy towards Psionics.
+
+Dromite Ability Adjustments: +2 Cha, -2 Str, -2 Wis.
+Favored Class (Wilder): A multiclass dromite's wilder class does not count when determining whether he suffers an XP penalty for multiclassing.
+
+Special Abilities:
+
+- Small Stature
++1 size bonus to attack rolls.
++1 size bonus to AC.
++4 size bonus to Hide checks. 
+- 20' base speed
+- Minor Sonic Resistance: Innate damage resistance 5 vs Sonic.
+- Natural Armor Bonus: Racial natural armor bonus of 3.
+- Naturally Psionic: Dromites gain 1 free power point at first level.
+- Psi-Like Abilities: Energy Ray - 1/day
+- Compound Eyes: +2 bonus to Spot
+- Bonus Feat: Blind-Fight
+- Monstrous Humanoid: Dromites are considered Monstrous Humanoids for the purpose of spells.</entry>
+  <entry id="50456" lang="en" sex="m">Elan</entry>
+  <entry id="50457" lang="en" sex="m">elan</entry>
+  <entry id="50458" lang="en" sex="m">Elans</entry>
+  <entry id="50459" lang="en" sex="m">Elans are made, not born.  Living humans are selected from a pool of applicants by a council of elan, and those chosen undergo a secret psionic ritual, transforming them and giving them a new psionically-charged existance.  For some arcane reason only humans are able to undergo the process, and whiel they retain their basic memories and personality, on the whole they become a completely new person.  Physically they still keep their old appearance, but they are no longer subject to aging, becoming effectively immortal.  They also no longer require sleep, instead meditating in a fashion similar to the elven reverie.
+
+Elan Ability Adjustments: -2 Cha.
+Favored Class (Psion): A multiclass elan's psion class does not count when determining whether he suffers an XP penalty for multiclassing.
+
+Special Abilities:
+
+- 30' base speed
+- Naturally Psionic: Elans gain 2 free power points at first level.
+- Resistance: Elans can spend 1 power point to give them a +4 to all saving throws until the next round as a free action.
+- Resiliance: Elans can spend power points to protect themselves from damage.  For each power point spent in this way, they gain 2 temporary hit points, all of which fade after 1 round.
+- Aberration: Elans are considered Aberrations for the purpose of spells.</entry>
+  <entry id="50460" lang="en" sex="m">Half-Giant</entry>
+  <entry id="50461" lang="en" sex="m">half-giant</entry>
+  <entry id="50462" lang="en" sex="m">Half-Giants</entry>
+  <entry id="50463" lang="en" sex="m">A cross between humans and giants, this race was bred into existance by a group of desert sorcerer-kings wanting a race of warriors and laborers.  A few however found that the breeding had somehow awakened a spark of psionic power wihtin them, and used it to escape their slavery and forge a new life for themselves.  Physically they stand about 7-8' tall, sometimes being mistaken for a well-groomed Hill Giant.  Despite their appearance, they are as quick fo mind as any human, and usually retain human sensibilities.
+
+Half-Giant Ability Adjustments: +2 Str, +2 Con, -2 Dex.
+Favored Class (Psychic Warrior): A multiclass half-giant's psychic warrior class does not count when determining whether he suffers an XP penalty for multiclassing.
+
+Special Abilities:
+
+- 30' base speed
+- Low-Light Vision: Half-Giants can see farther in dim lighting.
+- Fire-Acclimated: +2 to save vs fire-based spells and effects.
+- Powerful Build: Half-giants count as Large for purposes of grapples, trips, and similar abilities.  They can wield weapons as if they were Large size.
+- Naturally Psionic: Half-giants gain 2 free power points at first level.
+- Psi-like Ability: Stomp - 1/day
+- Giant: Elans are considered Giants for the purpose of spells.</entry>
+  <entry id="50464" lang="en" sex="m">Maenad</entry>
+  <entry id="50465" lang="en" sex="m">maenad</entry>
+  <entry id="50466" lang="en" sex="m">Maenads</entry>
+  <entry id="50467" lang="en" sex="m">Maenads are an emotional people, though at first glance they seem very reserved.  This is because they bottle their wild tempest of emotions wihtin themselves, only releasing it when necessary, or when unable to restrain it further.  Physically they are tall and wiry, standing around 6'.  They tend to wear their dark hair long and braided, adn their skin is sparkles wiht flecks of living crystal embedded in it.
+
+Maenad Ability Adjustments: None.
+Favored Class (Wilder): A multiclass maenad's wilder class does not count when determining whether he suffers an XP penalty for multiclassing.
+
+Special Abilities:
+
+- 30' base speed
+- Naturally Psionic: Maenads gain 2 free power points at first level.
+- Psi-Like Abilities: Energy Ray: Sonic - 1/day
+- Outburst: Once per day, for up to 4 rounds a Maenad can subjugate his mind to increase his physical prowess, taking -2 to Intelligence and Wisdom in exchange for a +2 to Strength.
+- Humanoid: Maenads are considered Humanoids for the purpose of spells.</entry>
+  <entry id="50468" lang="en" sex="m">Xeph</entry>
+  <entry id="50469" lang="en" sex="m">xeph</entry>
+  <entry id="50470" lang="en" sex="m">Xephs</entry>
+  <entry id="50471" lang="en" sex="m">Xephs are a race of atheletes and artisans, renowned for their feats in agility and speed, as well as their sense of humor.  They value the arts highly, similar to elves, but when betrayed are as implacable as dwarves.  Physically they stand around five and a half feet tall, witha  slender build.  They typically sport dark eyes and hair, matching their brown-colored skin.
+
+Xeph Ability Adjustments: +2 Dex, -2 Str.
+Favored Class (Soulknife): A multiclass xeph's soulknife class does not count when determining whether he suffers an XP penalty for multiclassing.
+
+Special Abilities:
+
+- 30' base speed
+- Darkvision: Xephs are able to see in the dark.
+- Naturally Psionic: Xephs gain 1 free power point at first level.
+- Hardiness against Spells: +1 to save vs all spells and spell-like abilities.
+- Burst: Three times per day, for up to 3 rounds a Xeph can increase his speed, depending on his level.  33% at levels 1-4, 66% at levels 5-8, up to a max of 100% at levels 9 and greater.
+- Humanoid: Xephs are considered Humanoids for the purpose of spells.</entry>
+  <entry id="50472" lang="en" sex="m">You grew up among a culture that valued the powers of the mind, and worked to realize that potential.  Now an adult, you have left home to explore the outside world, and in so doing also explore the inner world within yourself.  What sights will you see, and what discoveries will you make about the universe and your own self?  Only time will tell.</entry>
+  <entry id="50473" lang="en" sex="m">Naturally Psionic</entry>
+  <entry id="50474" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-specific
+
+Specifics: You gain one extra power point at first level due to your race's natural psionic inclinations.
+Use: Automatic.</entry>
+  <entry id="50475" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-specific
+
+Specifics: You gain two extra power points at first level due to your race's natural psionic inclinations.
+Use: Automatic.</entry>
+  <entry id="50476" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-specific
+
+Specifics: You gain three extra power points at first level due to your race's natural psionic inclinations.
+Use: Automatic.</entry>
+  <entry id="50477" lang="en" sex="m">Half-Giant Stomp</entry>
+  <entry id="50478" lang="en" sex="m">Fire Acclimated</entry>
+  <entry id="50479" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-specific
+
+Specifics: You gain a +2 racial bonus to save vs fire-subtype spells and effects.
+Use: Automatic.</entry>
+  <entry id="50480" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-specific
+
+Specifics: You gain a +1 racial bonus to save vs all spells and effects.
+Use: Automatic.</entry>
+  <entry id="50481" lang="en" sex="m">Powerful Build</entry>
+  <entry id="50482" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-specific
+
+Specifics: You count as one size larger for any special maneuvers such as grapple or trip.  In addition, you can wield weapons with no penalty as if you were one size larger.
+Use: Automatic.</entry>
+  <entry id="50483" lang="en" sex="m">Elan Resistance</entry>
+  <entry id="50484" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-specific
+
+Specifics: You can spend 1 power point to gain +4 to all saving throws for one round.
+Use: Selected.</entry>
+  <entry id="50485" lang="en" sex="m">Elan Resiliance</entry>
+  <entry id="50486" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-specific
+
+Specifics: For each 1 power point spent, you gain 2 temporary hit points.  These hit points fade after one round.
+Use: Selected.</entry>
+  <entry id="50487" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-specific
+
+Specifics: Three times per day you can increase your speed for 3 rounds as follows:
+Level     Percent
+1-4       33%
+5-8       66%
+9+        100%
+Use: Selected.</entry>
+  <entry id="50488" lang="en" sex="m">Outburst</entry>
+  <entry id="50489" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-specific
+
+Specifics: Once per day, you can subjugate your mental ability to enhance your physical prowess, gaining -2 to Int and Wis and +2 to Str for 4 rounds.
+Use: Selected.</entry>
+  <entry id="50490" lang="en" sex="m">Elven Lightblade</entry>
+  <entry id="50491" lang="en" sex="m">Elven Thinblade</entry>
+  <entry id="50492" lang="en" sex="m">Elven Courtblade</entry>
+  <entry id="50493" lang="en" sex="m">Base Damage: 1d6
+Base Critical Threat: 18-20/x2 
+Base Damage Type: Piercing
+Weapon Size: Small
+Feats Required: Exotic</entry>
+  <entry id="50494" lang="en" sex="m">Base Damage: 1d8
+Base Critical Threat: 18-20/x2 
+Base Damage Type: Piercing
+Weapon Size: Medium
+Feats Required: Exotic</entry>
+  <entry id="50495" lang="en" sex="m">Base Damage: 1d10
+Base Critical Threat: 18-20/x2 
+Base Damage Type: Slashing
+Weapon Size: Large
+Feats Required: Exotic</entry>
   <entry id="50501" lang="en" sex="m">***50,501 -&gt; 51,000 reserved for domains and spells***</entry>
   <entry id="50502" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Metal domain.

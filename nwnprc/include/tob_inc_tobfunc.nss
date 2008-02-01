@@ -465,7 +465,7 @@ int DoOverrun(object oPC, object oTarget, int nGenerateAoO = TRUE, int nExtraBon
 /*             Internal functions               */
 //////////////////////////////////////////////////
 
-int _CheckPrereqsByDiscipline(object oPC, int nDiscipline, int nCount, int nClass)
+int _CheckPrereqsByDiscipline(object oPC, int nDiscipline, int nCount, int nClass, int nType = MANEUVER_TYPE_MANEUVER)
 {
      // Place to finish, place to start in feat.2da
      int nCheckTo, nCheck, nCheckTo2, nCheck2, nCheckTo3, nCheck3;
@@ -493,7 +493,14 @@ int _CheckPrereqsByDiscipline(object oPC, int nDiscipline, int nCount, int nClas
      while (nCheckTo >= nCheck) 
      {
         // If the PC has a prereq feat, mark it down
-        if(GetHasFeat(nCheck, oPC)) nPrereqCount += 1;
+        if(GetHasFeat(nCheck, oPC)) 
+        {
+        	if (nType == MANEUVER_TYPE_MANEUVER)
+       			nPrereqCount += 1;
+        	// If stances are being looked for, special check
+        	else if ((nType == MANEUVER_TYPE_STANCE && Get2DACache("feat", "Constant", nCheck) == "MANEUVER_STANCE"))
+        	      	nPrereqCount += 1;
+        }
         // If the number of prereq feats is at least equal to requirement, return true.
         if (nPrereqCount >= nCount) return TRUE;        
         
@@ -503,7 +510,14 @@ int _CheckPrereqsByDiscipline(object oPC, int nDiscipline, int nCount, int nClas
      while (nCheckTo2 >= nCheck2 && bUse2)      
      {
         // If the PC has a prereq feat, mark it down
-        if(GetHasFeat(nCheck2, oPC)) nPrereqCount += 1;
+        if(GetHasFeat(nCheck, oPC)) 
+        {
+        	if (nType == MANEUVER_TYPE_MANEUVER)
+       			nPrereqCount += 1;
+        	// If stances are being looked for, special check
+        	else if ((nType == MANEUVER_TYPE_STANCE && Get2DACache("feat", "Constant", nCheck) == "MANEUVER_STANCE"))
+        	      	nPrereqCount += 1;
+        }
         // If the number of prereq feats is at least equal to requirement, return true.
         if (nPrereqCount >= nCount) return TRUE;        
         
@@ -513,7 +527,14 @@ int _CheckPrereqsByDiscipline(object oPC, int nDiscipline, int nCount, int nClas
      while (nCheckTo3 >= nCheck3 && bUse3)      
      {
         // If the PC has a prereq feat, mark it down
-        if(GetHasFeat(nCheck3, oPC)) nPrereqCount += 1;
+        if(GetHasFeat(nCheck, oPC)) 
+        {
+        	if (nType == MANEUVER_TYPE_MANEUVER)
+       			nPrereqCount += 1;
+        	// If stances are being looked for, special check
+        	else if ((nType == MANEUVER_TYPE_STANCE && Get2DACache("feat", "Constant", nCheck) == "MANEUVER_STANCE"))
+        	      	nPrereqCount += 1;
+        }
         // If the number of prereq feats is at least equal to requirement, return true.
         if (nPrereqCount >= nCount) return TRUE;        
         
@@ -1032,11 +1053,37 @@ int GetIsStance(int nMoveId)
         // Somewhat silly and ineffecient hardcoding, but I'm feeling lazy.
         // Checks three times since each has unique maneuvers.
         string sManeuverFile = GetAMSDefinitionFileName(CLASS_TYPE_CRUSADER);
-        if (StringToInt(Get2DACache(sManeuverFile, "Stance", nMoveId)) == 1) return TRUE;
+        int i, nManeuverLevel;
+        string sMoveID;
+        for(i = 0; i < GetPRCSwitch(FILE_END_CLASS_POWER) ; i++)
+        {
+            // If looking for stances, skip maneuvers, else reverse
+            if(StringToInt(Get2DACache(sManeuverFile, "Stance", i)) == 0){
+                continue;
+            } 
+            sMoveID = Get2DACache(sManeuverFile, "RealSpellID", i);
+            if(StringToInt(sMoveID) == nMoveId) return TRUE;
+        }
         sManeuverFile = GetAMSDefinitionFileName(CLASS_TYPE_SWORDSAGE);
-        if (StringToInt(Get2DACache(sManeuverFile, "Stance", nMoveId)) == 1) return TRUE;
+        for(i = 0; i < GetPRCSwitch(FILE_END_CLASS_POWER) ; i++)
+        {
+            // If looking for stances, skip maneuvers, else reverse
+            if(StringToInt(Get2DACache(sManeuverFile, "Stance", i)) == 0){
+                continue;
+            } 
+            sMoveID = Get2DACache(sManeuverFile, "RealSpellID", i);
+            if(StringToInt(sMoveID) == nMoveId) return TRUE;
+        }
         sManeuverFile = GetAMSDefinitionFileName(CLASS_TYPE_WARBLADE);
-        if (StringToInt(Get2DACache(sManeuverFile, "Stance", nMoveId)) == 1) return TRUE;
+        for(i = 0; i < GetPRCSwitch(FILE_END_CLASS_POWER) ; i++)
+        {
+            // If looking for stances, skip maneuvers, else reverse
+            if(StringToInt(Get2DACache(sManeuverFile, "Stance", i)) == 0){
+                continue;
+            } 
+            sMoveID = Get2DACache(sManeuverFile, "RealSpellID", i);
+            if(StringToInt(sMoveID) == nMoveId) return TRUE;
+        }
         
         return FALSE;
 }

@@ -509,7 +509,8 @@ void UseManeuver(int nManeuver, int nClass, int nLevelOverride = 0)
     // Normally swift action maneuvers check
     if((Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "SWIFT_ACTION" ||
     	Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "MANEUVER_BOOST" ||
-    	Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "MANEUVER_COUNTER") && // The maneuver is swift action to use
+    	Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "MANEUVER_COUNTER" ||
+    	Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "MANEUVER_STANCE") && // The maneuver is swift action to use
        TakeSwiftAction(oInitiator)                                                                        // And the initiator can take a swift action now
        )
     {

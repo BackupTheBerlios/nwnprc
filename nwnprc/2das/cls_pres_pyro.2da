@@ -4,3 +4,4 @@
 0 Concentration SKILL   1             8         
 1 Lore          SKILL   7             2         
 2 ScriptVar     VAR     PRC_AllowPyro 0         
+3 ScriptVar     VAR     PRC_PrereqPyro 0   

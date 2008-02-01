@@ -25,3 +25,4 @@
 21 feyri            RACE    201          ****      
 22 Base_Attack      BAB     7            ****      
 23 ScriptVar        VAR     PRC_AllowCoC 0         
+24 ScriptVar        VAR     PRC_PrereqCoC 0

@@ -10,6 +10,7 @@
 #include "prc_alterations"
 #include "prc_inc_sneak"
 #include "psi_inc_psifunc"
+#include "tob_inc_tobfunc"
 #include "inc_newspellbook"
 #include "prc_allow_const"
 
@@ -859,22 +860,41 @@ void CoC(object oPC)
 {
     if(GetLevelByClass(CLASS_TYPE_CLERIC, oPC))
     {
-        SetLocalInt(oPC, "PRC_AllowCoC", 1);
+        SetLocalInt(oPC, "PRC_PrereqCoC", 1);
         if(GetHasFeat(FEAT_DOMAIN_POWER_ELF, oPC) +
             //GetHasFeat(FEAT_DOMAIN_POWER_CHAOS, oPC) +    //chaos domain not yet implemented
             GetHasFeat(FEAT_GOOD_DOMAIN_POWER, oPC) +
             GetHasFeat(FEAT_MAGIC_DOMAIN_POWER, oPC) +
             GetHasFeat(FEAT_PROTECTION_DOMAIN_POWER, oPC) +
             GetHasFeat(FEAT_WAR_DOMAIN_POWER, oPC) >= 2)
-                SetLocalInt(oPC, "PRC_AllowCoC", 0);
+                SetLocalInt(oPC, "PRC_PrereqCoC", 0);
     }
 }
 
 void Pyro(object oPC)
 {
-    SetLocalInt(oPC, "PRC_AllowPyro", 1);
+    SetLocalInt(oPC, "PRC_PrereqPyro", 1);
     if(GetIsPsionicCharacter(oPC))
-        SetLocalInt(oPC, "PRC_AllowPyro", 0);
+        SetLocalInt(oPC, "PRC_PrereqPyro", 0);
+}
+
+void TomeOfBattle(object oPC = OBJECT_SELF)
+{
+	int nClass = GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL, oPC);
+	SetLocalInt(oPC, "PRC_PrereqDeepSt", 1);
+
+	if (nClass > 0)
+	{
+		// Needs two Stone Dragon maneuvers
+		int nMove = _CheckPrereqsByDiscipline(oPC, DISCIPLINE_STONE_DRAGON, 2, GetFirstBladeMagicClass(oPC));
+		// Needs two Stone Dragon maneuvers
+		int nStance = _CheckPrereqsByDiscipline(oPC, DISCIPLINE_STONE_DRAGON, 1, GetFirstBladeMagicClass(oPC), MANEUVER_TYPE_STANCE);
+		
+		if (nMove >=2 && nStance >= 1)
+		{
+			SetLocalInt(oPC, "PRC_PrereqDeepSt", 0);
+		}		
+	}
 }
 
 void main()
@@ -1037,6 +1057,7 @@ void main()
      Pyro(oPC);
      SkirmishRequirement(oPC);
      SpecialAttackRequirement(oPC);
+     TomeOfBattle(oPC);
      // Truly massive debug message flood if activated.
      /*
 

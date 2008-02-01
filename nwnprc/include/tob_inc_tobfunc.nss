@@ -182,11 +182,10 @@ int GetFirstBladeMagicClass(object oCreature = OBJECT_SELF);
 int GetFirstBladeMagicClassPosition(object oCreature = OBJECT_SELF);
 
 /**
- * Checks whether the PC possesses the feats the given feat has as it's
- * prerequisites. Possession of a feat is checked using GetHasFeat().
+ * Checks whether the PC has the prereqs for the maneuver
  *
  * @param nClass The class that is trying to learn the feat
- * @param nFeat The feat for which determine the possession of prerequisites
+ * @param nFeat The maneuver's FeatId
  * @param oPC   The creature whose feats to check
  * @return      TRUE if the PC possesses the prerequisite feats AND does not
  *              already posses nFeat, FALSE otherwise.
@@ -731,6 +730,8 @@ int GetInitiatorLevel(object oInitiator, int nSpecificClass = CLASS_TYPE_INVALID
                 // Initiator level is class level + 1/2 levels in all other classes
                 // See ToB p39
                 // Max level is therefor the level plus 1/2 of remaining levels
+                // Prestige classes are stuck in here 
+                nClassLevel += GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL, oInitiator);
                 nLevel = nClassLevel + ((nTotalHD - nClassLevel)/2);
             }
         }

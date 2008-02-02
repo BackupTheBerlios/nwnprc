@@ -13,6 +13,81 @@
 #include "prc_inc_combat"
 #include "prc_alterations"
 
+void DoEquipLightblade(object oPC, object oItem, int nHand)
+{
+	if(DEBUG) DoDebug("Checking Lightblade feats");
+	if(GetHasFeat(FEAT_WEAPON_FOCUS_SHORT_SWORD, oPC))
+	{
+	    if(DEBUG) DoDebug("Lightblade - Checking Weapon Focus");
+	    SetCompositeAttackBonus(oPC, "LightbladeWF" + IntToString(nHand), 1, nHand);
+	}
+	if(GetHasFeat(FEAT_EPIC_WEAPON_FOCUS_SHORTSWORD, oPC))
+	    SetCompositeAttackBonus(oPC, "LightbladeEpicWF" + IntToString(nHand), 2, nHand);
+	if(GetHasFeat(FEAT_WEAPON_SPECIALIZATION_SHORT_SWORD, oPC))
+	    SetCompositeDamageBonusT(oItem, "LightbladeWS", 2);
+	if(GetHasFeat(FEAT_EPIC_WEAPON_SPECIALIZATION_SHORTSWORD, oPC))
+	    SetCompositeDamageBonusT(oItem, "LightbladeEpicWS", 4);
+	if(GetHasFeat(FEAT_IMPROVED_CRITICAL_SHORT_SWORD, oPC))
+	    IPSafeAddItemProperty(oItem, ItemPropertyKeen(), 99999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+}
+
+
+void DoEquipThinblade(object oPC, object oItem, int nHand)
+{
+	if(GetHasFeat(FEAT_WEAPON_FOCUS_LONG_SWORD, oPC))
+	    SetCompositeAttackBonus(oPC, "ThinbladeWF" + IntToString(nHand), 1, nHand);
+	if(GetHasFeat(FEAT_EPIC_WEAPON_FOCUS_LONGSWORD, oPC))
+	    SetCompositeAttackBonus(oPC, "ThinbladeEpicWF" + IntToString(nHand), 2, nHand);
+	if(GetHasFeat(FEAT_WEAPON_SPECIALIZATION_LONG_SWORD, oPC))
+	    SetCompositeDamageBonusT(oItem, "ThinbladeWS", 2);
+	if(GetHasFeat(FEAT_EPIC_WEAPON_SPECIALIZATION_LONGSWORD, oPC))
+	    SetCompositeDamageBonusT(oItem, "ThinbladeEpicWS", 4);
+	if(GetHasFeat(FEAT_IMPROVED_CRITICAL_LONG_SWORD, oPC))
+	    IPSafeAddItemProperty(oItem, ItemPropertyKeen(), 99999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+}
+
+
+void DoEquipCourtblade(object oPC, object oItem, int nHand)
+{
+	if(GetHasFeat(FEAT_WEAPON_FOCUS_GREAT_SWORD, oPC))
+	    SetCompositeAttackBonus(oPC, "CourtbladeWF" + IntToString(nHand), 1, nHand);
+	if(GetHasFeat(FEAT_EPIC_WEAPON_FOCUS_GREATSWORD, oPC))
+	    SetCompositeAttackBonus(oPC, "CourtbladeEpicWF" + IntToString(nHand), 2, nHand);
+	if(GetHasFeat(FEAT_WEAPON_SPECIALIZATION_GREAT_SWORD, oPC))
+	    SetCompositeDamageBonusT(oItem, "CourtbladeWS", 2);
+	if(GetHasFeat(FEAT_EPIC_WEAPON_SPECIALIZATION_GREATSWORD, oPC))
+	    SetCompositeDamageBonusT(oItem, "CourtbladeEpicWS", 4);
+	if(GetHasFeat(FEAT_IMPROVED_CRITICAL_GREAT_SWORD, oPC))
+	    IPSafeAddItemProperty(oItem, ItemPropertyKeen(), 99999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+}
+
+void DoElfbladeUnequip(object oPC, object oItem, int nHand)
+{
+	if(GetBaseItemType(oItem) == BASE_ITEM_ELF_LIGHTBLADE)
+	{
+	    if(DEBUG) DoDebug("Clearing Lightblade variables.");
+	    SetCompositeAttackBonus(oPC, "LightbladeWF" + IntToString(nHand), 0, nHand);
+	    SetCompositeAttackBonus(oPC, "LightbladeEpicWF" + IntToString(nHand), 0, nHand);
+	    SetCompositeDamageBonusT(oItem, "LightbladeWS", 0);
+	    SetCompositeDamageBonusT(oItem, "LightbladeEpicWS", 0);
+	}
+	if(GetBaseItemType(oItem) == BASE_ITEM_ELF_THINBLADE)
+	{
+	    SetCompositeAttackBonus(oPC, "ThinbladeWF" + IntToString(nHand), 0, nHand);
+	    SetCompositeAttackBonus(oPC, "ThinbladeEpicWF" + IntToString(nHand), 0, nHand);
+	    SetCompositeDamageBonusT(oItem, "ThinbladeWS", 0);
+	    SetCompositeDamageBonusT(oItem, "ThinbladeEpicWS", 0);
+	}
+	if(GetBaseItemType(oItem) == BASE_ITEM_ELF_COURTBLADE)
+	{
+	    SetCompositeAttackBonus(oPC, "CourtbladeWF" + IntToString(nHand), 0, nHand);
+	    SetCompositeAttackBonus(oPC, "CourtbladeEpicWF" + IntToString(nHand), 0, nHand);
+	    SetCompositeDamageBonusT(oItem, "CourtbladeWS", 0);
+	    SetCompositeDamageBonusT(oItem, "CourtbladeEpicWS", 0);
+	}
+	RemoveSpecificProperty(oItem, ITEM_PROPERTY_KEEN, -1, -1, 1, "", -1, DURATION_TYPE_TEMPORARY);
+}
+
 void main()
 {
     int nEvent = GetRunningEvent();
@@ -78,13 +153,21 @@ void main()
                 if(GetWeaponSize(oItem) == nSize + 1 || (GetWeaponSize(oItem) == nRealSize + 1 && GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC) == OBJECT_INVALID))
                 {
                     if(DEBUG) DoDebug("Applying THF damage bonus");
-                    SetCompositeDamageBonusT(oItem, "THFBonus", nTHFDmgBonus, IP_CONST_DAMAGETYPE_PHYSICAL);
+                    SetCompositeDamageBonusT(oItem, "THFBonus", nTHFDmgBonus);
                 }
                     
                 //if a 2-hander, then unequip shield/offhand weapon
                 if(GetWeaponSize(oItem) == 1 + nSize)
         	    // Force unequip
                     AssignCommand(oPC, ActionUnequipItem(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC)));
+                  
+                //Handle feat bonuses for Lightblade, thinblade, and courtblade
+                if(GetBaseItemType(oItem) == BASE_ITEM_ELF_LIGHTBLADE)
+                    DoEquipLightblade(oPC, oItem, ATTACK_BONUS_ONHAND);
+                if(GetBaseItemType(oItem) == BASE_ITEM_ELF_THINBLADE)
+                    DoEquipThinblade(oPC, oItem, ATTACK_BONUS_ONHAND);
+                if(GetBaseItemType(oItem) == BASE_ITEM_ELF_COURTBLADE)
+                    DoEquipCourtblade(oPC, oItem, ATTACK_BONUS_ONHAND);
         }
                 
         if(oItem == GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC) && !GetIsShield(oItem))
@@ -105,6 +188,14 @@ void main()
                 if(GetWeaponSize(oItem) == nRealSize)
         	    // Assign penalty
                     SetCompositeAttackBonus(oPC, "OTWFPenalty", -2);
+                    
+                //Handle feat bonuses for Lightblade, thinblade, and courtblade
+                if(GetBaseItemType(oItem) == BASE_ITEM_ELF_LIGHTBLADE)
+                    DoEquipLightblade(oPC, oItem, ATTACK_BONUS_OFFHAND);
+                if(GetBaseItemType(oItem) == BASE_ITEM_ELF_THINBLADE)
+                    DoEquipThinblade(oPC, oItem, ATTACK_BONUS_OFFHAND);
+                if(GetBaseItemType(oItem) == BASE_ITEM_ELF_COURTBLADE)
+                    DoEquipCourtblade(oPC, oItem, ATTACK_BONUS_OFFHAND);
         }
     }
     
@@ -131,7 +222,11 @@ void main()
                 SetCompositeAttackBonus(oPC, "ElfFinesseRH", 0, ATTACK_BONUS_ONHAND);
         }
             
-        SetCompositeDamageBonusT(oItem, "THFBonus", 0, IP_CONST_DAMAGETYPE_PHYSICAL);
+        SetCompositeDamageBonusT(oItem, "THFBonus", 0);
+        
+        DoElfbladeUnequip(oPC, oItem, ATTACK_BONUS_OFFHAND);
+        if(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC) == oItem)
+                DoElfbladeUnequip(oPC, oItem, ATTACK_BONUS_ONHAND);
 
     }
 }

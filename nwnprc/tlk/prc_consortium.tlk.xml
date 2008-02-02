@@ -18437,6 +18437,7 @@ Note: The Will save prevents an attended or magical object from being sequestere
 There is no save to see the sequestered creature or object or to detect it with a divination spell.
 
 Material Component: A basilisk eyelash, gum arabic, and a dram of whitewash.</entry>
+  <entry id="49789" lang="en" sex="m">Song of Arcane Power</entry>
   <entry id="49790" lang="en" sex="m">Adaptive Style</entry>
   <entry id="49791" lang="en" sex="m">Type of Feat: Blade Magic Feat
 Prerequisites: Crusader, swordsage, or warblade level 1
@@ -20125,6 +20126,8 @@ This weapon is finessable, and counts as a rapier or a longsword in regards to W
   <entry id="50498" lang="en" sex="m">This large sword seems impossibly light and thin, tapering to a needlelike point.  ONe edge of the blkade is sharpened along its entire length, and the opposite side is only sharpened for the final quarter, near the tip.  It has a long grip, a heavy counterweight, and a basket hilt, and is equally suited for quick thrusting or slicing attacks.
   
 This weapon is finessable, and counts as a greatsword in regards to Weapon Focus, Weapon Specialization, their epic counterparts, and Improved Critical.</entry>
+  <entry id="50499" lang="en" sex="m">Song of Timelessness</entry>
+  <entry id="50500" lang="en" sex="m">Song of Cosmic Fire</entry>
   <entry id="50501" lang="en" sex="m">***50,501 -&gt; 51,000 reserved for domains and spells***</entry>
   <entry id="50502" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Metal domain.
@@ -21014,6 +21017,13 @@ Level
 28: Bonus Feat
 29:  -
 30: Superior Defense +10</entry>
+  <entry id="51185" lang="en" sex="m">A Sublime Chord of 2nd level or higher with 12 or more ranks in the Perform skill learns how to use her Bardic Music to assist her spellcasting. As a move action, she can prepare to cast a spell by giving voice to the song of power. The next spell she casts gains a bonus to it's caster level based on the result of the Sublime Chord's Perform Check. The spell to be enhanced by the arcane song of power must be cast by the end of the Sublime Chord's next turn, or else the song fades with no effect (other than consuming a Bardic Music use).
+
+Perform Check result         Caster Level increase
+9 or lower                                               +0
+10 to 19                                                  +1
+20 to 29                                                  +2
+30 or higher                                           +3</entry>
   <entry id="51186" lang="en" sex="m">Normally, active metapsionics are applied to an eligible power regardless of whether this would bring the PP cost over the manifester level cap.
 At your option, application of activated metapsionics other than quicken will be skipped if applying that metapsionic power would raise the PP cost over manifester level.
 Current setting:</entry>
@@ -24039,6 +24049,8 @@ Cost:
 +14000 Enhancement
 +80gp
 </entry>
+  <entry id="51808" lang="en" sex="m">A Sublime Chord of 6th level or higher with 16 or more ranks in the Perform skill knows the Song of Timelessness. As a standard action she can envelop a single creature within 60 feet in a field of timelessness, provided she has line of effect to the target. The subject is entitled to a Will save (DC10 + Sublime Chord level + Cha modifier) to negate the effect.
+If the subject fails it's save, it is frozen in a shimmering aura of timelessness and can take no actions. However, no force can affect it - weapons can not reach it, spells that target it automatically fail, and if the ground it is standing on is somehow taken away, it would not even begin to fall. A Sublime Chord can keep it's target frozen in time for as long as she maintains the power by continuing to perfom, up to a maximum of 1 minute per level. When she stops performing, the subject immediately returns to normal. As far as the creature is concerned, no time seems to have passed.</entry>
   <entry id="51809" lang="en" sex="m">Base Item: Cloak
 
 Description: 
@@ -24551,6 +24563,7 @@ Cost:
 
 +12000gp
 </entry>
+  <entry id="51842" lang="en" sex="m">A 10th-level Sublime Chord with 20 or more ranks in the Perform skill learns the Song of Cosmic Fire. Using this ability costs a Sublime Chord two of her daily uses of Bardic Music. The Song of Cosmic Fire creates a 20-foot-radius spread of fire anywhere within 100 feet of the Sublime Chord (provided she has line of effect to the fire's point of origin). Creatures in the area take damage equal to the Sublime Chord's Perform check result. All affected creatures are entitled to a Reflex save (DC10 + Sublime Chord level + Cha modifier) for half damage.</entry>
   <entry id="51843" lang="en" sex="m">Base Item: Amulet
 
 Description: 
@@ -26770,6 +26783,62 @@ Use: Automatic.</entry>
   <entry id="52231" lang="en" sex="m">WhiteRavenHammer</entry>
   <entry id="52233" lang="en" sex="m">WhiteRavenStrike</entry>
   <entry id="52235" lang="en" sex="m">WhiteRavenTactics</entry>
+  <entry id="52236" lang="en" sex="m">Sublime Chord</entry>
+  <entry id="52237" lang="en" sex="m">Sublime Chords</entry>
+  <entry id="52238" lang="en" sex="m">sublime chord</entry>
+  <entry id="52239" lang="en" sex="m">(PRESTIGE CLASS)
+Music is not just a pleasant sound; it is also the expression of mathematical relationships fraught with significance. A member of the Sublime Chord prestige class sees music, even the powerful music of a skilled bard, as nothing more than a stepping-stone to true universal insight into the legandary song of creation heard at the dawn of time. Music and magic are actually one and the same, and an astute student who unravels the riddles of metre and pitch simultaneously reveals hidden secrets of great power.
+
+- Hit die: d6
+- Skill points: 4 + Int Modifier
+
+REQUIREMENTS:
+
+Spellcasting: Able to cast 3rd level Arcane spells
+Feats: Bardic Music
+Skills: Lore 13, Listen 13, Perform 10, Concentration 6, Spellcraft 6
+
+ABILITIES:
+
+Level
+1:   Bardic Lore, Bardic Music
+2:   Song of arcane power
+6:   Song of timelessness
+10: Song of cosmic fire
+
+SPELLCASTING:
+
+To cast a spell, a Sublime Chord must have a Charisma score of at least 10 + the spell's level. The DC of a Sublime Chord's spell is 10 + spell level + the Sublime Chord's Charisma modifier. The caster level of a Sublime Chord is it's class level + it's level in it's spellcasting base class. A Sublime Chord does not suffer arcane spell failure while wearing light armor.
+
+Spells known:
+A Sublime Chord has the ability to cast a small number of arcane spells, all of 4th level or higher.
+
+Level   4th   5th   6th   7th   8th   9th
+1:           3      1       -        -       -        -
+2:           4      2       -        -       -        -
+3:           4      2       1       -       -        -
+4:           4      3       2       -       -        -
+5:           4      3       2       1      -        -
+6:           4      4       3       2      -        -
+7:           4      4       3       2      1       -
+8:           4      4       4       3      2       -
+9:           4      4       4       3      2       1
+10:         4      4       4       4      3       2
+
+Spells per day:
+
+Level   4th   5th   6th   7th   8th   9th
+1:           2      1       -        -       -        -
+2:           2      2       -        -       -        -
+3:           3      2       1       -       -        -
+4:           3      3       2       -       -        -
+5:           3      3       2       1      -        -
+6:           4      3       3       2      -        -
+7:           4      4       3       2      1       -
+8:           4      4       3       3      2       -
+9:           4      4       4       3      2       1
+10:         5      4       4       3      3       2
+</entry>
   <entry id="52240" lang="en" sex="m">Acid</entry>
   <entry id="52241" lang="en" sex="m">Cold</entry>
   <entry id="52242" lang="en" sex="m">Electricity</entry>

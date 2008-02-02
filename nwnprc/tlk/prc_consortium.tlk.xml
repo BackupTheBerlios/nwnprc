@@ -20113,9 +20113,18 @@ Weapon Size: Medium
 Feats Required: Exotic</entry>
   <entry id="50495" lang="en" sex="m">Base Damage: 1d10
 Base Critical Threat: 18-20/x2 
-Base Damage Type: Slashing
+Base Damage Type: Slashing and Piercing
 Weapon Size: Large
 Feats Required: Exotic</entry>
+  <entry id="50496" lang="en" sex="m">These rapierlike exotic weapons are the size of short swords but weight as much as a dagger.  Dextrous elven rogues and fighters favor it for its ability to slip into cracks in armor.  Some elven nobles carry one as a sign of status, even if they are not proficient in its use.
+  
+This weapon is finessable, and counts as a rapier or a shortsword in regards to Weapon Focus, Weapon Specialization, their epic counterparts, and Improved Critical.</entry>
+  <entry id="50497" lang="en" sex="m">This exotic rapierlike weapon is the size of a longsword, but much lighter.  Like the lightblade, it is favored by dextrous elven rogues and fighters.
+  
+This weapon is finessable, and counts as a rapier or a longsword in regards to Weapon Focus, Weapon Specialization, their epic counterparts, and Improved Critical.</entry>
+  <entry id="50498" lang="en" sex="m">This large sword seems impossibly light and thin, tapering to a needlelike point.  ONe edge of the blkade is sharpened along its entire length, and the opposite side is only sharpened for the final quarter, near the tip.  It has a long grip, a heavy counterweight, and a basket hilt, and is equally suited for quick thrusting or slicing attacks.
+  
+This weapon is finessable, and counts as a greatsword in regards to Weapon Focus, Weapon Specialization, their epic counterparts, and Improved Critical.</entry>
   <entry id="50501" lang="en" sex="m">***50,501 -&gt; 51,000 reserved for domains and spells***</entry>
   <entry id="50502" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Metal domain.

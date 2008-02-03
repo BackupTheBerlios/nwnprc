@@ -14,6 +14,8 @@
 #include "inc_epicspells"
 #include "prc_inc_scry"
 #include "prc_inc_dragsham"
+#include "prc_inc_wpnrest"
+#include "inc_dynconv"
 
 void PrcFeats(object oPC)
 {
@@ -139,6 +141,16 @@ void RestFinished(object oPC)
         DeleteLocalInt(OBJECT_SELF, "ChillingFogLock");
     if(array_exists(OBJECT_SELF, "BreathProtected")) //Endure Exposure wearing off
         array_delete(OBJECT_SELF, "BreathProtected");
+        
+    if(GetHasFeat(FEAT_WEAPON_FOCUS_APTITUDE, oPC) || GetHasFeat(FEAT_IMPROVED_CRITICAL_APTITUDE, oPC))
+        StartDynamicConversation("tob_aptitudeconv", oPC, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, oPC);
+        
+    //reapply weapon feat simulations
+    object oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
+    DoWeaponEquip(oPC, oWeapon, ATTACK_BONUS_ONHAND);  
+    oWeapon = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
+    if(!GetIsShield(oWeapon))
+        DoWeaponEquip(oPC, oWeapon, ATTACK_BONUS_OFFHAND);  
 
     //DelayCommand(1.0,PrcFeats(oPC));
     PrcFeats(oPC);

@@ -18654,6 +18654,15 @@ Use: Selected</entry>
 Prerequisite: Pyrokineticist level 10
 Specifics: At 10th level, a pyrokineticist gains the ability to create a massive burst of raging flames around herself, burning everything in the area. Once per day, as a standard action, she can use this ability to deal 15d6 points of fire damage in a 30-foot-radius burst emanating from herself. Any creature or object caught in the burst can make a Reflex saving throw (DC 15 + pyro?s Cha modifier) for half damage. Anyone failing the Reflex save against the conflagration must also make a Fortitude saving throw (same DC) or die due to extreme shock from the intense heat.
 Use: Selected</entry>
+  <entry id="49864" lang="en" sex="m">Aptitude Weapon Focus</entry>
+  <entry id="49865" lang="en" sex="m">Epic Aptitude Weapon Focus</entry>
+  <entry id="49866" lang="en" sex="m">Aptitude Weapon Specialization</entry>
+  <entry id="49867" lang="en" sex="m">Epic Aptitude Weapon Specialization</entry>
+  <entry id="49868" lang="en" sex="m">Aptitude Improved Critical</entry>
+  <entry id="49869" lang="en" sex="m">Aptitude Sanctify Martial Strike</entry>
+  <entry id="49870" lang="en" sex="m">Aptitude Vile Martial Strike</entry>
+  <entry id="49871" lang="en" sex="m">Select a weapon to focus your feats on:</entry>
+  <entry id="49872" lang="en" sex="m">Your Aptitude feats have been set.  You can choose a weapon type again when you next rest.\n\nNOTE: You may need to re-equip your weapons for the feats to take effect properly.</entry>
   <entry id="49999" lang="en" sex="m">**** 50,000 - 50,500 reserved for Race Pack Feats ****</entry>
   <entry id="50000" lang="en" sex="m">Light Sensitivity</entry>
   <entry id="50001" lang="en" sex="m">Type of Feat: Racial
@@ -20119,13 +20128,13 @@ Weapon Size: Large
 Feats Required: Exotic</entry>
   <entry id="50496" lang="en" sex="m">These rapierlike exotic weapons are the size of short swords but weight as much as a dagger.  Dextrous elven rogues and fighters favor it for its ability to slip into cracks in armor.  Some elven nobles carry one as a sign of status, even if they are not proficient in its use.
   
-This weapon is finessable, and counts as a rapier or a shortsword in regards to Weapon Focus, Weapon Specialization, their epic counterparts, and Improved Critical.</entry>
+This weapon is finessable, and counts as a rapier or a shortsword in regards to Weapon Focus, Weapon Specialization, their epic counterparts, Sanctify and Vile Martial Strikes, and Improved Critical.</entry>
   <entry id="50497" lang="en" sex="m">This exotic rapierlike weapon is the size of a longsword, but much lighter.  Like the lightblade, it is favored by dextrous elven rogues and fighters.
   
-This weapon is finessable, and counts as a rapier or a longsword in regards to Weapon Focus, Weapon Specialization, their epic counterparts, and Improved Critical.</entry>
-  <entry id="50498" lang="en" sex="m">This large sword seems impossibly light and thin, tapering to a needlelike point.  ONe edge of the blkade is sharpened along its entire length, and the opposite side is only sharpened for the final quarter, near the tip.  It has a long grip, a heavy counterweight, and a basket hilt, and is equally suited for quick thrusting or slicing attacks.
+This weapon is finessable, and counts as a rapier or a longsword in regards to Weapon Focus, Weapon Specialization, their epic counterparts, Sanctify and Vile Martial Strikes, and Improved Critical.</entry>
+  <entry id="50498" lang="en" sex="m">This large sword seems impossibly light and thin, tapering to a needlelike point.  One edge of the blade is sharpened along its entire length, and the opposite side is only sharpened for the final quarter, near the tip.  It has a long grip, a heavy counterweight, and a basket hilt, and is equally suited for quick thrusting or slicing attacks.
   
-This weapon is finessable, and counts as a greatsword in regards to Weapon Focus, Weapon Specialization, their epic counterparts, and Improved Critical.</entry>
+This weapon is finessable, and counts as a greatsword in regards to Weapon Focus, Weapon Specialization, their epic counterparts, Sanctify and Vile Martial Strikes, and Improved Critical.</entry>
   <entry id="50499" lang="en" sex="m">Song of Timelessness</entry>
   <entry id="50500" lang="en" sex="m">Song of Cosmic Fire</entry>
   <entry id="50501" lang="en" sex="m">***50,501 -&gt; 51,000 reserved for domains and spells***</entry>

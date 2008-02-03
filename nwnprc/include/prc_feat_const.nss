@@ -2587,6 +2587,13 @@ const int FEAT_AVENGING_STRIKE                          = 4297;
 const int FEAT_RAPID_ASSAULT                            = 4299;
 const int FEAT_SUPERIOR_UNARMED_STRIKE                  = 4386;
 const int FEAT_SNAP_KICK                                = 4398;
+const int FEAT_WEAPON_FOCUS_APTITUDE                    = 2123;
+const int FEAT_EPIC_WEAPON_FOCUS_APTITUDE               = 2124;
+const int FEAT_WEAPON_SPECIALIZATION_APTITUDE           = 2125;
+const int FEAT_EPIC_WEAPON_SPECIALIZATION_APTITUDE      = 2126;
+const int FEAT_IMPROVED_CRITICAL_APTITUDE               = 2127;
+const int FEAT_SANCTIFY_MARTIAL_APTITUDE                = 2128;
+const int FEAT_VILE_MARTIAL_APTITUDE                    = 2129;
 
 const int FEAT_SS_DF_IS_DW                  = 2201;
 const int FEAT_SS_DF_IS_DM                  = 2202;

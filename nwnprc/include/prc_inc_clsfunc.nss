@@ -675,8 +675,16 @@ int Vile_Feat(int iTypeWeap)
                 case BASE_ITEM_TWOBLADEDSWORD: return GetHasFeat(FEAT_VILE_MARTIAL_TWOBLADED);
                 case BASE_ITEM_WARHAMMER: return GetHasFeat(FEAT_VILE_MARTIAL_WARHAMMER);
                 case BASE_ITEM_WHIP: return GetHasFeat(FEAT_VILE_MARTIAL_SLING);
+                
+                //new items
+                case BASE_ITEM_ELF_LIGHTBLADE: return (GetHasFeat(FEAT_VILE_MARTIAL_SHORTSWORD) || GetHasFeat(FEAT_VILE_MARTIAL_RAPIER));
+                case BASE_ITEM_ELF_THINBLADE: return (GetHasFeat(FEAT_VILE_MARTIAL_LONGSWORD) || GetHasFeat(FEAT_VILE_MARTIAL_RAPIER));
+                case BASE_ITEM_ELF_COURTBLADE: return GetHasFeat(FEAT_VILE_MARTIAL_GREATSWORD);
             }
-    return 0;
+    
+    
+    return (GetHasFeat(FEAT_VILE_MARTIAL_APTITUDE) && GetLocalInt(OBJECT_SELF, "AptitudeWpnType") == iTypeWeap);
+            
 }
 
 ////////////////End Vile Feat//////////////////
@@ -726,8 +734,14 @@ int Sanctify_Feat(int iTypeWeap)
                 case BASE_ITEM_TWOBLADEDSWORD: return GetHasFeat(FEAT_SANCTIFY_MARTIAL_TWOBLADED);
                 case BASE_ITEM_WARHAMMER: return GetHasFeat(FEAT_SANCTIFY_MARTIAL_WARHAMMER);
                 case BASE_ITEM_WHIP: return GetHasFeat(FEAT_SANCTIFY_MARTIAL_SLING);
+                
+                //new items
+                case BASE_ITEM_ELF_LIGHTBLADE: return (GetHasFeat(FEAT_SANCTIFY_MARTIAL_SHORTSWORD) || GetHasFeat(FEAT_SANCTIFY_MARTIAL_RAPIER));
+                case BASE_ITEM_ELF_THINBLADE: return (GetHasFeat(FEAT_SANCTIFY_MARTIAL_LONGSWORD) || GetHasFeat(FEAT_SANCTIFY_MARTIAL_RAPIER));
+                case BASE_ITEM_ELF_COURTBLADE: return GetHasFeat(FEAT_SANCTIFY_MARTIAL_GREATSWORD);
             }
-    return 0;
+            
+    return (GetHasFeat(FEAT_SANCTIFY_MARTIAL_APTITUDE) && GetLocalInt(OBJECT_SELF, "AptitudeWpnType") == iTypeWeap);
 }
 
 int DamageConv(int iMonsDmg)

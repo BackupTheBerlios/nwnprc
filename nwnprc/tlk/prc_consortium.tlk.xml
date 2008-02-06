@@ -28948,7 +28948,59 @@ Level  Maneuvers Known   Maneuvers Readied   Stances Known
   <entry id="52494" lang="en" sex="m">Warblade</entry>
   <entry id="52495" lang="en" sex="m">Warblades</entry>
   <entry id="52496" lang="en" sex="m">warblade</entry>
-  <entry id="52497" lang="en" sex="m">Warblade Description</entry>
+  <entry id="52497" lang="en" sex="m">(BASE CLASS)
+  A master of martial maneuvers, the swordsage is a physical adept - a blade wizard whose knowledge of the Sublime Way lets him unlock potent abilities, many of which are overtly supernatural or magical in nature. Depending on which disciplines he chooses to study, a swordsage might be capable of walking through walls, leaping dozens of feet into the air, shattering boulders with a single touch, or even mastering the elements of fire or shadow. Whatever his specific training, a swordsage blurs the line between martial prowess and magical skill.
+  
+  - Hit Die: d12
+  - Proficiencies: A Warblade gains proficiencies.with Martial and Simple Weapons, Shields, Medium and Light armour.
+  - Skill Points: 4 + Int Modifier
+  
+  ABILITIES:
+  
+  Level
+  1: Battle Clarity - Int to Reflex saves
+     Weapon Aptitude - You may alter your weapon focus and other weapon specific feats to a weapon of your choice
+  2: Uncanny Dodge
+  3: Battle Ardor - Int to Critical Confirmation
+  4: 
+  5: Bonus Feat
+  6: Improved Uncanny Dodge
+  7: Battle Cunning - Int to Damage against flatfooted foes
+  8: 
+  9: Bonus Feat
+  10: 
+  11: Battle Skill - Int to checks to Trip, Disarm, Overrun, or Bullrush 
+  12: 
+  13: Bonus Feat
+  14: 
+  15: Battle Masty - Int to Attack
+  16: 
+  17: Bonus Feat
+  18: 
+  19:
+  20: Stance Mastery - May use two stances at the same time
+  
+  Level  Maneuvers Known   Maneuvers Readied   Stances Known
+  1      3                 3                   1
+  2      4                 3                   1
+  3      5                 3                   1
+  4      5                 4                   2
+  5      6                 4                   2
+  6      6                 4                   2
+  7      7                 4                   2
+  8      7                 4                   2
+  9      8                 4                   2
+  10     8                 5                   3
+  11     9                 5                   3
+  12     9                 5                   3
+  13     10                5                   3
+  14     10                5                   3
+  15     11                6                   3
+  16     11                6                   4
+  17     12                6                   4
+  18     12                6                   4
+  19     13                6                   4
+  20     13                7                   4</entry>
   <entry id="52498" lang="en" sex="m">Desert Wind</entry>
   <entry id="52499" lang="en" sex="m">Devoted Spirit</entry>
   <entry id="52500" lang="en" sex="m">Diamond Mind</entry>
@@ -32976,8 +33028,37 @@ bonus on Intimidate checks and a +2 enhancement bonus to Strength.</entry>
   <entry id="54879" lang="en" sex="m">2 Bolts</entry>
   <entry id="54880" lang="en" sex="m">3 Bolts</entry>
   <entry id="54881" lang="en" sex="m">4 Bolts</entry>
-  <entry id="54882" lang="en" sex="m">5 Bolts
-</entry>
+  <entry id="54882" lang="en" sex="m">5 Bolts</entry>
+  <entry id="54883" lang="en" sex="m">Battle Clarity</entry>
+  <entry id="54884" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Warblade 1.
+Specifics: You gain a bonus on your Reflex saves equal to your Intelligence modifier.
+Use: Automatic</entry>
+  <entry id="54885" lang="en" sex="m">Battle Ardor</entry>
+  <entry id="54886" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Warblade 3.
+Specifics: You gain a bonus on your rolls to confirm maneuver critical hits equal to your Intelligence modifier.
+Use: Automatic</entry>
+  <entry id="54887" lang="en" sex="m">Battle Cunning</entry>
+  <entry id="54888" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Warblade 7.
+Specifics: You gain a damage bonus on your strikes made against flatfooted or flanked enemies equal to your Intelligence modifier.
+Use: Automatic</entry>
+  <entry id="54889" lang="en" sex="m">Battle Skill</entry>
+  <entry id="54890" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Warblade 11.
+Specifics: You gain a bonus on your opposed checks for Trip, Overrun, Bullrush, Feint, and Disarm equal to your Intelligence modifier.
+Use: Automatic</entry>
+  <entry id="54891" lang="en" sex="m">Battle Mastery</entry>
+  <entry id="54892" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Warblade 15.
+Specifics: You gain an attack bonus on your strikes equal to your Intelligence modifier.
+Use: Automatic</entry>
+  <entry id="54893" lang="en" sex="m">Stance Mastery</entry>
+  <entry id="54894" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Warblade 20.
+Specifics: You may use two stances at the same time.
+Use: Automatic</entry>  
   <entry id="54898" lang="en" sex="m">You have not drained levels in the last 24 hours, Soul Blast does not work.</entry>
   <entry id="54899" lang="en" sex="m">Target is immune to negative levels.</entry>
   <entry id="54900" lang="en" sex="m">Soul Eater</entry>

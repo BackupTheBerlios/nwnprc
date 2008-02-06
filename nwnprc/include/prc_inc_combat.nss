@@ -3836,13 +3836,13 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iOffha
 	}
         
         int iDiceRoll = d20();
-/*        if (DEBUG) DoDebug("Starting DSPerfectOrder");
+        if (DEBUG) DoDebug("Starting DSPerfectOrder");
         // All rolls = 11 for this guy
         if (GetLocalInt(oAttacker, "DSPerfectOrder") && GetHasSpellEffect(MOVE_DS_PERFECT_ORDER, oAttacker)) 
         	iDiceRoll = 11;
         else 	// Cleanup on aisle 5
         	DeleteLocalInt(oAttacker, "DSPerfectOrder");
-        if (DEBUG) DoDebug("Ending DSPerfectOrder");	*/
+        if (DEBUG) DoDebug("Ending DSPerfectOrder");	
 	//string sDebugFeedback = "";
 	//if (DEBUG) DoDebug("GetAttackRoll: Line #1");
 	//int bDebug = GetPRCSwitch(PRC_COMBAT_DEBUG);
@@ -3852,6 +3852,9 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iOffha
 	//if (bDebug) sDebugFeedback += " + AB (" + IntToString(iAttackBonus) + ")";
 	//if (DEBUG) DoDebug("GetAttackRoll: Line #4");
 	iAttackBonus += iMod;
+	// Battle Mastery ability
+	if (GetLevelByClass(CLASS_TYPE_WARBLADE, oAttacker) >= 15)  iAttackBonus += GetAbilityModifier(ABILITY_INTELLIGENCE, oAttacker);
+        
 	//if (DEBUG) DoDebug("GetAttackRoll: Line #5");
 	//if(bDebug) sDebugFeedback += " - APR penalty ("  + IntToString(iMod * -1) + ")";
 	if (DEBUG) DoDebug("Starting GetAttackModVersusDefender");	
@@ -3954,6 +3957,7 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iOffha
                                 iCritThreatRoll = d20();
                                 if (DEBUG) DoDebug("Starting BoneCrusher");
                                 if (GetLocalInt(oDefender, "BoneCrusher")) iCritThreatRoll += 10;
+                                if (GetLevelByClass(CLASS_TYPE_WARBLADE, oAttacker) >= 3) iCritThreatRoll += GetAbilityModifier(ABILITY_INTELLIGENCE, oAttacker);
                                 if (DEBUG) DoDebug("Ending BoneCrusher");
                         }
 			
@@ -5741,6 +5745,11 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
 			{
 				iWeaponDamage += GetAbilityModifier(ABILITY_WISDOM, oAttacker);
 			}
+			// Warblade Battle Cunning: Int To Damage on Flatfoots.
+			if (GetLevelByClass(CLASS_TYPE_WARBLADE, oAttacker) >= 7 && (GetIsFlanked(oDefender, oAttacker) || GetIsDeniedDexBonusToAC(oDefender, oAttacker))) 
+			{
+				iWeaponDamage += GetAbilityModifier(ABILITY_INTELLIGENCE, oAttacker);
+			}			
 			// This is for the Lightning Throw Maneuver.
 			if (GetLocalInt(oAttacker, "LightningThrowSave")) iWeaponDamage /= 2;
 			if (DEBUG) DoDebug("Ending LightningThrowSave");

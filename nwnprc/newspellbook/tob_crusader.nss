@@ -29,7 +29,7 @@ void IndomitableSoul(object oPC)
 void main()
 {
     int nEvent = GetRunningEvent();
-    if(DEBUG) DoDebug("prc_crusader running, event: " + IntToString(nEvent));
+    if(DEBUG) DoDebug("tob_crusader running, event: " + IntToString(nEvent));
 
     // Get the PC. This is event-dependent
     object oPC;
@@ -57,17 +57,17 @@ void main()
     	// Saving throw bonus, charisma, does not stack with paladin
     	if (nClass >= 2 && GetLevelByClass(CLASS_TYPE_PALADIN, oPC) == 0)IndomitableSoul(oPC);
         // Hook in the events, needed from level 1 for Steely Resolve
-        if(DEBUG) DoDebug("prc_crusader: Adding eventhooks");
-        AddEventScript(oPC, EVENT_ONPLAYEREQUIPITEM,   "prc_crusader", TRUE, FALSE);
-        AddEventScript(oPC, EVENT_ONPLAYERUNEQUIPITEM, "prc_crusader", TRUE, FALSE);
-        AddEventScript(oPC, EVENT_ONHEARTBEAT,         "prc_crusader", TRUE, FALSE);
+        if(DEBUG) DoDebug("tob_crusader: Adding eventhooks");
+        AddEventScript(oPC, EVENT_ONPLAYEREQUIPITEM,   "tob_crusader", TRUE, FALSE);
+        AddEventScript(oPC, EVENT_ONPLAYERUNEQUIPITEM, "tob_crusader", TRUE, FALSE);
+        AddEventScript(oPC, EVENT_ONHEARTBEAT,         "tob_crusader", TRUE, FALSE);
     }
     // Damage reduction from Steely Resolve
     else if(nEvent == EVENT_ITEM_ONHIT)
     {
         oItem          = GetSpellCastItem();
         object oTarget = PRCGetSpellTargetObject();
-        if(DEBUG) DoDebug("prc_crusader: OnHit:\n"
+        if(DEBUG) DoDebug("tob_crusader: OnHit:\n"
                         + "oPC = " + DebugObject2Str(oPC) + "\n"
                         + "oItem = " + DebugObject2Str(oItem) + "\n"
                         + "oTarget = " + DebugObject2Str(oTarget) + "\n"
@@ -111,13 +111,13 @@ void main()
     {
         oPC   = GetItemLastEquippedBy();
         oItem = GetItemLastEquipped();
-        if(DEBUG) DoDebug("prc_crusader - OnEquip");
+        if(DEBUG) DoDebug("tob_crusader - OnEquip");
 
         // Only applies to armours
         if(GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
         {
             // Add eventhook to the item
-            AddEventScript(oItem, EVENT_ITEM_ONHIT, "prc_crusader", TRUE, FALSE);
+            AddEventScript(oItem, EVENT_ITEM_ONHIT, "tob_crusader", TRUE, FALSE);
 
             // Add the OnHitCastSpell: Unique needed to trigger the event
             IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 99999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
@@ -128,13 +128,13 @@ void main()
     {
         oPC   = GetItemLastUnequippedBy();
         oItem = GetItemLastUnequipped();
-        if(DEBUG) DoDebug("prc_crusader - OnUnEquip");
+        if(DEBUG) DoDebug("tob_crusader - OnUnEquip");
 
         // Only applies to armours
         if(GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
         {
             // Add eventhook to the item
-            RemoveEventScript(oItem, EVENT_ITEM_ONHIT, "prc_crusader", TRUE, FALSE);
+            RemoveEventScript(oItem, EVENT_ITEM_ONHIT, "tob_crusader", TRUE, FALSE);
 
             // Remove the temporary OnHitCastSpell: Unique
             RemoveSpecificProperty(oItem, ITEM_PROPERTY_ONHITCASTSPELL, IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 0, 1, "", 1, DURATION_TYPE_TEMPORARY);

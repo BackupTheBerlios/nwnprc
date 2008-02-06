@@ -1216,6 +1216,8 @@ int DoBullRush(object oPC, object oTarget, int nExtraBonus, int nGenerateAoO = T
         int nTargetStr = GetAbilityModifier(ABILITY_STRENGTH, oTarget);
         int nPCBonus = GetSizeModifier(oPC);
         int nTargetBonus = GetSizeModifier(oTarget);
+        if (GetLevelByClass(CLASS_TYPE_WARBLADE, oPC) >= 11)  nPCBonus += GetAbilityModifier(ABILITY_INTELLIGENCE, oPC);
+        if (GetLevelByClass(CLASS_TYPE_WARBLADE, oTarget) >= 11)  nTargetBonus += GetAbilityModifier(ABILITY_INTELLIGENCE, oTarget);
         effect eNone;
         // Get a +2 bonus for charging during a bullrush
         if (GetIsCharging(oPC)) nPCBonus += 2;
@@ -1283,6 +1285,8 @@ int DoTrip(object oPC, object oTarget, int nExtraBonus, int nGenerateAoO = TRUE,
         // Get mods for size
         int nPCBonus = GetSizeModifier(oPC);
         int nTargetBonus = GetSizeModifier(oTarget);
+        if (GetLevelByClass(CLASS_TYPE_WARBLADE, oPC) >= 11)  nPCBonus += GetAbilityModifier(ABILITY_INTELLIGENCE, oPC);
+        if (GetLevelByClass(CLASS_TYPE_WARBLADE, oTarget) >= 11)  nTargetBonus += GetAbilityModifier(ABILITY_INTELLIGENCE, oTarget);
         
         // Do the AoO for a trip attempt
         if (nGenerateAoO)
@@ -1616,6 +1620,8 @@ int DoOverrun(object oPC, object oTarget, int nGenerateAoO = TRUE, int nExtraBon
         // Get mods for size
         int nPCBonus = GetSizeModifier(oPC);
         int nTargetBonus = GetSizeModifier(oTarget);
+        if (GetLevelByClass(CLASS_TYPE_WARBLADE, oPC) >= 11)  nPCBonus += GetAbilityModifier(ABILITY_INTELLIGENCE, oPC);
+        if (GetLevelByClass(CLASS_TYPE_WARBLADE, oTarget) >= 11)  nTargetBonus += GetAbilityModifier(ABILITY_INTELLIGENCE, oTarget);        
 
         // Do the AoO for a trip attempt
         if (nGenerateAoO)

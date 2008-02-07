@@ -635,7 +635,7 @@ A Mage Killer will fraternise with all sorts of people to help them locate and g
 REQUIREMENTS:
 
 Spells: Able to cast 4th-level arcane spells.
-Feats: Great Fortitude, Lightning Reflexes, Combat Casting, Weapon Proficiency: Martial.
+Feats: Great Fortitude, Lightning Reflexes, Combat Casting, Any Martial Weapon Proficiency.
 Skills: Spellcraft (10 ranks).
 
 ABILITIES:
@@ -705,7 +705,7 @@ Feared by other mages for their ability to cast spells while in armor and treate
 REQUIREMENTS:
 
 Spells: Able to cast 2nd level spells.
-Feats: Weapon Proficiency: Simple, Weapon Proficiency: Martial, Armor Proficiency: Light, Armor Proficiency: Medium, Armor Proficiency: Heavy.
+Feats: Weapon Proficiency: All Simple and Martial Weapon Proficiencies, Armor Proficiency: Light, Armor Proficiency: Medium, Armor Proficiency: Heavy.
 Skills: Lore (6 ranks).
 Base attack bonus: +4.
 
@@ -994,7 +994,7 @@ Studying the martial and arcane arts to equal degree, the Eldritch Knight is a v
 
 REQUIREMENTS:
 
-Feats: Weapon Proficiency: Martial
+Feats: All Martial Weapon Proficiencies
 Arcane Spellcasting: Able to cast 3rd-level spells.
 
 ABILITIES:
@@ -1376,7 +1376,7 @@ REQUIREMENTS:
 
 Alignment: Lawful Evil, Neutral Evil or Lawful Neutral
 Skills: Spot 4 ranks, Intimidate 4 ranks, Lore 4 ranks
-Feats: Power Attack, Cleave, Martial Weapon Proficiency
+Feats: Power Attack, Cleave, Any Martial Weapon Proficiency
 Base Attack Bonus: +5
 
 ABILITIES:
@@ -1973,7 +1973,7 @@ The Society of the Sanctified Mind is a collection of elite clerics, fighters, m
 REQUIREMENTS:
 
 Alignment: Non-Evil.
-Feats: Martial Weapon Proficiency, Iron Will.
+Feats: All Martial Weapon Proficiencies, Iron Will.
 Skills: Lore 4 ranks.
 Base Attack Bonus: +4.
 Special: Must possess a power point reserve of at least 1 power point.
@@ -2090,7 +2090,7 @@ The ancient Suel Empire was known for the great and terrible power wielded by it
 REQUIREMENTS:
 
 Base Attack Bonus: +6.
-Feats: Weapon Proficiency (Martial), Combat Casting, Iron Will
+Feats: Any 4 Martial or Exotic Weapon Proficiencies, Combat Casting, Iron Will
 Skills: Concentration 4 ranks, Jump 4 ranks, Spellcraft 5 ranks, Tumble 4 ranks.
 
 ABILITIES:
@@ -2351,7 +2351,7 @@ The Cormyrean War Wizards are some of the most respected battlemages in all of F
 REQUIREMENTS:
 
 Alignment: No Chaotic, No Evil.
-Feats: Weapon Proficiency (Martial), Empower Spell, Maximize Spell.
+Feats: Any Martial Weapon Proficiency, Empower Spell, Maximize Spell.
 Skills: Spellcraft 10 ranks.
 Arcane Spellcasting: Able to cast 4th-level spells.
 
@@ -2589,7 +2589,7 @@ The Duelist is a nimble, intelligent fighter trained in making precise attacks w
 REQUIREMENTS:
 
 Base Attack Bonus: +6
-Feats: Dodge, Weapon Finesse, Mobility, Weapon Proficiency (Martial, Rogue or Elf).
+Feats: Dodge, Weapon Finesse, Mobility.
 Skills: Tumble 5 ranks. Perform 3 ranks.
 
 ABILITIES:
@@ -3919,7 +3919,7 @@ Across the world, bards are considered to be jacks-of-all-trades, but sometimes 
 
 REQUIREMENTS
 
-Feats: Curse Song, Skill Focus (Perform), Weapon Proficiency (Martial)
+Feats: Curse Song, Skill Focus (Perform), Any Martial Weapon Proficiency.
 Skills: Perform 10, Discipline 10
 
 CLASS SKILLS
@@ -4931,7 +4931,7 @@ A secret society of holy slayers devoted to the worship of Kossuth, the Order of
 REQUIREMENTS:
 Alignment: Any Non-Good.
 Skills: Hide 8 ranks, Lore 8 ranks, Move Silently 8 ranks.
-Feats: Exotic Weapon Proficiency, Iron Will,
+Feats: Exotic Weapon Proficiency(Kukri), Iron Will,
 Sneak Attack: 1d6.
 Divine Spellcasting: Must be able to cast level 2 spells.
 Special: Must worship Kossuth. (Clerics taking this class must two of Fire, Destruction and Renewal domains.)
@@ -5401,7 +5401,7 @@ The arcane duelist is a tricky, evasive opponent who relies on her foe's percept
 REQUIREMENTS
 Base Attack Bonus: +6
 Skills: Perform 5 ranks, Tumble 5 ranks.
-Feats: Weapon Proficiency Martial, Dodge, Mobility
+Feats: Martial Weapon Proficiency(Rapier or Shortsword), Dodge, Mobility
 Spellcasting: Level 1 Arcane spells.
 
 ABILITIES:
@@ -11294,7 +11294,7 @@ REQUIREMENTS:
 
 Alignment: Evil
 Divine Spellcasting: Able to cast 4th-level spells.
-Feats: Great Fortitude,  Weapon Proficiency: Martial.
+Feats: Great Fortitude,  Martial Weapon Proficiency(Halberd).
 Special: Must worship Talona. A cleric who takes this class must have the Destruction and Evil domains.
 
 ABILITIES:
@@ -16134,7 +16134,7 @@ RREQUIREMENTS:
 
 Race: Dwarf
 Alignment: Lawful Good
-Feats: Martial Weapon Proficiency, Power Attack
+Feats: Martial Weapon Proficiency(Dwarven Waraxe), Power Attack
 Skills: Craft (Armorsmithing) 5, Craft (Weaponsmithing) 5
 Domains: 2 of Dwarf, Good, Law, Strength, War
 BAB: +6
@@ -18511,7 +18511,7 @@ The Inspired are the lords of Riedra and the physical presence of the Dreaming D
 
 REQUIREMENTS:
 Base Attack Bonus: +4.
-Feats: Exotic or Martial Weapon Proficiency, any one psionic feat.
+Feats: ANy Exotic or Martial Weapon Proficiency, any one psionic feat.
 Skills: Lore 4 ranks.
 
 ABILITIES:
@@ -20956,7 +20956,7 @@ REQUIREMENTS:
 
 Race: Any elven or half-elven.
 Alignment: Any non-evil.
-Feats: Martial Weapon Proficiency, Heavy Armor Proficiency, Dodge, Expertise, Weapon Focus with either Rapier, Longsword or Greatsword.
+Feats: All Martial Weapon Proficiencies, Heavy Armor Proficiency, Dodge, Expertise, Weapon Focus with Longsword or Weapon Proficiency with Thinblade or Courtblade.
 Skills: Lore 2, Persuade 4.
 Base Attack Bonus: +7.
 Special: Must worship Corellon Larethian. (Clerics taking this class must have two of the following domains: Chaos, Good, Magic, Protection, War)
@@ -30856,7 +30856,7 @@ Epic Levels:
 28 Channel Spell 11 times per day.
 </entry>
   <entry id="53316" lang="en" sex="m">Type of Feat: Class Specific
-Prerequisite: Level 10 or higher in the Spellsword prestige class.
+Prerequisite: Level 10 or higher in the 3rd prestige class.
 Specifics: The Spellsword can channel more than one spells into his melee weapon.
 Using this ability requires the spellsword to cast the spells to his equipped melee
 weapon. The Channeled spells affect the next target that the spellsword successfully
@@ -36987,6 +36987,50 @@ Spell Resistance: No (harmless)
 
 The goddess Shar is called the Mistress of the Night, the Lady of Loss, and the Dark Goddess. She is shadow; dark and secret. It is with little surprise that a gift from her to the caster of this spell would encompass such things. Upon completion of this spell, you receive an immensely powerful whip, created by the hands of Shar herself. It holds powerful enchantments, and also blinds its targets. In addition, shadow settles upon the battlefield wherever this whip is used. When the duration ends, the whip is left as a reminder to you, though all of its enchantments are stripped from it. </entry>
   <entry id="56314" lang="en" sex="m">##START_OF_EPIC_SPELL_AND_ISC_RESERVE</entry>
+  <entry id="57000" lang="en" sex="m">##PnP Weapon Proficiencies##</entry>
+  <entry id="57001" lang="en" sex="m">Weapon Proficiencies</entry>
+  <entry id="57002" lang="en" sex="m">These feats represent the famiiarization of yourself with various weapons.  Where classes give training in several weapons at once, feats are used to grant training in specific weapons.</entry>
+  <entry id="57003" lang="en" sex="m">Type of feat: Proficiency
+
+This feat grants you proficiency in the named weapon.
+Use: Automatic.</entry>
+  <entry id="57004" lang="en" sex="m">Weapon Proficiency: Shortsword</entry>
+  <entry id="57005" lang="en" sex="m">Weapon Proficiency: Longsword</entry>
+  <entry id="57006" lang="en" sex="m">Weapon Proficiency: Battleaxe</entry>
+  <entry id="57007" lang="en" sex="m">Weapon Proficiency: Bastard Sword</entry>
+  <entry id="57008" lang="en" sex="m">Weapon Proficiency: Light Flail</entry>
+  <entry id="57009" lang="en" sex="m">Weapon Proficiency: Warhammer</entry>
+  <entry id="57010" lang="en" sex="m">Weapon Proficiency: Longbow</entry>
+  <entry id="57011" lang="en" sex="m">Weapon Proficiency: Light Mace</entry>
+  <entry id="57012" lang="en" sex="m">Weapon Proficiency: Halberd</entry>
+  <entry id="57013" lang="en" sex="m">Weapon Proficiency: Short Bow</entry>
+  <entry id="57014" lang="en" sex="m">Weapon Proficiency: Two-Bladed Sword</entry>
+  <entry id="57015" lang="en" sex="m">Weapon Proficiency: Greatsword</entry>
+  <entry id="57016" lang="en" sex="m">Weapon Proficiency: Greataxe</entry>
+  <entry id="57017" lang="en" sex="m">Weapon Proficiency: Dart</entry>
+  <entry id="57018" lang="en" sex="m">Weapon Proficiency: Dire Mace</entry>
+  <entry id="57019" lang="en" sex="m">Weapon Proficiency: Double Axe</entry>
+  <entry id="57020" lang="en" sex="m">Weapon Proficiency: Heavy Flail</entry>
+  <entry id="57021" lang="en" sex="m">Weapon Proficiency: Light Hammer</entry>
+  <entry id="57022" lang="en" sex="m">Weapon Proficiency: Handaxe</entry>
+  <entry id="57023" lang="en" sex="m">Weapon Proficiency: Kama</entry>
+  <entry id="57024" lang="en" sex="m">Weapon Proficiency: Katana</entry>
+  <entry id="57025" lang="en" sex="m">Weapon Proficiency: Kukri</entry>
+  <entry id="57026" lang="en" sex="m">Weapon Proficiency: Morningstar</entry>
+  <entry id="57027" lang="en" sex="m">Weapon Proficiency: Rapier</entry>
+  <entry id="57028" lang="en" sex="m">Weapon Proficiency: Scimitar</entry>
+  <entry id="57029" lang="en" sex="m">Weapon Proficiency: Scythe</entry>
+  <entry id="57030" lang="en" sex="m">Weapon Proficiency: Shortspear</entry>
+  <entry id="57031" lang="en" sex="m">Weapon Proficiency: Shuriken</entry>
+  <entry id="57032" lang="en" sex="m">Weapon Proficiency: Sickle</entry>
+  <entry id="57033" lang="en" sex="m">Weapon Proficiency: Sling</entry>
+  <entry id="57034" lang="en" sex="m">Weapon Proficiency: Throwing Axe</entry>
+  <entry id="57035" lang="en" sex="m">Weapon Proficiency: Trident</entry>
+  <entry id="57036" lang="en" sex="m">Weapon Proficiency: Dwarven Waraxe</entry>
+  <entry id="57037" lang="en" sex="m">Weapon Proficiency: Whip</entry>
+  <entry id="57038" lang="en" sex="m">Weapon Proficiency: Elven Lightblade</entry>
+  <entry id="57039" lang="en" sex="m">Weapon Proficiency: Elven Thinblade</entry>
+  <entry id="57040" lang="en" sex="m">Weapon Proficiency: Elven Courtblade</entry>
   <entry id="60000" lang="en" sex="m">##EPIC_SPELL_AND_ISC_RESERVE</entry>
   <entry id="60500" lang="en" sex="m">##EPIC_SPELL_AND_ISC_RESERVE</entry>
   <entry id="61000" lang="en" sex="m">##EPIC_SPELL_AND_ISC_RESERVE</entry>

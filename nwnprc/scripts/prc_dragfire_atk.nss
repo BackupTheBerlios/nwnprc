@@ -17,6 +17,7 @@
 void DoDragonfireSneak(object oPC, object oTarget, object oWeapon)
 {
 	if(DEBUG) DoDebug("Performing Strike");
+	effect eStrike;
 	int nType = GetDragonfireDamageType(oPC);
 	int nDice = GetTotalSneakAttackDice(oPC);
 	int nSneakDamage = GetSneakAttackDamage(nDice);
@@ -32,7 +33,10 @@ void DoDragonfireSneak(object oPC, object oTarget, object oWeapon)
             nSneakDamage += nDice;
 
         effect eSneakDamage = EffectDamage(nSneakDamage, nType);
-        effect eStrike = EffectLinkEffects(eSneakDamage, eHealed);
+        if(!GetIsImmune(oTarget, IMMUNITY_TYPE_CRITICAL_HIT))
+            eStrike = EffectLinkEffects(eSneakDamage, eHealed);
+        else
+            eStrike = eSneakDamage;
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eStrike, oTarget);
         
 }

@@ -878,6 +878,48 @@ void Pyro(object oPC)
         SetLocalInt(oPC, "PRC_PrereqPyro", 0);
 }
 
+void Suel(object oPC)
+{
+    int nMar = 0;
+    int nExot = 0;
+    SetLocalInt(oPC, "PRC_PrereqSuelWeap", 1);
+    
+    nMar += GetHasFeat(FEAT_WEAPON_PROFICIENCY_SHORTSWORD, oPC) +
+            GetHasFeat(FEAT_WEAPON_PROFICIENCY_LONGSWORD, oPC) +
+            GetHasFeat(FEAT_WEAPON_PROFICIENCY_BATTLEAXE, oPC) +
+            GetHasFeat(FEAT_WEAPON_PROFICIENCY_WARHAMMER, oPC) +
+            GetHasFeat(FEAT_WEAPON_PROFICIENCY_LONGBOW, oPC) +
+            GetHasFeat(FEAT_WEAPON_PROFICIENCY_LIGHT_FLAIL, oPC) +
+            GetHasFeat(FEAT_WEAPON_PROFICIENCY_HALBERD, oPC) +
+            GetHasFeat(FEAT_WEAPON_PROFICIENCY_SHORTBOW, oPC) +
+            GetHasFeat(FEAT_WEAPON_PROFICIENCY_GREATSWORD, oPC) +
+            GetHasFeat(FEAT_WEAPON_PROFICIENCY_GREATAXE, oPC) + 
+            GetHasFeat(FEAT_WEAPON_PROFICIENCY_HEAVY_FLAIL, oPC) +
+            GetHasFeat(FEAT_WEAPON_PROFICIENCY_LIGHT_HAMMER, oPC) +
+            GetHasFeat(FEAT_WEAPON_PROFICIENCY_HANDAXE, oPC) +
+            GetHasFeat(FEAT_WEAPON_PROFICIENCY_RAPIER, oPC) + 
+            GetHasFeat(FEAT_WEAPON_PROFICIENCY_SCIMITAR, oPC) +
+            GetHasFeat(FEAT_WEAPON_PROFICIENCY_THROWING_AXE, oPC);
+    
+    nExot += GetHasFeat(FEAT_WEAPON_PROFICIENCY_BASTARD_SWORD, oPC) +
+            GetHasFeat(FEAT_WEAPON_PROFICIENCY_TWO_BLADED_SWORD, oPC) +
+            GetHasFeat(FEAT_WEAPON_PROFICIENCY_BATTLEAXE, oPC) +
+            GetHasFeat(FEAT_WEAPON_PROFICIENCY_DIRE_MACE, oPC) +
+            GetHasFeat(FEAT_WEAPON_PROFICIENCY_DOUBLE_AXE, oPC) +
+            GetHasFeat(FEAT_WEAPON_PROFICIENCY_KAMA, oPC) +
+            GetHasFeat(FEAT_WEAPON_PROFICIENCY_KUKRI, oPC) +
+            GetHasFeat(FEAT_WEAPON_PROFICIENCY_KATANA, oPC) +
+            GetHasFeat(FEAT_WEAPON_PROFICIENCY_SCYTHE, oPC) +
+            GetHasFeat(FEAT_WEAPON_PROFICIENCY_SHURIKEN, oPC) +
+            GetHasFeat(FEAT_WEAPON_PROFICIENCY_DWARVEN_WARAXE, oPC) +
+            GetHasFeat(FEAT_WEAPON_PROFICIENCY_WHIP, oPC) +
+            GetHasFeat(FEAT_WEAPON_PROFICIENCY_ELVEN_THINBLADE, oPC) +
+            GetHasFeat(FEAT_WEAPON_PROFICIENCY_RAPIER, oPC) +
+            GetHasFeat(FEAT_WEAPON_PROFICIENCY_ELVEN_COURTBLADE, oPC);
+            
+     if((nExot + nMar) > 3) SetLocalInt(oPC, "PRC_PrereqSuelWeap", 0);
+}
+
 void TomeOfBattle(object oPC = OBJECT_SELF)
 {
 	int nClass = GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL, oPC);
@@ -1055,6 +1097,7 @@ void main()
      CoC(oPC);
      DalQuor(oPC);
      Pyro(oPC);
+     Suel(oPC);
      SkirmishRequirement(oPC);
      SpecialAttackRequirement(oPC);
      TomeOfBattle(oPC);

@@ -2,7 +2,8 @@
 
   LABEL       ReqType ReqParam1     ReqParam2 
 0 Base_Attack BAB     5             ****      
-1 WeapProfEx  FEAT    44            ****      
-2 WeapFocWhip FEAT    993           ****      
-3 CraftWeapon SKILL   26            2         
-4 ScriptVar   VAR     PRC_AllowLash 0         
+1 WeapProfEx  FEATOR  44            ****      
+2 WeapProfEx  FEATOR  7934          ****      
+3 WeapFocWhip FEAT    993           ****      
+4 CraftWeapon SKILL   26            2         
+5 ScriptVar   VAR     PRC_AllowLash 0         

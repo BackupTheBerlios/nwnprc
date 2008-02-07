@@ -10,8 +10,9 @@
 6  WildDwarf   RACE    156            ****      
 7  CraftWeapon SKILL   26             5         
 8  CraftArmor  SKILL   25             5         
-9  WeapProfMar FEAT    45             ****      
-10 PowerAtk    FEAT    28             ****      
-11 Base_Attack BAB     6              ****      
-12 ScriptVar   VAR     PRC_PrereqAlag 0         
-13 ScriptVar   VAR     PRC_AllowAlag  0         
+9  WeapProfMar FEATOR  45             ****      
+10 ProfWaraxe  FEATOR  7933           ****      
+11 PowerAtk    FEAT    28             ****      
+12 Base_Attack BAB     6              ****      
+13 ScriptVar   VAR     PRC_PrereqAlag 0         
+14 ScriptVar   VAR     PRC_AllowAlag  0         

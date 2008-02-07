@@ -7,7 +7,4 @@
 3  Dodge       FEAT    10            ****      
 4  WeapFinesse FEAT    42            ****      
 5  Mobility    FEAT    26            ****      
-6  WeapProfMar FEATOR  45            ****      
-7  WeapProfElf FEATOR  256           ****      
-8  WeapProfRog FEATOR  50            ****      
-9  ScriptVar   VAR     PRC_AllowDuel 0         
+6  ScriptVar   VAR     PRC_AllowDuel 0         

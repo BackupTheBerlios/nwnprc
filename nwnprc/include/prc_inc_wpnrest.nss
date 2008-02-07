@@ -136,150 +136,181 @@ void DoProficiencyCheck(object oPC, object oItem, int nHand)
 	    case BASE_ITEM_SHORTSWORD:
 	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_MARTIAL, oPC)
 	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_ROGUE, oPC)
-	           || GetHasFeat(FEAT_MINDBLADE, oPC))
+	           || GetHasFeat(FEAT_MINDBLADE, oPC)
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_SHORTSWORD, oPC))
 	          bProficient = TRUE; break;
 	    
 	    case BASE_ITEM_LONGSWORD:
 	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_MARTIAL, oPC)
 	           || GetHasFeat(FEAT_MINDBLADE, oPC)
-	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_ELF, oPC))
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_ELF, oPC)
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_LONGSWORD, oPC))
 	          bProficient = TRUE; break;
 	    
 	    case BASE_ITEM_BATTLEAXE:
-	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_MARTIAL, oPC))
+	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_MARTIAL, oPC)
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_BATTLEAXE, oPC))
 	          bProficient = TRUE; break;
 	    
 	    case BASE_ITEM_BASTARDSWORD:
 	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_EXOTIC, oPC)
-	           || GetHasFeat(FEAT_MINDBLADE, oPC))
+	           || GetHasFeat(FEAT_MINDBLADE, oPC)
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_BASTARD_SWORD, oPC))
 	          bProficient = TRUE; break;
 	    
 	    case BASE_ITEM_LIGHTFLAIL:
-	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_MARTIAL, oPC))
+	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_MARTIAL, oPC)
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_LIGHT_FLAIL, oPC))
 	          bProficient = TRUE; break;
 	    
 	    case BASE_ITEM_WARHAMMER:
-	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_MARTIAL, oPC))
+	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_MARTIAL, oPC)
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_WARHAMMER, oPC))
 	          bProficient = TRUE; break;
 	    
 	    case BASE_ITEM_LONGBOW:
 	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_MARTIAL, oPC)
-	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_ELF, oPC))
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_ELF, oPC)
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_LONGBOW, oPC))
 	          bProficient = TRUE; break;
 	    
 	    case BASE_ITEM_LIGHTMACE:
 	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_SIMPLE, oPC)
-	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_ROGUE, oPC))
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_ROGUE, oPC)
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_LIGHT_MACE, oPC))
 	          bProficient = TRUE; break;
 	    
 	    case BASE_ITEM_HALBERD:
-	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_MARTIAL, oPC))
+	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_MARTIAL, oPC)
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_HALBERD, oPC))
 	          bProficient = TRUE; break;
 	    
 	    case BASE_ITEM_SHORTBOW:
 	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_MARTIAL, oPC)
 	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_ROGUE, oPC)
-	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_ELF, oPC))
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_ELF, oPC)
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_SHORTBOW, oPC))
 	          bProficient = TRUE; break;
 	    
 	    case BASE_ITEM_TWOBLADEDSWORD:
-	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_EXOTIC, oPC))
+	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_EXOTIC, oPC)
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_TWO_BLADED_SWORD, oPC))
 	          bProficient = TRUE; break;
 	    
 	    case BASE_ITEM_GREATSWORD:
-	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_MARTIAL, oPC))
+	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_MARTIAL, oPC)
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_GREATSWORD, oPC))
 	          bProficient = TRUE; break;
 	    
 	    case BASE_ITEM_GREATAXE:
-	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_MARTIAL, oPC))
+	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_MARTIAL, oPC)
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_GREATAXE, oPC))
 	          bProficient = TRUE;  break;
 	    
 	    case BASE_ITEM_DART:
 	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_SIMPLE, oPC)
 	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_ROGUE, oPC)
-	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_DRUID, oPC))
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_DRUID, oPC)
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_DART, oPC))
 	          bProficient = TRUE; break;
 	    
 	    case BASE_ITEM_DIREMACE:
-	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_EXOTIC, oPC))
+	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_EXOTIC, oPC)
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_DIRE_MACE, oPC))
 	          bProficient = TRUE; break;
 	    
 	    case BASE_ITEM_DOUBLEAXE:
-	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_EXOTIC, oPC))
+	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_EXOTIC, oPC)
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_DOUBLE_AXE, oPC))
 	          bProficient = TRUE; break;
 	    
 	    case BASE_ITEM_HEAVYFLAIL:
-	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_MARTIAL, oPC))
+	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_MARTIAL, oPC)
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_HEAVY_FLAIL, oPC))
 	          bProficient = TRUE; break;
 	    
 	    case BASE_ITEM_LIGHTHAMMER:
-	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_MARTIAL, oPC))
+	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_MARTIAL, oPC)
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_LIGHT_HAMMER, oPC))
 	          bProficient = TRUE; break;
 	    
 	    case BASE_ITEM_HANDAXE:
 	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_MARTIAL, oPC)
 	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_ROGUE, oPC)
-	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_MONK, oPC))
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_MONK, oPC)
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_HANDAXE, oPC))
 	          bProficient = TRUE; break;
 	    
 	    case BASE_ITEM_KAMA:
 	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_EXOTIC, oPC)
-	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_MONK, oPC))
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_MONK, oPC)
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_KAMA, oPC))
 	          bProficient = TRUE; break;
 	    
 	    case BASE_ITEM_KATANA:
-	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_EXOTIC, oPC))
+	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_EXOTIC, oPC)
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_KATANA, oPC))
 	          bProficient = TRUE; break;
 	    
 	    case BASE_ITEM_KUKRI:
-	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_EXOTIC, oPC))
+	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_EXOTIC, oPC)
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_KUKRI, oPC))
 	          bProficient = TRUE; break;
 	    
 	    case BASE_ITEM_MORNINGSTAR:
 	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_SIMPLE, oPC)
-	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_ROGUE, oPC))
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_ROGUE, oPC)
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_MORNINGSTAR, oPC))
 	          bProficient = TRUE; break;
 	    
 	    case BASE_ITEM_RAPIER:
 	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_MARTIAL, oPC)
 	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_ROGUE, oPC)
-	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_ELF, oPC))
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_ELF, oPC)
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_RAPIER, oPC))
 	          bProficient = TRUE; break;
 	    
 	    case BASE_ITEM_SCIMITAR:
 	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_MARTIAL, oPC)
-	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_DRUID, oPC))
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_DRUID, oPC)
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_SCIMITAR, oPC))
 	          bProficient = TRUE; break;
 	    
 	    case BASE_ITEM_SCYTHE:
-	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_EXOTIC, oPC))
+	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_EXOTIC, oPC)
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_SCYTHE, oPC))
 	          bProficient = TRUE; break;
 	    
 	    case BASE_ITEM_SHORTSPEAR:
 	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_SIMPLE, oPC)
-	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_DRUID, oPC))
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_DRUID, oPC)
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_SHORTSPEAR, oPC))
 	          bProficient = TRUE; break;
 	    
 	    case BASE_ITEM_SHURIKEN:
 	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_EXOTIC, oPC)
-	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_MONK, oPC))
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_MONK, oPC)
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_SHURIKEN, oPC))
 	          bProficient = TRUE; break;
 	    
 	    case BASE_ITEM_SICKLE:
 	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_SIMPLE, oPC)
-	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_DRUID, oPC))
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_DRUID, oPC)
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_SICKLE, oPC))
 	          bProficient = TRUE; break;
 	    
 	    case BASE_ITEM_SLING:
 	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_SIMPLE, oPC)
 	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_ROGUE, oPC)
 	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_MONK, oPC)
-	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_DRUID, oPC))
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_DRUID, oPC)
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_SLING, oPC))
 	          bProficient = TRUE; break;
 	    
 	    case BASE_ITEM_THROWINGAXE:
 	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_MARTIAL, oPC)
-	           || GetHasFeat(FEAT_MINDBLADE, oPC))
+	           || GetHasFeat(FEAT_MINDBLADE, oPC)
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_THROWING_AXE, oPC))
 	          bProficient = TRUE; break;
 	    
 	    case BASE_ITEM_CSLASHWEAPON:
@@ -300,30 +331,36 @@ void DoProficiencyCheck(object oPC, object oItem, int nHand)
 	    
 	    case BASE_ITEM_TRIDENT:
 	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_SIMPLE, oPC)
-	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_DRUID, oPC))
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_DRUID, oPC)
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_TRIDENT, oPC))
 	          bProficient = TRUE; break;
 	    
 	    //special case: counts as martial for dwarves
 	    case BASE_ITEM_DWARVENWARAXE:
 	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_EXOTIC, oPC)
-	           || (GetHasFeat(FEAT_WEAPON_PROFICIENCY_MARTIAL, oPC) && GetHasFeat(FEAT_DWARVEN, oPC)))
+	           || (GetHasFeat(FEAT_WEAPON_PROFICIENCY_MARTIAL, oPC) && GetHasFeat(FEAT_DWARVEN, oPC))
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_DWARVEN_WARAXE, oPC))
 	          bProficient = TRUE; break;
 	    
 	    case BASE_ITEM_WHIP:
 	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_EXOTIC, oPC)
-	           || GetHasFeat(FEAT_PYRO_FIRE_LASH, oPC))
+	           || GetHasFeat(FEAT_PYRO_FIRE_LASH, oPC)
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_WHIP, oPC))
 	          bProficient = TRUE; break;
 	    
 	    case BASE_ITEM_ELF_LIGHTBLADE:
-	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_EXOTIC, oPC))
+	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_EXOTIC, oPC)
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_ELVEN_LIGHTBLADE, oPC))
 	          bProficient = TRUE; break;
 	    
 	    case BASE_ITEM_ELF_THINBLADE:
-	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_EXOTIC, oPC))
+	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_EXOTIC, oPC)
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_ELVEN_THINBLADE, oPC))
 	          bProficient = TRUE; break;
 	    
 	    case BASE_ITEM_ELF_COURTBLADE:
-	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_EXOTIC, oPC))
+	        if(GetHasFeat(FEAT_WEAPON_PROFICIENCY_EXOTIC, oPC)
+	           || GetHasFeat(FEAT_WEAPON_PROFICIENCY_ELVEN_COURTBLADE, oPC))
 	          bProficient = TRUE; break;
 	          
 	    case BASE_ITEM_DAGGER:
@@ -331,6 +368,9 @@ void DoProficiencyCheck(object oPC, object oItem, int nHand)
 	    case BASE_ITEM_HEAVYCROSSBOW:
 	    case BASE_ITEM_CLUB:
 	    case BASE_ITEM_QUARTERSTAFF:
+	         bProficient = TRUE; break;
+	         
+	    default:
 	         bProficient = TRUE; break;
 	    	
 	}

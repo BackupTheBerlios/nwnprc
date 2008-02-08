@@ -469,6 +469,12 @@ const int SPELL_HOUND_DETECTEVIL                    = 2933;
 const int SPELL_HOUND_DISGUISE                      = 2936;
 const int SPELL_HOUND_MAGICCIRCLE                   = 2934;
 const int SPELL_HOUND_TELEPORT                      = 2935;
+const int SPELL_ZENYTH_TRUE_STRIKE                  = 2937;
+const int SPELL_RACIAL_CIRCLE_VS_GOOD               = 2938;
+const int SPELL_RACIAL_CIRCLE_VS_EVIL               = 2939;
+const int SPELL_RACIAL_CIRCLE_VS_LAW                = 2940;
+const int SPELL_RACIAL_CIRCLE_VS_CHAOS              = 2941;
+const int SPELL_NATHRI_EXPEDITIOUS_RETREAT          = 2943;
 
 
 // Poison system spells

@@ -69,6 +69,10 @@ const int FEAT_MAENAD_OUTBURST     = 4525;
 const int FEAT_XEPH_SPELLHARD      = 4527;
 const int FEAT_XEPH_BURST          = 4526;
 
+const int FEAT_ZENYTH_TRUESTRIKE     = 4536;
+const int FEAT_TULADH_MAGIC_CIRCLE   = 4533;
+const int FEAT_NATHRI_EXP_RETREAT    = 4534;
+
 const int FEAT_LTSENSE = 4700;
 const int FEAT_LTBLIND = 4701;
 
@@ -137,21 +141,24 @@ const int FEAT_VULN_COLD    = 4746;
 const int FEAT_DAM_RED10    = 4747;
 const int FEAT_DAM_RED15    = 4748;
 
-const int FEAT_SA_HIDE      = 4767;
-const int FEAT_SA_HIDEU     = 4749;
-const int FEAT_SA_HIDEF     = 4750;
-const int FEAT_SA_MOVE4     = 4751;
-const int FEAT_SA_JUMP      = 4752;
-const int FEAT_SA_BLUFF     = 4753;
-const int FEAT_SA_HIDE4      = 4754;
-const int FEAT_SA_CRFTARM   = 4757;
-const int FEAT_SA_CRFTWEAP  = 4758;
-const int FEAT_SA_CRFTTRAP  = 4517;
-const int FEAT_SA_SPOT_4    = 4762;
-const int FEAT_SA_JUMP_4    = 4763;
-const int FEAT_LEAP     = 4772;
-const int FEAT_KEEN_SIGHT   = 4774;
-const int FEAT_SA_APPRAISE  = 4792;
+const int FEAT_SA_HIDE           = 4767;
+const int FEAT_SA_HIDEU          = 4749;
+const int FEAT_SA_HIDEF          = 4750;
+const int FEAT_SA_MOVE4          = 4751;
+const int FEAT_SA_JUMP           = 4752;
+const int FEAT_SA_BLUFF          = 4753;
+const int FEAT_SA_HIDE4          = 4754;
+const int FEAT_SA_CRFTARM        = 4757;
+const int FEAT_SA_CRFTWEAP       = 4758;
+const int FEAT_SA_CRFTTRAP       = 4517;
+const int FEAT_SA_SPOT_4         = 4762;
+const int FEAT_SA_JUMP_4         = 4763;
+const int FEAT_LEAP              = 4772;
+const int FEAT_KEEN_SIGHT        = 4774;
+const int FEAT_SA_APPRAISE       = 4792;
+const int FEAT_SA_BALANCE        = 4511;
+const int FEAT_SA_PERSUADE       = 4527;
+const int FEAT_SA_SENSE_MOTIVE   = 4532;
 
 const int FEAT_ALTFORM                  = 4754;
 const int FEAT_DISGUISE                 = 4755;

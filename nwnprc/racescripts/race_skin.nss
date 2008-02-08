@@ -232,6 +232,12 @@ void main()
         SetCompositeBonus(oSkin, "SA_Bluff", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_BLUFF);
     }
 
+    // Skill Affinity, +2 to balance
+    if(GetHasFeat(FEAT_SA_BALANCE))
+    {
+        SetCompositeBonus(oSkin, "SA_Balance", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_BALANCE);
+    }
+
     // Skill Affinity, +2 to heal
     if(GetHasFeat(FEAT_SA_HEAL))
     {
@@ -396,10 +402,22 @@ void main()
         SetCompositeBonus(oSkin, "SA_AnimalEmpathy_2", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_ANIMAL_EMPATHY);
     }
 
+    // Skill Affinity, +2 to persuade
+    if(GetHasFeat(FEAT_SA_PERSUADE))
+    {
+        SetCompositeBonus(oSkin, "SA_Persuade", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_PERSUADE);
+    }
+
+    // Skill Affinity, +2 to sense motive
+    if(GetHasFeat(FEAT_SA_SENSE_MOTIVE))
+    {
+        SetCompositeBonus(oSkin, "SA_SenseMotive_2", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_SENSE_MOTIVE);
+    }
+
     // Partial Skill Affinity, +1 to persuade
     if(GetHasFeat(FEAT_PSA_PERSUADE))
     {
-        SetCompositeBonus(oSkin, "PSA_Persuade", 1, ITEM_PROPERTY_SKILL_BONUS, SKILL_ANIMAL_EMPATHY);
+        SetCompositeBonus(oSkin, "PSA_Persuade", 1, ITEM_PROPERTY_SKILL_BONUS, SKILL_PERSUADE);
     }
 
     // PSA to Lore and Spellcraft

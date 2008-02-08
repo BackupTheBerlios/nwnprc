@@ -35978,6 +35978,68 @@ Use: Selected</entry>
   <entry id="55823" lang="en" sex="m">Instill Vulnerability: Electricity</entry>
   <entry id="55824" lang="en" sex="m">Instill Vulnerability: Fire</entry>
   <entry id="55825" lang="en" sex="m">Instill Vulnerability: Sonic</entry>
+  <entry id="55826" lang="en" sex="m">Listen up basher, here's the dark of it.  You grew up in Sigil, the city of doors.  It wasn't easy, and you definitely earned a page or two.  Recently, through portaljumping, or getting portaljacked, you've managed to escape the Cage.  Now, you've got a whole new plane in front of you, and it's time to earn some jink and show these berks what a real cutter is like.</entry>
+  <entry id="55827" lang="en" sex="m">Zenythri</entry>
+  <entry id="55828" lang="en" sex="m">zenythri</entry>
+  <entry id="55829" lang="en" sex="m">The Zenythri are a human-like race, infused with the energies of Law.  No one knows where they come from, with rumors ranging from mysterious rituals, to the effects of distant parts of the Lawful planes.  As a race they devote their lives to self-perfection, and view their role as to bring order to the universe, through example, or possibly other means.  Physically they resemble perfectly-formed humans, with even their hair falling naturally into their personal style.  Their skin is usually tinted a bluish-purple, and rarely they have other features showing their planetouched heritage such as metallic colored hair or eyes.  They usually dress in simple and elegant clothing, and tend to either set or follow the ocal fashion.
+
+Zenythri Ability Adjustments: +2 Str, +2 Dex, +2 Wis, -2 Cha
+Favored Class (Monk): A multiclass zenythri's monk class does not count when determining whether he suffers an XP penalty for multiclassing. 
+
+Special Abilities:
+
+- 30' base speed 
+- Darkvision: Zenythri are able to see in the dark.
+- Skill Affinity (Balance): +2 racial bonus to Balance checks. 
+- Resist Fire: Innate fire resistance of 5.
+- Resist Sonic: Innate sonic resistance of 5.
+- Resist Electrical: Innate electrical resistance of 5.
+- Spell-Like Abilities: 1/day - True Strike.
+- Outsider: Zenythri count as Outsiders for the purpose of spells.</entry>
+  <entry id="55830" lang="en" sex="m">Skill Affinity: Balance</entry>
+  <entry id="55831" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: The creature gains a +2 racial bonus to Balance checks.
+Use: Automatic.</entry>
+  <entry id="55832" lang="en" sex="m">Racial True Strike</entry>
+  <entry id="55833" lang="en" sex="m">Racial Magic Circle</entry>
+  <entry id="55834" lang="en" sex="m">Tuladhara</entry>
+  <entry id="55835" lang="en" sex="m">tuladhara</entry>
+  <entry id="55836" lang="en" sex="m">The Tuladhara are among the rarest of planetouched; a crossbreed between humans and the enigmatic rilmani, the neutral exemplars.  To them, balance is everything.  They are not emotionless, but almost always consider all sides of an issue, acting without bias.  Unlike some rumors may have you believe, however, they do not betray trust and friendship easily.  Physically they resemble lithe and graceful humans, and are sometimes mistaken at a distance for half-elves.  Up close, metallic-colored skin and opalesent eyes give them away.  They are balanced in dres as in all things; not too flashy, but still fashionable.
+  
+Tuladhara Ability Adjustments: +2 Con, +2 Wis
+Favored Class (Druid): A multiclass tuladhara's druid class does not count when determining whether he suffers an XP penalty for multiclassing. 
+
+Special Abilities:
+
+- 30' base speed 
+- Darkvision: Tuladhara are able to see in the dark.
+- Skill Affinity (Persuade): +2 racial bonus to Persuade checks.
+- Skill Affinity (Sense Motive): +2 racial bonus to Sense Motive checks. 
+- Resist Acid: Innate acid resistance of 5.
+- Resist Sonic: Innate sonic resistance of 5.
+- Resist Electrical: Innate electrical resistance of 5.
+- Spell-Like Abilities: 1/day - Magic Circle vs Alignment.
+- Outsider: Tuladhara count as Outsiders for the purpose of spells.</entry>
+  <entry id="55837" lang="en" sex="m">Racial Expeditious Retreat</entry>
+  <entry id="55838" lang="en" sex="m">Nathri</entry>
+  <entry id="55839" lang="en" sex="m">nathri</entry>
+  <entry id="55840" lang="en" sex="m">The nathri are a crude and savage race native to the ethereal plane, living in hunting packs that hunt intruders to their realm.  Rumors say they sprung from the deep ethereal itself.  Physically they are small, standing around 4' tall, with green skin and dark unruly hair.  They have wide faces with fla noses and long pointed ears.  The only clothing they wear is that scavenged from their victims, with many pouches and bags for their few possessions.
+  
+Nathri Ability Adjustments: +2 Dex, +2 Con, -2 Cha.
+Favored Class (Barbarian): A multiclass nathri's barbarian class does not count when determining whether he suffers an XP penalty for multiclassing. 
+
+Special Abilities:
+
+- Small Stature:
+- +1 size bonus to attack rolls.
+- +1 size bonus to AC.
+- +4 size bonus to Hide checks.
+- 20' base speed 
+- Darkvision: Nathri are able to see in the dark.
+- Spell Resistance: Innate spell resistance of 5 + 1 per character level.
+- Spell-Like Abilities: 3/day - Expeditious Retreat.
+- Outsider: Tuladhara count as Outsiders for the purpose of spells.</entry>
   <entry id="55964" lang="en" sex="m">1</entry>
   <entry id="55965" lang="en" sex="m">2</entry>
   <entry id="55966" lang="en" sex="m">3</entry>

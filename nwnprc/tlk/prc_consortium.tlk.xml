@@ -33034,31 +33034,36 @@ bonus on Intimidate checks and a +2 enhancement bonus to Strength.</entry>
 Prerequisites: Warblade 1.
 Specifics: You gain a bonus on your Reflex saves equal to your Intelligence modifier.
 Use: Automatic</entry>
-  <entry id="54885" lang="en" sex="m">Battle Ardor</entry>
+  <entry id="54885" lang="en" sex="m">Weapon Aptitude</entry>
   <entry id="54886" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Warblade 1.
+Specifics: Each morning, you may change your weapon specific feats (Weapon Focus, Weapon Specialization, Improved Critical) to any weapon you are proficient in.
+Use: Automatic</entry>
+  <entry id="54887" lang="en" sex="m">Battle Ardor</entry>
+  <entry id="54888" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisites: Warblade 3.
 Specifics: You gain a bonus on your rolls to confirm maneuver critical hits equal to your Intelligence modifier.
 Use: Automatic</entry>
-  <entry id="54887" lang="en" sex="m">Battle Cunning</entry>
-  <entry id="54888" lang="en" sex="m">Type of Feat: Class Specific
+  <entry id="54889" lang="en" sex="m">Battle Cunning</entry>
+  <entry id="54890" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisites: Warblade 7.
 Specifics: You gain a damage bonus on your strikes made against flatfooted or flanked enemies equal to your Intelligence modifier.
 Use: Automatic</entry>
-  <entry id="54889" lang="en" sex="m">Battle Skill</entry>
-  <entry id="54890" lang="en" sex="m">Type of Feat: Class Specific
+  <entry id="54891" lang="en" sex="m">Battle Skill</entry>
+  <entry id="54892" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisites: Warblade 11.
 Specifics: You gain a bonus on your opposed checks for Trip, Overrun, Bullrush, Feint, and Disarm equal to your Intelligence modifier.
 Use: Automatic</entry>
-  <entry id="54891" lang="en" sex="m">Battle Mastery</entry>
-  <entry id="54892" lang="en" sex="m">Type of Feat: Class Specific
+  <entry id="54893" lang="en" sex="m">Battle Mastery</entry>
+  <entry id="54894" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisites: Warblade 15.
 Specifics: You gain an attack bonus on your strikes equal to your Intelligence modifier.
 Use: Automatic</entry>
-  <entry id="54893" lang="en" sex="m">Stance Mastery</entry>
-  <entry id="54894" lang="en" sex="m">Type of Feat: Class Specific
+  <entry id="54895" lang="en" sex="m">Stance Mastery</entry>
+  <entry id="54896" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisites: Warblade 20.
 Specifics: You may use two stances at the same time.
-Use: Automatic</entry>  
+Use: Automatic</entry> 
   <entry id="54898" lang="en" sex="m">You have not drained levels in the last 24 hours, Soul Blast does not work.</entry>
   <entry id="54899" lang="en" sex="m">Target is immune to negative levels.</entry>
   <entry id="54900" lang="en" sex="m">Soul Eater</entry>

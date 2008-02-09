@@ -290,7 +290,3 @@ const int BASE_ITEM_ELF_COURTBLADE  = 204;
 
 // Dragon Fire Inspiration ONHIT
 const int IP_CONST_ONHIT_CASTSPELL_DRAGONFIRE = 203;
-
-//Temporary race const
-
-const int RACIAL_TYPE_PLANT = 21;

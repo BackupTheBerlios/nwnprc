@@ -62,6 +62,10 @@ const int RACIAL_TYPE_XIXCHIL              = 181;
 
 /* Generic Type Races */
 
+
+//Racial Type constant
+const int RACIAL_TYPE_PLANT                = 52;
+
 //Fey-type Races
 const int RACIAL_TYPE_BRALANI              = 159;
 const int RACIAL_TYPE_BROWNIE              = 53;
@@ -163,7 +167,7 @@ const int RACIAL_TYPE_SAURIAL_FLYER        = 64;
 const int RACIAL_TYPE_SAURIAL_HORNHEAD     = 65;
 const int RACIAL_TYPE_TAER                 = 66;
 const int RACIAL_TYPE_TORTLE               = 188;
-const int RACIAL_TYPE_VOLODNI              = 52;
+const int RACIAL_TYPE_VOLODNI              = 131;
 const int RACIAL_TYPE_WEMIC                = 51;
 
 /* Standard Races */

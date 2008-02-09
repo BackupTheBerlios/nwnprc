@@ -36108,6 +36108,54 @@ Special Abilities:
 - Metal Hide: Despite their metal skin, bladelings themselves cannot be damaged by rust attacks.  They also cannot wear any armor heavier than light armor due to the spikes in their skin.
 - Razor Storm: Once per day, bladelings can expel a 15' cone of metallic shards from their skin, dealing 2d6 slashing to those within.  There is a reflex save vs 10 + Con for half damage.  Afterwards, the bladeling's natural armor drops by 2 for 24 hours.
 - Outsider: Bladelings count as Outsiders for the purpose of spells.</entry>
+  <entry id="55861" lang="en" sex="m">Plant</entry>
+  <entry id="55862" lang="en" sex="m">plant</entry>
+  <entry id="55863" lang="en" sex="m">Plants</entry>
+  <entry id="55864" lang="en" sex="m">Not all plants are motionless, drawn only by the wind, sun and water on life's canvas. Some have a mind and volition of their own.</entry>
+  <entry id="55865" lang="en" sex="m">drider</entry>
+  <entry id="55866" lang="en" sex="m">Failed in the eyes of your goddess, shunned by cruel, violent people you once considered your own, the Underdark holds no comfort for you now. Driven from all you have known, only wanderlust and a thirst for adventure keeps you going now.</entry>
+  <entry id="55867" lang="en" sex="m">Driders are bloodthirsty creatures that lurk in the depths of the earth, seeking warm-blooded prey of any kind. These strange beings have the head and torso of a drow elf and the legs and lower body of a giant spider. Failed of Lolth, driders are outcast from their own communities. Drow and driders hate one another passionately.
+
+Drider Ability Adjustments: +4 Str, +4 Dex, +6 Con, +4 Int, +6 Wis, +6 Cha
+Favored Class (Cleric): A multiclass drider's cleric class does not count when determining whether he or she suffers an XP penalty for multiclassing.
+
+Special Abilities:
+- Darkvision: Driders can see in the dark.
+- Natural Armor: +6 racial bonus to natural armor.
+- Spell Resistance: Spell Resistance equal to 11 + hit dice.
+- Skill Affinity (Hide): +4 Racial bonus to Hide checks
+- Skill Affinity (Move Silently): +4 Racial bonus to Move Silently checks
+- Poison bite, Fortitude save (DC 16), initial and secondary damage 1d6 temporary strength
+- Spell-like abilitys: darkness, detect alignment, faerie fire - 1/day, Caster level 6th
+- Aberration: Driders count as Aberrations for the purposes of spells and effects.</entry>
+  <entry id="55868" lang="en" sex="m">Plant Immunities</entry>
+  <entry id="55869" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: The plant racial type conveys several immunities:  Immunity to sleep, paralyze, mind-affecting abilities, critical hits, and poison.
+Use: Automatic.</entry>
+  <entry id="55870" lang="en" sex="m">Partial Piercing Immunity</entry>
+  <entry id="55871" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: The creature takes 50% less damage from piercing weapons.
+Use: Automatic.</entry>
+  <entry id="55872" lang="en" sex="m">Plant</entry>
+  <entry id="55873" lang="en" sex="m">Creature is a member of the Plant race.</entry>
+  <entry id="55874" lang="en" sex="m">Volodni</entry>
+  <entry id="55875" lang="en" sex="m">volodni</entry>
+  <entry id="55876" lang="en" sex="m">At the end of a terrible war, a great lord led his people into the great forests of the former ancient empire to seek refuge from the roving demons and magical plagues ravaging the lands.  Some power of the old woods, whether an elder trant or something greater, confronted the refugees and denied them safety unless they forswore their demon-summoning ways and took on the forests' blood for their own.  The lord agreed on the spot, and thus the refugees gave up their humanity for safety, becoming the Volodni.  In shape they still resemble humans, but their skin is the deep olive green of a pine needle, and is woody and tough.  They bear sap for blood, and their hair grows in long, thick locks scaled like bark on a young tree.  Their eyes are gleaming black and they tend to be tall and wirey.  They tend to be cold and dispassionate, believing the ends serve the means, and go about their tasks with the patience of the forest itself.  To the "pine folk" as they are sometimes known, the forest is everything.
+  
+Volodni Ability Adjustments: +2 Con, +2 Wis, -2 Int, -2 Cha.
+Favored Class (Druid): A multiclass volodni's druid class does not count when determining whether he suffers an XP penalty for multiclassing. 
+
+Special Abilities:
+
+- 30' base speed 
+- Low-Light Vision: Allows them to see better than normal in the dark.
+- Resist Cold: Innate cold resistance of 5.
+- Skill Affinity (Hide Forest): +4 racial bonus to Hide when in the forest.
+- Resist Piercing: Innate 50% piercing resistance.
+- Plant Immunities:  Immune to sleep, paralyze, poison, mind-affecting effects, and critical hits.
+- Plant: Volodni count as Plants for the purpose of spells.</entry>
   <entry id="55964" lang="en" sex="m">1</entry>
   <entry id="55965" lang="en" sex="m">2</entry>
   <entry id="55966" lang="en" sex="m">3</entry>

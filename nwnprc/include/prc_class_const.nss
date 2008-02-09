@@ -1,3 +1,4 @@
+const int CLASS_TYPE_PLANT                   = 39;
 const int CLASS_TYPE_ACOLYTE                 = 68;
 const int CLASS_TYPE_ANTI_PALADIN            = 113;
 const int CLASS_TYPE_ARCANE_ASSASSIN         = 230;

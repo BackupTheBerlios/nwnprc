@@ -780,6 +780,7 @@ void RacialHD(object oPC)
     SetLocalInt(oPC, "PRC_PrereqOutsider", 1);
     SetLocalInt(oPC, "PRC_PrereqShapechanger", 1);
     SetLocalInt(oPC, "PRC_PrereqVermin", 1);
+    SetLocalInt(oPC, "PRC_PrereqPlant", 1);
     if(GetPRCSwitch(PRC_XP_USE_SIMPLE_RACIAL_HD))
     {
         int nRealRace = GetRacialType(oPC);
@@ -804,6 +805,7 @@ void RacialHD(object oPC)
                 case CLASS_TYPE_OUTSIDER: SetLocalInt(oPC, "PRC_PrereqOutsider", 0); break;
                 case CLASS_TYPE_SHAPECHANGER: SetLocalInt(oPC, "PRC_PrereqShapechanger", 0); break;
                 case CLASS_TYPE_VERMIN: SetLocalInt(oPC, "PRC_PrereqVermin", 0); break;
+                case CLASS_TYPE_PLANT: SetLocalInt(oPC, "PRC_PrereqPlant", 0); break;
             }
         }
 

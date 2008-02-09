@@ -72,6 +72,8 @@ const int FEAT_XEPH_BURST          = 4526;
 const int FEAT_ZENYTH_TRUESTRIKE     = 4536;
 const int FEAT_TULADH_MAGIC_CIRCLE   = 4533;
 const int FEAT_NATHRI_EXP_RETREAT    = 4534;
+const int FEAT_METAL_HIDE            = 4538;
+const int FEAT_BLADELING_RAZOR_STORM = 4539;
 
 const int FEAT_LTSENSE = 4700;
 const int FEAT_LTBLIND = 4701;
@@ -104,20 +106,23 @@ const int FEAT_UNDEAD      = 4769;
 const int FEAT_BEAST       = 4770;
 const int FEAT_VERMIN      = 4771;
 const int FEAT_DRAGON      = 4773;
+const int FEAT_PLANT       = 4542;
 
-const int FEAT_HARD_AIR   = 4723;
-const int FEAT_HARD_EARTH = 4724;
-const int FEAT_HARD_FIRE  = 4725;
-const int FEAT_HARD_WATER = 4726;
-const int FEAT_HARD_ELEC  = 4727;
-const int FEAT_POISON_3   = 4728;
-const int FEAT_POISON_4   = 4768;
-const int FEAT_ACCLIMATED_FIRE  = 4523;
+const int FEAT_HARD_AIR              = 4723;
+const int FEAT_HARD_EARTH            = 4724;
+const int FEAT_HARD_FIRE             = 4725;
+const int FEAT_HARD_WATER            = 4726;
+const int FEAT_HARD_ELEC             = 4727;
+const int FEAT_POISON_3              = 4728;
+const int FEAT_POISON_4              = 4768;
+const int FEAT_ACCLIMATED_FIRE       = 4523;
+const int FEAT_PARTIAL_PIERCE_IMMUNE = 4541;
 
 const int FEAT_IMM_COLD     = 4729;
 const int FEAT_IMM_PHANT    = 4730;
 const int FEAT_NONDETECTION = 4731;
 const int FEAT_IMM_APOI     = 4732;
+const int FEAT_PLANT_IMM    = 4540;
 
 const int FEAT_NATARM_1     = 4733;
 const int FEAT_NATARM_2     = 4761;
@@ -140,6 +145,7 @@ const int FEAT_VERYHEROIC   = 4745;
 const int FEAT_VULN_COLD    = 4746;
 const int FEAT_DAM_RED10    = 4747;
 const int FEAT_DAM_RED15    = 4748;
+const int FEAT_DAM_RED5     = 4537;
 
 const int FEAT_SA_HIDE           = 4767;
 const int FEAT_SA_HIDEU          = 4749;
@@ -159,6 +165,7 @@ const int FEAT_SA_APPRAISE       = 4792;
 const int FEAT_SA_BALANCE        = 4511;
 const int FEAT_SA_PERSUADE       = 4527;
 const int FEAT_SA_SENSE_MOTIVE   = 4532;
+const int FEAT_SA_TUMBLE         = 4535;
 
 const int FEAT_ALTFORM                  = 4754;
 const int FEAT_DISGUISE                 = 4755;

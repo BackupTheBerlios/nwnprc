@@ -36039,7 +36039,75 @@ Special Abilities:
 - Darkvision: Nathri are able to see in the dark.
 - Spell Resistance: Innate spell resistance of 5 + 1 per character level.
 - Spell-Like Abilities: 3/day - Expeditious Retreat.
-- Outsider: Tuladhara count as Outsiders for the purpose of spells.</entry>
+- Outsider: Nathri count as Outsiders for the purpose of spells.</entry>
+  <entry id="55841" lang="en" sex="m">Skill Affinity (Persuade)</entry>
+  <entry id="55842" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: The creature receives +2 racial bonus to Persuade checks.
+Use: Automatic.</entry>
+  <entry id="55843" lang="en" sex="m">Skill Affinity (Sense Motive)</entry>
+  <entry id="55844" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: The creature receives +2 racial bonus to Sense Motive checks.
+Use: Automatic.</entry>
+  <entry id="55845" lang="en" sex="m">Skill Affinity (Tumble)</entry>
+  <entry id="55846" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: The creature receives +2 racial bonus to Tumble checks.
+Use: Automatic.</entry>
+  <entry id="55847" lang="en" sex="m">Chaond</entry>
+  <entry id="55848" lang="en" sex="m">chaond</entry>
+  <entry id="55849" lang="en" sex="m">Chaonds</entry>
+  <entry id="55850" lang="en" sex="m">Sometimes, when the implanted eggs of slaadi are removed from their victim, they leave behind some remnants of chaos, which in turn affect said victim's descendants, resulting in the planetouched race of chaonds.  Their chaotic heritage leaves them whimsical and emotional, living for the present.  They seldom look past today, and while they are outgoing they also tend to be insensitive, making no excuses and expecting nothing from others.  Physically they typically appear as rough humans with thick chests and limbs, blocky faces, and skin and hair that slowly shifts in color.  They stand about 5'1" to 5'10" and are usually twice as wide as a normal human.  Other features showing their slaadi heritage vary from chaond to chaond as befits their chaotic nature, and could be anything from patches of hardened scales, to reptillian hands and feet.  Clothing-wise they just wear whatever is at hand, tending to leave them wearing wild and clashing colors.
+  
+Chaond Ability Adjustments: +4 Dex, +2 Con, -2 Cha.
+Favored Class (Any): A multiclass chaond's highest class does not count when determining whether he suffers an XP penalty for multiclassing. 
+
+Special Abilities:
+
+- 30' base speed 
+- Darkvision: Chaonds are able to see in the dark.
+- Skill Affinity (Tumble): +2 racial bonus to Tumble checks.
+- Resist Acid: Innate acid resistance of 5.
+- Resist Sonic: Innate sonic resistance of 5.
+- Resist Cold: Innate cold resistance of 5.
+- Outsider: Chaonds count as Outsiders for the purpose of spells.</entry>
+  <entry id="55851" lang="en" sex="m">Damage Reduction 5</entry>
+  <entry id="55852" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: The creature receives damage reduction 5/+1 to hit.
+Use: Automatic.</entry>
+  <entry id="55853" lang="en" sex="m">Metal Hide</entry>
+  <entry id="55854" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: The spikes on a bladeling's body prevent the wearing of any medium or heavy armor.
+Use: Automatic.</entry>
+  <entry id="55855" lang="en" sex="m">Razor Storm</entry>
+  <entry id="55856" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: Once per day, a bladeling can expel shrapnel-like bits of its skin in a 15' cone, dealing 2d6 points of slashing damge to any within the area.  A reflex save vs 10 + the bladeling's Con modifier halves the damage.  After this, the bladeling's natural armor bonus drops by 2 for 24 hours.
+Use: Selected.</entry>
+  <entry id="55857" lang="en" sex="m">Bladeling</entry>
+  <entry id="55858" lang="en" sex="m">bladeling</entry>
+  <entry id="55859" lang="en" sex="m">Bladelings</entry>
+  <entry id="55860" lang="en" sex="m">Bladelings are dangerous inhabitants of the Lower Plane of Acheron.  Like their home plane they are mostly made of metal, resembling living constructs.  In shape they are human, but lack hair, and their skin is covered in patches of metallic spines.  Their eyes typically glow a blue or purple light.  They have little interest in superficial clothing, and many rely on their natural armor for protection.  As a race they are xenophobic and distrusting of outsiders, though they have a strong sense of duty and loyalty to their own kind.  They are also highly superstitious.
+  
+Bladeling Ability Adjustments: +2 Dex.
+Favored Class (Fighter): A multiclass bladeling's fighter class does not count when determining whether he suffers an XP penalty for multiclassing. 
+
+Special Abilities:
+
+- 30' base speed 
+- Darkvision: Bladelings are able to see in the dark.
+- Natural Armor: Bladelings have a +4 Natural Armor bonus.
+- Natural Weapons: Bladelings have a primary natural claw attack for 1d6 damage.
+- Immunities: Immune to acid damage.
+- Resist Fire: Innate fire resistance of 5.
+- Resist Cold: Innate cold resistance of 5.
+- Damage Reduction: DR 5/+1.
+- Metal Hide: Despite their metal skin, bladelings themselves cannot be damaged by rust attacks.  They also cannot wear any armor heavier than light armor due to the spikes in their skin.
+- Razor Storm: Once per day, bladelings can expel a 15' cone of metallic shards from their skin, dealing 2d6 slashing to those within.  There is a reflex save vs 10 + Con for half damage.  Afterwards, the bladeling's natural armor drops by 2 for 24 hours.
+- Outsider: Bladelings count as Outsiders for the purpose of spells.</entry>
   <entry id="55964" lang="en" sex="m">1</entry>
   <entry id="55965" lang="en" sex="m">2</entry>
   <entry id="55966" lang="en" sex="m">3</entry>

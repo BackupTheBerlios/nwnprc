@@ -70,6 +70,25 @@ void main()
         itemproperty ipIP =ItemPropertyImmunityMisc(IP_CONST_IMMUNITYMISC_DISEASE);
         IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
     }
+    
+    //Plant racial type immunities - sleep, paralysis, poison, mind-affecting, criticals
+    if(GetHasFeat(FEAT_PLANT_IMM))
+    {
+    	effect eSleepImmune = ExtraordinaryEffect(EffectImmunity(IMMUNITY_TYPE_SLEEP));
+    	AssignCommand(oPC, ApplyEffectToObject(DURATION_TYPE_PERMANENT, eSleepImmune, oPC));
+    	
+        itemproperty ipIP =ItemPropertyImmunityMisc(IP_CONST_IMMUNITYMISC_PARALYSIS);
+        IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+        
+        ipIP =ItemPropertyImmunityMisc(IP_CONST_IMMUNITYMISC_POISON);
+        IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+        
+        ipIP =ItemPropertyImmunityMisc(IP_CONST_IMMUNITYMISC_MINDSPELLS);
+        IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+        
+        ipIP =ItemPropertyImmunityMisc(IP_CONST_IMMUNITYMISC_CRITICAL_HITS);
+        IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+    }
 
     //natural armor 1-10
     // Note: This bonus will be Dodge bonus no matter what IP_CONST you specify.
@@ -411,7 +430,13 @@ void main()
     // Skill Affinity, +2 to sense motive
     if(GetHasFeat(FEAT_SA_SENSE_MOTIVE))
     {
-        SetCompositeBonus(oSkin, "SA_SenseMotive_2", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_SENSE_MOTIVE);
+        SetCompositeBonus(oSkin, "SA_SenseMotive", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_SENSE_MOTIVE);
+    }
+
+    // Skill Affinity, +2 to tumble
+    if(GetHasFeat(FEAT_SA_TUMBLE))
+    {
+        SetCompositeBonus(oSkin, "SA_Tumble", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_TUMBLE);
     }
 
     // Partial Skill Affinity, +1 to persuade
@@ -425,6 +450,13 @@ void main()
     {
         SetCompositeBonus(oSkin, "PSA_Lorespell_Lore", 1, ITEM_PROPERTY_SKILL_BONUS, SKILL_LORE);
         SetCompositeBonus(oSkin, "PSA_Lorespell_Spell", 1, ITEM_PROPERTY_SKILL_BONUS, SKILL_SPELLCRAFT);
+    }
+
+    //damage reduction 5/+1
+    if(GetHasFeat(FEAT_DAM_RED5))
+    {
+        itemproperty ipIP =ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_1, IP_CONST_DAMAGESOAK_5_HP);
+        IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
     }
 
     //damage reduction 10/+1
@@ -455,6 +487,13 @@ void main()
         IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
     }
  
+    //damage immunity 50% Piercing
+    if(GetHasFeat(FEAT_PARTIAL_PIERCE_IMMUNE))
+    {
+        itemproperty ipIP = ItemPropertyDamageVulnerability(DAMAGE_TYPE_PIERCING, IP_CONST_DAMAGEVULNERABILITY_50_PERCENT);
+        IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+    }
+
     //Svirfneblin dodge bonus (+4)
     if(GetHasFeat(FEAT_SVIRFNEBLIN_DODGE))
     {
@@ -538,6 +577,12 @@ void main()
     if(GetHasFeat(FEAT_WEMIC_JUMP_8))
     {
         SetCompositeBonus(oSkin, "WEMIC_JUMP_8", 8, ITEM_PROPERTY_SKILL_BONUS, 28);
+    } 
+    
+    // Metal hide - Bladeling armor restriction
+    if(GetHasFeat(FEAT_METAL_HIDE))
+    {
+        ExecuteScript("race_bldlngrstct", oPC);
     } 
     
     //natural weapons
@@ -665,5 +710,13 @@ void main()
         sResRef = "prc_hdarc_slam_";
         sResRef += GetAffixForSize(nSize);
         AddNaturalPrimaryWeapon(oPC, sResRef, 1);
+    }
+    else if(nRace==RACIAL_TYPE_BLADELING)
+    {
+        int nSize = PRCGetCreatureSize(oPC);
+        //primary weapon
+        string sResRef = "prc_claw_1d6m_";
+        sResRef += GetAffixForSize(nSize);
+        AddNaturalPrimaryWeapon(oPC, sResRef, 2);
     }
 }

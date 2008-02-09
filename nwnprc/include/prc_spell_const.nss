@@ -475,6 +475,7 @@ const int SPELL_RACIAL_CIRCLE_VS_EVIL               = 2939;
 const int SPELL_RACIAL_CIRCLE_VS_LAW                = 2940;
 const int SPELL_RACIAL_CIRCLE_VS_CHAOS              = 2941;
 const int SPELL_NATHRI_EXPEDITIOUS_RETREAT          = 2943;
+const int SPELL_BLADELING_RAZOR_STORM               = 2944;
 
 
 // Poison system spells

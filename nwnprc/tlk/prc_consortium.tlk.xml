@@ -4103,6 +4103,7 @@ Special: You must be able to assume an alternate form. See the following list:
   Initiate of Draconic Mysteries: Level 10 or higher.
   Bonded Summoner: Level 10 or higher.
   Werewolf: Level 1 or higher.
+  Races: Pixie, Rakshasa, Fey'ri, Hound Archon, Yuan-ti Pureblood
 
 ABILITIES:
 
@@ -36117,7 +36118,7 @@ Special Abilities:
   <entry id="55867" lang="en" sex="m">Driders are bloodthirsty creatures that lurk in the depths of the earth, seeking warm-blooded prey of any kind. These strange beings have the head and torso of a drow elf and the legs and lower body of a giant spider. Failed of Lolth, driders are outcast from their own communities. Drow and driders hate one another passionately.
 
 Drider Ability Adjustments: +4 Str, +4 Dex, +6 Con, +4 Int, +6 Wis, +6 Cha
-Favored Class (Cleric): A multiclass drider's cleric class does not count when determining whether he or she suffers an XP penalty for multiclassing.
+Favored Class (Sorcerer): A multiclass drider's sorcerer class does not count when determining whether he or she suffers an XP penalty for multiclassing.
 
 Special Abilities:
 - Darkvision: Driders can see in the dark.
@@ -36125,8 +36126,8 @@ Special Abilities:
 - Spell Resistance: Spell Resistance equal to 11 + hit dice.
 - Skill Affinity (Hide): +4 Racial bonus to Hide checks
 - Skill Affinity (Move Silently): +4 Racial bonus to Move Silently checks
-- Poison bite, Fortitude save (DC 16), initial and secondary damage 1d6 temporary strength
-- Spell-like abilitys: darkness, detect alignment, faerie fire - 1/day, Caster level 6th
+- Poison bite: Fortitude save (DC 18), initial and secondary damage 1d6 temporary strength
+- Spell-like abilitys: darkness, detect good, detect law, faerie fire - 1/day, Caster level 6th
 - Aberration: Driders count as Aberrations for the purposes of spells and effects.</entry>
   <entry id="55868" lang="en" sex="m">Plant Immunities</entry>
   <entry id="55869" lang="en" sex="m">Type of Feat: Racial
@@ -36156,6 +36157,8 @@ Special Abilities:
 - Resist Piercing: Innate 50% piercing resistance.
 - Plant Immunities:  Immune to sleep, paralyze, poison, mind-affecting effects, and critical hits.
 - Plant: Volodni count as Plants for the purpose of spells.</entry>
+  <entry id="55877" lang="en" sex="m">Racial Detect Good</entry>
+  <entry id="55878" lang="en" sex="m">Racial Detect Law</entry>
   <entry id="55964" lang="en" sex="m">1</entry>
   <entry id="55965" lang="en" sex="m">2</entry>
   <entry id="55966" lang="en" sex="m">3</entry>

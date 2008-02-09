@@ -719,4 +719,12 @@ void main()
         sResRef += GetAffixForSize(nSize);
         AddNaturalPrimaryWeapon(oPC, sResRef, 2);
     }
+    else if(nRace==RACIAL_TYPE_DRIDER)
+    {
+        int nSize = PRCGetCreatureSize(oPC);
+        //secondary weapon
+        string sResRef = "prc_drid_bite_";
+        sResRef += GetAffixForSize(nSize);
+        AddNaturalSecondaryWeapon(oPC, sResRef);
+    }
 }

@@ -377,6 +377,13 @@ int GetArcanePRCLevels (object oCaster)
     if(GetLevelByClass(CLASS_TYPE_SORCERER, oCaster)
         && GetRacialType(oCaster) == RACIAL_TYPE_RAKSHASA)
         nArcane += GetLevelByClass(CLASS_TYPE_OUTSIDER);
+        
+    //Driders include aberration HD as sorc
+    //if they have sorcerer levels, then it counts as a prestige class
+    //otherwise its used instead of sorc levels
+    if(GetLevelByClass(CLASS_TYPE_SORCERER, oCaster)
+        && GetRacialType(oCaster) == RACIAL_TYPE_DRIDER)
+        nArcane += GetLevelByClass(CLASS_TYPE_ABERRATION);
 
    return nArcane;
 }
@@ -455,6 +462,9 @@ int GetIsArcaneClass(int nClass, object oCaster = OBJECT_SELF)
             nClass==CLASS_TYPE_WARMAGE ||
             (nClass==CLASS_TYPE_OUTSIDER
                 && GetRacialType(oCaster)==RACIAL_TYPE_RAKSHASA
+                && !GetLevelByClass(CLASS_TYPE_SORCERER)) ||
+            (nClass==CLASS_TYPE_ABERRATION
+                && GetRacialType(oCaster)==RACIAL_TYPE_DRIDER
                 && !GetLevelByClass(CLASS_TYPE_SORCERER))
             );
 }
@@ -513,6 +523,11 @@ int GetFirstArcaneClass (object oCaster = OBJECT_SELF)
     //raks cast as sorcs
     if(nClass == CLASS_TYPE_OUTSIDER
         && GetRacialType(oCaster) == RACIAL_TYPE_RAKSHASA
+        && !GetLevelByClass(CLASS_TYPE_SORCERER))
+        nClass = CLASS_TYPE_SORCERER;
+    //driders cast as sorcs
+    if(nClass == CLASS_TYPE_ABERRATION
+        && GetRacialType(oCaster) == RACIAL_TYPE_DRIDER
         && !GetLevelByClass(CLASS_TYPE_SORCERER))
         nClass = CLASS_TYPE_SORCERER;
     return nClass;
@@ -1635,6 +1650,11 @@ int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)
             // motu99: shouldn't we add this to the sorc levels? Not sure, so left it the way it was
             if(!iTemp && GetRacialType(oCaster) == RACIAL_TYPE_RAKSHASA)
                 iTemp = GetLevelByClass(CLASS_TYPE_OUTSIDER, oCaster);
+                
+            //Drider include aberration HD as sorc
+            // fox: handled same way as rak, if rak needs changing this does too
+            if(!iTemp && GetRacialType(oCaster) == RACIAL_TYPE_DRIDER)
+                iTemp = GetLevelByClass(CLASS_TYPE_ABERRATION, oCaster);
 
             iTemp += PractisedSpellcasting(oCaster, CLASS_TYPE_SORCERER, iTemp);
             iTemp += DraconicPower(oCaster);

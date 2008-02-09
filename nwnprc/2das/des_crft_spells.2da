@@ -2946,8 +2946,8 @@
 2942  Racial_Magic_Circle_against_Alignment                     ****            1        1      1        3     0           
 2943  FEAT_NATHRI_EXP_RETREAT                                   ****            1        1      1        1     0           
 2944  FEAT_BLADELING_RAZOR_STORM                                ****            1        1      1        5     0           
-2945  ****                                                      ****            1        1      1        ****  0           
-2946  ****                                                      ****            1        1      1        ****  0           
+2945  Racial_Detect_Good                                        ****            1        1      1        1     0           
+2946  Racial_Detect_Law                                         ****            1        1      1        1     0           
 2947  ****                                                      ****            1        1      1        ****  0           
 2948  ****                                                      ****            1        1      1        ****  0           
 2949  ****                                                      ****            1        1      1        ****  0           

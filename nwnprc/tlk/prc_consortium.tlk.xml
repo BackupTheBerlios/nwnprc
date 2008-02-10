@@ -20015,7 +20015,7 @@ Special Abilities:
 - Powerful Build: Half-giants count as Large for purposes of grapples, trips, and similar abilities.  They can wield weapons as if they were Large size.
 - Naturally Psionic: Half-giants gain 2 free power points at first level.
 - Psi-like Ability: Stomp - 1/day
-- Giant: Elans are considered Giants for the purpose of spells.</entry>
+- Giant: Half-giants are considered Giants for the purpose of spells.</entry>
   <entry id="50464" lang="en" sex="m">Maenad</entry>
   <entry id="50465" lang="en" sex="m">maenad</entry>
   <entry id="50466" lang="en" sex="m">Maenads</entry>
@@ -36159,6 +36159,86 @@ Special Abilities:
 - Plant: Volodni count as Plants for the purpose of spells.</entry>
   <entry id="55877" lang="en" sex="m">Racial Detect Good</entry>
   <entry id="55878" lang="en" sex="m">Racial Detect Law</entry>
+  <entry id="55879" lang="en" sex="m">Born in the new draconian nation of Teyr on Krynn, you were raised to a semi-military lifestyle.  Now, for whatever reasons you may have, you have left the sanctuary of home and have journeyed into the world to show them what a real draconian is like.</entry>
+  <entry id="55880" lang="en" sex="m">Bozak Draconian</entry>
+  <entry id="55881" lang="en" sex="m">Bozak</entry>
+  <entry id="55882" lang="en" sex="m">bozak</entry>
+  <entry id="55883" lang="en" sex="m">Bozak Draconians</entry>
+  <entry id="55884" lang="en" sex="m">Bozak Draconians are a race of dragon-like humanoids created originally from the eggs of bronze dragons. They are skilled magic users and are typically clerics. They take pride in knowing a variety of spells, and Bozaks are also good with languages (during his twenty-year stay in the Kharolis mountains, a Bozak named Kang picked up a large working vocabulary in Dwarven, while Slith, Kang's Sivak second-in-command, learned very little Dwarven in the equivalent span of time). Bozaks are physically about the same size as Kapak draconians, but tend to be more intelligent; nevertheless, they are also proficient melee combatants and are natural tacticians and strategists. When a Bozak is killed, its scales shrivel and its bones are revealed; the bones then explode.
+  
+Bozak Draconian Ability Adjustments: +2 Str, +2 Int, +2 Cha.
+Favored Class (Sorcerer): A multiclass bozak's sorcerer class does not count when determining whether he suffers an XP penalty for multiclassing. 
+
+Special Abilities:
+
+- 30' base speed 
+- Darkvision: Allows them to see in the dark.
+- Spell Resistance: Bozaks have spell resistance equal to 14 + their level.
+- Natural Armor: +8 racial bonus to Natural Armor.
+- Natural Weapons: Has a bite attack for 1d6 and 2 claw attacks for 1d4 each.
+- Immunities: Immune to sleep, paralyzation, and disease.
+- Death Throes: When a bozak dies, he explodes in a cloud of dust and bone, dealing 1d6 damage to everything within 10'.  A reflex save vs 10 + Con reduces the damage by half.
+- Proficiencies: Proficient with light armor, shields, all simple weapons, longsword, longbow, and shortsword.
+- Dragon: Bozak Draconians count as Dragons for the purpose of spells.</entry>
+  <entry id="55885" lang="en" sex="m">Baaz Draconian</entry>
+  <entry id="55886" lang="en" sex="m">Baaz</entry>
+  <entry id="55887" lang="en" sex="m">baaz</entry>
+  <entry id="55888" lang="en" sex="m">Baaz Draconians</entry>
+  <entry id="55889" lang="en" sex="m">Baaz Draconians are a race of dragon-like humanoids created originally from the eggs of brass dragons and are the smallest and most common type of draconian. Baaz typically serve as soldiers, and are historically mistreated by other draconian breeds.  The arrival of female Baaz draconians is beginning to change this, female Baaz being superb organizers by nature. Male baaz on the other hand tend to be shallow, selfish and sadistic, or at the very least undisciplined. They do not possess any magical powers. When a Baaz is killed, its body turns into stone, often trapping the weapon used to kill it. After a short time passes, the stone body will crumble on its own and the trapped weapon will then be released, unharmed.
+  
+Bozak Draconian Ability Adjustments: +2 Con, -2 Int, -2 Wis.
+Favored Class(Fighter): A multiclass baaz's fighter class does not count when determining whether he suffers an XP penalty for multiclassing. 
+
+Special Abilities:
+
+- 30' base speed 
+- Darkvision: Allows them to see in the dark.
+- Spell Resistance: Baaz have spell resistance equal to 8 + their level.
+- Natural Armor: +2 racial bonus to Natural Armor.
+- Natural Weapons: Has a bite attack for 1d4 and 2 claw attacks for 1d4 each.
+- Immunities: Immune to sleep, paralyzation, and disease.
+- Death Throes: When a baaz dies, the corpse turns to stone around the weapon that struck the killing blow, trapping it.  After a time, the corpse turns to dust, leaving the weapon unharmed.
+- Proficiencies: Proficient with all simple weapons.
+- Dragon: Baaz Draconians count as Dragons for the purpose of spells.</entry>
+  <entry id="55890" lang="en" sex="m">Spell Resistance 8</entry>
+  <entry id="55891" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: The creature has an innate spell resistance of 8, plus 1 per level.
+Use: Automatic.</entry>
+  <entry id="55892" lang="en" sex="m">Racial Sneak Attack +1d6</entry>
+  <entry id="55893" lang="en" sex="m">Type of Feat: Race Specific
+  
+Specifics: Adds +1d6 Sneak Attack damage to your existing sneak attack, or grants the ability to sneak attack for 1d6 damage.
+Use: Automatic.</entry>
+  <entry id="55894" lang="en" sex="m">Kapak Draconian</entry>
+  <entry id="55895" lang="en" sex="m">Kapak</entry>
+  <entry id="55896" lang="en" sex="m">kapak</entry>
+  <entry id="55897" lang="en" sex="m">Kapak Draconians</entry>
+  <entry id="55898" lang="en" sex="m">Kapak Draconians are a race of dragon-like humanoids created originally from the eggs of copper dragons. They make good assassins and thieves, as they can coat their weapons with a form of poison, which paralyzes a victim. They like structure, and while not reknowned for original thought, they still show creativity in carrying out missions of stealth and subterfuge.  Kapaks are larger than Baaz draconians (though smaller than Sivaks) and powerfully muscled; they tend to enjoy battle, but they are not particularly perceptive. When a Kapak is killed, it immediately dissolves into a pool of acid and all equipment it carried becomes useless. The saliva of female Kapaks is not poisonous; instead, it has healing properties.
+  
+Kapak Draconian Ability Adjustments: +2 Dex, +2 Con, -2 Int, -2 Wis.
+Favored Class (Rogue): A multiclass kapak's rogue class does not count when determining whether he suffers an XP penalty for multiclassing. 
+
+Special Abilities:
+
+- 30' base speed 
+- Darkvision: Allows them to see in the dark.
+- Spell Resistance: Kapaks have spell resistance equal to 11 + their level.
+- Natural Armor: +2 racial bonus to Natural Armor.
+- Natural Weapons: Has a bite attack for 1d4.
+- Sneak Attack: Kapaks gain 1d6 sneak attack damage to their attacks.
+- Immunities: Immune to sleep, paralyzation, and disease.
+- Saliva: Male Kapaks have poisonous saliva.  When used on a weapon it coats it with a poison that does 1d6 Dex primary and 1d6 secondary damage.  Female Kapaks have a healing saliva instead of poisonous, healing 2d6 points of damage.  This healing only works once every 4 hours on any given creature, and does not work on the kapak herself.
+- Death Throes: When a kapak dies, he melts into a pool of acid with a radius of 5'.  The acid lasts 1d6 rounds before evaporating, and does 1d6 acid points damage to anything in it each round.
+- Proficiencies: Proficient with all simple weapons.
+- Dragon: Kapak Draconians count as Dragons for the purpose of spells.</entry>
+  <entry id="55899" lang="en" sex="m">Kapak Saliva</entry>
+  <entry id="55900" lang="en" sex="m">Type of Feat: Race Specific
+  
+Specifics: A male kapak can lick his weapon, coating it with a poison that does 1d6 dex damage as primary and secondary effects.  Licking a weapon is a full round action that provokes attacks of opportunity.  The poison lasts for 3 rounds.
+
+A female kapak does not secrete poison but a healing agent.  She can lcik the owunds of any creature, healing it for 2d6.  She can do this to any given creature once every 4 hours, and cannot use it on herself.
+Use: Selected.</entry>
   <entry id="55964" lang="en" sex="m">1</entry>
   <entry id="55965" lang="en" sex="m">2</entry>
   <entry id="55966" lang="en" sex="m">3</entry>

@@ -1,9 +1,12 @@
 2DA V2.0
 
-  FeatLabel        FeatIndex 
-0 Natural_Armor_2  4761      
-1 Immunity_Disease 4785      
-2 Race_Dragon      4773      
-3 Spell_Resist_8   4615      
-4 darkvision       228       
-5 WeapProfCreature 289       
+   FeatLabel                     FeatIndex 
+0  darkvision                    228       
+1  Race_Dragon                   4773      
+2  Natural_Armor_2               4761      
+3  ImmuneDisease                 4785        
+4  FEAT_DRAGON_IMMUNE_PARALYSIS  963     
+5  Immunity_sleep                235       
+6  Spell_resistance_8            4615       
+7  WeapProfSimple                46        
+8  WeapProfCreature              289       

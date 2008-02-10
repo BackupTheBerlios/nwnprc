@@ -384,6 +384,13 @@ int GetArcanePRCLevels (object oCaster)
     if(GetLevelByClass(CLASS_TYPE_SORCERER, oCaster)
         && GetRacialType(oCaster) == RACIAL_TYPE_DRIDER)
         nArcane += GetLevelByClass(CLASS_TYPE_ABERRATION);
+        
+    //Bozaks include dragon HD as sorc
+    //if they have sorcerer levels, then it counts as a prestige class
+    //otherwise its used instead of sorc levels
+    if(GetLevelByClass(CLASS_TYPE_SORCERER, oCaster)
+        && GetRacialType(oCaster) == RACIAL_TYPE_BOZAK)
+        nArcane += GetLevelByClass(CLASS_TYPE_DRAGON);
 
    return nArcane;
 }
@@ -465,6 +472,9 @@ int GetIsArcaneClass(int nClass, object oCaster = OBJECT_SELF)
                 && !GetLevelByClass(CLASS_TYPE_SORCERER)) ||
             (nClass==CLASS_TYPE_ABERRATION
                 && GetRacialType(oCaster)==RACIAL_TYPE_DRIDER
+                && !GetLevelByClass(CLASS_TYPE_SORCERER)) ||
+            (nClass==CLASS_TYPE_DRAGON
+                && GetRacialType(oCaster)==RACIAL_TYPE_BOZAK
                 && !GetLevelByClass(CLASS_TYPE_SORCERER))
             );
 }
@@ -528,6 +538,11 @@ int GetFirstArcaneClass (object oCaster = OBJECT_SELF)
     //driders cast as sorcs
     if(nClass == CLASS_TYPE_ABERRATION
         && GetRacialType(oCaster) == RACIAL_TYPE_DRIDER
+        && !GetLevelByClass(CLASS_TYPE_SORCERER))
+        nClass = CLASS_TYPE_SORCERER;
+    //driders cast as sorcs
+    if(nClass == CLASS_TYPE_DRAGON
+        && GetRacialType(oCaster) == RACIAL_TYPE_BOZAK
         && !GetLevelByClass(CLASS_TYPE_SORCERER))
         nClass = CLASS_TYPE_SORCERER;
     return nClass;
@@ -1655,6 +1670,11 @@ int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)
             // fox: handled same way as rak, if rak needs changing this does too
             if(!iTemp && GetRacialType(oCaster) == RACIAL_TYPE_DRIDER)
                 iTemp = GetLevelByClass(CLASS_TYPE_ABERRATION, oCaster);
+
+            //Bozak include dragon HD as sorc
+            // fox: handled same way as rak, if rak needs changing this does too
+            if(!iTemp && GetRacialType(oCaster) == RACIAL_TYPE_BOZAK)
+                iTemp = GetLevelByClass(CLASS_TYPE_DRAGON, oCaster);
 
             iTemp += PractisedSpellcasting(oCaster, CLASS_TYPE_SORCERER, iTemp);
             iTemp += DraconicPower(oCaster);

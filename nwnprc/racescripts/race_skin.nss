@@ -727,4 +727,37 @@ void main()
         sResRef += GetAffixForSize(nSize);
         AddNaturalSecondaryWeapon(oPC, sResRef);
     }
+    else if(nRace==RACIAL_TYPE_BOZAK)
+    {
+        string sResRef = "prc_raks_bite_";
+        int nSize = PRCGetCreatureSize(oPC);
+        sResRef += GetAffixForSize(nSize);
+        AddNaturalSecondaryWeapon(oPC, sResRef);
+        //primary weapon
+        sResRef = "prc_claw_1d6l_";
+        sResRef += GetAffixForSize(nSize);
+        AddNaturalPrimaryWeapon(oPC, sResRef, 2);
+    }
+    else if(nRace==RACIAL_TYPE_BAAZ)
+    {
+        string sResRef = "prc_lizf_bite_";
+        int nSize = PRCGetCreatureSize(oPC);
+        sResRef += GetAffixForSize(nSize);
+        AddNaturalSecondaryWeapon(oPC, sResRef);
+        //primary weapon
+        sResRef = "prc_claw_1d6l_";
+        sResRef += GetAffixForSize(nSize);
+        AddNaturalPrimaryWeapon(oPC, sResRef, 2);
+    }
+    else if(nRace==RACIAL_TYPE_KAPAK)
+    {
+        string sResRef = "prc_lizf_bite_";
+        int nSize = PRCGetCreatureSize(oPC);
+        sResRef += GetAffixForSize(nSize);
+        AddNaturalSecondaryWeapon(oPC, sResRef);
+    }
+    
+    //Draconian on-death effects
+    if(nRace == RACIAL_TYPE_BOZAK || nRace == RACIAL_TYPE_BAAZ || nRace == RACIAL_TYPE_KAPAK)
+        ExecuteScript("race_deaththroes", oPC);
 }

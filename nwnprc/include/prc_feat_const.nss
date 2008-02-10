@@ -61,6 +61,7 @@ const int FEAT_HOUND_MAGICCIRCLE   = 4515;
 const int FEAT_HOUND_TELEPORT      = 4516;
 const int FEAT_DRIDER_DETECTGOOD   = 4543;
 const int FEAT_DRIDER_DETECTLAW    = 4544;
+const int FEAT_RACIAL_SNEAK_1D6    = 4545;
 
 const int FEAT_RACE_ENERGYRAY      = 4856;
 const int FEAT_RACE_ENERGYRAYSONIC = 4520;
@@ -76,6 +77,8 @@ const int FEAT_TULADH_MAGIC_CIRCLE   = 4533;
 const int FEAT_NATHRI_EXP_RETREAT    = 4534;
 const int FEAT_METAL_HIDE            = 4538;
 const int FEAT_BLADELING_RAZOR_STORM = 4539;
+
+const int FEAT_KAPAK_SALIVA          = 4546;
 
 const int FEAT_LTSENSE = 4700;
 const int FEAT_LTBLIND = 4701;

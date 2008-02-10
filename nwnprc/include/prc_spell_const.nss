@@ -478,6 +478,8 @@ const int SPELL_NATHRI_EXPEDITIOUS_RETREAT          = 2943;
 const int SPELL_BLADELING_RAZOR_STORM               = 2944;
 const int SPELL_DRIDER_DETECTGOOD                   = 2945;
 const int SPELL_DRIDER_DETECTLAW                    = 2946;
+const int SPELL_KAPAK_APPLY_SALIVA                  = 2947;
+const int SPELL_KAPAK_ONHIT_POISON                  = 2948;
 
 
 // Poison system spells

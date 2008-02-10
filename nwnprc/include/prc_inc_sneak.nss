@@ -138,6 +138,10 @@ int GetRogueSneak(object oPC)
          break;
       }
    }
+   
+   //Kapak racial sneak attack
+   if(GetHasFeat(FEAT_RACIAL_SNEAK_1D6)) iRogueSneak += 1;
+   
    if(iRogueSneak > 0) //the feats only apply if you already have Sneak Attack
        iRogueSneak += nBonusFeatDice;
 

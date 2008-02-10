@@ -287,6 +287,6 @@ const int BASE_ITEM_ELF_LIGHTBLADE  = 202;
 const int BASE_ITEM_ELF_THINBLADE   = 203;
 const int BASE_ITEM_ELF_COURTBLADE  = 204;
 
-
-// Dragon Fire Inspiration ONHIT
+// ONHIT Spells
 const int IP_CONST_ONHIT_CASTSPELL_DRAGONFIRE = 203;
+const int IP_CONST_ONHIT_KAPAK_POISON         = 204;

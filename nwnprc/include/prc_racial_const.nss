@@ -28,6 +28,7 @@ const int RACIAL_TYPE_SILVANESTI_ELF       = 45;
 const int RACIAL_TYPE_TINK_GNOME           = 46;
 
 //Eberron Races
+const int RACIAL_TYPE_SHIFTER              = 146;
 const int RACIAL_TYPE_CHANGELING           = 147;
 const int RACIAL_TYPE_KALASHTAR            = 148;
 const int RACIAL_TYPE_WARFORGED            = 149;
@@ -45,8 +46,8 @@ const int RACIAL_TYPE_TULADHARA            = 197;
 const int RACIAL_TYPE_ZENYRTHRI            = 206;
 
 //Ravenloft Races
-const int RACIAL_TYPE_HVISTANI             = 145;
-const int RACIAL_TYPE_VISTANI              = 146;
+const int RACIAL_TYPE_HVISTANI             = 146;
+const int RACIAL_TYPE_VISTANI              = 147;
 
 //Rokugan/Kara-Tur Races
 const int RACIAL_TYPE_KOROBKURU            = 245;
@@ -110,7 +111,7 @@ const int RACIAL_TYPE_AIR_GEN              = 199;
 const int RACIAL_TYPE_EARTH_GEN            = 200;
 const int RACIAL_TYPE_FEYRI                = 201;
 const int RACIAL_TYPE_FIRE_GEN             = 202;
-const int RACIAL_TYPE_MORTIF               = 144;
+const int RACIAL_TYPE_MORTIF               = 130;
 const int RACIAL_TYPE_TANARUKK             = 203;
 const int RACIAL_TYPE_TIEFLING             = 204;
 const int RACIAL_TYPE_WATER_GEN            = 205;

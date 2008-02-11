@@ -708,6 +708,10 @@ const int IP_CONST_FEAT_2ND_AURA_ENERGY         = 15979;
 const int IP_CONST_FEAT_INCORPOREAL             = 227;
 const int IP_CONST_FEAT_ETHEREAL                = 228;
 
+//Racial feats
+const int IP_CONST_FEAT_CRAFTGUILD              = 391;
+const int IP_CONST_FEAT_TECHGUILD               = 392;
+const int IP_CONST_FEAT_SAGEGUILD               = 393;
 
 // Template Feats
 const int IP_CONST_FEAT_TEMPLATE_CELESTIAL_SMITE_EVIL = 16301;

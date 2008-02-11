@@ -1,5 +1,6 @@
 /*
     Whisper Gnome Mage Hand
+    Also used for Irda
 */
 
 #include "prc_inc_racial"

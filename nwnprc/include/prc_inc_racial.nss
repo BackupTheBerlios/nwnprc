@@ -70,6 +70,8 @@ int MyPRCGetRacialType(object oCreature)
         return RACIAL_TYPE_ABERRATION;
     if(GetHasFeat(FEAT_DRAGON, oCreature))
         return RACIAL_TYPE_DRAGON;
+    if(GetHasFeat(FEAT_SHAPECHANGER, oCreature))
+        return RACIAL_TYPE_SHAPECHANGER;
     if(GetHasFeat(FEAT_GIANT, oCreature))
         return RACIAL_TYPE_GIANT;
     if(GetHasFeat(FEAT_FEY, oCreature))

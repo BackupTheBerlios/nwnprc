@@ -251,6 +251,12 @@ void main()
         SetCompositeBonus(oSkin, "SA_Bluff", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_BLUFF);
     }
 
+    // Skill Affinity, +2 to intimidate
+    if(GetHasFeat(FEAT_SA_INTIMIDATE))
+    {
+        SetCompositeBonus(oSkin, "SA_Intimidate", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_INTIMIDATE);
+    }
+
     // Skill Affinity, +2 to balance
     if(GetHasFeat(FEAT_SA_BALANCE))
     {
@@ -329,6 +335,12 @@ void main()
         SetCompositeBonus(oSkin, "SA_Open_Lock", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_OPEN_LOCK);
     }
 
+    // Skill Affinity, +2 to sleight of hand/Pickpocket
+    if(GetHasFeat(FEAT_SA_PICKPOCKET))
+    {
+        SetCompositeBonus(oSkin, "SA_Pickpocket", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_PICK_POCKET);
+    }
+
 
    // Minotaur bonuses due to scent
     if(GetHasFeat(FEAT_MINOT_SCENT))
@@ -390,6 +402,7 @@ void main()
 
     // Skill Affinity, +4 to hide
     // for forest gnomes since they get +4 or +8 in the woods.
+    //also for Volodni, which only get hide bonuses in the forest
     if(GetHasFeat(FEAT_SA_HIDEF))
     {
         SetCompositeBonus(oSkin, "SA_Hide_Forest", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE);
@@ -499,7 +512,28 @@ void main()
     {
         SetCompositeBonus(oSkin, "Svirf_Dodge", 4, ITEM_PROPERTY_AC_BONUS);
     }
-
+    
+    //Tinker Gnome guilds
+    if(GetHasFeat(FEAT_LIFEPATH) && !(GetHasFeat(FEAT_CRAFTGUILD) || GetHasFeat(FEAT_TECHGUILD) || GetHasFeat(FEAT_SAGEGUILD)))
+        ExecuteScript("race_lifepthconv", oPC);
+    
+    if(GetHasFeat(FEAT_CRAFTGUILD))
+    {
+        SetCompositeBonus(oSkin, "SA_Craft_GuildA", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_CRAFT_ARMOR);
+        SetCompositeBonus(oSkin, "SA_Craft_GuildW", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_CRAFT_WEAPON);
+        SetCompositeBonus(oSkin, "SA_Craft_GuildT", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_CRAFT_TRAP);
+    }
+    if(GetHasFeat(FEAT_TECHGUILD))
+    {
+        SetCompositeBonus(oSkin, "SA_Tech_GuildA", 1, ITEM_PROPERTY_SKILL_BONUS, SKILL_CRAFT_ARMOR);
+        SetCompositeBonus(oSkin, "SA_Tech_GuildW", 1, ITEM_PROPERTY_SKILL_BONUS, SKILL_CRAFT_WEAPON);
+        SetCompositeBonus(oSkin, "SA_Tech_GuildT", 1, ITEM_PROPERTY_SKILL_BONUS, SKILL_CRAFT_TRAP);
+        SetCompositeBonus(oSkin, "SA_Tech_GuildL", 1, ITEM_PROPERTY_SKILL_BONUS, SKILL_LORE);
+    }
+    if(GetHasFeat(FEAT_SAGEGUILD))
+    {
+        SetCompositeBonus(oSkin, "SA_Sage_Guild", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_LORE);
+    }
 
     //Sheild restriction
     if(   GetLocalInt(oPC,"ONEQUIP") == 2
@@ -588,7 +622,7 @@ void main()
     //natural weapons
     //replace with a feat check
     int nRace = GetRacialType(oPC);
-    if(nRace==RACIAL_TYPE_MINOTAUR)
+    if(nRace==RACIAL_TYPE_MINOTAUR || nRace==RACIAL_TYPE_KRYNN_MINOTAUR)
     {
         string sResRef = "prc_mino_gore_";
         int nSize = PRCGetCreatureSize(oPC);

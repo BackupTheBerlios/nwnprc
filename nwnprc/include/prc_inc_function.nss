@@ -486,11 +486,13 @@ void DeletePRCLocalInts(object oSkin)
     // Duskblade
     DeleteLocalInt(oSkin, "DuskbladeArmourCasting");
 
-    // Scout
-    DeleteLocalInt(oPC, "ScoutBattleFort");
+
     DeleteLocalInt(oPC, "ScoutFreeMove");
     DeleteLocalInt(oPC, "ScoutFastMove");
     DeleteLocalInt(oPC, "ScoutBlindsight");
+    
+    // Enlightened Fist
+    DeleteLocalInt(oPC, "EnlightenedFistSR");
 
     // future PRCs Go below here
 }

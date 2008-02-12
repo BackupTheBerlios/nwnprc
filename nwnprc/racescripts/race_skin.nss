@@ -370,6 +370,12 @@ void main()
         SetCompositeBonus(oSkin, "Gully_Trait_Fear", 4, ITEM_PROPERTY_DECREASED_SAVING_THROWS_SPECIFIC, SPELL_FEAR);
     }
    
+    // Skill Affinity, +2 to move silently
+    if(GetHasFeat(FEAT_SA_MOVE))
+    {
+        SetCompositeBonus(oSkin, "SA_Move", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_MOVE_SILENTLY);
+    }
+   
     // Skill Affinity, +4 to move silently
     if(GetHasFeat(FEAT_SA_MOVE4))
     {

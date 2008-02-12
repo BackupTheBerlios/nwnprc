@@ -17395,7 +17395,31 @@ Special: Rock Gnomes are small creatures and as such they can never use the foll
   <entry id="49577" lang="en" sex="m">Tinker Gnomish</entry>
   <entry id="49578" lang="en" sex="m">tinker gnomish</entry>
   <entry id="49579" lang="en" sex="m">Tinker Gnomes</entry>
-  <entry id="49580" lang="en" sex="m">**not included in first release**</entry>
+  <entry id="49580" lang="en" sex="m">Tinker gnomes are the tinkers and inventors of Krynn.  Their mind is always awhirl with technological dreams and ideas.  Upon reaching adulthood, every gnome takes up a Life QUest, a goal that they strive towards throughout their entire life.  They are specific and usually outlandish; it's not uncommon for a given Life Quest to be passed through several generations of a family.  Gnomes are typically too focused on their plans and devices to think much of social graces;  it's not that they mean to be rude, the thought just doesn't occur to them.  They also believe that the more complicated it is, the better it is.  Physically, they are like their cousins on other worlds: 3' tall humanoids with teak-colored skin, blue or violet eyes, and long white hair.  Males usually grow a extremely cury beard and moustache.  As a race they tend to speak extemely fast, individual words almost seeming to run together.
+
+Rock Gnomish Ability Adjustments: +2 Dex, +2 Int, -2 Str, -2 Wis.
+Favored Class (Any): A multiclass tinker gnome's highest class does not count when determining whether he suffers an XP penalty for multiclassing.
+
+Special Abilities:
+
+- Small Stature
+ +1 size bonus to attack rolls.
+ +1 size bonus to AC.
+ +4 size bonus to Hide checks.
+- Hardiness vs. Illusions: +2 racial bonus on saving throws against mind-affecting spells.
+- Offensive Training vs. Reptilians: +1 racial bonus on attack rolls against reptilian humanoids.
+- Offensive Training vs. Goblinoids: +1 racial bonus on attack rolls against goblinoids (goblins, hobgoblins, and bugbears).
+- Defensive Training vs. Giants: +4 dodge bonus to AC against giants.
+- Skill Affinity (Listen): +2 racial bonus to Listen checks.
+- Skill Affinity (Concentration): +2 racial bonus to Concentration checks.
+- Spell Focus (Illusion): Rock Gnomes add +2 DC to any Illusion spells they cast. This is identical to the feat.
+- Low-Light Vision: Allows them to see better than normal in the dark.
+- Life Quest: Tinker gnomes are extremely hard to distract from their Life Quest, which grants them a +2 to will saves.
+- Guilds: Every gnome chooses a guild when they choose a Life Quest. This guild will not change for the life of the gnome.
+  Craft Guild gnomes gain a +2 to all crafting skill checks.
+  Tech Guild gnomes gain a +1 to all crafting and Lore checks.
+  Sage Guild gnomes gain a +2 to all Lore checks.
+- Gnomish: Tinker Gnomes count as Gnomes for the purpose of spells.</entry>
   <entry id="49581" lang="en" sex="m">Scro</entry>
   <entry id="49582" lang="en" sex="m">scro</entry>
   <entry id="49583" lang="en" sex="m">Scro are a race that has only recently begun to reappear in Wildspace.  They are highly militaristic and violent.  After their defeat in the First Unhuman Wars by the Elven spelljammer fleet, they sequested themselves on a far crystal sphere and are now on a holy crusade to drive all non-scro out of Wildspace.  Physically they resemble orcs, standing tall and straight, with skin colors ranging from gray to burnt orange, to moss green, or even jet black or albino.
@@ -18982,8 +19006,11 @@ Use: Automatic.</entry>
   <entry id="50152" lang="en" sex="m">**not included in this release**</entry>
   <entry id="50153" lang="en" sex="m">Special Abilities - Drow</entry>
   <entry id="50154" lang="en" sex="m">Spell-Like Abilities: 1/day - Darkness, Faerie Fire. Caster level 3rd.</entry>
-  <entry id="50155" lang="en" sex="m">Special Abilities - Duergar</entry>
-  <entry id="50156" lang="en" sex="m">Spell-Like Abilities: 1/day - Invisibility. Caster level 3rd.</entry>
+  <entry id="50155" lang="en" sex="m">Kender Taunting</entry>
+  <entry id="50156" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: Kenders are experts at taunting, and gain a +4 to bluff and taunt checks.
+Use: Automatic.</entry>
   <entry id="50157" lang="en" sex="m">Special Abilities - Fey'ri</entry>
   <entry id="50158" lang="en" sex="m">Spell-Like Abilities: 1/day - Alter Self, Charm Person, Clairaudience, Darkness, Enervation.
 Fey'ri spell-like abilities have caster level equal to the fey'ri's character level. The DC is Charisma-based.</entry>
@@ -18996,8 +19023,11 @@ Fey'ri spell-like abilities have caster level equal to the fey'ri's character le
 Extract/Suck Brain: Illithid have a chance to extract the brain of a victim on a successful hit.</entry>
   <entry id="50165" lang="en" sex="m">Special Abilities - Pixie</entry>
   <entry id="50166" lang="en" sex="m">Spell-Like Abilities: At Will - Invisibility; 1/day - Confusion, Entangle, Lesser Dispel, Polymorph Self. Caster level 8th, except Confusion, which is caster level 4th. The DC is Charisma-based.</entry>
-  <entry id="50167" lang="en" sex="m">Special Abilities - Yuan-ti Pureblood</entry>
-  <entry id="50168" lang="en" sex="m">Spell-Like Abilities: 1/day - Charm Person, Darkness, Entangle, Fear. Caster level 3rd. The DC is Charisma-based.</entry>
+  <entry id="50167" lang="en" sex="m">Immunity to Disease</entry>
+  <entry id="50168" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: The creature is immune to disease.
+Use: Automatic.</entry>
   <entry id="50169" lang="en" sex="m">Immunity to Electricity</entry>
   <entry id="50170" lang="en" sex="m">Type of Feat: Racial
 Prerequisite: Race-Specific.
@@ -36237,8 +36267,186 @@ Special Abilities:
   
 Specifics: A male kapak can lick his weapon, coating it with a poison that does 1d6 dex damage as primary and secondary effects.  Licking a weapon is a full round action that provokes attacks of opportunity.  The poison lasts for 3 rounds.
 
-A female kapak does not secrete poison but a healing agent.  She can lcik the owunds of any creature, healing it for 2d6.  She can do this to any given creature once every 4 hours, and cannot use it on herself.
+A female kapak does not secrete poison but a healing agent.  She can lick the wounds of any creature, healing it for 2d6.  She can do this to any given creature once every 4 hours, and cannot use it on herself.
 Use: Selected.</entry>
+  <entry id="55901" lang="en" sex="m">Racial Flare</entry>
+  <entry id="55902" lang="en" sex="m">Shapeshifter</entry>
+  <entry id="55903" lang="en" sex="m">Creature is a member of the Shapeshifter race.</entry>
+  <entry id="55904" lang="en" sex="m">Skill Affinity: Intimidate</entry>
+  <entry id="55905" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: The creature gains a +2 racial bonus to Intimidate checks.
+Use: Automatic.</entry>
+  <entry id="55906" lang="en" sex="m">Skill Affinity: Pickpocket</entry>
+  <entry id="55907" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: The creature gains a +2 racial bonus to Pickpocket checks.
+Use: Automatic.</entry>
+  <entry id="55908" lang="en" sex="m">Partial Skill Affinity: Spells</entry>
+  <entry id="55909" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: The creature gains a +1 racial bonus to Lore and Spellcraft checks.
+Use: Automatic.</entry>
+  <entry id="55910" lang="en" sex="m">Cowardly and Pitiable</entry>
+  <entry id="55911" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: The creature gains a +4 to Persuade checks, but a -4 to fear saves.
+Use: Automatic.</entry>
+  <entry id="55912" lang="en" sex="m">Select a guild to pursue your Life Quest in:</entry>
+  <entry id="55913" lang="en" sex="m">Your Life Path has been selected.</entry>
+  <entry id="55914" lang="en" sex="m">Life Path</entry>
+  <entry id="55915" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: The creature gains a +4 to Persuade checks, but a -4 to fear saves.
+Use: Automatic.</entry>
+  <entry id="55916" lang="en" sex="m">Gnomish Craft Guild</entry>
+  <entry id="55917" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: You are a member of one of the various crafting guilds(leatherworking, blacksmithing, etc) among the gnomes.  You gain a +2 bonus to all crafting checks.
+Use: Automatic.</entry>
+  <entry id="55918" lang="en" sex="m">Gnomish Tech Guild</entry>
+  <entry id="55919" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: You are a member of one of the various technology guilds(architecture, engineering, etc) among the gnomes.  You gain a +1 bonus to all crafting and Lore checks.
+Use: Automatic.</entry>
+  <entry id="55920" lang="en" sex="m">Gnomish Sage Guild</entry>
+  <entry id="55921" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: You are a member of one of the various research guilds(philosophy, mathematics, etc) among the gnomes.  You gain a +2 bonus to Lore checks.
+Use: Automatic.</entry>
+  <entry id="55922" lang="en" sex="m">Lack of Focus</entry>
+  <entry id="55923" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: The creature is unable to focus for any length of time.  This imposes a -4 on all Concentration checks.
+Use: Automatic.</entry>
+  <entry id="55924" lang="en" sex="m">You grew up among stories of honor and glory.  Now, you have left your clan's home to forge stories and legends of your own, and to find a cause worth fighting for.</entry>
+  <entry id="55925" lang="en" sex="m">You have grown up always knowing you and your kind were special.  Your homeland destroyed, your kind wanders the world, hiding what they are.  for reasons of your own however, you have headed out into the world to see what it has in store for you.</entry>
+  <entry id="55926" lang="en" sex="m">You grew up with a small clan of gully dwarves among dirt and squalor.  Somehow, you've managed to overcome your kind's natural cowardice, and now you seek your fortunes among the greater people.</entry>
+  <entry id="55927" lang="en" sex="m">The world is a shiny toy to you.  Like Uncle Trapspringer you've left to wander the world and see all the shiny new stuff out there.  After all, with the way things keep jumping into your pouches, it's obvious they like being there...</entry>
+  <entry id="55928" lang="en" sex="m">Krynn Minotaur</entry>
+  <entry id="55929" lang="en" sex="m">Minotaur</entry>
+  <entry id="55930" lang="en" sex="m">minotaur</entry>
+  <entry id="55931" lang="en" sex="m">Minotaurs</entry>
+  <entry id="55932" lang="en" sex="m">Minotaurs from the world of Krynn are an honorable race.  They are a warrior culture, and promote bravery, glory, and honor.  if they are fighting for a cause they beieve in, they will dedicate themselves to that cause.  They are also natural sailors.  They believe that they are superior to all other races, though they respect dwarves for their ruggedness and humans for their sailing ability and military skills.  Physically they are smaller than their cousins on other worlds, between 6'6" and 7' tall typically, though just as powerfuly built, relatively.  They tend to dress austerely, preferring a simple harness and skirt or kilt, though nobles will occasionally wear robes.
+
+Minotaur Ability Adjustments: +4 Str, -2 Dex, -2 Int, -2 Cha
+Favored Class (Fighter): A multiclass Krynn minotaur's fighter class does not count when determining whether he suffers an XP penalty for multiclassing.
+
+Special Abilities:
+
+- Minotaur Scent: +4 racial bonus to Search, Spot and Listen checks.
+- Skill Affinity(Intimidate): +2 racial bonus to Intimidate checks.
+- Natural Armor Bonus: Racial natural armor bonus of 2.
+- Natural Weapon: Minotaurs can make an unarmed gore attack with their horns.
+- Powerful Charge: Minotaurs can make a charging gore attack at +2 to hit, -2 to AC for an additional 4d6+6 damage.
+- Monstrous: Krynn Minotaurs count as Monstrous Humanoids for the purpose of spells.</entry>
+  <entry id="55933" lang="en" sex="m">Irda</entry>
+  <entry id="55934" lang="en" sex="m">irda</entry>
+  <entry id="55935" lang="en" sex="m">Irda, also known as high ogres, retain the natural grace and beauty bestowed upon them as one of the first races created on Krynn.  They split from their ogre ancestors long ago, taking up residence on a faraway island and only paying visits in secrecy to the mainland of Ansalon.  Thye were cast out into the world when Chaos was reborn, destroying their island in the process.  Physically they are tall and slender, moving with a grace and delicacy that even elves envy.  Mentally they are aloof and arrogant, typically considering the other races as squabbling children.  They prefer isolation as well, even among their own kind.
+
+Irda Ability Adjustments: +2 Int, +2 Cha, -2 Con
+Favored Class (Wizard): A multiclass irda's wizard class does not count when determining whether he suffers an XP penalty for multiclassing.
+
+Special Abilities:
+
+- Low-Light Vision: Irda can see better than normal in the dark.
+- Change Shape: Irda can assume another humanoid shape, disguising themselves as that creature.  They can keep the same shape as long as they wish with no problems.
+- Spell-Like Abilities: Mage Hand, Light, Flare - 1/day
+- Shapeshifter: Irda count as Shapeshifters for the purpose of spells.</entry>
+  <entry id="55936" lang="en" sex="m">Krynn Half-Ogre</entry>
+  <entry id="55937" lang="en" sex="m">Half-Ogre</entry>
+  <entry id="55938" lang="en" sex="m">half-ogre</entry>
+  <entry id="55939" lang="en" sex="m">Half-Ogres</entry>
+  <entry id="55940" lang="en" sex="m">Half-ogres are usually born out of violence and slavery.  Considered weak by ogre standards and a freak despised for their lack of control by human society, they try hard to win acceptance to avoid becoming lonely and depressed.  Their values tend to be set by the culture in which they are raised, which also influences how they prove themselves.  Physically they are a mix, about 6'6" to 7'6" tall.  Half-ogres raised by ogres tend to be unkempt, while human-raised groom as they are taught.  They often try to hide their heritage under large hoods and cloaks.
+
+Half-Ogre Ability Adjustments: +4 Str, +2 Con, -2 Int, -2 Cha
+Favored Class (Fighter): A multiclass Krynn half-ogre's fighter class does not count when determining whether he suffers an XP penalty for multiclassing.
+
+Special Abilities:
+
+- Low-Light Vision: Half-Ogres can see better than normal in the dark.
+- Natural Armor Bonus: Racial natural armor bonus of 1.
+- Giant: Krynn half-ogres count as Giants for the purpose of spells.</entry>
+  <entry id="55941" lang="en" sex="m">Silvanesti</entry>
+  <entry id="55942" lang="en" sex="m">silvanesti</entry>
+  <entry id="55943" lang="en" sex="m">Silvanesti are the oldest and most hidebound of the Krynn elves.  They have a haunting beauty, but are also equally cold and aloof.  Their culture has changed little in 3000 years, typically only when forced to, and they consider themselves superior to all other races, even their Kagonesti and Qualinesti cousins.  They stand about 5' tall, and are typically fair-skinned and hazel-eyed.  Their hair is typically a light brown to platinum blonde.
+
+Silvanesti Ability Adjustments: +2 Dex, +2 Int, -2 Con, -2 Cha.
+Favored Class (Wizard): A multiclass silvanesti's wizard class does not count when determining whether he suffers an XP penalty for multiclassing.
+
+Special Abilities:
+
+- Sleeplessness: Immune to spells and effects of the 'Sleep' subtype.
+- Hardiness vs. Enchantments: +2 racial bonus on saving throws against mind-affecting spells.
+- Bonus Proficiencies (Longsword, Rapier, Shortbow, Longbow)
+- Skill Affinity (Listen): +2 racial bonus to Listen checks.
+- Skill Affinity (Search): +2 racial bonus to Search checks.
+- Skill Affinity (Spot): +2 racial bonus to Spot checks.
+- Skill Affinity(Spells): +1 racial bonus to Lore and Spellcraft checks.
+- Keen Senses: Silvanesti make active Search checks automatically and with no movement penalties.
+- Elvensight: Allows them to see in the dark.
+- Elven: Silvanesti are considered Elven for the purpose of spells.</entry>
+  <entry id="55944" lang="en" sex="m">Kagonesti</entry>
+  <entry id="55945" lang="en" sex="m">kagonesti</entry>
+  <entry id="55946" lang="en" sex="m">The kagonesti are a spiritual breed of elves, honoring the spirits within every object.  They believe the best way to live is in harmony wiht nature, and resent being forced out of their forest homes by encroaching civilization.  They are a more hot-tempered and fierce bunch than their cousin elves.  Physically they are shorter than other elves, with dark brown skin and dark-colored hair.  They tend to wear leather with fringe, feathers, and silver or turquoise jewelry.
+
+Kagonesti Ability Adjustments: +2 Dex, -2 Int, -2 Cha
+Favored Class (Ranger): A multiclass kagonesti's ranger class does not count when determining whether he suffers an XP penalty for multiclassing.
+
+Special Abilities:
+
+- Sleeplessness: Immune to spells and effects of the 'Sleep' subtype.
+- Hardiness vs. Enchantments: +2 racial bonus on saving throws against mind-affecting spells.
+- Bonus Proficiencies (Shortsword, Spear, Shortbow, Longbow)
+- Skill Affinity (Listen): +2 racial bonus to Listen checks.
+- Skill Affinity (Search): +2 racial bonus to Search checks.
+- Skill Affinity (Spot): +2 racial bonus to Spot checks.
+- Keen Senses: Kagonesti make active Search checks automatically and with no movement penalties.
+- Elfsight: Allows them to see in the dark.
+- Elven: Kagonesti are considered Elven for the purpose of spells.</entry>
+  <entry id="55947" lang="en" sex="m">Gully Dwarf</entry>
+  <entry id="55948" lang="en" sex="m">Gully Dwarven</entry>
+  <entry id="55949" lang="en" sex="m">gully dwarven</entry>
+  <entry id="55950" lang="en" sex="m">Gully Dwarves</entry>
+  <entry id="55951" lang="en" sex="m">Gully dwarves are a misbegotten race of tough survivors, said to have descended from gnome/dwarf crossbreeds born after the gnomes' transformation by the Graygem of Gargath.  Guly dwarves are reknowned aorund Ansalon for their stupiditiy, including the fact that their entire numbering system consists of the number one, and two, which represents any number more than one.  They are proud of themselves despite their self-image, and are hardy survivors, small clans taking root wherever they find room.  Ironically, despite al that they are the best cooks in Krynn.  Physically they are much like other dwarves, but typically have a lot of scars, boils, warts, and so on on their skin due to their living conditions.  Males tend to grow long scruffy beards, while females have wispy tufts of hair on their cheeks.  Unlike their brethren, they also tend towards thinness in their limbs, and potbellies are common among both genders.
+
+Gully Dwarven Ability Adjustments: +2 Dex, +2 Con, -4 Int, -4 Cha.
+Favored Class (Rogue): A multiclass gully dwarf's rogue class does not count when determining whether he suffers an XP penalty for multiclassing.
+
+- Hardiness vs. Poisons: +2 racial bonus on saving throws against poisons.
+- Skill Affinity (Hide): +2 racial bonus to Hide checks.
+- Skill Affinity (Move Silently): +2 racial bonus to Move Silently checks.
+- Pitiable: +4 racial bonus to Persuade checks.
+- Cowardly: -4 to saves vs fear.
+- Dwarven: Gully Dwarves count as Dwarves for the purpose of spells.</entry>
+  <entry id="55952" lang="en" sex="m">Skill Affinity: Move Siently</entry>
+  <entry id="55953" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: The creature gains a +2 racial bonus to Move Silently checks.
+Use: Automatic.</entry>
+  <entry id="55954" lang="en" sex="m">Kender</entry>
+  <entry id="55955" lang="en" sex="m">kender</entry>
+  <entry id="55956" lang="en" sex="m">Kender are like the children or Krynn.  They have short attention spans, intense curiousity, and a fearlessness that leads them into and out of more troubles than a dragon could count.  You never want to hear a kender say "Oops."  They will leave no chest unlocked, and no shiny object unhandled.  They have a tendancy to pick up things that don't belong to them, but don't consider it stealing, and dislike thieves as much as anyone else.  They instead consider it borrowing, as they fuly intend to return it; just with so much going on in the world to see, they sometimes forget for a long time.  They are creatures of extremes, and other creatures tend to get caught up in their moods.  They are also horrible at keeping secrets.  Physically, kender are similar to halflings of other worlds.  They stand between 3' and 4', rarely going up to 5'.  Their hair runs the gamut form light brown and blond, to coppery red, wiht styles ranging from short-cropped to long.  Their eyes are usually a blue or hazel color, and their clothes are typically flamboyant.  Aware of the importance of first impressions, when a kender first meets someone new, their first instinct is to brush themseves off, straighten their clothes, and offer a hand to the new person.
+
+Kender Ability Adjustments: +2 Dex, -2 Str, -2 Wis.
+Favored Class (Rogue): A multiclass kender's rogue class does not count when determining whether he suffers an XP penalty for multiclassing.
+
+Special Abilities:
+
+- Small Stature:
+ +1 size bonus to attack rolls.
+ +1 size bonus to AC.
+ +4 size bonus to Hide checks.
+- Skill Affinity (Spot): +2 racial bonus to Spot checks.
+- Skill Affinity (Open Lock): +2 racial bonus to Open Lock checks.
+- Skill Affinity (Pick Pocket): +2 racial bonus to Pick Pocket checks.
+- Lucky: +1 luck bonus to all saving throws.
+- Fearless: Kender are immune to spells and effects of the 'Fear' subtype.
+- Lack of Focus: -4 racial penalty to Concentration checks.
+- Kender Taunting: +4 racial bonus to Bluff and Taunt.
+- Halfling: Kender are considered Halflings for the purpose of spells.
+
+Special: Kender are small creatures and as such they can never use the following Large weapons: bastard sword, dire mace, two-bladed sword, double axe, greataxe, greatsword, halberd, heavy flail, quarterstaff, scythe and spear.</entry>
   <entry id="55964" lang="en" sex="m">1</entry>
   <entry id="55965" lang="en" sex="m">2</entry>
   <entry id="55966" lang="en" sex="m">3</entry>

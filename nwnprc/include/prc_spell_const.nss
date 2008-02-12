@@ -480,6 +480,7 @@ const int SPELL_DRIDER_DETECTGOOD                   = 2945;
 const int SPELL_DRIDER_DETECTLAW                    = 2946;
 const int SPELL_KAPAK_APPLY_SALIVA                  = 2947;
 const int SPELL_KAPAK_ONHIT_POISON                  = 2948;
+const int SPELL_IRDA_FLARE                          = 2922;
 
 
 // Poison system spells

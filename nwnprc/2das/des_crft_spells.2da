@@ -2923,7 +2923,7 @@
 2919  FEAT_RACE_IDENTIFY                                        ****            1        1      1        ****  0           
 2920  FEAT_RACE_HURLROCK                                        ****            1        1      1        ****  0           
 2921  FEAT_RACE_HOLYSMITE                                       ****            1        1      1        ****  0           
-2922  FEAT_RACE_FLARE                                           ****            1        1      1        ****  0           
+2922  FEAT_RACE_FLARE                                           ****            1        1      1        0     0           
 2923  FEAT_RACE_FIREBALL                                        ****            1        1      1        ****  0           
 2924  FEAT_RACE_ENTROPIC                                        ****            1        1      1        ****  0           
 2925  FEAT_RACE_CONEOFCOLD                                      ****            1        1      1        ****  0           

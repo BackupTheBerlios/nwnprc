@@ -11,6 +11,7 @@
     Zephyr Dance
 
     Desert Wind (Counter)
+    Level: Swordsage 3
     Prerequisite: One Desert Wind Maneuver
     Initiation Action: 1 Swift Action
     Range: Personal

@@ -29217,32 +29217,360 @@ Prerequisites: Deepstone Sentinel 5.
 Specifics: You cause the ground to shake, forcing all enemies to make a DC 10 + 1/2 Character level + Strength Modifier Reflex save or take 12d6 damage and fall prone. A successful save deals half damage and they remain standing.
 Use: Selected</entry>
   <entry id="52571" lang="en" sex="m">Blistering Flourish</entry>
+  <entry id="52572" lang="en" sex="m">Desert Wind (Strike)
+Level: Swordsage 1
+Initiation Action: 1 Standard Action
+Range: 30ft.
+Area: 30-ft burst 
+Duration: 1 Minute
+
+Your weapons bursts into flames as you twirl it over your head. With a flourish, you cause the fire to explode with a blinding flash.
+
+All creatures other than you in the area must make a Fortitude save vs 11 + Wisdom modifier or be dazzled.
+This is a supernatural maneuver.</entry>
   <entry id="52573" lang="en" sex="m">Burning Blade</entry>
+  <entry id="52574" lang="en" sex="m">Desert Wind (Boost) [Fire]
+Level: Swordsage 1
+Initiation Action: 1 Swift Action
+Range: Personal.
+Target: You.
+Duration: 1 Round.
+
+Your blade bursts into flame as it sweeps towards your foe in an elegant arc.
+
+Your strikes deal 1d6 + Initiator level fire damage.
+This is a supernatural maneuver.</entry>
   <entry id="52575" lang="en" sex="m">Burning Brand</entry>
-  <entry id="52577" lang="en" sex="m">DeathMark</entry>
-  <entry id="52579" lang="en" sex="m">DesertTempest</entry>
+  <entry id="52576" lang="en" sex="m">Desert Wind (Boost)
+Level: Swordsage 2
+Initiation Action: 1 Swift action
+Range: Personal
+Target: You
+Duration: End of Turn
+
+Your weapon transforms into a roaring gout of flame. As you swing your burning blade, it stretches out beyond your normal reach to scorch your foes.
+
+You take a full attack action, with your reach increasing by 5 feet. Your weapon deals fire damage instead of normal damage for this round.
+This is a supernatural maneuver.</entry>
+  <entry id="52577" lang="en" sex="m">Deathmark</entry>
+  <entry id="52578" lang="en" sex="m">Desert Wind (Strike) [Fire]
+Level: Swordsage 3
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creature
+Area: Variable.
+Saving Throw: Reflex half, see text.
+
+As your weapon strikes your foe, his body convulses as waves of flame run down your blade into his body. The fire causes him to briefly glow with a brilliant internal fire before the flames erupt from his body in a terrible explosion.
+
+When you strike your foe, all creatures in the area (see table below) take 6d6 fire damage, Reflex save for half. You are immune to this effect.
+This maneuver is a supernatural maneuver.
+
+Size		Radius
+Small or Less	5'
+Medium		10'
+Large		20'
+Huge		30'
+Gargantuan	40'
+Colossal	50'</entry>
+  <entry id="52579" lang="en" sex="m">Desert Tempest</entry>
+  <entry id="52580" lang="en" sex="m">Desert Wind (Strike)
+Level: Swordsage 6
+Prerequisite: Two Desert Wind maneuvers
+Initiation Action: 1 Full-round Action
+Range: Personal
+Target: You
+Duration: 1 round.
+
+You move in a blur, leaving scorch marks in your wake as you twirl around the battlefield, slicing into your foes as you move.
+
+Move up to your speed. Each time you move next to an enemy, make a single melee attack against him.
+No enemy can be struck more than once. </entry>
   <entry id="52581" lang="en" sex="m">Distracting Ember</entry>
-  <entry id="52583" lang="en" sex="m">Dragons Flame</entry>
+  <entry id="52582" lang="en" sex="m">Desert Wind (Boost)
+Level: Swordsage 1
+Initiation Action: 1 Swift Action
+Range: Personal.
+Effect: One Summoned Fire Elemental
+Duration: 1 Round.
+
+A wave of heat sweeps over the area, forms a small dust funnel, and ignites into flame next to your foe.
+
+You summon a small fire elemental.
+This is a supernatural maneuver.</entry>
+  <entry id="52583" lang="en" sex="m">Dragon's Flame</entry>
+  <entry id="52584" lang="en" sex="m">Desert Wind (Strike)
+Level: Swordsage 5
+Prerequisite: Two Desert Wind Maneuvers
+Initiation Action: 1 Standard Action
+Range: 30ft.
+Area: Cone
+Duration: Instantaneous
+Saving Throw: Reflex half
+
+With a defiant roar, you summon your ki and unleash it, igniting it with a combination of your meditative focus and seething fury.
+
+You create a cone of fire that does 6d6 damage.
+This is a supernatural maneuver.</entry>
   <entry id="52585" lang="en" sex="m">Fan The Flames</entry>
+  <entry id="52586" lang="en" sex="m">Desert Wind (Strike) [Fire]
+Level: Swordsage 3
+Prerequisite: One Desert Wind maneuver
+Initiation Action: 1 Standard Action
+Range: 30'
+Target: One Creature
+
+Flickering flames dance along your blade, then springs toward your target as you sweep your sword through the air.
+
+If successful on a ranged touch attack, you deal 6d6 fire damage.
+This maneuver is a supernatural maneuver.</entry>
   <entry id="52587" lang="en" sex="m">Fiery Assault</entry>
+  <entry id="52589" lang="en" sex="m">Desert Wind (Stance) [Fire]
+Level: Swordsage 6
+Prerequisite: Two Desert Wind maneuvers
+Initiation Action: 1 Swift Action
+Range: Personal
+Target: You
+Duration: Stance
+
+Fire dances along your arms and across your weapon, lending burning energy to every attack you make.
+
+Your attacks do an extra 1d6 fire damage.
+This is a supernatural maneuver.</entry>
   <entry id="52589" lang="en" sex="m">Fire Riposte</entry>
+  <entry id="52590" lang="en" sex="m">Desert Wind (Counter)
+Level: Swordsage 2
+Initiation Action: 1 Immediate Action
+Range: Personal.
+Target: You.
+Duration: Instantaneous.
+
+You focus the pain from a wound you have just suffered  into a firey manifestation of revenge.
+
+The next time you are struck during this round, you make a melee touch attack. If it succeeds, the target takes 4d6 fire damage.
+This is a supernatural maneuver.</entry>
   <entry id="52591" lang="en" sex="m">Firesnake</entry>
+  <entry id="52592" lang="en" sex="m">Desert Wind (Strike) [Fire]
+Level: Swordsage 4
+Prerequisite: Two Desert Wind Maneuvers
+Initiation Action: 1 Standard Action
+Range: 60ft.
+Area: Line
+Duration: Instantaneous
+Saving Throw: Reflex half
+
+You drive your weapon into the ground, causing a gout of fire to jet into the air. The fire flows back to the ground and creeps ahead like a serpent, sweeping over your enemies and roasting them where they stand.
+
+You create a line of fire that does 6d6 damage.
+This is a supernatural maneuver.</entry>
   <entry id="52593" lang="en" sex="m">Flames Blessing</entry>
+  <entry id="52594" lang="en" sex="m">Desert Wind (Stance) [Fire]
+Level: Swordsage 1
+Initiation Action: 1 Swift Action
+Range: Personal.
+Target: You
+Duration: Stance.
+
+Fire is not your enemy, and it does not harm you.
+
+You gain fire resistance depending on your tumble ranks.
+Tumble 4-8  : Fire Resist 5.
+Tumble 9-13 : Fire Resist 10.
+Tumble 14-18: Fire Resist 20.
+Tumble 19   : Fire Immunity.
+This is a supernatural maneuver.</entry>
   <entry id="52595" lang="en" sex="m">Flashing Sun</entry>
+  <entry id="52596" lang="en" sex="m">Desert Wind (Strike)
+Level: Swordsage 2
+Prerequisite: One Desert Wind maneuver
+Initiation Action: 1 Full-Round action
+Range: Personal
+Target: You
+
+Almost a blur of acceleration, your shining blade flashes as you attack with impossible speed.
+
+You take a full attack action, getting one additional attack at your highest attack bonus.
+All attacks are made at a -2 penalty.</entry>
   <entry id="52597" lang="en" sex="m">Hatchlings Flame</entry>
+  <entry id="52598" lang="en" sex="m">Desert Wind (Strike) [Fire]
+Level: Swordsage 2
+Prerequisite: One Desert Wind Maneuver
+Initiation Action: 1 Standard Action
+Range: 30ft.
+Area: Cone
+Duration: Instantaneous
+Saving Throw: Reflex half
+
+You focus a burning aura of energy at the end of your blade. It forms a seething sphere that, after a moment, bursts into a torrent of energy.
+
+You create a cone of fire that does 2d6 damage.
+This is a supernatural maneuver.</entry>
   <entry id="52599" lang="en" sex="m">Holocaust Cloak</entry>
+  <entry id="52600" lang="en" sex="m">Desert Wind (Stance) [Fire]
+Level: Swordsage 3
+Prerequisite: One Desert Wind Maneuver
+Initiation Action: 1 Swift Action
+Range: Personal
+Target: You
+
+Fire trails along your blade as you spin it about, cloaking you in flames that leap out to burn those who attack you.
+
+You cloak yourself in fire, dealing 5 damage to all who strike you in melee.
+This is a supernatural maneuver.</entry>
   <entry id="52601" lang="en" sex="m">Inferno Blade</entry>
+  <entry id="52602" lang="en" sex="m">Desert Wind (Boost) [Fire]
+Level: Swordsage 7
+Initiation Action: 1 Swift Action
+Range: Personal
+Target: You
+Duration: 1 Round
+
+A blinding light flashes from your weapon, and for a split second, it transforms into burning magma.
+
+Your strikes deal 3d6 + Initiator level fire damage.
+This is a supernatural maneuver.</entry>
   <entry id="52603" lang="en" sex="m">Inferno Blast</entry>
+  <entry id="52604" lang="en" sex="m">Desert Wind (Strike) [Fire]
+Level: Swordsage 9
+Prerequisite: Five Desert Wind maneuvers
+Initiation Action: 1 Full-round action
+Range: 60ft.
+Area: Burst
+Duration: Instantaneous
+Saving Throw: Reflex half
+
+Hot winds swirl around you, and a faint aroma of brimstone sweeps over the area. A flickering yellow aura surrounds you and grows in intensity, shedding tremendous heat and light. Creatures around you stumble back from the heat. With a howling roar, you unleash a hellish blast of fire that melts steel and warps stone.
+
+You create a blast of fire that deals 100 damage to all creatures in the area.
+This is a supernatural maneuver.</entry>
   <entry id="52605" lang="en" sex="m">Leaping Flame</entry>
+  <entry id="52606" lang="en" sex="m">Desert Wind (Counter) [Teleport]
+Level: Swordsage 5
+Prerequisite: Two Desert Wind Maneuvers
+Initiation Action: 1 Swift Action
+Range: Personal.
+Target: You
+Duration: Instantaneous
+
+As your foe attacks you, you disappear in a burst of flame and smoke, only to reappear as if out of thin air next to him.
+
+You teleport up to a 100ft to the person who last attacked you.
+This is a supernatural maneuver.</entry>
   <entry id="52607" lang="en" sex="m">Lingering Inferno</entry>
+  <entry id="52608" lang="en" sex="m">Desert Wind (Strike) [Fire]
+Level: Swordsage 5
+Prerequisite: Two Desert Wind Maneuvers
+Initiation Action: 1 Standard Action
+Range: Melee
+Target: One creature
+Duration: 3 rounds; see text
+
+A blue, dancing flame appears on your weapon. As you strike your foe, this flame slides off your weapon and covers your enemy in raging fire.
+
+You make a single melee attack that deals an extra 2d6 fire damage. If it hits the foe takes 2d6 fire damage again in each of the next three rounds.
+This is a supernatural maneuver.</entry>
   <entry id="52609" lang="en" sex="m">Ring Of Fire</entry>
+  <entry id="52610" lang="en" sex="m">Desert Wind (Strike) [Fire]
+Level: Swordsage 6
+Prerequisite: Two Desert Wind maneuvers
+Initiation Action: 1 Standard Action
+Range: 30ft.
+Area: Burst
+Duration: Instantaneous
+Saving Throw: Reflex half
+
+You move in a blur, your feet wreathed in flaming energy. As you run, you leave a trail of fire behind you. You encircle a foe, and the ring of fire you leave behind bursts into an inferno that engulfs you enemy and everything else in the area.
+
+You create a burst of fire that does 12d6 damage.
+This is a supernatural maneuver.</entry>
   <entry id="52611" lang="en" sex="m">Rising Phoenix</entry>
+  <entry id="52612" lang="en" sex="m">Desert Wind (Stance) [Fire]
+Level: Swordsage 8
+Prerequisite: Three Desert Wind maneuvers
+Initiation Action: 1 Swift Action
+Range: Personal
+Target: You
+Duration: Stance
+
+Hot winds swirl about your feet, lifting you skyward as flames begin to flick below.
+
+You gain freedom of movement. You may attack an adjacent enemy with an extra 3d6 fire damage. (Use the feat added).
+This is a supernatural maneuver.</entry>
   <entry id="52613" lang="en" sex="m">Salamander Charge</entry>
+  <entry id="52614" lang="en" sex="m">Desert Wind (Strike) [Fire]
+Level: Swordsage 7
+Prerequisite: Three Desert Wind maneuvers
+Initiation Action: 1 Full-round action
+Range: Personal
+Target: You
+Duration: Instantaneous, see text
+
+You spin and tumble about the battlefield, a wall of raging flame marking your steps.
+
+You charge your foe. In the space across which you charge, a wall of fire appears, dealing 6d6 damage to all who enter. This wall lasts for 5 rounds.
+This is a supernatural maneuver.</entry>
   <entry id="52615" lang="en" sex="m">Searing Blade</entry>
+  <entry id="52616" lang="en" sex="m">Desert Wind (Boost) [Fire]
+Level: Swordsage 4
+Prerequisite: Two Desert Wind Maneuvers
+Initiation Action: 1 Swift Action
+Range: Personal.
+Target: You.
+Duration: 1 Round.
+
+Your weapon transforms into a raging torrent of flame, causing those around you to recoil slightly from the tremendous heat.
+
+Your strikes deal 2d6 + Initiator level fire damage.
+This is a supernatural maneuver.</entry>
   <entry id="52617" lang="en" sex="m">Searing Charge</entry>
+  <entry id="52618" lang="en" sex="m">Desert Wind (Strike) [Fire]
+Level: Swordsage 4
+Prerequisite: One Desert Wind maneuver
+Initiation Action: 1 Full-round action
+Range: Personal.
+Target: You.
+Duration: Instantaneous.
+
+You rush through the air towards your foe, fire streaming in your wake.
+
+You charge your foe, gaining 5d6 fire damage. You generate no Attacks of Opportunity.
+This is a supernatural maneuver.</entry>
   <entry id="52619" lang="en" sex="m">Wind Stride</entry>
+  <entry id="52620" lang="en" sex="m">Desert Wind (Boost) 
+Level: Swordsage 1
+Initiation Action: 1 Swift Action
+Range: Personal.
+Target: You.
+Duration: 1 Round.
+
+A warm breeze swirls about you as you move speedily away.
+
+You gain +10 feet to your move speed.</entry>
   <entry id="52621" lang="en" sex="m">Wyrms Flame</entry>
+  <entry id="52622" lang="en" sex="m">Desert Wind (Strike) [Fire]
+Level: Swordsage 8
+Prerequisite: Three Desert Wind maneuvers
+Initiation Action: 1 Standard Action
+Range: 30ft.
+Area: Cone
+Duration: Instantaneous
+Saving Throw: Reflex half
+
+You spin your blade in a whirling arc. With each revolution, seathing flames build upon its length. With a flourish, you bring your blade to a halt, pointing it at your foe, and unleashing a roaring wall of flame.
+
+You create a cone of fire that does 10d6 damage.
+This is a supernatural maneuver.</entry>
   <entry id="52623" lang="en" sex="m">Zephyr Dance</entry>
+<entry id="52624" lang="en" sex="m">Desert Wind (Counter)
+Level: Swordsage 3
+Prerequisite: One Desert Wind Maneuver
+Initiation Action: 1 Swift Action
+Range: Personal
+Target: You
+
+You spin gracefully away from a foe's attack, whirling like the desert zephyr racing across the sands. Your enemy's blade barely touches your cloak as you nimbly dodge aside.
+  
+You gain a +4 bonus to AC versus one attack.</entry>
   <entry id="52625" lang="en" sex="m">Aura Of Chaos</entry>
   <entry id="52627" lang="en" sex="m">Aura Of Perfect Order</entry>
   <entry id="52629" lang="en" sex="m">Aura Of Triumph</entry>

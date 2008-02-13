@@ -177,3 +177,4 @@ const int CLASS_TYPE_DRAGONFIRE_ADEPT        = 144;
 const int CLASS_TYPE_SHAMAN                  = 207;
 const int CLASS_TYPE_DEEPSTONE_SENTINEL      = 191;
 const int CLASS_TYPE_SUBLIME_CHORD           = 93;
+const int CLASS_TYPE_JADE_PHOENIX_MAGE       = 192;

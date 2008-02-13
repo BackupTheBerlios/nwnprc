@@ -186,6 +186,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL, oPC) > 0)  ExecuteScript("tob_deepstone", oPC);
     if(GetLevelByClass(CLASS_TYPE_CRUSADER, oPC) > 0)            ExecuteScript("tob_crusader", oPC);
     if(GetLevelByClass(CLASS_TYPE_WARBLADE, oPC) > 0)            ExecuteScript("tob_warblade", oPC);
+    if(GetLevelByClass(CLASS_TYPE_JADE_PHOENIX_MAGE, oPC) > 0)   ExecuteScript("tob_jadepm", oPC);
 
     // Bonus Domain check
     // If there is a bonus domain, it will always be in the first slot, so just check that.

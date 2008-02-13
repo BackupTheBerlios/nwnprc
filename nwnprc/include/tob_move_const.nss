@@ -87,3 +87,4 @@ const int SPELL_AVENGING_STRIKE = -1;
 
 // Class Specific Constants
 const int MOVE_MOUNTAIN_FORTRESS = -1;
+const int TOB_JPM_ARCANE_WRATH   = -1;

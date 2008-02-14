@@ -50,7 +50,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     {
         if(!GetIsReactionTypeFriendly(oTarget) &&
             MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD &&
-            MyPRCGetRacialType(oTarget) != RACIAL_TYPE_CONSTRUCT &&
+            (MyPRCGetRacialType(oTarget) != RACIAL_TYPE_CONSTRUCT || GetRacialType(oTarget) == RACIAL_TYPE_WARFORGED) &&
             !GetHasSpellEffect(SPELL_NEGATIVE_ENERGY_PROTECTION, oTarget))
         {
            //Signal spell cast at event

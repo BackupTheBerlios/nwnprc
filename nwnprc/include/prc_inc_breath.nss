@@ -840,7 +840,12 @@ void ApplyBreath(struct breath BreathUsed, location lTargetArea, int bLinger = F
             //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.
             //Determine effect delay
             fDelay = GetDistanceBetween(BreathUsed.oDragon, oTarget)/20;
-            eBreath = EffectHeal(BreathUsed.nDiceNumber);
+            int nHeal = BreathUsed.nDiceNumber;
+            
+            //Warforged are only healed for half
+            if(GetRacialType(oTarget) == RACIAL_TYPE_WARFORGED) nHeal /= 2;
+            
+            eBreath = EffectHeal(nHeal);
             effect eHealVis = EffectVisualEffect(VFX_IMP_HEALING_S);
             DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eBreath, oTarget));
             DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eHealVis, oTarget));

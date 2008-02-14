@@ -486,7 +486,7 @@ void main()
 
                 // Undead and Constructs are immune to mind effecting abilities.
                 // A bard with requiem can effect undead
-                if ((nRace == RACIAL_TYPE_UNDEAD && GetHasFeat(FEAT_REQUIEM, OBJECT_SELF)) || (nRace != RACIAL_TYPE_UNDEAD && nRace != RACIAL_TYPE_CONSTRUCT))
+                if ((nRace == RACIAL_TYPE_UNDEAD && GetHasFeat(FEAT_REQUIEM, OBJECT_SELF)) || (nRace != RACIAL_TYPE_UNDEAD && nRace != RACIAL_TYPE_CONSTRUCT) || GetRacialType(oTarget) == RACIAL_TYPE_WARFORGED)
                 {
                     // Even with requiem, they have half duration
                     if (nRace == RACIAL_TYPE_UNDEAD) nDuration /= 2;

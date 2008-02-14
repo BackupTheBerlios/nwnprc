@@ -82,6 +82,10 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent, int bI
         if(iHeal && (spellsIsTarget(oTarget, SPELL_TARGET_ALLALLIES, oCaster) || (GetIsDead(oTarget) && (GetCurrentHitPoints(oTarget) > -10))))
         {
             SignalEvent(oTarget, EventSpellCastAt(oCaster, nSpellID, FALSE));
+            
+            //Warforged are only healed for half
+            if(GetRacialType(oTarget) == RACIAL_TYPE_WARFORGED) nHeal /= 2;
+            
             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(nHeal), oTarget));
             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(nHealVFX), oTarget));
             // Code for FB to remove damage that would be caused at end of Frenzy

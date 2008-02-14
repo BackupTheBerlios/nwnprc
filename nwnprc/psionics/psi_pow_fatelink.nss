@@ -74,7 +74,7 @@ void main()
 
             // Make sure the first target is alive
             nRacialType = MyPRCGetRacialType(oFirstTarget);
-            if(nRacialType != RACIAL_TYPE_CONSTRUCT &&
+            if((nRacialType != RACIAL_TYPE_CONSTRUCT || GetRacialType(oFirstTarget) == RACIAL_TYPE_WARFORGED) &&
                nRacialType != RACIAL_TYPE_UNDEAD    &&
                !GetIsDead(oFirstTarget)
                )
@@ -91,7 +91,7 @@ void main()
                     {
                         // Livingness check
                         nRacialType = MyPRCGetRacialType(oTest);
-                        if(nRacialType != RACIAL_TYPE_CONSTRUCT &&
+                        if((nRacialType != RACIAL_TYPE_CONSTRUCT || GetRacialType(oTest) == RACIAL_TYPE_WARFORGED) &&
                            nRacialType != RACIAL_TYPE_UNDEAD    &&
                            !GetIsDead(oTest)
                            )

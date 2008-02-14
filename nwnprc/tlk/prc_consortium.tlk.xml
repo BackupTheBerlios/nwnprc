@@ -4103,7 +4103,7 @@ Special: You must be able to assume an alternate form. See the following list:
   Initiate of Draconic Mysteries: Level 10 or higher.
   Bonded Summoner: Level 10 or higher.
   Werewolf: Level 1 or higher.
-  Races: Pixie, Rakshasa, Fey'ri, Hound Archon, Yuan-ti Pureblood
+  Races: Pixie, Rakshasa, Fey'ri, Hound Archon, Yuan-ti Pureblood, Irda, Zakya Rakshasa, Changeling
 
 ABILITIES:
 
@@ -19014,8 +19014,13 @@ Use: Automatic.</entry>
   <entry id="50157" lang="en" sex="m">Special Abilities - Fey'ri</entry>
   <entry id="50158" lang="en" sex="m">Spell-Like Abilities: 1/day - Alter Self, Charm Person, Clairaudience, Darkness, Enervation.
 Fey'ri spell-like abilities have caster level equal to the fey'ri's character level. The DC is Charisma-based.</entry>
-  <entry id="50159" lang="en" sex="m">Special Abilities - Githyanki</entry>
-  <entry id="50160" lang="en" sex="m">Spell-Like Abilities: 3/day - Blur, Daze. Caster level 3rd.</entry>
+  <entry id="50159" lang="en" sex="m">Adamantine Plating</entry>
+  <entry id="50160" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Composite Plating
+
+This Warforged was built using Adamantium for their armor plating.  This grants a +8 bonus to AC, a +1 max Dex bonus to AC, a -5 armor check penalty, 35% arcane spell failure, DR 2/-, and counts as heavy armor.
+Note: This uses the "armor" slot, and so you cannot wear other armor.
+Use: Automatic.</entry>
   <entry id="50161" lang="en" sex="m">Special Abilities - Githzerai</entry>
   <entry id="50162" lang="en" sex="m">Spell-Like Abilities: 3/day - Daze. Caster level 3rd.</entry>
   <entry id="50163" lang="en" sex="m">Special Abilities - Illithid</entry>
@@ -20493,6 +20498,82 @@ Use: Automatic.</entry>
   <entry id="50638" lang="en" sex="m">&lt;CUSTOM0&gt; turns water creatures.</entry>
   <entry id="50639" lang="en" sex="m">&lt;CUSTOM0&gt; turns fire creatures.</entry>
   <entry id="50640" lang="en" sex="m">&lt;CUSTOM0&gt; turns blightspawned.</entry>
+  <entry id="50979" lang="en" sex="m">Zakya Rakshasa</entry>
+  <entry id="50980" lang="en" sex="m">Zakya</entry>
+  <entry id="50981" lang="en" sex="m">zakya</entry>
+  <entry id="50982" lang="en" sex="m">A race of tigerlike humanoid warriors, the zakya are another breed of rakshasa.  Unlike their sorcerer brethren, zakya prefer to charge in and get down and dirty in melee combat, and they are able to twist their backwards hands to weild weapons normally.  In most other ways, however, they are identical to their sorcerer cousins.
+
+Zakya Rakshasa Ability Adjustments: +10 Str, +4 Dex, +10 Con, +2 Int, +2 Wis.
+Favored Class (Fighter): A multiclass zakya rakshasa's fighter class does not count when determining whether he suffers an XP penalty for multiclassing.
+
+Special Abilities:
+
+- Darkvision: Zakya Rakshasa are able to see in the dark.
+- Base movement of 50.
+- Weapon Proficiency (Simple): All rakshasa are proficient with simple weapons.
+- Weapon Proficiency (Martial): All rakshasa are proficient with martial weapons.
+- Weapon Proficiency (Creature): Rakshasa can make an unarmed attack with their claws.
+- Spell Resistance: Innate spell resistance of 22, plus 1 per character level.
+- Natural Armor Bonus: Racial natural armor bonus of 9.
+- Damage Reduction: Innate damage reduction of 15/+1
+- Spell-Like Abilities: At will - Disguise. 3/day - Chill Touch, True Strike, Vampiric Touch.
+- Bonus Feat: 1 bonus feat of your choice.
+- Outsider: Zakya Rakshasa are considered Outsiders for the purpose of spells.</entry>
+  <entry id="50983" lang="en" sex="m">Racial Chill Touch</entry>
+  <entry id="50984" lang="en" sex="m">Racial Vampiric Touch</entry>
+  <entry id="50985" lang="en" sex="m">Warforged</entry>
+  <entry id="50986" lang="en" sex="m">warforged</entry>
+  <entry id="50987" lang="en" sex="m">Warforged were originally built as mindless war machines, an army of constructs able to fight whtout food and water.  AS a side-effect of the processes used to create them, however, they gained sentience.  At first this was a boon, as now there was no need for a living general to travel with them, but eventually the war came to an end, as all wars do.  As they couldn't destroy the now sentient race of living constructs, they were instead freed and left to find their own way in the world.  Physically they look similar to golems, with plating made of metal and mineral covering a living wooden frame.  They were created without gender, though a few with a more typically feminine mindset have modified their design and plating to mimic a humanoid female's shape.  Warforged cannot reproduce, but can only be made at special Creation Forges built using uncovered ancient plans.  They do not age either, and their mindset sometimes leaves the activites of the huamnoid races a puzzle to them.
+  
+Warforged Ability Adjustments: +2 Con, -2 Wis, -2 Cha.
+Favored Class (Fighter): A multiclass warforged's fighter class does not count when determining whether he suffers an XP penalty for multiclassing. 
+
+Special Abilities:
+
+- 30' base speed 
+- Composite Plating: +2 to AC, cannot wear armor, and 5% arcane spell failure chance.
+- Living Construct subtype:  
+  Immune to sleep, paralyze, poison, energy drain, and disease
+  Does not heal naturally, healing spells only heal half the normal amount.
+- Construct: Warforged count as Constructs for the purpose of spells.</entry>
+  <entry id="50988" lang="en" sex="m">You were created to fight in a great war, a constuct designed to be a self-sufficient soldier and make decisions as necessary in the field.  The war ended, and because of your kind's sentience, you were freed.  With no war left to fight, and no owner other than yourself, you must find a new place in the world.</entry>
+  <entry id="50989" lang="en" sex="m">Mithril Plating</entry>
+  <entry id="50990" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Composite Plating
+
+This Warforged was built using Mithril for their armor plating.  This grants a +5 bonus to AC, a +5 max Dex bonus to AC, a -2 armor check penalty, 15% arcane spell failure, and counts as wearing light armor.
+Note: This uses the "armor" slot, and so you cannot wear other armor.
+Use: Automatic.</entry>
+  <entry id="50991" lang="en" sex="m">Ironwood Plating</entry>
+  <entry id="50992" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Composite Plating
+
+This Warforged was built using Ironwood for their armor plating.  This grants a +3 bonus to AC, a +4 max Dex bonus to AC, a -3 armor check penalty, 20% arcane spell failure, DR 2/slashing, and counts as light armor.
+Note: This uses the "armor" slot, and so you cannot wear other armor.
+Use: Automatic.</entry>
+  <entry id="50993" lang="en" sex="m">Unarmored Body</entry>
+  <entry id="50994" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Composite Plating
+
+This Warforged was built without extraneous external armor plating, imposing no benefits or penalties.  You can also wear armor.
+Use: Automatic.</entry>
+  <entry id="50995" lang="en" sex="m">Composite Plating</entry>
+  <entry id="50996" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race Specific
+
+This Warforged was built with the standard body materials.  This grants you a +2 armor bonus, a 5% arcane spell failure chance, and does not count as wearing armor.
+Note: This uses the "armor" slot, and so you cannot wear other armor.  Any other Warforged Body feats override and replace this one.
+Use: Automatic.</entry>
+  <entry id="50997" lang="en" sex="m">Living Construct</entry>
+  <entry id="50998" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race Specific
+
+The creature is a member of the race of Constructs, with the subtype Living Construct.
+This grants the following immunities: Disease, Energy Drain, Paralysis, Poison, Sleep.
+Living Constructs do not heal normally when they rest, and only heal half the normal amount of hit points from spells and effects.
+Use: Automatic.</entry>
+  <entry id="50999" lang="en" sex="m">Warforged Body Feats</entry>
+  <entry id="51000" lang="en" sex="m">These feats can only be taken by a warforged at 1st level.  They represent different materials used in the warforged's construction.</entry>
   <entry id="51001" lang="en" sex="m">Swashbuckler</entry>
   <entry id="51002" lang="en" sex="m">Swashbucklers</entry>
   <entry id="51003" lang="en" sex="m">swashbuckler</entry>
@@ -29325,7 +29406,7 @@ Flickering flames dance along your blade, then springs toward your target as you
 If successful on a ranged touch attack, you deal 6d6 fire damage.
 This maneuver is a supernatural maneuver.</entry>
   <entry id="52587" lang="en" sex="m">Fiery Assault</entry>
-  <entry id="52589" lang="en" sex="m">Desert Wind (Stance) [Fire]
+  <entry id="52588" lang="en" sex="m">Desert Wind (Stance) [Fire]
 Level: Swordsage 6
 Prerequisite: Two Desert Wind maneuvers
 Initiation Action: 1 Swift Action
@@ -36775,6 +36856,11 @@ Special Abilities:
 - Halfling: Kender are considered Halflings for the purpose of spells.
 
 Special: Kender are small creatures and as such they can never use the following Large weapons: bastard sword, dire mace, two-bladed sword, double axe, greataxe, greatsword, halberd, heavy flail, quarterstaff, scythe and spear.</entry>
+  <entry id="55957" lang="en" sex="m">Spell Resistance 22</entry>
+  <entry id="55958" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: The creature has an innate spell resistance of 22, plus 1 per level.
+Use: Automatic.</entry>
   <entry id="55964" lang="en" sex="m">1</entry>
   <entry id="55965" lang="en" sex="m">2</entry>
   <entry id="55966" lang="en" sex="m">3</entry>

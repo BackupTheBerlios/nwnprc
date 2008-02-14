@@ -61,7 +61,7 @@ void main()
            && !( // And not
              // Non-living or
              nRacialType == RACIAL_TYPE_UNDEAD              ||
-             nRacialType == RACIAL_TYPE_CONSTRUCT           ||
+             (nRacialType == RACIAL_TYPE_CONSTRUCT && GetRacialType(oTarget) != RACIAL_TYPE_WARFORGED) ||
              // Mindless or
              spellsIsMindless(oTarget)                      ||
              // Immune to mind-affecting

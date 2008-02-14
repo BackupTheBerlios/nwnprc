@@ -1997,7 +1997,7 @@
 1993  Race_Halfgiant_Stomp                                      ****            1        1      1        1     0           
 1994  Race_Maenad_Outburst                                      ****            1        1      1        2     0           
 1995  Race_Xeph_Burst                                           ****            1        1      1        1     0           
-1996  ****                                                      ****            1        1      1        ****  0           
+1996  Race_Vampiric_Touch                                       ****            1        1      1        3     0           
 1997  ****                                                      ****            1        1      1        ****  0           
 1998  ****                                                      ****            1        1      1        ****  0           
 1999  **racepack-end**                                          ****            1        1      1        ****  0           
@@ -2908,8 +2908,8 @@
 2904  Wolf_Empathy                                              ****            1        1      1        7     0           
 2905  FEAT_HOUND_AURAMENACE                                     ****            1        1      1        4     0           
 2906  FEAT_RACE_WEB                                             ****            1        1      1        ****  0           
-2907  FEAT_RACE_TRUESEEING                                      ****            1        1      1        ****  0           
-2908  FEAT_RACE_STENCH                                          ****            1        1      1        ****  0           
+2907  FEAT_RACE_MINOR_SHAPE_CHANGE                              ****            1        1      1        1     0           
+2908  FEAT_CHANGELING_TRUE_FORM                                 ****            1        1      1        3     0           
 2909  FEAT_RACE_SOUNDBURST                                      ****            1        1      1        ****  0           
 2910  FEAT_RACE_SMITEGOOD                                       ****            1        1      1        ****  0           
 2911  FEAT_RACE_SLEEP                                           ****            1        1      1        ****  0           

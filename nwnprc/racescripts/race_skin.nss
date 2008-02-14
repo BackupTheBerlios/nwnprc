@@ -89,7 +89,26 @@ void main()
         ipIP =ItemPropertyImmunityMisc(IP_CONST_IMMUNITYMISC_CRITICAL_HITS);
         IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
     }
-
+    
+    //Living Construct type immunities - sleep, paralysis, poison, disease, energy drain
+    if(GetHasFeat(FEAT_LIVING_CONSTRUCT))
+    {
+    	effect eSleepImmune = ExtraordinaryEffect(EffectImmunity(IMMUNITY_TYPE_SLEEP));
+    	AssignCommand(oPC, ApplyEffectToObject(DURATION_TYPE_PERMANENT, eSleepImmune, oPC));
+    	
+        itemproperty ipIP =ItemPropertyImmunityMisc(IP_CONST_IMMUNITYMISC_PARALYSIS);
+        IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+        
+        ipIP =ItemPropertyImmunityMisc(IP_CONST_IMMUNITYMISC_POISON);
+        IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+        
+        ipIP =ItemPropertyImmunityMisc(IP_CONST_IMMUNITYMISC_DISEASE);
+        IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+        
+        ipIP =ItemPropertyImmunityMisc(IP_CONST_IMMUNITYMISC_LEVEL_ABIL_DRAIN);
+        IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+    }
+    
     //natural armor 1-10
     // Note: This bonus will be Dodge bonus no matter what IP_CONST you specify.
     if(GetHasFeat(FEAT_NATARM_1))
@@ -470,7 +489,14 @@ void main()
         SetCompositeBonus(oSkin, "PSA_Lorespell_Lore", 1, ITEM_PROPERTY_SKILL_BONUS, SKILL_LORE);
         SetCompositeBonus(oSkin, "PSA_Lorespell_Spell", 1, ITEM_PROPERTY_SKILL_BONUS, SKILL_SPELLCRAFT);
     }
-
+    
+    //Changeling +2 to save vs mind-affecting
+    if(GetHasFeat(FEAT_CHANGE_MIND))
+    {
+        itemproperty ipIP =ItemPropertyBonusSavingThrowVsX(IP_CONST_SAVEVS_MINDAFFECTING, 2);
+        IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+    }
+    
     //damage reduction 5/+1
     if(GetHasFeat(FEAT_DAM_RED5))
     {
@@ -540,42 +566,13 @@ void main()
     {
         SetCompositeBonus(oSkin, "SA_Sage_Guild", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_LORE);
     }
-
-    //Sheild restriction
-    if(   GetLocalInt(oPC,"ONEQUIP") == 2
-       && GetHasFeat(FEAT_RESTRICT_SHIELD)
-       && (   GetBaseItemType(GetItemLastEquipped()) == BASE_ITEM_TOWERSHIELD
-           || GetBaseItemType(GetItemLastEquipped()) == BASE_ITEM_LARGESHIELD
-           || GetBaseItemType(GetItemLastEquipped()) == BASE_ITEM_SMALLSHIELD
-          )
-      )
-    {
-        ActionUnequipItem(GetItemLastEquipped());
-        ActionDoCommand(SetCommandable(TRUE, oPC));
-        SetCommandable(FALSE, oPC);
-    }
-
-    //boots restriction
-    if(   GetLocalInt(oPC,"ONEQUIP") == 2
-       && GetHasFeat(FEAT_RESTRICT_BOOTS)
-       && GetBaseItemType(GetItemLastEquipped()) == BASE_ITEM_BOOTS
-      )
-    {
-        ActionUnequipItem(GetItemLastEquipped());
-        ActionDoCommand(SetCommandable(TRUE, oPC));
-        SetCommandable(FALSE, oPC);
-    }
-
-    //armor restriction
-    if(   GetLocalInt(oPC,"ONEQUIP") == 2
-       && GetHasFeat(FEAT_RESTRICT_ARMOR)
-       && GetBaseItemType(GetItemLastEquipped()) == BASE_ITEM_ARMOR
-      )
-    {
-        ActionUnequipItem(GetItemLastEquipped());
-        ActionDoCommand(SetCommandable(TRUE, oPC));
-        SetCommandable(FALSE, oPC);
-    }
+    
+    //"cheat" ac boosts to Warforged armor so it stacks properly
+    if(GetHasFeat(FEAT_COMPOSITE_PLATING))
+        SetCompositeBonus(oSkin, "CompositePlating", 2, ITEM_PROPERTY_AC_BONUS);
+    if(GetHasFeat(FEAT_MITHRIL_PLATING))
+        SetCompositeBonus(oSkin, "MithrilPlating", 3, ITEM_PROPERTY_AC_BONUS);
+    
 
     //Subdual to elements
     //implemented as resist 1/- for heat and cold
@@ -624,6 +621,12 @@ void main()
     {
         ExecuteScript("race_bldlngrstct", oPC);
     } 
+    
+    //Warforged armor restrictions
+    if(GetRacialType(oPC) == RACIAL_TYPE_WARFORGED)
+    {
+        ExecuteScript("race_warforged", oPC);
+    }
     
     //natural weapons
     //replace with a feat check
@@ -795,6 +798,15 @@ void main()
         int nSize = PRCGetCreatureSize(oPC);
         sResRef += GetAffixForSize(nSize);
         AddNaturalSecondaryWeapon(oPC, sResRef);
+    }
+    else if(nRace==RACIAL_TYPE_WARFORGED)
+    {
+        string sResRef;
+        int nSize = PRCGetCreatureSize(oPC);
+        //primary weapon
+        sResRef = "prc_warf_slam_";
+        sResRef += GetAffixForSize(nSize);
+        AddNaturalPrimaryWeapon(oPC, sResRef, 1);
     }
     
     //Draconian on-death effects

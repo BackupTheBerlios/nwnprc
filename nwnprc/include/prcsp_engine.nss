@@ -44,6 +44,8 @@ int PRCGetSpellResistance(object oTarget, object oCaster)
             iRacialSpellRes += 27+GetHitDice(oTarget);
         else if(GetHasFeat(FEAT_SPELL25, oTarget))
             iRacialSpellRes += 25+GetHitDice(oTarget);
+        else if(GetHasFeat(FEAT_SPELL22, oTarget))
+            iRacialSpellRes += 22+GetHitDice(oTarget);
         else if(GetHasFeat(FEAT_SPELL18, oTarget))
             iRacialSpellRes += 18+GetHitDice(oTarget);
         else if(GetHasFeat(FEAT_SPELL16, oTarget))

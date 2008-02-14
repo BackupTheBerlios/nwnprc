@@ -24,7 +24,8 @@ void main()
     int nType = MyPRCGetRacialType(oTarget);
     if ((nType == RACIAL_TYPE_CONSTRUCT) ||
         (nType == RACIAL_TYPE_UNDEAD) ||
-        (nType == RACIAL_TYPE_ELEMENTAL))
+        (nType == RACIAL_TYPE_ELEMENTAL) ||
+        GetRacialType(oTarget) == RACIAL_TYPE_WARFORGED)
     {
         FloatingTextStringOnCreature("Target must be alive",OBJECT_SELF);
         return;

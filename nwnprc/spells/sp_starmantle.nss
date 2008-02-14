@@ -60,7 +60,7 @@ void main()
 		fDur += fDur;
 	}
 	
-	if(nType == RACIAL_TYPE_UNDEAD || nType == RACIAL_TYPE_CONSTRUCT)
+	if(nType == RACIAL_TYPE_UNDEAD || (nType == RACIAL_TYPE_CONSTRUCT && GetRacialType(oTarget) != RACIAL_TYPE_WARFORGED))
 	{
 		SPSetSchool();
 		return;

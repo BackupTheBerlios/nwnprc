@@ -43,7 +43,7 @@ void main()
         
         if(nType == RACIAL_TYPE_UNDEAD ||
            nType == RACIAL_TYPE_ELEMENTAL ||
-           nType == RACIAL_TYPE_CONSTRUCT)
+           (nType == RACIAL_TYPE_CONSTRUCT && GetRacialType(oTarget) != RACIAL_TYPE_WARFORGED))
            
            {
                    SendMessageToPC(oPC, "This spell must be cast on a living target");

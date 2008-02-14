@@ -64,6 +64,8 @@ int MyPRCGetRacialType(object oCreature)
         return RACIAL_TYPE_UNDEAD;
     if(GetHasFeat(FEAT_ELEMENTAL, oCreature))
         return RACIAL_TYPE_ELEMENTAL;
+    if(GetHasFeat(FEAT_LIVING_CONSTRUCT, oCreature))
+        return RACIAL_TYPE_CONSTRUCT;
     if(GetHasFeat(FEAT_PLANT, oCreature))
         return RACIAL_TYPE_PLANT;
     if(GetHasFeat(FEAT_ABERRATION, oCreature))

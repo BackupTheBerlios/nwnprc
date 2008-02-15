@@ -102,6 +102,7 @@ void main()
 {
     object oPC;
     int nEvent = GetRunningEvent();
+    int nHand;
 
     if(LOCAL_DEBUG) DoDebug("psi_sk_event running");
 
@@ -156,51 +157,57 @@ void main()
         if(GetBaseItemType(oItem) == BASE_ITEM_SHORTSWORD     &&
            GetTag(oItem) != "prc_sk_mblade_ss"                &&
            !(GetHasFeat(FEAT_WEAPON_PROFICIENCY_MARTIAL, oPC) ||
-             GetHasFeat(FEAT_WEAPON_PROFICIENCY_ROGUE, oPC)))
+             GetHasFeat(FEAT_WEAPON_PROFICIENCY_ROGUE, oPC) ||
+             GetHasFeat(FEAT_WEAPON_PROFICIENCY_SHORTSWORD, oPC)))
         {
             SendMessageToPCByStrRef(oPC, 16824511);
             // Check which slot the weapon got equipped into
             if(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC) == oItem)
-                ForceUnequip(oPC, oItem, INVENTORY_SLOT_RIGHTHAND);
+                nHand = INVENTORY_SLOT_RIGHTHAND;
             else
-                ForceUnequip(oPC, oItem, INVENTORY_SLOT_LEFTHAND);
+                nHand = INVENTORY_SLOT_LEFTHAND;
+            SetCompositeAttackBonus(oPC, "Unproficient" + IntToString(nHand), -4, nHand);
         }
         // Lacking the correct proficiency to wield non-mindblade version of a longsword
         if(GetBaseItemType(oItem) == BASE_ITEM_LONGSWORD      &&
            GetTag(oItem) != "prc_sk_mblade_ls"                &&
            !(GetHasFeat(FEAT_WEAPON_PROFICIENCY_MARTIAL, oPC) ||
-             GetHasFeat(FEAT_WEAPON_PROFICIENCY_ELF, oPC)))
+             GetHasFeat(FEAT_WEAPON_PROFICIENCY_ELF, oPC) ||
+             GetHasFeat(FEAT_WEAPON_PROFICIENCY_LONGSWORD, oPC)))
         {
             SendMessageToPCByStrRef(oPC, 16824511);
             // Check which slot the weapon got equipped into
             if(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC) == oItem)
-                ForceUnequip(oPC, oItem, INVENTORY_SLOT_RIGHTHAND);
+                nHand = INVENTORY_SLOT_RIGHTHAND;
             else
-                ForceUnequip(oPC, oItem, INVENTORY_SLOT_LEFTHAND);
+                nHand = INVENTORY_SLOT_LEFTHAND;
+            SetCompositeAttackBonus(oPC, "Unproficient" + IntToString(nHand), -4, nHand);
         }
         // Lacking the correct proficiency to wield non-mindblade version of a bastard sword
         if(GetBaseItemType(oItem) == BASE_ITEM_BASTARDSWORD   &&
            GetTag(oItem) != "prc_sk_mblade_bs"                &&
-           !GetHasFeat(FEAT_WEAPON_PROFICIENCY_EXOTIC, oPC))
+           !(GetHasFeat(FEAT_WEAPON_PROFICIENCY_EXOTIC, oPC) ||
+           GetHasFeat(FEAT_WEAPON_PROFICIENCY_BASTARD_SWORD, oPC)))
         {
             SendMessageToPCByStrRef(oPC, 16824511);
-            // Check which slot the weapon got equipped into
             if(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC) == oItem)
-                ForceUnequip(oPC, oItem, INVENTORY_SLOT_RIGHTHAND);
+                nHand = INVENTORY_SLOT_RIGHTHAND;
             else
-                ForceUnequip(oPC, oItem, INVENTORY_SLOT_LEFTHAND);
+                nHand = INVENTORY_SLOT_LEFTHAND;
+            SetCompositeAttackBonus(oPC, "Unproficient" + IntToString(nHand), -4, nHand);
         }
         // Lacking the correct proficiency to wield non-mindblade version of a throwing axe
         if(GetBaseItemType(oItem) == BASE_ITEM_THROWINGAXE    &&
            GetTag(oItem) != "prc_sk_mblade_th"                &&
-           !GetHasFeat(FEAT_WEAPON_PROFICIENCY_MARTIAL, oPC))
+           !(GetHasFeat(FEAT_WEAPON_PROFICIENCY_MARTIAL, oPC) ||
+            GetHasFeat(FEAT_WEAPON_PROFICIENCY_THROWING_AXE, oPC)))
         {
             SendMessageToPCByStrRef(oPC, 16824511);
-            // Check which slot the weapon got equipped into
             if(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC) == oItem)
-                ForceUnequip(oPC, oItem, INVENTORY_SLOT_RIGHTHAND);
+                nHand = INVENTORY_SLOT_RIGHTHAND;
             else
-                ForceUnequip(oPC, oItem, INVENTORY_SLOT_LEFTHAND);
+                nHand = INVENTORY_SLOT_LEFTHAND;
+            SetCompositeAttackBonus(oPC, "Unproficient" + IntToString(nHand), -4, nHand);
         }
     }
     else if(nEvent == EVENT_ONPLAYERUNEQUIPITEM)
@@ -211,6 +218,11 @@ void main()
         if(GetStringLeft(GetTag(oItem), 14) == "prc_sk_mblade_")
         {
             if(LOCAL_DEBUG) DoDebug("Destroying unequipped mindblade");
+            MyDestroyObject(oItem);
+        }
+        if(GetStringLeft(GetTag(oItem), 15) == "prc_sk_tshield_")
+        {
+            if(LOCAL_DEBUG) DoDebug("Destroying unequipped thought shield");
             MyDestroyObject(oItem);
         }
 
@@ -238,6 +250,11 @@ void main()
             if(LOCAL_DEBUG) DoDebug("Destroying lost mindblade");
             MyDestroyObject(oItem);
         }
+        if(GetStringLeft(GetTag(oItem), 15) == "prc_sk_tshield_")
+        {
+            if(LOCAL_DEBUG) DoDebug("Destroying lost thought shield");
+            MyDestroyObject(oItem);
+        }
     }
     else if(nEvent == EVENT_ONPLAYERDEATH)
     {
@@ -252,6 +269,11 @@ void main()
         if(GetStringLeft(GetTag(oItem), 14) == "prc_sk_mblade_")
         {
             if(LOCAL_DEBUG) DoDebug("Destroying mindblade from left hand");
+            MyDestroyObject(oItem);
+        }
+        if(GetStringLeft(GetTag(oItem), 15) == "prc_sk_tshield_")
+        {
+            if(LOCAL_DEBUG) DoDebug("Destroying thought shield from left hand");
             MyDestroyObject(oItem);
         }
     }
@@ -274,6 +296,11 @@ void main()
         if(GetStringLeft(GetTag(oItem), 14) == "prc_sk_mblade_")
         {
             if(LOCAL_DEBUG) DoDebug("Destroying mindblade from left hand");
+            MyDestroyObject(oItem);
+        }
+        if(GetStringLeft(GetTag(oItem), 15) == "prc_sk_tshield_")
+        {
+            if(LOCAL_DEBUG) DoDebug("Destroying thought shield from left hand");
             MyDestroyObject(oItem);
         }
 

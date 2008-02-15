@@ -19015,8 +19015,8 @@ Use: Automatic.</entry>
   <entry id="50158" lang="en" sex="m">Spell-Like Abilities: 1/day - Alter Self, Charm Person, Clairaudience, Darkness, Enervation.
 Fey'ri spell-like abilities have caster level equal to the fey'ri's character level. The DC is Charisma-based.</entry>
   <entry id="50159" lang="en" sex="m">Adamantine Plating</entry>
-  <entry id="50160" lang="en" sex="m">Type of Feat: Racial
-Prerequisite: Composite Plating
+  <entry id="50160" lang="en" sex="m">Type of Feat: Warforged
+Prerequisite: Composite Plating, 1st level only
 
 This Warforged was built using Adamantium for their armor plating.  This grants a +8 bonus to AC, a +1 max Dex bonus to AC, a -5 armor check penalty, 35% arcane spell failure, DR 2/-, and counts as heavy armor.
 Note: This uses the "armor" slot, and so you cannot wear other armor.
@@ -20498,6 +20498,74 @@ Use: Automatic.</entry>
   <entry id="50638" lang="en" sex="m">&lt;CUSTOM0&gt; turns water creatures.</entry>
   <entry id="50639" lang="en" sex="m">&lt;CUSTOM0&gt; turns fire creatures.</entry>
   <entry id="50640" lang="en" sex="m">&lt;CUSTOM0&gt; turns blightspawned.</entry>
+  <entry id="50959" lang="en" sex="m">Strength of Two</entry>
+  <entry id="50960" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Kalashtar
+
+You gain a +1 insight bonus to will saves as long as you are psionically focused.  if you spend 1PP and expend your psionic focus, you can increase this bonus to +5 for one round.
+Note: if you take this feat and are not a Kalashtar, you will have to reselect your feats.  if you take this feat at level 1 and are not Kalashtar, you will be unable to level.
+Use: Selected.</entry>
+  <entry id="50961" lang="en" sex="m">Soulblade Warrior</entry>
+  <entry id="50962" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Kalashtar, ability to manifest a mindblade
+
+You can manifest a mindblade(using this feat) as a swift action.  Your effective level for determining the mind blade enhancement class feature is 2 higher than normal, but you still do not get access to it until level 6 soulknife.
+Note: if you take this feat and are not a Kalashtar, you will have to reselect your feats.  if you take this feat at level 1 and are not Kalashtar, you will be unable to level.
+Use: Selected.</entry>
+  <entry id="50963" lang="en" sex="m">Spiritual Force</entry>
+  <entry id="50964" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Kalashtar, ability to manifest a mindblade
+
+You can expend your psionic focus while wielding your mindblade to gain bonus damage equal to your Charisma modifier for one round.
+Note: if you take this feat and are not a Kalashtar, you will have to reselect your feats.  if you take this feat at level 1 and are not Kalashtar, you will be unable to level.
+Use: Selected.</entry>
+  <entry id="50965" lang="en" sex="m">Improved Fortification</entry>
+  <entry id="50966" lang="en" sex="m">Type of Feat: Warforged
+Prerequisite: Warforged, +6 base attack bonus
+
+You become immune to critical hits and precision damage.  You can no longer be healed by Heal or the Cure Wounds spells.
+Use: Automatic.</entry>
+  <entry id="50967" lang="en" sex="m">Kalashtar</entry>
+  <entry id="50968" lang="en" sex="m">kalashtar</entry>
+  <entry id="50969" lang="en" sex="m">Kalashtar are a compound race, a fusion of humans and an incoporeal race called the quori, native to a plane of dreams.  Fleeing persecution, they found a way to escape to the Prime, and joined with those humans willing to welcome them.  Now, kalashtar are a race of their own, each having a small portion of the original quori who joined with their ancestors, but due to the quori's exile the kalashtar cannot dream.  Physically they appear like humans for the most part, but are typically a bit talle, with slightly more angular features.  When they move, it is with more than the usual grace and elegance.
+
+Kalashtar Ability Adjustments: None.
+Favored Class (Psion): A multiclass kalashtar's psion class does not count when determining whether he suffers an XP penalty for multiclassing.
+
+Special Abilities:
+
+- Base movement of 30.
+- Dual Nature: Kalashtars gain a +2 racial bonus to save vs mind-affecting abilities due to their dual spirits.
+- Social Masters: Kalashtar are adept at social situations, influencing others through their commanding presence and subtle psychic powers.  They gain a +2 to all Bluff, Intimidate, and Persuade checks.
+- Human: Changelings are considered Human for the purpose of spells.</entry>
+  <entry id="50970" lang="en" sex="m">Changeling</entry>
+  <entry id="50971" lang="en" sex="m">changeling</entry>
+  <entry id="50972" lang="en" sex="m">Changelings</entry>
+  <entry id="50973" lang="en" sex="m">Changelings are a true-breeding race decended from human and doppelganger ancestry.  while they lack the full shifting capability of a doppelganger, they are still able to significantly alter their form, up to changing genders.  Also, unlike doppelgangers, they have a defined gender in their natural form.  This ability to assume another's shape makes them excellent at subterfuge.  In their true form, they stand between 5 and 6 feet, with pale grey skin, and thin, fair hair.  Their limbs are long and slightly out of proportion, and their facial features appear melted or somewhat unfinished, including blank white eyes.
+
+Changeling Ability Adjustments: None.
+Favored Class (Rogue): A multiclass changeling's rogue class does not count when determining whether he suffers an XP penalty for multiclassing.
+
+Special Abilities:
+
+- Base movement of 30.
+- Slippery Mind: Changelings gain a +2 racial bonus to save vs mind-affecting abilities due to their slippery minds.
+- Body Language: Changelings are adept at reading body language and attitude, and gain a +2 to all Bluff, Intimidate, and Sense Motive checks.
+- Minor Shape Change: Changelings can physically alter their form to mimic someone of a similar size and mass, as if using a Disguise Self spell.
+- Shapeshifter: Changelings are considered Shapeshifters for the purpose of spells.</entry>
+  <entry id="50974" lang="en" sex="m">You grew up during the last war on Khovaire, whether under the towers of Sharn, or elsewhere among the Five Nations.  Many great heros fell during the clashes of that conflict, and now that you've come of age, perhaps you can find a place as one of the new guard of heroes.</entry>
+  <entry id="50975" lang="en" sex="m">Minor Change Shape</entry>
+  <entry id="50976" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race Specific
+
+You can physically alter your form to mimic that of another of similar size and mass.  You can appear one foot shorter or taller, fatter or thinner, or even change genders, but you cannot grow new limbs.
+Use: Selected.</entry>
+  <entry id="50977" lang="en" sex="m">Mental Spell Resistance</entry>
+  <entry id="50978" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race Specific
+
+You gain a +2 to save vs mind-affecting spells.
+Use: Automatic.</entry>
   <entry id="50979" lang="en" sex="m">Zakya Rakshasa</entry>
   <entry id="50980" lang="en" sex="m">Zakya</entry>
   <entry id="50981" lang="en" sex="m">zakya</entry>
@@ -20523,7 +20591,7 @@ Special Abilities:
   <entry id="50984" lang="en" sex="m">Racial Vampiric Touch</entry>
   <entry id="50985" lang="en" sex="m">Warforged</entry>
   <entry id="50986" lang="en" sex="m">warforged</entry>
-  <entry id="50987" lang="en" sex="m">Warforged were originally built as mindless war machines, an army of constructs able to fight whtout food and water.  AS a side-effect of the processes used to create them, however, they gained sentience.  At first this was a boon, as now there was no need for a living general to travel with them, but eventually the war came to an end, as all wars do.  As they couldn't destroy the now sentient race of living constructs, they were instead freed and left to find their own way in the world.  Physically they look similar to golems, with plating made of metal and mineral covering a living wooden frame.  They were created without gender, though a few with a more typically feminine mindset have modified their design and plating to mimic a humanoid female's shape.  Warforged cannot reproduce, but can only be made at special Creation Forges built using uncovered ancient plans.  They do not age either, and their mindset sometimes leaves the activites of the huamnoid races a puzzle to them.
+  <entry id="50987" lang="en" sex="m">Warforged were originally built as mindless war machines, an army of constructs able to fight without food and water.  As a side-effect of the processes used to create them, however, they gained sentience.  At first this was a boon, as now there was no need for a living general to travel with them, but eventually the war came to an end, as all wars do.  As they couldn't destroy the now-sentient race of living constructs, they were instead freed and left to find their own way in the world.  Physically they look similar to golems, with plating made of metal and mineral covering a living wooden frame.  They were created without gender, though a few with a more typically feminine mindset have modified their design and plating to mimic a humanoid female's shape.  Warforged cannot reproduce, but can only be made at special Creation Forges built using uncovered ancient plans.  They do not age either, and their mindset sometimes leaves the activities of the humanoid races a puzzle to them.
   
 Warforged Ability Adjustments: +2 Con, -2 Wis, -2 Cha.
 Favored Class (Fighter): A multiclass warforged's fighter class does not count when determining whether he suffers an XP penalty for multiclassing. 
@@ -20538,22 +20606,22 @@ Special Abilities:
 - Construct: Warforged count as Constructs for the purpose of spells.</entry>
   <entry id="50988" lang="en" sex="m">You were created to fight in a great war, a constuct designed to be a self-sufficient soldier and make decisions as necessary in the field.  The war ended, and because of your kind's sentience, you were freed.  With no war left to fight, and no owner other than yourself, you must find a new place in the world.</entry>
   <entry id="50989" lang="en" sex="m">Mithril Plating</entry>
-  <entry id="50990" lang="en" sex="m">Type of Feat: Racial
-Prerequisite: Composite Plating
+  <entry id="50990" lang="en" sex="m">Type of Feat: Warforged
+Prerequisite: Composite Plating, 1st level only
 
 This Warforged was built using Mithril for their armor plating.  This grants a +5 bonus to AC, a +5 max Dex bonus to AC, a -2 armor check penalty, 15% arcane spell failure, and counts as wearing light armor.
 Note: This uses the "armor" slot, and so you cannot wear other armor.
 Use: Automatic.</entry>
   <entry id="50991" lang="en" sex="m">Ironwood Plating</entry>
-  <entry id="50992" lang="en" sex="m">Type of Feat: Racial
-Prerequisite: Composite Plating
+  <entry id="50992" lang="en" sex="m">Type of Feat: Warforged
+Prerequisite: Composite Plating, 1st level only
 
 This Warforged was built using Ironwood for their armor plating.  This grants a +3 bonus to AC, a +4 max Dex bonus to AC, a -3 armor check penalty, 20% arcane spell failure, DR 2/slashing, and counts as light armor.
 Note: This uses the "armor" slot, and so you cannot wear other armor.
 Use: Automatic.</entry>
   <entry id="50993" lang="en" sex="m">Unarmored Body</entry>
-  <entry id="50994" lang="en" sex="m">Type of Feat: Racial
-Prerequisite: Composite Plating
+  <entry id="50994" lang="en" sex="m">Type of Feat: Warforged
+Prerequisite: Composite Plating, 1st level only
 
 This Warforged was built without extraneous external armor plating, imposing no benefits or penalties.  You can also wear armor.
 Use: Automatic.</entry>

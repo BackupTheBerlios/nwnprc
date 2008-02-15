@@ -95,9 +95,9 @@
 91    ****     ****                                                      **** ****      
 92    ****     ****                                                      **** ****      
 93    ****     ****                                                      **** ****      
-94    ****     ****                                                      **** ****      
-95    ****     ****                                                      **** ****      
-96    ****     ****                                                      **** ****      
+94    217      Shield_Proficiency                                        0    32        
+95    205      Heavy_Armor_Proficiency                                   0    2         
+96    207      Light_Armor_Proficiency                                   0    3         
 97    8497     FEAT_EPIC_IMPROVED_COMBAT_CASTING                         10   696       
 98    16824543 ACP_FEAT                                                  0    2892      
 99    1905     SpellFocusTrans                                           0.75 172       
@@ -392,9 +392,9 @@
 388   16824444 ImpCrit_Mindblade                                         1    3614      
 389   ****     ****                                                      **** ****      
 390   8685     ImbueArrow                                                0    450       
-391   ****     CraftGuild                                                0    4637      
-392   ****     TechGuild                                                 0    4638      
-393   ****     SageGuild                                                 0    4639      
+391   16833132 CraftGuild                                                0    4637      
+392   16833134 TechGuild                                                 0    4638      
+393   16833136 SageGuild                                                 0    4639      
 394   431      FEAT_TOUGHNESS                                            0    40        
 395   83496    FEAT_DRAGON_IMMUNE_PARALYSIS                              0    963       
 396   16827421 Race_Dragon                                               0    4773      

@@ -70,6 +70,13 @@ void main()
         itemproperty ipIP =ItemPropertyImmunityMisc(IP_CONST_IMMUNITYMISC_DISEASE);
         IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
     }
+
+    //improved fortification - immunity to critical hits
+    if(GetHasFeat(FEAT_IMPROVED_FORTIFICATION))
+    {
+        itemproperty ipIP =ItemPropertyImmunityMisc(IP_CONST_IMMUNITYMISC_CRITICAL_HITS);
+        IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+    }
     
     //Plant racial type immunities - sleep, paralysis, poison, mind-affecting, criticals
     if(GetHasFeat(FEAT_PLANT_IMM))
@@ -490,12 +497,13 @@ void main()
         SetCompositeBonus(oSkin, "PSA_Lorespell_Spell", 1, ITEM_PROPERTY_SKILL_BONUS, SKILL_SPELLCRAFT);
     }
     
-    //Changeling +2 to save vs mind-affecting
-    if(GetHasFeat(FEAT_CHANGE_MIND))
+    //+2 to save vs mind-affecting
+    if(GetHasFeat(FEAT_BONUS_MIND_2))
     {
         itemproperty ipIP =ItemPropertyBonusSavingThrowVsX(IP_CONST_SAVEVS_MINDAFFECTING, 2);
         IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
     }
+    
     
     //damage reduction 5/+1
     if(GetHasFeat(FEAT_DAM_RED5))

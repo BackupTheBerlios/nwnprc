@@ -95,6 +95,10 @@ const int IP_CONST_FEAT_LOWLIGHT_VISION = 383;
 const int IP_CONST_FEAT_NEW_PWATK = 384;
 const int IP_CONST_FEAT_NEW_IPWATK = 385;
 
+const int IP_CONST_FEAT_LIGHT_ARMOR_PROF        = 96;
+const int IP_CONST_FEAT_HEAVY_ARMOR_PROF        = 95;
+const int IP_CONST_FEAT_SHIELD_PROF             = 94;
+
 const int IP_CONST_FEAT_EPIC_AUTO_STILL_I       = 204;
 const int IP_CONST_FEAT_EPIC_AUTO_STILL_II      = 205;
 const int IP_CONST_FEAT_EPIC_AUTO_STILL_III     = 206;

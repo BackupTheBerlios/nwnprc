@@ -83,8 +83,10 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent, int bI
         {
             SignalEvent(oTarget, EventSpellCastAt(oCaster, nSpellID, FALSE));
             
-            //Warforged are only healed for half
+            //Warforged are only healed for half, none if they have Improved Fortification
             if(GetRacialType(oTarget) == RACIAL_TYPE_WARFORGED) nHeal /= 2;
+            if(GetHasFeat(FEAT_IMPROVED_FORTIFICATION, oTarget)) nHeal = 0;
+            
             
             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(nHeal), oTarget));
             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(nHealVFX), oTarget));

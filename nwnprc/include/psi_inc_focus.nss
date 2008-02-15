@@ -143,6 +143,12 @@ void GainPsionicFocus(object oGainee = OBJECT_SELF)
     // Psionic Dodge
     if(GetHasFeat(FEAT_PSIONIC_DODGE, oGainee))
         SetCompositeBonus(GetPCSkin(oGainee), "PsionicDodge", 1, ITEM_PROPERTY_AC_BONUS);
+        
+    //Strength of Two - Kalashtar racial feat
+    if(GetHasFeat(FEAT_STRENGTH_OF_TWO, oGainee))
+    {
+        SetCompositeBonus(GetPCSkin(oGainee), "StrengthOfTwo", 1, ITEM_PROPERTY_SAVING_THROW_BONUS, SAVING_THROW_WILL);
+    }
 }
 
 int UsePsionicFocus(object oUser = OBJECT_SELF)
@@ -204,6 +210,8 @@ void LosePsionicFocus(object oLoser = OBJECT_SELF)
         RemoveEventScript(oLoser, EVENT_ONPLAYERUNEQUIPITEM, "psi_spdfthgt_ueq", TRUE);
         // Loss of Psionic Dodge effects
         SetCompositeBonus(GetPCSkin(oLoser), "PsionicDodge", 0, ITEM_PROPERTY_AC_BONUS);
+        // Loss of Strength of Two effects
+        SetCompositeBonus(GetPCSkin(oLoser), "StrengthOfTwo", 0, ITEM_PROPERTY_SAVING_THROW_BONUS, SAVING_THROW_WILL);
 
         // Inform oLoser about the event
         FloatingTextStrRefOnCreature(16826415, oLoser, FALSE); // "You have lost your Psionic Focus"

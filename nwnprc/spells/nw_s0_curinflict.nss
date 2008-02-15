@@ -71,7 +71,8 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent, int bI
     {
         // Skip non-creatures. AoE targeting shouldn't get them anyway, but single target spells shouldn't affect non-creatures either
         // Also skip constructs, since they are neither living nor undead. Technically, they would qualify for being healed by mass cures, but we assume that's just bad editing.
-        if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_CONSTRUCT && GetRacialType(oTarget) != RACIAL_TYPE_WARFORGED)
+        //Improved Fortification overrides Warforged's ability to be healed.
+        if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_CONSTRUCT && GetRacialType(oTarget) != RACIAL_TYPE_WARFORGED || GetHasFeat(FEAT_IMPROVED_FORTIFICATION, oTarget))
         {
             oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lLoc, TRUE);
             continue;
@@ -112,8 +113,9 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent, int bI
         // Healing, assume the caster never wants to heal hostiles and any targeting of such was a misclick
         if(bHeal && !spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE, oCaster))
         {
-            //Warforged are only healed for half
+            //Warforged are only healed for half, none if they have Improved Fortification
             if(GetRacialType(oTarget) == RACIAL_TYPE_WARFORGED) nHeal /= 2;
+            if(GetHasFeat(FEAT_IMPROVED_FORTIFICATION, oTarget)) nHeal = 0;
         	
             // Apply healing to the target
             effect eHeal = EffectHeal(nHeal);

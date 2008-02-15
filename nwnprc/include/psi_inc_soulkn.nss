@@ -135,7 +135,9 @@ int GetFlagCost(int nFlag)
 
 int GetMaxEnhancementCost(object oSK)
 {
-    return (GetLevelByClass(CLASS_TYPE_SOULKNIFE, oSK) - 2) / 4;
+    int nEffMBldLevel = GetLevelByClass(CLASS_TYPE_SOULKNIFE, oSK);
+    if(GetHasFeat(FEAT_SOULBLADE_WARRIOR, oSK)) nEffMBldLevel += 2;
+    return (nEffMBldLevel - 2) / 4;
 }
 
 int GetIsMindblade(object oWeapon)

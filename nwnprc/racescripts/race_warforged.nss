@@ -12,6 +12,43 @@
 
 #include "prc_alterations"
 
+void CreateWarforgedArmor(object oPC)
+{
+    object oArmor;
+    itemproperty ipIP;
+    
+    if(GetHasFeat(FEAT_IRONWOOD_PLATING, oPC))
+    {
+    	ipIP =ItemPropertyBonusFeat(IP_CONST_FEAT_LIGHT_ARMOR_PROF);
+        IPSafeAddItemProperty(GetPCSkin(oPC), ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+        oArmor = CreateItemOnObject("prc_wf_woodbody", oPC);
+    }
+    else if(GetHasFeat(FEAT_MITHRIL_PLATING, oPC))
+    {
+    	ipIP =ItemPropertyBonusFeat(IP_CONST_FEAT_LIGHT_ARMOR_PROF);
+        IPSafeAddItemProperty(GetPCSkin(oPC), ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+        oArmor = CreateItemOnObject("prc_wf_mithbody", oPC);
+    }
+    else if(GetHasFeat(FEAT_ADAMANTINE_PLATING, oPC))
+    {
+    	ipIP =ItemPropertyBonusFeat(IP_CONST_FEAT_HEAVY_ARMOR_PROF);
+        IPSafeAddItemProperty(GetPCSkin(oPC), ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+        oArmor = CreateItemOnObject("prc_wf_admtbody", oPC);
+    }
+    else if(GetHasFeat(FEAT_UNARMORED_BODY, oPC))
+        oArmor = CreateItemOnObject("prc_wf_unacbody", oPC);
+    else if(GetHasFeat(FEAT_COMPOSITE_PLATING, oPC))
+        oArmor = CreateItemOnObject("prc_wf_compbody", oPC);
+                
+    // Force equip
+    AssignCommand(oPC, ActionEquipItem(oArmor, INVENTORY_SLOT_CHEST));
+    
+    object oHelm = CreateItemOnObject("prc_wf_helmhead", oPC);
+            
+    //Force Equip
+    AssignCommand(oPC, ActionEquipItem(oHelm, INVENTORY_SLOT_HEAD));
+}
+
 void DoWarforgedCheck(object oPC)
 {
     object oHelm = GetItemPossessedBy(oPC, "prc_wf_helmhead");
@@ -38,32 +75,20 @@ void main()
     if(nEvent == FALSE)
     {
     	oPC = OBJECT_SELF;
-    	//Need to replace this with a GetItemPossessed check for the actual armor/helm
-    	int nArmorExists = GetPersistantLocalInt(oPC, "WarforgedArmor");
+    	int nArmorExists = GetItemPossessedBy(oPC, "prc_wf_unacbody") != OBJECT_INVALID
+    	                   || GetItemPossessedBy(oPC, "prc_wf_woodbody") != OBJECT_INVALID
+    	                   || GetItemPossessedBy(oPC, "prc_wf_mithbody") != OBJECT_INVALID
+    	                   || GetItemPossessedBy(oPC, "prc_wf_admtbody") != OBJECT_INVALID
+    	                   || GetItemPossessedBy(oPC, "prc_wf_compbody") != OBJECT_INVALID;
         // Hook in the events
         if(DEBUG) DoDebug("race_warforged: Adding eventhooks");
         AddEventScript(oPC, EVENT_ONPLAYERUNEQUIPITEM, "race_warforged", TRUE, FALSE);
+        //may not be needed, put in just in case(ala HotU start)
+        AddEventScript(oPC, EVENT_ONUNAQUIREITEM, "race_warforged", TRUE, FALSE);
         
         if(!nArmorExists)
         {
-            if(GetHasFeat(FEAT_IRONWOOD_PLATING, oPC))
-                oArmor = CreateItemOnObject("prc_wf_woodbody", oPC);
-            else if(GetHasFeat(FEAT_MITHRIL_PLATING, oPC))
-                oArmor = CreateItemOnObject("prc_wf_mithbody", oPC);
-            else if(GetHasFeat(FEAT_ADAMANTINE_PLATING, oPC))
-                oArmor = CreateItemOnObject("prc_wf_admtbody", oPC);
-            else if(GetHasFeat(FEAT_UNARMORED_BODY, oPC))
-                oArmor = CreateItemOnObject("prc_wf_unacbody", oPC);
-            else if(GetHasFeat(FEAT_COMPOSITE_PLATING, oPC))
-                oArmor = CreateItemOnObject("prc_wf_compbody", oPC);
-                
-            object oHelm = CreateItemOnObject("prc_wf_helmhead", oPC);
-                
-            // Force equip
-            AssignCommand(oPC, ActionEquipItem(oArmor, INVENTORY_SLOT_CHEST));
-            AssignCommand(oPC, ActionEquipItem(oHelm, INVENTORY_SLOT_HEAD));
-            
-            SetPersistantLocalInt(oPC, "WarforgedArmor", TRUE);
+            CreateWarforgedArmor(oPC);
         }
     }
     
@@ -85,6 +110,9 @@ void main()
            && GetHasFeat(FEAT_IRONWOOD_PLATING, oPC)
            && GetResRef(oItem) == "prc_wf_woodbody")
         {
+            //Add proficiency
+            itemproperty ipIP =ItemPropertyBonusFeat(IP_CONST_FEAT_LIGHT_ARMOR_PROF);
+            IPSafeAddItemProperty(GetPCSkin(oPC), ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
             // Force equip
             AssignCommand(oPC, ActionEquipItem(oItem, INVENTORY_SLOT_CHEST)); 
         }
@@ -93,6 +121,8 @@ void main()
            && GetHasFeat(FEAT_MITHRIL_PLATING, oPC)
            && GetResRef(oItem) == "prc_wf_mithbody")
         {
+            itemproperty ipIP =ItemPropertyBonusFeat(IP_CONST_FEAT_LIGHT_ARMOR_PROF);
+            IPSafeAddItemProperty(GetPCSkin(oPC), ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
             // Force equip
             AssignCommand(oPC, ActionEquipItem(oItem, INVENTORY_SLOT_CHEST)); 
         }
@@ -100,7 +130,9 @@ void main()
         else if(oItem == GetItemInSlot(INVENTORY_SLOT_CHEST, oPC) 
            && GetHasFeat(FEAT_ADAMANTINE_PLATING, oPC)
            && GetResRef(oItem) == "prc_wf_admtbody")
-        {
+        {        	
+            itemproperty ipIP =ItemPropertyBonusFeat(IP_CONST_FEAT_HEAVY_ARMOR_PROF);
+            IPSafeAddItemProperty(GetPCSkin(oPC), ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
             // Force equip
             AssignCommand(oPC, ActionEquipItem(oItem, INVENTORY_SLOT_CHEST)); 
         }
@@ -118,5 +150,19 @@ void main()
             // Delay a bit to make sure they haven't equipped another helm
             DelayCommand(0.5f, DoWarforgedCheck(oPC)); 
         }
+    }
+    
+    else if(nEvent == EVENT_ONUNAQUIREITEM)
+    {
+        if(DEBUG) DoDebug("race_warforged: OnUnAcquire");
+        object oItem = GetModuleItemLost();
+        if(GetStringLeft(GetTag(oItem), 7) == "prc_wf_")
+        {
+            if(DEBUG) DoDebug("Destroying lost warforged stuff");
+            MyDestroyObject(oItem);
+        }
+        
+        //recreates armor after 1 second to avoid triggering any infinite loops from HotU-type scripts
+        DelayCommand(1.0, CreateWarforgedArmor(oPC));
     }
 }

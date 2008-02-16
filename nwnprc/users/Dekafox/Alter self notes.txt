@@ -1,0 +1,40 @@
+[7:01:52pm] <@fluffyamoeba> Fox, you can go ahead and fix those if you want
+[7:02:00pm] <@fluffyamoeba> as i've been menaing to do it since september
+[7:02:05pm] <@Fox> oh the spells?
+[7:02:09pm] <@fluffyamoeba> and i've not got anywhere
+[7:02:39pm] <@fluffyamoeba> racial alter self for feyrii and rakshasa
+[7:02:44pm] <@Fox> kay, I'll take a stab at it later
+[7:02:44pm] <@fluffyamoeba> lich alter self
+[7:02:59pm] joins: [1]ladydesire (~ladydesir@nwc-D1062AA6.suite224.net) (8 users)
+[7:03:06pm] <@fluffyamoeba> and the spell disguise self (i don't think we have alter self)
+[7:03:09pm] <@Fox> I'll probably do what I did with the changeling, and give both the 1000faces and shifter change shape feats
+[7:03:18pm] <@Fox> for the racial ones
+[7:03:34pm] <@fluffyamoeba> spells suffer from needing to memorise the spell again to cancel it
+[7:03:54pm] quits: ladydesire (~ladydesir@nwc-BCC7C33A.suite224.net) (Ping timeout)
+[7:03:56pm] [1]ladydesire (~ladydesir@nwc-D1062AA6.suite224.net) is now known as ladydesire
+[7:04:04pm] <@fluffyamoeba> i was thinking maybe end scrying and end disguise could be made into subfeats
+[7:04:05pm] <*Stratovarius> wb ld
+[7:04:36pm] <*Stratovarius> yeah, we need the spell alter self as well
+[7:04:38pm] <@fluffyamoeba> thing with feyrii is that they want one ofg the slots to be feyrii but no wings
+[7:04:45pm] <*Stratovarius> hell, if you're feeling like distributing the poly thing widely
+[7:04:49pm] <*Stratovarius> there's a ton i can point at
+[7:04:55pm] <@fluffyamoeba> and lich one of the slots should be their pre-lich appearance
+[7:05:14pm] <@fluffyamoeba> (as those two are used most often)
+[7:05:21pm] <*Stratovarius> probaly a good idea to use the end scrying as a subradial feat
+[7:05:26pm] <*Stratovarius> the cancellation series
+[7:05:38pm] <@fluffyamoeba> at the moment, lich alter self at least lets you switch between lich and original
+[7:05:45pm] <@fluffyamoeba> feyrii is just broken
+[7:05:54pm] <*Stratovarius> lol
+[7:05:57pm] <*Stratovarius> yeah :p
+[7:06:00pm] <@fluffyamoeba> rak only lets you switch between original and rak iirc
+[7:06:08pm] <@Fox> probably be easy to add a feat that jsut toggles the wings for teh fey'ri
+[7:06:22pm] <@fluffyamoeba> feyrii get full alter self though
+[7:06:28pm] <@fluffyamoeba> as do lich and rak
+[7:06:31pm] <@fluffyamoeba> as SLAs
+[7:06:47pm] <ladydesire> time to see how a Halfling Psion will fare in NWN1...
+[7:06:59pm] <@Fox> I meant in addition to the regular change shape
+[7:07:00pm] <@fluffyamoeba> :) so you could do it as seperate feats, or as one of the subfeats
+[7:07:45pm] <@fluffyamoeba> hmm....i think that's most of the stuff in my notes
+[7:08:33pm] <@fluffyamoeba> (i made some notes on how to do it in a very incomprehensible lecture)
+[7:09:27pm] <*Stratovarius> fairly well, if you have a meatshield LD :p
+[7:09:37pm] <@fluffyamoeba> i'd be really happy if you did them, as then i could do something else other than stare at my nearly blank script

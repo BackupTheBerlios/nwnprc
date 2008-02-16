@@ -37,6 +37,16 @@ int StartingConditional()
     if(nFlags & MBLADE_FLAG_WOUNDING)           { sSelect += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(741); }
     if(nFlags & MBLADE_FLAG_DISRUPTING)         { sSelect += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16824507); }
     if(nFlags & MBLADE_FLAG_SOULBREAKER)        { sSelect += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16824508); }    
+    if(nFlags & MBLADE_FLAG_SHIELD_1)           { sSelect += (bFirst-- > 0 ? "":" ,") + "Shield of Thought +1"; }    
+    if(nFlags & MBLADE_FLAG_SHIELD_2)           { sSelect += (bFirst-- > 0 ? "":" ,") + "Shield of Thought +2"; }    
+    if(nFlags & MBLADE_FLAG_SHIELD_3)           { sSelect += (bFirst-- > 0 ? "":" ,") + "Shield of Thought +3"; }    
+    if(nFlags & MBLADE_FLAG_SHIELD_4)           { sSelect += (bFirst-- > 0 ? "":" ,") + "Shield of Thought +4"; }    
+    if(nFlags & MBLADE_FLAG_SHIELD_5)           { sSelect += (bFirst-- > 0 ? "":" ,") + "Shield of Thought +5"; }    
+    if(nFlags & MBLADE_FLAG_SHIELD_6)           { sSelect += (bFirst-- > 0 ? "":" ,") + "Shield of Thought +6"; }    
+    if(nFlags & MBLADE_FLAG_SHIELD_7)           { sSelect += (bFirst-- > 0 ? "":" ,") + "Shield of Thought +7"; }    
+    if(nFlags & MBLADE_FLAG_SHIELD_8)           { sSelect += (bFirst-- > 0 ? "":" ,") + "Shield of Thought +8"; }    
+    if(nFlags & MBLADE_FLAG_SHIELD_9)           { sSelect += (bFirst-- > 0 ? "":" ,") + "Shield of Thought +9"; }    
+    if(nFlags & MBLADE_FLAG_SHIELD_10)          { sSelect += (bFirst-- > 0 ? "":" ,") + "Shield of Thought +10"; }        
     
     SetCustomToken(100, sSelect);
     

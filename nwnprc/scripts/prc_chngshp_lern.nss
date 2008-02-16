@@ -31,18 +31,7 @@ void main()
     if(GetCanShiftIntoCreature(oPC, SHIFTER_TYPE_CHANGESHAPE, oTarget))
     {
         StoreShiftingTemplate(oPC, SHIFTER_TYPE_CHANGESHAPE, oTarget);
-        // Make sure the character has uses left for shifting
-        int bPaid = FALSE;
-        // Pay if Irda
-        if(nSpellID == SPELL_IRDA_CHANGE_SHAPE_LEARN)
-        {
-            DecrementRemainingFeatUses(oPC, FEAT_IRDA_CHANGE_SHAPE);
-            bPaid = TRUE;
-        }
-                    
-        else
-            bPaid = TRUE;
-
+        
         // Start shifting. If this fails immediately, refund the shifting use
         if(!ShiftIntoCreature(oPC, SHIFTER_TYPE_CHANGESHAPE, oTarget))
         {

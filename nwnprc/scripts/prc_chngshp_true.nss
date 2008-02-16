@@ -25,6 +25,9 @@ void main()
 {
     object oPC = OBJECT_SELF;
     
+    if(GetSpellId() == SPELL_IRDA_CHANGE_SHAPE_TRUE)
+         IncrementRemainingFeatUses(oPC, FEAT_IRDA_CHANGE_SHAPE);
+    
     //clear old style shifting first
     if(GetLocalInt(oPC, "shifting"))
     {

@@ -27,7 +27,7 @@ void BuildMindShield(object oPC, object oShield);
 
 void main()
 {
-    if(LOCAL_DEBUG) DoDebug("Starting psi_sk_manifmbld");
+    if(LOCAL_DEBUG) DoDebug("Starting psi_sk_manifshld");
     object oPC = OBJECT_SELF;
     object oShield;
     int nMbldType = GetPersistantLocalInt(oPC, MBLADE_SHAPE);
@@ -45,12 +45,9 @@ void main()
             if(!GetHasFeat(FEAT_WEAPON_PROFICIENCY_EXOTIC) && !GetHasFeat(FEAT_WEAPON_PROFICIENCY_BASTARD_SWORD)) return;
             break;
 
-        default:
-            WriteTimestampedLogEntry("Invalid value in MBLADE_SHAPE for " + GetName(oPC) + ": " + IntToString(nMbldType));
-            return;
     }
     
-    oShield = CreateItemOnObject("prc_sk_tshield_0", oPC);
+    oShield = CreateItemOnObject("psi_sk_tshield_0", oPC);
 
     // Construct the bonuses
     /*DelayCommand(0.25f, */BuildMindShield(oPC, oShield)/*)*/;
@@ -76,43 +73,43 @@ void BuildMindShield(object oPC, object oShield)
 
     if(nFlags & MBLADE_FLAG_SHIELD_1)
     {
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyEnhancementBonus(1), oShield);
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyACBonus(1), oShield);
     }
     if(nFlags & MBLADE_FLAG_SHIELD_2)
     {
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyEnhancementBonus(2), oShield);
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyACBonus(2), oShield);
     }
     if(nFlags & MBLADE_FLAG_SHIELD_3)
     {
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyEnhancementBonus(3), oShield);
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyACBonus(3), oShield);
     }
     if(nFlags & MBLADE_FLAG_SHIELD_4)
     {
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyEnhancementBonus(4), oShield);
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyACBonus(4), oShield);
     }
     if(nFlags & MBLADE_FLAG_SHIELD_5)
     {
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyEnhancementBonus(5), oShield);
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyACBonus(5), oShield);
     }
     if(nFlags & MBLADE_FLAG_SHIELD_6)
     {
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyEnhancementBonus(6), oShield);
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyACBonus(6), oShield);
     }
     if(nFlags & MBLADE_FLAG_SHIELD_7)
     {
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyEnhancementBonus(7), oShield);
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyACBonus(7), oShield);
     }
     if(nFlags & MBLADE_FLAG_SHIELD_8)
     {
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyEnhancementBonus(8), oShield);
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyACBonus(8), oShield);
     }
     if(nFlags & MBLADE_FLAG_SHIELD_9)
     {
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyEnhancementBonus(9), oShield);
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyACBonus(9), oShield);
     }
     if(nFlags & MBLADE_FLAG_SHIELD_10)
     {
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyEnhancementBonus(10), oShield);
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyACBonus(10), oShield);
     }
     
     

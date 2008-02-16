@@ -949,7 +949,14 @@ void _prc_inc_shifting_ShiftIntoTemplateAux(object oShifter, int nShifterType, o
         }
 
         // Change the appearance to that of the template
-        SetAppearanceData(oShifter, GetAppearanceData(oTemplate));
+        if(GetAppearanceType(oTemplate) > 5)
+             SetAppearanceData(oShifter, GetAppearanceData(oTemplate));
+        else
+        {
+             SetAppearanceData(oShifter, GetAppearanceData(oTemplate));
+             SetLocalInt(oShifter, "DynamicAppearance", TRUE);
+             SetCreatureAppearanceType(oShifter, GetAppearanceType(oTemplate));
+        }
 
         // Set a local variable to override racial type. Offset by +1 to differentiate value 0 from non-existence
         //Change shape doesn't include this, but there is a feat that gives it to Changelings
@@ -1212,6 +1219,7 @@ int StoreCurrentAppearanceAsTrueAppearance(object oShifter, int bCarefull = TRUE
 
     // Store it
     SetPersistantLocalAppearancevalues(oShifter, SHIFTER_TRUEAPPEARANCE, appval);
+    SetPersistantLocalInt(oShifter, "TrueFormAppearanceType", GetAppearanceType(oShifter));
 
     // Set a marker that tells that the true appearance is stored
     SetPersistantLocalInt(oShifter, SHIFTER_TRUEAPPEARANCE, TRUE);
@@ -1241,6 +1249,12 @@ int RestoreTrueAppearance(object oShifter)
 
     // Apply it to the creature
     SetAppearanceData(oShifter, appval);
+    
+    if(GetLocalInt(oShifter, "DynamicAppearance"))
+    {
+        SetCreatureAppearanceType(oShifter, GetPersistantLocalInt(oShifter, "TrueFormAppearanceType"));
+        DeleteLocalInt(oShifter, "DynamicAppearance");
+    }
 
     // Inform caller of success
     return TRUE;

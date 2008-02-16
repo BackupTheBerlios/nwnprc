@@ -4,6 +4,7 @@
 
 #include "prc_alterations"
 #include "prc_ipfeat_const"
+#include "inc_dynconv"
 
 void main()
 {
@@ -555,7 +556,7 @@ void main()
     
     //Tinker Gnome guilds
     if(GetHasFeat(FEAT_LIFEPATH) && !(GetHasFeat(FEAT_CRAFTGUILD) || GetHasFeat(FEAT_TECHGUILD) || GetHasFeat(FEAT_SAGEGUILD)))
-        ExecuteScript("race_lifepthconv", oPC);
+        StartDynamicConversation("race_lifepthconv", oPC, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, oPC);
     
     if(GetHasFeat(FEAT_CRAFTGUILD))
     {
@@ -821,5 +822,8 @@ void main()
     
     //Draconian on-death effects
     if(nRace == RACIAL_TYPE_BOZAK || nRace == RACIAL_TYPE_BAAZ || nRace == RACIAL_TYPE_KAPAK)
+    {
+    	SetCreatureWingType(CREATURE_WING_TYPE_DRAGON, oPC);
         ExecuteScript("race_deaththroes", oPC);
+    }
 }

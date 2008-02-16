@@ -48,33 +48,17 @@ void main()
     if(sResRef == "")
     {
         FloatingTextStrRefOnCreature(16828382, oPC, FALSE); // "This Quick Shift Slot is empty!"
+        if(nSpellID == SPELL_IRDA_CHANGE_SHAPE_QS1 || nSpellID == SPELL_IRDA_CHANGE_SHAPE_QS2)
+             IncrementRemainingFeatUses(oPC, FEAT_IRDA_CHANGE_SHAPE);
         return;
     }
 
-    // Make sure the character has uses left for shifting
+    // See if the shifting starts successfully
+    if(!ShiftIntoResRef(oPC, SHIFTER_TYPE_CHANGESHAPE, sResRef))
+    {
+        // In case of shifting failure, refund the shifting use
+        if(nSpellID == SPELL_IRDA_CHANGE_SHAPE_QS1 || nSpellID == SPELL_IRDA_CHANGE_SHAPE_QS2)
+            IncrementRemainingFeatUses(oPC, FEAT_IRDA_CHANGE_SHAPE);
+    }
     
-    // Pay if Irda
-    if(nSpellID == SPELL_IRDA_CHANGE_SHAPE_QS1 || nSpellID == SPELL_IRDA_CHANGE_SHAPE_QS2)
-    {
-        DecrementRemainingFeatUses(oPC, FEAT_IRDA_CHANGE_SHAPE);
-        bPaid = TRUE;
-    }
-                
-    else
-        bPaid = TRUE;
-
-    // If the user could pay for the shifting, do it
-    if(bPaid)
-    {
-        // See if the shifting starts successfully
-        if(!ShiftIntoResRef(oPC, SHIFTER_TYPE_CHANGESHAPE, sResRef))
-        {
-            // In case of shifting failure, refund the shifting use
-            if(nSpellID == SPELL_IRDA_CHANGE_SHAPE_QS1 || nSpellID == SPELL_IRDA_CHANGE_SHAPE_QS2)
-                IncrementRemainingFeatUses(oPC, FEAT_IRDA_CHANGE_SHAPE);
-        }
-    }
-    // Otherwise, whine
-    else
-        FloatingTextStrRefOnCreature(16828153, oPC, FALSE); // "You didn't have Change Shape uses available."
 }

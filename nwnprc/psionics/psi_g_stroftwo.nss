@@ -29,6 +29,6 @@ void main()
     //Don't need to check PP total, you can only have focus if you have PP
     LosePowerPoints(oManifester, 1);
     
-    effect eWillBonus = EffectSavingThrowIncrease(SAVING_THROW_WILL, 4);
+    effect eWillBonus = EffectSavingThrowIncrease(SAVING_THROW_WILL, 5);
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eWillBonus, oManifester, RoundsToSeconds(1));
 }

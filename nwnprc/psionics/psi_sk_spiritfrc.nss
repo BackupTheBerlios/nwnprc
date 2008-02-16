@@ -36,6 +36,6 @@ void main()
 
     //Add Charisma to damage
     int nDmgBonus = GetAbilityModifier(ABILITY_CHARISMA, oPC);
-    effect eDmgBonus = EffectDamageIncrease(nDmgBonus, DAMAGE_TYPE_BASE_WEAPON);
+    effect eDmgBonus = EffectDamageIncrease(nDmgBonus, DAMAGE_TYPE_SLASHING);
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDmgBonus, oPC, RoundsToSeconds(1));
 }

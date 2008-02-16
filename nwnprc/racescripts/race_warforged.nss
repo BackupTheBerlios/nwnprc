@@ -15,41 +15,40 @@
 void CreateWarforgedArmor(object oPC)
 {
     object oArmor;
-    itemproperty ipIP;
-    object oSkin = GetPCSkin(oPC);
-    if(oSkin == OBJECT_INVALID) DoDebug("race_warforged: Skin does not exist! Danger, danger Will Robinson!");
+    object oHelm;
+    object oFeatHide = CreateItemOnObject("prc_wf_feats", oPC);
         
     if(GetHasFeat(FEAT_IRONWOOD_PLATING, oPC))
     {
-    	ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_LIGHT_ARMOR_PROF);
-        IPSafeAddItemProperty(GetPCSkin(oPC), ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
-        oArmor = CreateItemOnObject("prc_wf_woodbody", oPC);
+    	oArmor = CreateItemOnObject("prc_wf_woodbody", oPC);
+        oHelm = CreateItemOnObject("prc_wf_helmwood", oPC);
     }
     else if(GetHasFeat(FEAT_MITHRIL_PLATING, oPC))
     {
-    	ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_LIGHT_ARMOR_PROF);
-        IPSafeAddItemProperty(GetPCSkin(oPC), ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
-        oArmor = CreateItemOnObject("prc_wf_mithbody", oPC);
+    	oArmor = CreateItemOnObject("prc_wf_mithbody", oPC);
+        oHelm = CreateItemOnObject("prc_wf_helmmith", oPC);
     }
     else if(GetHasFeat(FEAT_ADAMANTINE_PLATING, oPC))
     {
-    	ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_HEAVY_ARMOR_PROF);
-        IPSafeAddItemProperty(GetPCSkin(oPC), ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
-        oArmor = CreateItemOnObject("prc_wf_admtbody", oPC);
+    	oArmor = CreateItemOnObject("prc_wf_admtbody", oPC);
+        oHelm = CreateItemOnObject("prc_wf_helmadmt", oPC);
     }
     else if(GetHasFeat(FEAT_UNARMORED_BODY, oPC))
+    {
         oArmor = CreateItemOnObject("prc_wf_unacbody", oPC);
+        oHelm = CreateItemOnObject("prc_wf_helmhead", oPC);
+    }
     else if(GetHasFeat(FEAT_COMPOSITE_PLATING, oPC))
+    {
         oArmor = CreateItemOnObject("prc_wf_compbody", oPC);
+        oHelm = CreateItemOnObject("prc_wf_helmhead", oPC);
+    }
     
-    AssignCommand(oPC, ActionEquipItem(oSkin, INVENTORY_SLOT_CARMOUR)); //test attempt to circumvent (bio?)bug
-                
+    //Circumvention for armor prof feats on CARMOR not working
+    AssignCommand(oPC, ActionEquipItem(oFeatHide, INVENTORY_SLOT_CWEAPON_B)); 
+                   
     // Force equip
     AssignCommand(oPC, ActionEquipItem(oArmor, INVENTORY_SLOT_CHEST));
-    
-    object oHelm = CreateItemOnObject("prc_wf_helmhead", oPC);
-            
-    //Force Equip
     AssignCommand(oPC, ActionEquipItem(oHelm, INVENTORY_SLOT_HEAD));
 }
 
@@ -115,7 +114,7 @@ void main()
            && GetResRef(oItem) == "prc_wf_woodbody")
         {
             //Add proficiency
-            itemproperty ipIP =ItemPropertyBonusFeat(IP_CONST_FEAT_LIGHT_ARMOR_PROF);
+            itemproperty ipIP =ItemPropertyBonusFeat(IP_CONST_FEAT_ARMOR_PROF_LIGHT);
             IPSafeAddItemProperty(GetPCSkin(oPC), ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
             // Force equip
             AssignCommand(oPC, ActionEquipItem(oItem, INVENTORY_SLOT_CHEST)); 
@@ -125,7 +124,7 @@ void main()
            && GetHasFeat(FEAT_MITHRIL_PLATING, oPC)
            && GetResRef(oItem) == "prc_wf_mithbody")
         {
-            itemproperty ipIP =ItemPropertyBonusFeat(IP_CONST_FEAT_LIGHT_ARMOR_PROF);
+            itemproperty ipIP =ItemPropertyBonusFeat(IP_CONST_FEAT_ARMOR_PROF_LIGHT);
             IPSafeAddItemProperty(GetPCSkin(oPC), ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
             // Force equip
             AssignCommand(oPC, ActionEquipItem(oItem, INVENTORY_SLOT_CHEST)); 
@@ -135,7 +134,7 @@ void main()
            && GetHasFeat(FEAT_ADAMANTINE_PLATING, oPC)
            && GetResRef(oItem) == "prc_wf_admtbody")
         {        	
-            itemproperty ipIP =ItemPropertyBonusFeat(IP_CONST_FEAT_HEAVY_ARMOR_PROF);
+            itemproperty ipIP =ItemPropertyBonusFeat(IP_CONST_FEAT_ARMOR_PROF_HEAVY);
             IPSafeAddItemProperty(GetPCSkin(oPC), ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
             // Force equip
             AssignCommand(oPC, ActionEquipItem(oItem, INVENTORY_SLOT_CHEST)); 

@@ -44,7 +44,7 @@ const int MBLADE_SHAPE_RANGED           = 4; // Actual shape is throwing axe
 
 
 const string MBLADE_FLAGS   = "PRC_PSI_SK_MindbladeFlags";
-const int MBLADE_FLAG_COUNT = 13;
+const int MBLADE_FLAG_COUNT = 23;
 
 const int MBLADE_FLAG_LUCKY                 = 0x1;
 const int MBLADE_FLAG_DEFENDING             = 0x2;

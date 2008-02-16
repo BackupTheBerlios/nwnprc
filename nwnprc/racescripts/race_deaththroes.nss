@@ -13,12 +13,9 @@
 #include "prc_alterations"
 
 //function to handle the damage from a kapak's acid pool
-void DoKapakAcidDamage(object oPC)
+void DoKapakAcidDamage(location lTarget)
 {
-        location lTarget = GetLocation(oPC);
         int nDamage = d6();
-        effect eBlastVis = EffectVisualEffect(VFX_IMP_PULSE_COLD);
-        ApplyEffectToObject(DURATION_TYPE_INSTANT, eBlastVis, oPC);
             
         //Declare the spell shape, size and the location.  Capture the first target object in the shape.
         object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(5.0), lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
@@ -106,27 +103,28 @@ void main()
         else if(GetRacialType(oPC) == RACIAL_TYPE_KAPAK)
         {
             int nDuration = d6();
+            location lTarget = GetLocation(oPC);
             
             //use a switch to set the proper amount of "pulses" of damage
             switch(nDuration)
             {
             	case 6: 
-            	    DelayCommand(RoundsToSeconds(5), DoKapakAcidDamage(oPC));
+            	    DelayCommand(RoundsToSeconds(5), DoKapakAcidDamage(lTarget));
             	    
             	case 5: 
-            	    DelayCommand(RoundsToSeconds(4), DoKapakAcidDamage(oPC));
+            	    DelayCommand(RoundsToSeconds(4), DoKapakAcidDamage(lTarget));
             	    
             	case 4: 
-            	    DelayCommand(RoundsToSeconds(3), DoKapakAcidDamage(oPC));
+            	    DelayCommand(RoundsToSeconds(3), DoKapakAcidDamage(lTarget));
             	    
             	case 3: 
-            	    DelayCommand(RoundsToSeconds(2), DoKapakAcidDamage(oPC));
+            	    DelayCommand(RoundsToSeconds(2), DoKapakAcidDamage(lTarget));
             	    
             	case 2: 
-            	    DelayCommand(RoundsToSeconds(1), DoKapakAcidDamage(oPC));
+            	    DelayCommand(RoundsToSeconds(1), DoKapakAcidDamage(lTarget));
             	    
             	case 1: 
-            	    DoKapakAcidDamage(oPC); break;
+            	    DoKapakAcidDamage(lTarget); break;
             }
         }
         
@@ -139,7 +137,9 @@ void main()
             	object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oEnemy);
             	AssignCommand(oEnemy, ActionGiveItem(oItem, oPC));
             }
-        	
+            
+            else
+        	if(DEBUG) DoDebug("race_deaththroes: Enemy not disarmable.");
         }
         
     }

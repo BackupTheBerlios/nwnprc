@@ -211,7 +211,7 @@ void main()
         }
         // Lacking the correct proficiency to wield non-mindblade version of a small shield
         if(GetBaseItemType(oItem) == BASE_ITEM_SMALLSHIELD    &&
-           GetTag(oItem) != "prc_sk_tshield_0"                &&
+           GetTag(oItem) != "psi_sk_tshield_0"                &&
            !GetHasFeat(FEAT_SHIELD_PROFICIENCY, oPC))
         {
             SendMessageToPCByStrRef(oPC, 16824511);
@@ -229,7 +229,7 @@ void main()
             if(LOCAL_DEBUG) DoDebug("Destroying unequipped mindblade");
             MyDestroyObject(oItem);
         }
-        if(GetStringLeft(GetTag(oItem), 15) == "prc_sk_tshield_")
+        if(GetStringLeft(GetTag(oItem), 15) == "psi_sk_tshield_")
         {
             if(LOCAL_DEBUG) DoDebug("Destroying unequipped thought shield");
             MyDestroyObject(oItem);
@@ -259,7 +259,7 @@ void main()
             if(LOCAL_DEBUG) DoDebug("Destroying lost mindblade");
             MyDestroyObject(oItem);
         }
-        if(GetStringLeft(GetTag(oItem), 15) == "prc_sk_tshield_")
+        if(GetStringLeft(GetTag(oItem), 15) == "psi_sk_tshield_")
         {
             if(LOCAL_DEBUG) DoDebug("Destroying lost thought shield");
             MyDestroyObject(oItem);
@@ -280,7 +280,7 @@ void main()
             if(LOCAL_DEBUG) DoDebug("Destroying mindblade from left hand");
             MyDestroyObject(oItem);
         }
-        if(GetStringLeft(GetTag(oItem), 15) == "prc_sk_tshield_")
+        if(GetStringLeft(GetTag(oItem), 15) == "psi_sk_tshield_")
         {
             if(LOCAL_DEBUG) DoDebug("Destroying thought shield from left hand");
             MyDestroyObject(oItem);
@@ -307,7 +307,7 @@ void main()
             if(LOCAL_DEBUG) DoDebug("Destroying mindblade from left hand");
             MyDestroyObject(oItem);
         }
-        if(GetStringLeft(GetTag(oItem), 15) == "prc_sk_tshield_")
+        if(GetStringLeft(GetTag(oItem), 15) == "psi_sk_tshield_")
         {
             if(LOCAL_DEBUG) DoDebug("Destroying thought shield from left hand");
             MyDestroyObject(oItem);

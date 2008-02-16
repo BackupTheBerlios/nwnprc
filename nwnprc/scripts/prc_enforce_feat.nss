@@ -1646,7 +1646,8 @@ int RacialFeats(object oPC = OBJECT_SELF)
 {
     if((GetHasFeat(FEAT_SOULBLADE_WARRIOR)
         || GetHasFeat(FEAT_SPIRITUAL_FORCE)
-        || GetHasFeat(FEAT_STRENGTH_OF_TWO))
+        || GetHasFeat(FEAT_STRENGTH_OF_TWO)
+        || GetHasFeat(FEAT_SHIELD_OF_THOUGHT))
        && GetRacialType(oPC) != RACIAL_TYPE_KALASHTAR)
     {
         FloatingTextStringOnCreature("You must be Kalashtar.", oPC, FALSE);

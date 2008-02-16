@@ -80,6 +80,7 @@ const int FEAT_BLADELING_RAZOR_STORM = 4539;
 
 const int FEAT_KAPAK_SALIVA          = 4546;
 const int FEAT_IRDA_FLARE            = 4551;
+const int FEAT_IRDA_CHANGE_SHAPE     = 4562;
 
 const int FEAT_LIVING_CONSTRUCT        = 4556;
 const int FEAT_COMPOSITE_PLATING       = 4554;
@@ -92,11 +93,14 @@ const int FEAT_ZAKYA_CHILLTOUCH        = 4570;
 const int FEAT_ZAKYA_VAMPTOUCH         = 4558;
 const int FEAT_BONUS_MIND_2            = 4559;
 const int FEAT_RACE_MINOR_SHAPE_CHANGE = 4560;
-const int FEAT_CHANGELING_TRUE_FORM    = 4561;
 const int FEAT_IMPROVED_FORTIFICATION  = 4580;
 const int FEAT_SOULBLADE_WARRIOR       = 4854;
 const int FEAT_SPIRITUAL_FORCE         = 4855;
 const int FEAT_STRENGTH_OF_TWO         = 4965;
+const int FEAT_CHANGELING_CHANGE_SHAPE = 4561;
+const int FEAT_RACIAL_EMULATION        = 4564;
+const int FEAT_CHANGELING_QUICK_CHANGE = 4563;
+const int FEAT_SHIELD_OF_THOUGHT       = 4565;
 
 const int FEAT_LTSENSE = 4700;
 const int FEAT_LTBLIND = 4701;

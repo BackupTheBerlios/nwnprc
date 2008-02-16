@@ -209,6 +209,15 @@ void main()
                 nHand = INVENTORY_SLOT_LEFTHAND;
             SetCompositeAttackBonus(oPC, "Unproficient" + IntToString(nHand), -4, nHand);
         }
+        // Lacking the correct proficiency to wield non-mindblade version of a small shield
+        if(GetBaseItemType(oItem) == BASE_ITEM_SMALLSHIELD    &&
+           GetTag(oItem) != "prc_sk_tshield_0"                &&
+           !GetHasFeat(FEAT_SHIELD_PROFICIENCY, oPC))
+        {
+            SendMessageToPCByStrRef(oPC, 16824511);
+            // unequip the shield
+            ForceUnequip(oPC, oItem, INVENTORY_SLOT_LEFTHAND);
+        }
     }
     else if(nEvent == EVENT_ONPLAYERUNEQUIPITEM)
     {

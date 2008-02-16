@@ -20498,31 +20498,83 @@ Use: Automatic.</entry>
   <entry id="50638" lang="en" sex="m">&lt;CUSTOM0&gt; turns water creatures.</entry>
   <entry id="50639" lang="en" sex="m">&lt;CUSTOM0&gt; turns fire creatures.</entry>
   <entry id="50640" lang="en" sex="m">&lt;CUSTOM0&gt; turns blightspawned.</entry>
+  <entry id="50934" lang="en" sex="m">&lt;CUSTOM0&gt; manifests a shield of glowing psychic energy.</entry>
+  <entry id="50935" lang="en" sex="m">Shield of Thought</entry>
+  <entry id="50936" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Kalashtar, ability to manifest a mindblade
+You can manifest a shield of thought(using this feat) as a move action.  You can allocate any amount of your total Weapon Enhancement Bonus points to increase the enhancement on your shield rather than give your mindblade additional abilities.  For each one point spent, your shield gains +1 AC, and your armor check penalty on the shield reduces by 1, to a maximum of 0.
+Note: if you take this feat and are not a Kalashtar, you will have to reselect your feats.  if you take this feat at level 1 and are not Kalashtar, you will be unable to level.
+Use: Selected.</entry>
+  <entry id="50937" lang="en" sex="m">You didn't have Change Shape uses available.</entry>
+  <entry id="50938" lang="en" sex="m">Irda Quickslot 1</entry>
+  <entry id="50939" lang="en" sex="m">Irda Quickslot 2</entry>
+  <entry id="50940" lang="en" sex="m">Change Shape</entry>
+  <entry id="50941" lang="en" sex="m">Change Shape:
+
+With this you can attempt to learn a new shape and shift into that shape if you can learn it.
+</entry>
+  <entry id="50942" lang="en" sex="m">Quick Change Shape</entry>
+  <entry id="50943" lang="en" sex="m">Changeling Quick Quickslot 1</entry>
+  <entry id="50944" lang="en" sex="m">Changeling Quick Quickslot 2</entry>
+  <entry id="50945" lang="en" sex="m">Minor Change Shape</entry>
+  <entry id="50946" lang="en" sex="m">Minor Change Shape:
+
+With this you can attempt to learn a new shape and shift into that shape if you can learn it.
+</entry>
+  <entry id="50947" lang="en" sex="m">Changeling Quickslot 1</entry>
+  <entry id="50948" lang="en" sex="m">Changeling Quickslot 2</entry>
+  <entry id="50949" lang="en" sex="m">Change Shape Options</entry>
+  <entry id="50950" lang="en" sex="m">Change Shape Options:
+
+With this you can:
+* Select a shape you know to turn into
+* View what shapes you have assigned to your 'Quick Shift Slots'
+* Assign shapes you know to your 'Quick Shift Slots'
+* Remove shapes you no longer want
+</entry>
+  <entry id="50951" lang="en" sex="m">Racial Emulation</entry>
+  <entry id="50952" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Changeling
+When you use Minor Shape Change, you assume the racial type and subtype of the form you assume.
+Use: Automatic.</entry>
+  <entry id="50953" lang="en" sex="m">Irda Change Shape</entry>
+  <entry id="50954" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race Specific
+You can assume the form of any Small, Medium, or Large humanoid creature.  You can stay in this form until you decide to change again or return to your true form.  You gain any natural weapons, armor and size of the new form, but your abilities and special qualities stay the same.
+This feat controls learning and using NPC shapes.
+Use: Selected.</entry>
+  <entry id="50955" lang="en" sex="m">Quick Change</entry>
+  <entry id="50956" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Changeling
+You can now perform Minor Change Shape as a move action instead of a full action.
+Use: Selected.</entry>
+  <entry id="50957" lang="en" sex="m">Minor Change Shape - General</entry>
+  <entry id="50958" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race Specific
+You can physically alter your form to mimic that of another of similar size and mass.  You can appear one foot shorter or taller, fatter or thinner, or even change genders, but you cannot grow new limbs.
+This feat controls learning and using NPC shapes.  Return to True Form is under this feat as well.
+Use: Selected.</entry>
   <entry id="50959" lang="en" sex="m">Strength of Two</entry>
   <entry id="50960" lang="en" sex="m">Type of Feat: Racial
 Prerequisite: Kalashtar
-
 You gain a +1 insight bonus to will saves as long as you are psionically focused.  if you spend 1PP and expend your psionic focus, you can increase this bonus to +5 for one round.
 Note: if you take this feat and are not a Kalashtar, you will have to reselect your feats.  if you take this feat at level 1 and are not Kalashtar, you will be unable to level.
 Use: Selected.</entry>
   <entry id="50961" lang="en" sex="m">Soulblade Warrior</entry>
   <entry id="50962" lang="en" sex="m">Type of Feat: Racial
 Prerequisite: Kalashtar, ability to manifest a mindblade
-
 You can manifest a mindblade(using this feat) as a swift action.  Your effective level for determining the mind blade enhancement class feature is 2 higher than normal, but you still do not get access to it until level 6 soulknife.
 Note: if you take this feat and are not a Kalashtar, you will have to reselect your feats.  if you take this feat at level 1 and are not Kalashtar, you will be unable to level.
 Use: Selected.</entry>
   <entry id="50963" lang="en" sex="m">Spiritual Force</entry>
   <entry id="50964" lang="en" sex="m">Type of Feat: Racial
 Prerequisite: Kalashtar, ability to manifest a mindblade
-
 You can expend your psionic focus while wielding your mindblade to gain bonus damage equal to your Charisma modifier for one round.
 Note: if you take this feat and are not a Kalashtar, you will have to reselect your feats.  if you take this feat at level 1 and are not Kalashtar, you will be unable to level.
 Use: Selected.</entry>
   <entry id="50965" lang="en" sex="m">Improved Fortification</entry>
   <entry id="50966" lang="en" sex="m">Type of Feat: Warforged
 Prerequisite: Warforged, +6 base attack bonus
-
 You become immune to critical hits and precision damage.  You can no longer be healed by Heal or the Cure Wounds spells.
 Use: Automatic.</entry>
   <entry id="50967" lang="en" sex="m">Kalashtar</entry>
@@ -20537,7 +20589,7 @@ Special Abilities:
 - Base movement of 30.
 - Dual Nature: Kalashtars gain a +2 racial bonus to save vs mind-affecting abilities due to their dual spirits.
 - Social Masters: Kalashtar are adept at social situations, influencing others through their commanding presence and subtle psychic powers.  They gain a +2 to all Bluff, Intimidate, and Persuade checks.
-- Human: Changelings are considered Human for the purpose of spells.</entry>
+- Human: Kalashtar are considered Human for the purpose of spells.</entry>
   <entry id="50970" lang="en" sex="m">Changeling</entry>
   <entry id="50971" lang="en" sex="m">changeling</entry>
   <entry id="50972" lang="en" sex="m">Changelings</entry>
@@ -20554,16 +20606,15 @@ Special Abilities:
 - Minor Shape Change: Changelings can physically alter their form to mimic someone of a similar size and mass, as if using a Disguise Self spell.
 - Shapeshifter: Changelings are considered Shapeshifters for the purpose of spells.</entry>
   <entry id="50974" lang="en" sex="m">You grew up during the last war on Khovaire, whether under the towers of Sharn, or elsewhere among the Five Nations.  Many great heros fell during the clashes of that conflict, and now that you've come of age, perhaps you can find a place as one of the new guard of heroes.</entry>
-  <entry id="50975" lang="en" sex="m">Minor Change Shape</entry>
+  <entry id="50975" lang="en" sex="m">Minor Change Shape - Dynamic</entry>
   <entry id="50976" lang="en" sex="m">Type of Feat: Racial
 Prerequisite: Race Specific
-
 You can physically alter your form to mimic that of another of similar size and mass.  You can appear one foot shorter or taller, fatter or thinner, or even change genders, but you cannot grow new limbs.
+This feat selects a random PC appearance.
 Use: Selected.</entry>
   <entry id="50977" lang="en" sex="m">Mental Spell Resistance</entry>
   <entry id="50978" lang="en" sex="m">Type of Feat: Racial
 Prerequisite: Race Specific
-
 You gain a +2 to save vs mind-affecting spells.
 Use: Automatic.</entry>
   <entry id="50979" lang="en" sex="m">Zakya Rakshasa</entry>
@@ -36827,7 +36878,7 @@ Favored Class (Wizard): A multiclass irda's wizard class does not count when det
 Special Abilities:
 
 - Low-Light Vision: Irda can see better than normal in the dark.
-- Change Shape: Irda can assume another humanoid shape, disguising themselves as that creature.  They can keep the same shape as long as they wish with no problems.
+- Change Shape: Three times per day, Irda can assume another humanoid shape, disguising themselves as that creature.  They can keep the same shape as long as they wish with no problems.
 - Spell-Like Abilities: Mage Hand, Light, Flare - 1/day
 - Shapeshifter: Irda count as Shapeshifters for the purpose of spells.</entry>
   <entry id="55936" lang="en" sex="m">Krynn Half-Ogre</entry>
@@ -36929,6 +36980,21 @@ Special: Kender are small creatures and as such they can never use the following
 Prerequisite: Race-Specific.
 Specifics: The creature has an innate spell resistance of 22, plus 1 per level.
 Use: Automatic.</entry>
+  <entry id="55959" lang="en" sex="m">Humanoid Shape:
+
+With this you can attempt to learn a new shape and shift into that shape if you can learn it.
+</entry>
+  <entry id="55960" lang="en" sex="m">Humanoid Quickslot 1</entry>
+  <entry id="55961" lang="en" sex="m">Humanoid Quickslot 2</entry>
+  <entry id="55962" lang="en" sex="m">Humanoid Shape Options</entry>
+  <entry id="55963" lang="en" sex="m">Humanoid Shape Options:
+
+With this you can:
+* Select a shape you know to turn into
+* View what shapes you have assigned to your 'Quick Shift Slots'
+* Assign shapes you know to your 'Quick Shift Slots'
+* Remove shapes you no longer want
+</entry>
   <entry id="55964" lang="en" sex="m">1</entry>
   <entry id="55965" lang="en" sex="m">2</entry>
   <entry id="55966" lang="en" sex="m">3</entry>

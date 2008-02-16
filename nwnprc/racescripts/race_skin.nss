@@ -576,7 +576,9 @@ void main()
     }
     
     //"cheat" ac boosts to Warforged armor so it stacks properly
-    if(GetHasFeat(FEAT_COMPOSITE_PLATING))
+    if(GetHasFeat(FEAT_COMPOSITE_PLATING) &&
+       !(GetHasFeat(FEAT_MITHRIL_PLATING) || GetHasFeat(FEAT_ADAMANTINE_PLATING) 
+         || GetHasFeat(FEAT_IRONWOOD_PLATING) || GetHasFeat(FEAT_UNARMORED_BODY)))
         SetCompositeBonus(oSkin, "CompositePlating", 2, ITEM_PROPERTY_AC_BONUS);
     if(GetHasFeat(FEAT_MITHRIL_PLATING))
         SetCompositeBonus(oSkin, "MithrilPlating", 3, ITEM_PROPERTY_AC_BONUS);

@@ -59,6 +59,16 @@ const int MBLADE_FLAG_SUPPRESSION           = 0x200;
 const int MBLADE_FLAG_WOUNDING              = 0x400;
 const int MBLADE_FLAG_DISRUPTING            = 0x800;
 const int MBLADE_FLAG_SOULBREAKER           = 0x1000;
+const int MBLADE_FLAG_SHIELD_1              = 0x2000;
+const int MBLADE_FLAG_SHIELD_2              = 0x4000;
+const int MBLADE_FLAG_SHIELD_3              = 0x8000;
+const int MBLADE_FLAG_SHIELD_4              = 0x10000;
+const int MBLADE_FLAG_SHIELD_5              = 0x20000;
+const int MBLADE_FLAG_SHIELD_6              = 0x40000;
+const int MBLADE_FLAG_SHIELD_7              = 0x80000;
+const int MBLADE_FLAG_SHIELD_8              = 0x100000;
+const int MBLADE_FLAG_SHIELD_9              = 0x200000;
+const int MBLADE_FLAG_SHIELD_10             = 0x400000;
 
 
 
@@ -125,6 +135,16 @@ int GetFlagCost(int nFlag)
         case MBLADE_FLAG_WOUNDING:              return 2;
         case MBLADE_FLAG_DISRUPTING:            return 3;
         case MBLADE_FLAG_SOULBREAKER:           return 4;
+        case MBLADE_FLAG_SHIELD_1:              return 1;
+        case MBLADE_FLAG_SHIELD_2:              return 2;
+        case MBLADE_FLAG_SHIELD_3:              return 3;
+        case MBLADE_FLAG_SHIELD_4:              return 4;
+        case MBLADE_FLAG_SHIELD_5:              return 5;
+        case MBLADE_FLAG_SHIELD_6:              return 6;
+        case MBLADE_FLAG_SHIELD_7:              return 7;
+        case MBLADE_FLAG_SHIELD_8:              return 8;
+        case MBLADE_FLAG_SHIELD_9:              return 9;
+        case MBLADE_FLAG_SHIELD_10:             return 10;
 
         default:
             WriteTimestampedLogEntry("Unknown flag passed to GetFlagCost: " + IntToString(nFlag));

@@ -26,10 +26,11 @@
 /*                 Constants                    */
 //////////////////////////////////////////////////
 
-const int SHIFTER_TYPE_NONE      = 0;
-const int SHIFTER_TYPE_SHIFTER   = 1;
-const int SHIFTER_TYPE_SOULEATER = 2;
-const int SHIFTER_TYPE_POLYMORPH = 3;
+const int SHIFTER_TYPE_NONE        = 0;
+const int SHIFTER_TYPE_SHIFTER     = 1;
+const int SHIFTER_TYPE_SOULEATER   = 2;
+const int SHIFTER_TYPE_POLYMORPH   = 3;
+const int SHIFTER_TYPE_CHANGESHAPE = 4;
 
 const int SHIFTER_ABILITIESITEM_MAXPROPS = 8;
 
@@ -680,7 +681,7 @@ int _prc_inc_shifting_GetCanShift(object oShifter)
  * Implements the actual shifting bit. Copies creature items, changes appearance, etc
  *
  * @param oShifter                The creature shifting
- * @param nShifterType            SHIFTER_TYPE_*    20060702, Ornedan: Currently unused
+ * @param nShifterType            SHIFTER_TYPE_*    
  * @param oTemplate               The template creature
  * @param bGainSpellLikeAbilities Whether to create the SLA item
  */
@@ -727,168 +728,178 @@ void _prc_inc_shifting_ShiftIntoTemplateAux(object oShifter, int nShifterType, o
         object oTemplateCWpL = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oTemplate);
         object oTemplateCWpB = GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oTemplate);
 
-        // Handle hide
-        // Nuke old props and composite bonus tracking - they will be re-evaluated later
-        ScrubPCSkin(oShifter, oShifterHide);
-        DeletePRCLocalInts(oShifterHide);
-        // Copy all itemproperties from the source's hide. No need to check for validity of oTemplateHide - it not
-        // existing works the same as it existing, but having no iprops.
-        _prc_inc_shifting_CopyAllItemProperties(oTemplateHide, oShifterHide);
-
-        // This may be necessary. Unknown if relevant BioBugs are still present - 20060630, Ornedan
-        /*DelayCommand(0.05, */AssignCommand(oShifter, ActionEquipItem(oShifterHide, INVENTORY_SLOT_CARMOUR))/*)*/;
-
-        // Handle creature weapons - replace any old weapons with new
-        // Delete old natural weapons
-        if(GetIsObjectValid(oShifterCWpR)) MyDestroyObject(oShifterCWpR);
-        if(GetIsObjectValid(oShifterCWpL)) MyDestroyObject(oShifterCWpL);
-        if(GetIsObjectValid(oShifterCWpB)) MyDestroyObject(oShifterCWpB);
-
-        // Copy the template's weapons and assign equipping
-        if(GetIsObjectValid(oTemplateCWpR))
+        //Hide isn't modified for Change Shape - Special Qualities don't transfer
+        if(nShifterType != SHIFTER_TYPE_CHANGESHAPE)
         {
-            oShifterCWpR = CopyItem(oTemplateCWpR, oShifter, TRUE);
-            SetIdentified(oShifterCWpR, TRUE);
-            AssignCommand(oShifter, ActionEquipItem(oShifterCWpR, INVENTORY_SLOT_CWEAPON_R));
+            // Handle hide
+            // Nuke old props and composite bonus tracking - they will be re-evaluated later
+            ScrubPCSkin(oShifter, oShifterHide);
+            DeletePRCLocalInts(oShifterHide);
+            // Copy all itemproperties from the source's hide. No need to check for validity of oTemplateHide - it not
+            // existing works the same as it existing, but having no iprops.
+            _prc_inc_shifting_CopyAllItemProperties(oTemplateHide, oShifterHide);
+    
+            // This may be necessary. Unknown if relevant BioBugs are still present - 20060630, Ornedan
+            /*DelayCommand(0.05, */AssignCommand(oShifter, ActionEquipItem(oShifterHide, INVENTORY_SLOT_CARMOUR))/*)*/;
         }
-        if(GetIsObjectValid(oTemplateCWpL))
+        //Changlings don't get the natural attacks
+        if(!(nShifterType == SHIFTER_TYPE_CHANGESHAPE && GetRacialType(oShifter) == RACIAL_TYPE_CHANGELING))
         {
-            oShifterCWpL = CopyItem(oTemplateCWpL, oShifter, TRUE);
-            SetIdentified(oShifterCWpL, TRUE);
-            AssignCommand(oShifter, ActionEquipItem(oShifterCWpL, INVENTORY_SLOT_CWEAPON_L));
-        }
-        if(GetIsObjectValid(oTemplateCWpB))
-        {
-            oShifterCWpB = CopyItem(oTemplateCWpB, oShifter, TRUE);
-            SetIdentified(oShifterCWpB, TRUE);
-            AssignCommand(oShifter, ActionEquipItem(oShifterCWpB, INVENTORY_SLOT_CWEAPON_B));
-        }
-
-        // Ability score adjustments
-        // Get the base delta
-        int nDeltaSTR = GetAbilityScore(oTemplate, ABILITY_STRENGTH,     TRUE) - GetAbilityScore(oShifter, ABILITY_STRENGTH,     TRUE);
-        int nDeltaDEX = GetAbilityScore(oTemplate, ABILITY_DEXTERITY,    TRUE) - GetAbilityScore(oShifter, ABILITY_DEXTERITY,    TRUE);
-        int nDeltaCON = GetAbilityScore(oTemplate, ABILITY_CONSTITUTION, TRUE) - GetAbilityScore(oShifter, ABILITY_CONSTITUTION, TRUE);
-        int nNewDEX   = GetAbilityScore(oShifter, ABILITY_DEXTERITY, TRUE) + nDeltaDEX; // For calculating AC bonuses in case of dex bonus overflow
-        int nExtraSTR = 0, nExtraDEX = 0, nExtraCON = 0;
-
-        // Adjust for caps
-        /// @todo Think of a more accurate calculation method
-        if     (nDeltaSTR >  12) { nExtraSTR = nDeltaSTR - 12; nDeltaSTR =  12; }
-        else if(nDeltaSTR < -10) { nExtraSTR = nDeltaSTR + 10; nDeltaSTR = -10; }
-        if     (nDeltaDEX > 12)  { nExtraDEX = nDeltaDEX - 12; nDeltaDEX =  12; }
-        else if(nDeltaDEX < -10) { nExtraDEX = nDeltaDEX + 10; nDeltaDEX = -10; }
-        if     (nDeltaCON > 12)  { nExtraCON = nDeltaCON - 12; nDeltaCON =  12; }
-        else if(nDeltaCON < -10) { nExtraCON = nDeltaCON + 10; nDeltaCON = -10; }
-
-        // Set the ability score adjustments as composite bonuses
-        if(nDeltaSTR > 0)
-            SetCompositeBonus(oShifterHide, "Shifting_AbilityAdjustmentSTRBonus", nDeltaSTR, ITEM_PROPERTY_ABILITY_BONUS, IP_CONST_ABILITY_STR);
-        else if(nDeltaSTR < 0)
-            SetCompositeBonus(oShifterHide, "Shifting_AbilityAdjustmentSTRPenalty", -nDeltaSTR, ITEM_PROPERTY_DECREASED_ABILITY_SCORE, IP_CONST_ABILITY_STR);
-        if(nDeltaDEX > 0)
-            SetCompositeBonus(oShifterHide, "Shifting_AbilityAdjustmentDEXBonus", nDeltaDEX, ITEM_PROPERTY_ABILITY_BONUS, IP_CONST_ABILITY_DEX);
-        else if(nDeltaDEX < 0)
-            SetCompositeBonus(oShifterHide, "Shifting_AbilityAdjustmentDEXPenalty", -nDeltaDEX, ITEM_PROPERTY_DECREASED_ABILITY_SCORE, IP_CONST_ABILITY_DEX);
-        if(nDeltaCON > 0)
-            SetCompositeBonus(oShifterHide, "Shifting_AbilityAdjustmentCONBonus", nDeltaCON, ITEM_PROPERTY_ABILITY_BONUS, IP_CONST_ABILITY_CON);
-        else if(nDeltaCON < 0)
-            SetCompositeBonus(oShifterHide, "Shifting_AbilityAdjustmentCONPenalty", -nDeltaCON, ITEM_PROPERTY_DECREASED_ABILITY_SCORE, IP_CONST_ABILITY_CON);
-
-        // Extra Strength - Attack and damage bonus / penalty
-        // Convert to stat bonus and see if it's non-zero
-        if((nExtraSTR /= 2) != 0)
-        {
-            // Determine damage type. Default to bludgeoning
-            int nDamageType = DAMAGE_TYPE_BLUDGEONING;
-            int nCWpItemType;
-
-            // Check the creature weapons. The first valid weapon encountered takes precedence
-            if(GetIsObjectValid(oShifterCWpR))
+            // Handle creature weapons - replace any old weapons with new
+            // Delete old natural weapons
+            if(GetIsObjectValid(oShifterCWpR)) MyDestroyObject(oShifterCWpR);
+            if(GetIsObjectValid(oShifterCWpL)) MyDestroyObject(oShifterCWpL);
+            if(GetIsObjectValid(oShifterCWpB)) MyDestroyObject(oShifterCWpB);
+    
+            // Copy the template's weapons and assign equipping
+            if(GetIsObjectValid(oTemplateCWpR))
             {
-                nCWpItemType = GetBaseItemType(oShifterCWpR);
-                if(nCWpItemType == BASE_ITEM_CSLASHWEAPON ||
-                   nCWpItemType == BASE_ITEM_CSLSHPRCWEAP   // Slashing takes precedence over piercing in case of slashing & piercing
-                   )
-                    nDamageType = DAMAGE_TYPE_SLASHING;
-                else if(nCWpItemType == BASE_ITEM_CPIERCWEAPON)
-                    nDamageType = DAMAGE_TYPE_PIERCING;
+                oShifterCWpR = CopyItem(oTemplateCWpR, oShifter, TRUE);
+                SetIdentified(oShifterCWpR, TRUE);
+                AssignCommand(oShifter, ActionEquipItem(oShifterCWpR, INVENTORY_SLOT_CWEAPON_R));
             }
-            else if(GetIsObjectValid(oShifterCWpL))
+            if(GetIsObjectValid(oTemplateCWpL))
             {
-                nCWpItemType = GetBaseItemType(oShifterCWpL);
-                if(nCWpItemType == BASE_ITEM_CSLASHWEAPON ||
-                   nCWpItemType == BASE_ITEM_CSLSHPRCWEAP   // Slashing takes precedence over piercing in case of slashing & piercing
-                   )
-                    nDamageType = DAMAGE_TYPE_SLASHING;
-                else if(nCWpItemType == BASE_ITEM_CPIERCWEAPON)
-                    nDamageType = DAMAGE_TYPE_PIERCING;
+                oShifterCWpL = CopyItem(oTemplateCWpL, oShifter, TRUE);
+                SetIdentified(oShifterCWpL, TRUE);
+                AssignCommand(oShifter, ActionEquipItem(oShifterCWpL, INVENTORY_SLOT_CWEAPON_L));
             }
-            else if(GetIsObjectValid(oShifterCWpB))
+            if(GetIsObjectValid(oTemplateCWpB))
             {
-                nCWpItemType = GetBaseItemType(oShifterCWpB);
-                if(nCWpItemType == BASE_ITEM_CSLASHWEAPON ||
-                   nCWpItemType == BASE_ITEM_CSLSHPRCWEAP   // Slashing takes precedence over piercing in case of slashing & piercing
-                   )
-                    nDamageType = DAMAGE_TYPE_SLASHING;
-                else if(nCWpItemType == BASE_ITEM_CPIERCWEAPON)
-                    nDamageType = DAMAGE_TYPE_PIERCING;
+                oShifterCWpB = CopyItem(oTemplateCWpB, oShifter, TRUE);
+                SetIdentified(oShifterCWpB, TRUE);
+                AssignCommand(oShifter, ActionEquipItem(oShifterCWpB, INVENTORY_SLOT_CWEAPON_B));
             }
-
-            bNeedSpellCast = TRUE;
-            SetLocalInt(oShifter, "PRC_Shifter_ExtraSTR", nExtraSTR);
-            SetLocalInt(oShifter, "PRC_Shifter_DamageType", nDamageType);
         }
 
-        // Extra Dex - AC penalty or dodge bonus
-        if((nExtraDEX /= 2) != 0)
+        // Ability score adjustments - doesn't apply to Change Shape
+        if(nShifterType != SHIFTER_TYPE_CHANGESHAPE)
         {
-            // For bonuses, limit to max allowed by worn armour
-            if(nExtraDEX > 0)
+            // Get the base delta
+            int nDeltaSTR = GetAbilityScore(oTemplate, ABILITY_STRENGTH,     TRUE) - GetAbilityScore(oShifter, ABILITY_STRENGTH,     TRUE);
+            int nDeltaDEX = GetAbilityScore(oTemplate, ABILITY_DEXTERITY,    TRUE) - GetAbilityScore(oShifter, ABILITY_DEXTERITY,    TRUE);
+            int nDeltaCON = GetAbilityScore(oTemplate, ABILITY_CONSTITUTION, TRUE) - GetAbilityScore(oShifter, ABILITY_CONSTITUTION, TRUE);
+            int nNewDEX   = GetAbilityScore(oShifter, ABILITY_DEXTERITY, TRUE) + nDeltaDEX; // For calculating AC bonuses in case of dex bonus overflow
+            int nExtraSTR = 0, nExtraDEX = 0, nExtraCON = 0;
+    
+            // Adjust for caps
+            /// @todo Think of a more accurate calculation method
+            if     (nDeltaSTR >  12) { nExtraSTR = nDeltaSTR - 12; nDeltaSTR =  12; }
+            else if(nDeltaSTR < -10) { nExtraSTR = nDeltaSTR + 10; nDeltaSTR = -10; }
+            if     (nDeltaDEX > 12)  { nExtraDEX = nDeltaDEX - 12; nDeltaDEX =  12; }
+            else if(nDeltaDEX < -10) { nExtraDEX = nDeltaDEX + 10; nDeltaDEX = -10; }
+            if     (nDeltaCON > 12)  { nExtraCON = nDeltaCON - 12; nDeltaCON =  12; }
+            else if(nDeltaCON < -10) { nExtraCON = nDeltaCON + 10; nDeltaCON = -10; }
+    
+            // Set the ability score adjustments as composite bonuses
+            if(nDeltaSTR > 0)
+                SetCompositeBonus(oShifterHide, "Shifting_AbilityAdjustmentSTRBonus", nDeltaSTR, ITEM_PROPERTY_ABILITY_BONUS, IP_CONST_ABILITY_STR);
+            else if(nDeltaSTR < 0)
+                SetCompositeBonus(oShifterHide, "Shifting_AbilityAdjustmentSTRPenalty", -nDeltaSTR, ITEM_PROPERTY_DECREASED_ABILITY_SCORE, IP_CONST_ABILITY_STR);
+            if(nDeltaDEX > 0)
+                SetCompositeBonus(oShifterHide, "Shifting_AbilityAdjustmentDEXBonus", nDeltaDEX, ITEM_PROPERTY_ABILITY_BONUS, IP_CONST_ABILITY_DEX);
+            else if(nDeltaDEX < 0)
+                SetCompositeBonus(oShifterHide, "Shifting_AbilityAdjustmentDEXPenalty", -nDeltaDEX, ITEM_PROPERTY_DECREASED_ABILITY_SCORE, IP_CONST_ABILITY_DEX);
+            if(nDeltaCON > 0)
+                SetCompositeBonus(oShifterHide, "Shifting_AbilityAdjustmentCONBonus", nDeltaCON, ITEM_PROPERTY_ABILITY_BONUS, IP_CONST_ABILITY_CON);
+            else if(nDeltaCON < 0)
+                SetCompositeBonus(oShifterHide, "Shifting_AbilityAdjustmentCONPenalty", -nDeltaCON, ITEM_PROPERTY_DECREASED_ABILITY_SCORE, IP_CONST_ABILITY_CON);
+    
+            // Extra Strength - Attack and damage bonus / penalty
+            // Convert to stat bonus and see if it's non-zero
+            if((nExtraSTR /= 2) != 0)
             {
-                object oShifterArmour = GetItemInSlot(INVENTORY_SLOT_CHEST, oShifter);
-                if(GetIsObjectValid(oShifterArmour))
+                // Determine damage type. Default to bludgeoning
+                int nDamageType = DAMAGE_TYPE_BLUDGEONING;
+                int nCWpItemType;
+    
+                // Check the creature weapons. The first valid weapon encountered takes precedence
+                if(GetIsObjectValid(oShifterCWpR))
                 {
-                    int nCurrentDexBon = GetAbilityModifier(ABILITY_DEXTERITY, oShifter);
-                    int nMaxDexBon;
-
-                    switch(GetItemACValue(oShifterArmour))
+                    nCWpItemType = GetBaseItemType(oShifterCWpR);
+                    if(nCWpItemType == BASE_ITEM_CSLASHWEAPON ||
+                       nCWpItemType == BASE_ITEM_CSLSHPRCWEAP   // Slashing takes precedence over piercing in case of slashing & piercing
+                       )
+                        nDamageType = DAMAGE_TYPE_SLASHING;
+                    else if(nCWpItemType == BASE_ITEM_CPIERCWEAPON)
+                        nDamageType = DAMAGE_TYPE_PIERCING;
+                }
+                else if(GetIsObjectValid(oShifterCWpL))
+                {
+                    nCWpItemType = GetBaseItemType(oShifterCWpL);
+                    if(nCWpItemType == BASE_ITEM_CSLASHWEAPON ||
+                       nCWpItemType == BASE_ITEM_CSLSHPRCWEAP   // Slashing takes precedence over piercing in case of slashing & piercing
+                       )
+                        nDamageType = DAMAGE_TYPE_SLASHING;
+                    else if(nCWpItemType == BASE_ITEM_CPIERCWEAPON)
+                        nDamageType = DAMAGE_TYPE_PIERCING;
+                }
+                else if(GetIsObjectValid(oShifterCWpB))
+                {
+                    nCWpItemType = GetBaseItemType(oShifterCWpB);
+                    if(nCWpItemType == BASE_ITEM_CSLASHWEAPON ||
+                       nCWpItemType == BASE_ITEM_CSLSHPRCWEAP   // Slashing takes precedence over piercing in case of slashing & piercing
+                       )
+                        nDamageType = DAMAGE_TYPE_SLASHING;
+                    else if(nCWpItemType == BASE_ITEM_CPIERCWEAPON)
+                        nDamageType = DAMAGE_TYPE_PIERCING;
+                }
+    
+                bNeedSpellCast = TRUE;
+                SetLocalInt(oShifter, "PRC_Shifter_ExtraSTR", nExtraSTR);
+                SetLocalInt(oShifter, "PRC_Shifter_DamageType", nDamageType);
+            }
+    
+            // Extra Dex - AC penalty or dodge bonus
+            if((nExtraDEX /= 2) != 0)
+            {
+                // For bonuses, limit to max allowed by worn armour
+                if(nExtraDEX > 0)
+                {
+                    object oShifterArmour = GetItemInSlot(INVENTORY_SLOT_CHEST, oShifter);
+                    if(GetIsObjectValid(oShifterArmour))
                     {
-                        case 8: case 7: case 6:
-                            nMaxDexBon = 1; break;
-                        case 5:
-                            nMaxDexBon = 2; break;
-                        case 4: case 3:
-                            nMaxDexBon = 4; break;
-                        case 2:
-                            nMaxDexBon = 6; break;
-                        case 1:
-                            nMaxDexBon = 8; break;
-
-                        default:
-                            nMaxDexBon = 100;
+                        int nCurrentDexBon = GetAbilityModifier(ABILITY_DEXTERITY, oShifter);
+                        int nMaxDexBon;
+    
+                        switch(GetItemACValue(oShifterArmour))
+                        {
+                            case 8: case 7: case 6:
+                                nMaxDexBon = 1; break;
+                            case 5:
+                                nMaxDexBon = 2; break;
+                            case 4: case 3:
+                                nMaxDexBon = 4; break;
+                            case 2:
+                                nMaxDexBon = 6; break;
+                            case 1:
+                                nMaxDexBon = 8; break;
+    
+                            default:
+                                nMaxDexBon = 100;
+                        }
+    
+                        if(nCurrentDexBon > nMaxDexBon)
+                            nExtraDEX = 0;
+                        else if((nExtraDEX + nCurrentDexBon) > nMaxDexBon)
+                            nExtraDEX = nMaxDexBon - nCurrentDexBon;
                     }
-
-                    if(nCurrentDexBon > nMaxDexBon)
-                        nExtraDEX = 0;
-                    else if((nExtraDEX + nCurrentDexBon) > nMaxDexBon)
-                        nExtraDEX = nMaxDexBon - nCurrentDexBon;
+                }
+    
+                // Make sure there's still something left to apply
+                if(nExtraDEX != 0)
+                {
+                    bNeedSpellCast = TRUE;
+                    SetLocalInt(oShifter, "PRC_Shifter_ExtraDEX", nExtraDEX);
                 }
             }
-
-            // Make sure there's still something left to apply
-            if(nExtraDEX != 0)
+    
+            // Extra Con bonus gets applied as temporary HP
+            if((nExtraCON /= 2) > 0)
             {
                 bNeedSpellCast = TRUE;
-                SetLocalInt(oShifter, "PRC_Shifter_ExtraDEX", nExtraDEX);
+                SetLocalInt(oShifter, "PRC_Shifter_ExtraCON", nExtraCON);
             }
-        }
-
-        // Extra Con bonus gets applied as temporary HP
-        if((nExtraCON /= 2) > 0)
-        {
-            bNeedSpellCast = TRUE;
-            SetLocalInt(oShifter, "PRC_Shifter_ExtraCON", nExtraCON);
         }
 
         // Approximately figure out the template's natural AC bonus
@@ -899,8 +910,8 @@ void _prc_inc_shifting_ShiftIntoTemplateAux(object oShifter, int nShifterType, o
         for(i = 0; i < NUM_INVENTORY_SLOTS; i++)
             nNaturalAC -= GetItemACValue(GetItemInSlot(i, oTemplate));
 
-        // If there is any AC bonus to apply
-        if(nNaturalAC > 0)
+        // If there is any AC bonus to apply - Changelings don't get it
+        if(nNaturalAC > 0 && !(nShifterType == SHIFTER_TYPE_CHANGESHAPE && GetRacialType(oShifter) == RACIAL_TYPE_CHANGELING))
         {
             bNeedSpellCast = TRUE;
             SetLocalInt(oShifter, "PRC_Shifter_NaturalAC", nNaturalAC);
@@ -941,10 +952,13 @@ void _prc_inc_shifting_ShiftIntoTemplateAux(object oShifter, int nShifterType, o
         SetAppearanceData(oShifter, GetAppearanceData(oTemplate));
 
         // Set a local variable to override racial type. Offset by +1 to differentiate value 0 from non-existence
-        SetLocalInt(oShifter, SHIFTER_OVERRIDE_RACE, MyPRCGetRacialType(oTemplate) + 1);
+        //Change shape doesn't include this, but there is a feat that gives it to Changelings
+        if(nShifterType != SHIFTER_TYPE_CHANGESHAPE || GetHasFeat(FEAT_RACIAL_EMULATION))
+            SetLocalInt(oShifter, SHIFTER_OVERRIDE_RACE, MyPRCGetRacialType(oTemplate) + 1);
 
-        // Heal as if rested - this is a side-effect of polymorphing
-        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(GetHitDice(oShifter) * d4()), oShifter);
+        // Heal as if rested - this is a side-effect of polymorphing - doesn't apply to Change Shape
+        if(nShifterType != SHIFTER_TYPE_CHANGESHAPE)
+            ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(GetHitDice(oShifter) * d4()), oShifter);
 
         // Some VFX
         ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_POLYMORPH), oShifter);
@@ -974,6 +988,59 @@ void _prc_inc_shifting_ShiftIntoTemplateAux(object oShifter, int nShifterType, o
                      )
         // */
                       ;
+    }
+
+    // Destroy the template creature
+    MyDestroyObject(oTemplate);
+}
+
+/** Internal function.
+ * Implements the actual shifting bit. Only changes appearance for this version
+ *
+ * @param oShifter                The creature shifting
+ * @param nShifterType            SHIFTER_TYPE_*    20060702, Ornedan: Currently unused
+ * @param oTemplate               The template creature
+ */
+void _prc_inc_shifting_ShiftIntoChangeShapeAux(object oShifter, int nShifterType, object oTemplate)
+{
+    if(DEBUG) DoDebug("prc_inc_shifting: _ShiftIntoDisguiseAux():\n"
+                    + "oShifter = " + DebugObject2Str(oShifter) + "\n"
+                    + "nShifterType = " + IntToString(nShifterType) + "\n"
+                    + "oTemplate = " + DebugObject2Str(oTemplate) + "\n"
+                      );
+
+    // Make sure the template creature is still valid
+    if(!GetIsObjectValid(oTemplate) || GetObjectType(oTemplate) != OBJECT_TYPE_CREATURE)
+    {
+        if(DEBUG) DoDebug("prc_inc_shifting: _ShiftIntoTemplateAux(): ERROR: oTemplate is not a valid object or not a creature: " + DebugObject2Str(oTemplate));
+        /// @todo Write a better error message
+        SendMessageToPCByStrRef(oShifter, STRREF_TEMPLATE_FAILURE); // "Polymorph failed: Failed to create a template of the creature to polymorph into."
+
+        // On failure, unset the mutex right away
+        SetLocalInt(oShifter, SHIFTER_SHIFT_MUTEX, FALSE);
+    }
+    else
+    {
+        // Queue unsetting the mutex. Done here so that even if something breaks along the way, this has a good chance of getting executed
+        DelayCommand(SHIFTER_MUTEX_UNSET_DELAY, SetLocalInt(oShifter, SHIFTER_SHIFT_MUTEX, FALSE));
+
+        /* Start the actual shifting */
+
+        // First, clear the shifter's action queue. We'll be assigning a bunch of commands that should get executed ASAP
+        AssignCommand(oShifter, ClearAllActions(TRUE));
+ 
+        // Change the appearance to that of the template
+        SetAppearanceData(oShifter, GetAppearanceData(oTemplate));
+
+        // Set a local variable to override racial type if appropriate feat is there. Offset by +1 to differentiate value 0 from non-existence
+        if(GetHasFeat(FEAT_RACIAL_EMULATION, oShifter))
+            SetLocalInt(oShifter, SHIFTER_OVERRIDE_RACE, MyPRCGetRacialType(oTemplate) + 1);
+
+        // Some VFX
+        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_POLYMORPH), oShifter);
+
+        // Set the shiftedness marker
+        SetPersistantLocalInt(oShifter, SHIFTER_ISSHIFTED_MARKER, TRUE);
     }
 
     // Destroy the template creature
@@ -1437,6 +1504,121 @@ int GetCanShiftIntoCreature(object oShifter, int nShifterType, object oTemplate)
                     }
                 }// end else - Not outright forbidden due to target being Fey or Shapeshifter
             }// end if - PnP Shifter checks
+        
+            //Change Shape checks
+            if(nShifterType == SHIFTER_TYPE_CHANGESHAPE)
+            {
+                //Humanoid Shape check
+                if(GetSpellId() == INVOKE_HUMANOID_SHAPE_LEARN) 
+                {                    
+                    int nTargetSize        = PRCGetCreatureSize(oTemplate);
+                    int nRacialType        = MyPRCGetRacialType(oTemplate);
+                    int nShifterSize       = PRCGetCreatureSize(oShifter);
+                    
+                    int nSizeDiff = nTargetSize - nShifterSize;
+                    
+                    if(nSizeDiff > 1 || nSizeDiff < -1)
+                    {
+                        bReturn = FALSE;
+                        SendMessageToPC(oShifter, "This creature is too large or too small.");
+                    }
+                    
+                    if(!(nRacialType == RACIAL_TYPE_DWARF            ||
+                       nRacialType == RACIAL_TYPE_ELF                ||
+                       nRacialType == RACIAL_TYPE_GNOME              ||
+                       nRacialType == RACIAL_TYPE_HUMAN              ||
+                       nRacialType == RACIAL_TYPE_HALFORC            ||
+                       nRacialType == RACIAL_TYPE_HALFELF            ||
+                       nRacialType == RACIAL_TYPE_HALFLING           ||
+                       nRacialType == RACIAL_TYPE_HUMANOID_ORC       ||
+                       nRacialType == RACIAL_TYPE_HUMANOID_REPTILIAN
+                       ))
+                    {
+                        bReturn = FALSE;
+                        SendMessageToPC(oShifter, "This creature is not a humanoid racial type.");
+                    }
+                }
+                
+                //Changeling check
+                else if(GetRacialType(oShifter) == RACIAL_TYPE_CHANGELING)
+                {                    
+                    int nSize        = PRCGetCreatureSize(oTemplate);
+                    int nRacialType  = MyPRCGetRacialType(oTemplate);
+                    int nShifterSize = PRCGetCreatureSize(oShifter);
+                    
+                    if(nSize != nShifterSize)
+                    {
+                        bReturn = FALSE;
+                        SendMessageToPC(oShifter, "This creature is too large or too small.");
+                    }
+                    
+                    if(!(nRacialType == RACIAL_TYPE_DWARF            ||
+                       nRacialType == RACIAL_TYPE_ELF                ||
+                       nRacialType == RACIAL_TYPE_GNOME              ||
+                       nRacialType == RACIAL_TYPE_HUMAN              ||
+                       nRacialType == RACIAL_TYPE_HALFORC            ||
+                       nRacialType == RACIAL_TYPE_HALFELF            ||
+                       nRacialType == RACIAL_TYPE_HALFLING           ||
+                       nRacialType == RACIAL_TYPE_HUMANOID_ORC       ||
+                       nRacialType == RACIAL_TYPE_HUMANOID_REPTILIAN
+                       ))
+                    {
+                        bReturn = FALSE;
+                        SendMessageToPC(oShifter, "This creature is not a humanoid racial type.");
+                    }
+                }
+                
+                //Irda check
+                else if(GetRacialType(oShifter) == RACIAL_TYPE_IRDA)
+                {                    
+                    int nSize        = PRCGetCreatureSize(oTemplate);
+                    int nRacialType  = MyPRCGetRacialType(oTemplate);
+                    
+                    if(nSize > 4 || nSize < 2)
+                    {
+                        bReturn = FALSE;
+                        SendMessageToPC(oShifter, "This creature is too large or too small.");
+                    }
+                    
+                    if(!(nRacialType == RACIAL_TYPE_DWARF            ||
+                       nRacialType == RACIAL_TYPE_ELF                ||
+                       nRacialType == RACIAL_TYPE_GNOME              ||
+                       nRacialType == RACIAL_TYPE_HUMAN              ||
+                       nRacialType == RACIAL_TYPE_HALFORC            ||
+                       nRacialType == RACIAL_TYPE_HALFELF            ||
+                       nRacialType == RACIAL_TYPE_HALFLING           ||
+                       nRacialType == RACIAL_TYPE_HUMANOID_ORC       ||
+                       nRacialType == RACIAL_TYPE_HUMANOID_REPTILIAN
+                       ))
+                    {
+                        bReturn = FALSE;
+                        SendMessageToPC(oShifter, "This creature is not a humanoid racial type.");
+                    }
+                }
+                
+                //Generic check
+                else
+                {                    
+                    int nTargetSize        = PRCGetCreatureSize(oTemplate);
+                    int nTargetRacialType  = MyPRCGetRacialType(oTemplate);
+                    int nShifterSize       = PRCGetCreatureSize(oShifter);
+                    int nShifterRacialType = MyPRCGetRacialType(oShifter);
+                    
+                    int nSizeDiff = nTargetSize - nShifterSize;
+                    
+                    if(nSizeDiff > 1 || nSizeDiff < -1)
+                    {
+                        bReturn = FALSE;
+                        SendMessageToPC(oShifter, "This creature is too large or too small.");
+                    }
+                    
+                    if(nTargetRacialType != nShifterRacialType)
+                    {
+                        bReturn = FALSE;
+                        SendMessageToPC(oShifter, "This creature is a different racial type.");
+                    }
+                }
+            }
         }// end if - Check shifting list specific stuff
     }
     // Failed one of the basic checks

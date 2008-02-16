@@ -62,13 +62,6 @@ void main()
     SetDroppableFlag(oShield, FALSE);
     SetItemCursedFlag(oShield, TRUE);
 
-    // Get the other hand
-    int nOtherHand;
-    if(nHand == INVENTORY_SLOT_RIGHTHAND)
-        nOtherHand = INVENTORY_SLOT_LEFTHAND;
-    else
-        nOtherHand = INVENTORY_SLOT_RIGHTHAND;
-
     if(LOCAL_DEBUG) DelayCommand(0.01f, DoDebug("Finished psi_sk_manifshld")); // Wrap in delaycommand so that the game clock gets to update for the purposes of WriteTimestampedLogEntry
 }
 
@@ -76,31 +69,57 @@ void main()
 void BuildMindShield(object oPC, object oShield)
 {
     /* Add normal stuff and VFX */
-    /// Add enhancement bonus
-    int nSKLevel = GetLevelByClass(CLASS_TYPE_SOULKNIFE, oPC) - 2;
-    int nEnh;
-    // The first actual enhancement bonus is gained at L4, but the mindblade needs to
-    // have enhancement right from the beginning to pierce DR as per being magical
-    if(nSKLevel < 4)
+    
+    /* Apply the enhancements */
+    int nFlags = GetPersistantLocalInt(oPC, MBLADE_FLAGS);
+    int bLight = FALSE;
+
+    if(nFlags & MBLADE_FLAG_SHIELD_1)
     {
-        nEnh = 0;
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyEnhancementBonus(1), oShield);
     }
-    else
+    if(nFlags & MBLADE_FLAG_SHIELD_2)
     {
-        nEnh = nSKLevel <= 20 ?
-                nSKLevel / 4:            // Boni are granget +1 / 4 levels pre-epic
-                (nSKLevel - 20) / 5 + 5; // Boni are granted +1 / 5 levels epic
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyEnhancementBonus(2), oShield);
     }
-    AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyEnhancementBonus(nEnh), oShield);
+    if(nFlags & MBLADE_FLAG_SHIELD_3)
+    {
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyEnhancementBonus(3), oShield);
+    }
+    if(nFlags & MBLADE_FLAG_SHIELD_4)
+    {
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyEnhancementBonus(4), oShield);
+    }
+    if(nFlags & MBLADE_FLAG_SHIELD_5)
+    {
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyEnhancementBonus(5), oShield);
+    }
+    if(nFlags & MBLADE_FLAG_SHIELD_6)
+    {
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyEnhancementBonus(6), oShield);
+    }
+    if(nFlags & MBLADE_FLAG_SHIELD_7)
+    {
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyEnhancementBonus(7), oShield);
+    }
+    if(nFlags & MBLADE_FLAG_SHIELD_8)
+    {
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyEnhancementBonus(8), oShield);
+    }
+    if(nFlags & MBLADE_FLAG_SHIELD_9)
+    {
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyEnhancementBonus(9), oShield);
+    }
+    if(nFlags & MBLADE_FLAG_SHIELD_10)
+    {
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyEnhancementBonus(10), oShield);
+    }
+    
     
     /// Add in VFX
     AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyVisualEffect(GetAlignmentGoodEvil(oPC) == ALIGNMENT_GOOD ? ITEM_VISUAL_HOLY :
                                                                        GetAlignmentGoodEvil(oPC) == ALIGNMENT_EVIL ? ITEM_VISUAL_EVIL :
                                                                         ITEM_VISUAL_SONIC
                                                                       ), oShield);
-
-    /* Apply the enhancements */
-    int nFlags = GetPersistantLocalInt(oPC, MBLADE_FLAGS);
-    int bLight = FALSE;
 
 }

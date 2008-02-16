@@ -16,22 +16,24 @@ void CreateWarforgedArmor(object oPC)
 {
     object oArmor;
     itemproperty ipIP;
-    
+    object oSkin = GetPCSkin(oPC);
+    if(oSkin == OBJECT_INVALID) DoDebug("race_warforged: Skin does not exist! Danger, danger Will Robinson!");
+        
     if(GetHasFeat(FEAT_IRONWOOD_PLATING, oPC))
     {
-    	ipIP =ItemPropertyBonusFeat(IP_CONST_FEAT_LIGHT_ARMOR_PROF);
+    	ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_LIGHT_ARMOR_PROF);
         IPSafeAddItemProperty(GetPCSkin(oPC), ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
         oArmor = CreateItemOnObject("prc_wf_woodbody", oPC);
     }
     else if(GetHasFeat(FEAT_MITHRIL_PLATING, oPC))
     {
-    	ipIP =ItemPropertyBonusFeat(IP_CONST_FEAT_LIGHT_ARMOR_PROF);
+    	ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_LIGHT_ARMOR_PROF);
         IPSafeAddItemProperty(GetPCSkin(oPC), ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
         oArmor = CreateItemOnObject("prc_wf_mithbody", oPC);
     }
     else if(GetHasFeat(FEAT_ADAMANTINE_PLATING, oPC))
     {
-    	ipIP =ItemPropertyBonusFeat(IP_CONST_FEAT_HEAVY_ARMOR_PROF);
+    	ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_HEAVY_ARMOR_PROF);
         IPSafeAddItemProperty(GetPCSkin(oPC), ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
         oArmor = CreateItemOnObject("prc_wf_admtbody", oPC);
     }
@@ -39,6 +41,8 @@ void CreateWarforgedArmor(object oPC)
         oArmor = CreateItemOnObject("prc_wf_unacbody", oPC);
     else if(GetHasFeat(FEAT_COMPOSITE_PLATING, oPC))
         oArmor = CreateItemOnObject("prc_wf_compbody", oPC);
+    
+    AssignCommand(oPC, ActionEquipItem(oSkin, INVENTORY_SLOT_CARMOUR)); //test attempt to circumvent (bio?)bug
                 
     // Force equip
     AssignCommand(oPC, ActionEquipItem(oArmor, INVENTORY_SLOT_CHEST));

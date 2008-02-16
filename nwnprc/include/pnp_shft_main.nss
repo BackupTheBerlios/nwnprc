@@ -124,7 +124,7 @@ void SetShift_02(object oPC, object oTarget);
 
 void StoreAppearance(object oPC)
 {
-    if (GetLocalInt(oPC, "shifting") == TRUE)
+    if (GetLocalInt(oPC, "shifting") || GetPersistantLocalInt(oPC, "nPCShifted"))
         return;
 
     int iIsStored = GetPersistantLocalInt( oPC, "AppearanceIsStored" );
@@ -156,7 +156,7 @@ int CanShift(object oPC)
 
     int iOutcome = FALSE;
 
-    if (GetLocalInt(oPC, "shifting") == TRUE)
+    if (GetLocalInt(oPC, "shifting") || GetPersistantLocalInt(oPC, "nPCShifted"))
     {
         return iOutcome;
     }

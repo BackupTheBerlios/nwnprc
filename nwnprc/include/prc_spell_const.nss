@@ -483,7 +483,21 @@ const int SPELL_KAPAK_ONHIT_POISON                  = 2948;
 const int SPELL_IRDA_FLARE                          = 2922;
 const int SPELL_ZAKYA_VAMPIRIC_TOUCH                = 1996;
 const int SPELL_MINOR_SHAPE_CHANGE                  = 2907;
-const int SPELL_CHANGELING_TRUE_FORM                = 2908;
+const int SPELL_CHANGLING_CHANGE_SHAPE_LEARN        = 1943;          
+const int SPELL_CHANGLING_CHANGE_SHAPE_OPTIONS      = 1944;      
+const int SPELL_CHANGLING_CHANGE_SHAPE_TRUE         = 1945;     
+const int SPELL_CHANGLING_CHANGE_SHAPE_QS1          = 1946;    
+const int SPELL_CHANGLING_CHANGE_SHAPE_QS2          = 1947;    
+const int SPELL_IRDA_CHANGE_SHAPE_LEARN             = 1937;          
+const int SPELL_IRDA_CHANGE_SHAPE_OPTIONS           = 1938;      
+const int SPELL_IRDA_CHANGE_SHAPE_TRUE              = 1939;     
+const int SPELL_IRDA_CHANGE_SHAPE_QS1               = 1940;    
+const int SPELL_IRDA_CHANGE_SHAPE_QS2               = 1941;      
+const int SPELL_QUICK_CHANGE_SHAPE_LEARN            = 2909;          
+const int SPELL_QUICK_CHANGE_SHAPE_OPTIONS          = 2910;      
+const int SPELL_QUICK_CHANGE_SHAPE_TRUE             = 2911;     
+const int SPELL_QUICK_CHANGE_SHAPE_QS1              = 2912;    
+const int SPELL_QUICK_CHANGE_SHAPE_QS2              = 2913;   
 
 
 // Poison system spells

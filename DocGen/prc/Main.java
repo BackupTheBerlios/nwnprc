@@ -12,7 +12,7 @@ public class Main {
 
 	/** Version number for public releases. Raise by one whenever doing a release. */
 	private static final int releaseNum = 1;
-	
+
 	/** A convenience object for printing both to log and System.err */
 	public static ErrorPrinter err_pr = new ErrorPrinter();
 
@@ -72,6 +72,9 @@ public class Main {
 		}
 		else if(toCall.equals("spellbookmaker")){
 			prc.utils.SpellbookMaker.main(paramsToPass);
+		}
+		else if(toCall.equals("amsspellbookmaker")){
+			prc.utils.AMSSpellbookMaker.main(paramsToPass);
 		}
 		else if(toCall.equals("itempropmaker")){
 			prc.utils.ItempropMaker.main(paramsToPass);
@@ -149,6 +152,7 @@ public class Main {
 		                   "                          that should be precached\n" +
 		                   "         scrmrchgen     - Creates scroll merchant based on des_crft_scroll.2da\n" +
 		                   "         spellbookmaker - Creates and/or updates the new spellbooks data\n" +
+		                   "         amsspellbookmaker - Creates and/or updates the new AMS spellbooks data\n" +
 		                   "         validator      - Performs a bunch of 2da integrity tests\n" +
 		                   "         updatedescrft  - Updates des_crft_*.2da based on spells.2da\n" +
 		                   "         scrollgen      - Create spell scrolls based on (iprp_)spells.2da\n" +

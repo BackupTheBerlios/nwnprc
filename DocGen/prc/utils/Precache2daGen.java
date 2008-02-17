@@ -9,7 +9,7 @@ import static prc.Main.*;
 /**
  * A class that parses 2das and determines which rows need to be
  * cached for the spells / powers to work fast.
- * 
+ *
  * @author Heikki 'Ornedan' Aitakangas
  */
 public class Precache2daGen {
@@ -21,12 +21,12 @@ public class Precache2daGen {
 	}
 	private static Data_2da spells = null/*,
 	                        feat   = null*/;
-	
+
 	private static int normalSpellMaxRow = 5000;
-	
+
 	/**
 	 * Ye olde maine methode.
-	 * 
+	 *
 	 * @param args The program arguments
 	 * @throws Throwable Any problems just crash the program
 	 */
@@ -39,7 +39,7 @@ public class Precache2daGen {
 				if(param.equals("--help")) readMe();
 				else if(param.equals("--normalspellsmax")){
 					try {
-						normalSpellMaxRow = Integer.parseInt(args[i++]);
+						normalSpellMaxRow = Integer.parseInt(args[++i]);
 					} catch(NumberFormatException e) {
 						err_pr.println("Invalid number given with parameter --normalspellsmax");
 						readMe();
@@ -61,28 +61,28 @@ public class Precache2daGen {
 					path2daDir = param;
 			}
 		}
-		
+
 		if(path2daDir == null)
 			readMe();
-		
+
 		// Load a directory listing
 		File dir = new File(path2daDir);
 		if(!dir.isDirectory()) {
 			err_pr.println("Not a directory: " + path2daDir);
 			System.exit(1);
 		}
-		
+
 		// Load the main 2das
 		spells = Data_2da.load2da(dir.getPath() + File.separator + "spells.2da");
 		//feat   = Data_2da.load2da(dir.getPath() + File.separator + "feat.2da");
-		
+
 		handleNormalSpells();
 		handlePsionics(dir);
 		handleTruenaming(dir);
 		handleNewSpells();
-		
+
 		output.appendRow();
-		
+
 		output.save2da(".", false, true);
 	}
 
@@ -102,7 +102,7 @@ public class Precache2daGen {
 	            );
 		System.exit(0);
 	}
-	
+
 	private static void handleNormalSpells() {
 		int temp;
 		for(int i = 0; i < normalSpellMaxRow; i++) {
@@ -134,7 +134,7 @@ public class Precache2daGen {
 			}
 		}
 	}
-	
+
 	private static void handlePsionics(File dir) {
 		File[] files = dir.listFiles(new FileFilter(){
 			public boolean accept(File file){
@@ -142,11 +142,11 @@ public class Precache2daGen {
 				       file.getName().toLowerCase().endsWith(".2da");
 			}
 		});
-		
+
 		Data_2da[] cls_psipw_2das = new Data_2da[files.length];
 		for(int i = 0; i < files.length; i++)
 			cls_psipw_2das[i] = Data_2da.load2da(files[i].getPath());
-		
+
 		int temp;
 		Set<Integer> realEntriesHandled = new HashSet<Integer>();
 		// First, spells.2da referencing entries
@@ -185,7 +185,7 @@ public class Precache2daGen {
 			}
 		}
 	}
-	
+
 	// Pretty much a copy of psionics, at least for now
 	private static void handleTruenaming(File dir) {
 		File[] files = dir.listFiles(new FileFilter(){
@@ -196,11 +196,11 @@ public class Precache2daGen {
 				       !file.getName().toLowerCase().equals("cls_true_maxlvl.2da");
 			}
 		});
-		
+
 		Data_2da[] cls_true_2das = new Data_2da[files.length];
 		for(int i = 0; i < files.length; i++)
 			cls_true_2das[i] = Data_2da.load2da(files[i].getPath());
-		
+
 		int temp;
 		Set<Integer> realEntriesHandled = new HashSet<Integer>();
 		// First, spells.2da referencing entries
@@ -239,7 +239,7 @@ public class Precache2daGen {
 			}
 		}
 	}
-	
+
 	private static void handleNewSpells() {
 		int begin = -1, end = -1;
 		int temp, i = normalSpellMaxRow;
@@ -252,12 +252,12 @@ public class Precache2daGen {
 				break;
 			i += 1;
 		}
-		
+
 		if(begin == -1 || end == -1) {
 			err_pr.println("Missing a new spellbook reserve marker");
 			System.exit(1);
 		}
-		
+
 		for(i = begin; i <= end; i++) {
 			output.appendRow();
 			temp = output.getEntryCount() - 1;

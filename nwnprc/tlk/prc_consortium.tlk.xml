@@ -29772,185 +29772,1999 @@ You spin gracefully away from a foe's attack, whirling like the desert zephyr ra
   
 You gain a +4 bonus to AC versus one attack.</entry>
   <entry id="52625" lang="en" sex="m">Aura Of Chaos</entry>
+  <entry id="52626" lang="en" sex="m">Devoted Spirit (Stance)
+Level: Crusader 6
+Prerequisite: Two Devoted Spirit Maneuvers
+Initiation Action: 1 Swift Action
+Range: Personal.
+Target: You.
+Duration: Stance.
+
+A coruscating aura of purple energy surrounds you as chaos runs rampant in the area immediately around you.
+
+Whenever you roll maximum damage on your weapon's dice, roll again and add the result. 
+Continue rolling until you no longer roll the maximum.</entry>
   <entry id="52627" lang="en" sex="m">Aura Of Perfect Order</entry>
+  <entry id="52628" lang="en" sex="m">Devoted Spirit (Stance)
+Level: Crusader 6
+Prerequisite: Two Devoted Spirit Maneuvers
+Initiation Action: 1 Swift Action
+Range: Personal.
+Target: You.
+Duration: Stance.
+
+A perfect, hazy square of golden energy surrounds you as you enter this stance
+
+Whenever you initiate a strike, your attack roll is always 11.</entry>
   <entry id="52629" lang="en" sex="m">Aura Of Triumph</entry>
+  <entry id="52630" lang="en" sex="m">Devoted Spirit (Stance)
+Level: Crusader 6
+Prerequisite: Two Devoted Spirit maneuvers
+Initiation Action: 1 Swift Action
+Range: Personal
+Target: One ally
+Duration: Stance
+
+You channel the power of good through your body and soul, infusing the area around you with a soft, golden radiance. With each blow you strike against evil, you feel invigorated and driven onwards.
+
+While you are in this stance you and the targeted ally both heal 4 points of damage with each successful melee attack either of you makes against an evil target.</entry>
   <entry id="52631" lang="en" sex="m">Aura Of Tyranny</entry>
+  <entry id="52632" lang="en" sex="m">Devoted Spirit (Stance)
+Level: Crusader 6
+Prerequisite: Two Devoted Spirit maneuvers
+Initiation Action: 1 Swift Action
+Range: Personal
+Target: You
+Duration: Stance
+
+A sickly grey radiance surrounds you, sapping the strength of your allies and funneling it to you.
+
+Each round, you damage all allies within 10 feet 2 hit points, and you heal 1 hit point for each ally struck.</entry>
   <entry id="52633" lang="en" sex="m">Castigating Strike</entry>
-  <entry id="52635" lang="en" sex="m">Crusaders Strike</entry>
+  <entry id="52634" lang="en" sex="m">Devoted Spirit (Strike)
+Level: Crusader 7
+Prerequisite: Two Devoted Spirit maneuvers.
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creature
+
+With a howling battle cry, your weapon crackles with energy. As you strike your foe that energy detonates in a burst that scythes through those who stand against your cause.
+
+You make a single attack against an enemy who's alignment has at least one component different from yours. If you hit, you deal an extra 8d6 damage. All enemies within 30 feet take 5d6 damage. Any creature that fails a saving throw against 17 + your charisma modifier takes a -2 penalty to attacks for 1 minute.</entry>
+  <entry id="52635" lang="en" sex="m">Crusader's Strike</entry>
+  <entry id="52636" lang="en" sex="m">Devoted Spirit (Strike)
+Level: Crusader 1
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creature
+
+Divine power surrounds your weapon as you strike. This power washes over you as your weapon finds its mark, mending your wounds and giving you the strength to fight on.
+
+You make a single attack against an enemy who's alignment has at least one component different from yours. If you hit, you or an ally with 10 feet is healed 1d6 + 1 per initiator level (max of +5).</entry>
   <entry id="52637" lang="en" sex="m">Daunting Strike</entry>
+  <entry id="52638" lang="en" sex="m">Devoted Spirit (Strike)
+Level: Crusader 5
+Prerequisite: One Devoted Spirit Maneuver
+Initiation Action: 1 Standard Action
+Range: Melee
+Target: One creature
+Saving Throw: Will negates
+Duration: 1 minute
+
+A blue, dancing flame appears on your weapon. As you strike your foe, this flame slides off your weapon and covers your enemy in raging fire.
+
+You make a single melee attack. If it hits, the foe must save against DC 15 + Charisma or be shaken.</entry>
   <entry id="52639" lang="en" sex="m">Defensive Rebuke</entry>
+  <entry id="52640" lang="en" sex="m">Devoted Spirit (Boost)
+Level: Crusader 3
+Prerequisite: One Devoted Spirit maneuver.
+Initiation Action: 1 Swift Action
+Range: Personal
+Target: You
+Duration: 1 round
+
+You sweep your weapon in a wide, deadly arc. When your blows strike home, you send your foe tumbling back on the defensive. He must deal with you first, or leave himself open to your deadly counter.
+
+You make an attack of opportunity against any foe you strike this round who targets your allies instead of attacking you.</entry>
   <entry id="52641" lang="en" sex="m">Divine Surge</entry>
+  <entry id="52642" lang="en" sex="m">Devoted Spirit (Strike)
+Level: Crusader 4
+Prerequisite: One Devoted Spirit Maneuver
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creature
+
+Your body shakes and spasms as unfettered divine energy courses through it. This power sparks off your weapon and courses into your foe, devastating your enemy but leaving you drained.
+
+You make a single attack against an enemy. If this attack his, you deal 8d8 extra damage.</entry>
   <entry id="52643" lang="en" sex="m">Greater Divine Surge </entry>
+  <entry id="52644" lang="en" sex="m">Devoted Spirit (Strike)
+Level: Crusader 8
+Prerequisite: Two Devoted Spirit Maneuvers
+Initiation Action: 1 Full-Round Action
+Range: Melee Attack
+Target: One Creature
+
+A torrent of divine energy courses through you. With supreme force of will, you channel the energy into a devastating attack even as it saps your mortal form.
+
+You make a single attack against an enemy. If this attack his, you deal 6d8 extra damage. For every point of constitution damage voluntarily taken, you gain a +1 bonus to attack and +2d8 damage. You can sacrifice a number of con points equal to your initiator level.
+This makes you flat-footed for the rest of the round.</entry>
   <entry id="52645" lang="en" sex="m">Doom Charge</entry>
+  <entry id="52646" lang="en" sex="m">Devoted Spirit (Strike) [Evil]
+Level: Crusader 5
+Prerequisite: One Devoted Spirit maneuver
+Initiation Action: 1 Full-round action
+Range: Melee
+Target: One creature
+Duration: 1 round
+
+You cloak yourself in a black, terrible aura of contempt and spite.
+
+You make a charge attack. If the target is good aligned, you gain 6d6 damage on the attack, and damage reduction of 10/- for one round.</entry>
   <entry id="52647" lang="en" sex="m">Entangling Blade</entry>
+  <entry id="52648" lang="en" sex="m">Devoted Spirit (Strike)
+Level: Crusader 4
+Prerequisite: One Devoted Spirit Maneuver
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creature
+Duration: 1 round.
+
+You hack into your foe's legs, forcing his movement to slow and his resolution to falter.
+
+You make a single attack against an enemy. If this attack his, you deal 2d6 extra damage, and you foe takes a 20 ft penalty to his movement speed.</entry>
   <entry id="52649" lang="en" sex="m">Foehammer</entry>
+  <entry id="52650" lang="en" sex="m">Devoted Spirit (Strike)
+Level: Crusader 2
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creature
+
+You throw yourself behind your attack, lending your blow such great weight and force that you leave injuries that even magical defenses cannot ignore.
+
+You make a single attack against an enemy. If this attack his, you ignore all DR and do an extra 2d6 damage.</entry>
   <entry id="52651" lang="en" sex="m">Immortal Fortitude</entry>
+  <entry id="52652" lang="en" sex="m">Devoted Spirit (Stance)
+Level: Crusader 8
+Prerequisite: Three Devoted Spirit maneuvers
+Initiation Action: 1 Swift Action
+Range: Personal
+Target: You
+Duration: Stance
+
+Despite the horrific wounds you suffer, the flash of searing spells and the crash of a foe's mighty attacks, you stand resolute on the field. So long as the potential for victory exists you fight on.
+
+While you remain in this stance, you cannot be killed through loss of hitpoints. Other effects, such as death spells, may still kill you. If you take damage that would reduce you below 0 hit points, you must make a Fortitude save or die. If you succeed, you have 1 hit point remaining. After enduring three saves, the stance ends.</entry>
   <entry id="52653" lang="en" sex="m">Iron Guards Glare</entry>
+  <entry id="52654" lang="en" sex="m">Devoted Spirit (Stance)
+Level: Crusader 1
+Initiation Action: 1 Swift Action
+Range: Personal.
+Target: You.
+Duration: Stance.
+
+With a quick snarl and a glare that would stop a charging barbarian in his tracks, you spoil an opponent's attack. Rather than strike his original target, your enemy turns his attention to you.
+
+Any creature you threaten takes a -4 penalty on attacks against allies.</entry>
   <entry id="52655" lang="en" sex="m">Law Bearer</entry>
+  <entry id="52656" lang="en" sex="m">Devoted Spirit (Strike) [Law]
+Level: Crusader 5
+Prerequisite: One Devoted Spirit maneuver
+Initiation Action: 1 Full-round action
+Range: Melee
+Target: One creature
+Duration: 1 round
+
+The air arounds you hums with cosmic energy as the power of pure law surges through you. For a moment, you take on the aspect of a perfect being  as you charge forward to smite your foes.
+
+You make a charge attack. If the target is chaos aligned, you gain a +8 bonus on your attack and 4d6 damage. If it hits, you gain +5 saves and Armour class for one round.</entry>
   <entry id="52657" lang="en" sex="m">Martial Spirit</entry>
+  <entry id="52658" lang="en" sex="m">Devoted Spirit (Stance)
+Level: Crusader 1
+Initiation Action: 1 Swift Action
+Range: Personal.
+Target: You.
+Duration: Stance.
+
+As you cleave through your foes, each ferocious attack you make lends vigor and strength to you and your allies.
+
+Whenever you successfully strike a creature, you or your ally within 30 feet heals 2 hit points.</entry>
   <entry id="52659" lang="en" sex="m">Radiant Charge</entry>
+  <entry id="52660" lang="en" sex="m">Devoted Spirit (Strike) [Good]
+Level: Crusader 5
+Prerequisite: One Devoted Spirit maneuver
+Initiation Action: 1 Full-round action
+Range: Melee
+Target: One creature
+Duration: 1 round
+
+You gather the power of your faith and discipline, surrounding yourself in an aura of blinding glory.
+
+You make a charge attack. If the target is evil aligned, you gain 6d6 damage on the attack, and damage reduction of 10/- for one round.</entry>
   <entry id="52661" lang="en" sex="m">Rallying Strike</entry>
+  <entry id="52662" lang="en" sex="m">Devoted Spirit (Strike)
+Level: Crusader 6
+Prerequisite: Two Devoted Spirit maneuvers.
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creature
+
+Your weapon blazes with divine energy as you smite your enemy. The energy discharges in a great pulse, sweeping over your allies and mending their wounds.
+
+You make a single attack against an enemy who's alignment has at least one component different from yours. If you hit, you and all allies within 30 feet is healed 3d6 + 1 per initiator level (max of +15).</entry>
   <entry id="52663" lang="en" sex="m">Revitalizing Strike</entry>
+  <entry id="52664" lang="en" sex="m">Devoted Spirit (Strike)
+Level: Crusader 3
+Prerequisite: One Devoted Spirit maneuver.
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creature
+
+As you rear back to strike your foe, an aura of divine energy surrounds you. As your attack slams home, this aura dissipates in a flash, knitting your wounds as it discharges.
+
+You make a single attack against an enemy who's alignment has at least one component different from yours. If you hit, you or an ally with 10 feet is healed 3d6 + 1 per initiator level (max of +10).</entry>
   <entry id="52665" lang="en" sex="m">Shield Block</entry>
+  <entry id="52666" lang="en" sex="m">Devoted Spirit (Counter)
+Level: Crusader 2
+Initiation Action: 1 Immediate Action
+Range: Touch
+Target: One Ally
+Duration: One Attack
+
+With a heroic burst of effort, you thrust your shield between your defenseless ally and your enemy.
+
+Your grant your ally a +4 shield bonus against the next attack made against him.</entry>
   <entry id="52667" lang="en" sex="m">Shield Counter</entry>
+  <entry id="52668" lang="en" sex="m">Devoted Spirit (Counter)
+Level: Crusader 2
+Prerequisite: 2 Devoted Spirit maneuvers
+Initiation Action: 1 Swift Action
+Range: Melee Attack
+Target: One Creature
+
+As your opponent prepares to make his attack, you bash him with your shield and disrupt his attempt.
+
+You make a single attack against an enemy at a -2 penalty. If this attack hits, your opponent takes a -20 penalty on his next strike.</entry>
   <entry id="52669" lang="en" sex="m">Strike Of Righteous Vitality</entry>
+  <entry id="52670" lang="en" sex="m">Devoted Spirit (Strike)
+Level: Crusader 9
+Prerequisite: Three Devoted Spirit maneuvers
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creature
+
+As your enemy reels from your mighty blow, an ally nearby is simultaneously healed and cleansed of its wounds by the power of your faith.
+
+You make a single attack against an enemy who's alignment has at least one component different from yours. If you hit, you or an ally with 10 feet is healed, as per the heal spell.</entry>
   <entry id="52671" lang="en" sex="m">Thicket Of Blades</entry>
+  <entry id="52672" lang="en" sex="m">Devoted Spirit (Stance)
+Level: Crusader 3
+Prerequisite: One Devoted Spirit maneuver.
+Initiation Action: 1 Swift Action
+Range: Personal.
+Target: You.
+Duration: Stance.
+
+You maintain a careful guard as you search for any gaps in your opponent's awarness. Even the slightest move provokes a stinging counter from you.
+
+Any creature who attempts to move near you provokes an AoO.</entry>
   <entry id="52673" lang="en" sex="m">Tide Of Chaos</entry>
+  <entry id="52674" lang="en" sex="m">Devoted Spirit (Strike) [Chaos]
+Level: Crusader 5
+Prerequisite: One Devoted Spirit maneuver
+Initiation Action: 1 Full-round action
+Range: Melee
+Target: One creature
+Duration: 1 round
+
+The power of chaos swirls around you, lending strength toyour attacks as you cast your fate to the whims of luck.
+
+You make a charge attack. If the target is law aligned, you gain a +8 bonus on your attack and 4d6 damage. If it hits, you gain total concealment for one round.</entry>
   <entry id="52675" lang="en" sex="m">Vanguard Strike</entry>
+  <entry id="52676" lang="en" sex="m">Devoted Spirit (Strike)
+Level: Crusader 1
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creature
+
+You batter aside your foe's defenses with a vicious, overwhelming attack, leaving him vulnerable to your allies blows.
+
+You make a single attack against an enemy. If you hit, that enemy takes a -4 AC penalty for one round.</entry>
   <entry id="52677" lang="en" sex="m">Action Before Thought</entry>
+  <entry id="52678" lang="en" sex="m">Diamond Mind (Counter)
+Level: Swordsage 2, Warblade 2
+Initiation Action: 1 Swift Action
+Range: Personal.
+Target: You.
+Duration: 1 Round
+
+Your supreme sense of the battlefield, unmatched martial training, and simple, intuitive sense of danger allow you to act faster than the speed of thought. When a spell or other attack strikes you, you move a split second before you are even aware of the threat.
+
+You replace the next Reflex save you make this round with a Concentration check. The DC of the check is the same as that of the spell. A result of 1 on the roll is not an automatic failure.</entry>
   <entry id="52679" lang="en" sex="m">Avalanche Of Blades</entry>
+  <entry id="52680" lang="en" sex="m">Diamond Mind (Strike)
+Level: Swordsage 7, warblade 7
+Prerequisite: Three Diamond Mind maneuvers
+Initiation Action: 1 full-round action
+Range: Melee attack
+Target: One creature
+
+In a flashing blur of steel, you unleash a devastating volley of deadly attacks against your enemy, striking it again and again.
+
+As part of this maneuver, you make a single melee attack against an opponent. If that attack hits, resolve your damage as normal. You can then make another attack against that foe with a -4 penalty on your attack roll. If that attack hits, you can make another attack against that opponent with a -8 penalty. You continue to make additional attacks, each one with an additional -4 penalty, until you miss or your opponent is killed. You must direct all of these attacks at a single foe.</entry>
   <entry id="52681" lang="en" sex="m">Bounding Assault</entry>
+  <entry id="52682" lang="en" sex="m">Diamond Mind (Strike)
+Level: Swordsage 4, Warblade 4
+Prerequisite: Two Diamond Mind Maneuvers
+Initiation Action: 1 Full-round action
+Range: Melee Attack
+Target: One Creature
+Duration: 1 round.
+
+You spring across the battlefield, using your focus and ability to act quickly to make an attack while moving.
+
+You make a double move and attack a foe with a +2 bonus to attack. This counts as a charge attack.</entry>
   <entry id="52683" lang="en" sex="m">Diamond Defense</entry>
+  <entry id="52684" lang="en" sex="m">Diamond Mind (Counter)
+Level: Swordsage 8, warblade 8
+Initiation Action: 1 immediate action
+Range: Personal
+Target: You
+
+You steel yourself against an opponent's spell, drawing on your focus and training
+to overcome its effect.
+
+You gain a bonus on your next save equal to your initiator level.</entry>
   <entry id="52685" lang="en" sex="m">Diamond Nightmare Blade</entry>
+  <entry id="52686" lang="en" sex="m">Diamond Mind (Strike)
+Level: Swordsage 8, Warblade 8
+Prerequisite: Three Diamond Mind Maneuvers
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creature
+
+With a moment's thought, you instantly perceive the deadliest place to strike your enemy as you study her defences, note gaps in her armour, and read subtle but important clues in how she carries herself or maintains her fighting stance.
+
+You make a Concentration check against the target's AC. If you succeed, the target takes quadruple normal damage. If you fail, you take a -2 penalty on the attack.</entry>
   <entry id="52687" lang="en" sex="m">Disrupting Blow</entry>
+  <entry id="52688" lang="en" sex="m">Diamond Mind (Strike)
+Level: Swordsage 5, warblade 5
+Prerequisite: Two Diamond Mind maneuvers
+Inititation Action: 1 standard action
+Range: Melee attack
+Target: One creature
+Saving Throw: Will negates
+Duration: 1 round
+
+With a combination of brute force, keen timing, and exacting aim, you force your opponent into an awkward position that ruins his next action.
+
+As part of this maneuver, you make a melee attack. If this attack hits, your target takes normal melee damage and must make a Will save (DC 15 + your Str modifier) or be unable to take any actions for 1 round. </entry>
   <entry id="52689" lang="en" sex="m">Emerald Razor</entry>
+  <entry id="52690" lang="en" sex="m">Diamond Mind (Strike)
+Level: Swordsage 2, Warblade 2
+Prerequisite: One Diamond Mind maneuver
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creature.
+
+You stare at your enemy, studying his every move. You mentally probe his defenses in search of a weakness. A lesser warrior could spend long minutes pondering this problem, but you see an opening and seize upon it in an instant.
+
+You make a single melee attack as a touch attack.</entry>
   <entry id="52691" lang="en" sex="m">Hearing The Air</entry>
+  <entry id="52692" lang="en" sex="m">Diamond Mind (Stance)
+Level: Swordsage 5, warblade 5
+Prerequisite: Two Diamond Mind maneuvers
+Inititation Action: 1 swift action
+Range: Personal
+Target: You
+Duration: Stance
+
+Your perception becomes so fine that you can hear the tiniest flutter of air moving past you. Invisible foes and other hidden threats become as plain as  day in the area of your heightened senses.
+
+While you are in this stance, you gain blindsense out to 30 feet and a +5 insight bonus on Listen checks.</entry>
   <entry id="52693" lang="en" sex="m">Insightful Strike</entry>
+  <entry id="52694" lang="en" sex="m">Diamond Mind (Strike)
+Level: Swordsage 3, Warblade 3
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creature
+
+You study your opponent and spot a weak point in her armour. With a quick decisive strike, you take advantage of this weakness with a devastating attack.
+
+You make an attack. If it hits, you roll a concentration check and do damage equal to the result. Your weapon's normal damage modifiers do not apply.</entry>
   <entry id="52695" lang="en" sex="m">Greater Insightful Strike</entry>
+  <entry id="52696" lang="en" sex="m">Diamond Mind (Strike)
+Level: Swordsage 6, warblade 6
+Prerequisite: Two Diamond Mind maneuvers
+Initiation Action: 1 standard action
+Range: Melee attack
+Target: One creature
+
+Your keen eye picks out the slightest imperfection in your opponent's defenses. Your weapon becomes a tool of your mind.
+
+This maneuver functions like insightful strike, except that you deal damage equal to 2x your Concentration check result.</entry>
   <entry id="52697" lang="en" sex="m">Mind Over Body</entry>
+  <entry id="52698" lang="en" sex="m">Diamond Mind (Counter)
+Level: Swordsage 3, Warblade 3
+Initiation Action: 1 Swift Action
+Range: Personal.
+Target: You.
+Duration: 1 Round
+
+Your training and mental toughness allow you to use your focus to overcome physical threats. By focusing your mind, you ignore the effects of a deadly poison or a debilitating sickness.
+
+You replace the next Fortitude save you make this round with a Concentration check. The DC of the check is the same as that of the spell. A result of 1 on the roll is not an automatic failure.</entry>
   <entry id="52699" lang="en" sex="m">Mind Strike</entry>
+  <entry id="52700" lang="en" sex="m">Diamond Mind (Strike)
+Level: Swordsage 4, Warblade 4
+Prerequisite: Two Diamond Mind Maneuvers
+Initiation Action: 1 Standard action
+Range: Melee Attack
+Target: One Creature
+Save: Will negates
+
+You strike your opponent's head, rattling his senses and causing him to lose focus.
+
+If you succeed at your attack, your foe must make a save vs DC 14 + Strength or take 1d4 wisdom damage.</entry>
   <entry id="52701" lang="en" sex="m">Moment Of Alacrity</entry>
+  <entry id="52702" lang="en" sex="m">Diamond Mind (Boost)
+Level: Swordsage 6, warblade 6
+Prerequisite: Two Diamond Mind maneuvers
+Initiation Action: 1 swift action
+Range: Personal
+Target: You
+Duration: Instantaneous
+
+You step into a space between heartbeats and act again while your enemies are still reacting to your last strike.
+
+You use a single moment of speed to go first in combat.</entry>
   <entry id="52703" lang="en" sex="m">Moment Of Perfect Mind</entry>
+  <entry id="52704" lang="en" sex="m">Diamond Mind (Counter)
+Level: Swordsage 1, Warblade 1
+Initiation Action: 1 Swift Action
+Range: Personal.
+Target: You.
+Duration: 1 Round
+
+Your mental focus and martial study have rendered your will into an unbreakable iron wall. When someone targets you with a spell that seeks to erode your willpower, you steel yourself against the attack.
+
+You replace the next Will save you make this round with a Concentration check. The DC of the check is the same as that of the spell. A result of 1 on the roll is not an automatic failure.</entry>
   <entry id="52705" lang="en" sex="m">Pearl Of Black Doubt</entry>
+  <entry id="52706" lang="en" sex="m">Diamond Mind (Stance)
+Level: Swordsage 3, Warmage 3
+Prerequisite: One Diamond Mind maneuver.
+Initiation Action: 1 Swift Action
+Range: Personal
+Target: You
+Duration: Stance
+
+With every miss, your opponents become more uncertain, their doubt growing like an irritating pearl in the mouth of a helpless oyster.
+
+Whenever a foe swings and misses you, you gain +2 AC.</entry>
   <entry id="52707" lang="en" sex="m">Quicksilver Motion</entry>
+  <entry id="52708" lang="en" sex="m">Diamond Mind (Boost)
+Level: Swordsage 7, warblade 7
+Prerequisite: Three Diamond Mind maneuvers
+Inititation Action: 1 swirft action
+Range: Personal
+Target: You
+
+In the blink of an eye, you make your move. Your speed, reflexes, and boundless confidence combine to allow you to make a fast, bold move that catches your fores off guard.
+
+Your speed doubles for one round.</entry>
   <entry id="52709" lang="en" sex="m">Rapid Counter</entry>
+  <entry id="52710" lang="en" sex="m"></entry>
   <entry id="52711" lang="en" sex="m">Ruby Nightmare Blade</entry>
+  <entry id="52712" lang="en" sex="m">Diamond Mind (Strike)
+Level: Swordsage 4, Warblade 4
+Prerequisite: Two Diamond Mind Maneuvers
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creature
+
+With a moment's thought, you instantly perceive the deadliest place to strike your enemy as you study her defences, note gaps in her armour, and read subtle but important clues in how she carries herself or maintains her fighting stance.
+
+You make a Concentration check against the target's AC. If you succeed, the target takes double normal damage. If you fail, you take a -2 penalty on the attack.</entry>
   <entry id="52713" lang="en" sex="m">Sapphire Nightmare Blade</entry>
+  <entry id="52714" lang="en" sex="m">Diamond Mind (Strike)
+Level: Swordsage 1, Warblade 1
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creature
+
+You study your opponent for a brief moment, watching his defensive maneuvers and making a strike timed to take advantage of a lull in his vigilance.
+
+You make a Concentration check against the target's AC. If you succeed, the target takes an extra 1d6 damage and is flat-footed vs your attack. If you fail, you take a -2 penalty on the attack.</entry>
   <entry id="52715" lang="en" sex="m">Stance Of Alacrity</entry>
+  <entry id="52716" lang="en" sex="m">Diamond Mind (Stance)
+Level: Swordsage 8, Warblade 8
+Prerequisite: Three Diamond Mind maneuvers
+Initiation Action: 1 Swift Action
+Range: Personal
+Target: You
+Duration: Stance
+
+Your mind and body meld, granting you an edge in combat. You move slightly faster than normal due to a combination of confidence, training, and clarity of mind. This slight edge adds up with each action.
+
+You gain the ability to use a second counter each round when in this stance.</entry>
   <entry id="52717" lang="en" sex="m">Stance Of Clarity</entry>
+  <entry id="52718" lang="en" sex="m">Diamond Mind (Stance)
+Level: Swordsage 1, Warblade 1
+Initiation Action: 1 Swift Action
+Range: Personal.
+Target: You.
+Duration: Stance.
+
+You focus your efforts on a single opponent, studying his moves and preparing an attack. Your other opponents fade from sight as your mind locks onto your target.
+
+You gain a +2 AC bonus against the highest CR creature in the area, and a -2 AC penalty against all other creatures attacking you.</entry>
   <entry id="52719" lang="en" sex="m">Time Stands Still</entry>
+  <entry id="52720" lang="en" sex="m">Diamond Mind (Strike)
+Level: Swordsage 9, warblade 9
+Prerequisite: Four Diamond Mind maneuvers
+Initiation Action: 1 full-round action
+Range: Personal
+Target: You
+
+The raindrops themselves stand still as you act at the speed of thought. You move like a blur, catching your enemies by surprise with a complex action carried our in  a tiny fraction of the time normally needed to complete it.
+
+You take your full attack action twice against a single foe.</entry>
   <entry id="52721" lang="en" sex="m">Absolute Steel</entry>
+  <entry id="52722" lang="en" sex="m">Iron Heart (Stance)
+Level: Warblade 3
+Prerequisite: One Iron Heart maneuver
+Initiation Action: 1 Swift Action
+Range: Personal
+Target: You
+Duration: Stance
+
+You shift your weight to the back of your feet and hold your blade carefully forward at the ready. Your muscles twitch slightly as you prepare to dodge the next attack you face.
+
+You gain a +10' movement speed bonus. If you move more than 10' in a round, you gain +2 AC.</entry>
   <entry id="52723" lang="en" sex="m">Adamantine Hurricane</entry>
+  <entry id="52724" lang="en" sex="m">Iron Heart (Strike)
+Level: Warblade 8
+Prerequisite: Three Iron Heart Maneuvers
+Initiation Action: 1 standard action
+Range: Melee attack
+Targets: One or more adjacent creatures you threaten
+
+In a blur of motion, you make a short, twisting leap in the air. As you turn, your weapon flashes through the enemies around you like a blazing comet. As you drop back to the ground in your fighting stance, your enemies crumple to the ground
+around you.
+
+You make two melee attacks against each adjacent oppoenent you threaten when you initiate this maneuver. You receive a +4 bonus on each of these attacks, which are otherwise made with your highest attack bonus.</entry>
   <entry id="52725" lang="en" sex="m">Dancing Blade Form</entry>
+  <entry id="52726" lang="en" sex="m">Iron Heart (Stance)
+Level: Warblade 5
+Prerequisite: Two Iron Heart maneuvers
+Initiation Action: 1 swift action
+Range: Personal
+Target: You
+Duration: Stance
+
+You stike forward like a slithering snake, extending yourself almost beyond your ability to maintain your balance. Your foe stumbles backward, surprised that you could reach him from such a great distance.
+
+You gain 5' more of reach when making a strike.</entry>
   <entry id="52727" lang="en" sex="m">Dazing Strike</entry>
+  <entry id="52728" lang="en" sex="m">Iron Heart (Strike)
+Level: Warblade 5
+Prerequisite: Two Iron Heart maneuvers
+Initiation Action: 1 standard action
+Range: Melee attack
+Target: One creature
+Duration: 1 round
+Saving Throw: Fortitude partial
+
+Through focus, raw power, and expert aim, you make a mighty attack against your foe, leaving him temporarily knocked senseless by your attack.
+
+You make a single melee attack as part of this strike. If this attack hits, the target takes melee damage normally and must make a Fortitude save (DC 15 + your Str modifier) or be dazed for 1 round.</entry>
   <entry id="52729" lang="en" sex="m">Disarming Strike</entry>
+  <entry id="52730" lang="en" sex="m">Iron Heart (Strike)
+Level: Warblade 2
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creatures
+
+You chop at your foe's hand, causing a grievous injury and forcing him to drop his weapon.
+
+You make a single melee attack. If it is successful, you attempt to disarm the target. This will not work against creatures that cannot be disarmed.</entry>
   <entry id="52731" lang="en" sex="m">Exorcism Of Steel</entry>
+  <entry id="52732" lang="en" sex="m">Iron Heart (Strike)
+Level: Warblade 3
+Prerequisite: One Iron Heart maneuver.
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creatures
+Duration: 1 minute.
+Save: Will partial, see text.
+
+You attack, striking not your foe, but his weapon, sending a shockwave down his arm that leaves him unable to strike with full force.
+
+You make a single melee attack. If it is successful, you attempt to damage the target's weapon. If you damage it successfully, it deals -4 damage. If the target succeeds on a will save, it deals -2 damage.</entry>
   <entry id="52733" lang="en" sex="m">Finishing Move</entry>
+  <entry id="52734" lang="en" sex="m">Iron Heart(Strike)
+Level: Warblade 7
+Prerequisite: Three Iron Heart maneuvers
+Initiation Action: 1 standard action
+Range: Melee attack
+Target: One creature
+
+You deliver a devastating strike against a wounded foe, aiming to finish him off once and for all.
+
+As part of this maneuver, you make a melee attack against a creature. This attack deals an extra 4d6 points of damage. If the target's current hit points are less than its full normal hit points, the attack instead deals an extra 6d6 points of damage. If its hit points are equal to or less than one-half its full normal hit points, the attack instead deals an extra 14d6 points of damage.</entry>
   <entry id="52735" lang="en" sex="m">Iron Heart Endurance</entry>
+  <entry id="52736" lang="en" sex="m">Iron Heart (Boost)
+Level: Warblade 6
+Prerequisite: Two Iron Heart maneuvers
+Initiation Action: 1 swift action
+Range: Personal
+Target: You
+
+You push aside the pain of your injuries to fight on past mortal limits.
+
+If you have half or fewer of your full normal hit points remaining, you can initiate this maneuver to heal hit points equal to 2 x your level.</entry>
   <entry id="52737" lang="en" sex="m">Iron Heart Focus</entry>
+  <entry id="52738" lang="en" sex="m">Iron Heart (Counter)
+Level: Warblade 5
+Prerequisite: Two Iron Heart maneuvers
+Initiation Action: 1 immediate action
+Range: Personal
+Target: You
+
+With a last-second burst of speed, you summon reserves of mental and pysical will and throw off the effects of your enemy's attack.
+
+As an immediate action, you can reroll a saving throw you have just made. You must accept the  result of this second roll, even if the new result is lower than your initial roll.</entry>
   <entry id="52739" lang="en" sex="m">Iron Heart Surge</entry>
+  <entry id="52740" lang="en" sex="m">Iron Heart 
+Level: Warblade 3
+Prerequisite: One Iron Heart maneuver.
+Initiation Action: 1 Standard Action
+Range: Personal
+Target: You
+Duration: 1 round.
+
+By drawing on your mental strength and physical fortitude, you break free of a debilitating state that might otherwise defeat you.
+
+You remove one negative status effect on you, and gain a +2 bonus to attacks for one round.</entry>
   <entry id="52741" lang="en" sex="m">Lightning Recovery</entry>
+  <entry id="52742" lang="en" sex="m">Iron Heart (Counter)
+Level: Warblade 4
+Prerequisite: Two Iron Heart Maneuvers
+Initiation Action: 1 Swift Action
+Range: Melee Attack
+Target: One Creature
+
+Your foe twists out of the way of your initial attack, but your weapon becomes a blur as you reverse direction and strike at him again with lightning speed. In the blink of an eye, you complete your attack and resume your defensive posture.
+
+Make a single attack with a +2 bonus on the attack roll. </entry>
   <entry id="52743" lang="en" sex="m">Lightning Throw</entry>
+  <entry id="52744" lang="en" sex="m">Iron Heart (Strike)
+Level: Warblade 8
+Prerequisite: Two Iron Heart maneuvers
+Initiation Action: 1 standard action
+Range: 30ft
+Area: 30ft
+Duration: Instantaneous
+Saving Throw: Reflex half
+
+You throw your weapon through the air, sending it flying end over end to strike with uncanny accuracy and terrible force. It leaves it its wake a trail of battered enemies.
+
+When you use this strike, you make a singe melee attack (even though you are throwing your weapon). You deal damage to each creature in the maneuver's area equal to your normal melee damage (including damage from from Strength modifier, feats, magical abilities on your weapon, and so forth), plus an extra 12d6 points of damage. Each creature in the attack's area can make a Reflex save with a DC equal to the result of your attack roll. A successful save halves the damage dealt.
+Your weapon automatically returns to your hand at the end of the round.</entry>
   <entry id="52745" lang="en" sex="m">Manticore Parry</entry>
+  <entry id="52746" lang="en" sex="m">Iron Heart (Counter)
+Level: Warblade 6
+Prerequisite: Two Iron Heart maneuvers
+Initiation Action: 1 swift action
+Range: Melee attack
+Target: One creature
+
+You block an enemy's attack with a lightning-quick parry, then deflect it toward a different target. Your foe can barely control its momentum as its attack now slams into an ally.
+
+Make an opposed attack roll against the targeted creature. If you succeed, he damages an ally of his in melee range. If there is no enemy, he damages no one.</entry>
   <entry id="52747" lang="en" sex="m">Mithral Tornado</entry>
+  <entry id="52748" lang="en" sex="m">Iron Heart (Strike)
+Level: Warblade 4
+Prerequisite: Two Iron Heart Maneuvers
+Initiation Action: 1 Standard action
+Range: Melee Attack
+Target: Adjacent Creatures
+
+Your weapon becomes a blur of motion as you swing it in a tight arc over your head. Once you build up enough speed, you explode into a sweeping attack that chops the enemies around you.
+
+You make a single attack against each adjacent opponent with a +2 bonus.</entry>
   <entry id="52749" lang="en" sex="m">Punishing Stance</entry>
+  <entry id="52750" lang="en" sex="m">Iron Heart (Stance)
+Level: Warblade 1
+Initiation Action: 1 Swift Action
+Range: Personal
+Target: You
+Duration: Stance
+
+You chop down violently with your weapon, lending extra force to your blows. These attacks comes at a cost, as your enemies slash at your undefended legs and flanks.
+
+You deal an extra 1d6 damage with melee attacks, but take a -2 AC penalty.</entry>
   <entry id="52751" lang="en" sex="m">Scything Blade</entry>
+  <entry id="52752" lang="en" sex="m">Iron Heat (Boost)
+Level: Warblade 7
+Prerequisite Three Iron Heart maneuvers
+Initiation Action: 1 swift action
+Range: Personal
+Target: You
+
+You strike at one foe with a long, high backhand cut, then make a quick turn to continue the stroke against another nearby enemy.
+
+If the first melee attack you make during your turn hits, you can immediately make a free attack at your highest attack bonus against a different enemy that you threaten. You can only gain one free attack each time you initiate this maneuver, regardless of how many successful attacks you make in this round.</entry>
   <entry id="52753" lang="en" sex="m">Steel Wind</entry>
+  <entry id="52754" lang="en" sex="m">Iron Heart (Strike)
+Level: Warblade 1
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: Two Creatures
+
+You swing your weapon in broad, deadly arc, striking two foes with a single, mighty blow.
+
+Make two melee attacks, each against a different foe within melee range.</entry>
   <entry id="52755" lang="en" sex="m">Steely Strike</entry>
+  <entry id="52756" lang="en" sex="m">Iron Heart (Strike)
+Level: Warblade 1
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creatures
+Duration: 1 Round.
+
+You focus yourself for a single, accurate, shrugging off your opponent's blows and ignoring the need for defense as you make your assault.
+
+Make a single attack with a +4 bonus on the attack roll. All other opponents than the one you struck get a +4 bonus to hit you for one round.</entry>
   <entry id="52757" lang="en" sex="m">Strike Of Perfect Clarity</entry>
+  <entry id="52758" lang="en" sex="m">Iron Heart (Strike)
+Warblade 9
+Prerequisite: Four Iron Heart maneuvers
+Initiation Action: 1 standard action
+Range: Melee attack
+Target: One creature
+
+Your supreme focus and perfect fighting form allow you to make a single, devastating attack. You execute a flawless strike to drop your foe with a single attack.
+
+You make a single melee attack as part of this strike. If your attack hits, it deals an extra 100 points of damage (in addition to your normal melee damage).</entry>
   <entry id="52759" lang="en" sex="m">Supreme Blade Parry</entry>
+  <entry id="52760" lang="en" sex="m">Iron Heart (Stance)
+Level: Warblade 8
+Prerequisite: Three Iron Heart maneuvers
+Initiation Action: 1 swift action
+Range: Personal
+Target: You
+Duration: Stance
+
+You drop into a relaxed pose, allowing your defenses to flow naturally and easily. Your blade lashes out to absorb or deflect each attack you face, blunting the force of your enemies' blows.
+
+While you are in this stance, you gain damage reduction 5/-  To gain this benefit, you must be proficient with the weapon you carry.</entry>
   <entry id="52761" lang="en" sex="m">Wall Of Blades</entry>
+  <entry id="52762" lang="en" sex="m">Iron Heart (Counter)
+Level: Warblade 2
+Initiation Action: 1 Swift Action
+Range: Personal.
+Target: You.
+Duration: 1 Round
+
+Your weapon sways back and forth in your hand, ready to block incoming blows. With the speed of a thunderbolt, you clash your weapon against your foe's blade as he attempts to attack.
+
+You make an attack roll against yourself. If it is higher than your armour class, the result of the roll becomes your armour class until the end of the round.</entry>
   <entry id="52763" lang="en" sex="m">Baffling Defense</entry>
+  <entry id="52764" lang="en" sex="m">Setting Sun (Counter)
+Level: Swordsage 2
+Prerequisite: One Setting Sun maneuver
+Initiation Action: 1 Immediate Action
+Range: Personal.
+Target: You.
+Duration: 1 Round
+
+You crouch balanced on one foot, hands held high over your head. Your foe hesistates, unsure of how to attack you in this unlikely stance.
+
+You make a Sense Motive. If it is higher than your armour class, the result of the roll becomes your armour class until the end of the round.</entry>
   <entry id="52765" lang="en" sex="m">Ballista Throw</entry>
+  <entry id="52766" lang="en" sex="m">Setting Sun (Strike)
+Level: Swordsage 6
+Prerequisite: Two Setting Sun maneuvers
+Initiation Action: 1 Standard Action
+Range: Melee Attack.
+Target: One Creature.
+
+You grab your opponent and spin him like a top, swinging him around before throwing him at your opponents like a bolt from a ballista
+
+Make a trip attempt against your target. You get a +4 bonus on this attempt and cannot be tripped if you fail on this attempt. If you succeed on the check, your enemy is thrown in a 60 foot line. The target and all creatures in the line take 6d6 damage.</entry>
   <entry id="52767" lang="en" sex="m">Clever Positioning</entry>
+  <entry id="52768" lang="en" sex="m">Setting Sun (Strike)
+Level: Swordsage 2
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creatures
+Saving Throw: Reflex partial.
+
+With a swift flurry of motion, you knock your foe off balance, slip into his space, and force him into the spot you just occupied.
+
+Make a single melee attack. If you succesfully hit the creature, and he fails a Reflex save against 12 + your Dexterity modifier, you swap positions with your target.</entry>
   <entry id="52769" lang="en" sex="m">Comet Throw</entry>
+  <entry id="52770" lang="en" sex="m">Setting Sun (Strike)
+Level: Swordsage 4
+Prerequisite: One Setting Sun maneuver.
+Initiation Action: 1 Standard Action
+Range: Melee Attack.
+Target: One Creature.
+Save: Reflex partial; see text
+
+You use your foe's momentum against him, throwing him through the air to crash into a second enemy.
+
+Make a trip attempt against your target. You get a +4 bonus on this attempt and cannot be tripped if you fail on this attempt. If you succeed on the check, your enemy is thrown 10 feet away plus 5 feet for every 5 you succeed on the trip check by. The target takes 4d6 damage. If there is a second foe within the range of the throw, he is struck by the thrown foe and takes 4d6, reflex half.</entry>
   <entry id="52771" lang="en" sex="m">Counter Charge</entry>
+  <entry id="52772" lang="en" sex="m">Setting Sun (Counter)
+Level: Swordsage 1
+Initiation Action: 1 Swift Action
+Range: Melee Attack.
+Target: One Creature.
+
+With a quick sidestep, you send a charging opponent sprawling.
+
+You attempt to redirect a charging creature. Make a Strength or Dexterity check against the charging creature. You get a +4 bonus to strength if you are larger than the target, and +4 bonus on dexterity if you are smaller. If you succeed, the target does not get to attack you and is redirected 10 feet away from you. If you fail the target gets a +2 bonus to its attack.</entry>
   <entry id="52773" lang="en" sex="m">Devastating Throw</entry>
+  <entry id="52774" lang="en" sex="m">Setting Sun (Strike)
+Level: Swordsage 3
+Prerequisite: One Setting Sun maneuver.
+Initiation Action: 1 Standard Action
+Range: Melee Attack.
+Target: One Creature.
+
+Seizing your foe by the arm, you spin in a quick half-circle and hurl him headlong away from you.
+
+Make a trip attempt against your target. You get a +4 bonus on this attempt and cannot be tripped if you fail on this attempt. If you succeed on the check, your enemy is thrown 10 feet away plus 5 feet for every 5 you succeed on the trip check by. The target takes 2d6 damage.</entry>
   <entry id="52775" lang="en" sex="m">Feigned Opening</entry>
-  <entry id="52777" lang="en" sex="m">Fools Strike</entry>
+  <entry id="52776" lang="en" sex="m">Setting Sun (Counter)
+Level: Swordsage 3
+Prerequisite: One Setting Sun maneuver.
+Initiation Action: 1 Swift Action
+Range: Melee.
+Target: One Creature.
+
+You show your opponent a seemingly fatal mistake in your defenses, but easily avoid the ensuing attack and simultaneously draw your foe into overextending. As she fights to regain her balance, you make a swift counterattack.
+
+You provoke an attack of opportunity from a creature. If it misses, you get an attack against the creature. If it hits, all of your allies who threaten that creature can make an attack against it.</entry>
+  <entry id="52777" lang="en" sex="m">Fool's Strike</entry>
+  <entry id="52778" lang="en" sex="m">Setting Sun (Counter)
+Level: Swordsage 8
+Prerequisite: Three Setting Sun maneuvers
+Initiation Action: 1 swift action
+Range: Melee attack
+Target: One creature
+
+A creature strikes, but you turn the blow straight back at it.
+
+Make an opposed attack roll against the targeted creature. If you succeed, he damages himself rather than you.</entry>
   <entry id="52779" lang="en" sex="m">Ghostly Defense</entry>
+  <entry id="52780" lang="en" sex="m"></entry>
   <entry id="52781" lang="en" sex="m">Giant Killing Style</entry>
+  <entry id="52782" lang="en" sex="m">Setting Sun (Stance)
+Level: Swordsage 3
+Prerequisite: One Setting Sun maneuver.
+Initiation Action: 1 Swift Action
+Range: Personal.
+Target: You
+Duration: Stance
+
+You dart between a giant's legs, lashing at his inner ankles and other vulnerable areas while staying inside of his reach where he cannot hope to parry your attacks.
+
+You gain a +2 Attack, +4 Damage boost against creatures larger than you.</entry>
   <entry id="52783" lang="en" sex="m">Hydra Slaying Strike</entry>
+  <entry id="52784" lang="en" sex="m">Setting Sun (Strike)
+Level: Swordsage 7
+Prerequisite: Three Setting Sun maneuvers
+Initiation Action: 1 Standard action
+Range: Melee Attack.
+Target: One Creature.
+
+You take stock of an opponent's fighting style and make a single, carefully aimed attack that leaves the creature unable to make all of its attacks.
+
+You make an attack that deals deals normal damage, and leaves the creature unable to take the full-attack action.</entry>
   <entry id="52785" lang="en" sex="m">Mighty Throw</entry>
+  <entry id="52786" lang="en" sex="m">Setting Sun (Strike)
+Level: Swordsage 1
+Initiation Action: 1 Standard Action
+Range: Melee Attack.
+Target: One Creature.
+
+You use superior leverage and your Setting Sun training to send an opponent tumbling to the ground.
+
+Make a trip attempt against your target. You get a +4 bonus on this attempt and cannot be tripped if you fail on this attempt. If you succeed on the check, your enemy is thown 10 feet away and lands prone on the ground.</entry>
   <entry id="52787" lang="en" sex="m">Mirrored Pursuit</entry>
+  <entry id="52788" lang="en" sex="m">Setting Sun (Counter)
+Level: Swordsage 5
+Prerequisite: Two Setting Sun maneuvers
+Initiation Action: 1 immediate action
+Range: 30 feet
+Target: One creature
+
+Your movements perfectly match your foe's, allowing you to move as she does. Try as she might to escape, you remain at her side.
+
+You immediately move to any spot adjacent to your enemy, provided it is within range.</entry>
   <entry id="52789" lang="en" sex="m">Scorpion Parry</entry>
+  <entry id="52790" lang="en" sex="m">Setting Sun (Counter)
+Level: Swordsage 6
+Prerequisite: Two Setting Sun maneuvers
+Initiation Action: 1 swift action
+Range: Melee attack
+Target: One creature
+
+You knock your opponent's attack aside, guiding his weapon into one of his allies.
+
+Make an opposed attack roll against the targeted creature. If you succeed, he damages an ally of his in melee range. If there is no enemy, he damages no one.</entry>
   <entry id="52791" lang="en" sex="m">Shifting Defense</entry>
+  <entry id="52792" lang="en" sex="m"></entry>
   <entry id="52793" lang="en" sex="m">Soaring Throw</entry>
+  <entry id="52794" lang="en" sex="m">Setting Sun (Strike)
+Level: Swordsage 5
+Prerequisite: Two Setting Sun maneuvers
+Initiation Action: 1 Standard Action
+Range: Melee Attack.
+Target: One creature
+
+With a great shout, you send your opponent soaring through the air in a high arc. He slams back into the ground with a bone-crushing thud.
+
+Make a trip attempt against your target. You get a +4 bonus on this attempt and cannot be tripped if you fail on this attempt. If you succeed on the check, your enemy is thrown 20 feet away plus 5 feet for every 5 you succeed on the trip check by. The target takes 8d6 damage.</entry>
   <entry id="52795" lang="en" sex="m">Stalking Shadow</entry>
+  <entry id="52796" lang="en" sex="m">Setting Sun (Counter)
+Level: Swordsage 5
+Prerequisite: Two Setting Sun maneuvers
+Initiation Action: 1 immediate action
+Range: 10 feet
+Target: One creature
+
+When the creature you are battling tries to back away, you step next to it in the blink of an eye, forcing it to stand and fight or suffer the consequences of withdrawing.
+
+You immediately move to any spot adjacent to your enemy, provided it is within range.</entry>
   <entry id="52797" lang="en" sex="m">Step Of The Wind</entry>
+  <entry id="52798" lang="en" sex="m">Setting Sun (Stance)
+Level: Swordsage 1
+Initiation Action: 1 Swift Action
+Range: Personal.
+Target: You.
+Duration: Stance.
+
+You walk across rubble and other broken terrain with deceptive ease, allowing you to take advantage of your opponents as they struggle to move at full speed.
+
+You become immune to movement speed decreases and being slowed, and gain a +2 bonus to attack and a +4 bonus on Bull Rush attempts, both to attack and to defend.</entry>
   <entry id="52799" lang="en" sex="m">Strike Of The Broken Shield</entry>
+  <entry id="52800" lang="en" sex="m">Setting Sun (Strike)
+Level: Swordsage 4
+Prerequisite: Two Setting Sun maneuvers
+Initiation Action: 1 Standard action
+Range: Melee Attack.
+Target: One Creature.
+Save: Reflex partial; see text
+
+You study your opponent and deliver an attack precisely aimed to ruin his defenses and force him to scramble for balance. While he struggles to ready himself, he becomes more vulnerable to your attack.
+
+You make an attack that deals 4d6 extra damage. If it connects, the target must save or be flatfooted for one round.</entry>
   <entry id="52801" lang="en" sex="m">Tornado Throw</entry>
+  <entry id="52802" lang="en" sex="m"></entry>
   <entry id="52803" lang="en" sex="m">Assassins Stance</entry>
+  <entry id="52804" lang="en" sex="m">Shadow Hand (Stance)
+Level: Swordsage 3
+Prerequisite: One Shadow Hand maneuver.
+Initiation Action: 1 Swift Action
+Range: Personal.
+Target: You
+Duration: Stance
+
+As your foe struggles to regain his defensive posture, you line up an exacting strike that hits with superior accuracy and deadly force.
+
+You gain +2d6 Sneak Attack.</entry>
   <entry id="52805" lang="en" sex="m">Balance On The Sky</entry>
+  <entry id="52806" lang="en" sex="m"></entry>
   <entry id="52807" lang="en" sex="m">Bloodletting Strike</entry>
+  <entry id="52808" lang="en" sex="m">Shadow Hand (Strike)
+Level: Swordsage 5
+Prerequisite: Two Shadow Hand maneuvers
+Initiation Action: 1 standard action
+Range: Melee attack
+Target: One creature
+Saving Throw: Fortitude partial
+Spinning your blade in a butterflylike pattern, you administer a dozen precise cuts in an eyeblink. Blood flows from your foe’s opened veins.
+
+As part of this maneuver, you make a single melee attack. If this attack hits, your opponent takes 4 points of Constitution damage in addition to your attack’s normal damage. A successful Fortitude save (DC 15 + your Wis modifier) reduces this Constitution damage to 2 points, although the foe still takes full normal melee damage.</entry>
   <entry id="52809" lang="en" sex="m">Child Of Shadow</entry>
+  <entry id="52810" lang="en" sex="m">Shadow Hand (Stance)
+Level: Swordsage 1
+Initiation Action: 1 Swift Action
+Range: Personal.
+Target: You.
+Duration: Stance.
+
+As you move, shadows flutter and swarm around you. Even under the bright desert sun, you are difficult to spot as long as you remain in motion.
+
+If you move more than 10 feet, you gain the effects of concealment.
+This is a supernatural maneuver.</entry>
   <entry id="52811" lang="en" sex="m">Clinging Shadow Strike</entry>
+  <entry id="52812" lang="en" sex="m">Shadow Hand (Strike)
+Level: Swordsage 1
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creature
+Saving Throw: Fortitude Partial.
+
+You weapon transforms into solid darkness. When it strikes home, it discharges in a swirling orb of shadow that engulfs your foe's eyes.
+
+Your attack deals an additional 1d6 damage. If the foe fails a Fort save vs 11 + Wisdom modifier the foe suffers a 20% miss chance for one round.
+This is a supernatural maneuver.</entry>
   <entry id="52813" lang="en" sex="m">Cloak Of Deception</entry>
+  <entry id="52814" lang="en" sex="m">Shadow Hand (Boost) 
+Level: Swordsage 2
+Initiation Action: 1 Swift Action
+Range: Personal.
+Target: You.
+Duration: 1 Round.
+
+The shadows around you seem to surge forward and engulf you. For a brief moment, they render you invisible.
+
+You gain greater invisibility for one round.
+This maneuver is a supernatural maneuver.</entry>
   <entry id="52815" lang="en" sex="m">Dance Of The Spider</entry>
+  <entry id="52816" lang="en" sex="m">Shadow Hand (Stance)
+Level: Swordsage 3
+Initiation Action: 1 Swift Action
+Range: Personal.
+Target: You
+Duration: Stance
+
+Black, shadowy energy covers your hands and feet, giving you a touch of the grace and skill of the spider.
+
+You become immune to the web spell and poison.</entry>
   <entry id="52817" lang="en" sex="m">Death In The Dark</entry>
+  <entry id="52818" lang="en" sex="m">Level: Swordsage 7
+Initiation Action: 1 standard action
+Range: Melee attack
+Target: One creature
+Saving Throw: Fortitude partial
+
+You catch your foe unaware, allowing you to deal a single, deadly strike that slays her instantly.
+
+This maneuver functions only against a flat-footed opponent. As part of this maneuver, make a single melee attack. If this attack hits, you deal normal damage and the target must make a Fortitude save  (DC 17 + your Wis modifier). If the target fails this save, she takes an extra 15d6 points of damage. If her save succeeds, she takes an extra 5d6 points of damage. This maneuver functions only against opponents who are vulnerable to critical hits.</entry>
   <entry id="52819" lang="en" sex="m">Drain Vitality</entry>
+  <entry id="52820" lang="en" sex="m">Shadow Hand (Strike)
+Level: Swordsage 2
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creatures
+Saving Throw: Fort partial.
+
+A faint numbus of sickly grey shadow surrounds your weapon. When you attack, this shadowy aura flows into the wound you inflict, sapping your opponent's strength, vitality, and energy.
+
+Make a single melee attack. If you succesfully hit the creature, and he fails a Reflex save against 12 + your Wisdom modifier, he takes two points of Constitution damage.</entry>
   <entry id="52821" lang="en" sex="m">Enervating Shadow Strike</entry>
+  <entry id="52822" lang="en" sex="m">Shadow Hand (Strike)
+Level: Swordsage 8
+Prerequisite: Three Shadow Hand maneuvers
+Initiation Action: 1 standard action
+Range: Melee attack
+Target: One creature
+Saving Throw: Fortitude negates
+
+Your weapon becomes cloaked in an inky, black nimbus. As you strike your opponent, that energy flows into the wound and leaves him pale, weak, and shaking.
+
+As part of this maneuver, you make a single melee attack. If this attack hits, the target must make a successful Fortitude save (DC 18 + your Wis modifier) or gain 1d4 negative levels. You gain 5 temporary hit points for each negative level your enemy gains. Temporary hit points gained in this manner last until the end of the encounter. The effects of any negative levels bestowed by this strike disappear in 24 hours.
+This maneuver is a supernatural ability.</entry>
   <entry id="52823" lang="en" sex="m">Five Shadow Creeping Ice Enervation Strike</entry>
+  <entry id="52824" lang="en" sex="m">Shadow Hand (Strike)
+Level: Swordsage 9
+Prerequisite: Five Shadow Hand maneuvers
+Initiation Action: 1 standard action
+Range: Melee attack
+Target: One creature
+Duration: 1 minute
+Saving Throw: Fortitude partial; see text
+
+With a single lunge, you pierce your enemy to the core. A shadow of ultimate cold falls over his heart and begins to worm through his veins to the five points of his body.
+
+As part of this maneuver, you make a single melee attack. If you hit, you deal normal melee damage plus an extra 15d6 points of damage, and a shadow spreads out from your enemy’s heart, freezing the blood in his veins.
+
+Roll a d20 and refer to the information below to determine toward which point of his body the freezing shadow spreads. This effect functions even if your opponent is not humanoid; once you have struck your foe’s heart, the shadow produces the same effects even in a creature with a different anatomy.
+Result of 1-7: Spreads out to legs. Ability damage: 2d6 Dex. Special effect: Speed is reduced to 0 feet.
+Result of 8-14: Spreads out to arms. Ability damage: 2d6 Str. Special effect: -6 penalty on attack rolls and Concentration checks.
+Result of 15-20: Struck in the heart. Ability damage: 2d6 Dex, 2d6 Str. Special effect: 2d6 points of Constitution damage.
+
+A foe struck by this attack must make a successful Fortitude save (DC 19 + your Wis modifier) to resist its effects. On a successful save, the target ignores any special effect from the attack and takes half the indicated ability damage (but still takes normal melee damage as well as the extra 15d6 points of damage). Each of the special effects lasts for 1d6 rounds.
+This maneuver is a supernatural ability.</entry>
   <entry id="52825" lang="en" sex="m">Ghost Blade</entry>
+  <entry id="52826" lang="en" sex="m">Shadow Hand (Strike)
+Level: Swordsage 6
+Prerequisite: Three Shadow Hand maneuvers
+Initiation Action: 1 standard action
+Range: Melee attack
+Target: One creature
+
+A smile brightens your foe’s eyes; he has dodged your blow. But that was merely the ghost blade. The real blade is cutting swiftly from underneath, and yet he still smiles.
+
+As part of this maneuver, you make a melee attack. As you strike at your opponent, you create an illusory double of your weapon. This double slashes at your opponent, tricking him into mistaking it for your attack. In truth, the illusion cloaks your real attack. Your opponent is caught flat-footed against this strike, as the hidden attack from a new direction ruins his defenses.
+This maneuver is a supernatural ability.</entry>
   <entry id="52827" lang="en" sex="m">Hand Of Death</entry>
+  <entry id="52828" lang="en" sex="m">Shadow Hand (Strike)
+Level: Swordsage 4
+Initiation Action: 1 Standard Action
+Range: Touch
+Target: One Creatures
+Duration: 1d3 rounds
+Saving Throw: Fort negates
+
+You reach out and tap your foe with a single finger. Her look of puzzlement turns to fear as black energy spreads across her body, rendering her helpless.
+
+Make a melee touch attack. If it succeeds, the target must save or be paralyzed.</entry>
   <entry id="52829" lang="en" sex="m">Island Of Blades</entry>
+  <entry id="52830" lang="en" sex="m">Shadow Hand (Stance)
+Level: Swordsage 1
+Initiation Action: 1 Swift Action
+Range: Personal.
+Target: You.
+Duration: Stance.
+
+You cloak yourself in a swirling nimbus of shadow energy. These shadows spin and flow around you, preventing any creature near you from being able to anticipate your attacks.
+
+If both you and an ally are in melee range of the same creature, you gain a +2 bonus to attack rolls.</entry>
   <entry id="52831" lang="en" sex="m">Obscuring Shadow Veil</entry>
+  <entry id="52832" lang="en" sex="m">Shadow Hand (Strike)
+Level: Swordsage 4
+Prerequisite: Two Shadow Hand maneuvers
+Initiation Action: 4 Standard Action
+Range: Melee Attack
+Target: One Creature
+Saving Throw: Fortitude Partial.
+
+As you strike your opponent, you summon the fell energies of the Shadow Hand school to rob your foe of her sight. Inky, black energy burrows into her eyes, rendering her blind for a few critical moments.
+
+Your attack deals an additional 5d6 damage. If the foe fails a Fort save vs 14 + Wisdom modifier the foe suffers a 50% miss chance for one round.
+This is a supernatural maneuver.</entry>
   <entry id="52833" lang="en" sex="m">One With Shadow</entry>
+  <entry id="52834" lang="en" sex="m"></entry>
   <entry id="52835" lang="en" sex="m">Shadow Blade Technique</entry>
+  <entry id="52836" lang="en" sex="m">Shadow Hand (Strike)
+Level: Swordsage 1
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creature
+
+You weave your weapon in an elaborate pattern, creating an illusory double that glows with white energy. As you make your attack, both you true weapon and the illusion slash at your foe.
+
+You roll to attack twice, once for the normal blade and once for the double. The normal blade deals standard damage. If the illusion hits, it deals 1d6 cold damage.
+This is a supernatural maneuver.</entry>
   <entry id="52837" lang="en" sex="m">Shadow Blink</entry>
+  <entry id="52838" lang="en" sex="m">Level: Swordsage 7
+Initiation Action: 1 swift action
+Range: 50 ft.
+Target: You
+
+In the blink of an eye, you disappear and emerge from a mote of shadow energy across the battlefield.
+
+This maneuver functions as the shadow jaunt maneuver, except that it can be initiated as a swift action.</entry>
   <entry id="52839" lang="en" sex="m">Shadow Garrote</entry>
+  <entry id="52840" lang="en" sex="m">Shadow Hand (Strike) 
+Level: Swordsage 3
+Prerequisite: One Shadow Hand maneuver
+Initiation Action: 1 Standard Action
+Range: 60'
+Target: One Living Creature
+Duration: See text.
+Save: Fortitude partial.
+
+With a subtle gesture, you carve a slice of shadow and cast it towards your foe. It wraps around the creature's neck and squeeze the life from it.
+
+If successful on a ranged touch attack, you deal 5d6 damage. It must make a Fortitude save or be flat-footed for one round.
+This maneuver is a supernatural maneuver.</entry>
   <entry id="52841" lang="en" sex="m">Shadow Jaunt</entry>
+  <entry id="52842" lang="en" sex="m">Shadow Hand [Teleportation]
+Level: Swordsage 2
+Initiation Action: 1 Standard Action
+Range: 50'
+Target: You
+
+A cloud of shadow energy engulfs you, spins into a tiny mote, and disappears. A moment later, this shadowy cloud appears across the battlefield and expels you from it.
+
+You teleport up to 50'.</entry>
   <entry id="52843" lang="en" sex="m">Shadow Noose</entry>
+  <entry id="52844" lang="en" sex="m">Shadow Hand (Strike)
+Level: Swordsage 6
+Initiation Action: 1 standard action
+Range: 6 ft.
+Target: One flat-footed creature
+Duration: 1 round
+Saving Throw: Fortitude partial
+
+As your foe struggles to ready his defenses, you make a subtle gesture in the air. A noose formed of shadow drops from above him, wraps around his throat, and hoists him aloft. His limbs flail as he struggles to free himself from the strangling noose.
+
+As part of this maneuver, you form a noose of shadow that wraps around your target and strangles him. This maneuver only works against a flat-footed target. As part of this maneuver, you make a ranged touch attack against a flat-footed creature within range. If it hits, your opponent takes 8d6 points of damage. In addition, he must make a Fortitude save (DC 16 + your Wis modifier) or be stunned for 1 round. A successful save negates the stun, but not the extra damage. This strike has no effect against non-living creatures, such as constructs and the undead.
+This maneuver is a supernatural ability.</entry>
   <entry id="52845" lang="en" sex="m">Shadow Stride</entry>
+  <entry id="52846" lang="en" sex="m">Shadow Hand [Teleportation]
+Level: Swordsage 5
+Initiation Action: 1 move action
+Range: 50 ft.
+Target: You
+You dissipate into a puff of black shadow. A moment later, the shadow coalesces, and you appear fifty feet away.
+
+This maneuver functions as the shadow jaunt maneuver, except that it can be initiated as a move action.</entry>
   <entry id="52847" lang="en" sex="m">Stalker In The Night</entry>
+  <entry id="52848" lang="en" sex="m"></entry>
   <entry id="52849" lang="en" sex="m">Step Of The Dancing Moth</entry>
+  <entry id="52850" lang="en" sex="m"></entry>
   <entry id="52851" lang="en" sex="m">Strength Draining Strike</entry>
+  <entry id="52852" lang="en" sex="m">Shadow Hand (Strike)
+Level: Swordsage 3
+Prerequisite: One Shadow Hand maneuver.
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creatures
+Save: Fort partial, see text.
+
+Liquid, black energy covers your weapon. As you strike your opponent, this material flows into the wound, spreads along his veins, and leaves him weakened.
+
+You make a single melee attack. If it is successful, the target takes 4 strength damage. If the target succeeds on a Fortitude save, it takes 2 damage.
+This is a supernatural maneuver.</entry>
   <entry id="52853" lang="en" sex="m">Adamantine Bones</entry>
+  <entry id="52854" lang="en" sex="m">Stone Dragon (Strike)
+Level: Crusader 8, swordsage 8, warblade 8
+Prerequisite: Three Stone Dragon maneuvers
+Initiation Action: 1 standard action
+Range: Personal
+Target: You
+Duration: 1 round
+
+You are an impenetrable tower of defiance on the battlefield. Attacking 
+you is as fruitless as striking a mountain with a walking stick.
+
+As part of this maneuver, you make a single melee attack.  If this attack hits,
+you gain damage reduction 20/+5 for one round.</entry>
   <entry id="52855" lang="en" sex="m">Ancient Mountain Hammer</entry>
+  <entry id="52856" lang="en" sex="m">Stone Dragon (Strike)
+Level: Crusader 7, Swordsage 7, Warblade 7
+Prerequisite: Three Stone Dragon maneuvers
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creature
+
+You put the weight of a great mountain behind your attack, pounding through armor and bone.
+
+As part of this maneuver, you make a single melee attack. This attack deals an extra 12d6 points of damage and automatically overcomes damage reduction.</entry>
   <entry id="52857" lang="en" sex="m">Bonesplitting Strike</entry>
+  <entry id="52858" lang="en" sex="m">Stone Dragon (Strike)
+Level: Crusader 4, Swordsage 4, Warblade 4
+Prerequisite: Two Stone Dragon maneuvers
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creature
+
+Your attack slams home with a ferocious crack of shattered bones and parted flesh. Your target reels backward, still alive but severly crippled.
+
+You make a single attack against an enemy. If this attack his, you do 2 Constitution damage.</entry>
   <entry id="52859" lang="en" sex="m">Bonecrusher</entry>
+  <entry id="52860" lang="en" sex="m">Stone Dragon (Strike)
+Level: Crusader 3, Swordsage 3, Warblade 3
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creature
+Save: Fortitude Partial; see text
+
+You deliver your attack, and your enemy's eyes jerk wide open in panic as his skeleton begins to fracture in hundreds of places.
+
+You make a single attack against an enemy. If this attack his, you do an extra 4d6 damage. If the target fails a Fortitude save vs 13 + Strength modifier, all further strikes gain a +10 to confirm critical hits.</entry>
   <entry id="52861" lang="en" sex="m">Boulder Roll</entry>
+  <entry id="52862" lang="en" sex="m">Stone Dragon (Strike)
+Level: Crusader 4, Swordsage 4, Warblade 4
+Prerequisite: Two Stone Dragon maneuvers
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creature
+
+Like a boulder tumbling down the mountain, you slam through your enemies.
+
+You make an overrun attempt against each creature in a line with a +4 bonus. You do not provoke attacks of opportunity, and if you fail, you are not knocked prone, you simply halt.</entry>
   <entry id="52863" lang="en" sex="m">Charging Minotaur</entry>
+  <entry id="52864" lang="en" sex="m">Stone Dragon (Strike)
+Level: Crusader 1, Swordsage 1, Warblade 1
+Initiation Action: 1 Full-Round Action
+Range: Melee Attack
+Target: One Creature
+
+You charge at your foe, blasting him with such power that he stumbles back.
+
+Make a Bull Rush attack as part of a charge. You take no AoOs for this action. If you succeed on the strength check, you deal 2d6 + Str bludgeoning damage, and the target is pushed back 5 feet, and possibly more.</entry>
   <entry id="52865" lang="en" sex="m">Colossus Strike</entry>
+  <entry id="52866" lang="en" sex="m">Stone Dragon (Strike)
+Level: Crusader 7, swordsage 7, warblade 7
+Prerequisite: Two Stone Dragon maneuvers
+Initiation Action: 1 standard action
+Range: Melee attack
+Target: One creature
+Saving Throw: Fortitude partial
+
+Focusing your strength with a deep, rumbling shout, you execute an attack that sends your opponent flying through the air.
+
+As part of this maneuver, you make a melee attack against your foe. This attack deals an extra 6d6 points of damage, and the creature struck must succeed on a Fortitude save (DC 17 + your Str modifier) or be hurled 5 to 20' away from you, falling prone in that square. A creature of a smaller size category than yours gets a -2 penalty on this save; a creature of a larger size than yours gets a +2 bonus on the save. The enemy's movement doesn't provoke attacks of opportunity. If an obstacle blocks the creature's movement, it instead stops in the first unoccupied square.</entry>
   <entry id="52867" lang="en" sex="m">Crushing Vise</entry>
+  <entry id="52868" lang="en" sex="m">Stone Dragon (Strike)
+Level: Crusader 6, swordsage 6, warblade 6
+Initiation Action: 1 standard action
+Range: Melee attack
+Target: One creature
+Duration: 1 round
+
+The overwhelming power behind your attack leaves your opponent unable to move. The punishing strike forces it to waste a few moments shrugging off the effects of your attack.
+
+As part of this maneuver, you make a melee attack. This attack deals an extra 4d6 points of damage. Your attack also drops the  target's speed to 0 feet (for all movement types) for 1 round. It can act normally in all other ways.</entry>
   <entry id="52869" lang="en" sex="m">Crushing Weight Of The Mountain</entry>
+  <entry id="52870" lang="en" sex="m">Stone Dragon (Stance)
+Level: Crusader 3, Swordsage 3, Warblade 3
+Initiation Action: 1 Swift Action
+Range: Personal
+Target: You
+Duration: Stance
+
+You crush your opponent beneath you, squeezing the life out of him as you pin him to the ground.
+
+While in this stance, once you have successfully initiated a grapple, you may constrict the target for 2d6 + (1.5 * your strength modifier).</entry>
   <entry id="52871" lang="en" sex="m">Earthstrike Quake</entry>
+  <entry id="52872" lang="en" sex="m">Stone Dragon (Strike)
+Level: Crusader 8, swordsage 8, warblade 8
+Prerequisite: Two Stone Dragon maneuvers
+Initiation Action: 1 standard action
+Range: 20ft
+Area: 20 ft radius burst, centered on you
+Duration: Instantaneous
+Saving Throw: Reflex negates
+
+You swind your weapon in a wild arc, slamming it into the ground at your feet. Energy surges out from you, causing the ground to shudder with a sharp tremor.
+
+You channel ki into the earth with your mighty strike, causing the ground to rumble and shake briefly. Anyone standing on the ground in this maneuver's area must make a successful Reflex save (DC 18 + your Str modifier) or be knocked prone. Any creature in this area that is currently casting a spell must succeed on a Concentration check (DC 20 + spell level) or lose the spell. You are immune to the effect of the earthstrike quake maneuver. Your allies must still save as normal against its effect.</entry>
   <entry id="52873" lang="en" sex="m">Elder Mountain Hammer</entry>
-  <entry id="52875" lang="en" sex="m">Giants Stance</entry>
+  <entry id="52874" lang="en" sex="m">Stone Dragon (Strike)
+Level: Crusader 5, swordsage 5, warblade 5
+Prerequisite: Two Stone Dragon maneuvers
+Initiation Action: 1 standard action
+Range: Melee attack
+Target: One creature or unattended object
+
+You draw strength from the earth beneath your feet and transfer it into ruinous power. Your next attack drops like an avalanche upon your foe, hammering him into submission.
+
+When you use this maneuver, you make a single melee attack. That attack deals an extra 6d6 points of damage and automatically overcomes damage reduction.</entry>
+  <entry id="52875" lang="en" sex="m">Giant's Stance</entry>
+  <entry id="52876" lang="en" sex="m">Stone Dragon (Stance)
+Level: Crusader 5, swordsage 5, warblade 5
+Prerequisite: Two Stone Dragon maneuvers
+Initiation Aciton: 1 swift action
+Range: Personal
+Target: You
+Duration: Stance
+
+You swing your weapon in an wide, deadly arc that slams into your foe with incredible force. Only your mastery of the Stone Dragon techniques allows you to make such reckless blows without losing your footing.
+
+While you are in this stance, you deal damage as if you were one size larger than normal, to a maximum of Large. This benefit improves your weapon and unarmed strike damage. If does not confer any of the other benefits or drawbacks of a change in size, such as a modifier to ability scores or AC, or an improved reach.
+This stance immediately ends if you move more than 5 feet for any reason such as from a bull rush attack, a telekinesis spell, and so forth.</entry>
   <entry id="52877" lang="en" sex="m">Iron Bones</entry>
+  <entry id="52878" lang="en" sex="m">Stone Dragon (Strike)
+Level: Crusader 6, swordsage 6, warblade 6
+Prerequisite: Two Stone Dragon maneuvers
+Inititation Action: 1 standard action
+Range: Personal
+Target: You
+Duration: 1 round
+
+As you make a successful attack, you enter a meditative state that leaves you almost invulnerable to harm. For a few brief moments, arrows bounce off your skin, and sword blows barely draw any blood.
+
+When you use this maneuver, you make a single melee attack. If this attack hits, you gain damage reduction 10/+5 for 1 round.</entry>
   <entry id="52879" lang="en" sex="m">Irresistible Mountain Strike</entry>
+  <entry id="52880" lang="en" sex="m">Stone Dragon (Strike)
+Level: Crusader 6, swordsage 6, warblade 6
+Initiation Action: 1 standard action
+Range: Melee attack
+Target: One creature
+Duration: 1 round
+Saving Throw: Fortitude partial
+
+You slam your weapon into your foe with irresistable force. He can barely move as he struggles to marshal his defenses against you.
+
+As part of this maneuver, you make a single melee attack. This asstack deals an extra 4d6 points of damage. A creature hit by this strike must also make a successful Fortitude save (DC 16 + your Str modifier) or be unable to take a standard action for 1 round. It can otherwise act as normal. A creature that successfully saves still takes the extra damage.</entry>
   <entry id="52881" lang="en" sex="m">Mountain Avalanche</entry>
+  <entry id="52882" lang="en" sex="m">Stone Dragon (Strike)
+Level: Crusader 5, swordsage 5, warblade 5
+Prerequisite: Two Stone Dragon maneuvers
+Initiation Action: 1 full-round action
+Range: Personal
+Target: You
+Saving Throw: None
+
+You wade through your enemies like a stone giant rampaging through a mob of orcs. You crush them underfoot and drive them before you, leaving a trail of the dead in your wake.
+
+As part of this maneuver, you can move up to double your speed and trample your opponents. You can enter the space of any creature of your size category or smaller. If you enter and occupy the space occupied by such a creature, it takes damage equal to 2d6 + 1 1/2 times your Str bonus (if any).
+You can deal trampling damage to a creature only once per round, no matter how many times you move into or through its space.</entry>
   <entry id="52883" lang="en" sex="m">Mountain Hammer</entry>
+  <entry id="52884" lang="en" sex="m">Stone Dragon (Strike)
+Level: Crusader 2, Swordsage 2, Warblade 2
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creature
+
+Like a falling avalanche, you strike with the weight and fury of the mountain.
+
+You make a single attack against an enemy. If this attack his, you ignore all DR and do an extra 2d6 damage.</entry>
   <entry id="52885" lang="en" sex="m">Mountain Tombstone Strike</entry>
+  <entry id="52886" lang="en" sex="m">Stone Dragon (Strike)
+Level: Crusader 9, swordsage 9, warblade 9
+Initiation Action: 1 standard action
+Range: Melee attack
+Target: One creature
+
+You slam into your foe, turning bones into dust and muscle into bloody pulp. Your foe's body is left a crippled, twisted mockery.
+
+Your attack causes damage to the structure of your foe's body. As part of this maneuver, you make a single melee attack. If this attack hits, you deal 2d6 points of Constitution damage in addition to your normal damage.</entry>
   <entry id="52887" lang="en" sex="m">Overwhelming Mountain Strike</entry>
+  <entry id="52888" lang="en" sex="m">Stone Dragon (Strike)
+Level: Crusader 4, Swordsage 4, Warblade 4
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creature
+Duration: 1 round
+Save: Fortitude Partial; see text
+
+Your mighty strike temporarily disorients your opponent, costing him precious seconds as he shakes off the attack.
+
+You make a single attack against an enemy. If this attack his, you do an extra 2d6 damage. If the target fails a Fortitude save vs 14 + Strength modifier, it is slowed.</entry>
   <entry id="52889" lang="en" sex="m">Roots Of The Mountain</entry>
+  <entry id="52890" lang="en" sex="m">Stone Dragon (Stance)
+Level: Crusader 3, Swordsage 3, Warblade 3
+Initiation Action: 1 Swift Action
+Range: Personal
+Target: You
+Duration: Stance
+
+You crouch and set your feet flat on the ground, rooting yourself to the spot you stand. Nothing can move you from this place.
+
+You gain a +10 bonus on all ability checks for grapples, trips, overruns and bull rushes. Any creature that attempts to move past you gains a -10 penalty to Tumble, and you gain DR 2/-.
+This stance ends if you move more than 5 feet for any reason.</entry>
   <entry id="52891" lang="en" sex="m">Stone Bones</entry>
-  <entry id="52893" lang="en" sex="m">Stone Dragons Fury</entry>
+  <entry id="52892" lang="en" sex="m">Stone Dragon (Strike)
+Level: Crusader 1, Swordsage 1, Warblade 1
+Initiation Action: 1 Standard Action
+Range: Personal
+Target: You
+Duration: 1 round
+
+You focus your energy to enhance your defenses, drawing on the power of your weapon's impact with a foe to toughen yourself against a counterattack.
+
+You gain DR 5/adamantium (+5) for 1 round.</entry>
+  <entry id="52893" lang="en" sex="m">Stone Dragon's Fury</entry>
+  <entry id="52894" lang="en" sex="m">Stone Dragon (Strike)
+Level: Crusader 3, Swordsage 3, Warblade 3
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creature
+
+With a mighty war cry, you slam your weapon into a slight crack or other fault in an object. The object shudders for a moment before it collapses into broken shards.
+
+You deal an extra 4d6 damage to objects or constructs with this strike.</entry>
   <entry id="52895" lang="en" sex="m">Stone Vise</entry>
+  <entry id="52896" lang="en" sex="m">Stone Dragon (Strike)
+Level: Crusader 2, Swordsage 2, Warblade 2
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creature
+Saving Throw: Fort partial.
+
+You make a crushing blow that staggers your opponent, leaving it unable to move.
+
+Make a single melee attack. If you succesfully hit the creature, he takes an additional 1d6 damage. If he fails a Reflex save against 12 + your Strength modifier, he cannot move for one round.</entry>
   <entry id="52897" lang="en" sex="m">Stonefoot Stance</entry>
-  <entry id="52899" lang="en" sex="m">Stone Dragons Fury</entry>
-  <entry id="52901" lang="en" sex="m">Stone Vise</entry>
-  <entry id="52903" lang="en" sex="m">Stonefoot Stance</entry>
+  <entry id="52898" lang="en" sex="m">Stone Dragon (Stance)
+Level: Crusader 1, Swordsage 1, Warblade 1
+Initiation Action: 1 Swift Action
+Range: Personal
+Target: You
+Duration: Stance
+
+You crouch and set your feet flat on the ground, drawing the resilience of the earth into your body.
+
+You gain a +2 bonus on Strength checks, and a +2 AC bonus against creatures larger than you. This stance ends if you move more than 5 feet for any reason.</entry>
+  <entry id="52899" lang="en" sex="m">White Raven Tactics</entry>
+  <entry id="52900" lang="en" sex="m">White Raven (Boost)
+Level: Crusader 3, Warblade 3
+Initiation Action: 1 Swift Action
+Range: 10 ft.
+Target: One ally
+
+You can inspire your allies to astounding feats of martial prowess With a few short orders, you cajole them into seizing the initiative and driving back the enemy.
+
+Your ally gets to go again this turn. You cannot target yourself with this maneuver.</entry>    
+  <entry id="52901" lang="en" sex="m">White Raven Strike</entry>
+  <entry id="52902" lang="en" sex="m">White Raven (Strike)
+Level: Crusader 4, Warblade 4
+Prerequisite: One White Raven maneuver
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creature
+
+Your eye for tactics allows you to notice an enemy's weak points and attack them with a mighty blow.
+
+You make an attack that deals 4d6 extra damage. If it connects, is flatfooted for one round.</entry>
+  <entry id="52903" lang="en" sex="m">Leading the Charge</entry>
+  <entry id="52904" lang="en" sex="m">White Raven (Stance)
+Level: Crusader 1, Warblade 1
+Initiation Action: 1 Swift Action
+Range: 60ft. 
+Area: 60 ft radius centred on you.
+Duration: Stance.
+
+You fire the confidence and martial spirit of your allies, giving them the energy and bravery needed to make a devastating charge against your enemies.
+
+All allies gain a +1 damage bonus on charge attacks per initiator level.</entry>
   <entry id="52905" lang="en" sex="m">Strength Of Stone</entry>
+  <entry id="52906" lang="en" sex="m">Stone Dragon (Stance)
+Level: Crusader 8, swordsage 8, warblade 8
+Prerequisite: Three Stone Dragon maneuvers
+Initiation Action: 1 swift action
+Range: Personal
+Target: You
+Duration: Stance
+
+You enter an impenetrable defensive stance, making it almost impossible for an attack to strike you in a vulnerable area.
+
+While you are in this stance, you focus your efforts on preventing any devastating attacks from penetrating your defenses. You are immune to critical hits while you are in this stance. This stance immediately ends if you move more than 5 feet for any reason, such as from a bull rush attack, a telekinesis spell, and so forth.</entry>
   <entry id="52907" lang="en" sex="m">Blood In The Water</entry>
+  <entry id="52908" lang="en" sex="m">Tiger Claw (Stance)
+Level: Swordsage 1, Warblade 1
+Initiation Action: 1 Swift Action
+Range: Personal.
+Target: You.
+Duration: Stance.
+
+The smell of blood drives you into a fury. As you slash into your foe, each fresh wound you inflict spurs you onward.
+
+Whenever you successfully critical hit a creature, you gain a +1 Attack and Damage bonus for one minute.</entry>
   <entry id="52909" lang="en" sex="m">Claw At The Moon</entry>
+  <entry id="52910" lang="en" sex="m">Tiger Claw (Strike)
+Level: Swordsage 2, Warblade 2
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creature
+
+You leap into the air, catching your foe off guard as you slice down into him.
+
+Make a jump check with a DC equal to the target's AC. If it succeeds, you deal an extra 2d6 damage on your attack. If it fails, you deal damage normally.</entry>
   <entry id="52911" lang="en" sex="m">Dancing Mongoose</entry>
+  <entry id="52912" lang="en" sex="m">Tiger Claw (Boost)
+Level: Swordsage 5, warblade 5
+Prerequisite: Two Tiger Claw maneuvers
+Initiation Action: 1 swift action
+Range: Personal
+Target: You
+Duration: 1 turn
+
+You sing your weapons about you in a blur of speed, making a series of devastating attacks in the space of a single breath.
+
+You make a flurry of deadly attacks. After initiating this boost, you can make one additional attack with each weapon you wield (to a maximim of two extra attacks if you wield two or more weapons). These extra attacks are made at your highest attack bonus for each of your repective weapons. All of these attacks mus be directed against the same opponent.</entry>
   <entry id="52913" lang="en" sex="m">Death From Above</entry>
+  <entry id="52914" lang="en" sex="m">Tiger Claw (Strike)
+Level: Swordsage 4, Warblade 4
+Prerequisite: One Tiger Claw maneuver
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creature
+
+With a war cry, you leap into the air and lift your weapon high overhead. As you arc downward, your weight and momentum lend bone-crushing force to your attack.
+
+Make a jump check vs DC 20. If you succeed, your target is flatfooted versus the attack, deal 4d6 damage and land within 20' of your opponent. Otherwise, perform only a normal attack.</entry>
   <entry id="52915" lang="en" sex="m">Feral Death Blow</entry>
+  <entry id="52916" lang="en" sex="m">Tiger Claw (Strike)
+Level: Swordsage 9, warblade 9
+Prerequisite: Four Tiger Claw maneuvers
+Initiation Action: 1 full round action
+Range: Melee attack
+Target: One creature
+Saving Throw: Fortitude partial
+
+With a primal howl, you leap into the air and land on your opponent, hacking and clawing at his neck.
+
+To use this maneuver, you muste be adjacent to your intended target. As part of this maneuver make a Jump check with a DC equal to your opponent's AC. If the check succeeds, you can then make a single melee attack afainst your foe, also as part of this maneuver. The target is  considered flat-footed against this attack. If your attack deals damage, your target must attempt a Fortitude save (DC19 + your Str modifier). If this save fails, your target is instantly slain (his hit points drop to -10). If the save is successful, you deal an extra 20d6 points of damage to the target in addition to your normal weapon damage. Creatures immune to critical hits are immune to the death effect of this strike.
+If your Jump check fails, you can make a singe attack normally. The maneuver is still considered expended.</entry>
   <entry id="52917" lang="en" sex="m">Flesh Ripper</entry>
+  <entry id="52918" lang="en" sex="m">Tiger Claw (Strike)
+Level: Swordsage 3, Warblade 3
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creature
+Duration: 1 round
+Save: Fortitude Partial; see text
+
+With a mixture of careful precision and animal savagery, you tear into a foe to produce jagged wounds that overwhelm him with pain.
+
+If the target fails a Fortitude save vs 13 + Strength modifier, he takes a -4 penalty to attacks and AC.</entry>
   <entry id="52919" lang="en" sex="m">Fountain Of Blood</entry>
+  <entry id="52920" lang="en" sex="m">Tiger Claw (Boost)
+Level: Swordsage 4, Warblade 4
+Prerequisite: Two Tiger Claw maneuvers
+Initiation Action: 1 Swift Action
+Range: 30 ft.
+Area: 30 ft burst.
+Duration: 1 minute
+Saving Throw: Will partial; see text
+
+With a war cry, you leap into the air and lift your weapon high overhead. As you arc downward, your weight and momentum lend bone-crushing force to your attack.
+
+You strike a foe with less than 10 hit points for an additional 1d6, causing all creatures within the area to make a will save or be shaken for one minute.</entry>
   <entry id="52921" lang="en" sex="m">Girallon Windmill Flesh Rip</entry>
+  <entry id="52922" lang="en" sex="m">Tiger Claw (Boost)
+Level: Swordsage 8, warblade 8
+Prerequisite: Three Tiger Claw maneuvers
+Inititation Action: 1 swift action
+Range: Melee attack
+Target: One or more creatures
+Duration: 1 round
+
+Windmilling your arms in a furious blur, you strike your perplexed enemy from two directions at once, rending his flesh with each strike.
+
+You must initiate this maneuver before making any attacks in the current round, and you must have two weapons equipped. If you strike an opponent multiple times during your turn, you also deal rend damage. This damage is based on the number of times you strike your opponent during your turn (see the table below). Determine the rend damage dealt immediately after you make your last attack for your turn.
+If you attack multiple opponents during your turn, you gain this extra damage against each of them. A creature takes rend damage based on the number of attakcs that hit it, not the number of successful attacks you make. For example, if you hit a fire giant three times and an evil cleric twice during your turn, the fire giant takes rend damage for three attacks and the cleric takes rend damage for two attacks.
+
+Successful Attacks          Rend Damage
+
+2                            8d6
+3                           10d6 
+4                           12d6
+5                           14d6
+6                           16d6
+7                           18d6
+8+                          20d6 </entry>
   <entry id="52923" lang="en" sex="m">Hamstring Attack</entry>
-  <entry id="52925" lang="en" sex="m">Hunters Sense</entry>
+  <entry id="52924" lang="en" sex="m">Tiger Claw (Strike)
+Level: Swordsage 7, warblade 7
+Prerequisite: Three Tiger Claw maneuvers
+Initiation Action: 1 standard action
+Range: Melee attack
+Target: One creature
+Saving Throw: Fortitude half
+Duration: 1 minute
+
+You slice into your opponent's legs, leaving him hobbled and stumbling about.
+
+As part of this maneuver, you make a single melee attack. If this attack hits, it deals damage as normal. In addition, the target takes 1d8 points of Dexterity damage and a -10 foot penalty to speed for 1 minute. A successful Fortitude save (DC 17 + your Str modifier) halves both the Dexterity damage and the speed penalty.</entry>
+  <entry id="52925" lang="en" sex="m">Hunter's Sense</entry>
+  <entry id="52926" lang="en" sex="m">Tiger Claw (Stance)
+Level: Swordsage 1, Warblade 1
+Initiation Action: 1 Swift Action
+Range: Personal.
+Target: You.
+Duration: Stance.
+
+You sniff at the air like a hunting animal. After you focus your mind, an array of scents that normally eludes your awareness becomes clear to you.
+
+You gain the scent ability.</entry>
   <entry id="52927" lang="en" sex="m">Leaping Dragon Stance</entry>
+  <entry id="52928" lang="en" sex="m">Tiger Claw (Stance)
+Level: Swordsage 3, Warblade 3
+Initiation Action: 1 Swift Action
+Range: Personal.
+Target: You.
+Duration: Stance.
+
+Even when you are trapped in tight quarters and seemingly unable to move, a leap can send you flying gracefully through the air
+
+You gain a +10 bonus on jump checks, and always count as if you are running.</entry>
   <entry id="52929" lang="en" sex="m">Pounching Charge</entry>
+  <entry id="52930" lang="en" sex="m">Tiger Claw (Strike)
+Level: Swordsage 5, Warblade 5
+Prerequisite: Two Tiger Claw maneuvers
+Initiation Action: 1 Full-round action
+Range: Personal
+Target: You
+
+With the roar of a wild beast, you throw yourself into the fray. Your weapons are little more than a blur as you hack at your foe with feral speed.
+
+You charge your foe, but instead of performing a single attack at the end of the charge, you perform a full attack.</entry>
   <entry id="52931" lang="en" sex="m">Prey On The Weak</entry>
+  <entry id="52932" lang="en" sex="m">Tiger Claw (Stance)
+Level: Swordsage 7, warblade 7
+Prerequisite: Two Tiger Claw maneuvers
+Initiation Action: 1 swift action
+Range: Personal
+Target: You
+Duration: Stance
+
+You scythe through weaker foes like a mighty predator turned loose among a herd of prey.
+
+Whenever an opponent within 10 feet of you drops to -1 or fewer hit points, whether from your attack, an ally's strike, or some other cause, you can immediately make an attack of opportunity against any opponent within your threatened area.</entry>
   <entry id="52933" lang="en" sex="m">Rabid Bear Strike</entry>
+  <entry id="52934" lang="en" sex="m">Tiger Claw (Strike)
+Level: Swordsage 6, warblade 6
+Prerequisite: Two Tiger Claw maneuvers
+Initiation Action: 1 standard action
+Range: Melee attack
+Target: One creature
+
+With a ferocious roar, you leap upon your enemy like a wild beast, slamming your weapon into her with a madman's fury.
+
+You focus your primal fury into a single attack, laying an opponent low with a mighty blow that splinters bones and shatters steel. As part of this maneuver, you make a single melee attack. You gain a +4 bonus on this attack roll and deal an extra 10d6 points of damage. After completing this maneuver, you take a -4 penalty to AC until the start of your next turn.</entry>
   <entry id="52935" lang="en" sex="m">Rabid Wolf Strike</entry>
+  <entry id="52936" lang="en" sex="m">Tiger Claw (Strike)
+Level: Swordsage 2, Warblade 2
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creatures
+
+You foam at the mouth and scream in rage as you make a powerful attack against your enemy. You set aside all thoughts of defense as you lunge forward.
+
+Make a single attack with a +4 bonus on the attack roll, and +2d6 damage. You take a -4 penalty to AC for the rest of the round.</entry>
   <entry id="52937" lang="en" sex="m">Raging Mongoose</entry>
+  <entry id="52938" lang="en" sex="m">Tiger Claw (Boost)
+Level: Swordsage 8, warblade 8
+Prerequisite: Three Tiger Claw maneuvers
+Initiation Action: 1 swift action
+Range: Personal
+Target: You
+Duration: End of turn
+
+You unleash a ferocius volley of attacks, setting aside all thoughts of caution and self-control.
+
+You make a flurry of deadly attacks. After initiating this boost, you can make two additional attacks with each weapon you wield (to a maximum of four extra attacks if you wield two or more weapons). These extra attacks are made at your highest attack bonus for each of your repective weapons. You direct these attacks at one foe.</entry>
   <entry id="52939" lang="en" sex="m">Soaring Raptor Strike</entry>
+  <entry id="52940" lang="en" sex="m">Tiger Claw (Strike)
+Level: Swordsage 3, Warblade 3
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creature
+
+You leap into the air, catching a larger opponent by surprise as you jump over its defenses to plunge your weapon into the crown of its head.
+
+Make a jump check with a DC equal to the target's AC. If it succeeds, you deal an extra 6d6 damage on your attack, and attack with a +4 bonus. If it fails, you do not attack.
+This must be used on a creature larger than you are.</entry>
   <entry id="52941" lang="en" sex="m">Sudden Leap</entry>
+  <entry id="52942" lang="en" sex="m">Tiger Claw (Boost)
+Level: Swordsage 1, Warblade 1
+Initiation Action: 1 Swift Action
+Range: Personal.
+Target: You.
+Duration: Instantaneous.
+
+You leap to a new position in the blink of an eye, leaving your opponents baffled.
+
+You jump as a swift action.</entry>
   <entry id="52943" lang="en" sex="m">Swooping Dragon Strike</entry>
+  <entry id="52944" lang="en" sex="m">Tiger Claw (Strike)
+Level: Swordsage 7, warblade 7
+Prerequisite: Three Tiger Claw maneuvers
+Initiation Action: 1 standard action
+Range: Melee attack
+Target: One creature
+Saving Throw: Fortitude partial
+
+Like a dragon you swoop down upon you foe and let loose with a devastating attack. You leap over her and, as you soar through the air, unleash a devastating volley of attacks.
+
+As part of this maneuver, you attempt a Jump check to leap over your target. The result of this Jump check must be sufficient to allow you to move through an opponent's space and over her. If you fail the Jump check needed to jump over your foe, you provoke attacks of opportunity for the distance you jump, if applicable. If your jump was too short to clear your opponent but far enough that you would land in a space she occupies, you land adjacent to your opponent in the square closest to your starting square.
+If your check is insufficient to jump over your target, you can also make a single attack against your foe with no special benefits or penalties, as long as your target is within reach. If the check succeeds, you do not provoke attacks of opportunity for leaving threatened squares during your jump. Your foe loses her Dexterity bonus to AC against your melee attack. This attack deals an extra 10d6 points of damage, and the target must succeed on a Fortitude save (DC equal to your Jump check result) or be stunned for 1 round.</entry>
   <entry id="52945" lang="en" sex="m">Wolf Climbs The Mountain</entry>
+  <entry id="52946" lang="en" sex="m">Tiger Claw (Strike)
+Level: Swordsage 6, warblade 6
+Prerequisite: Two Tiger Claw maneuvers
+Initiation Action: 1 full-round action
+Range: Melee attack
+Target: One creature
+
+You slip between a larger foe's legs and strike its exposed side. You then cover in the shadow of your enemy's bulk.
+
+You can use this maneuver only against an opponent of a size category larger than yours. As part of the maneuver, you enter your target's space without provoking an attack of opportunity. You can then attack your target as part of this maneuver. Your attack deals an extra 5d6 points of damage. You remain within your opponent's space after you complete this maneuver. You gain cover against all attacks until the end of the round, including those made by the target. </entry>
   <entry id="52947" lang="en" sex="m">Wolf Fang Strike</entry>
+  <entry id="52948" lang="en" sex="m">Tiger Claw (Strike)
+Level: Swordsage 1, Warblade 1
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creature
+
+You lash out in a blur of movement with two weapons, hacking into your foe with a combination of feral strength and speed.
+
+You attack with both weapons against a single foe at a -2 penalty. 
+You must fight with two weapons to use this maneuver. </entry>
   <entry id="52949" lang="en" sex="m">Wolf Pack Tactics</entry>
+  <entry id="52950" lang="en" sex="m">Tiger Claw (Stance)
+Level: Swordsage 8, Warblade 8
+Prerequisite: Two Tiger Claw maneuvers
+Initiation Action: 1 Swift Action
+Range: Personal
+Target: You
+Duration: Stance
+
+With each stinging attach that connects against a foe, you slip around him, using the distraction provided by your attacks to prevent him from hindering your movement.
+
+While you are in this stance, you gain a 5 foot bonus to movement for every succesful attack, up to a maximum of 30 feet. This bonus applies the round after the hits strike.</entry>
   <entry id="52951" lang="en" sex="m">Wolverine Stance</entry>
-  <entry id="52953" lang="en" sex="m">Battle Leaders Charge</entry>
+  <entry id="52952" lang="en" sex="m">Tiger Claw (Stance)
+Level: Swordsage 3, Warblade 3
+Initiation Action: 1 Swift Action
+Range: Personal.
+Target: You.
+Duration: Stance.
+
+Like a cornered wolverine, you fight with unmatched ferocity and rage when your opponents force you into close quarters.
+
+You may use any weapon in a grapple, and do not take the -4 penalty to attack. If grappling a foe larger than you, you gain a +4 damage bonus.</entry>
+  <entry id="52953" lang="en" sex="m">Battle Leader's Charge</entry>
+  <entry id="52954" lang="en" sex="m">White Raven (Strike)
+Level: Crusader 2, Warblade 2
+Initiation Action: 1 Full-round Action
+Range: Melee Attack
+Target: One Creature
+
+You lead from the front, charging your enemies so that your allies can follow in your wake.
+
+You charge your opponent, dealing an extra 10 damage if you hit. You take no
+AoOs from the movement.</entry>
   <entry id="52955" lang="en" sex="m">Bolstering Voice</entry>
+  <entry id="52956" lang="en" sex="m">White Raven (Stance)
+Level: Crusader 1, Warblade 1
+Initiation Action: 1 Swift Action
+Range: 60ft. 
+Area: 60 ft radius centred on you.
+Duration: Stance.
+
+Your clarion voice strengthens the will of your comrades. So long as you remain on the field of battle, your allies are strengthened against attacks and effects that seek to subvert their willpower.
+
+All allies gain a +2 Will save bonus.</entry>
   <entry id="52957" lang="en" sex="m">Clarion Call</entry>
+  <entry id="52958" lang="en" sex="m">White Raven (Boost)
+Level: Crusader 7, Warblade 7
+Prerequisite: Three White Raven maneuvers
+Initiation Action: 1 swift Action
+Range: 60 ft.
+Area: 60 ft radius.
+
+As you defeat an opponent, you shout a battle cry that inspires one of your allies to renew his efforts.
+
+If you kill a foe with a melee attack this round, all allies in range
+gain a single extra attack in their next round.</entry>
   <entry id="52959" lang="en" sex="m">Covering Strike</entry>
+  <entry id="52960" lang="en" sex="m">White Raven (Strike)
+Level: Crusader 4, Warblade 4
+Prerequisite: One White Raven maneuver
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creature
+Duration: 3 rounds.
+
+You make a ferocious series of attacks at your enemies, forcing them on the defensive and buying your allies critical seconds needed to slip past them unharmed.
+
+If your strike hits, your target suffers a -4 penalty to attacks and attacks you.</entry>
   <entry id="52961" lang="en" sex="m">Douse The Flames</entry>
+  <entry id="52962" lang="en" sex="m">White Raven (Strike)
+Level: Crusader 1, Warblade 1
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creature
+
+You strike your enemy with a resounding blow, capturing his attention. As he turns to look, you let loose a string of oaths, challenges, and taunts that force him to focus his attention on you.
+
+If your strike hits, your target suffers a -2 penalty to attacks and attacks you.</entry>
   <entry id="52963" lang="en" sex="m">Flanking Maneuver</entry>
+  <entry id="52964" lang="en" sex="m">White Raven (Strike)
+Level: Crusader 5, Warblade 5
+Prerequisite: Two White Raven maneuvers
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creature
+
+Your keen leadership grants you and your allies a sudden advantage in combat. When you flank an opponent, you attack in such a way as to maximize your allies's openings. By the same token, your friends's ferocious, accurate attacks give you multiple opportunities to pierce your foe's defences.
+
+If you strike your foe and are flanking him, all allies in melee range and flanking your foe make a single attack against the struck creature.</entry>
   <entry id="52965" lang="en" sex="m">Leading The Attack</entry>
-  <entry id="52967" lang="en" sex="m">Lions Roar</entry>
+  <entry id="52966" lang="en" sex="m">White Raven (Strike)
+Level: Crusader 1, Warblade 1
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creature
+
+You boldly strike at your enemy. As you attack, you shout a war cry to demonstrate that victory is at hand. This attack inspires nearby allies to join the fray with renewed vigor.
+
+If your strike hits, your target suffers a -4 penalty to AC.</entry>
+  <entry id="52967" lang="en" sex="m">Lion's Roar</entry>
+  <entry id="52968" lang="en" sex="m">Iron Heart (Boost)
+Level: Crusader 3, Warblade 3
+Initiation Action: 1 Swift Action
+Range: 60'
+Target: You
+Duration: 1 Round
+
+You unleash a sudden battle roar as your mighty blows fell an enemy. Inspired by your example, your allies fight with renewed energy and determination.
+
+All allies within range gain a +5 damage bonus.</entry>
   <entry id="52969" lang="en" sex="m">Order Forged From Chaos</entry>
+  <entry id="52970" lang="en" sex="m">White Raven (Boost)
+Level: Crusader 6, Warblade 6
+Prerequisite: Two White Raven maneuvers
+Initiation Action: 1 Standard Action
+Range: 30 ft.
+Area: 30 ft radius.
+
+You bark a series of stern orders, directing your comrades to shift formation. The power of your presence is such that they obey without consciously thinking about it.
+
+All allies within range double their movement speed for one round.</entry>
   <entry id="52971" lang="en" sex="m">Press The Advantage</entry>
+  <entry id="52972" lang="en" sex="m">White Raven (Stance)
+Level: Crusader 5, Warblade 5
+Prerequisite: Two White Raven Maneuvers
+Initiation Action: 1 Swift Action
+Range: Personal
+Target: You
+Duration: Stance
+
+You shift across the battlefield, timing your movements precisely to avoid any attacks from your foe.
+
+You gain a 5 foot increase to your land speed.</entry>
   <entry id="52973" lang="en" sex="m">Swarm Tactics</entry>
+  <entry id="52974" lang="en" sex="m">White Raven (Stance)
+Level: Crusader 5, Warblade 5
+Prerequisite: One White Raven maneuver
+Initiation Action: 1 Swift Action
+Range: 10 ft.
+Area: 10 ft.
+Duration: Stance.
+
+Your quick directions enable close teamwork between you and an ally. At your urging, your allies seize the initiative and work in close coordination with you to defeat an enemy.
+
+Any creature you threaten takes a -5 penalty to armour class.</entry>
   <entry id="52975" lang="en" sex="m">Swarming Assault</entry>
+  <entry id="52976" lang="en" sex="m">White Raven (Strike)
+Level: Crusader 7, Warblade 7
+Prerequisite: Three White Raven maneuvers
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creature
+
+You attack an opponent with brutal force, ruining his defenses. As you strike you call out sharp commands to your allies, spurring them to action and allowing them to take advantage of the opening.
+
+If you strike your foe, all allies in melee range make a single attack against the struck creature.</entry>
   <entry id="52977" lang="en" sex="m">Tactical Strike</entry>
+  <entry id="52978" lang="en" sex="m">White Raven (Strike)
+Level: Crusader 2, Warblade 2
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creature
+
+Your skill at arms and overwhelming power force your opponent to falter at a fatal moment. As the foe attempts to recover your devastating strike, your allies rush in to finish what you have started.
+
+Make a single melee attack. If you succesfully hit the creature, all allies gain a 5' boost to movement speed for one round.</entry>
   <entry id="52979" lang="en" sex="m">Tactics Of The Wolf</entry>
-  <entry id="52981" lang="en" sex="m">War Leaders Charge</entry>
-  <entry id="52983" lang="en" sex="m">War Masters Charge</entry>
+  <entry id="52980" lang="en" sex="m">White Raven (Stance)
+Level: Crusader 3, Warblade 3
+Initiation Action: 1 Swift Action
+Range: 10ft. 
+Area: 10 ft radius centred on you.
+Duration: Stance.
+
+You shout orders that help coordinate your allies's efforts. They harass their enemies, shield each other from attacks. and otherwise maximize the support they lend to each other.
+
+All allies gain a bonus while flanking equal to +1/2 per your initiator level. </entry>
+  <entry id="52981" lang="en" sex="m">War Leader's Charge</entry>
+  <entry id="52982" lang="en" sex="m">White Raven (Strike)
+Level: Crusader 6, Warblade 6
+Prerequisite: Two White Raven maneuvers
+Initiation Action: 1 Full-round Action
+Range: Melee Attack
+Target: One Creature
+
+You summon a great fury within your lungs, releasing it in a titantic shout as you charge forward. Your reckless move startles your foes and puts greater force behind your attack.
+
+You charge your opponent, dealing an extra 35 damage if you hit. You take no AoOs from the movement.</entry>
+  <entry id="52983" lang="en" sex="m">War Master's Charge</entry>
+  <entry id="52984" lang="en" sex="m">White Raven (Strike)
+Level: Crusader 9, Warblade 9
+Prerequisite: Four White Raven maneuvers
+Initiation Action: 1 full-round action
+Range: Melee Attack; see text
+Target: One Creature; see text
+
+With a great battle cry, you lead your allies in a devastating charge. Fired by your commanding presence and deftly lead by your supreme grasp of tactics, you and your allies form an unstoppable wedge.
+
+You and all melee allies within 30 feet of you charge the target. All those who attack gain a +2 bonus to attack per ally charging. You deal an extra 50 damage, and your allies deal an extra 25. If you strike the foe, he is stunned for one round. Your and your allies do not block one another while charging.</entry>
   <entry id="52985" lang="en" sex="m">This feat opens the spellbook for this class. This is a conversation and feat driven version of the normal spellbook. Instead of appearing on the spell radial, they will appear on the class radial instead. Also, you may be able to use the spell after you have cast all your uses. No spell will result, but you will spend a round trying to cast it.</entry>
   <entry id="52986" lang="en" sex="m">Caster Level(s): Wizard / Sorcerer 9
 Innate Level: 9
@@ -33981,9 +35795,20 @@ Large - 1d6
 Huge - 1d8
 Gigantic - 2d6
 Colossal - 3d6</entry>
+  <entry id="55002" lang="en" sex="m">White Raven Hammer</entry>
+  <entry id="55003" lang="en" sex="m">White Raven (Strike)
+Level: Crusader 8, Warblade 8
+Prerequisite: Three White Raven maneuvers
+Initiation Action: 1 Standard Action
+Range: Melee Attack
+Target: One Creature
+Duration: 1 round.
+
+You slam your opponent with a mighty attack to disrupt his senses and leave him unable to defend himself while your allies close to finish him off.
+
+If your strike hits, you deal an extra 6d6 damage and your opponent is stunned.</entry>
   <entry id="55004" lang="en" sex="m">End of DD reserved</entry>
-  <entry id="55005" lang="en" sex="m">Disrupt Undead
-</entry>
+  <entry id="55005" lang="en" sex="m">Disrupt Undead</entry>
   <entry id="55006" lang="en" sex="m">Disrupt Undead
 Necromancy
 Level:  Sor/Wiz 0

@@ -11,7 +11,7 @@
     Scorpion Parry
 
     Setting Sun (Counter)
-    Level: Warblade 6
+    Level: Swordsage 6
     Prerequisite: Two Setting Sun maneuvers
     Initiation Action: 1 swift action
     Range: Melee attack

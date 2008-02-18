@@ -22,7 +22,7 @@
     fade from sight as your mind locks onto your target.
     
     You gain a +2 AC bonus against the highest CR creature in the area,
-    and a -2 AC penalty against all other creatures attacking him.
+    and a -2 AC penalty against all other creatures attacking you.
 */
 
 #include "tob_inc_tobfunc"

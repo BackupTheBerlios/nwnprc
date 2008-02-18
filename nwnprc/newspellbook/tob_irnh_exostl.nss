@@ -19,8 +19,7 @@
     Duration: 1 minute.
     Save: Will partial, see text.
 
-    You chop at your foe's hand, causing a grievous injury
-    and forcing him to drop his weapon.
+    You attack, striking not your foe, but his weapon, sending a shockwave down his arm that leaves him unable to strike with full force.
     
     You make a single melee attack. If it is successful, you attempt
     to damage the target's weapon. If you damage it successfully, it deals -4 damage.

@@ -4,7 +4,7 @@
 //  Tenjac 10/3/07
 //////////////////////////////////////////////////
 /** @file Quicksilver Motion
-Diamond Mind(Boost)
+Diamond Mind (Boost)
 Level: Swordsage 7, warblade 7
 Prerequisite: Three Diamond Mind maneuvers
 Inititation Action: 1 swirft action
@@ -14,8 +14,7 @@ Target: You
 In the blink of an eye, you make your move. Your speed, reflexes, and boundless confidence
 combine to allow you to make a fast, bold move that catches your fores off guard.
 
-Your training, mental acuity, and drive allow you to move with greater speed and confidence
-than other warriors.
+Your speed doubles for one round.
 
 */
 

@@ -39,8 +39,76 @@ public final class PageGeneration{
 		}
 		System.gc();
 	}
-	
-	
+
+	/**
+	 * Handles printing of the crafting property pages.
+	 */
+	public static void printCrafting() {
+		String text = null;
+
+		for(GenericEntry craft_armour_var : craft_armour.values()) {
+			if(verbose) System.out.println("Printing page for " + craft_armour_var.name);
+			// Start building the entry data. First, place in the name
+			text = craftTemplate;
+			text = text.replaceAll("~~~CraftPropName~~~", craft_armour_var.name);
+			// Then, put in the description
+			text = text.replaceAll("~~~CraftPropTLKDescription~~~",
+			                       craft_armour_var.text);
+			// Print the page
+			try {
+				printPage(craft_armour_var.filePath, text);
+			} catch(PageGenerationException e) {
+				err_pr.println("Exception when writing page for skill " + craft_armour_var.entryNum + ": " + craft_armour_var.name + ":\n" + e);
+			}
+		}
+		for(GenericEntry craft_weapon_var : craft_weapon.values()) {
+			if(verbose) System.out.println("Printing page for " + craft_weapon_var.name);
+			// Start building the entry data. First, place in the name
+			text = craftTemplate;
+			text = text.replaceAll("~~~CraftPropName~~~", craft_weapon_var.name);
+			// Then, put in the description
+			text = text.replaceAll("~~~CraftPropTLKDescription~~~",
+			                       craft_weapon_var.text);
+			// Print the page
+			try {
+				printPage(craft_weapon_var.filePath, text);
+			} catch(PageGenerationException e) {
+				err_pr.println("Exception when writing page for skill " + craft_weapon_var.entryNum + ": " + craft_weapon_var.name + ":\n" + e);
+			}
+		}
+		for(GenericEntry craft_ring_var : craft_ring.values()) {
+			if(verbose) System.out.println("Printing page for " + craft_ring_var.name);
+			// Start building the entry data. First, place in the name
+			text = craftTemplate;
+			text = text.replaceAll("~~~CraftPropName~~~", craft_ring_var.name);
+			// Then, put in the description
+			text = text.replaceAll("~~~CraftPropTLKDescription~~~",
+			                       craft_ring_var.text);
+			// Print the page
+			try {
+				printPage(craft_ring_var.filePath, text);
+			} catch(PageGenerationException e) {
+				err_pr.println("Exception when writing page for skill " + craft_ring_var.entryNum + ": " + craft_ring_var.name + ":\n" + e);
+			}
+		}
+		for(GenericEntry craft_wondrous_var : craft_wondrous.values()) {
+			if(verbose) System.out.println("Printing page for " + craft_wondrous_var.name);
+			// Start building the entry data. First, place in the name
+			text = craftTemplate;
+			text = text.replaceAll("~~~CraftPropName~~~", craft_wondrous_var.name);
+			// Then, put in the description
+			text = text.replaceAll("~~~CraftPropTLKDescription~~~",
+			                       craft_wondrous_var.text);
+			// Print the page
+			try {
+				printPage(craft_wondrous_var.filePath, text);
+			} catch(PageGenerationException e) {
+				err_pr.println("Exception when writing page for skill " + craft_wondrous_var.entryNum + ": " + craft_wondrous_var.name + ":\n" + e);
+			}
+		}
+		System.gc();
+	}
+
 
 	/**
 	 * Prints all spells and spell-likes (psionics, truenaming).
@@ -50,7 +118,7 @@ public final class PageGeneration{
 	public static void printSpells() {
 		String                 text = null;
 		StringBuilder subradialText = null;
-		
+
 		for(SpellEntry spell : spells.values()) {
 			if(verbose) System.out.println("Printing page for " + spell.name);
 			// Start building the entry data. First, place in the name
@@ -61,7 +129,7 @@ public final class PageGeneration{
 			                       spell.text);
 			// Add in the icon
 			text = text.replaceAll("~~~Icon~~~", spell.iconPath);
-			
+
 			// Handle subradials, if any
 			subradialText = new StringBuilder();
 			if(spell.subradials != null) {
@@ -72,7 +140,7 @@ public final class PageGeneration{
 				subradialText = new StringBuilder(spellSubradialListTemplate.replaceAll("~~~EntryList~~~", subradialText.toString()));
 			}
 			text = text.replaceAll("~~~SubradialNames~~~", subradialText.toString());
-			
+
 			// Print the page
 			try {
 				printPage(spell.filePath, text);
@@ -84,20 +152,20 @@ public final class PageGeneration{
 		// hits the memory limit
 		System.gc();
 	}
-	
+
 	/**
 	 * A simple method for printing out all the feat pages.
 	 */
 	public static void printFeats(){
 		// Print feats
 		printFeatsAux();
-		
+
 		// Print masterfeats
 		printMasterFeatsAux();
 
 		// Print a page with alphabetically sorted list of all feats
 		printPage(contentPath + "feats" + fileSeparator + "alphasortedfeats.html", buildAllFeatsList(false));
-		
+
 		// Print a page with alphabetically sorted list of all epic feats
 		printPage(contentPath + "epic_feats" + fileSeparator + "alphasortedepicfeats.html", buildAllFeatsList(true));
 	}
@@ -109,7 +177,7 @@ public final class PageGeneration{
 	private static void printMasterFeatsAux() {
 		String text = null,
 		       temp = null;
-		
+
 		for(FeatEntry masterfeat : masterFeats.values()) {
 			if(verbose) System.out.println("Printing page for " + masterfeat.name);
 			// Build the entry data
@@ -120,7 +188,7 @@ public final class PageGeneration{
 			                       masterfeat.text);
 			// Add in the icon
 			text = text.replaceAll("~~~Icon~~~", masterfeat.iconPath);
-			
+
 			// Add in child feats
 			temp = "";
 			for(FeatEntry child : masterfeat.childFeats.values()) {
@@ -128,7 +196,7 @@ public final class PageGeneration{
 	                                    .replace("~~~Name~~~", child.name);
 			}
 			text = text.replaceAll("~~~MasterFeatChildList~~~", temp);
-			
+
 			// Print the page
 			try {
 				printPage(masterfeat.filePath, text);
@@ -147,7 +215,7 @@ public final class PageGeneration{
 		String                 text = null,
 		                       temp = null;
 		StringBuilder subradialText = null;
-		
+
 		for(FeatEntry feat : feats.values()) {
 			if(verbose) System.out.println("Printing page for " + feat.name);
 			// Build the entry data
@@ -158,7 +226,7 @@ public final class PageGeneration{
 			                       feat.text);
 			// Add in the icon
 			text = text.replaceAll("~~~Icon~~~", feat.iconPath);
-			
+
 			// Print prerequisites into the entry
 			temp = "";
 			if(feat.andRequirements.size() != 0) {
@@ -174,7 +242,7 @@ public final class PageGeneration{
 					                        .replace("~~~Name~~~", orReq.name);
 			}
 			text = text.replaceAll("~~~PrerequisiteFeatList~~~", temp);
-			
+
 			// Print the successor, if any, into the entry
 			temp = "";
 			if(feat.successor != null) {
@@ -182,7 +250,7 @@ public final class PageGeneration{
 				                                                      .replace("~~~Name~~~", feat.successor.name);
 			}
 			text = text.replaceAll("~~~SuccessorFeat~~~", temp);
-			
+
 			// Handle subradials, if any
 			subradialText = new StringBuilder();
 			if(feat.subradials != null) {
@@ -193,7 +261,7 @@ public final class PageGeneration{
 				subradialText = new StringBuilder(spellSubradialListTemplate.replaceAll("~~~EntryList~~~", subradialText.toString()));
 			}
 			text = text.replaceAll("~~~SubradialNames~~~", subradialText.toString());
-			
+
 			// Handle feats that have this as their prerequisite
 			temp = "";
 			if(feat.requiredForFeats.size() != 0) {
@@ -204,7 +272,7 @@ public final class PageGeneration{
 				}
 			}
 			text = text.replaceAll("~~~RequiredForFeatList~~~", temp);
-			
+
 			// Print the page
 			try {
 				printPage(feat.filePath, text);
@@ -269,7 +337,7 @@ public final class PageGeneration{
 	public static void printDomains() {
 		String            text = null;
 		StringBuffer spellList = null;
-		
+
 		for(DomainEntry domain : domains.values()) {
 			if(verbose) System.out.println("Printing page for " + domain.name);
 			// Build the entry data
@@ -280,12 +348,12 @@ public final class PageGeneration{
 			                       domain.text);
 			// Add in the icon
 			text = text.replaceAll("~~~Icon~~~", domain.iconPath);
-			
+
 			// Add a link to the granted feat
 			text = text.replaceAll("~~~DomainFeat~~~",
 			                       pageLinkTemplate.replace("~~~Path~~~", domain.grantedFeat.filePath.replace(contentPath, "../").replaceAll("\\\\", "/"))
 			                                       .replace("~~~Name~~~", domain.grantedFeat.name));
-			
+
 			// Add links to the granted spells
 			spellList = new StringBuffer();
 			for(SpellEntry grantedSpell : domain.spells) {
@@ -293,7 +361,7 @@ public final class PageGeneration{
 				                                 .replace("~~~Name~~~", grantedSpell.name));
 			}
 			text = text.replaceAll("~~~DomainSpellList~~~", spellList.toString());
-			
+
 			// Print the page
 			try {
 				printPage(domain.filePath, text);
@@ -311,7 +379,7 @@ public final class PageGeneration{
 	public static void printRaces() {
 		String           text = null;
 		StringBuffer featList = null;
-		
+
 		for(RaceEntry race : races.values()) {
 			if(verbose) System.out.println("Printing page for " + race.name);
 			// Build the entry data
@@ -320,7 +388,7 @@ public final class PageGeneration{
 			                       race.name);
 			text = text.replaceAll("~~~RaceTLKDescription~~~",
 			                       race.text);
-			
+
 			// Add links to the racial feats
 			featList = new StringBuffer();
 			for(FeatEntry grantedFeat : race.raceFeats.values()) {
@@ -328,7 +396,7 @@ public final class PageGeneration{
                                                 .replace("~~~Name~~~", grantedFeat.name));
 			}
 			text = text.replaceAll("~~~RaceFeats~~~", featList.toString());
-			
+
 			// Print the page
 			try {
 				printPage(race.filePath, text);
@@ -359,7 +427,7 @@ public final class PageGeneration{
 			                       class_.text);
 			// Add in the icon
 			text = text.replaceAll("~~~Icon~~~", class_.iconPath);
-			
+
 			// Add in the BAB and saving throws table
 			text = text.replaceAll("~~~ClassBABAndSavThrTable~~~", buildBabAndSaveTable(class_));
 
@@ -368,11 +436,11 @@ public final class PageGeneration{
 
 			// Add in the feat table
 			text = text.replaceAll("~~~ClassFeatTable~~~", buildClassFeatTables(class_));
-			
+
 			// Add in the spells / powers table
 			text = text.replaceAll("~~~ClassSpellAndPowerTables~~~", buildClassSpellAndPowerTables(class_));
-			
-			
+
+
 			// Print the page
 			try {
 				printPage(class_.filePath, text);
@@ -461,7 +529,7 @@ public final class PageGeneration{
 		List<TreeMap<String, FeatEntry>> grantedFeatList    = class_.featList.e2.e1,
 		                                 selectableFeatList = class_.featList.e2.e2;
 		List<Integer> bonusFeatCounts = class_.featList.e1;
-		
+
 		// Start constructing the table
 		StringBuffer tableText = new StringBuffer();
 		StringBuffer linkList = null;
@@ -479,7 +547,7 @@ public final class PageGeneration{
 			else
 				linkList.append("&nbsp;");
 			tableLine = tableLine.replace("~~~FeatsGrantedList~~~", linkList.toString());
-			
+
 			// Generate the granted feats list
 			linkList = new StringBuffer();
 			if(selectableFeatList.get(i) != null)
@@ -490,11 +558,11 @@ public final class PageGeneration{
 			else
 				linkList.append("&nbsp;");
 			tableLine = tableLine.replace("~~~SelectableFeatsList~~~", linkList.toString());
-			
+
 			// Append the line to the table
 			tableText.append(tableLine);
 		}
-		
+
 		return classFeatTableTemplate.replace("~~~TableContents~~~", tableText.toString());
 	}
 
@@ -508,12 +576,12 @@ public final class PageGeneration{
 	 */
 	private static String buildClassSpellAndPowerTables(ClassEntry class_) {
 		StringBuffer toReturn = new StringBuffer("");
-		
+
 		for(Tuple<Tuple<String, String>, TreeMap<Integer, TreeMap<String, SpellEntry>>> magicData : class_.magics) {
 			// Map of level numbers to maps of spell names to html links. Cloned due to destructive operations
 			TreeMap<Integer, TreeMap<String, SpellEntry>> levelLists =
 				new TreeMap<Integer, TreeMap<String, SpellEntry>>(magicData.e2);
-			
+
 			StringBuffer tableLines = new StringBuffer(),
 			             spellLinks;
 			String tableLine;
@@ -525,12 +593,12 @@ public final class PageGeneration{
                                                       .replace("~~~Name~~~", spell.name));
 				tableLines.append(tableLine.replace("~~~EntryList~~~", spellLinks.toString()));
 			}
-			
+
 			toReturn.append(classMagicTableTemplate.replace("~~~TableName~~~",     magicData.e1.e1)
 			                                       .replace("~~~Type~~~",          magicData.e1.e2)
 			                                       .replace("~~~TableContents~~~", tableLines.toString()));
 		}
-		
+
 		return toReturn.toString();
 	}
 }

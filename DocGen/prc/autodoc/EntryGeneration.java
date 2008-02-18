@@ -49,7 +49,7 @@ public class EntryGeneration {
 				err_pr.println("Invalid description for skill " + i + ": " + name);
 				errored = true;
 			}
-			
+
 			// And icon
 			icon = skills2da.getEntry("Icon", i);
 			if(icon.equals("****")) {
@@ -72,7 +72,150 @@ public class EntryGeneration {
 		// hits the memory limit
 		System.gc();
 	}
-	
+
+	/**
+	 * Handles creation of the crafting itemprop pages.
+	 */
+	public static void doCrafting() {
+		String craftPath = contentPath + "itemcrafting" + fileSeparator;
+
+		String name      = null,
+		       text      = null,
+		       path      = null,
+		       icon      = null;
+		boolean errored;
+
+		craft_armour = new HashMap<Integer, GenericEntry>();
+		craft_weapon = new HashMap<Integer, GenericEntry>();
+		craft_ring = new HashMap<Integer, GenericEntry>();
+		craft_wondrous = new HashMap<Integer, GenericEntry>();
+		Data_2da craft_armour_2da = twoDA.get("craft_armour");
+		Data_2da craft_weapon_2da = twoDA.get("craft_weapon");
+		Data_2da craft_ring_2da = twoDA.get("craft_ring");
+		Data_2da craft_wondrous_2da = twoDA.get("craft_wondrous");
+
+		icon = "";
+
+		for(int i = 0; i < craft_armour_2da.getEntryCount(); i++) {
+			errored = false;
+			// Get the name of the skill and check if it's valid
+			name = tlk.get(craft_armour_2da.getEntry("Name", i));
+			if(verbose) System.out.println("Generating entry data for " + name);
+			if(name.equals(badStrRef)) {
+				err_pr.println("Invalid name for property " + i);
+				errored = true;
+			}
+
+			// Same for description
+			text = htmlizeTLK(tlk.get(craft_armour_2da.getEntry("Description", i)));
+			// Again, check if we had a valid description
+			if(tlk.get(craft_armour_2da.getEntry("Description", i)).equals(badStrRef)) {
+				err_pr.println("Invalid description for property " + i + ": " + name);
+				errored = true;
+			}
+
+			// Build the final path
+			path = craftPath + "armour" + i + ".html";
+
+			// Check if we had any errors. If we did, and the error tolerance flag isn't up, skip generating this entry
+			if(!errored || tolErr) {
+				// Store a data structure represeting the skill into a hashmap
+				craft_armour.put(i, new GenericEntry(name, text, icon, path, i));
+			} else
+				err_pr.println("Failed to generate entry for property " + i + ": " + name);
+		}
+
+		for(int i = 0; i < craft_weapon_2da.getEntryCount(); i++) {
+			errored = false;
+			// Get the name of the skill and check if it's valid
+			name = tlk.get(craft_weapon_2da.getEntry("Name", i));
+			if(verbose) System.out.println("Generating entry data for " + name);
+			if(name.equals(badStrRef)) {
+				err_pr.println("Invalid name for property " + i);
+				errored = true;
+			}
+
+			// Same for description
+			text = htmlizeTLK(tlk.get(craft_weapon_2da.getEntry("Description", i)));
+			// Again, check if we had a valid description
+			if(tlk.get(craft_weapon_2da.getEntry("Description", i)).equals(badStrRef)) {
+				err_pr.println("Invalid description for property " + i + ": " + name);
+				errored = true;
+			}
+
+			// Build the final path
+			path = craftPath + "weapon" + i + ".html";
+
+			// Check if we had any errors. If we did, and the error tolerance flag isn't up, skip generating this entry
+			if(!errored || tolErr) {
+				// Store a data structure represeting the skill into a hashmap
+				craft_weapon.put(i, new GenericEntry(name, text, icon, path, i));
+			} else
+				err_pr.println("Failed to generate entry for property " + i + ": " + name);
+		}
+
+		for(int i = 0; i < craft_ring_2da.getEntryCount(); i++) {
+			errored = false;
+			// Get the name of the skill and check if it's valid
+			name = tlk.get(craft_ring_2da.getEntry("Name", i));
+			if(verbose) System.out.println("Generating entry data for " + name);
+			if(name.equals(badStrRef)) {
+				err_pr.println("Invalid name for property " + i);
+				errored = true;
+			}
+
+			// Same for description
+			text = htmlizeTLK(tlk.get(craft_ring_2da.getEntry("Description", i)));
+			// Again, check if we had a valid description
+			if(tlk.get(craft_ring_2da.getEntry("Description", i)).equals(badStrRef)) {
+				err_pr.println("Invalid description for property " + i + ": " + name);
+				errored = true;
+			}
+
+			// Build the final path
+			path = craftPath + "ring" + i + ".html";
+
+			// Check if we had any errors. If we did, and the error tolerance flag isn't up, skip generating this entry
+			if(!errored || tolErr) {
+				// Store a data structure represeting the skill into a hashmap
+				craft_ring.put(i, new GenericEntry(name, text, icon, path, i));
+			} else
+				err_pr.println("Failed to generate entry for property " + i + ": " + name);
+		}
+
+		for(int i = 0; i < craft_wondrous_2da.getEntryCount(); i++) {
+			errored = false;
+			// Get the name of the skill and check if it's valid
+			name = tlk.get(craft_wondrous_2da.getEntry("Name", i));
+			if(verbose) System.out.println("Generating entry data for " + name);
+			if(name.equals(badStrRef)) {
+				err_pr.println("Invalid name for property " + i);
+				errored = true;
+			}
+
+			// Same for description
+			text = htmlizeTLK(tlk.get(craft_wondrous_2da.getEntry("Description", i)));
+			// Again, check if we had a valid description
+			if(tlk.get(craft_wondrous_2da.getEntry("Description", i)).equals(badStrRef)) {
+				err_pr.println("Invalid description for property " + i + ": " + name);
+				errored = true;
+			}
+
+			// Build the final path
+			path = craftPath + "wondrous" + i + ".html";
+
+			// Check if we had any errors. If we did, and the error tolerance flag isn't up, skip generating this entry
+			if(!errored || tolErr) {
+				// Store a data structure represeting the skill into a hashmap
+				craft_wondrous.put(i, new GenericEntry(name, text, icon, path, i));
+			} else
+				err_pr.println("Failed to generate entry for property " + i + ": " + name);
+		}
+		// Force a clean-up of dead objects. This will keep discarded objects from slowing down the program as it
+		// hits the memory limit
+		System.gc();
+	}
+
 	/**
 	 * Prints normal & epic spells and psionic powers.
 	 * As of now, all of these are similar enough to share the same
@@ -104,7 +247,7 @@ public class EntryGeneration {
 		for(int i = 0; i < spells2da.getEntryCount(); i++) {
 			spelltype = NONE;
 			errored = false;
-			
+
 			if     (isNormalSpell      (spells2da, i)) spelltype = NORMAL;
 			else if(isEpicSpell        (spells2da, i)) spelltype = EPIC;
 			else if(isPsionicPower     (spells2da, i)) spelltype = PSIONIC;
@@ -127,7 +270,7 @@ public class EntryGeneration {
 					err_pr.println("Invalid description for spell " + i + ": " + name);
 					errored = true;
 				}
-				
+
 				// Do the icon
 				icon = spells2da.getEntry("IconResRef", i);
 				if(icon.equals("****")) {
@@ -135,7 +278,7 @@ public class EntryGeneration {
 					errored = true;
 				}
 				icon = Icons.buildIcon(icon);
-				
+
 				// Handle subradials, if any
 				subradials = null;
 				// Assume that if there are any, the first slot is always non-****
@@ -143,12 +286,12 @@ public class EntryGeneration {
 					subradials = new ArrayList<Tuple<String, String>>(5);
 					for(int j = 1; j <= 5; j++) {
 						// Also assume that all the valid entries are in order, such that if Nth SubRadSpell entry
-						// is ****, all > N are also **** 
+						// is ****, all > N are also ****
 						if(spells2da.getEntry("SubRadSpell" + j, i).equals("****"))
 							break;
 						try {
 							subRadial = Integer.parseInt(spells2da.getEntry("SubRadSpell" + j, i));
-							
+
 							// Try name
 							subradName = tlk.get(spells2da.getEntry("Name", subRadial))
 							                .replaceAll("/", " / ");
@@ -157,14 +300,14 @@ public class EntryGeneration {
 								err_pr.println("Invalid Name entry for spell " + subRadial);
 								errored = true;
 							}
-							
+
 							// Try icon
 							subradIcon = spells2da.getEntry("IconResRef", subRadial);
 							if(subradIcon.equals("****")) {
 								err_pr.println("Icon not defined for spell " + subRadial + ": " + subradName);
 								errored = true;
 							}
-							
+
 							// Build list
 							subradials.add(new Tuple<String, String>(subradName, Icons.buildIcon(subradIcon)));
 						} catch(NumberFormatException e) {
@@ -203,7 +346,7 @@ public class EntryGeneration {
 		}
 		System.gc();
 	}
-	
+
 	/**
 	 * Creates a list of spells.2da rows that should contain a psionic power's class-specific
 	 * entry.
@@ -211,7 +354,7 @@ public class EntryGeneration {
 	public static void listPsionicPowers() {
 		// A map of power name to class-specific spells.2da entry
 		psiPowMap = new HashMap<String, Integer>();
-		
+
 		// Load cls_psipw_*.2da
 		String[] fileNames = new File("2da").list(new FilenameFilter() {
 			public boolean accept(File dir, String name) {
@@ -219,17 +362,17 @@ public class EntryGeneration {
 				       name.toLowerCase().endsWith(".2da");
 			}
 		});
-		
+
 		listAMSEntries(fileNames, psiPowMap);
 	}
-	
+
 	/**
-	 * Creates a list of spells.2da rows that should contain a truenaming utterance's 
+	 * Creates a list of spells.2da rows that should contain a truenaming utterance's
 	 */
 	public static void listTruenameUtterances() {
 		// A map of power name to class-specific spells.2da entry
 		utterMap = new HashMap<String, Integer>();
-		
+
 		// Load cls_*_utter.2da
 		String[] fileNames = new File("2da").list(new FilenameFilter() {
 			public boolean accept(File dir, String name) {
@@ -237,14 +380,14 @@ public class EntryGeneration {
 				       name.toLowerCase().endsWith("_utter.2da");
 			}
 		});
-		
+
 		listAMSEntries(fileNames, utterMap);
 	}
-	
+
 	/**
 	 * Does the actual list generation for listPsionicPowers() and
 	 * listTruenameUtterances().
-	 * 
+	 *
 	 * @param fileNames List of 2da files that contain the entries to be listed
 	 * @param storeMap  Map to store the entries in
 	 */
@@ -253,7 +396,7 @@ public class EntryGeneration {
 		for(int i = 0; i < fileNames.length; i++)
 			//Strip out the ".2da" from the filenames before loading, since the loader function assumes it's missing
 			list2das[i] = twoDA.get(fileNames[i].replace(".2da", ""));
-		
+
 		// Parse the 2das
 		for(Data_2da list2da : list2das) {
 			for(int i = 0; i < list2da.getEntryCount(); i++) {
@@ -310,7 +453,7 @@ public class EntryGeneration {
 	/**
 	 * A small convenience method for testing if the given entry contains a
 	 * psionic power. This is determined by whether the power's id is
-	 * in the psiPowMap Map. 
+	 * in the psiPowMap Map.
 	 *
 	 * @param spells2da the Data_2da entry containing spells.2da
 	 * @param entryNum  the line number to use for testing
@@ -321,11 +464,11 @@ public class EntryGeneration {
 	private static boolean isPsionicPower(Data_2da spells2da, int entryNum) {
 		return psiPowMap.containsValue(entryNum);
 	}
-	
+
 	/**
 	 * A small convenience method for testing if the given entry contains a
 	 * truenaming utterance. This is determined by whether the power's id is
-	 * in the utterMap Map. 
+	 * in the utterMap Map.
 	 *
 	 * @param spells2da the Data_2da entry containing spells.2da
 	 * @param entryNum  the line number to use for testing
@@ -336,8 +479,8 @@ public class EntryGeneration {
 	private static boolean isTruenameUtterance(Data_2da spells2da, int entryNum) {
 		return utterMap.containsValue(entryNum);
 	}
-	
-	
+
+
 	/**
 	 * Build the preliminary list of master feats, without the child feats
 	 * linked in.
@@ -373,7 +516,7 @@ public class EntryGeneration {
 				err_pr.println("Invalid description for masterfeat " + i + ": " + name);
 				errored = true;
 			}
-			
+
 			// Add in the icon
 			String icon = masterFeats2da.getEntry("ICON", i);
 			if(icon.equals("****")) {
@@ -384,7 +527,7 @@ public class EntryGeneration {
 
 			// Build the path
 			path = mFeatPath + i + ".html";
-			
+
 			if(!errored || tolErr) {
 				// Store the entry to wait for further processing
 				// Masterfeats start as class feats and are converted into general feats if any child
@@ -396,8 +539,8 @@ public class EntryGeneration {
 		}
 		System.gc();
 	}
-	
-	
+
+
 	/**
 	 * Build the preliminary list of feats, without master / successor / predecessor feats
 	 * linked in.
@@ -467,12 +610,12 @@ public class EntryGeneration {
 						subradials = new ArrayList<Tuple<String, String>>(5);
 						for(int j = 1; j <= 5; j++) {
 							// Also assume that all the valid entries are in order, such that if Nth SubRadSpell entry
-							// is ****, all > N are also **** 
+							// is ****, all > N are also ****
 							if(spells2da.getEntry("SubRadSpell" + j, featSpell).equals("****"))
 								break;
 							try {
 								subRadial = Integer.parseInt(spells2da.getEntry("SubRadSpell" + j, featSpell));
-								
+
 								// Try name
 								subradName = tlk.get(spells2da.getEntry("Name", subRadial))
 								                .replaceAll("/", " / ");
@@ -481,14 +624,14 @@ public class EntryGeneration {
 									err_pr.println("Invalid Name entry for spell " + subRadial);
 									errored = true;
 								}
-								
+
 								// Try icon
 								subradIcon = spells2da.getEntry("IconResRef", subRadial);
 								if(subradIcon.equals("****")) {
 									err_pr.println("Icon not defined for spell " + subRadial + ": " + subradName);
 									errored = true;
 								}
-								
+
 								// Build list
 								subradials.add(new Tuple<String, String>(subradName, Icons.buildIcon(subradIcon)));
 							} catch(NumberFormatException e) {
@@ -502,7 +645,7 @@ public class EntryGeneration {
 					errored = true;
 				}
 			}
-			
+
 			// Classification
 			isEpic = feats2da.getEntry("PreReqEpic", i).equals("1");
 			isClassFeat = !feats2da.getEntry("ALLCLASSESCANUSE", i).equals("1");
@@ -526,8 +669,8 @@ public class EntryGeneration {
 		}
 		System.gc();
 	}
-	
-	
+
+
 	/**
 	 * Builds the master - child, predecessor - successor and prerequisite links
 	 * and modifies the entry texts accordingly.
@@ -578,16 +721,16 @@ public class EntryGeneration {
 			if(verbose) System.out.println("Linking masterfeat " + check.name);
 			allChildrenEpic = allChildrenClassFeat = true;
 			for(FeatEntry child : check.childFeats.values()) {
-				if(!child.isEpic)      allChildrenEpic      = false; 
+				if(!child.isEpic)      allChildrenEpic      = false;
 				if(!child.isClassFeat) allChildrenClassFeat = false;
 			}
-			
+
 			check.allChildrenClassFeat = allChildrenClassFeat;
 			check.allChildrenEpic      = allChildrenEpic;
 		}
 		System.gc();
 	}
-	
+
 	/**
 	 * Links a feat and it's prerequisites.
 	 * Separated from the linkFeats method for improved readability.
@@ -604,7 +747,7 @@ public class EntryGeneration {
 		                   feats2da.getEntry("OrReqFeat2", check.entryNum),
 		                   feats2da.getEntry("OrReqFeat3", check.entryNum),
 		                   feats2da.getEntry("OrReqFeat4", check.entryNum)};
-		
+
 		/* Handle AND prerequisite feats */
 		// Some paranoia about bad entries
 		if(!andReq1Num.equals("****")){
@@ -624,7 +767,7 @@ public class EntryGeneration {
 			catch(NumberFormatException e){
 				err_pr.println("Feat " + check.entryNum + ": " + check.name + " contains an invalid PREREQFEAT2 entry");
 		}}
-		
+
 		// Check if we had at least one valid entry. If so, link
 		if(andReq1 != null || andReq2 != null) {
 			if(andReq1 != null) {
@@ -663,8 +806,8 @@ public class EntryGeneration {
 			}
 		}
 	}
-	
-	
+
+
 	/**
 	 * Handles creation of the domain pages.
 	 * Kills page generation on bad strref for name.
@@ -688,7 +831,7 @@ public class EntryGeneration {
 			// Skip blank rows
 			if(domains2da.getEntry("LABEL", i).equals("****")) continue;
 			errored = false;
-		
+
 			// Get the name and validate it
 			name = tlk.get(domains2da.getEntry("Name", i));
 			if(verbose) System.out.println("Printing page for " + name);
@@ -704,7 +847,7 @@ public class EntryGeneration {
 				err_pr.println("Invalid description for domain " + i + ": " + name);
 				errored = true;
 			}
-			
+
 			// Add in the icon
 			icon = domains2da.getEntry("Icon", i);
 			if(icon.equals("****")) {
@@ -752,8 +895,8 @@ public class EntryGeneration {
 		}
 		System.gc();
 	}
-	
-	
+
+
 	/**
 	 * Handles creation of the race pages.
 	 */
@@ -775,7 +918,7 @@ public class EntryGeneration {
 			if(!racialtypes2da.getEntry("PlayerRace", i).equals("1")) continue;
 			errored = false;
 			try {
-				// Get the name and validate it 
+				// Get the name and validate it
 				name = tlk.get(racialtypes2da.getEntry("Name", i));
 				if(verbose) System.out.println("Printing page for " + name);
 				if(name.equals(badStrRef)) {
@@ -825,8 +968,8 @@ public class EntryGeneration {
 		}
 		System.gc();
 	}
-	
-	
+
+
 	/**
 	 * Handles creation of the class pages.
 	 * Subsections handled by several following methods.
@@ -868,7 +1011,7 @@ public class EntryGeneration {
 					err_pr.println("Invalid description for class " + i + ": " + name);
 					errored = true;
 				}
-				
+
 				// Add in the icon
 				icon = classes2da.getEntry("Icon", i);
 				if(icon.equals("****")) {
@@ -885,7 +1028,7 @@ public class EntryGeneration {
 
 				// Add in the feat table
 				featList = buildClassFeatList(classes2da, i);
-				
+
 				// Add in the spells / powers table
 				magics = buildClassMagicList(classes2da, i);
 
@@ -916,7 +1059,7 @@ public class EntryGeneration {
 		}
 		System.gc();
 	}
-	
+
 	/**
 	 * Constructs a list of arrays containing the BAB and saving throw values
 	 * for the given class.
@@ -980,7 +1123,7 @@ public class EntryGeneration {
 
 		return toReturn;
 	}
-	
+
 	/**
 	 * Constructs a list of the class and cross-class skills of the
 	 * given class
@@ -1002,10 +1145,10 @@ public class EntryGeneration {
 		} catch(TwoDAReadException e) {
 			throw new PageGenerationException("Failed to read CLS_SKILL_*.2da for class " + entryNum + ": " + tlk.get(classes2da.getEntry("Name", entryNum)) + ":\n" + e);
 		}
-		
+
 		Tuple<TreeMap<String, GenericEntry>, TreeMap<String, GenericEntry>> toReturn =
 			new Tuple<TreeMap<String, GenericEntry>, TreeMap<String, GenericEntry>>(
-					new TreeMap<String, GenericEntry>(), new TreeMap<String, GenericEntry>()); 
+					new TreeMap<String, GenericEntry>(), new TreeMap<String, GenericEntry>());
 		String skillNum = null;
 		GenericEntry skillEntry = null;
 
@@ -1039,10 +1182,10 @@ public class EntryGeneration {
 			else
 				toReturn.e2.put(skillEntry.name, skillEntry); // Cross-class skill
 		}
-		
+
 		return toReturn;
 	}
-	
+
 	/**
 	 * Constructs a pair of granted feat, selectable feat lists for
 	 * the given class.
@@ -1068,7 +1211,7 @@ public class EntryGeneration {
 		String listNum = null;
 		FeatEntry classFeat = null;
 		int maxLevel, epicLevel, grantedLevel;
-		
+
 		// Attempt to load the class feats table
 		try {
 			featTable = twoDA.get(classes2da.getEntry("FeatsTable", entryNum));
@@ -1096,7 +1239,7 @@ public class EntryGeneration {
 		} catch(NumberFormatException e) {
 			throw new PageGenerationException("Invalid MaxLevel entry for class " + entryNum + ": " + tlk.get(classes2da.getEntry("Name", entryNum)));
 		}
-		
+
 		// Base classes have EpicLevel defined as -1, but become epic at L20
 		if(epicLevel == -1) epicLevel = 20;
 		// Sanity check
@@ -1106,20 +1249,20 @@ public class EntryGeneration {
 				epicLevel = maxLevel;
 			} else throw new PageGenerationException("EpicLevel value(" + epicLevel + ") greater than MaxLevel value(" + maxLevel + ") for class " + entryNum + ": " + tlk.get(classes2da.getEntry("Name", entryNum)));
 		}
-		
-		
+
+
 		// Init the lists
 		for(int i = 0; i < maxLevel; i++) grantedFeatList.add(null);
 		for(int i = 0; i < maxLevel; i++) selectableFeatList.add(null);
-		
-		
+
+
 		// Build a level-sorted list of feats
 		for(int i = 0; i < featTable.getEntryCount(); i++) {
 			// Skip empty rows and comments
 			if(featTable.getEntry("FeatLabel", i).equals("****") ||
 			   featTable.getEntry("FeatIndex", i).equals("****"))
 				continue;
-			
+
 			// Read the list number and validate
 			listNum = featTable.getEntry("List", i);
 			if(!(listNum.equals("0") || listNum.equals("1") || listNum.equals("2") || listNum.equals("3"))) {
@@ -1128,7 +1271,7 @@ public class EntryGeneration {
 					continue;
 				} else throw new PageGenerationException("Invalid List entry in " + featTable.getName() + " on row " + i + ": " + listNum);
 			}
-			
+
 			// Read the level granted on and validate
 			try {
 				grantedLevel = Integer.parseInt(featTable.getEntry("GrantedOnLevel", i));
@@ -1138,7 +1281,7 @@ public class EntryGeneration {
 					continue;
 				} else throw new PageGenerationException("Invalid GrantedOnLevel entry in " + featTable.getName() + " on row " + i + ": " + featTable.getEntry("GrantedOnLevel", i));
 			}
-			
+
 			// Complain about a semantic error
 			if(listNum.equals("3") && grantedLevel == -1) {
 				if(tolErr) {
@@ -1146,7 +1289,7 @@ public class EntryGeneration {
 					continue;
 				} else throw new PageGenerationException("List value '3' combined with GrantedOnLevel value '-1' in " + featTable.getName() + " on row " + i);
 			}
-			
+
 			// Get the feat on this row and validate
 			try {
 				classFeat = feats.get(Integer.parseInt(featTable.getEntry("FeatIndex", i)));
@@ -1162,8 +1305,8 @@ public class EntryGeneration {
 					continue;
 				} else throw new PageGenerationException("FeatIndex entry in " + featTable.getName() + " on row " + i + " points to non-existent feat: " + featTable.getEntry("FeatIndex", i));
 			}
-			
-			
+
+
 			// Skip feats that can never be gotten
 			if(grantedLevel > 40) continue;
 			if(grantedLevel > maxLevel) {
@@ -1171,7 +1314,7 @@ public class EntryGeneration {
 				err_pr.println("GrantedOnLevel entry in " + featTable.getName() + " on row " + i + " is greater than the class's maximum level, but not obviously unreachable: " + grantedLevel + " vs. " + maxLevel);
 				continue;
 			}
-			
+
 			// If the feat has a master, replace it with the master in the listing to prevent massive spammage
 			if(classFeat.master != null) {
 				// Only add masterfeats to the list once.
@@ -1179,7 +1322,7 @@ public class EntryGeneration {
 				masterFeatsUsed.add(classFeat.master);
 				classFeat = classFeat.master;
 			}
-			
+
 			// Freely selectable feats become available at L1
 			if(grantedLevel == -1) {
 				if(classFeat.isEpic) {
@@ -1196,7 +1339,7 @@ public class EntryGeneration {
 				// Create the map if missing
 				if(grantedFeatList.get(grantedLevel) == null)
 					grantedFeatList.set(grantedLevel, new TreeMap<String, FeatEntry>());
-				
+
 				// Add the feat to the map
 				grantedFeatList.get(grantedLevel).put(classFeat.name, classFeat);
 			}
@@ -1204,17 +1347,17 @@ public class EntryGeneration {
 				// Create the map if missing
 				if(selectableFeatList.get(grantedLevel) == null)
 					selectableFeatList.set(grantedLevel, new TreeMap<String, FeatEntry>());
-				
+
 				// Add the feat to the map
 				selectableFeatList.get(grantedLevel).put(classFeat.name, classFeat);
 			}
 		}
-		
+
 		// Make sure there are enough entries in the bonus feat table
 		if(bonusFeatTable.getEntryCount() < maxLevel) {
 			throw new PageGenerationException("Too few entries in class bonus feat table " + bonusFeatTable.getName() + ": " + bonusFeatTable.getEntryCount() + ". Need " + maxLevel);
 		}
-		
+
 		for(int i = 0; i < maxLevel; i++) {
 			try {
 				bonusFeatCounts.add(Integer.parseInt(bonusFeatTable.getEntry("Bonus", i)));
@@ -1225,14 +1368,14 @@ public class EntryGeneration {
 				} else throw new PageGenerationException("Invalid Bonus entry in " + bonusFeatTable.getName() + " on row " + i + ": " + bonusFeatTable.getEntry("Bonus", i));
 			}
 		}
-		
+
 		return new Tuple<List<Integer>, Tuple<List<TreeMap<String, FeatEntry>>, List<TreeMap<String, FeatEntry>>>>(
 				bonusFeatCounts,
 				new Tuple<List<TreeMap<String, FeatEntry>>, List<TreeMap<String, FeatEntry>>>(
 						grantedFeatList,
 						selectableFeatList));
 	}
-	
+
 	/**
 	 * Constructs lists of the magics available to the given class.
 	 * The entries are ordered by spell / power level
@@ -1241,7 +1384,7 @@ public class EntryGeneration {
 	 * @param entryNum    number of the entry to generate table for
 	 *
 	 * @return  List<Tuple<Tuple<String, String>, TreeMap<Integer, TreeMap<String, SpellEntry>>>>.
-	 *          Each list entry contains one magic type. The first tuple member consists of the 
+	 *          Each list entry contains one magic type. The first tuple member consists of the
 	 *          name of magic system, name of spell-equivalent pari. The second member contains
 	 *          the magic entries. The Integer-keyed TreeMaps contain the spells
 	 *          of each level. The integers are the spell levels.
@@ -1254,15 +1397,15 @@ public class EntryGeneration {
 		String classAbrev = null;
 		Data_2da spellList = null,
 		         powerList = null;
-		
+
 		// Check for correctly formed table name
 		if(!classes2da.getEntry("FeatsTable", entryNum).toLowerCase().startsWith("cls_feat_")) {
 			throw new PageGenerationException("Malformed FeatsTable entry for class " + entryNum + ": " + tlk.get(classes2da.getEntry("Name", entryNum)));
 		}
-		
+
 		// Extract the class abbreviation
 		classAbrev = classes2da.getEntry("FeatsTable", entryNum).toLowerCase().substring(9);
-		
+
 		// Attempt to load the class and power 2das - If these fail, assume it was just due to non-existent file
 		try {
 			spellList = twoDA.get("cls_spcr_" + classAbrev);
@@ -1270,14 +1413,14 @@ public class EntryGeneration {
 		try {
 			powerList = twoDA.get("cls_psipw_" + classAbrev);
 		} catch(TwoDAReadException e) { /* Ensure nullness */ powerList = null; }
-		
+
 		// Do spellbook
 		if(spellList != null) {
 			// Map of level numbers to maps of spell names to html links
 			TreeMap<Integer, TreeMap<String, SpellEntry>> levelLists = new TreeMap<Integer, TreeMap<String, SpellEntry>>();
 			SpellEntry spell = null;
 			int level;
-			
+
 			for(int i = 0; i < spellList.getEntryCount(); i++) {
 				// Make sure the Level entry is a number
 				try {
@@ -1288,7 +1431,7 @@ public class EntryGeneration {
 						continue;
 					} else throw new PageGenerationException("Invalid Level entry in " + spellList.getName() + " on row " + i + ": " + spellList.getEntry("Level", i));
 				}
-				
+
 				// Make sure the SpellID is valid
 				spell = null;
 				try {
@@ -1305,33 +1448,33 @@ public class EntryGeneration {
 						continue;
 					} else throw new PageGenerationException("SpellID entry in " + spellList.getName() + " on row " + i + " points at nonexistent spell: " + spellList.getEntry("SpellID", i));
 				}
-				
+
 				// If no map for this level yet, fill it in
 				if(!levelLists.containsKey(level))
 					levelLists.put(level, new TreeMap<String, SpellEntry>());
-				
+
 				// Add the spell to the map
 				levelLists.get(level)
 				          .put(spell.name, spell);
 			}
-			
+
 			toReturn.add(new Tuple<Tuple<String, String>, TreeMap<Integer, TreeMap<String, SpellEntry>>>(
 					new Tuple<String, String>(curLanguageData[LANGDATA_SPELLBOOKTXT], curLanguageData[LANGDATA_SPELLSTXT]),
 					levelLists));
 		}
-		
+
 		// Do psionics
 		if(powerList != null) {
 			// Map of level numbers to maps of spell names to html links
 			TreeMap<Integer, TreeMap<String, SpellEntry>> levelLists = new TreeMap<Integer, TreeMap<String, SpellEntry>>();
 			SpellEntry power = null;
 			int level;
-			
+
 			for(int i = 0; i < powerList.getEntryCount(); i++) {
 				// Skip rows that do not define a power
 				if(powerList.getEntry("Level", i).equals("****"))
 					continue;
-				
+
 				// Make sure the Level entry is a number
 				try {
 					level = Integer.parseInt(powerList.getEntry("Level", i));
@@ -1341,7 +1484,7 @@ public class EntryGeneration {
 						continue;
 					}else throw new PageGenerationException("Invalid Level entry in " + powerList.getName() + " on row " + i + ": " + powerList.getEntry("Level", i));
 				}
-				
+
 				// Make sure the SpellID is valid
 				power = null;
 				try {
@@ -1359,21 +1502,21 @@ public class EntryGeneration {
 						continue;
 					}else throw new PageGenerationException("Unable to map Name entry in " + powerList.getName() + " on row " + i + " to a spellEntry: " + tlk.get(powerList.getEntry("Name", i)));
 				}
-				
+
 				// If no map for this level yet, fill it in
 				if(!levelLists.containsKey(level))
 					levelLists.put(level, new TreeMap<String, SpellEntry>());
-				
+
 				// Add the spell to the map
 				levelLists.get(level)
 				          .put(power.name, power);
 			}
-			
+
 			toReturn.add(new Tuple<Tuple<String, String>, TreeMap<Integer, TreeMap<String, SpellEntry>>>(
 					new Tuple<String, String>(curLanguageData[LANGDATA_PSIONICPOWERSTXT], curLanguageData[LANGDATA_POWERTXT]),
 					levelLists));
 		}
-		
+
 		return toReturn;
 	}
 }

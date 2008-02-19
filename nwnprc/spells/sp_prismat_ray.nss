@@ -100,16 +100,16 @@ void main()
                         //blind
                         if(nHD < 7)  SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectBlindness(), oTarget, RoundsToSeconds(d4(2)));
                         
-                        if(nRoll = 8)
+                        if(nRoll == 8)
                         {
                                 bTwoRolls = TRUE;
                                 nRoll2 = d8(1);
                                 
-                                while(nRoll = 8)
+                                while(nRoll == 8)
                                 {
                                         nRoll = d8(1);
                                 }
-                                while (nRoll2 = 8)
+                                while (nRoll2 == 8)
                                 {
                                         nRoll2 = d8(1);
                                 }

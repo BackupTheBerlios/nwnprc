@@ -19,13 +19,22 @@
 //  Variables passed may be changed if necessary
 int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 {
+    int bPnP = GetPRCSwitch(PRC_PNP_GREATER_INVISIBILITY);
     effect eImpact = EffectVisualEffect(VFX_IMP_HEAD_MIND);
     effect eVis = EffectVisualEffect(VFX_DUR_INVISIBILITY);
-    effect eInvis = EffectInvisibility(INVISIBILITY_TYPE_IMPROVED);
+    effect eInvis = EffectInvisibility(bPnP ? INVISIBILITY_TYPE_IMPROVED : INVISIBILITY_TYPE_NORMAL);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
     effect eCover = EffectConcealment(50);
-    effect eLink = EffectLinkEffects(eDur, eCover);
-    eLink = EffectLinkEffects(eLink, eVis);
+    effect eLink;
+    if(bPnP)
+    {   //no concealment in PnP version
+        eLink = EffectLinkEffects(eDur, eVis);
+    }
+    else
+    {
+        eLink = EffectLinkEffects(eDur, eCover);
+        eLink = EffectLinkEffects(eLink, eVis);
+    }
 
     //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_IMPROVED_INVISIBILITY, FALSE));

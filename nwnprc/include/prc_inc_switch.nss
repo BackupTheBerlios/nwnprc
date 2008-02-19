@@ -169,6 +169,13 @@ const string PRC_PNP_FIND_TRAPS                      = "PRC_PNP_FIND_TRAPS";
 const string PRC_PNP_DARKNESS                        = "PRC_PNP_DARKNESS";
 
 /**
+ * PnP Greater Invisibility
+ * Improved inivisibility spell doesn't grant concealment
+ * or end when subject attacks
+ */
+const string PRC_PNP_GREATER_INVISIBILITY            = "PRC_PNP_GREATER_INVISIBILITY";
+
+/**
  * 3.5ed Darkness
  * Gives 20% concelement rather than bioware darkness
  */

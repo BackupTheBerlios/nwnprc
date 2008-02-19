@@ -169,9 +169,9 @@ const string PRC_PNP_FIND_TRAPS                      = "PRC_PNP_FIND_TRAPS";
 const string PRC_PNP_DARKNESS                        = "PRC_PNP_DARKNESS";
 
 /**
- * Bioware Improved Invisibility
+ * Bioware Invisibility, Improved Invisibility
  */
-const string PRC_BIOWARE_IMPROVED_INVISIBILITY       = "PRC_BIOWARE_IMPROVED_INVISIBILITY";
+const string PRC_BIOWARE_INVISIBILITY                = "PRC_BIOWARE_INVISIBILITY";
 
 /**
  * 3.5ed Darkness

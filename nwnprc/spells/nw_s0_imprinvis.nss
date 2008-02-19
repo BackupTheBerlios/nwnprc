@@ -19,22 +19,15 @@
 //  Variables passed may be changed if necessary
 int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 {
-    int bBio = GetPRCSwitch(PRC_BIOWARE_IMPROVED_INVISIBILITY);
+    int bBio = GetPRCSwitch(PRC_BIOWARE_INVISIBILITY);
+    float fDur;
     effect eImpact = EffectVisualEffect(VFX_IMP_HEAD_MIND);
     effect eVis = EffectVisualEffect(VFX_DUR_INVISIBILITY);
     effect eInvis = EffectInvisibility(bBio ? INVISIBILITY_TYPE_NORMAL : INVISIBILITY_TYPE_IMPROVED);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
     effect eCover = EffectConcealment(50);
-    effect eLink;
-    if(bBio)
-    {   //no concealment in PnP version
-        eLink = EffectLinkEffects(eDur, eCover);
-        eLink = EffectLinkEffects(eLink, eVis);
-    }
-    else
-    {
-        eLink = EffectLinkEffects(eDur, eVis);
-    }
+    effect eLink = EffectLinkEffects(eDur, eCover);
+    eLink = EffectLinkEffects(eLink, eVis);
 
     //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_IMPROVED_INVISIBILITY, FALSE));
@@ -48,11 +41,12 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     {
         nDuration = nDuration *2; //Duration is +100%
     }
+    fDur = bBio ? TurnsToSeconds(nDuration) : RoundsToSeconds(nDuration);
     //Apply the VFX impact and effects
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eImpact, oTarget);
 
-    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, TurnsToSeconds(nDuration),TRUE,-1,CasterLvl);
-    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eInvis, oTarget, TurnsToSeconds(nDuration),TRUE,-1,CasterLvl);
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur,TRUE,-1,CasterLvl);
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eInvis, oTarget, fDur,TRUE,-1,CasterLvl);
 
     return TRUE;    //return TRUE if spell charges should be decremented
 }

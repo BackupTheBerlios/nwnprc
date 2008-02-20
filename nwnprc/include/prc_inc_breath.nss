@@ -855,6 +855,8 @@ void ApplyBreath(struct breath BreathUsed, location lTargetArea, int bLinger = F
 	if(GetLocalInt(oTarget, "AffectedByBreath") && BreathUsed.bEntangling)
 	{
 	    effect eEntangled = EffectEntangle();
+	    effect eEntangleVis = EffectVisualEffect(VFX_DUR_ENTANGLE);
+	    eEntangled = EffectLinkEffects(eEntangled, eEntangleVis);
 	    int nEntangleRounds = d4();
 	    //only does damage if the original breath did damage
 	    if(BreathUsed.nDamageType > 0)

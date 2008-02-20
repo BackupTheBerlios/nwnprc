@@ -1653,6 +1653,30 @@ int RacialFeats(object oPC = OBJECT_SELF)
         FloatingTextStringOnCreature("You must be Kalashtar.", oPC, FALSE);
         return FALSE;
     }
+    
+    int nNumFeats;
+    nNumFeats +=   GetHasFeat(FEAT_DREAMSIGHT_ELITE, oPC) +
+            GetHasFeat(FEAT_GOREBRUTE_ELITE, oPC) +
+            GetHasFeat(FEAT_LONGSTRIDE_ELITE, oPC) +
+            GetHasFeat(FEAT_LONGTOOTH_ELITE, oPC) +
+            GetHasFeat(FEAT_RAZORCLAW_ELITE, oPC) +
+            GetHasFeat(FEAT_WILDHUNT_ELITE, oPC) +
+            GetHasFeat(FEAT_EXTRA_SHIFTER_TRAIT, oPC) +
+            GetHasFeat(FEAT_HEALING_FACTOR, oPC) +
+            GetHasFeat(FEAT_SHIFTER_AGILITY, oPC) +
+            GetHasFeat(FEAT_SHIFTER_DEFENSE, oPC) +
+            GetHasFeat(FEAT_GREATER_SHIFTER_DEFENSE, oPC) +
+            GetHasFeat(FEAT_SHIFTER_FEROCITY, oPC) +
+            GetHasFeat(FEAT_SHIFTER_INSTINCTS, oPC) +
+            GetHasFeat(FEAT_SHIFTER_SAVAGERY, oPC);
+            
+    if((GetHasFeat(FEAT_EXTRA_SHIFTER_TRAIT, oPC) && nNumFeats < 3) ||
+       (GetHasFeat(FEAT_SHIFTER_DEFENSE, oPC) && nNumFeats < 3) ||
+       (GetHasFeat(FEAT_GREATER_SHIFTER_DEFENSE, oPC) && nNumFeats < 5))
+    {
+        FloatingTextStringOnCreature("You must take more Shifter feats to take this feat.", oPC, FALSE);
+        return FALSE;
+    }
 
     return TRUE;
 }

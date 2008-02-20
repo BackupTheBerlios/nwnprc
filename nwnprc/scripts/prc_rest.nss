@@ -17,6 +17,27 @@
 #include "prc_inc_wpnrest"
 #include "inc_dynconv"
 
+int GetShiftingFeats(object oPC)
+{
+    int nNumFeats;
+    nNumFeats +=   GetHasFeat(FEAT_DREAMSIGHT_ELITE, oPC) +
+            GetHasFeat(FEAT_GOREBRUTE_ELITE, oPC) +
+            GetHasFeat(FEAT_LONGSTRIDE_ELITE, oPC) +
+            GetHasFeat(FEAT_LONGTOOTH_ELITE, oPC) +
+            GetHasFeat(FEAT_RAZORCLAW_ELITE, oPC) +
+            GetHasFeat(FEAT_WILDHUNT_ELITE, oPC) +
+            GetHasFeat(FEAT_EXTRA_SHIFTER_TRAIT, oPC) +
+            GetHasFeat(FEAT_HEALING_FACTOR, oPC) +
+            GetHasFeat(FEAT_SHIFTER_AGILITY, oPC) +
+            GetHasFeat(FEAT_SHIFTER_DEFENSE, oPC) +
+            GetHasFeat(FEAT_GREATER_SHIFTER_DEFENSE, oPC) +
+            GetHasFeat(FEAT_SHIFTER_FEROCITY, oPC) +
+            GetHasFeat(FEAT_SHIFTER_INSTINCTS, oPC) +
+            GetHasFeat(FEAT_SHIFTER_SAVAGERY, oPC);
+            
+     return nNumFeats;
+}
+
 void PrcFeats(object oPC)
 {
     if(DEBUG) DoDebug("prc_rest: Evaluating PC feats for " + DebugObject2Str(oPC));
@@ -142,6 +163,9 @@ void RestFinished(object oPC)
     if(array_exists(OBJECT_SELF, "BreathProtected")) //Endure Exposure wearing off
         array_delete(OBJECT_SELF, "BreathProtected");
         
+    //Clear Battle Fortitude lock
+    DeleteLocalInt(oPC, "BattleFortitude");
+        
     if(GetHasFeat(FEAT_WEAPON_FOCUS_APTITUDE, oPC) || GetHasFeat(FEAT_IMPROVED_CRITICAL_APTITUDE, oPC))
         StartDynamicConversation("tob_aptitudeconv", oPC, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, oPC);
         
@@ -195,6 +219,21 @@ void RestFinished(object oPC)
 
     //for Touch of Vitality point resetting
     ResetTouchOfVitality(oPC);
+    
+    //Shifter bonus shifting uses
+    if(GetHasFeat(FEAT_SHIFTER_SHIFTING))
+    {
+        int nShiftFeats = GetShiftingFeats(oPC);
+        if(nShiftFeats > 1)
+        {
+            int nBonusShiftUses = nShiftFeats / 2;
+            int nTempCounter = 0;
+            while(nTempCounter++ < nBonusShiftUses)
+            {
+                IncrementRemainingFeatUses(oPC, FEAT_SHIFTER_SHIFTING);
+            }
+        }
+    }
 
     //skip time forward if applicable
     AdvanceTimeForPlayer(oPC, HoursToSeconds(8));

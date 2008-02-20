@@ -4103,7 +4103,7 @@ Special: You must be able to assume an alternate form. See the following list:
   Initiate of Draconic Mysteries: Level 10 or higher.
   Bonded Summoner: Level 10 or higher.
   Werewolf: Level 1 or higher.
-  Races: Pixie, Rakshasa, Fey'ri, Hound Archon, Yuan-ti Pureblood, Irda, Zakya Rakshasa, Changeling
+  Races: Pixie, Rakshasa, Fey'ri, Hound Archon, Yuan-ti Pureblood, Irda, Zakya Rakshasa, Changeling, Shifter
 
 ABILITIES:
 
@@ -20498,6 +20498,147 @@ Use: Automatic.</entry>
   <entry id="50638" lang="en" sex="m">&lt;CUSTOM0&gt; turns water creatures.</entry>
   <entry id="50639" lang="en" sex="m">&lt;CUSTOM0&gt; turns fire creatures.</entry>
   <entry id="50640" lang="en" sex="m">&lt;CUSTOM0&gt; turns blightspawned.</entry>
+  <entry id="50880" lang="en" sex="m">Extra Shifter Trait</entry>
+  <entry id="50881" lang="en" sex="m">Type of Feat: Shifter
+Prerequisite: Shifter
+You can choose one additional shifter trait to manifest when you shift.  You do not get the ability bonus from the second trait.
+Use: Automatic.</entry>
+  <entry id="50882" lang="en" sex="m">Healing Factor</entry>
+  <entry id="50883" lang="en" sex="m">Type of Feat: Shifter
+Prerequisite: Shifter, Con 13
+When your shifting duration ends, you heal damage equal to your total character level.
+Use: Automatic.</entry>
+  <entry id="50884" lang="en" sex="m">Shifter Agility</entry>
+  <entry id="50885" lang="en" sex="m">Type of Feat: Shifter
+Prerequisite: Shifter, Longstride trait
+You gain +1 AC and +1 to Reflex saves when shifting.
+Use: Automatic.</entry>
+  <entry id="50886" lang="en" sex="m">Shifter Defense</entry>
+  <entry id="50887" lang="en" sex="m">Type of Feat: Shifter
+Prerequisite: Shifter, 2 other shifter feats
+You gain DR 2/silver when shifting.
+Use: Automatic.</entry>
+  <entry id="50888" lang="en" sex="m">Greater Shifter Defense</entry>
+  <entry id="50889" lang="en" sex="m">Type of Feat: Shifter
+Prerequisite: Shifter, Shifter Defense, 3 other shifter feats
+You gain DR 4/silver when shifting.
+Use: Automatic.</entry>
+  <entry id="50890" lang="en" sex="m">Shifter Ferocity</entry>
+  <entry id="50891" lang="en" sex="m">Type of Feat: Shifter
+Prerequisite: Shifter, Wis 13
+You remain concious when you go below 0 HP while shifting.  You still die at -10 HP as normal.
+Use: Automatic.</entry>
+  <entry id="50892" lang="en" sex="m">Shifter Instincts</entry>
+  <entry id="50893" lang="en" sex="m">Type of Feat: Shifter
+Prerequisite: Shifter
+You gain +1 to Spot, Listen, and Sense Motive, whether shifting or not.
+Use: Automatic.</entry>
+  <entry id="50894" lang="en" sex="m">Shifter Savagery</entry>
+  <entry id="50895" lang="en" sex="m">Type of Feat: Shifter
+Prerequisite: Shifter, Gorebrute, Longtooth, or Razorclaw trait, +6 BAB, ability to rage/frenzy
+Your natural weapon increases 2 sizes and your critical range with your natural weapon doubles while shifting and raging.
+Use: Automatic.</entry>
+  <entry id="50896" lang="en" sex="m">Shifter Feats</entry>
+  <entry id="50897" lang="en" sex="m">These feats enhance your natural shifting ability.</entry>
+  <entry id="50898" lang="en" sex="m">Beasthide Elite</entry>
+  <entry id="50899" lang="en" sex="m">Type of Feat: Shifter
+Prerequisite: Shifter, Beasthide trait
+You gain +4 AC instead of +2 when shifting.
+Use: Automatic.</entry>
+  <entry id="50900" lang="en" sex="m">Dreamsight Elite</entry>
+  <entry id="50901" lang="en" sex="m">Type of Feat: Shifter
+Prerequisite: Shifter, Dreamsight trait
+You gain +5 to Spot and can see through invisibility when shifting.
+Use: Automatic.</entry>
+  <entry id="50902" lang="en" sex="m">Gorebrute Elite</entry>
+  <entry id="50903" lang="en" sex="m">Type of Feat: Shifter
+Prerequisite: Shifter, Gorebrute trait
+You can roll an opposed strength check to knock down your opponent on a charge when shifting.
+Use: Automatic.</entry>
+  <entry id="50904" lang="en" sex="m">Longstride Elite</entry>
+  <entry id="50905" lang="en" sex="m">Type of Feat: Shifter
+Prerequisite: Shifter, Longstride trait
+You gain 20' bonus movement instead of 10' when shifting.
+Use: Automatic.</entry>
+  <entry id="50906" lang="en" sex="m">Longtooth Elite</entry>
+  <entry id="50907" lang="en" sex="m">Type of Feat: Shifter
+Prerequisite: Shifter, Longtooth trait
+Your bite when shifting deals 1 Con damage.
+Use: Automatic.</entry>
+  <entry id="50908" lang="en" sex="m">Razorclaw Elite</entry>
+  <entry id="50909" lang="en" sex="m">Type of Feat: Shifter
+Prerequisite: Shifter, Razorclaw trait
+You can make an attack with both claws at your highest bonus on a charge when shifting.
+Use: Automatic.</entry>
+  <entry id="50910" lang="en" sex="m">Wildhunt Elite</entry>
+  <entry id="50911" lang="en" sex="m">Type of Feat: Shifter
+Prerequisite: Shifter, Wildhunt trait
+You gain blindsense out to 30' when shifting.
+Use: Automatic.</entry>
+  <entry id="50912" lang="en" sex="m">Shifter</entry>
+  <entry id="50913" lang="en" sex="m">shifter</entry>
+  <entry id="50914" lang="en" sex="m">Shifters</entry>
+  <entry id="50915" lang="en" sex="m">Shifters are the distant descendants of lycanthropes and humans, sometimes called the weretouched.  They can no longer fully change form, but instead take on aspects of it in a unique ability called shifting.  They are a unique race that breeds true, and prefer to form small communities and villages out in the wilds rather than live in cities.  Their personality tends to be influenced by the animal they relate to.  They are basically humanoid in shape, but move in a crouched posture, springing and leaping while their companions walk alongside normally.  Their faces have a bestial cast, with wide, flat noses, large eyes, pointed ears, and long sideburns on both genders.  Their forearms and lower legs grow long hair, and they wear their hair on their head thick and long.
+
+Shifter Ability Adjustments: +2 Dex, -2 Int, -2 Cha.
+Favored Class (Ranger): A multiclass shifter's ranger class does not count when determining whether he suffers an XP penalty for multiclassing.
+
+Special Abilities:
+
+- Base movement of 30.
+- Shifting: Shifters can assume aspects of their lycanthropic heritage.  This grants them a bonus to one stat for 3+Con rounds, usable once per day.  Shifter feats can extend the time and add uses per day, as well as add other effects.
+- Low-Light Vision: Shifters can see better thsan normal in the dark.
+- Animalistic Heritage: Shifters gain a +2 to Jump and Balance from their feral heritage.
+- Shapeshifter: Shifters are considered Shapeshifters for the purpose of spells.</entry>
+  <entry id="50916" lang="en" sex="m">Shifting</entry>
+  <entry id="50917" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Shifter
+You can "shift" and assume aspects of your ancestral heritage.  You gain a +2 bonus to a specific stat and one other bonus when shifting.  Shifting lasts for 3 rounds, plus the shifter's Con modifier. plus one round for each shifter feat they have.  They can use this ability once per day, and for every two shifter feats they have they gain one additional use per day.
+Use: Selected.</entry>
+  <entry id="50918" lang="en" sex="m">Beasthide</entry>
+  <entry id="50919" lang="en" sex="m">Type of Feat: Shifter Trait
+Prerequisite: Shifter
+You can "shift" and assume aspects of your ancestral heritage.
+Beasthide shifters gain +2 to Constitution and +2 to AC when they shift.
+Use: Automatic.</entry>
+  <entry id="50920" lang="en" sex="m">Dreamsight</entry>
+  <entry id="50921" lang="en" sex="m">Type of Feat: Shifter Trait
+Prerequisite: Shifter
+You can "shift" and assume aspects of your ancestral heritage.
+Dreamsight shifters gain +2 to Wisdom and +2 to Animal Empathy when they shift.
+Use: Automatic.</entry>
+  <entry id="50922" lang="en" sex="m">Gorebrute</entry>
+  <entry id="50923" lang="en" sex="m">Type of Feat: Shifter Trait
+Prerequisite: Shifter
+You can "shift" and assume aspects of your ancestral heritage.
+Gorebrute shifters gain +2 to Strength, and grow horns that do 2d6 damage on a charge, when they shift.
+Use: Automatic.</entry>
+  <entry id="50924" lang="en" sex="m">Longstride</entry>
+  <entry id="50925" lang="en" sex="m">Type of Feat: Shifter Trait
+Prerequisite: Shifter
+You can "shift" and assume aspects of your ancestral heritage.
+Longstride shifters gain +2 to Dexterity and a 10' bonsu to movement when they shift.
+Use: Automatic.</entry>
+  <entry id="50926" lang="en" sex="m">Longtooth</entry>
+  <entry id="50927" lang="en" sex="m">Type of Feat: Shifter Trait
+Prerequisite: Shifter
+You can "shift" and assume aspects of your ancestral heritage.
+Longtooth shifters gain +2 to Strength and gain a bite attack that does 1d6 when they shift.
+Use: Automatic.</entry>
+  <entry id="50928" lang="en" sex="m">Razorclaw</entry>
+  <entry id="50929" lang="en" sex="m">Type of Feat: Shifter Trait
+Prerequisite: Shifter
+You can "shift" and assume aspects of your ancestral heritage.
+Razorclaw shifters gain +2 to Strength and gain two claw attacks for 1d4 when they shift.
+Use: Automatic.</entry>
+  <entry id="50930" lang="en" sex="m">Wildhunt</entry>
+  <entry id="50931" lang="en" sex="m">Type of Feat: Shifter Trait
+Prerequisite: Shifter
+You can "shift" and assume aspects of your ancestral heritage.
+Wildhunt shifters gain +2 to Constitution and scent abilities when they shift, granting +4 to spot, listen, and search.
+Use: Automatic.</entry>
+  <entry id="50932" lang="en" sex="m">Select a shifter trait to represent your lycanthrope heritage:</entry>
+  <entry id="50933" lang="en" sex="m">Your trait has been selected.</entry>
   <entry id="50934" lang="en" sex="m">&lt;CUSTOM0&gt; manifests a shield of glowing psychic energy.</entry>
   <entry id="50935" lang="en" sex="m">Shield of Thought</entry>
   <entry id="50936" lang="en" sex="m">Type of Feat: Racial

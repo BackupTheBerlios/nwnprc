@@ -1,10 +1,10 @@
 //:://////////////////////////////////////////////
-//:: Weapon Aptitude conversation script
+//:: Life Path conversation script
 //:: race_lifepthconv
 //:://////////////////////////////////////////////
 /** @file
-    This script controls the weapon selection
-    conversation for Warblade's Aptitude
+    This script controls the feat selection
+    conversation for Tinker Gnomes
 
 
     @author Primogenitor - Orinigal

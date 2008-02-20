@@ -1193,6 +1193,40 @@ int DoCharge(object oPC, object oTarget, int nDoAttack = TRUE, int nGenerateAoO 
                         }
                         if (nPounce) // Uses instant attack in order to make sure they all go off in the alloted period of time.
                         	PerformAttackRound(oPC, oTarget, eNone, 0.0, nAttack, nDamage, nDamageType, FALSE, "Charge Hit", "Charge Miss", FALSE, FALSE, TRUE);
+                        	
+                        //Gorebrute shifter option
+                        else if(GetLocalInt(oPC, "ShifterGore"))
+                        {
+                            string sResRef = "prc_shftr_gore_";
+                            int nSize = PRCGetCreatureSize(oPC);
+                            if(GetHasFeat(FEAT_SHIFTER_SAVAGERY) && GetHasFeatEffect(FEAT_FRENZY, oTarget))
+                                nSize += 2;
+                            if(nSize > CREATURE_SIZE_COLOSSAL)
+                                nSize = CREATURE_SIZE_COLOSSAL;
+                            sResRef += GetAffixForSize(nSize);
+                            object oHorns = CreateItemOnObject(sResRef, oPC);
+                            PerformAttack(oPC, oTarget, eNone, 0.0, nAttack, nDamage + (GetHitDice(oPC) / 4), DAMAGE_TYPE_PIERCING, "Horns Hit", "Horns Miss", FALSE, oHorns);
+                            //Gorebrute Elite Knockdown
+                            if(GetLocalInt(oTarget, "PRCCombat_StruckByAttack") && GetHasFeat(FEAT_GOREBRUTE_ELITE))
+                            {
+                                //Knockdown check
+                                int nEnemyStr = d20() + GetAbilityModifier(ABILITY_STRENGTH, oTarget);
+                                int nYourStr = d20() + GetAbilityModifier(ABILITY_STRENGTH, oPC);
+                                SendMessageToPC(oPC, "Opposed Knockdown Check: Rolled " + IntToString(nYourStr) + " vs " + IntToString(nEnemyStr));
+                                SendMessageToPC(oTarget, "Opposed Knockdown Check: Rolled " + IntToString(nEnemyStr) + " vs " + IntToString(nYourStr));
+                                if(nYourStr > nEnemyStr) 
+                                    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectKnockdown(), oTarget, 6.0);
+                            }
+                            DestroyObject(oHorns);
+                        }
+                        //Razorclaw Elite shifted option
+                        else if(GetLocalInt(oPC, "ShifterClaw"))
+                        {
+                            object oWeaponL = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oPC);
+                            object oWeaponR = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oPC);
+                            PerformAttack(oPC, oTarget, eNone, 0.0, nAttack, nDamage, DAMAGE_TYPE_SLASHING, "Claw Hit", "Claw Miss", FALSE, oWeaponR, oWeaponL);
+                            PerformAttack(oPC, oTarget, eNone, 0.0, nAttack, nDamage, DAMAGE_TYPE_SLASHING, "Claw Hit", "Claw Miss", FALSE, oWeaponR, oWeaponL, 1);
+                        }
                         else
                         	PerformAttack(oPC, oTarget, eNone, 0.0, nAttack, nDamage, nDamageType, "Charge Hit", "Charge Miss");
                         // Local int set when Perform Attack hits
@@ -1204,7 +1238,8 @@ int DoCharge(object oPC, object oTarget, int nDoAttack = TRUE, int nGenerateAoO 
         else
         {
                 FloatingTextStringOnCreature("You are too close to charge " + GetName(oTarget), oPC);
-        }    
+        }  
+        
         return nSucceed;
 }
 
@@ -1591,8 +1626,8 @@ int GetIsLightWeapon(object oPC)
         // You may use any weapon in a grapple with this stance.
         if (GetHasSpellEffect(MOVE_TC_WOLVERINE_STANCE, oPC)) return TRUE;
         int nSize   = PRCGetCreatureSize(oPC);
-        int nType = GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC));
-        int nWeaponSize = StringToInt(Get2DACache("baseitems", "WeaponSize", nType));
+        object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
+        int nWeaponSize = GetWeaponSize(oItem);
         // is the size appropriate for a light weapon?
         return (nWeaponSize < nSize);  
 }

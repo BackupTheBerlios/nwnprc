@@ -716,6 +716,14 @@ const int IP_CONST_FEAT_ETHEREAL                = 228;
 const int IP_CONST_FEAT_CRAFTGUILD              = 391;
 const int IP_CONST_FEAT_TECHGUILD               = 392;
 const int IP_CONST_FEAT_SAGEGUILD               = 393;
+const int IP_CONST_FEAT_REMAIN_CONCIOUS         = 269;
+const int IP_CONST_FEAT_SHIFTER_BEASTHIDE       = 90;
+const int IP_CONST_FEAT_SHIFTER_DREAMSIGHT      = 91;
+const int IP_CONST_FEAT_SHIFTER_GOREBRUTE       = 92;
+const int IP_CONST_FEAT_SHIFTER_LONGSTRIDE      = 93;
+const int IP_CONST_FEAT_SHIFTER_LONGTOOTH       = 94;
+const int IP_CONST_FEAT_SHIFTER_RAZORCLAW       = 95;
+const int IP_CONST_FEAT_SHIFTER_WILDHUNT        = 96;
 
 // Template Feats
 const int IP_CONST_FEAT_TEMPLATE_CELESTIAL_SMITE_EVIL = 16301;

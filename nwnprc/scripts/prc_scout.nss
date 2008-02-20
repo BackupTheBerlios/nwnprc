@@ -51,8 +51,13 @@ void BattleFortitude(object oPC, int nClass)
         else if (nClass >= 20) nFort = 3;
         else if (nClass >= 11) nFort = 2;
         else if (nClass >= 2)  nFort = 1;
+        //check Battle Fort lock to make sure it doesn't stack inappropriately
+        if(GetLocalInt(oPC, "BattleFortitude") >= nFort) return;
         effect eFort = ExtraordinaryEffect(EffectSavingThrowIncrease(SAVING_THROW_FORT, nFort));
         ApplyEffectToObject(DURATION_TYPE_PERMANENT, eFort, oPC);
+        
+        //Set Battle Fortitude Lock
+        SetLocalInt(oPC, "BattleFortitude", nFort);
 }
 
 // Permanent Freedom of movement spell

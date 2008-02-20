@@ -1,0 +1,26 @@
+Weapon Profs
+Fix feat prereqs on Weapon Focus and ImpCrit
+
+Races
+Shifter
+-make Gorebrute horns
+Darksun Races
+-wait on Aaracroaka, Thri-Kreen
+Spelljammer races
+-wait on Xixchil
+Oriental Adventures races
+-wait on Vanara, Hengeyokai?
+Other races
+-do Naz Rak
+-do fey races
+-do Lupin(use wolf rak)
+-do Dwarf, Elf, Gnome Goblin subraces
+
+Alter Self
+make Alter Self, Disguise Self spells
+Rakshasa
+Fey'Ri
+Lich
+
+Classes
+Warlock

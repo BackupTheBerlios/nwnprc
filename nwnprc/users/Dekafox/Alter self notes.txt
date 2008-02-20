@@ -38,3 +38,10 @@
 [7:08:33pm] <@fluffyamoeba> (i made some notes on how to do it in a very incomprehensible lecture)
 [7:09:27pm] <*Stratovarius> fairly well, if you have a meatshield LD :p
 [7:09:37pm] <@fluffyamoeba> i'd be really happy if you did them, as then i could do something else other than stare at my nearly blank script
+
+
+replace "Return to True" on spells with 3rd quickslot
+Set portrait to default "no port" portrait if dynamic and gender doesn't match - can be changed if 1.69 adds SetGender()
+Rakshasa - Humanoid only
+Lich - HUmanoid only, keep seperate feat for pre-lich form quickslot.
+Fey'ri - have seperate feat for wings, is alter self humanoid or elf limited?

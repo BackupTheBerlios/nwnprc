@@ -147,6 +147,7 @@ void Shifter(object oPC, int iArcSpell, int iDivSpell)
      if(GetRacialType(oPC) == RACIAL_TYPE_IRDA) SetLocalInt(oPC, "PRC_PrereqShift", 0);
      if(GetRacialType(oPC) == RACIAL_TYPE_ZAKYA_RAKSHASA) SetLocalInt(oPC, "PRC_PrereqShift", 0);
      if(GetRacialType(oPC) == RACIAL_TYPE_CHANGELING) SetLocalInt(oPC, "PRC_PrereqShift", 0);
+     if(GetRacialType(oPC) == RACIAL_TYPE_SHIFTER) SetLocalInt(oPC, "PRC_PrereqShift", 0);
 
      // not counted since it is just "disguise self" and not alter self or shape change
      //if(MyPRCGetRacialType(oPC) == RACIAL_TYPE_DEEP_GNOME) SetLocalInt(oPC, "PRC_PrereqShift", 0);

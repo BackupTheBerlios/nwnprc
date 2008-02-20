@@ -639,6 +639,40 @@ void main()
         ExecuteScript("race_warforged", oPC);
     }
     
+    //Shifter traits
+    if(GetHasFeat(FEAT_SHIFTER_SHIFTING))
+    {
+        if(!(GetHasFeat(FEAT_SHIFTER_WILDHUNT) ||
+             GetHasFeat(FEAT_SHIFTER_RAZORCLAW) ||
+             GetHasFeat(FEAT_SHIFTER_LONGTOOTH) ||
+             GetHasFeat(FEAT_SHIFTER_LONGSTRIDE) ||
+             GetHasFeat(FEAT_SHIFTER_BEASTHIDE) ||
+             GetHasFeat(FEAT_SHIFTER_DREAMSIGHT) ||
+             GetHasFeat(FEAT_SHIFTER_GOREBRUTE)))
+            StartDynamicConversation("race_shfttrt_con", oPC, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, oPC);
+    }
+    if(GetHasFeat(FEAT_EXTRA_SHIFTER_TRAIT))
+    {
+        int nNumTraits = 0;
+        nNumTraits += GetHasFeat(FEAT_SHIFTER_WILDHUNT) +
+             GetHasFeat(FEAT_SHIFTER_RAZORCLAW) +
+             GetHasFeat(FEAT_SHIFTER_LONGTOOTH) +
+             GetHasFeat(FEAT_SHIFTER_LONGSTRIDE) +
+             GetHasFeat(FEAT_SHIFTER_BEASTHIDE) +
+             GetHasFeat(FEAT_SHIFTER_DREAMSIGHT) +
+             GetHasFeat(FEAT_SHIFTER_GOREBRUTE);
+        if(nNumTraits == 1)
+            StartDynamicConversation("race_shfttrt_con", oPC, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, oPC);
+    }
+    
+    if(GetHasFeat(FEAT_SHIFTER_INSTINCTS))
+    {
+        SetCompositeBonus(oSkin, "ShifterInstinctSpot", 1, ITEM_PROPERTY_SKILL_BONUS, SKILL_SPOT);
+        SetCompositeBonus(oSkin, "ShifterInstinctSenseMotive", 1, ITEM_PROPERTY_SKILL_BONUS, SKILL_SENSE_MOTIVE);
+        SetCompositeBonus(oSkin, "ShifterInstinctListen", 1, ITEM_PROPERTY_SKILL_BONUS, SKILL_LISTEN);
+        
+    }
+    
     //natural weapons
     //replace with a feat check
     int nRace = GetRacialType(oPC);

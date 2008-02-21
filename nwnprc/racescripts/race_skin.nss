@@ -194,15 +194,27 @@ void main()
     }
 
     //immunity to drowning
-    //water gensasi and aquatic elves can breath water
-    if(GetHasFeat(FEAT_WATER_BREATHING))
+    //water gensasi and aquatic elves can breath water, so can some Spirit Folk
+    if(GetHasFeat(FEAT_WATER_BREATHING) || GetHasFeat(FEAT_BONUS_RIVER) || GetHasFeat(FEAT_BONUS_SEA))
     {
         itemproperty ipIP = ItemPropertySpellImmunitySpecific(SPELL_DROWN);
         IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
         ipIP = ItemPropertySpellImmunitySpecific(SPELL_MASS_DROWN  );
         IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
     }
-
+    
+    //Spirit Folk heritages
+    if(GetRacialType(oPC) == RACIAL_TYPE_SPIRIT_FOLK && !(GetHasFeat(FEAT_BONUS_BAMBOO) || GetHasFeat(FEAT_BONUS_RIVER) || GetHasFeat(FEAT_BONUS_SEA)))
+        StartDynamicConversation("race_spiritfkcon", oPC, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, oPC);
+    
+    //Bamboo Spirit Folk Bonuses
+    if(GetHasFeat(FEAT_BONUS_BAMBOO))
+    {
+        itemproperty ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_TRACKLESS_STEP);
+        IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+        SetCompositeBonus(oSkin, "Bamboo_Spirit_Lore", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_LORE);
+    }
+    
     //Azer Heat Damage +1 (armed and unarmed)
     if (GetHasFeat(FEAT_AZER_HEAT, oPC))
     {
@@ -278,6 +290,12 @@ void main()
         SetCompositeBonus(oSkin, "SA_Bluff", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_BLUFF);
     }
 
+    // Improved Skill Affinity, +4 to bluff
+    if(GetHasFeat(FEAT_SA_BLUFF_4))
+    {
+        SetCompositeBonus(oSkin, "SA_Bluff_4", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_BLUFF);
+    }
+
     // Skill Affinity, +2 to intimidate
     if(GetHasFeat(FEAT_SA_INTIMIDATE))
     {
@@ -336,12 +354,6 @@ void main()
     if(GetHasFeat(FEAT_SA_LISTEN_4))
     {
         SetCompositeBonus(oSkin, "SA_Listen_4", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_LISTEN);
-    }
-
-    // Skill Affinity, +4 to search
-    if(GetHasFeat(FEAT_SA_SEARCH_4))
-    {
-        SetCompositeBonus(oSkin, "SA_Search_4", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_SEARCH);
     }
 
     // Skill Affinity, +4 to perform
@@ -504,7 +516,18 @@ void main()
         itemproperty ipIP =ItemPropertyBonusSavingThrowVsX(IP_CONST_SAVEVS_MINDAFFECTING, 2);
         IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
     }
-    
+
+    // Skill Penalty, -2 to persuade
+    if(GetHasFeat(FEAT_MINUS_PERSUADE_2))
+    {
+        SetCompositeBonus(oSkin, "Minus_Persuade", -2, ITEM_PROPERTY_SKILL_BONUS, SKILL_PERSUADE);
+    }
+
+    // Skill Penalty, -2 to Listen
+    if(GetHasFeat(FEAT_POORHEARING))
+    {
+        SetCompositeBonus(oSkin, "Poor_Listen", -2, ITEM_PROPERTY_SKILL_BONUS, SKILL_LISTEN);
+    }
     
     //damage reduction 5/+1
     if(GetHasFeat(FEAT_DAM_RED5))
@@ -587,11 +610,23 @@ void main()
 
     //Subdual to elements
     //implemented as resist 1/- for heat and cold
-    if(GetHasFeat(FEAT_SUBDUAL))
+    if(GetHasFeat(FEAT_SUBDUAL_ELEMENTS))
     {
         itemproperty ipIP =ItemPropertyDamageResistance(IP_CONST_DAMAGETYPE_FIRE, IP_CONST_DAMAGERESIST_1);
         IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
         ipIP =ItemPropertyDamageResistance(IP_CONST_DAMAGETYPE_COLD, IP_CONST_DAMAGERESIST_1);
+        IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+    }
+    
+    //Subdual DR 1/-
+    //implemented as resist 1/- for slash/pierce/blud
+    if(GetHasFeat(FEAT_SUBDUAL))
+    {
+        itemproperty ipIP =ItemPropertyDamageResistance(IP_CONST_DAMAGETYPE_SLASHING, IP_CONST_DAMAGERESIST_1);
+        IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+        ipIP =ItemPropertyDamageResistance(IP_CONST_DAMAGETYPE_PIERCING, IP_CONST_DAMAGERESIST_1);
+        IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+        ipIP =ItemPropertyDamageResistance(IP_CONST_DAMAGETYPE_BLUDGEONING, IP_CONST_DAMAGERESIST_1);
         IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
     }
 
@@ -852,6 +887,27 @@ void main()
         sResRef = "prc_warf_slam_";
         sResRef += GetAffixForSize(nSize);
         AddNaturalPrimaryWeapon(oPC, sResRef, 1);
+    }
+    else if(nRace==RACIAL_TYPE_PTERRAN)
+    {
+        string sResRef = "prc_lizf_bite_";
+        int nSize = PRCGetCreatureSize(oPC);
+        sResRef += GetAffixForSize(nSize);
+        AddNaturalSecondaryWeapon(oPC, sResRef);
+        //primary weapon - cheating since it needs 1d4l
+        sResRef = "prc_claw_1d6l_";
+        nSize--;
+        sResRef += GetAffixForSize(nSize);
+        AddNaturalPrimaryWeapon(oPC, sResRef, 2);
+    }
+    else if(nRace==RACIAL_TYPE_NAZTHARUNE_RAKSHASA)
+    {
+        string sResRef;
+        int nSize = PRCGetCreatureSize(oPC);
+        //primary weapon
+        sResRef = "prc_claw_1d6l_";
+        sResRef += GetAffixForSize(nSize);
+        AddNaturalPrimaryWeapon(oPC, sResRef, 2);
     }
     
     //Draconian on-death effects

@@ -724,6 +724,10 @@ const int IP_CONST_FEAT_SHIFTER_LONGSTRIDE      = 93;
 const int IP_CONST_FEAT_SHIFTER_LONGTOOTH       = 94;
 const int IP_CONST_FEAT_SHIFTER_RAZORCLAW       = 95;
 const int IP_CONST_FEAT_SHIFTER_WILDHUNT        = 96;
+const int IP_CONST_FEAT_TRACKLESS_STEP          = 89;
+const int IP_CONST_FEAT_SEA_FOLK                = 88;
+const int IP_CONST_FEAT_RIVER_FOLK              = 87;
+const int IP_CONST_FEAT_BAMBOO_FOLK             = 86;
 
 // Template Feats
 const int IP_CONST_FEAT_TEMPLATE_CELESTIAL_SMITE_EVIL = 16301;

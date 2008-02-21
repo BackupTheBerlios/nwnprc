@@ -1,0 +1,19 @@
+2DA V2.0
+
+   FeatLabel           FeatIndex 
+0  darkvision          228       
+1  WeapProfSim         46        
+2  WeapProfMar         45        
+3  WeaponProfCreature  289       
+4  Spell_Resist_21     4621      
+5  Natural_Armor_5     4736      
+6  Damage_Reduction_15 4748      
+7  SkillAff_Bluff_4    4582
+8  Evasion             206   
+9  Improved_Evasion    212    
+10 Uncanny_Dodge       251   
+11 HideInPlainSight    3457  
+12 ShadowJump          3307    
+13 RacialSneakAtk6D6   4583        
+14 FEAT_RAK_DISGUISE   4656      
+15 Race_Outsider       4716      

@@ -142,6 +142,9 @@ int GetRogueSneak(object oPC)
    //Kapak racial sneak attack
    if(GetHasFeat(FEAT_RACIAL_SNEAK_1D6)) iRogueSneak += 1;
    
+   //Naztharune Rakshasa racial sneak attack
+   if(GetHasFeat(FEAT_RACIAL_SNEAK_6D6)) iRogueSneak += 6;
+   
    if(iRogueSneak > 0) //the feats only apply if you already have Sneak Attack
        iRogueSneak += nBonusFeatDice;
 

@@ -71,7 +71,7 @@ void main()
 
     // forest gnomes bonus to hide in the woods
     //this is in addition to the normal bonus
-    if(GetHasFeat(FEAT_SA_HIDEF, oPC))
+    if(GetHasFeat(FEAT_SA_HIDEF, oPC) || GetHasFeat(FEAT_BONUS_BAMBOO))
     {
        if(GetIsAreaNatural(oArea) == AREA_NATURAL && 
           GetIsAreaAboveGround(oArea) == AREA_ABOVEGROUND)

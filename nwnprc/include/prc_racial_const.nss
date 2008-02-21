@@ -104,6 +104,7 @@ const int RACIAL_TYPE_SALAMANDER           = 95;
 const int RACIAL_TYPE_SHADE                = 210;
 const int RACIAL_TYPE_SPIKER               = 239;
 const int RACIAL_TYPE_WILDREN              = 240;
+const int RACIAL_TYPE_NAZTHARUNE_RAKSHASA  = 96;
 
 //Planetouched Races
 const int RACIAL_TYPE_AASIMAR              = 198;

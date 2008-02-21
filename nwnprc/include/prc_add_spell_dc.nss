@@ -442,6 +442,33 @@ int EnergyAuraDC(int spell_id, object oCaster = OBJECT_SELF)
     return nDC;
 }
 
+//Spirit Folk get a better save vs elemental stuff
+int SpiritFolkAdjustment(int spell_id, object oCaster, object oTarget)
+{
+    int nDC = 0;
+
+    // get spell elemental type
+    string element = ChangedElementalType(spell_id, oCaster);
+    //if(DEBUG) FloatingTextStringOnCreature("Elemental type: " + element, oCaster, FALSE);
+
+    // Compare aura type and elemental type
+    if (element == "Fire" && GetHasFeat(FEAT_BONUS_SEA, oTarget))
+    {
+            return -2;
+    }
+    else if (element == "Cold" && GetHasFeat(FEAT_BONUS_RIVER, oTarget))
+    {
+            return -2;
+    }
+    else if (element == "Acid" && GetHasFeat(FEAT_BONUS_BAMBOO, oTarget))
+    {
+            return -2;
+    }
+
+    //if it gets here, the target is not a Spirit Folk
+    return nDC;
+}
+
 int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1)
 {
     object oItem = GetSpellCastItem();
@@ -616,6 +643,7 @@ int GetChangesToSaveDC(object oTarget, object oCaster = OBJECT_SELF, int nSpellI
     nDC += SoulEaterSoulPower(oCaster);
     nDC += DraconicPowerDC(nSpellID, oCaster);
     nDC += EnergyAuraDC(nSpellID, oCaster);
+    nDC += SpiritFolkAdjustment(nSpellID, oCaster, oTarget);
     nDC += GetLocalInt(oCaster, PRC_DC_ADJUSTMENT);//this is for builder use
     return nDC;
 

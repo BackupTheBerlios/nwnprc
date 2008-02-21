@@ -92,10 +92,10 @@ void main()
                 nDam = d6(min(40, (2 * nCasterLvl)));
                 
                 if(nMetaMagic == METAMAGIC_MAXIMIZE)
-                {			
-			nDam = 6 * (min(40, (2 * nCasterLvl)));
-		}
-					
+                {                       
+                        nDam = 6 * (min(40, (2 * nCasterLvl)));
+                }
+                                        
                 //Reflex save for 1/2 damage
                 if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_GOOD))
                 {
@@ -109,9 +109,9 @@ void main()
                 nDam = d6(min(20,nCasterLvl));
                 
                 if(nMetaMagic == METAMAGIC_MAXIMIZE)
-		{			
-			nDam = 6 * (min(20,nCasterLvl));
-		}
+                {                       
+                        nDam = 6 * (min(20,nCasterLvl));
+                }
                 
                 //Reflex for further 1/2
                 if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_GOOD))
@@ -122,8 +122,8 @@ void main()
             
             if(nMetaMagic == METAMAGIC_EMPOWER)
             {
-		    nDam += (nDam/2);
-	    }
+                    nDam += (nDam/2);
+            }
             
             //Half divine, half fire
             int nDiv = nDam/2;
@@ -138,7 +138,7 @@ void main()
     }
     
     //Wait 10 minutes, then rebirth
-    DelayCommand(600.0f, Rebirth(oPC));
+    DelayCommand(TurnsToSeconds(10), Rebirth(oPC));
     
     //Sanctified spells get mandatory 10 pt good adjustment, regardless of switch
     AdjustAlignment(oPC, ALIGNMENT_GOOD, 10);

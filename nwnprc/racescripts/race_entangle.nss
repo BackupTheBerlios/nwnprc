@@ -10,6 +10,7 @@ void main()
     if (GetRacialType(OBJECT_SELF) == RACIAL_TYPE_PIXIE) { CasterLvl = 8; }    
     else if (GetRacialType(OBJECT_SELF) == RACIAL_TYPE_PURE_YUAN) { CasterLvl = 3; }
     else if (GetRacialType(OBJECT_SELF) == RACIAL_TYPE_ABOM_YUAN) { CasterLvl = 3; }
+    else if (GetRacialType(OBJECT_SELF) == RACIAL_TYPE_GRIG) { CasterLvl = 9; }
     
     DoRacialSLA(SPELL_ENTANGLE, CasterLvl);
 }

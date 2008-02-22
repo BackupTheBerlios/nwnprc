@@ -91,6 +91,8 @@ void main()
         case SPELL_IRDA_CHANGE_SHAPE_OPTIONS:      sQuickslotSource = "Irda_Shape_Quick_"; break;
         
         case INVOKE_HUMANOID_SHAPE_OPTION:         sQuickslotSource = "Humanoid_Shape_Quick_"; break;
+        
+        case SPELL_FEYRI_CHANGE_SHAPE_OPTIONS:     sQuickslotSource = "Feyri_Shape_Quick_"; break;
     }
     
     if(nValue == DYNCONV_SETUP_STAGE)

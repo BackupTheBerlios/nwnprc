@@ -79,6 +79,16 @@ void main()
        else
            SetCompositeBonus(oSkin, "SA_Hide_Forest", 0, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE);
     }   
+
+    // grig bonus to hide in the woods
+    if(GetHasFeat(FEAT_SA_HIDEF_5, oPC))
+    {
+       if(GetIsAreaNatural(oArea) == AREA_NATURAL && 
+          GetIsAreaAboveGround(oArea) == AREA_ABOVEGROUND)
+           SetCompositeBonus(oSkin, "SA_Hide_Forest", 5, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE);
+       else
+           SetCompositeBonus(oSkin, "SA_Hide_Forest", 0, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE);
+    }   
     
     //Chameleon Skin Hide bonus for Poison Dusk Lizardfolk
     //+5 to Hide if most of skin is uncovered

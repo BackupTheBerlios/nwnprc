@@ -910,8 +910,8 @@ void _prc_inc_shifting_ShiftIntoTemplateAux(object oShifter, int nShifterType, o
         for(i = 0; i < NUM_INVENTORY_SLOTS; i++)
             nNaturalAC -= GetItemACValue(GetItemInSlot(i, oTemplate));
 
-        // If there is any AC bonus to apply - Changelings don't get it
-        if(nNaturalAC > 0 && !(nShifterType == SHIFTER_TYPE_CHANGESHAPE && GetRacialType(oShifter) == RACIAL_TYPE_CHANGELING))
+        // If there is any AC bonus to apply - Change Shape doesn't get it
+        if(nNaturalAC > 0 && nShifterType != SHIFTER_TYPE_CHANGESHAPE)
         {
             bNeedSpellCast = TRUE;
             SetLocalInt(oShifter, "PRC_Shifter_NaturalAC", nNaturalAC);
@@ -1523,7 +1523,8 @@ int GetCanShiftIntoCreature(object oShifter, int nShifterType, object oTemplate)
             if(nShifterType == SHIFTER_TYPE_CHANGESHAPE)
             {
                 //Humanoid Shape check
-                if(GetSpellId() == INVOKE_HUMANOID_SHAPE_LEARN) 
+                if(GetSpellId() == INVOKE_HUMANOID_SHAPE_LEARN ||
+                   GetSpellId() == SPELL_FEYRI_CHANGE_SHAPE_LEARN) 
                 {                    
                     int nTargetSize        = PRCGetCreatureSize(oTemplate);
                     int nRacialType        = MyPRCGetRacialType(oTemplate);

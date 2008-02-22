@@ -161,8 +161,6 @@ void main()
         SetCompositeBonus(oSkin, "RacialNaturalArmor",20, ITEM_PROPERTY_AC_BONUS);
     else if(GetHasFeat(FEAT_NATARM_21))
         SetCompositeBonus(oSkin, "RacialNaturalArmor",21, ITEM_PROPERTY_AC_BONUS);
-    else if(GetHasFeat(FEAT_NATARM_22))
-        SetCompositeBonus(oSkin, "RacialNaturalArmor",22, ITEM_PROPERTY_AC_BONUS);
 
     //immunity to breathing-targetted spells
     if(GetHasFeat(FEAT_BREATHLESS))
@@ -258,11 +256,12 @@ void main()
     {
         SetCompositeBonus(oSkin, "RacialRegeneration_5", 5, ITEM_PROPERTY_REGENERATION);
     }
-
-    //regeneration 2PH/round
-    if(GetHasFeat(FEAT_REGEN2))
+    
+    if(GetHasFeat(FEAT_UNEARTHLY_GRACE))
     {
-        SetCompositeBonus(oSkin, "RacialRegeneration_2", 2, ITEM_PROPERTY_REGENERATION);
+        int nGrace = GetAbilityModifier(ABILITY_CHARISMA, oPC);
+        SetCompositeBonus(oSkin, "UnearthlyGraceAC", nGrace, ITEM_PROPERTY_AC_BONUS);
+        SetCompositeBonus(oSkin, "UnearthlyGraceSave", nGrace, ITEM_PROPERTY_SAVING_THROW_BONUS, SAVING_THROW_ALL);
     }
 
     //fire resistance 5
@@ -306,12 +305,6 @@ void main()
     if(GetHasFeat(FEAT_SA_BALANCE))
     {
         SetCompositeBonus(oSkin, "SA_Balance", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_BALANCE);
-    }
-
-    // Skill Affinity, +2 to heal
-    if(GetHasFeat(FEAT_SA_HEAL))
-    {
-        SetCompositeBonus(oSkin, "SA_Heal", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_HEAL);
     }
 
     // Skill Affinity, +4 to jump
@@ -453,6 +446,13 @@ void main()
         SetCompositeBonus(oSkin, "SA_Hide_Forest", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE);
     }
 
+    // Skill Affinity, +5 to hide
+    // for grigs, as they get +5 in the woods.
+    if(GetHasFeat(FEAT_SA_HIDEF_5))
+    {
+        SetCompositeBonus(oSkin, "SA_Hide_Forest", 5, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE);
+    }
+
     // Skill Affinity, +4 to hide
     // for forest gnomes since they get +4 or +8 in the woods.
     if(GetHasFeat(FEAT_SA_HIDE4))
@@ -495,12 +495,6 @@ void main()
     if(GetHasFeat(FEAT_SA_TUMBLE))
     {
         SetCompositeBonus(oSkin, "SA_Tumble", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_TUMBLE);
-    }
-
-    // Partial Skill Affinity, +1 to persuade
-    if(GetHasFeat(FEAT_PSA_PERSUADE))
-    {
-        SetCompositeBonus(oSkin, "PSA_Persuade", 1, ITEM_PROPERTY_SKILL_BONUS, SKILL_PERSUADE);
     }
 
     // PSA to Lore and Spellcraft
@@ -547,6 +541,20 @@ void main()
     if(GetHasFeat(FEAT_DAM_RED15))
     {
         itemproperty ipIP =ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_1, IP_CONST_DAMAGESOAK_15_HP);
+        IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+    }
+    
+    //damage reduction 5/+3
+    if(GetHasFeat(FEAT_LESSER_FEY_DR))
+    {
+        itemproperty ipIP =ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_3, IP_CONST_DAMAGESOAK_5_HP);
+        IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+    }
+
+    //damage reduction 10/+3
+    if(GetHasFeat(FEAT_FEY_DR))
+    {
+        itemproperty ipIP =ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_3, IP_CONST_DAMAGESOAK_10_HP);
         IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
     }
 
@@ -909,11 +917,27 @@ void main()
         sResRef += GetAffixForSize(nSize);
         AddNaturalPrimaryWeapon(oPC, sResRef, 2);
     }
+    else if(nRace==RACIAL_TYPE_SATYR)
+    {
+        string sResRef = "prc_cent_hoof_";
+        int nSize = PRCGetCreatureSize(oPC);
+        sResRef += GetAffixForSize(nSize);
+        AddNaturalSecondaryWeapon(oPC, sResRef);
+    }
     
     //Draconian on-death effects
     if(nRace == RACIAL_TYPE_BOZAK || nRace == RACIAL_TYPE_BAAZ || nRace == RACIAL_TYPE_KAPAK)
     {
     	SetCreatureWingType(CREATURE_WING_TYPE_DRAGON, oPC);
         ExecuteScript("race_deaththroes", oPC);
+    }
+    
+    //Enforce female Nymphs
+    if(nRace == RACIAL_TYPE_NYMPH && GetGender(oPC) != GENDER_FEMALE)
+    {
+        if(!GetIsPolyMorphedOrShifted(oPC))
+        {
+        	SetCreatureAppearanceType(oPC, 126);
+        }
     }
 }

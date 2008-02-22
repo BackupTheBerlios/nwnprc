@@ -70,7 +70,6 @@ const int RACIAL_TYPE_PLANT                = 52;
 //Fey-type Races
 const int RACIAL_TYPE_BRALANI              = 159;
 const int RACIAL_TYPE_BROWNIE              = 53;
-const int RACIAL_TYPE_DRYAD                = 132;
 const int RACIAL_TYPE_GRIG                 = 133;
 const int RACIAL_TYPE_NIXIE                = 134;
 const int RACIAL_TYPE_NYMPH                = 135;
@@ -112,7 +111,7 @@ const int RACIAL_TYPE_AIR_GEN              = 199;
 const int RACIAL_TYPE_EARTH_GEN            = 200;
 const int RACIAL_TYPE_FEYRI                = 201;
 const int RACIAL_TYPE_FIRE_GEN             = 202;
-const int RACIAL_TYPE_MORTIF               = 130;
+const int RACIAL_TYPE_MORTIF               = 132;
 const int RACIAL_TYPE_TANARUKK             = 203;
 const int RACIAL_TYPE_TIEFLING             = 204;
 const int RACIAL_TYPE_WATER_GEN            = 205;

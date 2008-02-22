@@ -73,6 +73,9 @@ const int AOE_MOB_VIGILANT_DEFENDER             = 163;
 //Exhaled Barrier Area of Effect
 const int AOE_PER_WALLBREATH                    = 152;
 
+//Racial AOEs
+const int AOE_PER_NYMPH_BLINDING                = 225;
+
 
 //:://////////////////////////////////////////////
 //:: Disease Const

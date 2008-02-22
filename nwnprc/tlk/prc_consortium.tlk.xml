@@ -19005,10 +19005,13 @@ Use: Automatic.</entry>
   <entry id="50151" lang="en" sex="m">Skill Affinity (Animal Empathy)</entry>
   <entry id="50152" lang="en" sex="m">Type of Feat: Racial
 Prerequisite: Race-Specific.
-Specifics: The creature receives +2 racial bonus to Animal Empathy checks.
+Specifics: The creature receives a +2 racial bonus to Animal Empathy checks.
 Use: Automatic.</entry>
-  <entry id="50153" lang="en" sex="m">Special Abilities - Drow</entry>
-  <entry id="50154" lang="en" sex="m">Spell-Like Abilities: 1/day - Darkness, Faerie Fire. Caster level 3rd.</entry>
+  <entry id="50153" lang="en" sex="m">Wild Empathy</entry>
+  <entry id="50154" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: The creature receives a +6 racial bonus to Animal Empathy checks.
+Use: Automatic.</entry>
   <entry id="50155" lang="en" sex="m">Kender Taunting</entry>
   <entry id="50156" lang="en" sex="m">Type of Feat: Racial
 Prerequisite: Race-Specific.
@@ -20501,6 +20504,158 @@ Use: Automatic.</entry>
   <entry id="50638" lang="en" sex="m">&lt;CUSTOM0&gt; turns water creatures.</entry>
   <entry id="50639" lang="en" sex="m">&lt;CUSTOM0&gt; turns fire creatures.</entry>
   <entry id="50640" lang="en" sex="m">&lt;CUSTOM0&gt; turns blightspawned.</entry>
+  <entry id="50767" lang="en" sex="m">Bralani</entry>
+  <entry id="50768" lang="en" sex="m">bralani</entry>
+  <entry id="50769" lang="en" sex="m">
+
+Bralani Ability Adjustments: +8 Str, +8 Dex, +6 Con, +2 Int, +4 Wis, +4 Cha.
+Favored Class (Fighter): A multiclass bralani's fighter class does not count when determining whether he suffers an XP penalty for multiclassing.
+
+- Base movement of 40'
+- Darkvision: Bralani can see in the dark.
+- Natural Armor: +6 Natural AC
+- Fey Damage Reduction: DR 10/cold iron
+- Immunities: Immune to electricity and petrification.
+- Elemental Resistance: Resistance 10 to cold and fire.
+- Spell Resistance 17: Spell resistance of 17 + 1 per level.
+- Spell-like Abilities: 
+  at will - Blur, Charm Person, Gust of Wind, Mirror Image
+  2/day - Cure Serious Wounds, Lightning Bolt
+- Outsider: Bralani count as Outsiders for the purpose of spells.</entry>
+  <entry id="50770" lang="en" sex="m">Grig</entry>
+  <entry id="50771" lang="en" sex="m">grig</entry>
+  <entry id="50772" lang="en" sex="m">Grigs</entry>
+  <entry id="50773" lang="en" sex="m">
+
+Grig Ability Adjustments: Dex +8, Con +2, Wis +2, Cha +4, Str -6.
+Favored Class (Sorcerer): A multiclass grig's sorcerer class does not count when determining whether he suffers an XP penalty for multiclassing.
+
+- Tiny Stature:
+ +2 size bonus to attack rolls.
+ +2 size bonus to AC.
+ +8 size bonus to Hide checks.
+- Base movement of 20'
+- Low-Light Vision: Allows them to see better than normal in the dark.
+- Lesser Fey Damage Reduction: DR 5/cold iron
+- Skill Affinity(Jump): +8 racial bonus to jump checks.
+- Hide in Forest: +5 racial bonus to hide checks when in forested areas
+- Spell Resistance 17: Spell resistance of 17 + 1 per level.
+- Spell-like Abilities: 3/day - Entangle(DC 11+Cha), Invisibility, Pyrotechnics(DC 12+Cha).
+- Fey: Grigs count as Fey for the purpose of spells.</entry>
+  <entry id="50774" lang="en" sex="m">Nixie</entry>
+  <entry id="50775" lang="en" sex="m">nixie</entry>
+  <entry id="50776" lang="en" sex="m">Nixies</entry>
+  <entry id="50777" lang="en" sex="m">
+
+Nixie Ability Adjustments: Dex +6, Int +2, Wis +2, Cha +8, Str -4.
+Favored Class (Sorcerer): A multiclass nixie's sorcerer class does not count when determining whether he suffers an XP penalty for multiclassing.
+
+- Small Stature:
+ +1 size bonus to attack rolls.
+ +1 size bonus to AC.
+ +4 size bonus to Hide checks.
+- Base movement of 20'
+- Low-Light Vision: Allows them to see better than normal in the dark.
+- Lesser Fey Damage Reduction: DR 5/cold iron
+- Wild Empathy: +6 racial bonus to animal empathy checks.
+- Spell Resistance 16: Spell resistance of 16 + 1 per level.
+- Amphibious: Immune to drowning.
+- Spell-like Abilities: Waterbreathing on other 1/day, Charm Person 3/day
+- Fey: Nixies count as Fey for the purpose of spells.</entry>
+  <entry id="50778" lang="en" sex="m">Nymph</entry>
+  <entry id="50779" lang="en" sex="m">nymph</entry>
+  <entry id="50780" lang="en" sex="m">Nymphs</entry>
+  <entry id="50781" lang="en" sex="m">
+
+Nymph Ability Adjustments: +6 Dex, +2 Con, +6 Int, +6 Wis, +8 Cha.
+Favored Class (Druid): A multiclass nymph's druid class does not count when determining whether he suffers an XP penalty for multiclassing.
+
+- Base movement of 30'
+- Low-Light Vision: Allows them to see better than normal in the dark.
+- Fey Damage Reduction: DR 10/cold iron
+- Wild Empathy: +6 racial bonus to animal empathy checks.
+- Unearthly Grace: A nymph's Charisma modifier is added to their AC and all saving throws.
+- Blinding Beauty: All creatures within 30' must make a Fort save vs DC 13+Cha or be blinded.
+- Stunning Glare: One creature within 30' must make a Fort save vs DC 13+Cha or be stunned for 2d4 rounds.
+- Spell-like Abilities: Dimension Door 1/day
+- Fey: Nymphs count as Fey for the purpose of spells.</entry>
+  <entry id="50782" lang="en" sex="m">Satyr</entry>
+  <entry id="50783" lang="en" sex="m">satyr</entry>
+  <entry id="50784" lang="en" sex="m">Satyrs</entry>
+  <entry id="50785" lang="en" sex="m">
+
+Satyr Ability Adjustments: +2 Dex, +2 Con, +2 Int, +2 Wis, +2 Cha.
+Favored Class (Bard): A multiclass satyr's bard class does not count when determining whether he suffers an XP penalty for multiclassing.
+
+- Base movement of 40'
+- Natural Armor: +4 Natural AC
+- Low-Light Vision: Allows them to see better than normal in the dark.
+- Lesser Fey Damage Reduction: DR 5/cold iron
+- Natural Weapons: 1d6 head butt
+- Skill Affinities: +4 racial bonus to all hide, listen, move silently, perform, and spot checks.
+- Fey: Satyrs count as Fey for the purpose of spells.</entry>
+  <entry id="50786" lang="en" sex="m">Blinding Beauty</entry>
+  <entry id="50787" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: Any creature within 30' who fails a Fortitude save vs 13 + your Cha modifier is blinded.  You can suppress or activate this ability as a free action.  
+Use: Selected.</entry>
+  <entry id="50788" lang="en" sex="m">Stunning Glance</entry>
+  <entry id="50789" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: You can stun a creature with a single glance as a standard action.  If they fail a Fortitude save vs 13 + your Cha modifier, they are stunned for 2d4 rounds.  
+Use: Selected.</entry>
+  <entry id="50790" lang="en" sex="m">Waterbreathing</entry>
+  <entry id="50791" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: You can grant the ability to breathe water to one creature for 24 hours.
+Use: Selected.</entry>
+  <entry id="50792" lang="en" sex="m">Fey'ri Quickslot 1</entry>
+  <entry id="50793" lang="en" sex="m">Fey'ri Quickslot 2</entry>
+  <entry id="50794" lang="en" sex="m">Fey'Ri Change Shape</entry>
+  <entry id="50795" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race Specific
+You can assume the form of any humanoid creature up to 1 size class larger or smaller than you.  You can stay in this form until you decide to change again or return to your true form.  You gain the natural weapons and size of the new form, but your abilities and special qualities stay the same.
+This feat controls learning and using NPC shapes.
+Use: Selected.</entry>
+  <entry id="50796" lang="en" sex="m">Unearthly Grace</entry>
+  <entry id="50797" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: You get your Charisma modifier added to your AC and saving throw checks.
+Use: Automatic.</entry>
+  <entry id="50798" lang="en" sex="m">Daylight Adaptation</entry>
+  <entry id="50799" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: If you are a type of creature that suffers circumstance penalties when exposed to bright light, you no longer suffer those penalties, whether the light comes from natural or magical sources.
+Use: Automatic.</entry>
+  <entry id="50800" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: The creature receives a +5 racial bonus to Hide checks when in a natural area.
+Use: Automatic.</entry>
+  <entry id="50801" lang="en" sex="m">Tiny Creature</entry>
+  <entry id="50802" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: Your character is classified as a tiny creature and thus gains a +2 bonus to AC and attack, and +8 to all hide checks.
+Use: Automatic.</entry>
+  <entry id="50803" lang="en" sex="m">Spell Resistance 17</entry>
+  <entry id="50804" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: The creature has an innate spell resistance of 17, plus 1 per level.
+Use: Automatic.</entry>
+  <entry id="50805" lang="en" sex="m">Fey Damage Reduction</entry>
+  <entry id="50806" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: The creature has DR 10/cold iron(+3).
+Use: Automatic.</entry>
+  <entry id="50807" lang="en" sex="m">Lesser Fey Damage Reduction</entry>
+  <entry id="50808" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: The creature has DR 5/cold iron(+3).
+Use: Automatic.</entry>
+  <entry id="50809" lang="en" sex="m">Skill Affinity (Perform) +4</entry>
+  <entry id="50810" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: The creature receives +4 racial bonus to Perform checks.
+Use: Automatic.</entry>
   <entry id="50811" lang="en" sex="m">Naztharune Rakshasa</entry>
   <entry id="50812" lang="en" sex="m">Naztharune</entry>
   <entry id="50813" lang="en" sex="m">naztharune</entry>
@@ -20910,7 +21065,7 @@ Use: Automatic.</entry>
   <entry id="50953" lang="en" sex="m">Irda Change Shape</entry>
   <entry id="50954" lang="en" sex="m">Type of Feat: Racial
 Prerequisite: Race Specific
-You can assume the form of any Small, Medium, or Large humanoid creature.  You can stay in this form until you decide to change again or return to your true form.  You gain any natural weapons, armor and size of the new form, but your abilities and special qualities stay the same.
+You can assume the form of any Small, Medium, or Large humanoid creature.  You can stay in this form until you decide to change again or return to your true form.  You gain the natural weapons and size of the new form, but your abilities and special qualities stay the same.
 This feat controls learning and using NPC shapes.
 Use: Selected.</entry>
   <entry id="50955" lang="en" sex="m">Quick Change</entry>

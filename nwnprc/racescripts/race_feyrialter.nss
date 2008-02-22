@@ -14,26 +14,36 @@
 
 #include "prc_alterations"
 
+//internal function to remove wings
+void RemoveWings(object oPC)
+{
+    object oSkin = GetPCSkin(oPC);
+    //if not shifted
+    //store current appearance to be safe 
+    StoreAppearance(oPC);
+    SetPersistantLocalInt(oPC, "WingsOff", TRUE);
+    SetCreatureWingType(CREATURE_WING_TYPE_NONE, oPC);
+}
+
+//internal function to turn wings on
+void AddWings(object oPC)
+{
+    object oSkin = GetPCSkin(oPC);
+    //grant wings
+    SetPersistantLocalInt(oPC, "WingsOff", FALSE);
+    SetCreatureWingType(CREATURE_WING_TYPE_DEMON, oPC);
+}
+
 void main()
 {
-    StoreAppearance(OBJECT_SELF);
-    int nCurForm = GetAppearanceType(OBJECT_SELF);
-    int nPCForm = GetTrueForm(OBJECT_SELF);
-
-    // Switch to lich
-    if (nPCForm == nCurForm)
+    object oPC = OBJECT_SELF;
+    if(!GetIsPolyMorphedOrShifted(oPC))
     {
-        effect eFx = EffectVisualEffect(VFX_IMP_MAGICAL_VISION);
-        ApplyEffectToObject(DURATION_TYPE_INSTANT,eFx,OBJECT_SELF);
-        SetCreatureAppearanceType(OBJECT_SELF, APPEARANCE_TYPE_ELF_NPC_MALE_02);
+    	if(!GetPersistantLocalInt(oPC, "WingsOff")) 
+            RemoveWings(oPC);
+        else
+            AddWings(oPC);
     }
-    else // Switch to PC
-    {
-        effect eFx = EffectVisualEffect(VFX_IMP_MAGICAL_VISION);
-        ApplyEffectToObject(DURATION_TYPE_INSTANT,eFx,OBJECT_SELF);
-        //re-use unshifter code from shifter instead
-        //this will also remove complexities with lich/shifter characters
-        SetShiftTrueForm(OBJECT_SELF);
-        //SetCreatureAppearanceType(OBJECT_SELF,nPCForm);
-    }
+    else
+        FloatingTextStringOnCreature("You cannot use this ability while shifted.", oPC, FALSE);
 }

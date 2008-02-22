@@ -3370,7 +3370,6 @@ int GetDefenderAC(object oDefender, object oAttacker, int bIsTouchAttack = FALSE
 			else if( GetHasFeat(FEAT_NATARM_19) ) iAC += 19;
 			else if( GetHasFeat(FEAT_NATARM_20) ) iAC += 20;
 			else if( GetHasFeat(FEAT_NATARM_21) ) iAC += 21;
-			else if( GetHasFeat(FEAT_NATARM_22) ) iAC += 22;
 			if (DEBUG) DoDebug("GetDefenderAC: End Section #3");
 		}
 	}

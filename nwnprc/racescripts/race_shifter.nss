@@ -170,13 +170,13 @@ void main()
     
     if(GetHasFeat(FEAT_SHIFTER_DEFENSE))
     {
-        effect eDR = EffectDamageReduction(2, DAMAGE_POWER_PLUS_ONE);
+        effect eDR = EffectDamageReduction(2, DAMAGE_POWER_PLUS_TWO);
         eDR = SupernaturalEffect(eDR);
         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDR, oPC, RoundsToSeconds(nDuration));
     }
     else if(GetHasFeat(FEAT_GREATER_SHIFTER_DEFENSE))
     {
-        effect eDR = EffectDamageReduction(4, DAMAGE_POWER_PLUS_ONE);
+        effect eDR = EffectDamageReduction(4, DAMAGE_POWER_PLUS_TWO);
         eDR = SupernaturalEffect(eDR);
         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDR, oPC, RoundsToSeconds(nDuration));
     }

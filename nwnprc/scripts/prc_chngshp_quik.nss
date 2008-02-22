@@ -30,11 +30,13 @@ void main()
     switch(nSpellID)
     {
         case SPELL_IRDA_CHANGE_SHAPE_QS1:       nSlot = 1; sSource = "Irda_Shape_Quick_"; break;
+        case SPELL_FEYRI_CHANGE_SHAPE_QS1:      nSlot = 1; sSource = "Feyri_Shape_Quick_"; break;
         case SPELL_CHANGLING_CHANGE_SHAPE_QS1:
         case SPELL_QUICK_CHANGE_SHAPE_QS1:      nSlot = 1; sSource = "Changeling_Shape_Quick_"; break;
         case SPELL_IRDA_CHANGE_SHAPE_QS2:       nSlot = 2; sSource = "Irda_Shape_Quick_"; break;
         case SPELL_CHANGLING_CHANGE_SHAPE_QS2:
         case SPELL_QUICK_CHANGE_SHAPE_QS2:      nSlot = 2; sSource = "Changeling_Shape_Quick_"; break;
+        case SPELL_FEYRI_CHANGE_SHAPE_QS2:      nSlot = 2; sSource = "Feyri_Shape_Quick_"; break;
 
         default:
             if(DEBUG) DoDebug("prc_chngshp_quik: ERROR: Unknown nSpellID value: " + IntToString(nSpellID));

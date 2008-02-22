@@ -436,11 +436,9 @@ const int SPELL_PNP_SCARE                           = 1789;
 
 //racial spell additions
 const int SPELL_RAKSHASA_DISGUISE                   = 1951;
-const int SPELL_RAKSHASA_REVERT                     = 1952;/*
-const int SPELL_PIXIE_POLYMORPH                     = 1953;
-const int SPELL_PIXIE_REVERT                        = 1954;*/
+const int SPELL_RAKSHASA_REVERT                     = 1952;
 const int SPELL_FEYRI_ALTER                         = 1955;
-const int SPELL_FEYRI_REVERT                        = 1956;
+const int SPELL_NIXIE_WATERBREATHING                = 1956;
 const int SPELL_URDINNIR_STONESKIN                  = 1957;
 const int SPELL_RACE_DARKNESS                       = 1958;
 const int SPELL_RACE_DAZE                           = 1959;
@@ -498,6 +496,23 @@ const int SPELL_QUICK_CHANGE_SHAPE_OPTIONS          = 2910;
 const int SPELL_QUICK_CHANGE_SHAPE_TRUE             = 2911;     
 const int SPELL_QUICK_CHANGE_SHAPE_QS1              = 2912;    
 const int SPELL_QUICK_CHANGE_SHAPE_QS2              = 2913;   
+const int SPELL_FEYRI_CHANGE_SHAPE_LEARN            = 2951;          
+const int SPELL_FEYRI_CHANGE_SHAPE_OPTIONS          = 2952;      
+const int SPELL_FEYRI_CHANGE_SHAPE_TRUE             = 2953;     
+const int SPELL_FEYRI_CHANGE_SHAPE_QS1              = 2954;    
+const int SPELL_FEYRI_CHANGE_SHAPE_QS2              = 2955;          
+const int SPELL_NYMPH_DIMDOOR_SELF                  = 2957;      
+const int SPELL_NYMPH_DIMDOOR_PARTY                 = 2958;     
+const int SPELL_NYMPH_DIMDOOR_DIST_SELF             = 2959;    
+const int SPELL_NYMPH_DIMDOOR_DIST_PARTY            = 2960;     
+const int SPELL_NYMPH_STUNNING_GLANCE               = 1948;     
+const int SPELL_NYMPH_BLINDING_BEAUTY               = 1949;      
+const int SPELL_GRIG_PYROTECHNICS_FIREWORKS         = 2915;      
+const int SPELL_GRIG_PYROTECHNICS_SMOKE             = 2916;   
+const int SPELL_BRALANI_LIGHTNING_BOLT              = 2917;
+const int SPELL_BRALANI_CURE_SERIOUS_WOUNDS         = 2918;
+const int SPELL_BRALANI_MIRROR_IMAGE                = 2920;
+const int SPELL_BRALANI_GUST_OF_WIND                = 2919;   
 
 
 // Poison system spells

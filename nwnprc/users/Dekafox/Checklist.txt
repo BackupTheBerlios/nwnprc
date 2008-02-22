@@ -5,9 +5,9 @@ Other races
 -do Dwarf, Elf, Gnome Goblin subraces
 
 Alter Self
+set portraits to go to default if not the same gender and is dynamic
 make Alter Self, Disguise Self spells
 Rakshasa
-Fey'Ri
 Lich
 
 Classes

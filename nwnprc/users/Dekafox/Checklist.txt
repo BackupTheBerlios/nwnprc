@@ -1,14 +1,10 @@
-Races
-Other races
--do fey races
--do Lupin(use wolf rak)
--do Dwarf, Elf, Gnome Goblin subraces
+Races - 95 left, 9 open
+do standard race subraces
 
 Alter Self
-set portraits to go to default if not the same gender and is dynamic
+prepare and comment out SetColor/GetColor calls for 1.69 support
 make Alter Self, Disguise Self spells
-Rakshasa
-Lich
+Lich - doesn't have in 3.5, check 3.0 MM
 
 Classes
 Warlock

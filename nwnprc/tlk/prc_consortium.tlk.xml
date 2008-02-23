@@ -19000,8 +19000,11 @@ Specifics: The creature receives +4 racial bonus to Spot checks.
 Use: Automatic.</entry>
   <entry id="50147" lang="en" sex="m">Special Abilities - Aasimar</entry>
   <entry id="50148" lang="en" sex="m">Spell-Like Abilities: 1/day - Light. Caster level 3rd.</entry>
-  <entry id="50149" lang="en" sex="m">Special Abilities - Avariel</entry>
-  <entry id="50150" lang="en" sex="m">Creature can perform a dive attack at +2 while suffering -2 to armor class. A successful attack does double damage if using a piercing weapon.</entry>
+  <entry id="50149" lang="en" sex="m">Cold Resistance 10</entry>
+  <entry id="50150" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: The creature has an innate cold resistance of 10.
+Use: Automatic.</entry>
   <entry id="50151" lang="en" sex="m">Skill Affinity (Animal Empathy)</entry>
   <entry id="50152" lang="en" sex="m">Type of Feat: Racial
 Prerequisite: Race-Specific.
@@ -19046,8 +19049,11 @@ Specifics: The creature is immune to electric damage.
 Use: Automatic.</entry>
   <entry id="50171" lang="en" sex="m">Special Abilities - Svirfneblin</entry>
   <entry id="50172" lang="en" sex="m">Spell-Like Abilities: 1/day - Blindness and Deafness (DC 16), Blur, Disguise Self. Caster level is equal to the svirfneblin's character level, DC is Charisma-based with +4 racial bonus.</entry>
-  <entry id="50173" lang="en" sex="m">Special Abilities - Tiefling</entry>
-  <entry id="50174" lang="en" sex="m">Spell-Like Abilities: 1/day - Darkness. Caster level 3rd.</entry>
+  <entry id="50173" lang="en" sex="m">Fire Resistance 10</entry>
+  <entry id="50174" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: The creature has an innate fire resistance of 10.
+Use: Automatic.</entry>
   <entry id="50175" lang="en" sex="m">Special Abilities - Urdunnir</entry>
   <entry id="50176" lang="en" sex="m">Stone Shape: Urdunnir can take the shape of stone at will (using 'Stoneskin' as 4th level wizard).</entry>
   <entry id="50177" lang="en" sex="m">Detect Evil</entry>
@@ -20504,9 +20510,70 @@ Use: Automatic.</entry>
   <entry id="50638" lang="en" sex="m">&lt;CUSTOM0&gt; turns water creatures.</entry>
   <entry id="50639" lang="en" sex="m">&lt;CUSTOM0&gt; turns fire creatures.</entry>
   <entry id="50640" lang="en" sex="m">&lt;CUSTOM0&gt; turns blightspawned.</entry>
+  <entry id="50745" lang="en" sex="m">Disguise Self</entry>
+  <entry id="50746" lang="en" sex="m">Illusion (Glamer)
+Level:        Brd 1, Sor/Wiz 1
+Components:   V, S
+Casting Time: 1 standard action
+Range: 	      Personal
+Target: 	  You
+Duration: 	  10 min./level (D)
+
+You make yourself—including clothing, armor, weapons, and equipment—look different. You can seem 1 foot shorter or taller, thin, fat, or in between. You cannot change your body type. Otherwise, the extent of the apparent change is up to you. You could add or obscure a minor feature or look like an entirely different person.
+The spell does not provide the abilities or mannerisms of the chosen form, nor does it alter the perceived tactile (touch) or audible (sound) properties of you or your equipment.
+If you use this spell to create a disguise, you get a +10 bonus on the Disguise check.
+A creature that interacts with the glamer gets a Will save to recognize it as an illusion. </entry>
+  <entry id="50747" lang="en" sex="m">Disguise Self - Learn Shape</entry>
+  <entry id="50748" lang="en" sex="m">Disguise Self - Options</entry>
+  <entry id="50749" lang="en" sex="m">Disguise Self - Quickslot 1</entry>
+  <entry id="50750" lang="en" sex="m">Disguise Self - Quickslot 2</entry>
+  <entry id="50751" lang="en" sex="m">Disguise Self - Quickslot 3</entry>
+  <entry id="50752" lang="en" sex="m">Alter Self</entry>
+  <entry id="50753" lang="en" sex="m">Transmutation
+Level: 	      Brd 2, Sor/Wiz 2
+Components:   V, S
+Casting Time: 1 standard action
+Range: 	      Personal
+Target: 	  You
+Duration: 	  10 min./level (D)
+
+You assume the form of a creature of the same type as your normal form. The new form must be within one size category of your normal size. The maximum HD of an assumed form is equal to your caster level, to a maximum of 5 HD at 5th level. You can change into a member of your own kind or even into yourself.
+
+You retain your own ability scores. Your class and level, hit points, alignment, base attack bonus, and base save bonuses all remain the same. You retain all supernatural and spell-like special attacks and qualities of your normal form, except for those requiring a body part that the new form does not have (such as a mouth for a breath weapon or eyes for a gaze attack).
+
+You keep all extraordinary special attacks and qualities derived from class levels, but you lose any from your normal form that are not derived from class levels.
+
+If the new form is capable of speech, you can communicate normally. You retain any spellcasting ability you had in your original form, but the new form must be able to speak intelligibly (that is, speak a language) to use verbal components and must have limbs capable of fine manipulation to use somatic or material components.
+
+You acquire the physical qualities of the new form while retaining your own mind. Physical qualities include natural size, natural armor bonus, natural weapons (such as claws, bite, and so on), and any gross physical qualities (presence or absence of wings, number of extremities, and so forth). A body with extra limbs does not allow you to make more attacks (or more advantageous two-weapon attacks) than normal.
+
+You do not gain any extraordinary special attacks or special qualities not noted above under physical qualities, such as darkvision, low-light vision, blindsense, blindsight, fast healing, regeneration, scent, and so forth.
+
+You do not gain any supernatural special attacks, special qualities, or spell-like abilities of the new form. Your creature type and subtype (if any) remain the same regardless of your new form. You cannot take the form of any creature with a template, even if that template doesn’t change the creature type or subtype.
+
+When the change occurs, your equipment, if any, either remains worn or held by the new form (if it is capable of wearing or holding the item), or melds into the new form and becomes nonfunctional. When you revert to your true form, any objects previously melded into the new form reappear in the same location on your body they previously occupied and are once again functional. Any new items you wore in the assumed form and can’t wear in your normal form fall off and land at your feet; any that you could wear in either form or carry in a body part common to both forms at the time of reversion are still held in the same way. Any part of the body or piece of equipment that is separated from the whole reverts to its true form. </entry>
+  <entry id="50754" lang="en" sex="m">Alter Self - Learn Shape</entry>
+  <entry id="50755" lang="en" sex="m">Alter Self - Options</entry>
+  <entry id="50756" lang="en" sex="m">Alter Self - Quickslot 1</entry>
+  <entry id="50757" lang="en" sex="m">Alter Self - Quickslot 2</entry>
+  <entry id="50758" lang="en" sex="m">Alter Self - Quickslot 3</entry>
+  <entry id="50759" lang="en" sex="m">End Spell Effects</entry>
+  <entry id="50760" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: None.
+Specifics: This feat grants abilities to end certain effects created by spells.
+Use: Selected.</entry>
+  <entry id="50761" lang="en" sex="m">End PnP Polymorph</entry>
+  <entry id="50762" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: None.
+Specifics: Using this feat will end PnP polymorph effects on the user.
+Use: Selected.</entry>
+  <entry id="50763" lang="en" sex="m">Rakshasa Change Shape</entry>
+  <entry id="50764" lang="en" sex="m">Rakshasa Quickslot 1</entry>
+  <entry id="50765" lang="en" sex="m">Rakshasa Quickslot 2</entry>
+  <entry id="50766" lang="en" sex="m">Bralani Eladrin</entry>
   <entry id="50767" lang="en" sex="m">Bralani</entry>
   <entry id="50768" lang="en" sex="m">bralani</entry>
-  <entry id="50769" lang="en" sex="m">
+  <entry id="50769" lang="en" sex="m">Bralani are the most wild and feral kind of eladrin, existing from heartbeat to heartbeat in a glorious never-ending passion.  They are free-spirited outsiders native to Arborea, and roam the cosmos in search of good folk to aid.  Physically, bralani resemble shorter, stocky elves, with silver-white hair and eyes that are constantly shifting through a rainbow of colors.
 
 Bralani Ability Adjustments: +8 Str, +8 Dex, +6 Con, +2 Int, +4 Wis, +4 Cha.
 Favored Class (Fighter): A multiclass bralani's fighter class does not count when determining whether he suffers an XP penalty for multiclassing.
@@ -20525,7 +20592,7 @@ Favored Class (Fighter): A multiclass bralani's fighter class does not count whe
   <entry id="50770" lang="en" sex="m">Grig</entry>
   <entry id="50771" lang="en" sex="m">grig</entry>
   <entry id="50772" lang="en" sex="m">Grigs</entry>
-  <entry id="50773" lang="en" sex="m">
+  <entry id="50773" lang="en" sex="m">Grigs are a race of mischevious and lighthearted sprites.  They have no fear of larger creatures and like to pull minor pranks on them.  They are also fierce by sprite standards, ready to fight back with dagger when needed.  These small creatures are only 1'6" tall on average, and boast light blue skin, forest green hair, and brown hairy legs.  They typically wear brightly colored tunics or vests, with tiny gems for buttons.
 
 Grig Ability Adjustments: Dex +8, Con +2, Wis +2, Cha +4, Str -6.
 Favored Class (Sorcerer): A multiclass grig's sorcerer class does not count when determining whether he suffers an XP penalty for multiclassing.
@@ -20545,7 +20612,7 @@ Favored Class (Sorcerer): A multiclass grig's sorcerer class does not count when
   <entry id="50774" lang="en" sex="m">Nixie</entry>
   <entry id="50775" lang="en" sex="m">nixie</entry>
   <entry id="50776" lang="en" sex="m">Nixies</entry>
-  <entry id="50777" lang="en" sex="m">
+  <entry id="50777" lang="en" sex="m">Nixies are aquatic sprites who dwell in and protect pristine ponds and lakes.  They are not bound to the water though, and can survive on land indefinitely.  They are more reclusive than most fey and treat intruders to their territory with hostility and suspicion.  Physically they resemble slim and comely humanoids, with lightly scaled, pale green skin and dark green hair.  They stand about 4' tall, and typically wear clothes made of seaweed.
 
 Nixie Ability Adjustments: Dex +6, Int +2, Wis +2, Cha +8, Str -4.
 Favored Class (Sorcerer): A multiclass nixie's sorcerer class does not count when determining whether he suffers an XP penalty for multiclassing.
@@ -20565,10 +20632,10 @@ Favored Class (Sorcerer): A multiclass nixie's sorcerer class does not count whe
   <entry id="50778" lang="en" sex="m">Nymph</entry>
   <entry id="50779" lang="en" sex="m">nymph</entry>
   <entry id="50780" lang="en" sex="m">Nymphs</entry>
-  <entry id="50781" lang="en" sex="m">
+  <entry id="50781" lang="en" sex="m">Nymphs are nature's embodiment of physical beauty, and are the guardians of the sacred places of the wild.  They hate evil, and take a dim view on those who despoil nature.  Those who respect the wilds however are often shown kindness, but a nymph's demeneor is mucurial and could change at a moment's notice.  They are most friendly towards elves, half-elves, and druids, knowing them for friends of nature.  Physically nymphs are about the size and weight of a female elf, and are always female themselves.  They are so unbearably lovely they can blind onlookers if the nymph does not take precautions, and the glance of an angry nymph can stun almost any creature.
 
 Nymph Ability Adjustments: +6 Dex, +2 Con, +6 Int, +6 Wis, +8 Cha.
-Favored Class (Druid): A multiclass nymph's druid class does not count when determining whether he suffers an XP penalty for multiclassing.
+Favored Class (Druid): A multiclass nymph's druid class does not count when determining whether she suffers an XP penalty for multiclassing.
 
 - Base movement of 30'
 - Low-Light Vision: Allows them to see better than normal in the dark.
@@ -20582,7 +20649,7 @@ Favored Class (Druid): A multiclass nymph's druid class does not count when dete
   <entry id="50782" lang="en" sex="m">Satyr</entry>
   <entry id="50783" lang="en" sex="m">satyr</entry>
   <entry id="50784" lang="en" sex="m">Satyrs</entry>
-  <entry id="50785" lang="en" sex="m">
+  <entry id="50785" lang="en" sex="m">Satyrs are a hedonistic race of creatures that frolic in the wilds.  They love fine food, strong drink, and passionate romance.  They are more likely to be found carrying a bottle of wine or a musical instrument than a weapon, but they are more than a little mischevious and sometimes seek fun at the expense of others.  Physically about the size of a half-elf, satyrs resemble horned men with the legs and hooves of a goat.  Their hooves and horns are jet black in color, while their hair and fur is usually red or chestnut brown.
 
 Satyr Ability Adjustments: +2 Dex, +2 Con, +2 Int, +2 Wis, +2 Cha.
 Favored Class (Bard): A multiclass satyr's bard class does not count when determining whether he suffers an XP penalty for multiclassing.

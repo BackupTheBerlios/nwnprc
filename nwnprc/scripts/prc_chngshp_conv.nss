@@ -93,6 +93,11 @@ void main()
         case INVOKE_HUMANOID_SHAPE_OPTION:         sQuickslotSource = "Humanoid_Shape_Quick_"; break;
         
         case SPELL_FEYRI_CHANGE_SHAPE_OPTIONS:     sQuickslotSource = "Feyri_Shape_Quick_"; break;
+        
+        case SPELL_RAKSHASA_CHANGE_SHAPE_OPTIONS:  sQuickslotSource = "Rakshasa_Shape_Quick_"; break;
+        
+        case SPELL_DISGUISE_SELF_OPTIONS:          sQuickslotSource = "Disguise_Self_Quick_"; break;
+        case SPELL_ALTER_SELF_OPTIONS:             sQuickslotSource = "Alter_Self_Quick_"; break;
     }
     
     if(nValue == DYNCONV_SETUP_STAGE)
@@ -139,7 +144,9 @@ void main()
                 SetHeader("Select a 'Quick Shift Slot' to change the shape stored in it");
 
                 int i;
-                for(i = 1; i <= 2; i++)
+                //3 quickslots for the spells, 2 otherwise
+                int nLimit = (nSourceSpellId == SPELL_DISGUISE_SELF_OPTIONS || nSourceSpellId == SPELL_ALTER_SELF_OPTIONS) ? 3 : 2;
+                for(i = 1; i <= nLimit; i++)
                     AddChoice(GetStringByStrRef(16828374) + " " + IntToString(i) + " - " // "Quick Shift Slot N - "
                             + (GetPersistantLocalString(oPC, sQuickslotSource + IntToString(i) + "_ResRef") != "" ?
                                GetPersistantLocalString(oPC, sQuickslotSource + IntToString(i) + "_Name") :
@@ -193,6 +200,7 @@ void main()
     {
         // Add any locals set through this conversation
         DeleteLocalInt(oPC, QSMODIFYVAR);
+        DeleteLocalInt(oPC, "ChangeShapeConfig");
     }
     // Abort conversation cleanup.
     // NOTE: This section is only run when the conversation is aborted

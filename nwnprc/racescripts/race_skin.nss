@@ -271,6 +271,20 @@ void main()
         IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
     }
 
+    //fire resistance 10
+    if(GetHasFeat(FEAT_RESIST_FIRE_10))
+    {
+        itemproperty ipIP =ItemPropertyDamageResistance(IP_CONST_DAMAGETYPE_FIRE, IP_CONST_DAMAGERESIST_10);
+        IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+    }
+
+    //cold resistance 10
+    if(GetHasFeat(FEAT_RESIST_COLD_10))
+    {
+        itemproperty ipIP =ItemPropertyDamageResistance(IP_CONST_DAMAGETYPE_COLD, IP_CONST_DAMAGERESIST_10);
+        IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+    }
+
     // Very Heroic, +2 to all saving throws
     if(GetHasFeat(FEAT_VERYHEROIC))
     {
@@ -335,12 +349,6 @@ void main()
     if(GetHasFeat(FEAT_KEEN_SIGHT))
     {
         SetCompositeBonus(oSkin, "Keen_Sight", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_SPOT);
-    }
-
-    // Bird's Eye, +6 to spot
-    if(GetHasFeat(FEAT_BIRDSEYE))
-    {
-        SetCompositeBonus(oSkin, "Birdseye", 6, ITEM_PROPERTY_SKILL_BONUS, SKILL_SPOT);
     }
 
     // Skill Affinity, +4 to listen

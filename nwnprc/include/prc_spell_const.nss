@@ -436,7 +436,6 @@ const int SPELL_PNP_SCARE                           = 1789;
 
 //racial spell additions
 const int SPELL_RAKSHASA_DISGUISE                   = 1951;
-const int SPELL_RAKSHASA_REVERT                     = 1952;
 const int SPELL_FEYRI_ALTER                         = 1955;
 const int SPELL_NIXIE_WATERBREATHING                = 1956;
 const int SPELL_URDINNIR_STONESKIN                  = 1957;
@@ -513,6 +512,11 @@ const int SPELL_BRALANI_LIGHTNING_BOLT              = 2917;
 const int SPELL_BRALANI_CURE_SERIOUS_WOUNDS         = 2918;
 const int SPELL_BRALANI_MIRROR_IMAGE                = 2920;
 const int SPELL_BRALANI_GUST_OF_WIND                = 2919;   
+const int SPELL_RAKSHASA_CHANGE_SHAPE_LEARN         = 2962;          
+const int SPELL_RAKSHASA_CHANGE_SHAPE_OPTIONS       = 2963;      
+const int SPELL_RAKSHASA_CHANGE_SHAPE_TRUE          = 2964;     
+const int SPELL_RAKSHASA_CHANGE_SHAPE_QS1           = 2965;    
+const int SPELL_RAKSHASA_CHANGE_SHAPE_QS2           = 2966;          
 
 
 // Poison system spells
@@ -821,6 +825,17 @@ const int SPELL_HEAL_ANIMAL_COMPANION               = 3709;
 const int SPELL_SHADOW_ARROW                        = 3710;
 const int SPELL_SNARE                               = 3711;
 const int SPELL_SPELLSLAYER_ARROW                   = 3712;
+   
+const int SPELL_DISGUISE_SELF_LEARN                 = 2840;          
+const int SPELL_DISGUISE_SELF_OPTIONS               = 2841;      
+const int SPELL_DISGUISE_SELF_QS1                   = 2842;     
+const int SPELL_DISGUISE_SELF_QS2                   = 2843;    
+const int SPELL_DISGUISE_SELF_QS3                   = 2844;   
+const int SPELL_ALTER_SELF_LEARN                    = 2846;          
+const int SPELL_ALTER_SELF_OPTIONS                  = 2847;      
+const int SPELL_ALTER_SELF_QS1                      = 2848;     
+const int SPELL_ALTER_SELF_QS2                      = 2849;    
+const int SPELL_ALTER_SELF_QS3                      = 2850;   
 
 // Passive feats
 const int SPELL_FORCE_PERSONALITY                   = 1915;

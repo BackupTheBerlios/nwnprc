@@ -63,9 +63,12 @@ const int RACIAL_TYPE_XIXCHIL              = 181;
 
 /* Generic Type Races */
 
-
 //Racial Type constant
 const int RACIAL_TYPE_PLANT                = 52;
+
+//Draconic Races
+const int RACIAL_TYPE_DRAGONBORN           = 128;
+const int RACIAL_TYPE_SPELLSCALE           = 129;
 
 //Fey-type Races
 const int RACIAL_TYPE_BRALANI              = 159;
@@ -138,6 +141,7 @@ const int RACIAL_TYPE_PURE_YUAN            = 220;
 const int RACIAL_TYPE_SAHUAGIN             = 71;
 const int RACIAL_TYPE_SK_YUANTI            = 233;
 const int RACIAL_TYPE_TREN                 = 72;
+const int RACIAL_TYPE_VILETOOTH_LIZARDFOLK = 112;
 
 //Underdark Races
 const int RACIAL_TYPE_ARANEA               = 74;
@@ -154,6 +158,8 @@ const int RACIAL_TYPE_UMBER_HULK           = 79;
 //Other Monsterous Races
 const int RACIAL_TYPE_CENTAUR              = 208;
 const int RACIAL_TYPE_CATFOLK              = 209;
+const int RACIAL_TYPE_DIABOLUS             = 113;
+const int RACIAL_TYPE_DIOPSID              = 114;
 const int RACIAL_TYPE_DRAGONKIN            = 58;
 const int RACIAL_TYPE_ETTERCAP             = 73;
 const int RACIAL_TYPE_FIRENEWT             = 59;
@@ -162,22 +168,58 @@ const int RACIAL_TYPE_HAGSPAWN             = 57;
 const int RACIAL_TYPE_KIRLANAN             = 60;
 const int RACIAL_TYPE_LUPIN                = 186;
 const int RACIAL_TYPE_PTERAFOLK            = 61;
+const int RACIAL_TYPE_RAPTORAN             = 130;
 const int RACIAL_TYPE_SAURIAL_BLADEBACK    = 62;
 const int RACIAL_TYPE_SAURIAL_FINHEAD      = 63;
 const int RACIAL_TYPE_SAURIAL_FLYER        = 64;
 const int RACIAL_TYPE_SAURIAL_HORNHEAD     = 65;
 const int RACIAL_TYPE_TAER                 = 66;
-const int RACIAL_TYPE_TORTLE               = 188;
+const int RACIAL_TYPE_TORTLE               = 118;
 const int RACIAL_TYPE_VOLODNI              = 131;
 const int RACIAL_TYPE_WEMIC                = 51;
 
+//Frostburn
+const int RACIAL_TYPE_FROST_FOLK           = 137;
+const int RACIAL_TYPE_NEANDERTHAL          = 138;
+const int RACIAL_TYPE_ULDRA                = 139;
+
+//Magic of Incarnum
+const int RACIAL_TYPE_AZURIN               = 124;
+const int RACIAL_TYPE_DUSKLING             = 125;
+const int RACIAL_TYPE_RILKAN               = 126;
+const int RACIAL_TYPE_SKARN                = 127;
+
+//Races of Destiny
+const int RACIAL_TYPE_DOPPELGANGER         = 119;
+const int RACIAL_TYPE_ILLUMIAN             = 120;
+const int RACIAL_TYPE_MONGRELFOLK          = 121;
+const int RACIAL_TYPE_SHARAKIM             = 122;
+const int RACIAL_TYPE_UNDERFOLK            = 123;
+
+//Races of Stone
+const int RACIAL_TYPE_FERAL_GARGUN         = 169;
+const int RACIAL_TYPE_GOLIATH              = 170;
+const int RACIAL_TYPE_STONECHILD           = 171;
+
+//Sandstorm
+const int RACIAL_TYPE_ASHERATI             = 115;
+const int RACIAL_TYPE_BHUKA                = 116;
+
+//Stormwrack
+const int RACIAL_TYPE_DARFELLAN            = 117;
+
+
 /* Standard Races */
+
+//Human
+const int RACIAL_TYPE_SILVERBROW_HUMAN     = 110;
 
 //Elf
 const int RACIAL_TYPE_AQELF                = 161;
 const int RACIAL_TYPE_AVARIEL              = 162;
 const int RACIAL_TYPE_DROW_FEMALE          = 163;
 const int RACIAL_TYPE_DROW_MALE            = 164;
+const int RACIAL_TYPE_FORESTLORD_ELF       = 107;
 const int RACIAL_TYPE_HALFDROW             = 183;
 const int RACIAL_TYPE_SNOW_ELF             = 165;
 const int RACIAL_TYPE_STAR_ELF             = 160;
@@ -188,6 +230,7 @@ const int RACIAL_TYPE_WOOD_ELF             = 168;
 //Dwarf
 const int RACIAL_TYPE_ARC_DWARF            = 151;
 const int RACIAL_TYPE_DREAM_DWARF          = 157;
+const int RACIAL_TYPE_FIREBLOOD_DWARF      = 106;
 const int RACIAL_TYPE_FROST_DWARF          = 158;
 const int RACIAL_TYPE_GOLD_DWARF           = 152;
 const int RACIAL_TYPE_DUERGAR              = 153;
@@ -208,20 +251,12 @@ const int RACIAL_TYPE_WHISPER_GNOME        = 179;
 //Halfling
 const int RACIAL_TYPE_DEEP_HALFLING        = 194;
 const int RACIAL_TYPE_GHOSTWISE_HALFLING   = 190;
+const int RACIAL_TYPE_GLIMMERSKIN_HALFING  = 109;
 const int RACIAL_TYPE_JARREN               = 189;
+const int RACIAL_TYPE_SHOAL_HALFLING       = 188;
 const int RACIAL_TYPE_STRONGHEART_HALFLING = 192;
 const int RACIAL_TYPE_TALLFELLOW_HALFLING  = 193;
 const int RACIAL_TYPE_TUNDRA_HALFLING      = 191;
-
-//Frostburn
-const int RACIAL_TYPE_FROST_FOLK           = 137;
-const int RACIAL_TYPE_NEANDERTHAL          = 138;
-const int RACIAL_TYPE_ULDRA                = 139;
-
-//Races of Stone
-const int RACIAL_TYPE_FERAL_GARGUN         = 169;
-const int RACIAL_TYPE_GOLIATH              = 170;
-const int RACIAL_TYPE_STONECHILD           = 171;
 
 //Goblin
 const int RACIAL_TYPE_BLUE_GOBLIN          = 143;
@@ -232,6 +267,7 @@ const int RACIAL_TYPE_SNOW_GOBLIN          = 141;
 //"Greenskin" Races
 const int RACIAL_TYPE_BUGBEAR              = 217;
 const int RACIAL_TYPE_FLIND                = 247;
+const int RACIAL_TYPE_FROSTBLOOD_ORC       = 108;
 const int RACIAL_TYPE_GNOLL                = 216;
 const int RACIAL_TYPE_GRAYORC              = 184;
 const int RACIAL_TYPE_HALFOGRE             = 229;
@@ -242,6 +278,7 @@ const int RACIAL_TYPE_OGRE                 = 212;
 const int RACIAL_TYPE_OMAGE                = 211;
 const int RACIAL_TYPE_OROG                 = 187;
 const int RACIAL_TYPE_ORC                  = 214;
+const int RACIAL_TYPE_SUNSCORCH_HOBGOBLIN  = 111;
 const int RACIAL_TYPE_TROLL                = 231;
 
 

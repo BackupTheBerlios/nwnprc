@@ -229,7 +229,7 @@
 225 FEAT_READ_RECIPE                               2919      3    1              1      
 226 FEAT_SPELLS_TOUCH_ATTACK                       4092      3    1              1      
 227 FEAT_SPELLS_HOLD_CHARGE_TOGGLE                 4095      3    1              1      
-228 EndScrying                                     2468      3    1              1      
+228 EndSpellEffects                                2468      3    1              1      
 229 ****                                           ****      **** ****           ****   
 230 **GeneralActivatableFeats**                    ****      **** ****           ****   
 231 FEAT_INSCRIBE_RUNE                             2462      0    -1             1      
@@ -328,7 +328,7 @@
 324 FEAT_SVIRF_DISGUISE                            4654      0    99             1      
 325 FEAT_SVIRF_REVERT                              4655      0    99             1      
 326 FEAT_RAK_DISGUISE                              4656      0    99             1      
-327 FEAT_RAK_REVERT                                4657      0    99             1      
+327 FEAT_RAK_CHANGE_SHAPE                          4657      0    99             1      
 328 FEAT_PYUAN_CHARM                               4658      0    99             1      
 329 FEAT_PYUAN_DARKNESS                            4659      0    99             1      
 330 FEAT_PYUAN_ENTANGLE                            4660      0    99             1      

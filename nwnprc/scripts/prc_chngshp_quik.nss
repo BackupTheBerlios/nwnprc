@@ -31,12 +31,20 @@ void main()
     {
         case SPELL_IRDA_CHANGE_SHAPE_QS1:       nSlot = 1; sSource = "Irda_Shape_Quick_"; break;
         case SPELL_FEYRI_CHANGE_SHAPE_QS1:      nSlot = 1; sSource = "Feyri_Shape_Quick_"; break;
+        case SPELL_RAKSHASA_CHANGE_SHAPE_QS1:   nSlot = 1; sSource = "Rakshasa_Shape_Quick_"; break;
+        case SPELL_DISGUISE_SELF_QS1:           nSlot = 1; sSource = "Disguise_Self_Quick_"; break;
+        case SPELL_ALTER_SELF_QS1:              nSlot = 1; sSource = "Alter_Self_Quick_"; break;
         case SPELL_CHANGLING_CHANGE_SHAPE_QS1:
         case SPELL_QUICK_CHANGE_SHAPE_QS1:      nSlot = 1; sSource = "Changeling_Shape_Quick_"; break;
         case SPELL_IRDA_CHANGE_SHAPE_QS2:       nSlot = 2; sSource = "Irda_Shape_Quick_"; break;
         case SPELL_CHANGLING_CHANGE_SHAPE_QS2:
         case SPELL_QUICK_CHANGE_SHAPE_QS2:      nSlot = 2; sSource = "Changeling_Shape_Quick_"; break;
         case SPELL_FEYRI_CHANGE_SHAPE_QS2:      nSlot = 2; sSource = "Feyri_Shape_Quick_"; break;
+        case SPELL_RAKSHASA_CHANGE_SHAPE_QS2:   nSlot = 2; sSource = "Rakshasa_Shape_Quick_"; break;
+        case SPELL_DISGUISE_SELF_QS2:           nSlot = 2; sSource = "Disguise_Self_Quick_"; break;
+        case SPELL_ALTER_SELF_QS2:              nSlot = 2; sSource = "Alter_Self_Quick_"; break;
+        case SPELL_DISGUISE_SELF_QS3:           nSlot = 3; sSource = "Disguise_Self_Quick_"; break;
+        case SPELL_ALTER_SELF_QS3:              nSlot = 3; sSource = "Alter_Self_Quick_"; break;
 
         default:
             if(DEBUG) DoDebug("prc_chngshp_quik: ERROR: Unknown nSpellID value: " + IntToString(nSpellID));

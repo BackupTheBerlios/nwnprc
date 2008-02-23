@@ -26,11 +26,14 @@
 /*                 Constants                    */
 //////////////////////////////////////////////////
 
-const int SHIFTER_TYPE_NONE        = 0;
-const int SHIFTER_TYPE_SHIFTER     = 1;
-const int SHIFTER_TYPE_SOULEATER   = 2;
-const int SHIFTER_TYPE_POLYMORPH   = 3;
-const int SHIFTER_TYPE_CHANGESHAPE = 4;
+const int SHIFTER_TYPE_NONE          = 0;
+const int SHIFTER_TYPE_SHIFTER       = 1;
+const int SHIFTER_TYPE_SOULEATER     = 2;
+const int SHIFTER_TYPE_POLYMORPH     = 3;
+const int SHIFTER_TYPE_CHANGESHAPE   = 4;
+const int SHIFTER_TYPE_HUMANOIDSHAPE = 5;
+const int SHIFTER_TYPE_ALTER_SELF    = 6;
+const int SHIFTER_TYPE_DISGUISE_SELF = 7;
 
 const int SHIFTER_ABILITIESITEM_MAXPROPS = 8;
 
@@ -130,6 +133,8 @@ struct appearancevalues{
     string sPortraitResRef;
     /// The footstep type
     int nFootStepType;
+    ///The gender
+    int nGender;
 };
 
 //////////////////////////////////////////////////
@@ -364,6 +369,14 @@ void SetPersistantLocalAppearancevalues(object oStore, string sName, struct appe
  * @param sName  The name of the local variable
  */
 void DeletePersistantLocalAppearancevalues(object oStore, string sName);
+
+/**
+ * Forces an unshift if spell duration ends, for ALter Self, etc.  If player 
+ * unshifts before then, fuction will recognize it's a new shift and do nothing.
+ *
+ * @param oShifter The object to force an unshift if needed
+ */
+void ForceUnshift(object oShifter);
 
 /**
  * Creates a string containing the values of the fields of the given appearancevalues
@@ -910,8 +923,12 @@ void _prc_inc_shifting_ShiftIntoTemplateAux(object oShifter, int nShifterType, o
         for(i = 0; i < NUM_INVENTORY_SLOTS; i++)
             nNaturalAC -= GetItemACValue(GetItemInSlot(i, oTemplate));
 
-        // If there is any AC bonus to apply - Change Shape doesn't get it
-        if(nNaturalAC > 0 && nShifterType != SHIFTER_TYPE_CHANGESHAPE)
+        // If there is any AC bonus to apply - Change Shape doesn't get it, Alter Self does
+        if(nNaturalAC > 0 && (nShifterType != SHIFTER_TYPE_CHANGESHAPE || GetSpellId() == SPELL_ALTER_SELF_LEARN ||
+                               GetLocalInt(oShifter, "ChangeShapeConfig") == SPELL_ALTER_SELF_OPTIONS ||
+                               GetSpellId() == SPELL_ALTER_SELF_QS1 ||
+                               GetSpellId() == SPELL_ALTER_SELF_QS2 ||
+                               GetSpellId() == SPELL_ALTER_SELF_QS3))
         {
             bNeedSpellCast = TRUE;
             SetLocalInt(oShifter, "PRC_Shifter_NaturalAC", nNaturalAC);
@@ -1437,6 +1454,12 @@ int GetCanShiftIntoCreature(object oShifter, int nShifterType, object oTemplate)
                 // "You need X more character levels before you can take on that form."
                 SendMessageToPC(oShifter, GetStringByStrRef(STRREF_YOUNEED) + " " + IntToString(nTemplateHD - nShifterHD) + " " + GetStringByStrRef(STRREF_MORECHARLVL));
             }
+            
+            if(GetSpellId() == SPELL_ALTER_SELF_LEARN && nTemplateHD > 5)
+            {
+                bReturn = FALSE;
+                SendMessageToPC(oShifter, "This creature is too high a level to copy with this spell.");
+            }
         }// end if - Checking HD or CR
 
         // Move onto shifting type-specific checks if there haven't been any problems yet
@@ -1524,7 +1547,8 @@ int GetCanShiftIntoCreature(object oShifter, int nShifterType, object oTemplate)
             {
                 //Humanoid Shape check
                 if(GetSpellId() == INVOKE_HUMANOID_SHAPE_LEARN ||
-                   GetSpellId() == SPELL_FEYRI_CHANGE_SHAPE_LEARN) 
+                   GetSpellId() == SPELL_FEYRI_CHANGE_SHAPE_LEARN ||
+                   GetSpellId() == SPELL_RAKSHASA_CHANGE_SHAPE_LEARN) 
                 {                    
                     int nTargetSize        = PRCGetCreatureSize(oTemplate);
                     int nRacialType        = MyPRCGetRacialType(oTemplate);
@@ -1627,7 +1651,29 @@ int GetCanShiftIntoCreature(object oShifter, int nShifterType, object oTemplate)
                         SendMessageToPC(oShifter, "This creature is too large or too small.");
                     }
                     
-                    if(nTargetRacialType != nShifterRacialType)
+                    if(!(nTargetRacialType == nShifterRacialType ||
+                       //check for humanoid type
+                       ((nTargetRacialType == RACIAL_TYPE_DWARF            ||
+                       nTargetRacialType == RACIAL_TYPE_ELF                ||
+                       nTargetRacialType == RACIAL_TYPE_GNOME              ||
+                       nTargetRacialType == RACIAL_TYPE_HUMAN              ||
+                       nTargetRacialType == RACIAL_TYPE_HALFORC            ||
+                       nTargetRacialType == RACIAL_TYPE_HALFELF            ||
+                       nTargetRacialType == RACIAL_TYPE_HALFLING           ||
+                       nTargetRacialType == RACIAL_TYPE_HUMANOID_ORC       ||
+                       nTargetRacialType == RACIAL_TYPE_HUMANOID_REPTILIAN
+                       ) &&
+                       (nShifterRacialType == RACIAL_TYPE_DWARF            ||
+                       nShifterRacialType == RACIAL_TYPE_ELF                ||
+                       nShifterRacialType == RACIAL_TYPE_GNOME              ||
+                       nShifterRacialType == RACIAL_TYPE_HUMAN              ||
+                       nShifterRacialType == RACIAL_TYPE_HALFORC            ||
+                       nShifterRacialType == RACIAL_TYPE_HALFELF            ||
+                       nShifterRacialType == RACIAL_TYPE_HALFLING           ||
+                       nShifterRacialType == RACIAL_TYPE_HUMANOID_ORC       ||
+                       nShifterRacialType == RACIAL_TYPE_HUMANOID_REPTILIAN
+                       ))
+                       ))
                     {
                         bReturn = FALSE;
                         SendMessageToPC(oShifter, "This creature is a different racial type.");
@@ -1742,6 +1788,7 @@ int UnShift(object oShifter, int bRemovePoly = TRUE, int bIgnoreShiftingMutex = 
     else
     {
         _prc_inc_shifting_UnShiftAux(oShifter, SHIFTER_TYPE_NONE, OBJECT_INVALID, FALSE);
+        DeletePersistantLocalInt(oShifter, "TempShifted");
         return UNSHIFT_SUCCESS;
     }
 }
@@ -1784,6 +1831,8 @@ struct appearancevalues GetAppearanceData(object oTemplate)
     appval.sPortraitResRef         = GetPortraitResRef(oTemplate);
     // Footstep type
     appval.nFootStepType           = GetFootstepType(oTemplate);
+    // Gender
+    appval.nGender                 = GetGender(oTemplate);
 
 
     return appval;
@@ -1830,6 +1879,17 @@ void SetAppearanceData(object oTarget, struct appearancevalues appval)
     // Otherwise, use the portrait resref. This will set portrait ID to PORTRAIT_INVALID
     else
         SetPortraitResRef(oTarget, appval.sPortraitResRef);
+        
+    //replace with SetGender if 1.69 adds it
+    if(GetGender(oTarget) != appval.nGender && appval.nAppearanceType < 7)
+    {
+        if(GetFirstArcaneClass(oTarget) != CLASS_TYPE_INVALID)
+            SetPortraitId(oTarget, 1061); //generic wizard port
+        else if(GetFirstDivineClass(oTarget) != CLASS_TYPE_INVALID)
+            SetPortraitId(oTarget, 1033); //generic cleric port
+        else
+            SetPortraitId(oTarget, 1043); //generic fighter port
+    }
 }
 
 struct appearancevalues GetLocalAppearancevalues(object oStore, string sName)
@@ -1867,6 +1927,8 @@ struct appearancevalues GetLocalAppearancevalues(object oStore, string sName)
     appval.sPortraitResRef         = GetLocalString(oStore, sName + "sPortraitResRef");
     // Footstep type
     appval.nFootStepType           = GetLocalInt(oStore, sName + "nFootStepType");
+    // Gender
+    appval.nGender                 = GetLocalInt(oStore, sName + "nGender");
 
 
     return appval;
@@ -1906,6 +1968,8 @@ void SetLocalAppearancevalues(object oStore, string sName, struct appearancevalu
     SetLocalString(oStore, sName + "sPortraitResRef"     , appval.sPortraitResRef         );
     // Footstep type
     SetLocalInt(oStore, sName + "nFootStepType"          , appval.nFootStepType           );
+    //Gender
+    SetLocalInt(oStore, sName + "nGender"                , appval.nGender                 );
 }
 
 void DeleteLocalAppearancevalues(object oStore, string sName)
@@ -1942,6 +2006,8 @@ void DeleteLocalAppearancevalues(object oStore, string sName)
     DeleteLocalString(oStore, sName + "sPortraitResRef");
     // Footstep type
     DeleteLocalInt(oStore, sName + "nFootStepType");
+    // Gender
+    DeleteLocalInt(oStore, sName + "nGender");
 }
 
 struct appearancevalues GetPersistantLocalAppearancevalues(object oStore, string sName)
@@ -1960,6 +2026,12 @@ void DeletePersistantLocalAppearancevalues(object oStore, string sName)
 {
     object oToken = GetHideToken(oStore);
     DeleteLocalAppearancevalues(oToken, sName);
+}
+
+void ForceUnshift(object oShifter)
+{
+    if(GetPersistantLocalInt(oShifter, "TempShifted") == TRUE)
+        UnShift(oShifter);
 }
 
 string DebugAppearancevalues2Str(struct appearancevalues appval)
@@ -1989,6 +2061,7 @@ string DebugAppearancevalues2Str(struct appearancevalues appval)
          + "Portrait ID                = " + (appval.nPortraitID == PORTRAIT_INVALID ? "PORTRAIT_INVALID" : IntToString(appval.nPortraitID)) + "\n"
          + "Portrait ResRef            = " + appval.sPortraitResRef + "\n"
          + "Footstep type              = " + IntToString(appval.nFootStepType) + "\n"
+         + "Gender                     = " + IntToString(appval.nGender) + "\n"
          ;
 }
 

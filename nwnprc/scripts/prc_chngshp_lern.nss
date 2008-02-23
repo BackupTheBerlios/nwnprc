@@ -22,18 +22,30 @@ void main()
     object oPC     = OBJECT_SELF;
     object oTarget = PRCGetSpellTargetObject();
     int nSpellID   = GetSpellId();
+    int nShiftType;
+    
+    switch(nSpellID)
+    {
+        case SPELL_IRDA_CHANGE_SHAPE_LEARN:       
+        case SPELL_FEYRI_CHANGE_SHAPE_LEARN:      
+        case SPELL_RAKSHASA_CHANGE_SHAPE_LEARN:   nShiftType = SHIFTER_TYPE_HUMANOIDSHAPE; break;
+        case SPELL_ALTER_SELF_LEARN:              nShiftType = SHIFTER_TYPE_ALTER_SELF; break;
+        case SPELL_DISGUISE_SELF_LEARN:           
+        case SPELL_CHANGLING_CHANGE_SHAPE_LEARN:
+        case SPELL_QUICK_CHANGE_SHAPE_LEARN:      nShiftType = SHIFTER_TYPE_DISGUISE_SELF; break;
+    }
 
     // Store the PC's current appearance as true appearance
     /// @note This may be a bad idea, we have no way of knowing if the current appearance really is the "true appearance" - Ornedan
     StoreCurrentAppearanceAsTrueAppearance(oPC, TRUE);
 
     // See if the creature is shiftable to. If so, store it as a template and shift
-    if(GetCanShiftIntoCreature(oPC, SHIFTER_TYPE_CHANGESHAPE, oTarget))
+    if(GetCanShiftIntoCreature(oPC, nShiftType, oTarget))
     {
-        StoreShiftingTemplate(oPC, SHIFTER_TYPE_CHANGESHAPE, oTarget);
+        StoreShiftingTemplate(oPC, nShiftType, oTarget);
         
         // Start shifting. If this fails immediately, refund the shifting use
-        if(!ShiftIntoCreature(oPC, SHIFTER_TYPE_CHANGESHAPE, oTarget))
+        if(!ShiftIntoCreature(oPC, nShiftType, oTarget))
         {
             // In case of shifting failure, refund the shifting use
             if(nSpellID == SPELL_IRDA_CHANGE_SHAPE_LEARN)

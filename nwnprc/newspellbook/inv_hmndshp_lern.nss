@@ -31,20 +31,24 @@ void main()
     object oPC     = OBJECT_SELF;
     object oTarget = PRCGetSpellTargetObject();
     int nSpellID   = GetSpellId();
+    
+    SetLocalInt(oPC, "HumanoidShapeInvocation", TRUE);
 
     // Store the PC's current appearance as true appearance
     /// @note This may be a bad idea, we have no way of knowing if the current appearance really is the "true appearance" - Ornedan
     StoreCurrentAppearanceAsTrueAppearance(oPC, TRUE);
 
     // See if the creature is shiftable to. If so, store it as a template and shift
-    if(GetCanShiftIntoCreature(oPC, SHIFTER_TYPE_CHANGESHAPE, oTarget))
+    if(GetCanShiftIntoCreature(oPC, SHIFTER_TYPE_HUMANOIDSHAPE, oTarget))
     {
-        StoreShiftingTemplate(oPC, SHIFTER_TYPE_CHANGESHAPE, oTarget);
+        StoreShiftingTemplate(oPC, SHIFTER_TYPE_HUMANOIDSHAPE, oTarget);
 
         // Start shifting.
-        if(!ShiftIntoCreature(oPC, SHIFTER_TYPE_CHANGESHAPE, oTarget))
+        if(!ShiftIntoCreature(oPC, SHIFTER_TYPE_HUMANOIDSHAPE, oTarget))
         {
             
         }
     }
+    
+    DeleteLocalInt(oPC, "HumanoidShapeInvocation");
 }

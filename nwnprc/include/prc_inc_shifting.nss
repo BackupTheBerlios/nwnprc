@@ -371,12 +371,14 @@ void SetPersistantLocalAppearancevalues(object oStore, string sName, struct appe
 void DeletePersistantLocalAppearancevalues(object oStore, string sName);
 
 /**
- * Forces an unshift if spell duration ends, for ALter Self, etc.  If player 
+ * Forces an unshift if spell duration ends, for Alter Self, etc.  If player 
  * unshifts before then, fuction will recognize it's a new shift and do nothing.
  *
- * @param oShifter The object to force an unshift if needed
+ * @param oShifter       The object to force an unshift if needed
+ * @param nShifterNumber a number to check against to make sure DelayCommand 
+ *                       doesn't end the wrong shift
  */
-void ForceUnshift(object oShifter);
+void ForceUnshift(object oShifter, int nShiftedNumber);
 
 /**
  * Creates a string containing the values of the fields of the given appearancevalues
@@ -742,7 +744,8 @@ void _prc_inc_shifting_ShiftIntoTemplateAux(object oShifter, int nShifterType, o
         object oTemplateCWpB = GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oTemplate);
 
         //Hide isn't modified for Change Shape - Special Qualities don't transfer
-        if(nShifterType != SHIFTER_TYPE_CHANGESHAPE)
+        if(nShifterType != SHIFTER_TYPE_CHANGESHAPE &&
+           nShifterType != SHIFTER_TYPE_HUMANOIDSHAPE)
         {
             // Handle hide
             // Nuke old props and composite bonus tracking - they will be re-evaluated later
@@ -756,7 +759,7 @@ void _prc_inc_shifting_ShiftIntoTemplateAux(object oShifter, int nShifterType, o
             /*DelayCommand(0.05, */AssignCommand(oShifter, ActionEquipItem(oShifterHide, INVENTORY_SLOT_CARMOUR))/*)*/;
         }
         //Changlings don't get the natural attacks
-        if(!(nShifterType == SHIFTER_TYPE_CHANGESHAPE && GetRacialType(oShifter) == RACIAL_TYPE_CHANGELING))
+        if(nShifterType != SHIFTER_TYPE_DISGUISE_SELF)
         {
             // Handle creature weapons - replace any old weapons with new
             // Delete old natural weapons
@@ -786,7 +789,10 @@ void _prc_inc_shifting_ShiftIntoTemplateAux(object oShifter, int nShifterType, o
         }
 
         // Ability score adjustments - doesn't apply to Change Shape
-        if(nShifterType != SHIFTER_TYPE_CHANGESHAPE)
+        if(nShifterType != SHIFTER_TYPE_CHANGESHAPE &&
+           nShifterType != SHIFTER_TYPE_HUMANOIDSHAPE &&
+           nShifterType != SHIFTER_TYPE_ALTER_SELF &&
+           nShifterType != SHIFTER_TYPE_DISGUISE_SELF)
         {
             // Get the base delta
             int nDeltaSTR = GetAbilityScore(oTemplate, ABILITY_STRENGTH,     TRUE) - GetAbilityScore(oShifter, ABILITY_STRENGTH,     TRUE);
@@ -924,11 +930,9 @@ void _prc_inc_shifting_ShiftIntoTemplateAux(object oShifter, int nShifterType, o
             nNaturalAC -= GetItemACValue(GetItemInSlot(i, oTemplate));
 
         // If there is any AC bonus to apply - Change Shape doesn't get it, Alter Self does
-        if(nNaturalAC > 0 && (nShifterType != SHIFTER_TYPE_CHANGESHAPE || GetSpellId() == SPELL_ALTER_SELF_LEARN ||
-                               GetLocalInt(oShifter, "ChangeShapeConfig") == SPELL_ALTER_SELF_OPTIONS ||
-                               GetSpellId() == SPELL_ALTER_SELF_QS1 ||
-                               GetSpellId() == SPELL_ALTER_SELF_QS2 ||
-                               GetSpellId() == SPELL_ALTER_SELF_QS3))
+        if(nNaturalAC > 0 && (nShifterType != SHIFTER_TYPE_CHANGESHAPE && 
+                              nShifterType != SHIFTER_TYPE_HUMANOIDSHAPE && 
+                              nShifterType != SHIFTER_TYPE_DISGUISE_SELF ))
         {
             bNeedSpellCast = TRUE;
             SetLocalInt(oShifter, "PRC_Shifter_NaturalAC", nNaturalAC);
@@ -977,11 +981,18 @@ void _prc_inc_shifting_ShiftIntoTemplateAux(object oShifter, int nShifterType, o
 
         // Set a local variable to override racial type. Offset by +1 to differentiate value 0 from non-existence
         //Change shape doesn't include this, but there is a feat that gives it to Changelings
-        if(nShifterType != SHIFTER_TYPE_CHANGESHAPE || GetHasFeat(FEAT_RACIAL_EMULATION))
+        if((nShifterType != SHIFTER_TYPE_CHANGESHAPE 
+            && nShifterType != SHIFTER_TYPE_HUMANOIDSHAPE 
+            && nShifterType != SHIFTER_TYPE_ALTER_SELF 
+            && nShifterType != SHIFTER_TYPE_DISGUISE_SELF) 
+           || GetHasFeat(FEAT_RACIAL_EMULATION))
             SetLocalInt(oShifter, SHIFTER_OVERRIDE_RACE, MyPRCGetRacialType(oTemplate) + 1);
 
         // Heal as if rested - this is a side-effect of polymorphing - doesn't apply to Change Shape
-        if(nShifterType != SHIFTER_TYPE_CHANGESHAPE)
+        if(nShifterType != SHIFTER_TYPE_CHANGESHAPE 
+           && nShifterType != SHIFTER_TYPE_HUMANOIDSHAPE 
+           && nShifterType != SHIFTER_TYPE_ALTER_SELF 
+           && nShifterType != SHIFTER_TYPE_DISGUISE_SELF)
             ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(GetHitDice(oShifter) * d4()), oShifter);
 
         // Some VFX
@@ -1001,6 +1012,31 @@ void _prc_inc_shifting_ShiftIntoTemplateAux(object oShifter, int nShifterType, o
 
         // Set the shiftedness marker
         SetPersistantLocalInt(oShifter, SHIFTER_ISSHIFTED_MARKER, TRUE);
+        
+        if(nShifterType == SHIFTER_TYPE_ALTER_SELF || 
+          (nShifterType == SHIFTER_TYPE_DISGUISE_SELF && GetRacialType(oShifter) != RACIAL_TYPE_CHANGELING))
+        {
+            int nShiftedNumber = GetPersistantLocalInt(oShifter, "nTimesShifted");
+            if(nShiftedNumber > 9) nShiftedNumber = 0;
+            nShiftedNumber++;
+            SetPersistantLocalInt(oShifter, "nTimesShifted", nShiftedNumber);
+            int nMetaMagic = PRCGetMetaMagicFeat();
+            int nDuration = PRCGetCasterLevel(oShifter) * 10;
+            if ((nMetaMagic & METAMAGIC_EXTEND))
+            {
+                nDuration *= 2;
+            }
+            DelayCommand(TurnsToSeconds(nDuration), ForceUnshift(oShifter, nShiftedNumber));
+        }
+        
+        else if(GetLocalInt(oShifter, "HumanoidShapeInvocation"))
+        {
+            int nShiftedNumber = GetPersistantLocalInt(oShifter, "nTimesShifted");
+            if(nShiftedNumber > 9) nShiftedNumber = 0;
+            nShiftedNumber++;
+            SetPersistantLocalInt(oShifter, "nTimesShifted", nShiftedNumber);
+            DelayCommand(HoursToSeconds(24), ForceUnshift(oShifter, nShiftedNumber));
+        }
 
         // Run the class & feat evaluation code
         // In case of TMIs, add two domino blocks
@@ -1455,7 +1491,7 @@ int GetCanShiftIntoCreature(object oShifter, int nShifterType, object oTemplate)
                 SendMessageToPC(oShifter, GetStringByStrRef(STRREF_YOUNEED) + " " + IntToString(nTemplateHD - nShifterHD) + " " + GetStringByStrRef(STRREF_MORECHARLVL));
             }
             
-            if(GetSpellId() == SPELL_ALTER_SELF_LEARN && nTemplateHD > 5)
+            if(nShifterType == SHIFTER_TYPE_ALTER_SELF && nTemplateHD > 5)
             {
                 bReturn = FALSE;
                 SendMessageToPC(oShifter, "This creature is too high a level to copy with this spell.");
@@ -1543,141 +1579,109 @@ int GetCanShiftIntoCreature(object oShifter, int nShifterType, object oTemplate)
             }// end if - PnP Shifter checks
         
             //Change Shape checks
-            if(nShifterType == SHIFTER_TYPE_CHANGESHAPE)
-            {
-                //Humanoid Shape check
-                if(GetSpellId() == INVOKE_HUMANOID_SHAPE_LEARN ||
-                   GetSpellId() == SPELL_FEYRI_CHANGE_SHAPE_LEARN ||
-                   GetSpellId() == SPELL_RAKSHASA_CHANGE_SHAPE_LEARN) 
-                {                    
-                    int nTargetSize        = PRCGetCreatureSize(oTemplate);
-                    int nRacialType        = MyPRCGetRacialType(oTemplate);
-                    int nShifterSize       = PRCGetCreatureSize(oShifter);
+            if(nShifterType == SHIFTER_TYPE_HUMANOIDSHAPE)
+            {                    
+                int nTargetSize        = PRCGetCreatureSize(oTemplate);
+                int nRacialType        = MyPRCGetRacialType(oTemplate);
+                int nShifterSize       = PRCGetCreatureSize(oShifter);
                     
-                    int nSizeDiff = nTargetSize - nShifterSize;
+                int nSizeDiff = nTargetSize - nShifterSize;
                     
-                    if(nSizeDiff > 1 || nSizeDiff < -1)
-                    {
-                        bReturn = FALSE;
-                        SendMessageToPC(oShifter, "This creature is too large or too small.");
-                    }
-                    
-                    if(!(nRacialType == RACIAL_TYPE_DWARF            ||
-                       nRacialType == RACIAL_TYPE_ELF                ||
-                       nRacialType == RACIAL_TYPE_GNOME              ||
-                       nRacialType == RACIAL_TYPE_HUMAN              ||
-                       nRacialType == RACIAL_TYPE_HALFORC            ||
-                       nRacialType == RACIAL_TYPE_HALFELF            ||
-                       nRacialType == RACIAL_TYPE_HALFLING           ||
-                       nRacialType == RACIAL_TYPE_HUMANOID_ORC       ||
-                       nRacialType == RACIAL_TYPE_HUMANOID_REPTILIAN
-                       ))
-                    {
-                        bReturn = FALSE;
-                        SendMessageToPC(oShifter, "This creature is not a humanoid racial type.");
-                    }
+                if(nSizeDiff > 1 || nSizeDiff < -1)
+                {
+                    bReturn = FALSE;
+                    SendMessageToPC(oShifter, "This creature is too large or too small.");
                 }
-                
-                //Changeling check
-                else if(GetRacialType(oShifter) == RACIAL_TYPE_CHANGELING)
-                {                    
-                    int nSize        = PRCGetCreatureSize(oTemplate);
-                    int nRacialType  = MyPRCGetRacialType(oTemplate);
-                    int nShifterSize = PRCGetCreatureSize(oShifter);
-                    
-                    if(nSize != nShifterSize)
-                    {
-                        bReturn = FALSE;
-                        SendMessageToPC(oShifter, "This creature is too large or too small.");
-                    }
-                    
-                    if(!(nRacialType == RACIAL_TYPE_DWARF            ||
-                       nRacialType == RACIAL_TYPE_ELF                ||
-                       nRacialType == RACIAL_TYPE_GNOME              ||
-                       nRacialType == RACIAL_TYPE_HUMAN              ||
-                       nRacialType == RACIAL_TYPE_HALFORC            ||
-                       nRacialType == RACIAL_TYPE_HALFELF            ||
-                       nRacialType == RACIAL_TYPE_HALFLING           ||
-                       nRacialType == RACIAL_TYPE_HUMANOID_ORC       ||
-                       nRacialType == RACIAL_TYPE_HUMANOID_REPTILIAN
-                       ))
-                    {
-                        bReturn = FALSE;
-                        SendMessageToPC(oShifter, "This creature is not a humanoid racial type.");
-                    }
+                   
+                if(!(nRacialType == RACIAL_TYPE_DWARF            ||
+                   nRacialType == RACIAL_TYPE_ELF                ||
+                   nRacialType == RACIAL_TYPE_GNOME              ||
+                   nRacialType == RACIAL_TYPE_HUMAN              ||
+                   nRacialType == RACIAL_TYPE_HALFORC            ||
+                   nRacialType == RACIAL_TYPE_HALFELF            ||
+                   nRacialType == RACIAL_TYPE_HALFLING           ||
+                   nRacialType == RACIAL_TYPE_HUMANOID_ORC       ||
+                   nRacialType == RACIAL_TYPE_HUMANOID_REPTILIAN
+                   ))
+                {
+                    bReturn = FALSE;
+                    SendMessageToPC(oShifter, "This creature is not a humanoid racial type.");
                 }
+            }
                 
-                //Irda check
-                else if(GetRacialType(oShifter) == RACIAL_TYPE_IRDA)
-                {                    
-                    int nSize        = PRCGetCreatureSize(oTemplate);
-                    int nRacialType  = MyPRCGetRacialType(oTemplate);
+            //Changeling check
+            else if(nShifterType == SHIFTER_TYPE_DISGUISE_SELF && GetRacialType(oShifter) == RACIAL_TYPE_CHANGELING)
+            {                    
+                int nSize        = PRCGetCreatureSize(oTemplate);
+                int nRacialType  = MyPRCGetRacialType(oTemplate);
+                int nShifterSize = PRCGetCreatureSize(oShifter);
                     
-                    if(nSize > 4 || nSize < 2)
-                    {
-                        bReturn = FALSE;
-                        SendMessageToPC(oShifter, "This creature is too large or too small.");
-                    }
-                    
-                    if(!(nRacialType == RACIAL_TYPE_DWARF            ||
-                       nRacialType == RACIAL_TYPE_ELF                ||
-                       nRacialType == RACIAL_TYPE_GNOME              ||
-                       nRacialType == RACIAL_TYPE_HUMAN              ||
-                       nRacialType == RACIAL_TYPE_HALFORC            ||
-                       nRacialType == RACIAL_TYPE_HALFELF            ||
-                       nRacialType == RACIAL_TYPE_HALFLING           ||
-                       nRacialType == RACIAL_TYPE_HUMANOID_ORC       ||
-                       nRacialType == RACIAL_TYPE_HUMANOID_REPTILIAN
-                       ))
-                    {
-                        bReturn = FALSE;
-                        SendMessageToPC(oShifter, "This creature is not a humanoid racial type.");
-                    }
+                if(nSize != nShifterSize)
+                {
+                    bReturn = FALSE;
+                    SendMessageToPC(oShifter, "This creature is too large or too small.");
                 }
+                  
+                if(!(nRacialType == RACIAL_TYPE_DWARF            ||
+                   nRacialType == RACIAL_TYPE_ELF                ||
+                   nRacialType == RACIAL_TYPE_GNOME              ||
+                   nRacialType == RACIAL_TYPE_HUMAN              ||
+                   nRacialType == RACIAL_TYPE_HALFORC            ||
+                   nRacialType == RACIAL_TYPE_HALFELF            ||
+                   nRacialType == RACIAL_TYPE_HALFLING           ||
+                   nRacialType == RACIAL_TYPE_HUMANOID_ORC       ||
+                   nRacialType == RACIAL_TYPE_HUMANOID_REPTILIAN
+                   ))
+                {
+                    bReturn = FALSE;
+                    SendMessageToPC(oShifter, "This creature is not a humanoid racial type.");
+                }
+            }
                 
-                //Generic check
-                else
-                {                    
-                    int nTargetSize        = PRCGetCreatureSize(oTemplate);
-                    int nTargetRacialType  = MyPRCGetRacialType(oTemplate);
-                    int nShifterSize       = PRCGetCreatureSize(oShifter);
-                    int nShifterRacialType = MyPRCGetRacialType(oShifter);
+            //Generic check
+            else if(nShifterType == SHIFTER_TYPE_CHANGESHAPE 
+                    || nShifterType == SHIFTER_TYPE_ALTER_SELF
+                    || (nShifterType == SHIFTER_TYPE_DISGUISE_SELF && GetRacialType(oShifter) != RACIAL_TYPE_CHANGELING))
+            {                    
+                int nTargetSize        = PRCGetCreatureSize(oTemplate);
+                int nTargetRacialType  = MyPRCGetRacialType(oTemplate);
+                int nShifterSize       = PRCGetCreatureSize(oShifter);
+                int nShifterRacialType = MyPRCGetRacialType(oShifter);
                     
-                    int nSizeDiff = nTargetSize - nShifterSize;
+                int nSizeDiff = nTargetSize - nShifterSize;
                     
-                    if(nSizeDiff > 1 || nSizeDiff < -1)
-                    {
-                        bReturn = FALSE;
-                        SendMessageToPC(oShifter, "This creature is too large or too small.");
-                    }
+                if(nSizeDiff > 1 || nSizeDiff < -1)
+                {
+                    bReturn = FALSE;
+                    SendMessageToPC(oShifter, "This creature is too large or too small.");
+                }
                     
-                    if(!(nTargetRacialType == nShifterRacialType ||
-                       //check for humanoid type
-                       ((nTargetRacialType == RACIAL_TYPE_DWARF            ||
-                       nTargetRacialType == RACIAL_TYPE_ELF                ||
-                       nTargetRacialType == RACIAL_TYPE_GNOME              ||
-                       nTargetRacialType == RACIAL_TYPE_HUMAN              ||
-                       nTargetRacialType == RACIAL_TYPE_HALFORC            ||
-                       nTargetRacialType == RACIAL_TYPE_HALFELF            ||
-                       nTargetRacialType == RACIAL_TYPE_HALFLING           ||
-                       nTargetRacialType == RACIAL_TYPE_HUMANOID_ORC       ||
-                       nTargetRacialType == RACIAL_TYPE_HUMANOID_REPTILIAN
-                       ) &&
-                       (nShifterRacialType == RACIAL_TYPE_DWARF            ||
-                       nShifterRacialType == RACIAL_TYPE_ELF                ||
-                       nShifterRacialType == RACIAL_TYPE_GNOME              ||
-                       nShifterRacialType == RACIAL_TYPE_HUMAN              ||
-                       nShifterRacialType == RACIAL_TYPE_HALFORC            ||
-                       nShifterRacialType == RACIAL_TYPE_HALFELF            ||
-                       nShifterRacialType == RACIAL_TYPE_HALFLING           ||
-                       nShifterRacialType == RACIAL_TYPE_HUMANOID_ORC       ||
-                       nShifterRacialType == RACIAL_TYPE_HUMANOID_REPTILIAN
-                       ))
-                       ))
-                    {
-                        bReturn = FALSE;
-                        SendMessageToPC(oShifter, "This creature is a different racial type.");
-                    }
+                if(!(nTargetRacialType == nShifterRacialType ||
+                   //check for humanoid type
+                   ((nTargetRacialType == RACIAL_TYPE_DWARF            ||
+                   nTargetRacialType == RACIAL_TYPE_ELF                ||
+                   nTargetRacialType == RACIAL_TYPE_GNOME              ||
+                   nTargetRacialType == RACIAL_TYPE_HUMAN              ||
+                   nTargetRacialType == RACIAL_TYPE_HALFORC            ||
+                   nTargetRacialType == RACIAL_TYPE_HALFELF            ||
+                   nTargetRacialType == RACIAL_TYPE_HALFLING           ||
+                   nTargetRacialType == RACIAL_TYPE_HUMANOID_ORC       ||
+                   nTargetRacialType == RACIAL_TYPE_HUMANOID_REPTILIAN
+                   ) &&
+                   (nShifterRacialType == RACIAL_TYPE_DWARF            ||
+                   nShifterRacialType == RACIAL_TYPE_ELF                ||
+                   nShifterRacialType == RACIAL_TYPE_GNOME              ||
+                   nShifterRacialType == RACIAL_TYPE_HUMAN              ||
+                   nShifterRacialType == RACIAL_TYPE_HALFORC            ||
+                   nShifterRacialType == RACIAL_TYPE_HALFELF            ||
+                   nShifterRacialType == RACIAL_TYPE_HALFLING           ||
+                   nShifterRacialType == RACIAL_TYPE_HUMANOID_ORC       ||
+                   nShifterRacialType == RACIAL_TYPE_HUMANOID_REPTILIAN
+                   ))
+                   ))
+                {
+                    bReturn = FALSE;
+                    SendMessageToPC(oShifter, "This creature is a different racial type.");
                 }
             }
         }// end if - Check shifting list specific stuff
@@ -2028,9 +2032,9 @@ void DeletePersistantLocalAppearancevalues(object oStore, string sName)
     DeleteLocalAppearancevalues(oToken, sName);
 }
 
-void ForceUnshift(object oShifter)
+void ForceUnshift(object oShifter, int nShiftedNumber)
 {
-    if(GetPersistantLocalInt(oShifter, "TempShifted") == TRUE)
+    if(GetPersistantLocalInt(oShifter, "nTimesShifted") == nShiftedNumber)
         UnShift(oShifter);
 }
 

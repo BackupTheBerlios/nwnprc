@@ -3,8 +3,6 @@ do standard race subraces
 
 Alter Self
 prepare and comment out SetColor/GetColor calls for 1.69 support
-make Alter Self, Disguise Self spells
-Lich - doesn't have in 3.5, check 3.0 MM
 
 Classes
 Warlock

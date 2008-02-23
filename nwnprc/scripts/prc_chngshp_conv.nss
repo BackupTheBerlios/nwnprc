@@ -46,12 +46,12 @@ const string QSMODIFYVAR    = "PRC_ShiftConvo_QSToModify";
 /* Aid functions                                */
 //////////////////////////////////////////////////
 
-void GenerateShapeList(object oPC)
+void GenerateShapeList(object oPC, int nShiftType)
 {
-    int i, nArraySize = GetNumberOfStoredTemplates(oPC, SHIFTER_TYPE_CHANGESHAPE);
+    int i, nArraySize = GetNumberOfStoredTemplates(oPC, nShiftType);
 
     for(i = 0; i < nArraySize; i++)
-        AddChoice(GetStoredTemplateName(oPC, SHIFTER_TYPE_CHANGESHAPE, i), i, oPC);
+        AddChoice(GetStoredTemplateName(oPC, nShiftType, i), i, oPC);
 }
 
 
@@ -76,6 +76,7 @@ void main()
     // The stage is used to determine the active conversation node.
     // 0 is the entry node.
     int nStage = GetStage(oPC);
+    int nShiftType;
     string sQuickslotSource;
     int nSourceSpellId = GetLocalInt(oPC, "ChangeShapeConfig");
 
@@ -86,18 +87,19 @@ void main()
     switch(nSourceSpellId)
     {
         case SPELL_CHANGLING_CHANGE_SHAPE_OPTIONS:
-        case SPELL_QUICK_CHANGE_SHAPE_OPTIONS:     sQuickslotSource = "Changeling_Shape_Quick_"; break;
+        case SPELL_QUICK_CHANGE_SHAPE_OPTIONS:     nShiftType = SHIFTER_TYPE_DISGUISE_SELF; sQuickslotSource = "Changeling_Shape_Quick_"; break;
         
-        case SPELL_IRDA_CHANGE_SHAPE_OPTIONS:      sQuickslotSource = "Irda_Shape_Quick_"; break;
+        case SPELL_IRDA_CHANGE_SHAPE_OPTIONS:      nShiftType = SHIFTER_TYPE_HUMANOIDSHAPE; sQuickslotSource = "Irda_Shape_Quick_"; break;
         
-        case INVOKE_HUMANOID_SHAPE_OPTION:         sQuickslotSource = "Humanoid_Shape_Quick_"; break;
+        case INVOKE_HUMANOID_SHAPE_OPTION:         nShiftType = SHIFTER_TYPE_HUMANOIDSHAPE; sQuickslotSource = "Humanoid_Shape_Quick_"; 
+                                                   SetLocalInt(oPC, "HumanoidShapeInvocation", TRUE); break;
         
-        case SPELL_FEYRI_CHANGE_SHAPE_OPTIONS:     sQuickslotSource = "Feyri_Shape_Quick_"; break;
+        case SPELL_FEYRI_CHANGE_SHAPE_OPTIONS:     nShiftType = SHIFTER_TYPE_HUMANOIDSHAPE; sQuickslotSource = "Feyri_Shape_Quick_"; break;
         
-        case SPELL_RAKSHASA_CHANGE_SHAPE_OPTIONS:  sQuickslotSource = "Rakshasa_Shape_Quick_"; break;
+        case SPELL_RAKSHASA_CHANGE_SHAPE_OPTIONS:  nShiftType = SHIFTER_TYPE_HUMANOIDSHAPE; sQuickslotSource = "Rakshasa_Shape_Quick_"; break;
         
-        case SPELL_DISGUISE_SELF_OPTIONS:          sQuickslotSource = "Disguise_Self_Quick_"; break;
-        case SPELL_ALTER_SELF_OPTIONS:             sQuickslotSource = "Alter_Self_Quick_"; break;
+        case SPELL_DISGUISE_SELF_OPTIONS:          nShiftType = SHIFTER_TYPE_DISGUISE_SELF; sQuickslotSource = "Disguise_Self_Quick_"; break;
+        case SPELL_ALTER_SELF_OPTIONS:             nShiftType = SHIFTER_TYPE_ALTER_SELF; sQuickslotSource = "Alter_Self_Quick_"; break;
     }
     
     if(nValue == DYNCONV_SETUP_STAGE)
@@ -129,7 +131,7 @@ void main()
                 // The list may be long, so list the back choice first
                 AddChoiceStrRef(STRREF_BACK_TO_MAIN, CHOICE_BACK_TO_MAIN, oPC);
 
-                GenerateShapeList(oPC);
+                GenerateShapeList(oPC, nShiftType);
 
                 MarkStageSetUp(nStage, oPC);
             }
@@ -165,7 +167,7 @@ void main()
                 // The list may be long, so list the back choice first
                 AddChoiceStrRef(STRREF_BACK_TO_MAIN, CHOICE_BACK_TO_MAIN, oPC);
 
-                GenerateShapeList(oPC);
+                GenerateShapeList(oPC, nShiftType);
 
                 MarkStageSetUp(nStage, oPC);
             }
@@ -176,7 +178,7 @@ void main()
                 // The list may be long, so list the back choice first
                 AddChoiceStrRef(STRREF_BACK_TO_MAIN, CHOICE_BACK_TO_MAIN, oPC);
 
-                GenerateShapeList(oPC);
+                GenerateShapeList(oPC, nShiftType);
 
                 MarkStageSetUp(nStage, oPC);
             }
@@ -201,6 +203,7 @@ void main()
         // Add any locals set through this conversation
         DeleteLocalInt(oPC, QSMODIFYVAR);
         DeleteLocalInt(oPC, "ChangeShapeConfig");
+        DeleteLocalInt(oPC, "HumanoidShapeInvocation");
     }
     // Abort conversation cleanup.
     // NOTE: This section is only run when the conversation is aborted
@@ -264,8 +267,8 @@ void main()
                 if(bPaid)
                 {
                     // Choice is index into the template list
-                    if(!ShiftIntoResRef(oPC, SHIFTER_TYPE_CHANGESHAPE,
-                                        GetStoredTemplate(oPC, SHIFTER_TYPE_CHANGESHAPE, nChoice)
+                    if(!ShiftIntoResRef(oPC, nShiftType,
+                                        GetStoredTemplate(oPC, nShiftType, nChoice)
                                         )
                        )
                     {
@@ -312,10 +315,10 @@ void main()
                 // Store the chosen template into the quickslot, choice is the template's index in the main list
                 int nSlot = GetLocalInt(oPC, QSMODIFYVAR);
                 SetPersistantLocalString(oPC, sQuickslotSource + IntToString(nSlot) + "_ResRef",
-                                         GetStoredTemplate(oPC, SHIFTER_TYPE_CHANGESHAPE, nChoice)
+                                         GetStoredTemplate(oPC, nShiftType, nChoice)
                                          );
                 SetPersistantLocalString(oPC, sQuickslotSource + IntToString(nSlot) + "_Name",
-                                         GetStoredTemplateName(oPC, SHIFTER_TYPE_CHANGESHAPE, nChoice)
+                                         GetStoredTemplateName(oPC, nShiftType, nChoice)
                                          );
 
                 // Clean up
@@ -331,7 +334,7 @@ void main()
             if(nChoice != CHOICE_BACK_TO_MAIN)
             {
                 // Choice is index into the template list
-                DeleteStoredTemplate(oPC, SHIFTER_TYPE_CHANGESHAPE, nChoice);
+                DeleteStoredTemplate(oPC, nShiftType, nChoice);
             }
 
             // Return to main menu in any case

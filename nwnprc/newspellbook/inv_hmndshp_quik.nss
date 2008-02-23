@@ -20,13 +20,6 @@
 #include "inv_inc_invfunc"
 #include "inv_invokehook"
 
-void EndShape(object oPC)
-{
-    if(GetLocalInt(oPC, "HumanoidShapeDuration"))
-        if(UnShift(oPC, TRUE) != UNSHIFT_FAIL)
-            DeleteLocalInt(oPC, "HumanoidShapeDuration");
-}
-
 void main()
 {
     
@@ -42,6 +35,8 @@ void main()
     int nSpellID = PRCGetSpellId();
     int bPaid    = FALSE;
     int nSlot;
+
+    SetLocalInt(oPC, "HumanoidShapeInvocation", TRUE);
 
     // Determine which quickslot was used
     switch(nSpellID)
@@ -65,9 +60,9 @@ void main()
     }
 
     // See if the shifting starts successfully
-    if(ShiftIntoResRef(oPC, SHIFTER_TYPE_CHANGESHAPE, sResRef))
+    if(ShiftIntoResRef(oPC, SHIFTER_TYPE_HUMANOIDSHAPE, sResRef))
     {
-        SetLocalInt(oPC, "HumanoidShapeDuration", TRUE);
-        DelayCommand(HoursToSeconds(24), EndShape(oPC));
     }
+        
+    DeleteLocalInt(oPC, "HumanoidShapeInvocation");
 }

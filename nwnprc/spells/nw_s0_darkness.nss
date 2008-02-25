@@ -28,7 +28,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 
     if(GetObjectType(oTarget) == OBJECT_TYPE_CREATURE)
     {   //touch attack roll if target creature is hostile
-        if(!GetIsReactionTypeFriendly(oTarget))
+        if(!GetIsReactionTypeFriendly(oTarget, oCaster))
             iAttackRoll = PRCDoMeleeTouchAttack(oTarget);
 
         if (iAttackRoll > 0)

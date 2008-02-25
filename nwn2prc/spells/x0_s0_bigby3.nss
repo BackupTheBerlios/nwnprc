@@ -68,7 +68,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, 461, TRUE));
 
         // Check spell resistance
-        if(!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl+ SPGetPenetr()))
+        if(!PRCMyResistSpell(OBJECT_SELF, oTarget,CasterLvl+ SPGetPenetr()))
         {
             // Check caster ability vs. target's AC
 

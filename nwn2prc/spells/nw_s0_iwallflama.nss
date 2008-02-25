@@ -46,7 +46,7 @@ void main()
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_WALL_OF_FIRE));
         //Make SR check, and appropriate saving throw(s).
-        if(!MyResistSpell(GetAreaOfEffectCreator(), oTarget))
+        if(!PRCMyResistSpell(GetAreaOfEffectCreator(), oTarget))
         {
             //Roll damage.
             //nDamage = d6(2) + GetAbilityModifier(ABILITY_CHARISMA, oCreator);  // JLR - OEI 07/19/05 //pkm oei 10.20.06

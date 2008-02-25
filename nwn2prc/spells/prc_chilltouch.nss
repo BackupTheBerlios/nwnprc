@@ -43,7 +43,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 
             if (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD)
             {
-                if (!MyPRCResistSpell(OBJECT_SELF, oTarget, iPenetr) && !PRCMySavingThrow(SAVING_THROW_WILL, oTarget, iSaveDC))
+                if (!PRCMyResistSpell(OBJECT_SELF, oTarget, iPenetr) && !PRCMySavingThrow(SAVING_THROW_WILL, oTarget, iSaveDC))
                 {
                     effect eVis1 = EffectVisualEffect(VFX_IMP_FROST_S);
                     effect eVis2 = EffectVisualEffect(VFX_IMP_DOOM);
@@ -58,7 +58,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
             }
             else
             {
-                if (!MyPRCResistSpell(OBJECT_SELF, oTarget, iPenetr))
+                if (!PRCMyResistSpell(OBJECT_SELF, oTarget, iPenetr))
                 {
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_FROST_S), oTarget);
                     ApplyTouchAttackDamage(OBJECT_SELF, oTarget, iAttackRoll, iNegDam, iEleDmg);

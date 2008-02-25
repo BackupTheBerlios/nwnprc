@@ -132,7 +132,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent, int bI
                 SignalEvent(oTarget, EventSpellCastAt(oCaster, nSpellID));
 
                 // Roll SR
-                if(!MyPRCResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr()))
+                if(!PRCMyResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr()))
                 {
                     // Save for half
                     if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget,

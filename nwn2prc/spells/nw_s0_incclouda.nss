@@ -48,7 +48,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_INCENDIARY_CLOUD));
         //Make SR check, and appropriate saving throw(s).
-        if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr, fDelay))
+        if(!PRCMyResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr, fDelay))
         {
             fDelay = GetRandomDelay(0.5, 2.0);
             //Roll damage.

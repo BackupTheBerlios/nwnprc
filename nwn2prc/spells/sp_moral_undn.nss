@@ -63,7 +63,7 @@ void main()
 	SPRaiseSpellCastAt(oTarget,TRUE, SPELL_MORALITY_UNDONE, oPC);
 	
 	//Spell Resist
-	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	if(!PRCMyResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 	{
 		//Saving Throw
 		if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_EVIL))

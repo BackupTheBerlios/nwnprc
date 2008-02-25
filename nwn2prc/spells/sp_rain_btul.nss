@@ -65,7 +65,7 @@ void main()
 		if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL)
 		{
 			//SR
-			if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+			if(!PRCMyResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 			{
 				nDam = d6(5);
 				

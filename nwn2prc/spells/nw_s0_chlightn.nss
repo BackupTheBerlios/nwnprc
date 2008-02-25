@@ -85,7 +85,7 @@ void main()
         //Fire cast spell at event for the specified target
         SignalEvent(oFirstTarget, EventSpellCastAt(OBJECT_SELF, SPELL_CHAIN_LIGHTNING));
         //Make an SR Check
-        if (!MyPRCResistSpell(OBJECT_SELF, oFirstTarget,nPenetr))
+        if (!PRCMyResistSpell(OBJECT_SELF, oFirstTarget,nPenetr))
         {
            int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
             //Adjust damage via Reflex Save or Evasion or Improved Evasion
@@ -130,7 +130,7 @@ void main()
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_CHAIN_LIGHTNING));
             //Do an SR check
-            if (!MyPRCResistSpell(OBJECT_SELF, oTarget, nPenetr, fDelay))
+            if (!PRCMyResistSpell(OBJECT_SELF, oTarget, nPenetr, fDelay))
             {
                 int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                 nDamage = PRCMaximizeOrEmpower(6,nCasterLevel, nMetaMagic);                

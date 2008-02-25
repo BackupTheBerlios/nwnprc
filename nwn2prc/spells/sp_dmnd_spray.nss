@@ -58,7 +58,7 @@ void main()
 	
 	while(GetIsObjectValid(oTarget))
 	{		
-		if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+		if(!PRCMyResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 		{
 			int nDam = d6(min(nCasterLvl,10));
 			

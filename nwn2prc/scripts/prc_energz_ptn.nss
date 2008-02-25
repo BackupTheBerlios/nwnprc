@@ -52,7 +52,7 @@ void main()
 	
 	while(GetIsObjectValid(oTarget))
 	{
-		if(!MyPRCResistSpell(oPotion, oTarget, nCasterLvl + SPGetPenetr()))
+		if(!PRCMyResistSpell(oPotion, oTarget, nCasterLvl + SPGetPenetr()))
 		{
 			nDC = SPGetSpellSaveDC(oPotion, oTarget);
 			nDam = d6(nDice);

@@ -64,7 +64,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     if (iAttackRoll > 0)
     {
 	     //Touch attack code goes here
-	    if (!MyPRCResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr()))
+	    if (!PRCMyResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr()))
 	    {
 		    if(nMetaMagic == METAMAGIC_MAXIMIZE)
 		    {

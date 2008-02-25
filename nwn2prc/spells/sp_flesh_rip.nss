@@ -50,7 +50,7 @@ void main()
 	if(nType == RACIAL_TYPE_UNDEAD)
 	{
 		//Check spell resistance
-		if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+		if(!PRCMyResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 		{
 			int nDam = d8(nCasterLvl);
 			

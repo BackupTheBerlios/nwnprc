@@ -57,7 +57,7 @@ void main()
     int nCounter = (FloatToInt(fDur))/3;
             
     //Spell Resistance
-    if (!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+    if (!PRCMyResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
     {
         //Saving Throw
         if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
@@ -84,7 +84,7 @@ void HiImABomb(object oTarget, int nCounter, int nHP, int nCasterLvl)
         //effect eSplode = EffectDeath(TRUE, TRUE);
         //       eSplode = SupernaturalEffect(eSplode);
                
-        effect eVis = EffectVisualEffect(VFX_FNF_BLINDDEAF);
+        effect eVis = EffectVisualEffect(VFX_NONE);
         location lLoc = GetLocation(oTarget);
         int nMetaMagic = PRCGetMetaMagicFeat();
         

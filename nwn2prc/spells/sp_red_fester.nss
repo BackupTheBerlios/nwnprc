@@ -50,7 +50,7 @@ void main()
 	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_RED_FESTER, oPC);
 	
 	//Spell Resist
-	if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
+	if (!PRCMyResistSpell(OBJECT_SELF, oTarget,nPenetr))
 	{
 		//Fort save
 		if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, PRCGetSaveDC(oTarget,oPC)))

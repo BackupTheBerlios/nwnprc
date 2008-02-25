@@ -1433,7 +1433,7 @@ int GetIsMagicItem(object oItem)
             }
             nSubtype = GetItemPropertySubType(ip);
 
-            if(nType == ITEM_PROPERTY_BONUS_FEAT)
+            /*if(nType == ITEM_PROPERTY_BONUS_FEAT)
             {
                 if(GetBaseItemType(oItem) == BASE_ITEM_WHIP)
                 {
@@ -1442,7 +1442,7 @@ int GetIsMagicItem(object oItem)
                 }
                 else
                     return 1;
-            }
+            }*/
             ip = GetNextItemProperty(oItem);
         }
     }

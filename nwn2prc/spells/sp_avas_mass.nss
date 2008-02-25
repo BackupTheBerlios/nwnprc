@@ -111,7 +111,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 	if (iAttackRoll)
 	{	
 		//Spell Resistance
-		if (!MyPRCResistSpell(OBJECT_SELF, oTarget, nPenetr))
+		if (!PRCMyResistSpell(OBJECT_SELF, oTarget, nPenetr))
 		{
 			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
 			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eBlood, oTarget);

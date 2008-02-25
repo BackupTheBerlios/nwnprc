@@ -86,7 +86,7 @@ void main()
 
     float fDelay = GetDistanceBetween(oTarget, OBJECT_SELF)/13;
 
-    if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
+    if(!PRCMyResistSpell(OBJECT_SELF, oTarget,nPenetr))
     {
         //----------------------------------------------------------------------
         // Engulf the target in flame

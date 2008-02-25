@@ -114,7 +114,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                  DelayCommand(fDelay,SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBeam,oTarget,1.5f));
             }
 
-            if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
+            if (!PRCMyResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
             {
 
                 int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);

@@ -67,7 +67,7 @@ void main()
 	//Fire cast spell at event for the specified target
 	SignalEvent(oTarget, EventSpellCastAt(oPC, PRCGetSpellId()));
 	
-	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	if(!PRCMyResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 	{
 		if(PRCDoMeleeTouchAttack(oTarget))
 		{

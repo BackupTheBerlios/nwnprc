@@ -51,7 +51,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_BATTLETIDE,OBJECT_SELF, GetSpellSaveDC()));
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
         //Make a SR check
-        if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
+        if(!PRCMyResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
         {
             //Make a Fort Save
             if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (PRCGetSaveDC(oTarget,GetAreaOfEffectCreator())), SAVING_THROW_TYPE_NEGATIVE))

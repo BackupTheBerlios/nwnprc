@@ -49,7 +49,7 @@ void main()
 	   nType != RACIAL_TYPE_UNDEAD)
 	{
 		//Spell Resistance
-		if (!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+		if (!PRCMyResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 		{		
 			//Fort save
 			if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_ACID))    

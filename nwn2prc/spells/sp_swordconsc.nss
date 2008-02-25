@@ -79,7 +79,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
 
     //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-    if (!MyPRCResistSpell(OBJECT_SELF, oTarget, nCaster+SPGetPenetr()))
+    if (!PRCMyResistSpell(OBJECT_SELF, oTarget, nCaster+SPGetPenetr()))
     {
     	if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
         {

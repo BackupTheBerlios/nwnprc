@@ -62,7 +62,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
         }
         if(bValid == FALSE)
         {
-            if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
+            if(!PRCMyResistSpell(OBJECT_SELF, oTarget,nPenetr))
             {
                 //Make Will save to negate
                 if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_MIND_SPELLS))

@@ -37,7 +37,7 @@ void main()
 	int nDC = SPGetSpellSaveDC(oTarget, oPC);	
 	
 	//SR
-	if(!MyPRCResistSpell(oPC, oTarget, PRCGetCasterLevel(oPC) + SPGetPenetr()))
+	if(!PRCMyResistSpell(oPC, oTarget, PRCGetCasterLevel(oPC) + SPGetPenetr()))
 	{
 		//Saving Throw
 		if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_SPELL))

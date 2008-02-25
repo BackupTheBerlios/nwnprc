@@ -68,7 +68,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     if(!GetIsReactionTypeFriendly(oTarget))
     {
           //Make SR Check
-          if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLevel))
+          if (!PRCMyResistSpell(OBJECT_SELF, oTarget,nCasterLevel))
           {
                //Make a Will Save
                if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_MIND_SPELLS))

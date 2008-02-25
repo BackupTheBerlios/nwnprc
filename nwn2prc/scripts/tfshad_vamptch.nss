@@ -105,7 +105,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
             // GZ: * GetSpellCastItem() == OBJECT_INVALID is used to prevent feedback from showing up when used as OnHitCastSpell property
             if (PRCDoMeleeTouchAttack(oTarget))
             {
-                if(MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLevel+SPGetPenetr()) == 0)
+                if(PRCMyResistSpell(OBJECT_SELF, oTarget,nCasterLevel+SPGetPenetr()) == 0)
                  {
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);

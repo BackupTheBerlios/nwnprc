@@ -78,7 +78,7 @@ void main()
 	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_CURSE_OF_THE_PUTRID_HUSK, oPC);
 			
 	//Check Spell Resistance
-	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	if(!PRCMyResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 	{
 		//Will save
 		if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))

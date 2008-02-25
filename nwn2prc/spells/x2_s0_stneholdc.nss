@@ -59,7 +59,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_STONEHOLD,OBJECT_SELF, GetSpellSaveDC()));
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_STONEHOLD));
             if (!GetHasSpellEffect(SPELL_STONEHOLD,oTarget))
             {
-                if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
+                if(!PRCMyResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
                 {
                     int nDC = PRCGetSaveDC(oTarget,GetAreaOfEffectCreator());
                     if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (nDC) , SAVING_THROW_TYPE_MIND_SPELLS))

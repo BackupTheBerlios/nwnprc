@@ -167,7 +167,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     if(iAttackRoll)
     {
         //Spell Resistance
-        if (!MyPRCResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr()))
+        if (!PRCMyResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr()))
         {
             int nDC = SPGetSpellSaveDC(oTarget, oCaster);
             //Saving Throw

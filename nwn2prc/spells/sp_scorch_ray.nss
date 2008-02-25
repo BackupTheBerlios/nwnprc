@@ -80,7 +80,7 @@ void main()
 		
 		if (iAttackRoll > 0)
 		{
-			if(!MyPRCResistSpell(oCaster, oTarget, nPenetr))
+			if(!PRCMyResistSpell(oCaster, oTarget, nPenetr))
 			{
 				nDam = d6(4);
 				

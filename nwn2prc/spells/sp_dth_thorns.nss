@@ -69,7 +69,7 @@ void main()
     SPRaiseSpellCastAt(oTarget, TRUE, SPELL_DEATH_BY_THORNS, oPC);
             
     //Check Spell Resistance
-    if (!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+    if (!PRCMyResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
     {
         //loop the thorn giving              max 3 targets         
         while(GetIsObjectValid(oTarget) && nTargetCount < 3)

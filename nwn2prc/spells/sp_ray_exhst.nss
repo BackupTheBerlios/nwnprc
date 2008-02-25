@@ -64,7 +64,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 	if (iAttackRoll > 0)
 	{
 		//Touch attack code goes here
-		if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nPenetr))
+		if(!PRCMyResistSpell(OBJECT_SELF, oTarget, nPenetr))
 		{
 			effect eSpeed = EffectMovementSpeedDecrease(50);
 			int nDrain = 6;

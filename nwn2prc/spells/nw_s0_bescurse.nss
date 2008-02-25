@@ -36,7 +36,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
         //Signal spell cast at event
         SignalEvent(oTarget, EventSpellCastAt(oTarget, SPELL_BESTOW_CURSE));
          //Make SR Check
-         if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
+         if (!PRCMyResistSpell(OBJECT_SELF, oTarget,nPenetr))
          {
             //Make Will Save
             if (!/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF)))

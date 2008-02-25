@@ -76,7 +76,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
             //Get the distance between the explosion and the target to calculate delay
             fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget))/20;
-            if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
+            if (!PRCMyResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
             {
                 int nSpellDC = (PRCGetSaveDC(oTarget,OBJECT_SELF)) ;
                 //Roll damage for each target

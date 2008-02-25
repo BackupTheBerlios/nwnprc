@@ -82,7 +82,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
             //between the caster and the target
             fDist = GetDistanceBetween(OBJECT_SELF, oTarget)/20;
             //Make SR check, and appropriate saving throw.
-            if(!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDist) && oTarget != OBJECT_SELF)
+            if(!PRCMyResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDist) && oTarget != OBJECT_SELF)
             {
                 nDamage = d4(nCasterLevel);
                 //Enter Metamagic conditions

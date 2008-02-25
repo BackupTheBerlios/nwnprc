@@ -83,7 +83,7 @@ void main()
 		
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_MAGICAL), oTarget);
 		
-		if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+		if(!PRCMyResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 		{
 			nBonusDice++;
 		}

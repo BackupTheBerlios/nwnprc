@@ -60,7 +60,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_CLOUD_OF_BEWILDERMENT,OBJECT_SELF, GetSpellS
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_CLOUD_OF_BEWILDERMENT));
             //Make a SR check
-            if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
+            if(!PRCMyResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
             {
                 if (!GetHasSpellEffect(SPELL_CLOUD_OF_BEWILDERMENT,oTarget))
                 {

@@ -85,7 +85,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             iAttackRoll = PRCDoRangedTouchAttack(oTarget);;
             if(iAttackRoll > 0)
             {
-                if(!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
+                if(!PRCMyResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
                 {
                     //Roll damage
                     int nDam = d6(4) + 1;

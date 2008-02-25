@@ -102,7 +102,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_DIVINATION);
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_POWER_WORD_STUN));
         //Make an SR check
-        if(!MyPRCResistSpell(OBJECT_SELF, oTarget))
+        if(!PRCMyResistSpell(OBJECT_SELF, oTarget))
         {
             if (nDuration>0)
             {

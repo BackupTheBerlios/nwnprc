@@ -78,7 +78,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_CONFUSION));
            fDelay = GetRandomDelay();
            //Make SR Check and faction check
-           if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr , fDelay))
+           if (!PRCMyResistSpell(OBJECT_SELF, oTarget,nPenetr , fDelay))
            {
                 int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                 //Make Will Save

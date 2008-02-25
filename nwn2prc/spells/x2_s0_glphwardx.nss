@@ -91,7 +91,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_GLYPH_OF_WARDING,OBJECT_SELF, GetSpellSaveDC
                 //Fire cast spell at event for the specified target
                 SignalEvent(oTarget, EventSpellCastAt(oCreator, PRCGetSpellId()));
                 //Make SR check
-                if (!MyPRCResistSpell(oCreator, oTarget,nPenetr))
+                if (!PRCMyResistSpell(oCreator, oTarget,nPenetr))
                 {
                     int nDC = PRCGetSaveDC(oTarget,oCreator);
                     nDamage = d8(nDice);

@@ -94,7 +94,7 @@ void main()
         int iAttackRoll = PRCDoRangedTouchAttack(oTarget);
         if(iAttackRoll > 0)
         {
-            if(!MyPRCResistSpell(OBJECT_SELF, oTarget, (nCasterLevel + SPGetPenetr())))
+            if(!PRCMyResistSpell(OBJECT_SELF, oTarget, (nCasterLevel + SPGetPenetr())))
             {
                 //--------------------------------------------------------------------------
                 // This spell no longer stacks. If there is one of that type, thats ok

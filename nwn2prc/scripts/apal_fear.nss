@@ -79,7 +79,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_FEAR));
             //Make SR Check
-            if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay))
+            if(!PRCMyResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay))
             {
                 //Make a will save
                 if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (PRCGetSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_FEAR, OBJECT_SELF, fDelay))

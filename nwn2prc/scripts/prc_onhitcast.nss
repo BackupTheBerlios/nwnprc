@@ -330,7 +330,7 @@ void main()
             {
                 if(spellsIsTarget(oFlareTarget, SPELL_TARGET_STANDARDHOSTILE, oSpellOrigin))
                 {
-                    if(!MyPRCResistSpell(oSpellOrigin, oFlareTarget, nSpellfire))
+                    if(!PRCMyResistSpell(oSpellOrigin, oFlareTarget, nSpellfire))
                     {
                         if (PRCMySavingThrow(SAVING_THROW_FORT, oFlareTarget, nDC))
                     	{

@@ -63,7 +63,7 @@ void main()
 	if(nTouch > 0)
 	{
 		//Check Spell Resistance
-		if (!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+		if (!PRCMyResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 		{
 			effect eDrain = EffectAbilityDecrease(ABILITY_DEXTERITY, nDam);
 			effect eVis = EffectVisualEffect(VFX_IMP_FROST_S);

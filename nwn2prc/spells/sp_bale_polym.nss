@@ -58,7 +58,7 @@ void main()
 	SPRaiseSpellCastAt(oTarget,TRUE, SPELL_BALEFUL_POLYMORPH, oPC);
 	
 	//SR
-	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	if(!PRCMyResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 	{
 		//First save
 		if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL))

@@ -49,7 +49,7 @@ void main()
     if(GetHasSoulRot(oPC))
     {
         //SR
-        if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+        if(!PRCMyResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
         {
             int nDam = d4(min(nCasterLvl, 10));
             

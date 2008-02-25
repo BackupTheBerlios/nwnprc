@@ -52,7 +52,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     float fDelay;
     location lTarget;
     effect eVis = EffectVisualEffect(VFX_IMP_DEATH);
-    effect eWail = EffectVisualEffect(VFX_FNF_WAIL_O_BANSHEES);
+    effect eWail = EffectVisualEffect(VFX_NONE);
     int nCnt = 1;
     
     nCasterLevel +=SPGetPenetr();
@@ -77,7 +77,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                 //Fire cast spell at event for the specified target
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_WAIL_OF_THE_BANSHEE));
                 //Make SR check
-                if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLevel)) //, 0.1))
+                if(!PRCMyResistSpell(OBJECT_SELF, oTarget,nCasterLevel)) //, 0.1))
                 {
                     int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                     //Make a fortitude save to avoid death

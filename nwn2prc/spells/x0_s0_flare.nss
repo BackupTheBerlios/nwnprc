@@ -59,7 +59,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
 
         //Make SR Check
-        if ((!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLevel)) 
+        if ((!PRCMyResistSpell(OBJECT_SELF, oTarget,nCasterLevel)) 
             &&  (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (PRCGetSaveDC(oTarget,OBJECT_SELF))) == FALSE) )
         {
             //Set damage effect

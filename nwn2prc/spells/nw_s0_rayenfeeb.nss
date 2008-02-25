@@ -62,7 +62,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
         if(iAttackRoll > 0)
         {
              //Make SR check
-             if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
+             if (!PRCMyResistSpell(OBJECT_SELF, oTarget,nPenetr))
              {
 
                 //Make a Fort save to negate

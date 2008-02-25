@@ -58,7 +58,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
        if (iAttackRoll > 0)
        {
            //Make SR Check
-           if (!MyPRCResistSpell(oCaster, oTarget))
+           if (!PRCMyResistSpell(oCaster, oTarget))
            {
                // Primary damage
                DoPoison(oTarget, oCaster, nDC, CasterLvl, nMetaMagic);

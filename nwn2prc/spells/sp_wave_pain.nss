@@ -55,7 +55,7 @@ void main()
 		//Check for "discernable anatomy"
 		if(nType != RACIAL_TYPE_OOZE)
 		{
-			if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+			if(!PRCMyResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 			{			
 				if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
 				{

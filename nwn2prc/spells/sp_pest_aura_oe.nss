@@ -112,7 +112,7 @@ SPSetSchool(SPELL_SCHOOL_NECROMANCY);
         if(MyPRCGetRacialType(oTarget) != RACIAL_TYPE_CONSTRUCT && MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)
         {
             //Make SR Check
-            if (!MyPRCResistSpell(oCaster, oTarget, nPenetr))
+            if (!PRCMyResistSpell(oCaster, oTarget, nPenetr))
             {
                 if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_DISEASE))
                 {

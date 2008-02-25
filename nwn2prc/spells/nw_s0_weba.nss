@@ -55,7 +55,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             //Fire cast spell at event for the target
             SignalEvent(oTarget, EventSpellCastAt(GetAreaOfEffectCreator(), SPELL_WEB));
             //Spell resistance check
-            if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
+            if(!PRCMyResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
             {
                 //Make a Fortitude Save to avoid the effects of the entangle.
                 if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, (PRCGetSaveDC(oTarget,GetAreaOfEffectCreator()))))

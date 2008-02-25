@@ -83,7 +83,7 @@ void main()
         {
         	// If the Spell Penetration fails, don't apply any effects
         	// Its done this way so the law of sequence is applied properly
-        	nSRCheck = MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen);
+        	nSRCheck = PRCMyResistSpell(oTrueSpeaker, oTarget, utter.nPen);
         	if (!nSRCheck)
         	{
 			utter.eLink2 = EffectLinkEffects(EffectNegativeLevel(1), EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY));

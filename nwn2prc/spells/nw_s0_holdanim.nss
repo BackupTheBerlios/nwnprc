@@ -66,7 +66,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
         if (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_ANIMAL)
         {
             //Make SR check
-            if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
+            if (!PRCMyResistSpell(OBJECT_SELF, oTarget,nPenetr))
             {
                 //Make Will Save
                 if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, ((PRCGetSaveDC(oTarget,OBJECT_SELF))+4)))

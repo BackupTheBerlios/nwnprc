@@ -91,7 +91,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             //represents the flame that erupts on the target not on the ground.
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eHitVis, oTarget);
 
-            if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay))
+            if (!PRCMyResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay))
             {
                 if (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD)
                 {

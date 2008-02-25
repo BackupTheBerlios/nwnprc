@@ -46,7 +46,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
     //if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oCaster))
     //{
           int bHostile;
-          if(!MyPRCResistSpell(oCaster,oTarget,nPenetr))
+          if(!PRCMyResistSpell(oCaster,oTarget,nPenetr))
           {
                 bHostile = GetIsEnemy(oTarget);
                 //Fire cast spell at event for the specified target

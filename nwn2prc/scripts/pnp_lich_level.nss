@@ -158,7 +158,7 @@ void main()
             {
                 LevelUpHide(oPC, oHide, nLichLevel);
                 LichLevelUpVFX(oPC);
-                eFx = EffectVisualEffect(VFX_FNF_WAIL_O_BANSHEES);
+                eFx = EffectVisualEffect(VFX_NONE);
                 ApplyEffectToObject(DURATION_TYPE_INSTANT,eFx,oPC);                
                 //let Alter Self code take care of this
                 //SetCreatureAppearanceType(oPC,430);

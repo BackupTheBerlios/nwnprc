@@ -114,7 +114,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     if(!GetIsReactionTypeFriendly(oTarget))
     {
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, nSpellID, TRUE));
-        int nResult = MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl +SPGetPenetr());
+        int nResult = PRCMyResistSpell(OBJECT_SELF, oTarget,CasterLvl +SPGetPenetr());
 
         if(nResult  == 0)
         {

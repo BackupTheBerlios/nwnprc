@@ -52,7 +52,7 @@ void main()
         utter.fDur       = HoursToSeconds(24);
 
 	// If the Spell Penetration fails, don't apply any effects
-        if (!MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen))
+        if (!PRCMyResistSpell(oTrueSpeaker, oTarget, utter.nPen))
         {
         	// Get the maze area
         	object oMazeArea = GetObjectByTag("prc_maze_01");

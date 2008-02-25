@@ -51,7 +51,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                 //Fire cast spell at event for the specified target
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_WEB));
 
-                if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
+                if(!PRCMyResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
                 {
                     int nDC = PRCGetSaveDC(oTarget,GetAreaOfEffectCreator());
 

@@ -105,7 +105,7 @@ const int IP_CONST_FEAT_EPIC_AUTO_SILENT_I      = 713;
 const int IP_CONST_FEAT_EPIC_AUTO_SILENT_II     = 714;
 const int IP_CONST_FEAT_EPIC_AUTO_SILENT_III    = 715;
 
-const int IP_CONST_FEAT_DISARM_WHIP = 37;
+//const int IP_CONST_FEAT_DISARM_WHIP = 37;
 const int IP_CONST_FEAT_KI_STRIKE = 757;
 
 const int IP_CONST_FEAT_REND            = 758;
@@ -458,10 +458,10 @@ const int IP_CONST_DAMAGEBONUS_17               = 27;
 const int IP_CONST_DAMAGEBONUS_18               = 28;
 const int IP_CONST_DAMAGEBONUS_19               = 29;
 const int IP_CONST_DAMAGEBONUS_20               = 30;
-const int IP_CONST_DAMAGEBONUS_3d6              = 31;
-const int IP_CONST_DAMAGEBONUS_4d6              = 32;
-const int IP_CONST_DAMAGEBONUS_5d6              = 33;
-const int IP_CONST_DAMAGEBONUS_6d6              = 34;
+//const int IP_CONST_DAMAGEBONUS_3d6              = 31;
+//const int IP_CONST_DAMAGEBONUS_4d6              = 32;
+//const int IP_CONST_DAMAGEBONUS_5d6              = 33;
+//const int IP_CONST_DAMAGEBONUS_6d6              = 34;
 const int IP_CONST_DAMAGEBONUS_7d6              = 35;
 const int IP_CONST_DAMAGEBONUS_8d6              = 36;
 const int IP_CONST_DAMAGEBONUS_3d4              = 37;
@@ -469,7 +469,7 @@ const int IP_CONST_DAMAGEBONUS_4d4              = 38;
 const int IP_CONST_DAMAGEBONUS_5d4              = 39;
 const int IP_CONST_DAMAGEBONUS_6d4              = 40;
 const int IP_CONST_DAMAGEBONUS_3d8              = 41;
-const int IP_CONST_DAMAGEBONUS_4d8              = 42;
+//const int IP_CONST_DAMAGEBONUS_4d8              = 42;
 const int IP_CONST_DAMAGEBONUS_5d8              = 43;
 const int IP_CONST_DAMAGEBONUS_6d8              = 44;
 const int IP_CONST_DAMAGEBONUS_7d8              = 45;
@@ -482,18 +482,18 @@ const int IP_CONST_DAMAGEBONUS_9d4              = 51;
 const int IP_CONST_DAMAGEBONUS_10d4             = 52;
 const int IP_CONST_DAMAGEBONUS_9d6              = 53;
 const int IP_CONST_DAMAGEBONUS_10d6             = 54;
-const int IP_CONST_DAMAGEBONUS_3d10             = 55;
-const int IP_CONST_DAMAGEBONUS_4d10             = 56;
+//const int IP_CONST_DAMAGEBONUS_3d10             = 55;
+//const int IP_CONST_DAMAGEBONUS_4d10             = 56;
 const int IP_CONST_DAMAGEBONUS_5d10             = 57;
 const int IP_CONST_DAMAGEBONUS_6d10             = 58;
 const int IP_CONST_DAMAGEBONUS_7d10             = 59;
 const int IP_CONST_DAMAGEBONUS_8d10             = 60;
 const int IP_CONST_DAMAGEBONUS_9d10             = 61;
 const int IP_CONST_DAMAGEBONUS_10d10            = 62;
-const int IP_CONST_DAMAGEBONUS_3d12             = 63;
-const int IP_CONST_DAMAGEBONUS_4d12             = 64;
-const int IP_CONST_DAMAGEBONUS_5d12             = 65;
-const int IP_CONST_DAMAGEBONUS_6d12             = 66;
+//const int IP_CONST_DAMAGEBONUS_3d12             = 63;
+//const int IP_CONST_DAMAGEBONUS_4d12             = 64;
+//const int IP_CONST_DAMAGEBONUS_5d12             = 65;
+//const int IP_CONST_DAMAGEBONUS_6d12             = 66;
 const int IP_CONST_DAMAGEBONUS_7d12             = 67;
 const int IP_CONST_DAMAGEBONUS_8d12             = 68;
 const int IP_CONST_DAMAGEBONUS_9d12             = 69;
@@ -514,7 +514,7 @@ const int IP_CONST_ONHIT_SAVEDC_19 = 19;
 // Creature Epic Criticals
 const int IP_CONST_FEAT_DEVCRITICAL_CREATURE    = 774;
 const int IP_CONST_FEAT_OVERCRITICAL_CREATURE   = 775;
-const int IP_CONST_FEAT_WEAPON_PROF_CREATURE    = 38;    // provided by Bioware in 1.66
+//const int IP_CONST_FEAT_WEAPON_PROF_CREATURE    = 38;    // provided by Bioware in 1.66
 
 // Epic DR
 const int IP_CONST_FEAT_EPIC_DR_3             = 776;
@@ -579,7 +579,7 @@ const int IP_CONST_DAMAGERESIST_9 = 28;
 
 
 //IP_CONST_REDUCEDWEIGHT
-const int IP_CONST_REDUCEDWEIGHT_50_PERCENT = 6;
+//const int IP_CONST_REDUCEDWEIGHT_50_PERCENT = 6;
 
 // IP_CONST_MONSTERDAMAGE
 const int IP_CONST_MONSTERDAMAGE_7d4 = 58;

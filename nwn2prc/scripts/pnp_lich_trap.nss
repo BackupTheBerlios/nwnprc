@@ -59,7 +59,7 @@ void main()
 
     DeathlessFrenzyCheck(oTarget);
 
-    eVis = EffectVisualEffect(VFX_FNF_PWKILL);
+    eVis = EffectVisualEffect(VFX_NONE);
     effect eDeath = EffectDeath(TRUE);
     ApplyEffectToObject(DURATION_TYPE_INSTANT,eVis,oTarget);
     // Blow yellow chunks for extra fun

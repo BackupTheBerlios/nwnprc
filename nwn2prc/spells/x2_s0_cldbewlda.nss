@@ -44,7 +44,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_CLOUD_OF_BEWILDERMENT,OBJECT_SELF, GetSpellS
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF,SPELL_CLOUD_OF_BEWILDERMENT));
         //Make a SR check
-        if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
+        if(!PRCMyResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
         {
             //Make a Fort Save
             if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (PRCGetSaveDC(oTarget,GetAreaOfEffectCreator())), SAVING_THROW_TYPE_POISON))

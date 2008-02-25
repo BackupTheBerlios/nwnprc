@@ -51,7 +51,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
                 //Make SR check
                 if(!GetHasSpellEffect(SPELL_ENTANGLE, oTarget))
                 {
-                    if(!MyPRCResistSpell(aoeCreator, oTarget,nPenetr))
+                    if(!PRCMyResistSpell(aoeCreator, oTarget,nPenetr))
                     {
                         //Make reflex save
                         if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, (PRCGetSaveDC(oTarget,aoeCreator))))

@@ -24,7 +24,7 @@ void main()
     //Declare major variables
     //Get the object that is exiting the AOE
     object oTarget = GetExitingObject();
-
+		
     effect eAOE;
     if(GetHasSpellEffect(SPELL_ANTIPAL_AURAFEAR, oTarget))
     {

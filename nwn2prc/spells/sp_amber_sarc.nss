@@ -75,7 +75,7 @@ void main()
 	{
 		//Sphere projectile VFX		
 		
-		if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+		if(!PRCMyResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 		{
 			//Apply effects
 			effect eSarc = EffectLinkEffects(EffectTemporaryHitpoints(10 * min(20, nCasterLvl)), EffectCutsceneParalyze());

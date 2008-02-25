@@ -43,7 +43,7 @@ void main()
 
         SPRaiseSpellCastAt(oTarget,TRUE, SPELL_SORROW, oPC);
 
-    if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+    if(!PRCMyResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
     {
         //Save
         if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL))

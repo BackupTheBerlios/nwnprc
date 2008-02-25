@@ -93,18 +93,18 @@ const string X2_CI_CRAFTING_MAT_2DA     = "des_crft_mat";
 
 
 // spells 2da
-const string SPELLS_2DA                 = "spells";         // 2da
-const int SPELLS_ROW_COUNT              = 1008;             // number of rows in the spells table.
-const string SPELLS_NAME_COL            = "Name";           // str ref of spell name
-const string SPELLS_DESC_COL            = "SpellDesc";      // str ref of spell description
-const string SPELLS_INNATE_LEVEL_COL    = "Innate";         // Innate level of spell
-const string SPELLS_BARD_LEVEL_COL      = "Bard";           // Bard spell level
-const string SPELLS_CLERIC_LEVEL_COL    = "Cleric";         // Cleric spell level
-const string SPELLS_DRUID_LEVEL_COL     = "Druid";          // Druid spell level
-const string SPELLS_PALADIN_LEVEL_COL   = "Paladin";        // Paladin spell level
-const string SPELLS_RANGER_LEVEL_COL    = "Ranger";         // Ranger spell level
-const string SPELLS_WIZ_SORC_LEVEL_COL  = "Wiz_Sorc";       // Wizard and Sorceror spell level
-const string SPELLS_WARLOCK_LEVEL_COL   = "Warlock";        // Warlock spell level
+//const string SPELLS_2DA                 = "spells";         // 2da
+//const int SPELLS_ROW_COUNT              = 1008;             // number of rows in the spells table.
+//const string SPELLS_NAME_COL            = "Name";           // str ref of spell name
+//const string SPELLS_DESC_COL            = "SpellDesc";      // str ref of spell description
+//const string SPELLS_INNATE_LEVEL_COL    = "Innate";         // Innate level of spell
+//const string SPELLS_BARD_LEVEL_COL      = "Bard";           // Bard spell level
+//const string SPELLS_CLERIC_LEVEL_COL    = "Cleric";         // Cleric spell level
+//const string SPELLS_DRUID_LEVEL_COL     = "Druid";          // Druid spell level
+//const string SPELLS_PALADIN_LEVEL_COL   = "Paladin";        // Paladin spell level
+//const string SPELLS_RANGER_LEVEL_COL    = "Ranger";         // Ranger spell level
+//const string SPELLS_WIZ_SORC_LEVEL_COL  = "Wiz_Sorc";       // Wizard and Sorceror spell level
+//const string SPELLS_WARLOCK_LEVEL_COL   = "Warlock";        // Warlock spell level
 
 // 2da for matching spells to properties
 const string X2_CI_CRAFTING_SP_2DA = "des_crft_spells" ;

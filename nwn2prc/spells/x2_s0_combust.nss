@@ -101,7 +101,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     if(!GetIsReactionTypeFriendly(oTarget))
     {
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_COMBUST));
-        if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLevel+SPGetPenetr()))
+        if(!PRCMyResistSpell(OBJECT_SELF, oTarget,nCasterLevel+SPGetPenetr()))
         {
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
             TLVFXPillar(VFX_IMP_FLAME_M, GetLocation(oTarget), 5, 0.1f,0.0f, 2.0f);

@@ -45,7 +45,7 @@ void main()
 		fDur += fDur;
 	}
 	
-	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	if(!PRCMyResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 	{
 		//Will save
 		if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))

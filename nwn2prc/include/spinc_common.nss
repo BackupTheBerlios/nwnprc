@@ -128,7 +128,7 @@ float TenMinutesToSeconds(int tenMinutes)
 int SPResistSpell(object oCaster, object oTarget,int nCasterLevel = 0, float fDelay = 0.0 )
 {
 //  return MyResistSpell(oCaster, oTarget, fDelay);
-    int result = MyPRCResistSpell(oCaster, oTarget,nCasterLevel, fDelay);
+    int result = PRCMyResistSpell(oCaster, oTarget,nCasterLevel, fDelay);
     return result;
 }
 

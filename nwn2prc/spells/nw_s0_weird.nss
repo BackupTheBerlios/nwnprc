@@ -74,7 +74,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
                //Fire cast spell at event for the specified target
                SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_WEIRD));
                //Make an SR Check
-               if(!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
+               if(!PRCMyResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
                {
                     if ( !GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS,OBJECT_SELF) &&
                          !GetIsImmune(oTarget, IMMUNITY_TYPE_FEAR,OBJECT_SELF))

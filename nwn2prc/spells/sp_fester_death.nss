@@ -77,7 +77,7 @@ void main()
     if(GetIsSkillSuccessful(oPC, SKILL_PERFORM, 20))
     {
         //Spell Resist
-        if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+        if(!PRCMyResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
         {
             if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL, oPC, 1.0))
             {

@@ -44,7 +44,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             //Fire cast spell at event for the target
             SignalEvent(oTarget, EventSpellCastAt(GetAreaOfEffectCreator(), SPELL_GREASE));
                //Spell resistance check
-            if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
+            if(!PRCMyResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
             {
                 //Apply reduced movement effect and VFX_Impact
                 SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget,0.0f,FALSE);

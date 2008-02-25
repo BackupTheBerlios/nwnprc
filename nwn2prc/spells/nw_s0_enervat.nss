@@ -79,7 +79,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_ENERVATION));
             //Resist magic check
-            if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nPenetr))
+            if(!PRCMyResistSpell(OBJECT_SELF, oTarget, nPenetr))
             {
                 if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_NEGATIVE))
                 {

@@ -57,7 +57,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_VINE_MINE_ENTANGLE,OBJECT_SELF, GetSpellSave
                 //Make SR check
                 if(!GetHasSpellEffect(SPELL_ENTANGLE, oTarget))
                 {
-                    if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
+                    if(!PRCMyResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
                     {
                         int nDC = PRCGetSaveDC(oTarget,GetAreaOfEffectCreator());
                         //Make reflex save

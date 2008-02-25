@@ -89,7 +89,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 //Fire cast spell at event for the specified target
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_WORD_OF_FAITH));
                 //Make SR check
-                if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay))
+                if(!PRCMyResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay))
                 {
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eSonic, oTarget);
 

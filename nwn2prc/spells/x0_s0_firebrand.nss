@@ -176,7 +176,7 @@ void DoFirebrand(int CasterLvl,int nD6Dice, int nCap, int nSpell, int nMIRV = VF
                 //     not one check per missile, which would rip spell mantels
                 //     apart
                 //--------------------------------------------------------------
-                if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterlvl, fDelay))
+                if (!PRCMyResistSpell(OBJECT_SELF, oTarget,nCasterlvl, fDelay))
                 {
                     int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                     for (i=1; i <= nExtraMissiles + nRemainder; i++)

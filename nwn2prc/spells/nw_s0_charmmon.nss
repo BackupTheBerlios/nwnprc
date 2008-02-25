@@ -73,7 +73,7 @@ void main()
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_CHARM_MONSTER, FALSE));
         // Make SR Check
-        if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
+        if (!PRCMyResistSpell(OBJECT_SELF, oTarget,nPenetr))
         {
             // Make Will save vs Mind-Affecting
             if (!/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_MIND_SPELLS))

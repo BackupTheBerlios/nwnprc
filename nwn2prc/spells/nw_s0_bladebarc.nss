@@ -69,7 +69,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             //Fire spell cast at event
             SignalEvent(oTarget, EventSpellCastAt(aoeCreator, SPELL_BLADE_BARRIER));
             //Make SR Check
-            if (!MyPRCResistSpell(aoeCreator, oTarget,CasterLvl) )
+            if (!PRCMyResistSpell(aoeCreator, oTarget,CasterLvl) )
             {
                 int nDC = PRCGetSaveDC(oTarget,aoeCreator);
                 //Roll Damage

@@ -59,7 +59,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
 
     if (iHP < 10)
     {
-        if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
+        if(!PRCMyResistSpell(OBJECT_SELF, oTarget,nPenetr))
         {
             if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_NEGATIVE))
             {

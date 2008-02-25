@@ -82,7 +82,7 @@ void main()
 	}
 	
 	//Spell Resistance, no save
-	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	if(!PRCMyResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 	{
 		//Calculate fingers used
 		if(nCasterLvl > 3) nFingers++;

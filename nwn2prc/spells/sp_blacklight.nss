@@ -22,7 +22,7 @@ void main()
     {
       SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_DARKNESS));
       //Make SR Check
-      if (!MyPRCResistSpell(OBJECT_SELF, oTarget,SPGetPenetrAOE(GetAreaOfEffectCreator())))
+      if (!PRCMyResistSpell(OBJECT_SELF, oTarget,SPGetPenetrAOE(GetAreaOfEffectCreator())))
       {
       	if (GetIsObjectValid(oTarget))
           //Create an instance of the AOE Object using the Apply Effect function

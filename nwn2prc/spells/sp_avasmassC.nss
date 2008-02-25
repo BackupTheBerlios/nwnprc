@@ -50,7 +50,7 @@ void main()
 				//Make SR check
 				if(!GetHasSpellEffect(SPELL_AVASCULAR_MASS, oTarget))
 				{
-					if(!MyPRCResistSpell(aoeCreator, oTarget,nPenetr))
+					if(!PRCMyResistSpell(aoeCreator, oTarget,nPenetr))
 					{
 						//Make reflex save
 						if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, (PRCGetSaveDC(oTarget,aoeCreator))))

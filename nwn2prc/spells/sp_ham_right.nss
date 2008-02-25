@@ -55,7 +55,7 @@ void main()
 		
 	SPRaiseSpellCastAt(oTarget,TRUE, SPELL_HAMMER_OF_RIGHTEOUSNESS, oPC);
 	
-	if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
+	if(!PRCMyResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
         {
 		int nDam = d6(nCasterLvl);
 			

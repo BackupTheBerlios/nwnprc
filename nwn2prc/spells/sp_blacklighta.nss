@@ -51,7 +51,7 @@ void main()
         {
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_DARKNESS));
             //Make SR Check
-            if (!MyPRCResistSpell(OBJECT_SELF, oTarget,SPGetPenetrAOE(GetAreaOfEffectCreator())))
+            if (!PRCMyResistSpell(OBJECT_SELF, oTarget,SPGetPenetrAOE(GetAreaOfEffectCreator())))
             {
             	if (!iShadow)
             	  //Fire cast spell at event for the specified target

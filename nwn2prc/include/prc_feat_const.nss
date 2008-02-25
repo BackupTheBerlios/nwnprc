@@ -3,7 +3,7 @@
 
 
 //missing bioware ones
-const int FEAT_EPIC_PLANAR_TURNING = 854;
+//const int FEAT_EPIC_PLANAR_TURNING = 854;
 
 // skill based feats
 const int FEAT_JUMP = 2884;
@@ -250,7 +250,7 @@ const int FEAT_PRACTISED_SPELLCASTER_DRUID             = 3123;
 const int FEAT_PRACTISED_SPELLCASTER_SORCERER          = 3124;
 const int FEAT_PRACTISED_SPELLCASTER_WIZARD            = 3125;
 
-const int FEAT_EPIC_DIVINE_MIGHT                       = 3120;
+//const int FEAT_EPIC_DIVINE_MIGHT                       = 3120;
 const int FEAT_EPIC_DIVINE_RESISTANCE                  = 3119;
 const int FEAT_EPIC_DIVINE_SHIELD                      = 3548;
 const int FEAT_DIVINE_CLEANSING                        = 3118;

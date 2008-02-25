@@ -289,8 +289,8 @@ void UnarmedFeats(object oCreature)
     
     object oSkin = GetPCSkin(oCreature);
 
-    if (!GetHasFeat(FEAT_WEAPON_PROFICIENCY_CREATURE, oCreature))
-        AddItemProperty(DURATION_TYPE_PERMANENT,PRCItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_CREATURE),oSkin);
+    /*if (!GetHasFeat(FEAT_WEAPON_PROFICIENCY_CREATURE, oCreature))
+        AddItemProperty(DURATION_TYPE_PERMANENT,PRCItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_CREATURE),oSkin);*/
 
     //only roll unarmed feats into creature feats when not using natural weapons
     if(!GetIsUsingPrimaryNaturalWeapons(oCreature))

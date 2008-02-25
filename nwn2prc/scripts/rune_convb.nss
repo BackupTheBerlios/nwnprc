@@ -135,7 +135,7 @@ void main()
                 SetHeader("Which spell would you like to scribe as a Runescar?");
                 AddRunescarSpellChoice(SPELL_CURE_MODERATE_WOUNDS,      oPC, 1);
                 AddRunescarSpellChoice(SPELL_DIVINE_FAVOR,              oPC, 1);
-                AddRunescarSpellChoice(SPELL_PROTECTION__FROM_CHAOS,    oPC, 1);
+                AddRunescarSpellChoice(SPELL_PROTECTION_FROM_CHAOS,    oPC, 1);
                 AddRunescarSpellChoice(SPELL_PROTECTION_FROM_EVIL,      oPC, 1);
                 AddRunescarSpellChoice(SPELL_PROTECTION_FROM_GOOD,      oPC, 1);
                 AddRunescarSpellChoice(SPELL_PROTECTION_FROM_LAW,       oPC, 1);

@@ -68,7 +68,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
     if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
     {
-        if(!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl))
+        if(!PRCMyResistSpell(OBJECT_SELF, oTarget,CasterLvl))
         {
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));

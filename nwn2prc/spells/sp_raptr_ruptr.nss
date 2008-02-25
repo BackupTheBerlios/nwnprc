@@ -140,7 +140,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent, string
            nRace != RACIAL_TYPE_UNDEAD
            )
         {
-            if(!MyPRCResistSpell(oCaster, oTarget, nPenetr))
+            if(!PRCMyResistSpell(oCaster, oTarget, nPenetr))
             {
                 // Roll damage and apply metamagic
                 int nDam = d6(6);

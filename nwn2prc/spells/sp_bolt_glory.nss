@@ -66,7 +66,7 @@ void main()
 	if(nTouch)
 	{
 		//SR
-		if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLevel + SPGetPenetr()))
+		if(!PRCMyResistSpell(OBJECT_SELF, oTarget, nCasterLevel + SPGetPenetr()))
 		{
 			if((nRace == RACIAL_TYPE_UNDEAD) || (nRace == RACIAL_TYPE_OUTSIDER && nAlign == ALIGNMENT_EVIL))
 			{

@@ -60,7 +60,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, 437));
         //Make SR Check
-        if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLevel))
+        if(!PRCMyResistSpell(OBJECT_SELF, oTarget,nCasterLevel))
         {
             // * certain racial types are immune
             if ((MyPRCGetRacialType(oTarget) != RACIAL_TYPE_CONSTRUCT)

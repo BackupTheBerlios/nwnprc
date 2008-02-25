@@ -42,7 +42,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     object oTarget = GetSpellTargetObject();
     int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
-    if (MyPRCResistSpell(OBJECT_SELF,oTarget,nCasterLvl+SPGetPenetr()) <1)
+    if (PRCMyResistSpell(OBJECT_SELF,oTarget,nCasterLvl+SPGetPenetr()) <1)
     {
        DoPetrification(nCasterLvl, OBJECT_SELF, oTarget, GetSpellId(), (PRCGetSaveDC(oTarget,OBJECT_SELF)));
      }

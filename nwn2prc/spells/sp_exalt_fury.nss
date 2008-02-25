@@ -63,7 +63,7 @@ void main()
 		if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL)
 		{
 			//SR
-			if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
+			if(!PRCMyResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
 			{
 				//Hit 'em
 				SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_MAGICAL), oTarget);

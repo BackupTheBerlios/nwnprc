@@ -28,7 +28,7 @@ void main()
 		if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL)
 		{
 			//Spell resistance
-			if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+			if(!PRCMyResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 			{
 				//Sicken
 				effect eLink = EffectAttackDecrease(2, ATTACK_BONUS_MISC);

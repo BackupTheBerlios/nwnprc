@@ -31,7 +31,7 @@ void main()
         if (nMissiles > 7) nMissiles = 7;
 
         //Make SR Check
-        if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
+        if (!PRCMyResistSpell(OBJECT_SELF, oTarget,nPenetr))
         {
             //Apply a single damage hit for each missile instead of as a single mass
             for (nCnt = 1; nCnt <= nMissiles; nCnt++)

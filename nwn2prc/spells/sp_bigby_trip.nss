@@ -62,7 +62,7 @@ void main()
 	if (iAttackRoll > 0)
 	{
 		//SR
-		if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+		if(!PRCMyResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 		{
 			//save
 			if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, SPGetSpellSaveDC(oTarget, oPC), SAVING_THROW_TYPE_SPELL))

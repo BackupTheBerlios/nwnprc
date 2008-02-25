@@ -17,7 +17,7 @@ void DarkBolt(object oTarget,int nMissiles, int nDC , int nMetaMagic)
    float fDelay2, fTime;
   
    //Make SR Check
-   if (!MyPRCResistSpell(OBJECT_SELF, oTarget))
+   if (!PRCMyResistSpell(OBJECT_SELF, oTarget))
    {      
       //Roll damage
       int nDam = d8(2);
@@ -108,7 +108,7 @@ void main()
         if (nMissiles > 7) nMissiles = 7;
 
         //Make SR Check
-        if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
+        if (!PRCMyResistSpell(OBJECT_SELF, oTarget,nPenetr))
         {
            
                 //Roll damage

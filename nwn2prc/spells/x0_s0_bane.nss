@@ -76,7 +76,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
         {
              //Fire spell cast at event for target
              SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, 449, FALSE));
-             if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLvl) )
+             if (!PRCMyResistSpell(OBJECT_SELF, oTarget,nCasterLvl) )
              {
 
                 int nSpellDC = (PRCGetSaveDC(oTarget,OBJECT_SELF)) ;

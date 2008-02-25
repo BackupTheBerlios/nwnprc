@@ -82,7 +82,7 @@ void main()
 							//decrement the counter
 							nToBeAffected--;
 							
-							if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+							if(!PRCMyResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 							{
 								nDC = SPGetSpellSaveDC(oTarget, oPC);
 								

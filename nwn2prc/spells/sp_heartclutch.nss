@@ -68,7 +68,7 @@ void main()
         if(GetHasSoulRot(oPC))
         {
             //Check for Spell resistance
-            if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+            if(!PRCMyResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
             {
         	//Save
         	if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))

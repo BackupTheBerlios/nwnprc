@@ -61,7 +61,7 @@ void main()
 		   
 		{
 			//Check for resistance
-			if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+			if(!PRCMyResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 			{
 				//Check for save
 				if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL)) 

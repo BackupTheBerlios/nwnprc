@@ -64,7 +64,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 	
 	if (iAttackRoll > 0)
 	{
-		if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLevel + SPGetPenetr()))
+		if(!PRCMyResistSpell(OBJECT_SELF, oTarget, nCasterLevel + SPGetPenetr()))
 		{
 			//Touch attack code goes here
 			int nDam = d6(4);

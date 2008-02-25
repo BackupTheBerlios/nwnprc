@@ -69,7 +69,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             if (GetDistanceBetween(oTarget, OBJECT_SELF) > 2.0)
             {
                 //Make SR check
-                if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, 0.5))
+                if (!PRCMyResistSpell(OBJECT_SELF, oTarget,CasterLvl, 0.5))
                 {
                       int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                       //Roll damage

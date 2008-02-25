@@ -55,7 +55,7 @@ void main()
         utter.fDur       = RoundsToSeconds(1);
         if(utter.bExtend) utter.fDur *= 2;
 
-	int nSRCheck = MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen);
+	int nSRCheck = PRCMyResistSpell(oTrueSpeaker, oTarget, utter.nPen);
 	if (!nSRCheck)
         {  
         	itemproperty ip = GetFirstItemProperty(oTarget);

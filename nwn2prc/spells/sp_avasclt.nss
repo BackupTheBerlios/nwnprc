@@ -67,7 +67,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 
     if (iAttackRoll)
     {
-        if (!MyPRCResistSpell(OBJECT_SELF, oTarget, nPenetr))
+        if (!PRCMyResistSpell(OBJECT_SELF, oTarget, nPenetr))
         {
             //damage rounds up now
             int nDam = (nHP - (nHP / 2));

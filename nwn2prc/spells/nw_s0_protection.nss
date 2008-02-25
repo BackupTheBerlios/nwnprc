@@ -29,11 +29,11 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     switch(nSpellID)
     {
         case SPELL_PROTECTION_FROM_LAW: AlignLC = ALIGNMENT_LAWFUL; break;
-        case SPELL_PROTECTION__FROM_CHAOS: AlignLC = ALIGNMENT_CHAOTIC; break;
+        case SPELL_PROTECTION_FROM_CHAOS: AlignLC = ALIGNMENT_CHAOTIC; break;
         case SPELL_PROTECTION_FROM_GOOD: AlignGE = ALIGNMENT_GOOD; break;
         case SPELL_PROTECTION_FROM_EVIL: AlignGE = ALIGNMENT_EVIL; break;
     }
-    if((nSpellID == SPELL_PROTECTION__FROM_CHAOS) ||
+    if((nSpellID == SPELL_PROTECTION_FROM_CHAOS) ||
         (nSpellID == SPELL_PROTECTION_FROM_EVIL))
         eDur = EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MINOR);
     else

@@ -71,7 +71,7 @@ void main()
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, nSpellID));
             //Get the distance between the explosion and the target to calculate delay
             fDelay = GetRandomDelay(0.4, 1.75);
-            if (!MyPRCResistSpell(OBJECT_SELF, oTarget,(nCasterLvl + SPGetPenetr()), fDelay))
+            if (!PRCMyResistSpell(OBJECT_SELF, oTarget,(nCasterLvl + SPGetPenetr()), fDelay))
             {
                 //Limit Caster level for the purposes of damage
                 if (nCasterLvl > 10)

@@ -66,7 +66,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                     //Fire cast spell at event for the specified target
                     SignalEvent(oTarget, EventSpellCastAt(oCaster, SPELL_DELAYED_BLAST_FIREBALL));
                     //Make SR check
-                    if (!MyPRCResistSpell(oCaster, oTarget,CasterLvl))
+                    if (!PRCMyResistSpell(oCaster, oTarget,CasterLvl))
                     {
                         int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                         nDamage = d6(nCasterLevel);

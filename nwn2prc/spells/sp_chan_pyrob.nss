@@ -64,7 +64,7 @@ void main()
 	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_CHANNELED_PYROBURST, oPC);
 	
 	//Check Spell Resistance
-	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	if(!PRCMyResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 	{
 		//swift
 		if(nSpell == SPELL_CHANNELED_PYROBURST_1)

@@ -84,7 +84,7 @@ void EmberLoop(int nCounter, int nCasterLvl, int nMetaMagic, object oPC, locatio
 		if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL)
 		{
 			//Spell Resist
-			if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
+			if(!PRCMyResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
 			{
 				int nDC = SPGetSpellSaveDC(oTarget, oPC);
 				//Save

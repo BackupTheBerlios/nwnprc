@@ -65,7 +65,7 @@ void main()
 	
 	while(GetIsObjectValid(oTarget))
 	{				
-		if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+		if(!PRCMyResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 		{
 			nDC = SPGetSpellSaveDC(oTarget, oPC);
 			

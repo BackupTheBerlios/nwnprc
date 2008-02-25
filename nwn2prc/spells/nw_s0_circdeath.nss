@@ -116,7 +116,7 @@ void main()
             //Fire cast spell at event for the specified target
             SignalEvent(oLowest, EventSpellCastAt(OBJECT_SELF, SPELL_CIRCLE_OF_DEATH));
             fDelay = GetRandomDelay();
-            if(!MyPRCResistSpell(OBJECT_SELF, oLowest, nPenetr, fDelay))
+            if(!PRCMyResistSpell(OBJECT_SELF, oLowest, nPenetr, fDelay))
             {
                 int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                 //Make a Fort Save versus death effects

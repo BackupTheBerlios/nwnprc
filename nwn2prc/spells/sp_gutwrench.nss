@@ -60,7 +60,7 @@ void main()
            nTargetType != RACIAL_TYPE_ELEMENTAL)
            
          {
-             if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
+             if(!PRCMyResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
              {
                  if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_DEATH))
                  {

@@ -54,7 +54,7 @@ void main()
     int nAttributes = 0;
     int nDC = SPGetSpellSaveDC(oTarget, oPC);
     float fDur = 15000.0f;  
-    effect eImp = EffectVisualEffect(VFX_FNF_PWKILL);
+    effect eImp = EffectVisualEffect(VFX_FNF_PWSTUN);
     
     //spellhook
     if(!X2PreSpellCastCode()) return;
@@ -62,7 +62,7 @@ void main()
     SPSetSchool(SPELL_SCHOOL_NECROMANCY);
     
     //Spell resist
-    if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+    if(!PRCMyResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
     {
         //VFX
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eImp, oTarget);

@@ -77,7 +77,7 @@ void main()
 		}
 		
 		//SR
-		if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+		if(!PRCMyResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 		{
 			nDC = SPGetSpellSaveDC(oTarget, oPC);
 			if(nAlign == ALIGNMENT_GOOD)

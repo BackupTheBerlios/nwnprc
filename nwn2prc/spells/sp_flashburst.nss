@@ -9,7 +9,7 @@ void main()
 
     // Apply a burst visual effect at the target location.    
     location lTarget = GetSpellTargetLocation();
-    effect eImpact = EffectVisualEffect(VFX_FNF_BLINDDEAF);
+    effect eImpact = EffectVisualEffect(VFX_NONE);
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, lTarget);
 
     // Create needed effects.

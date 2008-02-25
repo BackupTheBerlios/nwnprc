@@ -51,7 +51,7 @@ void main()
 	
 	while(GetIsObjectValid(oTarget))
 	{
-		if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
+		if(!PRCMyResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
 		{
 			nAlign = GetAlignmentGoodEvil(oTarget);
 			

@@ -78,7 +78,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, 436));
             //Get the distance between the explosion and the target to calculate delay
             fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget))/20;
-            if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay))
+            if (!PRCMyResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay))
             {
                 effect eTrip = EffectKnockdown();
                 // * DO a strength check vs. Strength 20

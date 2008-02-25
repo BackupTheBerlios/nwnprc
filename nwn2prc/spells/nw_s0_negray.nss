@@ -75,7 +75,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
                 //Fire cast spell at event for the specified target
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_NEGATIVE_ENERGY_RAY));
                 eRay = EffectBeam(VFX_BEAM_EVIL, OBJECT_SELF, BODY_NODE_HAND);
-                if (!MyPRCResistSpell(OBJECT_SELF, oTarget, nPenetr))
+                if (!PRCMyResistSpell(OBJECT_SELF, oTarget, nPenetr))
                 {
                     //Make a saving throw check
                     if(/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (PRCGetSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_NEGATIVE))

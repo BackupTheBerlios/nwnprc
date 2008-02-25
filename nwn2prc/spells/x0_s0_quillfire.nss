@@ -58,7 +58,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
         //Make SR Check
         {
             // BK: No spell resistance for quillfire
-            //if(!MyPRCResistSpell(OBJECT_SELF, oTarget, fDelay))
+            //if(!PRCMyResistSpell(OBJECT_SELF, oTarget, fDelay))
             {
                 //eMissile = EffectVisualEffect(VFX_IMP_MIRV_FLAME);
                 //Roll damage

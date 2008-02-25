@@ -82,7 +82,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                    //Fire cast spell at event for the specified target
                    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_LIGHTNING_BOLT));
                    //Make an SR check
-                   if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl))
+                   if (!PRCMyResistSpell(OBJECT_SELF, oTarget,CasterLvl))
                    {
                         int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                         //Roll damage

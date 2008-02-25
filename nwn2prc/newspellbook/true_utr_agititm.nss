@@ -60,7 +60,7 @@ void main()
         // If the Spell Penetration fails, don't apply any effects
 	// Its done this way so the law of sequence is applied properly
 	// Applies to both parts of the utterance
-	int nSRCheck = MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen);
+	int nSRCheck = PRCMyResistSpell(oTrueSpeaker, oTarget, utter.nPen);
 	if (!nSRCheck)
         {
                 // The NORMAL effect of the Utterance goes here

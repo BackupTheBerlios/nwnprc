@@ -74,7 +74,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_CHARM_PERSON, FALSE));
         //Make SR Check
-        if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
+        if (!PRCMyResistSpell(OBJECT_SELF, oTarget,nPenetr))
         {
             //Verify that the Racial Type is humanoid
             if  ((nRacial == RACIAL_TYPE_DWARF) ||

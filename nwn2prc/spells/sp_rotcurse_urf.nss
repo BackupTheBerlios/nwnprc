@@ -72,7 +72,7 @@ void main()
         SPRaiseSpellCastAt(oTarget, TRUE, SPELL_ROTTING_CURSE_OF_URFESTRA, oPC);
 			
 	//Spell Resistance
-	if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
+	if (!PRCMyResistSpell(OBJECT_SELF, oTarget,nPenetr))
 	{
 		if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, PRCGetSaveDC(oTarget,oPC)))
 		{

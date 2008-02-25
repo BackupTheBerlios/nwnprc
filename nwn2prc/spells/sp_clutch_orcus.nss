@@ -89,7 +89,7 @@ void main()
 	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_CLUTCH_OF_ORCUS, oPC);
 	
 	//Check spell resistance
-	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	if(!PRCMyResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 	{
 		//start loop
 		CrushLoop(oTarget, oPC, bEndSpell, nDC);

@@ -89,7 +89,7 @@ void main()
         else // UTTER_WARD_PEACE_R
         {
         	// If the Spell Penetration fails, don't apply any effects
-        	nSRCheck = MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen);
+        	nSRCheck = PRCMyResistSpell(oTrueSpeaker, oTarget, utter.nPen);
         	if (!nSRCheck)
         	{
         		// Saving throw

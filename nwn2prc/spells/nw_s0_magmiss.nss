@@ -75,7 +75,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             nMissiles = 5;
         }
         //Make SR Check
-        if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
+        if (!PRCMyResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
         {
             //Apply a single damage hit for each missile instead of as a single mass
             for (nCnt = 1; nCnt <= nMissiles; nCnt++)

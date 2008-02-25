@@ -67,7 +67,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_DIVINATION);
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_FEEBLEMIND));
         //Make SR check
-        if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
+        if (!PRCMyResistSpell(OBJECT_SELF, oTarget,nPenetr))
         {
             //Make an will save
 

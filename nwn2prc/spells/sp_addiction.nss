@@ -46,7 +46,7 @@ void main()
 	SPSetSchool(SPELL_SCHOOL_ENCHANTMENT);
 	
 	//SR
-	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	if(!PRCMyResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 	{
 		//Fort save
 		if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL))

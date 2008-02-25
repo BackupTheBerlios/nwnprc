@@ -83,7 +83,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_HAMMER_OF_THE_GODS));
             //Make SR Check
-            if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
+            if (!PRCMyResistSpell(OBJECT_SELF, oTarget,nPenetr))
             {
                 fDelay = GetRandomDelay(0.6, 1.3);
                 //Roll damage

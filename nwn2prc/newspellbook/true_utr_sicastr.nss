@@ -84,7 +84,7 @@ void main()
         else /* Effects of UTTER_SILENT_CASTER_R would be here */
         {
         	// If the Spell Penetration fails, don't apply any effects
-        	nSRCheck = MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen);
+        	nSRCheck = PRCMyResistSpell(oTrueSpeaker, oTarget, utter.nPen);
         	if (!nSRCheck)
         	{
         		// Saving throw

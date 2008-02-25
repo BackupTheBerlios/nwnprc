@@ -84,7 +84,7 @@ void main()
             {
                 SignalEvent(oTarget, EventSpellCastAt(oCaster, nSpellID));
                 fDelay = GetDistanceBetween(oCaster, oTarget)/20.0;
-                if(!MyPRCResistSpell(oCaster, oTarget, nCasterLevel, fDelay) && (oTarget != oCaster))
+                if(!PRCMyResistSpell(oCaster, oTarget, nCasterLevel, fDelay) && (oTarget != oCaster))
                 {
                     nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                     nDamage = d6(nDamageDice);

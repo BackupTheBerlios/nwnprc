@@ -54,7 +54,7 @@ void main()
     //if friendly
     if(GetIsReactionTypeFriendly(oTarget, oPC) || 
     //or failed SR check
-    (!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr())))
+    (!PRCMyResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr())))
     {
         //if friendly
         if(GetIsReactionTypeFriendly(oTarget, oPC) || 

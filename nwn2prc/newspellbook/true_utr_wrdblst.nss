@@ -131,7 +131,7 @@ void main()
         else // UTTER_WORD_BOLSTERING_R
         {
         	// If the Spell Penetration fails, don't apply any effects
-        	nSRCheck = MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen);
+        	nSRCheck = PRCMyResistSpell(oTrueSpeaker, oTarget, utter.nPen);
         	if (!nSRCheck)
         	{
        			// Stat Penalty

@@ -53,7 +53,7 @@ int GetBestL1Spell(object oTarget, int nSpell)
     int nBestSpell = nSpell;
     if (GetHasSpell(SPELL_IDENTIFY, oTarget) > 0) nBestSpell = SPELL_IDENTIFY;
     if (GetHasSpell(SPELL_PROTECTION_FROM_EVIL, oTarget) > 0) nBestSpell = SPELL_PROTECTION_FROM_EVIL;
-    if (GetHasSpell(SPELL_PROTECTION__FROM_CHAOS, oTarget) > 0) nBestSpell = SPELL_PROTECTION__FROM_CHAOS;
+    if (GetHasSpell(SPELL_PROTECTION_FROM_CHAOS, oTarget) > 0) nBestSpell = SPELL_PROTECTION_FROM_CHAOS;
     if (GetHasSpell(SPELL_PROTECTION_FROM_GOOD, oTarget) > 0) nBestSpell = SPELL_PROTECTION_FROM_GOOD;
     if (GetHasSpell(SPELL_PROTECTION_FROM_LAW, oTarget) > 0) nBestSpell = SPELL_PROTECTION_FROM_LAW;
     if (GetHasSpell(SPELL_INFLICT_LIGHT_WOUNDS, oTarget) > 0) nBestSpell = SPELL_INFLICT_LIGHT_WOUNDS;
@@ -137,7 +137,7 @@ int GetBestL2Spell(object oTarget, int nSpell)
     if (GetHasSpell(SPELL_SUMMON_CREATURE_II, oTarget) > 0) nBestSpell = SPELL_SUMMON_CREATURE_II;
     if (GetHasSpell(SPELL_PROTECTION_FROM_ENERGY, oTarget) > 0) nBestSpell = SPELL_PROTECTION_FROM_ENERGY;
     if (GetHasSpell(SPELL_OWLS_WISDOM, oTarget) > 0) nBestSpell = SPELL_OWLS_WISDOM;
-    if (GetHasSpell(SPELL_EAGLE_SPLEDOR, oTarget) > 0) nBestSpell = SPELL_EAGLE_SPLEDOR;
+    if (GetHasSpell(SPELL_EAGLES_SPLENDOR, oTarget) > 0) nBestSpell = SPELL_EAGLES_SPLENDOR;
     if (GetHasSpell(SPELL_FOXS_CUNNING, oTarget) > 0) nBestSpell = SPELL_FOXS_CUNNING;
     if (GetHasSpell(SPELL_BEARS_ENDURANCE, oTarget) > 0) nBestSpell = SPELL_BEARS_ENDURANCE;
     if (GetHasSpell(SPELL_CATS_GRACE, oTarget) > 0) nBestSpell = SPELL_CATS_GRACE;

@@ -51,7 +51,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_SEARING_LIGHT));
         eRay = EffectBeam(VFX_BEAM_HOLY, OBJECT_SELF, BODY_NODE_HAND);
         //Make an SR Check
-        if (!MyPRCResistSpell(oCaster, oTarget, nPenetr))
+        if (!PRCMyResistSpell(oCaster, oTarget, nPenetr))
         {
             //Limit caster level
             if (nCasterLevel > 10)

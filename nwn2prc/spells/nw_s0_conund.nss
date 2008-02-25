@@ -69,7 +69,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         {
            //Fire cast spell at event for the specified target
            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_CONTROL_UNDEAD));
-           if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
+           if (!PRCMyResistSpell(OBJECT_SELF, oTarget,nPenetr))
            {
                 //Make a Will save
                 if (!/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_NONE, OBJECT_SELF, 1.0))

@@ -90,7 +90,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
            int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_WAR_CRY));
            //Make SR and Will saves
-           if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr)  && !PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (nDC), SAVING_THROW_TYPE_FEAR))
+           if(!PRCMyResistSpell(OBJECT_SELF, oTarget,nPenetr)  && !PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (nDC), SAVING_THROW_TYPE_FEAR))
             {
                 DelayCommand(0.01,SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink2, oTarget, RoundsToSeconds(4),TRUE,-1,CasterLvl));
             }

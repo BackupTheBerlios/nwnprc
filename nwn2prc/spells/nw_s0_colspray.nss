@@ -79,7 +79,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_COLOR_SPRAY));
             fDelay = GetDistanceBetween(OBJECT_SELF, oTarget)/30;
-            if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nPenetr, fDelay) && oTarget != OBJECT_SELF)
+            if(!PRCMyResistSpell(OBJECT_SELF, oTarget, nPenetr, fDelay) && oTarget != OBJECT_SELF)
             {
                 int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                 if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS, OBJECT_SELF, fDelay))

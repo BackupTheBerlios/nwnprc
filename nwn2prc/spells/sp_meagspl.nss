@@ -7,5 +7,5 @@ void main()
 	if (!X2PreSpellCastCode()) return;
     
     // The typo on the spell ID is Bioware's.
-	DoMassBuff (MASSBUFF_STAT, ABILITY_CHARISMA, SPELL_EAGLE_SPLEDOR);
+	DoMassBuff (MASSBUFF_STAT, ABILITY_CHARISMA, SPELL_EAGLES_SPLENDOR);
 }

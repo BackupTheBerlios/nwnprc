@@ -51,7 +51,7 @@ void main()
 	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_BESTOW_WOUND, oPC);
 	
 	//Check Spell Resistance
-	if (MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	if (PRCMyResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 	{
 		return;
 	}

@@ -55,7 +55,7 @@ void main()
         if(utter.bExtend) utter.fDur *= 2;
 
 	// If the Spell Penetration fails, don't apply any effects
-        if (!MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen))
+        if (!PRCMyResistSpell(oTrueSpeaker, oTarget, utter.nPen))
         {
        		// eLink is used for Duration Effects (Penalty to AB etc)
        		if (PRCGetSpellId() == SYLLABLE_AFFLICATION_SIGHT)

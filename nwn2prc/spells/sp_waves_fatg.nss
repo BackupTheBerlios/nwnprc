@@ -40,7 +40,7 @@ void main()
 	
 	while(GetIsObjectValid(oTarget))
 	{
-		if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nPenetr))
+		if(!PRCMyResistSpell(OBJECT_SELF, oTarget, nPenetr))
 		{
 			effect eSpeed = EffectMovementSpeedDecrease(25);
 			effect eLink = EffectLinkEffects(EffectAbilityDecrease(ABILITY_STRENGTH, 2), EffectAbilityDecrease(ABILITY_DEXTERITY, 2));

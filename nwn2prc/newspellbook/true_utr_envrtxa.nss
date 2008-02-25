@@ -46,7 +46,7 @@ void main()
     SignalEvent(oTarget, EventSpellCastAt(GetAreaOfEffectCreator(), UTTER_ENERGY_VORTEX_ACID));    
     
     //Spell resistance check
-    if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPen))
+    if(!PRCMyResistSpell(GetAreaOfEffectCreator(), oTarget,nPen))
     {
         if (GetLocalInt(GetAreaOfEffectCreator(), "UtterEnergyVortexEmpower"))
         {

@@ -60,7 +60,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 	
 	{
 		//Check Spell Resistance
-		if(!MyPRCResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr()))
+		if(!PRCMyResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr()))
 		{
 			int nDam = d6(min(nCasterLevel, 5));
 			

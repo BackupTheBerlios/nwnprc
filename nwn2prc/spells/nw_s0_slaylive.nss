@@ -32,7 +32,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_SLAY_LIVING));
         //Make SR check
-        if(!MyPRCResistSpell(oCaster, oTarget,nCasterLevel))
+        if(!PRCMyResistSpell(oCaster, oTarget,nCasterLevel))
         {
             iAttackRoll = PRCDoMeleeTouchAttack(oTarget);
             if(iAttackRoll)

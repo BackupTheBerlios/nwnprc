@@ -111,7 +111,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             {
                 //Fire cast spell at event for the specified target
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, 31));
-                if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl))
+                if (!PRCMyResistSpell(OBJECT_SELF, oTarget,CasterLvl))
                 {
                     eDam = EffectDamage(nDamage,DAMAGE_TYPE_NEGATIVE);
                     //Apply the VFX impact and effects

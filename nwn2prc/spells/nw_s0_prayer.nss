@@ -102,7 +102,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         {
             //Fire spell cast at event for target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_PRAYER));
-            if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
+            if(!PRCMyResistSpell(OBJECT_SELF, oTarget,nPenetr))
             {
                 //Apply VFX impact and bonus effects
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, eNegVis, oTarget);

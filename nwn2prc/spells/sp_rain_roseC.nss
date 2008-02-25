@@ -50,7 +50,7 @@ void main()
 		if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL)
 		{			
 			//Check Spell Resistance
-			if(!MyPRCResistSpell(oCreator, oTarget, nCasterLvl + SPGetPenetr()))
+			if(!PRCMyResistSpell(oCreator, oTarget, nCasterLvl + SPGetPenetr()))
 			{
 				ApplyAbilityDamage(oTarget, ABILITY_WISDOM, d4(1), DURATION_TYPE_TEMPORARY, TRUE, -1.0f);
 			}

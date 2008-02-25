@@ -60,7 +60,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
             }
         }
         //Spell Resistance
-        else if (!MyPRCResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr()))
+        else if (!PRCMyResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr()))
         {
             //Max of 15 caster levels
             if (nCasterLevel > 15) nCasterLevel = 15;

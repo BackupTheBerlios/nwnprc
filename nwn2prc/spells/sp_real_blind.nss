@@ -53,7 +53,7 @@ void main()
 	
 	SPRaiseSpellCastAt(oTarget,TRUE, SPELL_REALITY_BLIND, oPC);
 	
-	if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
+	if(!PRCMyResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
         {	
 		//Loop
 		BlindLoop(oTarget, oPC);

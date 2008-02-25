@@ -58,7 +58,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eImpact, oTarget);
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, 460, TRUE));
-        if(!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl+ SPGetPenetr()))
+        if(!PRCMyResistSpell(OBJECT_SELF, oTarget,CasterLvl+ SPGetPenetr()))
         {
 
             int nCasterRoll = d20(1) + 14;

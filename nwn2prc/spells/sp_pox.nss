@@ -62,7 +62,7 @@ SPSetSchool(SPELL_SCHOOL_NECROMANCY);
                 //We have a valid target, increment counter
                 nCount++;
 
-                if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nPenetr, fDelay))
+                if(!PRCMyResistSpell(OBJECT_SELF, oTarget, nPenetr, fDelay))
                 {
                     nDC = PRCGetSaveDC(oTarget, OBJECT_SELF);
                     //Roll damage for each target and resolve metamagic

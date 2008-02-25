@@ -57,7 +57,7 @@ void main()
 	while(GetIsObjectValid(oTarget))
 	{
 		//Spell resistance
-		if(!MyPRCResistSpell(oPC, oTarget, nCasterLevel + SPGetPenetr()))
+		if(!PRCMyResistSpell(oPC, oTarget, nCasterLevel + SPGetPenetr()))
 		{	
 			int nType = GetObjectType(oTarget);
 			int nRace = MyPRCGetRacialType(oTarget);

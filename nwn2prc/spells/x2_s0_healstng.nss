@@ -61,7 +61,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
             if(iAttackRoll > 0)
             {
                  //Spell resistance
-                 if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLvl))
+                 if(!PRCMyResistSpell(OBJECT_SELF, oTarget,nCasterLvl))
                  {
                     if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (PRCGetSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_NEGATIVE))
                     {

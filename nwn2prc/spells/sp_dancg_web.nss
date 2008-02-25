@@ -51,7 +51,7 @@ void main()
 	while(GetIsObjectValid(oTarget))
 	{
 		//SR
-		if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+		if(!PRCMyResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 		{
 			//Should be non-lethal
 			nDam = d6(min(10, nCasterLvl));

@@ -96,7 +96,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent, int bI
                 iAttackRoll = PRCDoMeleeTouchAttack(oTarget);
                 if (iAttackRoll)
                 {
-                    if (!MyPRCResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr()))
+                    if (!PRCMyResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr()))
                     {
                         int nModify = d4();
                         iBlastFaith = BlastInfidelOrFaithHeal(oCaster, oTarget, nEnergyType, TRUE);

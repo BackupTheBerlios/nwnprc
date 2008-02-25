@@ -54,7 +54,7 @@ void main()
 	if(nAlign == ALIGNMENT_EVIL)
 	{
 		//Check Spell Resistance
-		if(!MyPRCResistSpell(oCreator, oTarget, nCasterLvl + SPGetPenetr()))
+		if(!PRCMyResistSpell(oCreator, oTarget, nCasterLvl + SPGetPenetr()))
 		{
 			//Make reflex save
 			if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, (PRCGetSaveDC(oTarget, oCreator))))

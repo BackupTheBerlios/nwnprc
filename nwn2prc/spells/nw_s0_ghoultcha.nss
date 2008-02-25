@@ -46,7 +46,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
 
     if(!GetIsReactionTypeFriendly(oTarget) || GetAreaOfEffectCreator() != oTarget)
     {
-        if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget) 
+        if(!PRCMyResistSpell(GetAreaOfEffectCreator(), oTarget) 
             && !PRCMySavingThrow(SAVING_THROW_FORT, oTarget, PRCGetSaveDC(oTarget,GetAreaOfEffectCreator())))
         {
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(2+d6()));

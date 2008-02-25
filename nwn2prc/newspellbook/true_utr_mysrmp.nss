@@ -77,7 +77,7 @@ void main()
         else // UTTER_MYSTIC_RAMPART_R
         {
         	// If the Spell Penetration fails, don't apply any effects
-        	nSRCheck = MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen);
+        	nSRCheck = PRCMyResistSpell(oTrueSpeaker, oTarget, utter.nPen);
         	if (!nSRCheck)
         	{
        			// eLink is used for Duration Effects (Buff/Penalty to AC)

@@ -102,7 +102,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_BIGBYS_CRUSHING_HAND, TRUE));
 
         //SR
-        if(!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl+ SPGetPenetr()))
+        if(!PRCMyResistSpell(OBJECT_SELF, oTarget,CasterLvl+ SPGetPenetr()))
         {
             int nCasterModifier = GetCasterAbilityModifier(OBJECT_SELF);
             int nCasterRoll = d20(1)

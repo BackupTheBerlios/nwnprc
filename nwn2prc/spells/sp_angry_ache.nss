@@ -55,7 +55,7 @@ void main()
 	int nDC = SPGetSpellSaveDC(oTarget, oPC);
 	
 	//Check Spell Resistance
-	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	if(!PRCMyResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 	{
 		if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
 		{

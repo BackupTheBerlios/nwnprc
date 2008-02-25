@@ -88,7 +88,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     {
 
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
-        if(MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay) == 0)
+        if(PRCMyResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay) == 0)
         {
             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oTarget,RoundsToSeconds(nDuration)));
             SetLocalInt(oTarget,"XP2_L_SPELL_SAVE_DC_" + IntToString (SPELL_INFESTATION_OF_MAGGOTS), nDC);

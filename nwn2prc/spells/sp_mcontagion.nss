@@ -73,7 +73,7 @@ if (!X2PreSpellCastCode()) return;
         {
             SPRaiseSpellCastAt(oTarget);
 
-            if (!MyPRCResistSpell(OBJECT_SELF, oTarget, nPenetr))
+            if (!PRCMyResistSpell(OBJECT_SELF, oTarget, nPenetr))
             {
                 // Make the real first save against the spell's DC
                 if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL))

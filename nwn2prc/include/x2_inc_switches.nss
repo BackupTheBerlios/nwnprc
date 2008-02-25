@@ -41,6 +41,37 @@ const string CAMPAIGN_SWITCH_USE_PERSONAL_REPUTATION = "N2_S_USE_PERSONAL_REP";
 // Set companion's Plot Flag FALSE on UserDefined EVENT_ROSTER_SPAWN_IN (2051)
 const string CAMPAIGN_SWITCH_UNPLOT_ON_ROSTER_SPAWN = "N2_S_UNPLOT_ON_ROSTER_SPAWN";
 
+// Allows companions to do weapon swapping (also applies to AI controlled PCs)
+const string CAMPAIGN_SWITCH_COMPANION_WEAPON_SWAP_ENABLED	= "N2_S_WEAP_SWAP_ENABLED";
+
+// Ties companion weapon swapping to the use item behavior.  The flag above must be on for this to have any effect.
+const string CAMPAIGN_SWITCH_COMPANION_WEAPON_SWAP_ON_USE_ITEM_ONLY	= "N2_S_WEAP_SWAP_USE_ITEM_ONLY";
+
+// Disables companion weapon auto preference by AI.  They do this when a player hasn't specified a weapon to use (by putting it in there hands).
+const string CAMPAIGN_SWITCH_COMPANION_WEAPON_SWAP_AUTO_PFEF_DISABLED = "N2_S_WEAP_SWAP_AUTO_PFEF_DIS";
+
+// Makes sure clock information only shows time and not date as well
+const string CAMPAIGN_SWITCH_ONLY_SHOW_TIME = "N2_S_ONLY_SHOW_TIME";
+
+// Enables smith hammer to be used to rename any item	
+const string CAMPAIGN_SWITCH_SMITH_HAMMER_RENAME_ITEM	= "N2_S_SMITH_HAMMER_RENAME_ITEM";
+
+// Enables single player auto save on world map transition	
+const string CAMPAIGN_SWITCH_WORLD_MAP_AUTO_SAVE	= "N2_S_WORLD_MAP_AUTO_SAVE";
+
+// Set minimum value for wandering monsters check.  Default is 0 (all rolls allowed)
+const string CAMPAIGN_VAR_WM_MIN_THRESHOLD = "N2_WM_MIN_THRESHOLD";
+
+// Not a switch but a string that tells the name of the script to run for custom IPSpeaker target
+const string CAMPAIGN_STRING_CUSTOM_IPSPEAKER	= "NX1_S_CUSTOM_IPSPEAKER";
+
+// Enables use of total level for determining caster level for magical crafting.
+const string CAMPAIGN_SWITCH_CRAFTING_USE_TOTAL_LEVEL	= "NX1_S_CRAFTING_USE_TOTAL_LEVEL";
+
+// This will cause the NX1 single party rest system to use Force Rest instead of ActionRest (thus no resting bar)
+const string CAMPAIGN_SWITCH_REST_SYS_USE_FORCE_REST = "NX1_S_REST_SYS_USE_FORCE_REST";
+
+
 
 //------------------------------------------------------------------------------
 //                                    M O D U L E

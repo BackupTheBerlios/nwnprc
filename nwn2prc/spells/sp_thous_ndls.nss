@@ -52,7 +52,7 @@ void main()
 		
 	SPRaiseSpellCastAt(oTarget,TRUE, SPELL_THOUSAND_NEEDLES, oPC);
 	
-	if (!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
+	if (!PRCMyResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
         {
 		//metamagic
 		if(nMetaMagic == METAMAGIC_EXTEND)

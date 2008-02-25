@@ -53,7 +53,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         if(iAttackRoll > 0)
         {
              //Make SR Check
-             if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLevel+SPGetPenetr()))
+             if(!PRCMyResistSpell(OBJECT_SELF, oTarget,nCasterLevel+SPGetPenetr()))
              {
                  //Apply the VFX impact and damage effect
                  SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);

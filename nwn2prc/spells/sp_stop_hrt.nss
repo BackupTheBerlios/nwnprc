@@ -95,7 +95,7 @@ void main()
     if(GetHasSpellEffect(SPELL_BACCARAN, oPC))
     {
 	    //Spell Resistance
-	    if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
+	    if(!PRCMyResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
 	    {
 		    //Fort save
 		    if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL))

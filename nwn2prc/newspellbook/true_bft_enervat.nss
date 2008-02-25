@@ -51,7 +51,7 @@ void main()
         utter.fDur       = HoursToSeconds(24);
 
 	// If the Spell Penetration fails, don't apply any effects
-        if (!MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen))
+        if (!PRCMyResistSpell(oTrueSpeaker, oTarget, utter.nPen))
         {
        		// eLink is used for Duration Effects (Penalty to AB etc)
        		utter.eLink = EffectLinkEffects(EffectNegativeLevel(2), EffectVisualEffect(VFX_DUR_SPELL_DEATH_WARD));

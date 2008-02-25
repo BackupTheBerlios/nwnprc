@@ -83,7 +83,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_FIREBALL));
                 //Get the distance between the explosion and the target to calculate delay
                 fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget))/20;
-                if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
+                if (!PRCMyResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
                 {
                     //Roll damage for each target
                     nDamage = d6(nCasterLvl);

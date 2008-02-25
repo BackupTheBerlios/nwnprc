@@ -56,7 +56,7 @@ void main()
 	{
 		if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
 		{
-			if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+			if(!PRCMyResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 			{
 				//Roll damage for each target
 				nDamage = d6(3);

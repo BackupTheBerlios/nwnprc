@@ -71,13 +71,13 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
             else
                 nAltSpellID = SPELL_BEARS_ENDURANCE;
         }
-        else if((nSpellID == SPELL_EAGLE_SPLEDOR) || (nSpellID == SPELL_MASS_EAGLES_SPLENDOR))
+        else if((nSpellID == SPELL_EAGLES_SPLENDOR) || (nSpellID == SPELL_MASS_EAGLES_SPLENDOR))
         {
             nAbility = ABILITY_CHARISMA;
-            if(nSpellID == SPELL_EAGLE_SPLEDOR)
+            if(nSpellID == SPELL_EAGLES_SPLENDOR)
                 nAltSpellID = SPELL_MASS_EAGLES_SPLENDOR;
             else
-                nAltSpellID = SPELL_EAGLE_SPLEDOR;
+                nAltSpellID = SPELL_EAGLES_SPLENDOR;
         }
         else if((nSpellID == SPELL_OWLS_WISDOM) || (nSpellID == SPELL_MASS_OWLS_WISDOM))
         {

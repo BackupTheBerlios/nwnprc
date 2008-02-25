@@ -496,7 +496,7 @@ void DoDirgeEffect(object oTarget,int nPenetr)
         //Fire cast spell at event for the target
         SignalEvent(oTarget, EventSpellCastAt(GetAreaOfEffectCreator(), PRCGetSpellId()));
         //Spell resistance check
-        if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
+        if(!PRCMyResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
         {
 
             //Make a Fortitude Save to avoid the effects of the movement hit.
@@ -580,7 +580,7 @@ void DoSpikeGrowthEffect(object oTarget,int nPenetr)
         //Fire cast spell at event for the target
         SignalEvent(oTarget, EventSpellCastAt(GetAreaOfEffectCreator(), SPELL_SPIKE_GROWTH));
         //Spell resistance check
-        if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr, fDelay))
+        if(!PRCMyResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr, fDelay))
         {
             int nMetaMagic = PRCGetMetaMagicFeat();
             int nDam = MaximizeOrEmpower(4, 1, nMetaMagic);
@@ -680,7 +680,7 @@ void spellsInflictTouchAttack(int nDamage, int nMaxExtraDamage, int nMaximized, 
         {
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, nSpellID));
-            if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl))
+            if (!PRCMyResistSpell(OBJECT_SELF, oTarget,CasterLvl))
             {
                 int nDamageTotal = nDamage + nExtraDamage;
                 // A succesful will save halves the damage
@@ -767,7 +767,7 @@ void ShootMissilesAtTarget(object oTarget, location lSourceLoc, location lTarget
 	for (i=1; i <= nMissilesForThisTarget; i++)
 	{
 		// Don't apply damage if target successfully resists
-		if (!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLevel, fDelay))
+		if (!PRCMyResistSpell(OBJECT_SELF, oTarget, nCasterLevel, fDelay))
 		{
 			//Roll damage
 			nDam = RollMissileDamage(oTarget, nD6Dice, nMetaMagic, iReflexSaveType);
@@ -1274,7 +1274,7 @@ void spellsGenericAreaOfEffect(
             // * actually perform the resist check
             if (bResistCheck == TRUE)
             {
-                nResistSpellSuccess = MyPRCResistSpell(oCaster, oTarget,nPenetr);
+                nResistSpellSuccess = PRCMyResistSpell(oCaster, oTarget,nPenetr);
             }
           if(!nResistSpellSuccess)
           {

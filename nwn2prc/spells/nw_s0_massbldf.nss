@@ -56,7 +56,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
     effect eLink = EffectLinkEffects(eBlind, eDeaf);
     eLink = EffectLinkEffects(eLink, eDur);
     effect eVis = EffectVisualEffect(VFX_IMP_BLIND_DEAF_M);
-    effect eXpl = EffectVisualEffect(VFX_FNF_BLINDDEAF);
+    effect eXpl = EffectVisualEffect(VFX_NONE);
     //Check for metamagic extend
     if ((nMetaMagic & METAMAGIC_EXTEND))
     {
@@ -76,7 +76,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_MASS_BLINDNESS_AND_DEAFNESS));
             //Make SR check
-            if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
+            if (!PRCMyResistSpell(OBJECT_SELF, oTarget,nPenetr))
             {
                 int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                 //Make Fort save

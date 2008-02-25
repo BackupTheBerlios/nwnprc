@@ -69,7 +69,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
         {
             if(!(GetHasSpellEffect(SPELL_PROTECTION_FROM_EVIL, oTarget) || GetHasSpellEffect(SPELL_MAGIC_CIRCLE_AGAINST_EVIL)))
             {
-                if(!MyPRCResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr()))
+                if(!PRCMyResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr()))
                 {
                     if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, SPGetSpellSaveDC(oTarget, oCaster), SAVING_THROW_TYPE_EVIL))
                     {

@@ -58,7 +58,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         {
              nDuration = nDuration * 2;
         }
-        if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl+ SPGetPenetr()))
+        if (!PRCMyResistSpell(OBJECT_SELF, oTarget,CasterLvl+ SPGetPenetr()))
         {
 
         effect eAC1 = EffectAttackDecrease(10);

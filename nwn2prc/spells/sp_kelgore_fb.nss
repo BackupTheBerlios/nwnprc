@@ -58,7 +58,7 @@ void main()
         nDam += (nDam/2);
     }
 
-    if(MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+    if(PRCMyResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
     {
         nDam = d6(1);
         eVis = EffectVisualEffect(VFX_IMP_FLAME_S);

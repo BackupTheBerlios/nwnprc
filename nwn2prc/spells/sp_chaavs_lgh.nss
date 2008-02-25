@@ -82,7 +82,7 @@ void main()
 			if (nAlign == ALIGNMENT_EVIL)
 			{
 				//SR
-				if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+				if(!PRCMyResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 				{
 					//Save
 					if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))

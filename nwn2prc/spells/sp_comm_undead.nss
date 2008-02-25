@@ -89,7 +89,7 @@ void main()
 	if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD)
 	{
 		//Check Spell Resistance
-		if (!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+		if (!PRCMyResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 		{
 			//Dominate mindless
 			if(GetAbilityScore(oTarget, ABILITY_INTELLIGENCE) < 11)

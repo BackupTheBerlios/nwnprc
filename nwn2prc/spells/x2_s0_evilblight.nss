@@ -72,7 +72,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
             //Signal spell cast at event
             SignalEvent(oTarget, EventSpellCastAt(oTarget,  PRCGetSpellId()));
             //Make SR Check
-            if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl))
+            if (!PRCMyResistSpell(OBJECT_SELF, oTarget,CasterLvl))
             {
                int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                     //Make Will Save

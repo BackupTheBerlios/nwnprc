@@ -75,7 +75,7 @@ void main()
         	utter.fDur       = RoundsToSeconds(1);
         	
         	// If the Spell Penetration fails, don't apply any effects
-        	nSRCheck = MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen);
+        	nSRCheck = PRCMyResistSpell(oTrueSpeaker, oTarget, utter.nPen);
         	if (!nSRCheck)
         	{
        			// Skill Penalty

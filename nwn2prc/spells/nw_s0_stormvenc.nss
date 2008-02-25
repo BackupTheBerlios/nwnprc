@@ -58,7 +58,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             SignalEvent(oTarget, EventSpellCastAt(GetAreaOfEffectCreator(), SPELL_STORM_OF_VENGEANCE));
             //Make an SR Check
             fDelay = GetRandomDelay(0.5, 2.0);
-            if(MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr, fDelay) == 0)
+            if(PRCMyResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr, fDelay) == 0)
             {
                 int nDC = PRCGetSaveDC(oTarget,GetAreaOfEffectCreator());
 

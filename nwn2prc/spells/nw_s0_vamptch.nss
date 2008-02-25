@@ -63,7 +63,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 
             if (iAttackRoll > 0)
             {
-                if(!MyPRCResistSpell(oCaster, oTarget, nPenetr))
+                if(!PRCMyResistSpell(oCaster, oTarget, nPenetr))
                  {
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
                     ApplyTouchAttackDamage(oCaster, oTarget, iAttackRoll, nDamage, DAMAGE_TYPE_NEGATIVE);

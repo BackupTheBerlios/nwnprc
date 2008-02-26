@@ -94,9 +94,7 @@ void RestFinished(object oPC)
         SendMessageToPC(oPC," Lips of Rapture : use "+IntToString(iLips-1));
     }
 
-    if (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC) ||
-        GetIsEpicSorcerer(oPC) || GetIsEpicWizard(oPC) ||
-        GetIsEpicFavSoul(oPC) || GetIsEpicHealer(oPC)) {
+    if (GetIsEpicSpellcaster(oPC)) {
         FloatingTextStringOnCreature("*You feel refreshed*", oPC, FALSE);
         ReplenishSlots(oPC);
     }

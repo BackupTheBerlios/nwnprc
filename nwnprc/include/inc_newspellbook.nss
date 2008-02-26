@@ -9,7 +9,7 @@ Add the spellbook feat to cls_feat_*.2da at the appropriate level
 Add class to GetSpellbookTypeForClass() below
 Add class to GetAbilityForClass() below
 Add class to GetIsArcaneClass() or GetIsDivineClass() in prc_inc_spells as appropriate
-Add class to GetCasterLvl() in prc_inc_spells
+Add class to GetCasterLevelModifier() in prc_inc_spells if necessary
 Add class to MakeLookupLoopMaster() in inc_lookups
 Run the assemble_spellbooks.bat file
 Make the prc_* scripts in newspellbook
@@ -21,7 +21,7 @@ Make cls_spcr_*.2da
 Add class to GetSpellbookTypeForClass() below
 Add class to GetAbilityForClass() below
 Add class to GetIsArcaneClass() or GetIsDivineClass() in prc_inc_spells as appropriate
-Add class to GetCasterLvl() in prc_inc_spells
+Add class to GetCasterLevelModifier() in prc_inc_spells if necessary
 Add class to MakeLookupLoopMaster() in inc_lookups
 Add class to prc_amagsys_gain if(CheckMissingSpells(oPC, CLASS_TYPE_SORCERER, MinimumSpellLevel, MaximumSpellLevel))
 Add class to ExecuteScript("prc_spellgain", oPC) list in EvalPRCFeats in prc_inc_function
@@ -563,7 +563,7 @@ void SetupSpells(object oPC, int nClass)
     string sClass = IntToString(nClass);
     string sArrayName = "NewSpellbookMem_" + sClass;
     object oSkin = GetPCSkin(oPC);
-    int nLevel = GetCasterLvl(nClass, oPC);
+    int nLevel = GetPrCAdjustedClassLevel(nClass, oPC);
     int nAbility = GetAbilityForClass(nClass, oPC);
     int nSpellbookType = GetSpellbookTypeForClass(nClass);
 

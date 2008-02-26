@@ -48,6 +48,36 @@ int GetFirstArcaneClassPosition (object oCaster = OBJECT_SELF);
 // Returns the position that the first divine class is in, returns 0 if none.
 int GetFirstDivineClassPosition (object oCaster = OBJECT_SELF);
 
+/** 
+ * A lookup for caster level progression for divine and arcane base classes
+ * @return an int that can be used in caster level calculations note: these use int division
+ */
+int GetCasterLevelModifier(int nClass);
+
+/**
+ * Adjusts the base class level (NOT caster level) of the class by any spellcasting PrCs
+ * @param nClass a base casting class (divine or arcane)
+ * @return The level of the class, adjusted for any appropriate PrC levels
+ */
+int GetPrCAdjustedClassLevel(int nClass, object oCaster = OBJECT_SELF);
+
+/**
+ * Adjusts the base caster level of the class by any spellcasting PrCs plus Practised Spellcasting feats if appropriate
+ * @param nClass a base casting class
+ * @param bAdjustForPractisedSpellcaster add practiced spellcaster feat to caster level. TRUE by default
+ * @return the caster level in the class, adjusted by any PrC levels and practised spellcaster feats as appropriate
+ */
+int GetPrCAdjustedCasterLevel(int nClassType, object oCaster = OBJECT_SELF, int bAdjustForPractisedSpellcaster = TRUE);
+
+/**
+ * finds the highest arcane or divine caster level, adjusting the base caster level of the class by any 
+ * spellcasting PrCs plus Practised Spellcasting feats if appropriate
+ * @param nClassType TYPE_DIVINE or TYPE_ARCANE
+ * @param bAdjustForPractisedSpellcaster add practiced spellcaster feat to caster level. TRUE by default
+ * @return the highest arcane/divine caster level adjusted by any PrC levels and practised spellcaster feats as appropriate 
+ */
+int GetPrCAdjustedCasterLevelByType(int nClassType, object oCaster = OBJECT_SELF, int bAdjustForPractisedSpellcaster = TRUE);
+
 // Returns the SPELL_SCHOOL of the spell in question.
 int GetSpellSchool(int iSpellId);
 
@@ -557,6 +587,81 @@ int GetFirstDivineClass (object oCaster = OBJECT_SELF)
     return nClass;
 }
 
+int GetCasterLevelModifier(int nClass)
+{
+    switch (nClass) // do not change to return zero as this is used as a divisor
+    {
+        // add in new base half-caster classes here
+        case CLASS_TYPE_HEXBLADE:
+        case CLASS_TYPE_RANGER:
+        case CLASS_TYPE_PALADIN:
+        case CLASS_TYPE_ANTI_PALADIN:
+            return 2;
+        default: // normal progression
+            return 1;
+    }
+    return 1; // stupid compiler
+}
+
+int GetPrCAdjustedClassLevel(int nClass, object oCaster = OBJECT_SELF)
+{
+    int iTemp;
+    // is it arcane, divine or neither?
+    if(GetIsArcaneClass(nClass, oCaster))
+    {
+        if (GetFirstArcaneClass(oCaster) == nClass) // adjust for any PrCs
+            iTemp = GetArcanePRCLevels(oCaster);
+    }
+    else if(GetIsDivineClass(nClass, oCaster))
+    {
+        if (GetFirstDivineClass(oCaster) == nClass) // adjust for any PrCs
+            iTemp = GetDivinePRCLevels(oCaster);
+    }
+    else // a non-caster class or a PrC
+    {
+        return 0;
+    }
+    // add the caster class levels
+    return iTemp += GetLevelByClass(nClass, oCaster);
+}
+
+int GetPrCAdjustedCasterLevel(int nClass, object oCaster = OBJECT_SELF, int bAdjustForPractisedSpellcaster = TRUE)
+{
+    int iTemp;
+    iTemp = GetPrCAdjustedClassLevel(nClass, oCaster);
+    iTemp = iTemp / GetCasterLevelModifier(nClass);
+    if (bAdjustForPractisedSpellcaster)
+        iTemp += PractisedSpellcasting(oCaster, nClass, iTemp);
+    return iTemp;
+}
+
+int GetPrCAdjustedCasterLevelByType(int nClassType, object oCaster = OBJECT_SELF, int bAdjustForPractisedSpellcaster = TRUE)
+{
+    int nHighest, nFirst, i;
+    int nClass1, nClass2, nClass3;
+    int nClass1Lvl, nClass2Lvl, nClass3Lvl;
+    nClass1 = PRCGetClassByPosition(1, oCaster);
+    nClass2 = PRCGetClassByPosition(2, oCaster);
+    nClass3 = PRCGetClassByPosition(3, oCaster);
+    if(nClassType == TYPE_ARCANE && (nFirst = GetFirstArcaneClass(oCaster)))
+    {
+        if (GetIsArcaneClass(nClass1, oCaster)) nClass1Lvl = GetPrCAdjustedCasterLevel(nClass1, oCaster, bAdjustForPractisedSpellcaster);
+        if (GetIsArcaneClass(nClass2, oCaster)) nClass2Lvl = GetPrCAdjustedCasterLevel(nClass1, oCaster, bAdjustForPractisedSpellcaster);
+        if (GetIsArcaneClass(nClass3, oCaster)) nClass3Lvl = GetPrCAdjustedCasterLevel(nClass1, oCaster, bAdjustForPractisedSpellcaster);
+    }
+    else if (nClassType == TYPE_DIVINE && (nFirst = GetFirstDivineClass(oCaster)))
+    {
+        if (GetIsDivineClass(nClass1, oCaster)) nClass1Lvl = GetPrCAdjustedCasterLevel(nClass1, oCaster, bAdjustForPractisedSpellcaster);
+        if (GetIsDivineClass(nClass2, oCaster)) nClass2Lvl = GetPrCAdjustedCasterLevel(nClass1, oCaster, bAdjustForPractisedSpellcaster);
+        if (GetIsDivineClass(nClass3, oCaster)) nClass3Lvl = GetPrCAdjustedCasterLevel(nClass1, oCaster, bAdjustForPractisedSpellcaster);
+    }
+    nHighest = nClass1Lvl;
+    if (nClass2Lvl > nHighest) nHighest = nClass2Lvl;
+    if (nClass3Lvl > nHighest) nHighest = nClass3Lvl;
+    return nHighest;
+
+}
+
 int GetSpellSchool(int iSpellId)
 {
     string sSpellSchool = Get2DACache("spells", "School", iSpellId);//lookup_spell_school(iSpellId);
@@ -858,6 +963,8 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
             iReturnLevel += GetArcanePRCLevels(oCaster)
                 +  ArchmageSpellPower(oCaster);
         }
+        if (iCastingClass == CLASS_TYPE_HEXBLADE)
+            iReturnLevel = iReturnLevel / 2; // note you cannot be an archmage *and* a 1/2 base caster so this is ok
         iReturnLevel += TrueNecromancy(oCaster, iSpellId, "ARCANE")
             +  ShadowWeave(oCaster, iSpellId)
             +  FireAdept(oCaster, iSpellId)
@@ -872,12 +979,12 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
     else if(GetIsDivineClass(iCastingClass, oCaster))
     {
         iReturnLevel = GetLevelByClass(iCastingClass, oCaster);
+        if (GetFirstDivineClass(oCaster) == iCastingClass)
+            iReturnLevel += GetDivinePRCLevels(oCaster);
         if (iCastingClass == CLASS_TYPE_RANGER
             || iCastingClass == CLASS_TYPE_PALADIN
             || iCastingClass == CLASS_TYPE_ANTI_PALADIN)
             iReturnLevel = iReturnLevel / 2;
-        if (GetFirstDivineClass(oCaster) == iCastingClass)
-            iReturnLevel += GetDivinePRCLevels(oCaster);
         iReturnLevel += TrueNecromancy(oCaster, iSpellId, "DIVINE")
             +  ShadowWeave(oCaster, iSpellId)
             +  FireAdept(oCaster, iSpellId)

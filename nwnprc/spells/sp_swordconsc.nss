@@ -63,8 +63,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
                 nRawStrength = GetHitDice(oTarget)/2;
             else
                 nRawStrength = GetHitDice(oTarget)/5;
-            if(GetCasterLvl(CLASS_TYPE_CLERIC, oTarget) > nRawStrength)
-                nRawStrength = GetCasterLvl(CLASS_TYPE_CLERIC, oTarget);    
+            if(GetPrCAdjustedCasterLevel(CLASS_TYPE_CLERIC, oTarget) > nRawStrength)
+                nRawStrength = GetPrCAdjustedCasterLevel(CLASS_TYPE_CLERIC, oTarget);    
         }
         else
      {

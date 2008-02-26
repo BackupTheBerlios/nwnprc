@@ -224,7 +224,7 @@ void ElementalFamiliar()
 
     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_WeapFocCreature),oHide);
 
-    int Arcanlvl = GetCasterLvl(TYPE_ARCANE);
+    int Arcanlvl = GetPrCAdjustedCasterLevelByType(TYPE_ARCANE) + GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER)/2;
 
 
    if (Arcanlvl>26)

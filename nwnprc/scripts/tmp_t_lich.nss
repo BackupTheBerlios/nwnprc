@@ -162,7 +162,7 @@ void main()
         SetExecutedScriptReturnValue(X2_EXECUTE_SCRIPT_END);
     }    
     
-    int nCasterLevel = GetCasterLvl(TYPE_ARCANE, oPC);
+    int nCasterLevel = GetPrCAdjustedCasterLevelByType(TYPE_ARCANE, oPC, FALSE);
     if(nCasterLevel < 11)
     {
         SendMessageToPC(oPC, "nCasterLevel = "+IntToString(nCasterLevel));

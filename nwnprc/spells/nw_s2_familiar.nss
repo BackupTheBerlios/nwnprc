@@ -44,7 +44,7 @@ void BondedSummon2()
     //set its name
     SetName(oSummon, GetFamiliarName(oPC));
     //apply bonus based on level
-    int nArcaneLevel = GetCasterLvl(TYPE_ARCANE);
+    int nArcaneLevel = GetPrCAdjustedCasterLevelByType(TYPE_ARCANE) + GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER)/2;
     object oSkin  = GetItemInSlot(INVENTORY_SLOT_CARMOUR, oSummon);
     //in all cases
     IPSafeAddItemProperty(oSkin,

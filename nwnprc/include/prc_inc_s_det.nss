@@ -164,8 +164,8 @@ DoDebug("DetectAlignmentRound() : Round = "+IntToString(nRound)+"from "+GetName(
                 nRawStrength = GetHitDice(oTest)/2;
             else
                 nRawStrength = GetHitDice(oTest)/5;
-            if(GetCasterLvl(CLASS_TYPE_CLERIC, oTest) > nRawStrength)
-                nRawStrength = GetCasterLvl(CLASS_TYPE_CLERIC, oTest);
+            if(GetPrCAdjustedCasterLevel(CLASS_TYPE_CLERIC, oTest) > nRawStrength)
+                nRawStrength = GetPrCAdjustedCasterLevel(CLASS_TYPE_CLERIC, oTest);
                 //GetLevelByClass(CLASS_TYPE_CLERIC, oTest);   //use caster level when integrated
 
             if(nRawStrength == 0)

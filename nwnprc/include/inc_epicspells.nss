@@ -229,7 +229,7 @@ FUNCTION BODIES
 
 int GetIsEpicWarmage(object oPC)
 {
-    if (GetCasterLvl(CLASS_TYPE_WARMAGE, oPC) >= 18 && GetHitDice(oPC) >= 21 &&
+    if (GetPrCAdjustedCasterLevel(CLASS_TYPE_WARMAGE, oPC) >= 18 && GetHitDice(oPC) >= 21 &&
         GetAbilityScore(oPC, ABILITY_CHARISMA) >= 19)
             return TRUE;
         return FALSE;
@@ -237,7 +237,7 @@ int GetIsEpicWarmage(object oPC)
 
 int GetIsEpicHealer(object oPC)
 {
-    if (GetCasterLvl(CLASS_TYPE_HEALER, oPC) >= 17 && GetHitDice(oPC) >= 21 &&
+    if (GetPrCAdjustedCasterLevel(CLASS_TYPE_HEALER, oPC) >= 17 && GetHitDice(oPC) >= 21 &&
         GetAbilityScore(oPC, ABILITY_WISDOM) >= 19)
             return TRUE;
     return FALSE;
@@ -245,7 +245,7 @@ int GetIsEpicHealer(object oPC)
 
 int GetIsEpicFavSoul(object oPC)
 {
-    if (GetCasterLvl(CLASS_TYPE_FAVOURED_SOUL, oPC) >= 18 && GetHitDice(oPC) >= 21 &&
+    if (GetPrCAdjustedCasterLevel(CLASS_TYPE_FAVOURED_SOUL, oPC) >= 18 && GetHitDice(oPC) >= 21 &&
         GetAbilityScore(oPC, ABILITY_CHARISMA) >= 19)
             return TRUE;
     return FALSE;
@@ -253,7 +253,7 @@ int GetIsEpicFavSoul(object oPC)
 
 int GetIsEpicCleric(object oPC)
 {
-    if (GetCasterLvl(CLASS_TYPE_CLERIC, oPC) >= 17 && GetHitDice(oPC) >= 21 &&
+    if (GetPrCAdjustedCasterLevel(CLASS_TYPE_CLERIC, oPC) >= 17 && GetHitDice(oPC) >= 21 &&
         GetAbilityScore(oPC, ABILITY_WISDOM) >= 19)
             return TRUE;
     return FALSE;
@@ -261,7 +261,7 @@ int GetIsEpicCleric(object oPC)
 
 int GetIsEpicDruid(object oPC)
 {
-    if (GetCasterLvl(CLASS_TYPE_DRUID, oPC) >= 17 && GetHitDice(oPC) >= 21 &&
+    if (GetPrCAdjustedCasterLevel(CLASS_TYPE_DRUID, oPC) >= 17 && GetHitDice(oPC) >= 21 &&
         GetAbilityScore(oPC, ABILITY_WISDOM) >= 19)
             return TRUE;
     return FALSE;
@@ -269,7 +269,7 @@ int GetIsEpicDruid(object oPC)
 
 int GetIsEpicSorcerer(object oPC)
 {
-    if (GetCasterLvl(CLASS_TYPE_SORCERER, oPC) >= 18 &&  GetHitDice(oPC) >= 21 &&
+    if (GetPrCAdjustedCasterLevel(CLASS_TYPE_SORCERER, oPC) >= 18 &&  GetHitDice(oPC) >= 21 &&
         GetAbilityScore(oPC, ABILITY_CHARISMA) >= 19)
             return TRUE;
     return FALSE;
@@ -277,7 +277,7 @@ int GetIsEpicSorcerer(object oPC)
 
 int GetIsEpicWizard(object oPC)
 {
-    if (GetCasterLvl(CLASS_TYPE_WIZARD, oPC) >= 17 && GetHitDice(oPC) >= 21 &&
+    if (GetPrCAdjustedCasterLevel(CLASS_TYPE_WIZARD, oPC) >= 17 && GetHitDice(oPC) >= 21 &&
         GetAbilityScore(oPC, ABILITY_INTELLIGENCE) >= 19)
             return TRUE;
     return FALSE;
@@ -285,7 +285,7 @@ int GetIsEpicWizard(object oPC)
 
 int GetIsEpicShaman(object oPC)
 {
-    if (GetCasterLvl(CLASS_TYPE_SHAMAN, oPC) >= 17 && GetHitDice(oPC) >= 21 &&
+    if (GetPrCAdjustedCasterLevel(CLASS_TYPE_SHAMAN, oPC) >= 17 && GetHitDice(oPC) >= 21 &&
         GetAbilityScore(oPC, ABILITY_WISDOM) >= 19)
             return TRUE;
     return FALSE;
@@ -756,10 +756,10 @@ int GetDCSchoolFocusAdjustment(object oPC, string sChool)
 
 int GetEpicSpellSaveDC(object oCaster = OBJECT_SELF, object oTarget = OBJECT_INVALID, int nSpellID = -1)
 {
-    int iDiv = GetCasterLvl(TYPE_DIVINE,   oCaster); // ie. wisdom determines DC
-    int iWiz = GetCasterLvl(CLASS_TYPE_WIZARD,   oCaster); // int determines DC
-    int iWMa = GetCasterLvl(CLASS_TYPE_WARMAGE, oCaster); // cha determines DC
-    int iSor = GetCasterLvl(CLASS_TYPE_SORCERER, oCaster); // cha determines DC
+    int iDiv = GetPrCAdjustedCasterLevelByType(TYPE_DIVINE,   oCaster); // ie. wisdom determines DC
+    int iWiz = GetPrCAdjustedCasterLevel(CLASS_TYPE_WIZARD,   oCaster); // int determines DC
+    int iWMa = GetPrCAdjustedCasterLevel(CLASS_TYPE_WARMAGE, oCaster); // cha determines DC
+    int iSor = GetPrCAdjustedCasterLevel(CLASS_TYPE_SORCERER, oCaster); // cha determines DC
     int iBest = 0;
     int iAbility;
     if(nSpellID == -1)

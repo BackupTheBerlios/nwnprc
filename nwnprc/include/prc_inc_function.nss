@@ -751,7 +751,7 @@ void FeatSpecialUsePerDay(object oPC)
     SpellShadow(oPC);
     FeatDiabolist(oPC);
     FeatAlaghar(oPC);
-    FeatUsePerDay(oPC,FEAT_SA_SHIELDSHADOW,-1,GetCasterLvl(TYPE_ARCANE,oPC));
+    FeatUsePerDay(oPC,FEAT_SA_SHIELDSHADOW,-1,GetPrCAdjustedCasterLevelByType(TYPE_ARCANE,oPC));
     FeatUsePerDay(oPC, FEAT_HEALING_KICKER_1, ABILITY_WISDOM, GetLevelByClass(CLASS_TYPE_COMBAT_MEDIC, oPC));
     FeatUsePerDay(oPC, FEAT_HEALING_KICKER_2, ABILITY_WISDOM, GetLevelByClass(CLASS_TYPE_COMBAT_MEDIC, oPC));
     FeatUsePerDay(oPC, FEAT_HEALING_KICKER_3, ABILITY_WISDOM, GetLevelByClass(CLASS_TYPE_COMBAT_MEDIC, oPC));

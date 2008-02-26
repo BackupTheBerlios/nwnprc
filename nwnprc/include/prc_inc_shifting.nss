@@ -135,6 +135,16 @@ struct appearancevalues{
     int nFootStepType;
     ///The gender
     int nGender;
+    
+    ///Colors
+    // Skin color
+    int nSkinColor;
+    // Hair color
+    int nHairColor;
+    // Tattoo 1 color
+    int nTat1Color;
+    // Tattoo 2 color
+    int nTat2Color;
 };
 
 //////////////////////////////////////////////////
@@ -1837,6 +1847,16 @@ struct appearancevalues GetAppearanceData(object oTemplate)
     appval.nFootStepType           = GetFootstepType(oTemplate);
     // Gender
     appval.nGender                 = GetGender(oTemplate);
+    /* Commented out until 1.69
+    // Skin color
+    appval.nSkinColor              = GetColor(oTemplate, COLOR_CHANNEL_SKIN);
+    // Hair color
+    appval.nHairColor              = GetColor(oTemplate, COLOR_CHANNEL_HAIR);
+    // Tattoo 1 color
+    appval.nTat1Color              = GetColor(oTemplate, COLOR_CHANNEL_TATTOO_1);
+    // Tattoo 2 color
+    appval.nTat2Color              = GetColor(oTemplate, COLOR_CHANNEL_TATTOO_2);
+    */
 
 
     return appval;
@@ -1894,6 +1914,17 @@ void SetAppearanceData(object oTarget, struct appearancevalues appval)
         else
             SetPortraitId(oTarget, 1043); //generic fighter port
     }
+    
+    /* Commented out until 1.69
+    // Skin color
+    SetColor(oTarget, COLOR_CHANNEL_SKIN, appval.nSkinColor);
+    // Hair color
+    SetColor(oTemplate, COLOR_CHANNEL_HAIR, appval.nHairColor);
+    // Tattoo 2 color
+    SetColor(oTemplate, COLOR_CHANNEL_TATTOO_1, appval.nTat1Color);
+    // Tattoo 1 color
+    SetColor(oTemplate, COLOR_CHANNEL_TATTOO_2, appval.nTat2Color);
+    */
 }
 
 struct appearancevalues GetLocalAppearancevalues(object oStore, string sName)
@@ -1933,6 +1964,15 @@ struct appearancevalues GetLocalAppearancevalues(object oStore, string sName)
     appval.nFootStepType           = GetLocalInt(oStore, sName + "nFootStepType");
     // Gender
     appval.nGender                 = GetLocalInt(oStore, sName + "nGender");
+    
+    // Skin color
+    appval.nSkinColor              = GetLocalInt(oStore, sName + "nSkinColor");
+    // Hair color
+    appval.nHairColor              = GetLocalInt(oStore, sName + "nHairColor");
+    // Tattoo 1 color
+    appval.nTat1Color              = GetLocalInt(oStore, sName + "nTat1Color");
+    // Tattoo 2 color
+    appval.nTat2Color              = GetLocalInt(oStore, sName + "nTat2Color");
 
 
     return appval;
@@ -1974,6 +2014,16 @@ void SetLocalAppearancevalues(object oStore, string sName, struct appearancevalu
     SetLocalInt(oStore, sName + "nFootStepType"          , appval.nFootStepType           );
     //Gender
     SetLocalInt(oStore, sName + "nGender"                , appval.nGender                 );
+    
+    // Skin color
+    SetLocalInt(oStore, sName + "nSkinColor"             , appval.nSkinColor              );
+    // Hair color
+    SetLocalInt(oStore, sName + "nHairColor"             , appval.nHairColor              );
+    // Tattoo 1 color
+    SetLocalInt(oStore, sName + "nTat1Color"             , appval.nTat1Color              );
+    // Tattoo 2 color
+    SetLocalInt(oStore, sName + "nTat2Color"             , appval.nTat2Color              );
+
 }
 
 void DeleteLocalAppearancevalues(object oStore, string sName)
@@ -2012,6 +2062,14 @@ void DeleteLocalAppearancevalues(object oStore, string sName)
     DeleteLocalInt(oStore, sName + "nFootStepType");
     // Gender
     DeleteLocalInt(oStore, sName + "nGender");
+    // Skin color
+    DeleteLocalInt(oStore, sName + "nSkinColor");
+    // Hair color
+    DeleteLocalInt(oStore, sName + "nHairColor");
+    // Tattoo 1 color
+    DeleteLocalInt(oStore, sName + "nTat1Color");
+    // Tattoo 2 color
+    DeleteLocalInt(oStore, sName + "nTat2Color");
 }
 
 struct appearancevalues GetPersistantLocalAppearancevalues(object oStore, string sName)
@@ -2066,6 +2124,10 @@ string DebugAppearancevalues2Str(struct appearancevalues appval)
          + "Portrait ResRef            = " + appval.sPortraitResRef + "\n"
          + "Footstep type              = " + IntToString(appval.nFootStepType) + "\n"
          + "Gender                     = " + IntToString(appval.nGender) + "\n"
+         + "Skin color                 = " + IntToString(appval.nSkinColor) + "\n"
+         + "Hair color                 = " + IntToString(appval.nHairColor) + "\n"
+         + "Tattoo 1 color             = " + IntToString(appval.nTat1Color) + "\n"
+         + "Tattoo 2 color             = " + IntToString(appval.nTat2Color) + "\n"
          ;
 }
 

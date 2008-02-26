@@ -2,7 +2,7 @@ Races - 95 left, 9 open
 do standard race subraces
 
 Alter Self
-prepare and comment out SetColor/GetColor calls for 1.69 support
+demilich
 
 Classes
 Warlock

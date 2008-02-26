@@ -1180,10 +1180,20 @@ int DraconicFeats(object oPC = OBJECT_SELF)
      }
 
     //Check for dragonblood subtype
-    if(GetRacialType(oPC) == RACIAL_TYPE_KOBOLD)  bDragonblooded = TRUE;
-    if(GetHasFeat(FEAT_DRAGONTOUCHED, oPC))  bDragonblooded = TRUE;
-    if(GetHasFeat(FEAT_DRACONIC_DEVOTEE, oPC))  bDragonblooded = TRUE;
-    if(GetLevelByClass(CLASS_TYPE_DRAGON_DISCIPLE, oPC) > 9)  bDragonblooded = TRUE;
+    if(GetRacialType(oPC) == RACIAL_TYPE_KOBOLD ||
+       GetRacialType(oPC) == RACIAL_TYPE_SPELLSCALE ||
+       GetRacialType(oPC) == RACIAL_TYPE_DRAGONBORN ||
+       GetRacialType(oPC) == RACIAL_TYPE_SILVERBROW_HUMAN ||
+       GetRacialType(oPC) == RACIAL_TYPE_FORESTLORD_ELF ||
+       GetRacialType(oPC) == RACIAL_TYPE_FIREBLOOD_DWARF ||
+       GetRacialType(oPC) == RACIAL_TYPE_GLIMMERSKIN_HALFING ||
+       GetRacialType(oPC) == RACIAL_TYPE_FROSTBLOOD_ORC ||
+       GetRacialType(oPC) == RACIAL_TYPE_SUNSCORCH_HOBGOBLIN ||
+       GetRacialType(oPC) == RACIAL_TYPE_VILETOOTH_LIZARDFOLK ||
+       GetHasFeat(FEAT_DRAGONTOUCHED, oPC) ||
+       GetHasFeat(FEAT_DRACONIC_DEVOTEE, oPC) ||
+       GetHasFeat(FEAT_DRAGON, oPC) ||
+       GetLevelByClass(CLASS_TYPE_DRAGON_DISCIPLE, oPC) > 9)  bDragonblooded = TRUE;
 
     //Draconic Heritage qualifies for dragonblood
     if((GetHasFeat(FEAT_DRACONIC_HERITAGE_BK, oPC))

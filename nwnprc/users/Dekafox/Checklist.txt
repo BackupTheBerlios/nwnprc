@@ -1,3 +1,7 @@
+Warlock
+Eldritch Blast
+Invocations
+
 Races - 95 left, 9 open
 do standard race subraces
 
@@ -6,3 +10,11 @@ demilich
 
 Classes
 Warlock
+Eldritch Disciple - eldritch essence invocations applying to divine spells with a single target 3+Cha/day, min applicable spell level equals spell level of the invoc
+Eldritch Theurge - embed AoE spells in the Eldritch Blast, EldDis ability above to arcane spells, embed touch spells like AoE spells
+Enlightened Spirit
+Hellfire Warlock - Hellfire INfusion(metamagic added to charged items when used)
+Dragon Descendent
+
+Extra new spellbook reserve at 53317 to 54699? - see if it can be cleared
+

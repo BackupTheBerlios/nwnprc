@@ -1,8 +1,0 @@
-armor/weapon/wonderous item - prc_craft_inc 
-CheckCraftingSpells - should check for Imbue Item first, return true if UMD check passes, false if fails.
-CHeckPrereq - check for Warlock levels in Caster Level check if has Imbue Item
-
-scroll/potion/wand/staff/rod - X2_inc_Craft
-Needs a convo of some sort to select spell - creation functions pass/are passed the spellId
-x2_pc_craft <-- craft script, calls CIGetSpellWasUsedForItemCreation in inc_craft
-"cast" imbue item on blank scroll/etc - pop up dialog with possible choices

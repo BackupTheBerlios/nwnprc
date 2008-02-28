@@ -848,7 +848,7 @@ void main()
                     int nMinXP = nHD * (nHD - 1) * 500;
                     int nCurrentXP = GetXP(oPC);
 
-                    if(GetGold(oPC) >= nCostDiff && (nCurrentXP - nMinXP) >= nXPDiff && CheckPrereq(oPC, nLine, nEpic, sFile, strTempNew))
+                    if(GetGold(oPC) >= nCostDiff && (nCurrentXP - nMinXP) >= nXPDiff && CheckPrereq(oPC, nLine, GetHasFeat(GetEpicCraftingFeat(GetCraftingFeat(oItem)), oPC) && (!GetPRCSwitch(PRC_DISABLE_CRAFT_EPIC)), sFile, strTempNew))
                         AddChoice(ActionString("Confirm"), CHOICE_CONFIRM, oPC);
                     SetLocalInt(oPC, PRC_CRAFT_COST, nCostDiff);
                     SetLocalInt(oPC, PRC_CRAFT_XP, nXPDiff);

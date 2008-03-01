@@ -33,7 +33,7 @@ void main()
 // shaken   -2 attack,weapon dmg,save.
 
     //Declare major variables
-    int CasterLvl = GetInvocationLevel(OBJECT_SELF);
+    int CasterLvl = GetInvokerLevel(OBJECT_SELF, GetInvokingClass());
 
     float fDuration = RoundsToSeconds(CasterLvl);
     int nDamage;

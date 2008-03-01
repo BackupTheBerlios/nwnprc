@@ -33,7 +33,7 @@ void main()
     effect    eDamage;
     object    oTarget      = PRCGetSpellTargetObject();
     location  lLocal       = PRCGetSpellTargetLocation();
-    int       nCasterLevel = GetInvocationLevel(OBJECT_SELF);
+    int       nCasterLevel = GetInvokerLevel(OBJECT_SELF, GetInvokingClass());
     int iTypeDispel = GetLocalInt(GetModule(),"BIODispel");
 
     //--------------------------------------------------------------------------

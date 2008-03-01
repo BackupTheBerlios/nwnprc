@@ -2614,6 +2614,16 @@ const int FEAT_SECOND_AURA_ENERGYCOLD             = 1825;
 const int FEAT_SECOND_AURA_ENERGYELEC             = 1826;
 const int FEAT_SECOND_AURA_ENERGYFIRE             = 1827;
 
+//Warlock feats
+const int FEAT_IMBUE_ITEM                         = 4459;
+const int FEAT_ELDRITCH_BLAST                     = 4460;
+const int FEAT_FIENDISH_RESILIENCE                = 4466;
+const int FEAT_WARLOCK_RESIST_ACID                = 4461;
+const int FEAT_WARLOCK_RESIST_COLD                = 4462;
+const int FEAT_WARLOCK_RESIST_ELEC                = 4463;
+const int FEAT_WARLOCK_RESIST_FIRE                = 4464;
+const int FEAT_WARLOCK_RESIST_SONIC               = 4465;
+
 
 /*//////////////////////////////////////////////////
 //////////////// TRUENAMING ////////////////////////

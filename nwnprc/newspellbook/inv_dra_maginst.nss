@@ -29,7 +29,7 @@ void main()
 
 
     //Declare major variables
-    int CasterLvl = GetInvocationLevel(OBJECT_SELF);
+    int CasterLvl = GetInvokerLevel(OBJECT_SELF, GetInvokingClass());
     int nBonus = 10 + CasterLvl;
     effect eLore = EffectSkillIncrease(SKILL_LORE, nBonus);
     effect eVis = EffectVisualEffect(VFX_IMP_MAGICAL_VISION);

@@ -14,7 +14,7 @@ void main()
 
 
     //Declare major variables
-    int CasterLvl = GetInvocationLevel(OBJECT_SELF);
+    int CasterLvl = GetInvokerLevel(OBJECT_SELF, GetInvokingClass());
     object oTarget = GetSpellTargetObject();
     effect eVis = EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);

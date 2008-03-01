@@ -15,7 +15,7 @@
 void main()
 {
     object oCaster = OBJECT_SELF;
-    int nCasterLevel = GetInvocationLevel(oCaster);
+    int nCasterLevel = GetInvokerLevel(OBJECT_SELF, GetInvokingClass());
     object oTarget = PRCGetSpellTargetObject();
     
     effect eInvis = EffectInvisibility(INVISIBILITY_TYPE_NORMAL);

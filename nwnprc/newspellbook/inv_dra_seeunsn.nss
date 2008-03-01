@@ -38,7 +38,7 @@ void main()
     
     //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_SEE_INVISIBILITY, FALSE));
-    int CasterLvl = GetInvocationLevel(OBJECT_SELF);
+    int CasterLvl = GetInvokerLevel(OBJECT_SELF, GetInvokingClass());
     
     //Apply the VFX impact and effects
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(24),TRUE,-1,CasterLvl);

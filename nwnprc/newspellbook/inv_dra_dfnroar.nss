@@ -19,7 +19,7 @@ void main()
 // panicked -2 save + flee away ,50 % drop object holding
 
     //Declare major variables
-    int CasterLvl = GetInvocationLevel(OBJECT_SELF);
+    int CasterLvl = GetInvokerLevel(OBJECT_SELF, GetInvokingClass());
 
     effect eDeaf = EffectDeaf();
     effect eVis = EffectVisualEffect(VFX_IMP_BLIND_DEAF_M);

@@ -19047,8 +19047,11 @@ Use: Automatic.</entry>
 Prerequisite: Race-Specific.
 Specifics: The creature is immune to electric damage.
 Use: Automatic.</entry>
-  <entry id="50171" lang="en" sex="m">Special Abilities - Svirfneblin</entry>
-  <entry id="50172" lang="en" sex="m">Spell-Like Abilities: 1/day - Blindness and Deafness (DC 16), Blur, Disguise Self. Caster level is equal to the svirfneblin's character level, DC is Charisma-based with +4 racial bonus.</entry>
+  <entry id="50171" lang="en" sex="m">Vulnerability to Fire</entry>
+  <entry id="50172" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: The creature takes 50% more damage from fire.
+Use: Automatic.</entry>
   <entry id="50173" lang="en" sex="m">Fire Resistance 10</entry>
   <entry id="50174" lang="en" sex="m">Type of Feat: Racial
 Prerequisite: Race-Specific.
@@ -20510,6 +20513,46 @@ Use: Automatic.</entry>
   <entry id="50638" lang="en" sex="m">&lt;CUSTOM0&gt; turns water creatures.</entry>
   <entry id="50639" lang="en" sex="m">&lt;CUSTOM0&gt; turns fire creatures.</entry>
   <entry id="50640" lang="en" sex="m">&lt;CUSTOM0&gt; turns blightspawned.</entry>
+  <entry id="50734" lang="en" sex="m">Imbue Item</entry>
+  <entry id="50735" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Warlock 12.
+Specifics: Warlocks can shape their supernatural powers to emulate spells when creating magical items.  They can replace any spell requirement of a crafted item with a UMD check of 15 + Spell Level for arcane spells, and 25 + Spell Level for divine spells.  They must still have the appropriate crafting feats to craft, however.
+If you are attempting to craft a wearable item, use the appropriate feat.
+If you are attempting to craft a limited use item such as a wand, scroll, potion, or staff, then use this feat on the base item and select the spell to use in the following dialog.
+Use: Selected/Automatic.</entry>
+  <entry id="50736" lang="en" sex="m">Frostblood Orc</entry>
+  <entry id="50737" lang="en" sex="m">Frostblood Orcish</entry>
+  <entry id="50738" lang="en" sex="m">frostblood orcish</entry>
+  <entry id="50739" lang="en" sex="m">Frostblood Orcs</entry>
+  <entry id="50740" lang="en" sex="m">Frostblood orcs trace their ancestry to ancient tribes that hunted and revered white dragons.  After a successful hunt, the hunters would performa  ritual where they drank the blood of their fallen foe, and over time this somehow managed to impart some traits of the white dragon into their bloodline.  They are physically similar to other orcs, but sport pale white skin, catlike eyes, and stringy white or grey hair that grows quickly.
+
+Frostblood Orc Ability Adjustments: +4 Str, -2 Int, -2 Cha, -2 Wis.
+Favored Class (Barbarian): A multiclass frostblood orc's barbarian class does not count when determining whether he suffers an XP penalty for multiclassing.
+
+Special Abilities:
+
+- Darkvision: Frostblood Orcs are able to see in the dark.
+- Cold Resistance: Cold Resitance 10.
+- Vulnerability to Fire: 50% more damage from fire.
+- Endurance: Frostblood Orcs gain Endurance as a bonus feat.
+- Light Sensitivity: Frostblood Orcs suffer -2 penalty to attack rolls, saves and checks while operating in bright light.
+- Dragonblood subtype: Sunscorch Hobgoblins have the Dragonblood subtype, which qualifies them for certain feats.
+- Orcish: Orcs are considered Orcish for the purpose of spells.</entry>
+  <entry id="50741" lang="en" sex="m">Sunscorch Hobgoblin</entry>
+  <entry id="50742" lang="en" sex="m">sunscorch hobgoblin</entry>
+  <entry id="50743" lang="en" sex="m">Sunscorch Hobgoblins</entry>
+  <entry id="50744" lang="en" sex="m">Hobgoblins often ally with powerful dragons, to both sides' mutual benefit, with blue dragons being the most common due to shared territories.  Although physical relationships are extremely rare between the two, a tribe of hobgoblins developed a series of rituals to allow them to take on aspects of dragonkind.  This original tribe is long since gone, but the traits left behind by the rituals live on among the hobgoblin race.  The birth of a Sunscorch Hobgoblin is considered a omen, and they are often leaders or the power behind the leader of a given tribe.  They look like their fellows, but for brilliant azure eyes.  They are mroe cunning and patient than normal hobgoblins, but they also inherited the blue dragon's vanity.
+
+Sunscorch Hobgoblin Ability Adjustments: +2 Con, +2 Wis
+Favored Class (Fighter): A multiclass sunscorch hobgoblin's fighter class does not count when determining whether he suffers an XP penalty for multiclassing.
+
+Special Abilities:
+
+- Darkvision: Sunscorch Hobgoblins are able to see in the dark.
+- Skill Affinity (Move Silently): +4 racial bonus to Move Silently checks.
+- Skill Affinity (Bluff): +2 racial bonus to Bluff checks.
+- Dragonblood subtype: Sunscorch Hobgoblins have the Dragonblood subtype, which qualifies them for certain feats.
+- Goblinoid: Hobgoblins count as Goblinoids for the purpose of spells.</entry>
   <entry id="50745" lang="en" sex="m">Disguise Self</entry>
   <entry id="50746" lang="en" sex="m">Illusion (Glamer)
 Level:        Brd 1, Sor/Wiz 1

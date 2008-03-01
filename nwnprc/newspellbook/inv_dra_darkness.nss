@@ -18,7 +18,7 @@
 void main()
 {
     object oCaster = OBJECT_SELF;
-    int nCasterLevel = GetInvocationLevel(oCaster);
+    int nCasterLevel = GetInvokerLevel(OBJECT_SELF, GetInvokingClass());
     if (!PreInvocationCastCode()) return;
     object oTarget = PRCGetSpellTargetObject();
     

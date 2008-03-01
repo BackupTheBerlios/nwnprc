@@ -43,7 +43,7 @@ void main()
     effect eLink = EffectLinkEffects(eMind, eCharm);
     eLink = EffectLinkEffects(eLink, eDur);
 
-    int CasterLvl = GetInvocationLevel(OBJECT_SELF);
+    int CasterLvl = GetInvokerLevel(OBJECT_SELF, GetInvokingClass());
     int nDuration = 3 + CasterLvl/2;
     int nPenetr = CasterLvl + SPGetPenetr();
     nDuration = GetScaledDuration(nDuration, oTarget);

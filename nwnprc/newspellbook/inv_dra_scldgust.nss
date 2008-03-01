@@ -16,7 +16,7 @@ void main()
 // End of Spell Cast Hook
 
     //Declare major variables
-    int CasterLvl = GetInvocationLevel(OBJECT_SELF);
+    int CasterLvl = GetInvokerLevel(OBJECT_SELF, GetInvokingClass());
     object oTarget;
     float fDelay;
     effect eDmg = EffectDamage(CasterLvl, DAMAGE_TYPE_FIRE);

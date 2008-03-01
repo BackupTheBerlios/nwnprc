@@ -222,10 +222,10 @@ int GetInvokerLevel(object oInvoker, int nSpecificClass = CLASS_TYPE_INVALID, in
     return nLevel;
 }
 
-//add Warlock here later
 int GetIsInvocationUser(object oCreature)
 {
-    return !!(GetLevelByClass(CLASS_TYPE_DRAGONFIRE_ADEPT, oCreature)
+    return !!(GetLevelByClass(CLASS_TYPE_DRAGONFIRE_ADEPT, oCreature) ||
+              GetLevelByClass(CLASS_TYPE_WARLOCK, oCreature)
              );
 }
 
@@ -238,10 +238,10 @@ int GetHighestInvokerLevel(object oCreature)
                );
 }
 
-//add Warlock here later
 int GetIsInvocationClass(int nClass)
 {
-    return (nClass==CLASS_TYPE_DRAGONFIRE_ADEPT 
+    return (nClass==CLASS_TYPE_DRAGONFIRE_ADEPT ||
+            nClass==CLASS_TYPE_WARLOCK 
             );
 }
 

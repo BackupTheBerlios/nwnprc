@@ -17,6 +17,7 @@
 #include "prc_alterations"
 #include "prc_inc_sneak"
 #include "psi_inc_psifunc"
+#include "inv_inc_invfunc"
 #include "inc_ecl"
 
 //  Prevents a Man at Arms from taking improved critical
@@ -1005,9 +1006,11 @@ int CraftingFeats(object oPC = OBJECT_SELF)
                                  ),
                              PRCGetClassByPosition(3, oPC) != CLASS_TYPE_INVALID ? GetManifesterLevel(oPC, PRCGetClassByPosition(3, oPC)) : 0
                              ),
-        nMax           = max(nCasterLvl, nManifesterLvl);
+        nInvokerLvl    = max(GetInvokerLevel(oPC, CLASS_TYPE_WARLOCK), GetInvokerLevel(oPC, CLASS_TYPE_DRAGONFIRE_ADEPT)),
+        nCasterMax     = max(nCasterLvl, nInvokerLvl),
+        nMax           = max(nCasterMax, nManifesterLvl);
     int bOK = TRUE, bFirst = TRUE;
-    string sError = GetStringByStrRef(16823153) + "\n"; // "You spellcaster (or manifester) level is not high enough to take the following crafting feats:"
+    string sError = GetStringByStrRef(16823153) + "\n"; // "Your spellcaster (or manifester) level is not high enough to take the following crafting feats:"
 
     if(GetHasFeat(FEAT_SCRIBE_SCROLL, oPC) &&
        nMax < 1 &&
@@ -1172,7 +1175,7 @@ int DraconicFeats(object oPC = OBJECT_SELF)
       || GetHasFeat(FEAT_DRACONIC_HERITAGE_CP, oPC)
       || GetHasFeat(FEAT_DRACONIC_HERITAGE_GD, oPC)
       || GetHasFeat(FEAT_DRACONIC_HERITAGE_SR, oPC)
-      ) && !( GetLevelByClass(CLASS_TYPE_SORCERER, oPC) > 1 || GetHasFeat(FEAT_DRAGONTOUCHED, oPC))
+      ) && !( GetLevelByClass(CLASS_TYPE_SORCERER, oPC) > 0 || GetHasFeat(FEAT_DRAGONTOUCHED, oPC))
      )
      {
         FloatingTextStringOnCreature("You need Dragontouched or a level of Sorcerer for Heritage.", oPC, FALSE);

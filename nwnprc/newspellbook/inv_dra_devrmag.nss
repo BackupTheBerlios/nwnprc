@@ -24,7 +24,7 @@ void main()
 
     effect   eVis         = EffectVisualEffect( VFX_IMP_BREACH );
     effect   eImpact      = EffectVisualEffect( VFX_FNF_DISPEL_GREATER );
-    int      nCasterLevel = GetInvocationLevel(OBJECT_SELF);
+    int      nCasterLevel = GetInvokerLevel(OBJECT_SELF, GetInvokingClass());
     object   oTarget      = PRCGetSpellTargetObject();
     location lLocal   =     PRCGetSpellTargetLocation();
     int iTypeDispel = GetLocalInt(GetModule(),"BIODispel");

@@ -443,6 +443,8 @@ const int IP_CONST_CASTSPELL_CLEAN_POISON_OFF       = 1144;
 
 const int IP_CONST_CASTSPELL_MINDBLADE_LUCKY        = 1171;
 
+const int IP_CONST_CASTSPELL_ELDRITCH_GLAIVE_ONHIT  = 852;
+
 
 //  IP_CONST_ONHIT_CASTSPELL
 // Note: Do not add anything to this section, since multiple onhit properties conflict with each other. Instead implement your stuff via eventhook to EVENT_ONHIT.

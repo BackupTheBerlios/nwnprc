@@ -1,0 +1,27 @@
+
+
+Essence INvocations:
+*Baneful Blast - 2d6 extra damage vs racial type, racial type chosen when Invoc learned
+*Binding Blast - will save or stunned for 1 round
+*Penetrating Blast - +4 to SR penetration, if successful drop SR by 5 for 1 minute
+*Brimstone Blast - add'l 2d6 fire damage/round for lvl/5 rounds
+*Beshadowed Blast - save or blinds for 1 round
+*Hellrime Blast - blast is cold damage, save or -4 to Dex for 1 minutes
+*Frightful Blast - save or shaken for 1 round
+*Sickening Blast - save or sickened for 1 minute
+*Utterdark Blast - blast is neg energy, hit = 2 neg levels for 1 hour
+*Vitriolic Blast - blast is acid damage, ignores SR, 2d6 acid damage/rnd for lvl/5 rounds
+*Noxious Blast - save or nauseated for 1 minute
+*Hammer Blast - full damage ot objects
+*Bewitching Blast - will save or confused for 1 round
+Hindering Blast - will save or slowed for 1 round
+
+Blast Shape Invocs
+(do as seperate blast feats)
+*Eldritch Spear - 250ft range
+*Hideous Blow - combines with melee attack
+*Eldritch chain - jumps from target to target
+*Eldritch Cone - uses 30' cone shape instead of a ray
+*Eldritch Doom - 20' sphere centered on warlock
+*Eldritch Line - uses line shape instead of a ray
+*Eldritch Glaive - forms into a glaive that lasts for 1 round

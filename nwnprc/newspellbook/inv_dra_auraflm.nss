@@ -32,7 +32,7 @@ void main()
 
     //Declare major variables
     effect eVis = EffectVisualEffect(VFX_DUR_ELEMENTAL_SHIELD);
-    int CasterLvl = GetInvocationLevel(OBJECT_SELF);
+    int CasterLvl = GetInvokerLevel(OBJECT_SELF, GetInvokingClass());
     object oTarget = OBJECT_SELF;
     object oSkin = GetPCSkin(oTarget);
     effect eShield = EffectDamageShield(CasterLvl - 1, DAMAGE_BONUS_1, DAMAGE_TYPE_FIRE);

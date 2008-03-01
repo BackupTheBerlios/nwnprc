@@ -112,12 +112,12 @@ int   CIGetIsCraftFeatBaseItem( object oItem );
 // *  Checks if the last spell cast was used to brew potion and will do the brewing process.
 // *  Returns TRUE if the spell was indeed used to brew a potion (regardless of the actual outcome of the brewing process)
 // *  Meant to be used in spellscripts only
-int   CICraftCheckBrewPotion(object oSpellTarget, object oCaster);
+int   CICraftCheckBrewPotion(object oSpellTarget, object oCaster, int nID = 0);
 
 // *  Checks if the last spell cast was used to scribe a scroll and handles the scribe scroll process
 // *  Returns TRUE if the spell was indeed used to scribe a scroll (regardless of the actual outcome)
 // *  Meant to be used in spellscripts only
-int   CICraftCheckScribeScroll(object oSpellTarget, object oCaster);
+int   CICraftCheckScribeScroll(object oSpellTarget, object oCaster, int nID = 0);
 
 // *   Create a new potion item based on the spell nSpellID  on the creator
 object CICraftBrewPotion(object oCreator, int nSpellID );
@@ -152,6 +152,7 @@ int AttuneGem();
 #include "x2_inc_switches"
 #include "prc_inc_newip"
 #include "prc_inc_spells"
+#include "inv_inc_invfunc"
 
 
 //////////////////////////////////////////////////
@@ -211,6 +212,12 @@ int CI_GetClassMagicType(int nClass)
         case CLASS_TYPE_WIZARD:
                 return X2_CI_MAGICTYPE_ARCANE; break;
     }
+    
+    if(GetIsArcaneClass(nClass))
+        return X2_CI_MAGICTYPE_ARCANE;
+    else if(GetIsDivineClass(nClass))
+        return X2_CI_MAGICTYPE_DIVINE;
+    
     return X2_CI_MAGICTYPE_INVALID;
 }
 
@@ -253,6 +260,12 @@ object CICraftBrewPotion(object oCreator, int nSpellID )
         FloatingTextStrRefOnCreature(84544,oCreator);
         return OBJECT_INVALID;
     }
+    
+    int nCasterLevel = PRCGetCasterLevel();
+    if(GetLocalInt(oCreator, "UsingImbueItem"))
+    {
+       nCasterLevel = GetInvokerLevel(oCreator, CLASS_TYPE_WARLOCK);
+    }
 
     if (nPropID != -1)
     {
@@ -261,7 +274,7 @@ object CICraftBrewPotion(object oCreator, int nSpellID )
         AddItemProperty(DURATION_TYPE_PERMANENT,ipProp,oTarget);
         if(GetPRCSwitch(PRC_BREW_POTION_CASTER_LEVEL))
         {
-            itemproperty ipLevel = ItemPropertyCastSpellCasterLevel(nSpellID, PRCGetCasterLevel());
+            itemproperty ipLevel = ItemPropertyCastSpellCasterLevel(nSpellID, nCasterLevel);
             AddItemProperty(DURATION_TYPE_PERMANENT,ipLevel,oTarget);
             itemproperty ipMeta = ItemPropertyCastSpellMetamagic(nSpellID, PRCGetMetaMagicFeat());
             AddItemProperty(DURATION_TYPE_PERMANENT,ipMeta,oTarget);
@@ -319,7 +332,15 @@ object CICraftCraftWand(object oCreator, int nSpellID )
         FloatingTextStrRefOnCreature(84544,oCreator);
         return OBJECT_INVALID;
     }
-
+    
+    
+    int nCasterLevel = PRCGetCasterLevel();
+    int nClass = PRCGetLastSpellCastClass();
+    if(GetLocalInt(oCreator, "UsingImbueItem"))
+    {
+       nCasterLevel = GetInvokerLevel(oCreator, CLASS_TYPE_WARLOCK);
+       nClass = GetLocalInt(oCreator, "SpellType");
+    }
 
     if (nPropID != -1)
     {
@@ -329,7 +350,7 @@ object CICraftCraftWand(object oCreator, int nSpellID )
 
         if(GetPRCSwitch(PRC_CRAFT_WAND_CASTER_LEVEL))
         {
-            itemproperty ipLevel = ItemPropertyCastSpellCasterLevel(nSpellID, PRCGetCasterLevel());
+            itemproperty ipLevel = ItemPropertyCastSpellCasterLevel(nSpellID, nCasterLevel);
             AddItemProperty(DURATION_TYPE_PERMANENT,ipLevel,oTarget);
             itemproperty ipMeta = ItemPropertyCastSpellMetamagic(nSpellID, PRCGetMetaMagicFeat());
             AddItemProperty(DURATION_TYPE_PERMANENT,ipMeta,oTarget);
@@ -337,7 +358,7 @@ object CICraftCraftWand(object oCreator, int nSpellID )
             AddItemProperty(DURATION_TYPE_PERMANENT,ipDC,oTarget);
         }
 
-        int nType = CI_GetClassMagicType(PRCGetLastSpellCastClass());
+        int nType = CI_GetClassMagicType(nClass);
         itemproperty ipLimit;
 
         if (nType == X2_CI_MAGICTYPE_DIVINE)
@@ -360,8 +381,14 @@ object CICraftCraftWand(object oCreator, int nSpellID )
              ipLimit = ItemPropertyLimitUseByClass(CLASS_TYPE_BARD);
              AddItemProperty(DURATION_TYPE_PERMANENT,ipLimit,oTarget);
         }
+        
+        if(nClass != CLASS_TYPE_WARLOCK)
+        {
+            ipLimit = ItemPropertyLimitUseByClass(nClass);
+            AddItemProperty(DURATION_TYPE_PERMANENT,ipLimit,oTarget);
+        }
 
-        int nCharges = PRCGetCasterLevel() + d20();
+        int nCharges = nCasterLevel + d20();
 
         if (nCharges == 0) // stupi cheaters
         {
@@ -410,6 +437,11 @@ object CICraftScribeScroll(object oCreator, int nSpellID)
     // get scroll resref from scrolls lookup 2da
     int nClass =PRCGetLastSpellCastClass ();
     string sClass = "Wiz_Sorc";
+    if(GetLocalInt(oCreator, "UsingImbueItem"))
+    {
+       nClass = GetLocalInt(oCreator, "SpellType");
+       if(nClass == CLASS_TYPE_FAVOURED_SOUL) nClass = CLASS_TYPE_CLERIC;
+    }
     switch (nClass)
     {
        case CLASS_TYPE_WIZARD:
@@ -446,7 +478,10 @@ object CICraftScribeScroll(object oCreator, int nSpellID)
 
         if(GetPRCSwitch(PRC_SCRIBE_SCROLL_CASTER_LEVEL))
         {
-            itemproperty ipLevel = ItemPropertyCastSpellCasterLevel(nSpellID, PRCGetCasterLevel());
+            int nCasterLevel = PRCGetCasterLevel();
+            if(GetLocalInt(oCreator, "UsingImbueItem"))
+                nCasterLevel = GetInvokerLevel(oCreator, CLASS_TYPE_WARLOCK);
+            itemproperty ipLevel = ItemPropertyCastSpellCasterLevel(nSpellID, nCasterLevel);
             AddItemProperty(DURATION_TYPE_PERMANENT,ipLevel,oTarget);
             itemproperty ipMeta = ItemPropertyCastSpellMetamagic(nSpellID, PRCGetMetaMagicFeat());
             AddItemProperty(DURATION_TYPE_PERMANENT,ipMeta,oTarget);
@@ -465,12 +500,13 @@ object CICraftScribeScroll(object oCreator, int nSpellID)
 // -----------------------------------------------------------------------------
 // Returns TRUE if the player used the last spell to brew a potion
 // -----------------------------------------------------------------------------
-int CICraftCheckBrewPotion(object oSpellTarget, object oCaster)
+int CICraftCheckBrewPotion(object oSpellTarget, object oCaster, int nID = 0)
 {
+
+    if(nID == 0) nID = PRCGetSpellId();
 
     object oSpellTarget = GetSpellTargetObject();
     object oCaster      = OBJECT_SELF;
-    int    nID          = PRCGetSpellId();
     int    nLevel       = CIGetSpellInnateLevel(nID,TRUE);
     if(GetPRCSwitch(PRC_BREW_POTION_CASTER_LEVEL))
     {
@@ -601,9 +637,9 @@ These dont work as IPs since they are hardcoded */
 // -----------------------------------------------------------------------------
 // Returns TRUE if the player used the last spell to create a scroll
 // -----------------------------------------------------------------------------
-int CICraftCheckScribeScroll(object oSpellTarget, object oCaster)
+int CICraftCheckScribeScroll(object oSpellTarget, object oCaster, int nID = 0)
 {
-    int  nID = PRCGetSpellId();
+    if(nID == 0) nID = PRCGetSpellId();
 
     // -------------------------------------------------------------------------
     // check if scribe scroll feat is there
@@ -724,10 +760,10 @@ These dont work as IPs since they are hardcoded */
 // -----------------------------------------------------------------------------
 // Returns TRUE if the player used the last spell to craft a wand
 // -----------------------------------------------------------------------------
-int CICraftCheckCraftWand(object oSpellTarget, object oCaster)
+int CICraftCheckCraftWand(object oSpellTarget, object oCaster, int nID = 0)
 {
 
-    int nID = PRCGetSpellId();
+    if(nID == 0) nID = PRCGetSpellId();
 
     // -------------------------------------------------------------------------
     // check if craft wand feat is there
@@ -856,9 +892,15 @@ These dont work as IPs since they are hardcoded */
     return FALSE;
 }
 
-int CICraftCheckCraftStaff(object oSpellTarget, object oCaster)
+int CICraftCheckCraftStaff(object oSpellTarget, object oCaster, int nSpellID = 0)
 {
-    int nSpellID = PRCGetSpellId();
+
+    if(nSpellID == 0) nSpellID = PRCGetSpellId();
+    int nCasterLevel = PRCGetCasterLevel();
+    if(GetLocalInt(oCaster, "UsingImbueItem"))
+    {
+       nCasterLevel = GetInvokerLevel(oCaster, CLASS_TYPE_WARLOCK);
+    }
     int bSuccess = TRUE;
     int nCount = 0;
     itemproperty ip = GetFirstItemProperty(oSpellTarget);
@@ -957,7 +999,7 @@ These dont work as IPs since they are hardcoded */
 
         if(GetPRCSwitch(PRC_CRAFT_STAFF_CASTER_LEVEL))
         {
-            AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyCastSpellCasterLevel(nSpellID, PRCGetCasterLevel()),oSpellTarget);
+            AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyCastSpellCasterLevel(nSpellID, nCasterLevel),oSpellTarget);
             AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyCastSpellMetamagic(nSpellID, PRCGetMetaMagicFeat()),oSpellTarget);
             AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyCastSpellDC(nSpellID, PRCGetSaveDC(PRCGetSpellTargetObject(), OBJECT_SELF)),oSpellTarget);
         }

@@ -17,7 +17,7 @@ void main()
     //Declare major variables including Area of Effect Object
     effect eAOE = EffectAreaOfEffect(INVOKE_AOE_BREATH_OF_NIGHT);
     location lTarget = PRCGetSpellTargetLocation();
-    int CasterLvl = GetInvocationLevel(OBJECT_SELF);
+    int CasterLvl = GetInvokerLevel(OBJECT_SELF, GetInvokingClass());
 
     int nDuration = 1;
     effect eImpact = EffectVisualEffect(257);

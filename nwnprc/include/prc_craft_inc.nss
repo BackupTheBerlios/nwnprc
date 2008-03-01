@@ -615,6 +615,9 @@ int CheckCraftingSpells(object oPC, string sFile, int nLine, int bDecrement = FA
     int nPosition;
     int nTemp;
     int i;
+    int nImbueDC;
+    int nArcaneSpellLevel;
+    int nDivineSpellLevel;
 
     for(i = 0; i < 5; i++)
     {
@@ -674,6 +677,14 @@ int CheckCraftingSpells(object oPC, string sFile, int nLine, int bDecrement = FA
                                 PRCGetHasSpell(SPELL_PRISMATIC_SPRAY, oPC) &&
                                 PRCGetHasSpell(SPELL_PROTECTION_FROM_ELEMENTS, oPC) &&
                                 PRCGetHasSpell(SPELL_WALL_OF_FIRE, oPC));
+                        if(GetHasFeat(FEAT_IMBUE_ITEM) && bOR == FALSE)
+                            bOR = GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, 16) &&
+                                  GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, 18) &&
+                                  GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, 17) &&
+                                  GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, 16) &&
+                                  GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, 22) &&
+                                  GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, 18) &&
+                                  GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, 19);
                         if(bDecrement)
                         {
                             PRCDecrementRemainingSpellUses(oPC, SPELL_DETECT_UNDEAD);
@@ -689,35 +700,109 @@ int CheckCraftingSpells(object oPC, string sFile, int nLine, int bDecrement = FA
                     }
                 }
             }
+            nArcaneSpellLevel = StringToInt(Get2DACache("spells", "Wiz_Sorc", nSpell1));
+            nDivineSpellLevel = StringToInt(Get2DACache("spells", "Cleric", nSpell1));
+            if(nArcaneSpellLevel > 0)
+                nImbueDC = 15 + nArcaneSpellLevel;
+            else
+                nImbueDC = 25 + nDivineSpellLevel;
             if(!PRCGetHasSpell(nSpell1, oPC))
-                return FALSE;
+            {
+                if(!GetHasFeat(FEAT_IMBUE_ITEM))
+                    return FALSE;
+                else if(!GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, nImbueDC))
+                    return FALSE;
+            }
         }
         if(nSpellPattern & 2)
         {
+            nArcaneSpellLevel = StringToInt(Get2DACache("spells", "Wiz_Sorc", nSpell2));
+            nDivineSpellLevel = StringToInt(Get2DACache("spells", "Cleric", nSpell2));
+            if(nArcaneSpellLevel > 0)
+                nImbueDC = 15 + nArcaneSpellLevel;
+            else
+                nImbueDC = 25 + nDivineSpellLevel;
             if(!PRCGetHasSpell(nSpell2, oPC))
-                return FALSE;
+            {
+                if(!GetHasFeat(FEAT_IMBUE_ITEM))
+                    return FALSE;
+                else if(!GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, nImbueDC))
+                    return FALSE;
+            }
         }
         if(nSpellPattern & 4)
         {
+            nArcaneSpellLevel = StringToInt(Get2DACache("spells", "Wiz_Sorc", nSpell3));
+            nDivineSpellLevel = StringToInt(Get2DACache("spells", "Cleric", nSpell3));
+            if(nArcaneSpellLevel > 0)
+                nImbueDC = 15 + nArcaneSpellLevel;
+            else
+                nImbueDC = 25 + nDivineSpellLevel;
             if(!PRCGetHasSpell(nSpell3, oPC))
-                return FALSE;
+            {
+                if(!GetHasFeat(FEAT_IMBUE_ITEM))
+                    return FALSE;
+                else if(!GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, nImbueDC))
+                    return FALSE;
+            }
         }
         if(nSpellPattern & 8)
         {
+            nArcaneSpellLevel = StringToInt(Get2DACache("spells", "Wiz_Sorc", nSpellOR1));
+            nDivineSpellLevel = StringToInt(Get2DACache("spells", "Cleric", nSpellOR1));
+            if(nArcaneSpellLevel != 0)
+                nImbueDC = 15 + nArcaneSpellLevel;
+            else
+                nImbueDC = 25 + nDivineSpellLevel;
             if(!PRCGetHasSpell(nSpellOR1, oPC))
-                if(nSpellPattern & 16)
+            {
+                if(!GetHasFeat(FEAT_IMBUE_ITEM))
                 {
-                    bOR = TRUE;
-                    if(!PRCGetHasSpell(nSpellOR2, oPC))
+                    if(nSpellPattern & 16)
+                    {
+                        bOR = TRUE;
+                        if(!PRCGetHasSpell(nSpellOR2, oPC))
+                            return FALSE;
+                    }
+                    else
                         return FALSE;
                 }
-                else
-                    return FALSE;
+                else if(!GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, nImbueDC))
+                {
+                    if(nSpellPattern & 16)
+                    {
+                        bOR = TRUE;
+                        nArcaneSpellLevel = StringToInt(Get2DACache("spells", "Wiz_Sorc", nSpellOR2));
+                        nDivineSpellLevel = StringToInt(Get2DACache("spells", "Cleric", nSpellOR2));
+                        if(nArcaneSpellLevel > 0)
+                            nImbueDC = 15 + nArcaneSpellLevel;
+                        else
+                            nImbueDC = 25 + nDivineSpellLevel;
+                        if(!PRCGetHasSpell(nSpellOR2, oPC))
+                            if(!GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, nImbueDC))
+                                return FALSE;
+                    }
+                    else
+                        return FALSE;
+                }
+                
+            }
         }
         else if(nSpellPattern & 16)
         {
+            nArcaneSpellLevel = StringToInt(Get2DACache("spells", "Wiz_Sorc", nSpellOR2));
+            nDivineSpellLevel = StringToInt(Get2DACache("spells", "Cleric", nSpellOR2));
+            if(nArcaneSpellLevel != 0)
+                nImbueDC = 15 + nArcaneSpellLevel;
+            else
+                nImbueDC = 25 + nDivineSpellLevel;
             if(!PRCGetHasSpell(nSpellOR2, oPC))
-                return FALSE;
+            {
+                if(!GetHasFeat(FEAT_IMBUE_ITEM))
+                    return FALSE;
+                else if(!GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, nImbueDC))
+                    return FALSE;
+            }
         }
         if(bDecrement)
         {

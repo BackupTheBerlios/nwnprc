@@ -1,0 +1,7 @@
+2DA V2.0
+
+     LABEL        ReqType ReqParam1 ReqParam2 
+0    Half-Orc     RACE    5         ****      
+1    Base_Attack  BAB     5         ****      
+2    Intimidate   SKILL   24        2         
+3    WeapFocUnArm FEAT    100       ****      

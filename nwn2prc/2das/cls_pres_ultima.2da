@@ -1,0 +1,15 @@
+2DA V2.0
+
+                    LABEL     ReqType           ReqParam1     ReqParam2
+  0            LoreSkill       SKILL                   7             4
+  1      SpellcraftSkill       SKILL                  16             8
+  2                 Bard     CLASSOR                   1             4
+  3             Sorcerer     CLASSOR                   9             4
+  4               Wizard       CLASS                  10             3
+  5           FeatExtend      FEATOR                  12          ****
+  6          FeatEmpower      FEATOR                  11          ****
+  7         FeatMaximize      FEATOR                  25          ****
+  8          FeatQuicken      FEATOR                  29          ****
+  9            FeatSTill      FEATOR                  37          ****
+ 10          FeatSilence      FEATOR                  33          ****
+ 11            ScriptVar         VAR      nw_AllowUltima             0

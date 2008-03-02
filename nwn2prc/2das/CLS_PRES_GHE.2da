@@ -1,0 +1,7 @@
+2DA V2.0
+
+     LABEL     ReqType ReqParam1 ReqParam2 
+0    BAB       BAB     8         ****      
+1    Toughness FEAT    40        ****      
+2    Empower   FEATOR  11        ****      
+3    PowerAtk  FEATOR  28        ****      

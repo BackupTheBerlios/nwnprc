@@ -1,0 +1,8 @@
+2DA V2.0
+
+                   LABEL     ReqType            ReqParam1     ReqParam2
+ 0            LoreSkill       SKILL                    7             8
+ 1      SpellcraftSkill       SKILL                   16             8
+ 2               Arcane    ARCSPELL                    2          ****
+ 3              Warlock       CLASS                   39             3
+ 4            ScriptVar         VAR      nw_AllowEldrthg             0

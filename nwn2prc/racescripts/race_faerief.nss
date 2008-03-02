@@ -64,7 +64,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     int nCasterLvl = CasterLvl;
     int nMetaMagic = PRCGetMetaMagicFeat();
     int nDamage;
-    effect eExplode = EffectVisualEffect(VFX_FNF_BLINDDEAF);
+    effect eExplode = EffectVisualEffect(VFX_NONE);
     //Get the spell target location as opposed to the spell target.
     location lTarget = PRCGetSpellTargetLocation();
 
@@ -97,7 +97,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 break;
         }
         SignalEvent(oTarget, EventSpellCastAt(oCaster, SPELL_FAERIE_FIRE));
-        if (!MyPRCResistSpell(oCaster, oTarget,CasterLvl))
+        if (!PRCMyResistSpell(oCaster, oTarget,CasterLvl))
         {
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget, fDuration);
             RemoveSpecificEffect(EFFECT_TYPE_GREATERINVISIBILITY, oTarget);

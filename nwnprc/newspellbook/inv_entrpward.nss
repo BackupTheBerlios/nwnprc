@@ -33,7 +33,7 @@ void main()
     int nDuration = CasterLvl;
     effect eVis = EffectVisualEffect(VFX_IMP_AC_BONUS);
     //Fire cast spell at event for the specified target
-    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId(), FALSE));
+    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, INVOKE_ENTROPIC_WARDING, FALSE));
     
     //Set the four unique armor bonuses
     effect eShield =  EffectConcealment(20, MISS_CHANCE_TYPE_VS_RANGED);

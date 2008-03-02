@@ -760,9 +760,9 @@ void ApplyBreath(struct breath BreathUsed, location lTargetArea, int bLinger = F
 	    //normal damaging-type breath
 	    else
 	    {
-            	 //Fire cast spell at event for the specified target
-                 SignalEvent(oTarget, EventSpellCastAt(BreathUsed.oDragon, GetSpellId()));
-	    	 
+             //Fire cast spell at event for the specified target
+             SignalEvent(oTarget, EventSpellCastAt(BreathUsed.oDragon, GetSpellId()));
+                 
 	    	 if(BreathUsed.nSaveUsed == SAVING_THROW_FORT)
 	    	 {
 	    	     nAdjustedDamage = nDamage;
@@ -783,36 +783,40 @@ void ApplyBreath(struct breath BreathUsed, location lTargetArea, int bLinger = F
 	  	     //Set Damage and VFX
                      if(BreathUsed.nOverrideSpecial == BREATH_PYROCLASTIC)
                      {
-		          int chSaveth;
-			  int chVisual;
-			  int eleRoll;
-			
-			  int nNumDice = d2();
-			  //Sets the random Element factor of the Chaos Dragons Breath Weapon.
-			  //Affects damage, saving throw, and impact visual.
-			  if (nNumDice==1)
-			  {
-			      chSaveth = SAVING_THROW_TYPE_SONIC;
-			      chVisual = VFX_IMP_SILENCE;
-			  }
-			  else if (nNumDice==2)
-			  {
-			      chSaveth = SAVING_THROW_TYPE_FIRE;
-			      chVisual = VFX_IMP_FLAME_M;
-			  }
-		          effect eBreath1 = EffectDamage(nAdjustedDamage/2, DAMAGE_TYPE_FIRE);
-		          effect eBreath2 = EffectDamage(nAdjustedDamage/2, DAMAGE_TYPE_SONIC);
-		          eBreath = EffectLinkEffects(eBreath1, eBreath2);
-		          eVis = EffectVisualEffect(chVisual);
+        		          int chSaveth;
+            			  int chVisual;
+            			  int eleRoll;
+            			
+            			  int nNumDice = d2();
+            			  //Sets the random Element factor of the Chaos Dragons Breath Weapon.
+            			  //Affects damage, saving throw, and impact visual.
+            			  if (nNumDice==1)
+            			  {
+            			      chSaveth = SAVING_THROW_TYPE_SONIC;
+            			      chVisual = VFX_IMP_SILENCE;
+            			  }
+            			  else if (nNumDice==2)
+            			  {
+            			      chSaveth = SAVING_THROW_TYPE_FIRE;
+            			      chVisual = VFX_IMP_FLAME_M;
+            			  }
+            			  if(GetLocalInt(oTarget, "DragonWard"))
+                             nAdjustedDamage -= 40;
+        		          effect eBreath1 = EffectDamage(nAdjustedDamage/2, DAMAGE_TYPE_FIRE);
+        		          effect eBreath2 = EffectDamage(nAdjustedDamage/2, DAMAGE_TYPE_SONIC);
+        		          eBreath = EffectLinkEffects(eBreath1, eBreath2);
+        		          eVis = EffectVisualEffect(chVisual);
                      }
                      else
                      {
-		         eBreath = EffectDamage(nAdjustedDamage, BreathUsed.nDamageType);
-		         eVis = EffectVisualEffect(nVisualType);
-		     }
-		     //Apply the VFX impact and effects
-		     DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-		     DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eBreath, oTarget));
+                         if(GetLocalInt(oTarget, "DragonWard"))
+                             nAdjustedDamage -= 20;
+        		         eBreath = EffectDamage(nAdjustedDamage, BreathUsed.nDamageType);
+        		         eVis = EffectVisualEffect(nVisualType);
+		             }
+        		     //Apply the VFX impact and effects
+        		     DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+        		     DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eBreath, oTarget));
                      SetLocalInt(oTarget, "AffectedByBreath", TRUE);
                      bCanCling = TRUE;
 	         }  

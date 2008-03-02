@@ -1024,7 +1024,9 @@ void _prc_inc_shifting_ShiftIntoTemplateAux(object oShifter, int nShifterType, o
         SetPersistantLocalInt(oShifter, SHIFTER_ISSHIFTED_MARKER, TRUE);
         
         if(nShifterType == SHIFTER_TYPE_ALTER_SELF || 
-          (nShifterType == SHIFTER_TYPE_DISGUISE_SELF && GetRacialType(oShifter) != RACIAL_TYPE_CHANGELING))
+          (nShifterType == SHIFTER_TYPE_DISGUISE_SELF 
+           && GetRacialType(oShifter) != RACIAL_TYPE_CHANGELING
+           && !GetLocalInt(oShifter, "MaskOfFleshInvocation")))
         {
             int nShiftedNumber = GetPersistantLocalInt(oShifter, "nTimesShifted");
             if(nShiftedNumber > 9) nShiftedNumber = 0;
@@ -1046,6 +1048,16 @@ void _prc_inc_shifting_ShiftIntoTemplateAux(object oShifter, int nShifterType, o
             nShiftedNumber++;
             SetPersistantLocalInt(oShifter, "nTimesShifted", nShiftedNumber);
             DelayCommand(HoursToSeconds(24), ForceUnshift(oShifter, nShiftedNumber));
+        }
+        
+        else if(GetLocalInt(oShifter, "MaskOfFleshInvocation"))
+        {
+            int nShiftedNumber = GetPersistantLocalInt(oShifter, "nTimesShifted");
+            if(nShiftedNumber > 9) nShiftedNumber = 0;
+            nShiftedNumber++;
+            SetPersistantLocalInt(oShifter, "nTimesShifted", nShiftedNumber);
+            int nDuration = GetInvokerLevel(oShifter, CLASS_TYPE_WARLOCK);
+            DelayCommand(HoursToSeconds(nDuration), ForceUnshift(oShifter, nShiftedNumber));
         }
 
         // Run the class & feat evaluation code

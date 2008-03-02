@@ -112,6 +112,17 @@ int GetSkill(object oObject, int nSkill, int bSynergy = FALSE, int bSize = FALSE
 int GetBreakConcentrationCheck(object oConcentrator);
 
 /**
+ * Checks for breaks in concentration for an ongoing effect, and removes
+ * the effect if concentration is broken.
+ *
+ * @param oCaster       The creature who cast the effect
+ * @param SpellID       The id of the spell the effect belongs to
+ * @param oTarget       The creature or object that is the target of the effect
+ * @param nDuration     The duration the effect lasts in seconds.
+ */
+void CheckConcentrationOnEffect(object oCaster, int SpellID, object oTarget, int nDuration);
+
+/**
  * Gets a creature that can apply an effect
  * Useful to apply/remove specific effects rather than using spellID
  * Remember to assigncommand the effect creation
@@ -674,6 +685,25 @@ int GetBreakConcentrationCheck(object oConcentrator)
     return FALSE;
 }
 
+void CheckConcentrationOnEffect(object oCaster, int SpellID, object oTarget, int nDuration)
+{
+    int nDur = GetLocalInt(oCaster, "Conc" + IntToString(SpellID));
+    if(GetBreakConcentrationCheck(oCaster) == TRUE && nDur < nDuration)
+    {
+        FloatingTextStringOnCreature("*Concentration Broken*", oCaster);
+        DeleteLocalInt(oCaster, "Conc" + IntToString(SpellID));
+        RemoveSpellEffects(SpellID, oCaster, oTarget);
+    }
+    else if(nDur < nDuration)
+    {
+        SetLocalInt(oCaster, "Conc" + IntToString(SpellID), nDur + 3);
+        DelayCommand(3.0, CheckConcentrationOnEffect(oCaster, SpellID, oTarget, nDuration));
+    }
+    else
+    {
+        DeleteLocalInt(oCaster, "Conc" + IntToString(SpellID));
+    }
+}
 
 object GetObjectToApplyNewEffect(string sTag, object oPC, int nStripEffects = TRUE)
 {

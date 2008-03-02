@@ -232,6 +232,7 @@ void RestFinished(object oPC)
             }
         }
     }
+    DeleteLocalInt(oPC, "DragonWard");
 
     //skip time forward if applicable
     AdvanceTimeForPlayer(oPC, HoursToSeconds(8));

@@ -74,7 +74,7 @@ void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, fl
 #include "nw_i0_spells"
 #include "x2_i0_spells"
 #include "spinc_remeffct"
-#include "inv_invoc_const"
+#include "inv_inc_invfunc"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -327,6 +327,73 @@ void DispelMagicBestMod(object oTarget, int nCasterLevel)
                 {
                     if(GetEffectCreator(eToDispel) == oEffectCaster)
                     {
+                      if(GetEffectSpellId(eToDispel) == INVOKE_RETRIBUTIVE_INVISIBILITY && GetLocalInt(oTarget, "DangerousInvis"))
+                      {
+                        location lTarget = GetLocation(oTarget);
+                        effect eRetrVis = EffectVisualEffect(VFX_IMP_SONIC);
+                        effect eRetrPulse = EffectVisualEffect(VFX_IMP_PULSE_WIND);
+                        effect eRetrStun = EffectStunned();
+                        effect eDam;
+                        int nDamage;
+                        int nDC;
+                        float fDelay;
+                        int RICasterLvl = GetInvokerLevel(oTarget, CLASS_TYPE_WARLOCK);
+                        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eRetrPulse, oTarget);
+                        DeleteLocalInt(oTarget, "DangerousInvis");
+                        
+                        //Declare the spell shape, size and the location.  Capture the first target object in the shape.
+                        object oVictim = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(20.0), lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+                        //Cycle through the targets within the spell shape until an invalid object is captured.
+                        while (GetIsObjectValid(oVictim))
+                        {
+                            if (spellsIsTarget(oVictim, SPELL_TARGET_STANDARDHOSTILE, oTarget))
+                            {
+                                    //Fire cast spell at event for the specified target
+                                    SignalEvent(oVictim, EventSpellCastAt(oTarget, INVOKE_RETRIBUTIVE_INVISIBILITY));
+                                    //Get the distance between the explosion and the target to calculate delay
+                                    fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oVictim))/20;
+                                    if (!MyPRCResistSpell(oTarget, oVictim, RICasterLvl, fDelay))
+                                    {
+                                        //Roll damage for each target
+                                        nDamage = d6(4);
+                                        nDamage += ApplySpellBetrayalStrikeDamage(oVictim, oTarget, FALSE);
+                                        nDC = 16 + GetAbilityModifier(ABILITY_CHARISMA, oTarget);
+                                        
+                                        //save
+                                        if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
+                                        {
+                                            nDamage = nDamage / 2;
+                                            if(GetHasMettle(oTarget, SAVING_THROW_FORT)) nDamage = 0;
+                                        }
+                                        else
+                                            DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eRetrStun, oVictim, RoundsToSeconds(1)));
+                                            
+                                        if(nDamage > 0)
+                                        {
+                                            //Set the damage effect
+                                            eDam = PRCEffectDamage(nDamage, DAMAGE_TYPE_SONIC);
+                                            // Apply effects to the currently selected target.
+                                            DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oVictim));
+                                            PRCBonusDamage(oVictim);
+                                            //This visual effect is applied to the target object not the location as above.  This visual effect
+                                            //represents the flame that erupts on the target not on the ground.
+                                            DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eRetrVis, oVictim));
+                                        }
+                                     }
+                                
+                            }
+                           //Select the next target within the spell shape.
+                           oVictim = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(20.0), lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+                        }
+                      }
+                      else if(GetEffectSpellId(eToDispel) == INVOKE_PAINFUL_SLUMBER_OF_AGES && GetLocalInt(oTarget, "PainfulSleep"))
+                      {
+                          effect eSleepDam = EffectDamage(GetInvokerLevel(GetEffectCreator(eToDispel), CLASS_TYPE_WARLOCK), DAMAGE_TYPE_MAGICAL);
+                          ApplyEffectToObject(DURATION_TYPE_INSTANT, eSleepDam, oTarget);
+                          DeleteLocalInt(oTarget, "PainfulSleep");
+                          RemoveEventScript(oTarget, EVENT_VIRTUAL_ONDAMAGED, "inv_painsleep", FALSE, FALSE);
+                      }
+                      
                       RemoveEffect(oTarget, eToDispel);
                       
                       if(GetSpellId() == INVOKE_VORACIOUS_DISPELLING)
@@ -497,6 +564,75 @@ void DispelMagicAllMod(object oTarget, int nCasterLevel)
           {
             if(GetEffectCreator(eToDispel) == oEffectCaster)
             {
+              
+              if(GetEffectSpellId(eToDispel) == INVOKE_RETRIBUTIVE_INVISIBILITY && GetLocalInt(oTarget, "DangerousInvis"))
+              {
+                  location lTarget = GetLocation(oTarget);
+                  effect eRetrVis = EffectVisualEffect(VFX_IMP_SONIC);
+                  effect eRetrPulse = EffectVisualEffect(VFX_IMP_PULSE_WIND);
+                  effect eRetrStun = EffectStunned();
+                  int RICasterLvl = GetInvokerLevel(oTarget, GetInvokingClass());
+                  effect eDam;
+                  int nDamage;
+                  float fDelay;
+                  int nDC;
+                  SPApplyEffectToObject(DURATION_TYPE_INSTANT, eRetrPulse, oTarget);
+                  DeleteLocalInt(oTarget, "DangerousInvis");
+                        
+                  //Declare the spell shape, size and the location.  Capture the first target object in the shape.
+                  object oVictim = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(20.0), lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+                  //Cycle through the targets within the spell shape until an invalid object is captured.
+                  while (GetIsObjectValid(oVictim))
+                  {
+                      if (spellsIsTarget(oVictim, SPELL_TARGET_STANDARDHOSTILE, oTarget))
+                      {
+                              //Fire cast spell at event for the specified target
+                              SignalEvent(oVictim, EventSpellCastAt(oTarget, INVOKE_RETRIBUTIVE_INVISIBILITY));
+                              //Get the distance between the explosion and the target to calculate delay
+                              fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oVictim))/20;
+                              if (!MyPRCResistSpell(oTarget, oVictim, RICasterLvl, fDelay))
+                              {
+                                  //Roll damage for each target
+                                  nDamage = d6(4);
+                                  nDamage += ApplySpellBetrayalStrikeDamage(oVictim, oTarget, FALSE);
+                                  nDC = 16 + GetAbilityModifier(ABILITY_CHARISMA, oTarget);
+                                        
+                                  //save
+                                  if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
+                                  {
+                                      nDamage = nDamage / 2;
+                                      if(GetHasMettle(oTarget, SAVING_THROW_FORT)) nDamage = 0;
+                                  }
+                                  else
+                                      DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eRetrStun, oVictim, RoundsToSeconds(1)));
+                                            
+                                  if(nDamage > 0)
+                                  {
+                                      //Set the damage effect
+                                      eDam = PRCEffectDamage(nDamage, DAMAGE_TYPE_SONIC);
+                                      // Apply effects to the currently selected target.
+                                      DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oVictim));
+                                      PRCBonusDamage(oVictim);
+                                      //This visual effect is applied to the target object not the location as above.  This visual effect
+                                      //represents the flame that erupts on the target not on the ground.
+                                      DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eRetrVis, oVictim));
+                                  }
+                               }
+                          
+                       }
+                       //Select the next target within the spell shape.
+                       oVictim = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(20.0), lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+                   }
+               }
+               
+               else if(GetEffectSpellId(eToDispel) == INVOKE_PAINFUL_SLUMBER_OF_AGES && GetLocalInt(oTarget, "PainfulSleep"))
+               {
+                    effect eSleepDam = EffectDamage(GetInvokerLevel(GetEffectCreator(eToDispel), CLASS_TYPE_WARLOCK), DAMAGE_TYPE_MAGICAL);
+                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eSleepDam, oTarget);
+                    DeleteLocalInt(oTarget, "PainfulSleep");
+                    RemoveEventScript(oTarget, EVENT_VIRTUAL_ONDAMAGED, "inv_painsleep", FALSE, FALSE);
+               }
+               
               RemoveEffect(oTarget, eToDispel);
 
               if(GetSpellId() == INVOKE_VORACIOUS_DISPELLING)
@@ -533,8 +669,8 @@ void DispelMagicAllMod(object oTarget, int nCasterLevel)
               effect eSlashDam = EffectDamage(DAMAGE_TYPE_MAGICAL, 2 * nEffectSpellLevel);
 
               SPApplyEffectToObject(DURATION_TYPE_INSTANT, eSlashDam, oTarget);
-          }
-
+              }
+ 
               //Spell Removal Check
               SpellRemovalCheck(oEffectCaster, oTarget);
 

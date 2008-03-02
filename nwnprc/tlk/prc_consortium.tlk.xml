@@ -38893,7 +38893,7 @@ Use: Selected</entry>
   <entry id="55784" lang="en" sex="m">Lesser Invocation
   4th Level Spell
   
-  You can beguile a creature within 60'.  They must make a Will save or regard you as an ally.  The charm lasts for 1 round per 2 caster levels.</entry>
+  You can beguile a creature within 60'.  They must make a Will save or regard you as an ally.  The charm lasts for 1 day per caster level, but you can only have one creature charmed in this way at any time.  If you charm another creature, the first charm will be canceled.</entry>
   <entry id="55785" lang="en" sex="m">Energy Resistance</entry>
   <entry id="55786" lang="en" sex="m">Lesser Invocation
   3rd Level Spell

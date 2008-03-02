@@ -204,7 +204,16 @@ location GetDimensionDoorLocation(object oCaster, int nCasterLvl, location lBase
     {
         if(DEBUG) DoDebug("spinc_dimdoor: Calculating the new location based on direction and distance");
         // Make sure the distance jumped is in range
-        if(fDistance > FeetToMeters(400.0 + 40.0 * nCasterLvl))
+        if(GetLocalInt(oCaster, "FleeTheScene") && fDistance > FeetToMeters(25.0 + 5.0 * (nCasterLvl / 2)))
+        {
+                fDistance = FeetToMeters(25.0 + 5.0 * (nCasterLvl / 2));
+                string sPretty = FloatToString(fDistance);
+                sPretty = GetSubString(sPretty, 0, FindSubString(sPretty, ".") + 2); // Trunctate decimals to the last two
+                sPretty += "m"; // Note the unit. Since this is SI, the letter should be universal
+            //                      "You can't teleport that far, distance limited to"
+            SendMessageToPC(oCaster, GetStringByStrRef(16825210) + " " + sPretty);
+        }
+        else if(fDistance > FeetToMeters(400.0 + 40.0 * nCasterLvl))
         {
             fDistance = FeetToMeters(400.0 + 40.0 * nCasterLvl);
             string sPretty = FloatToString(fDistance);

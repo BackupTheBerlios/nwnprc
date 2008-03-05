@@ -43,8 +43,8 @@ void main()
 ActionDoCommand(SetAllAoEInts(INVOKE_CHILLING_TENTACLES,OBJECT_SELF, GetSpellSaveDC()));
 
     object oTarget = GetEnteringObject();
-    int nCasterLevel = GetInvokerLevel(GetAreaOfEffectCreator(), GetInvokingClass());
-    int nPenetr = SPGetPenetrAOE(GetAreaOfEffectCreator());
+    int nCasterLevel = GetInvokerLevel(GetAreaOfEffectCreator(), CLASS_TYPE_WARLOCK);
+    int nPenetr = SPGetPenetrAOE(GetAreaOfEffectCreator(), nCasterLevel);
     if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE , GetAreaOfEffectCreator())
         && GetCreatureFlag(oTarget, CREATURE_VAR_IS_INCORPOREAL) != TRUE)
     {
@@ -71,7 +71,7 @@ ActionDoCommand(SetAllAoEInts(INVOKE_CHILLING_TENTACLES,OBJECT_SELF, GetSpellSav
         int nAttackerGrappleMod = nCasterLevel+4+4;
         nGrappleSucessful = DoGrappleCheck(OBJECT_INVALID, oTarget,
             nAttackerGrappleMod, 0,
-            GetStringByStrRef(6341), "");
+            "Chilling Tentacles", "");
         if(nGrappleSucessful)
         {
             //now being grappled

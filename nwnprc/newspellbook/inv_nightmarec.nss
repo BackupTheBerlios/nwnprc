@@ -11,8 +11,8 @@ void main()
  ActionDoCommand(SetAllAoEInts(INVOKE_NIGHTMARES_MADE_REAL,OBJECT_SELF, GetSpellSaveDC()));
 
 
-    int nCasterLevel = GetInvokerLevel(GetAreaOfEffectCreator(), GetInvokingClass());
-    int nPenetr = SPGetPenetrAOE(GetAreaOfEffectCreator());
+    int nCasterLevel = GetInvokerLevel(GetAreaOfEffectCreator(), CLASS_TYPE_WARLOCK);
+    int nPenetr = SPGetPenetrAOE(GetAreaOfEffectCreator(), nCasterLevel);
     object oTarget = GetFirstInPersistentObject();
     while(GetIsObjectValid(oTarget))
     {

@@ -217,7 +217,7 @@ int GetInvokerLevel(object oInvoker, int nSpecificClass = CLASS_TYPE_INVALID, in
     nLevel += nAdjust;
 
     // This spam is technically no longer necessary once the Invoker level getting mechanism has been confirmed to work
-    if(DEBUG) FloatingTextStringOnCreature("Invoker Level: " + IntToString(nLevel), oInvoker, FALSE);
+    //if(DEBUG) FloatingTextStringOnCreature("Invoker Level: " + IntToString(nLevel), oInvoker, FALSE);
 
     return nLevel;
 }

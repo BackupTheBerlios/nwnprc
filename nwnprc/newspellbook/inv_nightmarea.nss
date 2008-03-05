@@ -43,7 +43,7 @@ void main()
 ActionDoCommand(SetAllAoEInts(INVOKE_CHILLING_TENTACLES,OBJECT_SELF, GetSpellSaveDC()));
 
     object oTarget = GetEnteringObject();
-    int nCasterLevel = GetInvokerLevel(GetAreaOfEffectCreator(), GetInvokingClass());
+    int nCasterLevel = GetInvokerLevel(GetAreaOfEffectCreator(), CLASS_TYPE_WARLOCK);
     
     SPApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectConcealment(50), oTarget);
     

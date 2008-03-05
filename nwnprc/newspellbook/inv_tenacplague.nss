@@ -14,7 +14,7 @@ void main()
     
     //Declare major variables
     int nCasterLvl = GetInvokerLevel(OBJECT_SELF, GetInvokingClass());
-    effect eSummon = EffectSummonCreature("prc_bat_swarm");
+    effect eSummon = EffectSummonCreature("prc_tplagueswarm");
     int nAOE;
     if(nCasterLvl > 17)
         nAOE = INVOKE_AOE_SWARMDMG_6;
@@ -29,7 +29,6 @@ void main()
     else
         nAOE = INVOKE_AOE_SWARMDMG;
     effect eAOE = EffectAreaOfEffect(nAOE);
-    eSummon = EffectSummonCreature("prc_tplagueswarm");
     effect eVis = EffectVisualEffect(VFX_FNF_SUMMON_MONSTER_1);
     float fDuration = TurnsToSeconds(nCasterLvl);
     

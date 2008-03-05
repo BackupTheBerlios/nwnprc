@@ -29,6 +29,7 @@ void main()
     
     effect eVis = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);
     effect eCurse = EffectCurse(2, 2, 2, 2, 2, 2);
+    effect eDespair = EffectAttackDecrease(1);
     int nPenetr =   CasterLvl + SPGetPenetr();
 
     //Make sure that curse is of type supernatural not magical
@@ -48,6 +49,12 @@ void main()
             {
                 //Apply Effect and VFX
                 SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eCurse, oTarget,0.0f,TRUE,-1,CasterLvl);
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+            }
+            else
+            {
+                //Apply Effect and VFX
+                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDespair, oTarget,TurnsToSeconds(1),TRUE,-1,CasterLvl);
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
             }
         }

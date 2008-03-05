@@ -42,8 +42,8 @@ void main()
  ActionDoCommand(SetAllAoEInts(INVOKE_CHILLING_TENTACLES,OBJECT_SELF, GetSpellSaveDC()));
 
 
-    int nCasterLevel = GetInvokerLevel(GetAreaOfEffectCreator(), GetInvokingClass());
-    int nPenetr = SPGetPenetrAOE(GetAreaOfEffectCreator());
+    int nCasterLevel = GetInvokerLevel(GetAreaOfEffectCreator(), CLASS_TYPE_WARLOCK);
+    int nPenetr = SPGetPenetrAOE(GetAreaOfEffectCreator(), nCasterLevel);
     object oTarget = GetFirstInPersistentObject();
     while(GetIsObjectValid(oTarget))
     {
@@ -69,7 +69,7 @@ void main()
             int nAttackerGrappleMod = nCasterLevel+4+4;
             nGrappleSucessful = DoGrappleCheck(OBJECT_INVALID, oTarget,
                 nAttackerGrappleMod, 0,
-                GetStringByStrRef(6341), "");
+                "Chilling Tentacles", "");
             if(nGrappleSucessful)
             {
                 //if already being grappled, apply damage

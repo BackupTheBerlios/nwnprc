@@ -9,7 +9,7 @@ void main()
     
     //Declare major variables
     object oTarget = GetEnteringObject();
-    int CasterLvl = GetInvokerLevel(GetAreaOfEffectCreator(), GetInvokingClass());
+    int CasterLvl = GetInvokerLevel(GetAreaOfEffectCreator(), CLASS_TYPE_WARLOCK);
     int nDC = SPGetSpellSaveDC(oTarget, GetAreaOfEffectCreator());
     effect eConceal = EffectConcealment(20);
     effect eStrength = EffectAbilityDecrease(ABILITY_STRENGTH, 4);
@@ -18,13 +18,13 @@ void main()
     if(oTarget == GetAreaOfEffectCreator())
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eConceal, oTarget, RoundsToSeconds(5),TRUE,-1,CasterLvl);
 
-    else if(!GetLocalInt(oTarget, "EnervatingShadowLock"))
+    else if(!GetLocalInt(oTarget, "EnervatingShadowLock") && PRCGetIsAliveCreature(oTarget))
     {
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(GetAreaOfEffectCreator(), INVOKE_ENERVATING_SHADOW, FALSE));
         
         //SR
-    	if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget, SPGetPenetrAOE(GetAreaOfEffectCreator())))
+    	if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget, SPGetPenetrAOE(GetAreaOfEffectCreator(), CasterLvl)))
     	{
     		//save
     		if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL))

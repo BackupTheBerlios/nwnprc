@@ -7,7 +7,6 @@ Least
 *Summon Swarm - as the spell of the same name, duration concentration
 *Swimming the Styx - Gain waterbreathing
 Lesser
-*Dread Seizure - 60' range, Fort save or 50% move penalty and -5 ranged attack for 3 rounds
 *HUngry Darkness - Darkness spell, lasts concentration + 2 rounds, on HB attack of bat swarm(MM 237)
 *Ignore the Pyre - Resist x for any element for 24 hours, where x is Invoke level
 *Mask of Flesh - touch attack deals 1d6 cha damage, shift to look liek target
@@ -23,7 +22,6 @@ Dark
     cast, items are merged into you ala polymorph, on heartbeat nauseate and 4d6 damage to creatures in your space, 
     immune to weapons(extremely high resist slash/blud/piercing), immune to crits,Dex +6, Str to 3, +4 size AC, 
     +Cha Deflection AC, 50% damage from AoE and immune to targeted non-mind spells(this part not doable?)
-*Retributive Invisibility - Greater Invisibility, does 4d6 sonic/1 round stun in a 20'burst(Fort save) if dispelled
 
 Icons
 Least
@@ -38,6 +36,7 @@ Least
 Lesser
 *Cold COmfort - as Endure Elements
 *Curse of Despair - Bestow CUrse spell
+*Dread Seizure - 60' range, Fort save or 50% move penalty and -5 ranged attack for 3 rounds
 *Flee the Scene - short range DImension Door, leaves behind a mirror image that lasts 1 round
 *Stony Grasp - as Earthen Grasp, but worked surfaces too
 *The Dead Walk - ANimate Dead spell
@@ -53,6 +52,7 @@ Greater
 Dark
 *Dark Foresight - as the Foresight spell
 *Path of Shadow - Shadow Walk spell, and speeds up healing - Do as Teleport with full heal
+*Retributive Invisibility - Greater Invisibility, does 4d6 sonic/1 round stun in a 20'burst(Fort save) if dispelled
 *Steal Summoning - Dominate enemy casters' summons
 *WOrd of Changing - baleful polymorph, lasts 24 hours, second save after 24 hours determines whether its permanent.
 

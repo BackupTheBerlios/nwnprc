@@ -2623,6 +2623,8 @@ const int FEAT_WARLOCK_RESIST_COLD                = 4462;
 const int FEAT_WARLOCK_RESIST_ELEC                = 4463;
 const int FEAT_WARLOCK_RESIST_FIRE                = 4464;
 const int FEAT_WARLOCK_RESIST_SONIC               = 4465;
+const int FEAT_WARLOCK_REDUCTION                  = 4467;
+const int FEAT_DECIEVE_ITEM                       = 4468;
 
 
 /*//////////////////////////////////////////////////

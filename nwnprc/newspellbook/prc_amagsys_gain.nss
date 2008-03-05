@@ -105,6 +105,8 @@ void main()
     // Handle Invocations
     if(CheckMissingInvocations(oPC, CLASS_TYPE_DRAGONFIRE_ADEPT))
         return;   
+    if(CheckMissingInvocations(oPC, CLASS_TYPE_WARLOCK))
+        return;   
 }
 
 

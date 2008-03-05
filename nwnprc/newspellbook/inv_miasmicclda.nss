@@ -34,7 +34,7 @@ void main()
     //Declare major variables
     object oTarget = GetEnteringObject();
     object oCaster = GetAreaOfEffectCreator();
-    int nCasterLvl = GetInvokerLevel(oCaster, GetInvokingClass());
+    int nCasterLvl = GetInvokerLevel(oCaster, CLASS_TYPE_WARLOCK);
     int nDC = PRCGetSaveDC(oTarget, oCaster);
     effect eConceal = EffectConcealment(20);
     effect eDex = EffectAbilityDecrease(ABILITY_DEXTERITY, 2);
@@ -48,7 +48,7 @@ void main()
 
     if(oTarget != oCaster)
     {
-        if(!MyPRCResistSpell(oCaster, oTarget, SPGetPenetrAOE(GetAreaOfEffectCreator())))
+        if(!MyPRCResistSpell(oCaster, oTarget, SPGetPenetrAOE(GetAreaOfEffectCreator(), nCasterLvl)))
     	{
     		//save
     		if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL))

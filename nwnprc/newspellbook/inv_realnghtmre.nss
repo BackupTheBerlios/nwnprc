@@ -12,6 +12,12 @@ void main()
     int nCasterLvl = GetInvokerLevel(OBJECT_SELF, GetInvokingClass());
     int nAOE;
     
+    if(GetLocalInt(OBJECT_SELF, "NightmareLock"))
+    {
+        FloatingTextStringOnCreature("You must wait for the previous casting to expire.", OBJECT_SELF, FALSE);
+        return;
+    }
+    
     if(nCasterLvl > 36)
         nAOE = INVOKE_VFX_NIGHTMARE_TERRAIN_37;
     else if(nCasterLvl > 30)
@@ -42,5 +48,8 @@ void main()
     }
     //Create an instance of the AOE Object using the Apply Effect function
     ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAOE, lTarget, RoundsToSeconds(nDuration));
+    
+    SetLocalInt(OBJECT_SELF, "NightmareLock", TRUE);
+    DelayCommand(RoundsToSeconds(nDuration), DeleteLocalInt(OBJECT_SELF, "NightmareLock"));
 
 }

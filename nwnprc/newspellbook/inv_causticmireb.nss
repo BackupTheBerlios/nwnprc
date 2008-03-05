@@ -9,6 +9,7 @@ void main()
 
     //Get the object that is exiting the AOE
     object oTarget = GetExitingObject();
+    int CasterLvl = GetInvokerLevel(OBJECT_SELF, CLASS_TYPE_WARLOCK);
     
     //Search through the valid effects on the target.
     effect eAOE = GetFirstEffect(oTarget);
@@ -31,7 +32,7 @@ void main()
     int nDam = FloatToInt(fDistance / FeetToMeters(5.0));
     effect eDam = EffectDamage(DAMAGE_TYPE_ACID, d6(nDam));
     effect eLink = EffectLinkEffects(eDam, EffectVisualEffect(VFX_IMP_ACID_S));
-    int nPenetr = SPGetPenetrAOE(GetAreaOfEffectCreator());
+    int nPenetr = SPGetPenetrAOE(GetAreaOfEffectCreator(), CasterLvl);
     
     if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink, oTarget);

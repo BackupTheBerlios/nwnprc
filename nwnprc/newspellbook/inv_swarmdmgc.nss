@@ -11,7 +11,7 @@ void main()
  ActionDoCommand(SetAllAoEInts(GetLocalInt(GetAreaOfEffectCreator(), "SwarmDmgType"),OBJECT_SELF, GetSpellSaveDC()));
 
 
-    int nCasterLevel = GetInvokerLevel(GetAreaOfEffectCreator(), GetInvokingClass());
+    int nCasterLevel = GetInvokerLevel(GetAreaOfEffectCreator(), CLASS_TYPE_WARLOCK);
     
     object oTarget = GetFirstInPersistentObject();
     while(GetIsObjectValid(oTarget) && !GetLocalInt(oTarget, "IgnoreSwarmDmg"))

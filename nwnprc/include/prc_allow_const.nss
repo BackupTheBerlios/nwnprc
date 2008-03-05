@@ -16,6 +16,7 @@ const string ALLOW_CLASS_WIZARD                 = "PRC_AllowWizard";
 const string ALLOW_CLASS_ANTIPALADIN            = "PRC_AllowAntiPal";
 const string ALLOW_CLASS_ARCHER                 = "PRC_AllowArcherCore";
 const string ALLOW_CLASS_BRAWLER                = "PRC_AllowBrawler";
+const string ALLOW_CLASS_DRAGONFIRE_ADEPT       = "PRC_ALlowDFireAdept";
 const string ALLOW_CLASS_MARSHAL                = "PRC_AllowMarshal";
 const string ALLOW_CLASS_NINJA                  = "PRC_AllowNinjaCA";
 const string ALLOW_CLASS_PSION                  = "PRC_AllowPsion";
@@ -25,6 +26,7 @@ const string ALLOW_CLASS_SAMURAI_CW             = "PRC_AllowCWSam";
 const string ALLOW_CLASS_SOULKNIFE              = "PRC_AllowSoulKnife";
 const string ALLOW_CLASS_SWASHBUCKLER           = "PRC_AllowSwash";
 const string ALLOW_CLASS_ULTIMATE_RANGER        = "PRC_Allow_URanger";
+const string ALLOW_CLASS_WARLOCK                = "PRC_Allow_Warlock";
 const string ALLOW_CLASS_WILDER                 = "PRC_AllowWilder";
 
 

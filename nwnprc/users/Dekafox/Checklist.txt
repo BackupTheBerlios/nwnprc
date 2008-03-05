@@ -1,6 +1,6 @@
 Warlock
-Eldritch Blast
-Invocations
+TLK
+2da
 
 Races - 95 left, 9 open
 do standard race subraces
@@ -15,6 +15,3 @@ Eldritch Theurge - embed AoE spells in the Eldritch Blast, EldDis ability above 
 Enlightened Spirit
 Hellfire Warlock - Hellfire INfusion(metamagic added to charged items when used)
 Dragon Descendent
-
-Extra new spellbook reserve at 53317 to 54699? - see if it can be cleared
-

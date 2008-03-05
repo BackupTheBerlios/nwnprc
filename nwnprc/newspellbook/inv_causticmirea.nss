@@ -9,7 +9,8 @@ void main()
     //Declare major variables
     object oTarget = GetEnteringObject();
 
-    int nPenetr = SPGetPenetrAOE(GetAreaOfEffectCreator());
+    int nCasterLvl = GetInvokerLevel(GetAreaOfEffectCreator(), CLASS_TYPE_WARLOCK);
+    int nPenetr = SPGetPenetrAOE(GetAreaOfEffectCreator(), nCasterLvl);
 
     effect eSlow = EffectMovementSpeedDecrease(33);
     if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, GetAreaOfEffectCreator()))

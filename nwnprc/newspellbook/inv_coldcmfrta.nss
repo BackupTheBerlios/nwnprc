@@ -22,7 +22,7 @@ void main()
     
     //Declare major variables
     object oTarget = GetEnteringObject();
-    int CasterLvl = GetInvokerLevel(GetAreaOfEffectCreator(), GetInvokingClass());
+    int CasterLvl = GetInvokerLevel(GetAreaOfEffectCreator(), CLASS_TYPE_WARLOCK);
     int nAmount = 20;
     int nResistance = 10;
     effect eCold = EffectDamageResistance(DAMAGE_TYPE_COLD, nResistance, nAmount);

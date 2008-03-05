@@ -124,6 +124,13 @@ int X2_UMD()
         WriteTimestampedLogEntry("***X2UseMagicDevice (Warning): Found no property matching SpellID "+ IntToString(nSpellID));
         return TRUE;
     }
+    
+    //Warlock's Decieve Item take 10 ability:
+    if(GetHasFeat(FEAT_DECIEVE_ITEM, oCaster) 
+        && (GetSkillRank(SKILL_USE_MAGIC_DEVICE, oCaster) + 10 > 25 + nInnateLevel))
+    {
+        return TRUE;
+    }
 
     // -------------------------------------------------------------------------
     // Base DC for casting a spell from a scroll is 25+SpellLevel

@@ -43,7 +43,9 @@ void main()
     if(GetSpellTargetObject() != oPC)
     {
         ClearAllActions();
-        AssignCommand(oPC, ActionAttack(GetSpellTargetObject()));
+        PerformAttackRound(GetSpellTargetObject(), oPC, EffectVisualEffect(VFX_IMP_MAGBLUE), 
+            0.0, 0, 0, DAMAGE_TYPE_SLASHING, FALSE, "*Eldritch Glaive Hit*", "*Eldritch Glaive Miss*", 
+            TRUE, TOUCH_ATTACK_MELEE, FALSE, PRC_COMBATMODE_ALLOW_TARGETSWITCH|PRC_COMBATMODE_ABORT_WHEN_OUT_OF_RANGE);
     }
 
     if(LOCAL_DEBUG) DelayCommand(0.01f, DoDebug("Finished inv_eldrtch_glv")); // Wrap in delaycommand so that the game clock gets to update for the purposes of WriteTimestampedLogEntry

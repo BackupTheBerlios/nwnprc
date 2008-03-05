@@ -7,7 +7,8 @@
 void main()
 {
 
-    int nPenetr = SPGetPenetrAOE(GetAreaOfEffectCreator());
+    int CasterLvl = GetInvokerLevel(OBJECT_SELF, CLASS_TYPE_WARLOCK);
+    int nPenetr = SPGetPenetrAOE(GetAreaOfEffectCreator(), CasterLvl);
     object oTarget;
     //Spell resistance check
     oTarget = GetFirstInPersistentObject();

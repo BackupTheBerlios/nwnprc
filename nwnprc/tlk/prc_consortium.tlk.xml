@@ -20513,6 +20513,94 @@ Use: Automatic.</entry>
   <entry id="50638" lang="en" sex="m">&lt;CUSTOM0&gt; turns water creatures.</entry>
   <entry id="50639" lang="en" sex="m">&lt;CUSTOM0&gt; turns fire creatures.</entry>
   <entry id="50640" lang="en" sex="m">&lt;CUSTOM0&gt; turns blightspawned.</entry>
+  <entry id="50716" lang="en" sex="m">Decieve Item</entry>
+  <entry id="50717" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Warlock 4.
+Specifics: Warlocks can take 10 on Use Magic Device checks, even in combat.
+Use: Automatic.</entry>
+  <entry id="50718" lang="en" sex="m">Warlock</entry>
+  <entry id="50719" lang="en" sex="m">Warlocks</entry>
+  <entry id="50720" lang="en" sex="m">warlock</entry>
+  <entry id="50721" lang="en" sex="m">(BASE CLASS)
+Warlocks are born, not made.  Their ancestors traded portions of their soul for magical power, and warlocks inherit this power.  Unlike sorcerers or wizards, rather than harnessing magic through the guidelines of a spell, they manipulate the supernatural energy infusing them with will alone.  The demand to further the goals of the originators of the pact, or to fight them, drives many to adventuring.
+
+- Hit Die: d6
+- Proficiencies: Warlocks are proficient with simple weapons and light armor.
+- Skill Points: 2 + Int Modifier(x4 at 1st level)
+
+Abilities:
+Alignment: Chaotic or Evil only.
+Base Attack Bonus: +3/4
+Strong Saves: Will
+
+Eldritch Blast: The first ability a warlock learns is the eldritch blast; a 60' ray of magical energy.  It has no saving throw, but is affected by spell resistance and requires a touch attack.  Certain types of invocations can modify it, and it increases in damage as level increases.
+
+Damage Reduction: Fortified by the supernatural power flowing through his body, a warlock gains damage reduction 1/cold iron at level 3.  This reduction increases by 1 point every 4 levels.
+
+Decieve Item: A warlock can use his mastery of the supernatural forces infusing his soul to make up for lack of knowledge.  From 4th level on, a warlock can take 10 on all Use Magic Device checks, even in combat.
+
+Fiendish Resilience: Beginning at 8th level, a warlock knows the trick of fiendish resilience.  For 2 minutes each day, they gain fast healing, with the amount increasing every 5 levels.
+
+Energy Resistance: Beginning at 10th level a warlock chooses 2 elemental energies and gains resistance 5 to them.  This resistance increases to 10 at level 20.
+
+Imbue Item: A warlock of 12th level or higher can "fake it" when crafting magic items, suffusing the item wiht supernatural power and attempting to emulate the required spell(though the warlock must still have the appropriate feat).    A successful UMD check, vs DC 15 + spell level for arcane spells of DC 25 + spell level for divine spells, allows a single spell requirement to be passed.  If any of the UMD check fails, the warlock does not lose gold or xp and the crafting fails.
+
+Invocations: These are spell-like abilities.  Any of them that are known can be used at will, but otherwise act like spells, such as in regards to casting in combat, or spell resistance.  Casting level is the warlock's class level, and those that grant saves have a DC of 10 + the equivalent spell level + the warlock's Cha modifier.
+They come in 4 grades: least(2nd), lesser(4th), greater(6th), and dark(8th).  Warlocks start with knowledge of a single least invocation, and gain access to more as below.  At levels 6, 11, and 16 they also unlock the next level of invocation, but they can select invocations of any level equal to or less than their highest level of access.
+Invocations are also subject to arcane spell failure, but warlocks ignore spell failure in light armor.
+
+Level  Invocations known
+1      1
+2      2
+3      2
+4      3
+5      3
+6      4
+7      4
+8      5
+9      5
+10     6
+11     7       
+12     7
+13     8 
+14     8
+15     9 
+16     10
+17     10
+18     11
+19     11
+20     12
+
+EPIC WARLOCK
+Epic warlocks continue to find new ways to harness their supernatural energy.  Their damage reduction, energy resistance, eldritch blast al continue to increase as before, and they gain a new invocation every 2 levels.
+</entry>
+  <entry id="50722" lang="en" sex="m">Warlock Acid Resistance</entry>
+  <entry id="50723" lang="en" sex="m">Warlock Cold Resistance</entry>
+  <entry id="50724" lang="en" sex="m">Warlock Electric Resistance</entry>
+  <entry id="50725" lang="en" sex="m">Warlock Fire Resistance</entry>
+  <entry id="50726" lang="en" sex="m">Warlock Sonic Resistance</entry>
+  <entry id="50727" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Warlock 10.
+Specifics: You gain resistance 5 to the specified element.  This increases by 5 at levels 20, 30, and 40.
+Use: Selected.</entry>
+  <entry id="50728" lang="en" sex="m">Warlock Damage Reduction</entry>
+  <entry id="50729" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Warlock 3.
+Specifics: Warlocks become inured to normal weapons gaining DR 1/cold iron.  This DR increases by 1 every 4 levels.
+Use: Selected.</entry>
+  <entry id="50730" lang="en" sex="m">Fiendish Resilience</entry>
+  <entry id="50731" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Warlock 8.
+Specifics: Warlocks can, once per day, enter a state of being that grants them Fast Healing 1, and lasts for 2 minutes
+At level 13 this improves to Fast Healing 2, and to 5 at level 18.  Thereafter it increases by 2 at levels 23 and 33, and by 3 at 28 and 38.
+Use: Selected.</entry>
+  <entry id="50732" lang="en" sex="m">Eldritch Blast</entry>
+  <entry id="50733" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Warlock 1.
+Specifics: A warlock can channel magical energy into a ray of up to 60' long, damaging the target and sometimes imparting other debilitating effects.  It deals 1d6 damage at first level, and increases by 1d6 every 2nd level until level 11, after which it rises by 1d6 every 3 levels.
+It counts as a spell equal to one-half the warlock's invoking level, rounded up, and spell resistance does apply unless otherwise noted.  While Spell Penetration feats do help, metamagic does not apply.
+You can apply one essence and one blast shape invocation you know to any given eldritch blast use.
+Use: Selected.</entry>
   <entry id="50734" lang="en" sex="m">Imbue Item</entry>
   <entry id="50735" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Warlock 12.
@@ -40490,6 +40578,379 @@ Use: Automatic.</entry>
   <entry id="57038" lang="en" sex="m">Weapon Proficiency: Elven Lightblade</entry>
   <entry id="57039" lang="en" sex="m">Weapon Proficiency: Elven Thinblade</entry>
   <entry id="57040" lang="en" sex="m">Weapon Proficiency: Elven Courtblade</entry>
+  <entry id="57100" lang="en" sex="m">##START OF WARLOCK INVOCATIONS##</entry>
+  <entry id="57101" lang="en" sex="m">All Seeing Eyes</entry>
+  <entry id="57102" lang="en" sex="m">Least Invocation
+2nd Level Spell
+  
+You gain a supernaturally precise view of the world around you. This grants you +6 to search and spot checks.  This invocation lasts for 24 hours.</entry>
+  <entry id="57103" lang="en" sex="m">Baleful Utterance</entry>
+  <entry id="57104" lang="en" sex="m">Least Invocation
+2nd Level Spell
+  
+You speak a single word of the Dark Speech.  This destroys any one nonmagical object, though the holder of an object can make a will save to prevent it.  If an object being worn or carried is destroyed in this manner, the holder must make a fortitude save or be dazed for one round and deafened for one hour.</entry>
+  <entry id="57105" lang="en" sex="m">Call of the Beast</entry>
+  <entry id="57106" lang="en" sex="m">Least Invocation
+2nd Level Spell
+  
+You gain a rapport with the beasts of the world, and can charm a single animal for 2 rounds plus one round for every 3 levels.</entry>
+  <entry id="57107" lang="en" sex="m">Dark One's Own Luck</entry>
+  <entry id="57108" lang="en" sex="m">Least Invocation
+2nd Level Spell
+  
+You are favored by the dark powers, and gain a bonus to one saving throw equal to your Charisma modifier.  This invocation lasts for 24 hours, and you can only affect one save at a time.</entry>
+  <entry id="57109" lang="en" sex="m">Dark One's Own Luck - Fortitude</entry>
+  <entry id="57110" lang="en" sex="m">Dark One's Own Luck - Reflex</entry>
+  <entry id="57111" lang="en" sex="m">Dark One's Own Luck - Will</entry>
+  <entry id="57112" lang="en" sex="m">Devil's Sight</entry>
+  <entry id="57113" lang="en" sex="m">Least Invocation
+2nd Level Spell
+  
+You gain the visual acuity of a devil.  You can see equally well in light and darkness, whether magical or nonmaqical. This invocation lasts for 24 hours.</entry>
+  <entry id="57114" lang="en" sex="m">Earthen Grasp</entry>
+  <entry id="57115" lang="en" sex="m">Least Invocation
+2nd Level Spell
+  
+You can summon up an immobile hand of dirt and grass which grapples any creature nearby.  The hand lasts for 2 rounds per level, has an AC of 15, hardness of 4, and has 3 HP per level.</entry>
+  <entry id="57116" lang="en" sex="m">Eldritch Glaive</entry>
+  <entry id="57117" lang="en" sex="m">Least Invocation
+Blast Shape
+2nd Level Spell
+  
+Your eldritch blast takes on the physical form of a glaive.  If you hit with the glaive, the target is hit as if with your eldritch blast, including any essence applied.  The glaive dissipates next round.</entry>
+  <entry id="57118" lang="en" sex="m">Eldritch Spear</entry>
+  <entry id="57119" lang="en" sex="m">Least Invocation
+Blast Shape
+2nd Level Spell
+  
+Your eldritch blast increases in range to 250'.</entry>
+  <entry id="57120" lang="en" sex="m">Entropic Warding</entry>
+  <entry id="57121" lang="en" sex="m">Least Invocation
+2nd Level Spell
+  
+You are surrounded by chaotic energies that deflect ranged attacks, similar to Entropic Shield.  This grants a 20% concealment from ranged weapons, and lasts one minute per level.</entry>
+  <entry id="57122" lang="en" sex="m">Frightful Blast</entry>
+  <entry id="57123" lang="en" sex="m">Least Invocation
+Eldritch Essence
+2nd Level Spell
+  
+When this invocation is activated, any creature hit by your blast must make a will save or be shaken for one round.  This is a mind-affecting fear effect.</entry>
+  <entry id="57124" lang="en" sex="m">Hammer Blast</entry>
+  <entry id="57125" lang="en" sex="m">Least Invocation
+Eldritch Essence
+2nd Level Spell
+  
+When this invocation is activated, your eldritch blast does full damage to objects.</entry>
+  <entry id="57126" lang="en" sex="m">Hideous Blow</entry>
+  <entry id="57127" lang="en" sex="m">Least Invocation
+Blast Shape
+1st Level Spell
+  
+Your eldritch blast infuses your weapon.  You make a single attack, and if you hit you do any damage and effects from your eldritch blast to the creature hit, in addition to any damage from the weapon itself.</entry>
+  <entry id="57128" lang="en" sex="m">Leaps and Bounds</entry>
+  <entry id="57129" lang="en" sex="m">Least Invocation
+2nd Level Spell
+  
+You grant yourself amazing agility, gaining a +6 bonus to jump, tumble, and balance checks. This invocation lasts for 24 hours.</entry>
+  <entry id="57130" lang="en" sex="m">Miasmic Cloud</entry>
+  <entry id="57131" lang="en" sex="m">Least Invocation
+1st Level Spell
+  
+A 10' cloud of fog spreads from around you, granting concealment to thsoe inside.  Anyone other than the caster who enters it must make a fort save or be fatigued.  The cloud dissipates after one minute.</entry>
+  <entry id="57132" lang="en" sex="m">Otherwordly Whispers</entry>
+  <entry id="57133" lang="en" sex="m">Least Invocation
+2nd Level Spell
+  
+You can hear whispers in your ears, revealing the secrets of the multiverse.  This grants a +6 bonus to Lore.  This invocation lasts for 24 hours.</entry>
+  <entry id="57134" lang="en" sex="m">Serpent's Tongue</entry>
+  <entry id="57135" lang="en" sex="m">Least Invocation
+2nd Level Spell
+  
+Your tongue becomes like that of a serpent, and you gain a +5 bonus to save vs poison.  This invocation lasts for 24 hours.</entry>
+  <entry id="57136" lang="en" sex="m">Sickening Blast</entry>
+  <entry id="57137" lang="en" sex="m">Least Invocation
+Eldritch Essence
+2nd Level Spell
+  
+When this invocation is activated, any living creature hit by your blast must make a fortitude save or be sickened for one minute.</entry>
+  <entry id="57138" lang="en" sex="m">Soulreaving Aura</entry>
+  <entry id="57139" lang="en" sex="m">Least Invocation
+2nd Level Spell
+  
+You flood the air around you with negative energy.  This does one damage to anyone within 10' below 0 HP, and if they die you gain one HP per hitdice of the creature, maximum 10, for one round.</entry>
+  <entry id="57140" lang="en" sex="m">Summon Swarm</entry>
+  <entry id="57141" lang="en" sex="m">Least Invocation
+2nd Level Spell
+  
+You can summon forth a swarm of normally harmless creatures as long as you maintain concentration.  They crawl over enemies, dealing 1d6 damage, as well as an additional effect depending on the type of creature.  Rat swarms have a chance of poisoning their victims, and bat swarms can wound their victims, making them bleed one HP a round until treated.</entry>
+  <entry id="57142" lang="en" sex="m">Summon Swarm - Bat</entry>
+  <entry id="57143" lang="en" sex="m">Summon Swarm - Rat</entry>
+  <entry id="57144" lang="en" sex="m">Swimming the Styx</entry>
+  <entry id="57145" lang="en" sex="m">Least Invocation
+2nd Level Spell
+  
+You gain the ability to breathe water, and are immune to drowning.  This invocation lasts for 24 hours.</entry>
+  <entry id="57146" lang="en" sex="m">Baneful Blast - Abberation</entry>
+  <entry id="57147" lang="en" sex="m">Lesser Invocation
+Eldritch Essence
+3rd Level Spell
+  
+This essence adds 2d6 to your eldritch blast's damage when used on the named type of creature.</entry>
+  <entry id="57148" lang="en" sex="m">Baneful Blast - Beast</entry>
+  <entry id="57149" lang="en" sex="m">Baneful Blast - Construct</entry>
+  <entry id="57150" lang="en" sex="m">Baneful Blast - Dragon</entry>
+  <entry id="57151" lang="en" sex="m">Baneful Blast - Dwarf</entry>
+  <entry id="57152" lang="en" sex="m">Baneful Blast - Elemental</entry>
+  <entry id="57153" lang="en" sex="m">Baneful Blast - Elf</entry>
+  <entry id="57154" lang="en" sex="m">Baneful Blast - Fey</entry>
+  <entry id="57155" lang="en" sex="m">Baneful Blast - Giant</entry>
+  <entry id="57156" lang="en" sex="m">Baneful Blast - Goblinoid</entry>
+  <entry id="57157" lang="en" sex="m">Baneful Blast - Gnome</entry>
+  <entry id="57158" lang="en" sex="m">Baneful Blast - Halfling</entry>
+  <entry id="57159" lang="en" sex="m">Baneful Blast - Human</entry>
+  <entry id="57160" lang="en" sex="m">Baneful Blast - Monstrous Humanoid</entry>
+  <entry id="57161" lang="en" sex="m">Baneful Blast - Orc</entry>
+  <entry id="57162" lang="en" sex="m">Baneful Blast - Outsider</entry>
+  <entry id="57163" lang="en" sex="m">Baneful Blast - Plant</entry>
+  <entry id="57164" lang="en" sex="m">Baneful Blast - Reptilian</entry>
+  <entry id="57165" lang="en" sex="m">Baneful Blast - Shapechanger</entry>
+  <entry id="57166" lang="en" sex="m">Baneful Blast - Undead</entry>
+  <entry id="57167" lang="en" sex="m">Baneful Blast - Vermin</entry>
+  <entry id="57168" lang="en" sex="m">Beshadowed Blast</entry>
+  <entry id="57169" lang="en" sex="m">Lesser Invocation
+Eldritch Essence
+4th Level Spell
+  
+Any living creature hit by your eldritch blast when this is active must make a fortitude save or be blinded for one round.</entry>
+  <entry id="57170" lang="en" sex="m">Brimstone Blast</entry>
+  <entry id="57171" lang="en" sex="m">Lesser Invocation
+Eldritch Essence
+3rd Level Spell
+  
+Your eldritch blast does fire damage, and any creature hit must make a reflex save or they will catch on fire.  If on fire, they take 2d6 damage every round, and the fire burns itself out after one round for every 5 invoking levels you have.</entry>
+  <entry id="57172" lang="en" sex="m">Cold Comfort</entry>
+  <entry id="57173" lang="en" sex="m">Lesser Invocation
+2nd Level Spell
+  
+You radiate an unnatural aura that protects you and those around you to some small extent from the ravages of the elements.  This invocation acts like the Endure Elements spell, and lasts for 24 hours or until the caster takes more than 20 points of elemental damage.</entry>
+  <entry id="57174" lang="en" sex="m">Curse of Despair</entry>
+  <entry id="57175" lang="en" sex="m">Lesser Invocation
+4th Level Spell
+  
+You curse a single creature you touch as the Bestow Curse spell.  If they make their will save, then they still take a -1 on all their attacks for one minute.</entry>
+  <entry id="57176" lang="en" sex="m">Dread Seizure</entry>
+  <entry id="57177" lang="en" sex="m">Lesser Invocation
+4th Level Spell
+  
+You speak a word that sends wracking pain through the limbs of a creature wihtin 60'.  The creature can only move at half speed, and takes a -5 on attack rolls.  This effect lasts for 3 rounds, or is negated by a fortitude save.</entry>
+  <entry id="57178" lang="en" sex="m">Eldritch Chain</entry>
+  <entry id="57179" lang="en" sex="m">Lesser Invocation
+Blast Shape
+4th Level Spell
+  
+Your eldritch blast can jump from target to target, if each is within 30' of the previous target.  The blast hits one secondary target for every 5 invoker levels, and each secondary target only takes half the damage of the primary target.</entry>
+  <entry id="57180" lang="en" sex="m">Flee the Scene</entry>
+  <entry id="57181" lang="en" sex="m">Lesser Invocation
+4th Level Spell
+  
+You can teleport a short distance(25' + 5'/lvl) as if using a dimension door spell.  You leave behind an illusion of yourself that reacts appropriately to attacks and lasts for one round before fading.</entry>
+  <entry id="57182" lang="en" sex="m">Flee the Scene - Selection</entry>
+  <entry id="57183" lang="en" sex="m">Flee the Scene - Direction and Distance</entry>
+  <entry id="57184" lang="en" sex="m">Hellrime Blast</entry>
+  <entry id="57185" lang="en" sex="m">Lesser Invocation
+Eldritch Essence
+4th Level Spell
+  
+Your eldritch blast does cold damage, and any creature hit must make a fortitude save or they will take a -4 penalty to dexterity for ten minutes.</entry>
+  <entry id="57186" lang="en" sex="m">Hungry Darkness</entry>
+  <entry id="57187" lang="en" sex="m">Lesser Invocation
+3rd Level Spell
+  
+You create an area of shadow(as the darkness spell) filled with a swarm of bats.  You are immune to the attacks of the swarm, but not the darkness.  The invocation lasts as long as you concentrate on it.</entry>
+  <entry id="57188" lang="en" sex="m">Ignore the Pyre</entry>
+  <entry id="57189" lang="en" sex="m">Lesser Invocation
+4th Level Spell
+  
+You gain remarkable resiliance to any one energy type, gaining resistance equal to your invoker level to that element for 24 hours.  If you cast it again before it expires, the new element and duration replace the old.</entry>
+  <entry id="57190" lang="en" sex="m">Ignore the Pyre - Acid</entry>
+  <entry id="57191" lang="en" sex="m">Ignore the Pyre - Cold</entry>
+  <entry id="57192" lang="en" sex="m">Ignore the Pyre - Electric</entry>
+  <entry id="57193" lang="en" sex="m">Ignore the Pyre - Fire</entry>
+  <entry id="57194" lang="en" sex="m">Ignore the Pyre - Sonic</entry>
+  <entry id="57195" lang="en" sex="m">Mask of Flesh</entry>
+  <entry id="57196" lang="en" sex="m">Lesser Invocation
+3rd Level Spell
+  
+You make a touch attack against any creature of your size, and if you succeed you take on their appearance as the Disguise Self spell.  If you wish, in addition you can do 1d6 Charisma damage in addition to taking on the appearance. Both effects last one hour per invoker level.</entry>
+  <entry id="57197" lang="en" sex="m">Mask of Flesh - Friendly</entry>
+  <entry id="57198" lang="en" sex="m">Mask of Flesh - Hostile</entry>
+  <entry id="57199" lang="en" sex="m">Relentless Dispelling</entry>
+  <entry id="57200" lang="en" sex="m">Lesser Invocation
+4th Level Spell
+  
+You can attempt to dispel all effects on a creature as per the targeted version of Dispel Magic.  The next round a second dispel will hit the target again.</entry>
+  <entry id="57201" lang="en" sex="m">Stony Grasp</entry>
+  <entry id="57202" lang="en" sex="m">Lesser Invocation
+3rd Level Spell
+  
+You can summon up an immobile hand of rock and stone which grapples any creature nearby.  The hand lasts for 1 round per level, has an AC of 18, hardness of 8, and has 4 HP per level.</entry>
+  <entry id="57203" lang="en" sex="m">The Dead Walk</entry>
+  <entry id="57204" lang="en" sex="m">Lesser Invocation
+4th Level Spell
+  
+You can create undead as per the Animate Undead spell.</entry>
+  <entry id="57205" lang="en" sex="m">Wall of Gloom</entry>
+  <entry id="57206" lang="en" sex="m">Lesser Invocation
+2nd Level Spell
+  
+You can create a wall of gloomy shadows that lasts as long as you concentrate on it.  Any creature who steps into it must make a will save or be halted, and any creature inside gains concealment.</entry>
+  <entry id="57207" lang="en" sex="m">Witchwood Step</entry>
+  <entry id="57208" lang="en" sex="m">Lesser Invocation
+3rd Level Spell
+  
+Your footsteps become unnaturally sure and supportive.  Your movement is not afected by undergrowth, and you are immune to being entangled.</entry>
+  <entry id="57209" lang="en" sex="m">Bewitching Blast</entry>
+  <entry id="57210" lang="en" sex="m">Greater Invocation
+Eldritch Essence
+4th Level Spell
+  
+When this invocation is activated, any creature hit by your blast must make a will save or be confused for one round.</entry>
+  <entry id="57211" lang="en" sex="m">Caustic Mire</entry>
+  <entry id="57212" lang="en" sex="m">Greater Invocation
+4th Level Spell
+  
+You can create an area of acidic sludge on the ground.  Any creature who steps into it is slowed by about a third, and each 5' they move deals 1d6 acid damage to them. If a creature stands still in it they still take 1d6 acid damage each round.  The sludge lasts one round per level, and you can only create one area at any given time.</entry>
+  <entry id="57213" lang="en" sex="m">Chilling Tentacles</entry>
+  <entry id="57214" lang="en" sex="m">Greater Invocation
+5th Level Spell
+  
+This invocation acts as the spell Evard's Black Tentacles.  In addition, every round a creature is in the area of effect they take 2d6 cold damage.</entry>
+  <entry id="57215" lang="en" sex="m">Dragon Ward</entry>
+  <entry id="57216" lang="en" sex="m">Greater Invocation
+6th Level Spell
+  
+This invocation makes you resistant to the special abilities of dragons.  You become immune to fear, and gain damage resistance 20 to any fire, acid, sonic, electric, or cold damage dealt by breath weapons.  This invocation lasts 24 hours.</entry>
+  <entry id="57217" lang="en" sex="m">Eldritch Cone</entry>
+  <entry id="57218" lang="en" sex="m">Least Invocation
+Blast Shape
+5th Level Spell
+  
+Your eldritch blast becomes a 30' cone instead of a ray.  Those within can make a reflex save for half damage.</entry>
+  <entry id="57219" lang="en" sex="m">Eldritch Line</entry>
+  <entry id="57220" lang="en" sex="m">Least Invocation
+Blast Shape
+5th Level Spell
+  
+Your eldritch blast becomes a 60' line instead of a ray.  Those within can make a reflex save for half damage.</entry>
+  <entry id="57221" lang="en" sex="m">Enervating Shadow</entry>
+  <entry id="57222" lang="en" sex="m">Greater Invocation
+5th Level Spell
+  
+The dark powers cloak you and shield you from harm, while draining vitality from nearby foes.  Any living creature within 10' of you must make a fortitude save or take a -4 penalty ot Strength for 5 rounds.  Creatures can only be affected by this once every 24 hours.  This ability lasts 5 rounds, and does not work in sunlight or magical bright light.</entry>
+  <entry id="57223" lang="en" sex="m">Hellspawned Grace</entry>
+  <entry id="57224" lang="en" sex="m">Greater Invocation
+6th Level Spell
+  
+You can polymorph into a hellcat for 1 round for every 2 invoker levels you have.</entry>
+  <entry id="57225" lang="en" sex="m">Hindering Blast</entry>
+  <entry id="57226" lang="en" sex="m">Greater Invocation
+Eldritch Essence
+4th Level Spell
+  
+When this invocation is activated, any living creature hit by your blast must make a will save or be slowed for one round.</entry>
+  <entry id="57227" lang="en" sex="m">Nightmares Made Real</entry>
+  <entry id="57228" lang="en" sex="m">Greater Invocation
+5th Level Spell
+  
+You can create an illusion of nightmarish terrain, and anyone who does not make their will save to disbelieve becomes entangles, and takes 1d6 per round.  Regardless of if they passed their will save, everyone wihtin gains concealment.  The illusion lasts one round per level, and you can only create one area at any given time.</entry>
+  <entry id="57229" lang="en" sex="m">Noxious Blast</entry>
+  <entry id="57230" lang="en" sex="m">Greater Invocation
+Eldritch Essence
+6th Level Spell
+  
+When this invocation is activated, any creature hit by your blast must make a fortitude save or be nauseated for one minute.</entry>
+  <entry id="57231" lang="en" sex="m">Painful Slumber of Ages</entry>
+  <entry id="57232" lang="en" sex="m">Greater Invocation
+6th Level Spell
+  
+You put a creature to sleep.  If they are woken by dispelling or being struck, they take damage equal to your invoker level.</entry>
+  <entry id="57233" lang="en" sex="m">Penetrating Blast</entry>
+  <entry id="57234" lang="en" sex="m">Greater Invocation
+Eldritch Essence
+6th Level Spell
+  
+When this invocation is activated, your eldritch blast gains +4 to the caster level to pierce spell resistance, and a failed will save reduces the creature's spell resistance by 5 for 1 minute.</entry>
+  <entry id="57235" lang="en" sex="m">Tenacious Plague</entry>
+  <entry id="57236" lang="en" sex="m">Greater Invocation
+6th Level Spell
+  
+You summon a swarm of hardy insects that lasts for one minute per invoker level.  Their attacks count as magical weapons, and your charisma modifier is added to their distraction DC.</entry>
+  <entry id="57237" lang="en" sex="m">Vitriolic Blast</entry>
+  <entry id="57238" lang="en" sex="m">Greater Invocation
+Eldritch Essence
+6th Level Spell
+  
+Your eldritch blast does acid damage, and ignores spell resistance.  Any creature hit automatically takes 2d6 acid damage every round.  This effect lasts for one round for every 5 invoking levels you have.</entry>
+  <entry id="57239" lang="en" sex="m">Wall of Perilous Flame</entry>
+  <entry id="57240" lang="en" sex="m">Greater Invocation
+5th Level Spell
+  
+You can call up a wall of fire as the spell of the same name.  However, half the damage done by it is caused by supernatural power and not subject to fire resistance.</entry>
+  <entry id="57241" lang="en" sex="m">Binding Blast</entry>
+  <entry id="57242" lang="en" sex="m">Dark Invocation
+Eldritch Essence
+7th Level Spell
+  
+When this invocation is active, any creature struck by your eldritch blast must make a will save or be stunned for one round.  This is a mind-affecting effect.</entry>
+  <entry id="57243" lang="en" sex="m">Caster's Lament</entry>
+  <entry id="57244" lang="en" sex="m">Dark Invocation
+8th Level Spell
+  
+With a touch you can attempt to dispel all effects on a creature, as the break enchantment spell.  The maximum caster level for the dspel checks is 15.</entry>
+  <entry id="57245" lang="en" sex="m">Dark Discorporation</entry>
+  <entry id="57246" lang="en" sex="m">Dark Invocation
+8th Level Spell
+  
+You can abandon your body and become a swarm of batlike shadows for up to 24 hours.  In this form you cannot attack or cast, but you are immune to normal weapon damage and critical hits as a swarm is.  Your dexterity increases by 6, and you get a deflection bonus to AC equal to your charisma modifier.  You also gain a swarm attack that does 4d6 damage to anyone in a square your swarm occupies.</entry>
+  <entry id="57247" lang="en" sex="m">Dark Foresight</entry>
+  <entry id="57248" lang="en" sex="m">Dark Invocation
+9th Level Spell
+  
+You gain foresight, as the spell.  You gain a +2 insight bonus to Reflex saves and AC, and are never surprised or flatfooted.  This lasts 10 minutes per level.</entry>
+  <entry id="57249" lang="en" sex="m">Eldritch Doom</entry>
+  <entry id="57250" lang="en" sex="m">Dark Invocation
+Blast Shape
+8th Level Spell
+  
+Your eldritch blast becomes a 20' cloud around you instead of a ray.  Those within can make a reflex save for half damage.</entry>
+  <entry id="57251" lang="en" sex="m">Path of Shadow</entry>
+  <entry id="57252" lang="en" sex="m">Dark Invocation
+6th Level Spell
+  
+You can walk the plane of shadow, either by yourself or with a party.  This is effectively a teleport spell, and during the walk you and any with you heal back any damage taken.</entry>
+  <entry id="57253" lang="en" sex="m">Path of Shadow - Self</entry>
+  <entry id="57254" lang="en" sex="m">Path of Shadow - Party</entry>
+  <entry id="57255" lang="en" sex="m">Retributive Invisibility</entry>
+  <entry id="57256" lang="en" sex="m">Dark Invocation
+6th Level Spell
+  
+You can use greater invisibility as the spell, but you can only target yourself.  If the invisibility is dispelled, you release a 4d6 sonic shock wave in a 20' burst around you.  ANy creature hit by the shockwave is stunned for one round, but a fortitude save reduces the damage to half and negates the stunning.</entry>
+  <entry id="57257" lang="en" sex="m">Steal Summoning</entry>
+  <entry id="57258" lang="en" sex="m">Dark Invocation
+6th Level Spell
+  
+You can take control of another caster's summonned creature.  This control lasts as long as you maintain concentration on it, and thereafter the summon reverts to its previous master's control.</entry>
+  <entry id="57259" lang="en" sex="m">Utterdark Blast</entry>
+  <entry id="57260" lang="en" sex="m">Dark Invocation
+Eldritch Essence
+8th Level Spell
+  
+Your eldritch blast does negative energy damage.  Any creature hit must make a fortitude save or take 2 negative levels.  These negative levels fade after one hour.</entry>
+  <entry id="57261" lang="en" sex="m">Word of Changing</entry>
+  <entry id="57262" lang="en" sex="m">Dark Invocation
+5th Level Spell
+  
+You utter a powerful word that transforms a creature into a harmless form.  This functions like baleful polymorph, except that they get a second save which determiens if it lasts for 24 hours or is permanent.</entry>
   <entry id="60000" lang="en" sex="m">##EPIC_SPELL_AND_ISC_RESERVE</entry>
   <entry id="60500" lang="en" sex="m">##EPIC_SPELL_AND_ISC_RESERVE</entry>
   <entry id="61000" lang="en" sex="m">##EPIC_SPELL_AND_ISC_RESERVE</entry>

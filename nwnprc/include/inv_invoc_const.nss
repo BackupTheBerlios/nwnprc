@@ -188,6 +188,7 @@ const int INVOKE_AOE_SWARMDMG_5             = 246;
 const int INVOKE_AOE_SWARMDMG_6             = 247;
 const int INVOKE_VFX_DARK_DISCORPORATION    = 248;
 const int INVOKE_VFX_PER_WALL_OF_GLOOM      = 249;
+const int INVOKE_AOE_EARTHEN_GRASP_GRAPPLE  = 250;
 
 //class abilities
 const int INVOKE_ELDRITCH_BLAST             = 2083;

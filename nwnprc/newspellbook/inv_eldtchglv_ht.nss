@@ -180,7 +180,7 @@ void main()
                  if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
                      ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eEssence, oTarget, TurnsToSeconds(1));
              }
-             else if(nEssence == INVOKE_HINDERING_BLAST)
+             else if(nEssence == INVOKE_HINDERING_BLAST && PRCGetIsAliveCreature(oTarget))
              {
                  eEssence = EffectSlow();
                  if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
@@ -198,7 +198,7 @@ void main()
                  if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
                      ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eEssence, oTarget, RoundsToSeconds(1));
              }
-             else if(nEssence == INVOKE_BESHADOWED_BLAST)
+             else if(nEssence == INVOKE_BESHADOWED_BLAST && PRCGetIsAliveCreature(oTarget))
              {
                  eEssence = EffectBlindness();
                  if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
@@ -240,7 +240,7 @@ void main()
                  if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
                      ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eEssence, oTarget, TurnsToSeconds(1));
              }
-             else if(nEssence == INVOKE_SICKENING_BLAST)
+             else if(nEssence == INVOKE_SICKENING_BLAST && PRCGetIsAliveCreature(oTarget))
              {
                  effect eDur2 = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
                  effect eAttackD = EffectAttackDecrease(2);

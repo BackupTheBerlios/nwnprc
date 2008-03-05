@@ -26,9 +26,11 @@ void main()
     int nDamage;
     effect eDam;
     object oTarget;
+    object oCaster = GetAreaOfEffectCreator();
+    int nCasterLvl = GetInvokerLevel(oCaster, CLASS_TYPE_WARLOCK);
     //Declare and assign personal impact visual effect.
     effect eVis = EffectVisualEffect(VFX_IMP_FLAME_M);
-    int nPenetr = SPGetPenetrAOE(GetAreaOfEffectCreator());
+    int nPenetr = SPGetPenetrAOE(GetAreaOfEffectCreator(), nCasterLvl);
 
     //Capture the first target object in the shape.
     oTarget = GetEnteringObject();
@@ -40,7 +42,7 @@ void main()
         if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
         {
             //Roll damage.
-            nDamage = d6(4);
+            nDamage = d6(2 + nCasterLvl);
             nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
             nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, (PRCGetSaveDC(oTarget,GetAreaOfEffectCreator())), SAVING_THROW_TYPE_FIRE);
             if(nDamage > 0)

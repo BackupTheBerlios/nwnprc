@@ -48,7 +48,7 @@ void main()
 	SPSetSchool(SPELL_SCHOOL_CONJURATION);
 	
 	object oPC     = OBJECT_SELF;
-	object oTarget = PRCGetSpellTargetObject();
+	location lTarget = PRCGetSpellTargetLocation();
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	float fDur     = 60.0f * PRCGetCasterLevel(oPC);
 	
@@ -60,7 +60,7 @@ void main()
 	effect eAOE = EffectAreaOfEffect(AOE_PER_SOLID_FOG, "sp_solid_fogA", "", "sp_solid_fogB");
 			
 	// Duration Effects
-	ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAOE, GetSpellTargetLocation(),fDur);
+	ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAOE, lTarget,fDur);
 	
 	SPSetSchool();
 }

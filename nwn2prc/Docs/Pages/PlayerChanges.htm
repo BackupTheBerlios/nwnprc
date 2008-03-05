@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+         
+  <meta http-equiv="Content-Language" content="en-gb">
+         
+  <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+         
+  <meta name="ProgId" content="FrontPage.Editor.Document">
+         
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=windows-1252">
+  <title>Player Readme</title>
+</head>
+  <body text="#c0c0c0" bgcolor="#000000">
+      
+<p align="center"><u><b><font size="6">Player Resource Consortium</font></b></u></p>
+     
+<p align="center"><u><b><font size="5">Player Readme</font></b></u></p>
+     
+<p align="center"><u><font size="5"> <b>Changes to existing content</b></font></u></p>
+     
+<p align="left"><font size="2">back to <a href="Player.htm">Players</a>.</font></p>
+      
+<p align="left">In order to maintain  maximum compatibility and ease of use,
+ where possible content has been added,  rather than changed. The PnP Shifter
+ class is an example of this; rather than  overwriting Bioware's version,
+an alternative was created. However, at some  points it makes sense to replace
+ or alter existing content. </p>
+      
+<p align="left"><b><u>Assassin</u></b></p>
+      
+<p align="left">In addition to their  normal abilities, assassins now receive
+ an extra feat at level 1 designed to  more closely follow the Pen 'n' Paper
+ rules for Death Attack.</p>
+      
+<p align="left">True Death Attack<br>
+   Type of feat: Class<br>
+   Prerequisite: Level 1 Assassin<br>
+   Specifics: After studying your target for 3 rounds, you have 3 rounds
+to  slay  them vs DC 10 + Assassin level + Int Mod.<br>
+   *Note - using this feat will remove your stealth, you have 6 seconds to
+ become  stealthy again in order to continue studying the target. If anybody
+ knows a way  around this give me a shout. As per PnP the weapon can only
+be melee, so even  though it is possible in code for ranged weapons it is
+not included..<br>
+   <br>
+   How it works: Target (longest range in the game) what you want to kill,
+ go  invisible or stealth, move closer into melee range of the target. You
+ have to  study the target for 3 rounds(18 seconds), and while studying you
+ cant go out of  stealth, or attack. Once the 3 rounds are up your primary
+ weapon or gloves if  unarmed are given a temporary Slay Race (race of the
+ target) for 3 rounds at the  above DC.</p>
+      
+<p align="left"><u><b>Arcane Archer</b></u><br>
+ </p>
+ 
+<p align="left">This class has had its prerequisites modified to make it more
+widely avaliable. Now, instead of "Arcane Spellcasting Level 1", you need
+to have at least 1 level in one of the following classes: Sorcerer, Bard,
+Wizard, Assasin, and Harper Scout.<br>
+ </p>
+ 
+<p align="left"> <u><b>Turn Undead </b></u><br>
+  </p>
+   
+<p align="left">Bioware's Turn Undead script has been replaced with Wes Baran's
+ improved Turn Undead script. It is available on the vault <a
+ href="http://nwvault.ign.com/Files/scripts/data/1070171824145.shtml">Here</a>.
+ It follows the same rules as the bioware script with some critical differences.
+ Evil characters that turn undead do not turn or destroy undead, they will
+ stun or dominate them. A character can only dominate a number of hit dice
+ worth of undead equal to their turning level, any above that will be stunned
+ instead. Dominated undead will be freed when their master rests.</p>
+   
+<p align="left"> </p>
+   
+<p><u><b>Power Attack / Improved Power Attack</b></u></p>
+    
+<p align="left">These have been separated into sub-radials so you can select 
+ exactly which degree of accuracy/power trade-off you wish.<br>
+ <br>
+  </p>
+      
+<p align="left"><u><b> Spell Changes</b></u></p>
+      
+<p align="left">Bigby's Crushing Hand</p>
+ 
+<blockquote>Changed to correctly calculate grapple check for the target as 
+d20 + BAB + strength modifier + size modifier.<br>
+ </blockquote>
+ 
+<p align="left"><br>
+ Bigby's Grasping Hand<br>
+ </p>
+ 
+<blockquote>Changed to correctly calculate grapple check for the target as 
+d20 + BAB + strength modifier + size modifier.<br>
+ </blockquote>
+ 
+<p align="left"><br>
+ Firebrand<br>
+ </p>
+ 
+<blockquote>Changed to allow reflex save for half damage as per PnP rules.<br>
+ </blockquote>
+ 
+<p align="left"><br>
+ Mage Armor<br>
+ </p>
+ 
+<blockquote>Changed to follow PnP rules of being a +4 armor bonus.<br>
+ </blockquote>
+ 
+<p align="left"><br>
+ Summon Creature VII - IX<br>
+ </p>
+ 
+<blockquote>Changed to radial menus to choose the creature being summoned 
+and added earth elementals, so all 4 elemental types can be summoned. Note: 
+This change may affect the AI of NPC casters, generally they cant cope with 
+radial spells.<br>
+ </blockquote>
+ 
+<p align="left"><br>
+ Harm<br>
+ </p>
+ 
+<blockquote>Does 10HP/level. Capped at 150 HP.<br>
+ </blockquote>
+ 
+<p align="left"><br>
+ Heal<br>
+ </p>
+ 
+<blockquote>Does 10HP/level. Capped at 150 HP.<br>
+ </blockquote>
+ 
+<p align="left"><br>
+ Bombardment<br>
+ </p>
+ 
+<blockquote>Raised cap to 20d8.<br>
+ </blockquote>
+ 
+<p align="left"><br>
+ Earthquake<br>
+ </p>
+ 
+<blockquote>25% chance to be forced to make a reflex save (DC20) against death.
+All must make reflex save (DC15) or be knocked down for 3 rounds.<br>
+ </blockquote>
+ 
+<p align="left"><br>
+ Greater Dispel<br>
+ </p>
+ 
+<blockquote>Raised cap to 20.<br>
+ </blockquote>
+ 
+<p align="left"><br>
+ Mass Heal<br>
+ </p>
+ 
+<blockquote>Does 10HP/level. Capped at 250 HP.<br>
+ </blockquote>
+ 
+<p align="left"><br>
+ Greater Restore<br>
+ </p>
+ 
+<blockquote>Does 10HP/level. Capped at 250 HP.<br>
+ </blockquote>
+ 
+<p align="left"><br>
+ Timestop<br>
+ </p>
+ 
+<blockquote>Duration is 1d4+1 rounds<br>
+ </blockquote>
+ 
+<p align="left"><br>
+ </p>
+ 
+<p align="left"><u><b>Epic Spells</b></u></p>
+      
+<p align="left" style="margin-left: 25px;">The PRC now contains Boneshank's
+ Epic  Spellcasting System. As part of this all of the Bioware Epic Spells
+ have been  re-written and added to, though the Bioware spells have the same
+ name and  effects.</p>
+    <br>
+  <br>
+ <br>
+</body>
+</html>

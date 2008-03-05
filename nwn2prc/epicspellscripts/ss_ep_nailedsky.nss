@@ -15,13 +15,13 @@
 
 void RunNailedToTheSky(object oTarget, int nDC);
 
-void Petrify(object oTarget)
+/*void Petrify(object oTarget)
 {
     effect ePetrify = EffectPetrify();
     SPApplyEffectToObject(DURATION_TYPE_PERMANENT, ePetrify, oTarget, 0.0, TRUE, -1, GetTotalCastingLevel(OBJECT_SELF), OBJECT_SELF);
-}
+}*/
 
-void RemoveEffectOfType(object oTarget, int nEffectType)
+/*void RemoveEffectOfType(object oTarget, int nEffectType)
 {
     effect eEff = GetFirstEffect(oTarget);
     while (GetIsEffectValid(eEff)) {
@@ -30,12 +30,12 @@ void RemoveEffectOfType(object oTarget, int nEffectType)
         }
         eEff = GetNextEffect(oTarget);
     }
-}
+}*/
 // Removes the petrification effect.
-void Depetrify(object oTarget)
+/*void Depetrify(object oTarget)
 {
     RemoveEffectOfType(oTarget, EFFECT_TYPE_PETRIFY);
-}
+}*/
 
 void main()
 {

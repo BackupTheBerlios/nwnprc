@@ -23,6 +23,10 @@ if(DEBUG) DoDebug("m0q0_archery_2 running");
                    GetLevelByClass(CLASS_TYPE_SOHEI,oAttacker) > 0 ||
                    GetLevelByClass(CLASS_TYPE_KNIGHT,oAttacker) > 0 ||
                    GetLevelByClass(CLASS_TYPE_DUSKBLADE,oAttacker) > 0 ||
+    	           GetLevelByClass(CLASS_TYPE_WARBLADE,oAttacker) > 0 ||
+  	           GetLevelByClass(CLASS_TYPE_SWORDSAGE,oAttacker) > 0 ||
+        	   GetLevelByClass(CLASS_TYPE_CRUSADER,oAttacker) > 0 ||
+	           GetLevelByClass(CLASS_TYPE_DRAGON_SHAMAN,oAttacker) > 0 ||
                    GetLevelByClass(CLASS_TYPE_MONK,oAttacker) > 0 ||
                    GetLevelByClass(CLASS_TYPE_PALADIN,oAttacker) > 0 ||
                    GetLevelByClass(CLASS_TYPE_ANTI_PALADIN,oAttacker) > 0 ||

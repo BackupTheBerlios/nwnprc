@@ -71,18 +71,18 @@ void main()
 
                 // This reads all of the legal choices from baseitems.2da
                 int i;
-        for(i = 0; i < 112; i++) //Total rows in baseitems.2da
-        {
-            // If the selection is a legal weapon
-            if (StringToInt(Get2DACache("baseitems", "WeaponType", i)) > 0)
-            {
-                string sWeaponName = GetStringByStrRef(StringToInt(Get2DACache("baseitems", "Name", i)));
-                // Just in case its a blank entry, don't put it here
-                if (sWeaponName != "")
-                {
-                    AddChoice(sWeaponName, i, oPC);
-                }
-            }
+        	for(i = 0; i < 112; i++) //Total rows in baseitems.2da
+        	{
+            		// If the selection is a legal weapon
+            		if (StringToInt(Get2DACache("baseitems", "WeaponType", i)) > 0)
+            		{
+                		string sWeaponName = GetStringByStrRef(StringToInt(Get2DACache("baseitems", "Name", i)));
+                		// Just in case its a blank entry, don't put it here
+                		if (sWeaponName != "")
+                		{
+                		    AddChoice(sWeaponName, i, oPC);
+                		}
+            		}
                 }
 
                 MarkStageSetUp(STAGE_WEAPON_CHOICE, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it

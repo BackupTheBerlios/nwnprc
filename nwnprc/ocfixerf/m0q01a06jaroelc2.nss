@@ -10,6 +10,7 @@ if(DEBUG) DoDebug("m0q01a06jaroelc2 running");
     if(GetLevelByClass(CLASS_TYPE_PSION,  GetPCSpeaker()) > 0 ||
        GetLevelByClass(CLASS_TYPE_PSYWAR, GetPCSpeaker()) > 0 ||
        GetLevelByClass(CLASS_TYPE_SHUGENJA, GetPCSpeaker()) > 0 ||
+       GetLevelByClass(CLASS_TYPE_SWORDSAGE, GetPCSpeaker()) > 0 ||
        GetLevelByClass(CLASS_TYPE_DRAGONFIRE_ADEPT, GetPCSpeaker()) > 0 ||
        GetLevelByClass(CLASS_TYPE_WARMAGE, GetPCSpeaker()) > 0 ||
        GetLevelByClass(CLASS_TYPE_DUSKBLADE, GetPCSpeaker()) > 0 ||

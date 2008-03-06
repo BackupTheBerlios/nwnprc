@@ -24,11 +24,7 @@ void main()
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
     
     int nHealAmt = 1;
-    if(GetLevelByClass(CLASS_TYPE_WARLOCK, oPC) > 37) nHealAmt = 15;
-    else if(GetLevelByClass(CLASS_TYPE_WARLOCK, oPC) > 32) nHealAmt = 12;
-    else if(GetLevelByClass(CLASS_TYPE_WARLOCK, oPC) > 27) nHealAmt = 10;
-    else if(GetLevelByClass(CLASS_TYPE_WARLOCK, oPC) > 22) nHealAmt = 7;
-    else if(GetLevelByClass(CLASS_TYPE_WARLOCK, oPC) > 17) nHealAmt = 5;
+    if(GetLevelByClass(CLASS_TYPE_WARLOCK, oPC) > 17) nHealAmt = 5;
     else if(GetLevelByClass(CLASS_TYPE_WARLOCK, oPC) > 12) nHealAmt = 2;
     
     effect eFastHeal = EffectRegenerate(nHealAmt, RoundsToSeconds(1));

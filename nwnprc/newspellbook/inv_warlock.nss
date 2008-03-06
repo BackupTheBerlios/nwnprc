@@ -57,7 +57,7 @@ void main()
 	   ApplyEffectToObject(DURATION_TYPE_PERMANENT, ExtraordinaryEffect(eReduction), oPC);
 	   
 	//Energy Resistance
-	int nResistAmt = nClass / 10 * IP_CONST_DAMAGERESIST_5;
+	int nResistAmt = nClass >= 20 ? 10 : 5;
 	
 	if(GetHasFeat(FEAT_WARLOCK_RESIST_ACID))
 	{

@@ -32,7 +32,7 @@ void main()
     effect eEssence;
 	
 	//calculate DC for essence effects
-	int nBlastLvl = min((GetInvokerLevel(oPC, CLASS_TYPE_WARLOCK) + 1) / 2, 9);
+	int nBlastLvl = min((GetLevelByClass(CLASS_TYPE_WARLOCK, oPC) + 1) / 2, 9);
 	nBlastLvl = max(max(GetLocalInt(oPC, "EssenceLevel"), 1), nBlastLvl);
 	int nDC = 10 + nBlastLvl + GetAbilityModifier(ABILITY_CHARISMA);
 	
@@ -43,10 +43,13 @@ void main()
     int nPenetr = GetInvokerLevel(oPC, CLASS_TYPE_WARLOCK) + SPGetPenetr();
     
     int iAttackRoll = 0;    //placeholder
-    if(GetInvokerLevel(oPC, CLASS_TYPE_WARLOCK) < 13)
-        nDmgDice = (GetInvokerLevel(oPC, CLASS_TYPE_WARLOCK) + 1) / 2;
+    if(GetLevelByClass(CLASS_TYPE_WARLOCK, oPC) < 13)
+        nDmgDice = (GetLevelByClass(CLASS_TYPE_WARLOCK, oPC) + 1) / 2;
+    else if(GetLevelByClass(CLASS_TYPE_WARLOCK, oPC) < 20)
+        nDmgDice = (GetLevelByClass(CLASS_TYPE_WARLOCK, oPC) + 7) / 3;
     else
-        nDmgDice = (GetInvokerLevel(oPC, CLASS_TYPE_WARLOCK) + 7) / 3;
+        nDmgDice = 9 + (GetLevelByClass(CLASS_TYPE_WARLOCK, oPC) - 20) / 2;
+    
     int nDam = d6(nDmgDice);
     
     //Essence effects that modify the blast itself
@@ -187,7 +190,7 @@ void main()
                      if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
                          ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eEssence, oTarget, TurnsToSeconds(1));
                  }
-                 else if(nEssence == INVOKE_HINDERING_BLAST)
+                 else if(nEssence == INVOKE_HINDERING_BLAST && PRCGetIsAliveCreature(oTarget))
                  {
                      eEssence = EffectSlow();
                      if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
@@ -205,7 +208,7 @@ void main()
                      if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
                          ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eEssence, oTarget, RoundsToSeconds(1));
                  }
-                 else if(nEssence == INVOKE_BESHADOWED_BLAST)
+                 else if(nEssence == INVOKE_BESHADOWED_BLAST && PRCGetIsAliveCreature(oTarget))
                  {
                      eEssence = EffectBlindness();
                      if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
@@ -247,7 +250,7 @@ void main()
                      if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
                          ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eEssence, oTarget, TurnsToSeconds(1));
                  }
-                 else if(nEssence == INVOKE_SICKENING_BLAST)
+                 else if(nEssence == INVOKE_SICKENING_BLAST && PRCGetIsAliveCreature(oTarget))
                  {
                      effect eDur2 = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
                      effect eAttackD = EffectAttackDecrease(2);

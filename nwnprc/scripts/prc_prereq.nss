@@ -136,6 +136,10 @@ void Shifter(object oPC, int iArcSpell, int iDivSpell)
      {
          SetLocalInt(oPC, "PRC_PrereqShift", 0);
      }
+     if(GetHasInvocation(INVOKE_MASK_OF_FLESH, oPC))
+     {
+         SetLocalInt(oPC, "PRC_PrereqShift", 0);
+     }
 
      // these races have an alternate form
      if(GetRacialType(oPC) == RACIAL_TYPE_PURE_YUAN) SetLocalInt(oPC, "PRC_PrereqShift", 0);

@@ -1,0 +1,121 @@
+Eldritch Sculptor [Epic]
+
+You control and shape your eldritch blasts like a master sculptor.
+
+Prerequisites: One invocation from the least, lesser, greater, and dark blast shape invocation categories, Spellcraft 24 ranks.
+
+Benefit: You can use two eldritch blasts per round as a full attack action, rather than the normal limit of one. You can apply eldritch essences to both blasts. If you possess the Lord of All Essences feat, you can imbue each blast with two eldritch essences. Activating this ability is part of the action to use an eldritch blast.
+
+The area and range of all your eldritch blasts is doubled. Activating this ability is part of the action to use an eldritch blast. If you imbue your eldritch blast with the eldritch spear blast shape, the range increases to 500 feet. If you are using the hideous blow invocation, you no longer suffer attacks of opportunity for invoking this power in melee and all attacks of opportunity you make can include hideous blow. If you imbue your eldritch blast with the eldritch chain blast shape, you may start the chain up to 120 feet away from you and the maximum distance between each target increases to 60 feet. The area of the eldritch doom blast shape increases to 40 feet from you. The range of your eldritch cone increases to 120 feet.
+
+You gain +2 bonus on attack rolls to hit an opponent with your eldritch blast. This is an extraordinary ability.
+
+Normal: A warlock can use only one eldritch blast per round. Using the hideous blow blast shape provokes attacks of opportunity and cannot be used as part of an attack of opportunity.
+
+
+Epic Eldritch Blast [Epic]
+
+Your eldritch blasts are unstoppably powerful.
+
+Prerequisites: Eldritch blast 9d6.
+
+Benefit: When you take this invocation, the damage dealt by your eldritch blast increases by 1d6.
+
+Special: You can gain this feat multiple times. Its effects stack. 
+
+
+Epic Extra Invocation [Epic]
+
+You learn an additional invocation.
+
+Prerequisites: Ability to use dark invocations, Spellcraft 24 ranks
+
+Benefit: You can learn one additional invocation from the list available to you, including dark invocations.
+
+Special: You can gain this feat multiple times. Each time, you gain an extra invocation of any grade (least, lesser, greater, or dark). 
+
+
+Epic Fiendish Resilience [Epic]
+
+You can make your blood boil with the strength of the Nine Hells.
+
+Prerequisites: Fiendish resilience that grants fast healing 5.
+
+Benefit: When you use your fiendish resilience ability, you gain fast healing 25 for 5 minutes. Activating this ability is a free action. This is a supernatural ability.
+
+Special: You can gain feat multiple times. Each time you take the feat, you gain an additional use of the fiendish resilience ability, and the fast healing granted by the feat increases by 5.
+
+
+Lord of All Essences [Epic]
+
+You have mastered the art of enhancing your eldritch blast with multiple essences.
+
+Prerequisites: One least, lesser, greater, and dark eldritch essence invocation, Spellcraft 24 ranks.
+
+Benefit: When you use the eldritch blast ability, you can apply two eldritch essence invocations simultaneously. You could choose to fire an eldritch blast with both the repelling blast and noxious blast eldritch essences. This also allows you to apply the same effect twice, though this is not beneficial in the case of all eldritch essences. The effects of each essence are resolved separately. If you imbue your eldritch blast with two different types of damage, half of the damage (rounded down) is dealt by each source. You must choose which essences you will use in conjunction with your eldritch blast before you start your action. If you possess the Eldritch Sculptor feat, you can apply two eldritch essence invocations to both your eldritch blasts in a single round. Activating this ability is part of the action to use an eldritch blast.
+
+For example, if Morthos is fighting an outsider he has never encountered, he can choose to imbue his eldritch blast with both hellrime blast and brimstone blast. He rolls 10d6 damage, dealing half fire and half cold damage. If the outsider happened to be immune to cold, but not fire, it would still take damage from the half that dealt fire damage.
+
+In addition, the DC of all eldritch essence invocations you use increases by 2. This is an extraordinary ability.
+
+Normal: A warlock can apply only one eldritch essence to an eldritch blast.
+
+
+Master of the Elements [Epic]
+
+You have achieved mastery of the four elements -- air, earth, fire, and water.
+
+Prerequisites: Spellcraft 24 ranks, breath of the night, chilling tentacles, stony grasp, wall of perilous flame.
+
+Benefit: As a full-round action, you can summon a single creature from the summon monster I-IX list that is an elemental or has the air, earth, fire, or water subtype. The monster serves you for a number of rounds equal to your caster level. Activating this ability requires a standard action.
+
+You can use dominate monster on elementals and creatures with the air, earth, fire, or water subtype. This effect lasts for a number of days equal to your caster level. Activating this ability requires a standard action.
+
+You gain energy resistance 10 to acid, cold, electricity, fire, and sonic. If you have energy resistance from the warlock class, your resistance to those two elements increases by 10. This is an extraordinary ability.
+
+Elementals and creatures with the earth, air, fire, or water subtype view you as one of their kind. These creatures react to you as if their attitude is two steps better than the situation otherwise warrants. This is an extraordinary ability. 
+
+
+Morpheme Savant [Epic]
+
+Your words are charged with supernatural power.
+
+Prerequisites: Baleful utterance, beguiling influence, warlock's call, word of changing.
+
+Benefit: You can use power word blind, power word kill, or power word stun. Activating this ability requires a standard action.
+
+When you use your warlock's call ability, you no longer suffer the chance of taking 1d10 points of damage from the recipient. In addition, you can imbue your sending with a suggestion (as demand). The casting time of warlock's call is 1 minute. Using this ability is part of the casting of the warlock's call invocation.
+
+You can communicate as if under the effects of a constant tongues spell. This is a supernatural ability.
+
+When you use your beguiling influence invocation, the bonus granted on your Bluff, Diplomacy, and Intimidate checks is equal to double your Charisma bonus or +6, whichever is greater. Using this ability is part of the casting of the beguiling influence invocation. It is an extraordinary ability. 
+
+
+Paragon Visionary [Epic]
+
+Your powers of perception are beyond mortal ken.
+
+Prerequisites: Spellcraft 24 ranks, dark foresight, devil's sight, see the unseen, voidsense.
+
+Benefit: You can see through illusions, magical darkness, shapechangers, and other effects (as true seeing). This is a supernatural ability.
+
+You are automatically aware of all spells or magical effects you see. Simply by looking at a creature, you can determine if it is a divine or arcane caster, whether it has any spell-like abilities, and the highest spell or spell-like abilities it knows. This is a supernatural ability.
+
+When you use the voidsense invocation, you gain blindsight 60 feet.
+
+You receive a bonus on all Listen, Sense Motive, and Spot checks equal to double your Wisdom modifier or +6, whichever is greater. This is an extraordinary ability.
+
+Normal: The voidsense invocation grants blindsense 30 feet. 
+
+
+Shadowmaster [Epic]
+
+You have walked the path of shadows, and now you have mastered its secrets.
+
+Prerequisites: Spellcraft 24 ranks, beshadowed blast, dark discorporation, darkness, enervating shadow.
+
+Benefit: You can create streaking masses of shadow around your form, providing you with a 50% miss chance against all attacks (as displacement). Activating this ability requires a standard action.
+
+You can use material from the Plane of Shadows to create quasireal illusions, mimicking sorcerer and wizard conjuration spells of 8th level or lower (as shades). The illusions deal 80% damage to nonbelievers, and nondamaging effects are 80% likely to work against nonbelievers. Activating this ability requires a standard action.
+
+You are immune to all spells with the shadow subtype and to effects that involve the use of shadows (such as the breath weapon of a shadow dragon). This is an extraordinary ability. 

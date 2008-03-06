@@ -31,6 +31,7 @@
 //////////////////////////////////////////////////
 
 const int INVOCATION_LIST_DRAGONFIRE_ADEPT = CLASS_TYPE_DRAGONFIRE_ADEPT;
+const int INVOCATION_LIST_WARLOCK          = CLASS_TYPE_WARLOCK;
 
 /// Special Maneuver list. Maneuvers gained via Extra Invocation or other sources.
 const int INVOCATION_LIST_MISC          = CLASS_TYPE_INVALID;//-1;
@@ -313,6 +314,8 @@ void RemoveInvocationsKnownOnLevel(object oCreature, int nLevel)
     if(persistant_array_exists(oCreature, _INVOCATION_LIST_NAME_BASE + IntToString(INVOCATION_LIST_DRAGONFIRE_ADEPT) + sPostFix))
     	// If one does exist, clear it
     	_RemoveInvocationArray(oCreature, INVOCATION_LIST_DRAGONFIRE_ADEPT, nLevel);
+    if(persistant_array_exists(oCreature, _INVOCATION_LIST_NAME_BASE + IntToString(INVOCATION_LIST_WARLOCK) + sPostFix))
+    	_RemoveInvocationArray(oCreature, INVOCATION_LIST_WARLOCK, nLevel);
 
 }
 
@@ -350,7 +353,22 @@ int GetMaxInvocationCount(object oCreature, int nList)
             // Add in the custom modifier
             nMaxInvocations += GetKnownInvocationsModifier(oCreature, nList);
             break;
-        }        
+        }    
+        
+        case INVOCATION_LIST_WARLOCK:{
+            // Determine base Invocations known
+            int nLevel = GetLevelByClass(CLASS_TYPE_WARLOCK, oCreature);
+                nLevel += GetFirstInvocationClass(oCreature) == CLASS_TYPE_WARLOCK ? GetInvocationPRCLevels(oCreature) : 0;
+            if(nLevel == 0)
+                break;
+            nMaxInvocations = StringToInt(Get2DACache(GetAMSKnownFileName(CLASS_TYPE_WARLOCK), "InvocationKnown", nLevel - 1));
+	    
+            // Calculate feats
+
+            // Add in the custom modifier
+            nMaxInvocations += GetKnownInvocationsModifier(oCreature, nList);
+            break;
+        }         
 
         case INVOCATION_LIST_MISC:
             DoDebug("GetMaxInvocationCount(): ERROR: Using unfinishes power list!");
@@ -370,7 +388,10 @@ int GetHasInvocation(int nInvocation, object oCreature = OBJECT_SELF)
 {
     if((GetLevelByClass(CLASS_TYPE_DRAGONFIRE_ADEPT, oCreature)
         && GetHasFeat(GetClassFeatFromPower(nInvocation, CLASS_TYPE_DRAGONFIRE_ADEPT), oCreature)
-        ) 
+        ) || 
+        (GetLevelByClass(CLASS_TYPE_WARLOCK, oCreature)
+        && GetHasFeat(GetClassFeatFromPower(nInvocation, CLASS_TYPE_WARLOCK), oCreature)
+        )
         // add new Invocation classes here
        )
         return TRUE;
@@ -392,6 +413,8 @@ string DebugListKnownInvocations(object oCreature)
         switch(i)
         {
             case 1: nPowerList = INVOCATION_LIST_DRAGONFIRE_ADEPT;          sReturn += "Dragonfire Adept";  break;
+            
+            case 2: nPowerList = INVOCATION_LIST_WARLOCK;          sReturn += "Warlock";  break;
             
             // This should always be last
             case 6: nPowerList = INVOCATION_LIST_MISC;           sReturn += "Misceallenous";   break;

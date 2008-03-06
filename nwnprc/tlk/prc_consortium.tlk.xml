@@ -20539,7 +20539,7 @@ Damage Reduction: Fortified by the supernatural power flowing through his body, 
 
 Decieve Item: A warlock can use his mastery of the supernatural forces infusing his soul to make up for lack of knowledge.  From 4th level on, a warlock can take 10 on all Use Magic Device checks, even in combat.
 
-Fiendish Resilience: Beginning at 8th level, a warlock knows the trick of fiendish resilience.  For 2 minutes each day, they gain fast healing, with the amount increasing every 5 levels.
+Fiendish Resilience: Beginning at 8th level, a warlock knows the trick of fiendish resilience.  For 2 minutes each day, they gain fast healing, with the amount increasing at levels 13 and 18.
 
 Energy Resistance: Beginning at 10th level a warlock chooses 2 elemental energies and gains resistance 5 to them.  This resistance increases to 10 at level 20.
 
@@ -20572,7 +20572,7 @@ Level  Invocations known
 20     12
 
 EPIC WARLOCK
-Epic warlocks continue to find new ways to harness their supernatural energy.  Their damage reduction, energy resistance, eldritch blast al continue to increase as before, and they gain a new invocation every 2 levels.
+Epic warlocks are supernatural power incarnate, retaining only the barest shred of their previous existance.  Their damage reduction increases by 1 at level 23 and every 4 levels thereafter.  They learn no new invocations normally, but their invoker level continues to increase.  Their Eldritch Blast damage increases by 1d6 at level 22, and increases every 2 levels thereafter.  They also gain a bonus feat every 3 levels.
 </entry>
   <entry id="50722" lang="en" sex="m">Warlock Acid Resistance</entry>
   <entry id="50723" lang="en" sex="m">Warlock Cold Resistance</entry>

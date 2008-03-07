@@ -63,6 +63,7 @@ void main()
     int nBeamVFX = VFX_BEAM_DISINTEGRATE;
     int nPenetr = GetInvokerLevel(oPC, CLASS_TYPE_WARLOCK) + SPGetPenetr();
     int nReflexSaveType = SAVING_THROW_TYPE_SPELL;
+    effect eDoom = EffectVisualEffect(VFX_IMP_PULSE_NEGATIVE);
     
     int iAttackRoll = 0;    //placeholder
     if(GetLevelByClass(CLASS_TYPE_WARLOCK, oPC) < 13)
@@ -80,6 +81,7 @@ void main()
         nDamageType = DAMAGE_TYPE_FIRE;
         eVis = EffectVisualEffect(VFX_IMP_FLAME_M);
         nBeamVFX = VFX_BEAM_FIRE;
+        eDoom = EffectVisualEffect(VFX_IMP_PULSE_FIRE);
         nReflexSaveType = SAVING_THROW_TYPE_FIRE;
     }
     else if(nEssence == INVOKE_HELLRIME_BLAST)
@@ -87,6 +89,7 @@ void main()
         nDamageType = DAMAGE_TYPE_COLD;
         eVis = EffectVisualEffect(VFX_IMP_FROST_S);
         nBeamVFX = VFX_BEAM_COLD;
+        eDoom = EffectVisualEffect(VFX_IMP_PULSE_COLD);
         nReflexSaveType = SAVING_THROW_TYPE_COLD;
     }
     else if(nEssence == INVOKE_VITRIOLIC_BLAST)
@@ -94,6 +97,7 @@ void main()
         nDamageType = DAMAGE_TYPE_ACID;
         eVis = EffectVisualEffect(VFX_IMP_ACID_S);
         nReflexSaveType = SAVING_THROW_TYPE_ACID;
+        eDoom = EffectVisualEffect(VFX_IMP_PULSE_WATER);
     }
     else if(nEssence == INVOKE_UTTERDARK_BLAST)
     {
@@ -374,6 +378,16 @@ void main()
                          OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE, 
                          GetPosition(oPC));
         }
+	    
         
 	}
+	
+	if(nEssence == INVOKE_ELDRITCH_LINE)
+    {
+        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, EffectBeam(nBeamVFX, oPC, BODY_NODE_HAND, FALSE), lTargetArea, 1.0f);
+    }
+	else if(nEssence == INVOKE_ELDRITCH_LINE)
+    {
+        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eDoom, lTargetArea, 1.0f);
+    }
 }

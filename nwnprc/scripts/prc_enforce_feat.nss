@@ -1694,6 +1694,24 @@ int RacialFeats(object oPC = OBJECT_SELF)
     return TRUE;
 }
 
+int WarlockResists(object oPC)
+{
+    int nNumFeats;
+    nNumFeats +=   GetHasFeat(FEAT_WARLOCK_RESIST_ACID, oPC) +
+            GetHasFeat(FEAT_WARLOCK_RESIST_COLD, oPC) +
+            GetHasFeat(FEAT_WARLOCK_RESIST_ELEC, oPC) +
+            GetHasFeat(FEAT_WARLOCK_RESIST_FIRE, oPC) +
+            GetHasFeat(FEAT_WARLOCK_RESIST_SONIC, oPC);
+            
+    if(nNumFeats > 2)
+    {
+        FloatingTextStringOnCreature("You can only choose resistances.", oPC, FALSE);
+        return FALSE;
+    }
+    
+    return TRUE;
+}
+
 void main()
 {
         //Declare Major Variables
@@ -1728,6 +1746,7 @@ void main()
          || !Swordsage(oPC)
          || !Shaman(oPC)
          || !RacialFeats(oPC)
+         || !WarlockResists(oPC)
        )
     {
        int nHD = GetHitDice(oPC);

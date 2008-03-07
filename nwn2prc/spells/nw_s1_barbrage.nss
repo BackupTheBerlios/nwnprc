@@ -28,7 +28,7 @@ void main()
         int nLevel = GetLevelByClass(CLASS_TYPE_BARBARIAN) 
             + GetLevelByClass(CLASS_TYPE_RUNESCARRED) 
             + GetLevelByClass(CLASS_TYPE_BATTLERAGER) 
-            + GetLevelByClass(CLASS_TYPE_PRC_EYE_OF_GRUUMSH);
+            + GetLevelByClass(CLASS_TYPE_EYE_OF_GRUUMSH);
         int iStr, iCon, iAC;
         int nSave;
 

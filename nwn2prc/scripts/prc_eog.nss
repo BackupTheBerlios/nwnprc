@@ -16,7 +16,7 @@
 void ApplyRitualScarringDefense(object oPC, object oSkin)
 {       
      int ACBonus = 0;
-     int iEOGLevel = GetLevelByClass(CLASS_TYPE_PRC_EYE_OF_GRUUMSH, oPC);
+     int iEOGLevel = GetLevelByClass(CLASS_TYPE_EYE_OF_GRUUMSH, oPC);
      
      if(iEOGLevel >= 3 && iEOGLevel < 6)
      {

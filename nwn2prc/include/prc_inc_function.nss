@@ -138,7 +138,7 @@ void EvalPRCFeats(object oPC)
     if(iThrallOfGrazzt > 0)                                      ExecuteScript("tog", oPC);
     if(GetLevelByClass(CLASS_TYPE_BLIGHTLORD,oPC) > 0)           ExecuteScript("prc_blightlord", oPC);
     if(GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN,oPC) > 0)       ExecuteScript("psi_zuoken", oPC);
-    if(GetLevelByClass(CLASS_TYPE_NINJA, oPC) > 0)               ExecuteScript("prc_ninjca", oPC);
+    if(GetLevelByClass(CLASS_TYPE_NINJA_CA, oPC) > 0)               ExecuteScript("prc_ninjca", oPC);
     if(GetLevelByClass(CLASS_TYPE_OLLAM,oPC) > 0)                ExecuteScript("prc_ollam", oPC);
     if(GetLevelByClass(CLASS_TYPE_COMBAT_MEDIC, oPC) > 0)        ExecuteScript("prc_cbtmed", oPC);
     if(GetLevelByClass(CLASS_TYPE_DRAGONDISCIPLE,oPC) > 0)      DelayCommand(0.1,ExecuteScript("prc_dradis", oPC));
@@ -646,7 +646,7 @@ void FeatAlaghar(object oPC)
 
 void FeatNinja (object oPC)
 {
-    int nUsesLeft = (GetLevelByClass(CLASS_TYPE_NINJA, oPC)/ 2);
+    int nUsesLeft = (GetLevelByClass(CLASS_TYPE_NINJA_CA, oPC)/ 2);
     if (nUsesLeft < 1)
         nUsesLeft = 1;
 

@@ -104,7 +104,7 @@ int GetRogueSneak(object oPC)
    if (iClassLevel >= 2) iRogueSneak += ((iClassLevel + 1) / 3);
 
    // Ninja
-   iClassLevel = GetLevelByClass(CLASS_TYPE_NINJA, oPC);
+   iClassLevel = GetLevelByClass(CLASS_TYPE_NINJA_CA, oPC);
    if (iClassLevel) iRogueSneak += (iClassLevel + 1) / 2;
    
    // Slayer of Domiel

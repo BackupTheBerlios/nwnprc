@@ -1081,6 +1081,15 @@ int CraftingFeats(object oPC = OBJECT_SELF)
     if(!bOK)
         FloatingTextStringOnCreature(sError, oPC);
 
+    //only one item creation feat and it's one of the ones that needs another as a prereq
+    if(GetItemCreationFeatCount(oPC) == 1)
+    {
+        if(GetHasFeat(FEAT_EXCEPTIONAL_ARTISAN_I, oPC) ||
+            GetHasFeat(FEAT_EXTRAORDINARY_ARTISAN_I, oPC) ||
+            GetHasFeat(FEAT_LEGENDARY_ARTISAN_I, oPC))
+            bOK = FALSE;
+    }
+
     return bOK;
 }
 
@@ -1282,9 +1291,9 @@ int DraconicFeats(object oPC = OBJECT_SELF)
              FloatingTextStringOnCreature("You must be dragonblood subtype.", oPC, FALSE);
           return FALSE;
     }
-    
+
     //testing for Dragonblood only
-    if((GetHasFeat(FEAT_DRAGONFIRE_ASSAULT, oPC) 
+    if((GetHasFeat(FEAT_DRAGONFIRE_ASSAULT, oPC)
          || GetHasFeat(FEAT_DRAGONFIRE_CHANNELING, oPC)
          || GetHasFeat(FEAT_DRAGONFIRE_INSPIRATION, oPC)
          || GetHasFeat(FEAT_ENTANGLING_EXHALATION, oPC)
@@ -1383,7 +1392,7 @@ int MetabreathFeats(object oPC)
 {
     int bRechargeBreath;
     int bBreath;
-    
+
     //sources of breaths with recharge rounds
     if((GetLevelByClass(CLASS_TYPE_DRAGON_DISCIPLE, oPC) > 9)
        || (GetLevelByClass(CLASS_TYPE_DRAGON_SHAMAN, oPC) > 3)
@@ -1392,7 +1401,7 @@ int MetabreathFeats(object oPC)
        || (GetLevelByClass(CLASS_TYPE_SHIFTER, oPC) > 6)
        || (GetRacialType(oPC) == RACIAL_TYPE_DRAGON))
        bRechargeBreath = TRUE;
-       
+
     if(bRechargeBreath
        || (GetLevelByClass(CLASS_TYPE_SWIFT_WING, oPC) > 2)
        || (GetLevelByClass(CLASS_TYPE_DIAMOND_DRAGON, oPC) > 3)
@@ -1400,7 +1409,7 @@ int MetabreathFeats(object oPC)
        || (GetLevelByClass(CLASS_TYPE_DRAGONFIRE_ADEPT, oPC) > 0)
        || GetHasFeat(FEAT_DRACONIC_BREATH, oPC))
        bBreath = TRUE;
-       
+
     //metabreath requires breath weapons with a recharge time
     if((GetHasFeat(FEAT_CLINGING_BREATH, oPC)
            || GetHasFeat(FEAT_LINGERING_BREATH, oPC)
@@ -1416,7 +1425,7 @@ int MetabreathFeats(object oPC)
         FloatingTextStringOnCreature("You must have a breath weapon with a recharge time.", oPC, FALSE);
         return FALSE;
     }
-        
+
     //breath channeling works with any breath weapon
     if((GetHasFeat(FEAT_ENTANGLING_EXHALATION, oPC)
            || GetHasFeat(FEAT_EXHALED_BARRIER, oPC)
@@ -1426,7 +1435,7 @@ int MetabreathFeats(object oPC)
         FloatingTextStringOnCreature("You must have a breath weapon.", oPC, FALSE);
         return FALSE;
     }
-    
+
     //Fivefold Tiamat and Bahamut breath alignment restrictions
     if((GetAlignmentGoodEvil(oPC) == ALIGNMENT_EVIL && GetHasFeat(FEAT_BAHAMUT_ADEPTBREATH))
        || (GetAlignmentGoodEvil(oPC) == ALIGNMENT_GOOD && GetHasFeat(FEAT_TIAMAT_ADEPTBREATH)))
@@ -1434,7 +1443,7 @@ int MetabreathFeats(object oPC)
         FloatingTextStringOnCreature("Your alignment does not allow you to take this breath effect.", oPC, FALSE);
         return FALSE;
     }
-        
+
     return TRUE;
 }
 
@@ -1480,7 +1489,7 @@ int DragonShamanFeats(object oPC)
         FloatingTextStringOnCreature("You cannot take more than one Dragon Totem, please reselect your feats.", oPC, FALSE);
         return FALSE;
     }
-    
+
     if(nLevel <= 2 && nNumAuras != 3)
     {
         FloatingTextStringOnCreature("You may only have 3 auras at this level, please reselect your feats.", oPC, FALSE);
@@ -1531,47 +1540,47 @@ int Swordsage(object oPC = OBJECT_SELF)
 
      if (nClass > 0)
      {
-	     int nWF   =     (GetHasFeat(FEAT_SS_DF_WF_DW, oPC))
-	               +     (GetHasFeat(FEAT_SS_DF_WF_DM, oPC))
-	               +     (GetHasFeat(FEAT_SS_DF_WF_SS, oPC))
-	               +     (GetHasFeat(FEAT_SS_DF_WF_SH, oPC))
-	               +     (GetHasFeat(FEAT_SS_DF_WF_SD, oPC))
-	               +     (GetHasFeat(FEAT_SS_DF_WF_TC, oPC));
+         int nWF   =     (GetHasFeat(FEAT_SS_DF_WF_DW, oPC))
+                   +     (GetHasFeat(FEAT_SS_DF_WF_DM, oPC))
+                   +     (GetHasFeat(FEAT_SS_DF_WF_SS, oPC))
+                   +     (GetHasFeat(FEAT_SS_DF_WF_SH, oPC))
+                   +     (GetHasFeat(FEAT_SS_DF_WF_SD, oPC))
+                   +     (GetHasFeat(FEAT_SS_DF_WF_TC, oPC));
 
-	      if (nWF > 1)
-	      {
-	
-	           FloatingTextStringOnCreature("You may only have one Discipline Focus (Weapon Focus). Please reselect your feats.", oPC, FALSE);
-	           return FALSE;
-	      }
+          if (nWF > 1)
+          {
 
-	     int nIS   =     (GetHasFeat(FEAT_SS_DF_IS_DW, oPC))
-	               +     (GetHasFeat(FEAT_SS_DF_IS_DM, oPC))
-	               +     (GetHasFeat(FEAT_SS_DF_IS_SS, oPC))
-	               +     (GetHasFeat(FEAT_SS_DF_IS_SH, oPC))
-	               +     (GetHasFeat(FEAT_SS_DF_IS_SD, oPC))
-	               +     (GetHasFeat(FEAT_SS_DF_IS_TC, oPC));
+               FloatingTextStringOnCreature("You may only have one Discipline Focus (Weapon Focus). Please reselect your feats.", oPC, FALSE);
+               return FALSE;
+          }
 
-	      if ((nIS > 1 && nClass >= 4 && nClass < 12) || (nIS > 2 && nClass >= 12))
-	      {
-	
-	           FloatingTextStringOnCreature("You do not have the correct amount of Discipline Focus (Insightful Strike). Please reselect your feats.", oPC, FALSE);
-	           return FALSE;
-	      }
-	     
-	     int nDS   =     (GetHasFeat(FEAT_SS_DF_DS_DW, oPC))
-	               +     (GetHasFeat(FEAT_SS_DF_DS_DM, oPC))
-	               +     (GetHasFeat(FEAT_SS_DF_DS_SS, oPC))
-	               +     (GetHasFeat(FEAT_SS_DF_DS_SH, oPC))
-	               +     (GetHasFeat(FEAT_SS_DF_DS_SD, oPC))
-	               +     (GetHasFeat(FEAT_SS_DF_DS_TC, oPC));
+         int nIS   =     (GetHasFeat(FEAT_SS_DF_IS_DW, oPC))
+                   +     (GetHasFeat(FEAT_SS_DF_IS_DM, oPC))
+                   +     (GetHasFeat(FEAT_SS_DF_IS_SS, oPC))
+                   +     (GetHasFeat(FEAT_SS_DF_IS_SH, oPC))
+                   +     (GetHasFeat(FEAT_SS_DF_IS_SD, oPC))
+                   +     (GetHasFeat(FEAT_SS_DF_IS_TC, oPC));
 
-	      if ((nDS > 1 && nClass >= 8 && nClass < 16) || (nDS > 2 && nClass >= 16))
-	      {
-	
-	           FloatingTextStringOnCreature("You do not have the correct amount of Discipline Focus (Defensive Stance). Please reselect your feats.", oPC, FALSE);
-	           return FALSE;
-	      }	      
+          if ((nIS > 1 && nClass >= 4 && nClass < 12) || (nIS > 2 && nClass >= 12))
+          {
+
+               FloatingTextStringOnCreature("You do not have the correct amount of Discipline Focus (Insightful Strike). Please reselect your feats.", oPC, FALSE);
+               return FALSE;
+          }
+
+         int nDS   =     (GetHasFeat(FEAT_SS_DF_DS_DW, oPC))
+                   +     (GetHasFeat(FEAT_SS_DF_DS_DM, oPC))
+                   +     (GetHasFeat(FEAT_SS_DF_DS_SS, oPC))
+                   +     (GetHasFeat(FEAT_SS_DF_DS_SH, oPC))
+                   +     (GetHasFeat(FEAT_SS_DF_DS_SD, oPC))
+                   +     (GetHasFeat(FEAT_SS_DF_DS_TC, oPC));
+
+          if ((nDS > 1 && nClass >= 8 && nClass < 16) || (nDS > 2 && nClass >= 16))
+          {
+
+               FloatingTextStringOnCreature("You do not have the correct amount of Discipline Focus (Defensive Stance). Please reselect your feats.", oPC, FALSE);
+               return FALSE;
+          }
 
      }
      return TRUE;
@@ -1583,74 +1592,74 @@ int Shaman(object oPC = OBJECT_SELF)
 
      if (nClass > 0)
      {
-	     int nDomain = (GetHasFeat(FEAT_BONUS_DOMAIN_AIR,           oPC))
-	                + (GetHasFeat(FEAT_BONUS_DOMAIN_ANIMAL,        oPC))
-	                + (GetHasFeat(FEAT_BONUS_DOMAIN_DEATH,         oPC))
-	                + (GetHasFeat(FEAT_BONUS_DOMAIN_DESTRUCTION,   oPC))
-	                + (GetHasFeat(FEAT_BONUS_DOMAIN_EARTH,         oPC))
-	                + (GetHasFeat(FEAT_BONUS_DOMAIN_EVIL,          oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_FIRE,          oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_GOOD,          oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_HEALING,       oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_KNOWLEDGE,     oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_MAGIC,         oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_PLANT,         oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_PROTECTION,    oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_STRENGTH,      oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_SUN,           oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_TRAVEL,        oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_TRICKERY,      oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_WAR,           oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_WATER,         oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_DARKNESS,      oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_STORM,         oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_METAL,         oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_PORTAL,        oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_FORCE,         oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_SLIME,         oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_TYRANNY,       oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_DOMINATION,    oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_SPIDER,        oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_UNDEATH,       oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_TIME,          oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_DWARF,         oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_CHARM,         oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_ELF,           oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_FAMILY,        oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_FATE,          oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_GNOME,         oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_ILLUSION,      oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_HATRED,        oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_HALFLING,      oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_NOBILITY,      oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_OCEAN,         oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_ORC,           oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_RENEWAL,       oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_RETRIBUTION,   oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_RUNE,          oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_SPELLS,        oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_SCALEYKIND,    oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_BLIGHTBRINGER, oPC))
-			+ (GetHasFeat(FEAT_BONUS_DOMAIN_DRAGON,        oPC));
-			
-	      if ((nDomain > 2 && nClass < 11) || (nDomain > 3 && nClass >= 11))
-	      {
-	
-	           FloatingTextStringOnCreature("You have the wrong among of domains. Please reselect your feats.", oPC, FALSE);
-	           return FALSE;
-	      }
+         int nDomain = (GetHasFeat(FEAT_BONUS_DOMAIN_AIR,           oPC))
+                    + (GetHasFeat(FEAT_BONUS_DOMAIN_ANIMAL,        oPC))
+                    + (GetHasFeat(FEAT_BONUS_DOMAIN_DEATH,         oPC))
+                    + (GetHasFeat(FEAT_BONUS_DOMAIN_DESTRUCTION,   oPC))
+                    + (GetHasFeat(FEAT_BONUS_DOMAIN_EARTH,         oPC))
+                    + (GetHasFeat(FEAT_BONUS_DOMAIN_EVIL,          oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_FIRE,          oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_GOOD,          oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_HEALING,       oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_KNOWLEDGE,     oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_MAGIC,         oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_PLANT,         oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_PROTECTION,    oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_STRENGTH,      oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_SUN,           oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_TRAVEL,        oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_TRICKERY,      oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_WAR,           oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_WATER,         oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_DARKNESS,      oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_STORM,         oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_METAL,         oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_PORTAL,        oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_FORCE,         oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_SLIME,         oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_TYRANNY,       oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_DOMINATION,    oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_SPIDER,        oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_UNDEATH,       oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_TIME,          oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_DWARF,         oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_CHARM,         oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_ELF,           oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_FAMILY,        oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_FATE,          oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_GNOME,         oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_ILLUSION,      oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_HATRED,        oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_HALFLING,      oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_NOBILITY,      oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_OCEAN,         oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_ORC,           oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_RENEWAL,       oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_RETRIBUTION,   oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_RUNE,          oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_SPELLS,        oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_SCALEYKIND,    oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_BLIGHTBRINGER, oPC))
+            + (GetHasFeat(FEAT_BONUS_DOMAIN_DRAGON,        oPC));
 
-	     int nIS   =     (GetHasFeat(FEAT_DODGE, oPC))
-	               +     (GetHasFeat(FEAT_STUNNING_FIST, oPC))
-	               +     (GetHasFeat(FEAT_EXPERTISE, oPC))
-	               +     (GetHasFeat(FEAT_IMPROVED_EXPERTISE, oPC))
-	               +     (GetHasFeat(FEAT_DEFLECT_ARROWS, oPC));
+          if ((nDomain > 2 && nClass < 11) || (nDomain > 3 && nClass >= 11))
+          {
 
-	      if (nIS != (nClass/4))
-	      {
-	           FloatingTextStringOnCreature("You do not have the correct amount of bonus feats. Please reselect your feats.", oPC, FALSE);
-	           return FALSE;
-	      }
+               FloatingTextStringOnCreature("You have the wrong among of domains. Please reselect your feats.", oPC, FALSE);
+               return FALSE;
+          }
+
+         int nIS   =     (GetHasFeat(FEAT_DODGE, oPC))
+                   +     (GetHasFeat(FEAT_STUNNING_FIST, oPC))
+                   +     (GetHasFeat(FEAT_EXPERTISE, oPC))
+                   +     (GetHasFeat(FEAT_IMPROVED_EXPERTISE, oPC))
+                   +     (GetHasFeat(FEAT_DEFLECT_ARROWS, oPC));
+
+          if (nIS != (nClass/4))
+          {
+               FloatingTextStringOnCreature("You do not have the correct amount of bonus feats. Please reselect your feats.", oPC, FALSE);
+               return FALSE;
+          }
      }
      return TRUE;
 }
@@ -1666,7 +1675,7 @@ int RacialFeats(object oPC = OBJECT_SELF)
         FloatingTextStringOnCreature("You must be Kalashtar.", oPC, FALSE);
         return FALSE;
     }
-    
+
     int nNumFeats;
     nNumFeats +=   GetHasFeat(FEAT_DREAMSIGHT_ELITE, oPC) +
             GetHasFeat(FEAT_GOREBRUTE_ELITE, oPC) +
@@ -1682,7 +1691,7 @@ int RacialFeats(object oPC = OBJECT_SELF)
             GetHasFeat(FEAT_SHIFTER_FEROCITY, oPC) +
             GetHasFeat(FEAT_SHIFTER_INSTINCTS, oPC) +
             GetHasFeat(FEAT_SHIFTER_SAVAGERY, oPC);
-            
+
     if((GetHasFeat(FEAT_EXTRA_SHIFTER_TRAIT, oPC) && nNumFeats < 3) ||
        (GetHasFeat(FEAT_SHIFTER_DEFENSE, oPC) && nNumFeats < 3) ||
        (GetHasFeat(FEAT_GREATER_SHIFTER_DEFENSE, oPC) && nNumFeats < 5))
@@ -1702,13 +1711,13 @@ int WarlockResists(object oPC)
             GetHasFeat(FEAT_WARLOCK_RESIST_ELEC, oPC) +
             GetHasFeat(FEAT_WARLOCK_RESIST_FIRE, oPC) +
             GetHasFeat(FEAT_WARLOCK_RESIST_SONIC, oPC);
-            
+
     if(nNumFeats > 2)
     {
         FloatingTextStringOnCreature("You can only choose resistances.", oPC, FALSE);
         return FALSE;
     }
-    
+
     return TRUE;
 }
 

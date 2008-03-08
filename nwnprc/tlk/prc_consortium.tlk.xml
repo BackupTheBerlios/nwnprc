@@ -18688,6 +18688,29 @@ Use: Selected</entry>
   <entry id="49870" lang="en" sex="m">Aptitude Vile Martial Strike</entry>
   <entry id="49871" lang="en" sex="m">Select a weapon to focus your feats on:</entry>
   <entry id="49872" lang="en" sex="m">Your Aptitude feats have been set.  You can choose a weapon type again when you next rest.\n\nNOTE: You may need to re-equip your weapons for the feats to take effect properly.</entry>
+  <entry id="49873" lang="en" sex="m">Exceptional Artisan I</entry>
+  <entry id="49874" lang="en" sex="m">Exceptional Artisan II</entry>
+  <entry id="49875" lang="en" sex="m">Exceptional Artisan III</entry>
+  <entry id="49876" lang="en" sex="m">Type of Feat: General 
+Prerequisite: Any item creation feat.
+Specifics: You are an expert at creating magic items faster than usual. When determining the time you need to craft any item, reduce the base time by 25%. You can gain this feat multiple times. Its effects stack (geometrically).
+Usage: Automatic.</entry>
+  <entry id="49877" lang="en" sex="m">Extraordinary Artisan I</entry>
+  <entry id="49878" lang="en" sex="m">Extraordinary Artisan II</entry>
+  <entry id="49879" lang="en" sex="m">Extraordinary Artisan III</entry>
+  <entry id="49880" lang="en" sex="m">Type of Feat: General 
+Prerequisite: Any item creation feat.
+Specifics: You are an expert at creating magic items at a lower cost than usual. When determining the gold piece cost in raw materials you need to craft any item, reduce the base price by 25%. You can gain this feat multiple times. Its effects stack (geometrically).
+Usage: Automatic.</entry>
+  <entry id="49881" lang="en" sex="m">Legendary Artisan I</entry>
+  <entry id="49882" lang="en" sex="m">Legendary Artisan II</entry>
+  <entry id="49883" lang="en" sex="m">Legendary Artisan III</entry>
+  <entry id="49884" lang="en" sex="m">Type of Feat: General 
+Prerequisite: Any item creation feat.
+Specifics: You have mastered the method of creating magic items. When determining your XP cost for creating any magic item, reduce the base cost by 25%. You can gain this feat multiple times. Its effects stack (geometrically).
+Usage: Automatic.</entry>
+
+
   <entry id="49999" lang="en" sex="m">**** 50,000 - 50,500 reserved for Race Pack Feats ****</entry>
   <entry id="50000" lang="en" sex="m">Light Sensitivity</entry>
   <entry id="50001" lang="en" sex="m">Type of Feat: Racial

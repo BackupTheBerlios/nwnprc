@@ -756,6 +756,38 @@ object GetObjectToApplyNewEffect(string sTag, object oPC, int nStripEffects = TR
     return oWP;
 }
 
+//Also serves as a store of all item creation feats
+int GetItemCreationFeatCount(object oPC)
+{
+    return (
+            GetHasFeat(FEAT_CRAFT_WONDROUS              , oPC) +
+            GetHasFeat(FEAT_CRAFT_STAFF                 , oPC) +
+            GetHasFeat(FEAT_CRAFT_ARMS_ARMOR            , oPC) +
+            GetHasFeat(FEAT_FORGE_RING                  , oPC) +
+            GetHasFeat(FEAT_CRAFT_ROD                   , oPC) +
+            GetHasFeat(FEAT_CRAFT_CONSTRUCT             , oPC) +
+            GetHasFeat(FEAT_SCRIBE_SCROLL               , oPC) +
+            GetHasFeat(FEAT_BREW_POTION                 , oPC) +
+            GetHasFeat(FEAT_CRAFT_WAND                  , oPC) +
+            GetHasFeat(FEAT_CRAFT_EPIC_WONDROUS_ITEM    , oPC) +
+            GetHasFeat(FEAT_CRAFT_EPIC_MAGIC_ARMS_ARMOR , oPC) +
+            GetHasFeat(FEAT_CRAFT_EPIC_ROD              , oPC) +
+            GetHasFeat(FEAT_CRAFT_EPIC_STAFF            , oPC) +
+            GetHasFeat(FEAT_FORGE_EPIC_RING             , oPC) +
+            GetHasFeat(FEAT_CRAFT_CONSTRUCT             , oPC) +
+            GetHasFeat(FEAT_EXCEPTIONAL_ARTISAN_I       , oPC) +
+            GetHasFeat(FEAT_EXCEPTIONAL_ARTISAN_II      , oPC) +
+            GetHasFeat(FEAT_EXCEPTIONAL_ARTISAN_III     , oPC) +
+            GetHasFeat(FEAT_EXTRAORDINARY_ARTISAN_I     , oPC) +
+            GetHasFeat(FEAT_EXTRAORDINARY_ARTISAN_II    , oPC) +
+            GetHasFeat(FEAT_EXTRAORDINARY_ARTISAN_III   , oPC) +
+            GetHasFeat(FEAT_LEGENDARY_ARTISAN_I         , oPC) +
+            GetHasFeat(FEAT_LEGENDARY_ARTISAN_II        , oPC) +
+            GetHasFeat(FEAT_LEGENDARY_ARTISAN_III       , oPC) +
+            GetHasFeat(FEAT_ATTUNE_GEM                  , oPC) +
+            GetHasFeat(FEAT_INSCRIBE_RUNE               , oPC) //+
+            );
+}
 
 // Test main
 //void main(){}

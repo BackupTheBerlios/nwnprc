@@ -35,7 +35,7 @@ const int INVOCATION_LIST_WARLOCK          = CLASS_TYPE_WARLOCK;
 
 /// Special Maneuver list. Maneuvers gained via Extra Invocation or other sources.
 const int INVOCATION_LIST_EXTRA          = CLASS_TYPE_INVALID;//-1;
-const int INVOCATION_LIST_EXTRA_EPIC     = CLASS_TYPE_INVALID - 1;//-2;
+const int INVOCATION_LIST_EXTRA_EPIC     = /*CLASS_TYPE_INVALID - 1;*/-2;   //needs a constant in there to compile properly
 
 const string _INVOCATION_LIST_NAME_BASE     = "PRC_InvocationList_";
 const string _INVOCATION_LIST_TOTAL_KNOWN   = "_TotalKnown";
@@ -314,10 +314,10 @@ void RemoveInvocationsKnownOnLevel(object oCreature, int nLevel)
     string sPostFix = _INVOCATION_LIST_LEVEL_ARRAY + IntToString(nLevel);
     // For each Invocation list, determine if an array exists for this level.
     if(persistant_array_exists(oCreature, _INVOCATION_LIST_NAME_BASE + IntToString(INVOCATION_LIST_DRAGONFIRE_ADEPT) + sPostFix))
-    	// If one does exist, clear it
-    	_RemoveInvocationArray(oCreature, INVOCATION_LIST_DRAGONFIRE_ADEPT, nLevel);
+        // If one does exist, clear it
+        _RemoveInvocationArray(oCreature, INVOCATION_LIST_DRAGONFIRE_ADEPT, nLevel);
     if(persistant_array_exists(oCreature, _INVOCATION_LIST_NAME_BASE + IntToString(INVOCATION_LIST_WARLOCK) + sPostFix))
-    	_RemoveInvocationArray(oCreature, INVOCATION_LIST_WARLOCK, nLevel);
+        _RemoveInvocationArray(oCreature, INVOCATION_LIST_WARLOCK, nLevel);
 
 }
 
@@ -349,14 +349,14 @@ int GetMaxInvocationCount(object oCreature, int nList)
             if(nLevel == 0)
                 break;
             nMaxInvocations = StringToInt(Get2DACache(GetAMSKnownFileName(CLASS_TYPE_DRAGONFIRE_ADEPT), "InvocationKnown", nLevel - 1));
-	    
+
             // Calculate feats
 
             // Add in the custom modifier
             nMaxInvocations += GetKnownInvocationsModifier(oCreature, nList);
             break;
-        }    
-        
+        }
+
         case INVOCATION_LIST_WARLOCK:{
             // Determine base Invocations known
             int nLevel = GetLevelByClass(CLASS_TYPE_WARLOCK, oCreature);
@@ -364,38 +364,38 @@ int GetMaxInvocationCount(object oCreature, int nList)
             if(nLevel == 0)
                 break;
             nMaxInvocations = StringToInt(Get2DACache(GetAMSKnownFileName(CLASS_TYPE_WARLOCK), "InvocationKnown", nLevel - 1));
-	    
+
             // Calculate feats
 
             // Add in the custom modifier
             nMaxInvocations += GetKnownInvocationsModifier(oCreature, nList);
             break;
-        }         
+        }
 
         case INVOCATION_LIST_EXTRA:
-            nMaxInvocations = GetHasFeat(FEAT_EXTRA_INVOCATION_I, oCreature) + 
-                               GetHasFeat(FEAT_EXTRA_INVOCATION_II, oCreature) + 
-                               GetHasFeat(FEAT_EXTRA_INVOCATION_III, oCreature) + 
-                               GetHasFeat(FEAT_EXTRA_INVOCATION_IV, oCreature) + 
-                               GetHasFeat(FEAT_EXTRA_INVOCATION_V, oCreature) + 
-                               GetHasFeat(FEAT_EXTRA_INVOCATION_VI, oCreature) + 
-                               GetHasFeat(FEAT_EXTRA_INVOCATION_VII, oCreature) + 
-                               GetHasFeat(FEAT_EXTRA_INVOCATION_VIII, oCreature) + 
-                               GetHasFeat(FEAT_EXTRA_INVOCATION_IX, oCreature) + 
-                               GetHasFeat(FEAT_EXTRA_INVOCATION_X, oCreature); 
+            nMaxInvocations = GetHasFeat(FEAT_EXTRA_INVOCATION_I, oCreature) +
+                               GetHasFeat(FEAT_EXTRA_INVOCATION_II, oCreature) +
+                               GetHasFeat(FEAT_EXTRA_INVOCATION_III, oCreature) +
+                               GetHasFeat(FEAT_EXTRA_INVOCATION_IV, oCreature) +
+                               GetHasFeat(FEAT_EXTRA_INVOCATION_V, oCreature) +
+                               GetHasFeat(FEAT_EXTRA_INVOCATION_VI, oCreature) +
+                               GetHasFeat(FEAT_EXTRA_INVOCATION_VII, oCreature) +
+                               GetHasFeat(FEAT_EXTRA_INVOCATION_VIII, oCreature) +
+                               GetHasFeat(FEAT_EXTRA_INVOCATION_IX, oCreature) +
+                               GetHasFeat(FEAT_EXTRA_INVOCATION_X, oCreature);
             break;
-            
+
         case INVOCATION_LIST_EXTRA_EPIC:
-            nMaxInvocations = GetHasFeat(FEAT_EPIC_EXTRA_INVOCATION_I, oCreature) + 
-                               GetHasFeat(FEAT_EPIC_EXTRA_INVOCATION_II, oCreature) + 
-                               GetHasFeat(FEAT_EPIC_EXTRA_INVOCATION_III, oCreature) + 
-                               GetHasFeat(FEAT_EPIC_EXTRA_INVOCATION_IV, oCreature) + 
-                               GetHasFeat(FEAT_EPIC_EXTRA_INVOCATION_V, oCreature) + 
-                               GetHasFeat(FEAT_EPIC_EXTRA_INVOCATION_VI, oCreature) + 
-                               GetHasFeat(FEAT_EPIC_EXTRA_INVOCATION_VII, oCreature) + 
-                               GetHasFeat(FEAT_EPIC_EXTRA_INVOCATION_VIII, oCreature) + 
-                               GetHasFeat(FEAT_EPIC_EXTRA_INVOCATION_IX, oCreature) + 
-                               GetHasFeat(FEAT_EPIC_EXTRA_INVOCATION_X, oCreature); 
+            nMaxInvocations = GetHasFeat(FEAT_EPIC_EXTRA_INVOCATION_I, oCreature) +
+                               GetHasFeat(FEAT_EPIC_EXTRA_INVOCATION_II, oCreature) +
+                               GetHasFeat(FEAT_EPIC_EXTRA_INVOCATION_III, oCreature) +
+                               GetHasFeat(FEAT_EPIC_EXTRA_INVOCATION_IV, oCreature) +
+                               GetHasFeat(FEAT_EPIC_EXTRA_INVOCATION_V, oCreature) +
+                               GetHasFeat(FEAT_EPIC_EXTRA_INVOCATION_VI, oCreature) +
+                               GetHasFeat(FEAT_EPIC_EXTRA_INVOCATION_VII, oCreature) +
+                               GetHasFeat(FEAT_EPIC_EXTRA_INVOCATION_VIII, oCreature) +
+                               GetHasFeat(FEAT_EPIC_EXTRA_INVOCATION_IX, oCreature) +
+                               GetHasFeat(FEAT_EPIC_EXTRA_INVOCATION_X, oCreature);
             break;
 
         default:{
@@ -412,7 +412,7 @@ int GetHasInvocation(int nInvocation, object oCreature = OBJECT_SELF)
 {
     if((GetLevelByClass(CLASS_TYPE_DRAGONFIRE_ADEPT, oCreature)
         && GetHasFeat(GetClassFeatFromPower(nInvocation, CLASS_TYPE_DRAGONFIRE_ADEPT), oCreature)
-        ) || 
+        ) ||
         (GetLevelByClass(CLASS_TYPE_WARLOCK, oCreature)
         && GetHasFeat(GetClassFeatFromPower(nInvocation, CLASS_TYPE_WARLOCK), oCreature)
         )
@@ -437,9 +437,9 @@ string DebugListKnownInvocations(object oCreature)
         switch(i)
         {
             case 1: nPowerList = INVOCATION_LIST_DRAGONFIRE_ADEPT;          sReturn += "Dragonfire Adept";  break;
-            
+
             case 2: nPowerList = INVOCATION_LIST_WARLOCK;                   sReturn += "Warlock";  break;
-            
+
             // This should always be last
             case 5: nPowerList = INVOCATION_LIST_EXTRA;                     sReturn += "Extra";   break;
             case 6: nPowerList = INVOCATION_LIST_EXTRA_EPIC;                sReturn += "Epic Extra";   break;

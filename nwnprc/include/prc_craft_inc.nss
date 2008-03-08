@@ -785,7 +785,7 @@ int CheckCraftingSpells(object oPC, string sFile, int nLine, int bDecrement = FA
                     else
                         return FALSE;
                 }
-                
+
             }
         }
         else if(nSpellPattern & 16)
@@ -1875,109 +1875,148 @@ int GetEnhancementBaseCost(object oItem)
     return 0;
 }
 
-//returns pnp market price of an item
-int GetPnPItemCost(struct itemvars strTemp)
+int GetModifiedGoldCost(int nCost, object oPC)
 {
-    int nTemp, nMaterial, nEnhancement;
+    if(nCost == 0)
+        return nCost;
+    if(GetHasFeat(FEAT_EXTRAORDINARY_ARTISAN_I  , oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
+    if(GetHasFeat(FEAT_EXTRAORDINARY_ARTISAN_II , oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
+    if(GetHasFeat(FEAT_EXTRAORDINARY_ARTISAN_III, oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
+    int nScale = GetPRCSwitch(PRC_CRAFTING_COST_SCALE);
+    if(nScale > 0)
+    {   //you're not getting away with negative values that easily :P
+        nCost = FloatToInt(IntToFloat(nCost) * IntToFloat(nScale) / 100.0);
+    }
+    return nCost;
+}
+
+int GetModifiedXPCost(int nCost, object oPC)
+{
+    if(nCost == 0)
+        return nCost;
+    if(GetHasFeat(FEAT_LEGENDARY_ARTISAN_I  , oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
+    if(GetHasFeat(FEAT_LEGENDARY_ARTISAN_II , oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
+    if(GetHasFeat(FEAT_LEGENDARY_ARTISAN_III, oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
+    return nCost;
+}
+
+int GetModifiedTimeCost(int nCost, object oPC)
+{
+    if(nCost == 0)
+        return nCost;
+    if(GetLevelByClass(CLASS_TYPE_MAESTER, oPC)) nCost /= 2;
+    if(GetHasFeat(FEAT_EXCEPTIONAL_ARTISAN_I  , oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
+    if(GetHasFeat(FEAT_EXCEPTIONAL_ARTISAN_II , oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
+    if(GetHasFeat(FEAT_EXCEPTIONAL_ARTISAN_III, oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
+    return nCost;
+}
+
+//returns pnp market price of an item
+int GetPnPItemCost(struct itemvars strTemp, int bIncludeBaseCost = TRUE)
+{
+    int nMaterial, nEnhancement;
+    int nAdd = 0, nTemp = 0;
     int nType = GetBaseItemType(strTemp.item);
-    SetIdentified(strTemp.item, FALSE);
-    int nMultiplyer = StringToInt(Get2DACache("baseitems", "ItemMultiplier", nType));
-    if(nMultiplyer < 1) nMultiplyer = 1;
-    nTemp = GetGoldPieceValue(strTemp.item) / nMultiplyer;
-    SetIdentified(strTemp.item, TRUE);
-    int nFlag = StringToInt(Get2DACache("prc_craft_gen_it", "Type", nType));
-    int nAdd = 0;
-    string sMaterial = GetStringLeft(GetTag(strTemp.item), 3);
-    nMaterial = StringToInt(sMaterial);
-    if(GetMaterialString(nMaterial) != sMaterial)
-        nMaterial = 0;
-    if(nMaterial & PRC_CRAFT_FLAG_MASTERWORK)
+    if(bIncludeBaseCost)
     {
-        switch(nFlag)
+        SetIdentified(strTemp.item, FALSE);
+        int nMultiplyer = StringToInt(Get2DACache("baseitems", "ItemMultiplier", nType));
+        if(nMultiplyer < 1) nMultiplyer = 1;
+        nTemp = GetGoldPieceValue(strTemp.item) / nMultiplyer;
+        SetIdentified(strTemp.item, TRUE);
+        int nFlag = StringToInt(Get2DACache("prc_craft_gen_it", "Type", nType));
+        string sMaterial = GetStringLeft(GetTag(strTemp.item), 3);
+        nMaterial = StringToInt(sMaterial);
+        if(GetMaterialString(nMaterial) != sMaterial)
+            nMaterial = 0;
+        if(nMaterial & PRC_CRAFT_FLAG_MASTERWORK)
         {
-            case PRC_CRAFT_ITEM_TYPE_WEAPON: nAdd = 300; break;
-            case PRC_CRAFT_ITEM_TYPE_ARMOUR: nAdd = 150; break;
-            case PRC_CRAFT_ITEM_TYPE_SHIELD: nAdd = 150; break;
-            case PRC_CRAFT_ITEM_TYPE_AMMO: nAdd = 594; break;
+            switch(nFlag)
+            {
+                case PRC_CRAFT_ITEM_TYPE_WEAPON: nAdd = 300; break;
+                case PRC_CRAFT_ITEM_TYPE_ARMOUR: nAdd = 150; break;
+                case PRC_CRAFT_ITEM_TYPE_SHIELD: nAdd = 150; break;
+                case PRC_CRAFT_ITEM_TYPE_AMMO: nAdd = 594; break;
+            }
         }
-    }
-    if(nMaterial & PRC_CRAFT_FLAG_ADAMANTINE)
-    {
-        switch(GetItemBaseAC(strTemp.item))
-        {
-            case 1:
-            case 2:
-            case 3: nAdd = 5000; break;
-            case 4:
-            case 5: nAdd = 10000; break;
-            case 6:
-            case 7:
-            case 8: nAdd = 15000; break;
-        }
-    }
-    if(nMaterial & PRC_CRAFT_FLAG_DARKWOOD)
-    {
-        nAdd += StringToInt(Get2DACache("baseitems", "TenthLBS", nType));
-    }
-    if(nMaterial & PRC_CRAFT_FLAG_DRAGONHIDE)
-    {
-        nAdd += nAdd + nTemp;
-    }
-    if(nMaterial & PRC_CRAFT_FLAG_MITHRAL)
-    {
-        if(nType == BASE_ITEM_ARMOR)
+        if(nMaterial & PRC_CRAFT_FLAG_ADAMANTINE)
         {
             switch(GetItemBaseAC(strTemp.item))
             {
                 case 1:
                 case 2:
-                case 3: nAdd = 1000; break;
+                case 3: nAdd = 5000; break;
                 case 4:
-                case 5: nAdd = 4000; break;
+                case 5: nAdd = 10000; break;
                 case 6:
                 case 7:
-                case 8: nAdd = 9000; break;
+                case 8: nAdd = 15000; break;
             }
         }
-        else
+        if(nMaterial & PRC_CRAFT_FLAG_DARKWOOD)
         {
-            switch(nFlag)
+            nAdd += StringToInt(Get2DACache("baseitems", "TenthLBS", nType));
+        }
+        if(nMaterial & PRC_CRAFT_FLAG_DRAGONHIDE)
+        {
+            nAdd += nAdd + nTemp;
+        }
+        if(nMaterial & PRC_CRAFT_FLAG_MITHRAL)
+        {
+            if(nType == BASE_ITEM_ARMOR)
             {
-                case PRC_CRAFT_ITEM_TYPE_WEAPON: nAdd = 50 * StringToInt(Get2DACache("baseitems", "TenthLBS", nType)); break;
-                case PRC_CRAFT_ITEM_TYPE_SHIELD: nAdd = 1000; break;
+                switch(GetItemBaseAC(strTemp.item))
+                {
+                    case 1:
+                    case 2:
+                    case 3: nAdd = 1000; break;
+                    case 4:
+                    case 5: nAdd = 4000; break;
+                    case 6:
+                    case 7:
+                    case 8: nAdd = 9000; break;
+                }
+            }
+            else
+            {
+                switch(nFlag)
+                {
+                    case PRC_CRAFT_ITEM_TYPE_WEAPON: nAdd = 50 * StringToInt(Get2DACache("baseitems", "TenthLBS", nType)); break;
+                    case PRC_CRAFT_ITEM_TYPE_SHIELD: nAdd = 1000; break;
+                }
             }
         }
-    }
-    if(nMaterial & PRC_CRAFT_FLAG_COLD_IRON)
-    {
-        //not implemented
-    }
-    if(nMaterial & PRC_CRAFT_FLAG_ALCHEMICAL_SILVER)
-    {
-        //not implemented
-    }
-    if(nMaterial & PRC_CRAFT_FLAG_MUNDANE_CRYSTAL)
-    {
-        //not implemented
-    }
-    if(nMaterial & PRC_CRAFT_FLAG_DEEP_CRYSTAL)
-    {
-        //not implemented
-    }
-    if(((nType == BASE_ITEM_LONGBOW) ||
-        (nType == BASE_ITEM_SHORTBOW))
-        )
-    {
-        int nCompMult = (nType == BASE_ITEM_LONGBOW) ? 100 : 75;
-        itemproperty ip = GetFirstItemProperty(strTemp.item);
-        while(GetIsItemPropertyValid(ip))
+        if(nMaterial & PRC_CRAFT_FLAG_COLD_IRON)
         {
-            if(GetItemPropertyType(ip) == ITEM_PROPERTY_MIGHTY)
+            //not implemented
+        }
+        if(nMaterial & PRC_CRAFT_FLAG_ALCHEMICAL_SILVER)
+        {
+            //not implemented
+        }
+        if(nMaterial & PRC_CRAFT_FLAG_MUNDANE_CRYSTAL)
+        {
+            //not implemented
+        }
+        if(nMaterial & PRC_CRAFT_FLAG_DEEP_CRYSTAL)
+        {
+            //not implemented
+        }
+        if(((nType == BASE_ITEM_LONGBOW) ||
+            (nType == BASE_ITEM_SHORTBOW))
+            )
+        {
+            int nCompMult = (nType == BASE_ITEM_LONGBOW) ? 100 : 75;
+            itemproperty ip = GetFirstItemProperty(strTemp.item);
+            while(GetIsItemPropertyValid(ip))
             {
-                nAdd += GetItemPropertyCostTableValue(ip) * nCompMult;
-                break;
+                if(GetItemPropertyType(ip) == ITEM_PROPERTY_MIGHTY)
+                {
+                    nAdd += GetItemPropertyCostTableValue(ip) * nCompMult;
+                    break;
+                }
+                ip = GetNextItemProperty(strTemp.item);
             }
-            ip = GetNextItemProperty(strTemp.item);
         }
     }
     nTemp += nAdd;
@@ -1985,11 +2024,6 @@ int GetPnPItemCost(struct itemvars strTemp)
     if(strTemp.epic) nEnhancement *= 10;
     nTemp += nEnhancement + strTemp.additionalcost;
 
-    int nScale = GetPRCSwitch(PRC_CRAFTING_COST_SCALE);
-    if(nScale > 0)
-    {   //you're not getting away with negative values that easily :P
-        nTemp = FloatToInt(IntToFloat(nTemp) * IntToFloat(nScale) / 100.0);
-    }
     if(StringToInt(Get2DACache("baseitems", "Stacking", nType)) > 1)
         nTemp = FloatToInt(IntToFloat(nTemp) * IntToFloat(GetItemStackSize(strTemp.item))/ 50.0);
     if(nTemp < 1) nTemp = 1;

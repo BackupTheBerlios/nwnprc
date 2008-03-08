@@ -92,6 +92,7 @@ const string PRC_CRAFT_PARAM1VALUE      = "PRC_CRAFT_PARAM1VALUE";
 const string PRC_CRAFT_PROPLIST         = "PRC_CRAFT_PROPLIST";
 const string PRC_CRAFT_COST             = "PRC_CRAFT_COST";
 const string PRC_CRAFT_XP               = "PRC_CRAFT_XP";
+const string PRC_CRAFT_TIME             = "PRC_CRAFT_TIME";
 //const string PRC_CRAFT_BLUEPRINT        = "PRC_CRAFT_BLUEPRINT";
 const string PRC_CRAFT_CONVO_           = "PRC_CRAFT_CONVO_";
 const string PRC_CRAFT_BASEITEMTYPE     = "PRC_CRAFT_BASEITEMTYPE";
@@ -511,6 +512,7 @@ void main()
     int nBase = GetLocalInt(oPC, PRC_CRAFT_BASEITEMTYPE);
     int nCost = GetLocalInt(oPC, PRC_CRAFT_COST);
     int nXP = GetLocalInt(oPC, PRC_CRAFT_XP);
+    int nTime = GetLocalInt(oPC, PRC_CRAFT_TIME);
     int nMaterial = GetLocalInt(oPC, PRC_CRAFT_MATERIAL);
     int nMighty = GetLocalInt(oPC, PRC_CRAFT_MIGHTY);
     int nPropList = GetLocalInt(oPC, PRC_CRAFT_PROPLIST);
@@ -801,8 +803,8 @@ void main()
                         strTempOld.epic = nEpic;
                         strTempNew = GetItemVars(oPC, oNewItem, sFile);
                         if(nEnhancement > 10 || strTempNew.enhancement > 10) strTempNew.epic = TRUE;
-                        int nCostOld = GetPnPItemCost(strTempOld);
-                        int nCostNew = GetPnPItemCost(strTempNew);
+                        int nCostOld = GetPnPItemCost(strTempOld, FALSE);
+                        int nCostNew = GetPnPItemCost(strTempNew, FALSE);
                         nCostDiff = nCostNew - nCostOld;    //assumes cost increases with addition of itemprops :P
                         if(!bToken)
                         {
@@ -814,11 +816,7 @@ void main()
                     else
                     {
                         nCostDiff = StringToInt(Get2DACache(sFile, "AdditionalCost", nLine));
-                        int nScale = GetPRCSwitch(PRC_CRAFTING_COST_SCALE);
-                        if(nScale > 0)
-                        {   //you're not getting away with negative values that easily :P
-                            nCostDiff = FloatToInt(IntToFloat(nCostDiff) * IntToFloat(nScale) / 100.0);
-                        }
+                        nCostDiff = GetModifiedGoldCost(nCostDiff, oPC);
                         if(!bToken)
                             nXPDiff = GetPnPItemXPCost(nCostDiff, StringToInt(Get2DACache(sFile, "Epic", nLine)));
                     }
@@ -829,10 +827,14 @@ void main()
                         nCostDiff /= 2;
                         nXPDiff /= 2;
                     }
+                    nCostDiff = GetModifiedGoldCost(nCostDiff, oPC);
+                    nXPDiff = GetModifiedXPCost(nXPDiff, oPC);
+                    nTime = GetModifiedTimeCost(nTime, oPC);
                     if(nCostDiff < 1) nCostDiff = 1;
                     if(nXPDiff < 0) nXPDiff = 0;
                     SetLocalInt(oPC, PRC_CRAFT_COST, nCostDiff);
                     SetLocalInt(oPC, PRC_CRAFT_XP, nXPDiff);
+                    SetLocalInt(oPC, PRC_CRAFT_TIME, nTime);
                     sTemp += GetStringByStrRef(StringToInt(Get2DACache(sFile, "Name", nLine)));
                     sTemp += "\n\n";
                     sTemp += GetStringByStrRef(StringToInt(Get2DACache(sFile, "Description", nLine)));
@@ -883,6 +885,7 @@ void main()
                         nCost = GetGoldPieceValue(oNewItem);
                         nXP = nCost / 25;
                         if(nXP < 1) nXP = 1;
+                        nTime = GetCraftingTime(nCost);
                     }
                     else
                     {
@@ -892,11 +895,17 @@ void main()
                         strTemp.additionalcost = nAdditional;
                         strTemp.epic = nEpic;
                         nCost = GetPnPItemCost(strTemp);
-                        nXP = GetPnPItemXPCost(nCost, nEpic);
+                        nXP = GetPnPItemXPCost(GetPnPItemCost(strTemp, FALSE), nEpic);
+                        nTime = GetCraftingTime(nCost);
                     }
+                    nCost = GetModifiedGoldCost(nCost, oPC);
+                    nXP = GetModifiedXPCost(nXP, oPC);
+                    nTime = GetModifiedTimeCost(nTime, oPC);
+                    if(nCost < 1) nCost = 1;
+                    if(nXP < 0) nXP = 0;
                     SetLocalInt(oPC, PRC_CRAFT_COST, nCost);
                     SetLocalInt(oPC, PRC_CRAFT_XP, nXP);
-                    int nTime = GetCraftingTime(nCost);
+                    SetLocalInt(oPC, PRC_CRAFT_TIME, nTime);
                     sTemp = "Do you want to clone this item?\n\nCost: " + IntToString(nCost) + "gp " + IntToString(nXP) + "XP";
                     if(nTime > 0)
                         sTemp += "\nTime: " + IntToString(nTime) + " rounds";
@@ -951,6 +960,7 @@ void main()
         DeleteLocalInt(oPC, PRC_CRAFT_BASEITEMTYPE);
         DeleteLocalInt(oPC, PRC_CRAFT_COST);
         DeleteLocalInt(oPC, PRC_CRAFT_XP);
+        DeleteLocalInt(oPC, PRC_CRAFT_TIME);
         DeleteLocalInt(oPC, PRC_CRAFT_MATERIAL);
         DeleteLocalInt(oPC, PRC_CRAFT_MIGHTY);
         DeleteLocalInt(oPC, PRC_CRAFT_SCRIPT_STATE);
@@ -1124,7 +1134,6 @@ void main()
                     itemproperty ip = ConstructIP(nType, nSubTypeValue, nCostTableValue, nParam1Value);
                     SetLocalInt(oPC, PRC_CRAFT_HB, 1);
                     int nDelay = GetCraftingTime(nCost);
-                    if(GetLevelByClass(CLASS_TYPE_MAESTER, oPC)) nDelay /= 2;
                     CraftingHB(oPC, oItem, ip, nCost, nXP, sFile, -1, nDelay);
                     AllowExit(DYNCONV_EXIT_FORCE_EXIT);
                 }
@@ -1229,9 +1238,7 @@ void main()
                 {
                     itemproperty ip;
                     SetLocalInt(oPC, PRC_CRAFT_HB, 1);
-                    int nDelay = GetCraftingTime(nCost);
-                    if(GetLevelByClass(CLASS_TYPE_MAESTER, oPC)) nDelay /= 2;
-                    CraftingHB(oPC, oItem, ip, nCost, nXP, sFile, nLine, nDelay);
+                    CraftingHB(oPC, oItem, ip, nCost, nXP, sFile, nLine, nTime);
                     AllowExit(DYNCONV_EXIT_FORCE_EXIT);
                 }
                 break;
@@ -1272,9 +1279,7 @@ void main()
                 {
                     itemproperty ip;
                     SetLocalInt(oPC, PRC_CRAFT_HB, 1);
-                    int nDelay = GetCraftingTime(nCost);
-                    if(GetLevelByClass(CLASS_TYPE_MAESTER, oPC)) nDelay /= 2;
-                    CraftingHB(oPC, oItem, ip, nCost, nXP, sFile, -2, nDelay);
+                    CraftingHB(oPC, oItem, ip, nCost, nXP, sFile, -2, nTime);
                     AllowExit(DYNCONV_EXIT_FORCE_EXIT);
                 }
                 break;

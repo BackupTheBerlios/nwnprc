@@ -205,7 +205,7 @@ void Shadowlord(object oPC, int iArcSpell)
      {
      iShadItem = 1;
      }
-     
+
      // shadowwalker 'token' int on hide
      if(GetPersistantLocalInt(oPC, "shadowwalkerstok"))
      {
@@ -471,18 +471,6 @@ void Maester(object oPC)
 
     SetLocalInt(oPC, "PRC_PrereqMaester", 1);
 
-    int iFeat;
-
-    iFeat =       GetHasFeat(FEAT_BREW_POTION, oPC)
-            + GetHasFeat(FEAT_CRAFT_WAND, oPC)
-            + GetHasFeat(FEAT_SCRIBE_SCROLL, oPC)
-            + GetHasFeat(FEAT_CRAFT_WONDROUS, oPC)
-            + GetHasFeat(FEAT_CRAFT_ARMS_ARMOR, oPC)
-            + GetHasFeat(FEAT_CRAFT_ROD, oPC)
-            + GetHasFeat(FEAT_CRAFT_STAFF, oPC)
-            + GetHasFeat(FEAT_FORGE_RING, oPC)
-            + GetHasFeat(FEAT_CRAFT_CONSTRUCT, oPC);
-
     int nSkill = FALSE;
 
     // No Int bonus to skills, just want the base ranks (and yes I know this allows items at the moment)
@@ -491,7 +479,7 @@ void Maester(object oPC)
     if ((GetSkillRank(SKILL_CRAFT_WEAPON, oPC) - GetAbilityModifier(ABILITY_INTELLIGENCE, oPC)) >= 8) nSkill = TRUE;
 
     // At least two crafting feats
-    if (iFeat >= 2 && nSkill)
+    if (GetItemCreationFeatCount(oPC) >= 2 && nSkill)
     {
         SetLocalInt(oPC, "PRC_PrereqMaester", 0);
     }
@@ -602,14 +590,10 @@ void RedWizard(object oPC)
              GetHasFeat(FEAT_RW_TF_ENC, oPC)+GetHasFeat(FEAT_RW_TF_EVO, oPC)+GetHasFeat(FEAT_RW_TF_ILL, oPC)+
              GetHasFeat(FEAT_RW_TF_NEC, oPC)+GetHasFeat(FEAT_RW_TF_TRS, oPC);
     // Metamagic or Item Creation feats
-    iFeat = GetHasFeat(FEAT_BREW_POTION, oPC)      + GetHasFeat(FEAT_CRAFT_WAND, oPC) +
+    iFeat = GetItemCreationFeatCount(oPC) +
             GetHasFeat(FEAT_EMPOWER_SPELL, oPC)    + GetHasFeat(FEAT_EXTEND_SPELL, oPC) +
             GetHasFeat(FEAT_MAXIMIZE_SPELL, oPC)   + GetHasFeat(FEAT_QUICKEN_SPELL, oPC) +
-            GetHasFeat(FEAT_SILENCE_SPELL, oPC)    +
-            GetHasFeat(FEAT_CRAFT_WONDROUS, oPC)   + GetHasFeat(FEAT_CRAFT_STAFF, oPC) +
-            GetHasFeat(FEAT_CRAFT_ARMS_ARMOR, oPC) + GetHasFeat(FEAT_FORGE_RING, oPC) +
-            GetHasFeat(FEAT_CRAFT_ROD, oPC)        + GetHasFeat(FEAT_CRAFT_CONSTRUCT, oPC) +
-            GetHasFeat(FEAT_SCRIBE_SCROLL, oPC)    + GetHasFeat(FEAT_STILL_SPELL, oPC) +
+            GetHasFeat(FEAT_SILENCE_SPELL, oPC)    + GetHasFeat(FEAT_STILL_SPELL, oPC) +
             GetHasFeat(FEAT_SUDDEN_EMPOWER, oPC) + GetHasFeat(FEAT_SUDDEN_MAXIMIZE, oPC) +
             GetHasFeat(FEAT_SUDDEN_EXTEND, oPC) + GetHasFeat(FEAT_SUDDEN_WIDEN, oPC);
 
@@ -895,7 +879,7 @@ void Suel(object oPC)
     int nMar = 0;
     int nExot = 0;
     SetLocalInt(oPC, "PRC_PrereqSuelWeap", 1);
-    
+
     nMar += GetHasFeat(FEAT_WEAPON_PROFICIENCY_SHORTSWORD, oPC) +
             GetHasFeat(FEAT_WEAPON_PROFICIENCY_LONGSWORD, oPC) +
             GetHasFeat(FEAT_WEAPON_PROFICIENCY_BATTLEAXE, oPC) +
@@ -905,14 +889,14 @@ void Suel(object oPC)
             GetHasFeat(FEAT_WEAPON_PROFICIENCY_HALBERD, oPC) +
             GetHasFeat(FEAT_WEAPON_PROFICIENCY_SHORTBOW, oPC) +
             GetHasFeat(FEAT_WEAPON_PROFICIENCY_GREATSWORD, oPC) +
-            GetHasFeat(FEAT_WEAPON_PROFICIENCY_GREATAXE, oPC) + 
+            GetHasFeat(FEAT_WEAPON_PROFICIENCY_GREATAXE, oPC) +
             GetHasFeat(FEAT_WEAPON_PROFICIENCY_HEAVY_FLAIL, oPC) +
             GetHasFeat(FEAT_WEAPON_PROFICIENCY_LIGHT_HAMMER, oPC) +
             GetHasFeat(FEAT_WEAPON_PROFICIENCY_HANDAXE, oPC) +
-            GetHasFeat(FEAT_WEAPON_PROFICIENCY_RAPIER, oPC) + 
+            GetHasFeat(FEAT_WEAPON_PROFICIENCY_RAPIER, oPC) +
             GetHasFeat(FEAT_WEAPON_PROFICIENCY_SCIMITAR, oPC) +
             GetHasFeat(FEAT_WEAPON_PROFICIENCY_THROWING_AXE, oPC);
-    
+
     nExot += GetHasFeat(FEAT_WEAPON_PROFICIENCY_BASTARD_SWORD, oPC) +
             GetHasFeat(FEAT_WEAPON_PROFICIENCY_TWO_BLADED_SWORD, oPC) +
             GetHasFeat(FEAT_WEAPON_PROFICIENCY_BATTLEAXE, oPC) +
@@ -928,27 +912,27 @@ void Suel(object oPC)
             GetHasFeat(FEAT_WEAPON_PROFICIENCY_ELVEN_THINBLADE, oPC) +
             GetHasFeat(FEAT_WEAPON_PROFICIENCY_RAPIER, oPC) +
             GetHasFeat(FEAT_WEAPON_PROFICIENCY_ELVEN_COURTBLADE, oPC);
-            
+
      if((nExot + nMar) > 3) SetLocalInt(oPC, "PRC_PrereqSuelWeap", 0);
 }
 
 void TomeOfBattle(object oPC = OBJECT_SELF)
 {
-	int nClass = GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL, oPC);
-	SetLocalInt(oPC, "PRC_PrereqDeepSt", 1);
+    int nClass = GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL, oPC);
+    SetLocalInt(oPC, "PRC_PrereqDeepSt", 1);
 
-	if (nClass > 0)
-	{
-		// Needs two Stone Dragon maneuvers
-		int nMove = _CheckPrereqsByDiscipline(oPC, DISCIPLINE_STONE_DRAGON, 2, GetFirstBladeMagicClass(oPC));
-		// Needs two Stone Dragon maneuvers
-		int nStance = _CheckPrereqsByDiscipline(oPC, DISCIPLINE_STONE_DRAGON, 1, GetFirstBladeMagicClass(oPC), MANEUVER_TYPE_STANCE);
-		
-		if (nMove >=2 && nStance >= 1)
-		{
-			SetLocalInt(oPC, "PRC_PrereqDeepSt", 0);
-		}		
-	}
+    if (nClass > 0)
+    {
+        // Needs two Stone Dragon maneuvers
+        int nMove = _CheckPrereqsByDiscipline(oPC, DISCIPLINE_STONE_DRAGON, 2, GetFirstBladeMagicClass(oPC));
+        // Needs two Stone Dragon maneuvers
+        int nStance = _CheckPrereqsByDiscipline(oPC, DISCIPLINE_STONE_DRAGON, 1, GetFirstBladeMagicClass(oPC), MANEUVER_TYPE_STANCE);
+
+        if (nMove >=2 && nStance >= 1)
+        {
+            SetLocalInt(oPC, "PRC_PrereqDeepSt", 0);
+        }
+    }
 }
 
 void main()

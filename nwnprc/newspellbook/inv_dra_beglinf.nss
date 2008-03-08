@@ -18,9 +18,10 @@ void main()
     object oTarget = GetSpellTargetObject();
     effect eVis = EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-    effect eSkill = EffectSkillIncrease(SKILL_BLUFF, 6);
-    effect eSkill1 = EffectSkillIncrease(SKILL_INTIMIDATE, 6);
-    effect eSkill2 = EffectSkillIncrease(SKILL_PERSUADE, 6);
+    int nSkillBonus = GetHasFeat(FEAT_MORPHEME_SAVANT) ? max(GetAbilityModifier(ABILITY_CHARISMA) * 2, 6) : 6;
+    effect eSkill = EffectSkillIncrease(SKILL_BLUFF, nSkillBonus);
+    effect eSkill1 = EffectSkillIncrease(SKILL_INTIMIDATE, nSkillBonus);
+    effect eSkill2 = EffectSkillIncrease(SKILL_PERSUADE, nSkillBonus);
     effect eLink = EffectLinkEffects(eSkill, eSkill1);
     eLink = EffectLinkEffects(eLink, eSkill2);
     eLink = EffectLinkEffects(eLink, eDur);

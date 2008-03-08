@@ -1,18 +1,18 @@
-int PRCDoRangedTouchAttack(object oTarget, int nDisplayFeedback = TRUE, object oCaster = OBJECT_SELF);
+int PRCDoRangedTouchAttack(object oTarget, int nDisplayFeedback = TRUE, object oCaster = OBJECT_SELF, int nAttackBonus = 0);
 int PRCDoMeleeTouchAttack(object oTarget, int nDisplayFeedback = TRUE, object oCaster = OBJECT_SELF);
 
 #include "prc_inc_sneak"
 #include "inc_utility"
 #include "prc_inc_combat"
 
-int PRCDoRangedTouchAttack(object oTarget, int nDisplayFeedback = TRUE, object oCaster = OBJECT_SELF)
+int PRCDoRangedTouchAttack(object oTarget, int nDisplayFeedback = TRUE, object oCaster = OBJECT_SELF, int nAttackBonus = 0)
 {
     if(GetLocalInt(oCaster, "AttackHasHit"))
         return GetLocalInt(oCaster, "AttackHasHit");
     string sCacheName = "AttackHasHit_"+ObjectToString(oTarget);
     if(GetLocalInt(oCaster, sCacheName))
         return GetLocalInt(oCaster, sCacheName);
-    int nResult = GetAttackRoll(oTarget, oCaster, OBJECT_INVALID, 0, 0,0,nDisplayFeedback, 0.0, TOUCH_ATTACK_RANGED_SPELL);
+    int nResult = GetAttackRoll(oTarget, oCaster, OBJECT_INVALID, 0, nAttackBonus, 0, nDisplayFeedback, 0.0, TOUCH_ATTACK_RANGED_SPELL);
     SetLocalInt(oCaster, sCacheName, nResult);
     DelayCommand(1.0, DeleteLocalInt(oCaster, sCacheName));
     return nResult;

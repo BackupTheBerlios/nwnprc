@@ -107,6 +107,12 @@ void main()
         return;   
     if(CheckMissingInvocations(oPC, CLASS_TYPE_WARLOCK))
         return;   
+    //extra invocations
+    if(CheckMissingInvocations(oPC, CLASS_TYPE_INVALID))
+        return;   
+    //epic extra invocations
+    if(CheckMissingInvocations(oPC, CLASS_TYPE_INVALID - 1))
+        return;   
 }
 
 

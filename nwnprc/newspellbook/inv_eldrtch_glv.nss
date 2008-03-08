@@ -24,6 +24,7 @@ void main()
     if(LOCAL_DEBUG) DoDebug("Starting inv_eldrtch_glv");
     object oPC = OBJECT_SELF;
     object oGlaive = CreateItemOnObject("prc_eldrtch_glv", oPC);
+    int nAtkBns = GetHasFeat(FEAT_ELDRITCH_SCULPTOR) ? 2 : 0;
 
     // Construct the bonuses
     itemproperty ipBlastOnHit = ItemPropertyOnHitCastSpell(IP_CONST_CASTSPELL_ELDRITCH_GLAIVE_ONHIT, (GetInvokerLevel(oPC, CLASS_TYPE_WARLOCK) + 1) / 2); 
@@ -44,7 +45,7 @@ void main()
     {
         ClearAllActions();
         PerformAttackRound(GetSpellTargetObject(), oPC, EffectVisualEffect(VFX_IMP_MAGBLUE), 
-            0.0, 0, 0, DAMAGE_TYPE_SLASHING, FALSE, "*Eldritch Glaive Hit*", "*Eldritch Glaive Miss*", 
+            0.0, nAtkBns, 0, DAMAGE_TYPE_SLASHING, FALSE, "*Eldritch Glaive Hit*", "*Eldritch Glaive Miss*", 
             TRUE, TOUCH_ATTACK_MELEE, FALSE, PRC_COMBATMODE_ALLOW_TARGETSWITCH|PRC_COMBATMODE_ABORT_WHEN_OUT_OF_RANGE);
     }
 

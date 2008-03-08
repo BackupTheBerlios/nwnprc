@@ -2472,11 +2472,6 @@ int GetIsHealingSpell(int nSpellId)
        || nSpellId == SPELL_MONSTROUS_REGENERATION
        || nSpellId == SPELL_REGENERATE
        //End of stock NWN spells
-       || nSpellId == SPELL_FOM_DIVINE_SONG_CURELIGHT
-       || nSpellId == SPELL_FOM_DIVINE_SONG_CUREMODERATE
-       || nSpellId == SPELL_FOM_DIVINE_SONG_CURESERIOUS
-       || nSpellId == SPELL_FOM_DIVINE_SONG_CURECRITICAL
-       || nSpellId == SPELL_FOM_DIVINE_SONG_MONSTREGEN
        || nSpellId == SPELL_CORRUPTER_CURE_LIGHT_WOUNDS
        || nSpellId == SPELL_CORRUPTER_CURE_MODERATE_WOUNDS
        || nSpellId == SPELL_CORRUPTER_CURE_SERIOUS_WOUNDS

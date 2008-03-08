@@ -6792,7 +6792,6 @@ struct DamageReducers GetTotalReduction(object oPC, object oTarget, object oWeap
    		//Stoneskin
    		if( nSpellID == 172
    		   || nSpellID == 342
-   		   || nSpellID == SPELL_FOM_DIVINE_SONG_STONESKIN
    		   || nSpellID == SPELL_URDINNIR_STONESKIN)
    		{
    		     nCurrentReduction.nRedLevel = DAMAGE_POWER_PLUS_FIVE;

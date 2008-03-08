@@ -40951,6 +40951,16 @@ Your eldritch blast does negative energy damage.  Any creature hit must make a f
 5th Level Spell
   
 You utter a powerful word that transforms a creature into a harmless form.  This functions like baleful polymorph, except that they get a second save which determiens if it lasts for 24 hours or is permanent.</entry>
+  <entry id="57263" lang="en" sex="m">Cocoon of Refuse</entry>
+  <entry id="57264" lang="en" sex="m">Least Invocation
+1st Level Spell
+  
+You cause various bits of trash and junk in an area - rotting garbage, old clothes, even dead animals - to fly about and latch onto a target.  The target is entangled for 1 round per invoker level, or until he makes a DC 20 strength check to escape.  Because this uses urban remains, it cannot be used in wilderness areas.</entry>
+  <entry id="57265" lang="en" sex="m">Spider Shape</entry>
+  <entry id="57266" lang="en" sex="m">Lesser Invocation
+3rd Level Spell
+  
+You polymorph yourself into the form of a fiendish large monstrous spider.  You can remain in this form for 1 hour per invoker level.</entry>
   <entry id="60000" lang="en" sex="m">##EPIC_SPELL_AND_ISC_RESERVE</entry>
   <entry id="60500" lang="en" sex="m">##EPIC_SPELL_AND_ISC_RESERVE</entry>
   <entry id="61000" lang="en" sex="m">##EPIC_SPELL_AND_ISC_RESERVE</entry>

@@ -166,6 +166,11 @@ void main()
     int nClass = GetLocalInt(oPC, "nClass");
     string sInvFile = GetAMSKnownFileName(nClass);
     string sInvocationFile = GetAMSDefinitionFileName(nClass);
+    if(nClass < 0)
+    {
+        sInvFile = GetAMSKnownFileName(CLASS_TYPE_WARLOCK);
+        sInvocationFile = GetAMSDefinitionFileName(CLASS_TYPE_WARLOCK);
+    }
 
     // Check which of the conversation scripts called the scripts
     if(nValue == 0) // All of them set the DynConv_Var to non-zero value, so something is wrong -> abort
@@ -188,6 +193,12 @@ void main()
                 // Determine maximum power level
                 int nInvokeLevel = GetInvokerLevel(oPC, nClass);
                 int nMaxLevel = StringToInt(Get2DACache(sInvFile, "MaxInvocationLevel", nInvokeLevel - 1));
+                if(nClass < 0)
+                {
+                    nInvokeLevel = GetInvokerLevel(oPC, CLASS_TYPE_WARLOCK);
+                    nMaxLevel = StringToInt(Get2DACache(sInvFile, "MaxInvocationLevel", nInvokeLevel - 1)) - 1;
+                    if(nClass == -2) nMaxLevel++;
+                }
 
                 // Set the tokens
                 int i;
@@ -219,6 +230,12 @@ void main()
                 // Determine maximum power level
                 int nInvokeLevel = GetInvokerLevel(oPC, nClass);
                 int nMaxLevel = StringToInt(Get2DACache(sInvFile, "MaxInvocationLevel", nInvokeLevel-1));
+                if(nClass < 0)
+                {
+                    nInvokeLevel = GetInvokerLevel(oPC, CLASS_TYPE_WARLOCK);
+                    nMaxLevel = StringToInt(Get2DACache(sInvFile, "MaxInvocationLevel", nInvokeLevel - 1)) - 1;
+                    if(nClass == -2) nMaxLevel++;
+                }
 
 
                 int nInvocationLevelToBrowse = GetLocalInt(oPC, "nInvocationLevelToBrowse");

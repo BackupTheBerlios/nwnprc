@@ -34,12 +34,14 @@ const int INVOCATION_LIST_DRAGONFIRE_ADEPT = CLASS_TYPE_DRAGONFIRE_ADEPT;
 const int INVOCATION_LIST_WARLOCK          = CLASS_TYPE_WARLOCK;
 
 /// Special Maneuver list. Maneuvers gained via Extra Invocation or other sources.
-const int INVOCATION_LIST_MISC          = CLASS_TYPE_INVALID;//-1;
+const int INVOCATION_LIST_EXTRA          = CLASS_TYPE_INVALID;//-1;
+const int INVOCATION_LIST_EXTRA_EPIC     = CLASS_TYPE_INVALID - 1;//-2;
 
 const string _INVOCATION_LIST_NAME_BASE     = "PRC_InvocationList_";
 const string _INVOCATION_LIST_TOTAL_KNOWN   = "_TotalKnown";
 const string _INVOCATION_LIST_MODIFIER      = "_KnownModifier";
-const string _INVOCATION_LIST_MISC_ARRAY    = "_InvocationsKnownMiscArray";
+const string _INVOCATION_LIST_EXTRA_ARRAY    = "_InvocationsKnownExtraArray";
+const string _INVOCATION_LIST_EXTRA_EPIC_ARRAY    = "_InvocationsKnownExtraEpicArray";
 const string _INVOCATION_LIST_LEVEL_ARRAY   = "_InvocationsKnownLevelArray_";
 const string _INVOCATION_LIST_GENERAL_ARRAY = "_InvocationsKnownGeneralArray";
 
@@ -370,8 +372,30 @@ int GetMaxInvocationCount(object oCreature, int nList)
             break;
         }         
 
-        case INVOCATION_LIST_MISC:
-            DoDebug("GetMaxInvocationCount(): ERROR: Using unfinishes power list!");
+        case INVOCATION_LIST_EXTRA:
+            nMaxInvocations = GetHasFeat(FEAT_EXTRA_INVOCATION_I, oCreature) + 
+                               GetHasFeat(FEAT_EXTRA_INVOCATION_II, oCreature) + 
+                               GetHasFeat(FEAT_EXTRA_INVOCATION_III, oCreature) + 
+                               GetHasFeat(FEAT_EXTRA_INVOCATION_IV, oCreature) + 
+                               GetHasFeat(FEAT_EXTRA_INVOCATION_V, oCreature) + 
+                               GetHasFeat(FEAT_EXTRA_INVOCATION_VI, oCreature) + 
+                               GetHasFeat(FEAT_EXTRA_INVOCATION_VII, oCreature) + 
+                               GetHasFeat(FEAT_EXTRA_INVOCATION_VIII, oCreature) + 
+                               GetHasFeat(FEAT_EXTRA_INVOCATION_IX, oCreature) + 
+                               GetHasFeat(FEAT_EXTRA_INVOCATION_X, oCreature); 
+            break;
+            
+        case INVOCATION_LIST_EXTRA_EPIC:
+            nMaxInvocations = GetHasFeat(FEAT_EPIC_EXTRA_INVOCATION_I, oCreature) + 
+                               GetHasFeat(FEAT_EPIC_EXTRA_INVOCATION_II, oCreature) + 
+                               GetHasFeat(FEAT_EPIC_EXTRA_INVOCATION_III, oCreature) + 
+                               GetHasFeat(FEAT_EPIC_EXTRA_INVOCATION_IV, oCreature) + 
+                               GetHasFeat(FEAT_EPIC_EXTRA_INVOCATION_V, oCreature) + 
+                               GetHasFeat(FEAT_EPIC_EXTRA_INVOCATION_VI, oCreature) + 
+                               GetHasFeat(FEAT_EPIC_EXTRA_INVOCATION_VII, oCreature) + 
+                               GetHasFeat(FEAT_EPIC_EXTRA_INVOCATION_VIII, oCreature) + 
+                               GetHasFeat(FEAT_EPIC_EXTRA_INVOCATION_IX, oCreature) + 
+                               GetHasFeat(FEAT_EPIC_EXTRA_INVOCATION_X, oCreature); 
             break;
 
         default:{
@@ -414,10 +438,11 @@ string DebugListKnownInvocations(object oCreature)
         {
             case 1: nPowerList = INVOCATION_LIST_DRAGONFIRE_ADEPT;          sReturn += "Dragonfire Adept";  break;
             
-            case 2: nPowerList = INVOCATION_LIST_WARLOCK;          sReturn += "Warlock";  break;
+            case 2: nPowerList = INVOCATION_LIST_WARLOCK;                   sReturn += "Warlock";  break;
             
             // This should always be last
-            case 6: nPowerList = INVOCATION_LIST_MISC;           sReturn += "Misceallenous";   break;
+            case 5: nPowerList = INVOCATION_LIST_EXTRA;                     sReturn += "Extra";   break;
+            case 6: nPowerList = INVOCATION_LIST_EXTRA_EPIC;                sReturn += "Epic Extra";   break;
         }
         sReturn += " Invocations known:\n";
 

@@ -457,6 +457,8 @@ struct invocation EvaluateInvocation(object oInvoker, object oTarget)
 
 void UseInvocation(int nInvocation, int nClass, int nLevelOverride = 0)
 {
+    if(nClass < 0) 
+        nClass = CLASS_TYPE_WARLOCK;
     object oInvoker    = OBJECT_SELF;
     object oSkin       = GetPCSkin(oInvoker);
     object oTarget     = PRCGetSpellTargetObject();

@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8">
+
+<!-- The spell selection will be done just after the character level up  -->
+<UIScene name="SCREEN_LEVELUP_SPELLS" width=1024 height=768 priority="SCENE_INGAME_FULLSCREEN" OnAdd=UIButton_Input_CharGenCommit("LEVELUP","CHARGEN_SPELLS") fullscreen=true cullrenderables=true />

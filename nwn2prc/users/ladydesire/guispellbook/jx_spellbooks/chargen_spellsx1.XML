@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8">
+
+<!-- The spell selection will be done after the character creation, the first time the new character logs in a module  -->
+<UIScene name="SCREEN_CHARGEN_SPELLS" priority="SCENE_FE_FULLSCREEN" fullscreen=true OnAdd=UIButton_Input_CharGenCommit("CHARGEN","CHARGEN_SPELLS") />

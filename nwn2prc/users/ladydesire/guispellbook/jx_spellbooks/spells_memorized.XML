@@ -1,0 +1,2594 @@
+﻿<?xml version="1.0" encoding="NWN2UI">
+
+<UIScene name="SCREEN_SPELLS_MEMORIZED" x=425 y=20 width=354 height=460 draggable=true fadeout="0.3" fadein="0.3" scriptloadable=true
+				 priority="SCENE_INGAME"
+				 OnAdd=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_open) />
+
+	<!-- Scene Title -->
+	<UIText strref="181417" x=90 y=8 width=260 height=28 align=left valign=middle fontfamily="Title_Font" style="2" />
+	<UIIcon name="SPELL_KNOWN_DETAIL" img="mem_icon.tga" x=0 y=0 width=78 height=71 ignoreevents=true />
+
+	<!-- *** MEMORIZED SPELL LIST COLLAPSABLE *** -->
+	<UIIcon name="HZ_BAR" img="grid_pixel.tga" x=10 y=67 width=330 height=1 />
+	<UIListbox name="listSpells" x=14 y=68 width=330 height=378 yPadding=1  
+						 showpartialchild=true scrollbaronright=true unequalcontrols=true scrollsegmentsize=64>
+
+		<UICollapsable name="clpSpellsLevel0" x=0 y=0 height=PARENT_HEIGHT width=315 yPadding=1 xPadding=5 indent=10 isexpanded=false>		
+			<UIButton name="btnSpellsLevel0" x=0 y=0 width=300 height=22 header=true strref=2275>
+				<UIText indent=20 align=left valign=middle fontfamily="Title_Font" style=1  />
+				<UIFrame state=up			fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=down			fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=hilited		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=focused		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=hifocus		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=disabled		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=header		fill="b_feat_normal.tga" />
+				<UIFrame state=hiheader		fill="b_feat_normal.tga" />
+				<UIFrame state=downheader	fill="b_feat_normal.tga" />
+			</UIButton>
+
+			<UIPane width="300" height="82">
+				<UIIcon name="icoMetamagic0_1" x=25 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic0_2" x=66 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic0_3" x=107 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic0_4" x=148 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic0_5" x=189 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic0_6" x=230 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic0_7" x=271 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic0_8" x=25 y=41 width=15 height=15 />
+				<UIIcon name="icoMetamagic0_9" x=66 y=41 width=15 height=15 />
+				<UIIcon name="icoMetamagic0_10" x=107 y=41 width=15 height=15 />
+
+				<UIButton name="btnSpellsLevel0_1" x=0 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_0_1
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:21,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel0_2" x=41 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_0_2
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:22,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel0_3" x=82 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_0_3
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:23,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel0_4" x=123 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_0_4
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:24,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel0_5" x=164 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_0_5
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:25,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel0_6" x=205 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_0_6
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:26,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel0_7" x=246 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_0_7
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:27,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel0_8" x=0 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_0_8
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:28,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel0_9" x=41 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_0_9
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:29,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel0_10" x=82 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_0_10
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:30,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel0_11" x=123 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_0_11
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:31,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel0_12" x=144 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_0_12
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:32,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+			</UIPane>
+		</UICollapsable>
+
+		<UICollapsable name="clpSpellsLevel1" x=0 y=0 height=PARENT_HEIGHT width=315 yPadding=1 xPadding=5 indent=10 isexpanded=false>		
+			<UIButton name="btnSpellsLevel1" x=0 y=0 width=300 height=22 header=true strref=690>
+				<UIText indent=20 align=left valign=middle fontfamily="Title_Font" style=1  />
+				<UIFrame state=up			fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=down			fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=hilited		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=focused		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=hifocus		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=disabled		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=header		fill="b_feat_normal.tga" />
+				<UIFrame state=hiheader		fill="b_feat_normal.tga" />
+				<UIFrame state=downheader	fill="b_feat_normal.tga" />
+			</UIButton>
+
+			<UIPane width="300" height="82">
+				<UIIcon name="icoMetamagic1_1" x=25 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic1_2" x=66 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic1_3" x=107 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic1_4" x=148 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic1_5" x=189 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic1_6" x=230 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic1_7" x=271 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic1_8" x=25 y=41 width=15 height=15 />
+				<UIIcon name="icoMetamagic1_9" x=66 y=41 width=15 height=15 />
+				<UIIcon name="icoMetamagic1_10" x=107 y=41 width=15 height=15 />
+
+				<UIButton name="btnSpellsLevel1_1" x=0 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_1_1
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:41,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel1_2" x=41 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_1_2
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:42,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel1_3" x=82 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_1_3
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:43,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel1_4" x=123 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_1_4
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:44,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel1_5" x=164 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_1_5
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:45,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel1_6" x=205 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_1_6
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:46,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel1_7" x=246 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_1_7
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:47,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel1_8" x=0 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_1_8
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:48,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel1_9" x=41 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_1_9
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:49,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel1_10" x=82 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_1_10
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:50,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel1_11" x=123 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_1_11
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:51,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel1_12" x=144 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_1_12
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:52,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+			</UIPane>
+		</UICollapsable>
+
+		<UICollapsable name="clpSpellsLevel2" x=0 y=0 height=PARENT_HEIGHT width=315 yPadding=1 xPadding=5 indent=10 isexpanded=false>		
+			<UIButton name="btnSpellsLevel2" x=0 y=0 width=300 height=22 header=true strref=725>
+				<UIText indent=20 align=left valign=middle fontfamily="Title_Font" style=1  />
+				<UIFrame state=up			fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=down			fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=hilited		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=focused		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=hifocus		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=disabled		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=header		fill="b_feat_normal.tga" />
+				<UIFrame state=hiheader		fill="b_feat_normal.tga" />
+				<UIFrame state=downheader	fill="b_feat_normal.tga" />
+			</UIButton>
+		
+			<UIPane width="300" height="82">
+				<UIIcon name="icoMetamagic2_1" x=25 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic2_2" x=66 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic2_3" x=107 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic2_4" x=148 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic2_5" x=189 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic2_6" x=230 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic2_7" x=271 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic2_8" x=25 y=41 width=15 height=15 />
+				<UIIcon name="icoMetamagic2_9" x=66 y=41 width=15 height=15 />
+				<UIIcon name="icoMetamagic2_10" x=107 y=41 width=15 height=15 />
+
+				<UIButton name="btnSpellsLevel2_1" x=0 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_2_1
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:61,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel2_2" x=41 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_2_2
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:62,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel2_3" x=82 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_2_3
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:63,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel2_4" x=123 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_2_4
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:64,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel2_5" x=164 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_2_5
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:65,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel2_6" x=205 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_2_6
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:66,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel2_7" x=246 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_2_7
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:67,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel2_8" x=0 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_2_8
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:68,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel2_9" x=41 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_2_9
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:69,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel2_10" x=82 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_2_10
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:70,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel2_11" x=123 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_2_11
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:71,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel2_12" x=144 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_2_12
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:72,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+			</UIPane>
+		</UICollapsable>
+
+		<UICollapsable name="clpSpellsLevel3" x=0 y=0 height=PARENT_HEIGHT width=315 yPadding=1 xPadding=5 indent=10 isexpanded=false>		
+			<UIButton name="btnSpellsLevel3" x=0 y=0 width=300 height=22 header=true strref=687>
+				<UIText indent=20 align=left valign=middle fontfamily="Title_Font" style=1  />
+				<UIFrame state=up			fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=down			fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=hilited		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=focused		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=hifocus		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=disabled		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=header		fill="b_feat_normal.tga" />
+				<UIFrame state=hiheader		fill="b_feat_normal.tga" />
+				<UIFrame state=downheader	fill="b_feat_normal.tga" />
+			</UIButton>
+		
+			<UIPane width="300" height="82">
+				<UIIcon name="icoMetamagic3_1" x=25 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic3_2" x=66 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic3_3" x=107 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic3_4" x=148 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic3_5" x=189 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic3_6" x=230 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic3_7" x=271 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic3_8" x=25 y=41 width=15 height=15 />
+				<UIIcon name="icoMetamagic3_9" x=66 y=41 width=15 height=15 />
+				<UIIcon name="icoMetamagic3_10" x=107 y=41 width=15 height=15 />
+
+				<UIButton name="btnSpellsLevel3_1" x=0 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_3_1
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:81,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel3_2" x=41 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_3_2
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:82,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel3_3" x=82 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_3_3
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:83,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel3_4" x=123 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_3_4
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:84,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel3_5" x=164 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_3_5
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:85,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel3_6" x=205 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_3_6
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:86,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel3_7" x=246 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_3_7
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:87,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel3_8" x=0 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_3_8
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:88,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel3_9" x=41 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_3_9
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:89,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel3_10" x=82 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_3_10
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:90,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel3_11" x=123 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_3_11
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:91,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel3_12" x=144 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_3_12
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:92,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+			</UIPane>
+		</UICollapsable>
+
+		<UICollapsable name="clpSpellsLevel4" x=0 y=0 height=PARENT_HEIGHT width=315 yPadding=1 xPadding=5 indent=10 isexpanded=false>		
+			<UIButton name="btnSpellsLevel4" x=0 y=0 width=300 height=22 header=true strref=684>
+				<UIText indent=20 align=left valign=middle fontfamily="Title_Font" style=1  />
+				<UIFrame state=up			fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=down			fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=hilited		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=focused		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=hifocus		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=disabled		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=header		fill="b_feat_normal.tga" />
+				<UIFrame state=hiheader		fill="b_feat_normal.tga" />
+				<UIFrame state=downheader	fill="b_feat_normal.tga" />
+			</UIButton>
+		
+			<UIPane width="300" height="82">
+				<UIIcon name="icoMetamagic4_1" x=25 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic4_2" x=66 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic4_3" x=107 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic4_4" x=148 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic4_5" x=189 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic4_6" x=230 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic4_7" x=271 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic4_8" x=25 y=41 width=15 height=15 />
+				<UIIcon name="icoMetamagic4_9" x=66 y=41 width=15 height=15 />
+				<UIIcon name="icoMetamagic4_10" x=107 y=41 width=15 height=15 />
+
+				<UIButton name="btnSpellsLevel4_1" x=0 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_4_1
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:101,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel4_2" x=41 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_4_2
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:102,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel4_3" x=82 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_4_3
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:103,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel4_4" x=123 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_4_4
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:104,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel4_5" x=164 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_4_5
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:105,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel4_6" x=205 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_4_6
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:106,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel4_7" x=246 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_4_7
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:107,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel4_8" x=0 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_4_8
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:108,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel4_9" x=41 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_4_9
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:109,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel4_10" x=82 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_4_10
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:110,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel4_11" x=123 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_4_11
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:111,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel4_12" x=144 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_4_12
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:112,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+			</UIPane>
+		</UICollapsable>
+
+		<UICollapsable name="clpSpellsLevel5" x=0 y=0 height=PARENT_HEIGHT width=315 yPadding=1 xPadding=5 indent=10 isexpanded=false>		
+			<UIButton name="btnSpellsLevel5" x=0 y=0 width=300 height=22 header=true strref=1026>
+				<UIText indent=20 align=left valign=middle fontfamily="Title_Font" style=1  />
+				<UIFrame state=up			fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=down			fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=hilited		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=focused		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=hifocus		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=disabled		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=header		fill="b_feat_normal.tga" />
+				<UIFrame state=hiheader		fill="b_feat_normal.tga" />
+				<UIFrame state=downheader	fill="b_feat_normal.tga" />
+			</UIButton>
+		
+			<UIPane width="300" height="82">
+				<UIIcon name="icoMetamagic5_1" x=25 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic5_2" x=66 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic5_3" x=107 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic5_4" x=148 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic5_5" x=189 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic5_6" x=230 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic5_7" x=271 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic5_8" x=25 y=41 width=15 height=15 />
+				<UIIcon name="icoMetamagic5_9" x=66 y=41 width=15 height=15 />
+				<UIIcon name="icoMetamagic5_10" x=107 y=41 width=15 height=15 />
+
+				<UIButton name="btnSpellsLevel5_1" x=0 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_5_1
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:121,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel5_2" x=41 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_5_2
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:122,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel5_3" x=82 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_5_3
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:123,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel5_4" x=123 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_5_4
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:124,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel5_5" x=164 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_5_5
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:125,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel5_6" x=205 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_5_6
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:126,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel5_7" x=246 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_5_7
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:127,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel5_8" x=0 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_5_8
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:128,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel5_9" x=41 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_5_9
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:129,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel5_10" x=82 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_5_10
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:130,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel5_11" x=123 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_5_11
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:131,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel5_12" x=144 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_5_12
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:132,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+			</UIPane>
+		</UICollapsable>
+
+		<UICollapsable name="clpSpellsLevel6" x=0 y=0 height=PARENT_HEIGHT width=315 yPadding=1 xPadding=5 indent=10 isexpanded=false>		
+			<UIButton name="btnSpellsLevel6" x=0 y=0 width=300 height=22 header=true strref=1014>
+				<UIText indent=20 align=left valign=middle fontfamily="Title_Font" style=1  />
+				<UIFrame state=up			fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=down			fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=hilited		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=focused		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=hifocus		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=disabled		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=header		fill="b_feat_normal.tga" />
+				<UIFrame state=hiheader		fill="b_feat_normal.tga" />
+				<UIFrame state=downheader	fill="b_feat_normal.tga" />
+			</UIButton>
+
+			<UIPane width="300" height="82">
+				<UIIcon name="icoMetamagic6_1" x=25 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic6_2" x=66 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic6_3" x=107 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic6_4" x=148 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic6_5" x=189 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic6_6" x=230 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic6_7" x=271 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic6_8" x=25 y=41 width=15 height=15 />
+				<UIIcon name="icoMetamagic6_9" x=66 y=41 width=15 height=15 />
+				<UIIcon name="icoMetamagic6_10" x=107 y=41 width=15 height=15 />
+
+				<UIButton name="btnSpellsLevel6_1" x=0 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_6_1
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:141,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel6_2" x=41 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_6_2
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:142,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel6_3" x=82 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_6_3
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:143,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel6_4" x=123 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_6_4
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:144,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel6_5" x=164 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_6_5
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:145,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel6_6" x=205 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_6_6
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:146,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel6_7" x=246 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_6_7
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:147,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel6_8" x=0 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_6_8
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:148,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel6_9" x=41 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_6_9
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:149,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel6_10" x=82 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_6_10
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:150,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel6_11" x=123 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_6_11
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:151,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel6_12" x=144 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_6_12
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:152,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+			</UIPane>
+		</UICollapsable>
+
+		<UICollapsable name="clpSpellsLevel7" x=0 y=0 height=PARENT_HEIGHT width=315 yPadding=1 xPadding=5 indent=10 isexpanded=false>		
+			<UIButton name="btnSpellsLevel7" x=0 y=0 width=300 height=22 header=true strref=2214>
+				<UIText indent=20 align=left valign=middle fontfamily="Title_Font" style=1  />
+				<UIFrame state=up			fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=down			fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=hilited		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=focused		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=hifocus		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=disabled		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=header		fill="b_feat_normal.tga" />
+				<UIFrame state=hiheader		fill="b_feat_normal.tga" />
+				<UIFrame state=downheader	fill="b_feat_normal.tga" />
+			</UIButton>
+
+			<UIPane width="300" height="82">
+				<UIIcon name="icoMetamagic7_1" x=25 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic7_2" x=66 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic7_3" x=107 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic7_4" x=148 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic7_5" x=189 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic7_6" x=230 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic7_7" x=271 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic7_8" x=25 y=41 width=15 height=15 />
+				<UIIcon name="icoMetamagic7_9" x=66 y=41 width=15 height=15 />
+				<UIIcon name="icoMetamagic7_10" x=107 y=41 width=15 height=15 />
+
+				<UIButton name="btnSpellsLevel7_1" x=0 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_7_1
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:161,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel7_2" x=41 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_7_2
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:162,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel7_3" x=82 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_7_3
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:163,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel7_4" x=123 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_7_4
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:164,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel7_5" x=164 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_7_5
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:165,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel7_6" x=205 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_7_6
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:166,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel7_7" x=246 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_7_7
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:167,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel7_8" x=0 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_7_8
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:168,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel7_9" x=41 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_7_9
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:169,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel7_10" x=82 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_7_10
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:170,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel7_11" x=123 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_7_11
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:171,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel7_12" x=144 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_7_12
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:172,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+			</UIPane>
+		</UICollapsable>
+
+		<UICollapsable name="clpSpellsLevel8" x=0 y=0 height=PARENT_HEIGHT width=315 yPadding=1 xPadding=5 indent=10 isexpanded=false>		
+			<UIButton name="btnSpellsLevel8" x=0 y=0 width=300 height=22 header=true strref=2215>
+				<UIText indent=20 align=left valign=middle fontfamily="Title_Font" style=1  />
+				<UIFrame state=up			fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=down			fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=hilited		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=focused		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=hifocus		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=disabled		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=header		fill="b_feat_normal.tga" />
+				<UIFrame state=hiheader		fill="b_feat_normal.tga" />
+				<UIFrame state=downheader	fill="b_feat_normal.tga" />
+			</UIButton>
+
+			<UIPane width="300" height="82">
+				<UIIcon name="icoMetamagic8_1" x=25 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic8_2" x=66 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic8_3" x=107 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic8_4" x=148 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic8_5" x=189 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic8_6" x=230 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic8_7" x=271 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic8_8" x=25 y=41 width=15 height=15 />
+				<UIIcon name="icoMetamagic8_9" x=66 y=41 width=15 height=15 />
+				<UIIcon name="icoMetamagic8_10" x=107 y=41 width=15 height=15 />
+
+				<UIButton name="btnSpellsLevel8_1" x=0 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_8_1
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:181,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel8_2" x=41 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_8_2
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:182,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel8_3" x=82 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_8_3
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:183,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel8_4" x=123 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_8_4
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:184,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel8_5" x=164 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_8_5
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:185,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel8_6" x=205 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_8_6
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:186,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel8_7" x=246 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_8_7
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:187,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel8_8" x=0 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_8_8
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:188,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel8_9" x=41 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_8_9
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:189,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel8_10" x=82 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_8_10
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:190,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel8_11" x=123 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_8_11
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:191,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel8_12" x=144 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_8_12
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:192,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+			</UIPane>
+		</UICollapsable>
+
+		<UICollapsable name="clpSpellsLevel9" x=0 y=0 height=PARENT_HEIGHT width=315 yPadding=1 xPadding=5 indent=10 isexpanded=false>		
+			<UIButton name="btnSpellsLevel9" x=0 y=0 width=300 height=22 header=true strref=2216>
+				<UIText indent=20 align=left valign=middle fontfamily="Title_Font" style=1  />
+				<UIFrame state=up			fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=down			fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=hilited		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=focused		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=hifocus		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=disabled		fill="b_feat_hover_pressed.tga" />
+				<UIFrame state=header		fill="b_feat_normal.tga" />
+				<UIFrame state=hiheader		fill="b_feat_normal.tga" />
+				<UIFrame state=downheader	fill="b_feat_normal.tga" />
+			</UIButton>
+
+			<UIPane width="300" height="82">
+				<UIIcon name="icoMetamagic9_1" x=25 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic9_2" x=66 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic9_3" x=107 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic9_4" x=148 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic9_5" x=189 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic9_6" x=230 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic9_7" x=271 y=0 width=15 height=15 />
+				<UIIcon name="icoMetamagic9_8" x=25 y=41 width=15 height=15 />
+				<UIIcon name="icoMetamagic9_9" x=66 y=41 width=15 height=15 />
+				<UIIcon name="icoMetamagic9_10" x=107 y=41 width=15 height=15 />
+
+				<UIButton name="btnSpellsLevel9_1" x=0 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_9_1
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:201,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel9_2" x=41 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_9_2
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:202,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel9_3" x=82 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_9_3
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:203,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel9_4" x=123 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_9_4
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:204,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel9_5" x=164 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_9_5
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:205,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel9_6" x=205 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_9_6
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:206,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel9_7" x=246 y=0 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_9_7
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:207,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel9_8" x=0 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_9_8
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:208,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel9_9" x=41 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_9_9
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:209,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel9_10" x=82 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_9_10
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:210,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel9_11" x=123 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_9_11
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:211,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+				<UIButton name="btnSpellsLevel9_12" x=144 y=41 height=40 width=40 draggable=true SetDataString=JX_SPELL_MEMO_9_12
+									OnLeftClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnLeftClick1=UIObject_Misc_ExecuteServerScript("gui_jx_spbk_spmem_remove",local:1)
+									OnRightClick0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnRightClick1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_showspelldesc,local:1)
+									OnMouseDropReceived0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+									OnMouseDropReceived1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropped,local:1)
+								  OnGainedFocus0=UIObject_Misc_ExtractData(self:,string,0,local:1)
+								  OnGainedFocus1=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_cmon_focus,local:1)
+									OnToolTip=UIObject_Tooltip_DisplayTooltipString(local:212,OBJECT_X,OBJECT_Y,SCREEN_TOOLTIP_2)
+								  OnMouseDropFailed=UIObject_Misc_ExecuteServerScript(gui_jx_spbk_spmem_dropfailed)>
+					<UIFrame state=base		fill="mem_spell_slot.tga" />
+					<UIFrame state=up		fill="b_empty.tga" />
+					<UIFrame state=down		fill="b_overlay.tga" />
+					<UIFrame state=focused	fill="b_empty.tga" />
+					<UIFrame state=hilited	fill="b_overlay.tga" />
+					<UIFrame state=hifocus	fill="b_overlay.tga" />
+					<UIFrame state=disabled fill="b_empty.tga" />
+				</UIButton>
+			</UIPane>
+		</UICollapsable>
+
+		<UIScrollBar name="SB" style="STYLE_SB_THIN"></UIScrollBar>	
+	</UIListbox>
+
+
+	<!-- Background Image -->
+	<UIIcon name="SPELL_KNOWN_BG" img="mem_bg.tga" x=9 y=8 width=336 height=443 />
+	<UIFrame x=0 y=0 width=PARENT_WIDTH height=PARENT_HEIGHT topleft="frame1_tl.tga" topright="frame1_tr.tga" bottomleft="frame1_bl.tga"
+		bottomright="frame1_BR.tga" top="frame1_t.tga" bottom="frame1_b.tga"
+		left="frame1_l.tga" right="frame1_r.tga" border=32 />	

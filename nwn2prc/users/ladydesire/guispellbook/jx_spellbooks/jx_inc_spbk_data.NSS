@@ -1,0 +1,7 @@
+#include "jx_inc_spbk_data_spday"
+#include "jx_inc_spbk_data_spkwn"
+#include "jx_inc_spbk_data_spkwnui"
+#include "jx_inc_spbk_data_spmem"
+#include "jx_inc_spbk_data_sprdy"
+#include "jx_inc_spbk_data_spsel"
+#include "jx_inc_spbk_data_spsub"

@@ -47,7 +47,7 @@ void main()
         if(move.bCanManeuver)
         {
         	effect eNone;
-                PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Scything Blade Hit", "Scything Blade Miss");
+                PerformAttackRound(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, FALSE, "Scything Blade Hit", "Scything Blade Miss");
                 if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
                 {
                         location lLoc = GetLocation(oInitiator);

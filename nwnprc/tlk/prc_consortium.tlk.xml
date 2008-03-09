@@ -36518,6 +36518,8 @@ Large - 1d6
 Huge - 1d8
 Gigantic - 2d6
 Colossal - 3d6</entry>
+  <entry id="55000" lang="en" sex="m">Add Constitution To Strike</entry>
+  <entry id="55001" lang="en" sex="m">Clear Constitution Total</entry>
   <entry id="55002" lang="en" sex="m">White Raven Hammer</entry>
   <entry id="55003" lang="en" sex="m">White Raven (Strike)
 Level: Crusader 8, Warblade 8

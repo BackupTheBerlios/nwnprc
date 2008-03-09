@@ -7,7 +7,7 @@
 Shadow Hand (Strike)
 Level: Swordsage 6
 Initiation Action: 1 standard action
-Range: 6 ft.
+Range: 60 ft.
 Target: One flat-footed creature
 Duration: 1 round
 Saving Throw: Fortitude partial

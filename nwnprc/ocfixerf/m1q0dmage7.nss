@@ -19,6 +19,7 @@ if(DEBUG) DoDebug("m1q0dmage7 running");
     if(GetLevelByClass(CLASS_TYPE_SORCERER,oPC) > 0 ||
        GetLevelByClass(CLASS_TYPE_PSION,oPC) > 0 ||
        GetLevelByClass(CLASS_TYPE_HEALER,oPC) > 0 ||
+       GetLevelByClass(CLASS_TYPE_WARLOCK,oPC) > 0 ||
        GetLevelByClass(CLASS_TYPE_SHUGENJA,oPC) > 0 ||
        GetLevelByClass(CLASS_TYPE_DRAGONFIRE_ADEPT,oPC) > 0 ||
        GetLevelByClass(CLASS_TYPE_WARMAGE,oPC) > 0 ||

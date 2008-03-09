@@ -39,6 +39,7 @@ if(DEBUG) DoDebug("m1q0dchest2 running");
         else if(GetLevelByClass(CLASS_TYPE_ARCHER,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_DRAGON_SHAMAN,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_HEXBLADE,oPC) > 0 ||
+                GetLevelByClass(CLASS_TYPE_WARLOCK,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_BARBARIAN,oPC) > 0)
         {
             sItemTemplate1 = "NW_IT_MBELT010"; //Brawler's belt

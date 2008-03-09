@@ -14,6 +14,7 @@ if(DEBUG) DoDebug("m1q0boldgred_item running");
            GetLevelByClass(CLASS_TYPE_DRUID,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_SHAMAN,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_HEALER,oPC) > 0 ||
+           GetLevelByClass(CLASS_TYPE_WARLOCK,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_DRAGON_SHAMAN,oPC) > 0 ||
 	   GetLevelByClass(CLASS_TYPE_TRUENAMER,oPC) > 0 ||
 	   GetLevelByClass(CLASS_TYPE_SCOUT,oPC) > 0 ||

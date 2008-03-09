@@ -19,6 +19,7 @@ void main()
        GetLevelByClass(CLASS_TYPE_TRUENAMER,oPC) > 0 ||
        GetLevelByClass(CLASS_TYPE_SHUGENJA,oPC) > 0 ||
        GetLevelByClass(CLASS_TYPE_DRAGONFIRE_ADEPT,oPC) > 0 ||
+       GetLevelByClass(CLASS_TYPE_WARLOCK,oPC) > 0 ||
        GetLevelByClass(CLASS_TYPE_SHAMAN,oPC) > 0 ||
        GetLevelByClass(CLASS_TYPE_WARMAGE,oPC) > 0 ||
        GetLevelByClass(CLASS_TYPE_HEALER,oPC) > 0 ||

@@ -18709,8 +18709,6 @@ Usage: Automatic.</entry>
 Prerequisite: Any item creation feat.
 Specifics: You have mastered the method of creating magic items. When determining your XP cost for creating any magic item, reduce the base cost by 25%. You can gain this feat multiple times. Its effects stack (geometrically).
 Usage: Automatic.</entry>
-
-
   <entry id="49999" lang="en" sex="m">**** 50,000 - 50,500 reserved for Race Pack Feats ****</entry>
   <entry id="50000" lang="en" sex="m">Light Sensitivity</entry>
   <entry id="50001" lang="en" sex="m">Type of Feat: Racial
@@ -40986,8 +40984,332 @@ You cause various bits of trash and junk in an area - rotting garbage, old cloth
 3rd Level Spell
   
 You polymorph yourself into the form of a fiendish large monstrous spider.  You can remain in this form for 1 hour per invoker level.</entry>
-  <entry id="60000" lang="en" sex="m">##EPIC_SPELL_AND_ISC_RESERVE</entry>
-  <entry id="60500" lang="en" sex="m">##EPIC_SPELL_AND_ISC_RESERVE</entry>
+  <entry id="60000" lang="en" sex="m">####START_OF_TOB_SPELLBOOK_RESERVE</entry>
+  <entry id="60001" lang="en" sex="m">Aura Of Chaos</entry>
+  <entry id="60002" lang="en" sex="m">Aura Of Perfect Order</entry>
+  <entry id="60003" lang="en" sex="m">Aura Of Triumph</entry>
+  <entry id="60004" lang="en" sex="m">Aura Of Tyranny</entry>
+  <entry id="60005" lang="en" sex="m">Castigating Strike</entry>
+  <entry id="60006" lang="en" sex="m">Crusader's Strike</entry>
+  <entry id="60007" lang="en" sex="m">Daunting Strike</entry>
+  <entry id="60008" lang="en" sex="m">Defensive Rebuke</entry>
+  <entry id="60009" lang="en" sex="m">Divine Surge</entry>
+  <entry id="60010" lang="en" sex="m">Greater Divine Surge </entry>
+  <entry id="60011" lang="en" sex="m">Add Constitution To Strike</entry>
+  <entry id="60012" lang="en" sex="m">Clear Constitution Total</entry>
+  <entry id="60013" lang="en" sex="m">Greater Divine Surge </entry>
+  <entry id="60014" lang="en" sex="m">Doom Charge</entry>
+  <entry id="60015" lang="en" sex="m">Entangling Blade</entry>
+  <entry id="60016" lang="en" sex="m">Foehammer</entry>
+  <entry id="60017" lang="en" sex="m">Immortal Fortitude</entry>
+  <entry id="60018" lang="en" sex="m">Iron Guards Glare</entry>
+  <entry id="60019" lang="en" sex="m">Law Bearer</entry>
+  <entry id="60020" lang="en" sex="m">Martial Spirit</entry>
+  <entry id="60021" lang="en" sex="m">Radiant Charge</entry>
+  <entry id="60022" lang="en" sex="m">Rallying Strike</entry>
+  <entry id="60023" lang="en" sex="m">Revitalizing Strike</entry>
+  <entry id="60024" lang="en" sex="m">Shield Block</entry>
+  <entry id="60025" lang="en" sex="m">Shield Counter</entry>
+  <entry id="60026" lang="en" sex="m">Strike Of Righteous Vitality</entry>
+  <entry id="60027" lang="en" sex="m">Thicket Of Blades</entry>
+  <entry id="60028" lang="en" sex="m">Tide Of Chaos</entry>
+  <entry id="60029" lang="en" sex="m">Vanguard Strike</entry>
+  <entry id="60030" lang="en" sex="m">Adamantine Bones</entry>
+  <entry id="60031" lang="en" sex="m">Ancient Mountain Hammer</entry>
+  <entry id="60032" lang="en" sex="m">Bonesplitting Strike</entry>
+  <entry id="60033" lang="en" sex="m">Bonecrusher</entry>
+  <entry id="60034" lang="en" sex="m">Boulder Roll</entry>
+  <entry id="60035" lang="en" sex="m">Charging Minotaur</entry>
+  <entry id="60036" lang="en" sex="m">Colossus Strike</entry>
+  <entry id="60037" lang="en" sex="m">Crushing Vise</entry>
+  <entry id="60038" lang="en" sex="m">Crushing Weight Of The Mountain</entry>
+  <entry id="60039" lang="en" sex="m">Earthstrike Quake</entry>
+  <entry id="60040" lang="en" sex="m">Elder Mountain Hammer</entry>
+  <entry id="60041" lang="en" sex="m">Giant's Stance</entry>
+  <entry id="60042" lang="en" sex="m">Iron Bones</entry>
+  <entry id="60043" lang="en" sex="m">Irresistible Mountain Strike</entry>
+  <entry id="60044" lang="en" sex="m">Mountain Avalanche</entry>
+  <entry id="60045" lang="en" sex="m">Mountain Hammer</entry>
+  <entry id="60046" lang="en" sex="m">Mountain Tombstone Strike</entry>
+  <entry id="60047" lang="en" sex="m">Overwhelming Mountain Strike</entry>
+  <entry id="60048" lang="en" sex="m">Roots Of The Mountain</entry>
+  <entry id="60049" lang="en" sex="m">Stone Bones</entry>
+  <entry id="60050" lang="en" sex="m">Stone Dragon's Fury</entry>
+  <entry id="60051" lang="en" sex="m">Stone Vise</entry>
+  <entry id="60052" lang="en" sex="m">Stonefoot Stance</entry>
+  <entry id="60053" lang="en" sex="m">Strength Of Stone</entry>
+  <entry id="60054" lang="en" sex="m">Battle Leader's Charge</entry>
+  <entry id="60055" lang="en" sex="m">Bolstering Voice</entry>
+  <entry id="60056" lang="en" sex="m">Clarion Call</entry>
+  <entry id="60057" lang="en" sex="m">Covering Strike</entry>
+  <entry id="60058" lang="en" sex="m">Douse The Flames</entry>
+  <entry id="60059" lang="en" sex="m">Flanking Maneuver</entry>
+  <entry id="60060" lang="en" sex="m">Leading The Attack</entry>
+  <entry id="60061" lang="en" sex="m">Leading the Charge</entry>
+  <entry id="60062" lang="en" sex="m">Lion's Roar</entry>
+  <entry id="60063" lang="en" sex="m">Order Forged From Chaos</entry>
+  <entry id="60064" lang="en" sex="m">Press The Advantage</entry>
+  <entry id="60065" lang="en" sex="m">Swarm Tactics</entry>
+  <entry id="60066" lang="en" sex="m">Swarming Assault</entry>
+  <entry id="60067" lang="en" sex="m">Tactical Strike</entry>
+  <entry id="60068" lang="en" sex="m">Tactics Of The Wolf</entry>
+  <entry id="60069" lang="en" sex="m">War Leader's Charge</entry>
+  <entry id="60070" lang="en" sex="m">War Master's Charge</entry>
+  <entry id="60071" lang="en" sex="m">Leading the Charge</entry>
+  <entry id="60072" lang="en" sex="m">White Raven Strike</entry>
+  <entry id="60073" lang="en" sex="m">White Raven Tactics</entry>
+  <entry id="60074" lang="en" sex="m">Blistering Flourish</entry>
+  <entry id="60075" lang="en" sex="m">Burning Blade</entry>
+  <entry id="60076" lang="en" sex="m">Burning Brand</entry>
+  <entry id="60077" lang="en" sex="m">Deathmark</entry>
+  <entry id="60078" lang="en" sex="m">Desert Tempest</entry>
+  <entry id="60079" lang="en" sex="m">Distracting Ember</entry>
+  <entry id="60080" lang="en" sex="m">Dragon's Flame</entry>
+  <entry id="60081" lang="en" sex="m">Fan The Flames</entry>
+  <entry id="60082" lang="en" sex="m">Fiery Assault</entry>
+  <entry id="60083" lang="en" sex="m">Fire Riposte</entry>
+  <entry id="60084" lang="en" sex="m">Firesnake</entry>
+  <entry id="60085" lang="en" sex="m">Flames Blessing</entry>
+  <entry id="60086" lang="en" sex="m">Flashing Sun</entry>
+  <entry id="60087" lang="en" sex="m">Hatchlings Flame</entry>
+  <entry id="60088" lang="en" sex="m">Holocaust Cloak</entry>
+  <entry id="60089" lang="en" sex="m">Inferno Blade</entry>
+  <entry id="60090" lang="en" sex="m">Inferno Blast</entry>
+  <entry id="60091" lang="en" sex="m">Leaping Flame</entry>
+  <entry id="60092" lang="en" sex="m">Lingering Inferno</entry>
+  <entry id="60093" lang="en" sex="m">Ring Of Fire</entry>
+  <entry id="60094" lang="en" sex="m">Rising Phoenix</entry>
+  <entry id="60095" lang="en" sex="m">Salamander Charge</entry>
+  <entry id="60096" lang="en" sex="m">Searing Blade</entry>
+  <entry id="60097" lang="en" sex="m">Searing Charge</entry>
+  <entry id="60098" lang="en" sex="m">Wind Stride</entry>
+  <entry id="60099" lang="en" sex="m">Wyrms Flame</entry>
+  <entry id="60100" lang="en" sex="m">Zephyr Dance</entry>
+  <entry id="60101" lang="en" sex="m">Action Before Thought</entry>
+  <entry id="60102" lang="en" sex="m">Avalanche Of Blades</entry>
+  <entry id="60103" lang="en" sex="m">Bounding Assault</entry>
+  <entry id="60104" lang="en" sex="m">Diamond Defense</entry>
+  <entry id="60105" lang="en" sex="m">Diamond Nightmare Blade</entry>
+  <entry id="60106" lang="en" sex="m">Disrupting Blow</entry>
+  <entry id="60107" lang="en" sex="m">Emerald Razor</entry>
+  <entry id="60108" lang="en" sex="m">Hearing The Air</entry>
+  <entry id="60109" lang="en" sex="m">Insightful Strike</entry>
+  <entry id="60110" lang="en" sex="m">Greater Insightful Strike</entry>
+  <entry id="60111" lang="en" sex="m">Mind Over Body</entry>
+  <entry id="60112" lang="en" sex="m">Mind Strike</entry>
+  <entry id="60113" lang="en" sex="m">Moment Of Alacrity</entry>
+  <entry id="60114" lang="en" sex="m">Moment Of Perfect Mind</entry>
+  <entry id="60115" lang="en" sex="m">Pearl Of Black Doubt</entry>
+  <entry id="60116" lang="en" sex="m">Quicksilver Motion</entry>
+  <entry id="60117" lang="en" sex="m">Rapid Counter</entry>
+  <entry id="60118" lang="en" sex="m">Ruby Nightmare Blade</entry>
+  <entry id="60119" lang="en" sex="m">Sapphire Nightmare Blade</entry>
+  <entry id="60120" lang="en" sex="m">Stance Of Alacrity</entry>
+  <entry id="60121" lang="en" sex="m">Stance Of Clarity</entry>
+  <entry id="60122" lang="en" sex="m">Time Stands Still</entry>
+  <entry id="60123" lang="en" sex="m">Baffling Defense</entry>
+  <entry id="60124" lang="en" sex="m">Ballista Throw</entry>
+  <entry id="60125" lang="en" sex="m">Clever Positioning</entry>
+  <entry id="60126" lang="en" sex="m">Comet Throw</entry>
+  <entry id="60127" lang="en" sex="m">Counter Charge</entry>
+  <entry id="60128" lang="en" sex="m">Devastating Throw</entry>
+  <entry id="60129" lang="en" sex="m">Feigned Opening</entry>
+  <entry id="60130" lang="en" sex="m">Fool's Strike</entry>
+  <entry id="60131" lang="en" sex="m">Ghostly Defense</entry>
+  <entry id="60132" lang="en" sex="m">Giant Killing Style</entry>
+  <entry id="60133" lang="en" sex="m">Hydra Slaying Strike</entry>
+  <entry id="60134" lang="en" sex="m">Mighty Throw</entry>
+  <entry id="60135" lang="en" sex="m">Mirrored Pursuit</entry>
+  <entry id="60136" lang="en" sex="m">Scorpion Parry</entry>
+  <entry id="60137" lang="en" sex="m">Shifting Defense</entry>
+  <entry id="60138" lang="en" sex="m">Soaring Throw</entry>
+  <entry id="60139" lang="en" sex="m">Stalking Shadow</entry>
+  <entry id="60140" lang="en" sex="m">Step Of The Wind</entry>
+  <entry id="60141" lang="en" sex="m">Strike Of The Broken Shield</entry>
+  <entry id="60142" lang="en" sex="m">Tornado Throw</entry>
+  <entry id="60143" lang="en" sex="m">Assassins Stance</entry>
+  <entry id="60144" lang="en" sex="m">Balance On The Sky</entry>
+  <entry id="60145" lang="en" sex="m">Bloodletting Strike</entry>
+  <entry id="60146" lang="en" sex="m">Child Of Shadow</entry>
+  <entry id="60147" lang="en" sex="m">Clinging Shadow Strike</entry>
+  <entry id="60148" lang="en" sex="m">Cloak Of Deception</entry>
+  <entry id="60149" lang="en" sex="m">Dance Of The Spider</entry>
+  <entry id="60150" lang="en" sex="m">Death In The Dark</entry>
+  <entry id="60151" lang="en" sex="m">Drain Vitality</entry>
+  <entry id="60152" lang="en" sex="m">Enervating Shadow Strike</entry>
+  <entry id="60153" lang="en" sex="m">Five Shadow Creeping Ice Enervation Strike</entry>
+  <entry id="60154" lang="en" sex="m">Ghost Blade</entry>
+  <entry id="60155" lang="en" sex="m">Hand Of Death</entry>
+  <entry id="60156" lang="en" sex="m">Island Of Blades</entry>
+  <entry id="60157" lang="en" sex="m">Obscuring Shadow Veil</entry>
+  <entry id="60158" lang="en" sex="m">One With Shadow</entry>
+  <entry id="60159" lang="en" sex="m">Shadow Blade Technique</entry>
+  <entry id="60160" lang="en" sex="m">Shadow Blink</entry>
+  <entry id="60161" lang="en" sex="m">Shadow Garrote</entry>
+  <entry id="60162" lang="en" sex="m">Shadow Jaunt</entry>
+  <entry id="60163" lang="en" sex="m">Shadow Noose</entry>
+  <entry id="60164" lang="en" sex="m">Shadow Stride</entry>
+  <entry id="60165" lang="en" sex="m">Stalker In The Night</entry>
+  <entry id="60166" lang="en" sex="m">Step Of The Dancing Moth</entry>
+  <entry id="60167" lang="en" sex="m">Strength Draining Strike</entry>
+  <entry id="60168" lang="en" sex="m">Adamantine Bones</entry>
+  <entry id="60169" lang="en" sex="m">Ancient Mountain Hammer</entry>
+  <entry id="60170" lang="en" sex="m">Bonesplitting Strike</entry>
+  <entry id="60171" lang="en" sex="m">Bonecrusher</entry>
+  <entry id="60172" lang="en" sex="m">Boulder Roll</entry>
+  <entry id="60173" lang="en" sex="m">Charging Minotaur</entry>
+  <entry id="60174" lang="en" sex="m">Colossus Strike</entry>
+  <entry id="60175" lang="en" sex="m">Crushing Vise</entry>
+  <entry id="60176" lang="en" sex="m">Crushing Weight Of The Mountain</entry>
+  <entry id="60177" lang="en" sex="m">Earthstrike Quake</entry>
+  <entry id="60178" lang="en" sex="m">Elder Mountain Hammer</entry>
+  <entry id="60179" lang="en" sex="m">Giant's Stance</entry>
+  <entry id="60180" lang="en" sex="m">Iron Bones</entry>
+  <entry id="60181" lang="en" sex="m">Irresistible Mountain Strike</entry>
+  <entry id="60182" lang="en" sex="m">Mountain Avalanche</entry>
+  <entry id="60183" lang="en" sex="m">Mountain Hammer</entry>
+  <entry id="60184" lang="en" sex="m">Mountain Tombstone Strike</entry>
+  <entry id="60185" lang="en" sex="m">Overwhelming Mountain Strike</entry>
+  <entry id="60186" lang="en" sex="m">Roots Of The Mountain</entry>
+  <entry id="60187" lang="en" sex="m">Stone Bones</entry>
+  <entry id="60188" lang="en" sex="m">Stone Dragon's Fury</entry>
+  <entry id="60189" lang="en" sex="m">Stone Vise</entry>
+  <entry id="60190" lang="en" sex="m">Stonefoot Stance</entry>
+  <entry id="60191" lang="en" sex="m">Strength Of Stone</entry>
+  <entry id="60192" lang="en" sex="m">Blood In The Water</entry>
+  <entry id="60193" lang="en" sex="m">Claw At The Moon</entry>
+  <entry id="60194" lang="en" sex="m">Dancing Mongoose</entry>
+  <entry id="60195" lang="en" sex="m">Death From Above</entry>
+  <entry id="60196" lang="en" sex="m">Feral Death Blow</entry>
+  <entry id="60197" lang="en" sex="m">Flesh Ripper</entry>
+  <entry id="60198" lang="en" sex="m">Fountain Of Blood</entry>
+  <entry id="60199" lang="en" sex="m">Girallon Windmill Flesh Rip</entry>
+  <entry id="60200" lang="en" sex="m">Hamstring Attack</entry>
+  <entry id="60201" lang="en" sex="m">Hunter's Sense</entry>
+  <entry id="60202" lang="en" sex="m">Leaping Dragon Stance</entry>
+  <entry id="60203" lang="en" sex="m">Pouncing Charge</entry>
+  <entry id="60204" lang="en" sex="m">Prey On The Weak</entry>
+  <entry id="60205" lang="en" sex="m">Rabid Bear Strike</entry>
+  <entry id="60206" lang="en" sex="m">Rabid Wolf Strike</entry>
+  <entry id="60207" lang="en" sex="m">Raging Mongoose</entry>
+  <entry id="60208" lang="en" sex="m">Soaring Raptor Strike</entry>
+  <entry id="60209" lang="en" sex="m">Sudden Leap</entry>
+  <entry id="60210" lang="en" sex="m">Swooping Dragon Strike</entry>
+  <entry id="60211" lang="en" sex="m">Wolf Climbs The Mountain</entry>
+  <entry id="60212" lang="en" sex="m">Wolf Fang Strike</entry>
+  <entry id="60213" lang="en" sex="m">Wolf Pack Tactics</entry>
+  <entry id="60214" lang="en" sex="m">Wolverine Stance</entry>
+  <entry id="60215" lang="en" sex="m">Action Before Thought</entry>
+  <entry id="60216" lang="en" sex="m">Avalanche Of Blades</entry>
+  <entry id="60217" lang="en" sex="m">Bounding Assault</entry>
+  <entry id="60218" lang="en" sex="m">Diamond Defense</entry>
+  <entry id="60219" lang="en" sex="m">Diamond Nightmare Blade</entry>
+  <entry id="60220" lang="en" sex="m">Disrupting Blow</entry>
+  <entry id="60221" lang="en" sex="m">Emerald Razor</entry>
+  <entry id="60222" lang="en" sex="m">Hearing The Air</entry>
+  <entry id="60223" lang="en" sex="m">Insightful Strike</entry>
+  <entry id="60224" lang="en" sex="m">Greater Insightful Strike</entry>
+  <entry id="60225" lang="en" sex="m">Mind Over Body</entry>
+  <entry id="60226" lang="en" sex="m">Mind Strike</entry>
+  <entry id="60227" lang="en" sex="m">Moment Of Alacrity</entry>
+  <entry id="60228" lang="en" sex="m">Moment Of Perfect Mind</entry>
+  <entry id="60229" lang="en" sex="m">Pearl Of Black Doubt</entry>
+  <entry id="60230" lang="en" sex="m">Quicksilver Motion</entry>
+  <entry id="60231" lang="en" sex="m">Rapid Counter</entry>
+  <entry id="60232" lang="en" sex="m">Ruby Nightmare Blade</entry>
+  <entry id="60233" lang="en" sex="m">Sapphire Nightmare Blade</entry>
+  <entry id="60234" lang="en" sex="m">Stance Of Alacrity</entry>
+  <entry id="60235" lang="en" sex="m">Stance Of Clarity</entry>
+  <entry id="60236" lang="en" sex="m">Time Stands Still</entry>
+  <entry id="60237" lang="en" sex="m">Absolute Steel</entry>
+  <entry id="60238" lang="en" sex="m">Adamantine Hurricane</entry>
+  <entry id="60239" lang="en" sex="m">Dancing Blade Form</entry>
+  <entry id="60240" lang="en" sex="m">Dazing Strike</entry>
+  <entry id="60241" lang="en" sex="m">Disarming Strike</entry>
+  <entry id="60242" lang="en" sex="m">Exorcism Of Steel</entry>
+  <entry id="60243" lang="en" sex="m">Finishing Move</entry>
+  <entry id="60244" lang="en" sex="m">Iron Heart Endurance</entry>
+  <entry id="60245" lang="en" sex="m">Iron Heart Focus</entry>
+  <entry id="60246" lang="en" sex="m">Iron Heart Surge</entry>
+  <entry id="60247" lang="en" sex="m">Lightning Recovery</entry>
+  <entry id="60248" lang="en" sex="m">Lightning Throw</entry>
+  <entry id="60249" lang="en" sex="m">Manticore Parry</entry>
+  <entry id="60250" lang="en" sex="m">Mithral Tornado</entry>
+  <entry id="60251" lang="en" sex="m">Punishing Stance</entry>
+  <entry id="60252" lang="en" sex="m">Scything Blade</entry>
+  <entry id="60253" lang="en" sex="m">Steel Wind</entry>
+  <entry id="60254" lang="en" sex="m">Steely Strike</entry>
+  <entry id="60255" lang="en" sex="m">Strike Of Perfect Clarity</entry>
+  <entry id="60256" lang="en" sex="m">Supreme Blade Parry</entry>
+  <entry id="60257" lang="en" sex="m">Wall Of Blades</entry>
+  <entry id="60258" lang="en" sex="m">Adamantine Bones</entry>
+  <entry id="60259" lang="en" sex="m">Ancient Mountain Hammer</entry>
+  <entry id="60260" lang="en" sex="m">Bonesplitting Strike</entry>
+  <entry id="60261" lang="en" sex="m">Bonecrusher</entry>
+  <entry id="60262" lang="en" sex="m">Boulder Roll</entry>
+  <entry id="60263" lang="en" sex="m">Charging Minotaur</entry>
+  <entry id="60264" lang="en" sex="m">Colossus Strike</entry>
+  <entry id="60265" lang="en" sex="m">Crushing Vise</entry>
+  <entry id="60266" lang="en" sex="m">Crushing Weight Of The Mountain</entry>
+  <entry id="60267" lang="en" sex="m">Earthstrike Quake</entry>
+  <entry id="60268" lang="en" sex="m">Elder Mountain Hammer</entry>
+  <entry id="60269" lang="en" sex="m">Giant's Stance</entry>
+  <entry id="60270" lang="en" sex="m">Iron Bones</entry>
+  <entry id="60271" lang="en" sex="m">Irresistible Mountain Strike</entry>
+  <entry id="60272" lang="en" sex="m">Mountain Avalanche</entry>
+  <entry id="60273" lang="en" sex="m">Mountain Hammer</entry>
+  <entry id="60274" lang="en" sex="m">Mountain Tombstone Strike</entry>
+  <entry id="60275" lang="en" sex="m">Overwhelming Mountain Strike</entry>
+  <entry id="60276" lang="en" sex="m">Roots Of The Mountain</entry>
+  <entry id="60277" lang="en" sex="m">Stone Bones</entry>
+  <entry id="60278" lang="en" sex="m">Stone Dragon's Fury</entry>
+  <entry id="60279" lang="en" sex="m">Stone Vise</entry>
+  <entry id="60280" lang="en" sex="m">Stonefoot Stance</entry>
+  <entry id="60281" lang="en" sex="m">Strength Of Stone</entry>
+  <entry id="60282" lang="en" sex="m">Blood In The Water</entry>
+  <entry id="60283" lang="en" sex="m">Claw At The Moon</entry>
+  <entry id="60284" lang="en" sex="m">Dancing Mongoose</entry>
+  <entry id="60285" lang="en" sex="m">Death From Above</entry>
+  <entry id="60286" lang="en" sex="m">Feral Death Blow</entry>
+  <entry id="60287" lang="en" sex="m">Flesh Ripper</entry>
+  <entry id="60288" lang="en" sex="m">Fountain Of Blood</entry>
+  <entry id="60289" lang="en" sex="m">Girallon Windmill Flesh Rip</entry>
+  <entry id="60290" lang="en" sex="m">Hamstring Attack</entry>
+  <entry id="60291" lang="en" sex="m">Hunter's Sense</entry>
+  <entry id="60292" lang="en" sex="m">Leaping Dragon Stance</entry>
+  <entry id="60293" lang="en" sex="m">Pouncing Charge</entry>
+  <entry id="60294" lang="en" sex="m">Prey On The Weak</entry>
+  <entry id="60295" lang="en" sex="m">Rabid Bear Strike</entry>
+  <entry id="60296" lang="en" sex="m">Rabid Wolf Strike</entry>
+  <entry id="60297" lang="en" sex="m">Raging Mongoose</entry>
+  <entry id="60298" lang="en" sex="m">Soaring Raptor Strike</entry>
+  <entry id="60299" lang="en" sex="m">Sudden Leap</entry>
+  <entry id="60300" lang="en" sex="m">Swooping Dragon Strike</entry>
+  <entry id="60301" lang="en" sex="m">Wolf Climbs The Mountain</entry>
+  <entry id="60302" lang="en" sex="m">Wolf Fang Strike</entry>
+  <entry id="60303" lang="en" sex="m">Wolf Pack Tactics</entry>
+  <entry id="60304" lang="en" sex="m">Wolverine Stance</entry>
+  <entry id="60305" lang="en" sex="m">Battle Leader's Charge</entry>
+  <entry id="60306" lang="en" sex="m">Bolstering Voice</entry>
+  <entry id="60307" lang="en" sex="m">Clarion Call</entry>
+  <entry id="60308" lang="en" sex="m">Covering Strike</entry>
+  <entry id="60309" lang="en" sex="m">Douse The Flames</entry>
+  <entry id="60310" lang="en" sex="m">Flanking Maneuver</entry>
+  <entry id="60311" lang="en" sex="m">Leading The Attack</entry>
+  <entry id="60312" lang="en" sex="m">Leading the Charge</entry>
+  <entry id="60313" lang="en" sex="m">Lion's Roar</entry>
+  <entry id="60314" lang="en" sex="m">Order Forged From Chaos</entry>
+  <entry id="60315" lang="en" sex="m">Press The Advantage</entry>
+  <entry id="60316" lang="en" sex="m">Swarm Tactics</entry>
+  <entry id="60317" lang="en" sex="m">Swarming Assault</entry>
+  <entry id="60318" lang="en" sex="m">Tactical Strike</entry>
+  <entry id="60319" lang="en" sex="m">Tactics Of The Wolf</entry>
+  <entry id="60320" lang="en" sex="m">War Leader's Charge</entry>
+  <entry id="60321" lang="en" sex="m">War Master's Charge</entry>
+  <entry id="60322" lang="en" sex="m">Leading the Charge</entry>
+  <entry id="60323" lang="en" sex="m">White Raven Strike</entry>
+  <entry id="60324" lang="en" sex="m">White Raven Tactics</entry>
+  <entry id="60500" lang="en" sex="m">####END_OF_TOB_SPELLBOOK_RESERVE</entry>
   <entry id="61000" lang="en" sex="m">##EPIC_SPELL_AND_ISC_RESERVE</entry>
   <entry id="61500" lang="en" sex="m">##EPIC_SPELL_AND_ISC_RESERVE</entry>
   <entry id="62000" lang="en" sex="m">##END_OF_EPIC_SPELL_AND_ISC_RESERVE</entry>

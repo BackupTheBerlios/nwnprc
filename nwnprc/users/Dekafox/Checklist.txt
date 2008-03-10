@@ -1,9 +1,6 @@
-Warlock
-TLK
-2da
-
 Races - 95 left, 9 open
 do standard race subraces
+Dragonborn
 
 Alter Self
 demilich
@@ -14,4 +11,4 @@ Eldritch Disciple - eldritch essence invocations applying to divine spells with 
 Eldritch Theurge - embed AoE spells in the Eldritch Blast, EldDis ability above to arcane spells, embed touch spells like AoE spells
 Enlightened Spirit
 Hellfire Warlock - Hellfire INfusion(metamagic added to charged items when used)
-Dragon Descendent
+Dragon Descendent - increase monk abilities, swift action calls

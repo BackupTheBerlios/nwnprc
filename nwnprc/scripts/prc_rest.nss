@@ -237,12 +237,16 @@ void RestFinished(object oPC)
     //Add daily Uses of Fiendish Resilience
     if(GetHasFeat(FEAT_EPIC_FIENDISH_RESILIENCE_I))
     {
+        int nFeatAmt = 0;
         int bDone = FALSE;
         while(!bDone)
         {   if(nFeatAmt >= 9) 
                 bDone = TRUE;
             else if(GetHasFeat(FEAT_EPIC_FIENDISH_RESILIENCE_II + nFeatAmt))
+            {
                 IncrementRemainingFeatUses(oPC, FEAT_FIENDISH_RESILIENCE);
+                nFeatAmt++;
+            }
             else
                 bDone = TRUE;
         }

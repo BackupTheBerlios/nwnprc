@@ -1,51 +1,47 @@
 2DA V2.0
 
-   Label                      Name     Level FeatID IPFeatID SpellID RealSpellID HasPrereqs 
-0  ****                       ****     ****  ****   ****     ****    ****        0          
-1  **Least_Draconic**         ****     ****  ****   ****     ****    ****        0          
-2  BeguilingInfluence         16832981 1     7501   15001    18159   18001       0          
-3  BreathOfTheNight           16832983 1     7502   15002    18160   18002       0          
-4  Darkness                   16832985 1     7503   15003    18161   18003       0          
-5  DeafeningRoar              16832987 1     7504   15004    18162   18004       0          
-6  DraconicKnowledge          16832989 1     7505   15005    18163   18005       0          
-7  EndureExposure             16832991 1     7506   15006    18164   18006       0          
-8  MagicInsight               16832993 1     7507   15007    18165   18007       0          
-9  ScaldingGust               16832995 1     7508   15008    18166   18008       0          
-10 SeetheUnseen               16832997 1     7509   15009    18167   18009       0          
-11 **Lesser_Draconic**        ****     ****  ****   ****     ****    ****        0          
-12 Charm                      16832999 2     7510   15010    18169   18010       0          
-13 EnergyResistance           16833001 2     7511   15011    18170   ****        0          
-14 EnergyResistance_Acid      16833003 ****  ****   ****     18171   18012       0          
-15 EnergyResistance_Cold      16833004 ****  ****   ****     18172   18013       0          
-16 EnergyResistance_Elec      16833005 ****  ****   ****     18173   18014       0          
-17 EnergyResistance_Fire      16833006 ****  ****   ****     18174   18015       0          
-18 EnergyResistance_Sonic     16833007 ****  ****   ****     18175   18016       0          
-19 FrightfulPresence          16833008 2     7512   15012    18176   18017       0          
-20 HumanoidShape              16833010 2     7513   15013    18177   18018       0          
-21 HumanoidShape_Select_Form  16833003 ****  ****   ****     18178   18019       0          
-22 HumanoidShape_Options      16833004 ****  ****   ****     18179   18020       0          
-23 HumanoidShape_True_Form    16833005 ****  ****   ****     18180   18021       0          
-24 HumanoidShape_Quickslot_1  16833006 ****  ****   ****     18181   18022       0          
-25 HumanoidShape_Quickslot_2  16833007 ****  ****   ****     18182   18023       0          
-26 Voidsense                  16833012 2     7514   15014    18183   18024       0          
-27 VoraciousDispelling        16833014 2     7515   15015    18184   18025       0          
-28 WalkUnseen                 16833016 2     7516   15016    18185   18026       0          
-29 **Greater_Draconic**       ****     ****  ****   ****     ****    ****        0          
-30 AuraOfFlame                16833018 3     7517   15017    18187   18027       0          
-31 ChillingFog                16833020 3     7518   15018    18188   18028       0          
-32 DevourMagic                16833022 3     7519   15019    18189   18029       0          
-33 DraconicToughness          16833024 3     7520   15020    18190   18030       0          
-34 TerrifyingRoar             16833026 3     7521   15021    18191   18031       0          
-35 **Dark_Draconic**          ****     ****  ****   ****     ****    ****        0          
-36 EnergyImmunity             16833028 4     7522   15022    18193   ****        0          
-37 EnergyImmunity_Acid        16833030 ****  ****   ****     18194   18033       0          
-38 EnergyImmunity_Cold        16833031 ****  ****   ****     18195   18034       0          
-39 EnergyImmunity_Elec        16833032 ****  ****   ****     18196   18035       0          
-40 EnergyImmunity_Fire        16833033 ****  ****   ****     18197   18036       0          
-41 EnergyImmunity_Sonic       16833034 ****  ****   ****     18198   18037       0          
-42 InstillVulnerability       16833035 4     7523   15023    18199   ****        0          
-43 InstillVulnerability_Acid  16833037 ****  ****   ****     18200   18039       0          
-44 InstillVulnerability_Cold  16833038 ****  ****   ****     18201   18040       0          
-45 InstillVulnerability_Elec  16833039 ****  ****   ****     18202   18041       0          
-46 InstillVulnerability_Fire  16833040 ****  ****   ****     18203   18042       0          
-47 InstillVulnerability_Sonic 16833041 ****  ****   ****     18204   18043       0          
+   Label                                       Level FeatID IPFeatID SpellID RealSpellID ReqFeat 
+0  ****                                        ****  ****   ****     ****    ****        ****    
+1  Dragonfire_Adept_BeguilingInfluence         1     7595   4795     18269   18001       ****    
+2  Dragonfire_Adept_BreathOfTheNight           1     7596   4796     18270   18002       ****    
+3  Dragonfire_Adept_Darkness                   1     7597   4797     18271   18003       ****    
+4  Dragonfire_Adept_DeafeningRoar              1     7598   4798     18272   18004       ****    
+5  Dragonfire_Adept_DraconicKnowledge          1     7599   4799     18273   18005       ****    
+6  Dragonfire_Adept_EndureExposure             1     7600   4800     18274   18006       ****    
+7  Dragonfire_Adept_MagicInsight               1     7601   4801     18275   18007       ****    
+8  Dragonfire_Adept_ScaldingGust               1     7602   4802     18276   18008       ****    
+9  Dragonfire_Adept_SeeTheUnseen               1     7603   4803     18277   18009       ****    
+10 Dragonfire_Adept_Charm                      2     7604   4804     18278   18010       ****    
+11 Dragonfire_Adept_EnergyResistance           2     7605   4805     18279   18011       ****    
+12 Dragonfire_Adept_EnergyResistanceAcid       ****  ****   ****     18280   18012       ****    
+13 Dragonfire_Adept_EnergyResistanceCold       ****  ****   ****     18281   18013       ****    
+14 Dragonfire_Adept_EnergyResistanceElectric   ****  ****   ****     18282   18014       ****    
+15 Dragonfire_Adept_EnergyResistanceFire       ****  ****   ****     18283   18015       ****    
+16 Dragonfire_Adept_EnergyResistanceSonic      ****  ****   ****     18284   18016       ****    
+17 Dragonfire_Adept_FrightfulPresence          2     7606   4806     18285   18017       ****    
+18 Dragonfire_Adept_HumanoidShape              2     7607   4807     18286   18018       ****    
+19 Dragonfire_Adept_HumanoidShape_Select_Form  ****  ****   ****     18287   18019       ****    
+20 Dragonfire_Adept_HumanoidShape_Options      ****  ****   ****     18288   18020       ****    
+21 Dragonfire_Adept_HumanoidShape_True_Form    ****  ****   ****     18289   18021       ****    
+22 Dragonfire_Adept_HumanoidShape_Quickslot_1  ****  ****   ****     18290   18022       ****    
+23 Dragonfire_Adept_HumanoidShape_Quickslot_2  ****  ****   ****     18291   18023       ****    
+24 Dragonfire_Adept_Voidsense                  2     7608   4808     18292   18024       ****    
+25 Dragonfire_Adept_VoraciousDispelling        2     7609   4809     18293   18025       ****    
+26 Dragonfire_Adept_WalkUnseen                 2     7610   4810     18294   18026       ****    
+27 Dragonfire_Adept_AuraOfFlame                3     7611   4811     18295   18027       ****    
+28 Dragonfire_Adept_ChillingFog                3     7612   4812     18296   18028       ****    
+29 Dragonfire_Adept_DevourMagic                3     7613   4813     18297   18029       ****    
+30 Dragonfire_Adept_DraconicToughness          3     7614   4814     18298   18030       ****    
+31 Dragonfire_Adept_TerrifyingRoar             3     7615   4815     18299   18031       ****    
+32 Dragonfire_Adept_EnergyImmunity             4     7616   4816     18300   18032       ****    
+33 Dragonfire_Adept_EnergyImmunityAcid         ****  ****   ****     18301   18033       ****    
+34 Dragonfire_Adept_EnergyImmunityCold         ****  ****   ****     18302   18034       ****    
+35 Dragonfire_Adept_EnergyImmunityElectric     ****  ****   ****     18303   18035       ****    
+36 Dragonfire_Adept_EnergyImmunityFire         ****  ****   ****     18304   18036       ****    
+37 Dragonfire_Adept_EnergyImmunitySonic        ****  ****   ****     18305   18037       ****    
+38 Dragonfire_Adept_InstillVulnerability       4     7617   4817     18306   18038       ****    
+39 Dragonfire_Adept_InstillVulnerability_Acid  ****  ****   ****     18307   18039       ****    
+40 Dragonfire_Adept_InstillVulnerability_Cold  ****  ****   ****     18308   18040       ****    
+41 Dragonfire_Adept_InstillVulnerability_Elec  ****  ****   ****     18309   18041       ****    
+42 Dragonfire_Adept_InstillVulnerability_Fire  ****  ****   ****     18310   18042       ****    
+43 Dragonfire_Adept_InstillVulnerability_Sonic ****  ****   ****     18311   18043       ****    

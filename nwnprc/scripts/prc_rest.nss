@@ -233,6 +233,20 @@ void RestFinished(object oPC)
         }
     }
     DeleteLocalInt(oPC, "DragonWard");
+    
+    //Add daily Uses of Fiendish Resilience
+    if(GetHasFeat(FEAT_EPIC_FIENDISH_RESILIENCE_I))
+    {
+        int bDone = FALSE;
+        while(!bDone)
+        {   if(nFeatAmt >= 9) 
+                bDone = TRUE;
+            else if(GetHasFeat(FEAT_EPIC_FIENDISH_RESILIENCE_II + nFeatAmt))
+                IncrementRemainingFeatUses(oPC, FEAT_FIENDISH_RESILIENCE);
+            else
+                bDone = TRUE;
+        }
+    }
 
     //skip time forward if applicable
     AdvanceTimeForPlayer(oPC, HoursToSeconds(8));

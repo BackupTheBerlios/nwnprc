@@ -14,6 +14,12 @@
 
 void main()
 {
+    if (!PreInvocationCastCode())
+    {
+        return;
+    }
+    // End of Spell Cast Hook
+    
     object oCaster = OBJECT_SELF;
     int nCasterLevel = GetInvokerLevel(OBJECT_SELF, GetInvokingClass());
     object oTarget = PRCGetSpellTargetObject();

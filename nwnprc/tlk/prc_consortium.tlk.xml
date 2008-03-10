@@ -20534,6 +20534,121 @@ Use: Automatic.</entry>
   <entry id="50638" lang="en" sex="m">&lt;CUSTOM0&gt; turns water creatures.</entry>
   <entry id="50639" lang="en" sex="m">&lt;CUSTOM0&gt; turns fire creatures.</entry>
   <entry id="50640" lang="en" sex="m">&lt;CUSTOM0&gt; turns blightspawned.</entry>
+  <entry id="50658" lang="en" sex="m">Shadowmaster Shades</entry>
+  <entry id="50659" lang="en" sex="m">Dominate Elemental</entry>
+  <entry id="50660" lang="en" sex="m">Epic Fiendish Resilience II</entry>
+  <entry id="50661" lang="en" sex="m">Epic Fiendish Resilience III</entry>
+  <entry id="50662" lang="en" sex="m">Epic Fiendish Resilience IV</entry>
+  <entry id="50663" lang="en" sex="m">Epic Fiendish Resilience V</entry>
+  <entry id="50664" lang="en" sex="m">Epic Fiendish Resilience VI</entry>
+  <entry id="50665" lang="en" sex="m">Epic Fiendish Resilience VII</entry>
+  <entry id="50666" lang="en" sex="m">Epic Fiendish Resilience VIII</entry>
+  <entry id="50667" lang="en" sex="m">Epic Fiendish Resilience IX</entry>
+  <entry id="50668" lang="en" sex="m">Epic Fiendish Resilience X</entry>
+  <entry id="50669" lang="en" sex="m">Extra Invocation II</entry>
+  <entry id="50670" lang="en" sex="m">Extra Invocation III</entry>
+  <entry id="50671" lang="en" sex="m">Extra Invocation IV</entry>
+  <entry id="50672" lang="en" sex="m">Extra Invocation V</entry>
+  <entry id="50673" lang="en" sex="m">Extra Invocation VI</entry>
+  <entry id="50674" lang="en" sex="m">Extra Invocation VII</entry>
+  <entry id="50675" lang="en" sex="m">Extra Invocation VIII</entry>
+  <entry id="50676" lang="en" sex="m">Extra Invocation IX</entry>
+  <entry id="50677" lang="en" sex="m">Extra Invocation X</entry>
+  <entry id="50678" lang="en" sex="m">Epic Extra Invocation II</entry>
+  <entry id="50679" lang="en" sex="m">Epic Extra Invocation III</entry>
+  <entry id="50680" lang="en" sex="m">Epic Extra Invocation IV</entry>
+  <entry id="50681" lang="en" sex="m">Epic Extra Invocation V</entry>
+  <entry id="50682" lang="en" sex="m">Epic Extra Invocation VI</entry>
+  <entry id="50683" lang="en" sex="m">Epic Extra Invocation VII</entry>
+  <entry id="50684" lang="en" sex="m">Epic Extra Invocation VIII</entry>
+  <entry id="50685" lang="en" sex="m">Epic Extra Invocation IX</entry>
+  <entry id="50686" lang="en" sex="m">Epic Extra Invocation X</entry>
+  <entry id="50687" lang="en" sex="m">Epic Eldritch Blast II</entry>
+  <entry id="50688" lang="en" sex="m">Epic Eldritch Blast III</entry>
+  <entry id="50689" lang="en" sex="m">Epic Eldritch Blast IV</entry>
+  <entry id="50690" lang="en" sex="m">Epic Eldritch Blast V</entry>
+  <entry id="50691" lang="en" sex="m">Epic Eldritch Blast VI</entry>
+  <entry id="50692" lang="en" sex="m">Epic Eldritch Blast VII</entry>
+  <entry id="50693" lang="en" sex="m">Epic Eldritch Blast VIII</entry>
+  <entry id="50694" lang="en" sex="m">Epic Eldritch Blast IX</entry>
+  <entry id="50695" lang="en" sex="m">Epic Eldritch Blast X</entry>
+  <entry id="50696" lang="en" sex="m">Shadowmaster</entry>
+  <entry id="50697" lang="en" sex="m">Type of Feat: Epic
+Prerequisite: Spellcraft 24 ranks, beshadowed blast, dark discorporation, darkness, enervating shadow.
+Specifics: You can create streaking masses of shadow around your form, providing you with a 50% miss chance against all attacks (as displacement). Activating this ability requires a standard action.
+
+You can use material from the Plane of Shadows to create quasireal illusions, mimicking certain sorcerer and wizard conjuration spells(as the spell Shades).
+
+Use: Automatic.</entry>
+  <entry id="50698" lang="en" sex="m">Paragon Visionary</entry>
+  <entry id="50699" lang="en" sex="m">Type of Feat: Epic
+Prerequisite: Spellcraft 24 ranks, dark foresight, devil's sight, see the unseen, voidsense.
+Specifics: You can see through illusions, magical darkness, shapechangers, and other effects (as true seeing). This is a supernatural ability.
+
+You receive a bonus on all Listen, Sense Motive, and Spot checks equal to double your Wisdom modifier or +6, whichever is greater. This is an extraordinary ability.
+
+Use: Automatic.</entry>
+  <entry id="50700" lang="en" sex="m">Morpheme Savant</entry>
+  <entry id="50701" lang="en" sex="m">Type of Feat: Epic
+Prerequisite: Baleful utterance, beguiling influence, word of changing, character level 21.
+Specifics: You can use power word kill or power word stun. Activating this ability requires a standard action.
+
+When you use your beguiling influence invocation, the bonus granted on your Bluff, Diplomacy, and Intimidate checks is equal to double your Charisma bonus or +6, whichever is greater. Using this ability is part of the casting of the beguiling influence invocation. It is an extraordinary ability. 
+
+Use: Automatic.</entry>
+  <entry id="50702" lang="en" sex="m">Master of the Elements</entry>
+  <entry id="50703" lang="en" sex="m">Type of Feat: Epic
+Prerequisite: Spellcraft 24 ranks, breath of the night, chilling tentacles, stony grasp, wall of perilous flame.
+Specifics: As a full-round action, you can summon a single elder elemental. The monster serves you for a number of rounds equal to your caster level. Activating this ability requires a standard action.
+
+You can use dominate monster on elementals and creatures with the elemental racial type.
+
+You gain energy resistance 10 to acid, cold, electricity, fire, and sonic. If you have energy resistance from the warlock class, your resistance to those two elements increases by 10. This is an extraordinary ability.
+Use: Automatic.</entry>
+  <entry id="50704" lang="en" sex="m">Lord of All Essences</entry>
+  <entry id="50705" lang="en" sex="m">Type of Feat: Epic
+Prerequisite: One least, lesser, greater, and dark eldritch essence invocation, Spellcraft 24 ranks.
+Specifics: When you use the eldritch blast ability, you can apply two eldritch essence invocations simultaneously. You could choose to fire an eldritch blast with both the binding blast and noxious blast eldritch essences. This also allows you to apply the same effect twice, though this is not beneficial in the case of all eldritch essences. The effects of each essence are resolved separately. If you imbue your eldritch blast with two different types of damage, half of the damage (rounded down) is dealt by each source. You must choose which essences you will use in conjunction with your eldritch blast before you start your action. If you possess the Eldritch Sculptor feat, you can apply two eldritch essence invocations to both your eldritch blasts in a single round. Activating this ability is part of the action to use an eldritch blast.
+
+For example, if Morthos is fighting an outsider he has never encountered, he can choose to imbue his eldritch blast with both hellrime blast and brimstone blast. He rolls 10d6 damage, dealing half fire and half cold damage. If the outsider happened to be immune to cold, but not fire, it would still take damage from the half that dealt fire damage.
+
+In addition, the DC of all eldritch essence invocations you use increases by 2. This is an extraordinary ability.
+
+You can use this feat to toggle which essence slot your activated essence invocations go into.
+Use: Selected.</entry>
+  <entry id="50706" lang="en" sex="m">Epic Fiendish Resilience I</entry>
+  <entry id="50707" lang="en" sex="m">Type of Feat: Epic
+Prerequisite: Fiendish Resilience that grants Fast Healing 5.
+Specifics: When you use your fiendish resilience ability, you gain fast healing 25 for 5 minutes. 
+You can gain feat multiple times. Each time you take the feat, you gain an additional use of the fiendish resilience ability, and the fast healing granted by the feat increases by 5.
+Use: Automatic.</entry>
+  <entry id="50708" lang="en" sex="m">Extra Invocation I</entry>
+  <entry id="50709" lang="en" sex="m">Type of Feat: General
+Prerequisite: A lesser warlock invocation.
+Specifics: You learn an extra invocation.  It must be of one lower level than the max level of invocation you can learn.
+
+This feat can be taken multiple times, and its effects stack.
+Use: Automatic.</entry>
+  <entry id="50710" lang="en" sex="m">Epic Extra Invocation I</entry>
+  <entry id="50711" lang="en" sex="m">Type of Feat: Epic
+Prerequisite: Ability to use dark invocations, Spellcraft 24 ranks.
+Specifics: You learn an extra invocation.
+
+This feat can be taken multiple times, and its effects stack.
+Use: Automatic.</entry>
+  <entry id="50712" lang="en" sex="m">Epic Eldritch Blast I</entry>
+  <entry id="50713" lang="en" sex="m">Type of Feat: Epic
+Prerequisite: Eldritch Blast 9d6.
+Specifics: The damage of your Eldritch Blast increases by 1d6
+
+This feat can be taken multiple times, and its effects stack.
+Use: Automatic.</entry>
+  <entry id="50714" lang="en" sex="m">Eldritch Sculptor</entry>
+  <entry id="50715" lang="en" sex="m">Type of Feat: Epic
+Prerequisite: one invocation from each invocation rank, Spellcraft 24.
+Specifics: You use two eldritch blasts instead of one.  In addition, the area of each one is doubled.  Eldritch Chain will chain out to 60' from each creature now, and Eldritch cone extends to 120'.
+You also gain +2 on all attack rolls with your eldritch blast.
+Use: Automatic.</entry>
   <entry id="50716" lang="en" sex="m">Decieve Item</entry>
   <entry id="50717" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Warlock 4.
@@ -41311,8 +41426,162 @@ You polymorph yourself into the form of a fiendish large monstrous spider.  You 
   <entry id="60324" lang="en" sex="m">White Raven Tactics</entry>
   <entry id="60500" lang="en" sex="m">####END_OF_TOB_SPELLBOOK_RESERVE</entry>
   <entry id="61000" lang="en" sex="m">##EPIC_SPELL_AND_ISC_RESERVE</entry>
-  <entry id="61500" lang="en" sex="m">##EPIC_SPELL_AND_ISC_RESERVE</entry>
-  <entry id="62000" lang="en" sex="m">##END_OF_EPIC_SPELL_AND_ISC_RESERVE</entry>
+  <entry id="61500" lang="en" sex="m">##END_OF_EPIC_SPELL_AND_ISC_RESERVE</entry>
+  <entry id="61501" lang="en" sex="m">####START_OF_INV_SPELLBOOK_RESERVE</entry>
+  <entry id="61502" lang="en" sex="m">Warlock Beguiling Influence</entry>
+  <entry id="61503" lang="en" sex="m">Warlock Breath of the Night</entry>
+  <entry id="61504" lang="en" sex="m">Warlock Darkness</entry>
+  <entry id="61505" lang="en" sex="m">Warlock See the Unseen</entry>
+  <entry id="61506" lang="en" sex="m">Warlock Charm</entry>
+  <entry id="61507" lang="en" sex="m">Warlock Voidsense</entry>
+  <entry id="61508" lang="en" sex="m">Warlock Voracious Dispelling</entry>
+  <entry id="61509" lang="en" sex="m">Warlock Walk Unseen</entry>
+  <entry id="61510" lang="en" sex="m">Warlock Devour Magic</entry>
+  <entry id="61511" lang="en" sex="m">Warlock All Seeing Eyes</entry>
+  <entry id="61512" lang="en" sex="m">Warlock Baleful Utterance</entry>
+  <entry id="61513" lang="en" sex="m">Warlock Call of the Beast</entry>
+  <entry id="61514" lang="en" sex="m">Warlock Cocoon of Refuse</entry>
+  <entry id="61515" lang="en" sex="m">Warlock Dark One's Own Luck</entry>
+  <entry id="61516" lang="en" sex="m">Warlock Dark One's Own Luck - Fortitude</entry>
+  <entry id="61517" lang="en" sex="m">Warlock Dark One's Own Luck - Reflex</entry>
+  <entry id="61518" lang="en" sex="m">Warlock Dark One's Own Luck - Will</entry>
+  <entry id="61519" lang="en" sex="m">Warlock Devil's Sight</entry>
+  <entry id="61520" lang="en" sex="m">Warlock Earthen Grasp</entry>
+  <entry id="61521" lang="en" sex="m">Warlock Eldritch Glaive</entry>
+  <entry id="61522" lang="en" sex="m">Warlock Eldritch Spear</entry>
+  <entry id="61523" lang="en" sex="m">Warlock Entropic Warding</entry>
+  <entry id="61524" lang="en" sex="m">Warlock Frightful Blast</entry>
+  <entry id="61525" lang="en" sex="m">Warlock Hammer Blast</entry>
+  <entry id="61526" lang="en" sex="m">Warlock Hideous Blow</entry>
+  <entry id="61527" lang="en" sex="m">Warlock Leaps and Bounds</entry>
+  <entry id="61528" lang="en" sex="m">Warlock Miasmic Cloud</entry>
+  <entry id="61529" lang="en" sex="m">Warlock Otherwordly Whispers</entry>
+  <entry id="61530" lang="en" sex="m">Warlock Serpent's Tongue</entry>
+  <entry id="61531" lang="en" sex="m">Warlock Sickening Blast</entry>
+  <entry id="61532" lang="en" sex="m">Warlock Soulreaving Aura</entry>
+  <entry id="61533" lang="en" sex="m">Warlock Summon Swarm</entry>
+  <entry id="61534" lang="en" sex="m">Warlock Summon Swarm - Bat</entry>
+  <entry id="61535" lang="en" sex="m">Warlock Summon Swarm - Rat</entry>
+  <entry id="61536" lang="en" sex="m">Warlock Swimming the Styx</entry>
+  <entry id="61537" lang="en" sex="m">Warlock Baneful Blast - Abberation</entry>
+  <entry id="61538" lang="en" sex="m">Warlock Baneful Blast - Beast</entry>
+  <entry id="61539" lang="en" sex="m">Warlock Baneful Blast - Construct</entry>
+  <entry id="61540" lang="en" sex="m">Warlock Baneful Blast - Dragon</entry>
+  <entry id="61541" lang="en" sex="m">Warlock Baneful Blast - Dwarf</entry>
+  <entry id="61542" lang="en" sex="m">Warlock Baneful Blast - Elemental</entry>
+  <entry id="61543" lang="en" sex="m">Warlock Baneful Blast - Elf</entry>
+  <entry id="61544" lang="en" sex="m">Warlock Baneful Blast - Fey</entry>
+  <entry id="61545" lang="en" sex="m">Warlock Baneful Blast - Giant</entry>
+  <entry id="61546" lang="en" sex="m">Warlock Baneful Blast - Goblinoid</entry>
+  <entry id="61547" lang="en" sex="m">Warlock Baneful Blast - Gnome</entry>
+  <entry id="61548" lang="en" sex="m">Warlock Baneful Blast - Halfling</entry>
+  <entry id="61549" lang="en" sex="m">Warlock Baneful Blast - Human</entry>
+  <entry id="61550" lang="en" sex="m">Warlock Baneful Blast - Monstrous Humanoid</entry>
+  <entry id="61551" lang="en" sex="m">Warlock Baneful Blast - Orc</entry>
+  <entry id="61552" lang="en" sex="m">Warlock Baneful Blast - Outsider</entry>
+  <entry id="61553" lang="en" sex="m">Warlock Baneful Blast - Plant</entry>
+  <entry id="61554" lang="en" sex="m">Warlock Baneful Blast - Reptilian</entry>
+  <entry id="61555" lang="en" sex="m">Warlock Baneful Blast - Shapechanger</entry>
+  <entry id="61556" lang="en" sex="m">Warlock Baneful Blast - Undead</entry>
+  <entry id="61557" lang="en" sex="m">Warlock Baneful Blast - Vermin</entry>
+  <entry id="61558" lang="en" sex="m">Warlock Beshadowed Blast</entry>
+  <entry id="61559" lang="en" sex="m">Warlock Brimstone Blast</entry>
+  <entry id="61560" lang="en" sex="m">Warlock Cold Comfort</entry>
+  <entry id="61561" lang="en" sex="m">Warlock Curse of Despair</entry>
+  <entry id="61562" lang="en" sex="m">Warlock Dread Seizure</entry>
+  <entry id="61563" lang="en" sex="m">Warlock Eldritch Chain</entry>
+  <entry id="61564" lang="en" sex="m">Warlock Flee the Scene</entry>
+  <entry id="61565" lang="en" sex="m">Warlock Flee the Scene - Selection</entry>
+  <entry id="61566" lang="en" sex="m">Warlock Flee the Scene - Direction and Distance</entry>
+  <entry id="61567" lang="en" sex="m">Warlock Hellrime Blast</entry>
+  <entry id="61568" lang="en" sex="m">Warlock Hungry Darkness</entry>
+  <entry id="61569" lang="en" sex="m">Warlock Ignore the Pyre</entry>
+  <entry id="61570" lang="en" sex="m">Warlock Ignore the Pyre - Acid</entry>
+  <entry id="61571" lang="en" sex="m">Warlock Ignore the Pyre - Cold</entry>
+  <entry id="61572" lang="en" sex="m">Warlock Ignore the Pyre - Electric</entry>
+  <entry id="61573" lang="en" sex="m">Warlock Ignore the Pyre - Fire</entry>
+  <entry id="61574" lang="en" sex="m">Warlock Ignore the Pyre - Sonic</entry>
+  <entry id="61575" lang="en" sex="m">Warlock Mask of Flesh</entry>
+  <entry id="61576" lang="en" sex="m">Warlock Mask of Flesh - Friendly</entry>
+  <entry id="61577" lang="en" sex="m">Warlock Mask of Flesh - Hostile</entry>
+  <entry id="61578" lang="en" sex="m">Warlock Relentless Dispelling</entry>
+  <entry id="61579" lang="en" sex="m">Warlock Spider Shape</entry>
+  <entry id="61580" lang="en" sex="m">Warlock Stony Grasp</entry>
+  <entry id="61581" lang="en" sex="m">Warlock The Dead Walk</entry>
+  <entry id="61582" lang="en" sex="m">Warlock Wall of Gloom</entry>
+  <entry id="61583" lang="en" sex="m">Warlock Witchwood Step</entry>
+  <entry id="61584" lang="en" sex="m">Warlock Bewitching Blast</entry>
+  <entry id="61585" lang="en" sex="m">Warlock Caustic Mire</entry>
+  <entry id="61586" lang="en" sex="m">Warlock Chilling Tentacles</entry>
+  <entry id="61587" lang="en" sex="m">Warlock Dragon Ward</entry>
+  <entry id="61588" lang="en" sex="m">Warlock Eldritch Cone</entry>
+  <entry id="61589" lang="en" sex="m">Warlock Eldritch Line</entry>
+  <entry id="61590" lang="en" sex="m">Warlock Enervating Shadow</entry>
+  <entry id="61591" lang="en" sex="m">Warlock Hellspawned Grace</entry>
+  <entry id="61592" lang="en" sex="m">Warlock Hindering Blast</entry>
+  <entry id="61593" lang="en" sex="m">Warlock Nightmares Made Real</entry>
+  <entry id="61594" lang="en" sex="m">Warlock Noxious Blast</entry>
+  <entry id="61595" lang="en" sex="m">Warlock Painful Slumber of Ages</entry>
+  <entry id="61596" lang="en" sex="m">Warlock Penetrating Blast</entry>
+  <entry id="61597" lang="en" sex="m">Warlock Tenacious Plague</entry>
+  <entry id="61598" lang="en" sex="m">Warlock Vitriolic Blast</entry>
+  <entry id="61599" lang="en" sex="m">Warlock Wall of Perilous Flame</entry>
+  <entry id="61600" lang="en" sex="m">Warlock Binding Blast</entry>
+  <entry id="61601" lang="en" sex="m">Warlock Caster's Lament</entry>
+  <entry id="61602" lang="en" sex="m">Warlock Dark Discorporation</entry>
+  <entry id="61603" lang="en" sex="m">Warlock Dark Foresight</entry>
+  <entry id="61604" lang="en" sex="m">Warlock Eldritch Doom</entry>
+  <entry id="61605" lang="en" sex="m">Warlock Path of Shadow</entry>
+  <entry id="61606" lang="en" sex="m">Warlock Path of Shadow - Self</entry>
+  <entry id="61607" lang="en" sex="m">Warlock Path of Shadow - Party</entry>
+  <entry id="61608" lang="en" sex="m">Warlock Retributive Invisibility</entry>
+  <entry id="61609" lang="en" sex="m">Warlock Steal Summoning</entry>
+  <entry id="61610" lang="en" sex="m">Warlock Utterdark Blast</entry>
+  <entry id="61611" lang="en" sex="m">Warlock Word of Changing</entry>
+  <entry id="61612" lang="en" sex="m">Dragonfire Adept Beguiling Influence</entry>
+  <entry id="61613" lang="en" sex="m">Dragonfire Adept Breath of the Night</entry>
+  <entry id="61614" lang="en" sex="m">Dragonfire Adept Darkness</entry>
+  <entry id="61615" lang="en" sex="m">Dragonfire Adept Deafening Roar</entry>
+  <entry id="61616" lang="en" sex="m">Dragonfire Adept Draconic Knowledge</entry>
+  <entry id="61617" lang="en" sex="m">Dragonfire Adept Endure Exposure</entry>
+  <entry id="61618" lang="en" sex="m">Dragonfire Adept Magic Insight</entry>
+  <entry id="61619" lang="en" sex="m">Dragonfire Adept Scalding Gust</entry>
+  <entry id="61620" lang="en" sex="m">Dragonfire Adept See the Unseen</entry>
+  <entry id="61621" lang="en" sex="m">Dragonfire Adept Charm</entry>
+  <entry id="61622" lang="en" sex="m">Dragonfire Adept Energy Resistance</entry>
+  <entry id="61623" lang="en" sex="m">Dragonfire Adept Energy Resistance: Acid</entry>
+  <entry id="61624" lang="en" sex="m">Dragonfire Adept Energy Resistance: Cold</entry>
+  <entry id="61625" lang="en" sex="m">Dragonfire Adept Energy Resistance: Electricity</entry>
+  <entry id="61626" lang="en" sex="m">Dragonfire Adept Energy Resistance: Fire</entry>
+  <entry id="61627" lang="en" sex="m">Dragonfire Adept Energy Resistance: Sonic</entry>
+  <entry id="61628" lang="en" sex="m">Dragonfire Adept Frightful Presence</entry>
+  <entry id="61629" lang="en" sex="m">Dragonfire Adept Humanoid Shape</entry>
+  <entry id="61630" lang="en" sex="m">Dragonfire Adept Humanoid Shape</entry>
+  <entry id="61631" lang="en" sex="m">Dragonfire Adept Humanoid Shape Options</entry>
+  <entry id="61632" lang="en" sex="m">Dragonfire Adept Return to True Form</entry>
+  <entry id="61633" lang="en" sex="m">Dragonfire Adept Humanoid Quickslot 1</entry>
+  <entry id="61634" lang="en" sex="m">Dragonfire Adept Humanoid Quickslot 2</entry>
+  <entry id="61635" lang="en" sex="m">Dragonfire Adept Voidsense</entry>
+  <entry id="61636" lang="en" sex="m">Dragonfire Adept Voracious Dispelling</entry>
+  <entry id="61637" lang="en" sex="m">Dragonfire Adept Walk Unseen</entry>
+  <entry id="61638" lang="en" sex="m">Dragonfire Adept Aura of Flame</entry>
+  <entry id="61639" lang="en" sex="m">Dragonfire Adept Chilling Fog</entry>
+  <entry id="61640" lang="en" sex="m">Dragonfire Adept Devour Magic</entry>
+  <entry id="61641" lang="en" sex="m">Dragonfire Adept Draconic Toughness</entry>
+  <entry id="61642" lang="en" sex="m">Dragonfire Adept Terrifying Roar</entry>
+  <entry id="61643" lang="en" sex="m">Dragonfire Adept Energy Immunity</entry>
+  <entry id="61644" lang="en" sex="m">Dragonfire Adept Energy Immunity: Acid</entry>
+  <entry id="61645" lang="en" sex="m">Dragonfire Adept Energy Immunity: Cold</entry>
+  <entry id="61646" lang="en" sex="m">Dragonfire Adept Energy Immunity: Electricity</entry>
+  <entry id="61647" lang="en" sex="m">Dragonfire Adept Energy Immunity: Fire</entry>
+  <entry id="61648" lang="en" sex="m">Dragonfire Adept Energy Immunity: Sonic</entry>
+  <entry id="61649" lang="en" sex="m">Dragonfire Adept Instill Vulnerability</entry>
+  <entry id="61650" lang="en" sex="m">Dragonfire Adept Instill Vulnerability: Acid</entry>
+  <entry id="61651" lang="en" sex="m">Dragonfire Adept Instill Vulnerability: Cold</entry>
+  <entry id="61652" lang="en" sex="m">Dragonfire Adept Instill Vulnerability: Electricity</entry>
+  <entry id="61653" lang="en" sex="m">Dragonfire Adept Instill Vulnerability: Fire</entry>
+  <entry id="61654" lang="en" sex="m">Dragonfire Adept Instill Vulnerability: Sonic</entry>
+  <entry id="62000" lang="en" sex="m">####END_OF_INV_SPELLBOOK_RESERVE</entry>
   <entry id="62001" lang="en" sex="m">####START_OF_NEW_SPELLBOOK_RESERVE</entry>
   <entry id="62002" lang="en" sex="m">Sorcerer Still Augment Familiar</entry>
   <entry id="62003" lang="en" sex="m">Sorcerer Touch of Idiocy</entry>

@@ -475,20 +475,22 @@ int _CheckPrereqsByDiscipline(object oPC, int nDiscipline, int nCount, int nClas
      int nPrereqCount = 0;
      // The range to check for prereqs
      // Some disciplines (5 of the 9) only have one range to check (single class disciplines)
-     if (nDiscipline == DISCIPLINE_DESERT_WIND)    { nCheck = -1; nCheckTo = -1; }
-     if (nDiscipline == DISCIPLINE_DEVOTED_SPIRIT) { nCheck = 8002; nCheckTo = 8049; }
-     if (nDiscipline == DISCIPLINE_IRON_HEART)     { nCheck = -1; nCheckTo = -1; }
-     if (nDiscipline == DISCIPLINE_SETTING_SUN)    { nCheck = -1; nCheckTo = -1; }
-     if (nDiscipline == DISCIPLINE_SHADOW_HAND)    { nCheck = -1; nCheckTo = -1; }
+     if (nDiscipline == DISCIPLINE_DESERT_WIND)    	{ nCheck = 23672; nCheckTo = 23698; }
+     else if (nDiscipline == DISCIPLINE_DEVOTED_SPIRIT) { nCheck = 23602; nCheckTo = 23627; }
+     else if (nDiscipline == DISCIPLINE_IRON_HEART)     { nCheck = 23835; nCheckTo = 23855; }
+     else if (nDiscipline == DISCIPLINE_SETTING_SUN)    { nCheck = 23721; nCheckTo = 23740; }
+     else if (nDiscipline == DISCIPLINE_SHADOW_HAND)    { nCheck = 23741; nCheckTo = 23765; }
      
      // These disciplines require looping over two or three areas in feat.2da
-     if (nDiscipline == DISCIPLINE_DIAMOND_MIND && nClass == CLASS_TYPE_SWORDSAGE)    { nCheck = -1; nCheckTo = -1; }
-     if (nDiscipline == DISCIPLINE_DIAMOND_MIND && nClass == CLASS_TYPE_WARBLADE)     { nCheck2 = -1; nCheckTo2 = -1; bUse2 = TRUE; }
-     if (nDiscipline == DISCIPLINE_STONE_DRAGON && nClass == CLASS_TYPE_CRUSADER)     { nCheck = -1; nCheckTo = -1; }
-     if (nDiscipline == DISCIPLINE_STONE_DRAGON && nClass == CLASS_TYPE_SWORDSAGE)    { nCheck2 = -1; nCheckTo2 = -1; bUse2 = TRUE; }     
-     if (nDiscipline == DISCIPLINE_STONE_DRAGON && nClass == CLASS_TYPE_WARBLADE)     { nCheck3 = -1; nCheckTo3 = -1; bUse3 = TRUE; }     
-     if (nDiscipline == DISCIPLINE_TIGER_CLAW   && nClass == CLASS_TYPE_SWORDSAGE)    { nCheck = -1; nCheckTo = -1; }
-     if (nDiscipline == DISCIPLINE_TIGER_CLAW   && nClass == CLASS_TYPE_WARBLADE)     { nCheck2 = -1; nCheckTo2 = -1; bUse2 = TRUE; }     
+     else if (nDiscipline == DISCIPLINE_DIAMOND_MIND && nClass == CLASS_TYPE_SWORDSAGE)    { nCheck = 23699; nCheckTo = 23720; }
+     else if (nDiscipline == DISCIPLINE_DIAMOND_MIND && nClass == CLASS_TYPE_WARBLADE)     { nCheck2 = 23813; nCheckTo2 = 23834; bUse2 = TRUE; }
+     else if (nDiscipline == DISCIPLINE_STONE_DRAGON && nClass == CLASS_TYPE_CRUSADER)     { nCheck = 23628; nCheckTo = 23651; }
+     else if (nDiscipline == DISCIPLINE_STONE_DRAGON && nClass == CLASS_TYPE_SWORDSAGE)    { nCheck2 = 23766; nCheckTo2 = 23789; bUse2 = TRUE; }     
+     else if (nDiscipline == DISCIPLINE_STONE_DRAGON && nClass == CLASS_TYPE_WARBLADE)     { nCheck3 = 23856; nCheckTo3 = 23879; bUse3 = TRUE; }     
+     else if (nDiscipline == DISCIPLINE_TIGER_CLAW   && nClass == CLASS_TYPE_SWORDSAGE)    { nCheck = 23790; nCheckTo = 23812; }
+     else if (nDiscipline == DISCIPLINE_TIGER_CLAW   && nClass == CLASS_TYPE_WARBLADE)     { nCheck2 = 23880; nCheckTo2 = 23902; bUse2 = TRUE; }     
+     else if (nDiscipline == DISCIPLINE_WHITE_RAVEN  && nClass == CLASS_TYPE_CRUSADER)     { nCheck = 23652; nCheckTo = 23671; }
+     else if (nDiscipline == DISCIPLINE_WHITE_RAVEN  && nClass == CLASS_TYPE_WARBLADE)     { nCheck2 = 23903; nCheckTo2 = 23922; bUse2 = TRUE; }  
      
      // While it hasn't reached the end of the check, keep going
      while (nCheckTo >= nCheck) 
@@ -507,7 +509,7 @@ int _CheckPrereqsByDiscipline(object oPC, int nDiscipline, int nCount, int nClas
         
         nCheck += 1;
      }
-     // Diamond Mind, Stone Dragon, Tiger Claw 2nd class check
+     // Diamond Mind, Stone Dragon, Tiger Claw. White Raven 2nd class check
      while (nCheckTo2 >= nCheck2 && bUse2)      
      {
         // If the PC has a prereq feat, mark it down

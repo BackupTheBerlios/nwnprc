@@ -37,6 +37,8 @@ public final class AMSSpellbookMaker{
 
 	private static String spellbook_filename_start = "cls_spcr_";
 	private static String class_filename_start = "cls_spell_";
+	private static String AMSheader = "prc_";
+	private static int classlength = 5;
 
 	/**
 	 * The main method, as usual.
@@ -52,12 +54,25 @@ public final class AMSSpellbookMaker{
 				if(param.equals("--help")) readMe();
 				else if(param.equals("-tob"))
 				{
-					spellbook_filename_start = "cls_spcr_";
+					classlength = 3;
+					spellbook_filename_start = "cls_mvcr_";
+					AMSheader = "tob_";
+					class_filename_start = "cls_move_";
 					start_label = "####START_OF_TOB_SPELLBOOK_RESERVE";
 					end_label = "####END_OF_TOB_SPELLBOOK_RESERVE";
 
 					System.out.println("Assembling Tome of Battle spellbooks...");
-					System.exit(0);		//remove later for testing code
+				}
+				else if(param.equals("-inv"))
+				{
+					classlength = 3;
+					spellbook_filename_start = "cls_ivcr_";
+					AMSheader = "inv_";
+					class_filename_start = "cls_inv_";
+					start_label = "####START_OF_INV_SPELLBOOK_RESERVE";
+					end_label = "####END_OF_INV_SPELLBOOK_RESERVE";
+
+					System.out.println("Assembling Invocation spellbooks...");
 				}
 				else{
 					for(char c : param.substring(1).toCharArray()){
@@ -351,7 +366,7 @@ public final class AMSSpellbookMaker{
 		}
 
 		//change the ImpactScript
-		String script = "prc_" + (classfilename.length() <= 5 ? classfilename : classfilename.substring(0, 5)) + "_" + metaScript + "_gen";
+		String script = AMSheader + (classfilename.length() <= 5 ? classfilename : classfilename.substring(0, classlength)) + "_generic";
 		spells2da.setEntry("ImpactScript", spells2daRow, script);
 		//change the Label
 		spells2da.setEntry("Label", spells2daRow, label);
@@ -660,10 +675,12 @@ public final class AMSSpellbookMaker{
                            "\n" +
                            "  --help  prints this text\n" +
                            "\n" +
+                           "  -tob    Tome of Battle" +
+                           "  -inv    Invocations" +
                            "\n" +
                            "Creates and/or updates the new AMS spellbooks data. Assumes it's being run from\n" +
                            "the root of the nwnprc cvs module. Looks for dialog.tlk under tlk/.\n" +
-                           "Reads the cls_spcr_*.2da files and updates cls_feat_*.2da, cls_spell*.2da,\n" +
+                           "Reads the cls_??cr_*.2da files and updates cls_feat_*.2da, cls_????*.2da,\n" +
                            "feat.2da, iprp_feats.2da and spells.2da."
                 );
 		System.exit(0);

@@ -163,3 +163,7 @@ const int CLASS_TYPE_TENEBROUS_APOSTATE      = 220;
 const int CLASS_TYPE_WITCH_SLAYER            = 221;
 const int CLASS_TYPE_DRAGON_SHAMAN           = 222;
 const int CLASS_TYPE_SHAMAN                  = 223;
+const int CLASS_TYPE_CRUSADER                = 234;
+const int CLASS_TYPE_SWORDSAGE               = 235;
+const int CLASS_TYPE_WARBLADE                = 236;
+const int CLASS_TYPE_WARMAGE                 = 237;

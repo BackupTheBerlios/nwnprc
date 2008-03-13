@@ -150,7 +150,7 @@ int TOBGetHasDisciplineFocus(object oInitiator, int nDiscipline);
  * @param oCreature Creature to calculate added initiator levels for
  * @return          The number of initiator levels gained
  */
-int GetBladeMagicPRCLevels(object oCreature);
+int GetBladeMagicPRCLevels(object oInitiator);
 
 /**
  * Determines whether a given class is a blade magic class or not. A blade magic
@@ -755,7 +755,7 @@ int GetInitiatorLevel(object oInitiator, int nSpecificClass = CLASS_TYPE_INVALID
                 // See ToB p39
                 // Max level is therefor the level plus 1/2 of remaining levels
                 // Prestige classes are stuck in here 
-                nClassLevel += GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL, oInitiator);
+                nClassLevel += GetBladeMagicPRCLevels(oInitiator);
                 nLevel = nClassLevel + ((nTotalHD - nClassLevel)/2);
             }
         }
@@ -871,33 +871,13 @@ int GetDisciplineByManeuver(int nMoveId, int nClass, int nSpellFeat = -1)
      return -1;
 }
 
-int GetBladeMagicPRCLevels(object oCreature)
+int GetBladeMagicPRCLevels(object oInitiator)
 {
-    int nLevel = 0;
-/*
-    // Cerebremancer and Psychic Theurge add initiator levels on each level
-    nLevel += GetLevelByClass(CLASS_TYPE_CEREBREMANCER, oCreature);
-    nLevel += GetLevelByClass(CLASS_TYPE_PSYCHIC_THEURGE, oCreature);
-
-    // No initiator level boost at level 1 and 10 for Thrallherd
-    if(GetLevelByClass(CLASS_TYPE_THRALLHERD, oCreature))
-    {
-        nLevel += GetLevelByClass(CLASS_TYPE_THRALLHERD, oCreature) - 1;
-        if(GetLevelByClass(CLASS_TYPE_THRALLHERD, oCreature) >= 10) nLevel -= 1;
-    }
-    // No initiator level boost at level 1 and 6 for Iron Mind
-    if(GetLevelByClass(CLASS_TYPE_IRONMIND, oCreature))
-    {
-        nLevel += GetLevelByClass(CLASS_TYPE_IRONMIND, oCreature) - 1;
-        if(GetLevelByClass(CLASS_TYPE_IRONMIND, oCreature) >= 6) nLevel -= 1;
-    }
-    // No initiator level boost at level 1 for Sanctified Mind
-    if(GetLevelByClass(CLASS_TYPE_SANCTIFIED_MIND, oCreature))
-    {
-        nLevel += GetLevelByClass(CLASS_TYPE_SANCTIFIED_MIND, oCreature) - 1;
-    }
-*/
-    return nLevel;
+    	int nLevel = 0;
+	
+	nLevel += GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL, oInitiator);
+	
+    	return nLevel;
 }
 
 int GetFirstBladeMagicClass(object oCreature = OBJECT_SELF)
@@ -942,14 +922,93 @@ int CheckManeuverPrereqs(int nClass, int nFeat, object oPC)
 int GetIsManeuverSupernatural(int nMoveId)
 {
         if (nMoveId == MOVE_DW_BLISTERING_FLOURISH) return TRUE;
-
+        else if (nMoveId == MOVE_DW_BURNING_BLADE) return TRUE;
+        else if (nMoveId == MOVE_DW_DISTRACTING_EMBER) return TRUE;
+        else if (nMoveId == MOVE_DW_FLAMES_BLESSING) return TRUE;
+        else if (nMoveId == MOVE_DW_BURNING_BRAND) return TRUE;
+        else if (nMoveId == MOVE_DW_FIRE_RIPOSTE    ) return TRUE;
+        else if (nMoveId == MOVE_DW_HATCHLINGS_FLAME) return TRUE;
+        else if (nMoveId == MOVE_DW_DEATH_MARK	 ) return TRUE;
+        else if (nMoveId == MOVE_DW_FAN_FLAMES     ) return TRUE;
+        else if (nMoveId == MOVE_DW_HOLOCAUST_CLOAK) return TRUE;
+        else if (nMoveId == MOVE_DW_FIRESNAKE	) return TRUE;
+        else if (nMoveId == MOVE_DW_SEARING_BLADE ) return TRUE;
+        else if (nMoveId == MOVE_DW_SEARING_CHARGE) return TRUE;
+        else if (nMoveId == MOVE_DW_DRAGONS_FLAME ) return TRUE;
+        else if (nMoveId == MOVE_DW_LEAPING_FLAME    ) return TRUE;
+        else if (nMoveId == MOVE_DW_LINGERING_INFERNO) return TRUE;
+        else if (nMoveId == MOVE_DW_FIERY_ASSAULT ) return TRUE;
+        else if (nMoveId == MOVE_DW_RING_FIRE	) return TRUE;
+        else if (nMoveId == MOVE_DW_INFERNO_BLADE ) return TRUE;
+        else if (nMoveId == MOVE_DW_SALAMANDER_CHARGE) return TRUE;
+        else if (nMoveId == MOVE_DW_RISING_PHOENIX) return TRUE;
+        else if (nMoveId == MOVE_DW_WYRMS_FLAME   ) return TRUE;
+	else if (nMoveId == MOVE_DW_INFERNO_BLAST) return TRUE;
+        else if (nMoveId == MOVE_SH_BALANCE_SKY) return TRUE;
+        else if (nMoveId == MOVE_SH_CHILD_SHADOW ) return TRUE;
+        else if (nMoveId == MOVE_SH_CLINGING_SHADOW    ) return TRUE;
+        else if (nMoveId == MOVE_SH_CLOAK_DECEPTION) return TRUE;
+        else if (nMoveId == MOVE_SH_ENERVATING_SHADOW ) return TRUE;
+        else if (nMoveId == MOVE_SH_FIVE_SHADOW_CREEPING	) return TRUE;
+        else if (nMoveId == MOVE_SH_GHOST_BLADE ) return TRUE;
+        else if (nMoveId == MOVE_SH_OBSCURING_SHADOW_VEIL) return TRUE;
+        else if (nMoveId == MOVE_SH_SHADOW_BLADE_TECH) return TRUE;
+        else if (nMoveId == MOVE_SH_SHADOW_GARROTTE   ) return TRUE;
+	else if (nMoveId == MOVE_SH_SHADOW_NOOSE) return TRUE;	
+	else if (nMoveId == MOVE_SH_STRENGTH_DRAINING) return TRUE;	
+        
         // If nothing returns TRUE, fail
         return FALSE;
 }
 
 int GetHasActiveStance(object oInitiator)
 {
-        if (GetHasSpellEffect(MOVE_SD_STONEFOOT_STANCE, oInitiator)) return MOVE_SD_STONEFOOT_STANCE;
+	if (GetHasSpellEffect(MOVE_DW_FLAMES_BLESSING, oInitiator)) return MOVE_DW_FLAMES_BLESSING;
+	else if (GetHasSpellEffect(MOVE_DS_IRON_GUARDS_GLARE, oInitiator)) return MOVE_DS_IRON_GUARDS_GLARE;
+	else if (GetHasSpellEffect(MOVE_DS_MARTIAL_SPIRIT, oInitiator)) return MOVE_DS_MARTIAL_SPIRIT;
+	else if (GetHasSpellEffect(MOVE_DM_STANCE_OF_CLARITY, oInitiator)) return MOVE_DM_STANCE_OF_CLARITY;
+	else if (GetHasSpellEffect(MOVE_IH_PUNISHING_STANCE, oInitiator)) return MOVE_IH_PUNISHING_STANCE;
+	else if (GetHasSpellEffect(MOVE_SS_STEP_WIND, oInitiator)) return MOVE_SS_STEP_WIND;
+	else if (GetHasSpellEffect(MOVE_SH_CHILD_SHADOW, oInitiator)) return MOVE_SH_CHILD_SHADOW;
+	else if (GetHasSpellEffect(MOVE_SH_ISLAND_BLADES, oInitiator)) return MOVE_SH_ISLAND_BLADES;
+	else if (GetHasSpellEffect(MOVE_SD_STONEFOOT_STANCE, oInitiator)) return MOVE_SD_STONEFOOT_STANCE;
+	else if (GetHasSpellEffect(MOVE_TC_BLOOD_WATER, oInitiator)) return MOVE_TC_BLOOD_WATER;
+	else if (GetHasSpellEffect(MOVE_TC_HUNTERS_SENSE, oInitiator)) return MOVE_TC_HUNTERS_SENSE;
+	else if (GetHasSpellEffect(MOVE_WR_BOLSTERING_VOICE, oInitiator)) return MOVE_WR_BOLSTERING_VOICE;
+	else if (GetHasSpellEffect(MOVE_WR_LEADING_CHARGE, oInitiator)) return MOVE_WR_LEADING_CHARGE;
+	else if (GetHasSpellEffect(MOVE_DW_HOLOCAUST_CLOAK, oInitiator)) return MOVE_DW_HOLOCAUST_CLOAK;
+        else if (GetHasSpellEffect(MOVE_DS_THICKET_BLADES, oInitiator)) return MOVE_DS_THICKET_BLADES;
+	else if (GetHasSpellEffect(MOVE_DM_PEARL_BLACK_DOUBT, oInitiator)) return MOVE_DM_PEARL_BLACK_DOUBT;
+	else if (GetHasSpellEffect(MOVE_IH_ABSOLUTE_STEEL, oInitiator)) return MOVE_IH_ABSOLUTE_STEEL;
+	else if (GetHasSpellEffect(MOVE_SS_GIANT_KILLING_STYLE, oInitiator)) return MOVE_SS_GIANT_KILLING_STYLE;
+	else if (GetHasSpellEffect(MOVE_SH_ASSASSINS_STANCE, oInitiator)) return MOVE_SH_ASSASSINS_STANCE;
+	else if (GetHasSpellEffect(MOVE_SH_DANCE_SPIDER, oInitiator)) return MOVE_SH_DANCE_SPIDER;
+	else if (GetHasSpellEffect(MOVE_SD_CRUSHING_WEIGHT, oInitiator)) return MOVE_SD_CRUSHING_WEIGHT;
+	else if (GetHasSpellEffect(MOVE_SD_ROOT_MOUNTAIN, oInitiator)) return MOVE_SD_ROOT_MOUNTAIN;
+	else if (GetHasSpellEffect(MOVE_TC_LEAPING_DRAGON, oInitiator)) return MOVE_TC_LEAPING_DRAGON;
+	else if (GetHasSpellEffect(MOVE_TC_WOLVERINE_STANCE, oInitiator)) return MOVE_TC_WOLVERINE_STANCE;
+	else if (GetHasSpellEffect(MOVE_WR_TACTICS_WOLF, oInitiator)) return MOVE_WR_TACTICS_WOLF;
+	else if (GetHasSpellEffect(MOVE_DM_HEARING_AIR, oInitiator)) return MOVE_DM_HEARING_AIR;
+	else if (GetHasSpellEffect(MOVE_IH_DANCING_BLADE_FORM, oInitiator)) return MOVE_IH_DANCING_BLADE_FORM;
+	else if (GetHasSpellEffect(MOVE_SS_SHIFTING_DEFENSE, oInitiator)) return MOVE_SS_SHIFTING_DEFENSE;
+        else if (GetHasSpellEffect(MOVE_SH_STEP_DANCING_MOTH, oInitiator)) return MOVE_SH_STEP_DANCING_MOTH;
+	else if (GetHasSpellEffect(MOVE_SD_GIANTS_STANCE, oInitiator)) return MOVE_SD_GIANTS_STANCE;
+	else if (GetHasSpellEffect(MOVE_WR_PRESS_ADVANTAGE, oInitiator)) return MOVE_WR_PRESS_ADVANTAGE;
+	else if (GetHasSpellEffect(MOVE_DW_FIERY_ASSAULT, oInitiator)) return MOVE_DW_FIERY_ASSAULT;
+	else if (GetHasSpellEffect(MOVE_DS_AURA_CHAOS, oInitiator)) return MOVE_DS_AURA_CHAOS;
+	else if (GetHasSpellEffect(MOVE_DS_PERFECT_ORDER, oInitiator)) return MOVE_DS_PERFECT_ORDER;
+	else if (GetHasSpellEffect(MOVE_DS_AURA_TRIUMPH, oInitiator)) return MOVE_DS_AURA_TRIUMPH;
+	else if (GetHasSpellEffect(MOVE_DS_AURA_TYRANNY, oInitiator)) return MOVE_DS_AURA_TYRANNY;
+	else if (GetHasSpellEffect(MOVE_TC_PREY_ON_THE_WEAK, oInitiator)) return MOVE_TC_PREY_ON_THE_WEAK;
+	else if (GetHasSpellEffect(MOVE_DW_RISING_PHOENIX, oInitiator)) return MOVE_DW_RISING_PHOENIX;
+	else if (GetHasSpellEffect(MOVE_DS_IMMORTAL_FORTITUDE, oInitiator)) return MOVE_DS_IMMORTAL_FORTITUDE;
+	else if (GetHasSpellEffect(MOVE_DM_STANCE_ALACRITY, oInitiator)) return MOVE_DM_STANCE_ALACRITY;
+	else if (GetHasSpellEffect(MOVE_IH_SUPREME_BLADE_PARRY, oInitiator)) return MOVE_IH_SUPREME_BLADE_PARRY;
+	else if (GetHasSpellEffect(MOVE_SS_GHOSTLY_DEFENSE, oInitiator)) return MOVE_SS_GHOSTLY_DEFENSE;
+        else if (GetHasSpellEffect(MOVE_SH_BALANCE_SKY, oInitiator)) return MOVE_SH_BALANCE_SKY;  
+	else if (GetHasSpellEffect(MOVE_SD_STRENGTH_STONE, oInitiator)) return MOVE_SD_STRENGTH_STONE;
+	else if (GetHasSpellEffect(MOVE_TC_WOLF_PACK_TACTICS, oInitiator)) return MOVE_TC_WOLF_PACK_TACTICS;
+	else if (GetHasSpellEffect(MOVE_WR_SWARM_TACTICS, oInitiator)) return MOVE_WR_SWARM_TACTICS;
 
         // If nothing returns TRUE, fail
         return FALSE;
@@ -959,8 +1018,98 @@ void ClearStances(object oInitiator, int nDontClearMove)
 {
         // Clears spell effects, will not clear DontClearMove
         // This is used to allow Warblades to have two stances.
-        if (GetHasSpellEffect(MOVE_SD_STONEFOOT_STANCE, oInitiator) && nDontClearMove != MOVE_SD_STONEFOOT_STANCE) 
-                RemoveEffectsFromSpell(oInitiator, MOVE_SD_STONEFOOT_STANCE);
+	if (GetHasSpellEffect(MOVE_DW_FLAMES_BLESSING, oInitiator) && nDontClearMove != MOVE_DW_FLAMES_BLESSING)
+           RemoveEffectsFromSpell(oInitiator, MOVE_DW_FLAMES_BLESSING);	
+	if (GetHasSpellEffect(MOVE_DS_IRON_GUARDS_GLARE, oInitiator) && nDontClearMove != MOVE_DS_IRON_GUARDS_GLARE)
+           RemoveEffectsFromSpell(oInitiator, MOVE_DS_IRON_GUARDS_GLARE);	
+	if (GetHasSpellEffect(MOVE_DS_MARTIAL_SPIRIT, oInitiator) && nDontClearMove != MOVE_DS_MARTIAL_SPIRIT)
+           RemoveEffectsFromSpell(oInitiator, MOVE_DS_MARTIAL_SPIRIT);	
+	if (GetHasSpellEffect(MOVE_DM_STANCE_OF_CLARITY, oInitiator) && nDontClearMove != MOVE_DM_STANCE_OF_CLARITY)
+           RemoveEffectsFromSpell(oInitiator, MOVE_DM_STANCE_OF_CLARITY);	
+	if (GetHasSpellEffect(MOVE_IH_PUNISHING_STANCE, oInitiator) && nDontClearMove != MOVE_IH_PUNISHING_STANCE)
+           RemoveEffectsFromSpell(oInitiator, MOVE_IH_PUNISHING_STANCE);	
+	if (GetHasSpellEffect(MOVE_SS_STEP_WIND, oInitiator) && nDontClearMove != MOVE_SS_STEP_WIND)
+           RemoveEffectsFromSpell(oInitiator, MOVE_SS_STEP_WIND);	
+	if (GetHasSpellEffect(MOVE_SH_CHILD_SHADOW, oInitiator) && nDontClearMove != MOVE_SH_CHILD_SHADOW)
+           RemoveEffectsFromSpell(oInitiator, MOVE_SH_CHILD_SHADOW);	
+	if (GetHasSpellEffect(MOVE_SH_ISLAND_BLADES, oInitiator) && nDontClearMove != MOVE_SH_ISLAND_BLADES)
+           RemoveEffectsFromSpell(oInitiator, MOVE_SH_ISLAND_BLADES);	
+	if (GetHasSpellEffect(MOVE_SD_STONEFOOT_STANCE, oInitiator) && nDontClearMove != MOVE_SD_STONEFOOT_STANCE)
+           RemoveEffectsFromSpell(oInitiator, MOVE_SD_STONEFOOT_STANCE);	
+	if (GetHasSpellEffect(MOVE_TC_BLOOD_WATER, oInitiator) && nDontClearMove != MOVE_TC_BLOOD_WATER)
+           RemoveEffectsFromSpell(oInitiator, MOVE_TC_BLOOD_WATER);	
+	if (GetHasSpellEffect(MOVE_TC_HUNTERS_SENSE, oInitiator) && nDontClearMove != MOVE_TC_HUNTERS_SENSE)
+           RemoveEffectsFromSpell(oInitiator, MOVE_TC_HUNTERS_SENSE);	
+	if (GetHasSpellEffect(MOVE_WR_BOLSTERING_VOICE, oInitiator) && nDontClearMove != MOVE_WR_BOLSTERING_VOICE)
+           RemoveEffectsFromSpell(oInitiator, MOVE_WR_BOLSTERING_VOICE);	
+	if (GetHasSpellEffect(MOVE_WR_LEADING_CHARGE, oInitiator) && nDontClearMove != MOVE_WR_LEADING_CHARGE)
+           RemoveEffectsFromSpell(oInitiator, MOVE_WR_LEADING_CHARGE);	
+	if (GetHasSpellEffect(MOVE_DW_HOLOCAUST_CLOAK, oInitiator) && nDontClearMove != MOVE_DW_HOLOCAUST_CLOAK)
+           RemoveEffectsFromSpell(oInitiator, MOVE_DW_HOLOCAUST_CLOAK);	
+        if (GetHasSpellEffect(MOVE_DS_THICKET_BLADES, oInitiator) && nDontClearMove != MOVE_DS_THICKET_BLADES)
+           RemoveEffectsFromSpell(oInitiator, MOVE_DS_THICKET_BLADES);        
+	if (GetHasSpellEffect(MOVE_DM_PEARL_BLACK_DOUBT, oInitiator) && nDontClearMove != MOVE_DM_PEARL_BLACK_DOUBT)
+           RemoveEffectsFromSpell(oInitiator, MOVE_DM_PEARL_BLACK_DOUBT);	
+	if (GetHasSpellEffect(MOVE_IH_ABSOLUTE_STEEL, oInitiator) && nDontClearMove != MOVE_IH_ABSOLUTE_STEEL)
+           RemoveEffectsFromSpell(oInitiator, MOVE_IH_ABSOLUTE_STEEL);	
+	if (GetHasSpellEffect(MOVE_SS_GIANT_KILLING_STYLE, oInitiator) && nDontClearMove != MOVE_SS_GIANT_KILLING_STYLE)
+           RemoveEffectsFromSpell(oInitiator, MOVE_SS_GIANT_KILLING_STYLE);	
+	if (GetHasSpellEffect(MOVE_SH_ASSASSINS_STANCE, oInitiator) && nDontClearMove != MOVE_SH_ASSASSINS_STANCE)
+           RemoveEffectsFromSpell(oInitiator, MOVE_SH_ASSASSINS_STANCE);	
+	if (GetHasSpellEffect(MOVE_SH_DANCE_SPIDER, oInitiator) && nDontClearMove != MOVE_SH_DANCE_SPIDER)
+           RemoveEffectsFromSpell(oInitiator, MOVE_SH_DANCE_SPIDER);	
+	if (GetHasSpellEffect(MOVE_SD_CRUSHING_WEIGHT, oInitiator) && nDontClearMove != MOVE_SD_CRUSHING_WEIGHT)
+           RemoveEffectsFromSpell(oInitiator, MOVE_SD_CRUSHING_WEIGHT);	
+	if (GetHasSpellEffect(MOVE_SD_ROOT_MOUNTAIN, oInitiator) && nDontClearMove != MOVE_SD_ROOT_MOUNTAIN)
+           RemoveEffectsFromSpell(oInitiator, MOVE_SD_ROOT_MOUNTAIN);	
+	if (GetHasSpellEffect(MOVE_TC_LEAPING_DRAGON, oInitiator) && nDontClearMove != MOVE_TC_LEAPING_DRAGON)
+           RemoveEffectsFromSpell(oInitiator, MOVE_TC_LEAPING_DRAGON);	
+	if (GetHasSpellEffect(MOVE_TC_WOLVERINE_STANCE, oInitiator) && nDontClearMove != MOVE_TC_WOLVERINE_STANCE)
+           RemoveEffectsFromSpell(oInitiator, MOVE_TC_WOLVERINE_STANCE);	
+	if (GetHasSpellEffect(MOVE_WR_TACTICS_WOLF, oInitiator) && nDontClearMove != MOVE_WR_TACTICS_WOLF)
+           RemoveEffectsFromSpell(oInitiator, MOVE_WR_TACTICS_WOLF);	
+	if (GetHasSpellEffect(MOVE_DM_HEARING_AIR, oInitiator) && nDontClearMove != MOVE_DM_HEARING_AIR)
+           RemoveEffectsFromSpell(oInitiator, MOVE_DM_HEARING_AIR);	
+	if (GetHasSpellEffect(MOVE_IH_DANCING_BLADE_FORM, oInitiator) && nDontClearMove != MOVE_IH_DANCING_BLADE_FORM)
+           RemoveEffectsFromSpell(oInitiator, MOVE_IH_DANCING_BLADE_FORM);	
+	if (GetHasSpellEffect(MOVE_SS_SHIFTING_DEFENSE, oInitiator) && nDontClearMove != MOVE_SS_SHIFTING_DEFENSE)
+           RemoveEffectsFromSpell(oInitiator, MOVE_SS_SHIFTING_DEFENSE);	
+        if (GetHasSpellEffect(MOVE_SH_STEP_DANCING_MOTH, oInitiator) && nDontClearMove != MOVE_SH_STEP_DANCING_MOTH)
+           RemoveEffectsFromSpell(oInitiator, MOVE_SH_STEP_DANCING_MOTH);        
+	if (GetHasSpellEffect(MOVE_SD_GIANTS_STANCE, oInitiator) && nDontClearMove != MOVE_SD_GIANTS_STANCE)
+           RemoveEffectsFromSpell(oInitiator, MOVE_SD_GIANTS_STANCE);	
+	if (GetHasSpellEffect(MOVE_WR_PRESS_ADVANTAGE, oInitiator) && nDontClearMove != MOVE_WR_PRESS_ADVANTAGE)
+           RemoveEffectsFromSpell(oInitiator, MOVE_WR_PRESS_ADVANTAGE);	
+	if (GetHasSpellEffect(MOVE_DW_FIERY_ASSAULT, oInitiator) && nDontClearMove != MOVE_DW_FIERY_ASSAULT)
+           RemoveEffectsFromSpell(oInitiator, MOVE_DW_FIERY_ASSAULT);	
+	if (GetHasSpellEffect(MOVE_DS_AURA_CHAOS, oInitiator) && nDontClearMove != MOVE_DS_AURA_CHAOS)
+           RemoveEffectsFromSpell(oInitiator, MOVE_DS_AURA_CHAOS);	
+	if (GetHasSpellEffect(MOVE_DS_PERFECT_ORDER, oInitiator) && nDontClearMove != MOVE_DS_PERFECT_ORDER)
+           RemoveEffectsFromSpell(oInitiator, MOVE_DS_PERFECT_ORDER);	
+	if (GetHasSpellEffect(MOVE_DS_AURA_TRIUMPH, oInitiator) && nDontClearMove != MOVE_DS_AURA_TRIUMPH)
+           RemoveEffectsFromSpell(oInitiator, MOVE_DS_AURA_TRIUMPH);	
+	if (GetHasSpellEffect(MOVE_DS_AURA_TYRANNY, oInitiator) && nDontClearMove != MOVE_DS_AURA_TYRANNY)
+           RemoveEffectsFromSpell(oInitiator, MOVE_DS_AURA_TYRANNY);	
+	if (GetHasSpellEffect(MOVE_TC_PREY_ON_THE_WEAK, oInitiator) && nDontClearMove != MOVE_TC_PREY_ON_THE_WEAK)
+           RemoveEffectsFromSpell(oInitiator, MOVE_TC_PREY_ON_THE_WEAK);	
+	if (GetHasSpellEffect(MOVE_DW_RISING_PHOENIX, oInitiator) && nDontClearMove != MOVE_DW_RISING_PHOENIX)
+           RemoveEffectsFromSpell(oInitiator, MOVE_DW_RISING_PHOENIX);	
+	if (GetHasSpellEffect(MOVE_DS_IMMORTAL_FORTITUDE, oInitiator) && nDontClearMove != MOVE_DS_IMMORTAL_FORTITUDE)
+           RemoveEffectsFromSpell(oInitiator, MOVE_DS_IMMORTAL_FORTITUDE);	
+	if (GetHasSpellEffect(MOVE_DM_STANCE_ALACRITY, oInitiator) && nDontClearMove != MOVE_DM_STANCE_ALACRITY)
+           RemoveEffectsFromSpell(oInitiator, MOVE_DM_STANCE_ALACRITY);	
+	if (GetHasSpellEffect(MOVE_IH_SUPREME_BLADE_PARRY, oInitiator) && nDontClearMove != MOVE_IH_SUPREME_BLADE_PARRY)
+           RemoveEffectsFromSpell(oInitiator, MOVE_IH_SUPREME_BLADE_PARRY);	
+	if (GetHasSpellEffect(MOVE_SS_GHOSTLY_DEFENSE, oInitiator) && nDontClearMove != MOVE_SS_GHOSTLY_DEFENSE)
+           RemoveEffectsFromSpell(oInitiator, MOVE_SS_GHOSTLY_DEFENSE);	
+        if (GetHasSpellEffect(MOVE_SH_BALANCE_SKY, oInitiator) && nDontClearMove != MOVE_SH_BALANCE_SKY)  
+           RemoveEffectsFromSpell(oInitiator, MOVE_SH_BALANCE_SKY);        
+	if (GetHasSpellEffect(MOVE_SD_STRENGTH_STONE, oInitiator) && nDontClearMove != MOVE_SD_STRENGTH_STONE)
+           RemoveEffectsFromSpell(oInitiator, MOVE_SD_STRENGTH_STONE);	
+	if (GetHasSpellEffect(MOVE_TC_WOLF_PACK_TACTICS, oInitiator) && nDontClearMove != MOVE_TC_WOLF_PACK_TACTICS)
+           RemoveEffectsFromSpell(oInitiator, MOVE_TC_WOLF_PACK_TACTICS);	
+	if (GetHasSpellEffect(MOVE_WR_SWARM_TACTICS, oInitiator) && nDontClearMove != MOVE_WR_SWARM_TACTICS)  
+                RemoveEffectsFromSpell(oInitiator, MOVE_WR_SWARM_TACTICS);	
 }
 
 void MarkStanceActive(object oInitiator, int nStance)

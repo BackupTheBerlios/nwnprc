@@ -36,7 +36,7 @@ void main()
     object oTarget = GetExitingObject();
     int bValid = FALSE;
     effect eAOE;
-    if(GetHasSpellEffect(MOVE_DS_SWARM_TACTICS, oTarget))
+    if(GetHasSpellEffect(MOVE_WR_SWARM_TACTICS, oTarget))
     {
         //Search through the valid effects on the target.
         eAOE = GetFirstEffect(oTarget);
@@ -44,8 +44,8 @@ void main()
         {
             if (GetEffectCreator(eAOE) == GetAreaOfEffectCreator())
             {
-                    //If the effect was created by MOVE_DS_SWARM_TACTICS
-                    if(GetEffectSpellId(eAOE) == MOVE_DS_SWARM_TACTICS)
+                    //If the effect was created by MOVE_WR_SWARM_TACTICS
+                    if(GetEffectSpellId(eAOE) == MOVE_WR_SWARM_TACTICS)
                     {
                         RemoveEffect(oTarget, eAOE);
                         bValid = TRUE;

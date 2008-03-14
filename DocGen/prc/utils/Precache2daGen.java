@@ -22,7 +22,7 @@ public class Precache2daGen {
 	private static Data_2da spells = null/*,
 	                        feat   = null*/;
 
-	private static int normalSpellMaxRow = 5000;
+	private static int normalSpellMaxRow = 4200;
 
 	/**
 	 * Ye olde maine methode.
@@ -77,8 +77,11 @@ public class Precache2daGen {
 		//feat   = Data_2da.load2da(dir.getPath() + File.separator + "feat.2da");
 
 		handleNormalSpells();
+		//should generalise all of the AMS ones later - Flaming_Sword
 		handlePsionics(dir);
 		handleTruenaming(dir);
+		handleTob(dir);
+		handleInvocations(dir);
 		handleNewSpells();
 
 		output.appendRow();
@@ -139,6 +142,108 @@ public class Precache2daGen {
 		File[] files = dir.listFiles(new FileFilter(){
 			public boolean accept(File file){
 				return file.getName().toLowerCase().startsWith("cls_psipw_") &&
+				       file.getName().toLowerCase().endsWith(".2da");
+			}
+		});
+
+		Data_2da[] cls_psipw_2das = new Data_2da[files.length];
+		for(int i = 0; i < files.length; i++)
+			cls_psipw_2das[i] = Data_2da.load2da(files[i].getPath());
+
+		int temp;
+		Set<Integer> realEntriesHandled = new HashSet<Integer>();
+		// First, spells.2da referencing entries
+		for(Data_2da cls_psipw : cls_psipw_2das) {
+			for(int i = 0; i < cls_psipw.getEntryCount(); i++) {
+				// Add the feat-linked power's data
+				if(!cls_psipw.getEntry("SpellID", i).equals("****")) {
+					output.appendRow();
+					temp = output.getEntryCount() - 1;
+					output.setEntry("RowNum", temp, cls_psipw.getEntry("SpellID", i));
+					output.setEntry("Type",   temp, "P");
+				}
+				// Add the real entry's data
+				if(!cls_psipw.getEntry("RealSpellID", i).equals("****")) {
+					temp = Integer.parseInt(cls_psipw.getEntry("RealSpellID", i));
+					if(!realEntriesHandled.contains(temp)) {
+						realEntriesHandled.add(temp);
+						output.appendRow();
+						temp = output.getEntryCount() - 1;
+						output.setEntry("RowNum", temp, cls_psipw.getEntry("RealSpellID", i));
+						output.setEntry("Type",   temp, "PS");
+					}
+				}
+			}
+		}
+		// Feat.2da entries
+		for(Data_2da cls_psipw : cls_psipw_2das) {
+			for(int i = 0; i < cls_psipw.getEntryCount(); i++) {
+				// The feat's data
+				if(!cls_psipw.getEntry("FeatID", i).equals("****")) {
+					output.appendRow();
+					temp = output.getEntryCount() - 1;
+					output.setEntry("RowNum", temp, cls_psipw.getEntry("FeatID", i));
+					output.setEntry("Type",   temp, "PF");
+				}
+			}
+		}
+	}
+
+	private static void handleTob(File dir) {
+		File[] files = dir.listFiles(new FileFilter(){
+			public boolean accept(File file){
+				return file.getName().toLowerCase().startsWith("cls_move_") &&
+				       file.getName().toLowerCase().endsWith(".2da");
+			}
+		});
+
+		Data_2da[] cls_psipw_2das = new Data_2da[files.length];
+		for(int i = 0; i < files.length; i++)
+			cls_psipw_2das[i] = Data_2da.load2da(files[i].getPath());
+
+		int temp;
+		Set<Integer> realEntriesHandled = new HashSet<Integer>();
+		// First, spells.2da referencing entries
+		for(Data_2da cls_psipw : cls_psipw_2das) {
+			for(int i = 0; i < cls_psipw.getEntryCount(); i++) {
+				// Add the feat-linked power's data
+				if(!cls_psipw.getEntry("SpellID", i).equals("****")) {
+					output.appendRow();
+					temp = output.getEntryCount() - 1;
+					output.setEntry("RowNum", temp, cls_psipw.getEntry("SpellID", i));
+					output.setEntry("Type",   temp, "P");
+				}
+				// Add the real entry's data
+				if(!cls_psipw.getEntry("RealSpellID", i).equals("****")) {
+					temp = Integer.parseInt(cls_psipw.getEntry("RealSpellID", i));
+					if(!realEntriesHandled.contains(temp)) {
+						realEntriesHandled.add(temp);
+						output.appendRow();
+						temp = output.getEntryCount() - 1;
+						output.setEntry("RowNum", temp, cls_psipw.getEntry("RealSpellID", i));
+						output.setEntry("Type",   temp, "PS");
+					}
+				}
+			}
+		}
+		// Feat.2da entries
+		for(Data_2da cls_psipw : cls_psipw_2das) {
+			for(int i = 0; i < cls_psipw.getEntryCount(); i++) {
+				// The feat's data
+				if(!cls_psipw.getEntry("FeatID", i).equals("****")) {
+					output.appendRow();
+					temp = output.getEntryCount() - 1;
+					output.setEntry("RowNum", temp, cls_psipw.getEntry("FeatID", i));
+					output.setEntry("Type",   temp, "PF");
+				}
+			}
+		}
+	}
+
+	private static void handleInvocations(File dir) {
+		File[] files = dir.listFiles(new FileFilter(){
+			public boolean accept(File file){
+				return file.getName().toLowerCase().startsWith("cls_inv_") &&
 				       file.getName().toLowerCase().endsWith(".2da");
 			}
 		});

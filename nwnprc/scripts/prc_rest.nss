@@ -17,27 +17,6 @@
 #include "prc_inc_wpnrest"
 #include "inc_dynconv"
 
-int GetShiftingFeats(object oPC)
-{
-    int nNumFeats;
-    nNumFeats +=   GetHasFeat(FEAT_DREAMSIGHT_ELITE, oPC) +
-            GetHasFeat(FEAT_GOREBRUTE_ELITE, oPC) +
-            GetHasFeat(FEAT_LONGSTRIDE_ELITE, oPC) +
-            GetHasFeat(FEAT_LONGTOOTH_ELITE, oPC) +
-            GetHasFeat(FEAT_RAZORCLAW_ELITE, oPC) +
-            GetHasFeat(FEAT_WILDHUNT_ELITE, oPC) +
-            GetHasFeat(FEAT_EXTRA_SHIFTER_TRAIT, oPC) +
-            GetHasFeat(FEAT_HEALING_FACTOR, oPC) +
-            GetHasFeat(FEAT_SHIFTER_AGILITY, oPC) +
-            GetHasFeat(FEAT_SHIFTER_DEFENSE, oPC) +
-            GetHasFeat(FEAT_GREATER_SHIFTER_DEFENSE, oPC) +
-            GetHasFeat(FEAT_SHIFTER_FEROCITY, oPC) +
-            GetHasFeat(FEAT_SHIFTER_INSTINCTS, oPC) +
-            GetHasFeat(FEAT_SHIFTER_SAVAGERY, oPC);
-            
-     return nNumFeats;
-}
-
 void PrcFeats(object oPC)
 {
     if(DEBUG) DoDebug("prc_rest: Evaluating PC feats for " + DebugObject2Str(oPC));
@@ -150,17 +129,7 @@ void RestFinished(object oPC)
     }
     if(sMessage != "")
         FloatingTextStringOnCreature(sMessage, oPC, TRUE);
-
-    //clear Dragonfriend/Dragonthrall flag so effect properly reapplies
-    if (GetHasFeat(FEAT_DRAGONFRIEND, oPC)
-       || GetHasFeat(FEAT_DRAGONTHRALL, oPC)) DeleteLocalInt(GetPCSkin(oPC), "DragonThrall");
        
-    //Clear Invocation-related variables
-    if(GetLocalInt(OBJECT_SELF, "ChillingFogLock")) //Chilling Fog lock
-        DeleteLocalInt(OBJECT_SELF, "ChillingFogLock");
-    if(array_exists(OBJECT_SELF, "BreathProtected")) //Endure Exposure wearing off
-        array_delete(OBJECT_SELF, "BreathProtected");
-        
     //Clear Battle Fortitude lock
     DeleteLocalInt(oPC, "BattleFortitude");
         
@@ -217,40 +186,6 @@ void RestFinished(object oPC)
 
     //for Touch of Vitality point resetting
     ResetTouchOfVitality(oPC);
-    
-    //Shifter bonus shifting uses
-    if(GetHasFeat(FEAT_SHIFTER_SHIFTING))
-    {
-        int nShiftFeats = GetShiftingFeats(oPC);
-        if(nShiftFeats > 1)
-        {
-            int nBonusShiftUses = nShiftFeats / 2;
-            int nTempCounter = 0;
-            while(nTempCounter++ < nBonusShiftUses)
-            {
-                IncrementRemainingFeatUses(oPC, FEAT_SHIFTER_SHIFTING);
-            }
-        }
-    }
-    DeleteLocalInt(oPC, "DragonWard");
-    
-    //Add daily Uses of Fiendish Resilience
-    if(GetHasFeat(FEAT_EPIC_FIENDISH_RESILIENCE_I))
-    {
-        int nFeatAmt = 0;
-        int bDone = FALSE;
-        while(!bDone)
-        {   if(nFeatAmt >= 9) 
-                bDone = TRUE;
-            else if(GetHasFeat(FEAT_EPIC_FIENDISH_RESILIENCE_II + nFeatAmt))
-            {
-                IncrementRemainingFeatUses(oPC, FEAT_FIENDISH_RESILIENCE);
-                nFeatAmt++;
-            }
-            else
-                bDone = TRUE;
-        }
-    }
 
     //skip time forward if applicable
     AdvanceTimeForPlayer(oPC, HoursToSeconds(8));

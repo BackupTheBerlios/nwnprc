@@ -482,7 +482,9 @@ const int SPELL_RAKSHASA_CHANGE_SHAPE_LEARN         = 2962;
 const int SPELL_RAKSHASA_CHANGE_SHAPE_OPTIONS       = 2963;      
 const int SPELL_RAKSHASA_CHANGE_SHAPE_TRUE          = 2964;     
 const int SPELL_RAKSHASA_CHANGE_SHAPE_QS1           = 2965;    
-const int SPELL_RAKSHASA_CHANGE_SHAPE_QS2           = 2966;          
+const int SPELL_RAKSHASA_CHANGE_SHAPE_QS2           = 2966;   
+const int SPELL_FORESTLORD_TREEWALK_SELECTED        = 2967;
+const int SPELL_FORESTLORD_TREEWALK_DIRDIST         = 2968;       
 
 
 // Poison system spells

@@ -1195,6 +1195,7 @@ int DraconicFeats(object oPC = OBJECT_SELF)
     if(GetRacialType(oPC) == RACIAL_TYPE_KOBOLD ||
        GetRacialType(oPC) == RACIAL_TYPE_SPELLSCALE ||
        GetRacialType(oPC) == RACIAL_TYPE_DRAGONBORN ||
+       GetRacialType(oPC) == RACIAL_TYPE_STONEHUNTER_GNOME ||
        GetRacialType(oPC) == RACIAL_TYPE_SILVERBROW_HUMAN ||
        GetRacialType(oPC) == RACIAL_TYPE_FORESTLORD_ELF ||
        GetRacialType(oPC) == RACIAL_TYPE_FIREBLOOD_DWARF ||

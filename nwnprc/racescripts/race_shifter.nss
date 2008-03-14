@@ -13,27 +13,6 @@
 
 #include "prc_alterations"
 
-int GetShiftingFeats(object oPC)
-{
-    int nNumFeats;
-    nNumFeats +=   GetHasFeat(FEAT_DREAMSIGHT_ELITE, oPC) +
-            GetHasFeat(FEAT_GOREBRUTE_ELITE, oPC) +
-            GetHasFeat(FEAT_LONGSTRIDE_ELITE, oPC) +
-            GetHasFeat(FEAT_LONGTOOTH_ELITE, oPC) +
-            GetHasFeat(FEAT_RAZORCLAW_ELITE, oPC) +
-            GetHasFeat(FEAT_WILDHUNT_ELITE, oPC) +
-            GetHasFeat(FEAT_EXTRA_SHIFTER_TRAIT, oPC) +
-            GetHasFeat(FEAT_HEALING_FACTOR, oPC) +
-            GetHasFeat(FEAT_SHIFTER_AGILITY, oPC) +
-            GetHasFeat(FEAT_SHIFTER_DEFENSE, oPC) +
-            GetHasFeat(FEAT_GREATER_SHIFTER_DEFENSE, oPC) +
-            GetHasFeat(FEAT_SHIFTER_FEROCITY, oPC) +
-            GetHasFeat(FEAT_SHIFTER_INSTINCTS, oPC) +
-            GetHasFeat(FEAT_SHIFTER_SAVAGERY, oPC);
-            
-     return nNumFeats;
-}
-
 void ApplyPrimaryTrait(object oPC, int nAbility, int nDuration)
 {
     effect eTrait = EffectAbilityIncrease(nAbility, 2);

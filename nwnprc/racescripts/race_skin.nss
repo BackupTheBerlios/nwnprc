@@ -157,10 +157,6 @@ void main()
         SetCompositeBonus(oSkin, "RacialNaturalArmor",18, ITEM_PROPERTY_AC_BONUS);
     else if(GetHasFeat(FEAT_NATARM_19))
         SetCompositeBonus(oSkin, "RacialNaturalArmor",19, ITEM_PROPERTY_AC_BONUS);
-    else if(GetHasFeat(FEAT_NATARM_20))
-        SetCompositeBonus(oSkin, "RacialNaturalArmor",20, ITEM_PROPERTY_AC_BONUS);
-    else if(GetHasFeat(FEAT_NATARM_21))
-        SetCompositeBonus(oSkin, "RacialNaturalArmor",21, ITEM_PROPERTY_AC_BONUS);
 
     //immunity to breathing-targetted spells
     if(GetHasFeat(FEAT_BREATHLESS))
@@ -724,6 +720,9 @@ void main()
         
     }
     
+    if(GetHasFeat(FEAT_DRAGON_TRAINING))
+        SetCompositeBonus(oSkin, "RacialDragonTrsining", 4, ITEM_PROPERTY_AC_BONUS_VS_ALIGNMENT_GROUP, RACIAL_TYPE_DRAGON);
+    
     //natural weapons
     //replace with a feat check
     int nRace = GetRacialType(oPC);
@@ -931,6 +930,17 @@ void main()
         int nSize = PRCGetCreatureSize(oPC);
         sResRef += GetAffixForSize(nSize);
         AddNaturalSecondaryWeapon(oPC, sResRef);
+    }
+    else if(nRace==RACIAL_TYPE_VILETOOTH_LIZARDFOLK)
+    {
+        string sResRef = "prc_vtth_bite_";
+        int nSize = PRCGetCreatureSize(oPC);
+        sResRef += GetAffixForSize(nSize);
+        AddNaturalSecondaryWeapon(oPC, sResRef);
+        //primary weapon
+        sResRef = "prc_claw_1d6m_";
+        sResRef += GetAffixForSize(nSize);
+        AddNaturalPrimaryWeapon(oPC, sResRef, 2);
     }
     
     //Draconian on-death effects

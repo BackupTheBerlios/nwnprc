@@ -208,6 +208,8 @@
 204 FEAT_BRALANI_CHARM_PERSON                        4998      0    99             1      
 205 FEAT_BRALANI_MIRROR_IMAGE                        4999      0    99             1      
 206 FEAT_BRALANI_GUST_OF_WIND                        4978      0    99             1      
+206 FEAT_TOUCH_OF_LUCK                               4634      0    99             1      
+206 FEAT_FORESTLORD_TREEWALK                         4633      0    99             1      
 207 ****                                             ****      **** ****           ****   
 208 **BonusDomains**                                 ****      **** ****           ****   
 209 FEAT_CHECK_DOMAIN_SLOTS                          2000      0    99             1      

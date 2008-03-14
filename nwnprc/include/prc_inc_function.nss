@@ -495,6 +495,17 @@ void DeletePRCLocalInts(object oSkin)
     // Enlightened Fist
     DeleteLocalInt(oPC, "EnlightenedFistSR");
 
+    //clear Dragonfriend/Dragonthrall flag so effect properly reapplies
+    if (GetHasFeat(FEAT_DRAGONFRIEND, oPC)
+       || GetHasFeat(FEAT_DRAGONTHRALL, oPC)) DeleteLocalInt(GetPCSkin(oPC), "DragonThrall");
+
+    //Invocations
+    if(GetLocalInt(OBJECT_SELF, "ChillingFogLock")) //Chilling Fog lock
+        DeleteLocalInt(OBJECT_SELF, "ChillingFogLock");
+    if(array_exists(OBJECT_SELF, "BreathProtected")) //Endure Exposure wearing off
+        array_delete(OBJECT_SELF, "BreathProtected");
+    DeleteLocalInt(oPC, "DragonWard");
+
     // future PRCs Go below here
 }
 
@@ -572,6 +583,27 @@ int BlastInfidelOrFaithHeal(object oCaster, object oTarget, int iEnergyType, int
 
     if(iDisplayFeedback) FloatingTextStringOnCreature(sFeedback, oCaster);
     return iRetVal;
+}
+
+int GetShiftingFeats(object oPC)
+{
+    int nNumFeats;
+    nNumFeats +=   GetHasFeat(FEAT_DREAMSIGHT_ELITE, oPC) +
+            GetHasFeat(FEAT_GOREBRUTE_ELITE, oPC) +
+            GetHasFeat(FEAT_LONGSTRIDE_ELITE, oPC) +
+            GetHasFeat(FEAT_LONGTOOTH_ELITE, oPC) +
+            GetHasFeat(FEAT_RAZORCLAW_ELITE, oPC) +
+            GetHasFeat(FEAT_WILDHUNT_ELITE, oPC) +
+            GetHasFeat(FEAT_EXTRA_SHIFTER_TRAIT, oPC) +
+            GetHasFeat(FEAT_HEALING_FACTOR, oPC) +
+            GetHasFeat(FEAT_SHIFTER_AGILITY, oPC) +
+            GetHasFeat(FEAT_SHIFTER_DEFENSE, oPC) +
+            GetHasFeat(FEAT_GREATER_SHIFTER_DEFENSE, oPC) +
+            GetHasFeat(FEAT_SHIFTER_FEROCITY, oPC) +
+            GetHasFeat(FEAT_SHIFTER_INSTINCTS, oPC) +
+            GetHasFeat(FEAT_SHIFTER_SAVAGERY, oPC);
+            
+     return nNumFeats;
 }
 
 void FeatUsePerDay(object oPC,int iFeat, int iAbiMod = ABILITY_CHARISMA, int iMod = 0)
@@ -743,6 +775,44 @@ void FeatVirtuoso(object oPC)
     }
 }
 
+void FeatRacial(object oPC)
+{
+    //Shifter bonus shifting uses
+    if(GetRacialType(oPC) == RACIAL_TYPE_SHIFTER)
+    {
+        int nShiftFeats = GetShiftingFeats(oPC);
+        if(nShiftFeats > 1)
+        {
+            int nBonusShiftUses = nShiftFeats / 2;
+            FeatUsePerDay(oPC, FEAT_SHIFTER_SHIFTING, -1, nBonusShiftUses);
+        }
+    }
+    
+    //Add daily Uses of Fiendish Resilience for epic warlock
+    if(GetHasFeat(FEAT_EPIC_FIENDISH_RESILIENCE_I))
+    {
+        int nFeatAmt = 0;
+        int bDone = FALSE;
+        while(!bDone)
+        {   if(nFeatAmt >= 9) 
+                bDone = TRUE;
+            else if(GetHasFeat(FEAT_EPIC_FIENDISH_RESILIENCE_II + nFeatAmt))
+            {
+                IncrementRemainingFeatUses(oPC, FEAT_FIENDISH_RESILIENCE);
+                nFeatAmt++;
+            }
+            else
+                bDone = TRUE;
+        }
+    }
+    
+    if(GetRacialType(oPC) == RACIAL_TYPE_FORESTLORD_ELF)
+    {
+        int nUses = GetHitDice(oPC) / 5 + 1;
+        FeatUsePerDay(oPC, FEAT_FORESTLORD_TREEWALK, -1, nUses);
+    }
+}
+
 void FeatSpecialUsePerDay(object oPC)
 {
     FeatUsePerDay(oPC,FEAT_FIST_OF_IRON, ABILITY_WISDOM, 3);
@@ -776,6 +846,7 @@ void FeatSpecialUsePerDay(object oPC)
     FeatUsePerDay(oPC, FEAT_WWOC_WIDEN_SPELL, ABILITY_CHARISMA, GetLevelByClass(CLASS_TYPE_WAR_WIZARD_OF_CORMYR, oPC));
     FeatUsePerDay(oPC, FEAT_COC_WRATH, ABILITY_CHARISMA, 3);
     FeatUsePerDay(oPC, FEAT_FIST_DAL_QUOR_STUNNING_STRIKE, -1, GetLevelByClass(CLASS_TYPE_FIST_DAL_QUOR, oPC));
+    FeatRacial(oPC);
 
     if(GetPersistantLocalInt(oPC, "PRC_SLA_Uses_1"))
         FeatUsePerDay(oPC, FEAT_SPELL_LIKE_ABILITY_1, -1, GetPersistantLocalInt(oPC, "PRC_SLA_Uses_1"));

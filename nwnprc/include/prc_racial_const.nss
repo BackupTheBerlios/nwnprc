@@ -245,6 +245,7 @@ const int RACIAL_TYPE_FIRE_GNOME           = 173;
 const int RACIAL_TYPE_FOR_GNOME            = 175;
 const int RACIAL_TYPE_ICE_GNOME            = 178;
 const int RACIAL_TYPE_ROCK_GNOME           = 176;
+const int RACIAL_TYPE_STONEHUNTER_GNOME    = 105;
 const int RACIAL_TYPE_SVIRFNEBLIN          = 174;
 const int RACIAL_TYPE_WHISPER_GNOME        = 179;
 

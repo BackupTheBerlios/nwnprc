@@ -17339,7 +17339,7 @@ Special Abilities:
 - Very Heroic: +2 racial bonus to all saving throws.
 - Spell Resistance: Spell Resistance of 11, plus 1 per level.
 - Spell-Like Abilities: 1/day - Blindness and Deafness (DC 16), Blur, Disguise Self. Caster level is equal to the svirfneblin's character level, DC is Charisma-based with +4 racial bonus.
-- Gnomish: Svirfneblin count as Gnomes for the purpose of spells.F</entry>
+- Gnomish: Svirfneblin count as Gnomes for the purpose of spells.</entry>
   <entry id="49566" lang="en" sex="m">Forest Gnome</entry>
   <entry id="49567" lang="en" sex="m">Forest Gnomish</entry>
   <entry id="49568" lang="en" sex="m">forest gnomish</entry>
@@ -17752,6 +17752,7 @@ Special Abilities:
 - Skill Focus (Craft Trap): +2 bonus to Craft Trap checks.
 - Natural Armor Bonus: Racial natural armor bonus of 1.
 - Light Sensitivity: Kobolds suffer -2 penalty to attack rolls, saves and checks while operating in bright light.
+- Dragonblooded: Kobolds have the dragonblood subtype.
 - Reptilian: Kobolds count as Reptilian for the purpose of spells.</entry>
   <entry id="49645" lang="en" sex="m">bugbear</entry>
   <entry id="49646" lang="en" sex="m">Bugbears</entry>
@@ -37439,13 +37440,13 @@ Huge               2d6
 Gargantuan         2d8
 Colossal           4d6
 
-*Note: The dragonblood subtype consists of the following: kobolds, dragons, anyone with the half-dragon template, or the Dragontouched or Dragon Heritage feats.  If you take this feat and are not one of the above, you will be unable to level.</entry>
+*Note: In addition to race, you can gain the dragonblood subtype through the Dragontouched or Dragon Heritage feats.  If you take this feat and are not dragonblooded, you will be unable to level.</entry>
   <entry id="55190" lang="en" sex="m">Dragon Wings</entry>
   <entry id="55191" lang="en" sex="m">Type of Feat: General
 Prerequisites: Dragonblood subtype*, 1st level only or Dragonwrought and 3rd level
 Specifics: Your draconic ancestry manifests as a pair of wings, giving you a +10 to Jump checks.
 
-*Note: The dragonblood subtype consists of the following: kobolds, dragons, anyone with the half-dragon template, or the Dragontouched or Dragon Heritage feats.  If you take this feat at level 1 and are not one of the above, you will be unable to level.</entry>
+*Note: In addition to race, you can gain the dragonblood subtype through the Dragontouched or Dragon Heritage feats.  If you take this feat and are not dragonblooded, you will be unable to level.</entry>
   <entry id="55192" lang="en" sex="m">Dragonwrought</entry>
   <entry id="55193" lang="en" sex="m">Type of Feat: General
 Prerequisites: Kobold, 1st level only
@@ -37882,7 +37883,7 @@ Your Draconic Breath damage increases to 3d8 at level 16, 4d6 at 20, 4d8 at 26, 
   <entry id="55286" lang="en" sex="m">Draconic Feats</entry>
   <entry id="55287" lang="en" sex="m">Sorcerers and dragontouched can take draconic feats to gain abilities akin to those of their draconic ancestors.  Draconic feats don't change a creature into something fundamentally different, but they can grant increased capabilities.
 
-Draconic Senses and Dragonfire Strike are Draconic feats available to any of the dragonblooded as well.</entry>
+Draconic Senses and the Dragonfire feats are Draconic feats available to any of the dragonblooded as well.</entry>
   <entry id="55288" lang="en" sex="m">Dragon Heritage</entry>
   <entry id="55289" lang="en" sex="m">Type of Feat: Draconic
 Prerequisite: Sorcerer 1, or Dragontouched.
@@ -38050,7 +38051,7 @@ Prerequisite: Dragonblood subtype*, Cha 11 or Swift Wing 2
 
 Your draconic blood grants you great sensory powers.  If you have 2 or less draconic feats, you gain low-light vision.  If you have 3 or more, you gain darkvision.  If you have 4 or more, you also gain Blindsense.  You also are granted a bonus on Listen, Search, and Spot checks equal to the number of Draconic feats you have.
 
-*Note: The dragonblood subtype consists of the following: kobolds, dragons, anyone with the half-dragon template, or the Dragontouched or Dragon Heritage feats.  If you take this feat and are not one of the above, you will be deleveled.</entry>
+*Note: In addition to race, you can gain the dragonblood subtype through the Dragon Devotee or Dragon Disciple classes, or through the Dragontouched or Dragon Heritage feats.  If you take this feat and are not dragonblooded or a Swift Wing, you will be deleveled or unable to level.</entry>
   <entry id="55343" lang="en" sex="m">Draconic Arcane Grace</entry>
   <entry id="55344" lang="en" sex="m">Type of Feat: Draconic
 Prerequisite: Sorcerer 1st, Dragon Heritage
@@ -38389,7 +38390,7 @@ You can take this feat if you do not have sneak attack or skirmish, but it will 
 Also note that due to engine limitations the sneak attack implementation is a bit iffy, and may not always behave as expected.
 Use: Selected.
 
-*Note: The dragonblood subtype consists of the following: kobolds, dragons, anyone with the half-dragon template, or the Dragontouched or Dragon Heritage feats.  If you take this feat and are not one of the above, you will be deleveled.</entry>
+*Note: In addition to race, you can gain the dragonblood subtype through the Dragon Devotee or Dragon Disciple classes, or through the Dragontouched or Dragon Heritage feats.  If you take this feat and are not dragonblooded or a Hand of the Winged Masters, you will be deleveled or unable to level.</entry>
   <entry id="55476" lang="en" sex="m">Improved Dragonfire Strike</entry>
   <entry id="55477" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Hand of the Winged Masters 9
@@ -38743,7 +38744,7 @@ When you perform your bard song(if this feat is activated) instead of granting a
 All other effects your bard song causes are unchanged.
 Use: Selected.
 
-*Note: The dragonblood subtype consists of the following: kobolds, dragons, anyone with the half-dragon template, or the Dragontouched or Dragon Heritage feats.  If you take this feat and are not one of the above, you will be deleveled.</entry>
+*Note: In addition to race, you can gain the dragonblood subtype through the Dragon Devotee or Dragon Disciple classes, or through the Dragontouched or Dragon Heritage feats.  If you take this feat and are not dragonblooded, you will be deleveled or unable to level.</entry>
   <entry id="55630" lang="en" sex="m">Dragonfire Assault</entry>
   <entry id="55631" lang="en" sex="m">Type of Feat: Draconic
 Prerequisite: Str 13, Cha 11, Dragonblood subtype*, Power Attack
@@ -38751,7 +38752,7 @@ Prerequisite: Str 13, Cha 11, Dragonblood subtype*, Power Attack
 When you use your Power Attack ability, if this feat is activated, your extra damage from Power Attack is the element related to your draconic ancestry.  If that dragon type is not associated with one of the 5 main elements, the damage type is fire.
 Use: Selected.
 
-*Note: The dragonblood subtype consists of the following: kobolds, dragons, anyone with the half-dragon template, or the Dragontouched or Dragon Heritage feats.  If you take this feat and are not one of the above, you will be deleveled.</entry>
+*Note: In addition to race, you can gain the dragonblood subtype through the Dragon Devotee or Dragon Disciple classes, or through the Dragontouched or Dragon Heritage feats.  If you take this feat and are not dragonblooded, you will be deleveled or unable to level.</entry>
   <entry id="55632" lang="en" sex="m">Dragonfire Channeling</entry>
   <entry id="55633" lang="en" sex="m">Type of Feat: Draconic
 Prerequisite: Cha 11, Dragonblood subtype*, Turn Undead
@@ -38759,7 +38760,7 @@ Prerequisite: Cha 11, Dragonblood subtype*, Turn Undead
 When you activate this feat, you use up a Turn Undead use for the day and breathe a 15' cone of an element related your draconic ancestry.  If your dragon type is not related to one of the 5 main elements, or you are not related to a specific dragon, the damage defaults to fire.  The damage is a number of d6 equal to your turning level divided by 2, and the save is a Reflex save vs 10 + your Charisma modifier + your turning level divided by 2.
 Use: Selected.
 
-*Note: The dragonblood subtype consists of the following: kobolds, dragons, anyone with the half-dragon template, or the Dragontouched or Dragon Heritage feats.  If you take this feat and are not one of the above, you will be deleveled.</entry>
+*Note: In addition to race, you can gain the dragonblood subtype through the Dragon Devotee or Dragon Disciple classes, or through the Dragontouched or Dragon Heritage feats.  If you take this feat and are not dragonblooded, you will be deleveled or unable to level.</entry>
   <entry id="55634" lang="en" sex="m">Draconic Aura: Magic Power</entry>
   <entry id="55635" lang="en" sex="m">Extra Draconic Aura: Magic Power</entry>
   <entry id="55636" lang="en" sex="m">Draconic Marshal Aura: Magic Power</entry>
@@ -38802,20 +38803,24 @@ This increases your recharge time by one round when used.
 Use: Selected.</entry>
   <entry id="55649" lang="en" sex="m">Exhale Immunity</entry>
   <entry id="55650" lang="en" sex="m">Type of Feat: Breath Channeling
-Prerequisite: dragonblood subtype, breath weapon
+Prerequisite: dragonblood subtype*, breath weapon
 
 When activated, your breath weapon instead of dealing damage, will grant immunity to it's energy type for 1d4 rounds to a specified target.  If your breath does not do energy damage, it grants immunity to fire.
-Use: Selected.</entry>
+Use: Selected.
+
+*Note: In addition to race, you can gain the dragonblood subtype through the Dragon Devotee or Dragon Disciple classes, or through the Dragontouched or Dragon Heritage feats.  If you take this feat and are not dragonblooded, you will be deleveled or unable to level.</entry>
   <entry id="55651" lang="en" sex="m">Metabreath Feats</entry>
   <entry id="55652" lang="en" sex="m">This series of feats allows you to enhance a breath weapon at the cost of increasing the recharge time.  Thus, these feats are only usable on breath weapons with a recharge time.</entry>
   <entry id="55653" lang="en" sex="m">Breath Channeling Feats</entry>
   <entry id="55654" lang="en" sex="m">This series of feats allows you to modify a breath weapon's effect to entangle, block, or grant immunity.  You must have a breath weapon of some type to take these.</entry>
   <entry id="55655" lang="en" sex="m">Entangling Exhalation</entry>
   <entry id="55656" lang="en" sex="m">Type of Feat: Breath Channeling
-Prerequisite: dragonblood subtype, breath weapon
+Prerequisite: dragonblood subtype*, breath weapon
 
 When activated, your breath weapon does half-damage, if it does damage.  Any creature affected by your breath weapon will be entangled for 1d4 rounds.  If your breath weapon does energy damage, those entangled will take 1d6 damage per round of that type for the duration of the entanglement.
-Use: Selected.</entry>
+Use: Selected.
+
+*Note: In addition to race, you can gain the dragonblood subtype through the Dragon Devotee or Dragon Disciple classes, or through the Dragontouched or Dragon Heritage feats.  If you take this feat and are not dragonblooded, you will be deleveled or unable to level.</entry>
   <entry id="55657" lang="en" sex="m">Spreading Breath</entry>
   <entry id="55658" lang="en" sex="m">Type of Feat: Metabreath
 Prerequisite: Con 15, Shape Breath, breath weapon with a recharge time
@@ -38855,10 +38860,12 @@ This increases your recharge time by two rounds for each round of duration when 
 Use: Selected.</entry>
   <entry id="55667" lang="en" sex="m">Exhale Barrier</entry>
   <entry id="55668" lang="en" sex="m">Type of Feat: Breath Channeling
-Prerequisite: dragonblood subtype, breath weapon
+Prerequisite: dragonblood subtype*, breath weapon
 
 When activated, your breath weapon, instead of doing its normal blast, is formed into a 10' long wall of the same energy type, which lasts for 1d4 rounds.  Anyone passing through this wall takes the same amount of damage your breath does normally.  If your breath does not do energy damage, the wall does fire damage.  If your breath does not damage at all, the wall does 2d6 fire damage.
-Use: Selected.</entry>
+Use: Selected.
+
+*Note: In addition to race, you can gain the dragonblood subtype through the Dragon Devotee or Dragon Disciple classes, or through the Dragontouched or Dragon Heritage feats.  If you take this feat and are not dragonblooded, you will be deleveled or unable to level.</entry>
   <entry id="55669" lang="en" sex="m">Off</entry>
   <entry id="55670" lang="en" sex="m">Maximum</entry>
   <entry id="55671" lang="en" sex="m">Quickslot 1</entry>
@@ -40672,6 +40679,7 @@ Spell Resistance: No (harmless)
 
 The goddess Shar is called the Mistress of the Night, the Lady of Loss, and the Dark Goddess. She is shadow; dark and secret. It is with little surprise that a gift from her to the caster of this spell would encompass such things. Upon completion of this spell, you receive an immensely powerful whip, created by the hands of Shar herself. It holds powerful enchantments, and also blinds its targets. In addition, shadow settles upon the battlefield wherever this whip is used. When the duration ends, the whip is left as a reminder to you, though all of its enchantments are stripped from it. </entry>
   <entry id="56314" lang="en" sex="m">##START_OF_EPIC_SPELL_AND_ISC_RESERVE</entry>
+  <entry id="56999" lang="en" sex="m">##END_OF_EPIC_SPELL_AND_ISC_RESERVE</entry>
   <entry id="57000" lang="en" sex="m">##PnP Weapon Proficiencies##</entry>
   <entry id="57001" lang="en" sex="m">Weapon Proficiencies</entry>
   <entry id="57002" lang="en" sex="m">These feats represent the familiarization of yourself with various weapons.  Where classes give training in several weapons at once, feats are used to grant training in specific weapons.</entry>
@@ -41099,6 +41107,145 @@ You cause various bits of trash and junk in an area - rotting garbage, old cloth
 3rd Level Spell
   
 You polymorph yourself into the form of a fiendish large monstrous spider.  You can remain in this form for 1 hour per invoker level.</entry>
+  <entry id="57500" lang="en" sex="m">Viletooth Lizardfolk</entry>
+  <entry id="57501" lang="en" sex="m">viletooth lizardfolk</entry>
+  <entry id="57502" lang="en" sex="m">Many lizardfolk forge alliances with black dragons due to their races' similar habitats.  Over time this led to a mingling of bloodlines, sometimes resulting in entire tribes, and other times a single viletooth being born to a tribe of normal lizardfolk.  Physically they are much thinner than their more typical brethren, sometimes even scrawny.  They have patches of black on their body, up to and including their entire body being covered in ebony scales.  They have large eyes and frequently grow short, curved horns similar to those of their draconic ancestor.
+
+Viletooth Lizardfolk Ability Adjustments: +2 Con
+Favored Class (Druid): A multiclass viletooth lizardfolk's druid class does not count when determining whether he suffers an XP penalty for multiclassing.
+
+Special Abilities:
+
+- Weapon Proficiency (Simple): All Viletooth Lizardfolk are proficient with Simple Weapons.
+- Natural Weapon: Viletooth Lizardfolk can make an natural bite attack that deals 1d6 acid damage in addition to 1d4 normal damage.
+- Shield: All Viletooth Lizardfolk are proficient with shields.
+- Skill Affinity (Jump): +4 racial bonus to Jump checks.
+- Natural Armor Bonus: Racial natural armor bonus of 5.
+- Darkvision: Viletooth Lizardfolk are able to see in the dark.
+- Waterbreathing: Viletooth Lizardfolk are immune to drowning.
+- Dragonblooded: Viletooth Lizardfolk have the dragonblood subtype.
+- Reptilian: Viletooth Lizardfolk count as Reptilian for the purpose of spells.</entry>
+  <entry id="57503" lang="en" sex="m">Silverbrow Human</entry>
+  <entry id="57504" lang="en" sex="m">silverbrow human</entry>
+  <entry id="57505" lang="en" sex="m">Silverbrow Humans</entry>
+  <entry id="57506" lang="en" sex="m">Silver dragons are well known for taking humanoid form and living among them.  Long ago, communities of humans welcomed silver dragons into their homes, not knowing the nature of their disguised visitors.  In these communities, often secluded and small, half-dragon children became common as the dragons married their human friends.  The silvers did their best to protect these children form discovery, eventually teaching them to assume full human form magically, and thus the mingling of human and silver dragon blood continued.  Over time, teh draconic features disappeared, and the dragons moved on as well, leaving communities of humans with dragonblood heritage.  They came to be known as Silverbrow humans due to the white streaks or highlights displayed in the hair of these descendents.  Physically they are otherwise indistinguishable from normal humans.
+
+Silverbrow Human Ability Adjustments: None
+Favored Class (Any): A multiclass silverbrow human's highest class does not count when determining whether he suffers an XP penalty for multiclassing.
+
+Special Abilities:
+
+- Quick To Master: Silverbrow Humans gain a bonus feat at first level.
+- Dragonblooded: Silverbrow Humans have the dragonblood subtype.
+- Human: Silverbrow Humans count as Human for the purpose of spells.</entry>
+  <entry id="57507" lang="en" sex="m">Stonehunter Gnome</entry>
+  <entry id="57508" lang="en" sex="m">Stonehunter Gnomish</entry>
+  <entry id="57509" lang="en" sex="m">stonehunter gnomish</entry>
+  <entry id="57510" lang="en" sex="m">Stonehunter Gnomes</entry>
+  <entry id="57511" lang="en" sex="m">One of the few races considered to be fast companions of any kind of dragon, stonehunter gnomes are the favored people of copper dragons.  Since the coppers' love of pranks, riddles, and mischief fit well with the gnomes' outlook on life, it should be no surprise they get along well.  The gnomes who return this sentiment are known as stonehunters, as the two races frequently meet to hutn together.  Copper dragons often make their lairs beneath stonehunter gnome villages, and over time while the gnomes become more dragonlike in appearance the coppers grow fonder of the mortals.  Physically they tend to look like most other gnomes, but for their very dark skin that takes on a coppery sheen in sunlight.
+ 
+Stonehunter Gnomish Ability Adjustments: +2 Con, -2 Str.
+Favored Class (Ranger): A multiclass stonehunter gnome's ranger class does not count when determining whether he suffers an XP penalty for multiclassing.
+
+Special Abilities:
+
+- Small Stature
+ +1 size bonus to attack rolls.
+ +1 size bonus to AC.
+ +4 size bonus to Hide checks.
+- Offensive Training vs. Reptilians: +1 racial bonus on attack rolls against reptilian humanoids.
+- Offensive Training vs. Goblinoids: +1 racial bonus on attack rolls against goblinoids (goblins, hobgoblins, and bugbears).
+- Defensive Training vs. Giants: +4 dodge bonus to AC against giants.
+- Skill Affinity (Listen): +2 racial bonus to Listen checks.
+- Skill Affinity (Concentration): +2 racial bonus to Concentration checks.
+- Low-Light Vision: Allows them to see better than normal in the dark.
+- Dragonblooded: Stonehunter Gnomes have the dragonblood subtype.
+- Gnomish: Stonehunter Gnomes count as Gnomes for the purpose of spells.</entry>
+  <entry id="57512" lang="en" sex="m">Fireblood Dwarf</entry>
+  <entry id="57513" lang="en" sex="m">Fireblood Dwarven</entry>
+  <entry id="57514" lang="en" sex="m">fireblood dwarven</entry>
+  <entry id="57515" lang="en" sex="m">Fireblood Dwarves</entry>
+  <entry id="57516" lang="en" sex="m">Few dwarves delved as deep as the ancient Fireblood clan.  Particularly fond of dormant volcanos, these dwarves followed volcanic trails and tunnels in search of further access to the world's depths.  Unfortunately they stumbled on a nest of red dragons, and the outraged dragons enslaved the hapless clan to mine treasures for them.  Over time, whether by interbreeding, natural mutation, or magical effect the Fireblood clan began to take on unique traits making them better adapted to higher temperatures... and to battling dragons.  They won their freedom eventually, but the hatred for evil dragons in general and red dragons in specific still burns deep within this breed of dwarf.  The clan intermarried and spread their bloodline across many clans now, however, and a Fireblood dwarf may be born to any dwarf parents.  They are much the same as standard dwarves, but have dark red-brown skin, and are usually bald, with only the faintest of beards.
+
+Dwarven Ability Adjustments: +2 Con, -2 Cha.
+Favored Class (Fighter): A multiclass fireblood dwarf's fighter class does not count when determining whether he suffers an XP penalty for multiclassing.
+
+Special Abilities:
+
+- Stonecunning: +2 racial bonus on Search checks made in subterranean areas.
+- Darkvision: Dwarves are able to see in the dark.
+- Resistance to fire 5: Fireblood Dwarves have Fire Resistance 5.
+- Hardiness vs. Spells: +2 racial bonus on saving throws against spells.
+- Offensive Training vs. Orcs: +1 racial bonus on attack rolls against orcs.
+- Offensive Training vs. Goblinoids: +1 racial bonus on attack rolls against goblinoids (goblins, hobgoblins, and bugbears).
+- Defensive Training vs. Dragons: +4 dodge bonus to AC against dragons.
+- Skill Affinity (Lore): +2 racial bonus to Lore checks.
+- Skill Affinity (Craft Armor): +2 racial bonus to Craft Armor checks.
+- Skill Affinity (Craft Weapon): +2 racial bonus to Craft Weapon checks.
+- Skill Affinity (Appraise): +2 racial bonus to Appraise checks.
+- Dragonblooded: Fireblood Dwarves have the dragonblood subtype.
+- Dwarven: Fireblood Dwarves count as Dwarves for the purpose of spells.</entry>
+  <entry id="57517" lang="en" sex="m">Glimmerskin Halfling</entry>
+  <entry id="57518" lang="en" sex="m">glimmerskin halfling</entry>
+  <entry id="57519" lang="en" sex="m">Glmmerskin Halflings</entry>
+  <entry id="57520" lang="en" sex="m">Gold dragons hate injustice and foul play, but few things anger them more than tyranny of the strong over the weak, or the small.  When a gold dragon's territory includes or is near a halfling village, they often appoint themselves protector and take of threats too powerful for the halflings to handle alone.  Such villages seldom, if ever, learn of those dangers or of their guardian.  The dragon often walks among its charges, appearing as a small animal or as a halfling looking to settle in the town.  While any relationships from this are short-lived as far as the dragon is concerned, the signs of draconic heritage live on long after among the village inhabitants.  These dragonblooded halflings look for the most part like their more mundane kin, but bear a golden sheen to their complexion and inevitably have golden flecks in their eyes.  They also tend to show traits of nobility and courage, standing up to any threat they encounter.
+
+Halfling Ability Adjustments: +2 Dex, -2 Str.
+
+Favored Class (Rogue): A multiclass glimmerskin halfling's rogue class does not count when determining whether he suffers an XP penalty for multiclassing.
+
+Special Abilities:
+
+- Small Stature:
+ +1 size bonus to attack rolls.
+ +1 size bonus to AC.
+ +4 size bonus to Hide checks.
+- Skill Affinity (Listen): +2 racial bonus to Listen checks.
+- Skill Affinity (Jump): +2 racial bonus to Jump checks.
+- Lucky: +1 luck bonus to all saving throws.
+- Fearless: +2 morale bonus to saving throws against spells and effects of the 'Fear' subtype.
+- Good Aim: +1 racial bonus to attack rolls made with throwing weapons.
+- Touch of Luck: Once per day, a glimmerkin halfling can grant himself or an ally within 30' a +2 bonus to saves for one round as an immediate action.
+- Dragonblooded: Glimmerskin Halflings have the dragonblood subtype.
+- Halfling: Glimmerskin Halflings count as Halflings for the purpose of spells.</entry>
+  <entry id="57521" lang="en" sex="m">Forestlord Elf</entry>
+  <entry id="57522" lang="en" sex="m">Forestlord Elven</entry>
+  <entry id="57523" lang="en" sex="m">forestlord elven</entry>
+  <entry id="57524" lang="en" sex="m">Forestlord Elves</entry>
+  <entry id="57525" lang="en" sex="m">Like most sylvan races, the elves are in tune with the natural world, which includes dragonkind.  In ancient times a few groups of elves forged treaties with powerful green dragons, who in turn granted those elves strange new powers.  Though the elves did not and do not worship those dragons, the peace accords they crafted last to this day, long after those who signed them died.  Every descendent of a forestlord can be one, although this is far from certain, as the traits themselves are unpredictable.  Physically, they appear much like regular elves, but can be easily distinguished by their smooth green skin, similar to green dragon scales.  Most have green hair as well, though occasionally it can be anywhere from brown to white.
+
+Forestlord Elven Ability Adjustments: +2 Dex, -2 Con.
+Favored Class (Sorcerer): A multiclass forestlord elf's sorcerer class does not count when determining whether he suffers an XP penalty for multiclassing.
+
+Special Abilities:
+
+- Sleeplessness: Immune to spells and effects of the 'Sleep' subtype.
+- Skill Affinity (Listen): +2 racial bonus to Listen checks.
+- Skill Affinity (Search): +2 racial bonus to Search checks.
+- Skill Affinity (Spot): +2 racial bonus to Spot checks.
+- Keen Senses: Forestlord Elves make active Search checks automatically and with no movement penalties.
+- Low-Light Vision: Allows them to see better than normal in the dark.
+- Treewalk: Once per day, Forestlord Elves can step through a nearby tree and emerge by any tree up to 60' away, as the Dimension Door spell.  They can use this ability one additional time per day for every 5HD they have.
+- Dragonblooded: Forestlord Elves have the dragonblood subtype.
+- Elven: Forestlord Elves are considered Elven for the purpose of spells.</entry>
+  <entry id="57526" lang="en" sex="m">Defenseive Training vs Dragons</entry>
+  <entry id="57527" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: The creature gains a +4 dodge bonus to AC vs dragons.
+Use: Automatic.</entry>
+  <entry id="57528" lang="en" sex="m">Touch of Luck</entry>
+  <entry id="57529" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: You can grant yourself or a single ally within 30' a +2 bonus to saves for one round.
+Use: Selected.</entry>
+  <entry id="57530" lang="en" sex="m">Treewalk</entry>
+  <entry id="57531" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: Once per day, you can step into a nearby tree, and step out of any other one within 60'.  You gain one extra use per day at level 5, and one more every 5 levels thereafter.
+Note: For game purposes this is treated as a 60' Dimension Door ability that only works aboveground and in natural surroundings.
+Use: Selected.</entry>
+  <entry id="57532" lang="en" sex="m">Treewalk - Selected</entry>
+  <entry id="57533" lang="en" sex="m">Treewalk - Direction and Distance</entry>
   <entry id="60000" lang="en" sex="m">####START_OF_TOB_SPELLBOOK_RESERVE</entry>
   <entry id="60001" lang="en" sex="m">Aura Of Chaos</entry>
   <entry id="60002" lang="en" sex="m">Aura Of Perfect Order</entry>
@@ -41425,8 +41572,6 @@ You polymorph yourself into the form of a fiendish large monstrous spider.  You 
   <entry id="60323" lang="en" sex="m">White Raven Strike</entry>
   <entry id="60324" lang="en" sex="m">White Raven Tactics</entry>
   <entry id="60500" lang="en" sex="m">####END_OF_TOB_SPELLBOOK_RESERVE</entry>
-  <entry id="61000" lang="en" sex="m">##EPIC_SPELL_AND_ISC_RESERVE</entry>
-  <entry id="61500" lang="en" sex="m">##END_OF_EPIC_SPELL_AND_ISC_RESERVE</entry>
   <entry id="61501" lang="en" sex="m">####START_OF_INV_SPELLBOOK_RESERVE</entry>
   <entry id="61502" lang="en" sex="m">Warlock Beguiling Influence</entry>
   <entry id="61503" lang="en" sex="m">Warlock Breath of the Night</entry>

@@ -177,6 +177,7 @@ int GetInvokerLevel(object oInvoker, int nSpecificClass = CLASS_TYPE_INVALID, in
         if(GetIsInvocationClass(nSpecificClass))
         {
             int nClassLevel = GetLevelByClass(nSpecificClass, oInvoker);
+            if(DEBUG) DoDebug("Invoker Class Level is: " + IntToString(nClassLevel));
             if (nClassLevel > 0)
             {
                 // Invoker level is class level + any arcane spellcasting or invoking levels in any PRCs
@@ -240,8 +241,8 @@ int GetHighestInvokerLevel(object oCreature)
 
 int GetIsInvocationClass(int nClass)
 {
-    return (nClass==CLASS_TYPE_DRAGONFIRE_ADEPT ||
-            nClass==CLASS_TYPE_WARLOCK 
+    return (nClass == CLASS_TYPE_DRAGONFIRE_ADEPT ||
+            nClass == CLASS_TYPE_WARLOCK 
             );
 }
 

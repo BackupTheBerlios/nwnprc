@@ -14,6 +14,7 @@
 
 #include "inc_dynconv"
 #include "prc_alterations"
+#include "prc_inc_wpnrest"
 
 //////////////////////////////////////////////////
 /* Constant defintions                          */
@@ -78,7 +79,7 @@ void main()
                     {
                         // If the selection is a martial weapon
                         // Everything that needs Martial weapon pro has it in this column
-                        if (StringToInt(Get2DACache("baseitems", "ReqFeat0", i)) == FEAT_WEAPON_PROFICIENCY_MARTIAL)
+                        if(IsWeaponMartial(i))
                         {
                             string sWeaponName = GetStringByStrRef(StringToInt(Get2DACache("baseitems", "Name", i)));
                             // Just in case its a blank entry, don't put it here

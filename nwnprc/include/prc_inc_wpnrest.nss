@@ -124,6 +124,39 @@ void DoWeaponFeatUnequip(object oPC, object oItem, int nHand)
 	}
 }
 
+int IsWeaponMartial(int nBaseItemType)
+{
+    switch(nBaseItemType)
+	{ 
+	    case BASE_ITEM_SHORTSWORD:
+	    case BASE_ITEM_LONGSWORD:
+	    case BASE_ITEM_BATTLEAXE:
+	    case BASE_ITEM_LIGHTFLAIL:
+	    case BASE_ITEM_WARHAMMER:
+	    case BASE_ITEM_LONGBOW:
+	    case BASE_ITEM_HALBERD:
+	    case BASE_ITEM_SHORTBOW:
+	    case BASE_ITEM_GREATSWORD:
+	    case BASE_ITEM_GREATAXE:
+	    case BASE_ITEM_HEAVYFLAIL:
+	    case BASE_ITEM_LIGHTHAMMER:
+	    case BASE_ITEM_HANDAXE:
+	    case BASE_ITEM_RAPIER:
+	    case BASE_ITEM_SCIMITAR:
+	    case BASE_ITEM_THROWINGAXE:
+	         return TRUE;
+	         
+	    //special case: counts as martial for dwarves
+	    case BASE_ITEM_DWARVENWARAXE:
+	        if(GetHasFeat(FEAT_DWARVEN, oPC))
+	          return TRUE;
+	    
+	    default:
+	         return FALSE;
+	    	
+	}
+}
+
 //checks to see if the PC can wield the weapon.  If not, applies a -4 penalty.
 void DoProficiencyCheck(object oPC, object oItem, int nHand)
 {
@@ -374,6 +407,9 @@ void DoProficiencyCheck(object oPC, object oItem, int nHand)
 	         bProficient = TRUE; break;
 	    	
 	}
+	
+	if(GetPersistantLocalInt(oPC, "FavouredSoulDietyWeapon") == GetBaseItemType(oItem))
+	    bProficient = TRUE;
 	
 	if(!bProficient) SetCompositeAttackBonus(oPC, "Unproficient" + IntToString(nHand), -4, nHand);
 }

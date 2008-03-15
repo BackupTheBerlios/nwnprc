@@ -259,11 +259,10 @@ void main()
                     sFeatID = Get2DACache(sInvocationFile, "FeatID", i);
                     if(sFeatID != ""                                           // Non-blank row
                      && !GetHasFeat(StringToInt(sFeatID), oPC)                 // PC does not already posses the power
-                     && !StringToInt(Get2DACache(sInvocationFile, "HasPrereqs", i)) // and INvocation is completed.  This flag in the 2da can be used to disable invocations.
                        )
                     {
-                        if(SORT) AddToTempList(oPC, GetStringByStrRef(StringToInt(Get2DACache(sInvocationFile, "Name", i))), i);
-                        else     AddChoice(GetStringByStrRef(StringToInt(Get2DACache(sInvocationFile, "Name", i))), i, oPC);
+                        if(SORT) AddToTempList(oPC, GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", StringToInt(sFeatID)))), i);
+                        else     AddChoice(GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", StringToInt(sFeatID)))), i, oPC);
                     }
                 }
 
@@ -290,7 +289,7 @@ void main()
                 string sToken = GetStringByStrRef(STRREF_SELECTED_HEADER1) + "\n\n"; // "You have selected:"
                 int nInvocation = GetLocalInt(oPC, "nInvocation");
                 int nFeatID = StringToInt(Get2DACache(sInvocationFile, "FeatID", nInvocation));
-                sToken += GetStringByStrRef(StringToInt(Get2DACache(sInvocationFile, "Name", nInvocation)))+"\n";
+                sToken += GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", nFeatID)))+"\n";
                 sToken += GetStringByStrRef(StringToInt(Get2DACache("feat", "DESCRIPTION", nFeatID)))+"\n\n";
                 sToken += GetStringByStrRef(STRREF_SELECTED_HEADER2); // "Is this correct?"
                 SetHeader(sToken);

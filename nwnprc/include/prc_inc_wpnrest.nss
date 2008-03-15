@@ -124,7 +124,7 @@ void DoWeaponFeatUnequip(object oPC, object oItem, int nHand)
 	}
 }
 
-int IsWeaponMartial(int nBaseItemType)
+int IsWeaponMartial(int nBaseItemType, object oPC)
 {
     switch(nBaseItemType)
 	{ 
@@ -155,6 +155,8 @@ int IsWeaponMartial(int nBaseItemType)
 	         return FALSE;
 	    	
 	}
+	
+	return FALSE;
 }
 
 //checks to see if the PC can wield the weapon.  If not, applies a -4 penalty.

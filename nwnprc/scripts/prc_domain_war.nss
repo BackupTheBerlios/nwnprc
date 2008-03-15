@@ -79,7 +79,7 @@ void main()
                     {
                         // If the selection is a martial weapon
                         // Everything that needs Martial weapon pro has it in this column
-                        if(IsWeaponMartial(i))
+                        if(IsWeaponMartial(i, oPC))
                         {
                             string sWeaponName = GetStringByStrRef(StringToInt(Get2DACache("baseitems", "Name", i)));
                             // Just in case its a blank entry, don't put it here

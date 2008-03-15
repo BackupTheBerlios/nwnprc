@@ -282,6 +282,14 @@ void RecoverExpendedManeuvers(object oPC, int nList)
 		// Clear them all
 		DeleteLocalInt(oPC, "ManeuverExpended" + IntToString(nList) + IntToString(i));
         }
+        // Do Grant/Withheld Maneuvers whenever this is called on a Crusader
+        if (nList == MANEUVER_LIST_CRUSADER)
+        {
+        	// Make sure to clear them all first
+        	ClearGrantedWithheldManeuvers(oPC);
+        	// Then re-grant/withhold them
+        	GrantManeuvers(oPC, nList);
+        }
 }
 
 void RecoverManeuver(object oPC, int nList, int nMoveId)

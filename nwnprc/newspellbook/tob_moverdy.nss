@@ -61,17 +61,11 @@ int _GetLoopBegin(int nLevel)
 	return -1;
 }
 
-int _GetLoopEnd(int nLevel)
+int _GetLoopEnd(int nClass)
 {
-	if (nLevel == 1) return 6005; // Not a real value, fix later
-	else if (nLevel == 2) return -1;
-	else if (nLevel == 3) return -1;
-	else if (nLevel == 4) return -1;
-	else if (nLevel == 5) return -1;
-	else if (nLevel == 6) return -1;
-	else if (nLevel == 7) return -1;
-	else if (nLevel == 8) return -1;
-	else if (nLevel == 9) return -1;
+	if (nClass == CLASS_TYPE_CRUSADER) return 73; 
+	else if (nClass == CLASS_TYPE_SWORDSAGE) return 141;
+	else if (nClass == CLASS_TYPE_WARBLADE) return 110;
 	
 	return -1;
 }
@@ -139,9 +133,9 @@ void main()
                 
                 // Start at the beginning of the level and scroll through to the end
                 int i;
-		for(i = _GetLoopBegin(nBrowseLevel); i < _GetLoopEnd(nBrowseLevel); i++)
-		{
-			if (GetHasManeuver(i, oPC))
+		for(i = 0; i < _GetLoopEnd(nClass); i++)
+		{	// Checks to see if its the appropriate level
+			if (GetHasManeuver(i, oPC) && nBrowseLevel == StringToInt(Get2DACache(sManeuverFile, "Level", i)))
 			{
 				AddChoice(GetManeuverName(i), i);
 			}
@@ -193,8 +187,7 @@ void main()
         DeleteLocalInt(oPC, "ManeuverListChoiceOffset");
 
         // Restart the convo to pick next maneuver if needed
-        // done via EvalPRCFFeats to avoid convlicts with new spellbooks
-        //ExecuteScript("psi_maneuvergain", oPC);
+        // done via EvalPRCFFeats to avoid conflicts with new spellbooks
         DelayCommand(1.0, EvalPRCFeats(oPC));
     }
     else if(nValue == DYNCONV_ABORTED)

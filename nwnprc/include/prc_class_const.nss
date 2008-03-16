@@ -13,7 +13,6 @@ const int CLASS_TYPE_BLARCHER                = 156;
 const int CLASS_TYPE_BONDED_SUMMONNER        = 121;
 const int CLASS_TYPE_BRAWLER                 = 254;
 const int CLASS_TYPE_CHAMPION_BANE           = 69;
-const int CLASS_TYPE_CORRUPTER               = 112;
 const int CLASS_TYPE_CW_SAMURAI              = 132;
 const int CLASS_TYPE_DISC_BAALZEBUL          = 128;
 const int CLASS_TYPE_DISCIPLE_OF_DARKNESS    = 216;

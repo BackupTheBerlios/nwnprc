@@ -30,7 +30,6 @@ if(DEBUG) DoDebug("M0q01herbfight running");
        (GetLevelByClass(CLASS_TYPE_DRAGON_SHAMAN, GetPCSpeaker()) == 0) &&
        (GetLevelByClass(CLASS_TYPE_DUSKBLADE, GetPCSpeaker()) == 0) &&
        (GetLevelByClass(CLASS_TYPE_ANTI_PALADIN, GetPCSpeaker()) == 0) &&
-       (GetLevelByClass(CLASS_TYPE_CORRUPTER, GetPCSpeaker()) == 0) &&
        (GetLevelByClass(CLASS_TYPE_MARSHAL, GetPCSpeaker()) == 0) &&
        (GetLevelByClass(CLASS_TYPE_SWASHBUCKLER, GetPCSpeaker()) == 0) &&
        (GetLevelByClass(CLASS_TYPE_ARCHER, GetPCSpeaker()) == 0) &&

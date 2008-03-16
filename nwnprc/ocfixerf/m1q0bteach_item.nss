@@ -51,7 +51,6 @@ if(DEBUG) DoDebug("m1q0bteach_item running");
                 GetLevelByClass(CLASS_TYPE_SHUGENJA,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_KNIGHT,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_WARMAGE,oPC) > 0 ||
-                GetLevelByClass(CLASS_TYPE_CORRUPTER,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_ANTI_PALADIN,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_PSYWAR,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_BRAWLER,oPC) > 0 ||

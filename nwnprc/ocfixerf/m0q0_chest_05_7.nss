@@ -23,7 +23,6 @@ if(DEBUG) DoDebug("m0q0_chest_05_7 running");
            GetLevelByClass(CLASS_TYPE_SWORDSAGE,oAttacker) > 0 ||
            GetLevelByClass(CLASS_TYPE_CRUSADER,oAttacker) > 0 ||
            GetLevelByClass(CLASS_TYPE_DRAGON_SHAMAN,oAttacker) > 0 ||
-           GetLevelByClass(CLASS_TYPE_CORRUPTER,oAttacker) > 0 ||
            GetLevelByClass(CLASS_TYPE_ARCHER,oAttacker) > 0 ||
            GetLevelByClass(CLASS_TYPE_BRAWLER,oAttacker) > 0 ||
            GetLevelByClass(CLASS_TYPE_SOULKNIFE,oAttacker) > 0 ||

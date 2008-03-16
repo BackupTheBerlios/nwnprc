@@ -25,7 +25,6 @@ if(DEBUG) DoDebug("m1q0dchest2 running");
            GetLevelByClass(CLASS_TYPE_WARBLADE,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_SWORDSAGE,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_CRUSADER,oPC) > 0 ||
-           GetLevelByClass(CLASS_TYPE_CORRUPTER,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_SOHEI,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_KNIGHT,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_ANTI_PALADIN,oPC) > 0 ||

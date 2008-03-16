@@ -57,7 +57,7 @@ void main()
             return;
         eTest = GetNextEffect(oPC);
     }
-
+    
     // Handle psionics
     if(CheckMissingPowers(oPC, CLASS_TYPE_PSION))
         return;
@@ -216,40 +216,18 @@ int CheckMissingManeuvers(object oPC, int nClass)
 
 int CheckMissingInvocations(object oPC, int nClass)
 {
-    int nLevel;
-    if(DEBUG) DoDebug("Is this even running?");
-    /*if(nClass == CLASS_TYPE_DRAGONFIRE_ADEPT)
-    {
-           if(DEBUG) DoDebug("DFA Levels " + IntToString(GetLevelByClass(CLASS_TYPE_DRAGONFIRE_ADEPT, oPC)));
-           if(GetLevelByClass(CLASS_TYPE_DRAGONFIRE_ADEPT, oPC) < 1) return FALSE;
-    }
-    
-    if(nClass == CLASS_TYPE_WARLOCK)
-    {
-           if(DEBUG) DoDebug("Warlock Levels " + IntToString(GetLevelByClass(CLASS_TYPE_WARLOCK, oPC)));
-           if(GetLevelByClass(CLASS_TYPE_WARLOCK, oPC) < 1) return FALSE;
-    }
-           
-        //Extra Invocations
-    if(nClass ==  CLASS_TYPE_INVALID)
-    {
-           if(!GetHasFeat(FEAT_EXTRA_INVOCATION_I, oPC))
+    int nLevel = GetLevelByClass(nClass, oPC);
+    if(!nLevel && (nClass == CLASS_TYPE_DRAGONFIRE_ADEPT || nClass == CLASS_TYPE_WARLOCK))
+        return FALSE;
+    else if(nClass == CLASS_TYPE_INVALID && !GetHasFeat(FEAT_EXTRA_INVOCATION_I))
                return FALSE;
-    }
-        //Epic Extra Invocations
-    if(nClass == -2)
-    {
-           if(!GetHasFeat(FEAT_EPIC_EXTRA_INVOCATION_I, oPC))
+    else if(nClass == -2 && !GetHasFeat(FEAT_EPIC_EXTRA_INVOCATION_I))
                return FALSE;
-    }*/
-    if(DEBUG) DoDebug("RUnnign here?");
 
     int nCurrentInvocations = GetInvocationCount(oPC, nClass);
     if(DEBUG) DoDebug("Current Invocations: " + IntToString(nCurrentInvocations));
     int nMaxInvocations = GetMaxInvocationCount(oPC, nClass);
     if(DEBUG) DoDebug("Max Invocations: " + IntToString(nMaxInvocations));
-    
-    if(DEBUG) DoDebug("Stupid Debug");
 
     if(nCurrentInvocations < nMaxInvocations)
     {

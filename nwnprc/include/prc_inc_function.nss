@@ -321,8 +321,9 @@ void EvalPRCFeats(object oPC)
        GetLevelByClass(CLASS_TYPE_WARBLADE,         oPC) ||
        // Invocations
        GetLevelByClass(CLASS_TYPE_DRAGONFIRE_ADEPT, oPC) ||
+       GetLevelByClass(CLASS_TYPE_WARLOCK, oPC) ||
        // Racial casters
-       (GetLevelByClass(CLASS_TYPE_OUTSIDER, oPC) && GetRacialType(oPC) == RACIAL_TYPE_RAKSHASA)
+       (GetLevelByClass(CLASS_TYPE_OUTSIDER, oPC) && GetRacialType(oPC) == RACIAL_TYPE_RAKSHASA) 
         )
         DelayCommand(1.0, ExecuteScript("prc_amagsys_gain", oPC));
 

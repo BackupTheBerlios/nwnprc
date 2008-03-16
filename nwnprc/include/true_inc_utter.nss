@@ -176,6 +176,7 @@ void TruenameDebugIgnoreConstraints(object oTrueSpeaker);
 
 #include "true_inc_metautr"
 #include "true_inc_truespk" 
+#include "inc_lookups"
 
 //////////////////////////////////////////////////
 /*             Internal functions               */

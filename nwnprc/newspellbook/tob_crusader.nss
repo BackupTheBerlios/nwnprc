@@ -143,29 +143,36 @@ void main()
     // This is used to determine the bonus from Furious Counterstrike
     else if(nEvent == EVENT_ONHEARTBEAT)
     {
-    	// Get the amount of damage prevented
-	int nDelayedPool = GetLocalInt(oPC, "DelayedDamage");
-	if (DEBUG) DoDebug("Your delayed damage pool: " + IntToString(nDelayedPool));
-	if (nDelayedPool > 0)
-	{
-		// Furious counterstrike is delayed damage / 5
-		int nBonus = nDelayedPool / 5;
-		// Minimum of one if you have delayed damage
-		if (nBonus == 0 && nDelayedPool > 0) nBonus = 1;
-		if (DEBUG) DoDebug("Your furious counterstrike: " + IntToString(nBonus));
-    		// Calculate damage type and apply
-        	int nDamageType = GetWeaponDamageType(oHand);
-		effect eLink = EffectLinkEffects(EffectAttackIncrease(nBonus), EffectDamageIncrease(GetIntToDamage(nBonus), nDamageType));
-		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(eLink), oPC, 6.0);
-		// Visuals
-		effect eVis = EffectVisualEffect(VFX_IMP_HEAD_HOLY);
-		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oPC);
-		
-		// Now apply the delayed damage
-		effect eDam = EffectDamage(nDelayedPool);
-		ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oPC);
-	}	
-	// Clean up local int for this round
-	DeleteLocalInt(oPC, "DelayedDamage");
+        //if they are deleveled completely out of Crusader, no need to keep running these
+        if(GetLevelByClass(CLASS_TYPE_CRUSADER, oPC) == 0)
+        {   
+            RemoveEventScript(oPC, EVENT_ONPLAYEREQUIPITEM,   "tob_crusader", TRUE, FALSE);
+            RemoveEventScript(oPC, EVENT_ONPLAYERUNEQUIPITEM, "tob_crusader", TRUE, FALSE);
+            RemoveEventScript(oPC, EVENT_ONHEARTBEAT,         "tob_crusader", TRUE, FALSE);
+        }
+        	// Get the amount of damage prevented
+    	int nDelayedPool = GetLocalInt(oPC, "DelayedDamage");
+    	if (DEBUG) DoDebug("Your delayed damage pool: " + IntToString(nDelayedPool));
+    	if (nDelayedPool > 0)
+    	{
+    		// Furious counterstrike is delayed damage / 5
+    		int nBonus = nDelayedPool / 5;
+    		// Minimum of one if you have delayed damage
+    		if (nBonus == 0 && nDelayedPool > 0) nBonus = 1;
+    		if (DEBUG) DoDebug("Your furious counterstrike: " + IntToString(nBonus));
+        		// Calculate damage type and apply
+            	int nDamageType = GetWeaponDamageType(oHand);
+    		effect eLink = EffectLinkEffects(EffectAttackIncrease(nBonus), EffectDamageIncrease(GetIntToDamage(nBonus), nDamageType));
+    		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(eLink), oPC, 6.0);
+    		// Visuals
+    		effect eVis = EffectVisualEffect(VFX_IMP_HEAD_HOLY);
+    		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oPC);
+    		
+    		// Now apply the delayed damage
+    		effect eDam = EffectDamage(nDelayedPool);
+    		ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oPC);
+    	}	
+    	// Clean up local int for this round
+    	DeleteLocalInt(oPC, "DelayedDamage");
     }
 }

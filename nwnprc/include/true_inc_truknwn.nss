@@ -25,6 +25,7 @@
 
 // Included here to provide the values for the constants below
 #include "prc_class_const"
+#include "inc_lookups"
 
 //////////////////////////////////////////////////
 /*                 Constants                    */

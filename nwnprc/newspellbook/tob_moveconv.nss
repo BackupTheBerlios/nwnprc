@@ -270,7 +270,7 @@ void main()
                      * maneuvers that wouldn't be shown anyway.
                      */
                     if(nManeuverLevel > nManeuverLevelToBrowse){
-                        break;
+                        continue;
                     }
                     sFeatID = Get2DACache(sManeuverFile, "FeatID", i);
                     if(sFeatID != ""                                           // Non-blank row
@@ -280,8 +280,8 @@ void main()
                          )
                        )
                     {
-                        if(SORT) AddToTempList(oPC, GetStringByStrRef(StringToInt(Get2DACache(sManeuverFile, "Name", i))), i);
-                        else     AddChoice(GetStringByStrRef(StringToInt(Get2DACache(sManeuverFile, "Name", i))), i, oPC);
+                        if(SORT) AddToTempList(oPC, GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", StringToInt(sFeatID)))), i);
+                        else     AddChoice(GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", StringToInt(sFeatID)))), i, oPC);
                     }
                 }
 
@@ -308,7 +308,7 @@ void main()
                 string sToken = GetStringByStrRef(STRREF_SELECTED_HEADER1) + "\n\n"; // "You have selected:"
                 int nManeuver = GetLocalInt(oPC, "nManeuver");
                 int nFeatID = StringToInt(Get2DACache(sManeuverFile, "FeatID", nManeuver));
-                sToken += GetStringByStrRef(StringToInt(Get2DACache(sManeuverFile, "Name", nManeuver)))+"\n";
+                sToken += GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", nFeatID)))+"\n";
                 sToken += GetStringByStrRef(StringToInt(Get2DACache("feat", "DESCRIPTION", nFeatID)))+"\n\n";
                 sToken += GetStringByStrRef(STRREF_SELECTED_HEADER2); // "Is this correct?"
                 SetHeader(sToken);

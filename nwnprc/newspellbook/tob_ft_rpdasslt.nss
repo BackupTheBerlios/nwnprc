@@ -10,9 +10,10 @@ Created:   25.4.2007
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
-/*
+
 void main()
 {
+/*
         object oPC = GetAreaOfEffectCreator();
         object oTarget = GetEnteringObject();
         
@@ -57,8 +58,8 @@ void main()
                         }
                 }
         }
+        //Possible AoE?  On creature enter give bonus to damage if enemy and if the player 
+        //has been out of combat for 6 seconds.
+*/
 }
 
-//Possible AoE?  On creature enter give bonus to damage if enemy and if the player 
-//has been out of combat for 6 seconds.
-*/

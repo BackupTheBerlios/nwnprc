@@ -313,7 +313,7 @@ int GetArcanePRCLevels (object oCaster)
            +  GetLevelByClass(CLASS_TYPE_MASTER_HARPER,   oCaster)
            +  GetLevelByClass(CLASS_TYPE_TRUENECRO,       oCaster)
            +  GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT,    oCaster)
-           +  GetLevelByClass(CLASS_TYPE_MYSTIC_THEURGE,  oCaster)
+           +  GetLevelByClass(CLASS_TYPE_MYSTICTHEURGE,  oCaster)
            +  GetLevelByClass(CLASS_TYPE_RED_WIZARD,      oCaster)
            +  GetLevelByClass(CLASS_TYPE_DIABOLIST,       oCaster)
            +  GetLevelByClass(CLASS_TYPE_CEREBREMANCER,   oCaster)
@@ -372,7 +372,7 @@ int GetDivinePRCLevels (object oCaster)
            +  GetLevelByClass(CLASS_TYPE_HIEROPHANT,        oCaster)
            +  GetLevelByClass(CLASS_TYPE_HOSPITALER,        oCaster)
            +  GetLevelByClass(CLASS_TYPE_MASTER_OF_SHROUDS, oCaster)
-           +  GetLevelByClass(CLASS_TYPE_MYSTIC_THEURGE,    oCaster)
+           +  GetLevelByClass(CLASS_TYPE_MYSTICTHEURGE,    oCaster)
            +  GetLevelByClass(CLASS_TYPE_STORMLORD,         oCaster)
            +  GetLevelByClass(CLASS_TYPE_MASTER_HARPER_DIV, oCaster)
            +  GetLevelByClass(CLASS_TYPE_PSYCHIC_THEURGE,   oCaster)
@@ -2305,7 +2305,7 @@ int PRCGetPrestigeCasterLevels(object oCreature, int nClass)
 int PRCGetPrestigeCasterBoost(object oCreature, int nSlot)
 {
 	int nClass = PRCGetClassByPosition(nSlot, oCreature);
-	
+
 	// If its their first class (aka base class)
 	if (nSlot == 1) return -1;
 	// If the class doesn't exist
@@ -2346,7 +2346,7 @@ int PRCGetPrestigeCasterBoost(object oCreature, int nSlot)
 		else if (GetHasFeat(FEAT_MHARP_SPELLCST_SOHEI , oCreature)) return CLASS_TYPE_SOHEI;
 		else if (GetHasFeat(FEAT_MHARP_SPELLCST_HLR   , oCreature)) return CLASS_TYPE_HEALER;
 		else if (GetHasFeat(FEAT_MHARP_SPELLCST_SOD   , oCreature)) return CLASS_TYPE_SLAYER_OF_DOMIEL;
-		else if (GetHasFeat(FEAT_MHARP_SPELLCST_OCULAR, oCreature)) return CLASS_TYPE_OCULAR;		
+		else if (GetHasFeat(FEAT_MHARP_SPELLCST_OCULAR, oCreature)) return CLASS_TYPE_OCULAR;
 	}
 	else if (nClass == CLASS_TYPE_ARCTRICK)
 	{
@@ -2387,7 +2387,7 @@ int PRCGetPrestigeCasterBoost(object oCreature, int nSlot)
 		else if (GetHasFeat(FEAT_TEMPUS_SPELLCST_SOHEI , oCreature)) return CLASS_TYPE_SOHEI;
 		else if (GetHasFeat(FEAT_TEMPUS_SPELLCST_HLR   , oCreature)) return CLASS_TYPE_HEALER;
 		else if (GetHasFeat(FEAT_TEMPUS_SPELLCST_SOD   , oCreature)) return CLASS_TYPE_SLAYER_OF_DOMIEL;
-		else if (GetHasFeat(FEAT_TEMPUS_SPELLCST_OCULAR, oCreature)) return CLASS_TYPE_OCULAR;		
+		else if (GetHasFeat(FEAT_TEMPUS_SPELLCST_OCULAR, oCreature)) return CLASS_TYPE_OCULAR;
 	}
 	else if (nClass == CLASS_TYPE_BFZ)
 	{
@@ -2406,8 +2406,8 @@ int PRCGetPrestigeCasterBoost(object oCreature, int nSlot)
 		else if (GetHasFeat(FEAT_BFZ_SPELLCST_SOHEI , oCreature)) return CLASS_TYPE_SOHEI;
 		else if (GetHasFeat(FEAT_BFZ_SPELLCST_HLR   , oCreature)) return CLASS_TYPE_HEALER;
 		else if (GetHasFeat(FEAT_BFZ_SPELLCST_SOD   , oCreature)) return CLASS_TYPE_SLAYER_OF_DOMIEL;
-		else if (GetHasFeat(FEAT_BFZ_SPELLCST_OCULAR, oCreature)) return CLASS_TYPE_OCULAR;		
-	}	
-	
+		else if (GetHasFeat(FEAT_BFZ_SPELLCST_OCULAR, oCreature)) return CLASS_TYPE_OCULAR;
+	}
+
 	return -1;
 }

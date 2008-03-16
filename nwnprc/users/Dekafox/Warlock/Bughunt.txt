@@ -1,0 +1,1 @@
+Last Stack Underflow for ranged touch was at about 3692 in prc_inc_combat

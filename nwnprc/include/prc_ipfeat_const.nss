@@ -715,21 +715,21 @@ const int IP_CONST_FEAT_INCORPOREAL             = 227;
 const int IP_CONST_FEAT_ETHEREAL                = 228;
 
 //Racial feats
-const int IP_CONST_FEAT_CRAFTGUILD              = 391;
-const int IP_CONST_FEAT_TECHGUILD               = 392;
-const int IP_CONST_FEAT_SAGEGUILD               = 393;
+const int IP_CONST_FEAT_CRAFTGUILD              = 4987;
+const int IP_CONST_FEAT_TECHGUILD               = 4988;
+const int IP_CONST_FEAT_SAGEGUILD               = 4989;
 const int IP_CONST_FEAT_REMAIN_CONCIOUS         = 269;
-const int IP_CONST_FEAT_SHIFTER_BEASTHIDE       = 90;
-const int IP_CONST_FEAT_SHIFTER_DREAMSIGHT      = 91;
-const int IP_CONST_FEAT_SHIFTER_GOREBRUTE       = 92;
-const int IP_CONST_FEAT_SHIFTER_LONGSTRIDE      = 93;
-const int IP_CONST_FEAT_SHIFTER_LONGTOOTH       = 94;
-const int IP_CONST_FEAT_SHIFTER_RAZORCLAW       = 95;
-const int IP_CONST_FEAT_SHIFTER_WILDHUNT        = 96;
-const int IP_CONST_FEAT_TRACKLESS_STEP          = 89;
-const int IP_CONST_FEAT_SEA_FOLK                = 88;
-const int IP_CONST_FEAT_RIVER_FOLK              = 87;
-const int IP_CONST_FEAT_BAMBOO_FOLK             = 86;
+const int IP_CONST_FEAT_SHIFTER_BEASTHIDE       = 4993;
+const int IP_CONST_FEAT_SHIFTER_DREAMSIGHT      = 4994;
+const int IP_CONST_FEAT_SHIFTER_GOREBRUTE       = 4995;
+const int IP_CONST_FEAT_SHIFTER_LONGSTRIDE      = 4996;
+const int IP_CONST_FEAT_SHIFTER_LONGTOOTH       = 4997;
+const int IP_CONST_FEAT_SHIFTER_RAZORCLAW       = 4998;
+const int IP_CONST_FEAT_SHIFTER_WILDHUNT        = 4999;
+const int IP_CONST_FEAT_TRACKLESS_STEP          = 393;
+const int IP_CONST_FEAT_SEA_FOLK                = 4990;
+const int IP_CONST_FEAT_RIVER_FOLK              = 4991;
+const int IP_CONST_FEAT_BAMBOO_FOLK             = 4992;
 
 // Template Feats
 const int IP_CONST_FEAT_TEMPLATE_CELESTIAL_SMITE_EVIL = 16301;

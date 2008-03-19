@@ -1,1 +1,6 @@
 Last Stack Underflow for ranged touch was at about 3692 in prc_inc_combat
+
+Cause:
+DSPerfect Order Around 3833 - Get Has Spell Effect
+
+Moved the deletelocalint to the point where the effect is removed so the GetHasSpellEffect check isn't needed.

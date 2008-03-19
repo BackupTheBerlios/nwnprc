@@ -3831,15 +3831,12 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iOffha
 	{
 		iAttackBonus = GetAttackBonus(oDefender, oAttacker, oWeapon, iOffhand, iTouchAttackType);
 	}
-        
-        int iDiceRoll = d20();
-        if (DEBUG) DoDebug("Starting DSPerfectOrder");
-        // All rolls = 11 for this guy
-        if (GetLocalInt(oAttacker, "DSPerfectOrder") && GetHasSpellEffect(MOVE_DS_PERFECT_ORDER, oAttacker)) 
-        	iDiceRoll = 11;
-        else 	// Cleanup on aisle 5
-        	DeleteLocalInt(oAttacker, "DSPerfectOrder");
-        if (DEBUG) DoDebug("Ending DSPerfectOrder");	
+    int iDiceRoll = d20();
+    if (DEBUG) DoDebug("Starting DSPerfectOrder");
+    // All rolls = 11 for this guy
+    if (GetLocalInt(oAttacker, "DSPerfectOrder")) 
+      	iDiceRoll = 11;
+    if (DEBUG) DoDebug("Ending DSPerfectOrder");	
 	//string sDebugFeedback = "";
 	//if (DEBUG) DoDebug("GetAttackRoll: Line #1");
 	//int bDebug = GetPRCSwitch(PRC_COMBAT_DEBUG);

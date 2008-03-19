@@ -243,6 +243,26 @@ struct breath CreateBreath(object oDragon, int bLine, float fRange, int nDamageT
 	BreathUsed.nSaveUsed = nSaveUsed;
 	BreathUsed.nOverrideSpecial = nOverrideSpecial;
 	
+	//Energy Aura bonus checking
+	switch(nDamageType)
+	{
+	    case DAMAGE_TYPE_ACID:
+	        if(GetLocalInt(oDragon,"AcidEnergyAura"))
+	            BreathUsed.nOtherDCMod += GetLocalInt(oDragon,"AcidEnergyAura");
+	        break;
+	    case DAMAGE_TYPE_COLD:
+	        if(GetLocalInt(oDragon,"ColdEnergyAura"))
+	            BreathUsed.nOtherDCMod += GetLocalInt(oDragon,"ColdEnergyAura");
+	        break;
+	    case DAMAGE_TYPE_ELECTRICAL:
+	        if(GetLocalInt(oDragon,"ElecEnergyAura"))
+	            BreathUsed.nOtherDCMod += GetLocalInt(oDragon,"ElecEnergyAura");
+	        break;
+	    case DAMAGE_TYPE_FIRE:
+	        if(GetLocalInt(oDragon,"FireEnergyAura"))
+	            BreathUsed.nOtherDCMod += GetLocalInt(oDragon,"FireEnergyAura");
+	}
+	
 	/* Initialize metabreath/channeling tracking */
 	BreathUsed.nClinging = 0;
         BreathUsed.nLingering = 0;

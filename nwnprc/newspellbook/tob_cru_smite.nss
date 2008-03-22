@@ -9,5 +9,5 @@
 
 void main()
 {       
-    DoSmite(OBJECT_SELF, GetSpellTargetObject(), SMITE_TYPE_GOOD_ANTIPALADIN);
+    DoSmite(OBJECT_SELF, GetSpellTargetObject(), SMITE_TYPE_CRUSADER);
 }    

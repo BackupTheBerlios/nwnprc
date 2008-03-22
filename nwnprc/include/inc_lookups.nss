@@ -179,9 +179,16 @@ void MakeLookupLoopMaster()
     DelayCommand(12.0, MakeLookupLoop(CLASS_TYPE_WARBLADE,         0, GetPRCSwitch(FILE_END_CLASS_POWER), "RealSpellID", "FeatID",  "GetClassFeatFromPower_"+IntToString(CLASS_TYPE_WARBLADE)));
     DelayCommand(12.1, MakeLookupLoop(CLASS_TYPE_WARBLADE,         0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "", "SpellIDToClsPsipw"));
     // Invokers use the same lookup loop style as the psionic classes. Time adjusted to put it after the last of the caster lookup loops
-    DelayCommand(12.2, MakeLookupLoop(CLASS_TYPE_DRAGONFIRE_ADEPT, 0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "RealSpellID", "GetPowerFromSpellID"));
-    DelayCommand(12.3, MakeLookupLoop(CLASS_TYPE_DRAGONFIRE_ADEPT, 0, GetPRCSwitch(FILE_END_CLASS_POWER), "RealSpellID", "FeatID",  "GetClassFeatFromPower_"+IntToString(CLASS_TYPE_DRAGONFIRE_ADEPT)));
-    DelayCommand(12.4, MakeLookupLoop(CLASS_TYPE_DRAGONFIRE_ADEPT, 0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "", "SpellIDToClsPsipw"));
+    DelayCommand(13.4, MakeLookupLoop(CLASS_TYPE_DRAGONFIRE_ADEPT, 0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "RealSpellID", "GetPowerFromSpellID"));
+    DelayCommand(13.5, MakeLookupLoop(CLASS_TYPE_DRAGONFIRE_ADEPT, 0, GetPRCSwitch(FILE_END_CLASS_POWER), "RealSpellID", "FeatID",  "GetClassFeatFromPower_"+IntToString(CLASS_TYPE_DRAGONFIRE_ADEPT)));
+    DelayCommand(13.6, MakeLookupLoop(CLASS_TYPE_DRAGONFIRE_ADEPT, 0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "", "SpellIDToClsPsipw"));
+    DelayCommand(13.7, MakeLookupLoop(CLASS_TYPE_WARLOCK,          0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "RealSpellID", "GetPowerFromSpellID"));
+    DelayCommand(13.8, MakeLookupLoop(CLASS_TYPE_WARLOCK,          0, GetPRCSwitch(FILE_END_CLASS_POWER), "RealSpellID", "FeatID",  "GetClassFeatFromPower_"+IntToString(CLASS_TYPE_WARLOCK)));
+    DelayCommand(13.9, MakeLookupLoop(CLASS_TYPE_WARLOCK,          0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "", "SpellIDToClsPsipw"));
+    DelayCommand(14.1, MakeSpellbookLevelLoop(CLASS_TYPE_WARLOCK,  0, GetPRCSwitch(FILE_END_CLASS_POWER) , "SpellLvl", "Level", "1"));
+    DelayCommand(14.1, MakeSpellbookLevelLoop(CLASS_TYPE_WARLOCK,  0, GetPRCSwitch(FILE_END_CLASS_POWER) , "SpellLvl", "Level", "2"));
+    DelayCommand(14.1, MakeSpellbookLevelLoop(CLASS_TYPE_WARLOCK,  0, GetPRCSwitch(FILE_END_CLASS_POWER) , "SpellLvl", "Level", "3"));
+    DelayCommand(14.1, MakeSpellbookLevelLoop(CLASS_TYPE_WARLOCK,  0, GetPRCSwitch(FILE_END_CLASS_POWER) , "SpellLvl", "Level", "4"));
     //add new psionic classes here
     //also add them later too
 
@@ -404,7 +411,9 @@ void MakeSpellbookLevelLoop(int nClass, int nMin, int nMax, string sVarNameBase,
        nClass == CLASS_TYPE_WARBLADE         ||
        // Other new caster types
        nClass == CLASS_TYPE_TRUENAMER        ||
-       nClass == CLASS_TYPE_DRAGONFIRE_ADEPT
+       //Invocation
+       nClass == CLASS_TYPE_DRAGONFIRE_ADEPT ||
+       nClass == CLASS_TYPE_WARLOCK
        )
         sFile = GetAMSDefinitionFileName(nClass);
     // New spellbook class
@@ -486,7 +495,9 @@ void MakeLookupLoop(int nClass, int nMin, int nMax, string sSourceColumn,
        nClass == CLASS_TYPE_WARBLADE         ||
        // Other new caster types
        nClass == CLASS_TYPE_TRUENAMER        ||
-       nClass == CLASS_TYPE_DRAGONFIRE_ADEPT
+       //Invocation
+       nClass == CLASS_TYPE_DRAGONFIRE_ADEPT ||
+       nClass == CLASS_TYPE_WARLOCK
        )
         sFile = GetAMSDefinitionFileName(nClass);
     // New spellbook class
@@ -580,7 +591,9 @@ void MakeSpellIDLoop(int nClass, int nMin, int nMax, string sRealColumn,
        nClass == CLASS_TYPE_WARBLADE         ||
        // Other new caster types
        nClass == CLASS_TYPE_TRUENAMER        ||
-       nClass == CLASS_TYPE_DRAGONFIRE_ADEPT
+       //Invocation
+       nClass == CLASS_TYPE_DRAGONFIRE_ADEPT ||
+       nClass == CLASS_TYPE_WARLOCK
        )
         sFile = GetAMSDefinitionFileName(nClass);
     // New spellbook class

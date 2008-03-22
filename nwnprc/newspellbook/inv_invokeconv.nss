@@ -45,7 +45,7 @@ const int STRREF_YES                     = 4752;     // "Yes"
 const int STRREF_NO                      = 4753;     // "No"
 
 
-const int SORT       = TRUE; // If the sorting takes too much CPU, set to FALSE
+const int SORT       = FALSE; // Sorting was causing TMIs
 const int DEBUG_LIST = FALSE;
 
 //////////////////////////////////////////////////
@@ -166,10 +166,10 @@ void main()
     int nClass = GetLocalInt(oPC, "nClass");
     string sInvFile = GetAMSKnownFileName(nClass);
     string sInvocationFile = GetAMSDefinitionFileName(nClass);
-    if(nClass < 0)
+    if(nClass == -2 || nClass == CLASS_TYPE_INVALID)
     {
-        sInvFile = GetAMSKnownFileName(CLASS_TYPE_WARLOCK);
-        sInvocationFile = GetAMSDefinitionFileName(CLASS_TYPE_WARLOCK);
+        sInvFile = GetAMSKnownFileName(GetFirstInvocationClass(oPC));
+        sInvocationFile = GetAMSDefinitionFileName(GetFirstInvocationClass(oPC));
     }
 
     // Check which of the conversation scripts called the scripts
@@ -193,9 +193,9 @@ void main()
                 // Determine maximum power level
                 int nInvokeLevel = GetInvokerLevel(oPC, nClass);
                 int nMaxLevel = StringToInt(Get2DACache(sInvFile, "MaxInvocationLevel", nInvokeLevel - 1));
-                if(nClass < 0)
+                if(nClass == -2 || nClass == CLASS_TYPE_INVALID)
                 {
-                    nInvokeLevel = GetInvokerLevel(oPC, CLASS_TYPE_WARLOCK);
+                    nInvokeLevel = GetInvokerLevel(oPC, GetFirstInvocationClass(oPC));
                     nMaxLevel = StringToInt(Get2DACache(sInvFile, "MaxInvocationLevel", nInvokeLevel - 1)) - 1;
                     if(nClass == -2) nMaxLevel++;
                 }
@@ -219,6 +219,9 @@ void main()
                 if(DEBUG) DoDebug("inv_invokeconv: Building invocation selection");
                 int nCurrentInvocations = GetInvocationCount(oPC, nClass);
                 int nMaxInvocations = GetMaxInvocationCount(oPC, nClass);
+                //quick bugcheck in case the convo gets started when not needed
+                if(nCurrentInvocations >= nMaxInvocations)
+                    AllowExit(DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, FALSE, oPC);
                 string sToken = GetStringByStrRef(STRREF_POWERLIST_HEADER1) + " " + //"Select a power to gain.\n You can select "
                                 IntToString(nMaxInvocations-nCurrentInvocations) + " " +
                                 GetStringByStrRef(STRREF_POWERLIST_HEADER2);        //" more powers"
@@ -230,9 +233,9 @@ void main()
                 // Determine maximum power level
                 int nInvokeLevel = GetInvokerLevel(oPC, nClass);
                 int nMaxLevel = StringToInt(Get2DACache(sInvFile, "MaxInvocationLevel", nInvokeLevel-1));
-                if(nClass < 0)
+                if(nClass == -2 || nClass == CLASS_TYPE_INVALID)
                 {
-                    nInvokeLevel = GetInvokerLevel(oPC, CLASS_TYPE_WARLOCK);
+                    nInvokeLevel = GetInvokerLevel(oPC, GetFirstInvocationClass(oPC));
                     nMaxLevel = StringToInt(Get2DACache(sInvFile, "MaxInvocationLevel", nInvokeLevel - 1)) - 1;
                     if(nClass == -2) nMaxLevel++;
                 }

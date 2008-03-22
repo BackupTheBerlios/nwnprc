@@ -465,7 +465,8 @@ void DoWeaponEquip(object oPC, object oItem, int nHand)
            
                 
     //apply TWF penalty if a one-handed, not light weapon in offhand - -4/-4 etc isntead of -2/-2
-    if(GetWeaponSize(oItem) == nRealSize && nHand == ATTACK_BONUS_OFFHAND)
+    //Does not apply to small races due to weapon size-up. Stupid size equip hardcoded restrictions.
+    if(GetWeaponSize(oItem) == nRealSize && nHand == ATTACK_BONUS_OFFHAND && nRealSize > CREATURE_SIZE_SMALL)
         // Assign penalty
         SetCompositeAttackBonus(oPC, "OTWFPenalty", -2);
            

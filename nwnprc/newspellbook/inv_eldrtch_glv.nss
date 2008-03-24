@@ -25,10 +25,10 @@ void main()
     object oPC = OBJECT_SELF;
     object oGlaive = CreateItemOnObject("prc_eldrtch_glv", oPC);
     int nAtkBns = GetHasFeat(FEAT_ELDRITCH_SCULPTOR) ? 2 : 0;
-    nAttkBns += GetAttackBonus(oTarget, oPC, OBJECT_INVALID, FALSE, TOUCH_ATTACK_MELEE_SPELL);
+    nAtkBns += GetAttackBonus(GetSpellTargetObject(), oPC, OBJECT_INVALID, FALSE, TOUCH_ATTACK_MELEE_SPELL);
 
     // Construct the bonuses
-    IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(IP_CONST_CASTSPELL_ELDRITCH_GLAIVE_ONHIT, (GetInvokerLevel(oPC, CLASS_TYPE_WARLOCK) + 1) / 2), 99999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+    IPSafeAddItemProperty(oGlaive, ItemPropertyOnHitCastSpell(IP_CONST_CASTSPELL_ELDRITCH_GLAIVE_ONHIT, (GetInvokerLevel(oPC, CLASS_TYPE_WARLOCK) + 1) / 2), 99999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
 
     // Force equip
     ClearAllActions();

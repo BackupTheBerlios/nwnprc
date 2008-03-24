@@ -25,8 +25,8 @@ void main()
             effect eSleepDam = EffectDamage(GetLocalInt(oPC, "PainfulSleep"), DAMAGE_TYPE_MAGICAL);
             ApplyEffectToObject(DURATION_TYPE_INSTANT, eSleepDam, oPC);
             DeleteLocalInt(oPC, "PainfulSleep");
-            int nSleepCheck = GetLocalInt(oTarget, "nSleepCheck");
-            SetLocalInt(oTarget, "nSleepCheck", nSleepCheck + 1);
+            int nSleepCheck = GetLocalInt(oPC, "nSleepCheck");
+            SetLocalInt(oPC, "nSleepCheck", nSleepCheck + 1);
         }
     }
 }

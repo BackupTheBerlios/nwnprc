@@ -25,6 +25,8 @@ void DoSleepCheck(object oTarget, int nSleepCheck, object oCaster)
     if(nSleepCheck != GetLocalInt(oTarget, "nSleepCheck"))
         return;
         
+    int nDC = PRCGetSaveDC(oTarget, oCaster);
+        
     if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (nDC), SAVING_THROW_TYPE_MIND_SPELLS))
     {
         DelayCommand(HoursToSeconds(24), DoSleepCheck(oTarget, nSleepCheck, oCaster));

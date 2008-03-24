@@ -43,6 +43,7 @@ void main()
     int nBeamVFX = VFX_BEAM_DISINTEGRATE;
     int nPenetr = GetInvokerLevel(oPC, CLASS_TYPE_WARLOCK) + SPGetPenetr();
     int nAtkBns = GetHasFeat(FEAT_ELDRITCH_SCULPTOR) ? 2 : 0;
+    nAttkBns += GetAttackBonus(oTarget, oPC, OBJECT_INVALID, FALSE, TOUCH_ATTACK_RANGED_SPELL);
     
     int iAttackRoll = 0;    //placeholder
     if(GetLevelByClass(CLASS_TYPE_WARLOCK, oPC) < 13)

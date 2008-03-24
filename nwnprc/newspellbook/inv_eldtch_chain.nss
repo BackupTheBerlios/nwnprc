@@ -43,6 +43,7 @@ void main()
     int nBeamVFX = VFX_BEAM_DISINTEGRATE;
     int nPenetr = GetInvokerLevel(oPC, CLASS_TYPE_WARLOCK) + SPGetPenetr();
     int nAtkBns = GetHasFeat(FEAT_ELDRITCH_SCULPTOR) ? 2 : 0;
+    nAttkBns += GetAttackBonus(oTarget, oPC, OBJECT_INVALID, FALSE, TOUCH_ATTACK_RANGED_SPELL);
     
     int nNumTargets = GetInvokerLevel(oPC, CLASS_TYPE_WARLOCK) / 5 + 1;
     float fMaxChainDist = GetHasFeat(FEAT_ELDRITCH_SCULPTOR) ? FeetToMeters(60.0) : FeetToMeters(30.0);

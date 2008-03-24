@@ -37,24 +37,25 @@ void main()
     if(nEssence == INVOKE_ELDRITCH_CONE)
     {
         nShape = SHAPE_SPELLCONE;
-        fRange = GetHasFeat(FEAT_ELDRITCH_SCULPTOR) ? FeetToMeters(120.0) : FeetToMeters(30.0);
+        fRange = GetHasFeat(FEAT_ELDRITCH_SCULPTOR, oPC) ? FeetToMeters(120.0) : FeetToMeters(30.0);
         nShapeLevel = 5;
     }
     else if(nEssence == INVOKE_ELDRITCH_LINE)
     {
         nShape = SHAPE_SPELLCYLINDER;
-        fRange = GetHasFeat(FEAT_ELDRITCH_SCULPTOR) ? FeetToMeters(120.0) : FeetToMeters(60.0);
+        fRange = GetHasFeat(FEAT_ELDRITCH_SCULPTOR, oPC) ? FeetToMeters(120.0) : FeetToMeters(60.0);
         nShapeLevel = 5;
     }
     else if(nEssence == INVOKE_ELDRITCH_DOOM)
     {
         nShape = SHAPE_SPHERE;
-        fRange = GetHasFeat(FEAT_ELDRITCH_SCULPTOR) ? FeetToMeters(40.0) : FeetToMeters(20.0);
+        fRange = GetHasFeat(FEAT_ELDRITCH_SCULPTOR, oPC) ? FeetToMeters(40.0) : FeetToMeters(20.0);
         nShapeLevel = 8;
     }
 	
 	//calculate DC for essence effects
 	int nBlastLvl = min((GetLevelByClass(CLASS_TYPE_WARLOCK, oPC) + 1) / 2, 9);
+	if(DEBUG) DoDebug("inv_eldtch_shape: Calculating DC");
 	nBlastLvl = max(nShapeLevel, max(max(GetLocalInt(oPC, "EssenceLevel"), GetLocalInt(oPC, "EssenceLevel2")), nBlastLvl));
 	int nDC = 10 + nBlastLvl + GetAbilityModifier(ABILITY_CHARISMA);
 	if(GetHasFeat(FEAT_LORD_OF_ALL_ESSENCES)) nDC += 2;
@@ -65,7 +66,7 @@ void main()
     effect eVis = EffectVisualEffect(VFX_IMP_LIGHTNING_S);
     int nBeamVFX = VFX_BEAM_DISINTEGRATE;
     int nPenetr = GetInvokerLevel(oPC, CLASS_TYPE_WARLOCK) + SPGetPenetr();
-    int nAtkBns = GetHasFeat(FEAT_ELDRITCH_SCULPTOR) ? 2 : 0;
+    int nAtkBns = GetHasFeat(FEAT_ELDRITCH_SCULPTOR, oPC) ? 2 : 0;
     int nReflexSaveType = SAVING_THROW_TYPE_SPELL;
     effect eDoom = EffectVisualEffect(VFX_IMP_PULSE_NEGATIVE);
     
@@ -96,6 +97,7 @@ void main()
     int nDam = d6(nDmgDice);
     
     //Essence effects that modify the blast itself
+	if(DEBUG) DoDebug("inv_eldtch_shape: Determining Damage Type");
     if(nEssence == INVOKE_PENETRATING_BLAST || nEssence2 == INVOKE_PENETRATING_BLAST) nPenetr += 4;
     else if((nEssence == INVOKE_BRIMSTONE_BLAST && nEssence2 == INVOKE_HELLRIME_BLAST) ||
             (nEssence2 == INVOKE_BRIMSTONE_BLAST && nEssence == INVOKE_HELLRIME_BLAST))
@@ -184,6 +186,7 @@ void main()
     }
     
     //Get first target in spell area
+	if(DEBUG) DoDebug("inv_eldtch_shape: Getting first target");
     oTarget = GetFirstObjectInShape(nShape, fRange, lTargetArea, TRUE,
                                     OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE,
                                     GetPosition(oPC));
@@ -296,7 +299,7 @@ void main()
                 if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nPenetr) && 
                    !(nEssence == INVOKE_VITRIOLIC_BLAST && !nEssence2))
                 {
-                     // perform ranged touch attack and apply sneak attack if any exists
+                     // perform ranged touch attack
                      if((nEssence2 == INVOKE_HELLRIME_BLAST || nEssence2 == INVOKE_UTTERDARK_BLAST ||
                            nEssence2 == INVOKE_BRIMSTONE_BLAST) &&
                         (nEssence == INVOKE_HELLRIME_BLAST || nEssence == INVOKE_UTTERDARK_BLAST ||
@@ -476,13 +479,13 @@ void main()
                  }
                      
             }
-            
-            //Get next target in spell area
-            oTarget = GetNextObjectInShape(nShape, fRange, lTargetArea, TRUE,  
-                         OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE, 
-                         GetPosition(oPC));
         }
 	    
+            
+        //Get next target in spell area
+        oTarget = GetNextObjectInShape(nShape, fRange, lTargetArea, TRUE,  
+                     OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE, 
+                     GetPosition(oPC));
         
 	}
 	

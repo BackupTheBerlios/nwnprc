@@ -1,6 +1,23 @@
-Last Stack Underflow for ranged touch was at about 3692 in prc_inc_combat
+Possibly fixed:
 
-Cause:
-DSPerfect Order Around 3833 - Get Has Spell Effect
+Extra Invocation I does not add the invocation, II fails on "duplicate check"
+(creates cache object PRC_IPBF_0 during 1 and adds itemproperty to it?
+ DFA used PRC_IPBF_4795, Warlock 4710, 4703 before for Warlock)
 
-Moved the deletelocalint to the point where the effect is removed so the GetHasSpellEffect check isn't needed.
+Painful Sleep of Ages does not cause damage on awakening.
+
+i've noticed that the epic feat eldritch sculptor is working okay, you cast and the blast happens twice, which is probably the closest you can get in nwn, but my blast now all have an ab of +1 i'm missing test goblin fodder with them heh
+
+fiendish resilience doesn't do anything on click, no target prompt, no regen, nothing
+
+eldritch glaive equipping late, not firing blast on hit
+
+To Check:
+
+eldritch shapes(cone, line, doom) do a TMI, even when empty
+
+imbue item, trying to create wands or scrolls or potions the dialogue comes up asking which type of spell you want to add arcane or divine, then when you pick one it asks you to select the source of the spell but has no options except to exit the conversation.  No TMI.
+
+i was still able melee attack and cast the basic unshaped eldritch blast (including whatever essences i have toggled on before i polymorphed) in cow form though the other invocations where wiped from both the radial and my quickslot
+
+tenacious plague has 20hp when cast by a level fourty caster and is killable by a single non mage, weapon wielding goblin, also it does seem to move but only when it spots enemies it rushes to it's death

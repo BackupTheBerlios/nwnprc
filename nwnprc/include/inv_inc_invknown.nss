@@ -221,6 +221,10 @@ int AddInvocationKnown(object oCreature, int nList, int n2daRow, int bLevelDepen
     string sBase      = _INVOCATION_LIST_NAME_BASE + IntToString(nList);
     string sArray     = sBase;
     string sPowerFile = GetAMSDefinitionFileName(/*PowerListToClassType(*/nList/*)*/);
+    if(nList == -2 || nList == CLASS_TYPE_INVALID)
+    {
+        sPowerFile = GetAMSDefinitionFileName(GetFirstInvocationClass(oCreature));
+    }
     string sTestArray;
     int i, j, nSize, bReturn;
 
@@ -243,6 +247,7 @@ int AddInvocationKnown(object oCreature, int nList, int n2daRow, int bLevelDepen
 
     // Make sure the power isn't already in an array. If it is, abort and return FALSE
     // Loop over each level array and check that it isn't there.
+    if(DEBUG) DoDebug("inv_inc_invknown: Checking first array set for duplicates.");
     for(i = 1; i <= GetHitDice(oCreature); i++)
     {
         sTestArray = sBase + _INVOCATION_LIST_LEVEL_ARRAY + IntToString(i);
@@ -255,6 +260,7 @@ int AddInvocationKnown(object oCreature, int nList, int n2daRow, int bLevelDepen
         }
     }
     // Check the non-level-dependent array
+    if(DEBUG) DoDebug("inv_inc_invknown: Checking second array set for duplicates.");
     sTestArray = sBase + _INVOCATION_LIST_GENERAL_ARRAY;
     if(persistant_array_exists(oCreature, sTestArray))
     {
@@ -270,6 +276,7 @@ int AddInvocationKnown(object oCreature, int nList, int n2daRow, int bLevelDepen
         persistant_array_create(oCreature, sArray);
 
     // Store the power in the array
+    if(DEBUG) DoDebug("inv_inc_invknown: Adding to invocation array.");
     if(persistant_array_set_int(oCreature, sArray, persistant_array_get_size(oCreature, sArray), nSpells2daRow) != SDL_SUCCESS)
     {
         if(DEBUG) DoDebug("inv_inc_invknown: AddPowerKnown(): ERROR: Unable to add power to known array\n"

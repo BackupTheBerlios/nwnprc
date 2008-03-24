@@ -20,6 +20,23 @@
 #include "inv_inc_invfunc"
 #include "inv_invokehook"
 
+void DoSleepCheck(object oTarget, int nSleepCheck, object oCaster)
+{
+    if(nSleepCheck != GetLocalInt(oTarget, "nSleepCheck"))
+        return;
+        
+    if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (nDC), SAVING_THROW_TYPE_MIND_SPELLS))
+    {
+        DelayCommand(HoursToSeconds(24), DoSleepCheck(oTarget, nSleepCheck, oCaster));
+    }
+    else
+    {
+        DeleteLocalInt(oTarget, "PainfulSleep");
+        RemoveSpellEffects(INVOKE_PAINFUL_SLUMBER_OF_AGES, oCaster, oTarget);
+        RemoveEventScript(oTarget, EVENT_ONHEARTBEAT, "inv_painsleep", FALSE, FALSE);
+    }
+}
+
 void main()
 {
     if (!PreInvocationCastCode()) return;
@@ -60,6 +77,11 @@ void main()
                 SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink2, oTarget, 0.0,TRUE,-1,CasterLvl);
                 SetLocalInt(oTarget, "PainfulSleep", CasterLvl);
                 ExecuteScript("inv_painsleep", oTarget);
+                //set up the 24 hour saving throws
+                int nSleepCheck = GetLocalInt(oTarget, "nSleepCheck");
+                if(nSleepCheck > 30) nSleepCheck = 1;
+                SetLocalInt(oTarget, "nSleepCheck", nSleepCheck);
+                DelayCommand(HoursToSeconds(24), DoSleepCheck(oTarget, nSleepCheck, OBJECT_SELF));
             }
             else
             // * even though I am immune apply just the sleep effect for the immunity message

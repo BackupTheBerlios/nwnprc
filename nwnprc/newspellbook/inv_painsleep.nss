@@ -13,15 +13,20 @@ void main()
     if(nEvent == FALSE)
     {
         // Hook in the events
-        if(DEBUG) DoDebug("inv_painsleep: Adding eventhooks");
-        AddEventScript(oPC, EVENT_VIRTUAL_ONDAMAGED, "inv_painsleep", FALSE, FALSE);
+        if(DEBUG) DoDebug("inv_painsleep: Adding eventhooks to " + DebugObject2Str(oPC));
+        AddEventScript(oPC, EVENT_ONHEARTBEAT, "inv_painsleep", FALSE, FALSE);
     }
     
-    else if(nEvent == EVENT_VIRTUAL_ONDAMAGED)
+    else if(nEvent == EVENT_ONHEARTBEAT)
     {
-        if(DEBUG) DoDebug("inv_painsleep: OnDamaged Event Firing");
-        effect eSleepDam = EffectDamage(GetLocalInt(oPC, "PainfulSleep"), DAMAGE_TYPE_MAGICAL);
-        ApplyEffectToObject(DURATION_TYPE_INSTANT, eSleepDam, oPC);
-        DeleteLocalInt(oPC, "PainfulSleep");
+        if(!GetHasSpellEffect(INVOKE_PAINFUL_SLUMBER_OF_AGES, oPC))
+        {
+            if(DEBUG) DoDebug("inv_painsleep: Target awakened unnaturally");
+            effect eSleepDam = EffectDamage(GetLocalInt(oPC, "PainfulSleep"), DAMAGE_TYPE_MAGICAL);
+            ApplyEffectToObject(DURATION_TYPE_INSTANT, eSleepDam, oPC);
+            DeleteLocalInt(oPC, "PainfulSleep");
+            int nSleepCheck = GetLocalInt(oTarget, "nSleepCheck");
+            SetLocalInt(oTarget, "nSleepCheck", nSleepCheck + 1);
+        }
     }
 }

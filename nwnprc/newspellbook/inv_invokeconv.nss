@@ -371,8 +371,8 @@ void main()
             if(DEBUG) DoDebug("inv_invokeconv: Handling invocation confirmation");
             if(nChoice == TRUE)
             {
-                if(DEBUG) DoDebug("inv_invokeconv: Adding invocation");
                 int nInvocation = GetLocalInt(oPC, "nInvocation");
+                if(DEBUG) DoDebug("inv_invokeconv: Adding invocation: " + IntToString(nInvocation));
 
                 AddInvocationKnown(oPC, nClass, nInvocation, TRUE, GetHitDice(oPC));
 

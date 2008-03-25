@@ -81,7 +81,8 @@ void main()
                 int nClass             = GetLocalInt(oPC, "SpellType");
                 int nSpellbookMinLevel = 0;
                 int nSpellbookMaxLevel = (GetInvokerLevel(oPC, CLASS_TYPE_WARLOCK) + 1) / 2;
-                int nLevel             = GetSpellslotLevel(nClass, oPC);
+            if(DEBUG) DoDebug("inv_imbueitemcon: Spellbook max level: " + IntToString(nSpellbookMaxLevel));
+                //int nLevel             = GetSpellslotLevel(nClass, oPC);
                 string sFile           = GetFileForClass(nClass);
                 int i;
 
@@ -203,18 +204,21 @@ void main()
         if(nStage == STAGE_SELECT_TYPE)
         {
             SetLocalInt(oPC, "SpellType", nChoice);
+            if(DEBUG) DoDebug("inv_imbueitemcon: Spell type chosen: " + IntToString(nChoice));
             nStage = STAGE_SELECT_LEVEL;
             MarkStageNotSetUp(nStage, oPC);
         }
         else if(nStage == STAGE_SELECT_LEVEL)
         {
             SetLocalInt(oPC, "SelectedLevel", nChoice);
+            if(DEBUG) DoDebug("inv_imbueitemcon: Spell level chosen: " + IntToString(nChoice));
             nStage = STAGE_SELECT_SPELL;
             MarkStageNotSetUp(nStage, oPC);
         }
         else if(nStage == STAGE_SELECT_SPELL)
         {
             SetLocalInt(oPC, "SelectedSpell", nChoice);
+            if(DEBUG) DoDebug("inv_imbueitemcon: Spell chosen: " + IntToString(nChoice));
             nStage = STAGE_CONFIRM;
             MarkStageNotSetUp(nStage, oPC);
         }

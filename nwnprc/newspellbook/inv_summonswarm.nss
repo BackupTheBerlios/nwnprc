@@ -33,9 +33,10 @@ void main()
     object oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED, OBJECT_SELF, i);
     while(GetIsObjectValid(oSummon))
     {
-        oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED, OBJECT_SELF, i);
         i++;
+        oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED, OBJECT_SELF, i);
     }
+    oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED, OBJECT_SELF, i - 1);
     SetLocalInt(oSummon,"X2_L_CREATURE_NEEDS_CONCENTRATION",TRUE);
     SetLocalInt(oSummon, "IgnoreSwarmDmg", TRUE);
     SetLocalInt(OBJECT_SELF, "SwarmDmgType", GetSpellId());

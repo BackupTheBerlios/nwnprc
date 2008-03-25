@@ -19,6 +19,7 @@ void main()
     
     else if(nEvent == EVENT_ONHEARTBEAT)
     {
+        if(DEBUG) DoDebug("inv_painsleep: checking Painful Slumber of Ages");
         if(!GetHasSpellEffect(INVOKE_PAINFUL_SLUMBER_OF_AGES, oPC))
         {
             if(DEBUG) DoDebug("inv_painsleep: Target awakened unnaturally");

@@ -36,13 +36,15 @@ void main()
     MultisummonPreSummon();
     ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eVis, PRCGetSpellTargetLocation());
     ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, PRCGetSpellTargetLocation(), fDuration);
-    int i = 1;
+    int i = 0;
     object oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED, OBJECT_SELF, i);
     while(GetIsObjectValid(oSummon))
     {
-        oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED, OBJECT_SELF, i);
         i++;
+        oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED, OBJECT_SELF, i);
     }
+    oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED, OBJECT_SELF, i - 1);
+    if(DEBUG) DoDebug("inv_tenacplague: Summon is " + DebugObject2Str(oSummon));
     effect eCritImmune = EffectImmunity(IMMUNITY_TYPE_CRITICAL_HIT);
     effect eWeaponImm1 = EffectDamageImmunityIncrease(DAMAGE_TYPE_BLUDGEONING, 100);
     effect eWeaponImm2 = EffectDamageImmunityIncrease(DAMAGE_TYPE_PIERCING, 100);

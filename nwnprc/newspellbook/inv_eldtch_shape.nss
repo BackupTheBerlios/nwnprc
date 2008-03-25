@@ -195,6 +195,7 @@ void main()
     {
         int nDamage = nDam;
         
+	    if(DEBUG) DoDebug("inv_eldtch_shape: Checking Target's racial type");
         switch(MyPRCGetRacialType(oTarget))
         {
             case RACIAL_TYPE_OUTSIDER:

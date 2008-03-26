@@ -11,6 +11,7 @@ void Countdown(object oInitiator, int nTime)
 		RecoverExpendedManeuvers(oInitiator, MANEUVER_LIST_CRUSADER);
 		RecoverExpendedManeuvers(oInitiator, MANEUVER_LIST_SWORDSAGE);
 		RecoverExpendedManeuvers(oInitiator, MANEUVER_LIST_WARBLADE);
+		FloatingTextStringOnCreature("You have recovered all expended maneuvers", oInitiator, FALSE);
 	}
 	else if (!GetIsInCombat(oInitiator)) // Being in combat causes this to fail
 	{

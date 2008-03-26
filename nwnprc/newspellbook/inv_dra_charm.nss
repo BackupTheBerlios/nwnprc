@@ -57,7 +57,7 @@ void main()
         if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
         {
             // Make Will save vs Mind-Affecting
-            if (!/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_MIND_SPELLS))
+            if (!/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, GetInvocationSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_MIND_SPELLS))
             {
                 //Apply impact and linked effect
                 SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(nDuration * 24),TRUE,-1,CasterLvl);

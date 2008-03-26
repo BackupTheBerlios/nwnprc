@@ -54,7 +54,7 @@ void main()
         if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, GetAreaOfEffectCreator()))
         {
             //Fire cast spell at event for the specified target
-            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, INVOKE_VFX_PER_WALLPERILFIRE));
+            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, INVOKE_WALL_OF_PERILOUS_FLAME));
             //Make SR check, and appropriate saving throw(s).
             if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
             {
@@ -63,13 +63,14 @@ void main()
                 
                 nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
                 
-                int nDC = PRCGetSaveDC(oTarget,GetAreaOfEffectCreator());
+                int nDC = GetInvocationSaveDC(oTarget,GetAreaOfEffectCreator(),INVOKE_WALL_OF_PERILOUS_FLAME);
 
                 nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, (nDC), SAVING_THROW_TYPE_FIRE);
                 if(nDamage > 0)
                 {
                     // Apply effects to the currently selected target.
                     eDam = PRCEffectDamage(nDamage / 2, DAMAGE_TYPE_FIRE);
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
                     eDam = PRCEffectDamage(nDamage / 2, DAMAGE_TYPE_MAGICAL);
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
                     PRCBonusDamage(oTarget);

@@ -34,19 +34,19 @@ void main()
     int nShapeLevel;
     float fRange;
     
-    if(nEssence == INVOKE_ELDRITCH_CONE)
+    if(GetSpellId() == INVOKE_ELDRITCH_CONE)
     {
         nShape = SHAPE_SPELLCONE;
         fRange = GetHasFeat(FEAT_ELDRITCH_SCULPTOR, oPC) ? FeetToMeters(120.0) : FeetToMeters(30.0);
         nShapeLevel = 5;
     }
-    else if(nEssence == INVOKE_ELDRITCH_LINE)
+    else if(GetSpellId() == INVOKE_ELDRITCH_LINE)
     {
         nShape = SHAPE_SPELLCYLINDER;
         fRange = GetHasFeat(FEAT_ELDRITCH_SCULPTOR, oPC) ? FeetToMeters(120.0) : FeetToMeters(60.0);
         nShapeLevel = 5;
     }
-    else if(nEssence == INVOKE_ELDRITCH_DOOM)
+    else if(GetSpellId() == INVOKE_ELDRITCH_DOOM)
     {
         nShape = SHAPE_SPHERE;
         fRange = GetHasFeat(FEAT_ELDRITCH_SCULPTOR, oPC) ? FeetToMeters(40.0) : FeetToMeters(20.0);
@@ -187,9 +187,8 @@ void main()
     
     //Get first target in spell area
 	if(DEBUG) DoDebug("inv_eldtch_shape: Getting first target");
-    oTarget = GetFirstObjectInShape(nShape, fRange, lTargetArea, TRUE,
-                                    OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE,
-                                    GetPosition(oPC));
+    oTarget = MyFirstObjectInShape(nShape, fRange, lTargetArea, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+	if(DEBUG) DoDebug("inv_eldtch_shape: First target is: " + DebugObject2Str(oTarget));
 
     while(GetIsObjectValid(oTarget))
     {
@@ -286,9 +285,12 @@ void main()
         
         if(GetObjectType(oTarget) != OBJECT_TYPE_CREATURE && nEssence != INVOKE_HAMMER_BLAST && nEssence2 != INVOKE_HAMMER_BLAST)
             nDamage /= 2;
+            
+	    if(DEBUG) DoDebug("inv_eldtch_shape: Is target friendly? " + IntToString(GetIsReactionTypeFriendly(oTarget)));
     
         if(!GetIsReactionTypeFriendly(oTarget))
         {
+	        if(DEBUG) DoDebug("inv_eldtch_shape: Target is neutral or hostile");
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, INVOKE_ELDRITCH_BLAST));
             float fDelay = GetDistanceBetween(oPC, oTarget)/20;
@@ -484,9 +486,8 @@ void main()
 	    
             
         //Get next target in spell area
-        oTarget = GetNextObjectInShape(nShape, fRange, lTargetArea, TRUE,  
-                     OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR  | OBJECT_TYPE_PLACEABLE, 
-                     GetPosition(oPC));
+        oTarget = MyNextObjectInShape(nShape, fRange, lTargetArea, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+	    if(DEBUG) DoDebug("inv_eldtch_shape: Next target is: " + DebugObject2Str(oTarget));
         
 	}
 	

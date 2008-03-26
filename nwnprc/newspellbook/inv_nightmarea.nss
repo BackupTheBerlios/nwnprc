@@ -56,7 +56,7 @@ ActionDoCommand(SetAllAoEInts(INVOKE_CHILLING_TENTACLES,OBJECT_SELF, GetSpellSav
             INVOKE_NIGHTMARES_MADE_REAL));
         
         //save
-		if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, SPGetPenetrAOE(GetAreaOfEffectCreator()), SAVING_THROW_TYPE_SPELL))
+		if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, GetInvocationSaveDC(oTarget, GetAreaOfEffectCreator(), INVOKE_NIGHTMARES_MADE_REAL), SAVING_THROW_TYPE_SPELL))
 		{
             effect eEntangle = EffectLinkEffects(EffectEntangle(), EffectVisualEffect(VFX_DUR_ENTANGLE));
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eEntangle, oTarget, RoundsToSeconds(nCasterLevel));

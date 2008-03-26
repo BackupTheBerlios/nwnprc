@@ -18,7 +18,7 @@ void main()
         //If the effect was created by the Web then remove it
         if (GetEffectCreator(eAOE) == GetAreaOfEffectCreator())
         {
-            if(GetEffectSpellId(eAOE) == SPELL_WEB)
+            if(GetEffectSpellId(eAOE) == INVOKE_CAUSTIC_MIRE)
             {
                 RemoveEffect(oTarget, eAOE);
             }
@@ -30,7 +30,7 @@ void main()
     float fDistance = GetDistanceBetweenLocations(lLastLocation, GetLocation(oTarget));
     
     int nDam = FloatToInt(fDistance / FeetToMeters(5.0));
-    effect eDam = EffectDamage(DAMAGE_TYPE_ACID, d6(nDam));
+    effect eDam = EffectDamage(d6(nDam), DAMAGE_TYPE_ACID);
     effect eLink = EffectLinkEffects(eDam, EffectVisualEffect(VFX_IMP_ACID_S));
     int nPenetr = SPGetPenetrAOE(GetAreaOfEffectCreator(), CasterLvl);
     

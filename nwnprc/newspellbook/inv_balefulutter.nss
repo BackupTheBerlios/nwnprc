@@ -16,7 +16,7 @@ void main()
     effect   eVis         = EffectVisualEffect( VFX_IMP_DESTRUCTION );
     int      nCasterLvl   = GetInvokerLevel(OBJECT_SELF, GetInvokingClass());
     object   oTarget      = PRCGetSpellTargetObject();
-    int nDC = SPGetSpellSaveDC(oTarget, OBJECT_SELF);
+    int nDC = GetInvocationSaveDC(oTarget, OBJECT_SELF);
 
     
     if(GetIsObjectValid(oTarget) 
@@ -29,6 +29,8 @@ void main()
     
     if(GetIsObjectValid(oTarget) && GetObjectType(oTarget) == OBJECT_TYPE_CREATURE)
     {
+	    SPRaiseSpellCastAt(oTarget,TRUE, INVOKE_BALEFUL_UTTERANCE, OBJECT_SELF);
+	    
         if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_SONIC))
 		{
 		    int i;
@@ -39,15 +41,19 @@ void main()
 		           i != INVENTORY_SLOT_CWEAPON_L && i != INVENTORY_SLOT_CWEAPON_R)
 		        {
 		            oItem = GetItemInSlot(i, oTarget);
-		            if(!GetIsItemPropertyValid(GetFirstItemProperty(oItem)))
+		            if(DEBUG) DoDebug("Baleful Utterance: Checking Item Slot " + IntToString(i) + " which has item " + DebugObject2Str(oItem));
+		            if(!GetIsItemPropertyValid(GetFirstItemProperty(oItem)) && oItem != OBJECT_INVALID)
 		            {
 		                DestroyObject(oItem);
 		                i = NUM_INVENTORY_SLOTS;
 		                effect eDaze = EffectDazed();
 		                effect eDeaf = EffectDeaf();
 		                effect eVis = EffectVisualEffect(VFX_IMP_SONIC);
-		                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDaze, oTarget, RoundsToSeconds(1),TRUE,-1,nCasterLvl);
-		                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDeaf, oTarget, TurnsToSeconds(1),TRUE,-1,nCasterLvl);
+		                if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SONIC))
+	                	{
+    		                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDaze, oTarget, RoundsToSeconds(1),TRUE,-1,nCasterLvl);
+    		                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDeaf, oTarget, TurnsToSeconds(1),TRUE,-1,nCasterLvl);
+    		            }
 		                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 		            }
 		        }

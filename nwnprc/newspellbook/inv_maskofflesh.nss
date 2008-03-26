@@ -41,7 +41,7 @@ void main()
 	    SPRaiseSpellCastAt(oTarget, TRUE, INVOKE_MASK_OF_FLESH_HOSTILE, oPC);
 	    
         //save
-		if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget, oPC), SAVING_THROW_TYPE_SPELL))
+		if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, GetInvocationSaveDC(oTarget, oPC), SAVING_THROW_TYPE_SPELL))
 		{
 			effect eCha = EffectAbilityDecrease(ABILITY_CHARISMA, d6());
             effect eVis = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);

@@ -12,7 +12,7 @@ void main()
 	object oPC = OBJECT_SELF;
 	object oTarget = GetSpellTargetObject();
 	int nCasterLvl = GetInvokerLevel(OBJECT_SELF, GetInvokingClass());
-	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+	int nDC = GetInvocationSaveDC(oTarget, oPC);
 	
 	SPRaiseSpellCastAt(oTarget,TRUE, INVOKE_DREAD_SEIZURE, oPC);
 	

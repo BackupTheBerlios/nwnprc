@@ -10,7 +10,7 @@ void main()
     //Declare major variables
     object oTarget = GetEnteringObject();
     int CasterLvl = GetInvokerLevel(GetAreaOfEffectCreator(), CLASS_TYPE_WARLOCK);
-    int nDC = SPGetSpellSaveDC(oTarget, GetAreaOfEffectCreator());
+    int nDC = GetInvocationSaveDC(oTarget, GetAreaOfEffectCreator(),INVOKE_ENERVATING_SHADOW);
     effect eConceal = EffectConcealment(20);
     effect eStrength = EffectAbilityDecrease(ABILITY_STRENGTH, 4);
     effect eVis = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);

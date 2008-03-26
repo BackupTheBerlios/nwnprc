@@ -53,7 +53,7 @@ void main()
 	object oPC = OBJECT_SELF;
 	object oTarget = GetSpellTargetObject();
 	int nCasterLvl = GetInvokerLevel(OBJECT_SELF, GetInvokingClass());
-	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+	int nDC = GetInvocationSaveDC(oTarget, oPC);
 	
 	if (GetIsDM(oTarget)) return;
 	

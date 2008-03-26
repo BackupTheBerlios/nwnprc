@@ -21,7 +21,7 @@
 
 void main()
 {
- ActionDoCommand(SetAllAoEInts(INVOKE_AOE_CHILLFOG,OBJECT_SELF, GetSpellSaveDC()));
+ ActionDoCommand(SetAllAoEInts(INVOKE_AOE_CHILLFOG,OBJECT_SELF, GetInvocationSaveDC(OBJECT_SELF,GetAreaOfEffectCreator(),INVOKE_CHILLING_FOG)));
 
     //Declare major variables
     int nDamage = d6(2);

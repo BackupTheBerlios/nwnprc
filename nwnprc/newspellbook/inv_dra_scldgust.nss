@@ -37,7 +37,7 @@ void main()
             if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay))
             {   
             	if(PRCGetCreatureSize(oTarget) < CREATURE_SIZE_MEDIUM)
-	     	     if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_NONE))
+	     	     if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, GetInvocationSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_NONE))
                      {
                      	 effect eWindblown = EffectKnockdown();
                      	 DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eWindblown, oTarget, 6.0));

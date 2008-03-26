@@ -12,7 +12,7 @@ void main()
     object oTarget = GetEnteringObject();
     object oCaster = GetAreaOfEffectCreator();
     int nCasterLvl = GetInvokerLevel(oCaster, CLASS_TYPE_WARLOCK);
-    int nDC = PRCGetSaveDC(oTarget, oCaster);
+    int nDC = GetInvocationSaveDC(oTarget, oCaster, INVOKE_WALL_OF_GLOOM);
     effect eConceal = EffectConcealment(50);
     effect eHalt = EffectMovementSpeedDecrease(99);
 

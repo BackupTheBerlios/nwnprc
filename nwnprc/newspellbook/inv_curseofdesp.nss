@@ -45,7 +45,7 @@ void main()
          if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
          {
             //Make Will Save
-            if (!/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF)))
+            if (!/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, GetInvocationSaveDC(oTarget, OBJECT_SELF)))
             {
                 //Apply Effect and VFX
                 SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eCurse, oTarget,0.0f,TRUE,-1,CasterLvl);

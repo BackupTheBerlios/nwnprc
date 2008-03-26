@@ -25,7 +25,7 @@ void DoSleepCheck(object oTarget, int nSleepCheck, object oCaster)
     if(nSleepCheck != GetLocalInt(oTarget, "nSleepCheck"))
         return;
         
-    int nDC = PRCGetSaveDC(oTarget, oCaster);
+    int nDC = GetInvocationSaveDC(oTarget, oCaster);
         
     if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (nDC), SAVING_THROW_TYPE_MIND_SPELLS))
     {
@@ -69,7 +69,7 @@ void main()
     //Make SR check
     if (!MyPRCResistSpell(OBJECT_SELF, oTarget, nPenetr))
     {
-        int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
+        int nDC = GetInvocationSaveDC(oTarget,OBJECT_SELF);
         //Make Will save
         if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (nDC), SAVING_THROW_TYPE_MIND_SPELLS))
         {

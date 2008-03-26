@@ -44,7 +44,7 @@ void main()
             if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay))
             {
                 //Make a fort save
-                if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (PRCGetSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_SONIC, OBJECT_SELF, fDelay))
+                if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetInvocationSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_SONIC, OBJECT_SELF, fDelay))
                 {
                     //Apply the linked effects and the VFX impact
                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0,TRUE,-1,CasterLvl));

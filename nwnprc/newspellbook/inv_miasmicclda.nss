@@ -35,7 +35,7 @@ void main()
     object oTarget = GetEnteringObject();
     object oCaster = GetAreaOfEffectCreator();
     int nCasterLvl = GetInvokerLevel(oCaster, CLASS_TYPE_WARLOCK);
-    int nDC = PRCGetSaveDC(oTarget, oCaster);
+    int nDC = GetInvocationSaveDC(oTarget, oCaster, INVOKE_MIASMIC_CLOUD);
     effect eConceal = EffectConcealment(20);
     effect eDex = EffectAbilityDecrease(ABILITY_DEXTERITY, 2);
     effect eStr = EffectAbilityDecrease(ABILITY_STRENGTH, 2);

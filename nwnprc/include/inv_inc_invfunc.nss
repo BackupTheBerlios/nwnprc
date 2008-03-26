@@ -1,5 +1,5 @@
 //::///////////////////////////////////////////////
-//:: Tome of Battle include: Misceallenous
+//:: Invocation include: Miscellaneous
 //:: tob_inc_tobfunc
 //::///////////////////////////////////////////////
 /** @file
@@ -286,5 +286,63 @@ int GetFirstInvocationClassPosition(object oCreature = OBJECT_SELF)
 
     return 0;
 }
+
+int GetInvocationSaveDC(object oTarget, object oCaster, int nSpellID = -1)
+{
+    object oItem = GetSpellCastItem();
+    if(nSpellID == -1)
+        nSpellID = PRCGetSpellId();
+    //10+spelllevel+stat(cha default)
+    int nDC = 10;
+    nDC += StringToInt(Get2DACache("Spells", "Innate", nSpellID));
+    nDC += GetAbilityModifier(ABILITY_CHARISMA, oCaster);
+    // For when you want to assign the caster DC
+    //this does not take feat/race/class into account, it is an absolute override
+    if (GetLocalInt(oCaster, PRC_DC_TOTAL_OVERRIDE) != 0)
+    {
+        nDC = GetLocalInt(oCaster, PRC_DC_TOTAL_OVERRIDE);
+        DoDebug("Forced-DC PRC_DC_TOTAL_OVERRIDE casting at DC " + IntToString(nDC));
+    }
+    // For when you want to assign the caster DC
+    //this does take feat/race/class into account, it only overrides the baseDC
+    else if (GetLocalInt(oCaster, PRC_DC_BASE_OVERRIDE) != 0)
+    {
+        nDC = GetLocalInt(oCaster, PRC_DC_BASE_OVERRIDE);
+        if(nDC == -1)
+        {
+            nDC = 10;
+            nDC += StringToInt(Get2DACache("Spells", "Innate", nSpellID));
+            nDC += GetAbilityModifier(ABILITY_CHARISMA, oCaster);
+        }
+
+        DoDebug("Forced Base-DC casting at DC " + IntToString(nDC));
+        nDC += GetChangesToSaveDC(oTarget, oCaster, nSpellID);
+    }
+    else if(GetIsObjectValid(oItem)
+        && !(GetBaseItemType(oItem) == BASE_ITEM_MAGICSTAFF
+                && GetPRCSwitch(PRC_STAFF_CASTER_LEVEL)))
+    {
+        //code for getting new ip type
+        itemproperty ipTest = GetFirstItemProperty(oItem);
+        while(GetIsItemPropertyValid(ipTest))
+        {
+            if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_CAST_SPELL_DC)
+            {
+                int nSubType = GetItemPropertySubType(ipTest);
+                nSubType = StringToInt(Get2DACache("iprp_spells", "SpellIndex", nSubType));
+                if(nSubType == nSpellID)
+                {
+                    nDC = GetItemPropertyCostTableValue (ipTest);
+                    break;//end while
+                }
+            }
+            ipTest = GetNextItemProperty(oItem);
+        }
+    }
+    else
+        nDC += GetChangesToSaveDC(oTarget, oCaster, nSpellID);
+    return nDC;
+}
+
 // Test main
 //void main(){}

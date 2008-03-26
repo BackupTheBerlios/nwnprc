@@ -452,7 +452,7 @@ void DoWeaponEquip(object oPC, object oItem, int nHand)
             SetCompositeAttackBonus(oPC, "ElfFinesseLH", nElfFinesse, nHand);
     }
     //Two-hand damage bonus
-    if(GetWeaponSize(oItem) == nSize + 1 || (GetWeaponSize(oItem) == nRealSize + 1 && GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC) == OBJECT_INVALID))
+    if(GetWeaponSize(oItem) == nSize + 1 || (GetWeaponSize(oItem) == nRealSize + 1 && GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC) == OBJECT_INVALID) && nRealSize > CREATURE_SIZE_SMALL)
     {
         if(DEBUG) DoDebug("Applying THF damage bonus");
         SetCompositeDamageBonusT(oItem, "THFBonus", nTHFDmgBonus);
@@ -466,7 +466,7 @@ void DoWeaponEquip(object oPC, object oItem, int nHand)
                 
     //apply TWF penalty if a one-handed, not light weapon in offhand - -4/-4 etc isntead of -2/-2
     //Does not apply to small races due to weapon size-up. Stupid size equip hardcoded restrictions.
-    if(GetWeaponSize(oItem) == nRealSize && nHand == ATTACK_BONUS_OFFHAND && nRealSize > CREATURE_SIZE_SMALL)
+    if(GetWeaponSize(oItem) == nRealSize && nHand == ATTACK_BONUS_OFFHAND && nRealSize > CREATURE_SIZE_MEDIUM)
         // Assign penalty
         SetCompositeAttackBonus(oPC, "OTWFPenalty", -2);
            

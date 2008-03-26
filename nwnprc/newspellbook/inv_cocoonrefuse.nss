@@ -28,7 +28,7 @@ void main()
     effect   eVis         = EffectVisualEffect( VFX_DUR_ENTANGLE );
     int      nCasterLvl   = GetInvokerLevel(OBJECT_SELF, GetInvokingClass());
     object   oTarget      = PRCGetSpellTargetObject();
-    int nDC = SPGetSpellSaveDC(oTarget, OBJECT_SELF);
+    int nDC = GetInvocationSaveDC(oTarget, OBJECT_SELF);
     object oArea = GetArea(OBJECT_SELF);
     
     effect eEntangle = EffectEntangle();

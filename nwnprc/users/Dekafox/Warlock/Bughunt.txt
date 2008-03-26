@@ -2,16 +2,10 @@ Fixed:
 
 Possibly fixed:
 
-
 To Check:
 
 Painful Sleep of Ages does not cause damage on awakening.
 script isn't going off on creature's heartbeat
-
-tenacious plague has 20hp when cast by a level fourty caster and is killable by a single non mage, weapon wielding goblin, also it does seem to move but only when it spots enemies it rushes to it's death
-object invalid is selected
-
-eldritch shapes(cone, line, doom) don't do damage, gets into baneful check
 
 imbue item, trying to create wands or scrolls or potions the dialogue comes up asking which type of spell you want to add arcane or divine, then when you pick one it asks you to select the source of the spell but has no options except to exit the conversation.  No TMI.
 
@@ -19,3 +13,5 @@ i was still able melee attack and cast the basic unshaped eldritch blast (includ
 also check AOE size
 
 eldritch glaive stack underflows on hit
+
+master of the elements - doesn't seem to grant the ten resistance to all elemental damage types

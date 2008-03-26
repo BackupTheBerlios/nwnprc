@@ -19,7 +19,7 @@ void main()
     
         int nDam = FloatToInt(fDistance / FeetToMeters(5.0));
         if(nDam == 0) nDam = 1;
-        effect eDam = EffectDamage(DAMAGE_TYPE_ACID, d6(nDam));
+        effect eDam = EffectDamage(d6(nDam), DAMAGE_TYPE_ACID);
         effect eLink = EffectLinkEffects(eDam, EffectVisualEffect(VFX_IMP_ACID_S));
         
         if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))

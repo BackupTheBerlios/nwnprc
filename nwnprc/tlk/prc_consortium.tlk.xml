@@ -27746,6 +27746,11 @@ Classes: Any.
 You attempt to remain standing in precarious places.
 
 Use: Automatic.</entry>
+  <entry id="52162" lang="en" sex="m">Ready Maneuvers</entry>
+  <entry id="52163" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Crusader, Swordsage, or Warblade level 1.
+Specifics: This feat allows you to select which maneuvers are readied for your blade magic using character. It should be used after every rest, and every time you enter the module.
+Use: Selected.</entry>
   <entry id="52164" lang="en" sex="m">Aerie</entry>
   <entry id="52165" lang="en" sex="m">Ajantis</entry>
   <entry id="52166" lang="en" sex="m">Annah</entry>

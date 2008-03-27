@@ -218,4 +218,4 @@ const int INVOKE_SHADOWMASTER_STONESKIN      = 3748;
 const int INVOKE_SHADOWMASTER_WALL_OF_FIRE   = 3749;
 
 //other invocation-related abilities
-const int INVOKE_ELDRITCH_GLAIVE_ONHIT       = 18057;
+const int INVOKE_ELDRITCH_GLAIVE_ONHIT       = 205;

@@ -35,8 +35,23 @@ void DoSleepCheck(object oTarget, int nSleepCheck, object oCaster)
     {
         DeleteLocalInt(oTarget, "PainfulSleep");
         RemoveSpellEffects(INVOKE_PAINFUL_SLUMBER_OF_AGES, oCaster, oTarget);
-        RemoveEventScript(oTarget, EVENT_ONHEARTBEAT, "inv_painsleep", FALSE, FALSE);
     }
+}
+
+void DoDamageCheck(object oTarget, int nSleepCheck)
+{
+    if(nSleepCheck != GetLocalInt(oTarget, "nSleepCheck"))
+        return;
+        
+    if(!GetHasEffect(EFFECT_TYPE_SLEEP, oTarget))
+    {
+        if(DEBUG) DoDebug("inv_painslumber: Target awakened unnaturally");
+        effect eSleepDam = EffectDamage(GetLocalInt(oTarget, "PainfulSleep"), DAMAGE_TYPE_MAGICAL);
+        ApplyEffectToObject(DURATION_TYPE_INSTANT, eSleepDam, oTarget);
+        DeleteLocalInt(oTarget, "PainfulSleep");
+    }
+    else
+        DelayCommand(3.0, DoDamageCheck(oTarget, nSleepCheck));
 }
 
 void main()
@@ -78,10 +93,10 @@ void main()
                 effect eLink2 = EffectLinkEffects(eLink, eVis);
                 SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink2, oTarget, 0.0,TRUE,-1,CasterLvl);
                 SetLocalInt(oTarget, "PainfulSleep", CasterLvl);
-                ExecuteScript("inv_painsleep", oTarget);
                 //set up the 24 hour saving throws
                 int nSleepCheck = GetLocalInt(oTarget, "nSleepCheck");
                 if(nSleepCheck > 30) nSleepCheck = 1;
+                DelayCommand(3.0, DoDamageCheck(oTarget, nSleepCheck));
                 SetLocalInt(oTarget, "nSleepCheck", nSleepCheck);
                 DelayCommand(HoursToSeconds(24), DoSleepCheck(oTarget, nSleepCheck, OBJECT_SELF));
             }

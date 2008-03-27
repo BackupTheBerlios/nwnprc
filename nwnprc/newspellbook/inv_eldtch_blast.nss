@@ -29,6 +29,12 @@ void main()
     int nEssence = GetLocalInt(oPC, "BlastEssence");
     int nEssence2 = GetLocalInt(oPC, "BlastEssence2");
     effect eEssence;
+    
+    //---------------------------------------------------------------------------
+    // Run Dark Discorporation Check
+    //---------------------------------------------------------------------------
+    if (GetLocalInt(oPC, "DarkDiscorporation"))
+        return;
 	
 	//calculate DC for essence effects
 	int nBlastLvl = min((GetLevelByClass(CLASS_TYPE_WARLOCK, oPC) + 1) / 2, 9);

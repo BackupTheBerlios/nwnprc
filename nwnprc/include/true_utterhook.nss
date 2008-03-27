@@ -156,7 +156,13 @@ int TruePreUtterCastCode()
     {   //Sanity check, in case something goes wrong with the action queue
         DeleteLocalInt(oTrueSpeaker, "PRC_SPELL_EVENT");
     }
-
+    
+    //---------------------------------------------------------------------------
+    // Run Dark Discorporation Check
+    //---------------------------------------------------------------------------
+    if (nContinue)
+        nContinue = !GetLocalInt(oTrueSpeaker, "DarkDiscorporation");
+        
     return nContinue;
 }
 

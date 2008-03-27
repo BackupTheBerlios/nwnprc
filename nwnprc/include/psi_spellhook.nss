@@ -207,6 +207,12 @@ int PsiPrePowerCastCode()
     {   //Sanity check, in case something goes wrong with the action queue
         DeleteLocalInt(oManifester, "PRC_SPELL_EVENT");
     }
+    
+    //---------------------------------------------------------------------------
+    // Run Dark Discorporation Check
+    //---------------------------------------------------------------------------
+    if (nContinue)
+        nContinue = !GetLocalInt(oManifester, "DarkDiscorporation");
 
     return nContinue;
 }

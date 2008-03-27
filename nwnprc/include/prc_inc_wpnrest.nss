@@ -166,6 +166,8 @@ void DoProficiencyCheck(object oPC, object oItem, int nHand)
 	
 	if(!GetIsWeapon(oItem)) bProficient = TRUE;
 	
+	if(GetTag(oItem) == "prc_eldrtch_glv") bProficient = TRUE;
+	
 	switch(GetBaseItemType(oItem))
 	{ 
 	    case BASE_ITEM_SHORTSWORD:
@@ -423,6 +425,8 @@ void DoWeaponEquip(object oPC, object oItem, int nHand)
     //initialize variables
     int nRealSize = PRCGetCreatureSize(oPC);  //size for Finesse/TWF
     int nSize = nRealSize;                    //size for equipment restrictions
+    int nWeaponSize = GetWeaponSize(oItem);
+	if(GetTag(oItem) == "prc_eldrtch_glv") nWeaponSize = nRealSize + 1; //fix for eldritch glaive size
     int nDexMod = GetAbilityModifier(ABILITY_DEXTERITY, oPC);
     int nStrMod = GetAbilityModifier(ABILITY_STRENGTH, oPC);
     int nElfFinesse = nDexMod - nStrMod;
@@ -433,8 +437,8 @@ void DoWeaponEquip(object oPC, object oItem, int nHand)
         nSize++;
         
     //check to make sure it's not too large, or that you're not trying to TWF with 2-handers
-    if((GetWeaponSize(oItem) > 1 + nSize && nHand == ATTACK_BONUS_ONHAND)
-       || ((GetWeaponSize(oItem) > nSize || GetWeaponSize(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC)) > nSize) && nHand == ATTACK_BONUS_OFFHAND)
+    if((nWeaponSize > 1 + nSize && nHand == ATTACK_BONUS_ONHAND)
+       || ((nWeaponSize > nSize || GetWeaponSize(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC)) > nSize) && nHand == ATTACK_BONUS_OFFHAND)
        )
         // Force unequip
         AssignCommand(oPC, ActionUnequipItem(oItem));
@@ -452,21 +456,21 @@ void DoWeaponEquip(object oPC, object oItem, int nHand)
             SetCompositeAttackBonus(oPC, "ElfFinesseLH", nElfFinesse, nHand);
     }
     //Two-hand damage bonus
-    if(GetWeaponSize(oItem) == nSize + 1 || (GetWeaponSize(oItem) == nRealSize + 1 && GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC) == OBJECT_INVALID) && nRealSize > CREATURE_SIZE_SMALL)
+    if(nWeaponSize == nSize + 1 || (nWeaponSize == nRealSize + 1 && GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC) == OBJECT_INVALID) && nRealSize > CREATURE_SIZE_SMALL)
     {
         if(DEBUG) DoDebug("Applying THF damage bonus");
         SetCompositeDamageBonusT(oItem, "THFBonus", nTHFDmgBonus);
     }
                 
     //if a 2-hander, then unequip shield/offhand weapon
-    if(GetWeaponSize(oItem) == 1 + nSize && nHand == ATTACK_BONUS_ONHAND)
+    if(nWeaponSize == 1 + nSize && nHand == ATTACK_BONUS_ONHAND)
         // Force unequip
         AssignCommand(oPC, ActionUnequipItem(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC)));
            
                 
     //apply TWF penalty if a one-handed, not light weapon in offhand - -4/-4 etc isntead of -2/-2
     //Does not apply to small races due to weapon size-up. Stupid size equip hardcoded restrictions.
-    if(GetWeaponSize(oItem) == nRealSize && nHand == ATTACK_BONUS_OFFHAND && nRealSize > CREATURE_SIZE_MEDIUM)
+    if(nWeaponSize == nRealSize && nHand == ATTACK_BONUS_OFFHAND && nRealSize > CREATURE_SIZE_MEDIUM)
         // Assign penalty
         SetCompositeAttackBonus(oPC, "OTWFPenalty", -2);
            

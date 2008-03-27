@@ -1,17 +1,12 @@
 Fixed:
 
 Possibly fixed:
+Imbue Item conversation
 
 To Check:
-
-Painful Sleep of Ages does not cause damage on awakening.
-script isn't going off on creature's heartbeat
-
-imbue item, trying to create wands or scrolls or potions the dialogue comes up asking which type of spell you want to add arcane or divine, then when you pick one it asks you to select the source of the spell but has no options except to exit the conversation.  No TMI.
 
 i was still able melee attack and cast the basic unshaped eldritch blast (including whatever essences i have toggled on before i polymorphed) in cow form though the other invocations where wiped from both the radial and my quickslot
 also check AOE size
 
-eldritch glaive stack underflows on hit
-
-master of the elements - doesn't seem to grant the ten resistance to all elemental damage types
+Painful Sleep of Ages does not cause damage on awakening.
+script isn't going off on creature's heartbeat

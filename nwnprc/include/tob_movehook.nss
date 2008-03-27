@@ -53,7 +53,13 @@ int PreManeuverCastCode()
 	if (GetHasInsightfulStrike(oInitiator)) SetLocalInt(oInitiator, "InsightfulStrike", TRUE);
 	DelayCommand(2.0, DeleteLocalInt(oInitiator, "InsightfulStrike"));
     }        
-
+    
+    //---------------------------------------------------------------------------
+    // Run Dark Discorporation Check
+    //---------------------------------------------------------------------------
+    if (nContinue)
+        nContinue = !GetLocalInt(oInitiator, "DarkDiscorporation");
+        
     return nContinue;
 }
 

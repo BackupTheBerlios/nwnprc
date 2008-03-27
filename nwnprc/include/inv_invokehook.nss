@@ -118,6 +118,13 @@ int PreInvocationCastCode()
     {   //Sanity check, in case something goes wrong with the action queue
         DeleteLocalInt(oInvoker, "PRC_SPELL_EVENT");
     }
+    
+    //---------------------------------------------------------------------------
+    // Run Dark Discorporation Check
+    //---------------------------------------------------------------------------
+    if (nContinue)
+        nContinue = !GetLocalInt(oInvoker, "DarkDiscorporation");
+        
 
     return nContinue;
 }

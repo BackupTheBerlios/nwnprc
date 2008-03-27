@@ -5456,7 +5456,7 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
                 iWeaponDamage += iDiceRoll;
                 if (DEBUG) DoDebug("Ending Aura of Chaos");
                 // Aura of Chaos rerolls and adds if the dice rolled is max.
-                if (GetLocalInt(oAttacker, "DSChaos") && GetHasSpellEffect(MOVE_DS_AURA_CHAOS, oAttacker)) 
+                if (GetLocalInt(oAttacker, "DSChaos")) 
                 {
                 	// Maximum possible result
 		        while ((iNumSides * iNumDice) == iDiceRoll)
@@ -5475,8 +5475,6 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
                 		iWeaponDamage += iDiceRoll;
 		        }
 		}
-		else 	// Cleanup on aisle 5
-        		DeleteLocalInt(oAttacker, "DSChaos");
 		if (DEBUG) DoDebug("Ending Aura of Chaos");
                 
                 if (bDebug) sDebugMessage += IntToString(iNumDice) + "d" + IntToString(iNumSides) + " (" + IntToString(iDiceRoll) + ")";

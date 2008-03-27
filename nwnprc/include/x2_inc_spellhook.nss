@@ -1592,6 +1592,12 @@ if(DEBUG) DoDebug("x2_inc_spellhook pre-spellfire "+IntToString(nContinue));
     {   //Sanity check, in case something goes wrong with the action queue
         DeleteLocalInt(oCaster, "PRC_SPELL_EVENT");
     }
+    
+    //---------------------------------------------------------------------------
+    // Run Dark Discorporation Check
+    //---------------------------------------------------------------------------
+    if (nContinue)
+        nContinue = !GetLocalInt(oCaster, "DarkDiscorporation");
 
     return nContinue;
 }

@@ -1083,7 +1083,10 @@ void ClearStances(object oInitiator, int nDontClearMove)
 	if (GetHasSpellEffect(MOVE_DW_FIERY_ASSAULT, oInitiator) && nDontClearMove != MOVE_DW_FIERY_ASSAULT)
            RemoveEffectsFromSpell(oInitiator, MOVE_DW_FIERY_ASSAULT);	
 	if (GetHasSpellEffect(MOVE_DS_AURA_CHAOS, oInitiator) && nDontClearMove != MOVE_DS_AURA_CHAOS)
+    {
            RemoveEffectsFromSpell(oInitiator, MOVE_DS_AURA_CHAOS);	
+           DeleteLocalInt(oInitiator, "DSChaos");
+    }
 	if (GetHasSpellEffect(MOVE_DS_PERFECT_ORDER, oInitiator) && nDontClearMove != MOVE_DS_PERFECT_ORDER)
 	{
            RemoveEffectsFromSpell(oInitiator, MOVE_DS_PERFECT_ORDER);

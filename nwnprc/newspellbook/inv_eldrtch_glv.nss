@@ -28,7 +28,9 @@ void main()
     nAtkBns += GetAttackBonus(GetSpellTargetObject(), oPC, OBJECT_INVALID, FALSE, TOUCH_ATTACK_MELEE_SPELL);
 
     // Construct the bonuses
-    IPSafeAddItemProperty(oGlaive, ItemPropertyOnHitCastSpell(IP_CONST_CASTSPELL_ELDRITCH_GLAIVE_ONHIT, (GetInvokerLevel(oPC, CLASS_TYPE_WARLOCK) + 1) / 2), 99999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+    itemproperty ipAddon = ItemPropertyOnHitCastSpell(IP_CONST_CASTSPELL_ELDRITCH_GLAIVE_ONHIT, (GetInvokerLevel(oPC, CLASS_TYPE_WARLOCK) + 1) / 2);
+    //ipAddon = ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, (GetInvokerLevel(oPC, CLASS_TYPE_WARLOCK) + 1) / 2);
+    IPSafeAddItemProperty(oGlaive, ipAddon, 99999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
 
     // Force equip
     ClearAllActions();

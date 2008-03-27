@@ -73,16 +73,14 @@ void main()
                 AddChoice("Divine", SPELL_TYPE_DIVINE);
                 SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
                 SetHeader("Select the source of the spell you want to craft into the object.");
-                }
                 MarkStageSetUp(nStage, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
             }
             else if(nStage == STAGE_SELECT_LEVEL)
             {
                 int nClass             = GetLocalInt(oPC, "SpellType");
                 int nSpellbookMinLevel = 0;
-                int nSpellbookMaxLevel = (GetInvokerLevel(oPC, CLASS_TYPE_WARLOCK) + 1) / 2;
-            if(DEBUG) DoDebug("inv_imbueitemcon: Spellbook max level: " + IntToString(nSpellbookMaxLevel));
-                //int nLevel             = GetSpellslotLevel(nClass, oPC);
+                int nSpellbookMaxLevel = min((GetInvokerLevel(oPC, CLASS_TYPE_WARLOCK) + 1) / 2, 9);
+                if(DEBUG) DoDebug("inv_imbueitemcon: Spellbook max level: " + IntToString(nSpellbookMaxLevel));
                 string sFile           = GetFileForClass(nClass);
                 int i;
 
@@ -97,7 +95,6 @@ void main()
             else if(nStage == STAGE_SELECT_SPELL)
             {
                 int nClass      = GetLocalInt(oPC, "SpellType");
-                int nLevel      = GetSpellslotLevel(nClass, oPC);
                 int nSpellLevel = GetLocalInt(oPC, "SelectedLevel");
                 string sFile    = GetFileForClass(nClass);
 
@@ -163,8 +160,8 @@ void main()
                 SetCustomToken(DYNCONV_TOKEN_EXIT, GetStringByStrRef(STRREF_END_CONVO_SELECT));
                 AllowExit(DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, FALSE, oPC);
             }
-            //add more stages for more nodes with Else If clauses
-        
+        }
+
         // Do token setup
         SetupTokens();
     }
@@ -251,7 +248,7 @@ void main()
                             // -------------------------------------------------
                             // Brew Potion
                             // -------------------------------------------------
-                           nRet = CICraftCheckBrewPotion(oBaseItem,oPC);
+                           nRet = CICraftCheckBrewPotion(oBaseItem,oPC,nSpell);
                            break;
 
 
@@ -259,7 +256,7 @@ void main()
                            // -------------------------------------------------
                            // Scribe Scroll
                            // -------------------------------------------------
-                           nRet = CICraftCheckScribeScroll(oBaseItem,oPC);
+                           nRet = CICraftCheckScribeScroll(oBaseItem,oPC,nSpell);
                            break;
         
         
@@ -267,7 +264,7 @@ void main()
                            // -------------------------------------------------
                            // Craft Wand
                            // -------------------------------------------------
-                           nRet = CICraftCheckCraftWand(oBaseItem,oPC);
+                           nRet = CICraftCheckCraftWand(oBaseItem,oPC,nSpell);
                            break;
         
                         case 200 :
@@ -281,7 +278,7 @@ void main()
                            // -------------------------------------------------
                            // Craft Staff
                            // -------------------------------------------------
-                           nRet = CICraftCheckCraftStaff(oBaseItem,oPC);
+                           nRet = CICraftCheckCraftStaff(oBaseItem,oPC,nSpell);
                            break;
                     }
                 }
@@ -295,10 +292,7 @@ void main()
                 nStage = STAGE_SELECT_TYPE;
                 MarkStageNotSetUp(nStage, oPC);
             }
-
-            
         }
-        
 
         // Store the stage value. If it has been changed, this clears out the choices
         SetStage(nStage, oPC);

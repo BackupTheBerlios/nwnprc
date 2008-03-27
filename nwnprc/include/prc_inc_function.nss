@@ -187,7 +187,8 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_CRUSADER, oPC) > 0)            ExecuteScript("tob_crusader", oPC);
     if(GetLevelByClass(CLASS_TYPE_WARBLADE, oPC) > 0)            ExecuteScript("tob_warblade", oPC);
     if(GetLevelByClass(CLASS_TYPE_JADE_PHOENIX_MAGE, oPC) > 0)   ExecuteScript("tob_jadepm", oPC);
-
+    if(GetLevelByClass(CLASS_TYPE_WARLOCK, oPC) > 0)             ExecuteScript("inv_warlock", oPC);
+    
     // Bonus Domain check
     // If there is a bonus domain, it will always be in the first slot, so just check that.
     // It also runs things that clerics with those domains need

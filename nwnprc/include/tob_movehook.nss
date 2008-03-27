@@ -39,7 +39,7 @@ int PreManeuverCastCode()
     nContinue = !ExecuteScriptAndReturnInt("premovecode", oInitiator);
 
     //---------------------------------------------------------------------------
-    // Run NullPsionicsField Check - Adjust so only Supernatural Maneuvers are affected
+    // Run NullPsionicsField Check 
     //---------------------------------------------------------------------------
     if (nContinue && GetIsManeuverSupernatural(nMoveId))
         nContinue = NullPsionicsField();

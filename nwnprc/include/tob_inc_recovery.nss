@@ -154,6 +154,24 @@ int GetIsManeuverGranted(object oPC, int nMoveId);
  */
 void ClearGrantedWithheldManeuvers(object oPC);
 
+/**
+ * Starting function for Crusader recovery, calls DoCrusaderGranting
+ * Only works on Crusaders
+ *
+ * @param oPC       Crusader
+ */
+void BeginCrusaderGranting(object oPC);
+
+/**
+ * Recursive function granting maneuvers each round in combat
+ * Will end when combat ends
+ * Only works on Crusaders
+ *
+ * @param oPC       Crusader
+ * @param nTrip     Round of combat. Takes values from 1 to 5, always starts with 1.
+ */
+void DoCrusaderGranting(object oPC, int nTrip);
+
 //////////////////////////////////////////////////
 /*                  Includes                    */
 //////////////////////////////////////////////////
@@ -187,7 +205,7 @@ int GetReadiedCount(object oPC, int nList)
 
 int GetMaxReadiedCount(object oPC, int nList)
 {
-	int nLevel = GetLevelByClass(nList, oPC);
+	int nLevel = GetInitiatorLevel(oPC, nList);
 	string sPsiFile = GetAMSKnownFileName(nList);
 	// 2das start at Row 0
 	int nMaxReadied = StringToInt(Get2DACache(sPsiFile, "ManeuversReadied", nLevel-1));
@@ -335,11 +353,13 @@ void GrantManeuvers(object oPC, int nList)
 			if (i >= nGranted)
 			{
 				SetLocalInt(oPC, "ManeuverGranted" + IntToString(i), nMoveId);
+				FloatingTextStringOnCreature(GetManeuverName(nMoveId) + " is granted", oPC, FALSE);
 				if(DEBUG) DoDebug("tob_inc_recovery: Maneuvers Granted: " + IntToString(i));
 			}
 			else // Mark the rest as Withheld for the moment
 			{
 				SetLocalInt(oPC, "ManeuverWithheld" + IntToString(i), nMoveId);
+				FloatingTextStringOnCreature(GetManeuverName(nMoveId) + " is withheld", oPC, FALSE);
 				if(DEBUG) DoDebug("tob_inc_recovery: Maneuvers Withheld: " + IntToString(i));
 			}
 		}
@@ -364,7 +384,7 @@ void GrantWithheldManeuver(object oPC, int nList)
 	int i, nMoveId;
         string sPsiFile = GetAMSKnownFileName(nList);
 	// 2das start at Row 0
-	int nLevel = GetLevelByClass(nList, oPC);
+	int nLevel = GetInitiatorLevel(oPC, nList);
 	int nGranted = StringToInt(Get2DACache(sPsiFile, "ManeuversGranted", nLevel-1));	
 	int nReadied = StringToInt(Get2DACache(sPsiFile, "ManeuversReadied", nLevel-1));	
 	if(DEBUG) DoDebug("tob_inc_recovery: Maneuvers Granted: " + IntToString(nGranted));
@@ -378,6 +398,7 @@ void GrantWithheldManeuver(object oPC, int nList)
 		{
 			if(DEBUG) DoDebug("tob_inc_recovery: Withheld Maneuver Granted: " + IntToString(nMoveId));
 			DeleteLocalInt(oPC, "ManeuverWithheld" + IntToString(i));
+			FloatingTextStringOnCreature(GetManeuverName(nMoveId) + " is granted", oPC, FALSE);
 			SetLocalInt(oPC, "ManeuverGranted" + IntToString(i), nMoveId);
 			break;
 		}
@@ -414,4 +435,40 @@ void ClearGrantedWithheldManeuvers(object oPC)
 		DeleteLocalInt(oPC, "ManeuverWithheld" + IntToString(i));
 		DeleteLocalInt(oPC, "ManeuverGranted"  + IntToString(i));
         }
+}
+
+void BeginCrusaderGranting(object oPC)
+{
+	// Stops it from being called more than once.
+	if (GetLocalInt(oPC, "CrusaderGrantLoop")) return;
+	
+	// Starts the granting process
+	DoCrusaderGranting(oPC, 1);
+	SetLocalInt(oPC, "CrusaderGrantLoop", TRUE);
+}
+
+void DoCrusaderGranting(object oPC, int nTrip)
+{	
+	// First round of combat, no granting.
+	// Last round of the 5, clear and recover/grant maneuvers
+	if (nTrip == 5) // Granted maneuvers empty, restart
+		RecoverExpendedManeuvers(oPC, MANEUVER_LIST_CRUSADER);
+	else if (nTrip > 1)
+		// Rounds 2-4, grant a single maneuver
+		GrantWithheldManeuver(oPC, MANEUVER_LIST_CRUSADER);
+
+	// Increment the round counter
+	nTrip += 1;
+	// If it's greater than round 5, restart
+	if (nTrip > 5) nTrip = 1;
+	
+	// If in combat, keep the loop going
+	if (GetIsInCombat(oPC)) DelayCommand(6.0, DoCrusaderGranting(oPC, nTrip)); // Increment counter
+	// Recover and stop loop otherwise.
+	else
+	{
+		RecoverExpendedManeuvers(oPC, MANEUVER_LIST_CRUSADER);
+		// Resent Int for next time out
+		DeleteLocalInt(oPC, "CrusaderGrantLoop");
+	}
 }

@@ -368,7 +368,7 @@ void _UseManeuverAux(object oInitiator, object oMoveToken, int nSpellId,
     if(GetIsObjectValid(oMoveToken))
     {
         if(DEBUG) DoDebug("_UseManeuverAux(): Token was valid, queueing actual maneuver");
-        // Set the class to truespeak as
+        // Set the class to maneuver as
         SetLocalInt(oInitiator, PRC_INITIATING_CLASS, nClass + 1);
 
         // Set the maneuver's level
@@ -383,6 +383,8 @@ void _UseManeuverAux(object oInitiator, object oMoveToken, int nSpellId,
         if(nLevelOverride != 0)
             AssignCommand(oInitiator, ActionDoCommand(DeleteLocalInt(oInitiator, PRC_CASTERLEVEL_OVERRIDE)));
 
+	// Begins the Crusader Granting Maneuver process
+	if (nClass == CLASS_TYPE_CRUSADER) BeginCrusaderGranting(oInitiator);
         // Destroy the maneuver token for this maneuver
         _DestroyManeuverToken(oInitiator, oMoveToken);
     }

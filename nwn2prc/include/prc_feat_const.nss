@@ -793,6 +793,8 @@ const int FEAT_PRESTIGE_SHIFTER_NATURALSPELL = 2917;
 const int FEAT_PRESTIGE_SHIFTER_EGWSHAPE_1   = 2906;
 const int FEAT_PRESTIGE_SHIFTER_GWSHAPE_1    = 2900;
 const int SHIFTER_BLACK_LIST                  = 2918;
+const int FEAT_SHIFTER_SAVAGERY        = 1822;
+const int FEAT_GOREBRUTE_ELITE         = 1810;
 
 //heartwarder
 const int FEAT_SANCTIFY_MARTIAL_CLUB        = 3194;
@@ -2166,12 +2168,12 @@ const int FEAT_TEMPLATE_FIENDISH_SMITE_GOOD         = 22603;
  const int FEAT_EF_SPEED                       = 4395;
  const int FEAT_EF_EXTRA_STUNNING              = 4396;
  const int FEAT_EF_FIST_OF_ENERGY_BURST        = 4397;
- 
+
  //BONUS SPELL FEATS
- 
+
 const int FEAT_AOTS_SPELLCST_WIZ               = 7000;
 const int FEAT_AOTS_SPELLCST_SORC              = 7001;
-const int FEAT_AOTS_SPELLCST_BARD              = 7002; 
+const int FEAT_AOTS_SPELLCST_BARD              = 7002;
 const int FEAT_AOTS_SPELLCST_ASSN              = 7003;
 const int FEAT_AOTS_SPELLCST_SUEL              = 7004;
 const int FEAT_AOTS_SPELLCST_SHDL              = 7005;
@@ -2185,7 +2187,7 @@ const int FEAT_MHARP_SPELLCST_SUEL             = 7012;
 const int FEAT_MHARP_SPELLCST_SHDL             = 7013;
 const int FEAT_MHARP_SPELLCST_HEXBLD           = 7014;
 const int FEAT_MHARP_SPELLCST_DSKBLD           = 7015;
-const int FEAT_MHARP_SPELLCST_CLER             = 7016; 
+const int FEAT_MHARP_SPELLCST_CLER             = 7016;
 const int FEAT_MHARP_SPELLCST_DRUID            = 7017;
 const int FEAT_MHARP_SPELLCST_PAL              = 7018;
 const int FEAT_MHARP_SPELLCST_RNG              = 7019;
@@ -2577,7 +2579,7 @@ const int FEAT_SACFIS_SPELLCST_BLKG            = 7404;
 const int FEAT_SACFIS_SPELLCST_SOL             = 7405;
 const int FEAT_SACFIS_SPELLCST_VASSAL          = 7406;
 const int FEAT_SACFIS_SPELLCST_KMC             = 7407;
-const int FEAT_SACFIS_SPELLCST_KCH             = 7408; 
+const int FEAT_SACFIS_SPELLCST_KCH             = 7408;
 const int FEAT_SACFIS_SPELLCST_APAL            = 7409;
 const int FEAT_SACFIS_SPELLCST_VGL             = 7410;
 const int FEAT_SACFIS_SPELLCST_FVS             = 7411;
@@ -2885,8 +2887,8 @@ const int FEAT_EXTRA_SLOT_SHAMAN_6                      = 3859;
 const int FEAT_EXTRA_SLOT_SHAMAN_7                      = 3860;
 const int FEAT_EXTRA_SLOT_SHAMAN_8                      = 3861;
 
-                                             
-/*//////////////////////////////////////////////////              
+
+/*//////////////////////////////////////////////////
 //////////////// TRUENAMING ////////////////////////
 //////////////////////////////////////////////////*/
 
@@ -2950,4 +2952,52 @@ const int FEAT_FOCUSED_LEXICON_VERMIN                   = 6254;
 
 /*//////////////////////////////////////////////////
 //////////////// END TRUENAMING/////////////////////
+//////////////////////////////////////////////////*/
+
+/*//////////////////////////////////////////////////
+//////////////// BEGIN TOME OF BATTLE///////////////
+//////////////////////////////////////////////////*/
+
+const int FEAT_EXTRA_GRANTED_MANEUVER                   = 4096;
+const int FEAT_EXTRA_READIED_MANEUVER                   = 4097;
+const int FEAT_ADAPTIVE_STYLE                           = 4098;
+const int FEAT_BLADE_MEDITATION                         = 4099;
+const int FEAT_DESERT_FIRE                              = 4178;
+const int FEAT_DESERT_WIND_DODGE                        = 4179;
+const int FEAT_DEVOTED_BULWARK                          = 4180;
+const int FEAT_AVENGING_STRIKE                          = 4297;
+const int FEAT_RAPID_ASSAULT                            = 4299;
+const int FEAT_SUPERIOR_UNARMED_STRIKE                  = 4386;
+const int FEAT_SNAP_KICK                                = 4398;
+const int FEAT_WEAPON_FOCUS_APTITUDE                    = 2123;
+const int FEAT_EPIC_WEAPON_FOCUS_APTITUDE               = 2124;
+const int FEAT_WEAPON_SPECIALIZATION_APTITUDE           = 2125;
+const int FEAT_EPIC_WEAPON_SPECIALIZATION_APTITUDE      = 2126;
+const int FEAT_IMPROVED_CRITICAL_APTITUDE               = 2127;
+const int FEAT_SANCTIFY_MARTIAL_APTITUDE                = 2128;
+const int FEAT_VILE_MARTIAL_APTITUDE                    = 2129;
+
+const int FEAT_SS_DF_IS_DW                  = 2201;
+const int FEAT_SS_DF_IS_DM                  = 2202;
+const int FEAT_SS_DF_IS_SS                  = 2203;
+const int FEAT_SS_DF_IS_SH                  = 2204;
+const int FEAT_SS_DF_IS_SD                  = 2205;
+const int FEAT_SS_DF_IS_TC                  = 2206;
+
+const int FEAT_SS_DF_DS_DW                  = 2201;
+const int FEAT_SS_DF_DS_DM                  = 2202;
+const int FEAT_SS_DF_DS_SS                  = 2203;
+const int FEAT_SS_DF_DS_SH                  = 2204;
+const int FEAT_SS_DF_DS_SD                  = 2205;
+const int FEAT_SS_DF_DS_TC                  = 2206;
+
+const int FEAT_SS_DF_WF_DW                  = 2195;
+const int FEAT_SS_DF_WF_DM                  = 2196;
+const int FEAT_SS_DF_WF_SS                  = 2197;
+const int FEAT_SS_DF_WF_SH                  = 2198;
+const int FEAT_SS_DF_WF_SD                  = 2199;
+const int FEAT_SS_DF_WF_TC                  = 2200;
+
+/*//////////////////////////////////////////////////
+//////////////// END TOME OF BATTLE/////////////////
 //////////////////////////////////////////////////*/

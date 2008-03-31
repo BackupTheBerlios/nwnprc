@@ -126,8 +126,9 @@ void main()
                 if(DEBUG) DoDebug("tob_moverdy: Building maneuver selection");
                 int nBrowseLevel = GetLocalInt(oPC, "nManeuverLevelToBrowse");
 	        int nMaxReady   = GetMaxReadiedCount(oPC, nClass);
-            	int nCountReady = GetReadiedCount(oPC, nClass);                
-                string sToken = "Select a Maneuver to ready.\n You can select ";
+            	int nCountReady = GetReadiedCount(oPC, nClass);   
+            	int nMoveId;
+                string sToken = "Select a Maneuver to ready. \n" + "You can select ";
                 sToken += IntToString(nMaxReady-nCountReady) + " more maneuvers to ready.";
                 SetHeader(sToken);
                 
@@ -135,11 +136,13 @@ void main()
                 int i;
 		for(i = 0; i < _GetLoopEnd(nClass); i++)
 		{	// Checks to see if its the appropriate level
-			if (GetHasManeuver(i, oPC) && nBrowseLevel == StringToInt(Get2DACache(sManeuverFile, "Level", i)))
+			int nMoveId = StringToInt(Get2DACache(sManeuverFile, "RealSpellID", i));
+			if (GetHasManeuver(nMoveId, oPC) && nBrowseLevel == StringToInt(Get2DACache(sManeuverFile, "Level", i)))
 			{
-				AddChoice(GetManeuverName(i), i);
+				AddChoice(GetManeuverName(nMoveId), i);
 			}
                 }
+                if(DEBUG) DoDebug("tob_moverdy: GetEndLoop: " + IntToString(_GetLoopEnd(nClass)));
 
                 // Set the first choice to be return to level selection stage
                 AddChoice(GetStringByStrRef(STRREF_BACK_TO_LSELECT), CHOICE_BACK_TO_LSELECT, oPC);

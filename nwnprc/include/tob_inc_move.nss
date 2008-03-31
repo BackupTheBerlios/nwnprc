@@ -273,7 +273,7 @@ void _ManeuverHB(object oInitiator, location lTrueSpeaker, object oMoveToken)
             _DestroyManeuverToken(oInitiator, oMoveToken);
 
             // Inform initiator
-            FloatingTextStrRefOnCreature(16828469, oInitiator, FALSE); // "You have lost concentration on the maneuver you were attempting to truespeak!"
+            FloatingTextStringOnCreature("You have lost concentration on the maneuver you were attempting to initiate!", oInitiator, FALSE); 
         }
         // Schedule next HB
         else
@@ -447,10 +447,11 @@ struct maneuver EvaluateManeuver(object oInitiator, object oTarget)
     if (!_GetIsManeuverWeaponAppropriate(move.oInitiator)) 
     {
     	move.bCanManeuver = FALSE;
-    	FloatingTextStrRefOnCreature(16829728, oInitiator, FALSE); // "You do not have an appropriate weapon to initiate this maneuver."
+    	FloatingTextStringOnCreature("You do not have an appropriate weapon to initiate this maneuver.", oInitiator, FALSE); 
     }
     // If the maneuver is not readied, fail.
-    if (!GetIsManeuverReadied(move.oInitiator, nClass, move.nMoveId)) 
+    // Stances don't need to be readied
+    if (!GetIsManeuverReadied(move.oInitiator, nClass, move.nMoveId) && !GetIsStance(move.nMoveId)) 
     {
     	move.bCanManeuver = FALSE;
     	FloatingTextStringOnCreature(GetManeuverName(move.nMoveId) + " is not readied.", oInitiator, FALSE);

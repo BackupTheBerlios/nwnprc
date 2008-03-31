@@ -305,11 +305,11 @@ void main()
             {
                 if(DEBUG) DoDebug("tob_moveconv: Building selection confirmation");
                 // Build the confirmantion query
-                string sToken = GetStringByStrRef(STRREF_SELECTED_HEADER1) + "\n\n"; // "You have selected:"
+                string sToken = GetStringByStrRef(STRREF_SELECTED_HEADER1) + "\n \n"; // "You have selected:"
                 int nManeuver = GetLocalInt(oPC, "nManeuver");
                 int nFeatID = StringToInt(Get2DACache(sManeuverFile, "FeatID", nManeuver));
                 sToken += GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", nFeatID)))+"\n";
-                sToken += GetStringByStrRef(StringToInt(Get2DACache("feat", "DESCRIPTION", nFeatID)))+"\n\n";
+                sToken += GetStringByStrRef(StringToInt(Get2DACache("feat", "DESCRIPTION", nFeatID)))+"\n \n";
                 sToken += GetStringByStrRef(STRREF_SELECTED_HEADER2); // "Is this correct?"
                 SetHeader(sToken);
 

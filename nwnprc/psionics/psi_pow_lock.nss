@@ -56,7 +56,7 @@ void main()
 
     if(manif.bCanManifest)
     {
-        if(GetLockLockable(oTarget))
+        if(GetLockLockable(oTarget) && !GetPlotFlag(oTarget))
         {
         	SetLocked(oTarget, TRUE);
         }

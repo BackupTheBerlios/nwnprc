@@ -1,12 +1,9 @@
 Fixed:
 
 Possibly fixed:
-Imbue Item conversation
+Essences do nothing on hit
 
 To Check:
 
-i was still able melee attack and cast the basic unshaped eldritch blast (including whatever essences i have toggled on before i polymorphed) in cow form though the other invocations where wiped from both the radial and my quickslot
-also check AOE size
 
-Painful Sleep of Ages does not cause damage on awakening.
-script isn't going off on creature's heartbeat
+Eldritch Line does not get a target

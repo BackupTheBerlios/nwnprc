@@ -2922,12 +2922,12 @@
 2918 Bralani_Cure_Serious_Wounds                ****             ****             ****             ****             ****         ****             
 2919 Bralani_Gust_of_Wind                       ****             ****             ****             ****             ****         ****             
 2920 Bralani_Mirror_Image                       ****             ****             ****             ****             ****         ****             
-2921 FEAT_RACE_HOLYSMITE                        ****             ****             ****             ****             ****         ****             
+2921 CrusaderReadyManeuver                      ****             ****             ****             ****             ****         ****             
 2922 FEAT_RACE_FLARE                            ****             ****             ****             ****             ****         ****             
-2923 FEAT_RACE_FIREBALL                         ****             ****             ****             ****             ****         ****             
+2923 SwordsageReadyManeuver                     ****             ****             ****             ****             ****         ****             
 2924 FEAT_RACE_ENTROPIC                         ****             ****             ****             ****             ****         ****             
 2925 FEAT_RACE_CONEOFCOLD                       ****             ****             ****             ****             ****         ****             
-2926 FEAT_RACE_CURESERIOUS                      ****             ****             ****             ****             ****         ****             
+2926 WarbladeReadyManeuver                      ****             ****             ****             ****             ****         ****             
 2927 FEAT_RACE_CHAINLIGHT                       ****             ****             ****             ****             ****         ****             
 2928 FEAT_RACE_CALLLIGHT                        ****             ****             ****             ****             ****         ****             
 2929 FEAT_RACE_BLESS                            ****             ****             ****             ****             ****         ****             

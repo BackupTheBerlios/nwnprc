@@ -505,9 +505,9 @@ void UseManeuver(int nManeuver, int nClass, int nLevelOverride = 0)
     object oMoveToken;
     location lTarget   = PRCGetSpellTargetLocation();
     int nSpellID       = PRCGetSpellId();
-    //int nMoveDur       = StringToInt(Get2DACache("spells", "ConjTime", nManeuver)) + StringToInt(Get2DACache("spells", "CastTime", nManeuver));
+    int nMoveDur       = StringToInt(Get2DACache("spells", "ConjTime", nManeuver)) + StringToInt(Get2DACache("spells", "CastTime", nManeuver));
     // This is a test case to speed up the impact of the melee attacks, as PerformAttackRound takes the full 6 second.
-    int nMoveDur       = 0;
+    //int nMoveDur       = 0;
 
     // Normally swift action maneuvers check
     if((Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "SWIFT_ACTION" ||

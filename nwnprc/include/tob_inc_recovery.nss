@@ -222,7 +222,7 @@ void ReadyManeuver(object oPC, int nList, int nMoveId)
 	// If the PC can ready a maneuver and hasn't filled them all up
 	if (nMaxCount > nCount)
 	{
-		// Counting through the local ints
+/*		// Counting through the local ints
 		int i = 1;
                 while (i > 0)
 		{
@@ -230,11 +230,13 @@ void ReadyManeuver(object oPC, int nList, int nMoveId)
 			if (GetLocalInt(oPC, "ManeuverReadied" + IntToString(nList) + IntToString(i)) == 0) break;
 			i++;
                 }
-
+*/
 		// This will mark the Maneuver Readied, one further on than before
-		SetLocalInt(oPC, "ManeuverReadied" + IntToString(nList) + IntToString(i+1), nMoveId);
+		SetLocalInt(oPC, "ManeuverReadied" + IntToString(nList) + IntToString(nCount + 1), nMoveId);
 		if(DEBUG) DoDebug("tob_inc_recovery: ReadyManeuver: " +IntToString(nMoveId));
 	}
+	else
+		FloatingTextStringOnCreature("All maneuvers are readied", oPC, FALSE);
 }
 
 int GetIsManeuverReadied(object oPC, int nList, int nMoveId)

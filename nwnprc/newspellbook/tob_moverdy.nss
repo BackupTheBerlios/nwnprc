@@ -46,21 +46,6 @@ const int STRREF_MANEUVER           = 16829731; // "Maneuvers"
 /* Aid Functions                                */
 //////////////////////////////////////////////////
 
-int _GetLoopBegin(int nLevel)
-{
-	if (nLevel == 1) return 6001;
-	else if (nLevel == 2) return -1;
-	else if (nLevel == 3) return -1;
-	else if (nLevel == 4) return -1;
-	else if (nLevel == 5) return -1;
-	else if (nLevel == 6) return -1;
-	else if (nLevel == 7) return -1;
-	else if (nLevel == 8) return -1;
-	else if (nLevel == 9) return -1;
-	
-	return -1;
-}
-
 int _GetLoopEnd(int nClass)
 {
 	if (nClass == CLASS_TYPE_CRUSADER) return 73; 
@@ -137,9 +122,14 @@ void main()
 		for(i = 0; i < _GetLoopEnd(nClass); i++)
 		{	// Checks to see if its the appropriate level
 			int nMoveId = StringToInt(Get2DACache(sManeuverFile, "RealSpellID", i));
-			if (GetHasManeuver(nMoveId, oPC) && nBrowseLevel == StringToInt(Get2DACache(sManeuverFile, "Level", i)))
+			if (GetHasManeuver(nMoveId, oPC) && 
+			    nBrowseLevel == StringToInt(Get2DACache(sManeuverFile, "Level", i)) && 
+			    1 != StringToInt(Get2DACache(sManeuverFile, "Stance", i)))
 			{
-				AddChoice(GetManeuverName(nMoveId), i);
+				if (!GetIsManeuverReadied(oPC, nClass, nMoveId))
+				{
+					AddChoice(GetManeuverName(nMoveId), i);
+				}
 			}
                 }
                 if(DEBUG) DoDebug("tob_moverdy: GetEndLoop: " + IntToString(_GetLoopEnd(nClass)));
@@ -185,7 +175,6 @@ void main()
         // End of conversation cleanup
         DeleteLocalInt(oPC, "nClass");
         DeleteLocalInt(oPC, "nManeuver");
-        DeleteLocalInt(oPC, "nStanceOrManeuver");
         DeleteLocalInt(oPC, "nManeuverLevelToBrowse");
         DeleteLocalInt(oPC, "ManeuverListChoiceOffset");
 
@@ -230,13 +219,13 @@ void main()
         else if(nStage == STAGE_CONFIRM_SELECTION)
         {
             if(DEBUG) DoDebug("tob_moverdy: Handling maneuver confirmation");
-            int nMoveStance = GetLocalInt(oPC, "nStanceOrManeuver");
             if(nChoice == TRUE)
             {
                 if(DEBUG) DoDebug("tob_moverdy: Adding maneuver readied");
                 int nManeuver = GetLocalInt(oPC, "nManeuver");
-                
-                ReadyManeuver(oPC, nClass, nManeuver);
+                int nMoveId = StringToInt(Get2DACache(sManeuverFile, "RealSpellID", nManeuver));
+                if(DEBUG) DoDebug("tob_moverdy: nReadyMoveId: " + IntToString(nMoveId));
+                ReadyManeuver(oPC, nClass, nMoveId);
 
                 // Delete the stored offset
                 DeleteLocalInt(oPC, "ManeuverListChoiceOffset");

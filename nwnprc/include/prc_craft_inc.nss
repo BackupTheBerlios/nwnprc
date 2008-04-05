@@ -600,9 +600,52 @@ int PrereqSpecialHandling(string sFile, object oItem, int nLine)
     return TRUE;
 }
 
+//Checks crafting prereqs for warlocks
+int CheckImbueItem(object oPC, int nSpell)
+{
+    if(!GetHasFeat(FEAT_IMBUE_ITEM, oPC)) return FALSE;
+    int nImbueDC;
+    int bArcane = TRUE;
+    int nLevel;
+    int nArcaneSpellLevel;
+    int nDivineSpellLevel;
+    string sTemp;
+
+    sTemp = Get2DACache("spells", "Wiz_Sorc", nSpell);
+    if(sTemp == "")
+    {
+        sTemp = Get2DACache("spells", "Bard", nSpell);
+        if(sTemp == "")
+        {
+            bArcane = FALSE;    //now checking the divine classes
+            sTemp = Get2DACache("spells", "Cleric", nSpell);
+            if(sTemp == "")
+            {
+                sTemp = Get2DACache("spells", "Druid", nSpell);
+                if(sTemp == "")
+                {
+                    sTemp = Get2DACache("spells", "Paladin", nSpell);
+                    if(sTemp == "")
+                    {
+                        sTemp = Get2DACache("spells", "Ranger", nSpell);
+                        if(sTemp == "")
+                        {
+                            if(DEBUG) DoDebug("CheckImbueItem: ERROR - spell is neither arcane nor divine");
+                            return FALSE;
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+    return GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, StringToInt(sTemp) + (bArcane ? 15 : 25));
+}
+
 //Checks and decrements spells based on property to add
 int CheckCraftingSpells(object oPC, string sFile, int nLine, int bDecrement = FALSE)
 {
+    if(GetLevelByClass(CLASS_TYPE_ARTIFICER, oPC)) return TRUE;      //artificers roll UMD checks during crafting time
     if(nLine == -1) return FALSE;
     string sTemp = Get2DACache(sFile, "Spells", nLine);
     if(sTemp == "")
@@ -615,9 +658,6 @@ int CheckCraftingSpells(object oPC, string sFile, int nLine, int bDecrement = FA
     int nPosition;
     int nTemp;
     int i;
-    int nImbueDC;
-    int nArcaneSpellLevel;
-    int nDivineSpellLevel;
 
     for(i = 0; i < 5; i++)
     {
@@ -700,107 +740,52 @@ int CheckCraftingSpells(object oPC, string sFile, int nLine, int bDecrement = FA
                     }
                 }
             }
-            nArcaneSpellLevel = StringToInt(Get2DACache("spells", "Wiz_Sorc", nSpell1));
-            nDivineSpellLevel = StringToInt(Get2DACache("spells", "Cleric", nSpell1));
-            if(nArcaneSpellLevel > 0)
-                nImbueDC = 15 + nArcaneSpellLevel;
-            else
-                nImbueDC = 25 + nDivineSpellLevel;
             if(!PRCGetHasSpell(nSpell1, oPC))
             {
-                if(!GetHasFeat(FEAT_IMBUE_ITEM))
-                    return FALSE;
-                else if(!GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, nImbueDC))
+                if(!CheckImbueItem(oPC, nSpell1))
                     return FALSE;
             }
         }
         if(nSpellPattern & 2)
         {
-            nArcaneSpellLevel = StringToInt(Get2DACache("spells", "Wiz_Sorc", nSpell2));
-            nDivineSpellLevel = StringToInt(Get2DACache("spells", "Cleric", nSpell2));
-            if(nArcaneSpellLevel > 0)
-                nImbueDC = 15 + nArcaneSpellLevel;
-            else
-                nImbueDC = 25 + nDivineSpellLevel;
             if(!PRCGetHasSpell(nSpell2, oPC))
             {
-                if(!GetHasFeat(FEAT_IMBUE_ITEM))
-                    return FALSE;
-                else if(!GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, nImbueDC))
+                if(!CheckImbueItem(oPC, nSpell2))
                     return FALSE;
             }
         }
         if(nSpellPattern & 4)
         {
-            nArcaneSpellLevel = StringToInt(Get2DACache("spells", "Wiz_Sorc", nSpell3));
-            nDivineSpellLevel = StringToInt(Get2DACache("spells", "Cleric", nSpell3));
-            if(nArcaneSpellLevel > 0)
-                nImbueDC = 15 + nArcaneSpellLevel;
-            else
-                nImbueDC = 25 + nDivineSpellLevel;
             if(!PRCGetHasSpell(nSpell3, oPC))
             {
-                if(!GetHasFeat(FEAT_IMBUE_ITEM))
-                    return FALSE;
-                else if(!GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, nImbueDC))
+                if(!CheckImbueItem(oPC, nSpell3))
                     return FALSE;
             }
         }
         if(nSpellPattern & 8)
         {
-            nArcaneSpellLevel = StringToInt(Get2DACache("spells", "Wiz_Sorc", nSpellOR1));
-            nDivineSpellLevel = StringToInt(Get2DACache("spells", "Cleric", nSpellOR1));
-            if(nArcaneSpellLevel != 0)
-                nImbueDC = 15 + nArcaneSpellLevel;
-            else
-                nImbueDC = 25 + nDivineSpellLevel;
             if(!PRCGetHasSpell(nSpellOR1, oPC))
             {
-                if(!GetHasFeat(FEAT_IMBUE_ITEM))
+                if(!CheckImbueItem(oPC, nSpellOR1))
                 {
                     if(nSpellPattern & 16)
                     {
-                        bOR = TRUE;
                         if(!PRCGetHasSpell(nSpellOR2, oPC))
-                            return FALSE;
-                    }
-                    else
-                        return FALSE;
-                }
-                else if(!GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, nImbueDC))
-                {
-                    if(nSpellPattern & 16)
-                    {
-                        bOR = TRUE;
-                        nArcaneSpellLevel = StringToInt(Get2DACache("spells", "Wiz_Sorc", nSpellOR2));
-                        nDivineSpellLevel = StringToInt(Get2DACache("spells", "Cleric", nSpellOR2));
-                        if(nArcaneSpellLevel > 0)
-                            nImbueDC = 15 + nArcaneSpellLevel;
-                        else
-                            nImbueDC = 25 + nDivineSpellLevel;
-                        if(!PRCGetHasSpell(nSpellOR2, oPC))
-                            if(!GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, nImbueDC))
+                        {
+                            if(!CheckImbueItem(oPC, nSpellOR2))
                                 return FALSE;
+                        }
                     }
                     else
                         return FALSE;
                 }
-
             }
         }
         else if(nSpellPattern & 16)
         {
-            nArcaneSpellLevel = StringToInt(Get2DACache("spells", "Wiz_Sorc", nSpellOR2));
-            nDivineSpellLevel = StringToInt(Get2DACache("spells", "Cleric", nSpellOR2));
-            if(nArcaneSpellLevel != 0)
-                nImbueDC = 15 + nArcaneSpellLevel;
-            else
-                nImbueDC = 25 + nDivineSpellLevel;
             if(!PRCGetHasSpell(nSpellOR2, oPC))
             {
-                if(!GetHasFeat(FEAT_IMBUE_ITEM))
-                    return FALSE;
-                else if(!GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, nImbueDC))
+                if(!CheckImbueItem(oPC, nSpellOR2))
                     return FALSE;
             }
         }
@@ -938,9 +923,10 @@ int CheckPrereq(object oPC, int nLine, int bEpic, string sFile, struct itemvars 
     int bBreak = FALSE;
     int nLevel;
     int j = 0;
-    int nCasterLevel = max(GetLevelByTypeArcane(oPC), GetLevelByTypeDivine(oPC));
+    int nCasterLevel = max(max(GetLevelByTypeArcane(oPC), GetLevelByTypeDivine(oPC)), GetLevelByClass(CLASS_TYPE_ARTIFICER, oPC) + 2);
     int nManifesterLevel = GetManifesterLevel(oPC);
     int nTemp, nLength, nPosition;
+    int bArtificer = (GetLevelByClass(CLASS_TYPE_ARTIFICER, oPC) > 0);
     string sPropertyType = Get2DACache(sFile, "PropertyType", nLine);
     string sTemp, sSub;
     if(sPropertyType == "M")
@@ -987,35 +973,37 @@ int CheckPrereq(object oPC, int nLine, int bEpic, string sFile, struct itemvars 
             {
                 case 0:
                 {
-                    if(nTemp != -1 && MyPRCGetRacialType(oPC) != nTemp)
+                    if(nTemp != -1 && MyPRCGetRacialType(oPC) != nTemp && !bArtificer)
                         return FALSE;
                     break;
                 }
                 case 1:
                 {
-                    if(nTemp != -1 && !GetHasFeat(nTemp, oPC))
+                    if(nTemp != -1 && !GetHasFeat(nTemp, oPC))  //artificer can't emulate feat requirements
                         return FALSE;
                     break;
                 }
                 case 2:
                 {
-                    if((sSub == "G" && GetAlignmentGoodEvil(oPC) != ALIGNMENT_GOOD) ||
+                    if(((sSub == "G" && GetAlignmentGoodEvil(oPC) != ALIGNMENT_GOOD) ||
                         (sSub == "E" && GetAlignmentGoodEvil(oPC) != ALIGNMENT_EVIL) ||
-                        (sSub == "N" && GetAlignmentGoodEvil(oPC) != ALIGNMENT_NEUTRAL))
+                        (sSub == "N" && GetAlignmentGoodEvil(oPC) != ALIGNMENT_NEUTRAL)) &&
+                        !bArtificer)
                             return FALSE;
                     break;
                 }
                 case 3:
                 {
-                    if((sSub == "L" && GetAlignmentLawChaos(oPC) != ALIGNMENT_LAWFUL) ||
+                    if(((sSub == "L" && GetAlignmentLawChaos(oPC) != ALIGNMENT_LAWFUL) ||
                         (sSub == "C" && GetAlignmentLawChaos(oPC) != ALIGNMENT_CHAOTIC) ||
-                        (sSub == "N" && GetAlignmentLawChaos(oPC) != ALIGNMENT_NEUTRAL))
+                        (sSub == "N" && GetAlignmentLawChaos(oPC) != ALIGNMENT_NEUTRAL)) &&
+                        !bArtificer)
                             return FALSE;
                     break;
                 }
                 case 4:
                 {
-                    if(nTemp != -1 && !GetLevelByClass(nTemp, oPC))
+                    if(nTemp != -1 && !GetLevelByClass(nTemp, oPC) && !bArtificer)
                         return FALSE;
                     break;
                 }
@@ -1159,123 +1147,7 @@ struct itemvars GetItemVars(object oPC, object oItem, string sFile, int bEpic = 
     //Checking available spells, epic flag, caster level
     if(!GetLocalInt(oPC, PRC_CRAFT_TOKEN))
     {
-        /* - moved check to confirmation stage
-        for(i = 0; i <= nFileEnd; i++)
-        {   //will skip over properties already disallowed
-            if(array_get_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i))
-            {
-                bBreak = FALSE;
-                sPropertyType = Get2DACache(sFile, "PropertyType", i);
-                if(sPropertyType == "M")
-                    nLevel = nCasterLevel;
-                else if(sPropertyType == "P")
-                    nLevel = nManifesterLevel;
-                else
-                    nLevel = max(nCasterLevel, nManifesterLevel);
-                if(!bEpic && Get2DACache(sFile, "Epic", i) == "1")
-                    array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
-                else if(nLevel < StringToInt(Get2DACache(sFile, "Level", i)))
-                    array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
-                else if(!bEpic && ((StringToInt(Get2DACache(sFile, "Enhancement", i)) + strTemp.enhancement) > 10))
-                    array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
-                else
-                {
-                    if(
-                        (sPropertyType == "M") &&
-                        !CheckCraftingSpells(oPC, sFile, i)
-                        )
-                    {
-                        array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
-                        continue;
-                    }
-                    if(
-                        (sPropertyType == "P") &&
-                        !CheckCraftingPowerPoints(oPC, sFile, i)
-                        )
-                    {
-                        array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
-                        continue;
-                    }
-
-                    sTemp = Get2DACache(sFile, "PrereqMisc", i);
-                    if(sTemp == "")
-                        bBreak = TRUE;
-                    nLength = GetStringLength(sTemp);
-                    for(j = 0; j < 5; j++)
-                    {
-                        if(bBreak)
-                            break;
-                        nPosition = FindSubString(sTemp, "_");
-                        sSub = (nPosition == -1) ? sTemp : GetStringLeft(sTemp, nPosition);
-                        nLength -= (nPosition + 1);
-                        if(sSub == "*")
-                            nTemp = -1;
-                        else
-                            nTemp = StringToInt(sSub);
-                        switch(j)
-                        {
-                            case 0:
-                            {
-                                if(nTemp != -1 && nRace != nTemp)
-                                {
-                                    array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
-                                    bBreak = TRUE;
-                                }
-                                break;
-                            }
-                            case 1:
-                            {
-                                if(nTemp != -1 && !GetHasFeat(nTemp))
-                                {
-                                    array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
-                                    bBreak = TRUE;
-                                }
-                                break;
-                            }
-                            case 2:
-                            {
-                                if((sSub == "G" && GetAlignmentGoodEvil(oPC) != ALIGNMENT_GOOD) ||
-                                    (sSub == "E" && GetAlignmentGoodEvil(oPC) != ALIGNMENT_EVIL) ||
-                                    (sSub == "N" && GetAlignmentGoodEvil(oPC) != ALIGNMENT_NEUTRAL))
-                                {
-                                    array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
-                                    bBreak = TRUE;
-                                }
-                                break;
-                            }
-                            case 3:
-                            {
-                                if((sSub == "L" && GetAlignmentLawChaos(oPC) != ALIGNMENT_LAWFUL) ||
-                                    (sSub == "C" && GetAlignmentLawChaos(oPC) != ALIGNMENT_CHAOTIC) ||
-                                    (sSub == "N" && GetAlignmentLawChaos(oPC) != ALIGNMENT_NEUTRAL))
-                                {
-                                    array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
-                                    bBreak = TRUE;
-                                }
-                                break;
-                            }
-                            case 4:
-                            {
-                                if(nTemp != -1 && !GetLevelByClass(nTemp, oPC))
-                                {
-                                    array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
-                                    bBreak = TRUE;
-                                }
-                                break;
-                            }
-                         }
-                        sTemp = GetSubString(sTemp, nPosition + 1, nLength);
-                    }
-                    sTemp = Get2DACache(sFile, "Skill", i);
-                    if(sTemp != "" && (GetSkillRank(StringToInt(sTemp), oPC) < StringToInt(Get2DACache(sFile, "SkillRanks", i))))
-                    {
-                        array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
-                        continue;
-                    }
-                }
-            }
-        }
-        */
+        //moved check to confirmation stage
     }
     else if(GetPRCSwitch(PRC_DISABLE_CRAFT_EPIC))
     {   //disabling epic crafting at npc facilities
@@ -1294,12 +1166,59 @@ struct itemvars GetItemVars(object oPC, object oItem, string sFile, int bEpic = 
 //  returns 0 if not a weapon
 int GetWeaponType(int nBaseItem)
 {
-    int nFeat = StringToInt(Get2DACache("baseitems", "ReqFeat0", nBaseItem));
-    switch(nFeat)
+    switch(nBaseItem)
     {
-        case 44: return PRC_CRAFT_EXOTIC_WEAPON; break;
-        case 45: return PRC_CRAFT_MARTIAL_WEAPON; break;
-        case 46: return PRC_CRAFT_SIMPLE_WEAPON; break;
+        case BASE_ITEM_BASTARDSWORD:
+        case BASE_ITEM_TWOBLADEDSWORD:
+        case BASE_ITEM_DIREMACE:
+        case BASE_ITEM_DOUBLEAXE:
+        case BASE_ITEM_KAMA:
+        case BASE_ITEM_KATANA:
+        case BASE_ITEM_KUKRI:
+        case BASE_ITEM_SCYTHE:
+        case BASE_ITEM_SHURIKEN:
+        case BASE_ITEM_DWARVENWARAXE:
+        case BASE_ITEM_WHIP:
+        case BASE_ITEM_ELF_LIGHTBLADE:
+        case BASE_ITEM_ELF_THINBLADE:
+        case BASE_ITEM_ELF_COURTBLADE:
+            return PRC_CRAFT_EXOTIC_WEAPON;
+            break;
+
+        case BASE_ITEM_SHORTSWORD:
+        case BASE_ITEM_LONGSWORD:
+        case BASE_ITEM_BATTLEAXE:
+        case BASE_ITEM_LIGHTFLAIL:
+        case BASE_ITEM_WARHAMMER:
+        case BASE_ITEM_LONGBOW:
+        case BASE_ITEM_HALBERD:
+        case BASE_ITEM_SHORTBOW:
+        case BASE_ITEM_GREATSWORD:
+        case BASE_ITEM_GREATAXE:
+        case BASE_ITEM_HEAVYFLAIL:
+        case BASE_ITEM_LIGHTHAMMER:
+        case BASE_ITEM_HANDAXE:
+        case BASE_ITEM_RAPIER:
+        case BASE_ITEM_SCIMITAR:
+        case BASE_ITEM_THROWINGAXE:
+            return PRC_CRAFT_MARTIAL_WEAPON;
+            break;
+
+        case BASE_ITEM_LIGHTMACE:
+        case BASE_ITEM_DART:
+        case BASE_ITEM_MORNINGSTAR:
+        case BASE_ITEM_SHORTSPEAR:
+        case BASE_ITEM_SICKLE:
+        case BASE_ITEM_SLING:
+        case BASE_ITEM_TRIDENT:
+        case BASE_ITEM_DAGGER:
+        case BASE_ITEM_LIGHTCROSSBOW:
+        case BASE_ITEM_HEAVYCROSSBOW:
+        case BASE_ITEM_CLUB:
+        case BASE_ITEM_QUARTERSTAFF:
+            return PRC_CRAFT_SIMPLE_WEAPON;
+            break;
+
         default: return 0; break;
     }
     return 0;

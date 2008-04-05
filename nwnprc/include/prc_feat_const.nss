@@ -2797,3 +2797,20 @@ const int FEAT_SS_DF_WF_TC                  = 2200;
 /*//////////////////////////////////////////////////
 //////////////// END TOME OF BATTLE/////////////////
 //////////////////////////////////////////////////*/
+
+/*//////////////////////////////////////////////////
+////////////////   BEGIN INFUSIONS   ///////////////
+//////////////////////////////////////////////////*/
+
+const int FEAT_ARTISAN_BONUS                = 4065;
+const int FEAT_ITEM_CREATION                = 4066;
+const int FEAT_CRAFT_HOMUNCULUS             = 4067;
+const int FEAT_RETAIN_ESSENCE               = 4068;
+const int FEAT_METAMAGIC_SPELL_TRIGGER      = 4069;
+const int FEAT_METAMAGIC_SPELL_COMPLETION   = 4070;
+const int FEAT_SKILL_MASTERY_ARTIFICER      = 4071;
+const int FEAT_EPIC_ARTIFICER               = 4072;
+
+/*//////////////////////////////////////////////////
+////////////////   END INFUSIONS   /////////////////
+//////////////////////////////////////////////////*/

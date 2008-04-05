@@ -1008,13 +1008,15 @@ int CraftingFeats(object oPC = OBJECT_SELF)
                              ),
         nInvokerLvl    = max(GetInvokerLevel(oPC, CLASS_TYPE_WARLOCK), GetInvokerLevel(oPC, CLASS_TYPE_DRAGONFIRE_ADEPT)),
         nCasterMax     = max(nCasterLvl, nInvokerLvl),
-        nMax           = max(nCasterMax, nManifesterLvl);
+        nMax           = max(nCasterMax, nManifesterLvl),
+        nArti          = GetLevelByClass(CLASS_TYPE_ARTIFICER, oPC);
     int bOK = TRUE, bFirst = TRUE;
     string sError = GetStringByStrRef(16823153) + "\n"; // "Your spellcaster (or manifester) level is not high enough to take the following crafting feats:"
 
     if(GetHasFeat(FEAT_SCRIBE_SCROLL, oPC) &&
        nMax < 1 &&
-       !GetLevelByClass(CLASS_TYPE_WIZARD, oPC) //fix for wizards getting this for free.
+       !GetLevelByClass(CLASS_TYPE_WIZARD, oPC) && //fix for wizards getting this for free.
+       !nArti
        )
     {
         bOK = FALSE;
@@ -1022,7 +1024,7 @@ int CraftingFeats(object oPC = OBJECT_SELF)
         sError += GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", FEAT_SCRIBE_SCROLL)));
     }
     if(GetHasFeat(FEAT_BREW_POTION, oPC) &&
-       nMax < 3
+       nMax < 3 && nArti < 2
        )
     {
         bOK = FALSE;
@@ -1030,7 +1032,7 @@ int CraftingFeats(object oPC = OBJECT_SELF)
         sError += GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", FEAT_BREW_POTION)));
     }
     if(GetHasFeat(FEAT_CRAFT_WONDROUS, oPC) &&
-       nMax < 3
+       nMax < 3 && nArti < 3
        )
     {
         bOK = FALSE;
@@ -1038,7 +1040,7 @@ int CraftingFeats(object oPC = OBJECT_SELF)
         sError += GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", FEAT_CRAFT_WONDROUS)));
     }
     if(GetHasFeat(FEAT_CRAFT_ARMS_ARMOR, oPC) &&
-       nMax < 5
+       nMax < 5 && nArti < 5
        )
     {
         bOK = FALSE;
@@ -1046,7 +1048,7 @@ int CraftingFeats(object oPC = OBJECT_SELF)
         sError += GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", FEAT_CRAFT_ARMS_ARMOR)));
     }
     if(GetHasFeat(FEAT_CRAFT_WAND, oPC) &&
-       nMax < 5
+       nMax < 5 && nArti < 7
        )
     {
         bOK = FALSE;
@@ -1054,7 +1056,7 @@ int CraftingFeats(object oPC = OBJECT_SELF)
         sError += GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", FEAT_CRAFT_WAND)));
     }
     if(GetHasFeat(FEAT_CRAFT_ROD, oPC) &&
-       nMax < 9
+       nMax < 9 && nArti < 9
        )
     {
         bOK = FALSE;
@@ -1062,7 +1064,7 @@ int CraftingFeats(object oPC = OBJECT_SELF)
         sError += GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", FEAT_CRAFT_ROD)));
     }
     if(GetHasFeat(FEAT_CRAFT_STAFF, oPC) &&
-       nMax < 12
+       nMax < 12 && nArti < 12
        )
     {
         bOK = FALSE;
@@ -1070,7 +1072,7 @@ int CraftingFeats(object oPC = OBJECT_SELF)
         sError += GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", FEAT_CRAFT_STAFF)));
     }
     if(GetHasFeat(FEAT_FORGE_RING, oPC) &&
-       nMax < 12
+       nMax < 12 && nArti < 14
        )
     {
         bOK = FALSE;
@@ -1082,12 +1084,18 @@ int CraftingFeats(object oPC = OBJECT_SELF)
         FloatingTextStringOnCreature(sError, oPC);
 
     //only one item creation feat and it's one of the ones that needs another as a prereq
-    if(GetItemCreationFeatCount(oPC) == 1)
+    if(GetItemCreationFeatCount(oPC) == (
+            GetHasFeat(FEAT_EXCEPTIONAL_ARTISAN_I       , oPC) +
+            GetHasFeat(FEAT_EXCEPTIONAL_ARTISAN_II      , oPC) +
+            GetHasFeat(FEAT_EXCEPTIONAL_ARTISAN_III     , oPC) +
+            GetHasFeat(FEAT_EXTRAORDINARY_ARTISAN_I     , oPC) +
+            GetHasFeat(FEAT_EXTRAORDINARY_ARTISAN_II    , oPC) +
+            GetHasFeat(FEAT_EXTRAORDINARY_ARTISAN_III   , oPC) +
+            GetHasFeat(FEAT_LEGENDARY_ARTISAN_I         , oPC) +
+            GetHasFeat(FEAT_LEGENDARY_ARTISAN_II        , oPC) +
+            GetHasFeat(FEAT_LEGENDARY_ARTISAN_III       , oPC)))
     {
-        if(GetHasFeat(FEAT_EXCEPTIONAL_ARTISAN_I, oPC) ||
-            GetHasFeat(FEAT_EXTRAORDINARY_ARTISAN_I, oPC) ||
-            GetHasFeat(FEAT_LEGENDARY_ARTISAN_I, oPC))
-            bOK = FALSE;
+        bOK = FALSE;
     }
 
     return bOK;
@@ -1718,19 +1726,19 @@ int WarlockFeats(object oPC)
         FloatingTextStringOnCreature("You can only choose resistances.", oPC, FALSE);
         return FALSE;
     }
-    
+
     if(GetInvokerLevel(oPC, GetFirstInvocationClass(oPC)) < 6 && GetHasFeat(FEAT_EXTRA_INVOCATION_I))
     {
         FloatingTextStringOnCreature("You must have access to lesser invocations to learn extra ones.", oPC, FALSE);
         return FALSE;
     }
-    
+
     if(GetInvokerLevel(oPC, GetFirstInvocationClass(oPC)) < 16 && GetHasFeat(FEAT_EPIC_EXTRA_INVOCATION_I))
     {
         FloatingTextStringOnCreature("You must have access to dark invocations to learn epic extra ones.", oPC, FALSE);
         return FALSE;
     }
-    
+
     int nEldBlast = 0;
     if(GetLevelByClass(CLASS_TYPE_WARLOCK, oPC) < 13)
         nEldBlast = (GetLevelByClass(CLASS_TYPE_WARLOCK, oPC) + 1) / 2;
@@ -1738,115 +1746,115 @@ int WarlockFeats(object oPC)
         nEldBlast = (GetLevelByClass(CLASS_TYPE_WARLOCK, oPC) + 7) / 3;
     else
         nEldBlast = 9 + (GetLevelByClass(CLASS_TYPE_WARLOCK, oPC) - 20) / 2;
-        
+
     if(nEldBlast < 9 && GetHasFeat(FEAT_EPIC_ELDRITCH_BLAST_I))
     {
         FloatingTextStringOnCreature("You must have 9d6 eldritch blast to take Epic Eldritch Blast.", oPC, FALSE);
         return FALSE;
     }
-    
-    int bShadow = GetHasInvocation(INVOKE_BESHADOWED_BLAST, oPC) && 
-                  GetHasInvocation(INVOKE_DARK_DISCORPORATION, oPC) && 
-                  GetHasInvocation(INVOKE_DARKNESS, oPC) && 
+
+    int bShadow = GetHasInvocation(INVOKE_BESHADOWED_BLAST, oPC) &&
+                  GetHasInvocation(INVOKE_DARK_DISCORPORATION, oPC) &&
+                  GetHasInvocation(INVOKE_DARKNESS, oPC) &&
                   GetHasInvocation(INVOKE_ENERVATING_SHADOW, oPC);
-                  
-    int bVisionary = GetHasInvocation(INVOKE_DARK_FORESIGHT, oPC) && 
-                     GetHasInvocation(INVOKE_DEVILS_SIGHT, oPC) && 
-                     GetHasInvocation(INVOKE_SEE_THE_UNSEEN, oPC) && 
+
+    int bVisionary = GetHasInvocation(INVOKE_DARK_FORESIGHT, oPC) &&
+                     GetHasInvocation(INVOKE_DEVILS_SIGHT, oPC) &&
+                     GetHasInvocation(INVOKE_SEE_THE_UNSEEN, oPC) &&
                      GetHasInvocation(INVOKE_VOIDSENSE, oPC);
-                     
-    int bMorpheme = GetHasInvocation(INVOKE_BALEFUL_UTTERANCE, oPC) && 
+
+    int bMorpheme = GetHasInvocation(INVOKE_BALEFUL_UTTERANCE, oPC) &&
                     GetHasInvocation(INVOKE_BEGUILING_INFLUENCE, oPC) &&
                     GetHasInvocation(INVOKE_WORD_OF_CHANGING, oPC);
-                  
-    int bElements = GetHasInvocation(INVOKE_BREATH_OF_THE_NIGHT, oPC) && 
-                    GetHasInvocation(INVOKE_CHILLING_TENTACLES, oPC) && 
-                    GetHasInvocation(INVOKE_STONY_GRASP, oPC) && 
+
+    int bElements = GetHasInvocation(INVOKE_BREATH_OF_THE_NIGHT, oPC) &&
+                    GetHasInvocation(INVOKE_CHILLING_TENTACLES, oPC) &&
+                    GetHasInvocation(INVOKE_STONY_GRASP, oPC) &&
                     GetHasInvocation(INVOKE_WALL_OF_PERILOUS_FLAME, oPC);
-                  
-    int bSculptor = (GetHasInvocation(INVOKE_ELDRITCH_GLAIVE, oPC) || 
-                        GetHasInvocation(INVOKE_ELDRITCH_SPEAR, oPC) || 
-                        GetHasInvocation(INVOKE_HIDEOUS_BLOW, oPC)) && 
-                    GetHasInvocation(INVOKE_ELDRITCH_CHAIN, oPC) && 
-                    (GetHasInvocation(INVOKE_ELDRITCH_CONE, oPC) || 
-                        GetHasInvocation(INVOKE_ELDRITCH_LINE, oPC)) && 
+
+    int bSculptor = (GetHasInvocation(INVOKE_ELDRITCH_GLAIVE, oPC) ||
+                        GetHasInvocation(INVOKE_ELDRITCH_SPEAR, oPC) ||
+                        GetHasInvocation(INVOKE_HIDEOUS_BLOW, oPC)) &&
+                    GetHasInvocation(INVOKE_ELDRITCH_CHAIN, oPC) &&
+                    (GetHasInvocation(INVOKE_ELDRITCH_CONE, oPC) ||
+                        GetHasInvocation(INVOKE_ELDRITCH_LINE, oPC)) &&
                     GetHasInvocation(INVOKE_ELDRITCH_DOOM, oPC);
-                    
-    int bLeastEssence = GetHasInvocation(INVOKE_FRIGHTFUL_BLAST, oPC) || 
-                        GetHasInvocation(INVOKE_HAMMER_BLAST, oPC) || 
+
+    int bLeastEssence = GetHasInvocation(INVOKE_FRIGHTFUL_BLAST, oPC) ||
+                        GetHasInvocation(INVOKE_HAMMER_BLAST, oPC) ||
                         GetHasInvocation(INVOKE_SICKENING_BLAST, oPC);
-                    
-    int bLesserEssence = GetHasInvocation(INVOKE_BANEFUL_BLAST_ABBERATION, oPC) || 
-                         GetHasInvocation(INVOKE_BANEFUL_BLAST_BEAST, oPC) || 
-                         GetHasInvocation(INVOKE_BANEFUL_BLAST_CONSTRUCT, oPC) || 
-                         GetHasInvocation(INVOKE_BANEFUL_BLAST_DRAGON, oPC) || 
-                         GetHasInvocation(INVOKE_BANEFUL_BLAST_DWARF, oPC) || 
-                         GetHasInvocation(INVOKE_BANEFUL_BLAST_ELF, oPC) || 
-                         GetHasInvocation(INVOKE_BANEFUL_BLAST_ELEMENTAL, oPC) || 
-                         GetHasInvocation(INVOKE_BANEFUL_BLAST_FEY, oPC) || 
-                         GetHasInvocation(INVOKE_BANEFUL_BLAST_GIANT, oPC) || 
-                         GetHasInvocation(INVOKE_BANEFUL_BLAST_GOBLINOID, oPC) || 
-                         GetHasInvocation(INVOKE_BANEFUL_BLAST_GNOME, oPC) || 
-                         GetHasInvocation(INVOKE_BANEFUL_BLAST_HALFLING, oPC) || 
-                         GetHasInvocation(INVOKE_BANEFUL_BLAST_HUMAN, oPC) || 
-                         GetHasInvocation(INVOKE_BANEFUL_BLAST_MONSTEROUS, oPC) || 
-                         GetHasInvocation(INVOKE_BANEFUL_BLAST_ORC, oPC) || 
-                         GetHasInvocation(INVOKE_BANEFUL_BLAST_OUTSIDER, oPC) || 
-                         GetHasInvocation(INVOKE_BANEFUL_BLAST_PLANT, oPC) || 
-                         GetHasInvocation(INVOKE_BANEFUL_BLAST_REPTILIAN, oPC) || 
-                         GetHasInvocation(INVOKE_BANEFUL_BLAST_SHAPECHANGER, oPC) || 
-                         GetHasInvocation(INVOKE_BANEFUL_BLAST_UNDEAD, oPC) || 
-                         GetHasInvocation(INVOKE_BANEFUL_BLAST_VERMIN, oPC) || 
-                         GetHasInvocation(INVOKE_BESHADOWED_BLAST, oPC) || 
-                         GetHasInvocation(INVOKE_BRIMSTONE_BLAST, oPC) || 
+
+    int bLesserEssence = GetHasInvocation(INVOKE_BANEFUL_BLAST_ABBERATION, oPC) ||
+                         GetHasInvocation(INVOKE_BANEFUL_BLAST_BEAST, oPC) ||
+                         GetHasInvocation(INVOKE_BANEFUL_BLAST_CONSTRUCT, oPC) ||
+                         GetHasInvocation(INVOKE_BANEFUL_BLAST_DRAGON, oPC) ||
+                         GetHasInvocation(INVOKE_BANEFUL_BLAST_DWARF, oPC) ||
+                         GetHasInvocation(INVOKE_BANEFUL_BLAST_ELF, oPC) ||
+                         GetHasInvocation(INVOKE_BANEFUL_BLAST_ELEMENTAL, oPC) ||
+                         GetHasInvocation(INVOKE_BANEFUL_BLAST_FEY, oPC) ||
+                         GetHasInvocation(INVOKE_BANEFUL_BLAST_GIANT, oPC) ||
+                         GetHasInvocation(INVOKE_BANEFUL_BLAST_GOBLINOID, oPC) ||
+                         GetHasInvocation(INVOKE_BANEFUL_BLAST_GNOME, oPC) ||
+                         GetHasInvocation(INVOKE_BANEFUL_BLAST_HALFLING, oPC) ||
+                         GetHasInvocation(INVOKE_BANEFUL_BLAST_HUMAN, oPC) ||
+                         GetHasInvocation(INVOKE_BANEFUL_BLAST_MONSTEROUS, oPC) ||
+                         GetHasInvocation(INVOKE_BANEFUL_BLAST_ORC, oPC) ||
+                         GetHasInvocation(INVOKE_BANEFUL_BLAST_OUTSIDER, oPC) ||
+                         GetHasInvocation(INVOKE_BANEFUL_BLAST_PLANT, oPC) ||
+                         GetHasInvocation(INVOKE_BANEFUL_BLAST_REPTILIAN, oPC) ||
+                         GetHasInvocation(INVOKE_BANEFUL_BLAST_SHAPECHANGER, oPC) ||
+                         GetHasInvocation(INVOKE_BANEFUL_BLAST_UNDEAD, oPC) ||
+                         GetHasInvocation(INVOKE_BANEFUL_BLAST_VERMIN, oPC) ||
+                         GetHasInvocation(INVOKE_BESHADOWED_BLAST, oPC) ||
+                         GetHasInvocation(INVOKE_BRIMSTONE_BLAST, oPC) ||
                          GetHasInvocation(INVOKE_HELLRIME_BLAST, oPC);
-                         
-    int bGreatEssence = GetHasInvocation(INVOKE_BEWITCHING_BLAST, oPC) || 
-                        GetHasInvocation(INVOKE_HINDERING_BLAST, oPC) || 
-                        GetHasInvocation(INVOKE_INCARNUM_BLAST, oPC) || 
-                        GetHasInvocation(INVOKE_NOXIOUS_BLAST, oPC) || 
-                        GetHasInvocation(INVOKE_PENETRATING_BLAST, oPC) || 
+
+    int bGreatEssence = GetHasInvocation(INVOKE_BEWITCHING_BLAST, oPC) ||
+                        GetHasInvocation(INVOKE_HINDERING_BLAST, oPC) ||
+                        GetHasInvocation(INVOKE_INCARNUM_BLAST, oPC) ||
+                        GetHasInvocation(INVOKE_NOXIOUS_BLAST, oPC) ||
+                        GetHasInvocation(INVOKE_PENETRATING_BLAST, oPC) ||
                         GetHasInvocation(INVOKE_VITRIOLIC_BLAST, oPC);
-                    
-    int bDarkEssence = GetHasInvocation(INVOKE_BINDING_BLAST, oPC) || 
+
+    int bDarkEssence = GetHasInvocation(INVOKE_BINDING_BLAST, oPC) ||
                        GetHasInvocation(INVOKE_UTTERDARK_BLAST, oPC);
-                       
+
     if(!bShadow && GetHasFeat(FEAT_WARLOCK_SHADOWMASTER))
     {
         FloatingTextStringOnCreature("You must have Beshadowed Blast, Dark Discorporation, Darkness, and Enervating Shadow.", oPC, FALSE);
         return FALSE;
     }
-    
+
     if(!bVisionary && GetHasFeat(FEAT_PARAGON_VISIONARY))
     {
         FloatingTextStringOnCreature("You must have Dark Foresight, Devil's Sight, See the Unseen, and Voidsense.", oPC, FALSE);
         return FALSE;
     }
-    
+
     if(!bMorpheme && GetHasFeat(FEAT_MORPHEME_SAVANT))
     {
         FloatingTextStringOnCreature("You must have Baleful Utterance, Beguiling Influence, and Word of Changing.", oPC, FALSE);
         return FALSE;
     }
-    
+
     if(!bElements && GetHasFeat(FEAT_MASTER_OF_THE_ELEMENTS))
     {
         FloatingTextStringOnCreature("You must have Breath of the Night, Chilling Tentacles, Stony Grasp, and Wall of Perilous Flame.", oPC, FALSE);
         return FALSE;
     }
-    
+
     if(!bSculptor && GetHasFeat(FEAT_ELDRITCH_SCULPTOR))
     {
         FloatingTextStringOnCreature("You must have a blast shape invocation of each invocation level.", oPC, FALSE);
         return FALSE;
     }
-    
+
     if(!(bLeastEssence && bLesserEssence && bGreatEssence && bDarkEssence) && GetHasFeat(FEAT_LORD_OF_ALL_ESSENCES))
     {
         FloatingTextStringOnCreature("You must have an eldritch essence invocation of each invocation level.", oPC, FALSE);
         return FALSE;
     }
-    
+
     return TRUE;
 }
 

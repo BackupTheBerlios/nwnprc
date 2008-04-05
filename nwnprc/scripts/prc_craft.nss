@@ -109,6 +109,16 @@ const string PRC_CRAFT_MAGIC_EPIC       = "PRC_CRAFT_MAGIC_EPIC";
 
 const string PRC_CRAFT_SCRIPT_STATE     = "PRC_CRAFT_SCRIPT_STATE";
 
+const string ARTIFICER_PREREQ_RACE      = "ARTIFICER_PREREQ_RACE";
+const string ARTIFICER_PREREQ_ALIGN     = "ARTIFICER_PREREQ_ALIGN";
+const string ARTIFICER_PREREQ_CLASS     = "ARTIFICER_PREREQ_CLASS";
+const string ARTIFICER_PREREQ_SPELL1    = "ARTIFICER_PREREQ_SPELL1";
+const string ARTIFICER_PREREQ_SPELL2    = "ARTIFICER_PREREQ_SPELL2";
+const string ARTIFICER_PREREQ_SPELL3    = "ARTIFICER_PREREQ_SPELL3";
+const string ARTIFICER_PREREQ_SPELLOR1  = "ARTIFICER_PREREQ_SPELLOR1";
+const string ARTIFICER_PREREQ_SPELLOR2  = "ARTIFICER_PREREQ_SPELLOR2";
+const string ARTIFICER_PREREQ_COMPLETE  = "ARTIFICER_PREREQ_COMPLETE";
+
 const int PRC_CRAFT_STATE_NORMAL        = 1;
 const int PRC_CRAFT_STATE_MAGIC         = 2;
 
@@ -378,6 +388,162 @@ void ApplyProperties(object oPC, object oItem, itemproperty ip, int nCost, int n
     SetXP(oPC, GetXP(oPC) - nXP);
 }
 
+int ArtificerPrereqCheck(object oPC, string sFile, int nLine, int nCost)
+{
+    string sTemp, sSub, sSpell;
+    int nRace, nAlignGE, nAlignLC, nClass, i, j, bBreak, nLength, nPosition, nTemp;
+    int nSpell1, nSpell2, nSpell3, nSpellOR1, nSpellOR2;
+    int nDays = nCost / 1000;   //one set of UMD checks per "day" spent crafting
+    if(nCost % 1000) nDays++;
+    sTemp = Get2DACache(sFile, "PrereqMisc", nLine);
+    sSpell = Get2DACache(sFile, "Spells", nLine);
+    if(sTemp == "")
+    {
+        bBreak = TRUE;
+        nRace = -1;
+        nAlignGE = -1;
+        nAlignLC = -1;
+        nClass = -1;
+    }
+    nLength = GetStringLength(sTemp);
+    for(i = 0; i < 5; i++)
+    {
+        if(bBreak)
+            break;
+        nPosition = FindSubString(sTemp, "_");
+        sSub = (nPosition == -1) ? sTemp : GetStringLeft(sTemp, nPosition);
+        nLength -= (nPosition + 1);
+        if(sSub == "*")
+            nTemp = -1;
+        else
+            nTemp = StringToInt(sSub);
+        switch(i)
+        {
+            case 0:
+            {
+                nRace = (MyPRCGetRacialType(oPC) == nTemp) ? -1 : nTemp;
+                break;
+            }
+            case 1:
+            {
+                //can't emulate feat requirement
+                break;
+            }
+            case 2:
+            {
+                nAlignGE = -1;
+                if(sSub == "G") nAlignGE = (GetAlignmentGoodEvil(oPC) == ALIGNMENT_GOOD) ? -1 : ALIGNMENT_GOOD;
+                else if(sSub == "E") nAlignGE = (GetAlignmentGoodEvil(oPC) == ALIGNMENT_EVIL) ? -1 : ALIGNMENT_EVIL;
+                else if(sSub == "N") nAlignGE = (GetAlignmentGoodEvil(oPC) == ALIGNMENT_NEUTRAL) ? -1 : ALIGNMENT_NEUTRAL;
+                break;
+            }
+            case 3:
+            {
+                nAlignLC = -1;
+                if(sSub == "L") nAlignLC = (GetAlignmentLawChaos(oPC) == ALIGNMENT_LAWFUL) ? -1 : ALIGNMENT_LAWFUL;
+                if(sSub == "C") nAlignLC = (GetAlignmentLawChaos(oPC) == ALIGNMENT_CHAOTIC) ? -1 : ALIGNMENT_CHAOTIC;
+                if(sSub == "N") nAlignLC = (GetAlignmentLawChaos(oPC) == ALIGNMENT_NEUTRAL) ? -1 : ALIGNMENT_NEUTRAL;
+                break;
+            }
+            case 4:
+            {
+                nClass = (GetLevelByClass(nTemp, oPC)) ? -1 : nTemp;
+                break;
+            }
+        }
+        sTemp = GetSubString(sTemp, nPosition + 1, nLength);
+    }
+    if(sSpell == "")
+    {
+        nSpell1 = -1;
+        nSpell2 = -1;
+        nSpell3 = -1;
+        nSpellOR1 = -1;
+        nSpellOR2 = -1;
+    }
+    else
+    {
+        for(i = 0; i < 5; i++)
+        {
+            nPosition = FindSubString(sTemp, "_");
+            sSub = (nPosition == -1) ? sTemp : GetStringLeft(sTemp, nPosition);
+            nLength -= (nPosition + 1);
+            if(sSub == "*")
+                nTemp = -1;
+            else
+            {
+                nTemp = StringToInt(sSub);
+                switch(i)
+                {
+                    case 0:
+                    {   //storing the spell level and assuming it's a valid number
+                        nSpell1 = (PRCGetHasSpell(nTemp, oPC)) ? -1 : StringToInt(Get2DACache("spells", "Innate", nTemp)) + 20;
+                        break;
+                    }
+                    case 1:
+                    {
+                        nSpell2 = (PRCGetHasSpell(nTemp, oPC)) ? -1 : StringToInt(Get2DACache("spells", "Innate", nTemp)) + 20;
+                        break;
+                    }
+                    case 2:
+                    {
+                        nSpell3 = (PRCGetHasSpell(nTemp, oPC)) ? -1 : StringToInt(Get2DACache("spells", "Innate", nTemp)) + 20;
+                        break;
+                    }
+                    case 3:
+                    {
+                        nSpellOR1 = (PRCGetHasSpell(nTemp, oPC)) ? -1 : StringToInt(Get2DACache("spells", "Innate", nTemp)) + 20;
+                        break;
+                    }
+                    case 4:
+                    {
+                        nSpellOR2 = (PRCGetHasSpell(nTemp, oPC)) ? -1 : StringToInt(Get2DACache("spells", "Innate", nTemp)) + 20;
+                        break;
+                    }
+                }
+            }
+            sTemp = GetSubString(sTemp, nPosition + 1, nLength);
+        }
+    }
+    for(i = 0; i <= nDays; i++) //with extra last-ditch roll
+    {
+        if((nRace == -1) &&
+            (nAlignGE == -1) &&
+            (nAlignLC == -1) &&
+            (nClass == -1) &&
+            (nSpell1 == -1) &&
+            (nSpell2 == -1) &&
+            (nSpell3 == -1) &&
+            (nSpellOR1 == -1) &&
+            (nSpellOR2 == -1)
+            )
+            return TRUE;
+
+        if(nRace == -1)     nRace       = (GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, 25)) ? -1 : nRace;
+        if(nAlignGE == -1)  nAlignGE    = (GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, 30)) ? -1 : nAlignGE;
+        if(nAlignLC == -1)  nAlignLC    = (GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, 30)) ? -1 : nAlignLC;
+        if(nClass == -1)    nClass      = (GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, 21)) ? -1 : nClass;
+        if(nSpell1 == -1)   nSpell1     = (GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, nSpell1)) ? -1 : nSpell1;
+        if(nSpell2 == -1)   nSpell2     = (GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, nSpell2)) ? -1 : nSpell2;
+        if(nSpell3 == -1)   nSpell3     = (GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, nSpell3)) ? -1 : nSpell3;
+        if(nSpellOR1 == -1) nSpellOR1   = (GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, nSpellOR1)) ? -1 : nSpellOR1;
+        if(nSpellOR2 == -1) nSpellOR2   = (GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, nSpellOR2)) ? -1 : nSpellOR2;
+    }
+    if((nRace == -1) &&
+        (nAlignGE == -1) &&
+        (nAlignLC == -1) &&
+        (nClass == -1) &&
+        (nSpell1 == -1) &&
+        (nSpell2 == -1) &&
+        (nSpell3 == -1) &&
+        (nSpellOR1 == -1) &&
+        (nSpellOR2 == -1)
+        )
+        return TRUE;
+    else
+        return FALSE;   //made all the UMD rolls allocated and still failed
+}
+
 void CraftingHB(object oPC, object oItem, itemproperty ip, int nCost, int nXP, string sFile, int nLine, int nRounds)
 {
     if(GetBreakConcentrationCheck(oPC))
@@ -386,8 +552,19 @@ void CraftingHB(object oPC, object oItem, itemproperty ip, int nCost, int nXP, s
         DeleteLocalInt(oPC, PRC_CRAFT_HB);
         return;
     }
-    if(nRounds == 0)
+    if(nRounds == 0 || GetPCPublicCDKey(oPC) == "") //default to zero time if single player
     {
+        if(GetLevelByClass(CLASS_TYPE_ARTIFICER, oPC))
+        {
+            if(!ArtificerPrereqCheck(oPC, sFile, nLine, nCost))
+            {
+                FloatingTextStringOnCreature("Crafting Failed!", oPC);
+                DeleteLocalInt(oPC, PRC_CRAFT_HB);
+                TakeGoldFromCreature(nCost, oPC, TRUE);
+                SetXP(oPC, max(GetXP(oPC) - nXP, GetHitDice(oPC) * (GetHitDice(oPC) - 1) * 500));   //can't delevel
+                return;
+            }
+        }
         FloatingTextStringOnCreature("Crafting Complete!", oPC);
         DeleteLocalInt(oPC, PRC_CRAFT_HB);
         ApplyProperties(oPC, oItem, ip, nCost, nXP, sFile, nLine);

@@ -52,7 +52,9 @@ void main()
         if(GetIsObjectValid(oWeapon) &&
             ((nBase == BASE_ITEM_LONGSWORD) ||
             (nBase == BASE_ITEM_RAPIER) ||
-            (nBase == BASE_ITEM_GREATSWORD) ||  //no elven thinblade, courtblade approximated by greatsword
+            (nBase == BASE_ITEM_ELF_LIGHTBLADE) ||
+            (nBase == BASE_ITEM_ELF_THINBLADE) ||
+            (nBase == BASE_ITEM_ELF_COURTBLADE) ||
             (nBase == BASE_ITEM_SCIMITAR)
             ))
             ActionCastSpellOnSelf(SPELL_COC_DAMAGE);

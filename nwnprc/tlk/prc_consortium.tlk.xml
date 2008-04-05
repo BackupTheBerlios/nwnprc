@@ -329,14 +329,14 @@ Epic Warpriest Bonus Feats List:
 Armor Skin, Automatic Quicken Spell, Automatic Silent Spell, Automatic Still Spell, Epic Spell Focus, Epic Spell Penetration, Great Wisdom, Improved Combat Casting, Planar Turning.</entry>
   <entry id="12347" lang="en" sex="m">Cause Fear</entry>
   <entry id="12348" lang="en" sex="m">Necromancy [Fear, Mind-Affecting]
-Level: 	Brd 2, Sor/Wiz 2
-Components: 	V, S, M
-Casting Time: 	1 standard action
-Range: 	Medium (100 ft. + 10 ft./level)
-Targets: 	One living creature per three levels, no two of which can be more than 30 ft. apart
-Duration: 	1 round/level or 1 round
-Saving Throw: 	Will partial
-Spell Resistance: 	Yes
+Level:  Brd 2, Sor/Wiz 2
+Components:  V, S, M
+Casting Time:  1 standard action
+Range:  Medium (100 ft. + 10 ft./level)
+Targets:  One living creature per three levels, no two of which can be more than 30 ft. apart
+Duration:  1 round/level or 1 round
+Saving Throw:  Will partial
+Spell Resistance:  Yes
 
 This spell functions like cause fear, except that it causes all targeted creatures of less than 6 HD to become frightened. Creatures that make their saving throw are shaken.
 
@@ -18710,6 +18710,148 @@ Usage: Automatic.</entry>
 Prerequisite: Any item creation feat.
 Specifics: You have mastered the method of creating magic items. When determining your XP cost for creating any magic item, reduce the base cost by 25%. You can gain this feat multiple times. Its effects stack (geometrically).
 Usage: Automatic.</entry>
+  <entry id="49885" lang="en" sex="m">Artificer</entry>
+  <entry id="49886" lang="en" sex="m">Artificers</entry>
+  <entry id="49887" lang="en" sex="m">artificer</entry>
+  <entry id="49888" lang="en" sex="m">In Eberron, magic is almost technology. Spellcasters specialize in certain forms of that technology, while artificers tinker with its fundamental workings. Artificers understand magic on a different level from spellcasters, and do not cast spells as wizards and clerics do. They have an amazing facility with magic items and constructs, and in many ways, they keep the magical world of Eberron running.
+  
+- Hit Die: d6.
+- Proficiencies: All simple Weapons, Light and Medium Armour, Shield Proficiency.
+- Skill Points: 4 + Int Modifier.
+
+ABILITIES:
+
+Level
+1:  Artisan Bonus - +2 to Use Magic Device checks when using items
+    Item Creation - Craft items using Use Magic Device checks
+    Scribe Scroll
+2:  Brew Potion
+3:  Craft Wondrous Item
+4:  Craft Homunculus - Create a construct
+    Bonus Feat
+5:  Craft Magic Arms and Armor
+    Retain Essence - Recover XP from magic items
+6:  Metamagic Spell Trigger - Can add metamagic to crafted trigger items (eg. wands)
+7:  Craft Wand
+8:  Bonus Feat
+9:  Craft Rod
+10: 
+11: Metamagic Spell Completion - Can add metamagic to crafted completion items (eg. scrolls)
+12: Craft Staff
+    Bonus Feat
+13: Skill Mastery
+14: Forge Ring
+15: 
+16: Bonus feat
+17: 
+18: 
+19: 
+20: Bonus feat
+
+   
+Level Craft Reserve Infusions per day 1st 2nd 3rd 4th 5th 6th
+1 20     2 - - - - -
+2 40     3 - - - - -
+3 60     3 1 - - - -
+4 80     3 2 - - - -
+5 100     3 3 1 - - -
+6 150     3 3 2 - - -
+7 200     3 3 2 - - -
+8 250     3 3 3 1 - -
+9 300     3 3 3 2 - -
+10 400     3 3 3 2 - -
+11 500     3 3 3 2 1 -
+12 700     3 3 3 2 2 -
+13 900     3 3 3 3 2 -
+14 1,200     4 3 3 3 3 1
+15 1,500     4 4 3 3 3 2
+16 2,000     4 4 4 3 3 2
+17 2,500     4 4 4 4 3 3
+18 3,000     4 4 4 4 4 3
+19 4,000     4 4 4 4 4 4
+20 5,000     4 4 4 4 4 4
+
+Infusions: An artificer is not a spellcaster, but he does have the ability to imbue items with magical infusions. Infusions are neither arcane nor divine; they are drawn from the artificer infusion list. They function just like spells and follow all the rules for spells. For example, an infusion can be dispelled, it will not function in an antimagic area, and an artificer must make a Concentration check if injured while imbuing an item with an infusion.
+
+An artificer can imbue an item with any infusion from the list without preparing the infusion ahead of time. Unlike a sorcerer or bard, he does not select a subset of the available infusions as his known infusions; he has access to every infusion on the list that is of a level he can use.
+
+To imbue an item with an infusion, an artificer must have an Intelligence score equal to at least 10 + the infusion level. Infusions never allow saving throws.
+
+Like spellcasters, an artificer can use only a certain number of infusions of a particular level per day. In addition, he receives extra infusions per day if he has a sufficiently high Intelligence score.
+
+An artificer's infusions can only be imbued into an item or a construct (including warforged). He cannot, for example, simply imbue an ally with bull's strength. He must instead imbue that ability into an item his ally is wearing. The item then functions as a belt of giant strength for the duration of the infusion. He can, however, imbue bull's strength directly on a construct or a character with the living construct subtype, and infusions such as repair light damage and iron construct function only when imbued on such characters.
+
+Like a spellcaster, an artificer can apply item creation feats and metamagic feats to his infusions.</entry>
+  <entry id="49889" lang="en" sex="m">Artisan Bonus</entry>
+  <entry id="49890" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Artificer level 1
+Specifics: An artificer gains a +2 bonus on Use Magic Device checks to activate an item of a kind for which he has the prerequisite item creation feat. For example, an artificer who has the Craft Wand feat gains a +2 bonus on checks to use a spell from a wand.
+Use: Automatic</entry>
+  <entry id="49891" lang="en" sex="m">Item Creation</entry>
+  <entry id="49892" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Artificer level 1
+Specifics: An artificer can create a magic item even if he does not have access to the spells that are prerequisites for the item. The artificer must make a successful Use Magic Device check (DC 20 + caster level) to emulate each spell normally required to create the item.
+
+The artificer must make a successful check for each prerequisite for each item he makes. If he fails a check, he can try again each day until the item is complete. If he comes to the end of the crafting time and he has still not successfully emulated one of the powers, he can make one final check - his last-ditch effort, even if he has already made a check that day. If that check also fails, then the creation process fails and the time, money, and XP expended to craft the item are lost.
+
+For purposes of meeting item prerequisites, an artificer's effective caster level equals his artificer level +2. If the item duplicates a spell effect, however, it uses the artificer's actual level as its caster level. Costs are always determined using the item's minimum caster level or the artificer's actual level (if it is higher).
+
+An artificer can also make Use Magic Device checks to emulate nonspell requirements, including alignment and race, using the normal DCs for the skill. He cannot emulate skill or feat requirements, however, including item creation feat prerequisites. He must meet the caster level prerequisite, including the minimum level to cast a spell he stores in a potion, wand, or scroll.
+
+An artificer's infusions do not meet spell prerequisites for creating magic items.
+
+Use: Automatic</entry>
+  <entry id="49893" lang="en" sex="m">Craft Homunculus</entry>
+  <entry id="49894" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Artificer level 4
+Specifics: At 4th level, an artificer can create a homunculus as if he had the Craft Construct feat. He must emulate the spell requirements (arcane eye, mending, and mirror image) as normal for making a magic item, and he must pay all the usual gold and XP costs (though he can spend points from his craft reserve). An artificer can also upgrade an existing homunculus that he owns, adding 1 Hit Die at a cost of 2,000 gp and 160 XP.
+
+If an artificer gives his homunculus more than 6 Hit Dice, it becomes a Small creature and advances as described in the Monster Manual (+4 Str, -2 Dex, damage increases to Id6). The homunculus also gains 10 extra hit points for being a Small construct.
+
+An artificer's homunculus can have as many Hit Dice as its master's Hit Dice minus 2. No matter how many Hit Dice it has, a homunculus never grows larger than Small.
+
+Use: Selected</entry>
+  <entry id="49895" lang="en" sex="m">Retain Essence</entry>
+  <entry id="49896" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Artificer level 5
+Specifics: At 5th level, an artificer gains the ability to salvage the XP from a magic item and use those points to create another magic item. The artificer must spend a day with the item, and he must also have the appropriate item creation feat for the item he is salvaging. After one day, the item is destroyed and the artificer adds the XP it took to create the item to his craft reserve. These points are lost if the artificer does not use them before gaining his next level.
+
+For example, an artificer wants to retain the essence of a wand of summon monster IV that has 20 charges. Originally created (like all wands) with 50 charges, it required 840 XP when initially made, or 16.8 XP (840 - 50) per charge. The artificer is able to recover the XP from the remaining charges. He puts 336 XP (16.8 X 20) into his craft reserve.
+
+Use: Selected</entry>
+  <entry id="49897" lang="en" sex="m">Metamagic Spell Trigger</entry>
+  <entry id="49898" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Artificer level 6
+Specifics: At 6th level, an artificer gains the ability to apply a metamagic feat he knows to a spell trigger item (generally a wand). He must have the appropriate item creation feat for the spell trigger item he is using. Using this ability expends additional charges from the item equal to the number of effective spell levels the metamagic feat would add to a spell. The Still Spell feat confers no benefit when applied to a spell trigger item. An artificer cannot use this ability when using a spell trigger item that does not have charges.
+Use: Selected</entry>
+  <entry id="49899" lang="en" sex="m">Metamagic Spell Completion</entry>
+  <entry id="49900" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Artificer level 11
+Specifics: At 11th level, an artificer gains the ability to apply a metamagic feat he knows to a spell completion item (generally a scroll). He must have the appropriate item creation feat for the spell completion item he is using. The DC for the Use Magic Device check is equal to 20 + (3 X the modified level of the spell). An artificer can use this ability a number of times per day equal to 3 + his Int modifier.
+Use: Selected</entry>
+  <entry id="49901" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Artificer level 13
+Specifics: At 13th level, an artificer can take 10 when making a Spellcraft or Use Magic Device check, even if stress and distractions would normally prevent him from doing so. This ability circumvents the normal rule that a character may not take 10 on a Use Magic Device check.
+Use: Automatic</entry>
+  <entry id="49902" lang="en" sex="m">Epic Artificer</entry>
+  <entry id="49903" lang="en" sex="m">The epic artificer remains a master of item creation, gaining
+an increasing craft reserve and plenty of bonus feats to
+learn the craft of epic item creation.
+
+Knowledge is power and the quest for knowledge never ends. There is an ever lasting supply of arcane lore for you, the epic wizard,  to discover.
+
+Hit Die: d6
+Skill Points at Each Additional Level: 4+ Int Modifier
+Bonus Feats:  The epic artificer gains a bonus epic item creation feat every three levels after 20th
+
+Infusions: An epic artificer's caster level is equal to his class level. The artificer's number of infusions per day does not increase after 20th level.
+An epic artificer doesn't automatically gain infusion slots above 6th level, though he can select the Improved Spell Capacity feat to gain infusion slots above 6th level (which can be used to hold lower-level infusions or infusions whose level has been increased above 6th by the use of metamagic feats).
+Craft Reserve: An epic artificer's craft reserve increases by 1,000 points per level beyond 20th (6,000 points at 21st level. 7,000 points at 22nd level, and so on).</entry>
+  <entry id="49904" lang="en" sex="m">STUFF</entry>
+  <entry id="49905" lang="en" sex="m">STUFF</entry>
+  <entry id="49906" lang="en" sex="m">STUFF</entry>
+  <entry id="49907" lang="en" sex="m">STUFF</entry>
+  <entry id="49908" lang="en" sex="m">STUFF</entry>
   <entry id="49999" lang="en" sex="m">**** 50,000 - 50,500 reserved for Race Pack Feats ****</entry>
   <entry id="50000" lang="en" sex="m">Light Sensitivity</entry>
   <entry id="50001" lang="en" sex="m">Type of Feat: Racial
@@ -20783,9 +20925,9 @@ Special Abilities:
 Level:        Brd 1, Sor/Wiz 1
 Components:   V, S
 Casting Time: 1 standard action
-Range: 	      Personal
-Target: 	  You
-Duration: 	  10 min./level (D)
+Range:        Personal
+Target:    You
+Duration:    10 min./level (D)
 
 You make yourself?including clothing, armor, weapons, and equipment?look different. You can seem 1 foot shorter or taller, thin, fat, or in between. You cannot change your body type. Otherwise, the extent of the apparent change is up to you. You could add or obscure a minor feature or look like an entirely different person.
 The spell does not provide the abilities or mannerisms of the chosen form, nor does it alter the perceived tactile (touch) or audible (sound) properties of you or your equipment.
@@ -20798,12 +20940,12 @@ A creature that interacts with the glamer gets a Will save to recognize it as an
   <entry id="50751" lang="en" sex="m">Disguise Self - Quickslot 3</entry>
   <entry id="50752" lang="en" sex="m">Alter Self</entry>
   <entry id="50753" lang="en" sex="m">Transmutation
-Level: 	      Brd 2, Sor/Wiz 2
+Level:        Brd 2, Sor/Wiz 2
 Components:   V, S
 Casting Time: 1 standard action
-Range: 	      Personal
-Target: 	  You
-Duration: 	  10 min./level (D)
+Range:        Personal
+Target:    You
+Duration:    10 min./level (D)
 
 You assume the form of a creature of the same type as your normal form. The new form must be within one size category of your normal size. The maximum HD of an assumed form is equal to your caster level, to a maximum of 5 HD at 5th level. You can change into a member of your own kind or even into yourself.
 
@@ -30331,13 +30473,13 @@ As your weapon strikes your foe, his body convulses as waves of flame run down y
 When you strike your foe, all creatures in the area (see table below) take 6d6 fire damage, Reflex save for half. You are immune to this effect.
 This maneuver is a supernatural maneuver.
 
-Size		Radius
-Small or Less	5'
-Medium		10'
-Large		20'
-Huge		30'
-Gargantuan	40'
-Colossal	50'</entry>
+Size  Radius
+Small or Less 5'
+Medium  10'
+Large  20'
+Huge  30'
+Gargantuan 40'
+Colossal 50'</entry>
   <entry id="52579" lang="en" sex="m">Desert Tempest</entry>
   <entry id="52580" lang="en" sex="m">Desert Wind (Strike)
 Level: Swordsage 6

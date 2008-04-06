@@ -384,7 +384,11 @@ void _UseManeuverAux(object oInitiator, object oMoveToken, int nSpellId,
             AssignCommand(oInitiator, ActionDoCommand(DeleteLocalInt(oInitiator, PRC_CASTERLEVEL_OVERRIDE)));
 
 	// Begins the Crusader Granting Maneuver process
-	if (nClass == CLASS_TYPE_CRUSADER) BeginCrusaderGranting(oInitiator);
+	if (nClass == CLASS_TYPE_CRUSADER) 
+	{
+		BeginCrusaderGranting(oInitiator);
+		if(DEBUG) DoDebug("_UseManeuverAux(): BeginCrusaderGranting");
+	}
         // Destroy the maneuver token for this maneuver
         _DestroyManeuverToken(oInitiator, oMoveToken);
     }

@@ -441,24 +441,32 @@ void ClearGrantedWithheldManeuvers(object oPC)
 
 void BeginCrusaderGranting(object oPC)
 {
+	if(DEBUG) DoDebug("BeginCrusaderGranting(): Entered Function");
 	// Stops it from being called more than once.
 	if (GetLocalInt(oPC, "CrusaderGrantLoop")) return;
 	
 	// Starts the granting process
+	if(DEBUG) DoDebug("BeginCrusaderGranting(): DoCrusaderGranting called");
 	DoCrusaderGranting(oPC, 1);
 	SetLocalInt(oPC, "CrusaderGrantLoop", TRUE);
 }
 
 void DoCrusaderGranting(object oPC, int nTrip)
 {	
+	if(DEBUG) DoDebug("DoCrusaderGranting(): Entered Function on Round #" + IntToString(nTrip));
 	// First round of combat, no granting.
 	// Last round of the 5, clear and recover/grant maneuvers
 	if (nTrip == 5) // Granted maneuvers empty, restart
+	{
+		if(DEBUG) DoDebug("BeginCrusaderGranting(): RecoverExpendedManeuvers");
 		RecoverExpendedManeuvers(oPC, MANEUVER_LIST_CRUSADER);
+	}
 	else if (nTrip > 1)
+	{
 		// Rounds 2-4, grant a single maneuver
+		if(DEBUG) DoDebug("BeginCrusaderGranting(): GrantWithheldManeuver");
 		GrantWithheldManeuver(oPC, MANEUVER_LIST_CRUSADER);
-
+	}
 	// Increment the round counter
 	nTrip += 1;
 	// If it's greater than round 5, restart
@@ -469,6 +477,7 @@ void DoCrusaderGranting(object oPC, int nTrip)
 	// Recover and stop loop otherwise.
 	else
 	{
+		if(DEBUG) DoDebug("BeginCrusaderGranting(): Out of Combat Maneuver Recovery");
 		RecoverExpendedManeuvers(oPC, MANEUVER_LIST_CRUSADER);
 		// Resent Int for next time out
 		DeleteLocalInt(oPC, "CrusaderGrantLoop");

@@ -129,6 +129,8 @@ void CheckConcentrationOnEffect(object oCaster, int SpellID, object oTarget, int
  */
 object GetObjectToApplyNewEffect(string sTag, object oPC, int nStripEffects = TRUE);
 
+int GetPRCIsSkillSuccessful(object oCreature, int nSkill, int nDifficulty, int nRollOverride = -1);
+
 const int ERROR_CODE_5_FIX_YET_ANOTHER_TIME = 1;
 
 //////////////////////////////////////////////////
@@ -787,6 +789,29 @@ int GetItemCreationFeatCount(object oPC)
             GetHasFeat(FEAT_ATTUNE_GEM                  , oPC) +
             GetHasFeat(FEAT_INSCRIBE_RUNE               , oPC) //+
             );
+}
+
+//Wrapper for GetIsSkillSuccessful(), allows forcing of a particular roll eg. taking 10
+int GetPRCIsSkillSuccessful(object oCreature, int nSkill, int nDifficulty, int nRollOverride = -1)
+{
+    int nRanks = GetSkillRank(nSkill, oCreature);
+    if(nRollOverride < 0)
+        return GetIsSkillSuccessful(oCreature, nSkill, nDifficulty);
+    else
+    {   //we're going to fake a skill check here
+        if(nRollOverride > 20)
+        {
+            nRollOverride = 20;
+            if(DEBUG) DoDebug("GetPRCIsSkillSuccessful: nRollOverride > 20");
+        }
+        SendMessageToPC(oCreature,
+            COLOR_LIGHT_BLUE + GetName(oCreature) + COLOR_DARK_BLUE + " : " +
+            GetStringByStrRef(StringToInt(Get2DACache("skills", "Name", nSkill))) + " : *" +
+            ((nRollOverride >= nDifficulty) ? GetStringByStrRef(5352) : ((nDifficulty > nRanks + 20) ? GetStringByStrRef(8101) : GetStringByStrRef(5353))) + "* : " +
+            "(" + IntToString(nRollOverride) + " + " + IntToString(nRanks) + " = " + IntToString(nRollOverride + nRanks) + " vs. DC: " + IntToString(nDifficulty) + ")"
+            );
+    }
+    return (nRollOverride + nRanks >= nDifficulty);
 }
 
 // Test main

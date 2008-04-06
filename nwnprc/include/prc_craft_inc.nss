@@ -633,13 +633,13 @@ int CheckImbueItem(object oPC, int nSpell)
                             if(DEBUG) DoDebug("CheckImbueItem: ERROR - spell is neither arcane nor divine");
                             return FALSE;
                         }
-
                     }
                 }
             }
         }
     }
-    return GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, StringToInt(sTemp) + (bArcane ? 15 : 25));
+    //warlocks with deceive item get to take 10
+    return GetPRCIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, StringToInt(sTemp) + (bArcane ? 15 : 25), GetHasFeat(FEAT_DECEIVE_ITEM, oPC) ? 10 : -1);
 }
 
 //Checks and decrements spells based on property to add

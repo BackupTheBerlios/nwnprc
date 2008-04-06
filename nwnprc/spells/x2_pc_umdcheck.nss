@@ -117,18 +117,14 @@ int X2_UMD()
     // -------------------------------------------------------------------------
     int nInnateLevel = StringToInt(Get2DACache("des_crft_spells","Level",nSpellID));
     int nSkill = SKILL_USE_MAGIC_DEVICE;
+    //int nSkillRanks = GetSkillRank(SKILL_USE_MAGIC_DEVICE, oCaster);
+    if(GetLevelByClass(CLASS_TYPE_ARTIFICER, oCaster))
+        nInnateLevel -= 2;  //only scrolls are being checked, and arti gets scribe scroll at level 1, this instead of +2 to skill
 
     int nPropID = StringToInt(sPropID);
     if (nPropID == 0)
     {
         WriteTimestampedLogEntry("***X2UseMagicDevice (Warning): Found no property matching SpellID "+ IntToString(nSpellID));
-        return TRUE;
-    }
-    
-    //Warlock's Decieve Item take 10 ability:
-    if(GetHasFeat(FEAT_DECIEVE_ITEM, oCaster) 
-        && (GetSkillRank(SKILL_USE_MAGIC_DEVICE, oCaster) + 10 > 25 + nInnateLevel))
-    {
         return TRUE;
     }
 
@@ -137,7 +133,7 @@ int X2_UMD()
     // We do not have a way to check for misshaps here but GetIsSkillSuccessful
     /// does not return the required information
     // -------------------------------------------------------------------------
-    if (GetIsSkillSuccessful(oCaster,nSkill, 25+ nInnateLevel))
+    if (GetPRCIsSkillSuccessful(oCaster,nSkill, 25+ nInnateLevel, (GetHasFeat(FEAT_DECEIVE_ITEM, oCaster) || GetHasFeat(FEAT_SKILL_MASTERY_ARTIFICER, oCaster)) ? 10 : -1))
     {
         return TRUE;
     }

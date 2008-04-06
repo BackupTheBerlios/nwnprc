@@ -505,6 +505,7 @@ int ArtificerPrereqCheck(object oPC, string sFile, int nLine, int nCost)
             sTemp = GetSubString(sTemp, nPosition + 1, nLength);
         }
     }
+    int bTake10 = GetHasFeat(FEAT_SKILL_MASTERY_ARTIFICER, oPC) ? 10 : -1;
     for(i = 0; i <= nDays; i++) //with extra last-ditch roll
     {
         if((nRace == -1) &&
@@ -519,15 +520,15 @@ int ArtificerPrereqCheck(object oPC, string sFile, int nLine, int nCost)
             )
             return TRUE;
 
-        if(nRace == -1)     nRace       = (GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, 25)) ? -1 : nRace;
-        if(nAlignGE == -1)  nAlignGE    = (GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, 30)) ? -1 : nAlignGE;
-        if(nAlignLC == -1)  nAlignLC    = (GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, 30)) ? -1 : nAlignLC;
-        if(nClass == -1)    nClass      = (GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, 21)) ? -1 : nClass;
-        if(nSpell1 == -1)   nSpell1     = (GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, nSpell1)) ? -1 : nSpell1;
-        if(nSpell2 == -1)   nSpell2     = (GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, nSpell2)) ? -1 : nSpell2;
-        if(nSpell3 == -1)   nSpell3     = (GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, nSpell3)) ? -1 : nSpell3;
-        if(nSpellOR1 == -1) nSpellOR1   = (GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, nSpellOR1)) ? -1 : nSpellOR1;
-        if(nSpellOR2 == -1) nSpellOR2   = (GetIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, nSpellOR2)) ? -1 : nSpellOR2;
+        if(nRace == -1)     nRace       = (GetPRCIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, 25, bTake10)) ? -1 : nRace;
+        if(nAlignGE == -1)  nAlignGE    = (GetPRCIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, 30, bTake10)) ? -1 : nAlignGE;
+        if(nAlignLC == -1)  nAlignLC    = (GetPRCIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, 30, bTake10)) ? -1 : nAlignLC;
+        if(nClass == -1)    nClass      = (GetPRCIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, 21, bTake10)) ? -1 : nClass;
+        if(nSpell1 == -1)   nSpell1     = (GetPRCIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, nSpell1, bTake10)) ? -1 : nSpell1;
+        if(nSpell2 == -1)   nSpell2     = (GetPRCIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, nSpell2, bTake10)) ? -1 : nSpell2;
+        if(nSpell3 == -1)   nSpell3     = (GetPRCIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, nSpell3, bTake10)) ? -1 : nSpell3;
+        if(nSpellOR1 == -1) nSpellOR1   = (GetPRCIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, nSpellOR1, bTake10)) ? -1 : nSpellOR1;
+        if(nSpellOR2 == -1) nSpellOR2   = (GetPRCIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, nSpellOR2, bTake10)) ? -1 : nSpellOR2;
     }
     if((nRace == -1) &&
         (nAlignGE == -1) &&

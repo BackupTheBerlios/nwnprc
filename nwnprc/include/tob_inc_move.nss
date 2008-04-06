@@ -251,21 +251,21 @@ int _ManeuverStateCheck(object oInitiator)
  * Stops if such condition occurs or something else destroys the token.
  *
  * @param oInitiator A creature initiating a maneuver
- * @param lTrueSpeaker The location where the initiator was when starting the maneuver
+ * @param lInitiator The location where the initiator was when starting the maneuver
  * @param oMoveToken    The maneuver token that controls the ongoing maneuver
  */
-void _ManeuverHB(object oInitiator, location lTrueSpeaker, object oMoveToken)
+void _ManeuverHB(object oInitiator, location lInitiator, object oMoveToken)
 {
     if(DEBUG) DoDebug("_ManeuverHB() running:\n"
                     + "oInitiator = " + DebugObject2Str(oInitiator) + "\n"
-                    + "lTrueSpeaker = " + DebugLocation2Str(lTrueSpeaker) + "\n"
+                    + "lInitiator = " + DebugLocation2Str(lInitiator) + "\n"
                     + "oMoveToken = " + DebugObject2Str(oMoveToken) + "\n"
-                    + "Distance between maneuver start location and current location: " + FloatToString(GetDistanceBetweenLocations(lTrueSpeaker, GetLocation(oInitiator))) + "\n"
+                    + "Distance between maneuver start location and current location: " + FloatToString(GetDistanceBetweenLocations(lInitiator, GetLocation(oInitiator))) + "\n"
                       );
     if(GetIsObjectValid(oMoveToken))
     {
         // Continuance check
-        if(GetDistanceBetweenLocations(lTrueSpeaker, GetLocation(oInitiator)) > 2.0f || // Allow some variance in the location to account for dodging and random fidgeting
+        if(GetDistanceBetweenLocations(lInitiator, GetLocation(oInitiator)) > 2.0f || // Allow some variance in the location to account for dodging and random fidgeting
            !_ManeuverStateCheck(oInitiator)                                       // Action and effect check
            )
         {
@@ -277,7 +277,7 @@ void _ManeuverHB(object oInitiator, location lTrueSpeaker, object oMoveToken)
         }
         // Schedule next HB
         else
-            DelayCommand(PRC_MANEVEUR_HB_DELAY, _ManeuverHB(oInitiator, lTrueSpeaker, oMoveToken));
+            DelayCommand(PRC_MANEVEUR_HB_DELAY, _ManeuverHB(oInitiator, lInitiator, oMoveToken));
     }
 }
 
@@ -419,6 +419,7 @@ void _StanceSpecificChecks(object oInitiator, int nMoveId)
 		nStanceToKeep = GetHasActiveStance(oInitiator);	
 	}	
 	
+	if(DEBUG) DoDebug("tob_inc_move: ClearStances");
 	// Can only have one stance active, except for a level 20+ Warblade
 	ClearStances(oInitiator, nStanceToKeep);
 }
@@ -474,18 +475,22 @@ struct maneuver EvaluateManeuver(object oInitiator, object oTarget)
     	move.bCanManeuver = FALSE;
     	FloatingTextStringOnCreature(GetManeuverName(move.nMoveId) + " is not a granted maneuver.", oInitiator, FALSE);
     }     
-    
+    if(DEBUG) DoDebug("move.bCanManeuver: " + IntToString(move.bCanManeuver));
     // Skip doing anything if something has prevented a successful maneuver already by this point
     if(move.bCanManeuver)
     {
 	// If you're this far in, you always succeed, there are very few checks.
 	// Deletes any active stances, and allows a Warblade 20 to have his two stances active.
 	if (GetIsStance(move.nMoveId)) _StanceSpecificChecks(oInitiator, move.nMoveId);
+	if(DEBUG) DoDebug("tob_inc_move: _StanceSpecificChecks");
 	// Expend the Maneuver until recovered
 	ExpendManeuver(move.oInitiator, nClass, move.nMoveId);
+	if(DEBUG) DoDebug("tob_inc_move: ExpendManeuver");
 	// Do Martial Lore data
 	IdentifyManeuver(move.oInitiator, move.nMoveId);
+	if(DEBUG) DoDebug("tob_inc_move: IdentifyManeuver");
 	IdentifyDiscipline(move.oInitiator);
+	if(DEBUG) DoDebug("tob_inc_move: IdentifyDiscipline");
 	
     }//end if
 
@@ -561,14 +566,17 @@ void UseManeuver(int nManeuver, int nClass, int nLevelOverride = 0)
 
     // Start the maneuver monitor HB
     ActionDoCommand(_ManeuverHB(oInitiator, GetLocation(oInitiator), oMoveToken));
+    if(DEBUG) DoDebug("Starting _ManeuverHB");
 
     // Assuming the spell isn't used as a swift action, fakecast for visuals
     if(nMoveDur > 0)
     {
         // Hack. Workaround of a bug with the fakecast actions. See function comment for details
         ActionDoCommand(_AssignUseManeuverFakeCastCommands(oInitiator, oTarget, lTarget, nSpellID));
+        if(DEBUG) DoDebug("Starting _AssignUseManeuverFakeCastCommands");
     }
 
+    if(DEBUG) DoDebug("Starting _UseManeuverAux");
     // Action queue the function that will cheatcast the actual maneuver
     DelayCommand(nMoveDur / 1000.0f, AssignCommand(oInitiator, ActionDoCommand(_UseManeuverAux(oInitiator, oMoveToken, nSpellID, oTarget, lTarget, nManeuver, nClass, nLevelOverride))));
 }

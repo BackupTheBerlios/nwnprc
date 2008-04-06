@@ -1038,6 +1038,9 @@ void ClearStances(object oInitiator, int nDontClearMove)
            RemoveEffectsFromSpell(oInitiator, MOVE_SD_STONEFOOT_STANCE);	
 	if (GetHasSpellEffect(MOVE_TC_BLOOD_WATER, oInitiator) && nDontClearMove != MOVE_TC_BLOOD_WATER)
            RemoveEffectsFromSpell(oInitiator, MOVE_TC_BLOOD_WATER);	
+           
+           if(DEBUG) DoDebug("tob_inc_tobfunc: ClearStances Part #1");
+           
 	if (GetHasSpellEffect(MOVE_TC_HUNTERS_SENSE, oInitiator) && nDontClearMove != MOVE_TC_HUNTERS_SENSE)
            RemoveEffectsFromSpell(oInitiator, MOVE_TC_HUNTERS_SENSE);	
 	if (GetHasSpellEffect(MOVE_WR_BOLSTERING_VOICE, oInitiator) && nDontClearMove != MOVE_WR_BOLSTERING_VOICE)
@@ -1060,6 +1063,9 @@ void ClearStances(object oInitiator, int nDontClearMove)
            RemoveEffectsFromSpell(oInitiator, MOVE_SH_DANCE_SPIDER);	
 	if (GetHasSpellEffect(MOVE_SD_CRUSHING_WEIGHT, oInitiator) && nDontClearMove != MOVE_SD_CRUSHING_WEIGHT)
            RemoveEffectsFromSpell(oInitiator, MOVE_SD_CRUSHING_WEIGHT);	
+           
+           if(DEBUG) DoDebug("tob_inc_tobfunc: ClearStances Part #2");
+       	
 	if (GetHasSpellEffect(MOVE_SD_ROOT_MOUNTAIN, oInitiator) && nDontClearMove != MOVE_SD_ROOT_MOUNTAIN)
            RemoveEffectsFromSpell(oInitiator, MOVE_SD_ROOT_MOUNTAIN);	
 	if (GetHasSpellEffect(MOVE_TC_LEAPING_DRAGON, oInitiator) && nDontClearMove != MOVE_TC_LEAPING_DRAGON)
@@ -1083,15 +1089,18 @@ void ClearStances(object oInitiator, int nDontClearMove)
 	if (GetHasSpellEffect(MOVE_DW_FIERY_ASSAULT, oInitiator) && nDontClearMove != MOVE_DW_FIERY_ASSAULT)
            RemoveEffectsFromSpell(oInitiator, MOVE_DW_FIERY_ASSAULT);	
 	if (GetHasSpellEffect(MOVE_DS_AURA_CHAOS, oInitiator) && nDontClearMove != MOVE_DS_AURA_CHAOS)
-    {
+    	{
            RemoveEffectsFromSpell(oInitiator, MOVE_DS_AURA_CHAOS);	
            DeleteLocalInt(oInitiator, "DSChaos");
-    }
+    	}
 	if (GetHasSpellEffect(MOVE_DS_PERFECT_ORDER, oInitiator) && nDontClearMove != MOVE_DS_PERFECT_ORDER)
 	{
            RemoveEffectsFromSpell(oInitiator, MOVE_DS_PERFECT_ORDER);
            DeleteLocalInt(oInitiator, "DSPerfectOrder");	
-    }
+    	}
+    	
+    	if(DEBUG) DoDebug("tob_inc_tobfunc: ClearStances Part #3");
+    	
 	if (GetHasSpellEffect(MOVE_DS_AURA_TRIUMPH, oInitiator) && nDontClearMove != MOVE_DS_AURA_TRIUMPH)
            RemoveEffectsFromSpell(oInitiator, MOVE_DS_AURA_TRIUMPH);	
 	if (GetHasSpellEffect(MOVE_DS_AURA_TYRANNY, oInitiator) && nDontClearMove != MOVE_DS_AURA_TYRANNY)
@@ -1115,7 +1124,9 @@ void ClearStances(object oInitiator, int nDontClearMove)
 	if (GetHasSpellEffect(MOVE_TC_WOLF_PACK_TACTICS, oInitiator) && nDontClearMove != MOVE_TC_WOLF_PACK_TACTICS)
            RemoveEffectsFromSpell(oInitiator, MOVE_TC_WOLF_PACK_TACTICS);	
 	if (GetHasSpellEffect(MOVE_WR_SWARM_TACTICS, oInitiator) && nDontClearMove != MOVE_WR_SWARM_TACTICS)  
-                RemoveEffectsFromSpell(oInitiator, MOVE_WR_SWARM_TACTICS);	
+                RemoveEffectsFromSpell(oInitiator, MOVE_WR_SWARM_TACTICS);
+                
+        if(DEBUG) DoDebug("tob_inc_tobfunc: ClearStances Part #4");
 }
 
 void MarkStanceActive(object oInitiator, int nStance)
@@ -1208,31 +1219,10 @@ int GetAbilityCheckBonus(object oPC, int nAbility)
 int GetIsStance(int nMoveId)
 {
         if(DEBUG) DoDebug("GetIsStance running");
-        // Somewhat silly and ineffecient hardcoding, but I'm feeling lazy.
-        // Checks three times since each has unique maneuvers.
-        string sManeuverFile = GetAMSDefinitionFileName(CLASS_TYPE_CRUSADER);
+        int nClass = GetInitiatingClass(OBJECT_SELF);
+        string sManeuverFile = GetAMSDefinitionFileName(nClass);
         int i, nManeuverLevel;
         string sMoveID;
-        for(i = 0; i < GetPRCSwitch(FILE_END_CLASS_POWER) ; i++)
-        {
-            // If looking for stances, skip maneuvers, else reverse
-            if(StringToInt(Get2DACache(sManeuverFile, "Stance", i)) == 0){
-                continue;
-            } 
-            sMoveID = Get2DACache(sManeuverFile, "RealSpellID", i);
-            if(StringToInt(sMoveID) == nMoveId) return TRUE;
-        }
-        sManeuverFile = GetAMSDefinitionFileName(CLASS_TYPE_SWORDSAGE);
-        for(i = 0; i < GetPRCSwitch(FILE_END_CLASS_POWER) ; i++)
-        {
-            // If looking for stances, skip maneuvers, else reverse
-            if(StringToInt(Get2DACache(sManeuverFile, "Stance", i)) == 0){
-                continue;
-            } 
-            sMoveID = Get2DACache(sManeuverFile, "RealSpellID", i);
-            if(StringToInt(sMoveID) == nMoveId) return TRUE;
-        }
-        sManeuverFile = GetAMSDefinitionFileName(CLASS_TYPE_WARBLADE);
         for(i = 0; i < GetPRCSwitch(FILE_END_CLASS_POWER) ; i++)
         {
             // If looking for stances, skip maneuvers, else reverse

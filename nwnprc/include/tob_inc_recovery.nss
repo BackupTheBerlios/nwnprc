@@ -352,7 +352,7 @@ void GrantManeuvers(object oPC, int nList)
 		{
 			// First nGranted maneuvers are marked as granted
 			// Rest are marked as withheld, no need to use list because only one class has this
-			if (i >= nGranted)
+			if (nGranted >= i)
 			{
 				SetLocalInt(oPC, "ManeuverGranted" + IntToString(i), nMoveId);
 				FloatingTextStringOnCreature(GetManeuverName(nMoveId) + " is granted", oPC, FALSE);

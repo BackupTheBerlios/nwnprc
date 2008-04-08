@@ -409,15 +409,16 @@ void GrantWithheldManeuver(object oPC, int nList)
 
 int GetIsManeuverGranted(object oPC, int nMoveId)
 {
+	if(DEBUG) DoDebug("tob_inc_recovery: GetIsManeuverGranted Start");
 	// Counting through the local ints to determine if this one is expended
-	int i = 1;
+	int i;
 	// 7 is the max possible for Crusader
-        for(i = 0; i < 7; i++)
+        for(i = 1; i < 7; i++)
 	{
 		// returns if the maneuver is expended
 		if (GetLocalInt(oPC, "ManeuverGranted" + IntToString(i)) == nMoveId)
 		{
-			if(DEBUG) DoDebug("tob_inc_recovery: GetIsManeuverGranted: " +IntToString(nMoveId));
+			if(DEBUG) DoDebug("tob_inc_recovery: GetIsManeuverGranted: " + IntToString(nMoveId));
 			return TRUE;
 		}
         }

@@ -37165,9 +37165,15 @@ undead target within 15 feet of the first target. If you make a successful range
 target, that target takes half of the damage rolled for the first target.
 </entry>
   <entry id="55050" lang="en" sex="m">Fire Shield (PnP): Blue</entry>
-  <entry id="55051" lang="en" sex="m">Mass Fire Shield: Blue
-</entry>
+  <entry id="55051" lang="en" sex="m">Mass Fire Shield: Blue</entry>
   <entry id="55052" lang="en" sex="m">Fire Shield (PnP): Red</entry>
+  <entry id="55053" lang="en" sex="m">Recover Maneuvers</entry>
+  <entry id="55054" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Swordsage, or Warblade level 1.
+Specifics: This feat allows you to select which maneuvers to recover for your blade magic using character. 
+If you are a Warblade, this will recover all expended maneuvers in one round, during which time you can attack normally, but may not use a maneuver.
+If you are a Swordsage, this will allow recovery of a single expended maneuver as a full-round action.
+Use: Selected.</entry>
   <entry id="55056" lang="en" sex="m">Buomman</entry>
   <entry id="55057" lang="en" sex="m">buomman</entry>
   <entry id="55058" lang="en" sex="m">Buommans</entry>

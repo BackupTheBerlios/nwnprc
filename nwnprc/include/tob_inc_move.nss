@@ -446,11 +446,12 @@ struct maneuver EvaluateManeuver(object oInitiator, object oTarget)
     move.oInitiator      = oInitiator;
     move.bCanManeuver    = TRUE; // Assume successfull maneuver by default
     move.nInitiatorLevel = nInitiatorLevel;
-    move.nMoveId        = PRCGetSpellId();
+    move.nMoveId         = PRCGetSpellId();
     
     // If the weapon is not appropriate, fail.
     if (!_GetIsManeuverWeaponAppropriate(move.oInitiator)) 
     {
+    	if(DEBUG) DoDebug("tob_inc_move: _GetIsManeuverWeaponAppropriate");
     	move.bCanManeuver = FALSE;
     	FloatingTextStringOnCreature("You do not have an appropriate weapon to initiate this maneuver.", oInitiator, FALSE); 
     }
@@ -458,24 +459,28 @@ struct maneuver EvaluateManeuver(object oInitiator, object oTarget)
     // Stances don't need to be readied
     if (!GetIsManeuverReadied(move.oInitiator, nClass, move.nMoveId) && !GetIsStance(move.nMoveId)) 
     {
+    	if(DEBUG) DoDebug("tob_inc_move: GetIsManeuverReadied");
     	move.bCanManeuver = FALSE;
     	FloatingTextStringOnCreature(GetManeuverName(move.nMoveId) + " is not readied.", oInitiator, FALSE);
     }    
     // If the maneuver is expended, fail.
     if (GetIsManeuverExpended(move.oInitiator, nClass, move.nMoveId)) 
     {
+    	if(DEBUG) DoDebug("tob_inc_move: GetIsManeuverExpended");
     	move.bCanManeuver = FALSE;
     	FloatingTextStringOnCreature(GetManeuverName(move.nMoveId) + " is already expended.", oInitiator, FALSE);
     }   
     // If the PC is in a Warblade recovery round, fail
     if (GetIsWarbladeRecoveryRound(oInitiator)) 
     {
+    	if(DEBUG) DoDebug("tob_inc_move: GetIsWarbladeRecoveryRound");
     	move.bCanManeuver = FALSE;
     	FloatingTextStringOnCreature(GetName(oInitiator) + " is recovering Warblade maneuvers.", oInitiator, FALSE);
     }  
     // Is the maneuver granted, and is the class a Crusader
     if (GetIsManeuverGranted(oInitiator, move.nMoveId) && nClass == CLASS_TYPE_CRUSADER) 
     {
+    	if(DEBUG) DoDebug("tob_inc_move: GetIsManeuverGranted");
     	move.bCanManeuver = FALSE;
     	FloatingTextStringOnCreature(GetManeuverName(move.nMoveId) + " is not a granted maneuver.", oInitiator, FALSE);
     }     

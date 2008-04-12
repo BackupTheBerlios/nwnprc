@@ -551,21 +551,23 @@ int _CheckPrereqsByDiscipline(object oPC, int nDiscipline, int nCount, int nClas
 void _RecursiveStanceCheck(object oPC, object oTestWP, int nMoveId, float fFeet = 10.0)
 {
     // Seeing if this works better
-    string sWPTag = "PRC_BMWP_" + GetName(oPC) + GetManeuverName(nMoveId);
+    string sWPTag = "PRC_BMWP_" + GetName(oPC) + IntToString(nMoveId);
     oTestWP = GetWaypointByTag(sWPTag);
     // Distance moved in the last round
-    float fDist = GetDistanceBetween(oPC, oTestWP);
+    float fDist = FeetToMeters(GetDistanceBetween(oPC, oTestWP));
     // Giving them a little extra distance because of NWN's dance of death
     float fCheck = FeetToMeters(fFeet);
     if(DEBUG) DoDebug("_RecursiveStanceCheck: fDist: " + FloatToString(fDist));
     if(DEBUG) DoDebug("_RecursiveStanceCheck: fCheck: " + FloatToString(fCheck));
+    if(DEBUG) DoDebug("_RecursiveStanceCheck: nMoveId: " + IntToString(nMoveId));
     
 
     // Moved the distance
     if (fDist >= fCheck)
     {
+    	if(DEBUG) DoDebug("_RecursiveStanceCheck: fDist > fCheck");
         // Stances that clean up
-        if (nMoveId = MOVE_SD_STONEFOOT_STANCE) 
+        if (nMoveId == MOVE_SD_STONEFOOT_STANCE) 
         {
                 RemoveEffectsFromSpell(oPC, nMoveId);
                 if(DEBUG) DoDebug("_RecursiveStanceCheck: Moved too far, cancelling stances.");
@@ -573,7 +575,7 @@ void _RecursiveStanceCheck(object oPC, object oTestWP, int nMoveId, float fFeet 
                 DestroyObject(oTestWP);
         }
         // Stances that clean up
-        else if (nMoveId = MOVE_MOUNTAIN_FORTRESS) 
+        else if (nMoveId == MOVE_MOUNTAIN_FORTRESS) 
         {
                 RemoveEffectsFromSpell(oPC, nMoveId);
                 if(DEBUG) DoDebug("_RecursiveStanceCheck: Moved too far, cancelling stances.");
@@ -581,14 +583,14 @@ void _RecursiveStanceCheck(object oPC, object oTestWP, int nMoveId, float fFeet 
                 DestroyObject(oTestWP);
         }        
         // Stances that clean up
-        else if (nMoveId = MOVE_SD_ROOT_MOUNTAIN) 
+        else if (nMoveId == MOVE_SD_ROOT_MOUNTAIN) 
         {
                 RemoveEffectsFromSpell(oPC, nMoveId);
                 if(DEBUG) DoDebug("_RecursiveStanceCheck: Moved too far, cancelling stances.");
                 // Clean up the test WP as well
                 DestroyObject(oTestWP);
         }        
-        else if (nMoveId = MOVE_SH_CHILD_SHADOW)
+        else if (nMoveId == MOVE_SH_CHILD_SHADOW)
         {
                 ApplyEffectToObject(DURATION_TYPE_TEMPORARY, SupernaturalEffect(EffectConcealment(20)), oPC, 6.0);
                 if(DEBUG) DoDebug("_RecursiveStanceCheck: Applying bonuses.");
@@ -597,7 +599,7 @@ void _RecursiveStanceCheck(object oPC, object oTestWP, int nMoveId, float fFeet 
                 // Create waypoint for the movement for next round
                 CreateObject(OBJECT_TYPE_WAYPOINT, "nw_waypoint001", GetLocation(oPC), FALSE, sWPTag);          
         }
-        else if (nMoveId = MOVE_IH_ABSOLUTE_STEEL)
+        else if (nMoveId == MOVE_IH_ABSOLUTE_STEEL)
         {
                 ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(EffectACIncrease(2)), oPC, 6.0);
                 if(DEBUG) DoDebug("_RecursiveStanceCheck: Applying bonuses.");
@@ -607,7 +609,7 @@ void _RecursiveStanceCheck(object oPC, object oTestWP, int nMoveId, float fFeet 
                 CreateObject(OBJECT_TYPE_WAYPOINT, "nw_waypoint001", GetLocation(oPC), FALSE, sWPTag);          
         }
         
-        else if (nMoveId = MOVE_SD_GIANTS_STANCE)
+        else if (nMoveId == MOVE_SD_GIANTS_STANCE)
         {
                 DeleteLocalInt(oPC, "DWGiantsStance");
                 DeleteLocalInt(oPC, "PRC_Power_Expansion_SizeIncrease");
@@ -615,7 +617,7 @@ void _RecursiveStanceCheck(object oPC, object oTestWP, int nMoveId, float fFeet 
                 DestroyObject(oTestWP);        
         }
         
-        else if (nMoveId = MOVE_IH_DANCING_BLADE_FORM)
+        else if (nMoveId == MOVE_IH_DANCING_BLADE_FORM)
         {
                 DeleteLocalInt(oPC, "DWDancingBladeForm");
                 DestroyObject(oTestWP);
@@ -628,6 +630,8 @@ void _RecursiveStanceCheck(object oPC, object oTestWP, int nMoveId, float fFeet 
         DelayCommand(6.0, _RecursiveStanceCheck(oPC, oTestWP, nMoveId));
         if(DEBUG) DoDebug("_RecursiveStanceCheck: DelayCommand(6.0, _RecursiveStanceCheck(oPC, oTestWP, nMoveId)).");
     }
+    
+    if(DEBUG) DoDebug("_RecursiveStanceCheck: Exiting");
 }
 
 void _DoBullRushKnockBack(object oTarget, object oPC, float fFeet)
@@ -1187,7 +1191,7 @@ effect VersusSizeEffect(object oInitiator, effect eEffect, int nSize)
 void InitiatorMovementCheck(object oPC, int nMoveId, float fFeet = 10.0)
 {
     // Check to see if the WP is valid
-    string sWPTag = "PRC_BMWP_" + GetName(oPC) + GetManeuverName(nMoveId);
+    string sWPTag = "PRC_BMWP_" + GetName(oPC) + IntToString(nMoveId);
     object oTestWP = GetWaypointByTag(sWPTag);
     if (!GetIsObjectValid(oTestWP))
     {
@@ -1269,17 +1273,20 @@ object GetCrusaderHealTarget(object oPC, float fDistance)
         object oReturn;
         //Get the first target in the radius around the caster
         object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(fDistance), GetLocation(oPC));
-        while(GetIsObjectValid(oTarget) && GetIsPC(oTarget))
+        while(GetIsObjectValid(oTarget))
         {
-                if(DEBUG) DoDebug("GetCrusaderHealTarget: oTarget " + GetName(oTarget));
-                nCurrentHP = GetCurrentHitPoints(oTarget);
-                nMaxHP = GetMaxHitPoints(oTarget);
-                // Check HP vs current biggest loss
-                // Set the target
-                if ((nMaxHP - nCurrentHP) > nCurrentMax)
-                {
-                        nCurrentMax = nMaxHP - nCurrentHP;
-                        oReturn = oTarget;
+		if (GetIsPC(oTarget) && !GetIsEnemy(oTarget, oPC))
+		{
+                	if(DEBUG) DoDebug("GetCrusaderHealTarget: oTarget " + GetName(oTarget));
+                	nCurrentHP = GetCurrentHitPoints(oTarget);
+                	nMaxHP = GetMaxHitPoints(oTarget);
+                	// Check HP vs current biggest loss
+                	// Set the target
+                	if ((nMaxHP - nCurrentHP) > nCurrentMax)
+                	{
+                	        nCurrentMax = nMaxHP - nCurrentHP;
+                	        oReturn = oTarget;
+                	}
                 }
                 //Get the next target in the specified area around the caster
                 oTarget = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(fDistance), GetLocation(oPC));

@@ -341,10 +341,13 @@ void GrantManeuvers(object oPC, int nList)
 	// Counting through the local ints to determine how many are readied
 	int i;
         string sPsiFile = GetAMSKnownFileName(nList);
+        // Only crusader level matters for this
+        int nLevel = GetLevelByClass(CLASS_TYPE_CRUSADER, oPC);
 	// 2das start at Row 0
-	int nGranted = StringToInt(Get2DACache(sPsiFile, "ManeuversGranted", nList-1));	
+	int nGranted = StringToInt(Get2DACache(sPsiFile, "ManeuversGranted", nLevel-1));
+	int nMaxReadied = StringToInt(Get2DACache(sPsiFile, "ManeuversReadied", nLevel-1));
 	// is the max possible for a Crusader
-        for(i = 0; i < 7; i++)
+        for(i = 1; i < nMaxReadied; i++)
 	{
 		// If the value is readied, mark it and store it
 		int nMoveId = GetLocalInt(oPC, "ManeuverReadied" + IntToString(nList) + IntToString(i));
@@ -457,30 +460,39 @@ void DoCrusaderGranting(object oPC, int nTrip)
 	if(DEBUG) DoDebug("DoCrusaderGranting(): Entered Function on Round #" + IntToString(nTrip));
 	// First round of combat, no granting.
 	// Last round of the 5, clear and recover/grant maneuvers
+	if(DEBUG) DoDebug("DoCrusaderGranting(): Above Trip 5");
 	if (nTrip == 5) // Granted maneuvers empty, restart
 	{
-		if(DEBUG) DoDebug("BeginCrusaderGranting(): RecoverExpendedManeuvers");
+		if(DEBUG) DoDebug("DoCrusaderGranting(): RecoverExpendedManeuvers");
 		RecoverExpendedManeuvers(oPC, MANEUVER_LIST_CRUSADER);
 	}
+	if(DEBUG) DoDebug("DoCrusaderGranting(): Above Trip 2-4");
 	else if (nTrip > 1)
 	{
 		// Rounds 2-4, grant a single maneuver
-		if(DEBUG) DoDebug("BeginCrusaderGranting(): GrantWithheldManeuver");
+		if(DEBUG) DoDebug("DoCrusaderGranting(): GrantWithheldManeuver");
 		GrantWithheldManeuver(oPC, MANEUVER_LIST_CRUSADER);
 	}
+	if(DEBUG) DoDebug("DoCrusaderGranting(): Above Increment");
 	// Increment the round counter
-	nTrip += 1;
+	nTrip = nTrip + 1;
+	if(DEBUG) DoDebug("DoCrusaderGranting(): In Trip");
 	// If it's greater than round 5, restart
 	if (nTrip > 5) nTrip = 1;
 	
+	if(DEBUG) DoDebug("DoCrusaderGranting(): Above Recursive");
 	// If in combat, keep the loop going
-	if (GetIsInCombat(oPC)) DelayCommand(6.0, DoCrusaderGranting(oPC, nTrip)); // Increment counter
-	// Recover and stop loop otherwise.
-	else
+	if (GetIsInCombat(oPC)) 
 	{
-		if(DEBUG) DoDebug("BeginCrusaderGranting(): Out of Combat Maneuver Recovery");
+		if(DEBUG) DoDebug("DoCrusaderGranting(): In Combat");
+		DelayCommand(6.0, DoCrusaderGranting(oPC, nTrip)); // Increment counter
+	}
+	else // Recover and stop loop otherwise.
+	{
+		if(DEBUG) DoDebug("DoCrusaderGranting(): Out of Combat Maneuver Recovery");
 		RecoverExpendedManeuvers(oPC, MANEUVER_LIST_CRUSADER);
 		// Resent Int for next time out
 		DeleteLocalInt(oPC, "CrusaderGrantLoop");
 	}
+	if(DEBUG) DoDebug("DoCrusaderGranting(): Ending");
 }

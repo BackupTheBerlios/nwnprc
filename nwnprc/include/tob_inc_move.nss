@@ -176,6 +176,7 @@ object _GetManeuverToken(object oInitiator)
 void _DestroyManeuverToken(object oInitiator, object oMoveToken)
 {
     DestroyObject(oMoveToken);
+    if(DEBUG) DoDebug("_DestroyManeuverToken(): Destroying Token");
     SetLocalObject(oInitiator, PRC_MANEVEUR_TOKEN_VAR, oInitiator);
 }
 
@@ -493,7 +494,7 @@ struct maneuver EvaluateManeuver(object oInitiator, object oTarget)
 	if (GetIsStance(move.nMoveId)) _StanceSpecificChecks(oInitiator, move.nMoveId);
 	if(DEBUG) DoDebug("tob_inc_move: _StanceSpecificChecks");
 	// Expend the Maneuver until recovered
-	ExpendManeuver(move.oInitiator, nClass, move.nMoveId);
+	if (!GetIsStance(move.nMoveId)) ExpendManeuver(move.oInitiator, nClass, move.nMoveId);
 	if(DEBUG) DoDebug("tob_inc_move: ExpendManeuver");
 	// Do Martial Lore data
 	IdentifyManeuver(move.oInitiator, move.nMoveId);
@@ -520,8 +521,6 @@ void UseManeuver(int nManeuver, int nClass, int nLevelOverride = 0)
     location lTarget   = PRCGetSpellTargetLocation();
     int nSpellID       = PRCGetSpellId();
     int nMoveDur       = StringToInt(Get2DACache("spells", "ConjTime", nManeuver)) + StringToInt(Get2DACache("spells", "CastTime", nManeuver));
-    // This is a test case to speed up the impact of the melee attacks, as PerformAttackRound takes the full 6 second.
-    //int nMoveDur       = 0;
 
     // Normally swift action maneuvers check
     if((Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "SWIFT_ACTION" ||

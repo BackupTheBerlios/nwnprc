@@ -1,0 +1,15 @@
+2DA V2.0
+
+     LABEL                          ReqType     ReqParam1          ReqParam2   
+0    Cloak_of_Elvenkind             RESULT      nw_maarcl057       ****
+1    CasterLevel3rd                 CASTERLVL   3                  ****        
+2    Craft_Wondrous_Item_Feat       FEAT        2925               ****        
+3    Invisibility                   SPELL       90                 ****        
+4    Elf                            RACE        1                  ****        
+5    Aquatic_Elf                    RACE        161                ****        
+6    Avariel                        RACE        162                ****        
+7    Drow_Female                    RACE        163                ****        
+8    Drow_Male                      RACE        164                ****        
+9    Sun_Elf                        RACE        166                ****        
+10   Wild_Elf                       RACE        167                ****        
+11   Wood_Elf                       RACE        168                ****        

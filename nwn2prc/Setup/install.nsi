@@ -9,15 +9,15 @@
 !endif
 
 ; Define your application name
-!define APPNAME "PRC Pack"
-!define APPNAMEANDVERSION "PRC Pack ${PRCINSTALLVERSION}"
+!define APPNAME "PRG Pack"
+!define APPNAMEANDVERSION "PRG Pack ${PRCINSTALLVERSION}"
 
 ; Enable LZMA compression for the smallest EXE.
 SetCompressor lzma
 
 ; Main Install settings
 Name "${APPNAMEANDVERSION}"
-InstallDir "$PROGRAMFILES\PRC Pack"
+InstallDir "$PROGRAMFILES\PRG Pack"
 InstallDirRegKey HKLM "Software\${APPNAME}" ""
 OutFile "..\CompiledResources\Setup${PRCVERSION}.exe"
 Var NWNVERSION
@@ -29,8 +29,8 @@ Var NWNMINVERSION
 !include "MUI.nsh"
 
 !define MUI_ABORTWARNING
-!define MUI_FINISHPAGE_TEXT "The PRC Pack is now installed.  You can now run the PRC installer to add the PRC pack to modules."
-!define MUI_FINISHPAGE_RUN_TEXT "Install the PRC pack in modules now"
+!define MUI_FINISHPAGE_TEXT "The PRG Pack is now installed.  You can now run the PRG installer to add the PRG pack to modules."
+!define MUI_FINISHPAGE_RUN_TEXT "Install the PRG pack in modules now"
 !define MUI_FINISHPAGE_RUN "$NWNPRCPATH\PRCPack\PRCModuleUpdater.exe"
 !define MUI_FINISHPAGE_RUN_PARAMETERS "$\"PRC Pack.HIF$\""
 
@@ -47,7 +47,7 @@ Var NWNMINVERSION
 !insertmacro MUI_LANGUAGE "English"
 !insertmacro MUI_RESERVEFILE_LANGDLL
 
-Section "PRC Pack" Section1
+Section "PRG Pack" Section1
 
 	; Set Section properties
 	SetOverwrite on
@@ -118,14 +118,14 @@ Section Uninstall
 	DeleteRegKey HKLM "SOFTWARE\${APPNAME}"
 
 	; Delete self
-	Delete "$NWNPRCPATH\PRCPack\uninstall.exe"
+	Delete "$NWNPRCPATH\PRGPack\uninstall.exe"
 
 	; Delete Shortcuts
 	Delete "$DESKTOP\PRC Module Updater.lnk"
-	Delete "$SMPROGRAMS\PRC Pack\PRC Module Updater - Install PRC"
-	Delete "$SMPROGRAMS\PRC Pack\PRC Module Updater.lnk"
-	Delete "$SMPROGRAMS\PRC Pack\Uninstall.lnk"
-	Delete "$SMPROGRAMS\PRC Pack\Read Me.lnk"
+	Delete "$SMPROGRAMS\PRG Pack\PRC Module Updater - Install PRC"
+	Delete "$SMPROGRAMS\PRG Pack\PRC Module Updater.lnk"
+	Delete "$SMPROGRAMS\PRG Pack\Uninstall.lnk"
+	Delete "$SMPROGRAMS\PRG Pack\Read Me.lnk"
 
 	; Clean up PRC Pack
 	Delete "$NWNPATH\hak\PRC Pack.hif"
@@ -148,12 +148,12 @@ Section Uninstall
 	Delete "$NWNPATH\database\PRC_DATA.CDX"
 	Delete "$NWNPATH\database\PRC_DATA.DBF"
 	Delete "$NWNPATH\database\PRC_DATA.FPT"
-	Delete "$NWNPRCPATH\PRCPack\PRCModuleUpdater.exe"
+	Delete "$NWNPRCPATH\PRGPack\PRCModuleUpdater.exe"
 
 
 	; Remove remaining directories
-	RMDir "$SMPROGRAMS\PRC Pack"
-	RMDir "$NWNPRCPATH\PRCPack\"
+	RMDir "$SMPROGRAMS\PRG Pack"
+	RMDir "$NWNPRCPATH\PRGPack\"
 
 SectionEnd
 
@@ -163,29 +163,29 @@ Function .onInit
 	; Minimum version of NWN that the installer requires, just set
 	; the string to the part after the 1., i.e. for 1.62 set the
 	; string to "62"
-	StrCpy $NWNMINVERSION "66"
+	StrCpy $NWNMINVERSION "12"
 
 	; Read the NWN intall path and installed version from the registry.  If we get any
 	; errors assume NWN is not installed correctly.
-	ReadRegStr $NWNVERSION HKEY_LOCAL_MACHINE "SOFTWARE\BioWare\NWN\Neverwinter" "Version"
-	ReadRegStr $NWNPATH HKEY_LOCAL_MACHINE "SOFTWARE\BioWare\NWN\Neverwinter" "Location"
+	ReadRegStr $NWNVERSION HKEY_LOCAL_MACHINE "SOFTWARE\Obsidian\NWN 2\Neverwinter" "Version"
+	ReadRegStr $NWNPATH HKEY_LOCAL_MACHINE "SOFTWARE\Obsidian\NWN 2\Neverwinter" "Location"
 	IfErrors noNWN
 
-	; Validate that NWNMINVERSION or later of NWN is installed.
+	; Validate that NWNMINVERSION or later of NWN2 is installed.
 	Push $0
 	StrCpy $0 $NWNVERSION 2 2
 	IntCmp $0 $NWNMINVERSION okNWN badNWN
 	Pop $0
 
 	okNWN:
-	; Validate that XP1 and XP2 are installed
+	; Validate that NX1 is installed
 	Push $0
 	ClearErrors
-	ReadRegStr $0 HKEY_LOCAL_MACHINE "SOFTWARE\BioWare\NWN\Undrentide" "GUID"
+	ReadRegStr $0 HKEY_LOCAL_MACHINE "SOFTWARE\Obsidian\NWN 2\Mask of the Betrayer" "GUID"
 	IfErrors noXP
-	ClearErrors
-	ReadRegStr $0 HKEY_LOCAL_MACHINE "SOFTWARE\BioWare\NWN\Underdark" "GUID"
-	IfErrors noXP
+	;ClearErrors
+	;ReadRegStr $0 HKEY_LOCAL_MACHINE "SOFTWARE\BioWare\NWN\Underdark" "GUID"
+	;IfErrors noXP
 	Pop $0
 
 	; Get the parent directory of the $NWNPATH to use for the prc pack, since
@@ -209,15 +209,15 @@ Function .onInit
 	Abort
 
 	badNWN:
-	MessageBox MB_OK|MB_ICONEXCLAMATION "The PRC pack requires at least version 1.66 of NWN and HotU.  You must upgrade NWN before installing the PRC pack."
+	MessageBox MB_OK|MB_ICONEXCLAMATION "The PRG pack requires at least version 1.12 of NWN2 and Mask of the Betrayer.  You must upgrade NWN2 before installing the PRG pack."
 	Abort
 
 	noXP:
-	MessageBox MB_OK|MB_ICONEXCLAMATION "The PRC pack requires Shadows of Undrentide and Hordes of the Underdark to be installed.  You must upgrade NWN before installing the PRC pack.  If you installed the expansions by copying the files directly and did not install them using Bioware's setup applications, then you must reinstall using Bioware's setup applications."
+	MessageBox MB_OK|MB_ICONEXCLAMATION "The PRG pack requires Mask of the Betrayer to be installed.  You must upgrade NWN2 before installing the PRC pack.  If you installed the expansions by copying the files directly and did not install them using Obsidian's setup applications, then you must reinstall using Obsidian's setup applications."
 	Abort
 
 	noNWN:
-	MessageBox MB_OK|MB_ICONEXCLAMATION "Neverwinter Nights is not installed on your PC.  The PRC pack cannot be installed until Neverwinter Nights is installed."
+	MessageBox MB_OK|MB_ICONEXCLAMATION "Neverwinter Nights 2 is not installed on your PC.  The PRC pack cannot be installed until Neverwinter Nights 2 is installed."
 	Abort
 FunctionEnd
 

@@ -1,0 +1,6 @@
+2DA V2.0
+
+      LABEL                         ReqType     ReqParam1        ReqParam2   
+0     Warhammer_+4                  RESULT      x0_wblmhw001     ****        
+1     Caster_Level_12th             CASTERLVL   12               ****        
+2     CraftArmsandArmor             FEAT        2926             ****           

@@ -306,6 +306,8 @@ void main()
         DeleteLocalInt(oPC, "NullPsionicsField");
         RestoreObjects(oPC);
     }
+    
+    ExecuteScript("tob_evnt_recover", oPC);
 
     // Execute scripts hooked to this event for the player triggering it
     //How can this work? The PC isnt a valid object before this. - Primogenitor

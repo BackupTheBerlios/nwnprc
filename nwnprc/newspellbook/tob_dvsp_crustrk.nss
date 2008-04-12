@@ -42,21 +42,27 @@ void main()
     object oInitiator    = OBJECT_SELF;
     object oTarget       = PRCGetSpellTargetObject();
     struct maneuver move = EvaluateManeuver(oInitiator, oTarget);
+    if(DEBUG) DoDebug("tob_dvsp_crustrk: EvaluateManeuver");
 
     if(move.bCanManeuver)
     {
+    	if(DEBUG) DoDebug("tob_dvsp_crustrk: Can Maneuver");
     	effect eNone;
 	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Crusader's Strike Hit", "Crusader's Strike Miss");
 	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
     	{
+    		if(DEBUG) DoDebug("tob_dvsp_crustrk: Attack Hit");
     		if (GetAlignmentGoodEvil(oInitiator) != GetAlignmentGoodEvil(oTarget) || 
     		    GetAlignmentLawChaos(oInitiator) != GetAlignmentLawChaos(oTarget))
     		{
+    			if(DEBUG) DoDebug("tob_dvsp_crustrk: Alignment Different");
     			int nHeal = d6() + min(move.nInitiatorLevel, 5);
     			object oHeal = GetCrusaderHealTarget(oTarget, 10.0);
+    			if(DEBUG) DoDebug("tob_dvsp_crustrk: GetCrusaderHealTarget");
 			SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(nHeal), oHeal);
 			SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_HEALING_L_LAW), oHeal);
         	}
         }
     }
+    if(DEBUG) DoDebug("tob_dvsp_crustrk: Exit");
 }

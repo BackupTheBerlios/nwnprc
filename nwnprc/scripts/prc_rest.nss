@@ -57,6 +57,7 @@ void RestFinished(object oPC)
     if(DEBUG) DoDebug("prc_rest: Rest finished for for " + DebugObject2Str(oPC));
     //Restore Power Points for Psionics
     ExecuteScript("prc_psi_ppoints", oPC);
+    ExecuteScript("tob_evnt_recover", oPC);
     BonusDomainRest(oPC);
     ClearLawLocalVars(oPC);
 
@@ -183,7 +184,7 @@ void RestFinished(object oPC)
         //school for each spell level
         //also need to remove spells of prohibited schools
     }
-
+    
     //for Touch of Vitality point resetting
     ResetTouchOfVitality(oPC);
 

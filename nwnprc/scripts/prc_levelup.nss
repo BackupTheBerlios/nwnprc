@@ -54,6 +54,7 @@ void main()
 
     // These scripts fire events that should only happen on levelup
     ExecuteScript("prc_vassal_treas", oPC);
+    ExecuteScript("tob_evnt_recover", oPC);
 
     // Execute scripts hooked to this event for the player triggering it
     ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYERLEVELUP);

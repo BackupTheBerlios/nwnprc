@@ -1200,7 +1200,8 @@ void InitiatorMovementCheck(object oPC, int nMoveId, float fFeet = 10.0)
         if(DEBUG) DoDebug("InitiatorMovementCheck: WP for " + DebugObject2Str(oPC) + " didn't exist, creating. Tag: " + sWPTag);
     }
     // Start the recursive HB check for movement
-    _RecursiveStanceCheck(oPC, oTestWP, nMoveId, fFeet);
+    // Seeing if this solves some of the issues with it
+    DelayCommand(2.0, _RecursiveStanceCheck(oPC, oTestWP, nMoveId, fFeet));
 }
 
 int GetAbilityCheckBonus(object oPC, int nAbility)
@@ -1270,11 +1271,14 @@ object GetCrusaderHealTarget(object oPC, float fDistance)
         int nMaxHP = 0;
         int nCurrentHP = 0;
         int nCurrentMax = 0;
+        if(DEBUG) DoDebug("GetCrusaderHealTarget: HP to 0");
         object oReturn;
         //Get the first target in the radius around the caster
         object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(fDistance), GetLocation(oPC));
+        if(DEBUG) DoDebug("GetCrusaderHealTarget: First Target");
         while(GetIsObjectValid(oTarget))
         {
+        	if(DEBUG) DoDebug("GetCrusaderHealTarget: Valid");
 		if (GetIsPC(oTarget) && !GetIsEnemy(oTarget, oPC))
 		{
                 	if(DEBUG) DoDebug("GetCrusaderHealTarget: oTarget " + GetName(oTarget));
@@ -1284,10 +1288,12 @@ object GetCrusaderHealTarget(object oPC, float fDistance)
                 	// Set the target
                 	if ((nMaxHP - nCurrentHP) > nCurrentMax)
                 	{
+                		if(DEBUG) DoDebug("GetCrusaderHealTarget: New oReturn");
                 	        nCurrentMax = nMaxHP - nCurrentHP;
                 	        oReturn = oTarget;
                 	}
                 }
+                if(DEBUG) DoDebug("GetCrusaderHealTarget: Next Target");
                 //Get the next target in the specified area around the caster
                 oTarget = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(fDistance), GetLocation(oPC));
         }

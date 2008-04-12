@@ -5454,7 +5454,7 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
                 
                 // Normal rolling
                 iWeaponDamage += iDiceRoll;
-                if (DEBUG) DoDebug("Ending Aura of Chaos");
+                if (DEBUG) DoDebug("Starting Aura of Chaos");
                 // Aura of Chaos rerolls and adds if the dice rolled is max.
                 if (GetLocalInt(oAttacker, "DSChaos")) 
                 {

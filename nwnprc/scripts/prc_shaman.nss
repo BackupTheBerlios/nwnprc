@@ -6,10 +6,10 @@ void SpiritsFavour(object oPC, int nClass)
        	if (nClass >= 5)
        	{
        		int nSave = GetAbilityModifier(ABILITY_CHARISMA, oPC);
-        	effect eSave = EffectSavingThrowIncrease(SAVING_THROW_FORT, nSave);
-        	       eSave = EffectLinkEffects(eSave, EffectSavingThrowIncrease(SAVING_THROW_WILL, nSave));
-        	       eSave = EffectLinkEffects(eSave, EffectSavingThrowIncrease(SAVING_THROW_REFLEX, nSave));
-        	ApplyEffectToObject(DURATION_TYPE_PERMANENT, ExtraordinaryEffect(eSave), oPC);
+            object oSkin = GetPCSkin(oPC);
+            SetCompositeBonus(oSkin,"SpiritsFavourRef",nSave,ITEM_PROPERTY_SAVING_THROW_BONUS_SPECIFIC,IP_CONST_SAVEBASETYPE_REFLEX);
+            SetCompositeBonus(oSkin,"SpiritsFavourFort",nSave,ITEM_PROPERTY_SAVING_THROW_BONUS_SPECIFIC,IP_CONST_SAVEBASETYPE_FORTITUDE);
+            SetCompositeBonus(oSkin,"SpiritsFavourWill",nSave,ITEM_PROPERTY_SAVING_THROW_BONUS_SPECIFIC,IP_CONST_SAVEBASETYPE_WILL);
         }
 }
 

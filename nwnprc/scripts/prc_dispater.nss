@@ -56,15 +56,13 @@ void Device_Lore(object oPC ,object oSkin ,int iLevel)
 // Removes any temporary item properties on the weapon when unequipped.
 void RemoveIronPower(object oPC, object oWeap)
 {
-      if (GetLocalInt(oWeap, "DispIronPowerD"))
-      {
-         // Set the damage bonus from the weapon enhancement to 0
-         SetCompositeDamageBonusT(oWeap, "IPEnh", 0);
-         // Set the damage bonus from Iron Power to 0
-         SetCompositeDamageBonusT(oWeap, "DispIronPowerD", 0);
-         // Remove all temporary keen properties (sometimes they pile up, thus we'll go with 99)
-         RemoveSpecificProperty(oWeap, ITEM_PROPERTY_KEEN,-1,-1, 99,"",-1,DURATION_TYPE_TEMPORARY);
-      }
+    if (GetLocalInt(oWeap, "DispIronPowerD"))
+    {
+        SetCompositeDamageBonusT(oWeap, "DispIronPowerD", 0);
+        SetCompositeBonusT(oWeap, "DispIronPowerA", 0, ITEM_PROPERTY_ATTACK_BONUS);
+        // Remove all temporary keen properties (sometimes they pile up, thus we'll go with 99)
+        RemoveSpecificProperty(oWeap, ITEM_PROPERTY_KEEN,-1,-1, 99,"",-1,DURATION_TYPE_TEMPORARY);
+    }
 }
 
 // Adds damage property and keenness
@@ -79,36 +77,22 @@ void IronPower(object oPC, object oWeap, int iBonusType)
     if (GetLevelByClass(CLASS_TYPE_DISPATER, oPC) >= 8)
             iBonus = 2;
 
-      //Stack with Enchantment on Weapon
-      //int iEnch = 0;
-      //iBonus = iBonus + iEnch;
+    // Before we start we want to remove all the properties.  If the
+    // weapon/character qualifies we'll add them again.
+    RemoveIronPower(oPC, oWeap);
 
-   // This string identifies that each hand has its own attack bonus.
-   string sIronPower = "DispIronPowerA"+IntToString(iBonusType);
+    if (IsItemMetal(oWeap) == 2 && iBonus)
+    {
+        int nEnhance = max(IPGetWeaponEnhancementBonus(oWeap), IPGetWeaponEnhancementBonus(oWeap, ITEM_PROPERTY_ATTACK_BONUS));
+        //Fix up bonuses
+        SetCompositeBonusT(oWeap, "BaseAttack", nEnhance, ITEM_PROPERTY_ATTACK_BONUS);
+        SetCompositeBonusT(oWeap, "DispIronPowerA", iBonus, ITEM_PROPERTY_ATTACK_BONUS);
+        SetCompositeDamageBonusT(oWeap, "DispIronPowerD", nEnhance);
+        SetCompositeDamageBonusT(oWeap, "DispIronPowerD", iBonus);
 
-   // Before we start we want to remove all the properties.  If the
-   // weapon/character qualifies we'll add them again.
-   RemoveIronPower(oPC, oWeap);
-
-   if (IsItemMetal(oWeap) == 2 && iBonus)
-   {
-         // (See inc_item_props.nss)
-         // If a weapon does piercing and slashing, we do not want to add the damage.
-         // in the baseitems.2da, if a weapon's type is "4", it does piercing AND slashing.
-         if (StringToInt(Get2DACache("baseitems","WeaponType",GetBaseItemType(oWeap))) != 4)
-         {
-             IPEnhancementBonusToDamageBonus(oWeap);
-         }
-
-         // Add the +1 or +2 to the weapon's damage rolls
-         SetCompositeDamageBonusT(oWeap, "DispIronPowerD", iBonus);
-
-         // Make the weapon keen
-         AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyKeen(), oWeap,9999.0);
-
-         // Add a hand-specific attack roll bonus using effects (so that it doesn't go through DR)
-        // SetCompositeAttackBonus(oPC, sIronPower, iBonus, iBonusType);
-   }
+        // Make the weapon keen
+        AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyKeen(), oWeap,9999.0);
+    }
 }
 
 void main()

@@ -11,6 +11,20 @@ void main()
     object oCreature;
     int nHD = GetHitDice(OBJECT_SELF);
 
+    if (!GetHasFeat(FEAT_BARD_SONGS, OBJECT_SELF))
+    {
+        FloatingTextStrRefOnCreature(85587,OBJECT_SELF); // no more bardsong uses left
+        return;
+    }
+
+    DecrementRemainingFeatUses(OBJECT_SELF, FEAT_BARD_SONGS);
+
+    if (GetHasEffect(EFFECT_TYPE_SILENCE,OBJECT_SELF))
+    {
+        FloatingTextStrRefOnCreature(85764,OBJECT_SELF); // not useable when silenced
+        return;
+    }
+
     if (nHD >= 34)        sSummon = "prc_sum_dbl";
     else if (nHD >= 31)   sSummon = "prc_sum_dk";
     else if (nHD >= 28)   sSummon = "prc_sum_vamp2";
@@ -19,8 +33,8 @@ void main()
     else if (nHD >= 19)   sSummon = "prc_sum_vamp1";
     else if (nHD >= 16)   sSummon = "prc_sum_grav";
     else if (nHD >= 13)   sSummon = "prc_tn_fthug";
-    else if (nHD >= 10)   sSummon = "prc_sum_mohrg";    
-  
+    else if (nHD >= 10)   sSummon = "prc_sum_mohrg";
+
     effect eSummon = EffectSummonCreature(sSummon, VFX_FNF_SUMMON_UNDEAD);
     //Apply summon effect and VFX impact.
     MultisummonPreSummon();

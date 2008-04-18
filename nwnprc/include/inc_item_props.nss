@@ -209,6 +209,24 @@ void RemoveSpecificProperty(object oItem, int iType, int iSubType = -1, int iCos
                             string sFlag = "", int iParam1 = -1, int iDuration = DURATION_TYPE_PERMANENT);
 
 /**
+ * Finds the first itemproperty matching the parameters.
+ *   Use GetIsItemPropertyValid() to check if an itemproperty exists.
+ *
+ * @param oItem     The item to remove itemproperties from.
+ * @param iType     ITEM_PROPERTY_* constant.
+ * @param iSubType  IP_CONST_* constant of the itemproperty subtype or -1 to
+ *                  match all possible subtypes. Also use -1 if the itemproperty
+ *                  has no subtypes.
+ * @param iCostVal  CostTableValue of the itemproperty to remove. Again, -1 for
+ *                  any.
+ * @param iParam1   Param1 value of the itemproperty to remove. Again, -1 for any.
+ * @param iDuration DURATION_TYPE_* constant. The duration type of the itemproperty.
+ *                  Again, -1 for any.
+ */
+itemproperty GetSpecificProperty(object oItem, int iType, int iSubType = -1, int iCostVal = -1,
+                            int iParam1 = -1, int iDuration = DURATION_TYPE_PERMANENT);
+
+/**
  * Keeps track of Attack Bonus effects and stacks them appropriately... you cannot set up
  * "special" attack bonuses against races or alignments, but it will keep seperate tabs on
  * on-hand attack bonuses and off-hand attack bonuses.
@@ -341,6 +359,25 @@ int TotalAndRemoveProperty(object oItem, int iType, int iSubType = -1)
         ip = GetNextItemProperty(oItem);
     }
     return total;
+}
+
+itemproperty GetSpecificProperty(object oItem, int iType, int iSubType = -1, int iCostVal = -1,
+                            int iParam1 = -1, int iDuration = DURATION_TYPE_PERMANENT)
+{
+    itemproperty ip = GetFirstItemProperty(oItem);
+    while(GetIsItemPropertyValid(ip)){
+        if(GetItemPropertyType(ip)            == iType                          &&
+           (GetItemPropertyDurationType(ip)   == iDuration || iDuration == -1)  &&
+           (GetItemPropertySubType(ip)        == iSubType  || iSubType  == -1)  &&
+           (GetItemPropertyCostTableValue(ip) == iCostVal  || iCostVal  == -1)  &&
+           (GetItemPropertyParam1Value(ip)    == iParam1   || iParam1   == -1)
+          )
+        {
+            return ip;
+        }
+        ip = GetNextItemProperty(oItem);
+    }
+    return ip;
 }
 
 void RemoveSpecificProperty(object oItem, int iType, int iSubType = -1, int iCostVal = -1, int iNum = 1,

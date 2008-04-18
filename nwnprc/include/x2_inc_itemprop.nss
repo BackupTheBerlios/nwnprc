@@ -185,7 +185,7 @@ void  IPWildShapeCopyItemProperties(object oOld, object oNew, int bWeapon = FALS
 // *  no enhancement bonus. You can test for a specific type of enhancement bonus
 // *  by passing the appropritate ITEM_PROPERTY_ENHANCEMENT_BONUS* constant into
 // *  nEnhancementBonusType
-int   IPGetWeaponEnhancementBonus(object oWeapon, int nEnhancementBonusType = ITEM_PROPERTY_ENHANCEMENT_BONUS);
+int   IPGetWeaponEnhancementBonus(object oWeapon, int nEnhancementBonusType = ITEM_PROPERTY_ENHANCEMENT_BONUS, int bIgnoreTemporary = TRUE);
 
 // *  Shortcut function to set the enhancement bonus of a weapon to a certain bonus
 // *  Specifying bOnlyIfHigher as TRUE will prevent a bonus lower than the requested
@@ -1520,16 +1520,22 @@ void IPWildShapeCopyItemProperties(object oOld, object oNew, int bWeapon = FALSE
 // no enhancement bonus. You can test for a specific type of enhancement bonus
 // by passing the appropritate ITEM_PROPERTY_ENHANCEMENT_BONUS* constant into
 // nEnhancementBonusType
+//
+// Now gets the best enhancement, and ignores temporary ones by default - Flaming_Sword
 // ----------------------------------------------------------------------------
-int IPGetWeaponEnhancementBonus(object oWeapon, int nEnhancementBonusType = ITEM_PROPERTY_ENHANCEMENT_BONUS)
+int IPGetWeaponEnhancementBonus(object oWeapon, int nEnhancementBonusType = ITEM_PROPERTY_ENHANCEMENT_BONUS, int bIgnoreTemporary = TRUE)
 {
     itemproperty ip = GetFirstItemProperty(oWeapon);
-    int nFound = 0;
+    int nFound = 0, nTemp = 0;
     while (nFound == 0 && GetIsItemPropertyValid(ip))
     {
-        if (GetItemPropertyType(ip) ==nEnhancementBonusType)
+        if (GetItemPropertyType(ip) == nEnhancementBonusType)
         {
-            nFound = GetItemPropertyCostTableValue(ip);
+            if(GetItemPropertyDurationType(ip) == DURATION_TYPE_PERMANENT || !bIgnoreTemporary)
+            {
+                nTemp = GetItemPropertyCostTableValue(ip);
+                nFound = max(nFound, nTemp);
+            }
         }
         ip = GetNextItemProperty(oWeapon);
     }

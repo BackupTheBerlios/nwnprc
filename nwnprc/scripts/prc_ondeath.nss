@@ -55,10 +55,10 @@ void main()
             AssignCommand(oDead, ApplyEffectToObject(DURATION_TYPE_INSTANT, SupernaturalEffect(EffectDeath()), oDead));
         }
     }
-    
+
     //Prey on the Weak
     object oPrey = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(10.0), GetLocation(oDead), FALSE, OBJECT_TYPE_CREATURE);
-    
+
     while(GetIsObjectValid(oPrey))
     {
             if(!GetIsReactionTypeFriendly(oPrey, oDead))
@@ -66,10 +66,10 @@ void main()
                     if(GetHasSpellEffect(MOVE_TC_PREY_ON_THE_WEAK, oPrey))
                     {
                             if(!GetLocalInt(oPrey, "PRC_POTW_HAS_ATTACKED"))
-                            {                             
+                            {
                                     //GetNearestEnemy
                                     object oAoOTarget = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(5.0), GetLocation(oPrey), TRUE, OBJECT_TYPE_CREATURE);
-                                    
+
                                     while(GetIsObjectValid(oAoOTarget))
                                     {
                                             if(!GetIsReactionTypeFriendly(oAoOTarget))
@@ -80,15 +80,15 @@ void main()
                                                             object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPrey);
                                                             //SetLocalInt
                                                             SetLocalInt(oPrey, "PRC_POTW_HAS_ATTACKED", 1);
-                                                            
+
                                                             PerformAttack(oAoOTarget, oPrey, eNone, 0.0, 0, 0, GetWeaponDamageType(oWeap), "Prey on the Weak Hit", "Prey on the Weak Miss");
-                                                            
+
                                                             //Set up removal
                                                             DelayCommand(RoundsToSeconds(1), DeleteLocalInt(oPrey, "PRC_POTW_HAS_ATTACKED"));
                                                     }
                                             }
                                             oAoOTarget = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(5.0), GetLocation(oPrey), TRUE, OBJECT_TYPE_CREATURE);
-                                    }                               
+                                    }
                             }
                     }
             }
@@ -101,6 +101,10 @@ void main()
     // Psionic creatures lose all PP on death
     if(GetIsPsionicCharacter(oDead))
         LoseAllPowerPoints(oDead, TRUE);
+
+    DeleteLocalInt(oDead, PRC_SPELL_CHARGE_COUNT);
+    if(GetLocalInt(oDead, PRC_SPELL_HOLD))
+        DeleteLocalInt(oDead, PRC_SPELL_HOLD);
 
     DoDied(OBJECT_SELF, TRUE);
 

@@ -161,21 +161,21 @@ void RunSpellScript(object oPC, int nSpellID, int nEventType)
 //        or if you really need to bypass the action queue.
 void RunImpactScript(object oPC, int nSpellID, int nEventType)
 {
-	// we dont want to be running a 'fake' spellscript, as that will
-	// use ActionCastSpell, which is exactly what we are trying to avoid
-	int nRealSpell = GetPowerFromSpellID(nSpellID);
-	if (nRealSpell == -1)
-		nRealSpell = nSpellID;
+    // we dont want to be running a 'fake' spellscript, as that will
+    // use ActionCastSpell, which is exactly what we are trying to avoid
+    int nRealSpell = GetPowerFromSpellID(nSpellID);
+    if (nRealSpell == -1)
+        nRealSpell = nSpellID;
 
-	SetLocalInt(oPC, PRC_SPELL_EVENT, nEventType);
-	SetLocalInt(oPC, PRC_SPELLID_OVERRIDE, nRealSpell);
+    SetLocalInt(oPC, PRC_SPELL_EVENT, nEventType);
+    SetLocalInt(oPC, PRC_SPELLID_OVERRIDE, nRealSpell);
 
-	string sScript = Get2DACache("spells", "ImpactScript", nRealSpell);
+    string sScript = Get2DACache("spells", "ImpactScript", nRealSpell);
 
-	ExecuteScript(sScript, oPC);
+    ExecuteScript(sScript, oPC);
 
-	DeleteLocalInt(oPC, PRC_SPELL_EVENT);
-	DeleteLocalInt(oPC, PRC_SPELLID_OVERRIDE);
+    DeleteLocalInt(oPC, PRC_SPELL_EVENT);
+    DeleteLocalInt(oPC, PRC_SPELLID_OVERRIDE);
 }
 
 //Returns true if the spell is one of the cure spells
@@ -235,7 +235,6 @@ int CheckRemoveEffects(int nSpellID, int nEffectType)
                 nEffectType == EFFECT_TYPE_CONFUSED ||
                 nEffectType == EFFECT_TYPE_FRIGHTENED ||
                 nEffectType == EFFECT_TYPE_NEGATIVELEVEL ||
-                nEffectType == EFFECT_TYPE_PARALYZE ||
                 nEffectType == EFFECT_TYPE_SLOW ||
                 nEffectType == EFFECT_TYPE_STUNNED);
             break;
@@ -315,21 +314,21 @@ int CheckRemoveEffects(int nSpellID, int nEffectType)
 
 int IsRaySpell(int nSpell)
 {
-	int nRealSpell = GetPowerFromSpellID(nSpell);
-	if (nRealSpell != -1)
-		nSpell = nRealSpell;
-	return (nSpell == SPELL_AVASCULAR_MASS)		// avascular mass
-	||     (nSpell == SPELL_AVASCULATE)			// avasculate
-	||     (nSpell == SPELL_DIMENSIONAL_ANCHOR)	// dimensional anchor
-	||     (nSpell == SPELL_DISINTEGRATE)		// disintegrate
-	||     (nSpell == SPELL_POLAR_RAY)			// polar ray
-	||     (nSpell == SPELL_SLASHING_DARKNESS)	// slashing darkness
-	||     (nSpell == SPELL_RAY_OF_FROST)		// ray of frost
-	||     (nSpell == SPELL_ENERGY_DRAIN)		// energy drain
-	||     (nSpell == SPELL_ENERVATION)			// enervate
-	||     (nSpell == SPELL_RAY_OF_ENFEEBLEMENT)	// ray of enfeeblement
-	||     (nSpell == SPELL_NEGATIVE_ENERGY_RAY)	// negative energy ray
-	||     (nSpell == SPELL_SEARING_LIGHT)		// searing light
-//	||     (nSpell ==    0)	//
-	;
+    int nRealSpell = GetPowerFromSpellID(nSpell);
+    if (nRealSpell != -1)
+        nSpell = nRealSpell;
+    return (nSpell == SPELL_AVASCULAR_MASS)     // avascular mass
+    ||     (nSpell == SPELL_AVASCULATE)         // avasculate
+    ||     (nSpell == SPELL_DIMENSIONAL_ANCHOR) // dimensional anchor
+    ||     (nSpell == SPELL_DISINTEGRATE)       // disintegrate
+    ||     (nSpell == SPELL_POLAR_RAY)          // polar ray
+    ||     (nSpell == SPELL_SLASHING_DARKNESS)  // slashing darkness
+    ||     (nSpell == SPELL_RAY_OF_FROST)       // ray of frost
+    ||     (nSpell == SPELL_ENERGY_DRAIN)       // energy drain
+    ||     (nSpell == SPELL_ENERVATION)         // enervate
+    ||     (nSpell == SPELL_RAY_OF_ENFEEBLEMENT)    // ray of enfeeblement
+    ||     (nSpell == SPELL_NEGATIVE_ENERGY_RAY)    // negative energy ray
+    ||     (nSpell == SPELL_SEARING_LIGHT)      // searing light
+//  ||     (nSpell ==    0) //
+    ;
 }

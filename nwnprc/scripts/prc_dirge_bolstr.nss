@@ -6,8 +6,14 @@
 
 void main()
 {
+    if (!GetHasFeat(FEAT_BARD_SONGS, OBJECT_SELF))
+    {
+        FloatingTextStrRefOnCreature(85587,OBJECT_SELF); // no more bardsong uses left
+        return;
+    }
+
     DecrementRemainingFeatUses(OBJECT_SELF, FEAT_BARD_SONGS);
-    
+
     if (GetHasEffect(EFFECT_TYPE_SILENCE,OBJECT_SELF))
     {
         FloatingTextStrRefOnCreature(85764,OBJECT_SELF); // not useable when silenced
@@ -16,11 +22,11 @@ void main()
 
     //Declare major variables
     object oPC = OBJECT_SELF;
-    int nDuration = 15; 
+    int nDuration = 15;
     int nBoost = GetLevelByClass(CLASS_TYPE_BARD) + GetLevelByClass(CLASS_TYPE_DIRGESINGER);
     effect eTurn = EffectTurnResistanceIncrease(nBoost);
     eTurn = ExtraordinaryEffect(eTurn);
-    
+
     effect eVis = EffectVisualEffect(VFX_DUR_BARD_SONG);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
     effect eLink = EffectLinkEffects(eTurn, eDur);

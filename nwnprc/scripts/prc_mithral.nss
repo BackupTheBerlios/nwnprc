@@ -1,4 +1,39 @@
+//For crafted items
+
 #include "prc_craft_inc"
+
+//Assumes only one bane/dread can be applied
+void BaneCheck(object oItem)
+{
+    if(!GetIsObjectValid(oItem))
+        return;
+
+    itemproperty ipDread, ipBane;
+    int bDread = FALSE, bBane = FALSE;
+    ipBane = GetSpecificProperty(oItem, ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP, -1, IP_CONST_DAMAGEBONUS_2d6);
+    bBane = GetIsItemPropertyValid(ipBane);
+    if(!bBane)
+    {   //don't want to search through itemprops again
+        ipDread = GetSpecificProperty(oItem, ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP, -1, IP_CONST_DAMAGEBONUS_4d6);
+        bDread = GetIsItemPropertyValid(ipDread);
+    }
+    if(bBane || bDread)
+    {
+        int nRace, nBonus;
+        int nEnhance = IPGetWeaponEnhancementBonus(oItem);
+        if(bBane)
+        {
+            nRace = GetItemPropertySubType(ipBane);
+        }
+        else
+        {
+            nRace = GetItemPropertySubType(ipDread);
+        }
+        //Refresh enhancement bonuses in case of item upgrade
+        SetCompositeBonusT(oItem, "BaseEnhancementRace", nEnhance, ITEM_PROPERTY_ENHANCEMENT_BONUS_VS_RACIAL_GROUP, nRace);
+        SetCompositeBonusT(oItem, "BaneEnhancement", (bDread) ? 4 : 2, ITEM_PROPERTY_ENHANCEMENT_BONUS_VS_RACIAL_GROUP, nRace);
+    }
+}
 
 void main()
 {
@@ -41,4 +76,7 @@ void main()
         }
     }
     SetCompositeBonus(GetPCSkin(oPC), "PRC_CRAFT_MITHRAL", nBonus, ITEM_PROPERTY_AC_BONUS);
+
+    BaneCheck(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC));
+    BaneCheck(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC));
 }

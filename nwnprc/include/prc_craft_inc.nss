@@ -1339,7 +1339,7 @@ void ApplyItemProps(object oItem, string sFile, int nLine)
         }
     }
     i = 1;  //FUGLY HACK: i doesn't initialise properly in for loop
-    for(i == 1; i <= 6; i++)
+    for(i = 1; i <= 6; i++)
     {
         if(DEBUG) DoDebug("ApplyItemProps: i = " + IntToString(i));
         ip = PropSpecialHandling(oItem, sFile, nLine, i);

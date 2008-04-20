@@ -182,6 +182,7 @@ void main()
         // End of conversation cleanup
         DeleteLocalObject(oPC, "ScryTarget" + IntToString(GetLocalInt(oPC, "ScryChoice")));
         DeleteLocalInt(oPC, "ScryChoice");
+        DeleteLocalInt(oPC, "ScrySpellId");
     }
     // Abort conversation cleanup.
     // NOTE: This section is only run when the conversation is aborted
@@ -192,6 +193,7 @@ void main()
         // End of conversation cleanup
         DeleteLocalObject(oPC, "ScryTarget" + IntToString(GetLocalInt(oPC, "ScryChoice")));
         DeleteLocalInt(oPC, "ScryChoice");
+        DeleteLocalInt(oPC, "ScrySpellId");
     }
     // Handle PC responses
     else
@@ -240,7 +242,7 @@ void main()
                 MarkStageNotSetUp(STAGE_CHOOSE_TARGET, oPC);
                 MarkStageNotSetUp(STAGE_CONFIRMATION, oPC);
             }
-        DeleteLocalObject(oPC, "ScryTarget" + IntToString(GetLocalInt(oPC, "ScryChoice")));
+            DeleteLocalObject(oPC, "ScryTarget" + IntToString(GetLocalInt(oPC, "ScryChoice")));
             DeleteLocalInt(oPC, "ScryChoice");
         }
 

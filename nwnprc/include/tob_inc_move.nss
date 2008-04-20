@@ -269,7 +269,7 @@ void _ManeuverHB(object oInitiator, location lInitiator, object oMoveToken)
     {
         // Continuance check
         fDistance = GetDistanceBetweenLocations(lInitiator, GetLocation(oInitiator));
-        if(fDistance > 2.0f || fDistance < 0 || // Allow some variance in the location to account for dodging and random fidgeting
+        if(fDistance > 2.0f || fDistance < 0.0 || // Allow some variance in the location to account for dodging and random fidgeting
            !_ManeuverStateCheck(oInitiator)                                       // Action and effect check
            )
         {

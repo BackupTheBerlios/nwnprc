@@ -65,7 +65,7 @@ struct maneuver{
  *                      target of the maneuver as returned by PRCGetSpellTargetObject().
  *
  * @return              A maneuver structure that contains the data about whether
- *                      the maneuver was successfully initiated and some other 
+ *                      the maneuver was successfully initiated and some other
  *                      commonly used data, like the PC's initiator level for this maneuver.
  */
 struct maneuver EvaluateManeuver(object oInitiator, object oTarget);
@@ -75,7 +75,7 @@ struct maneuver EvaluateManeuver(object oInitiator, object oTarget);
  *
  * @param nManeuver         The index of the maneuver to use in spells.2da or an UTTER_*
  * @param nClass         The index of the class to use the maneuver as in classes.2da or a CLASS_TYPE_*
- * @param nLevelOverride An optional override to normal initiator level. 
+ * @param nLevelOverride An optional override to normal initiator level.
  *                       Default: 0, which means the parameter is ignored.
  */
 void UseManeuver(int nManeuver, int nClass, int nLevelOverride = 0);
@@ -123,8 +123,8 @@ void DeleteLocalManeuver(object oObject, string sName);
 //////////////////////////////////////////////////
 
 #include "tob_inc_recovery"
-#include "tob_inc_tobfunc" 
-#include "tob_inc_martlore" 
+#include "tob_inc_tobfunc"
+#include "tob_inc_martlore"
 
 //////////////////////////////////////////////////
 /*             Internal functions               */
@@ -215,6 +215,7 @@ object _CreateManeuverToken(object oInitiator)
  */
 int _ManeuverStateCheck(object oInitiator)
 {
+    if(GetIsDead(oInitiator)) return FALSE;
     int nAction = GetCurrentAction(oInitiator);
     // If the current action is not among those that could either be used to truespeak the maneuver or movement, the maneuver fails
     if(!(nAction || ACTION_CASTSPELL     || nAction == ACTION_INVALID      ||
@@ -257,6 +258,7 @@ int _ManeuverStateCheck(object oInitiator)
  */
 void _ManeuverHB(object oInitiator, location lInitiator, object oMoveToken)
 {
+    float fDistance;
     if(DEBUG) DoDebug("_ManeuverHB() running:\n"
                     + "oInitiator = " + DebugObject2Str(oInitiator) + "\n"
                     + "lInitiator = " + DebugLocation2Str(lInitiator) + "\n"
@@ -266,7 +268,8 @@ void _ManeuverHB(object oInitiator, location lInitiator, object oMoveToken)
     if(GetIsObjectValid(oMoveToken))
     {
         // Continuance check
-        if(GetDistanceBetweenLocations(lInitiator, GetLocation(oInitiator)) > 2.0f || // Allow some variance in the location to account for dodging and random fidgeting
+        fDistance = GetDistanceBetweenLocations(lInitiator, GetLocation(oInitiator));
+        if(fDistance > 2.0f || fDistance < 0 || // Allow some variance in the location to account for dodging and random fidgeting
            !_ManeuverStateCheck(oInitiator)                                       // Action and effect check
            )
         {
@@ -274,7 +277,7 @@ void _ManeuverHB(object oInitiator, location lInitiator, object oMoveToken)
             _DestroyManeuverToken(oInitiator, oMoveToken);
 
             // Inform initiator
-            FloatingTextStringOnCreature("You have lost concentration on the maneuver you were attempting to initiate!", oInitiator, FALSE); 
+            FloatingTextStringOnCreature("You have lost concentration on the maneuver you were attempting to initiate!", oInitiator, FALSE);
         }
         // Schedule next HB
         else
@@ -384,12 +387,12 @@ void _UseManeuverAux(object oInitiator, object oMoveToken, int nSpellId,
         if(nLevelOverride != 0)
             AssignCommand(oInitiator, ActionDoCommand(DeleteLocalInt(oInitiator, PRC_CASTERLEVEL_OVERRIDE)));
 
-	// Begins the Crusader Granting Maneuver process
-	if (nClass == CLASS_TYPE_CRUSADER) 
-	{
-		BeginCrusaderGranting(oInitiator);
-		if(DEBUG) DoDebug("_UseManeuverAux(): BeginCrusaderGranting");
-	}
+    // Begins the Crusader Granting Maneuver process
+    if (nClass == CLASS_TYPE_CRUSADER)
+    {
+        BeginCrusaderGranting(oInitiator);
+        if(DEBUG) DoDebug("_UseManeuverAux(): BeginCrusaderGranting");
+    }
         // Destroy the maneuver token for this maneuver
         _DestroyManeuverToken(oInitiator, oMoveToken);
     }
@@ -397,36 +400,36 @@ void _UseManeuverAux(object oInitiator, object oMoveToken, int nSpellId,
 
 int _GetIsManeuverWeaponAppropriate(object oInitiator)
 {
-	object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
-	// If the initiator is empty handed, unarmed strikes are good
-	if (!GetIsObjectValid(oItem)) return TRUE;
-	// If melee weapon, all good. 
-	if (IPGetIsMeleeWeapon(oItem)) return TRUE;
-	// Add other legal items in here, like Bloodstorm Blade throwing
-	
-	// If one of the other's hasn't tripped, fail here
-	return FALSE;
+    object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
+    // If the initiator is empty handed, unarmed strikes are good
+    if (!GetIsObjectValid(oItem)) return TRUE;
+    // If melee weapon, all good.
+    if (IPGetIsMeleeWeapon(oItem)) return TRUE;
+    // Add other legal items in here, like Bloodstorm Blade throwing
+
+    // If one of the other's hasn't tripped, fail here
+    return FALSE;
 }
 
 void _StanceSpecificChecks(object oInitiator, int nMoveId)
 {
-	int nStanceToKeep = -1;
-	if (GetLevelByClass(CLASS_TYPE_WARBLADE, oInitiator) >= 20)
-	{
-		nStanceToKeep = GetHasActiveStance(oInitiator);	
-	}
-	// Uses Crusader because all classes have Stone Dragon
-	// And Crusader has the smallest 2da to search
-	if (GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL, oInitiator) >= 3 && 
-	    GetHasSpellEffect(MOVE_MOUNTAIN_FORTRESS, oInitiator) &&
-	    GetDisciplineByManeuver(nMoveId, CLASS_TYPE_CRUSADER) == DISCIPLINE_STONE_DRAGON)
-	{
-		nStanceToKeep = GetHasActiveStance(oInitiator);	
-	}	
-	
-	if(DEBUG) DoDebug("tob_inc_move: ClearStances");
-	// Can only have one stance active, except for a level 20+ Warblade
-	ClearStances(oInitiator, nStanceToKeep);
+    int nStanceToKeep = -1;
+    if (GetLevelByClass(CLASS_TYPE_WARBLADE, oInitiator) >= 20)
+    {
+        nStanceToKeep = GetHasActiveStance(oInitiator);
+    }
+    // Uses Crusader because all classes have Stone Dragon
+    // And Crusader has the smallest 2da to search
+    if (GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL, oInitiator) >= 3 &&
+        GetHasSpellEffect(MOVE_MOUNTAIN_FORTRESS, oInitiator) &&
+        GetDisciplineByManeuver(nMoveId, CLASS_TYPE_CRUSADER) == DISCIPLINE_STONE_DRAGON)
+    {
+        nStanceToKeep = GetHasActiveStance(oInitiator);
+    }
+
+    if(DEBUG) DoDebug("tob_inc_move: ClearStances");
+    // Can only have one stance active, except for a level 20+ Warblade
+    ClearStances(oInitiator, nStanceToKeep);
 }
 
 //////////////////////////////////////////////////
@@ -448,60 +451,60 @@ struct maneuver EvaluateManeuver(object oInitiator, object oTarget)
     move.bCanManeuver    = TRUE; // Assume successfull maneuver by default
     move.nInitiatorLevel = nInitiatorLevel;
     move.nMoveId         = PRCGetSpellId();
-    
+
     // If the weapon is not appropriate, fail.
-    if (!_GetIsManeuverWeaponAppropriate(move.oInitiator)) 
+    if (!_GetIsManeuverWeaponAppropriate(move.oInitiator))
     {
-    	if(DEBUG) DoDebug("tob_inc_move: _GetIsManeuverWeaponAppropriate");
-    	move.bCanManeuver = FALSE;
-    	FloatingTextStringOnCreature("You do not have an appropriate weapon to initiate this maneuver.", oInitiator, FALSE); 
+        if(DEBUG) DoDebug("tob_inc_move: _GetIsManeuverWeaponAppropriate");
+        move.bCanManeuver = FALSE;
+        FloatingTextStringOnCreature("You do not have an appropriate weapon to initiate this maneuver.", oInitiator, FALSE);
     }
     // If the maneuver is not readied, fail.
     // Stances don't need to be readied
-    if (!GetIsManeuverReadied(move.oInitiator, nClass, move.nMoveId) && !GetIsStance(move.nMoveId)) 
+    if (!GetIsManeuverReadied(move.oInitiator, nClass, move.nMoveId) && !GetIsStance(move.nMoveId))
     {
-    	if(DEBUG) DoDebug("tob_inc_move: GetIsManeuverReadied");
-    	move.bCanManeuver = FALSE;
-    	FloatingTextStringOnCreature(GetManeuverName(move.nMoveId) + " is not readied.", oInitiator, FALSE);
-    }    
+        if(DEBUG) DoDebug("tob_inc_move: GetIsManeuverReadied");
+        move.bCanManeuver = FALSE;
+        FloatingTextStringOnCreature(GetManeuverName(move.nMoveId) + " is not readied.", oInitiator, FALSE);
+    }
     // If the maneuver is expended, fail.
-    if (GetIsManeuverExpended(move.oInitiator, nClass, move.nMoveId)) 
+    if (GetIsManeuverExpended(move.oInitiator, nClass, move.nMoveId))
     {
-    	if(DEBUG) DoDebug("tob_inc_move: GetIsManeuverExpended");
-    	move.bCanManeuver = FALSE;
-    	FloatingTextStringOnCreature(GetManeuverName(move.nMoveId) + " is already expended.", oInitiator, FALSE);
-    }   
+        if(DEBUG) DoDebug("tob_inc_move: GetIsManeuverExpended");
+        move.bCanManeuver = FALSE;
+        FloatingTextStringOnCreature(GetManeuverName(move.nMoveId) + " is already expended.", oInitiator, FALSE);
+    }
     // If the PC is in a Warblade recovery round, fail
-    if (GetIsWarbladeRecoveryRound(oInitiator)) 
+    if (GetIsWarbladeRecoveryRound(oInitiator))
     {
-    	if(DEBUG) DoDebug("tob_inc_move: GetIsWarbladeRecoveryRound");
-    	move.bCanManeuver = FALSE;
-    	FloatingTextStringOnCreature(GetName(oInitiator) + " is recovering Warblade maneuvers.", oInitiator, FALSE);
-    }  
+        if(DEBUG) DoDebug("tob_inc_move: GetIsWarbladeRecoveryRound");
+        move.bCanManeuver = FALSE;
+        FloatingTextStringOnCreature(GetName(oInitiator) + " is recovering Warblade maneuvers.", oInitiator, FALSE);
+    }
     // Is the maneuver granted, and is the class a Crusader
-    if (GetIsManeuverGranted(oInitiator, move.nMoveId) && nClass == CLASS_TYPE_CRUSADER) 
+    if (GetIsManeuverGranted(oInitiator, move.nMoveId) && nClass == CLASS_TYPE_CRUSADER)
     {
-    	if(DEBUG) DoDebug("tob_inc_move: GetIsManeuverGranted");
-    	move.bCanManeuver = FALSE;
-    	FloatingTextStringOnCreature(GetManeuverName(move.nMoveId) + " is not a granted maneuver.", oInitiator, FALSE);
-    }     
+        if(DEBUG) DoDebug("tob_inc_move: GetIsManeuverGranted");
+        move.bCanManeuver = FALSE;
+        FloatingTextStringOnCreature(GetManeuverName(move.nMoveId) + " is not a granted maneuver.", oInitiator, FALSE);
+    }
     if(DEBUG) DoDebug("move.bCanManeuver: " + IntToString(move.bCanManeuver));
     // Skip doing anything if something has prevented a successful maneuver already by this point
     if(move.bCanManeuver)
     {
-	// If you're this far in, you always succeed, there are very few checks.
-	// Deletes any active stances, and allows a Warblade 20 to have his two stances active.
-	if (GetIsStance(move.nMoveId)) _StanceSpecificChecks(oInitiator, move.nMoveId);
-	if(DEBUG) DoDebug("tob_inc_move: _StanceSpecificChecks");
-	// Expend the Maneuver until recovered
-	if (!GetIsStance(move.nMoveId)) ExpendManeuver(move.oInitiator, nClass, move.nMoveId);
-	if(DEBUG) DoDebug("tob_inc_move: ExpendManeuver");
-	// Do Martial Lore data
-	IdentifyManeuver(move.oInitiator, move.nMoveId);
-	if(DEBUG) DoDebug("tob_inc_move: IdentifyManeuver");
-	IdentifyDiscipline(move.oInitiator);
-	if(DEBUG) DoDebug("tob_inc_move: IdentifyDiscipline");
-	
+    // If you're this far in, you always succeed, there are very few checks.
+    // Deletes any active stances, and allows a Warblade 20 to have his two stances active.
+    if (GetIsStance(move.nMoveId)) _StanceSpecificChecks(oInitiator, move.nMoveId);
+    if(DEBUG) DoDebug("tob_inc_move: _StanceSpecificChecks");
+    // Expend the Maneuver until recovered
+    if (!GetIsStance(move.nMoveId)) ExpendManeuver(move.oInitiator, nClass, move.nMoveId);
+    if(DEBUG) DoDebug("tob_inc_move: ExpendManeuver");
+    // Do Martial Lore data
+    IdentifyManeuver(move.oInitiator, move.nMoveId);
+    if(DEBUG) DoDebug("tob_inc_move: IdentifyManeuver");
+    IdentifyDiscipline(move.oInitiator);
+    if(DEBUG) DoDebug("tob_inc_move: IdentifyDiscipline");
+
     }//end if
 
     if(DEBUG) DoDebug("EvaluateManeuver(): Final result:\n" + DebugManeuver2Str(move));
@@ -524,9 +527,9 @@ void UseManeuver(int nManeuver, int nClass, int nLevelOverride = 0)
 
     // Normally swift action maneuvers check
     if((Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "SWIFT_ACTION" ||
-    	Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "MANEUVER_BOOST" ||
-    	Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "MANEUVER_COUNTER" ||
-    	Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "MANEUVER_STANCE") && // The maneuver is swift action to use
+        Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "MANEUVER_BOOST" ||
+        Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "MANEUVER_COUNTER" ||
+        Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "MANEUVER_STANCE") && // The maneuver is swift action to use
        TakeSwiftAction(oInitiator)                                                                        // And the initiator can take a swift action now
        )
     {
@@ -549,7 +552,7 @@ void UseManeuver(int nManeuver, int nClass, int nLevelOverride = 0)
     {
         // Set the maneuver time to 0 to skip VFX
         nMoveDur = 0;
-    }    
+    }
 
     if(DEBUG) DoDebug("UseManeuver(): initiator is " + DebugObject2Str(oInitiator) + "\n"
                     + "nManeuver = " + IntToString(nManeuver) + "\n"

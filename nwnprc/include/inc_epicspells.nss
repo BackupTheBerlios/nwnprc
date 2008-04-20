@@ -293,7 +293,6 @@ int GetIsEpicShaman(object oPC)
 
 int GetIsEpicSpellcaster(object oPC)
 {
-    object oPC = GetPCSpeaker();
     if (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC) ||
         GetIsEpicSorcerer(oPC) || GetIsEpicWizard(oPC) ||
         GetIsEpicWarmage(oPC) || GetIsEpicHealer(oPC) || GetIsEpicFavSoul(oPC) || GetIsEpicShaman(oPC))

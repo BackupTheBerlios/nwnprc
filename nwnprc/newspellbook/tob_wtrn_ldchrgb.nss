@@ -33,6 +33,6 @@ void main()
     //Get the object that is exiting the AOE
     object oTarget = GetExitingObject();
     // Just clean up the local
-    DeleteLocalObject(oTarget, "LeadingTheCharge");
+    DeleteLocalInt(oTarget, "LeadingTheCharge");
 }
 

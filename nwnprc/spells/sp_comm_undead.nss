@@ -95,7 +95,7 @@ void main()
 			if(GetAbilityScore(oTarget, ABILITY_INTELLIGENCE) < 11)
 			
 			{
-				SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink2, oTarget, fDuration);
+				DelayCommand(1.0, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink2, oTarget, fDuration));
 			}
 			
 			else
@@ -103,7 +103,7 @@ void main()
 				if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_NONE))
 				{			
 					SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration);
-					SetIsTemporaryNeutral(oTarget, oPC, TRUE, fDuration);
+					SetIsTemporaryFriend(oTarget, oPC, TRUE, fDuration);
 				}
 			}
 		}

@@ -1,5 +1,6 @@
 #include "prc_alterations"
 #include "tob_inc_tobfunc"
+#include "prc_inc_combmove"
 
 int LevelToDelayedDamage(int nLevel)
 {

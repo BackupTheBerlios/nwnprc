@@ -35,6 +35,6 @@ void main()
     if (oTarget != GetAreaOfEffectCreator() && 
         GetIsFriend(oTarget, GetAreaOfEffectCreator()))
     {
-    	SetLocalObject(oTarget, "LeadingTheCharge", GetAreaOfEffectCreator());
+    	SetLocalInt(oTarget, "LeadingTheCharge", GetInitiatorLevel(GetAreaOfEffectCreator()));
     }
 }

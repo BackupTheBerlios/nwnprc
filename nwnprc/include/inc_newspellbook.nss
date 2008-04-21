@@ -159,7 +159,6 @@ int GetAbilityForClass(int nClass, object oPC)
         case CLASS_TYPE_SOHEI:
         case CLASS_TYPE_SLAYER_OF_DOMIEL:
         case CLASS_TYPE_HEALER:
-        case CLASS_TYPE_SLAYER_OF_DOMIEL:
         case CLASS_TYPE_SHAMAN:
             return GetAbilityScore(oPC, ABILITY_WISDOM);
         case CLASS_TYPE_WIZARD:
@@ -193,6 +192,8 @@ int GetDCAbilityModForClass(int nClass, object oPC)
         // Split ability casters
         case CLASS_TYPE_FAVOURED_SOUL:
             return GetAbilityModifier(ABILITY_WISDOM, oPC);
+        case CLASS_TYPE_HEALER:
+            return GetAbilityModifier(ABILITY_CHARISMA, oPC);
 
         // Everyone else
         default:

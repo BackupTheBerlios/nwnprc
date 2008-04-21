@@ -1084,7 +1084,9 @@ int CraftingFeats(object oPC = OBJECT_SELF)
         FloatingTextStringOnCreature(sError, oPC);
 
     //only one item creation feat and it's one of the ones that needs another as a prereq
-    if(GetItemCreationFeatCount(oPC) == (
+    int iCraft = GetItemCreationFeatCount(oPC);
+    if(iCraft &&
+        iCraft == (
             GetHasFeat(FEAT_EXCEPTIONAL_ARTISAN_I       , oPC) +
             GetHasFeat(FEAT_EXCEPTIONAL_ARTISAN_II      , oPC) +
             GetHasFeat(FEAT_EXCEPTIONAL_ARTISAN_III     , oPC) +

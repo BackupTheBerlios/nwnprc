@@ -81,6 +81,39 @@ void Assert(int bAssertion, string sAssertion, string sMessage = "", string sFil
  */
 void Die();
 
+/**
+ * Converts data about a given object into a string of the following format:
+ * "'GetName' - 'GetTag' - 'GetResRef' - ObjectToString"
+ *
+ * @param o Object to convert into a string
+ * @return  A string containing identifying data about o
+ */
+string DebugObject2Str(object o);
+
+/**
+ * Converts the given location into a string representation.
+ *
+ * @param loc Location to convert into a string
+ * @return    A string representation of loc
+ */
+string DebugLocation2Str(location loc);
+
+/**
+ * Converts the given itemproperty into a string representation.
+ *
+ * @param iprop Itemproperty to convert into a string
+ * @return      A string representation of iprop
+ */
+string DebugIProp2Str(itemproperty iprop);
+
+/**
+ * Converts a boolean to a string. Quick debug version.
+ * @see BooleanToString to use the tlkified one
+ *
+ * @param bool The boolean value to convert. 0 is considered false
+ *             and everything else is true.
+ */
+string DebugBool2String(int bool);
 
 //////////////////////////////////////////////////
 /*             Function definitions             */
@@ -130,4 +163,44 @@ void Assert(int bAssertion, string sAssertion, string sMessage = "", string sFil
 void Die()
 {
     while(TRUE) {;}
+}
+
+string DebugObject2Str(object o)
+{
+    return o == OBJECT_INVALID ?
+            "OBJECT_INVALID" :   // Special case
+            "'" + GetName(o) + "' - '" + GetTag(o) + "' - '" + GetResRef(o) + "' - " + ObjectToString(o);
+}
+
+string DebugLocation2Str(location loc)
+{
+    object oArea = GetAreaFromLocation(loc);
+    vector vPos = GetPositionFromLocation(loc);
+    string sX, sY, sZ, sF;
+    // 3 decimal places and no leading whitespace
+    sX = FloatToString(vPos.x,0,3);
+    sY = FloatToString(vPos.y,0,3);
+    sZ = FloatToString(vPos.z,0,3);
+    sF = FloatToString(GetFacingFromLocation(loc),0,3);
+
+    return "Area: Name = '" + GetName(oArea) + "', Tag = '" + GetTag(oArea) + "'; Position: (" + sX + ", " + sY + ", " + sZ + ",); Facing: " + sF;
+}
+
+string DebugIProp2Str(itemproperty iprop)
+{
+    return "Type: " + IntToString(GetItemPropertyType(iprop)) + "; "
+         + "Subtype: " + IntToString(GetItemPropertySubType(iprop)) + "; "
+         + "Duration type: " + (GetItemPropertyDurationType(iprop) == DURATION_TYPE_INSTANT ?   "DURATION_TYPE_INSTANT"   :
+                                GetItemPropertyDurationType(iprop) == DURATION_TYPE_TEMPORARY ? "DURATION_TYPE_TEMPORARY" :
+                                GetItemPropertyDurationType(iprop) == DURATION_TYPE_PERMANENT ? "DURATION_TYPE_PERMANENT" :
+                                IntToString(GetItemPropertyDurationType(iprop))) + "; "
+         + "Param1: " + IntToString(GetItemPropertyParam1(iprop)) + "; "
+         + "Param1 value: " + IntToString(GetItemPropertyParam1Value(iprop)) + "; "
+         + "Cost table: " + IntToString(GetItemPropertyCostTable(iprop)) + "; "
+         + "Cost table value: " + IntToString(GetItemPropertyCostTableValue(iprop));
+}
+
+string DebugBool2String(int bool)
+{
+    return bool ? "True" : "False";
 }

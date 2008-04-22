@@ -57,7 +57,7 @@ void DeletePRCLocalInts(object oSkin);
 #include "pnp_shft_poly"
 #include "x2_i0_spells"
 #include "prc_inc_natweap"
-#include "true_inc_trufunc"
+//#include "true_inc_trufunc"
 
 int nbWeaponFocus(object oPC);
 
@@ -496,10 +496,10 @@ void DeletePRCLocalInts(object oSkin)
     
     //Truenamer
     int UtterID;
-    for(UtterID = UTTER_DEFENSIVE_EDGE; UtterID <= UTTER_WORD_NURTURING_GREATER_R; UtterID++)
-        DeleteLocalInt(oPC, LAW_OF_RESIST_VARNAME + IntToString(UtterID));
-    for(UtterID = SYLLABLE_DETACHMENT; UtterID <= BRIMSTONE_HEAVEN_GREATER; UtterID++)
-        DeleteLocalInt(oPC, LAW_OF_RESIST_VARNAME + IntToString(UtterID));
+    for(UtterID = 3526; UtterID <= 3639; UtterID++) // All utterances
+        DeleteLocalInt(oPC, "PRC_LawOfResistance" + IntToString(UtterID));
+    for(UtterID = 3418; UtterID <= 3431; UtterID++) // Syllable of Detachment to Word of Heaven, Greater
+        DeleteLocalInt(oPC, "PRC_LawOfResistance" + IntToString(UtterID));
 
     //clear Dragonfriend/Dragonthrall flag so effect properly reapplies
     if (GetHasFeat(FEAT_DRAGONFRIEND, oPC)

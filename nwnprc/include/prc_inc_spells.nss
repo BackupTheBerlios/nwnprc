@@ -261,6 +261,16 @@ int GetControlledFiendTotalHD(object oPC = OBJECT_SELF);
 // Dominated outsiders from Turn Undead etc do not count
 int GetControlledCelestialTotalHD(object oPC = OBJECT_SELF);
 
+/**
+ * Multisummon code, to be run before the summoning effect is applied.
+ * Normally, this will only perform the multisummon trick of setting
+ * pre-existing summons indestructable if PRC_MULTISUMMON is set.
+ *
+ * @param oPC          The creature casting the summoning spell
+ * @param bOverride    If this is set, ignores the value of PRC_MULTISUMMON switch
+ */
+void MultisummonPreSummon(object oPC = OBJECT_SELF, int bOverride = FALSE);
+
 // -----------------
 // BEGIN SPELLSWORD
 // -----------------
@@ -2398,6 +2408,29 @@ void DoCorruptionCost(object oPC, int nAbility, int nCost, int bDrain)
     // Or damage
     else
         ApplyAbilityDamage(oPC, nAbility, nCost, DURATION_TYPE_TEMPORARY, TRUE, -1.0f);
+}
+
+void MultisummonPreSummon(object oPC = OBJECT_SELF, int bOverride = FALSE)
+{
+    if(!GetPRCSwitch(PRC_MULTISUMMON) && !bOverride)
+        return;
+    int i=1;
+    int nCount = GetPRCSwitch(PRC_MULTISUMMON);
+    if(bOverride)
+        nCount = bOverride;
+    if(nCount < 0
+        || nCount == 1)
+        nCount = 99;
+    if(nCount > 99)
+        nCount = 99;
+    object oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oPC, i);
+    while(GetIsObjectValid(oSummon) && i < nCount)
+    {
+        AssignCommand(oSummon, SetIsDestroyable(FALSE, FALSE, FALSE));
+        AssignCommand(oSummon, DelayCommand(0.3, SetIsDestroyable(TRUE, FALSE, FALSE)));
+        i++;
+        oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oPC, i);
+    }
 }
 
 

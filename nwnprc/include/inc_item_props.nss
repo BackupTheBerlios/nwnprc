@@ -295,6 +295,7 @@ itemproperty PRCItemPropertyBonusFeat(int nBonusFeatID);
 #include "inc_prc_npc"
 #include "inc_utility"
 #include "prc_ipfeat_const"
+#include "inc_array"
 
 //////////////////////////////
 // Function Definitions     //

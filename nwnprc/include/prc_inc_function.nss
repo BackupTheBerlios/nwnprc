@@ -52,7 +52,7 @@ void DeletePRCLocalInts(object oSkin);
 //#include "prc_inc_clsfunc"
 #include "prc_inc_racial"
 #include "inc_abil_damage"
-#include "NW_I0_GENERIC"
+// #include "NW_I0_GENERIC"
 #include "x2_inc_itemprop"
 #include "pnp_shft_poly"
 #include "x2_i0_spells"

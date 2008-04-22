@@ -18,6 +18,7 @@
 #include "prc_inc_leadersh"
 #include "prc_inc_natweap"
 #include "prc_inc_template"
+#include "inc_switch_setup"
 
 //////////////////////////////////////////////////
 /* Constant defintions                          */

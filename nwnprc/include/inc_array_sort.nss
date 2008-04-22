@@ -116,8 +116,7 @@ void CountingSortInt(object oStore, string sArrayName);
 /*                  Includes                    */
 //////////////////////////////////////////////////
 
-#include "inc_utility" // <- Whatever implements arrays goes here
-
+#include "inc_array"
 
 //////////////////////////////////////////////////
 /*             Internal functions               */

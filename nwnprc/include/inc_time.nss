@@ -56,8 +56,7 @@ void AdvanceTimeForPlayer(object oPC, float fSeconds);
 /* Include section                              */
 //////////////////////////////////////////////////
 
-#include "prc_inc_switch"  // Needs direct include instead of inc_utility
-#include "inc_utility"
+#include "prc_inc_switch"
 #include "inc_persist_loca"
 
 

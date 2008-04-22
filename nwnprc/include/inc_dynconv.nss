@@ -312,8 +312,8 @@ void ClearCurrentStage(object oPC = OBJECT_INVALID);
 /* Include section                              */
 //////////////////////////////////////////////////
 
-#include "inc_utility"
-
+#include "inc_array"
+#include "inc_debug"
 
 //////////////////////////////////////////////////
 /* Internal function prototypes                 */
@@ -579,8 +579,8 @@ void StartDynamicConversation(string sConversationScript, object oPC,
                                          nAllowExit == DYNCONV_EXIT_ALLOWED_SHOW_CHOICE ? "DYNCONV_EXIT_ALLOWED_SHOW_CHOICE" :
                                          "ERROR: Unsupported value: " + IntToString(nAllowExit)
                                          ) + "\n"
-                    + "bAllowAbort = " + BooleanToString(bAllowAbort) + "\n"
-                    + "bForceStart = " + BooleanToString(bForceStart) + "\n"
+                    + "bAllowAbort = " + DebugBool2String(bAllowAbort) + "\n"
+                    + "bForceStart = " + DebugBool2String(bForceStart) + "\n"
                     + "oConverseWith = " + DebugObject2Str(oConverseWith) + "\n"
                       );
     // By default, the PC converses with itself
@@ -609,7 +609,7 @@ void BranchDynamicConversation(string sConversationToEnter, int nStageToReturnTo
                                          nAllowExit == DYNCONV_EXIT_ALLOWED_SHOW_CHOICE ? "DYNCONV_EXIT_ALLOWED_SHOW_CHOICE" :
                                          "ERROR: Unsupported value: " + IntToString(nAllowExit)
                                          ) + "\n"
-                    + "bAllowAbort = " + BooleanToString(bAllowAbort) + "\n"
+                    + "bAllowAbort = " + DebugBool2String(bAllowAbort) + "\n"
                     + "oPC = " + DebugObject2Str(oPC) + "\n "
                       );
     oPC = _DynConvInternal_ResolvePC(oPC);
@@ -648,7 +648,7 @@ void AllowExit(int nNewValue = DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, int bChangeExit
                                         nNewValue == DYNCONV_EXIT_ALLOWED_SHOW_CHOICE ? "DYNCONV_EXIT_ALLOWED_SHOW_CHOICE" :
                                         "ERROR: Unsupported value: " + IntToString(nNewValue)
                                         ) + "\n"
-                    + "bChangeExitTokenText = " + BooleanToString(bChangeExitTokenText) + "\n"
+                    + "bChangeExitTokenText = " + DebugBool2String(bChangeExitTokenText) + "\n"
                     + "oPC = " + DebugObject2Str(_DynConvInternal_ResolvePC(oPC)) + "\n"
                       );
 
@@ -701,3 +701,5 @@ void ClearCurrentStage(object oPC = OBJECT_INVALID)
 
     MarkStageNotSetUp(GetStage(oPC), oPC);
 }
+
+void main(){}

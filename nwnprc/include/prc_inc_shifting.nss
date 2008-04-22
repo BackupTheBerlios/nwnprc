@@ -716,7 +716,7 @@ void _prc_inc_shifting_ShiftIntoTemplateAux(object oShifter, int nShifterType, o
                     + "oShifter = " + DebugObject2Str(oShifter) + "\n"
                     + "nShifterType = " + IntToString(nShifterType) + "\n"
                     + "oTemplate = " + DebugObject2Str(oTemplate) + "\n"
-                    + "bGainSpellLikeAbilities = " + BooleanToString(bGainSpellLikeAbilities) + "\n"
+                    + "bGainSpellLikeAbilities = " + DebugBool2String(bGainSpellLikeAbilities) + "\n"
                       );
 
     // Make sure the template creature is still valid

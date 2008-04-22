@@ -1,7 +1,5 @@
 // Added compatibility for PRC base classes
-#include "prc_alterations"
-#include "inc_utility"
-
+#include "prc_class_const"
 int StartingConditional()
 {
     int bCondition = GetLevelByClass(CLASS_TYPE_CLERIC, GetPCSpeaker()) == 0 &&

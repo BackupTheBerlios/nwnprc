@@ -148,7 +148,7 @@ object SpawnListener(string sScriptToCall, location lSpawnAt,
                     + "sPattern = '" + sPattern + "'\n"
                     + "oListenTo = " + DebugObject2Str(oListenTo) + "\n"
                     + "fTTL = " + FloatToString(fTTL) + "\n"
-                    + "bNotify = " + BooleanToString(bNotify) + "\n";
+                    + "bNotify = " + DebugBool2String(bNotify) + "\n";
         if(DEBUG) DoDebug(sErr);
         else      WriteTimestampedLogEntry(sErr);
         return OBJECT_INVALID;

@@ -37,7 +37,7 @@ void main()
 	if (!GetIsObjectValid(oPC))
 		return;
 
-//if(DEBUG) DoDebug("Running OnEquip, creature = '" + GetName(oPC) + "' is PC: " + BooleanToString(GetIsPC(oPC)) + "; Item = '" + GetName(oItem) + "' - '" + GetTag(oItem) + "'");
+//if(DEBUG) DoDebug("Running OnEquip, creature = '" + GetName(oPC) + "' is PC: " + DebugBool2String(GetIsPC(oPC)) + "; Item = '" + GetName(oItem) + "' - '" + GetTag(oItem) + "'");
 
     //DelayCommand(0.3, PrcFeats(oPC));
     PrcFeats(oPC);

@@ -706,8 +706,8 @@ location GetTeleportError(location lOriginal, object oUser, int bNormallyErroles
     if(DEBUG) DoDebug("prc_inc_teleport: GetTeleportError():\n"
                     + "lOriginal = " + DebugLocation2Str(lOriginal) + "\n"
                     + "oUser = " + DebugObject2Str(oUser) + "\n"
-                    + "bNormallyErroless = " + BooleanToString(bNormallyErroless) + "\n"
-                    + "bRecursing = " + BooleanToString(bRecursing) + "\n"
+                    + "bNormallyErroless = " + DebugBool2String(bNormallyErroless) + "\n"
+                    + "bRecursing = " + DebugBool2String(bRecursing) + "\n"
                       );
 
     int nOverrideValue = GetLocalInt(GetAreaFromLocation(lOriginal), PRC_FORCE_TELEPORTATION_RESULT);
@@ -732,7 +732,7 @@ location GetTeleportError(location lOriginal, object oUser, int bNormallyErroles
             case PRC_FORCE_TELEPORTATION_RESULT_MISHAP:       nRoll = 99; break;
         }
     }
-    if(DEBUG) DoDebug("prc_inc_teleport: GetTeleportError(): Roll is " + IntToString(nRoll) + ", forced = " + BooleanToString(nOverrideValue));
+    if(DEBUG) DoDebug("prc_inc_teleport: GetTeleportError(): Roll is " + IntToString(nRoll) + ", forced = " + DebugBool2String(nOverrideValue));
 
     /* On Target Off Target Way Off Target Mishap
      * 01–90     91–94      95–98          99–100
@@ -766,7 +766,7 @@ location GetTeleportError(location lOriginal, object oUser, int bNormallyErroles
         location lReplacement = MetalocationToLocation(GetNthStoredTeleportTargetLocation(oUser, nRand));
 
         if(DEBUG) DoDebug("prc_inc_teleport: GetTeleportError(): Way Off Target - Replacement location rolled: " + DebugLocation2Str(lReplacement) + "\n"
-                        + "Replacement location is useable: " + BooleanToString(!(nLocs == 0 || lReplacement == lOriginal))
+                        + "Replacement location is useable: " + DebugBool2String(!(nLocs == 0 || lReplacement == lOriginal))
                           );
 
         if(nLocs == 0 || lReplacement == lOriginal)
@@ -809,7 +809,7 @@ void AllowTeleport(object oTarget, int bClearAll = FALSE)
 {
     if(DEBUG) DoDebug("AllowTeleport():\n"
                     + "oTarget = " + DebugObject2Str(oTarget) + "\n"
-                    + "bClearAll = " + BooleanToString(bClearAll) + "\n"
+                    + "bClearAll = " + DebugBool2String(bClearAll) + "\n"
                     + "\n"
                     + "Old blocking variable value: " + IntToString(GetLocalInt(oTarget, PRC_DISABLE_CREATURE_TELEPORT))
                       );

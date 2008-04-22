@@ -16,6 +16,7 @@
 
 #include "inc_dynconv"
 #include "prc_spell_const"
+#include "inc_persist_loca"
 
 //////////////////////////////////////////////////
 /* Constant defintions                          */

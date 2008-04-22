@@ -75,7 +75,7 @@ void main()
             else
                 bBothHandsHit = GetLocalInt(oTarget, REND_FIRST_MAINHAND_HIT_PREFIX + sPCOID);
 
-            if(DEBUG) DoDebug("prc_tw_rend: OnHit: bBothHandsHit = " + BooleanToString(bBothHandsHit));
+            if(DEBUG) DoDebug("prc_tw_rend: OnHit: bBothHandsHit = " + DebugBool2String(bBothHandsHit));
 
             // If both hands did hit, run the rending code
             if(bBothHandsHit)

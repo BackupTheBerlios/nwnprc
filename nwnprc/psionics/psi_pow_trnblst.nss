@@ -217,7 +217,7 @@ void DoRandomMove(object oTarget)
 /*DoDebug("DoRandomMove(): Jumping creature " + DebugObject2Str(oTarget) + "\n"
       + "Old location = " + DebugLocation2Str(GetLocation(oTarget)) + "\n"
       + "New location = " + DebugLocation2Str(lTargetDestination) + "\n"
-      + "Commandability = " + BooleanToString(bCommandable) + "\n"
+      + "Commandability = " + DebugBool2String(bCommandable) + "\n"
         );*/
     // Do some VFX during the jump delay
     DrawLineFromVectorToVector(DURATION_TYPE_INSTANT, VFX_IMP_WIND, oArea, vOrigin, vTarget, 0.0f,

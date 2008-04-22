@@ -137,8 +137,8 @@ void TeleportationCircle(object oCaster, int nCasterLvl, int bVisible, int bExte
     if(DEBUG) DoDebug("spinc_telecircle: Running TeleportationCircle()" + (GetLocalInt(oCaster, TC_FIRSTSTAGE_DONE) ? ": ERROR: Called while in second stage!":"") + "\n"
                     + "oCaster = " + DebugObject2Str(oCaster) + "\n"
                     + "nCasterLvl = " + IntToString(nCasterLvl) + "\n"
-                    + "bVisible = " + BooleanToString(bVisible) + "\n"
-                    + "bExtended = " + BooleanToString(bExtended) + "\n"
+                    + "bVisible = " + DebugBool2String(bVisible) + "\n"
+                    + "bExtended = " + DebugBool2String(bExtended) + "\n"
                       );
 
     // Get whether we are executing the first or the second part of the script

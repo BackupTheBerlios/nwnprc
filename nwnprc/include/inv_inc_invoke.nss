@@ -482,7 +482,7 @@ void UseInvocation(int nInvocation, int nClass, int nLevelOverride = 0)
                     + "nClass = " + IntToString(nClass) + "\n"
                     + "nLevelOverride = " + IntToString(nLevelOverride) + "\n"
                     + "invocation duration = " + IntToString(nInvocationDur) + "ms \n"
-                    //+ "Token exists = " + BooleanToString(GetIsObjectValid(oInvokeToken))
+                    //+ "Token exists = " + DebugBool2String(GetIsObjectValid(oInvokeToken))
                       );
 
     // Create the invocation token. Deletes any old tokens and cancels corresponding invocations as a side effect
@@ -517,7 +517,7 @@ string DebugInvocation2Str(struct invocation invoked)
     string sRet;
 
     sRet += "oInvoker = " + DebugObject2Str(invoked.oInvoker) + "\n";
-    sRet += "bCanInvoke = " + BooleanToString(invoked.bCanInvoke) + "\n";
+    sRet += "bCanInvoke = " + DebugBool2String(invoked.bCanInvoke) + "\n";
     sRet += "nInvokerLevel = "  + IntToString(invoked.nInvokerLevel);
 
     return sRet;

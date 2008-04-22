@@ -216,7 +216,7 @@ void ScryMain(object oPC, object oTarget)
     
     if(DEBUG) DoDebug("prc_inc_scry running.\n"
                     + "oPC = '" + GetName(oPC) + "' - '" + GetTag(oPC) + "' - " + ObjectToString(oPC)
-                    + "Copy exists: " + BooleanToString(GetIsObjectValid(oCopy))
+                    + "Copy exists: " + DebugBool2String(GetIsObjectValid(oCopy))
                       );
 
     // Create the copy

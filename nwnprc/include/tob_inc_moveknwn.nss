@@ -283,7 +283,7 @@ int AddManeuverKnown(object oCreature, int nList, int n2daRow, int nType, int bL
                         + "oCreature = " + DebugObject2Str(oCreature) + "\n"
                         + "nList = " + IntToString(nList) + "\n"
                         + "n2daRow = " + IntToString(n2daRow) + "\n"
-                        + "bLevelDependent = " + BooleanToString(bLevelDependent) + "\n"
+                        + "bLevelDependent = " + DebugBool2String(bLevelDependent) + "\n"
                         + "nLevelToTieTo = " + IntToString(nLevelToTieTo) + "\n"
                         + "nSpells2daRow = " + IntToString(nSpells2daRow) + "\n"
                           );

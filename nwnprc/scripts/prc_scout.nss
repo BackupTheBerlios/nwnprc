@@ -260,7 +260,7 @@ void main()
             DestroyObject(oTestWP);
             CreateObject(OBJECT_TYPE_WAYPOINT, "nw_waypoint001", GetLocation(oPC), FALSE, sWPTag);
 
-            if(DEBUG) DoDebug("prc_scout: Moved enough: " + BooleanToString(fDist >= fCheck));
+            if(DEBUG) DoDebug("prc_scout: Moved enough: " + DebugBool2String(fDist >= fCheck));
 
             // Moved the distance
             if (fDist >= fCheck)

@@ -157,8 +157,8 @@ void Teleport(object oCaster, int nCasterLvl, int bTeleportParty, int bErrorLess
     if(DEBUG) DoDebug("spinc_teleport: Running Teleport()" + /*(GetLocalInt(oCaster, TP_FIRSTSTAGE_DONE) ? ": ERROR: Called while in second stage!":*/("\n"
                     + "oCaster = " + DebugObject2Str(oCaster) + "\n"
                     + "nCasterLvl = " + IntToString(nCasterLvl) + "\n"
-                    + "bTeleportParty = " + BooleanToString(bTeleportParty) + "\n"
-                    + "bErrorLess = " + BooleanToString(bErrorLess) + "\n"
+                    + "bTeleportParty = " + DebugBool2String(bTeleportParty) + "\n"
+                    + "bErrorLess = " + DebugBool2String(bErrorLess) + "\n"
                     + "sScriptToCall = '" + sScriptToCall + "'\n"
                       /*)*/));
 

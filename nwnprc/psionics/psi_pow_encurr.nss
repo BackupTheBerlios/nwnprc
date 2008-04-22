@@ -268,9 +268,9 @@ void SecondaryTargetsCheck(object oManifester, object oMainTarget, int nSecondar
            )
         {
 /*DoDebug("SecondaryTargetsCheck(): Needs replacement\n"
-      + "!GetIsObjectValid(oTest) = " + BooleanToString(!GetIsObjectValid(oTest)) + "\n"
-      + "GetCurrentHitPoints(oTest) < 0 = " + BooleanToString(GetCurrentHitPoints(oTest) < 0) + "\n"
-      + "GetDistanceBetween(oTest, oMainTarget) > fRange = " + BooleanToString(GetDistanceBetween(oTest, oMainTarget) > fRange) + "\n"
+      + "!GetIsObjectValid(oTest) = " + DebugBool2String(!GetIsObjectValid(oTest)) + "\n"
+      + "GetCurrentHitPoints(oTest) < 0 = " + DebugBool2String(GetCurrentHitPoints(oTest) < 0) + "\n"
+      + "GetDistanceBetween(oTest, oMainTarget) > fRange = " + DebugBool2String(GetDistanceBetween(oTest, oMainTarget) > fRange) + "\n"
         );*/
             // If one doesn't, clear the array entry and set the return value to indicate that secondary targets need to be reselected
             array_set_object(oManifester, SECONDARY_TARGETS_ARRAY, i, OBJECT_INVALID);

@@ -559,7 +559,7 @@ void UseManeuver(int nManeuver, int nClass, int nLevelOverride = 0)
                     + "nClass = " + IntToString(nClass) + "\n"
                     + "nLevelOverride = " + IntToString(nLevelOverride) + "\n"
                     + "maneuver duration = " + IntToString(nMoveDur) + "ms \n"
-                    //+ "Token exists = " + BooleanToString(GetIsObjectValid(oMoveToken))
+                    //+ "Token exists = " + DebugBool2String(GetIsObjectValid(oMoveToken))
                       );
 
     // Create the maneuver token. Deletes any old tokens and cancels corresponding maneuvers as a side effect
@@ -597,7 +597,7 @@ string DebugManeuver2Str(struct maneuver move)
     string sRet;
 
     sRet += "oInitiator = " + DebugObject2Str(move.oInitiator) + "\n";
-    sRet += "bCanManeuver = " + BooleanToString(move.bCanManeuver) + "\n";
+    sRet += "bCanManeuver = " + DebugBool2String(move.bCanManeuver) + "\n";
     sRet += "nInitiatorLevel = "  + IntToString(move.nInitiatorLevel);
 
     return sRet;

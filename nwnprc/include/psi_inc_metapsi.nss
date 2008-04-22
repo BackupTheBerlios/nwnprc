@@ -533,7 +533,7 @@ void EvaluateChainPower(struct manifestation manif, object oPrimaryTarget, int b
         if(DEBUG) DoDebug("EvaluateChainPower(): ERROR: Cannot create target array!\n"
                         + "manif = " + DebugManifestation2Str(manif) + "\n"
                         + "oPrimaryTarget = " + DebugObject2Str(oPrimaryTarget) + "\n"
-                        + "bAutoDelete = " + BooleanToString(bAutoDelete) + "\n"
+                        + "bAutoDelete = " + DebugBool2String(bAutoDelete) + "\n"
                           );
 
 	// Add the primary target to the array

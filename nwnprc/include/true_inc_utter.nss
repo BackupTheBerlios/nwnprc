@@ -436,7 +436,7 @@ void _UseUtteranceAux(object oTrueSpeaker, object oUtrToken, int nSpellId,
                     + "nUtter = " + IntToString(nUtter) + "\n"
                     + "nClass = " + IntToString(nClass) + "\n"
                     + "nLevelOverride = " + IntToString(nLevelOverride) + "\n"
-                    + "bQuickened = " + BooleanToString(bQuickened) + "\n"
+                    + "bQuickened = " + DebugBool2String(bQuickened) + "\n"
                       );
 
     // Make sure nothing has interrupted this utterance
@@ -574,8 +574,8 @@ void UseUtterance(int nUtter, int nClass, int nLevelOverride = 0)
                     + "nClass = " + IntToString(nClass) + "\n"
                     + "nLevelOverride = " + IntToString(nLevelOverride) + "\n"
                     + "utterance duration = " + IntToString(nUtterDur) + "ms \n"
-                    + "bQuicken = " + BooleanToString(bQuicken) + "\n"
-                    //+ "Token exists = " + BooleanToString(GetIsObjectValid(oUtrToken))
+                    + "bQuicken = " + DebugBool2String(bQuicken) + "\n"
+                    //+ "Token exists = " + DebugBool2String(GetIsObjectValid(oUtrToken))
                       );
 
     // Create the utterance token. Deletes any old tokens and cancels corresponding utterances as a side effect
@@ -610,12 +610,12 @@ string DebugUtterance2Str(struct utterance utter)
     string sRet;
 
     sRet += "oTrueSpeaker = " + DebugObject2Str(utter.oTrueSpeaker) + "\n";
-    sRet += "bCanUtter = " + BooleanToString(utter.bCanUtter) + "\n";
+    sRet += "bCanUtter = " + DebugBool2String(utter.bCanUtter) + "\n";
     sRet += "nTruespeakerLevel = "  + IntToString(utter.nTruespeakerLevel) + "\n";
 
-    sRet += "bEmpower  = " + BooleanToString(utter.bEmpower)  + "\n";
-    sRet += "bExtend   = " + BooleanToString(utter.bExtend)   + "\n";
-    sRet += "bQuicken  = " + BooleanToString(utter.bQuicken);//    + "\n";
+    sRet += "bEmpower  = " + DebugBool2String(utter.bEmpower)  + "\n";
+    sRet += "bExtend   = " + DebugBool2String(utter.bExtend)   + "\n";
+    sRet += "bQuicken  = " + DebugBool2String(utter.bQuicken);//    + "\n";
 
     return sRet;
 }

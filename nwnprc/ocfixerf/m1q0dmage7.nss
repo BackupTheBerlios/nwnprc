@@ -1,10 +1,9 @@
 // Added compatibility for PRC base classes
-#include "prc_alterations"
-
+#include "inc_debug"
+#include "prc_class_const"
 
 // This script creates a treasure item based on the class of the
 //PC who killed this creature
-#include "inc_utility"
 
 void main()
 {

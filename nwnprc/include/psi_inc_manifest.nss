@@ -709,9 +709,9 @@ void _UsePowerAux(object oManifester, object oMfToken, int nSpellId,
                     + "lTarget = " + DebugLocation2Str(lTarget) + "\n"
                     + "nPower = " + IntToString(nPower) + "\n"
                     + "nClass = " + IntToString(nClass) + "\n"
-                    + "bIsPsiLike = " + BooleanToString(bIsPsiLike) + "\n"
+                    + "bIsPsiLike = " + DebugBool2String(bIsPsiLike) + "\n"
                     + "nLevelOverride = " + IntToString(nLevelOverride) + "\n"
-                    + "bQuickened = " + BooleanToString(bQuickened) + "\n"
+                    + "bQuickened = " + DebugBool2String(bQuickened) + "\n"
                       );
 
     // Make sure nothing has interrupted this manifestation
@@ -912,11 +912,11 @@ void UsePower(int nPower, int nClass, int bIsPsiLike = FALSE, int nLevelOverride
     if(DEBUG) DoDebug("UsePower(): Manifester is " + DebugObject2Str(oManifester) + "\n"
                     + "nPower = " + IntToString(nPower) + "\n"
                     + "nClass = " + IntToString(nClass) + "\n"
-                    + "bIsPsiLike = " + BooleanToString(bIsPsiLike) + "\n"
+                    + "bIsPsiLike = " + DebugBool2String(bIsPsiLike) + "\n"
                     + "nLevelOverride = " + IntToString(nLevelOverride) + "\n"
                     + "Manifestation duration = " + IntToString(nManifDur) + "ms \n"
-                    + "bQuicken = " + BooleanToString(bQuicken) + "\n"
-                    //+ "Token exists = " + BooleanToString(GetIsObjectValid(oMfToken))
+                    + "bQuicken = " + DebugBool2String(bQuicken) + "\n"
+                    //+ "Token exists = " + DebugBool2String(GetIsObjectValid(oMfToken))
                       );
 
     // Create the manifestation token. Deletes any old tokens and cancels corresponding manifestations as a side effect
@@ -951,7 +951,7 @@ string DebugManifestation2Str(struct manifestation manif)
     string sRet;
 
     sRet += "oManifester = " + DebugObject2Str(manif.oManifester) + "\n";
-    sRet += "bCanManifest = " + BooleanToString(manif.bCanManifest) + "\n";
+    sRet += "bCanManifest = " + DebugBool2String(manif.bCanManifest) + "\n";
     sRet += "nPPCost = "           + IntToString(manif.nPPCost) + "\n";
     sRet += "nPsiFocUsesRemain = " + IntToString(manif.nPsiFocUsesRemain) + "\n";
     sRet += "nManifesterLevel = "  + IntToString(manif.nManifesterLevel) + "\n";
@@ -963,14 +963,14 @@ string DebugManifestation2Str(struct manifestation manif)
     sRet += "nTimesAugOptUsed_5 = " + IntToString(manif.nTimesAugOptUsed_5) + "\n";
     sRet += "nTimesGenericAugUsed = " + IntToString(manif.nTimesGenericAugUsed) + "\n";
 
-    sRet += "bChain    = " + BooleanToString(manif.bChain)    + "\n";
-    sRet += "bEmpower  = " + BooleanToString(manif.bEmpower)  + "\n";
-    sRet += "bExtend   = " + BooleanToString(manif.bExtend)   + "\n";
-    sRet += "bMaximize = " + BooleanToString(manif.bMaximize) + "\n";
-    sRet += "bSplit    = " + BooleanToString(manif.bSplit)    + "\n";
-    sRet += "bTwin     = " + BooleanToString(manif.bTwin)     + "\n";
-    sRet += "bWiden    = " + BooleanToString(manif.bWiden)    + "\n";
-    sRet += "bQuicken  = " + BooleanToString(manif.bQuicken);//    + "\n";
+    sRet += "bChain    = " + DebugBool2String(manif.bChain)    + "\n";
+    sRet += "bEmpower  = " + DebugBool2String(manif.bEmpower)  + "\n";
+    sRet += "bExtend   = " + DebugBool2String(manif.bExtend)   + "\n";
+    sRet += "bMaximize = " + DebugBool2String(manif.bMaximize) + "\n";
+    sRet += "bSplit    = " + DebugBool2String(manif.bSplit)    + "\n";
+    sRet += "bTwin     = " + DebugBool2String(manif.bTwin)     + "\n";
+    sRet += "bWiden    = " + DebugBool2String(manif.bWiden)    + "\n";
+    sRet += "bQuicken  = " + DebugBool2String(manif.bQuicken);//    + "\n";
 
     return sRet;
 }

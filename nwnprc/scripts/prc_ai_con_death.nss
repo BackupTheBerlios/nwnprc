@@ -1,5 +1,5 @@
-#include "prc_alterations"
-#include "inc_utility"
+#include "inc_pers_array"
+
 void main()
 {
     //ExecuteScript("nw_ch_ac7", OBJECT_SELF);

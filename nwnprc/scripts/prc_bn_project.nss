@@ -77,7 +77,7 @@ void main()
     
     if(DEBUG) DoDebug("prc_bn_project running.\n"
                     + "oPC = '" + GetName(oPC) + "' - '" + GetTag(oPC) + "' - " + ObjectToString(oPC)
-                    + "Copy exists: " + BooleanToString(GetIsObjectValid(oCopy))
+                    + "Copy exists: " + DebugBool2String(GetIsObjectValid(oCopy))
                       );
 
     // Check if there is a valid copy around.

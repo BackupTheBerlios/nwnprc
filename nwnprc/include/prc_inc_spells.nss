@@ -157,7 +157,7 @@ void PRCDecrementRemainingSpellUses(object oCreature, int nSpell);
 
 // wrapper for GetHasSpell, works for newspellbook 'fake' spells too
 // should return 0 if called with a normal spell when a character should be using the newspellbook
-int PRCGetHasSpell(int nSpell, object oCreature = OBJECT_SELF);
+int PRCGetHasSpell(int nRealSpellID, object oCreature = OBJECT_SELF);
 
 int PRCGetIsRealSpellKnown(int nRealSpellID, object oPC = OBJECT_SELF);
 

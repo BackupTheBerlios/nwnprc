@@ -34,4 +34,9 @@ void main()
 		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(1));
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 	}    
+    else
+    {
+        //  get to use curse again
+        IncrementRemainingFeatUses(oCaster, FEAT_HEXCURSE);
+    }
 }

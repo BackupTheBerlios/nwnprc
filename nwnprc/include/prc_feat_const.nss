@@ -2461,6 +2461,9 @@ const int FEAT_CWSM_FRIGHTFUL_PRESENCE        = 2359;
  const int FEAT_VIRTUOSO_SONG_OF_FURY          = 4175;
  const int FEAT_VIRTUOSO_REVEALING_MELODY      = 4176;
  const int FEAT_VIRTUOSO_PERFORMANCE           = 4177;
+ 
+// hexblade feats
+const int FEAT_HEXCURSE = 3664;
 
 // Status markers
 const int FEAT_INCORPOREAL                    = 4166;

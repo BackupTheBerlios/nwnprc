@@ -781,6 +781,12 @@ void FeatVirtuoso(object oPC)
     }
 }
 
+void HexCurse(object oPC)
+{
+    int nUses = (GetLevelByClass(CLASS_TYPE_HEXBLADE, oPC) + 3) / 4; // every 4 levels get 1 more use
+    FeatUsePerDay(oPC, FEAT_HEXCURSE, ABILITY_CHARISMA, nUses);
+}
+
 void FeatRacial(object oPC)
 {
     //Shifter bonus shifting uses
@@ -852,6 +858,7 @@ void FeatSpecialUsePerDay(object oPC)
     FeatUsePerDay(oPC, FEAT_WWOC_WIDEN_SPELL, ABILITY_CHARISMA, GetLevelByClass(CLASS_TYPE_WAR_WIZARD_OF_CORMYR, oPC));
     FeatUsePerDay(oPC, FEAT_COC_WRATH, ABILITY_CHARISMA, 3);
     FeatUsePerDay(oPC, FEAT_FIST_DAL_QUOR_STUNNING_STRIKE, -1, GetLevelByClass(CLASS_TYPE_FIST_DAL_QUOR, oPC));
+    HexCurse(oPC);
     FeatRacial(oPC);
 
     if(GetPersistantLocalInt(oPC, "PRC_SLA_Uses_1"))

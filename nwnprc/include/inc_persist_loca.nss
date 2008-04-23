@@ -182,7 +182,7 @@ void DeletePersistantLocalObject(object oPC, string sName);
 /*                  Includes                    */
 //////////////////////////////////////////////////
 
-#include "inc_item_props"
+#include "prc_inc_skin"
 
 
 //////////////////////////////////////////////////
@@ -336,4 +336,3 @@ void DeletePersistantLocalObject(object oPC, string sName)
 }
 
 // Test main
-//svoid main(){}

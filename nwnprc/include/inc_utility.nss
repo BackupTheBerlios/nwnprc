@@ -235,6 +235,15 @@ string ReplaceChars(string sString, string sToReplace, string sReplacement);
 void MyDestroyObject(object oObject);
 
 /**
+ * Checks to see if oPC has an item created by sResRef in his/her/it's inventory
+ *
+ * @param oPC     The creature whose inventory to search.
+ * @param sResRef The resref to look for in oPC's items.
+ * @return        TRUE if any items matching sResRef were found, FALSE otherwise.
+ */
+int GetHasItem(object oPC, string sResRef);
+
+/**
  * Calculates the base AC of the given armor.
  *
  * @param oArmor  An item of type BASE_ITEM_ARMOR
@@ -470,7 +479,8 @@ const int ERROR_CODE_5_ONCE_MORE5 = -1;
 // The following includes have dependencies on files linked via this file
 #include "inc_draw"       // includes inc_draw_text and inc_draw_tools
 #include "inc_draw_prc"
-#include "inc_pers_array"   // includes inc_array, inc_persist_loca, inc_item_props, inc_prc_npc and inc_2dacache
+#include "inc_pers_array"   // includes inc_array, inc_persist_loca, inc_item_props
+#include "inc_2dacache"
 #include "inc_eventhook"    // Should be after inc_pers_array, which it is dependent on
 #include "inc_heap"         // Should be after inc_pers_array, as it needs inc_array
 #include "inc_metalocation" // Depends on inc_persist_loca
@@ -712,6 +722,16 @@ void MyDestroyObject(object oObject)
         DestroyObject(oObject);
         DelayCommand(0.1f, MyDestroyObject(oObject));
     }
+}
+
+int GetHasItem(object oPC, string sResRef)
+{
+    object oItem = GetFirstItemInInventory(oPC);
+
+    while(GetIsObjectValid(oItem) && GetResRef(oItem) != sResRef)
+        oItem = GetNextItemInInventory(oPC);
+
+    return GetResRef(oItem) == sResRef;
 }
 
 int GetItemACBase(object oArmor)

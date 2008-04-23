@@ -47,12 +47,6 @@ void main()
         object oTarget = MyFirstObjectInShape(SHAPE_SPELLCONE, 18.28f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
         float fDur = 6.0f;
                 
-        //make sure it's not the PC
-        if(oTarget == oPC)
-        {
-                oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, 18.28f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
-        }
-        
         //Metamagic extend
         if(nMetaMagic == METAMAGIC_EXTEND)
         {
@@ -60,37 +54,40 @@ void main()
         }
                 
         while(GetIsObjectValid(oTarget))
-        {                               
-                if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
-                {
-                        nDC = SPGetSpellSaveDC(oTarget, oPC);
-                        
-                        if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC))
+        {
+                //make sure it's not the PC
+                if(oTarget != oPC)
+                {                        
+                        if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
                         {
-                                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectBlindness(), oTarget, fDur);
-                        }
-                        
-                        //evil take damage, separate saving throw                       
-                        if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL)
-                        {
-                                nDam = d6(min(5, nCasterLvl/2));
+                                nDC = SPGetSpellSaveDC(oTarget, oPC);
                                 
-                                //maximize
-                                if(nMetaMagic == METAMAGIC_MAXIMIZE)
+                                if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC))
                                 {
-                                        nDam = 6 * (min(5, nCasterLvl/2));
-                                }
-                                //empower
-                                if(nMetaMagic == METAMAGIC_EMPOWER)
-                                {
-                                        nDam += (nDam/2);
+                                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectBlindness(), oTarget, fDur);
                                 }
                                 
-                                if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC)) nDam = (nDam/2);
-                                
-                                //Apply damage                                                                                                          
-                                SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_DIVINE), oTarget);
-                                
+                                //evil take damage, separate saving throw                       
+                                if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL)
+                                {
+                                        nDam = d6(min(5, nCasterLvl/2));
+                                        
+                                        //maximize
+                                        if(nMetaMagic == METAMAGIC_MAXIMIZE)
+                                        {
+                                                nDam = 6 * (min(5, nCasterLvl/2));
+                                        }
+                                        //empower
+                                        if(nMetaMagic == METAMAGIC_EMPOWER)
+                                        {
+                                                nDam += (nDam/2);
+                                        }
+                                        
+                                        if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC)) nDam = (nDam/2);
+                                        
+                                        //Apply damage                                                                                                          
+                                        SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_DIVINE), oTarget);
+                                }
                         }
                 }
                 oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, 18.28f, lLoc, TRUE, OBJECT_TYPE_CREATURE);

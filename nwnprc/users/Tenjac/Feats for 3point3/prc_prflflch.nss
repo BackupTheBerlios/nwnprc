@@ -48,7 +48,7 @@ void main()
                 
                 int nDam;
                 
-                object oTarget = MyGetFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), lLoc, OBJECT_TYPE_CREATURE);
+                object oTarget = MyGetFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), lLoc, FALSE, OBJECT_TYPE_CREATURE);
                 
                 while(GetIsObjectValid(oTarget))
                 {
@@ -63,7 +63,7 @@ void main()
                                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(nDam), oTarget);                                
                         }
                         
-                        oTarget = MyGetNextObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), lLoc, OBJECT_TYPE_CREATURE);
+                        oTarget = MyGetNextObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), lLoc, FALSE, OBJECT_TYPE_CREATURE);
                 }
         
         else

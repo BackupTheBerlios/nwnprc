@@ -34,77 +34,74 @@ Created:   6/11/06
 
 void main()
 {
-	if(!X2PreSpellCastCode()) return;
-	
-	SPSetSchool(SPELL_SCHOOL_EVOCATION);
-	
-	object oPC = OBJECT_SELF;
-	int nCasterLvl = PRCGetCasterLevel(oPC);
-	int nDC;
-	int nMetaMagic = PRCGetMetaMagicFeat();
-	location lLoc = GetSpellTargetLocation();	
-	object oTarget = MyFirstObjectInShape(SHAPE_SPELLCONE, 18.28f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
-	float fDur = RoundsToSeconds(d6(2));
-	
-	//VFX
-	//effect eVis = EffectVisualEffect(?????);
-	//SPApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, lLoc);
-	
-	//make sure it's not the PC
-	if(oTarget == oPC)
-	{
-		oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, 18.28f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
-	}
-	
-	while(GetIsObjectValid(oTarget))
-	{		
-		if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
-		{
-			int nDam = d6(min(nCasterLvl,10));
-			
-			if(nMetaMagic == METAMAGIC_MAXIMIZE)
-			{
-				nDam = 6 * (min(nCasterLvl, 10));
-			}
-			if(nMetaMagic == METAMAGIC_EMPOWER)
-			{
-				nDam += (nDam/2);
-			}
-			if(nMetaMagic == METAMAGIC_EXTEND)
-			{
-				fDur += fDur;
-			}
-			
-			if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL)
-			{
-				nDC = SPGetSpellSaveDC(oTarget, oPC); 
-				
-				if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC))
-				{
-					nDam = nDam/2;					
-				}
-				
-				//Apply appropriate damage
-				SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_MAGICAL), oTarget);
-				
-				//Dazzled = -1 to Attack, Spot, and search
-				effect eDazzle = EffectLinkEffects(EffectAttackDecrease(1), EffectSkillDecrease(SKILL_SPOT, 1)); 
-				eDazzle = EffectLinkEffects(eDazzle, EffectSkillDecrease(SKILL_SEARCH, 1));
-				
-				SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDazzle, oTarget, fDur);
-			}
-		}
-		oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, 18.28f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
-	}
-	
-	//Sanctified spells get mandatory 10 pt good adjustment, regardless of switch
-	AdjustAlignment(oPC, ALIGNMENT_GOOD, 10);
-	
-	SPGoodShift(oPC);
-	SPSetSchool();
+        if(!X2PreSpellCastCode()) return;
+        
+        SPSetSchool(SPELL_SCHOOL_EVOCATION);
+        
+        object oPC = OBJECT_SELF;
+        int nCasterLvl = PRCGetCasterLevel(oPC);
+        int nDC;
+        int nMetaMagic = PRCGetMetaMagicFeat();
+        location lLoc = GetSpellTargetLocation();       
+        object oTarget = MyFirstObjectInShape(SHAPE_SPELLCONE, 18.28f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
+        float fDur = RoundsToSeconds(d6(2));
+                
+        //make sure it's not the PC
+        if(oTarget == oPC)
+        {
+                oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, 18.28f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
+        }
+        
+        while(GetIsObjectValid(oTarget))
+        {               
+                if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+                {
+                        int nDam = d6(min(nCasterLvl,10));
+                        
+                        if(nMetaMagic == METAMAGIC_MAXIMIZE)
+                        {
+                                nDam = 6 * (min(nCasterLvl, 10));
+                        }
+                        if(nMetaMagic == METAMAGIC_EMPOWER)
+                        {
+                                nDam += (nDam/2);
+                        }
+                        if(nMetaMagic == METAMAGIC_EXTEND)
+                        {
+                                fDur += fDur;
+                        }
+                        
+                        if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL)
+                        {
+                                nDC = SPGetSpellSaveDC(oTarget, oPC); 
+                                
+                                if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC))
+                                {
+                                        nDam = nDam/2;                                  
+                                }
+                                
+                                //Apply appropriate damage
+                                SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_MAGICAL), oTarget);
+                                
+                                //Dazzled = -1 to Attack, Spot, and search
+                                effect eDazzle = EffectLinkEffects(EffectAttackDecrease(1), EffectSkillDecrease(SKILL_SPOT, 1)); 
+                                eDazzle = EffectLinkEffects(eDazzle, EffectSkillDecrease(SKILL_SEARCH, 1));
+                                eDazzle = EffectLinkEffects(eDazzle, EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE));
+                                
+                                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDazzle, oTarget, fDur);
+                        }
+                }
+                oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, 18.28f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
+        }
+        
+        //Sanctified spells get mandatory 10 pt good adjustment, regardless of switch
+        AdjustAlignment(oPC, ALIGNMENT_GOOD, 10);
+        
+        SPGoodShift(oPC);
+        SPSetSchool();
 }
-		
-		
-		
-	
-	
+                
+                
+                
+        
+        

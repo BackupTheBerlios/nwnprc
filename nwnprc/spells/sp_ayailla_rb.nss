@@ -34,79 +34,75 @@ Created:   6/1/06
 
 void main()
 {
-	if(!X2PreSpellCastCode()) return;
-	
-	SPSetSchool(SPELL_SCHOOL_EVOCATION);
-	
-	object oPC = OBJECT_SELF;
-	int nCasterLvl = PRCGetCasterLevel(oPC);
-	int nDC;
-	int nDam;
-	int nMetaMagic = PRCGetMetaMagicFeat();
-	location lLoc = GetSpellTargetLocation();	
-	object oTarget = MyFirstObjectInShape(SHAPE_SPELLCONE, 18.28f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
-	float fDur = 6.0f;
-	//effect eVis = EffectVisualEffect(?????); 
-	
-	//make sure it's not the PC
-	if(oTarget == oPC)
-	{
-		oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, 18.28f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
-	}
-	
-	//Metamagic extend
-	if(nMetaMagic == METAMAGIC_EXTEND)
-	{
-		fDur = fDur * 2;
-	}
-	
-	//VFX
-	//SPApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, lLoc);
-	
-	while(GetIsObjectValid(oTarget))
-	{				
-		if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
-		{
-			nDC = SPGetSpellSaveDC(oTarget, oPC);
-			
-			if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC))
-			{
-				SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectBlindness(), oTarget, fDur);
-			}
-			
-			//evil take damage, separate saving throw			
-			if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL)
-			{
-				if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC))
-				{
-					nDam = d6(min(5, nCasterLvl/2));
-					
-					//maximize
-					if(nMetaMagic == METAMAGIC_MAXIMIZE)
-					{
-						nDam = 6 * (min(5, nCasterLvl/2));
-					}
-					//empower
-					if(nMetaMagic == METAMAGIC_EMPOWER)
-					{
-						nDam += (nDam/2);
-					}
-					//Apply damage														
-					SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_MAGICAL), oTarget);
-				}
-			}
-		}
-		oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, 18.28f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
-	}
-	
-	//Bwahah... yes, it's secretly Corruption cost and not Sacrifice :P
-	DoCorruptionCost(oPC, ABILITY_STRENGTH, d2(), 0);
-	
-	//Sanctified spells get mandatory 10 pt good adjustment, regardless of switch
-	AdjustAlignment(oPC, ALIGNMENT_GOOD, 10);
-	
-	SPGoodShift(oPC);
-	
-	SPSetSchool();
-}
-	
+        if(!X2PreSpellCastCode()) return;
+        
+        SPSetSchool(SPELL_SCHOOL_EVOCATION);
+        
+        object oPC = OBJECT_SELF;
+        int nCasterLvl = PRCGetCasterLevel(oPC);
+        int nDC;
+        int nDam;
+        int nMetaMagic = PRCGetMetaMagicFeat();
+        location lLoc = GetSpellTargetLocation();       
+        object oTarget = MyFirstObjectInShape(SHAPE_SPELLCONE, 18.28f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
+        float fDur = 6.0f;
+                
+        //make sure it's not the PC
+        if(oTarget == oPC)
+        {
+                oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, 18.28f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
+        }
+        
+        //Metamagic extend
+        if(nMetaMagic == METAMAGIC_EXTEND)
+        {
+                fDur = fDur * 2;
+        }
+                
+        while(GetIsObjectValid(oTarget))
+        {                               
+                if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+                {
+                        nDC = SPGetSpellSaveDC(oTarget, oPC);
+                        
+                        if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC))
+                        {
+                                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectBlindness(), oTarget, fDur);
+                        }
+                        
+                        //evil take damage, separate saving throw                       
+                        if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL)
+                        {
+                                nDam = d6(min(5, nCasterLvl/2));
+                                
+                                //maximize
+                                if(nMetaMagic == METAMAGIC_MAXIMIZE)
+                                {
+                                        nDam = 6 * (min(5, nCasterLvl/2));
+                                }
+                                //empower
+                                if(nMetaMagic == METAMAGIC_EMPOWER)
+                                {
+                                        nDam += (nDam/2);
+                                }
+                                
+                                if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC)) nDam = (nDam/2);
+                                
+                                //Apply damage                                                                                                          
+                                SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_DIVINE), oTarget);
+                                
+                        }
+                }
+                oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, 18.28f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
+        }
+        
+        //Bwahah... yes, it's secretly Corruption cost and not Sacrifice :P
+        DoCorruptionCost(oPC, ABILITY_STRENGTH, d2(), 0);
+        
+        //Sanctified spells get mandatory 10 pt good adjustment, regardless of switch
+        AdjustAlignment(oPC, ALIGNMENT_GOOD, 10);
+        
+        SPGoodShift(oPC);
+        
+        SPSetSchool();
+}    

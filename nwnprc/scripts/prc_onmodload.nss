@@ -14,6 +14,7 @@
 #include "prc_alterations"
 #include "prc_inc_leadersh"
 #include "inc_switch_setup"
+#include "inc_cache_setup"
 
 
 //////////////////////////////////////////////////

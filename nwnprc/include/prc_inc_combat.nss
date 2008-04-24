@@ -6409,6 +6409,7 @@ void ApplyOnHitAbilities(object oTarget, object oItemWielder, object oItem)
     int iParam1;
     int bOnHitCastSpell = FALSE;
     struct OnHitSpell sSpell;
+    array_create(oItemWielder, "ohspl"); // This is used here and in prc_inc_onhit
 
     effect eEffect;
 
@@ -6445,10 +6446,10 @@ void ApplyOnHitAbilities(object oTarget, object oItemWielder, object oItem)
                 {
                     iNr++;
                     // store the spell ID in an array and execute the spell later, this is safer than trying to execute the spell script directly
-                    SetLocalArrayInt(oItemWielder, "ohspl", iNr, sSpell.iSpellID);
+                    array_set_int(oItemWielder, "ohspl", iNr, sSpell.iSpellID);
 
                     iNr++;
-                    SetLocalArrayInt(oItemWielder, "ohspl", iNr, sSpell.iDC);
+                    array_set_int(oItemWielder, "ohspl", iNr, sSpell.iDC);
                 }
                 break;
             }
@@ -6487,9 +6488,9 @@ void ApplyOnHitAbilities(object oTarget, object oItemWielder, object oItem)
     // now execute the spell scripts (note that the local array will not be deleted)
     while (iNr)
     {
-        sSpell.iDC = GetLocalArrayInt(oItemWielder, "ohspl", iNr);
+        sSpell.iDC = array_get_int(oItemWielder, "ohspl", iNr);
         iNr--;
-        sSpell.iSpellID = GetLocalArrayInt(oItemWielder, "ohspl", iNr);
+        sSpell.iSpellID = array_get_int(oItemWielder, "ohspl", iNr);
         iNr--;
         // we might have to determine an appropriate caster level (minimum for spell?) and an appropriate class from the spellID
         CastSpellAtObject(sSpell.iSpellID, oTarget, METAMAGIC_NONE, 0, 0, sSpell.iDC, OBJECT_INVALID, oItemWielder);

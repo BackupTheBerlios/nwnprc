@@ -619,7 +619,7 @@ void ApplyAllOnHitCastSpellsOnItem(object oTarget = OBJECT_INVALID, object oItem
 			iNr++;
 			// store the spell ID in an array and execute the spell later, this is safer than trying to execute the spell script directly
 			// lets hope that nobody else uses our name "ohspl" for the array
-			SetLocalArrayInt(oCaster, "ohspl", iNr, iSubType);
+			array_set_int(oCaster, "ohspl", iNr, iSubType);
 		}
 		ip = GetNextItemProperty(oItem);
 	}
@@ -627,7 +627,7 @@ void ApplyAllOnHitCastSpellsOnItem(object oTarget = OBJECT_INVALID, object oItem
 	// now execute the spell scripts (note that the local array will not be deleted) 
 	while (iNr)
 	{
-		iSubType = GetLocalArrayInt(oCaster, "ohspl", iNr);
+		iSubType = array_get_int(oCaster, "ohspl", iNr);
 //DoDebug("ApplyAllOnHitCastSpellsExcludingSubType: executing onhitcastspell subtype # " + IntToString(iSubType));
 		ApplyOnHitCastSpellSubType(iSubType, oTarget, oItemPassed, oCaster);
 		iNr--;
@@ -665,7 +665,7 @@ void ApplyAllOnHitCastSpellsOnItemExcludingSubType(int iExcludeSubType, object o
 			iNr++;
 			// store the spell ID in an array and execute the spell later, this is safer than trying to execute the spell script directly
 			// lets hope that nobody else uses our name "ohspl" for the array
-			SetLocalArrayInt(oCaster, "ohspl", iNr, iSubType);
+			array_set_int(oCaster, "ohspl", iNr, iSubType);
 		}
 		ip = GetNextItemProperty(oItem);
 	}
@@ -673,7 +673,7 @@ void ApplyAllOnHitCastSpellsOnItemExcludingSubType(int iExcludeSubType, object o
 	// now execute the spell scripts (note that the local array will not be deleted) 
 	while (iNr)
 	{
-		iSubType = GetLocalArrayInt(oCaster, "ohspl", iNr);
+		iSubType = array_get_int(oCaster, "ohspl", iNr);
 //DoDebug("ApplyAllOnHitCastSpellsExcludingSubType: executing onhitcastspell subtype # " + IntToString(iSubType));
 		ApplyOnHitCastSpellSubType(iSubType, oTarget, oItemPassed, oCaster);
 		iNr--;

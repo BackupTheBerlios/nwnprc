@@ -201,7 +201,7 @@ void ScryMain(object oPC, object oTarget)
         nSpell != POWER_CLAIRVOYANT_SENSE && nSpell != TRUE_SEE_THE_NAMED && oPC != oTarget) // No save if you target yourself.
     {
     	//Make SR Check
-    	if (MyPRCResistSpell(oPC, oTarget, nCasterLevel)) 
+    	if (PRCDoResistSpell(oPC, oTarget, nCasterLevel)) 
     	{
     		FloatingTextStringOnCreature(GetName(oTarget) + " made Spell Resistance check vs Scrying", oPC, FALSE);
     		return;

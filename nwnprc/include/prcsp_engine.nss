@@ -9,7 +9,7 @@ const int SPELL_RESIST_PASS = 1;
 const int SPELL_RESIST_GLOBE = 2;
 const int SPELL_RESIST_MANTLE = 3;
 
-int MyPRCResistSpell(object oCaster, object oTarget, int nEffCasterLvl=0, float fDelay = 0.0);
+int PRCDoResistSpell(object oCaster, object oTarget, int nEffCasterLvl=0, float fDelay = 0.0);
 
 int CheckSpellfire(object oCaster, object oTarget, int bFriendly = FALSE);
 
@@ -127,7 +127,7 @@ void PRCShowSpellResist(object oCaster, object oTarget, int nResist, float fDela
 //  This function overrides the BioWare MyResistSpell.
 //  TODO: Change name to PRCMyResistSpell.
 //
-int MyPRCResistSpell(object oCaster, object oTarget, int nEffCasterLvl=0, float fDelay = 0.0)
+int PRCDoResistSpell(object oCaster, object oTarget, int nEffCasterLvl=0, float fDelay = 0.0)
 {
     int nResist;
 

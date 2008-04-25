@@ -20,7 +20,7 @@
 //
 // Functions that have no direct bioware equivalent, but allow for hooks into the spell code.
 //
-//  int SPGetElementalDamageType(int nDamageType, object oCaster = OBJECT_SELF)
+//  int PRCGetElementalDamageType(int nDamageType, object oCaster = OBJECT_SELF)
 //  void SPSetSchool(int nSchool = SPELL_SCHOOL_GENERAL)
 //
 // Functions that manipulate metamagic, these have no direct bioware equivalents, but should be called
@@ -52,90 +52,36 @@
 //      oCaster - caster object.
 
 ///////////////////////////////////////////////////////////////////////////
-
-// returns TRUE if oTarget is alive
-// will return FALSE for non-creature objects
-int PRCGetIsAliveCreature(object oTarget);
-
+/*
 #include "prc_alterations"
 #include "prc_inc_function"
 #include "X2_I0_SPELLS"
 #include "x2_inc_spellhook"
-
+*/
 
 // Coding issues with this one, need a collection of targets for napalm effect.
 const int SPELL_LIQUID_FIRE                 = 0;
 
 //const int SPELL_
 
-
-//
-// Time duration methods that are missing from BioWare's code, to do
-// minute / level and 10 minute / level spells in scaled time.
-//
-
-float MinutesToSeconds(int minutes)
-{
-    return TurnsToSeconds(minutes);
-/*
-    // Use HoursToSeconds to figure out how long a scaled minute
-    // is and then calculate the number of real seconds based
-    // on that.
-    float scaledMinute = HoursToSeconds(1) / 60.0;
-    float totalMinutes = minutes * scaledMinute;
-
-    // Return our scaled duration, but before doing so check to make sure
-    // that it is at least as long as a round / level (time scale is in
-    // the module properties, it's possible a minute / level could last less
-    // time than a round / level !, so make sure they get at least as much
-    // time as a round / level.
-    float totalRounds = RoundsToSeconds(minutes);
-    float result = totalMinutes > totalRounds ? totalMinutes : totalRounds;
-    return result;
-*/
-}
-
-float TenMinutesToSeconds(int tenMinutes)
-{
-    return TurnsToSeconds(tenMinutes) * 10;
-/*
-    // Use HoursToSeconds to figure out how long a scaled 10 minute
-    // duration is and then calculate the number of real seconds based
-    // on that.
-    float scaledMinute = HoursToSeconds(1) / 6.0;
-    float totalMinutes = tenMinutes * scaledMinute;
-
-    // Return our scaled duration, but before doing so check to make sure
-    // that it is at least as long as a round / level (time scale is in
-    // the module properties, it's possible a 10 minute / level could last less
-    // time than a round / level !, so make sure they get at least as much
-    // time as a round / level.
-    float totalRounds = RoundsToSeconds(tenMinutes);
-    float result = totalMinutes > totalRounds ? totalMinutes : totalRounds;
-    return result;
-*/
-}
-
-
-
 //
 // Wrappers for the PRC stuff in prc_alterations.nss, to keep my scripts somewhat isolated
 // just in case it needs to get ripped out or changed.
 //
-
+/* DEPRECIATED*/
 // New function for SR checks to take PRC levels into account.
 //      oCaster - caster object.
 //      oTargret - target object.
 //      fDelay - delay before visual effect is played.
-//      automaticCleanup - TRUE if PRCResistSpellEnd() should be called via
+//      automaticCleanup - TRUE if PRCDoResistSpellEnd() should be called via
 //      DelayCommand(), FALSE if the spell script will do it.
 int SPResistSpell(object oCaster, object oTarget,int nCasterLevel = 0, float fDelay = 0.0 )
 {
 //  return MyResistSpell(oCaster, oTarget, fDelay);
-    int result = MyPRCResistSpell(oCaster, oTarget,nCasterLevel, fDelay);
+    int result = PRCDoResistSpell(oCaster, oTarget,nCasterLevel, fDelay);
     return result;
 }
-
+/* DEPRECIATED*/
 // New function for adjusted save DC's. Seems like this needs more than the caster
 // for things like elemental savant. (need spell damage type?)
 //      oCaster - caster object.
@@ -143,29 +89,7 @@ int SPGetSpellSaveDC(object oTarget , object oCaster )
 {
     return PRCGetSaveDC(oTarget,oCaster);
 }
-
-// Get altered damage type for energy sub feats.
-//      nDamageType - The DAMAGE_TYPE_xxx constant of the damage. All types other
-//          than elemental damage types are ignored.
-//      oCaster - caster object.
-int SPGetElementalDamageType(int nDamageType, object oCaster = OBJECT_SELF)
-{
-    // Only apply change to elemental damages.
-    int nOldDamageType = nDamageType;
-    switch (nDamageType)
-    {
-    case DAMAGE_TYPE_ACID:
-    case DAMAGE_TYPE_COLD:
-    case DAMAGE_TYPE_ELECTRICAL:
-    case DAMAGE_TYPE_FIRE:
-    case DAMAGE_TYPE_SONIC:
-        nDamageType = ChangedElementalDamage(oCaster, nDamageType);
-    }
-
-    return nDamageType;
-}
-
-
+/* DEPRECIATED*/
 // This function gets the meta magic int value
 int SPGetMetaMagic()
 {
@@ -176,7 +100,7 @@ int SPGetMetaMagic()
     //nMetaMagic = PRCGetMetamagic(nMetaMagic);
     return nMetaMagic;
 }
-
+/* DEPRECIATED*/
 // This function rolls damage and applies metamagic feats to the damage.
 //      nDamageType - The DAMAGE_TYPE_xxx constant for the damage, or -1 for no
 //          a non-damaging effect.
@@ -196,7 +120,7 @@ int SPGetMetaMagicDamage(int nDamageType, int nDice, int nDieSize,
     int nDamage = PRCMaximizeOrEmpower(nDieSize, nDice, nMetaMagic, (nBonusPerDie * nDice) + nBonus);
     return nDamage;
 }
-
+/* DEPRECIATED */
 // This function applies metamagic to a spell's duration, returning the new duration.
 //      fDuration - the spell's normal duration.
 //      nMetaMagic - metamagic constant, if -1 GetMetaMagic() is called.
@@ -209,7 +133,7 @@ float SPGetMetaMagicDuration(float fDuration, int nMetaMagic = -1)
     if (nMetaMagic & METAMAGIC_EXTEND) fDuration *= 2.0;
     return fDuration;
 }
-
+/* DEPRECIATED */
 // Function to save the school of the currently cast spell in a variable.  This should be
 // called at the beginning of the script to set the spell school (passing the school) and
 // once at the end of the script (with no arguments) to delete the variable.
@@ -222,7 +146,7 @@ void SPSetSchool(int nSchool = SPELL_SCHOOL_GENERAL)
     if (SPELL_SCHOOL_GENERAL != nSchool)
         SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", nSchool);
 }
-
+/* depreciated */
 // Function to raise the spell cast at event.
 //      oTarget - Target of the spell.
 //      bHostile - TRUE if the spell is a hostile act.
@@ -235,7 +159,7 @@ void SPRaiseSpellCastAt(object oTarget, int bHostile = TRUE, int nSpellID = -1, 
     //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(oCaster, nSpellID, bHostile));
 }
-
+/* DEPRECIATED */
 // Function to return a damage effect.
 //      nDamageAmount - Amount of damage to apply.
 //      nDamageType - DAMAGE_TYPE_xxx for the type of damage.
@@ -249,7 +173,7 @@ effect SPEffectDamage(int nDamageAmount, int nDamageType = DAMAGE_TYPE_MAGICAL,
     //return EffectPRCDamage(nDamageAmount, nDamageType, nDamagePower);
 }
 
-
+/* DEPRECIATED */
 // Function to return damage shield effect
 //      nDamageAmount - Amount of damage to apply.
 //      nRandomAmount - DAMAGE_BONUS_xxx for amount of random bonus damage to apply.
@@ -262,7 +186,7 @@ effect SPEffectDamageShield(int nDamageAmount, int nRandomAmount, int nDamageTyp
     //return EffectPRCDamageShield(nDamageAmount, nRandomAmount, nDamageType);
 }
 
-
+/* DEPRECIATED */
 // Function to return healing effect
 //      nAmountToHeal - Amount of damage to heal.
 effect SPEffectHeal(int nAmountToHeal)
@@ -272,7 +196,7 @@ effect SPEffectHeal(int nAmountToHeal)
     // EffectPRCHeal() method.  So just call the bioware default.
     //return EffectPRCHeal(nAmountToHeal);
 }
-
+/*DEPRECIATED */
 // Function to return temporary hit points effect
 //      nHitPoints - Number of temp. hit points.
 effect SPEffectTemporaryHitpoints(int nHitPoints)
@@ -283,22 +207,3 @@ effect SPEffectTemporaryHitpoints(int nHitPoints)
     //return EffectPRCTemporaryHitpoints(nHitPoints);
 }
 
-int PRCGetIsAliveCreature(object oTarget)
-{
-        int bAlive = TRUE;
-        // non-creatures aren't alive
-        if (GetObjectType(oTarget) != OBJECT_TYPE_CREATURE)
-            return FALSE; // night of the living waypoints :p
-        
-        int nType = MyPRCGetRacialType(oTarget);
-        
-        //Non-living races
-        if(nType == RACIAL_TYPE_UNDEAD ||
-           nType == RACIAL_TYPE_CONSTRUCT) bAlive = FALSE;
-           
-        //If they're dead :P
-        if(GetIsDead(oTarget)) bAlive = FALSE;
-        
-        //return
-        return bAlive;
-}

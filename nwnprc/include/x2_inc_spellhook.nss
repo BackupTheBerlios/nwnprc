@@ -978,7 +978,7 @@ void VoidCounterspellExploitCheck()
 // increased, because for every new spell 100-250 kByte less code need to be loaded into memory
 // and NWN has more free memory available to keep more spells scripts (and other crucial scripts)
 //in RAM
-int X2PreSpellCastCode()
+/*int X2PreSpellCastCode()
 {
     object oCaster = OBJECT_SELF;
 
@@ -990,7 +990,7 @@ int X2PreSpellCastCode()
 
         return nReturn;
 }
-
+moved to prc_spellhook */
 //------------------------------------------------------------------------------
 // if FALSE is returned by this function, the spell will not be cast
 // the order in which the functions are called here DOES MATTER, changing it

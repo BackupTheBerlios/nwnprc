@@ -1,9 +1,9 @@
-#include "spinc_common"
+#include "prc_inc_spells"
 
 
 void DoOrb(effect eVis, effect eFailSave, int nSaveType, int nDamageType, int nSpellID = -1)
 {
-     SPSetSchool(SPELL_SCHOOL_EVOCATION);
+     PRCSetSchool(SPELL_SCHOOL_EVOCATION);
 
      object oTarget = PRCGetSpellTargetObject();
      int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
@@ -19,17 +19,17 @@ void DoOrb(effect eVis, effect eFailSave, int nSaveType, int nDamageType, int nS
              if (-1 == nSpellID) nSpellID = PRCGetSpellId();
              
              // Adjust the damage type of necessary.
-             nDamageType = SPGetElementalDamageType(nDamageType, OBJECT_SELF);
+             nDamageType = PRCGetElementalDamageType(nDamageType, OBJECT_SELF);
              
              effect eMissile = EffectVisualEffect(VFX_IMP_MIRV);
              
              if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
              {
                      //Fire cast spell at event for the specified target
-                     SPRaiseSpellCastAt(oTarget, TRUE, nSpellID);
+                     PRCSignalSpellEvent(oTarget, TRUE, nSpellID);
                      
                      //Roll damage for each target
-                     int nDamage = SPGetMetaMagicDamage(nDamageType, nDice, 6);
+                     int nDamage = PRCGetMetaMagicDamage(nDamageType, nDice, 6);
                      nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
                      
                      // Apply the damage and the damage visible effect to the target.
@@ -42,7 +42,7 @@ void DoOrb(effect eVis, effect eFailSave, int nSaveType, int nDamageType, int nS
                      SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eFailSave, oTarget, RoundsToSeconds(1),TRUE,-1,nCasterLvl);
              }           
      }
-     SPSetSchool();
+     PRCSetSchool();
 }
 
 // Test main

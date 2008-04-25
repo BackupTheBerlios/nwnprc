@@ -1,11 +1,11 @@
 
 #include "prc_inc_sp_tch"
 #include "prc_inc_combat"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void DoLesserOrb(effect eVis, int nDamageType, int nSpellID = -1)
 {
-     SPSetSchool(SPELL_SCHOOL_CONJURATION);
+     PRCSetSchool(SPELL_SCHOOL_CONJURATION);
 
      object oTarget = PRCGetSpellTargetObject();
      int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
@@ -18,12 +18,12 @@ void DoLesserOrb(effect eVis, int nDamageType, int nSpellID = -1)
      if (-1 == nSpellID) nSpellID = GetSpellId();
 
      // Adjust the damage type of necessary.
-     nDamageType = SPGetElementalDamageType(nDamageType, OBJECT_SELF);
+     nDamageType = PRCGetElementalDamageType(nDamageType, OBJECT_SELF);
 
      if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
      {
           // Fire cast spell at event for the specified target
-          SPRaiseSpellCastAt(oTarget, TRUE, nSpellID);
+          PRCSignalSpellEvent(oTarget, TRUE, nSpellID);
 
           // Note that this spell has no spell resistance intentionally in the WotC Miniatures
           // Handbook, bit powerful but that's how it is in the PnP book.
@@ -33,7 +33,7 @@ void DoLesserOrb(effect eVis, int nDamageType, int nSpellID = -1)
           if (nTouchAttack > 0)
           {
                // Roll the damage, doing double damage on a crit.
-               int nDamage = SPGetMetaMagicDamage(nDamageType, 1 == nTouchAttack ? nDice : (nDice * 2), 8);
+               int nDamage = PRCGetMetaMagicDamage(nDamageType, 1 == nTouchAttack ? nDice : (nDice * 2), 8);
                nDamage += SpellSneakAttackDamage(OBJECT_SELF, oTarget);
                nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
 
@@ -44,7 +44,7 @@ void DoLesserOrb(effect eVis, int nDamageType, int nSpellID = -1)
           }
      }
 
-     SPSetSchool();
+     PRCSetSchool();
 }
 
 // Test main

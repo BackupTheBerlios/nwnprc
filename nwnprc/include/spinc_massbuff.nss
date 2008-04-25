@@ -10,7 +10,7 @@
 //
 /////////////////////////////////////////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 
 const int MASSBUFF_STAT =			0;
@@ -35,7 +35,7 @@ void StripBuff(object oTarget, int nBuffSpellID, int nMassBuffSpellID)
 
 void DoMassBuff (int nBuffType, int nBuffSubType, int nBuffSpellID, int nSpellID = -1)
 {
-	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+	PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
 
 	// Get the spell target location as opposed to the spell target.
 	location lTarget = PRCGetSpellTargetLocation();
@@ -66,7 +66,7 @@ void DoMassBuff (int nBuffType, int nBuffSubType, int nBuffSpellID, int nSpellID
 	float fDelay;
 
 	// Determine the spell's duration.
-	float fDuration = SPGetMetaMagicDuration(HoursToSeconds(PRCGetCasterLevel(OBJECT_SELF)));
+	float fDuration = PRCGetMetaMagicDuration(HoursToSeconds(PRCGetCasterLevel(OBJECT_SELF)));
 
 	// Declare the spell shape, size and the location.  Capture the first target object in the shape.
 	// Cycle through the targets within the spell shape until an invalid object is captured.
@@ -77,12 +77,12 @@ void DoMassBuff (int nBuffType, int nBuffSubType, int nBuffSpellID, int nSpellID
 //		if (GetIsReactionTypeFriendly(oTarget))
 		{
 			//Fire cast spell at event for the specified target
-			SPRaiseSpellCastAt(oTarget, FALSE);
+			PRCSignalSpellEvent(oTarget, FALSE);
 
 			fDelay = GetSpellEffectDelay(lTarget, oTarget);
 
 			// Calculate stat mod and adjust for metamagic.
-			int nStatMod = SPGetMetaMagicDamage(-1, 1, 4, 0, 1);
+			int nStatMod = PRCGetMetaMagicDamage(-1, 1, 4, 0, 1);
 
 			// Create the appropriate buff effect and link the duration visual fx to it.
 			effect eBuff;
@@ -107,7 +107,7 @@ void DoMassBuff (int nBuffType, int nBuffSubType, int nBuffSpellID, int nSpellID
 		oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
 	}
 
-	SPSetSchool();
+	PRCSetSchool();
 }
 
 // Test main

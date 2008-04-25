@@ -10,14 +10,14 @@
 /////////////////////////////////////////////////////////////////////////////////
 
 #include "prc_inc_racial"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 int biowareSpellsCure(int nCasterLvl, object oTarget, int nDamage, int nMaxExtraDamage, int nMaximized,
     effect vfx_impactHurt, effect vfx_impactHeal, int nSpellID);
 
 void DoMassCure (int nDice, int nBonusCap, int nHealEffect, int nSpellID = -1)
 {
-    SPSetSchool(SPELL_SCHOOL_CONJURATION);
+    PRCSetSchool(SPELL_SCHOOL_CONJURATION);
 
     // Get the spell target location as opposed to the spell target.
     location lTarget = PRCGetSpellTargetLocation();
@@ -53,7 +53,7 @@ void DoMassCure (int nDice, int nBonusCap, int nHealEffect, int nSpellID = -1)
         oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
     }
 
-    SPSetSchool();
+    PRCSetSchool();
 }
 
 
@@ -133,7 +133,7 @@ int biowareSpellsCure(int nCasterLvl,object oTarget, int nDamage, int nMaxExtraD
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oTarget);
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);
             //Fire cast spell at event for the specified target
-            SPRaiseSpellCastAt(oTarget, FALSE, nSpellID);
+            PRCSignalSpellEvent(oTarget, FALSE, nSpellID);
         }
     }
     //Check that the target is undead
@@ -150,10 +150,10 @@ int biowareSpellsCure(int nCasterLvl,object oTarget, int nDamage, int nMaxExtraD
                 nEffected = 1;
 
                 //Fire cast spell at event for the specified target
-                SPRaiseSpellCastAt(oTarget, TRUE, nSpellID);
-                if (!SPResistSpell(OBJECT_SELF, oTarget,nCasterLvl+SPGetPenetr()))
+                PRCSignalSpellEvent(oTarget, TRUE, nSpellID);
+                if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nCasterLvl+SPGetPenetr()))
                 {
-                    eDam = SPEffectDamage(nDamage,DAMAGE_TYPE_NEGATIVE);
+                    eDam = PRCEffectDamage(nDamage,DAMAGE_TYPE_NEGATIVE);
                     //Apply the VFX impact and effects
                     DelayCommand(1.0, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);

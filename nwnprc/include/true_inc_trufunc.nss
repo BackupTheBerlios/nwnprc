@@ -522,7 +522,7 @@ void DoSpeakUntoTheMasses(object oTrueSpeaker, object oTarget, struct utterance 
                     if (GetIsFriend(oAreaTarget, oTrueSpeaker) || !utter.bFriend)
                     {
                         // Do SR, or ignore if its a friendly utterance.
-                    if (!MyPRCResistSpell(utter.oTrueSpeaker, oAreaTarget, utter.nPen) || utter.bIgnoreSR)
+                    if (!PRCDoResistSpell(utter.oTrueSpeaker, oAreaTarget, utter.nPen) || utter.bIgnoreSR)
                     {
                         // Saving throw, ignore it if there is no DC to check
                         if(!PRCMySavingThrow(utter.nSaveThrow, oAreaTarget, utter.nSaveDC, utter.nSaveType, OBJECT_SELF) ||

@@ -7,7 +7,7 @@
 //:: Created On: 23.01.2005
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "psi_inc_psifunc"
 #include "psi_inc_ac_const"
 #include "inc_utility"

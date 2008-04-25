@@ -54,9 +54,8 @@ void DoPoisonRemovalFromItem(object oItem);
 
 //#include "inc_utility"
 //#include "inc_poison_const"
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_ipfeat_const"
-#include "inc_utility"
 
 /****************************************************
 ************** The implementations ******************

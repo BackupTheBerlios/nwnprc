@@ -12,7 +12,7 @@
 //:: modifications by mr_bumpkin on dec 4, 2003
 //::
 //:: changed caster level calculations in 2 places to reflect prc caster levels.
-//:: changed MyResistSpell to MyPRCResistSpell in the spellsCure section.
+//:: changed MyResistSpell to PRCDoResistSpell in the spellsCure section.
 
 //Added code into spellsCure to maximize for Faith Healing and Blast Infidel
 //Aaon Graywolf - Jan 6, 2003

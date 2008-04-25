@@ -13,7 +13,7 @@ If there are other detect spells, they can probably be put in here too.
 //:://////////////////////////////////////////////
 
 
-#include "spinc_common"
+#include "prc_inc_spells"
 //#include "inc_draw"    Provided by inc_utility
 //#include "inc_utility" Provided by prc_alterations
 

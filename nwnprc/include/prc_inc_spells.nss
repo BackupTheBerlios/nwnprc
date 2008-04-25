@@ -136,6 +136,13 @@ int SpellStrikeDamage(object oTarget, object oCaster);
 // Used to add Warmage's Edge to spells.
 effect PRCEffectDamage(int nDamageAmount, int nDamageType=DAMAGE_TYPE_MAGICAL, int nDamagePower=DAMAGE_POWER_NORMAL);
 
+// Get altered damage type for energy sub feats.
+//      nDamageType - The DAMAGE_TYPE_xxx constant of the damage. All types other
+//          than elemental damage types are ignored.
+//      oCaster - caster object.
+// moved from spinc_common, possibly somewhat redundant
+int PRCGetElementalDamageType(int nDamageType, object oCaster = OBJECT_SELF);
+
 //  Adds the bonus damage from both Spell Betrayal and Spellstrike together
 int ApplySpellBetrayalStrikeDamage(object oTarget, object oCaster, int bShowTextString = TRUE);
 
@@ -245,6 +252,12 @@ int GetHasMettle(object oTarget, int nSavingThrow);
 // wouldnt be affected
 int GetIsIncorporeal(object oTarget);
 
+/** Tests if a creature is living. Should be called on creatures.
+ *  Dead and not-alive creatures return FALSE
+ *  Returns FALSE for non-creature objects.
+ */
+int PRCGetIsAliveCreature(object oTarget);
+
 
 // Gets the total number of HD of controlled undead
 // i.e from Animate Dead, Ghoul Gauntlet or similar
@@ -297,9 +310,39 @@ int PRCMaximizeOrEmpower(int nDice, int nNumberOfDice, int nMeta, int nBonus = 0
 //used for spellsword and items
 int PRCGetMetaMagicFeat(object oCaster = OBJECT_SELF);
 
-//wrapper for biowares PRCGetSpellId()
+// This function rolls damage and applies metamagic feats to the damage.
+//      nDamageType - The DAMAGE_TYPE_xxx constant for the damage, or -1 for no
+//          a non-damaging effect.
+//      nDice - number of dice to roll.
+//      nDieSize - size of dice, i.e. d4, d6, d8, etc.
+//      nBonusPerDie - Amount of bonus damage per die.
+//      nBonus - Amount of overall bonus damage.
+//      nMetaMagic - metamagic constant, if -1 GetMetaMagic() is called.
+//      returns - the damage rolled with metamagic applied.
+int PRCGetMetaMagicDamage(int nDamageType, int nDice, int nDieSize,
+    int nBonusPerDie = 0, int nBonus = 0, int nMetaMagic = -1);
+
+// Function to save the school of the currently cast spell in a variable.  This should be
+// called at the beginning of the script to set the spell school (passing the school) and
+// once at the end of the script (with no arguments) to delete the variable.
+//  nSchool - SPELL_SCHOOL_xxx constant to set, if general then the variable is
+//      deleted.
+// moved from spinc_common and renamed
+void PRCSetSchool(int nSchool = SPELL_SCHOOL_GENERAL);
+
+//wrapper for biowares GetSpellId()
 //used for actioncastspell
 int PRCGetSpellId(object oCaster = OBJECT_SELF);
+
+/**
+ * Signals a spell has been cast. Acts as a wrapper to fire EVENT_SPELL_CAST_AT
+ * via SignalEvent()
+ * @param oTarget   Target of the spell.
+ * @param bHostile  TRUE if the spell is a hostile act.
+ * @param nSpellID  Spell ID or -1 if PRCGetSpellId() should be used.
+ * @param oCaster   Object doing the casting.
+ */
+void PRCSignalSpellEvent(object oTarget, int bHostile = TRUE, int nSpellID = -1, object oCaster = OBJECT_SELF);
 
 //GetFirstObjectInShape wrapper for changing the AOE of the channeled spells (Spellsword Channel Spell)
 object MyFirstObjectInShape(int nShape, float fSize, location lTarget, int bLineOfSight=FALSE, int nObjectFilter=OBJECT_TYPE_CREATURE, vector vOrigin=[0.0,0.0,0.0]);
@@ -353,6 +396,7 @@ const int  TYPE_DIVINE   = -2;
 #include "prc_power_const"
 #include "inc_newspellbook"
 #include "inc_lookups"
+#include "prc_spellhook"
 
 // ---------------
 // BEGIN FUNCTIONS
@@ -2337,7 +2381,7 @@ int PRCMaximizeOrEmpower(int nDice, int nNumberOfDice, int nMeta, int nBonus = 0
     return nDamage + nBonus;
 }
 
-float PRCDoMetamagicDuration(float fDuration, int nMeta = -1)
+float PRCGetMetaMagicDuration(float fDuration, int nMeta = -1)
 {
     if (nMeta == -1) // no metamagic value was passed, so get it here
     {
@@ -2353,6 +2397,26 @@ float PRCDoMetamagicDuration(float fDuration, int nMeta = -1)
     return fDuration;
 }
 
+int PRCGetMetaMagicDamage(int nDamageType, int nDice, int nDieSize,
+    int nBonusPerDie = 0, int nBonus = 0, int nMetaMagic = -1)
+{
+    // If the metamagic argument wasn't given get it.
+    if (-1 == nMetaMagic) nMetaMagic = PRCGetMetaMagicFeat();
+
+    // Roll the damage, applying metamagic.
+    int nDamage = PRCMaximizeOrEmpower(nDieSize, nDice, nMetaMagic, (nBonusPerDie * nDice) + nBonus);
+    return nDamage;
+}
+
+void PRCSetSchool(int nSchool = SPELL_SCHOOL_GENERAL)
+{
+    // Remove the last value in case it is there and set the new value if it is NOT general.
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    if (SPELL_SCHOOL_GENERAL != nSchool)
+        SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", nSchool);
+}
+
+
 int PRCGetSpellId(object oCaster = OBJECT_SELF)
 {
     int nID = GetLocalInt(oCaster, PRC_SPELLID_OVERRIDE);
@@ -2364,6 +2428,14 @@ int PRCGetSpellId(object oCaster = OBJECT_SELF)
     if(nID == -1)
         nID = 0;
     return nID;
+}
+
+void PRCSignalSpellEvent(object oTarget, int bHostile = TRUE, int nSpellID = -1, object oCaster = OBJECT_SELF)
+{
+    if (-1 == nSpellID) nSpellID = PRCGetSpellId();
+
+    //Fire cast spell at event for the specified target
+    SignalEvent(oTarget, EventSpellCastAt(oCaster, nSpellID, bHostile));
 }
 
 void SPEvilShift(object oPC)
@@ -2651,6 +2723,26 @@ int GetIsIncorporeal(object oTarget)
 
     //Return value
     return bIncorporeal;
+}
+
+int PRCGetIsAliveCreature(object oTarget)
+{
+        int bAlive = TRUE;
+        // non-creatures aren't alive
+        if (GetObjectType(oTarget) != OBJECT_TYPE_CREATURE)
+            return FALSE; // night of the living waypoints :p
+        
+        int nType = MyPRCGetRacialType(oTarget);
+        
+        //Non-living races
+        if(nType == RACIAL_TYPE_UNDEAD ||
+           nType == RACIAL_TYPE_CONSTRUCT) bAlive = FALSE;
+           
+        //If they're dead :P
+        if(GetIsDead(oTarget)) bAlive = FALSE;
+        
+        //return
+        return bAlive;
 }
 
 
@@ -2960,6 +3052,24 @@ int PRCGetSpellLevel(object oCreature, int nSpell)
 
     //return innate level?
     return -1;
+}
+
+// this is possibly used in variations elsewhere
+int PRCGetElementalDamageType(int nDamageType, object oCaster = OBJECT_SELF)
+{
+    // Only apply change to elemental damages.
+    int nOldDamageType = nDamageType;
+    switch (nDamageType)
+    {
+    case DAMAGE_TYPE_ACID:
+    case DAMAGE_TYPE_COLD:
+    case DAMAGE_TYPE_ELECTRICAL:
+    case DAMAGE_TYPE_FIRE:
+    case DAMAGE_TYPE_SONIC:
+        nDamageType = ChangedElementalDamage(oCaster, nDamageType);
+    }
+
+    return nDamageType;
 }
 
 effect PRCEffectDamage(int nDamageAmount, int nDamageType=DAMAGE_TYPE_MAGICAL, int nDamagePower=DAMAGE_POWER_NORMAL)

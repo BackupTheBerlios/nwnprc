@@ -75,6 +75,43 @@ float fmin(float a, float b);
  */
 int HexToInt(string sHex);
 
+/*  NOTE: the following 2 functions don't actually do what they say and
+    use real time not game time. Possibly because by default, 1 in-game minute
+    is 2 seconds. As real-time minutes to sec function exists (TurnsToSeconds()),
+    this is possibly redundant and should be replaced.
+    
+    // Use HoursToSeconds to figure out how long a scaled minute
+    // is and then calculate the number of real seconds based
+    // on that.
+    float scaledMinute = HoursToSeconds(1) / 60.0;
+    float totalMinutes = minutes * scaledMinute;
+
+    // Return our scaled duration, but before doing so check to make sure
+    // that it is at least as long as a round / level (time scale is in
+    // the module properties, it's possible a minute / level could last less
+    // time than a round / level !, so make sure they get at least as much
+    // time as a round / level.
+    float totalRounds = RoundsToSeconds(minutes);
+    float result = totalMinutes > totalRounds ? totalMinutes : totalRounds;
+    return result;
+*/
+
+/**
+ * Takes an int representing the number of scaled 1 minute intervals wanted
+ * and converts to seconds with 1 turn = 1 minute
+ * @param minutes       The number of 1 min intervals (typically caster level)
+ * @return              Float of duration in seconds
+ */
+float MinutesToSeconds(int minutes);
+
+/**
+ * Takes an int representing the number of scaled 10 minute intervals wanted
+ * and converts to seconds with 1 turn = 1 minute
+ * @param tenMinutes    The number of 10 min intervals (typically caster level)
+ * @return              Float of duration in seconds
+ */
+float TenMinutesToSeconds(int tenMinutes);
+ 
 /**
  * Checks whether an alignment matches given restrictions.
  * For example
@@ -520,6 +557,16 @@ int HexToInt(string sHex)
     }
 
     return nReturn;
+}
+
+float TenMinutesToSeconds(int tenMinutes)
+{
+    return TurnsToSeconds(tenMinutes) * 10;
+}
+
+float MinutesToSeconds(int minutes)
+{
+    return TurnsToSeconds(minutes);
 }
 
 int GetIsValidAlignment ( int iLawChaos, int iGoodEvil,int iAlignRestrict, int iAlignRstrctType, int iInvertRestriction )

@@ -16,7 +16,7 @@
 //
 /////////////////////////////////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 float GetVFXLength(location lCaster, float fLength, float fAngle);
 
@@ -27,7 +27,7 @@ void DoBolt(int nCasterLevel, int nDieSize, int nBonusDam, int nDice, int nBoltE
      // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
      //if (!X2PreSpellCastCode()) return;
 
-     SPSetSchool(nSchool);
+     PRCSetSchool(nSchool);
      
      object oCaster = OBJECT_SELF;
 
@@ -35,7 +35,7 @@ void DoBolt(int nCasterLevel, int nDieSize, int nBonusDam, int nDice, int nBoltE
      if (-1 == nSpellID) nSpellID = PRCGetSpellId();
 
      // Adjust the damage type if necessary.
-     nDamageType = SPGetElementalDamageType(nDamageType, OBJECT_SELF);
+     nDamageType = PRCGetElementalDamageType(nDamageType, OBJECT_SELF);
 
     int nDamage;
     int nSaveDC;
@@ -76,14 +76,14 @@ void DoBolt(int nCasterLevel, int nDieSize, int nBonusDam, int nDice, int nBoltE
         if(oTarget != oCaster && spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oCaster))
         {
             // Let the AI know
-            SPRaiseSpellCastAt(oTarget, TRUE, nSpellID, oCaster);
+            PRCSignalSpellEvent(oTarget, TRUE, nSpellID, oCaster);
             // Reset the knockdown target flag.
             bKnockdownTarget = FALSE;
             // Make an SR check
-            if(!MyPRCResistSpell(oCaster, oTarget, nPenetr))
+            if(!PRCDoResistSpell(oCaster, oTarget, nPenetr))
             {
                 // Roll damage
-                nDamage = SPGetMetaMagicDamage(nDamageType, nDice, nDieSize, nBonusDam);
+                nDamage = PRCGetMetaMagicDamage(nDamageType, nDice, nDieSize, nBonusDam);
                 int nFullDamage = nDamage;
                 
                 // Do save
@@ -136,7 +136,7 @@ void DoBolt(int nCasterLevel, int nDieSize, int nBonusDam, int nDice, int nBoltE
         oTarget = MyNextObjectInShape(SHAPE_SPELLCYLINDER, fLength, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE, vOrigin);
     }// end while - Target loop
 
-     SPSetSchool();
+     PRCSetSchool();
 }
 
 // taken with minor modification from  psi_power_enbolt

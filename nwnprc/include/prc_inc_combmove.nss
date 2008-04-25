@@ -189,7 +189,8 @@ int DoOverrun(object oPC, object oTarget, int nGenerateAoO = TRUE, int nExtraBon
 /*                  Includes                    */
 //////////////////////////////////////////////////
 
-#include "prc_alterations"
+//#include "prc_alterations"
+#include "prc_inc_spells"
 
 //////////////////////////////////////////////////
 /*             Internal functions               */

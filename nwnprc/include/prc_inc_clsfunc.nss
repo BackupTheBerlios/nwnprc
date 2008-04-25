@@ -1314,7 +1314,7 @@ void spellsCureMod(int nCasterLvl ,int nDamage, int nMaxExtraDamage, int nMaximi
             {
                 //Fire cast spell at event for the specified target
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, nSpellID));
-                if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLvl+add_spl_pen(OBJECT_SELF)))
+                if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nCasterLvl+add_spl_pen(OBJECT_SELF)))
                 {
                     eDam = EffectDamage(nDamage,DAMAGE_TYPE_NEGATIVE);
                     //Apply the VFX impact and effects

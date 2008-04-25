@@ -9,7 +9,7 @@
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_inc_teleport"
 
 /////////////////////////
@@ -73,7 +73,7 @@ void Transpose(object o1, object o2)
 
 void DoTransposition(int bAllowHostile, int bRunSpellhook = TRUE)
 {
-    SPSetSchool(SPELL_SCHOOL_CONJURATION);
+    PRCSetSchool(SPELL_SCHOOL_CONJURATION);
     // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
     if(bRunSpellhook)
         if(!X2PreSpellCastCode()) return;
@@ -89,10 +89,10 @@ void DoTransposition(int bAllowHostile, int bRunSpellhook = TRUE)
         {
             // Targets outside the party get a will save and SR to resist.
             if (bParty ||
-                (!SPResistSpell(OBJECT_SELF, oTarget) && !PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget,OBJECT_SELF))))
+                (!PRCDoResistSpell(OBJECT_SELF, oTarget) && !PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget,OBJECT_SELF))))
             {
                 //Fire cast spell at event for the specified target
-                SPRaiseSpellCastAt(oTarget, !bParty);
+                PRCSignalSpellEvent(oTarget, !bParty);
 
                 // Move the creatures.
                 DelayCommand(0.1, Transpose(OBJECT_SELF, oTarget));
@@ -100,5 +100,5 @@ void DoTransposition(int bAllowHostile, int bRunSpellhook = TRUE)
         }
     }
 
-    SPSetSchool();
+    PRCSetSchool();
 }

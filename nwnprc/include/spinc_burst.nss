@@ -17,7 +17,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 
 void DoBurst (int nCasterLvl, int nDieSize, int nBonusDam, int nDice, int nBurstEffect,
@@ -26,7 +26,7 @@ void DoBurst (int nCasterLvl, int nDieSize, int nBonusDam, int nDice, int nBurst
      int nSchool = SPELL_SCHOOL_EVOCATION, int nSpellID = -1,
      float fAOEDuration = 0.0f)
 {
-     SPSetSchool(nSchool);
+     PRCSetSchool(nSchool);
 
      // Get the spell ID if it was not given.
      if (-1 == nSpellID) nSpellID = PRCGetSpellId();
@@ -41,7 +41,7 @@ void DoBurst (int nCasterLvl, int nDieSize, int nBonusDam, int nDice, int nBurst
      // Adjust the damage type of necessary, if the damage & bonus damage types are the
      // same we need to copy the adjusted damage type to the bonus damage type.
      int nSameDamageType = nDamageType == nBonusDamageType;
-     nDamageType = SPGetElementalDamageType(nDamageType, OBJECT_SELF);
+     nDamageType = PRCGetElementalDamageType(nDamageType, OBJECT_SELF);
      if (nSameDamageType) nBonusDamageType = nDamageType;
 
      // Apply the specified vfx to the location.  If we were given an aoe vfx then
@@ -67,10 +67,10 @@ void DoBurst (int nCasterLvl, int nDieSize, int nBonusDam, int nDice, int nBurst
                if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
                {
                     //Fire cast spell at event for the specified target
-                    SPRaiseSpellCastAt(oTarget, TRUE, nSpellID);
+                    PRCSignalSpellEvent(oTarget, TRUE, nSpellID);
 
                     fDelay = GetSpellEffectDelay(lTarget, oTarget);
-                    if (!SPResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay))
+                    if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay))
                     {
                          int nSaveDC = PRCGetSaveDC(oTarget, OBJECT_SELF);
 
@@ -82,7 +82,7 @@ void DoBurst (int nCasterLvl, int nDieSize, int nBonusDam, int nDice, int nBurst
                               // of the spell's type, apply metamagic and roll the save.
 
                               // Roll damage for each target
-                              nDam = SPGetMetaMagicDamage(nDamageType, nDice, nDieSize, nBonusDam);
+                              nDam = PRCGetMetaMagicDamage(nDamageType, nDice, nDieSize, nBonusDam);
                               nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
 
                               // Adjust damage for reflex save / evasion / imp evasion
@@ -96,7 +96,7 @@ void DoBurst (int nCasterLvl, int nDieSize, int nBonusDam, int nDice, int nBurst
                               // type.
 
                               // Calculate base and bonus damage.
-                              nDam = SPGetMetaMagicDamage(nDamageType, nDice, nDieSize, 0);
+                              nDam = PRCGetMetaMagicDamage(nDamageType, nDice, nDieSize, 0);
                               nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
                               nDam2 = nDice * nBonusDam;
 
@@ -146,7 +146,7 @@ void DoBurst (int nCasterLvl, int nDieSize, int nBonusDam, int nDice, int nBurst
 
      // Let the SR engine know that we are done and clear out school local var.
 
-     SPSetSchool();
+     PRCSetSchool();
 }
 
 // Test main

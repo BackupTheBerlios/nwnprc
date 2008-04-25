@@ -7,17 +7,17 @@
 //
 ///////////////////////////////////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 
 void DoEnergyImmunity (int nDamageType, int nVfx)
 {
-	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+	PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
 
 	object oTarget = PRCGetSpellTargetObject();
 
 	// Determine the duration
-	float fDuration = SPGetMetaMagicDuration(HoursToSeconds(24));
+	float fDuration = PRCGetMetaMagicDuration(HoursToSeconds(24));
 
 	// Build a list of the duration effects which includes the actually immunity
 	// effect and all visual effects.
@@ -28,12 +28,12 @@ void DoEnergyImmunity (int nDamageType, int nVfx)
 	eList = EffectLinkEffects(eList, eDur);
 
 	// Fire cast spell at event for the specified target
-	SPRaiseSpellCastAt(oTarget, FALSE, SPELL_ENERGY_IMMUNITY);
+	PRCSignalSpellEvent(oTarget, FALSE, SPELL_ENERGY_IMMUNITY);
 
 	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eList, oTarget, fDuration,TRUE,-1,PRCGetCasterLevel(OBJECT_SELF));
 	SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(nVfx), oTarget);
 
-	SPSetSchool();
+	PRCSetSchool();
 }
 
 // Test main

@@ -681,10 +681,10 @@ void GetTeleportingObjects(object oCaster, int nCasterLvl, int bSelfOrParty)
         object oTarget = PRCGetSpellTargetObject();
         if(GetIsHostile())
         {
-            SPRaiseSpellCastAt(oTarget, TRUE, nSpellID); // Let the target know it was cast a spell at
+            PRCSignalSpellEvent(oTarget, TRUE, nSpellID); // Let the target know it was cast a spell at
 
             //SR
-            if(!MyPRCResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr()))
+            if(!PRCDoResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr()))
             {
                 // Will save
                 if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget, oCaster), SAVING_THROW_TYPE_SPELL))
@@ -694,7 +694,7 @@ void GetTeleportingObjects(object oCaster, int nCasterLvl, int bSelfOrParty)
         // Not hostile, just add it to the list.
         else
         {
-            SPRaiseSpellCastAt(oTarget, FALSE, nSpellID); // Let the target know it was cast a spell at
+            PRCSignalSpellEvent(oTarget, FALSE, nSpellID); // Let the target know it was cast a spell at
             array_set_object(oCaster, PRC_TELEPORTING_OBJECTS_ARRAY, i++, oTarget);
         }
     }

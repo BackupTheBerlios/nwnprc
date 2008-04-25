@@ -60,15 +60,15 @@
  * However, you might want to check, whether you should use PRC functions for other things,
  * as the Bioware functions don't take the special abilities of the PRC-classes into account.
  * For instance you might want to use:
- *   - MyPRCResistSpell
+ *   - PRCDoResistSpell
  *   - PRCMySavingThrow
  *   - PRCGetHasSpell
  *   - PRCGetSpellLevel
  *   - MyFirstObjectInShape
  *   - MyNextObjectInShape
- *   - SPGetSpellSaveDC
  *   - PRCGetSaveDC
- *   - PRCResistSpell
+ *   - PRCGetSaveDC
+ *   - PRCDoResistSpell
  *   - PRCGetSpellResistance
  *   - etc.
  *

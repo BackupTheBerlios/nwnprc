@@ -14,13 +14,13 @@
 //
 /////////////////////////////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void DoCone (int nDieSize, int nBonusDam, int nDieCap, int nConeEffect /* unused */,
      int nVictimEffect, int nDamageType, int nSaveType,
      int nSchool = SPELL_SCHOOL_EVOCATION, int nSpellID = -1)
 {
-     SPSetSchool(nSchool);
+     PRCSetSchool(nSchool);
 
      // Get the spell ID if it was not given.
      if (-1 == nSpellID) nSpellID = PRCGetSpellId();
@@ -37,7 +37,7 @@ void DoCone (int nDieSize, int nBonusDam, int nDieCap, int nConeEffect /* unused
      location lTargetLocation = PRCGetSpellTargetLocation();
 
      // Adjust the damage type of necessary.
-     nDamageType = SPGetElementalDamageType(nDamageType, OBJECT_SELF);
+     nDamageType = PRCGetElementalDamageType(nDamageType, OBJECT_SELF);
 
 
 
@@ -54,17 +54,17 @@ void DoCone (int nDieSize, int nBonusDam, int nDieCap, int nConeEffect /* unused
           if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
           {
                //Fire cast spell at event for the specified target
-               SPRaiseSpellCastAt(oTarget, TRUE, nSpellID);
+               PRCSignalSpellEvent(oTarget, TRUE, nSpellID);
 
                //Get the distance between the target and caster to delay the application of effects
                fDelay = GetSpellEffectDelay(lTargetLocation, oTarget);
 
                //Make SR check, and appropriate saving throw(s).
-               if(!SPResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay) && (oTarget != OBJECT_SELF))
+               if(!PRCDoResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay) && (oTarget != OBJECT_SELF))
                {
                        int nSaveDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                     // Roll damage for each target
-                    int nDamage = SPGetMetaMagicDamage(nDamageType, nCasterLvl, nDieSize, nBonusDam);
+                    int nDamage = PRCGetMetaMagicDamage(nDamageType, nCasterLvl, nDieSize, nBonusDam);
                     nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
 
                     // Adjust damage according to Reflex Save, Evasion or Improved Evasion
@@ -88,7 +88,7 @@ void DoCone (int nDieSize, int nBonusDam, int nDieCap, int nConeEffect /* unused
 
      // Let the SR engine know that we are done and clear out school local var.
 
-     SPSetSchool();
+     PRCSetSchool();
 }
 
 

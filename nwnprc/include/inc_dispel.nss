@@ -352,7 +352,7 @@ void DispelMagicBestMod(object oTarget, int nCasterLevel)
                                     SignalEvent(oVictim, EventSpellCastAt(oTarget, INVOKE_RETRIBUTIVE_INVISIBILITY));
                                     //Get the distance between the explosion and the target to calculate delay
                                     fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oVictim))/20;
-                                    if (!MyPRCResistSpell(oTarget, oVictim, RICasterLvl, fDelay))
+                                    if (!PRCDoResistSpell(oTarget, oVictim, RICasterLvl, fDelay))
                                     {
                                         //Roll damage for each target
                                         nDamage = d6(4);
@@ -590,7 +590,7 @@ void DispelMagicAllMod(object oTarget, int nCasterLevel)
                               SignalEvent(oVictim, EventSpellCastAt(oTarget, INVOKE_RETRIBUTIVE_INVISIBILITY));
                               //Get the distance between the explosion and the target to calculate delay
                               fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oVictim))/20;
-                              if (!MyPRCResistSpell(oTarget, oVictim, RICasterLvl, fDelay))
+                              if (!PRCDoResistSpell(oTarget, oVictim, RICasterLvl, fDelay))
                               {
                                   //Roll damage for each target
                                   nDamage = d6(4);

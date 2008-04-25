@@ -31,9 +31,8 @@ string ReplaceSingleChars(string sString, string sTarget, string sReplace);
 /* Include section                              */
 //////////////////////////////////////////////////
 
-#include "inc_utility" // Supplies prc_inc_switch
-
-
+#include "inc_debug"
+#include "prc_inc_switch"
 
 //////////////////////////////////////////////////
 /* Function defintions                          */

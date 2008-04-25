@@ -28,7 +28,7 @@
 
 //:: modifications by mr_bumpkin on Dec 4, 2003
 //:: changed all instances of GetSpellSaveDC to PRCGetSaveDC
-//:: changed all instances of myResistSpell to myPRCResistSpell
+//:: changed all instances of myResistSpell to PRCDoResistSpell
 
 //Added code into spellsInflictTouchAttack to maximize for Faith Healing and Blast Infidel
 //Aaon Graywolf - Jan 6, 2003
@@ -445,7 +445,7 @@ void DoDirgeEffect(object oTarget,int nPenetr)
         //Fire cast spell at event for the target
         SignalEvent(oTarget, EventSpellCastAt(GetAreaOfEffectCreator(), PRCGetSpellId()));
         //Spell resistance check
-        if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
+        if(!PRCDoResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
         {
 
             //Make a Fortitude Save to avoid the effects of the movement hit.
@@ -528,7 +528,7 @@ void DoSpikeGrowthEffect(object oTarget,int nPenetr)
         //Fire cast spell at event for the target
         SignalEvent(oTarget, EventSpellCastAt(GetAreaOfEffectCreator(), 453));
         //Spell resistance check
-        if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr, fDelay))
+        if(!PRCDoResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr, fDelay))
         {
             int nMetaMagic = PRCGetMetaMagicFeat();
             int nDam = MaximizeOrEmpower(4, 1, nMetaMagic);
@@ -626,7 +626,7 @@ void spellsInflictTouchAttack(int nDamage, int nMaxExtraDamage, int nMaximized, 
         {
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, nSpellID));
-            if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl))
+            if (!PRCDoResistSpell(OBJECT_SELF, oTarget,CasterLvl))
             {
                 int nDamageTotal = nDamage + nExtraDamage;
                 // A succesful will save halves the damage
@@ -763,7 +763,7 @@ void DoMissileStorm(int nD6Dice, int nCap, int nSpell, int nMIRV = VFX_IMP_MIRV,
                 //     not one check per missile, which would rip spell mantels
                 //     apart
                 //--------------------------------------------------------------
-                if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLvl, fDelay))
+                if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nCasterLvl, fDelay))
                 {
                     for (i=1; i <= nExtraMissiles + nRemainder; i++)
                     {
@@ -1164,7 +1164,7 @@ void spellsGenericAreaOfEffect(
             // * actually perform the resist check
             if (bResistCheck == TRUE)
             {
-                nResistSpellSuccess = MyPRCResistSpell(oCaster, oTarget,nPenetr);
+                nResistSpellSuccess = PRCDoResistSpell(oCaster, oTarget,nPenetr);
             }
           if(!nResistSpellSuccess)
           {

@@ -51,7 +51,7 @@ void main()
                 {
                     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF,
                         SPELL_CONFUSION));
-                    if(!MyPRCResistSpell(OBJECT_SELF, oTarget, GetTotalCastingLevel(OBJECT_SELF)+SPGetPenetr(OBJECT_SELF), fDelay))
+                    if(!PRCDoResistSpell(OBJECT_SELF, oTarget, GetTotalCastingLevel(OBJECT_SELF)+SPGetPenetr(OBJECT_SELF), fDelay))
                     {
                         if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, GetEpicSpellSaveDC(OBJECT_SELF, oTarget),
                             SAVING_THROW_TYPE_NONE, OBJECT_SELF, fDelay))

@@ -39,7 +39,7 @@ Created:
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
@@ -55,7 +55,7 @@ void main()
 	}
         
 	if (!X2PreSpellCastCode()) return;
-	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+	PRCSetSchool(SPELL_SCHOOL_EVOCATION);
 			
 	// Apply summon and vfx at target location. 
 	MultisummonPreSummon();	
@@ -64,5 +64,5 @@ void main()
 	ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, EffectSummonCreature("prc_crush_fist"), lLoc, fDuration);
 	
 	SPEvilShift(oPC);
-	SPSetSchool();	
+	PRCSetSchool();	
 }

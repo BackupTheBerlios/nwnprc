@@ -28,7 +28,7 @@ Created:   3/26/05
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void FesterLoop(object oTarget, int nConc, int nHP)
 {
@@ -61,7 +61,7 @@ void FesterLoop(object oTarget, int nConc, int nHP)
 
 void main()
 {
-    SPSetSchool(SPELL_SCHOOL_EVOCATION);
+    PRCSetSchool(SPELL_SCHOOL_EVOCATION);
     
     // Run the spellhook. 
     if (!X2PreSpellCastCode()) return;
@@ -77,7 +77,7 @@ void main()
     if(GetIsSkillSuccessful(oPC, SKILL_PERFORM, 20))
     {
         //Spell Resist
-        if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+        if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
         {
             if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL, oPC, 1.0))
             {
@@ -87,6 +87,6 @@ void main()
     }
     
     SPEvilShift(oPC);
-    SPSetSchool();
+    PRCSetSchool();
 }
     

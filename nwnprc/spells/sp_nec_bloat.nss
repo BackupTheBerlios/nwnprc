@@ -37,15 +37,14 @@ the damage be repaired.
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common" 
+#include "prc_inc_spells" 
 #include "spinc_necro_cyst"
 #include "inc_utility"
-#include "prc_inc_spells"
 
 void main()
 {
 	// Set the spellschool
-	SPSetSchool(SPELL_SCHOOL_NECROMANCY); 
+	PRCSetSchool(SPELL_SCHOOL_NECROMANCY); 
 	
 	// Run the spellhook. 
 	if (!X2PreSpellCastCode()) return;
@@ -56,7 +55,7 @@ void main()
 	int nLevel = min(PRCGetCasterLevel(oPC), 10); 
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	
-	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_NECROTIC_BLOAT, oPC);
+	PRCSignalSpellEvent(oTarget, TRUE, SPELL_NECROTIC_BLOAT, oPC);
 	
 	if(!GetCanCastNecroticSpells(oPC))
 	return;
@@ -93,7 +92,7 @@ void main()
 	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eNormDam, oTarget);
 	
 	
-	SPSetSchool(); 
+	PRCSetSchool(); 
 	
 	SPEvilShift(oPC);
 }

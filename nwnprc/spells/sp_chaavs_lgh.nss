@@ -39,13 +39,13 @@ Created:   7/10/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_ENCHANTMENT);
+	PRCSetSchool(SPELL_SCHOOL_ENCHANTMENT);
 	
 	object oPC = OBJECT_SELF;
 	location lLoc = GetLocation(oPC);
@@ -74,7 +74,7 @@ void main()
 	while(GetIsObjectValid(oTarget))
 	{
 		nAlign = GetAlignmentGoodEvil(oTarget);
-		nDC = SPGetSpellSaveDC(oTarget, oPC);
+		nDC = PRCGetSaveDC(oTarget, oPC);
 		
 		if(!GetHasEffect(EFFECT_TYPE_DEAF, oTarget))
 		{
@@ -82,7 +82,7 @@ void main()
 			if (nAlign == ALIGNMENT_EVIL)
 			{
 				//SR
-				if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+				if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 				{
 					//Save
 					if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
@@ -100,7 +100,7 @@ void main()
 		oTarget = MyNextObjectInShape(SHAPE_SPHERE, 12.19f, lLoc, TRUE, OBJECT_TYPE_CREATURE); 
 	}			
 	SPGoodShift(oPC);
-	SPSetSchool();
+	PRCSetSchool();
 }
 				
 		

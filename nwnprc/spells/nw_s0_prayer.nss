@@ -14,7 +14,7 @@
 //:: VFX Pass By: Preston W, On: June 22, 2001
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "prc_alterations"
 #include "x2_inc_spellhook"
@@ -102,7 +102,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         {
             //Fire spell cast at event for target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_PRAYER));
-            if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
+            if(!PRCDoResistSpell(OBJECT_SELF, oTarget,nPenetr))
             {
                 //Apply VFX impact and bonus effects
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, eNegVis, oTarget);

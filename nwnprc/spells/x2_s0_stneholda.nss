@@ -15,7 +15,7 @@
 //:://////////////////////////////////////////////
 
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 
 
 #include "NW_I0_SPELLS"
@@ -49,7 +49,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_STONEHOLD,OBJECT_SELF, GetSpellSaveDC()));
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_STONEHOLD));
         //Make a SR check
-            if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
+            if(!PRCDoResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
             {
                 int nDC = PRCGetSaveDC(oTarget,GetAreaOfEffectCreator());
                 //Make a Fort Save

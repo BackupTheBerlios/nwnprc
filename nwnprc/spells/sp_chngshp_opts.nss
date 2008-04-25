@@ -15,7 +15,7 @@
 //#include "prc_inc_shifting"
 #include "inc_dynconv"
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 
 void main()

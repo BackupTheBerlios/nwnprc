@@ -21,13 +21,13 @@ the subject, it gains resistance 20.
 **/
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_ABJURATION);
+	PRCSetSchool(SPELL_SCHOOL_ABJURATION);
 	
 	object oPC = OBJECT_SELF;
 	object oTarget = GetSpellTargetObject();
@@ -36,7 +36,7 @@ void main()
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	float fDur = RoundsToSeconds(1);
 	
-	SPRaiseSpellCastAt(oTarget,FALSE, SPELL_ENERGY_AEGIS, oPC);
+	PRCSignalSpellEvent(oTarget,FALSE, SPELL_ENERGY_AEGIS, oPC);
 	
 	if(nMetaMagic == METAMAGIC_EXTEND)
 	{
@@ -70,7 +70,7 @@ void main()
 	
 	else
 	{
-		SPSetSchool();
+		PRCSetSchool();
 		return;
 	}
 	
@@ -78,7 +78,7 @@ void main()
 	
 	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBuff, oTarget, fDur);
 	
-	SPSetSchool();
+	PRCSetSchool();
 }
 	
 	

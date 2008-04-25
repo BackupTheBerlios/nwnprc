@@ -1,21 +1,21 @@
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
     // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
     if (!X2PreSpellCastCode()) return;
     
-    SPSetSchool(SPELL_SCHOOL_ENCHANTMENT);
+    PRCSetSchool(SPELL_SCHOOL_ENCHANTMENT);
     
     object oTarget = GetSpellTargetObject();
     if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
     {
         // Fire cast spell at event for the specified target
-        SPRaiseSpellCastAt(oTarget);
+        PRCSignalSpellEvent(oTarget);
         int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
         // Make SR check
-        if (!SPResistSpell(OBJECT_SELF, oTarget,nCasterLvl+SPGetPenetr()))
+        if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nCasterLvl+SPGetPenetr()))
         {
             // Fort save or die, if the fort save is successful will save or dazed for
             // 1d4 rounds.
@@ -35,7 +35,7 @@ void main()
 	    }
             else if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget,OBJECT_SELF), SAVING_THROW_TYPE_SPELL))
             {
-                float fDuration = SPGetMetaMagicDuration(RoundsToSeconds(d4()));
+                float fDuration = PRCGetMetaMagicDuration(RoundsToSeconds(d4()));
                 
                 effect eDazed = EffectDazed();
                 eDazed = EffectLinkEffects(eDazed, EffectVisualEffect(VFX_IMP_DAZED_S));
@@ -48,7 +48,7 @@ void main()
             if (!GetIsDead(oTarget))
             {
                 // Determine the spell's duration, taking metamagic feats into account.
-                float fDuration = SPGetMetaMagicDuration(RoundsToSeconds(nCasterLvl));
+                float fDuration = PRCGetMetaMagicDuration(RoundsToSeconds(nCasterLvl));
 
                 // Target's saves, attack rolls, and skill checks are reduced by 2 for the
                 // spell's duration.
@@ -64,5 +64,5 @@ void main()
         }
     }
     
-    SPSetSchool();
+    PRCSetSchool();
 }

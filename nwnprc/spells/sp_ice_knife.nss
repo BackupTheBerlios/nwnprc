@@ -37,13 +37,13 @@ Created:   7/6/07
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
         if(!X2PreSpellCastCode()) return;
         
-        SPSetSchool(SPELL_SCHOOL_CONJURATION);
+        PRCSetSchool(SPELL_SCHOOL_CONJURATION);
         
         object oPC = OBJECT_SELF;
         object oTarget = PRCGetSpellTargetObject();
@@ -51,12 +51,12 @@ void main()
         int nCasterLvl = PRCGetCasterLevel(oPC);
         int nTouch = PRCDoRangedTouchAttack(oTarget);
         int nMetaMagic = PRCGetMetaMagicFeat();
-        int nDC = SPGetSpellSaveDC(oTarget, oPC);
+        int nDC = PRCGetSaveDC(oTarget, oPC);
         int nDam;
         
         if(nTouch)
         {
-                if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+                if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
                 {
                         int nSave = PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_COLD);
                                           
@@ -87,7 +87,7 @@ void main()
                 
                 while(GetIsObjectValid(oTarget))
                 {
-                        if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+                        if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
                         {                               
                                 nDam = d8(1);
                                 
@@ -103,6 +103,6 @@ void main()
                         oTarget = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(10.0f), lAoE, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_PLACEABLE | OBJECT_TYPE_DOOR);
                 }
         }       
-        SPSetSchool();
+        PRCSetSchool();
 }
                         

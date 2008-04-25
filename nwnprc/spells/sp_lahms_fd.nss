@@ -48,7 +48,7 @@ or no fingers is useless.
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
@@ -70,9 +70,9 @@ void main()
 	//Spellhook
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+	PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
 	
-	SPRaiseSpellCastAt(oTarget,TRUE, SPELL_LAHMS_FINGER_DARTS, oPC);
+	PRCSignalSpellEvent(oTarget,TRUE, SPELL_LAHMS_FINGER_DARTS, oPC);
 	
 	//Set up fingers if it hasn't been done before
 	if (GetPersistantLocalInt(oPC, "FINGERS_LEFT_HAND") < 1)
@@ -82,7 +82,7 @@ void main()
 	}
 	
 	//Spell Resistance, no save
-	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 	{
 		//Calculate fingers used
 		if(nCasterLvl > 3) nFingers++;
@@ -148,5 +148,5 @@ void main()
 	
 	SPEvilShift(oPC);
 	DoCorruptionCost(oPC, ABILITY_STRENGTH, nFingers, 0);
-	SPSetSchool();
+	PRCSetSchool();
 }

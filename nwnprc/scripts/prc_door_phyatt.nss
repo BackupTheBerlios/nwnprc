@@ -3,7 +3,7 @@
 //:: prc_door_phyatt
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "inc_eventhook"
 void main()
 {
     ExecuteAllScriptsHookedToEvent(OBJECT_SELF, EVENT_DOOR_ONATTACKED);

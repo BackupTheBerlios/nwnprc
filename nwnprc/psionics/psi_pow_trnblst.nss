@@ -52,7 +52,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void DoRandomMove(object oTarget);
 
@@ -107,7 +107,7 @@ void main()
             if(GetIsObjectValid(oBallTarget))
             {
                 // Let the AI know
-                SPRaiseSpellCastAt(oBallTarget, TRUE, manif.nSpellID, oManifester);
+                PRCSignalSpellEvent(oBallTarget, TRUE, manif.nSpellID, oManifester);
 
                 // Roll touch attack
                 nTouchAttack = PRCDoRangedTouchAttack(oBallTarget);
@@ -132,7 +132,7 @@ void main()
                 if(spellsIsTarget(oExplodeTarget, SPELL_TARGET_STANDARDHOSTILE, oManifester))
                 {
                     // Let the AI know
-                    SPRaiseSpellCastAt(oExplodeTarget, TRUE, manif.nSpellID, oManifester);
+                    PRCSignalSpellEvent(oExplodeTarget, TRUE, manif.nSpellID, oManifester);
 
                     // Roll damage
                     nDamage = MetaPsionicsDamage(manif, nDieSize, nNumberOfDice_Explode, 0, 0, TRUE, TRUE);

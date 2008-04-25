@@ -20,7 +20,7 @@ bugfix by Kovi 2002.07.28
 */
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 
 
 #include "NW_I0_SPELLS"
@@ -102,7 +102,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_DIVINATION);
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_POWER_WORD_STUN));
         //Make an SR check
-        if(!MyPRCResistSpell(OBJECT_SELF, oTarget))
+        if(!PRCDoResistSpell(OBJECT_SELF, oTarget))
         {
             if (nDuration>0)
             {

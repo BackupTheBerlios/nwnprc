@@ -38,13 +38,13 @@ Created:   7/6/07
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
         if(!X2PreSpellCastCode()) return;
         
-        SPSetSchool(SPELL_SCHOOL_EVOCATION);
+        PRCSetSchool(SPELL_SCHOOL_EVOCATION);
         
         object oPC = OBJECT_SELF;
         object oTarget; 
@@ -63,9 +63,9 @@ void main()
         
         while(GetIsObjectValid(oTarget))
         {
-                if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLvl))
+                if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nCasterLvl))
                 {
-                        nDC = SPGetSpellSaveDC(oTarget, oPC);
+                        nDC = PRCGetSaveDC(oTarget, oPC);
                         nDam = d6(nDice);
                         
                         if(nMetaMagic == METAMAGIC_MAXIMIZE) nDam = 6 * nDice;
@@ -81,7 +81,7 @@ void main()
                 
                 oTarget = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(10.0), lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
         }
-        SPSetSchool();
+        PRCSetSchool();
 }
         
                   

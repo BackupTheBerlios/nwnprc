@@ -21,11 +21,11 @@ Created:
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
-	SPSetSchool(SPELL_SCHOOL_DIVINATION);
+	PRCSetSchool(SPELL_SCHOOL_DIVINATION);
 	
 	// Run the spellhook. 
 	if (!X2PreSpellCastCode()) return;
@@ -39,7 +39,7 @@ void main()
 	
 	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, fDur);
 	
-	SPSetSchool();
+	PRCSetSchool();
 	SPEvilShift(oPC);
 }
 	

@@ -35,7 +35,7 @@ Created:   05/05/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
@@ -52,7 +52,7 @@ void main()
 	//Spellhook
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_ABJURATION);
+	PRCSetSchool(SPELL_SCHOOL_ABJURATION);
 	
 	 //Meta Magic
 	 if(nMetaMagic == METAMAGIC_EXTEND)
@@ -68,7 +68,7 @@ void main()
 	 
 	 SPEvilShift(oPC);
 	 
-	 SPSetSchool();
+	 PRCSetSchool();
  }
 	 
 	 

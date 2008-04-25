@@ -50,14 +50,14 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
         else
         {
             // Raise the spell cast event.
-            SPRaiseSpellCastAt(oTarget, FALSE);
+            PRCSignalSpellEvent(oTarget, FALSE);
 
             // Save the ID of the tattoo spell (so the conversation scripts can cast it),
             // and save the metamagic and target.  Then invoke the conversation to
             // let the caster pick what tattoo to scribe.
             SetLocalInt(OBJECT_SELF, "SP_CREATETATOO_LEVEL", nCasterLevel);
             SetLocalInt(OBJECT_SELF, "SP_CREATETATOO_SPELLID", nTattooSpellID);
-            SetLocalInt(OBJECT_SELF, "SP_CREATETATOO_METAMAGIC", SPGetMetaMagic());
+            SetLocalInt(OBJECT_SELF, "SP_CREATETATOO_METAMAGIC", PRCGetMetaMagicFeat());
             SetLocalObject(OBJECT_SELF, "SP_CREATETATOO_TARGET", oTarget);
             ActionStartConversation(OBJECT_SELF, "sp_createtatoo", FALSE, FALSE);
         }
@@ -70,7 +70,7 @@ void main()
 {
     object oCaster = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oCaster);
-    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    PRCSetSchool(GetSpellSchool(PRCGetSpellId()));
     if (!X2PreSpellCastCode()) return;
     object oTarget = PRCGetSpellTargetObject();
     int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
@@ -91,5 +91,5 @@ void main()
                 DecrementSpellCharges(oCaster);
         }
     }
-    SPSetSchool();
+    PRCSetSchool();
 }

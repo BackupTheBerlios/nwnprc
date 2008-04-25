@@ -28,10 +28,11 @@
 //:: Added hold ray functionality - HackyKid
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "inc_item_props"
 #include "x2_inc_itemprop"
 #include "prc_sp_func"
+#include "x2_inc_spellhook"
 
 //Implements the spell impact, put code here
 //  if called in many places, return TRUE if
@@ -46,7 +47,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     int nPenetr = nCasterLevel + SPGetPenetr();
     int nHP = GetCurrentHitPoints(oTarget);
     
-    SPRaiseSpellCastAt(oTarget,TRUE, SPELL_AVASCULATE, oCaster);
+    PRCSignalSpellEvent(oTarget,TRUE, SPELL_AVASCULATE, oCaster);
     
     SPEvilShift(oCaster);
     
@@ -67,7 +68,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 
     if (iAttackRoll)
     {
-        if (!MyPRCResistSpell(OBJECT_SELF, oTarget, nPenetr))
+        if (!PRCDoResistSpell(OBJECT_SELF, oTarget, nPenetr))
         {
             //damage rounds up now
             int nDam = (nHP - (nHP / 2));
@@ -100,7 +101,7 @@ void main()
 {
     object oCaster = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oCaster);
-    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    PRCSetSchool(GetSpellSchool(PRCGetSpellId()));
     if (!X2PreSpellCastCode()) return;
     object oTarget = PRCGetSpellTargetObject();
     int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
@@ -122,5 +123,5 @@ void main()
                 DecrementSpellCharges(oCaster);
         }
     }
-    SPSetSchool();
+    PRCSetSchool();
 }

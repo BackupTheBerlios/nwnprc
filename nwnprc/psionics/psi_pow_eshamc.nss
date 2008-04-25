@@ -37,7 +37,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
@@ -55,7 +55,7 @@ void main()
     	if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, GetAreaOfEffectCreator()))
     	{
 		// Let the AI know
-        	SPRaiseSpellCastAt(oTarget, TRUE, POWER_ECTOSHAMBLER, oCreator);
+        	PRCSignalSpellEvent(oTarget, TRUE, POWER_ECTOSHAMBLER, oCreator);
         	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
         }
 

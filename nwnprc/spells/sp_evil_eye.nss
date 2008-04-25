@@ -28,7 +28,7 @@ Created:   5/14/06
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 
 void DawnCheck(object oTarget, object oPC, int nRemove)
@@ -49,7 +49,7 @@ void DawnCheck(object oTarget, object oPC, int nRemove)
 
 void main()
 {
-    SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+    PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
     
     // Run the spellhook. 
     if (!X2PreSpellCastCode()) return;
@@ -60,10 +60,10 @@ void main()
     float fDuration = RoundsToSeconds(nCasterLvl);
     int nPenalty = 4;
     int nMetaMagic = PRCGetMetaMagicFeat();
-    int nDC = SPGetSpellSaveDC(oTarget, oPC);
+    int nDC = PRCGetSaveDC(oTarget, oPC);
     
     //Check Spell Resistance
-    if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+    if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
     {
         //Will save
         if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
@@ -85,7 +85,7 @@ void main()
     }
     
     SPEvilShift(oPC);
-    SPSetSchool();
+    PRCSetSchool();
 }
     
         

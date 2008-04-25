@@ -32,7 +32,7 @@ Created:   3/28/05
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void CrushLoop(object oTarget, object oPC, int bEndSpell, int nDC)
 {
@@ -78,23 +78,23 @@ void main()
 	// Run the spellhook. 
 	if (!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+	PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
 	
 	object oPC = OBJECT_SELF;
 	object oTarget= GetSpellTargetObject();
 	int bEndSpell = FALSE;
-	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+	int nDC = PRCGetSaveDC(oTarget, oPC);
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	
-	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_CLUTCH_OF_ORCUS, oPC);
+	PRCSignalSpellEvent(oTarget, TRUE, SPELL_CLUTCH_OF_ORCUS, oPC);
 	
 	//Check spell resistance
-	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 	{
 		//start loop
 		CrushLoop(oTarget, oPC, bEndSpell, nDC);
 	}
 	
 	SPEvilShift(oPC);
-	SPSetSchool();
+	PRCSetSchool();
 }

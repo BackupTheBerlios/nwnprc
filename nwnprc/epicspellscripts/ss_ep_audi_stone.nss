@@ -42,7 +42,7 @@ void main()
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF,
                     PRCGetSpellId()));
                 fDelay = GetRandomDelay(1.5, 2.5);
-                if(!MyPRCResistSpell(OBJECT_SELF, oTarget, GetTotalCastingLevel(OBJECT_SELF)+SPGetPenetr(OBJECT_SELF), fDelay))
+                if(!PRCDoResistSpell(OBJECT_SELF, oTarget, GetTotalCastingLevel(OBJECT_SELF)+SPGetPenetr(OBJECT_SELF), fDelay))
                 {
 //Use bioware petrify command
                     DoPetrification(PRCGetCasterLevel(), OBJECT_SELF, oTarget, PRCGetSpellId(), GetEpicSpellSaveDC(OBJECT_SELF, oTarget));

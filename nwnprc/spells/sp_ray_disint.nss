@@ -3,7 +3,7 @@
 //:: FileName  sp_ray_disint.nss
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {

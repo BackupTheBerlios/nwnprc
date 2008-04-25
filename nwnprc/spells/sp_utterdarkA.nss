@@ -30,11 +30,11 @@ Created:   5/21/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
-        SPSetSchool(SPELL_SCHOOL_CONJURATION);
+        PRCSetSchool(SPELL_SCHOOL_CONJURATION);
         
         object oTarget = GetEnteringObject();
         object oPC = GetAreaOfEffectCreator();
@@ -59,7 +59,7 @@ void main()
                         SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);
                 }       
         }
-        SPSetSchool();
+        PRCSetSchool();
 }
                         
                         

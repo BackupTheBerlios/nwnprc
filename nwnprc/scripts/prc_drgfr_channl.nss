@@ -12,7 +12,7 @@
 
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_inc_sneak"
 #include "prc_inc_turning"
 
@@ -62,15 +62,13 @@ void main()
           )
        {
        	    // Let the AI know
-            SPRaiseSpellCastAt(oTarget, TRUE, nSpellID, oPC);
+            PRCSignalSpellEvent(oTarget, TRUE, nSpellID, oPC);
             // Roll damage
             nDamage = 0;
             int i;
             for (i = 0; i < nNumberOfDice; i++)
                    nDamage += Random(nDieSize) + 1;
-            // Target-specific stuff
-            nDamage = GetTargetSpecificChangesToDamage(oTarget, oPC, nDamage, TRUE, TRUE);
-
+            
             // Adjust damage according to Reflex Save, Evasion or Improved Evasion
             nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, nDC, nSaveType);
 

@@ -1,4 +1,4 @@
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "spinc_greenfire"
 
 void main()
@@ -16,7 +16,7 @@ void main()
 	SetHeartbeatFired();
 
 	// Get the adjusted damage type.
-	int nDamageType = SPGetElementalDamageType(DAMAGE_TYPE_ACID, oCaster);
+	int nDamageType = PRCGetElementalDamageType(DAMAGE_TYPE_ACID, oCaster);
 	
 	// Loop through all of the objects in the AOE and run the greenfire logic on them.	
 	object oTarget = GetFirstInPersistentObject();

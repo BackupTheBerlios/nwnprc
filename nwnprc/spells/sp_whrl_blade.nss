@@ -45,13 +45,13 @@ Created:   7/6/07
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
         if(!X2PreSpellCastCode()) return;
         
-        SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+        PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
         
         object oPC = OBJECT_SELF;
         vector vOrigin = GetPosition(oPC);
@@ -67,5 +67,5 @@ void main()
                 }
                 oTarget = MyNextObjectInShape(SHAPE_SPELLCYLINDER, FeetToMeters(60.0f), lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE, vOrigin);
         }
-        SPSetSchool();
+        PRCSetSchool();
 }

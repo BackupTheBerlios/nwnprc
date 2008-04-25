@@ -44,18 +44,18 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
      if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
      {
           // Fire cast spell at event for the specified target
-          SPRaiseSpellCastAt(oTarget);
+          PRCSignalSpellEvent(oTarget);
 
           // Make touch attack, saving result for possible critical
           nTouchAttack = PRCDoMeleeTouchAttack(oTarget);
           if (nTouchAttack > 0)
           {
-               if (!SPResistSpell(OBJECT_SELF, oTarget,nPenetr))
+               if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nPenetr))
                {
                     // 2da cha drain, 1d6 wis drain.
-                    int nChaDrain = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL,
+                    int nChaDrain = PRCGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL,
                          1 == nTouchAttack ? 2 : 4, 6);
-                    int nWisDrain = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL,
+                    int nWisDrain = PRCGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL,
                          1 == nTouchAttack ? 1 : 2, 6);
 
                     // Build the drain effect.
@@ -72,7 +72,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
                     ApplyAbilityDamage(oTarget, ABILITY_WISDOM,   nWisDrain, DURATION_TYPE_PERMANENT, TRUE);
 
                     // Target takes secondary 1d6 cha drain 1 minute later.
-                    nChaDrain = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL,
+                    nChaDrain = PRCGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL,
                          1 == nTouchAttack ? 1 : 2, 6);
                     DelayCommand(MinutesToSeconds(1), DoSecondaryDrain(oTarget, nChaDrain));
 
@@ -89,7 +89,7 @@ void main()
 {
     object oCaster = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oCaster);
-    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    PRCSetSchool(GetSpellSchool(PRCGetSpellId()));
     if (!X2PreSpellCastCode()) return;
     object oTarget = PRCGetSpellTargetObject();
     int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
@@ -110,5 +110,5 @@ void main()
                 DecrementSpellCharges(oCaster);
         }
     }
-    SPSetSchool();
+    PRCSetSchool();
 }

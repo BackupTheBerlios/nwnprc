@@ -37,7 +37,7 @@ Created:   7/17/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
@@ -50,7 +50,7 @@ void main()
 		if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL)
 		{			
 			//Check Spell Resistance
-			if(!MyPRCResistSpell(oCreator, oTarget, nCasterLvl + SPGetPenetr()))
+			if(!PRCDoResistSpell(oCreator, oTarget, nCasterLvl + SPGetPenetr()))
 			{
 				ApplyAbilityDamage(oTarget, ABILITY_WISDOM, d4(1), DURATION_TYPE_TEMPORARY, TRUE, -1.0f);
 			}

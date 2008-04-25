@@ -41,7 +41,7 @@ above benefits.
 //  Tenjac   10/1/07
 //////////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {

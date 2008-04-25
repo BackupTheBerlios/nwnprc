@@ -12,7 +12,7 @@
 //:: Created On: Nov 20, 2001
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "x2_inc_spellhook"
 

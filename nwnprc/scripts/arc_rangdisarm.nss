@@ -1,5 +1,5 @@
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
@@ -14,7 +14,7 @@ void main()
    }
 
    // Let the target know they were done a hostile action at
-   SPRaiseSpellCastAt(oTarget, TRUE, nSpellId);
+   PRCSignalSpellEvent(oTarget, TRUE, nSpellId);
 
    if (!GetIsCreatureDisarmable(oTarget) || GetPlotFlag(oTarget))
    {
@@ -128,7 +128,7 @@ void main()
    }
 
    // Let the target know they were done a hostile action at
-   SPRaiseSpellCastAt(oTarget, TRUE, nSpellId);
+   PRCSignalSpellEvent(oTarget, TRUE, nSpellId);
 
    if (!GetIsCreatureDisarmable(oTarget) || GetIsPlot(oTarget))
    {

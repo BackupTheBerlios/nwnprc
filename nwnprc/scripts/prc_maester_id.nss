@@ -10,7 +10,7 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 int LoreItem(object item)
 {

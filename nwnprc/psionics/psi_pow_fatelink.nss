@@ -39,7 +39,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void DispelMonitor(object oManifester, object oTarget1, object oTarget2, int nSpellID, int nBeatsRemaining);
 
@@ -108,8 +108,8 @@ void main()
                 if(GetIsObjectValid(oFirstTarget) && GetIsObjectValid(oSecondTarget))
                 {
                     // Let the AI know
-                    SPRaiseSpellCastAt(oFirstTarget, TRUE, manif.nSpellID, oManifester);
-                    SPRaiseSpellCastAt(oSecondTarget, TRUE, manif.nSpellID, oManifester);
+                    PRCSignalSpellEvent(oFirstTarget, TRUE, manif.nSpellID, oManifester);
+                    PRCSignalSpellEvent(oSecondTarget, TRUE, manif.nSpellID, oManifester);
 
                     // SR checks
                     if(PRCMyResistPower(oManifester, oFirstTarget, nPen) &&

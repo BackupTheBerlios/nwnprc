@@ -39,12 +39,12 @@ Created:   12/10/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "inc_dynconv"
 
 void main()
 {
-	SPSetSchool(SPELL_SCHOOL_CONJURATION);
+	PRCSetSchool(SPELL_SCHOOL_CONJURATION);
 	
 	// Run the spellhook. 
 	if (!X2PreSpellCastCode()) return;
@@ -54,7 +54,7 @@ void main()
 
 	StartDynamicConversation("sp_cnv_trures", oPC, DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, FALSE, TRUE, oPC);
 
-	SPSetSchool();
+	PRCSetSchool();
 }
 				
 				

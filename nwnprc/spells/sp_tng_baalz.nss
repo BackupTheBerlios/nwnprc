@@ -27,14 +27,14 @@ Created:   5/8/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	//spellhook
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+	PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
 	
 	//var
 	object oPC = OBJECT_SELF;
@@ -65,5 +65,5 @@ void main()
 	
 	SPEvilShift(oPC);
 	
-	SPSetSchool();
+	PRCSetSchool();
 }

@@ -18,7 +18,7 @@
 //::Added code to maximize for Faith Healing and Blast Infidel
 //::Aaon Graywolf - Jan 7, 2004
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "prc_alterations"
 #include "x2_inc_spellhook"
@@ -128,7 +128,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
             {
                 if(MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)
                 {
-                    if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay))
+                    if(!PRCDoResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay))
                     {
                         //Fire cast spell at event for the specified target
                         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_NEGATIVE_ENERGY_BURST));

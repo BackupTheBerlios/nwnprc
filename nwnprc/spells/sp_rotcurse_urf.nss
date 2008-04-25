@@ -27,9 +27,8 @@ Corruption Cost: 1d6 points of Strength damage.
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_common"
-#include "inc_abil_damage"
 #include "prc_inc_spells"
+#include "inc_abil_damage"
 #include "prc_spell_const"
 
 //Pseudo-heartbeat function for abil damage
@@ -61,7 +60,7 @@ void main()
         // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
         if (!X2PreSpellCastCode()) return;
         
-        SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+        PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
         
         //define vars
         object oPC = OBJECT_SELF;
@@ -70,10 +69,10 @@ void main()
         int nMetaMagic = PRCGetMetaMagicFeat();
         int nPenetr = nCasterLvl + SPGetPenetr();
         
-        SPRaiseSpellCastAt(oTarget, TRUE, SPELL_ROTTING_CURSE_OF_URFESTRA, oPC);
+        PRCSignalSpellEvent(oTarget, TRUE, SPELL_ROTTING_CURSE_OF_URFESTRA, oPC);
                         
         //Spell Resistance
-        if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
+        if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nPenetr))
         {
                 if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, PRCGetSaveDC(oTarget,oPC)))
                 {
@@ -92,5 +91,5 @@ void main()
         //Alignment shift if switch set
         SPEvilShift(oPC);
                 
-        SPSetSchool();
+        PRCSetSchool();
 }           

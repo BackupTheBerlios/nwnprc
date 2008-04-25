@@ -58,13 +58,13 @@ Created:
 
 object GetClawWeapon (object oCreature, string sResRef, int nInventorySlot, float fDuration);
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	//Spellhook
 	if (!X2PreSpellCastCode()) return;
-	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+	PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
 	
 	//define vars
 	object oPC = OBJECT_SELF;
@@ -124,7 +124,7 @@ void main()
 	IPSafeAddItemProperty(oRClaw, ItemPropertyEnhancementBonus(nBonus), fDuration, X2_IP_ADDPROP_POLICY_IGNORE_EXISTING, FALSE, FALSE);
 	
 	SPEvilShift(oPC);
-	SPSetSchool();
+	PRCSetSchool();
 }
 
 object GetClawWeapon (object oCreature, string sResRef, int nInventorySlot, float fDuration)

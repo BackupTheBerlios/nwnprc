@@ -32,11 +32,11 @@ Created:   7/6/07
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
-	SPSetSchool(SPELL_SCHOOL_CONJURATION);
+	PRCSetSchool(SPELL_SCHOOL_CONJURATION);
 	ActionDoCommand(SetAllAoEInts(SPELL_SLEET_STORM, OBJECT_SELF, GetSpellSaveDC()));
 	
 	//Declare major variables
@@ -61,6 +61,6 @@ void main()
 			eAOE = GetNextEffect(oTarget);
 		}
 	}	
-	SPSetSchool();
+	PRCSetSchool();
 }
 	

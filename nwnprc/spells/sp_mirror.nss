@@ -41,7 +41,7 @@ dead after being hit by a fireball).
 //:: Created On: August 20, 2004
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 
 void CleanCopy(object oImage)

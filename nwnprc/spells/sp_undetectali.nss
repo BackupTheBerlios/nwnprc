@@ -14,7 +14,7 @@ Conceals the alignment of an object or a creature from all forms of divination.
 
 */
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {

@@ -30,7 +30,7 @@ cause any harm to the objects or creatures thus outlined.
 //:://////////////////////////////////////////////
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "X0_I0_SPELLS"
 #include "x2_inc_spellhook"
 
@@ -97,7 +97,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 break;
         }
         SignalEvent(oTarget, EventSpellCastAt(oCaster, SPELL_FAERIE_FIRE));
-        if (!MyPRCResistSpell(oCaster, oTarget,CasterLvl))
+        if (!PRCDoResistSpell(oCaster, oTarget,CasterLvl))
         {
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget, fDuration);
             RemoveSpecificEffect(EFFECT_TYPE_IMPROVEDINVISIBILITY, oTarget);

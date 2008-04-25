@@ -29,7 +29,6 @@ Created:   2/19/06
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_common"
 #include "prc_inc_spells"
 
 
@@ -55,21 +54,21 @@ void CountdownToSlime(object oTarget, int nCounter)
 
 void main()
 {
-    SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+    PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
     
     // Run the spellhook. 
     if (!X2PreSpellCastCode()) return;
     
     object oPC = OBJECT_SELF;
     object oTarget = GetSpellTargetObject();
-    int nDC = SPGetSpellSaveDC(oTarget, oPC);
+    int nDC = PRCGetSaveDC(oTarget, oPC);
     int nCasterLvl = PRCGetCasterLevel(oPC);
     int nCounter = 4;
     
-    SPRaiseSpellCastAt(oTarget, TRUE, SPELL_TOUCH_OF_JUIBLEX, oPC);
+    PRCSignalSpellEvent(oTarget, TRUE, SPELL_TOUCH_OF_JUIBLEX, oPC);
     
     //Spell Resistance
-    if (!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+    if (!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
     {
         //Save
         if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
@@ -89,7 +88,7 @@ void main()
     //Corrupt spells get mandatory 10 pt evil adjustment, regardless of switch
     AdjustAlignment(oPC, ALIGNMENT_EVIL, 10);
     
-    SPSetSchool();
+    PRCSetSchool();
 }
     
     

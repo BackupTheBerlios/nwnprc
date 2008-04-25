@@ -42,25 +42,26 @@ can revert to its natural form as a standard action.
 //:://////////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
+#include "x2_inc_spellhook"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+	PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
 	
 	object oPC = OBJECT_SELF;
 	object oTarget = GetSpellTargetObject();
 	int nCasterLvl = PRCGetCasterLevel(oPC);
-	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+	int nDC = PRCGetSaveDC(oTarget, oPC);
 	
 	if (GetIsDM(oTarget)) return;
 	
-	SPRaiseSpellCastAt(oTarget,TRUE, SPELL_BALEFUL_POLYMORPH, oPC);
+	PRCSignalSpellEvent(oTarget,TRUE, SPELL_BALEFUL_POLYMORPH, oPC);
 	
 	//SR
-	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 	{
 		//First save
 		if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
@@ -79,7 +80,7 @@ void main()
 		}
 	}
 	
-	SPSetSchool();
+	PRCSetSchool();
 }
 	
 			

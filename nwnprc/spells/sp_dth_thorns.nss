@@ -33,7 +33,6 @@ Created:
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_common"
 #include "prc_inc_spells"
 
 void DamageLoop(object oTarget, int nCount)
@@ -50,7 +49,7 @@ void DamageLoop(object oTarget, int nCount)
 
 void main()
 {
-    SPSetSchool(SPELL_SCHOOL_CONJURATION);
+    PRCSetSchool(SPELL_SCHOOL_CONJURATION);
     
     // Run the spellhook. 
     if (!X2PreSpellCastCode()) return;
@@ -60,16 +59,16 @@ void main()
     int nTargetCount;
     location lTarget = GetLocation(oTarget);
     int nCasterLvl = PRCGetCasterLevel(oPC);
-    int nDC = SPGetSpellSaveDC(oTarget, oPC);
+    int nDC = PRCGetSaveDC(oTarget, oPC);
     int nDelay;
     float fDuration;
     effect ePar = EffectCutsceneImmobilize();
     effect eDeath = EffectDeath();
     
-    SPRaiseSpellCastAt(oTarget, TRUE, SPELL_DEATH_BY_THORNS, oPC);
+    PRCSignalSpellEvent(oTarget, TRUE, SPELL_DEATH_BY_THORNS, oPC);
             
     //Check Spell Resistance
-    if (!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+    if (!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
     {
         //loop the thorn giving              max 3 targets         
         while(GetIsObjectValid(oTarget) && nTargetCount < 3)
@@ -124,5 +123,5 @@ void main()
     //Corrupt spells get mandatory 10 pt evil adjustment, regardless of switch
     AdjustAlignment(oPC, ALIGNMENT_EVIL, 10);
     
-    SPSetSchool();
+    PRCSetSchool();
 }   

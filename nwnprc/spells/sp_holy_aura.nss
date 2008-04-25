@@ -45,13 +45,13 @@ The reliquary costs at least 500 gp.
 ////////////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_ABJURATION);
+	PRCSetSchool(SPELL_SCHOOL_ABJURATION);
 	
 	object oPC = OBJECT_SELF;
 	location lLoc = GetLocation(oPC);
@@ -83,7 +83,7 @@ void main()
 		oTarget = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(20.0f), lLoc, FALSE, OBJECT_TYPE_CREATURE);
 	}
 	
-	SPSetSchool();
+	PRCSetSchool();
 }
 	
 	

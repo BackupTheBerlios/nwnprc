@@ -40,13 +40,13 @@ Created:   6/12/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+	PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
 	
 	object oPC = OBJECT_SELF;
 	int nCasterLevel = PRCGetCasterLevel(oPC);
@@ -60,11 +60,11 @@ void main()
 	while(GetIsObjectValid(oTarget))
 	{
 		//Spell resistance
-		if(!MyPRCResistSpell(oPC, oTarget, nCasterLevel + SPGetPenetr()))
+		if(!PRCDoResistSpell(oPC, oTarget, nCasterLevel + SPGetPenetr()))
 		{	
 			int nType = GetObjectType(oTarget);
 			int nRace = MyPRCGetRacialType(oTarget);
-			int nDC = SPGetSpellSaveDC(oTarget, oPC);
+			int nDC = PRCGetSaveDC(oTarget, oPC);
 			
 			if(nType == OBJECT_TYPE_CREATURE)
 			{
@@ -118,5 +118,5 @@ void main()
 	}
 	
 	SPEvilShift(oPC);
-	SPSetSchool();
+	PRCSetSchool();
 }

@@ -16,7 +16,7 @@
 
 //::Added hold ray functionality - HackyKid
 
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_inc_sp_tch"
 #include "prc_alterations"
 #include "prc_sp_func"
@@ -62,7 +62,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
         if(iAttackRoll > 0)
         {
              //Make SR check
-             if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
+             if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nPenetr))
              {
 
                 //Make a Fort save to negate
@@ -103,7 +103,7 @@ void main()
 {
     object oCaster = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oCaster);
-    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    PRCSetSchool(GetSpellSchool(PRCGetSpellId()));
     if (!X2PreSpellCastCode()) return;
     object oTarget = PRCGetSpellTargetObject();
     int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
@@ -125,5 +125,5 @@ void main()
                 DecrementSpellCharges(oCaster);
         }
     }
-    SPSetSchool();
+    PRCSetSchool();
 }

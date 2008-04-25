@@ -1,4 +1,4 @@
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void DarkBolt(object oTarget,int nMissiles, int nDC , int nMetaMagic)
 {
@@ -17,7 +17,7 @@ void DarkBolt(object oTarget,int nMissiles, int nDC , int nMetaMagic)
    float fDelay2, fTime;
   
    //Make SR Check
-   if (!MyPRCResistSpell(OBJECT_SELF, oTarget))
+   if (!PRCDoResistSpell(OBJECT_SELF, oTarget))
    {      
       //Roll damage
       int nDam = d8(2);
@@ -82,7 +82,7 @@ void main()
     // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
     if (!X2PreSpellCastCode()) return;
     
-    SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+    PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
     object oTarget = GetSpellTargetObject();
     int nCasterLvl = PRCGetCasterLevel();
     int nMetaMagic = PRCGetMetaMagicFeat();
@@ -108,7 +108,7 @@ void main()
         if (nMissiles > 7) nMissiles = 7;
 
         //Make SR Check
-        if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
+        if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nPenetr))
         {
            
                 //Roll damage
@@ -164,6 +164,6 @@ void main()
         if (nMissiles>0)
            DelayCommand(6.2,DarkBolt( oTarget,nMissiles,nDC,nMetaMagic));
 
-        SPSetSchool();
+        PRCSetSchool();
     
 }

@@ -48,7 +48,7 @@ void main()
 
     if(oTarget != oCaster)
     {
-        if(!MyPRCResistSpell(oCaster, oTarget, SPGetPenetrAOE(GetAreaOfEffectCreator(), nCasterLvl)))
+        if(!PRCDoResistSpell(oCaster, oTarget, SPGetPenetrAOE(GetAreaOfEffectCreator(), nCasterLvl)))
     	{
     		//save
     		if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL))

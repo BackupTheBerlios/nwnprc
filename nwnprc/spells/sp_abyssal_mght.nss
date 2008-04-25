@@ -26,11 +26,12 @@ Created:   1/27/06
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
+#include "x2_inc_spellhook"
 
 void main()
 {
-    SPSetSchool(SPELL_SCHOOL_CONJURATION);
+    PRCSetSchool(SPELL_SCHOOL_CONJURATION);
     
     // Run the spellhook. 
     if (!X2PreSpellCastCode()) return;
@@ -44,7 +45,7 @@ void main()
     int nCasterLvl = PRCGetCasterLevel(oPC);
     int nMetaMagic = PRCGetMetaMagicFeat();
     
-    SPRaiseSpellCastAt(oTarget, TRUE, SPELL_ABYSSAL_MIGHT, oPC);
+    PRCSignalSpellEvent(oTarget, TRUE, SPELL_ABYSSAL_MIGHT, oPC);
     
     if(nType == RACIAL_TYPE_OUTSIDER && nAlignEvil == ALIGNMENT_EVIL && nAlignChaotic == ALIGNMENT_CHAOTIC)
     {
@@ -88,7 +89,7 @@ void main()
     
     SPEvilShift(oPC);
     
-    SPSetSchool();
+    PRCSetSchool();
 }
     
     

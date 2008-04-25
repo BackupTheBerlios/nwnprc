@@ -35,7 +35,7 @@
 
 const int ERROR_CODE_5_FIX_AGAIN = 1;
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "psi_inc_onhit"
 #include "psi_inc_psifunc"
 #include "psi_spellhook"

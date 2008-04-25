@@ -30,11 +30,11 @@ Created:   16.3.2006
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
-    SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+    PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
     
     //Spellhook
     if (!X2PreSpellCastCode()) return;
@@ -45,9 +45,9 @@ void main()
     int nMetaMagic = PRCGetMetaMagicFeat();
     int nType = MyPRCGetRacialType(oPC);
     int nTargetType = MyPRCGetRacialType(oTarget);
-    int nDC = SPGetSpellSaveDC(oTarget, oPC);
+    int nDC = PRCGetSaveDC(oTarget, oPC);
     
-    SPRaiseSpellCastAt(oTarget,TRUE, SPELL_GUTWRENCH, oPC);
+    PRCSignalSpellEvent(oTarget,TRUE, SPELL_GUTWRENCH, oPC);
     
     //Caster must be undead.  If not, hit 'em with alignment change anyway.
     //Try reading the description of the spell moron. =P
@@ -60,7 +60,7 @@ void main()
            nTargetType != RACIAL_TYPE_ELEMENTAL)
            
          {
-             if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
+             if(!PRCDoResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
              {
                  if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_DEATH))
                  {
@@ -112,7 +112,7 @@ void main()
      
      SPEvilShift(oPC);
      
-     SPSetSchool();
+     PRCSetSchool();
 }
      
      

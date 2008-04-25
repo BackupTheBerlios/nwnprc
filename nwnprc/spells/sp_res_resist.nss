@@ -28,13 +28,13 @@ Created:   7/5/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {	
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+	PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
 	
 	object oPC = OBJECT_SELF;
 	int nCasterLvl = PRCGetCasterLevel(oPC);
@@ -70,6 +70,6 @@ void main()
 		}
 	}
 	
-	SPSetSchool();
+	PRCSetSchool();
 }
 

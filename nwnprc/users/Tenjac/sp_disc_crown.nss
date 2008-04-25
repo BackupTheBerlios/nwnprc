@@ -3,7 +3,7 @@
 //  sp_disc_crown.nss
 ////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {

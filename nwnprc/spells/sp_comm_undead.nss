@@ -47,12 +47,11 @@ Created:   02/21/06
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_common"
 #include "prc_inc_spells"
 
 void main()
 {
-	SPSetSchool(SPELL_SCHOOL_CONJURATION);
+	PRCSetSchool(SPELL_SCHOOL_CONJURATION);
 	
 	// Run the spellhook. 
 	if (!X2PreSpellCastCode()) return;
@@ -61,7 +60,7 @@ void main()
 	object oPC = OBJECT_SELF;
 	object oTarget = GetSpellTargetObject();
 	int nCasterLvl = PRCGetCasterLevel(oPC);
-	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+	int nDC = PRCGetSaveDC(oTarget, oPC);
 	effect eCharm = EffectCharmed();
 	effect eVis = EffectVisualEffect(VFX_IMP_DOMINATE_S);
 	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
@@ -78,7 +77,7 @@ void main()
 	eLink2 = EffectLinkEffects(eLink2, eDur);
 	eLink2 = SupernaturalEffect(eLink2);
 	
-	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_COMMAND_UNDEAD, oPC);
+	PRCSignalSpellEvent(oTarget, TRUE, SPELL_COMMAND_UNDEAD, oPC);
 	
 	if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
 	{
@@ -89,7 +88,7 @@ void main()
 	if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD)
 	{
 		//Check Spell Resistance
-		if (!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+		if (!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 		{
 			//Dominate mindless
 			if(GetAbilityScore(oTarget, ABILITY_INTELLIGENCE) < 11)
@@ -108,7 +107,7 @@ void main()
 			}
 		}
 	}
-	SPSetSchool();
+	PRCSetSchool();
 }
 				
 				

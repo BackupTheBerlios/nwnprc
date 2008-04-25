@@ -38,7 +38,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_inc_teleport"
 
 void GoInvis(struct manifestation manif, object oTarget)

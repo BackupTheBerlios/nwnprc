@@ -10,7 +10,7 @@
 //:://////////////////////////////////////////////
 
 
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_alterations"
 
 void RemoveImprovedRicochet(object oPC, object oWeap)

@@ -35,11 +35,11 @@ Created:   6/8/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
-	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+	PRCSetSchool(SPELL_SCHOOL_EVOCATION);
 	
 	object oTarget = GetExitingObject();
 	effect eAOE = GetFirstEffect(oTarget);
@@ -70,7 +70,7 @@ void main()
 		//Get next effect on the target
 		eAOE = GetNextEffect(oTarget);
 	}
-	SPSetSchool();
+	PRCSetSchool();
 }
 				
 		

@@ -23,13 +23,13 @@ be an unoccupied space within line of sight.
 /////////////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_CONJURATION);
+	PRCSetSchool(SPELL_SCHOOL_CONJURATION);
 	
 	object oPC = OBJECT_SELF;
 	location lTarget = PRCGetSpellTargetLocation();
@@ -43,6 +43,6 @@ void main()
 	DelayCommand(0.5f, ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_CUTSCENE_INVISIBILITY), oPC, 0.55));
 	DrawLineFromVectorToVector(DURATION_TYPE_INSTANT, VFX_IMP_WIND, GetArea(oPC), GetPosition(oPC), GetPositionFromLocation(lTarget), 0.0, FloatToInt(GetDistanceBetweenLocations(GetLocation(oPC), lTarget)), 0.5);
 	
-	SPSetSchool();
+	PRCSetSchool();
 }
 	

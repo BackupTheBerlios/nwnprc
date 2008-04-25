@@ -43,7 +43,7 @@ int DoPower(object oManifester, object oTarget, struct manifestation manif)
     if(GetIsDead(oTarget))
     {
         // Let the AI know - Special handling
-        SPRaiseSpellCastAt(oTarget, FALSE, SPELL_RAISE_DEAD, oManifester);
+        PRCSignalSpellEvent(oTarget, FALSE, SPELL_RAISE_DEAD, oManifester);
 
         // Apply effects
         ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetLocation(oTarget));

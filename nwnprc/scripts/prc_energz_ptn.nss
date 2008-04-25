@@ -35,7 +35,7 @@ Created:   7/24/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
@@ -52,9 +52,9 @@ void main()
 	
 	while(GetIsObjectValid(oTarget))
 	{
-		if(!MyPRCResistSpell(oPotion, oTarget, nCasterLvl + SPGetPenetr()))
+		if(!PRCDoResistSpell(oPotion, oTarget, nCasterLvl + SPGetPenetr()))
 		{
-			nDC = SPGetSpellSaveDC(oPotion, oTarget);
+			nDC = PRCGetSaveDC(oPotion, oTarget);
 			nDam = d6(nDice);
 			
 			if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, nSave))

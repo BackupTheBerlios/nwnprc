@@ -1,11 +1,11 @@
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	// If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
 	if (!X2PreSpellCastCode()) return;
     
-	SPSetSchool(SPELL_SCHOOL_CONJURATION);
+	PRCSetSchool(SPELL_SCHOOL_CONJURATION);
 	
 	// Get the spell target location as opposed to the spell target.
 	location lTarget = PRCGetSpellTargetLocation();
@@ -16,7 +16,7 @@ void main()
 	if ("MordenkainensMagnificentMansion" != GetTag(GetArea(aCaster)))
 	{
 		// Fire cast spell at event for the specified target
-		SPRaiseSpellCastAt(aCaster, FALSE);
+		PRCSignalSpellEvent(aCaster, FALSE);
 
 		// Apply the ice explosion at the location captured above.
 		ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_SUMMON_MONSTER_3), lTarget);
@@ -33,5 +33,5 @@ void main()
 		}
 	}
 		
-	SPSetSchool();
+	PRCSetSchool();
 }

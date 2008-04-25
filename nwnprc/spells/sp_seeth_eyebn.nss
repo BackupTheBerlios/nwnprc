@@ -28,20 +28,20 @@ Corruption Cost: 1d6 points of Constitution damage
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
-	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+	PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
 	//define vars
 	object oPC = OBJECT_SELF;
 	object oTarget = PRCGetSpellTargetObject();
 	location lTarget = GetLocation(oTarget);
 	int nCasterLvl = PRCGetCasterLevel(oPC);
-	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+	int nDC = PRCGetSaveDC(oTarget, oPC);
 	int nType = MyPRCGetRacialType(oTarget);
 	
-	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_SEETHING_EYEBANE, oPC);
+	PRCSignalSpellEvent(oTarget, TRUE, SPELL_SEETHING_EYEBANE, oPC);
 	
 	if(nType != RACIAL_TYPE_CONSTRUCT &&
 	   nType != RACIAL_TYPE_OOZE &&
@@ -49,7 +49,7 @@ void main()
 	   nType != RACIAL_TYPE_UNDEAD)
 	{
 		//Spell Resistance
-		if (!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+		if (!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 		{		
 			//Fort save
 			if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_ACID))    
@@ -85,6 +85,6 @@ void main()
 	AdjustAlignment(oPC, ALIGNMENT_EVIL, 10);
 	
 	SPEvilShift(oPC);	
-	SPSetSchool();
+	PRCSetSchool();
 	
 }

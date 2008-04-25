@@ -24,7 +24,7 @@ points of energy damage.
 **/
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
@@ -65,7 +65,7 @@ void main()
 		
 		else
 		{
-			SPSetSchool();
+			PRCSetSchool();
 			return;
 		}
 	}
@@ -105,6 +105,6 @@ void main()
 	
 	IPSafeAddItemProperty(oTarget, ipBuff, fDur);
 	
-	SPSetSchool();
+	PRCSetSchool();
 }
 	

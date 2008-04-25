@@ -16,7 +16,7 @@
 //:: VFX Pass By: Preston W, On: June 27, 2001
 
 //:: modified by mr_bumpkin  Dec 4, 2003
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "X0_I0_SPELLS"
 #include "x2_inc_spellhook"
@@ -74,7 +74,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
                //Fire cast spell at event for the specified target
                SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_WEIRD));
                //Make an SR Check
-               if(!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
+               if(!PRCDoResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
                {
                     if ( !GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS,OBJECT_SELF) &&
                          !GetIsImmune(oTarget, IMMUNITY_TYPE_FEAR,OBJECT_SELF))

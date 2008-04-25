@@ -19,7 +19,7 @@
 //  Variables passed may be changed if necessary
 int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 {
-    SPRaiseSpellCastAt(oTarget, FALSE);
+    PRCSignalSpellEvent(oTarget, FALSE);
     // Boost stats, AC, attacks, stats, and saves by 4, and add the buff visual effect.
     // Shouldn't stack with itself. ~ Lock.
     if (!GetHasSpellEffect(SPELL_MANTLE_OF_EGREG_MIGHT, oTarget))
@@ -36,7 +36,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
         eList = EffectLinkEffects(eList, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
         //SetLocalInt(oTarget, "EgragiousM", 2); Does not seem to be used anywhere else - Ornedan
         // Get duration, 10 min / level unless extended.
-        float fDuration = SPGetMetaMagicDuration(TenMinutesToSeconds(nCasterLevel));
+        float fDuration = PRCGetMetaMagicDuration(TenMinutesToSeconds(nCasterLevel));
         // Build the list of fancy visual effects to apply when the spell goes off.
         effect eVisList = EffectLinkEffects(EffectVisualEffect(VFX_IMP_AC_BONUS), EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE));
         // Apply effects and VFX to target
@@ -51,7 +51,7 @@ void main()
 {
     object oCaster = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oCaster);
-    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    PRCSetSchool(GetSpellSchool(PRCGetSpellId()));
     if (!X2PreSpellCastCode()) return;
     object oTarget = PRCGetSpellTargetObject();
     int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
@@ -72,5 +72,5 @@ void main()
                 DecrementSpellCharges(oCaster);
         }
     }
-    SPSetSchool();
+    PRCSetSchool();
 }

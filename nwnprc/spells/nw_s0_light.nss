@@ -19,6 +19,7 @@
 */
 
 #include "prc_sp_func"
+#include "x2_inc_craft"
 
 //Implements the spell impact, put code here
 //  if called in many places, return TRUE if
@@ -61,7 +62,7 @@ void main()
     if(GetHasFeat(FEAT_SHADOWWEAVE,OBJECT_SELF)) return;
     object oCaster = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oCaster);
-    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    PRCSetSchool(GetSpellSchool(PRCGetSpellId()));
     object oTarget = PRCGetSpellTargetObject();
     int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
     if(!nEvent) //normal cast
@@ -81,5 +82,5 @@ void main()
                 DecrementSpellCharges(oCaster);
         }
     }
-    SPSetSchool();
+    PRCSetSchool();
 }

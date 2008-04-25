@@ -30,7 +30,7 @@ void main()
           eLink=EffectLinkEffects(eLink,eSaveEnch);
 
    //Make SR check
-   if (!MyPRCResistSpell(OBJECT_SELF, oTarget))
+   if (!PRCDoResistSpell(OBJECT_SELF, oTarget))
    {
       if (!/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (PRCGetSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_MIND_SPELLS))
       {

@@ -28,7 +28,7 @@ through the area at only half normal speed.
 //:: Primogenitor: Implemented 3.5ed rules
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_alterations"
 #include "inc_grapple"
 #include "inv_inc_invfunc"

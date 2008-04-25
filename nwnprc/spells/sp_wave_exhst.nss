@@ -23,13 +23,13 @@ Created:   7/6/07
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
         if(!X2PreSpellCastCode()) return;
         
-        SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+        PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
         
         object oPC = OBJECT_SELF;
         location lLoc = GetSpellTargetLocation();
@@ -39,7 +39,7 @@ void main()
         
         while(GetIsObjectValid(oTarget))
         {
-                if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nPenetr))
+                if(!PRCDoResistSpell(OBJECT_SELF, oTarget, nPenetr))
                 {
                         effect eSpeed = EffectMovementSpeedDecrease(50);
                         effect eLink = EffectLinkEffects(EffectAbilityDecrease(ABILITY_STRENGTH, 6), EffectAbilityDecrease(ABILITY_DEXTERITY, 6));
@@ -55,5 +55,5 @@ void main()
                 }
                 oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, 18.29f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
         }
-        SPSetSchool();
+        PRCSetSchool();
 }

@@ -56,7 +56,7 @@ void main()
     object oCaster = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oCaster);
     int nSpellID = PRCGetSpellId();
-    SPSetSchool(GetSpellSchool(nSpellID));
+    PRCSetSchool(GetSpellSchool(nSpellID));
     if (!X2PreSpellCastCode()) return;
     object oTarget;// = PRCGetSpellTargetObject();
     location lLocation = PRCGetSpellTargetLocation();
@@ -138,7 +138,7 @@ void main()
             break;
         else
         {
-            SPRaiseSpellCastAt(oTarget, FALSE);
+            PRCSignalSpellEvent(oTarget, FALSE);
             nSumHD += array_get_int(oCaster, sHD, nIndex);
             SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);
             ConcentrationHB(oCaster, oTarget, nSpellID, FloatToInt(fDuration));
@@ -151,5 +151,5 @@ void main()
     array_delete(oCaster, sFlag);
 
 
-    SPSetSchool();
+    PRCSetSchool();
 }

@@ -43,13 +43,13 @@ of overcoming damage reduction.
 // Tenjac   10/2/07
 //////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
         if(!X2PreSpellCastCode()) return;
         
-        SPSetSchool(SPELL_SCHOOL_CONJURATION)
+        PRCSetSchool(SPELL_SCHOOL_CONJURATION)
         
         object oPC = OBJECT_SELF;
         location lLoc = GetSpellTargetLocation();

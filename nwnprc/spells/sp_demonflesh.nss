@@ -23,11 +23,11 @@ Created:   03/25/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
-	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+	PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
 	
 	// Run the spellhook. 
 	if (!X2PreSpellCastCode()) return;
@@ -66,5 +66,5 @@ void main()
 	
 	SPEvilShift(oPC);
 	
-	SPSetSchool();
+	PRCSetSchool();
 }

@@ -14,7 +14,7 @@ Created:   3/10/2006
 
 void DamLoop(object oTarget, object oArea, int nCounter);
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {

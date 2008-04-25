@@ -148,7 +148,7 @@ void main()
         utter.fDur       = RoundsToSeconds(5);
         if(utter.bExtend) utter.fDur *= 2;
 
-	int nSRCheck = MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen);
+	int nSRCheck = PRCDoResistSpell(oTrueSpeaker, oTarget, utter.nPen);
 	if (!nSRCheck)
         {  
         	// Convert back to rounds

@@ -41,7 +41,7 @@ int DoPower(object oManifester, object oTarget, struct manifestation manif)
     effect eTest;
 
     // Let the AI know - Special handling
-    SPRaiseSpellCastAt(oTarget, FALSE, SPELL_RESTORATION, oManifester);
+    PRCSignalSpellEvent(oTarget, FALSE, SPELL_RESTORATION, oManifester);
 
     // Loop over remaining effects, remove any negative ones
     eTest = GetFirstEffect(oTarget);

@@ -30,13 +30,13 @@ depend on eyes for vision.
 // Tenjac  10/1/07
 ///////////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
         if(!X2PreSpellCastCode()) return;
         
-        SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+        PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
         
         object oPC = OBJECT_SELF;
         object oTarget = PRCGetSpellTargetObject();
@@ -53,11 +53,11 @@ void main()
                 nType != RACIAL_TYPE_ELEMENTAL &&
                 nType != RACIAL_TYPE_UNDEAD)
                 {
-                        if(!MyPRCResistSpell(oCaster, oTarget, nCasterLvl + SPGetPenetr()))
+                        if(!PRCDoResistSpell(oCaster, oTarget, nCasterLvl + SPGetPenetr()))
                         {
                                 SPApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectBlindness(), oTarget, TRUE, SPELL_BLINDING_SPITTLE, nCasterLvl);
                         }
                 }
         }
-        SPSetSchool();
+        PRCSetSchool();
 }

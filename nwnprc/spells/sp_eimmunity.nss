@@ -53,11 +53,11 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
             break;
         }
     }
-    float fDuration = SPGetMetaMagicDuration(HoursToSeconds(24));
+    float fDuration = PRCGetMetaMagicDuration(HoursToSeconds(24));
     effect eList = EffectDamageResistance(nDamageType, 9999);
     eList = EffectLinkEffects(eList, EffectVisualEffect(VFX_DUR_PROTECTION_ELEMENTS));
     eList = EffectLinkEffects(eList, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
-    SPRaiseSpellCastAt(oTarget, FALSE, SPELL_ENERGY_IMMUNITY);
+    PRCSignalSpellEvent(oTarget, FALSE, SPELL_ENERGY_IMMUNITY);
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eList, oTarget, fDuration,TRUE,-1,nCasterLevel);
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(nVfx), oTarget);
 
@@ -68,7 +68,7 @@ void main()
 {
     object oCaster = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oCaster);
-    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    PRCSetSchool(GetSpellSchool(PRCGetSpellId()));
     if (!X2PreSpellCastCode()) return;
     object oTarget = PRCGetSpellTargetObject();
     int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
@@ -89,5 +89,5 @@ void main()
                 DecrementSpellCharges(oCaster);
         }
     }
-    SPSetSchool();
+    PRCSetSchool();
 }

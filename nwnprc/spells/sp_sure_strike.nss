@@ -18,13 +18,13 @@ caster levels on your next attack roll.
 **/
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_DIVINATION);
+	PRCSetSchool(SPELL_SCHOOL_DIVINATION);
 	
 	object oPC = OBJECT_SELF;
 	effect eVis = EffectVisualEffect(VFX_IMP_HEAD_ODD);
@@ -35,11 +35,11 @@ void main()
 	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
 	effect eLink = EffectLinkEffects(eAttack, eDur);
 	
-	SPRaiseSpellCastAt(oPC, FALSE, SPELL_SURE_STRIKE, oPC);
+	PRCSignalSpellEvent(oPC, FALSE, SPELL_SURE_STRIKE, oPC);
 	
 	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oPC);
 	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, RoundsToSeconds(1));
 	
-	SPSetSchool();
+	PRCSetSchool();
 }
 	

@@ -38,34 +38,34 @@ Created:   6/6/06
 //:://////////////////////////////////////////////
 void BlindLoop(object oTarget, object oPC);
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_ILLUSION);
+	PRCSetSchool(SPELL_SCHOOL_ILLUSION);
 	
 	object oPC = OBJECT_SELF;
 	object oTarget = GetSpellTargetObject();
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	
-	SPRaiseSpellCastAt(oTarget,TRUE, SPELL_REALITY_BLIND, oPC);
+	PRCSignalSpellEvent(oTarget,TRUE, SPELL_REALITY_BLIND, oPC);
 	
-	if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
+	if(!PRCDoResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
         {	
 		//Loop
 		BlindLoop(oTarget, oPC);
 	}
-	SPSetSchool();
+	PRCSetSchool();
 	SPEvilShift(oPC);
 }
 
 	
 void BlindLoop(object oTarget, object oPC)
 {
-	int nDC = SPGetSpellSaveDC(oTarget, oPC);	
+	int nDC = PRCGetSaveDC(oTarget, oPC);	
 	
 	if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_EVIL)) //&& Conc check successful
 	{

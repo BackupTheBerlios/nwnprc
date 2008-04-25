@@ -30,14 +30,14 @@ Created:   8/22/07
 
 void ParaLoop(object oTarget, int nDC, object oPC);
 
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_craft_inc"
 
 void main()
 {
         if(!X2PreSpellCastCode()) return;
         
-        SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+        PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
         
         object oPC = OBJECT_SELF;
         object oTarget = PRCGetSpellTargetObject();
@@ -53,7 +53,7 @@ void main()
         nType != BASE_ITEM_LIGHTCROSSBOW && 
         nType != BASE_ITEM_HEAVYCROSSBOW)
         {
-                SPSetSchool();
+                PRCSetSchool();
                 return;
         }
         
@@ -72,7 +72,7 @@ void main()
         
         if((!(GetMaterialString(StringToInt(sMaterial)) == sMaterial && sMaterial != "000") && !GetIsMagicItem(oAmmo)))
         {
-                        SPSetSchool();
+                        PRCSetSchool();
                         return;
         }
         
@@ -82,11 +82,11 @@ void main()
         //if hit
         if(GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
         {
-                if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+                if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
                 {
                         ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(d6(2), DAMAGE_TYPE_COLD), oTarget);
                         
-                        int nDC = SPGetSpellSaveDC(oTarget, oPC);
+                        int nDC = PRCGetSaveDC(oTarget, oPC);
                         
                         //Save
                         if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_COLD))            
@@ -100,7 +100,7 @@ void main()
                 }
         }
         
-        SPSetSchool();
+        PRCSetSchool();
 }
 
 void ParaLoop(object oTarget, int nDC, object oPC)

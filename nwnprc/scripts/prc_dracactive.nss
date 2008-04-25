@@ -14,7 +14,7 @@
 int DecrementSpellLevel(int nLevel, object oPC = OBJECT_SELF);
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_inc_breath"
 
 void ActivateSavingThrow(int nSpellLevel, object oPC = OBJECT_SELF)

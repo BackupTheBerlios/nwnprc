@@ -36,15 +36,14 @@ sometimes even half the lolling head).
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common" 
+#include "prc_inc_spells" 
 #include "spinc_necro_cyst"
 #include "inc_utility"
-#include "prc_inc_spells"
 
 void main()
 {
 	// Set the spellschool
-	SPSetSchool(SPELL_SCHOOL_NECROMANCY); 
+	PRCSetSchool(SPELL_SCHOOL_NECROMANCY); 
 	
 	// Run the spellhook. 
 	if (!X2PreSpellCastCode()) return;
@@ -55,7 +54,7 @@ void main()
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	object oTarget = GetSpellTargetObject();
 	
-	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_NECROTIC_BURST, oPC);
+	PRCSignalSpellEvent(oTarget, TRUE, SPELL_NECROTIC_BURST, oPC);
 	
 	if(!GetCanCastNecroticSpells(oPC))
 	return;
@@ -69,7 +68,7 @@ void main()
 		
 	//Define nDC
 	
-	int nDC = SPGetSpellSaveDC(oTarget, oPC);     
+	int nDC = PRCGetSaveDC(oTarget, oPC);     
 	
 	//Resolve spell
 	if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
@@ -111,7 +110,7 @@ void main()
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget);
 		RemoveCyst(oTarget); 
-		SPSetSchool();
+		PRCSetSchool();
 	}
 	SPEvilShift(oPC);
 }

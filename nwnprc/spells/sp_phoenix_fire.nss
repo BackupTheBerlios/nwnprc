@@ -46,13 +46,13 @@ void Rebirth(object oPC);
 const int ERROR_CODE_5_FIX_AGAIN = 1;
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
     if(!X2PreSpellCastCode()) return;
     
-    SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+    PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
     
     //Define vars
     object oPC = OBJECT_SELF;
@@ -81,9 +81,9 @@ void main()
     //While object valid
     while(GetIsObjectValid(oTarget))
     {
-        if (!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
+        if (!PRCDoResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
         {
-            int nDC = SPGetSpellSaveDC(oTarget, oPC);
+            int nDC = PRCGetSaveDC(oTarget, oPC);
             
             //If alignment evil
             if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL)
@@ -143,7 +143,7 @@ void main()
     //Sanctified spells get mandatory 10 pt good adjustment, regardless of switch
     AdjustAlignment(oPC, ALIGNMENT_GOOD, 10);
     
-    SPSetSchool();
+    PRCSetSchool();
     SPGoodShift(oPC);
 }
     

@@ -6,14 +6,14 @@
 //
 /////////////////////////////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
     // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
     if (!X2PreSpellCastCode()) return;
 
-    SPSetSchool(SPELL_SCHOOL_CONJURATION);
+    PRCSetSchool(SPELL_SCHOOL_CONJURATION);
 
     // Get the target and raise the spell cast event.
     object oTarget = GetSpellTargetObject();
@@ -27,7 +27,7 @@ void main()
     // the target is undead then check for SR.
     if (RACIAL_TYPE_UNDEAD != MyPRCGetRacialType(oTarget))
     {   
-        SPRaiseSpellCastAt(oTarget, FALSE);
+        PRCSignalSpellEvent(oTarget, FALSE);
         
         // Look for detrimental effects and remove them.  Removes the following effects:
         // blinded, confused, dazed, deafened, diseased, frightened, paralyzed, 
@@ -61,7 +61,7 @@ void main()
         }
                 
         // Roll the healing 'damage'.
-        int nHeal = SPGetMetaMagicDamage(DAMAGE_TYPE_POSITIVE, 1, 8, 0, nAdd);
+        int nHeal = PRCGetMetaMagicDamage(DAMAGE_TYPE_POSITIVE, 1, 8, 0, nAdd);
         if (GetLevelByClass(CLASS_TYPE_HEALER, OBJECT_SELF))
             nHeal += GetAbilityModifier(ABILITY_CHARISMA, OBJECT_SELF);
 
@@ -71,16 +71,16 @@ void main()
     }
     else if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
     {
-        SPRaiseSpellCastAt(oTarget);
+        PRCSignalSpellEvent(oTarget);
         
-        if (!SPResistSpell(OBJECT_SELF, oTarget,nPenetr))
+        if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nPenetr))
         {
             int nTouch = PRCDoMeleeTouchAttack(oTarget);;
             if (nTouch > 0)
             {
                 // Roll the damage (allowing for a critical) and let the target make a will save to
                 // halve the damage.
-                int nDamage = SPGetMetaMagicDamage(DAMAGE_TYPE_POSITIVE, 1 == nTouch ? 1 : 2, 8, 0, nAdd);
+                int nDamage = PRCGetMetaMagicDamage(DAMAGE_TYPE_POSITIVE, 1 == nTouch ? 1 : 2, 8, 0, nAdd);
                 if (PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget,OBJECT_SELF))) 
                 {
                 	nDamage /= 2;
@@ -91,11 +91,11 @@ void main()
                 }
                 
                 // Apply damage and VFX.
-                SPApplyEffectToObject(DURATION_TYPE_INSTANT, SPEffectDamage(nDamage, DAMAGE_TYPE_POSITIVE), oTarget);
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(nDamage, DAMAGE_TYPE_POSITIVE), oTarget);
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_SUNSTRIKE), oTarget);
             }
         }
     }
 
-    SPSetSchool();
+    PRCSetSchool();
 }

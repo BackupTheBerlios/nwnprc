@@ -38,13 +38,13 @@ Created:   6/20/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_ABJURATION);
+	PRCSetSchool(SPELL_SCHOOL_ABJURATION);
 	
 	object oPC = OBJECT_SELF;
 	object oTarget = GetSpellTargetObject();
@@ -72,7 +72,7 @@ void main()
 	AdjustAlignment(oPC, ALIGNMENT_GOOD, 10);
 	
 	SPGoodShift(oPC);
-	SPSetSchool();
+	PRCSetSchool();
 }
 	
 

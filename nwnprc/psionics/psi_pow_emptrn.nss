@@ -82,7 +82,7 @@ int DoPower(object oManifester, object oTarget, struct manifestation manif)
         effect eHeal, eDam;
 
         // Let the AI know
-        SPRaiseSpellCastAt(oTarget, FALSE, manif.nSpellID, oManifester);
+        PRCSignalSpellEvent(oTarget, FALSE, manif.nSpellID, oManifester);
 
         // Handle Twin Power
         int nRepeats = manif.bTwin ? 2 : 1;

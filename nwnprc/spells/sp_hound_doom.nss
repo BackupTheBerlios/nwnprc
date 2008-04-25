@@ -42,13 +42,13 @@ hound is instantly dispelled.
 ///////////////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_ILLUSION);
+	PRCSetSchool(SPELL_SCHOOL_ILLUSION);
 	
 	object oPC = OBJECT_SELF;
 	location lLoc = GetSpellTargetLocation();
@@ -103,7 +103,7 @@ void main()
 	
 	SetBaseAttackBonus(GetBaseAttackBonus(oPC), oHound);
 	
-	SPSetSchool();
+	PRCSetSchool();
 }
 	
 

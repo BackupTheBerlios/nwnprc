@@ -37,7 +37,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void AvoidDR(object oTarget, int nDamage);
 
@@ -80,7 +80,7 @@ void main()
         effect eVis       = EffectVisualEffect(PSI_FNF_PSYCHIC_CRUSH);
 
         // Let the AI know
-        SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+        PRCSignalSpellEvent(oTarget, TRUE, manif.nSpellID, oManifester);
 
         // Handle Twin Power
         int nRepeats = manif.bTwin ? 2 : 1;

@@ -40,13 +40,13 @@ Created:
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+	PRCSetSchool(SPELL_SCHOOL_EVOCATION);
 	
 	object oPC = OBJECT_SELF;
 	object oTarget = GetSpellTargetObject();
@@ -57,7 +57,7 @@ void main()
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	int nDam;
 	
-	SPRaiseSpellCastAt(oTarget,TRUE, SPELL_BOLT_OF_GLORY, oPC);
+	PRCSignalSpellEvent(oTarget,TRUE, SPELL_BOLT_OF_GLORY, oPC);
 	
 	//Beam VFX.  Ornedan is my hero.
 	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectBeam(VFX_BEAM_HOLY, oPC, BODY_NODE_HAND, !nTouch), oTarget, 1.0f); 
@@ -66,7 +66,7 @@ void main()
 	if(nTouch)
 	{
 		//SR
-		if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLevel + SPGetPenetr()))
+		if(!PRCDoResistSpell(OBJECT_SELF, oTarget, nCasterLevel + SPGetPenetr()))
 		{
 			if((nRace == RACIAL_TYPE_UNDEAD) || (nRace == RACIAL_TYPE_OUTSIDER && nAlign == ALIGNMENT_EVIL))
 			{
@@ -104,7 +104,7 @@ void main()
 		}
 	}
 	SPGoodShift(oPC);
-	SPSetSchool();
+	PRCSetSchool();
 }
 		
 		

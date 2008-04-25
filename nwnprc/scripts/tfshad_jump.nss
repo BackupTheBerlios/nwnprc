@@ -24,7 +24,7 @@
 //:://////////////////////////////////////////////
 
 
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_alterations"
 #include "prc_inc_sneak"
 #include "prc_inc_teleport"

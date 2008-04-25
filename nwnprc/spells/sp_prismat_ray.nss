@@ -42,13 +42,13 @@ Created:   7/6/07
 
 void DoRay(object oTarget, int nSaveDC, int nRoll, int nCasterLvl, object oPC);
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
        if(!X2PreSpellCastCode()) return;
        
-       SPSetSchool(SPELL_SCHOOL_EVOCATION);
+       PRCSetSchool(SPELL_SCHOOL_EVOCATION);
        
        object oPC = OBJECT_SELF;
        object oTarget = PRCGetSpellTargetObject();
@@ -56,7 +56,7 @@ void main()
        int nRoll = d8(1);
        int bTwoRolls = FALSE;
        int nBeamVisualEffect;  
-       int nSaveDC = SPGetSpellSaveDC(oTarget, oPC);
+       int nSaveDC = PRCGetSaveDC(oTarget, oPC);
        int nTouch = PRCDoRangedTouchAttack(oTarget);
        int nHD = GetHitDice(oTarget);
        int nRoll2;
@@ -94,7 +94,7 @@ void main()
        if(nTouch)
        {
                 //SR check
-                if(!MyPRCResistSpell(oPC, oTarget, (nCasterLvl + SPGetPenetr())))
+                if(!PRCDoResistSpell(oPC, oTarget, (nCasterLvl + SPGetPenetr())))
                 {
                         
                         //blind
@@ -126,7 +126,7 @@ void main()
                         }
                 }
         }
-        SPSetSchool();
+        PRCSetSchool();
 }
 
 void DoRay(object oTarget, int nSaveDC, int nRoll, int nCasterLvl, object oPC)

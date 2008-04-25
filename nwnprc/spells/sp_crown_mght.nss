@@ -33,13 +33,13 @@ Focus: A copper hoop 6 inches in diameter.
 /////////////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+	PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
 	
 	object oPC = OBJECT_SELF;
 	object oTarget = GetSpellTargetObject();
@@ -49,7 +49,7 @@ void main()
 	effect eVis = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_POSITIVE);
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	
-	SPRaiseSpellCastAt(oTarget,FALSE, SPELL_CROWN_OF_MIGHT, oPC);
+	PRCSignalSpellEvent(oTarget,FALSE, SPELL_CROWN_OF_MIGHT, oPC);
 	
 	if(nMetaMagic == METAMAGIC_EXTEND)
 	{
@@ -70,7 +70,7 @@ void main()
 	//Schedule Destruction
 	DelayCommand(fDur, DestroyObject(oCrown));
 	
-	SPSetSchool();
+	PRCSetSchool();
 }
 	
 	

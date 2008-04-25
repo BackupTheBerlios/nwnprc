@@ -28,7 +28,7 @@ Created:   29/4/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void DoGreaterCommandRecursion(object oCaster, object oTarget, int nSpellId, int nLastBeat, effect eLink, int nDC, int nCaster, int nCurrentBeat = 0)
 {
@@ -62,7 +62,7 @@ void DoGreaterCommandRecursion(object oCaster, object oTarget, int nSpellId, int
 
 void main()
 {
-    SPSetSchool(SPELL_SCHOOL_ENCHANTMENT);
+    PRCSetSchool(SPELL_SCHOOL_ENCHANTMENT);
 
     // Run the spellhook.
     if (!X2PreSpellCastCode()) return;
@@ -94,7 +94,7 @@ void main()
         {
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
-            if (!MyPRCResistSpell(OBJECT_SELF, oTarget, nCaster+SPGetPenetr()))
+            if (!PRCDoResistSpell(OBJECT_SELF, oTarget, nCaster+SPGetPenetr()))
             {
                 int nDC = PRCGetSaveDC(oTarget, oCaster);
                 if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
@@ -109,5 +109,5 @@ void main()
        oTarget = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), lTarget, TRUE, OBJECT_TYPE_CREATURE);
     }
 
-    SPSetSchool();
+    PRCSetSchool();
 }

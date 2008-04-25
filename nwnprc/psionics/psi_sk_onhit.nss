@@ -13,7 +13,7 @@
 //:://////////////////////////////////////////////
 
 #include "psi_inc_soulkn"
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "psi_inc_psifunc"
 
 // Notes to self

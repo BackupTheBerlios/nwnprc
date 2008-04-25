@@ -30,13 +30,13 @@ Created:   6/13/06
 //:://////////////////////////////////////////////
 void MasochLoop(object oPC, int nHP, int nCounter);
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_ENCHANTMENT);
+	PRCSetSchool(SPELL_SCHOOL_ENCHANTMENT);
 	
 	object oPC = OBJECT_SELF;
 	int nCounter = PRCGetCasterLevel(oPC);
@@ -52,7 +52,7 @@ void main()
 	
 	MasochLoop(oPC, nHP, nCounter);
 	
-	SPSetSchool();
+	PRCSetSchool();
 	SPEvilShift(oPC);
 }
 

@@ -1,4 +1,4 @@
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "x2_i0_spells"
 
 //
@@ -36,20 +36,20 @@ void RunFlensing(object oCaster, object oTarget, int nSaveDC,
 
     // The nasty stuff, 2d6 damage, 1d6 cha/con damage, fort save to
     // half damage and negate stat damage.
-    int nDamage = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 2, 6, 0, 0, nMetaMagic);
-    int nConDrain = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 1, 8, 0, 0, nMetaMagic);
-    int nChaDrain = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 1, 8, 0, 0, nMetaMagic);
+    int nDamage = PRCGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 2, 6, 0, 0, nMetaMagic);
+    int nConDrain = PRCGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 1, 8, 0, 0, nMetaMagic);
+    int nChaDrain = PRCGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 1, 8, 0, 0, nMetaMagic);
     effect eDamage;
     if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nSaveDC, SAVING_THROW_TYPE_SPELL))
     {
 	if (GetHasMettle(oTarget, SAVING_THROW_FORT))
 	// This script does nothing if it has Mettle, bail
 		return;    	
-        eDamage = SPEffectDamage(nDamage / 2);
+        eDamage = PRCEffectDamage(nDamage / 2);
     }
     else
     {
-        eDamage = SPEffectDamage(nDamage);
+        eDamage = PRCEffectDamage(nDamage);
         /*eDamage = EffectLinkEffects(eDamage,
             EffectAbilityDecrease(ABILITY_CONSTITUTION, nConDrain));
         eDamage = EffectLinkEffects(eDamage,
@@ -78,18 +78,18 @@ void main()
     // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
     if (!X2PreSpellCastCode()) return;
 
-    SPSetSchool(SPELL_SCHOOL_EVOCATION);
+    PRCSetSchool(SPELL_SCHOOL_EVOCATION);
 
     object oTarget = GetSpellTargetObject();
     if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
     {
         // Get the target and raise the spell cast event.
-        SPRaiseSpellCastAt(oTarget);
+        PRCSignalSpellEvent(oTarget);
 
-        if (!SPResistSpell(OBJECT_SELF, oTarget))
+        if (!PRCDoResistSpell(OBJECT_SELF, oTarget))
         {
             // Determine the spell's duration, taking metamagic feats into account.
-            float fDuration = SPGetMetaMagicDuration(RoundsToSeconds(4));
+            float fDuration = PRCGetMetaMagicDuration(RoundsToSeconds(4));
 
             // Apply a persistent vfx to the target, we make him glow red.
             // RunFlensing uses our persistant vfx to determine it's duration.
@@ -104,9 +104,9 @@ void main()
             // and we need a real object reference.
             object oCaster = OBJECT_SELF;
             DelayCommand(1.0, RunFlensing(oCaster, oTarget, PRCGetSaveDC(oTarget,OBJECT_SELF),
-                SPGetMetaMagic(), PRCGetSpellId(), fDuration));
+                PRCGetMetaMagicFeat(), PRCGetSpellId(), fDuration));
         }
     }
 
-    SPSetSchool();
+    PRCSetSchool();
 }

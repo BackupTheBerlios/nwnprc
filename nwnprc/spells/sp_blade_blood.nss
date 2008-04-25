@@ -26,13 +26,13 @@ The weapon loses this property if its wielder drops
 it or otherwise loses contact with it.
 
 **/
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
         if(!X2PreSpellCastCode()) return;
         
-        SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+        PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
         
         object oPC = OBJECT_SELF;
         object oTarget = IPGetTargetedOrEquippedMeleeWeapon();
@@ -63,5 +63,5 @@ void main()
         
         AddEventScript(oTarget, EVENT_ITEM_ONHIT, "prc_event_bladeb", FALSE, FALSE);
         
-        SPSetSchool();
+        PRCSetSchool();
 }

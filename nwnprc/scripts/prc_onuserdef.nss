@@ -2,8 +2,7 @@
 //:: OnUserDefined eventscript
 //:: prc_onuserdef
 //:://////////////////////////////////////////////
-#include "prc_alterations"
-#include "inc_utility"
+#include "inc_eventhook"
 
 void main()
 {

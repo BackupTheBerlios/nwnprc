@@ -3,7 +3,7 @@
 //:: prc_door_transit
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "inc_eventhook"
 void main()
 {
     ExecuteAllScriptsHookedToEvent(OBJECT_SELF, EVENT_DOOR_ONTRANSITION);

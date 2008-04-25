@@ -12,7 +12,7 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_alterations"
 #include "prc_inc_clsfunc"
 #include "prc_alterations"
@@ -59,7 +59,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     
 if (iHP < 10)
 {    
-    if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
+    if(!PRCDoResistSpell(OBJECT_SELF, oTarget,nPenetr))
     {
         if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF)))
         {

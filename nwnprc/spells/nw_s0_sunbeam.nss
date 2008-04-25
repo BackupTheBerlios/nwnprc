@@ -18,7 +18,7 @@
 //:: VFX Pass By: Preston W, On: June 25, 2001
 
 //:: modified by mr_bumpkin  Dec 4, 2003
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "X0_I0_SPELLS"
 #include "x2_inc_spellhook"
@@ -83,7 +83,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_SUNBEAM));
             //Make an SR check
-            if ( ! MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr, 1.0))
+            if ( ! PRCDoResistSpell(OBJECT_SELF, oTarget,nPenetr, 1.0))
             {
                 //Check if the target is an undead
                 if (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD)

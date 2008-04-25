@@ -26,12 +26,12 @@ Created:   02/05/06
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_common"
 #include "prc_inc_spells"
+#include "x2_inc_spellhook"
 
 void main()
 {
-	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+	PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
 	
 	// Run the spellhook. 
 	if (!X2PreSpellCastCode()) return;
@@ -44,7 +44,7 @@ void main()
 	int nPenalty = 2;
 	float fDuration = RoundsToSeconds(nCasterLvl * 10);
 	
-	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_ANGRY_ACHE, oPC);
+	PRCSignalSpellEvent(oTarget, TRUE, SPELL_ANGRY_ACHE, oPC);
 	
 	if(nMetaMagic == METAMAGIC_EXTEND)
 	{
@@ -52,10 +52,10 @@ void main()
 	}
 	
 	//Calculate DC
-	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+	int nDC = PRCGetSaveDC(oTarget, oPC);
 	
 	//Check Spell Resistance
-	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 	{
 		if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
 		{
@@ -87,7 +87,7 @@ void main()
 		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePenalty, oTarget, fDuration, TRUE, SPELL_ANGRY_ACHE, nCasterLvl);
 	}
 	
-	SPSetSchool();		
+	PRCSetSchool();		
 }
 	
 	

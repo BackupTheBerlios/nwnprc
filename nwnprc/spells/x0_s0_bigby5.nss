@@ -28,7 +28,7 @@
 //:: VFX Pass By:
 
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_alterations"
 #include "x2_inc_spellhook"
 #include "inc_grapple"
@@ -102,7 +102,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_BIGBYS_CRUSHING_HAND, TRUE));
 
         //SR
-        if(!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl+ SPGetPenetr()))
+        if(!PRCDoResistSpell(OBJECT_SELF, oTarget,CasterLvl+ SPGetPenetr()))
         {
             int nCasterModifier = GetCasterAbilityModifier(OBJECT_SELF);
             int nCasterRoll = d20(1)

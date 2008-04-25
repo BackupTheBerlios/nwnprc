@@ -14,7 +14,7 @@
 //:://////////////////////////////////////////////
 
 #include "psi_inc_psifunc"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void AvoidDR(object oTarget, int nDamage);
 

@@ -35,13 +35,13 @@ Created:   8/9/07
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
         if(!X2PreSpellCastCode()) return;
         
-        SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);       
+        PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);       
         
         object oPC = OBJECT_SELF;
         effect eAOE = EffectAreaOfEffect(VFX_PER_SNARE);
@@ -51,5 +51,5 @@ void main()
         ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eAOE, lLoc);
         ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_AC_BONUS), lLoc);
         
-        SPSetSchool();
+        PRCSetSchool();
 }

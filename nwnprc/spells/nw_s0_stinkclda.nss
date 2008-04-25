@@ -13,7 +13,7 @@
 //:://////////////////////////////////////////////
 
 //:: modified by mr_bumpkin  Dec 4, 2003
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "X0_I0_SPELLS"
 #include "x2_inc_spellhook"
@@ -46,7 +46,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_STINKING_CLOUD));
         //Make a SR check
-        if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
+        if(!PRCDoResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
         {
             //Make a Fort Save
             if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (PRCGetSaveDC(oTarget,GetAreaOfEffectCreator())), SAVING_THROW_TYPE_POISON))

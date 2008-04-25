@@ -39,7 +39,7 @@ Created:   6/11/06
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 
 void SummonDragonCloud(location lLoc, float fDur)
@@ -53,7 +53,7 @@ void main()
 {
     if(!X2PreSpellCastCode()) return;
 
-    SPSetSchool(SPELL_SCHOOL_CONJURATION);
+    PRCSetSchool(SPELL_SCHOOL_CONJURATION);
 
     object oPC = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oPC);
@@ -78,7 +78,7 @@ void main()
 
     SPGoodShift(oPC);
 
-    SPSetSchool();
+    PRCSetSchool();
 }
 
 

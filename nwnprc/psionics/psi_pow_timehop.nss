@@ -42,7 +42,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void WisCheck(object oManifester, object oTarget, int nSpellID, int nBeatsRemaining);
 
@@ -113,7 +113,7 @@ void main()
             if(PRCGetCreatureSize(oMainTarget) <= nMaxSize)
             {
                 // Let the AI know
-                SPRaiseSpellCastAt(oMainTarget, TRUE, manif.nSpellID, oManifester);
+                PRCSignalSpellEvent(oMainTarget, TRUE, manif.nSpellID, oManifester);
 
                 // Check for Power Resistance
                 if(PRCMyResistPower(oManifester, oMainTarget, nPen))
@@ -144,7 +144,7 @@ void main()
                        )
                     {
                         // Let the AI know
-                        SPRaiseSpellCastAt(oExtraTarget, TRUE, manif.nSpellID, oManifester);
+                        PRCSignalSpellEvent(oExtraTarget, TRUE, manif.nSpellID, oManifester);
 
                         // Check for Power Resistance
                         if(PRCMyResistPower(oManifester, oExtraTarget, nPen))

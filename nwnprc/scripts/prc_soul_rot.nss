@@ -1,6 +1,6 @@
 
 //Soul Rot     DC 23       Incubation 1d8 days     1d6 WIS, 1d6 CHA
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {

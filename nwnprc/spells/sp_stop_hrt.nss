@@ -31,7 +31,7 @@ Created:
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
     
 void Deathloop(object oTarget, int nHP, int nCounter)
@@ -82,20 +82,20 @@ void main()
     object oPC = OBJECT_SELF;
     object oTarget = GetSpellTargetObject();
     int nHP = GetCurrentHitPoints(oTarget);
-    int nDC = SPGetSpellSaveDC(oTarget, oPC);
+    int nDC = PRCGetSaveDC(oTarget, oPC);
     int nCounter = 2;
     int nCasterLvl = PRCGetCasterLevel(oPC);
         
     //Spellhook
     if(!X2PreSpellCastCode()) return;
     
-    SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+    PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
     
     //must be under effect of baccaran
     if(GetHasSpellEffect(SPELL_BACCARAN, oPC))
     {
 	    //Spell Resistance
-	    if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
+	    if(!PRCDoResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
 	    {
 		    //Fort save
 		    if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
@@ -112,6 +112,6 @@ void main()
     
     
     SPEvilShift(oPC);
-    SPSetSchool();
+    PRCSetSchool();
 }
     

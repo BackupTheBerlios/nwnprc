@@ -37,13 +37,13 @@ Created:
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+	PRCSetSchool(SPELL_SCHOOL_EVOCATION);
 	
 	object oPC = OBJECT_SELF;
 	int nCasterLvl = PRCGetCasterLevel(oPC);
@@ -62,5 +62,5 @@ void main()
 	ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAOE, lLoc, fDur);
 		
 	SPGoodShift(oPC);
-	SPSetSchool();
+	PRCSetSchool();
 }

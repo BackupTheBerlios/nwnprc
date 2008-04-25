@@ -38,7 +38,7 @@ Created:   6/28/07
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "spinc_bolt"
 
 int GetDieType(int nCasterLevel);
@@ -47,7 +47,7 @@ void main()
 {
         if(!X2PreSpellCastCode()) return;
         
-        SPSetSchool(SPELL_SCHOOL_EVOCATION);
+        PRCSetSchool(SPELL_SCHOOL_EVOCATION);
         
         object oPC = OBJECT_SELF;
         int nCasterLevel = PRCGetCasterLevel(oPC);
@@ -60,7 +60,7 @@ void main()
         DoBolt(nCasterLevel, nDieSides, 0, 1, VFX_BEAM_LIGHTNING, VFX_IMP_LIGHTNING_S, DAMAGE_TYPE_ELECTRICAL, SAVING_THROW_TYPE_ELECTRICITY);
         DoBolt(nCasterLevel, nDieSides, 0, 1, VFX_BEAM_SPELLFIRE, VFX_IMP_SONIC, DAMAGE_TYPE_SONIC, SAVING_THROW_TYPE_SONIC);
                 
-        SPSetSchool();
+        PRCSetSchool();
 }
 
 int GetDieType(int nCasterLevel)

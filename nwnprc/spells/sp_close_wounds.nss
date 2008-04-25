@@ -26,13 +26,13 @@ damage if it makes a Will saving throw).
 ///////////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_CONJURATION);
+	PRCSetSchool(SPELL_SCHOOL_CONJURATION);
 	
 	object oPC = OBJECT_SELF;
 	object oTarget = PRCGetSpellTargetObject();
@@ -54,10 +54,10 @@ void main()
 	if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD)
 	{
 		//SR
-		if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+		if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 		{
 			//save for 1/2 dam
-			if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget, SPGetSpellSaveDC(oTarget, oPC), SAVING_THROW_TYPE_POSITIVE))
+			if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget, oPC), SAVING_THROW_TYPE_POSITIVE))
 			{
 				nHeal = nHeal/2;
 			}
@@ -73,6 +73,6 @@ void main()
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(nHeal), oTarget);
 	}
 	
-	SPSetSchool();
+	PRCSetSchool();
 }
 		

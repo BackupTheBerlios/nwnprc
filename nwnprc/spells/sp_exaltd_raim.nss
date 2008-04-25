@@ -39,7 +39,7 @@ Created:   6/28/06
 
 
 
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_ip_srcost.nss"
 
 int GetERSpellResistance(int nCasterLvl)
@@ -217,7 +217,7 @@ void main()
 	SPGoodShift(oPC);
 	
 	DoCorruptionCost(oPC, ABILITY_STRENGTH, d4(1), 0);
-	SPSetSchool();
+	PRCSetSchool();
 }
 		
 		

@@ -43,7 +43,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 
 void DoPower(struct manifestation manif, object oTarget, int nDC, int nPen, int nNumberOfDice, int nDieSize);
@@ -85,9 +85,9 @@ void main()
         object oSecondaryTarget = GetSplitPsionicRayTarget(manif, oTarget);
 
         // Let the AI know
-        SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+        PRCSignalSpellEvent(oTarget, TRUE, manif.nSpellID, oManifester);
         if(GetIsObjectValid(oSecondaryTarget))
-            SPRaiseSpellCastAt(oSecondaryTarget, TRUE, manif.nSpellID, oManifester);
+            PRCSignalSpellEvent(oSecondaryTarget, TRUE, manif.nSpellID, oManifester);
 
 
         // Handle Twin Power

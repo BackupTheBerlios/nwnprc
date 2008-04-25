@@ -26,13 +26,13 @@ Created:   7/7/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+	PRCSetSchool(SPELL_SCHOOL_EVOCATION);
 	
 	object oPC = OBJECT_SELF;
 	location lLoc = GetSpellTargetLocation();
@@ -44,9 +44,9 @@ void main()
 	
 	while(GetIsObjectValid(oTarget))
 	{
-		nDC = SPGetSpellSaveDC(oTarget, oPC);
+		nDC = PRCGetSaveDC(oTarget, oPC);
 		
-		if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+		if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 		{
 			if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SONIC))
 			{

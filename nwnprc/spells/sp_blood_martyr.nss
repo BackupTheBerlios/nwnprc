@@ -24,12 +24,12 @@ Created:   26/2/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "inc_dynconv"
 
 void main()
 {
-	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+	PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
 	
 	// Run the spellhook. 
 	if (!X2PreSpellCastCode()) return;
@@ -44,7 +44,7 @@ void main()
 		StartDynamicConversation("sp_cnv_bldmartyr", oPC, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, oPC);
 	}
 
-	SPSetSchool();
+	PRCSetSchool();
 }
 				
 				

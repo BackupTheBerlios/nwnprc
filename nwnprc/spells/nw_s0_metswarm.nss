@@ -15,7 +15,7 @@
 //:: VFX Pass By: Preston W, On: June 22, 2001
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "X0_I0_SPELLS"
 #include "x2_inc_spellhook"
@@ -69,7 +69,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             if (GetDistanceBetween(oTarget, OBJECT_SELF) > 2.0)
             {
                 //Make SR check
-                if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, 0.5))
+                if (!PRCDoResistSpell(OBJECT_SELF, oTarget,CasterLvl, 0.5))
                 {
                       int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                       //Roll damage

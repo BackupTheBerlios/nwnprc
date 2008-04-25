@@ -13,7 +13,7 @@
 //:://////////////////////////////////////////////
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "X0_I0_SPELLS"
 #include "x2_inc_spellhook"
@@ -72,7 +72,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             fDelay = GetRandomDelay(0.75, 2.25);
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_ICE_STORM));
-            if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
+            if (!PRCDoResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
             {
                 //Roll damage for each target
                 nDamage = d6(3);

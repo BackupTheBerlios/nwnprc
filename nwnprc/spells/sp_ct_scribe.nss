@@ -131,7 +131,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 
             // Get the duration of the tattoo, taking meta magic into account, and apply
             // the buff to the target.
-            float fDuration = SPGetMetaMagicDuration(HoursToSeconds(24), nMetaMagic);
+            float fDuration = PRCGetMetaMagicDuration(HoursToSeconds(24), nMetaMagic);
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBuff, oTarget, fDuration,
                 TRUE, nSpellID, nCasterLevel);
             SPApplyEffectToObject(DURATION_TYPE_INSTANT,
@@ -148,7 +148,7 @@ void main()
 {
     object oCaster = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oCaster);
-    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    PRCSetSchool(GetSpellSchool(PRCGetSpellId()));
     if (!X2PreSpellCastCode()) return;
     object oTarget = PRCGetSpellTargetObject();
     int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
@@ -169,16 +169,16 @@ void main()
                 DecrementSpellCharges(oCaster);
         }
     }
-    SPSetSchool();
+    PRCSetSchool();
 }
 
 //Old Code
 /*
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
-    SPSetSchool(SPELL_SCHOOL_CONJURATION);
+    PRCSetSchool(SPELL_SCHOOL_CONJURATION);
 
     // Get the tattoo data from the local variables.
     int nSpellID = GetLocalInt(OBJECT_SELF, "SP_CREATETATOO_SPELLID");
@@ -294,7 +294,7 @@ void main()
 
             // Get the duration of the tattoo, taking meta magic into account, and apply
             // the buff to the target.
-            float fDuration = SPGetMetaMagicDuration(HoursToSeconds(24), nMetaMagic);
+            float fDuration = PRCGetMetaMagicDuration(HoursToSeconds(24), nMetaMagic);
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBuff, oTarget, fDuration,
                 TRUE, nSpellID, nCasterLevel);
             SPApplyEffectToObject(DURATION_TYPE_INSTANT,
@@ -304,6 +304,6 @@ void main()
             SendMessageToPC(OBJECT_SELF, "You failed to scribe the tattoo.");
     }
 
-    SPSetSchool();
+    PRCSetSchool();
 }
 */

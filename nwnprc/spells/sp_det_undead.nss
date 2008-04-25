@@ -41,12 +41,12 @@
 void main()
 {
     int nSpellID = PRCGetSpellId();
-    SPSetSchool(GetSpellSchool(nSpellID));
+    PRCSetSchool(GetSpellSchool(nSpellID));
     if (!X2PreSpellCastCode()) return;
     location lTarget = PRCGetSpellTargetLocation();
     if(GetIsObjectValid(PRCGetSpellTargetObject()))
         lTarget = GetLocation(PRCGetSpellTargetObject());
 
     DetectAlignmentRound(0, lTarget, -1, -1, GetStringByStrRef(5018), VFX_BEAM_ODD);
-    SPSetSchool();
+    PRCSetSchool();
 }

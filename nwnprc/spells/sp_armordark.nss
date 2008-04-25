@@ -22,7 +22,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 {
     int nCasterLvl = nCasterLevel;
     int nMetaMagic = PRCGetMetaMagicFeat();
-    float fDuration = SPGetMetaMagicDuration(TenMinutesToSeconds(nCasterLvl));
+    float fDuration = PRCGetMetaMagicDuration(TenMinutesToSeconds(nCasterLvl));
 
     int iAC = 3 + nCasterLvl/4;
     if (iAC >8)  iAC = 8;
@@ -39,7 +39,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     object oTarget=PRCGetSpellTargetObject();
 
     //Fire cast spell at event for the specified target
-    SPRaiseSpellCastAt(oTarget, FALSE);
+    PRCSignalSpellEvent(oTarget, FALSE);
 
     if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD)
     {
@@ -54,7 +54,7 @@ void main()
 {
     object oCaster = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oCaster);
-    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    PRCSetSchool(GetSpellSchool(PRCGetSpellId()));
     if (!X2PreSpellCastCode()) return;
     object oTarget = PRCGetSpellTargetObject();
     int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
@@ -75,5 +75,5 @@ void main()
                 DecrementSpellCharges(oCaster);
         }
     }
-    SPSetSchool();
+    PRCSetSchool();
 }

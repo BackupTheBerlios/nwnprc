@@ -41,18 +41,18 @@ Created:   6/28/07
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
         object oSpellOrigin = OBJECT_SELF;
         object oTarget = PRCGetSpellTargetObject(oSpellOrigin);
-        int nSaveDC = SPGetSpellSaveDC(oTarget,oSpellOrigin);
+        int nSaveDC = PRCGetSaveDC(oTarget,oSpellOrigin);
         object oItem = PRCGetSpellCastItem(oSpellOrigin);
         int nCasterLvl = PRCGetCasterLevel(oSpellOrigin);
         
         //SR check
-        if(!MyPRCResistSpell(oSpellOrigin, oTarget, (nCasterLvl + SPGetPenetr())))
+        if(!PRCDoResistSpell(oSpellOrigin, oTarget, (nCasterLvl + SPGetPenetr())))
         {
                 //Save
                 if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nSaveDC, SAVING_THROW_TYPE_DEATH))

@@ -13,7 +13,7 @@
 //:: VFX Pass By: Preston W, On: June 22, 2001
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "nw_i0_spells"
 

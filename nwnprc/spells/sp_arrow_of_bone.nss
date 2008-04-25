@@ -41,11 +41,12 @@ Created:   6/28/07
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
+#include "x2_inc_spellhook"
 
 void main()
 {
-        SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+        PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
         
         if(!X2PreSpellCastCode()) return;
         
@@ -88,5 +89,5 @@ void main()
         IPSafeAddItemProperty(oArrowBone, ipHook, 0.0f);
         AddEventScript(oArrowBone, EVENT_ONHIT, "prc_evnt_arrbone", FALSE, FALSE);        
                 
-        SPSetSchool();
+        PRCSetSchool();
 }

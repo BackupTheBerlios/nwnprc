@@ -16,7 +16,7 @@
 
 
 //:: modified by mr_bumpkin Dec 4, 2003
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "x2_inc_spellhook"
 

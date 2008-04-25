@@ -3,7 +3,7 @@
 //:: FileName  prc_evnt_bladeb.nss
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {

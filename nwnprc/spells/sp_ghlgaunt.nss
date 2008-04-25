@@ -150,7 +150,7 @@ void Gauntlet(object oTarget, object oPC, int nHD, int nCasterLevel)
 //  Variables passed may be changed if necessary
 int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 {
-    SPRaiseSpellCastAt(oTarget, TRUE, SPELL_GHOUL_GAUNTLET, oCaster);
+    PRCSignalSpellEvent(oTarget, TRUE, SPELL_GHOUL_GAUNTLET, oCaster);
     if(GetLocalInt(oTarget, "HAS_GAUNTLET"))
     {
         return TRUE;
@@ -167,9 +167,9 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     if(iAttackRoll)
     {
         //Spell Resistance
-        if (!MyPRCResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr()))
+        if (!PRCDoResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr()))
         {
-            int nDC = SPGetSpellSaveDC(oTarget, oCaster);
+            int nDC = PRCGetSaveDC(oTarget, oCaster);
             //Saving Throw
             if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
             {
@@ -190,7 +190,7 @@ void main()
 {
     object oCaster = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oCaster);
-    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    PRCSetSchool(GetSpellSchool(PRCGetSpellId()));
     if (!X2PreSpellCastCode()) return;
     object oTarget = PRCGetSpellTargetObject();
     int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
@@ -212,5 +212,5 @@ void main()
                 DecrementSpellCharges(oCaster);
         }
     }
-    SPSetSchool();
+    PRCSetSchool();
 }

@@ -6,7 +6,7 @@
 const int DISEASE_TALONAS_BLIGHT = 52;
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {

@@ -29,13 +29,13 @@ Material component: A handful of ashes
 ////////////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
     if(!X2PreSpellCastCode()) return;
 
-    SPSetSchool(SPELL_SCHOOL_EVOCATION);
+    PRCSetSchool(SPELL_SCHOOL_EVOCATION);
 
     object oPC = OBJECT_SELF;
     object oTarget = GetSpellTargetObject();
@@ -47,7 +47,7 @@ void main()
     if (nMax > 5) nMax = 5;
     int nDam = d6(nMax);
 
-    SPRaiseSpellCastAt(oTarget,TRUE, SPELL_KELGORES_FIRE_ORB, oPC);
+    PRCSignalSpellEvent(oTarget,TRUE, SPELL_KELGORES_FIRE_ORB, oPC);
 
     if(nMetaMagic == METAMAGIC_MAXIMIZE)
     {
@@ -58,7 +58,7 @@ void main()
         nDam += (nDam/2);
     }
 
-    if(MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+    if(PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
     {
         nDam = d6(1);
         eVis = EffectVisualEffect(VFX_IMP_FLAME_S);
@@ -69,5 +69,5 @@ void main()
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_FIRE), oTarget);
 
-    SPSetSchool();
+    PRCSetSchool();
 }

@@ -32,13 +32,13 @@ Created:   6/28/07
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
         if(!X2PreSpellCastCode()) return;
         
-        SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+        PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
         
         object oPC = OBJECT_SELF;
         object oTarget = PRCGetSpellTargetObject();
@@ -53,15 +53,15 @@ void main()
         
         {
                 SendMessageToPC(oPC, "Target creature is immune to the effects of this spell.");
-                SPSetSchool();
+                PRCSetSchool();
                 return;
         }
         
         //SR check
-        if(!MyPRCResistSpell(oPC, oTarget, (nCasterLvl + SPGetPenetr())))
+        if(!PRCDoResistSpell(oPC, oTarget, (nCasterLvl + SPGetPenetr())))
         {		
                 //Save                                       
-                if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, SPGetSpellSaveDC(oTarget, oPC), SAVING_THROW_TYPE_DEATH))
+                if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, PRCGetSaveDC(oTarget, oPC), SAVING_THROW_TYPE_DEATH))
                 {
                         //Check HD
                         int nHD = GetHitDice(oTarget);
@@ -85,5 +85,5 @@ void main()
                         }
                 }
         }
-        SPSetSchool();
+        PRCSetSchool();
 }

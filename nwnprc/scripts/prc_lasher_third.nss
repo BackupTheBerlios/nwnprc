@@ -15,7 +15,7 @@
 
 #include "prc_alterations"
 #include "inc_2dacache"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
@@ -85,7 +85,7 @@ void main()
 
                         //weapon size
                         int nSize = StringToInt(Get2DACache("baseitems", "WeaponSize", GetBaseItemType(oEnemyWeapon)));
-                        SPRaiseSpellCastAt(oTarget, TRUE, nSpellId);
+                        PRCSignalSpellEvent(oTarget, TRUE, nSpellId);
 
                         //whip treated as medium from feat but -4 penalty on improved disarm
                         int nModifier = (2 - nSize) * 4;

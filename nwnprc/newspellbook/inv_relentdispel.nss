@@ -14,7 +14,7 @@
 //:://////////////////////////////////////////////
 
 
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "inv_inc_invfunc"
 #include "inv_invokehook"
 #include "prc_alterations"

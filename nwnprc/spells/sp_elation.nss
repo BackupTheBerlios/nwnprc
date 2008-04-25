@@ -28,13 +28,13 @@ Created:   6/25/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_ENCHANTMENT);
+	PRCSetSchool(SPELL_SCHOOL_ENCHANTMENT);
 	
 	object oPC = OBJECT_SELF;
 	object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, 24.4f, GetLocation(oPC), FALSE, OBJECT_TYPE_CREATURE);
@@ -63,7 +63,7 @@ void main()
 		}
 		oTarget = MyNextObjectInShape(SHAPE_SPHERE, 24.4f, GetLocation(oPC), FALSE, OBJECT_TYPE_CREATURE);
 	}
-	SPSetSchool();
+	PRCSetSchool();
 }
 	
 	

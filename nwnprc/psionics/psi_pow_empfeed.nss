@@ -35,7 +35,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 const string EMPATHIC_FEEDBACK_VARNAME = "PRC_Power_EmpathicFeedback_Damage";
 

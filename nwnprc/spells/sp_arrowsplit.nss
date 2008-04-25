@@ -26,14 +26,15 @@ Created:   8/22/07
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
+#include "x2_inc_spellhook"
 #include "prc_craft_inc"
 
 void main()
 {
         if(!X2PreSpellCastCode()) return;
                 
-        SPSetSchool(SPELL_SCHOOL_CONJURATION);
+        PRCSetSchool(SPELL_SCHOOL_CONJURATION);
         
         object oPC = OBJECT_SELF;
         object oTarget = PRCGetSpellTargetObject();
@@ -53,7 +54,7 @@ void main()
         
         else
         {
-                SPSetSchool();
+                PRCSetSchool();
                 return;
         }
         
@@ -62,7 +63,7 @@ void main()
         
         if((!(GetMaterialString(StringToInt(sMaterial)) == sMaterial && sMaterial != "000") && !GetIsMagicItem(oAmmo)))
         {
-                SPSetSchool();
+                PRCSetSchool();
                 return;
         }
                        
@@ -87,6 +88,6 @@ void main()
                 nCount--;
         }
         
-        SPSetSchool();
+        PRCSetSchool();
 }
         

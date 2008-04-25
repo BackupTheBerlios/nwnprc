@@ -64,7 +64,7 @@ void main()
         {
         	// If the Spell Penetration fails, don't apply any effects
         	// Its done this way so the law of sequence is applied properly
-        	nSRCheck = MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen);
+        	nSRCheck = PRCDoResistSpell(oTrueSpeaker, oTarget, utter.nPen);
         	if (!nSRCheck)
         	{        
 	            	effect eFear = GetFirstEffect(oTarget);

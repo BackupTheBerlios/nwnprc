@@ -55,7 +55,7 @@ const int SPELLID_HIDDEN  = 2879;
 void main()
 {
     // Set the spell school
-    SPSetSchool(SPELL_SCHOOL_CONJURATION);
+    PRCSetSchool(SPELL_SCHOOL_CONJURATION);
     // Spellhook
     if(!X2PreSpellCastCode()) return;
 
@@ -66,5 +66,5 @@ void main()
 
     TeleportationCircle(oCaster, nCasterLvl, bVisible, bExtended);
 
-    SPSetSchool();
+    PRCSetSchool();
 }

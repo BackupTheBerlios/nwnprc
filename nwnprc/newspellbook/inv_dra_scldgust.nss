@@ -1,5 +1,5 @@
 
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "X0_I0_SPELLS"
 #include "inv_inc_invfunc"
 #include "inv_invokehook"
@@ -34,7 +34,7 @@ void main()
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_FEAR));
             //Make SR Check
-            if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay))
+            if(!PRCDoResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay))
             {   
             	if(PRCGetCreatureSize(oTarget) < CREATURE_SIZE_MEDIUM)
 	     	     if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, GetInvocationSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_NONE))

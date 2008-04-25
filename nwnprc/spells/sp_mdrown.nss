@@ -1,4 +1,4 @@
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void BioWareDrown(int nCasterLevel, object oCaster, object oTarget, float fDelay);
 
@@ -7,7 +7,7 @@ void main()
     // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
     if (!X2PreSpellCastCode()) return;
     
-    SPSetSchool(SPELL_SCHOOL_CONJURATION);
+    PRCSetSchool(SPELL_SCHOOL_CONJURATION);
     
     // Get the spell target location as opposed to the spell target.
     location lTarget = GetSpellTargetLocation();
@@ -35,7 +35,7 @@ void main()
         oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
     }
     
-    SPSetSchool();
+    PRCSetSchool();
 }
 
 //
@@ -57,7 +57,7 @@ void BioWareDrown(int nCasterLevel, object oCaster, object oTarget, float fDelay
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, 437));
         //Make SR Check
-        if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLevel + SPGetPenetr()))
+        if(!PRCDoResistSpell(OBJECT_SELF, oTarget, nCasterLevel + SPGetPenetr()))
         {
             // * certain racial types are immune
             if ((MyPRCGetRacialType(oTarget) != RACIAL_TYPE_CONSTRUCT)

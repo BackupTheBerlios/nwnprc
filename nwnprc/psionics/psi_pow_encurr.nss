@@ -70,7 +70,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "psi_inc_enrgypow"
 
 
@@ -385,7 +385,7 @@ void DoEnergyCurrentDamage(struct manifestation manif, struct energy_adjustments
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectBeam(enAdj.nVFX2, manif.oManifester, BODY_NODE_HAND, nDamage == 0), oMainTarget, 1.7f, FALSE);
 
     // Let the main target's AI know it's being targeted with a hostile spell
-    SPRaiseSpellCastAt(oMainTarget, TRUE, manif.nSpellID, manif.oManifester);
+    PRCSignalSpellEvent(oMainTarget, TRUE, manif.nSpellID, manif.oManifester);
 
     // Deal damage if the target didn't Evade it
     if(nDamage > 0)
@@ -422,7 +422,7 @@ void DoEnergyCurrentDamage(struct manifestation manif, struct energy_adjustments
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectBeam(enAdj.nVFX2, oMainTarget, BODY_NODE_CHEST, nSecondaryDamage == 0), oSecondaryTarget, 1.7f, FALSE);
 
             // Let the secondary target's AI know it's being targeted with a hostile spell
-            SPRaiseSpellCastAt(oSecondaryTarget, TRUE, manif.nSpellID, manif.oManifester);
+            PRCSignalSpellEvent(oSecondaryTarget, TRUE, manif.nSpellID, manif.oManifester);
 
             // Deal damage if the target didn't Evade it
             if(nSecondaryDamage > 0)

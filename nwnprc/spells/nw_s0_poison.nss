@@ -16,7 +16,7 @@
 
 void DoPoison(object oTarget, object oCaster, int nDC, int CasterLvl, int nMetaMagic){
    //Declare major variables
-   int nDam = SPGetMetaMagicDamage(-1, 1, 10, 0, 0, nMetaMagic);
+   int nDam = PRCGetMetaMagicDamage(-1, 1, 10, 0, 0, nMetaMagic);
    //effect eDamage = EffectAbilityDecrease(ABILITY_CONSTITUTION, nDam);
    //effect eLink = EffectLinkEffects(EffectVisualEffect(VFX_IMP_POISON_L), eDamage);
 
@@ -58,7 +58,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
        if (iAttackRoll > 0)
        {
            //Make SR Check
-           if (!MyPRCResistSpell(oCaster, oTarget))
+           if (!PRCDoResistSpell(oCaster, oTarget))
            {
                // Primary damage
                DoPoison(oTarget, oCaster, nDC, CasterLvl, nMetaMagic);
@@ -75,7 +75,7 @@ void main()
 {
     object oCaster = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oCaster);
-    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    PRCSetSchool(GetSpellSchool(PRCGetSpellId()));
     if (!X2PreSpellCastCode()) return;
     object oTarget = PRCGetSpellTargetObject();
     int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
@@ -96,5 +96,5 @@ void main()
                 DecrementSpellCharges(oCaster);
         }
     }
-    SPSetSchool();
+    PRCSetSchool();
 }

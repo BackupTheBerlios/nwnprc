@@ -18,7 +18,7 @@
 int ApplyPrismaticEffect(int nEffect, object oTarget,int nDC,int CasterLvl);
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 //:: left its elemental damage alone, since it's already determined randomly.
 
 #include "X0_I0_SPELLS"
@@ -70,7 +70,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_PRISMATIC_SPRAY));
             //Make an SR check
-            if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay) && (oTarget != OBJECT_SELF))
+            if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay) && (oTarget != OBJECT_SELF))
             {
                  int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                 //Blind the target if they are less than 9 HD

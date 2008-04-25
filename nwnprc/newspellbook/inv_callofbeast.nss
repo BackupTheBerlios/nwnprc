@@ -10,7 +10,7 @@
 //:: Created On: Jan 29, 2001
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "inv_inc_invfunc"
 #include "inv_invokehook"
 
@@ -44,7 +44,7 @@ void main()
         //Fire spell cast at event to fire on the target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, INVOKE_CALL_OF_THE_BEAST, FALSE));
         //Make SR Check
-        if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
+        if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nPenetr))
         {
             //Make sure the racial type of the target is applicable
             if(nRacial == RACIAL_TYPE_ANIMAL)

@@ -31,11 +31,11 @@ Created:   3/26/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
-	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+	PRCSetSchool(SPELL_SCHOOL_EVOCATION);
 	
 	// Run the spellhook. 
 	if (!X2PreSpellCastCode()) return;
@@ -57,7 +57,7 @@ void main()
 		nDam += (nDam/2);
 	}
 	
-	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 	{
 		if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL, oPC, 1.0))
 		{
@@ -69,6 +69,6 @@ void main()
 		}
 	}
 	SPEvilShift(oPC);
-	SPSetSchool();
+	PRCSetSchool();
 }
 	

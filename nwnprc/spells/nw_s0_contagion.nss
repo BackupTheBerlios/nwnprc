@@ -62,7 +62,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_CONTAGION));
             effect eDisease = EffectDisease(nDisease);
             //Make SR check
-            if (!MyPRCResistSpell(OBJECT_SELF, oTarget, CasterLvl + SPGetPenetr()))
+            if (!PRCDoResistSpell(OBJECT_SELF, oTarget, CasterLvl + SPGetPenetr()))
             {
                 // Make the real first save against the spell's DC
                 if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
@@ -84,7 +84,7 @@ void main()
 {
     object oCaster = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oCaster);
-    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    PRCSetSchool(GetSpellSchool(PRCGetSpellId()));
     if (!X2PreSpellCastCode()) return;
     object oTarget = PRCGetSpellTargetObject();
     int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
@@ -105,5 +105,5 @@ void main()
                 DecrementSpellCharges(oCaster);
         }
     }
-    SPSetSchool();
+    PRCSetSchool();
 }

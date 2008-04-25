@@ -14,7 +14,7 @@
 //:: Created On: 23.01.2005
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 
 void DoPoison(object oTarget, object oCaster, int nDC, int nDam){

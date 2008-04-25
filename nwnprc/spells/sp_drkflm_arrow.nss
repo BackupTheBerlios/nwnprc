@@ -35,14 +35,14 @@ Created:
 
 void Burn(object oTarget, int nCounter, int nCasterLvl);
 
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_craft_inc"
 
 void main()
 {
         if(!X2PreSpellCastCode()) return;
         
-        SPSetSchool(SPELL_SCHOOL_EVOCATION);
+        PRCSetSchool(SPELL_SCHOOL_EVOCATION);
         
         object oPC = OBJECT_SELF;
         object oTarget = PRCGetSpellTargetObject();
@@ -58,7 +58,7 @@ void main()
            nType != BASE_ITEM_LIGHTCROSSBOW && 
            nType != BASE_ITEM_HEAVYCROSSBOW)
         {
-                SPSetSchool();
+                PRCSetSchool();
                 return;
         }
         
@@ -77,7 +77,7 @@ void main()
         
         if((!(GetMaterialString(StringToInt(sMaterial)) == sMaterial && sMaterial != "000") && !GetIsMagicItem(oAmmo)))
         {
-                SPSetSchool();
+                PRCSetSchool();
                 return;
         }
         
@@ -89,13 +89,13 @@ void main()
                 Burn(oTarget, 3, PRCGetCasterLevel(oPC));
         }
         
-        SPSetSchool();
+        PRCSetSchool();
         return;
 }
 
 void Burn(object oTarget, int nCounter, int nCasterLvl)
 {
-        if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
+        if(!PRCDoResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
         {
                 ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(d6(2), DAMAGE_TYPE_MAGICAL), oTarget);
                 nCounter--;

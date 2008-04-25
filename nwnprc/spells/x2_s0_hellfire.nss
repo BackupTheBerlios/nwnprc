@@ -16,7 +16,7 @@
 #include "prc_alterations"
 
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void BurstWeapon(object oWeapon, float fDur)
 {

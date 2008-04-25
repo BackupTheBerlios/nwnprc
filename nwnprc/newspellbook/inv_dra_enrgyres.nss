@@ -59,7 +59,7 @@ void main()
     effect eList = EffectDamageResistance(nDamageType, 10);
     eList = EffectLinkEffects(eList, EffectVisualEffect(VFX_DUR_PROTECTION_ELEMENTS));
     eList = EffectLinkEffects(eList, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
-    SPRaiseSpellCastAt(oTarget, FALSE, SPELL_ENERGY_IMMUNITY);
+    PRCSignalSpellEvent(oTarget, FALSE, SPELL_ENERGY_IMMUNITY);
     
     //  Spell does not stack with itself, even if it is different immunity types
     if (GetHasSpellEffect(INVOKE_ENERGY_RESISTANCE_ACID,oTarget))

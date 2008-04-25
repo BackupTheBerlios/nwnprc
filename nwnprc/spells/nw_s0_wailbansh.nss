@@ -16,7 +16,7 @@
 //:: VFX Pass By: Preston W, On: June 25, 2001
 
 //:: modified by mr_bumpkin  Dec 4, 2003
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "X0_I0_SPELLS"
 #include "x2_inc_spellhook"
@@ -77,7 +77,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                 //Fire cast spell at event for the specified target
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_WAIL_OF_THE_BANSHEE));
                 //Make SR check
-                if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLevel)) //, 0.1))
+                if(!PRCDoResistSpell(OBJECT_SELF, oTarget,nCasterLevel)) //, 0.1))
                 {
                     int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                     //Make a fortitude save to avoid death

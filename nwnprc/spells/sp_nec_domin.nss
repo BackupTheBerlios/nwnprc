@@ -18,15 +18,14 @@ harbors a necrotic cyst.
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common" 
+#include "prc_inc_spells" 
 #include "spinc_necro_cyst"
 #include "inc_utility"
-#include "prc_inc_spells"
 
 void main()
 {
 	// Set the spellschool
-	SPSetSchool(SPELL_SCHOOL_NECROMANCY); 
+	PRCSetSchool(SPELL_SCHOOL_NECROMANCY); 
 	
 	// Run the spellhook. 
 	if (!X2PreSpellCastCode()) return;
@@ -35,7 +34,7 @@ void main()
 	object oTarget = GetSpellTargetObject();
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	
-	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_NECROTIC_DOMINATION, oPC);
+	PRCSignalSpellEvent(oTarget, TRUE, SPELL_NECROTIC_DOMINATION, oPC);
 	
 	if(!GetCanCastNecroticSpells(oPC))
 	return;
@@ -80,7 +79,7 @@ void main()
 		{
 			
 			//Make SR Check
-			if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLevel))
+			if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nCasterLevel))
 			{
 				//Make Will Save
 				if (!/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (PRCGetSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_MIND_SPELLS, OBJECT_SELF, 1.0))

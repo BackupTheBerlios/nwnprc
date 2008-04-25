@@ -92,7 +92,7 @@ int DoPower(object oManifester, object oTarget, struct manifestation manif)
 
     int bHit = 0;
 
-    SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+    PRCSignalSpellEvent(oTarget, TRUE, manif.nSpellID, oManifester);
 
     int nRepeats = manif.bTwin ? 2 : 1;
     for(; nRepeats > 0; nRepeats--)
@@ -101,7 +101,7 @@ int DoPower(object oManifester, object oTarget, struct manifestation manif)
         if(manif.nTimesAugOptUsed_2 != 1)
         {
             // Let the AI know
-            SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+            PRCSignalSpellEvent(oTarget, TRUE, manif.nSpellID, oManifester);
 
             // Try to touch the single target
             if(PRCDoMeleeTouchAttack(oTarget) > 0) // No need to store the result, critical hits nor precision-based damage work with this power
@@ -170,7 +170,7 @@ int DoPower(object oManifester, object oTarget, struct manifestation manif)
             for(i = 0; i < array_get_size(oManifester, "PRC_Power_EmpTranHostile_Targets"); i++)
             {
                 // Let the AI know
-                SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+                PRCSignalSpellEvent(oTarget, TRUE, manif.nSpellID, oManifester);
 
                 // Mind-affecting immunity
                 if(!GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS))

@@ -22,7 +22,7 @@ This distortion grants the subject concealment (20% miss chance).
 //:: Created On: August 20, 2004
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 
 

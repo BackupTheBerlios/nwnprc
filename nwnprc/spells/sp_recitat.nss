@@ -1,11 +1,11 @@
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	// If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
 	if (!X2PreSpellCastCode()) return;
     
-	SPSetSchool(SPELL_SCHOOL_CONJURATION);
+	PRCSetSchool(SPELL_SCHOOL_CONJURATION);
 	
 	// Get the spell target location as opposed to the spell target.
 	location lTarget = GetSpellTargetLocation();
@@ -28,7 +28,7 @@ void main()
 	eNegative = EffectLinkEffects (eNegative, EffectVisualEffect(VFX_DUR_PROTECTION_EVIL_MINOR));
 	
 	// Calculate the spell duration.
-	float fDuration = SPGetMetaMagicDuration(RoundsToSeconds(nCasterLvl));
+	float fDuration = PRCGetMetaMagicDuration(RoundsToSeconds(nCasterLvl));
 	
 	int nPenetr = nCasterLvl + SPGetPenetr();
 	
@@ -56,11 +56,11 @@ void main()
 				effect eTarget = nFriendly ? ePositive : eNegative;
 			
 				// Fire cast spell at event for the specified target
-				SPRaiseSpellCastAt(oTarget, nHostile);
+				PRCSignalSpellEvent(oTarget, nHostile);
 			
 				// Check for SR vs. hostile targets before applying effects.
 				fDelay = GetSpellEffectDelay(lTarget, oTarget);
-				if (nFriendly || !SPResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay))
+				if (nFriendly || !PRCDoResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay))
 					DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eTarget, oTarget, fDuration,TRUE,-1,nCasterLvl));
 			}
 		
@@ -68,5 +68,5 @@ void main()
 		}
 	}
 	
-	SPSetSchool();
+	PRCSetSchool();
 }

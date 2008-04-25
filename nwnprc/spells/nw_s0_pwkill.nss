@@ -23,7 +23,7 @@
 //:: Update Pass By: Preston W, On: Aug 3, 2001
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "prc_alterations"
 
@@ -75,7 +75,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_DIVINATION);
                 //Check the creatures HP
                 if ( GetCurrentHitPoints(oTarget) <= 100 )
                 {
-                      if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLvl))
+                      if(!PRCDoResistSpell(OBJECT_SELF, oTarget,nCasterLvl))
                       {
                           DeathlessFrenzyCheck(oTarget);
                           
@@ -125,7 +125,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_DIVINATION);
                         SetLocalInt(oWeakest, "NW_SPELL_PW_KILL_" + GetTag(OBJECT_SELF), TRUE);
                         //Fire cast spell at event for the specified target
                         SignalEvent(oWeakest, EventSpellCastAt(OBJECT_SELF, SPELL_POWER_WORD_KILL));
-                        if(!MyPRCResistSpell(OBJECT_SELF, oWeakest,0, fDelay))
+                        if(!PRCDoResistSpell(OBJECT_SELF, oWeakest,0, fDelay))
                         {
                             DeathlessFrenzyCheck(oTarget);
                             

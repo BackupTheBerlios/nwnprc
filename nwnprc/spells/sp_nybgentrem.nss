@@ -1,25 +1,25 @@
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
     // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
     if (!X2PreSpellCastCode()) return;
     
-    SPSetSchool(SPELL_SCHOOL_ENCHANTMENT);
+    PRCSetSchool(SPELL_SCHOOL_ENCHANTMENT);
     
     object oTarget = GetSpellTargetObject();
     if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
     {
         // Fire cast spell at event for the specified target
-        SPRaiseSpellCastAt(oTarget);
+        PRCSignalSpellEvent(oTarget);
         int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
         // Make SR check
-        if (!SPResistSpell(OBJECT_SELF, oTarget,nCasterLvl+SPGetPenetr()) &&
+        if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nCasterLvl+SPGetPenetr()) &&
             !PRCMySavingThrow(SAVING_THROW_FORT, oTarget, PRCGetSaveDC(oTarget,OBJECT_SELF), SAVING_THROW_TYPE_SPELL))
         {
             // Determine the spell's duration, taking metamagic feats into account.
-            float fDuration = SPGetMetaMagicDuration(RoundsToSeconds(nCasterLvl));
+            float fDuration = PRCGetMetaMagicDuration(RoundsToSeconds(nCasterLvl));
 
             // Target is dazed for 1 round.
             effect eDazed = EffectDazed();
@@ -40,5 +40,5 @@ void main()
         }
     }
     
-    SPSetSchool();
+    PRCSetSchool();
 }

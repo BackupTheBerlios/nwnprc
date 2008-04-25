@@ -35,7 +35,7 @@ Created:   7/6/07
 
 int BalanceCheckFailure(object oTarget);
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {

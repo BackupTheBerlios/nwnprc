@@ -51,7 +51,7 @@
 //:: Added hold ray functionality - HackyKid
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_inc_sp_tch"
 #include "prc_sp_func"
 
@@ -73,7 +73,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oCaster))
     {
         // Fire cast spell at event for the specified target
-        SPRaiseSpellCastAt(oTarget);
+        PRCSignalSpellEvent(oTarget);
 
         // Make the touch attack.
         iAttackRoll = PRCDoRangedTouchAttack(oTarget);
@@ -87,7 +87,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
         if (iAttackRoll > 0)
         {
             // Make SR check
-            if (!SPResistSpell(oCaster, oTarget, nPenetr))
+            if (!PRCDoResistSpell(oCaster, oTarget, nPenetr))
             {
                 // Fort save or die time, but we implement death by doing massive damage
                 // since disintegrate works on constructs, undead, etc.  At some point EffectDie()
@@ -100,7 +100,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 			if (GetHasMettle(oTarget, SAVING_THROW_FORT))
 			// This script does nothing if it has Mettle, bail
 				return 0;                
-                    int nDamage = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 1 == iAttackRoll ? 5 : 10, 6);
+                    int nDamage = PRCGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 1 == iAttackRoll ? 5 : 10, 6);
 
                     // Determine if we should show the special kill VFX
                     if(nDamage >= GetCurrentHitPoints (oTarget))
@@ -137,7 +137,7 @@ void main()
 {
     object oCaster = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oCaster);
-    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    PRCSetSchool(GetSpellSchool(PRCGetSpellId()));
     if (!X2PreSpellCastCode()) return;
     object oTarget = PRCGetSpellTargetObject();
     int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
@@ -159,6 +159,6 @@ void main()
                 DecrementSpellCharges(oCaster);
         }
     }
-    SPSetSchool();
+    PRCSetSchool();
 }
 

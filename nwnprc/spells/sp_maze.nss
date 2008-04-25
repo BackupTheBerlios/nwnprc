@@ -44,7 +44,7 @@
 void main()
 {
     // Set the spell school
-    SPSetSchool(SPELL_SCHOOL_CONJURATION);
+    PRCSetSchool(SPELL_SCHOOL_CONJURATION);
     // Spellhook
     if(!X2PreSpellCastCode()) return;
 
@@ -56,7 +56,7 @@ void main()
     //int nSpellID   = PRCGetSpellId();
 
     // Fire cast spell at event for the specified target. For friendlies, Maze is considered non-hostile
-    SPRaiseSpellCastAt(oTarget, !GetIsFriend(oTarget));
+    PRCSignalSpellEvent(oTarget, !GetIsFriend(oTarget));
 
     // Minotaur check
     if(GetRacialType(oTarget) == RACIAL_TYPE_MINOTAUR       ||
@@ -68,7 +68,7 @@ void main()
     }
 
     // Make SR check
-    if(!SPResistSpell(oCaster, oTarget, nPenetr))
+    if(!PRCDoResistSpell(oCaster, oTarget, nPenetr))
     {
         // Get the maze area
         object oMazeArea = GetObjectByTag("prc_maze_01");
@@ -108,5 +108,5 @@ void main()
             SendMessageToPCByStrRef(oCaster, 16825702); // "The spell fails - the target cannot be teleported."
     }
 
-    SPSetSchool();
+    PRCSetSchool();
 }

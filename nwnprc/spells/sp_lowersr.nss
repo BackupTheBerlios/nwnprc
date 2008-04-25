@@ -1,11 +1,11 @@
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
     // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
     if (!X2PreSpellCastCode()) return;
     
-    SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+    PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
     
     object oTarget = GetSpellTargetObject();
     int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
@@ -13,14 +13,14 @@ void main()
     if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
     {
         // Fire cast spell at event for the specified target
-        SPRaiseSpellCastAt(oTarget);
+        PRCSignalSpellEvent(oTarget);
         
         // Let the target attempte to make a fort save. (good luck since there is a penalty equal to the 
         // caster's level on the save).
         if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, PRCGetSaveDC(oTarget,OBJECT_SELF) + nCasterLvl, SAVING_THROW_TYPE_SPELL))
         {
             // Calculate the duration of the spell.
-            float fDuration = SPGetMetaMagicDuration(MinutesToSeconds(nCasterLvl));
+            float fDuration = PRCGetMetaMagicDuration(MinutesToSeconds(nCasterLvl));
     
             // Generate a SR decrease for the caster level, up to a max of 15.    
             int nSRReduction = nCasterLvl;
@@ -36,6 +36,6 @@ void main()
         }
     }
     
-    SPSetSchool();
+    PRCSetSchool();
 }
 

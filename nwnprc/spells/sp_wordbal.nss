@@ -1,11 +1,11 @@
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	// If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
 	if (!X2PreSpellCastCode()) return;
 
-	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+	PRCSetSchool(SPELL_SCHOOL_EVOCATION);
 
 	// Apply a burst visual effect at the target location.
 	location lTarget = GetSpellTargetLocation();
@@ -18,7 +18,7 @@ void main()
 	eParalyzed = EffectLinkEffects(eParalyzed, EffectVisualEffect(VFX_DUR_PARALYZED));
 
 	// Determine the spell's duration.
-	float fDuration = SPGetMetaMagicDuration(RoundsToSeconds(PRCGetCasterLevel()));
+	float fDuration = PRCGetMetaMagicDuration(RoundsToSeconds(PRCGetCasterLevel()));
 
 	int nCasterLevel = PRCGetCasterLevel();
 	object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_GARGANTUAN, lTarget);
@@ -26,7 +26,7 @@ void main()
 	{
 		if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
 		{
-			SPRaiseSpellCastAt(oTarget);
+			PRCSignalSpellEvent(oTarget);
 
 			// Apply effects as follows, based on differences between caster's level
 			// and target creature's hit dice.
@@ -50,8 +50,8 @@ void main()
 				{
 					// Determine duration (base 1d10 minutes) taking metamagic into
 					// account.
-					int nMinutes = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 1, 10);
-					float fDuration = SPGetMetaMagicDuration(MinutesToSeconds(nMinutes));
+					int nMinutes = PRCGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 1, 10);
+					float fDuration = PRCGetMetaMagicDuration(MinutesToSeconds(nMinutes));
 
 					SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eParalyzed, oTarget, fDuration,TRUE,-1,nCasterLevel);
 				}
@@ -60,12 +60,12 @@ void main()
 				{
 					// Determine duration (base 1d10 minutes) taking metamagic into
 					// account.
-					int nRounds = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 2, 4);
-					float fDuration = SPGetMetaMagicDuration(RoundsToSeconds(nRounds));
+					int nRounds = PRCGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 2, 4);
+					float fDuration = PRCGetMetaMagicDuration(RoundsToSeconds(nRounds));
 
 					// Roll 2d6 str drain and apply it to the target, along with impact
 					// vfx.
-					int nStrDrain = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 2, 6);
+					int nStrDrain = PRCGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 2, 6);
 					/*SPApplyEffectToObject(DURATION_TYPE_TEMPORARY,
 						EffectAbilityDecrease(ABILITY_STRENGTH, nStrDrain), oTarget, fDuration,TRUE,-1,nCasterLevel);*/
                     ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, nStrDrain, DURATION_TYPE_TEMPORARY, TRUE, fDuration, TRUE, -1, nCasterLevel);
@@ -87,5 +87,5 @@ void main()
 		oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_GARGANTUAN, lTarget);
 	}
 
-	SPSetSchool();
+	PRCSetSchool();
 }

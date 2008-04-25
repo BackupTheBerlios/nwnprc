@@ -41,9 +41,9 @@
 int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 {
     int nCasterLevel = PRCGetCasterLevel(OBJECT_SELF);
-    int nDC = SPGetSpellSaveDC(oTarget, oCaster);
+    int nDC = PRCGetSaveDC(oTarget, oCaster);
     int nMetaMagic = PRCGetMetaMagicFeat();
-    SPRaiseSpellCastAt(oTarget, TRUE, SPELL_NIGHTS_CARESS, oCaster);
+    PRCSignalSpellEvent(oTarget, TRUE, SPELL_NIGHTS_CARESS, oCaster);
 
     //Make touch attack
     int nTouch = PRCDoMeleeTouchAttack(oTarget);
@@ -60,7 +60,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
             }
         }
         //Spell Resistance
-        else if (!MyPRCResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr()))
+        else if (!PRCDoResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr()))
         {
             //Max of 15 caster levels
             if (nCasterLevel > 15) nCasterLevel = 15;
@@ -94,7 +94,7 @@ void main()
 {
     object oCaster = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oCaster);
-    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    PRCSetSchool(GetSpellSchool(PRCGetSpellId()));
     if (!X2PreSpellCastCode()) return;
     object oTarget = PRCGetSpellTargetObject();
     int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
@@ -116,5 +116,5 @@ void main()
                 DecrementSpellCharges(oCaster);
         }
     }
-    SPSetSchool();
+    PRCSetSchool();
 }

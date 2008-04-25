@@ -13,7 +13,7 @@
 //:://////////////////////////////////////////////
 
 
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_alterations"
 #include "x2_inc_spellhook"
 
@@ -50,7 +50,7 @@ void main()
 				//Make SR check
 				if(!GetHasSpellEffect(SPELL_AVASCULAR_MASS, oTarget))
 				{
-					if(!MyPRCResistSpell(aoeCreator, oTarget,nPenetr))
+					if(!PRCDoResistSpell(aoeCreator, oTarget,nPenetr))
 					{
 						//Make reflex save
 						if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, (PRCGetSaveDC(oTarget,aoeCreator))))

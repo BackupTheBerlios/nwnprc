@@ -39,7 +39,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
@@ -55,7 +55,7 @@ void main()
        )
     {
         // Let the AI know
-        SPRaiseSpellCastAt(oTarget, TRUE, POWER_CATAPSI, oManifester);
+        PRCSignalSpellEvent(oTarget, TRUE, POWER_CATAPSI, oManifester);
 
         // Check for Power Resistance
         if(PRCMyResistPower(oManifester, oTarget, nPen))

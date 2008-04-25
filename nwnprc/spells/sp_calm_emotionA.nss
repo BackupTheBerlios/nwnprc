@@ -28,16 +28,16 @@ or do anything destructive.
 //////////////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	object oPC = GetAreaOfEffectCreator();
 	object oTarget = GetEnteringObject();
-	int nDC = SPGetSpellSaveDC(oTarget, oPC);	
+	int nDC = PRCGetSaveDC(oTarget, oPC);	
 	
 	//SR
-	if(!MyPRCResistSpell(oPC, oTarget, PRCGetCasterLevel(oPC) + SPGetPenetr()))
+	if(!PRCDoResistSpell(oPC, oTarget, PRCGetCasterLevel(oPC) + SPGetPenetr()))
 	{
 		//Saving Throw
 		if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_SPELL))

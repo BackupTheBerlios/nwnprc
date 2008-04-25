@@ -15,7 +15,7 @@
 //:: VFX Pass By: Preston W, On: June 25, 2001
 
 //:: modified by mr_bumpkin  Dec 4, 2003
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_alterations"
 #include "inv_inc_invfunc"
 #include "inv_invokehook"
@@ -82,7 +82,7 @@ void main()
     //Get the first target in the spell area
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, INVOKE_PAINFUL_SLUMBER_OF_AGES));
     //Make SR check
-    if (!MyPRCResistSpell(OBJECT_SELF, oTarget, nPenetr))
+    if (!PRCDoResistSpell(OBJECT_SELF, oTarget, nPenetr))
     {
         int nDC = GetInvocationSaveDC(oTarget,OBJECT_SELF);
         //Make Will save

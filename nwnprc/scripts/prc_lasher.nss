@@ -24,7 +24,7 @@
 //compiler would completely crap itself unless this include was here
 #include "prc_alterations"
 #include "inc_2dacache"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void ApplyLashing(object oPC) //ripped off the tempest
 {

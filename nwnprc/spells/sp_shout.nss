@@ -58,7 +58,7 @@ void main()
     object oCaster = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oCaster);
     int nSpellID = PRCGetSpellId();
-    SPSetSchool(GetSpellSchool(nSpellID));
+    PRCSetSchool(GetSpellSchool(nSpellID));
     if (!X2PreSpellCastCode()) return;
     location lTargetLocation = PRCGetSpellTargetLocation();
     object oTarget;
@@ -84,7 +84,7 @@ void main()
             {
                 SignalEvent(oTarget, EventSpellCastAt(oCaster, nSpellID));
                 fDelay = GetDistanceBetween(oCaster, oTarget)/20.0;
-                if(!MyPRCResistSpell(oCaster, oTarget, nCasterLevel, fDelay) && (oTarget != oCaster))
+                if(!PRCDoResistSpell(oCaster, oTarget, nCasterLevel, fDelay) && (oTarget != oCaster))
                 {
                     nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                     nDamage = d6(nDamageDice);
@@ -126,5 +126,5 @@ void main()
         oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, fSize, lTargetLocation, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
     }
 
-    SPSetSchool();
+    PRCSetSchool();
 }

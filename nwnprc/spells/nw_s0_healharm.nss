@@ -102,7 +102,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent, int bI
                 iAttackRoll = PRCDoMeleeTouchAttack(oTarget);
                 if (iAttackRoll)
                 {
-                    if (!MyPRCResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr()))
+                    if (!PRCDoResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr()))
                     {
                         int nModify = d4();
                         iBlastFaith = BlastInfidelOrFaithHeal(oCaster, oTarget, nEnergyType, TRUE);
@@ -153,7 +153,7 @@ DoDebug("nw_s0_healharm running "+IntToString(GetIsPC(OBJECT_SELF)));
     int nCasterLevel = PRCGetCasterLevel(oCaster);
     int nSpellID = PRCGetSpellId();
     int bIsHeal = IsHeal(nSpellID);  //whether it is a heal or harm spell
-    SPSetSchool(GetSpellSchool(nSpellID));
+    PRCSetSchool(GetSpellSchool(nSpellID));
     if (!X2PreSpellCastCode()) return;
 DoDebug("nw_s0_healharm running "+IntToString(GetIsPC(OBJECT_SELF)));
     object oTarget = PRCGetSpellTargetObject();
@@ -179,5 +179,5 @@ DoDebug("nw_s0_healharm running else casting");
                 DecrementSpellCharges(oCaster);
         }
     }
-    SPSetSchool();
+    PRCSetSchool();
 }

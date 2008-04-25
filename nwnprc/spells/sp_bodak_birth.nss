@@ -41,11 +41,10 @@ Created:
 
 #include "prc_alterations"
 #include "prc_inc_spells"
-#include "spinc_common"
 
 void main()
 {
-    SPSetSchool(SPELL_SCHOOL_CONJURATION);
+    PRCSetSchool(SPELL_SCHOOL_CONJURATION);
     
     // Run the spellhook. 
     if (!X2PreSpellCastCode()) return;
@@ -59,7 +58,7 @@ void main()
     location lLoc = GetLocation(oTarget);
     effect eDeath = EffectDeath();
     
-    SPRaiseSpellCastAt(oTarget, FALSE, SPELL_BODAK_BIRTH, oPC);
+    PRCSignalSpellEvent(oTarget, FALSE, SPELL_BODAK_BIRTH, oPC);
     
     //Agony check
     if(GetPersistantLocalInt(oPC, "USING_AGONY"))
@@ -91,5 +90,5 @@ void main()
     }
     SPEvilShift(oPC);
             
-    SPSetSchool();
+    PRCSetSchool();
 }

@@ -40,7 +40,7 @@
 
 #include "prc_alterations"
 #include "x2_inc_spellhook"
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_misc_const"
 #include "prc_sp_func"
 
@@ -59,7 +59,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 	effect eHold = EffectEntangle();
 	effect eSlow = EffectSlow();
 	
-	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_AVASCULAR_MASS, oCaster);
+	PRCSignalSpellEvent(oTarget, TRUE, SPELL_AVASCULAR_MASS, oCaster);
 	
 	// Gotta be a living critter
 	    int nType = MyPRCGetRacialType(oTarget);
@@ -111,7 +111,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 	if (iAttackRoll)
 	{	
 		//Spell Resistance
-		if (!MyPRCResistSpell(OBJECT_SELF, oTarget, nPenetr))
+		if (!PRCDoResistSpell(OBJECT_SELF, oTarget, nPenetr))
 		{
 			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
 			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eBlood, oTarget);
@@ -165,7 +165,7 @@ void main()
 {
     object oCaster = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oCaster);
-    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    PRCSetSchool(GetSpellSchool(PRCGetSpellId()));
     if (!X2PreSpellCastCode()) return;
     object oTarget = PRCGetSpellTargetObject();
     int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
@@ -187,6 +187,6 @@ void main()
                 DecrementSpellCharges(oCaster);
         }
     }
-    SPSetSchool();
+    PRCSetSchool();
 }
 

@@ -52,7 +52,7 @@ void main()
         if(utter.bExtend) utter.fDur *= 2;
 
 	// If the Spell Penetration fails, don't apply any effects
-        if (!MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen))
+        if (!PRCDoResistSpell(oTrueSpeaker, oTarget, utter.nPen))
         {
        		// eLink is used for Duration Effects (Penalty to AB etc)
        		utter.eLink = EffectLinkEffects(EffectAttackDecrease(2), EffectSavingThrowDecrease(SAVING_THROW_ALL, 2));

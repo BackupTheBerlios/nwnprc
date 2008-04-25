@@ -39,7 +39,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void DispelMonitor(object oManifester, object oTarget, int nSpellID, int nManifesterLevel, int nBeatsRemaining);
 
@@ -69,7 +69,7 @@ void main()
         if(manif.bExtend) fDuration *= 2;
 
         // Let the AI know
-        SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+        PRCSignalSpellEvent(oTarget, TRUE, manif.nSpellID, oManifester);
 
         // Handle Twin Power
         int nRepeats = manif.bTwin ? 2 : 1;

@@ -81,22 +81,22 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
         int nAdd = (nCasterLevel > 20) ? 20 : nCasterLevel;
         if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD && (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oCaster)))
         {
-            SPRaiseSpellCastAt(oTarget);
-            if (!SPResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr()))
+            PRCSignalSpellEvent(oTarget);
+            if (!PRCDoResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr()))
             {
                 iAttackRoll = PRCDoMeleeTouchAttack(oTarget);
                 if (iAttackRoll)
                 {
                     // Roll the damage (allowing for a critical) and let the target make a will save to
                     // halve the damage.
-                    int nDamage = SPGetMetaMagicDamage(DAMAGE_TYPE_POSITIVE, 1 == iAttackRoll ? 1 : 2, 8, 0, nAdd);
+                    int nDamage = PRCGetMetaMagicDamage(DAMAGE_TYPE_POSITIVE, 1 == iAttackRoll ? 1 : 2, 8, 0, nAdd);
                     if (PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget,OBJECT_SELF)))
                     {
                         nDamage /= 2;
                         if (GetHasMettle(oTarget, SAVING_THROW_WILL)) nDamage = 0;
                     }
                     // Apply damage and VFX.
-                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, SPEffectDamage(nDamage, DAMAGE_TYPE_POSITIVE), oTarget);
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(nDamage, DAMAGE_TYPE_POSITIVE), oTarget);
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_SUNSTRIKE), oTarget);
                 }
             }
@@ -104,7 +104,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
         else
         {
             // Roll the healing 'damage'.
-            int nHeal = SPGetMetaMagicDamage(DAMAGE_TYPE_POSITIVE, 1, 8, 0, nAdd);
+            int nHeal = PRCGetMetaMagicDamage(DAMAGE_TYPE_POSITIVE, 1, 8, 0, nAdd);
             // Apply the healing and VFX.
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(nHeal), oTarget);
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_HEALING_M), oTarget);
@@ -120,7 +120,7 @@ void main()
 {
     object oCaster = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oCaster);
-    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    PRCSetSchool(GetSpellSchool(PRCGetSpellId()));
     if (!X2PreSpellCastCode()) return;
     object oTarget = PRCGetSpellTargetObject();
     int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
@@ -141,5 +141,5 @@ void main()
                 DecrementSpellCharges(oCaster);
         }
     }
-    SPSetSchool();
+    PRCSetSchool();
 }

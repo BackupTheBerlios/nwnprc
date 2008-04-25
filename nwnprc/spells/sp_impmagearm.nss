@@ -1,17 +1,17 @@
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	// If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
 	if (!X2PreSpellCastCode()) return;
     
-	SPSetSchool(SPELL_SCHOOL_CONJURATION);
+	PRCSetSchool(SPELL_SCHOOL_CONJURATION);
 
 	// Declare major variables
 	object oTarget = PRCGetSpellTargetObject();
 
 	// Signal the spell cast at event
-	SPRaiseSpellCastAt(oTarget, FALSE);
+	PRCSignalSpellEvent(oTarget, FALSE);
 	
 	int nCasterLevel = PRCGetCasterLevel();
 	
@@ -22,7 +22,7 @@ void main()
     eAC = EffectLinkEffects(eAC, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
 
 	// Get duration, 1 hour / level unless extended.
-	float fDuration = SPGetMetaMagicDuration(MinutesToSeconds(nCasterLevel));
+	float fDuration = PRCGetMetaMagicDuration(MinutesToSeconds(nCasterLevel));
 	
 	// Build the list of fancy visual effects to apply when the spell goes off.
 	effect eVFX = EffectVisualEffect(VFX_IMP_AC_BONUS);
@@ -34,5 +34,5 @@ void main()
 	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAC, oTarget, fDuration,TRUE,-1,nCasterLevel);
 	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVFX, oTarget);
 	
-	SPSetSchool();
+	PRCSetSchool();
 }

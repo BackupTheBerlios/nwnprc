@@ -51,7 +51,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 // Checks if the effect is specific to a plot and should not be removed normally
 int GetShouldNotBeRemoved(effect eEff)
@@ -95,7 +95,7 @@ void main()
         effect eTest;
 
         // Let the AI know - Special handling
-        SPRaiseSpellCastAt(oTarget, FALSE, SPELL_GREATER_RESTORATION, oManifester);
+        PRCSignalSpellEvent(oTarget, FALSE, SPELL_GREATER_RESTORATION, oManifester);
 
         // Check for some specific stuff and remove if present
         if(GetHasSpellEffect(POWER_DECEREBRATE, oTarget))

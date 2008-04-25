@@ -28,13 +28,14 @@ Material Component: A bit of animal fur, feathers,
 ////////////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
+#include "x2_inc_spellhook"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+	PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
 	
 	object oPC = OBJECT_SELF;
 	object oTarget = GetSpellTargetObject();
@@ -42,7 +43,7 @@ void main()
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	float fDur = (60.0f * nCasterLvl);
 	
-	SPRaiseSpellCastAt(oTarget,FALSE, SPELL_ANIMALISTIC_POWER, oPC);
+	PRCSignalSpellEvent(oTarget,FALSE, SPELL_ANIMALISTIC_POWER, oPC);
 	
 	//Build effect
 	effect eBuff = EffectLinkEffects(EffectAbilityIncrease(ABILITY_STRENGTH, 2), EffectAbilityIncrease(ABILITY_DEXTERITY, 2));
@@ -56,7 +57,7 @@ void main()
 	
 	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBuff, oTarget, fDur, TRUE, SPELL_ANIMALISTIC_POWER, nCasterLvl);
 	
-	SPSetSchool();
+	PRCSetSchool();
 }
 	
 	

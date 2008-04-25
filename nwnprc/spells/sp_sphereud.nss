@@ -1,4 +1,4 @@
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "inc_utility"
 
 void main()
@@ -10,7 +10,7 @@ void main()
     float fDuration = RoundsToSeconds(nCasterLvl);
     if(GetPRCSwitch(PRC_SUMMON_ROUND_PER_LEVEL))
             fDuration = RoundsToSeconds(nCasterLvl*GetPRCSwitch(PRC_SUMMON_ROUND_PER_LEVEL));
-    fDuration = SPGetMetaMagicDuration(fDuration);
+    fDuration = PRCGetMetaMagicDuration(fDuration);
 
     // Apply summon and vfx at target location. 
     location lTarget = GetSpellTargetLocation();

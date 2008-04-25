@@ -27,13 +27,13 @@ excess of their current hit points.
 void RemoveSleep(object oTarget);
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_ENCHANTMENT);
+	PRCSetSchool(SPELL_SCHOOL_ENCHANTMENT);
 	
 	object oPC = OBJECT_SELF;
 	location lLoc = GetSpellTargetLocation();
@@ -45,7 +45,7 @@ void main()
 		oTarget = MyNextObjectInShape(SHAPE_SPHERE, 3.048f, lLoc, FALSE, OBJECT_TYPE_CREATURE);
 	}
 	
-	SPSetSchool();
+	PRCSetSchool();
 }
 
 void RemoveSleep(object oTarget)

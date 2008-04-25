@@ -44,13 +44,13 @@ Created:   7/3/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_CONJURATION);
+	PRCSetSchool(SPELL_SCHOOL_CONJURATION);
 	
 	object oPC = OBJECT_SELF;
 	int nSpell = GetSpellId();
@@ -76,7 +76,7 @@ void main()
 			ActionCastSpellAtObject(SPELL_MUSHROOM_POWDER, oPC, nMetaMagic, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
 	}
 	
-	SPSetSchool();
+	PRCSetSchool();
 }
 	
 	

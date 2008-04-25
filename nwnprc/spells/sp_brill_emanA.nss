@@ -35,15 +35,15 @@ Created:   6/8/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {	
-	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+	PRCSetSchool(SPELL_SCHOOL_EVOCATION);
 		
 	object oTarget = GetEnteringObject();
 	object oPC = GetAreaOfEffectCreator();
-	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+	int nDC = PRCGetSaveDC(oTarget, oPC);
 	int nCasterLvl = PRCGetCasterLevel(oPC);	
 	
 	//if valid                    
@@ -53,7 +53,7 @@ void main()
 		if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL)
 		{
 			//Spell resistance
-			if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+			if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 			{
 				//Save
 				if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
@@ -73,7 +73,7 @@ void main()
 			}
 		}
 	}
-	SPSetSchool();
+	PRCSetSchool();
 }
 					
 				

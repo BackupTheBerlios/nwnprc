@@ -43,7 +43,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 
             if (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD)
             {
-                if (!MyPRCResistSpell(OBJECT_SELF, oTarget, iPenetr) && !PRCMySavingThrow(SAVING_THROW_WILL, oTarget, iSaveDC))
+                if (!PRCDoResistSpell(OBJECT_SELF, oTarget, iPenetr) && !PRCMySavingThrow(SAVING_THROW_WILL, oTarget, iSaveDC))
                 {
                     effect eVis1 = EffectVisualEffect(VFX_IMP_FROST_S);
                     effect eVis2 = EffectVisualEffect(VFX_IMP_DOOM);
@@ -58,7 +58,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
             }
             else
             {
-                if (!MyPRCResistSpell(OBJECT_SELF, oTarget, iPenetr))
+                if (!PRCDoResistSpell(OBJECT_SELF, oTarget, iPenetr))
                 {
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_FROST_S), oTarget);
                     ApplyTouchAttackDamage(OBJECT_SELF, oTarget, iAttackRoll, iNegDam, iEleDmg);
@@ -81,7 +81,7 @@ void main()
 {
     object oCaster = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oCaster);
-    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    PRCSetSchool(GetSpellSchool(PRCGetSpellId()));
     if (!X2PreSpellCastCode()) return;
     object oTarget = PRCGetSpellTargetObject();
     int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
@@ -102,5 +102,5 @@ void main()
                 DecrementSpellCharges(oCaster);
         }
     }
-    SPSetSchool();
+    PRCSetSchool();
 }

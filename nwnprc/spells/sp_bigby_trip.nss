@@ -27,13 +27,13 @@ Material component: Three glass beads
 int EvalSizeBonus(object oSubject);
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+	PRCSetSchool(SPELL_SCHOOL_EVOCATION);
 	
 	object oPC = OBJECT_SELF;
 	object oTarget = GetSpellTargetObject();
@@ -42,7 +42,7 @@ void main()
 	int nDisplayFeedback;
 	
 	// Let the AI know
-        SPRaiseSpellCastAt(oTarget, TRUE, SPELL_BIGBYS_TRIPPING_HAND, oPC);
+        PRCSignalSpellEvent(oTarget, TRUE, SPELL_BIGBYS_TRIPPING_HAND, oPC);
 	
 	/*If your attack succeeds, make a Strength check opposed by the
 	defender’s Dexterity or Strength check (whichever ability score
@@ -62,10 +62,10 @@ void main()
 	if (iAttackRoll > 0)
 	{
 		//SR
-		if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+		if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 		{
 			//save
-			if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, SPGetSpellSaveDC(oTarget, oPC), SAVING_THROW_TYPE_SPELL))
+			if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, PRCGetSaveDC(oTarget, oPC), SAVING_THROW_TYPE_SPELL))
 			{				
 				int nOpposing = d20() + (max(GetAbilityModifier(ABILITY_STRENGTH, oTarget), GetAbilityModifier(ABILITY_DEXTERITY, oTarget))) + EvalSizeBonus(oTarget);
 				int nCheck    = d20() + 2 + nTripBonus;
@@ -77,7 +77,7 @@ void main()
 			}
 		}
 	}
-	SPSetSchool();
+	PRCSetSchool();
 }
 
 int EvalSizeBonus(object oSubject)

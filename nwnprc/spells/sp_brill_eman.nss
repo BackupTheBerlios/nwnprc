@@ -35,14 +35,14 @@ Created:   6/8/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	//spellhook
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+	PRCSetSchool(SPELL_SCHOOL_EVOCATION);
 	
 	object oPC = OBJECT_SELF;
 	location lLoc = GetLocation(oPC);
@@ -65,5 +65,5 @@ void main()
 	SPGoodShift(oPC);
 	
 	DoCorruptionCost(oPC, ABILITY_STRENGTH, d3(), 0);
-	SPSetSchool();		
+	PRCSetSchool();		
 }

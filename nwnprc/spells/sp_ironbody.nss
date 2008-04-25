@@ -29,7 +29,7 @@ void main()
     object oCaster = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oCaster);
     int nSpellID = PRCGetSpellId();
-    SPSetSchool(GetSpellSchool(nSpellID));
+    PRCSetSchool(GetSpellSchool(nSpellID));
     if (!X2PreSpellCastCode()) return;
     object oTarget = PRCGetSpellTargetObject();
     int nMetaMagic = PRCGetMetaMagicFeat();
@@ -70,5 +70,5 @@ void main()
 
 
 
-    SPSetSchool();
+    PRCSetSchool();
 }

@@ -18,7 +18,7 @@
 //:://////////////////////////////////////////////
 
 //:: modified by mr_bumpkin Dec 4, 2003 for prc stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 
 
 #include "x2_inc_spellhook"

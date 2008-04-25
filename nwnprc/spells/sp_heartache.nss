@@ -24,27 +24,27 @@ Created:
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	//Spellhook
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_ENCHANTMENT);
+	PRCSetSchool(SPELL_SCHOOL_ENCHANTMENT);
 	
 	//vars
 	object oPC = OBJECT_SELF;
 	object oTarget = GetSpellTargetObject();
 	int nCasterLvl = PRCGetCasterLevel(oPC);
-	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+	int nDC = PRCGetSaveDC(oTarget, oPC);
 	float fDur = 6.0f;
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	
-	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_HEARTACHE, oPC);
+	PRCSignalSpellEvent(oTarget, TRUE, SPELL_HEARTACHE, oPC);
 	
 	//Spell Resistance
-	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 	{
 		//Save
 		if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
@@ -63,7 +63,7 @@ void main()
 	}
 	
 	SPEvilShift(oPC);
-	SPSetSchool();
+	PRCSetSchool();
 }
 		
 		

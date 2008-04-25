@@ -2,7 +2,7 @@
 //Blueguts      DC14     Incubation 1d3 days       1d4 Str dam
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {

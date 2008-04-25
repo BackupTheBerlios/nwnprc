@@ -54,7 +54,7 @@ void main()
         RemoveSpellEffects(SPELL_ANTIMAGIC_FIELD, oCaster, oCaster);
         return;
     }*/
-    SPSetSchool(GetSpellSchool(nSpellID));
+    PRCSetSchool(GetSpellSchool(nSpellID));
     if (!X2PreSpellCastCode()) return;
     object oTarget = PRCGetSpellTargetObject();
     int nMetaMagic = PRCGetMetaMagicFeat();
@@ -67,5 +67,5 @@ void main()
     eAOE = ExtraordinaryEffect(eAOE);
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAOE, oTarget, fDuration);
 
-    SPSetSchool();
+    PRCSetSchool();
 }

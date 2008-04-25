@@ -28,13 +28,13 @@ Created:   7/6/07
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
         object oPC = GetAreaOfEffectCreator();
         object oTarget = GetEnteringObject();
-        int nDC = SPGetSpellSaveDC(oTarget, oPC);
+        int nDC = PRCGetSaveDC(oTarget, oPC);
         int nCasterLvl = PRCGetCasterLevel(oPC);
         effect eLink = EffectLinkEffects(EffectBlindness(), EffectAbilityDecrease(ABILITY_STRENGTH, 4));
         eLink = EffectLinkEffects(eLink, EffectAbilityDecrease(ABILITY_DEXTERITY, 4));

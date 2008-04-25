@@ -15,7 +15,7 @@
 //:://////////////////////////////////////////////
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "X0_I0_SPELLS"
 #include "x2_inc_spellhook"
@@ -62,7 +62,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
         }
         if(bValid == FALSE)
         {
-            if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
+            if(!PRCDoResistSpell(OBJECT_SELF, oTarget,nPenetr))
             {
                 //Make Will save to negate
                 if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_MIND_SPELLS))

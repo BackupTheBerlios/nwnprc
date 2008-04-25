@@ -34,13 +34,13 @@ Created:   7/6/07
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
         if(!X2PreSpellCastCode()) return;
         
-        SPSetSchool(SPELL_SCHOOL_CONJURATION);
+        PRCSetSchool(SPELL_SCHOOL_CONJURATION);
         
         object oPC = OBJECT_SELF;
         effect eAoE = EffectAreaOfEffect(VFX_MOB_RING_OF_BLADES);
@@ -52,5 +52,5 @@ void main()
         
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAoE, oPC, fDur);
         
-        SPSetSchool();
+        PRCSetSchool();
 }

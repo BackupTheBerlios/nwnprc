@@ -24,18 +24,18 @@ Material Component
 ////////////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+	PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
 	
 	object oPC = OBJECT_SELF;
 	
 	CreateItemOnObject("x1_wmgrenade005", oPC, 1);
 	
-	SPSetSchool();
+	PRCSetSchool();
 }
 	

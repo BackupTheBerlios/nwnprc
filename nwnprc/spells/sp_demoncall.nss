@@ -22,7 +22,7 @@ Created:
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
@@ -30,14 +30,14 @@ void main()
 	
 	if (!X2PreSpellCastCode()) return;
 		
-	SPSetSchool(SPELL_SCHOOL_DIVINATION);
+	PRCSetSchool(SPELL_SCHOOL_DIVINATION);
 	
 	object oPC = OBJECT_SELF;
 	effect eLore = EffectSkillIncrease(SKILL_LORE, 10);
 	
 	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLore, oPC, 3.0f);
 	
-	SPSetSchool();
+	PRCSetSchool();
 	SPEvilShift(oPC);
 	
 }

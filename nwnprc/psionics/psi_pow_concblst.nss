@@ -38,7 +38,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void DoPower(struct manifestation manif, object oMainTarget, int nDC, int nPen, int nExtraTargets,
              int nNumberOfDice, int nDieSize, effect eVis);
@@ -81,7 +81,7 @@ void main()
         effect eVis       = EffectVisualEffect(PSI_IMP_CONCUSSION_BLAST);
 
         // Hit the main target
-        SPRaiseSpellCastAt(oMainTarget, TRUE, manif.nSpellID, oManifester);
+        PRCSignalSpellEvent(oMainTarget, TRUE, manif.nSpellID, oManifester);
 
         DoPower(manif, oMainTarget, nDC, nPen, nExtraTargets, nNumberOfDice, nDieSize, eVis);
         if(manif.bTwin)
@@ -123,7 +123,7 @@ void DoPower(struct manifestation manif, object oMainTarget, int nDC, int nPen, 
                )
             {
                 //Fire cast spell at event for the specified target
-                SPRaiseSpellCastAt(oAreaTarget, TRUE, manif.nSpellID, manif.oManifester);
+                PRCSignalSpellEvent(oAreaTarget, TRUE, manif.nSpellID, manif.oManifester);
 
                 if(PRCMyResistPower(manif.oManifester, oAreaTarget, nPen))
                 {

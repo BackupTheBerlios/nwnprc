@@ -50,7 +50,7 @@ void main()
         utter.nPen       = GetTrueSpeakPenetration(oTrueSpeaker);
 
 	// If the Spell Penetration fails, don't apply any effects
-        if (!MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen))
+        if (!PRCDoResistSpell(oTrueSpeaker, oTarget, utter.nPen))
         {
        		// Damage
        		utter.eLink = EffectLinkEffects(EffectDamage(d6(8)), EffectVisualEffect(VFX_IMP_SHILLELAGH));

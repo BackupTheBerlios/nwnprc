@@ -6,7 +6,7 @@
 //::Added hold ray functionality - HackyKid
 
 
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_sp_func"
 
 //Implements the spell impact, put code here
@@ -25,14 +25,14 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     if (nDice > 5) nDice = 5;
 
     // Adjust the damage type if necessary.
-    int nDamageType = SPGetElementalDamageType(DAMAGE_TYPE_NEGATIVE, OBJECT_SELF);
+    int nDamageType = PRCGetElementalDamageType(DAMAGE_TYPE_NEGATIVE, OBJECT_SELF);
 
     int iAttackRoll = 0;
 
     if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
     {
         //Fire cast spell at event for the specified target
-        SPRaiseSpellCastAt(oTarget);
+        PRCSignalSpellEvent(oTarget);
 
         iAttackRoll = PRCDoRangedTouchAttack(oTarget);;
 
@@ -41,14 +41,14 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 
         if (iAttackRoll > 0)
         {
-            if (!SPResistSpell(OBJECT_SELF, oTarget, nPenetr))
+            if (!PRCDoResistSpell(OBJECT_SELF, oTarget, nPenetr))
             {
-                int nDamage = SPGetMetaMagicDamage(nDamageType, 1 == iAttackRoll ? nDice : (nDice * 2), 8);
+                int nDamage = PRCGetMetaMagicDamage(nDamageType, 1 == iAttackRoll ? nDice : (nDice * 2), 8);
 
                 // Apply the damage and the vfx to the target.
                 nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
                 effect eEffect = RACIAL_TYPE_UNDEAD == MyPRCGetRacialType(oTarget) ?
-                    EffectHeal(nDamage) : SPEffectDamage(nDamage, nDamageType);
+                    EffectHeal(nDamage) : PRCEffectDamage(nDamage, nDamageType);
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, eEffect, oTarget);
                 PRCBonusDamage(oTarget);
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY), oTarget);
@@ -63,7 +63,7 @@ void main()
 {
     object oCaster = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oCaster);
-    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    PRCSetSchool(GetSpellSchool(PRCGetSpellId()));
     if (!X2PreSpellCastCode()) return;
     object oTarget = PRCGetSpellTargetObject();
     int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
@@ -85,5 +85,5 @@ void main()
                 DecrementSpellCharges(oCaster);
         }
     }
-    SPSetSchool();
+    PRCSetSchool();
 }

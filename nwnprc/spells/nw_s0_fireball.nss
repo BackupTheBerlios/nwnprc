@@ -19,7 +19,7 @@
 //:: Last Updated By: Preston Watamaniuk, On: May 25, 2001
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "X0_I0_SPELLS"
 #include "x2_inc_spellhook"
@@ -83,7 +83,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_FIREBALL));
                 //Get the distance between the explosion and the target to calculate delay
                 fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget))/20;
-                if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
+                if (!PRCDoResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
                 {
                      //Resolve metamagic
                     if ((nMetaMagic & METAMAGIC_MAXIMIZE))

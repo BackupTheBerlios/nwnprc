@@ -35,7 +35,7 @@ Created:   8/9/07
 
 void StrengthCheck(object oTarget, object oCreator);
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {

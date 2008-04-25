@@ -36,13 +36,13 @@ Created:   6/28/07
 
 void SummonElemental(object oTarget, object oPC);
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
         if(!X2PreSpellCastCode()) return;
         
-        SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+        PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
         
         object oPC = OBJECT_SELF;
         object oTarget = PRCGetSpellTargetObject();
@@ -58,7 +58,7 @@ void main()
         
         {
                SendMessageToPC(oPC, "This spell must be cast on a living target");
-               SPSetSchool();
+               PRCSetSchool();
                return;
         }
        
@@ -73,7 +73,7 @@ void main()
         }
         
         //SR check
-        if(!MyPRCResistSpell(oPC, oTarget, (nCasterLvl + SPGetPenetr())))
+        if(!PRCDoResistSpell(oPC, oTarget, (nCasterLvl + SPGetPenetr())))
         {
                 //VFX
                 ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_PULSE_WATER), oTarget);
@@ -90,7 +90,7 @@ void main()
                         SummonElemental(oTarget, oPC);
                 }
         }
-        SPSetSchool();
+        PRCSetSchool();
 }
 
 void SummonElemental(object oTarget, object oPC)

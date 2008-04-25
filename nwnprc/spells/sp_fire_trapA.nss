@@ -37,7 +37,7 @@ Created:   7/6/07
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
@@ -72,7 +72,7 @@ void main()
                                          //Fire cast spell at event for the specified target
                                          SignalEvent(oTarget, EventSpellCastAt(oCaster, SPELL_FIRE_TRAP));
                                          //Make SR check
-                                         if(!MyPRCResistSpell(oCaster, oTarget,nCasterLvl + SPGetPenetr()))
+                                         if(!PRCDoResistSpell(oCaster, oTarget,nCasterLvl + SPGetPenetr()))
                                          {
                                                  int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                                                  nDam = d4(1) + nCasterLvl;
@@ -103,7 +103,7 @@ void main()
                          DestroyObject(OBJECT_SELF, 1.0);
                  }
          }
-         SPSetSchool();
+         PRCSetSchool();
  }
 
                   

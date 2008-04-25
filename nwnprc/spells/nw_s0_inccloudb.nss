@@ -15,7 +15,7 @@
 //:: Update Pass By: Preston W, On: July 20, 2001
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "x2_inc_spellhook"
 

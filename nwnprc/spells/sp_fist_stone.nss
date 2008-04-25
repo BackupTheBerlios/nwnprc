@@ -44,13 +44,13 @@ Created:   7/6/07
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
         if(!X2PreSpellCastCode()) return;
         
-        SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+        PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
         
         object oPC = OBJECT_SELF;
         effect eBuff = EffectAbilityIncrease(ABILITY_STRENGTH, 6);
@@ -63,6 +63,6 @@ void main()
         DelayCommand(fDur, RemoveNaturalSecondaryWeapons(oPC, "nw_it_crewpb005"));
         
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBuff, oPC, fDur, TRUE, SPELL_FIST_OF_STONE, PRCGetCasterLevel(oPC));
-        SPSetSchool();
+        PRCSetSchool();
 }
         

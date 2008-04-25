@@ -30,7 +30,7 @@ Created:
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 
 void main()
@@ -43,9 +43,9 @@ void main()
 	int nType = MyPRCGetRacialType(oPC);
 	int nCreatureType = MyPRCGetRacialType(oTarget);
 	int nDam = d3(1);
-	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+	int nDC = PRCGetSaveDC(oTarget, oPC);
 	
-	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+	PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
 	
 	
 	//Check for PLAYER undeath
@@ -61,7 +61,7 @@ void main()
 		   
 		{
 			//Check for resistance
-			if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+			if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 			{
 				//Check for save
 				if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL)) 
@@ -81,7 +81,7 @@ void main()
 	}
 	SPEvilShift(oPC);
 	
-	SPSetSchool();
+	PRCSetSchool();
 }
 			   
 			   

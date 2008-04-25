@@ -10,7 +10,7 @@
 //:: Created By: Preston Watamaniuk
 //:: Created On: Jan 7, 2002
 //:://////////////////////////////////////////////
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "x2_inc_spellhook"
 
 #include "prc_spell_const"

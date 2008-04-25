@@ -13,7 +13,7 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
@@ -33,7 +33,7 @@ void main()
         if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL && GetHitDice(oPC) > GetHitDice(oTarget))
         {
             // Let the AI know
-            //SPRaiseSpellCastAt(oTarget, TRUE, PRCGetSpellId(), oPC);
+            //PRCSignalSpellEvent(oTarget, TRUE, PRCGetSpellId(), oPC);
             //Make a saving throw check
             if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
             {

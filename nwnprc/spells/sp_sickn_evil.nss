@@ -28,13 +28,13 @@ Created:   6/30/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
         if(!X2PreSpellCastCode()) return;
         
-        SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+        PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
         
         //Declare major variables including Area of Effect Object
         effect eAOE = EffectAreaOfEffect(VFX_PER_SICKEN_EVIL);
@@ -65,5 +65,5 @@ void main()
         
         SPGoodShift(oPC);
         DelayCommand(fDuration, DoCorruptionCost(oPC, ABILITY_STRENGTH, d4(), 0));
-        SPSetSchool();
+        PRCSetSchool();
 }

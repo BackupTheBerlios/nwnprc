@@ -9,7 +9,7 @@
 */
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
@@ -38,7 +38,7 @@ void main()
             if(!GetIsReactionTypeFriendly(oTarget))
             {
                 //Fire cast spell at event for the specified target
-                SPRaiseSpellCastAt(oTarget, TRUE, SPELL_CONFLAGRATION);
+                PRCSignalSpellEvent(oTarget, TRUE, SPELL_CONFLAGRATION);
 
                 fDelay = GetSpellEffectDelay(lTarget, oTarget);
 

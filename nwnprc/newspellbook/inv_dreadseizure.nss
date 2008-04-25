@@ -1,7 +1,7 @@
 
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "inv_inc_invfunc"
 #include "inv_invokehook"
 
@@ -14,10 +14,10 @@ void main()
 	int nCasterLvl = GetInvokerLevel(OBJECT_SELF, GetInvokingClass());
 	int nDC = GetInvocationSaveDC(oTarget, oPC);
 	
-	SPRaiseSpellCastAt(oTarget,TRUE, INVOKE_DREAD_SEIZURE, oPC);
+	PRCSignalSpellEvent(oTarget,TRUE, INVOKE_DREAD_SEIZURE, oPC);
 	
 	//SR
-	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 	{
 		//save
 		if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL))

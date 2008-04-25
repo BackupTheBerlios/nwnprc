@@ -278,7 +278,7 @@ void main()
 {
     object oCaster = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oCaster);
-    SPSetSchool(GetSpellSchool(PRCGetSpellId(oCaster)));
+    PRCSetSchool(GetSpellSchool(PRCGetSpellId(oCaster)));
     if (!X2PreSpellCastCode()) return;
     object oTarget = PRCGetSpellTargetObject(oCaster);
     int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
@@ -299,5 +299,5 @@ void main()
                 DecrementSpellCharges(oCaster);
         }
     }
-    SPSetSchool();
+    PRCSetSchool();
 }

@@ -58,7 +58,7 @@ Created:   7/3/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void WandCounter(object oPC, object oSkin, object oNewWand, int nCounter);
 
@@ -66,7 +66,7 @@ void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+	PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
 	
 	object oPC = OBJECT_SELF;
 	object oTargetWand = GetSpellTargetObject();

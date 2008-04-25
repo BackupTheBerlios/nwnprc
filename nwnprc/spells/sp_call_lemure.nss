@@ -37,7 +37,7 @@ Created:
 
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
@@ -47,7 +47,7 @@ void main()
     string sResRef = "prc_sum_lemure";
     if(!X2PreSpellCastCode()) return;
 
-    SPSetSchool(SPELL_SCHOOL_CONJURATION);
+    PRCSetSchool(SPELL_SCHOOL_CONJURATION);
 
 
     MultisummonPreSummon();
@@ -79,5 +79,5 @@ void main()
         ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eSummon, lLoc);
     }
     SPEvilShift(oPC);
-    SPSetSchool();
+    PRCSetSchool();
 }

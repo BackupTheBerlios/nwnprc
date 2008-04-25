@@ -1,4 +1,4 @@
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "spinc_greenfire"
 
 void main()
@@ -6,7 +6,7 @@ void main()
 	// If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
 	if (!X2PreSpellCastCode()) return;
 
-	SPSetSchool(SPELL_SCHOOL_ABJURATION);
+	PRCSetSchool(SPELL_SCHOOL_ABJURATION);
 
 	// Get target location.
 	location lTarget = PRCGetSpellTargetLocation();
@@ -16,12 +16,12 @@ void main()
 	SetGreenfireSpellID(GetSpellId());
 			
 	// Get spell duration, taking metamagic into account (default is 1 round).
-	float fDuration = SPGetMetaMagicDuration(RoundsToSeconds(1));
+	float fDuration = PRCGetMetaMagicDuration(RoundsToSeconds(1));
 
 	// Create the AOE for the spell and apply it to the target location.
 	effect eAOE = EffectAreaOfEffect(AOE_PER_FOGACID, "sp_greenfire_en", 
 		"sp_greenfire_hb", "sp_greenfire_ex");
 	ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAOE, lTarget, fDuration);
 	
-	SPSetSchool();
+	PRCSetSchool();
 }

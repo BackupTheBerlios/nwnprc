@@ -35,12 +35,12 @@
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_inc_teleport"
 
 void main()
 {
-    SPSetSchool(SPELL_SCHOOL_ABJURATION);
+    PRCSetSchool(SPELL_SCHOOL_ABJURATION);
     // Spellhook
     if(!X2PreSpellCastCode()) return;
 
@@ -50,7 +50,7 @@ void main()
     int nCasterLvl   = PRCGetCasterLevel();
     int nSpellID     = PRCGetSpellId();
     effect eVis      = EffectLinkEffects(EffectVisualEffect(VFX_IMP_BLINDDEAD_DN_GREEN), EffectVisualEffect(VFX_IMP_BLINDDEAD_DN_SOUNDFX));
-    float fDur       = SPGetMetaMagicDuration(HoursToSeconds(24 * nCasterLvl));
+    float fDur       = PRCGetMetaMagicDuration(HoursToSeconds(24 * nCasterLvl));
 
 
     // Do VFX
@@ -70,5 +70,5 @@ void main()
     AssignCommand(oApplyObject, DelayCommand(fDur, DestroyObject(oApplyObject))); // The AoE is likely to destroy it before this, but paranoia
 
     // Cleanup
-    SPSetSchool();
+    PRCSetSchool();
 }

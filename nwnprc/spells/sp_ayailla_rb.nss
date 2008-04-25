@@ -30,13 +30,14 @@ Created:   6/1/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
+#include "x2_inc_spellhook"
 
 void main()
 {
         if(!X2PreSpellCastCode()) return;
         
-        SPSetSchool(SPELL_SCHOOL_EVOCATION);
+        PRCSetSchool(SPELL_SCHOOL_EVOCATION);
         
         object oPC = OBJECT_SELF;
         int nCasterLvl = PRCGetCasterLevel(oPC);
@@ -58,9 +59,9 @@ void main()
                 //make sure it's not the PC
                 if(oTarget != oPC)
                 {                        
-                        if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+                        if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
                         {
-                                nDC = SPGetSpellSaveDC(oTarget, oPC);
+                                nDC = PRCGetSaveDC(oTarget, oPC);
                                 
                                 if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC))
                                 {
@@ -101,5 +102,5 @@ void main()
         
         SPGoodShift(oPC);
         
-        SPSetSchool();
+        PRCSetSchool();
 }    

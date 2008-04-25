@@ -26,7 +26,7 @@ through the area at only half normal speed.
 //:://////////////////////////////////////////////
 //:: GZ: Removed SR, its not there by the book
 //:: Primogenitor: Implemented 3.5ed rules
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_alterations"
 #include "inc_grapple"
 #include "inv_inc_invfunc"
@@ -54,7 +54,7 @@ void main()
             SignalEvent(oTarget, EventSpellCastAt(GetAreaOfEffectCreator(),
                 INVOKE_CHILLING_TENTACLES));
                 
-            if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
+            if(!PRCDoResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
             {
                 //apply cold damage - always happens
                 effect eColdDamage = EffectDamage(d6(2), DAMAGE_TYPE_COLD);

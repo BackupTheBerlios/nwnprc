@@ -14,7 +14,7 @@
 
 
 //:: modified by mr_bumpkin Dec 4, 2003
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "NW_I0_SPELLS"
 #include "inv_inc_invfunc"
 #include "inv_invokehook"
@@ -54,7 +54,7 @@ void main()
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_CHARM_MONSTER, FALSE));
         // Make SR Check
-        if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
+        if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nPenetr))
         {
             // Make Will save vs Mind-Affecting
             if (!/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, GetInvocationSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_MIND_SPELLS))

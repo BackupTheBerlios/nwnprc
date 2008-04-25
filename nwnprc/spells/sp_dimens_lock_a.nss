@@ -15,7 +15,7 @@
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_inc_teleport"
 
 void main()
@@ -39,10 +39,10 @@ void main()
     int nPenetr      = GetLocalInt(oAoE, "PRC_Spell_DimLock_SpellPenetr");
 
     // Let the AI know
-    SPRaiseSpellCastAt(oTarget, TRUE, SPELL_DIMENSIONAL_LOCK, oCaster);
+    PRCSignalSpellEvent(oTarget, TRUE, SPELL_DIMENSIONAL_LOCK, oCaster);
 
     // Spell Resistance
-    if(!SPResistSpell(oCaster, oTarget, nPenetr))
+    if(!PRCDoResistSpell(oCaster, oTarget, nPenetr))
     {
         SendMessageToPCByStrRef(oTarget, 16825687); // "You feel steady"
         //ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_LOS_NORMAL_10), oTarget);

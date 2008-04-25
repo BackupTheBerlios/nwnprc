@@ -37,7 +37,7 @@ not its exact location.
 //:://////////////////////////////////////////////
  
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
  
 void RoundThree(object oPC, location lTarget);
 void RoundTwo(object oPC, location lTarget);
@@ -120,7 +120,7 @@ void RoundOne(object oPC, location lTarget)
  
 void main()
 {              
-        SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+        PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
         
         //spellhook
         if (!X2PreSpellCastCode())
@@ -145,5 +145,5 @@ void main()
         //Detect
         RoundOne(oPC, lTarget);
         
-        SPSetSchool();  
+        PRCSetSchool();  
 } 

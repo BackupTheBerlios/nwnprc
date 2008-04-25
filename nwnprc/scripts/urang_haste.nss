@@ -14,7 +14,7 @@
 // Modified March 2003: Remove Expeditious Retreat effects
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "x0_i0_spells"
 

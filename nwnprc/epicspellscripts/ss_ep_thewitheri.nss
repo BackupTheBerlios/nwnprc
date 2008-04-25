@@ -31,7 +31,7 @@ void main()
         SignalEvent(oTarget,
             EventSpellCastAt(OBJECT_SELF, SPELL_BESTOW_CURSE, FALSE));
         //Make SR Check
-        if (!MyPRCResistSpell(OBJECT_SELF, oTarget, GetTotalCastingLevel(OBJECT_SELF)+SPGetPenetr(OBJECT_SELF)))
+        if (!PRCDoResistSpell(OBJECT_SELF, oTarget, GetTotalCastingLevel(OBJECT_SELF)+SPGetPenetr(OBJECT_SELF)))
         {
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
             DoWithering(oTarget, GetEpicSpellSaveDC(OBJECT_SELF, oTarget)+10, nDuration);

@@ -39,13 +39,13 @@ Created:
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_common"
 #include "prc_inc_spells"
 #include "prc_spell_const"
+#include "x2_inc_spellhook"
 
 void main()
 {
-        SPSetSchool(SPELL_SCHOOL_CONJURATION);
+        PRCSetSchool(SPELL_SCHOOL_CONJURATION);
         
         // Run the spellhook. 
         if (!X2PreSpellCastCode()) return;
@@ -112,6 +112,6 @@ void main()
         //Corrupt spells get mandatory 10 pt evil adjustment, regardless of switch
         AdjustAlignment(oPC, ALIGNMENT_EVIL, 10);
         
-        SPSetSchool();
+        PRCSetSchool();
 }
         

@@ -34,7 +34,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 int CheckRace(struct manifestation manif, object oTarget);
 
@@ -102,7 +102,7 @@ void main()
             if(CheckRace(manif, oTarget))
             {
                 // Let the AI know
-                SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+                PRCSignalSpellEvent(oTarget, TRUE, manif.nSpellID, oManifester);
                 //Check for Power Resistance
                 if(PRCMyResistPower(oManifester, oTarget, nPen))
                 {
@@ -135,7 +135,7 @@ void main()
                        )
                     {
                         // Let the AI know
-                        SPRaiseSpellCastAt(oExtraTarget, TRUE, manif.nSpellID, oManifester);
+                        PRCSignalSpellEvent(oExtraTarget, TRUE, manif.nSpellID, oManifester);
                         //Check for Power Resistance
                         if(PRCMyResistPower(oManifester, oExtraTarget, nPen))
                         {

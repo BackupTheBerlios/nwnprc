@@ -31,7 +31,7 @@ Created:   3/9/2006
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
@@ -49,7 +49,7 @@ void main()
 	//Spellhook
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+	PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
 	
 	//Check for undeath
 	if(nType == RACIAL_TYPE_UNDEAD)
@@ -152,7 +152,7 @@ void main()
 		
 	}
 	SPEvilShift(oPC);
-	SPSetSchool();
+	PRCSetSchool();
 }
 	
 	

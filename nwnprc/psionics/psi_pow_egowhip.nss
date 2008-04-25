@@ -33,7 +33,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
@@ -77,7 +77,7 @@ void main()
         effect eRay  = EffectBeam(VFX_BEAM_FIRE_LASH, oManifester, BODY_NODE_CHEST);
 
         // Let the AI know
-        SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+        PRCSignalSpellEvent(oTarget, TRUE, manif.nSpellID, oManifester);
 
         // Mind-affecting immunity check
         if(!GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS))

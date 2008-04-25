@@ -24,7 +24,7 @@ Created:   5/17/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
@@ -37,7 +37,7 @@ void main()
     //Spellhook
     if(!X2PreSpellCastCode()) return;
     
-    SPSetSchool(SPELL_SCHOOL_DIVINATION);
+    PRCSetSchool(SPELL_SCHOOL_DIVINATION);
     
     itemproperty nDarkvis = PRCItemPropertyBonusFeat(FEAT_DARKVISION);
     effect eTrueSee = EffectTrueSeeing();
@@ -48,7 +48,7 @@ void main()
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eTrueSee, oPC, fDur);
     
     SPEvilShift(oPC);
-    SPSetSchool();
+    PRCSetSchool();
 }
     
     

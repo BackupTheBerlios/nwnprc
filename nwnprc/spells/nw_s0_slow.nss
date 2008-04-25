@@ -14,7 +14,7 @@
 //:: VFX Pass By: Preston W, On: June 25, 2001
 
 //:: modified by mr_bumpkin  Dec 4, 2003
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "X0_I0_SPELLS"
 #include "x2_inc_spellhook"
@@ -77,7 +77,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
             int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_SLOW));
-            if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nLevel) && !/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (nDC)))
+            if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nLevel) && !/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (nDC)))
             {
                 //Apply the slow effect and VFX impact
                 SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration),TRUE,-1,CasterLvl);

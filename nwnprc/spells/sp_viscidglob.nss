@@ -1,11 +1,11 @@
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
     // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
     if (!X2PreSpellCastCode()) return;
     
-    SPSetSchool(SPELL_SCHOOL_CONJURATION);
+    PRCSetSchool(SPELL_SCHOOL_CONJURATION);
 
     object oTarget = GetSpellTargetObject();
     
@@ -14,11 +14,11 @@ void main()
     if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
     {
         // Fire cast spell at event for the specified target
-        SPRaiseSpellCastAt(oTarget);
+        PRCSignalSpellEvent(oTarget);
         
         int CasterLvl = PRCGetCasterLevel();
         
-        if (!SPResistSpell(OBJECT_SELF, oTarget,CasterLvl+SPGetPenetr()))
+        if (!PRCDoResistSpell(OBJECT_SELF, oTarget,CasterLvl+SPGetPenetr()))
         {
             // Make touch attack, saving result for possible critical
             int nTouchAttack = PRCDoRangedTouchAttack(oTarget);;
@@ -31,7 +31,7 @@ void main()
                 if (!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, PRCGetSaveDC(oTarget,OBJECT_SELF), 
                     SAVING_THROW_TYPE_SPELL))
                 {
-                    float fDuration = SPGetMetaMagicDuration(MinutesToSeconds(CasterLvl));
+                    float fDuration = PRCGetMetaMagicDuration(MinutesToSeconds(CasterLvl));
                     
                     // Target cannot move no matter what.
                     effect eEffect = EffectCutsceneImmobilize();
@@ -53,5 +53,5 @@ void main()
         }
     }
     
-    SPSetSchool();
+    PRCSetSchool();
 }

@@ -73,7 +73,7 @@ void main()
         else // UTTER_SPEED_ZEPHYR_R
         {
 		// If the Spell Penetration fails, don't apply any effects
-		nSRCheck = MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen);
+		nSRCheck = PRCDoResistSpell(oTrueSpeaker, oTarget, utter.nPen);
 		if (!nSRCheck)
 		{
 			// eLink is used for Duration Effects (Speed Decrease)

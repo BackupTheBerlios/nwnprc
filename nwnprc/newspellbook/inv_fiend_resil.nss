@@ -3,7 +3,7 @@
           Fast Healing x for 2 minutes(5 minutes if epic)
 */
 
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "inv_inc_invfunc"
 #include "inv_invokehook"
 

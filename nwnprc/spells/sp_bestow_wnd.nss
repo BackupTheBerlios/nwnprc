@@ -29,12 +29,12 @@ Created:   02/05/06
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 
 void main()
 {
-	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+	PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
 	
 	// Run the spellhook. 
 	if (!X2PreSpellCastCode()) return;
@@ -46,12 +46,12 @@ void main()
 	int nCasterMaxHP = GetMaxHitPoints(oPC);
 	int nCasterCurrentHP = GetCurrentHitPoints(oPC);
 	int nDam = min((nCasterMaxHP - nCasterCurrentHP), nCasterLvl);
-	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+	int nDC = PRCGetSaveDC(oTarget, oPC);
 	
-	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_BESTOW_WOUND, oPC);
+	PRCSignalSpellEvent(oTarget, TRUE, SPELL_BESTOW_WOUND, oPC);
 	
 	//Check Spell Resistance
-	if (MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	if (PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 	{
 		return;
 	}
@@ -76,5 +76,5 @@ void main()
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eHealLink, oPC);
 	}
 		
-	SPSetSchool();
+	PRCSetSchool();
 }

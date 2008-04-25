@@ -32,7 +32,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 /**
  * This function contains the actual execution of the power. Separated from main() for easier implementation
@@ -82,7 +82,7 @@ void main()
         nPen += manif.nTimesAugOptUsed_1;
 
         // Let the main target know about the power use against it
-        SPRaiseSpellCastAt(oMainTarget, TRUE, manif.nSpellID, oManifester);
+        PRCSignalSpellEvent(oMainTarget, TRUE, manif.nSpellID, oManifester);
 
         DoPower(manif, oMainTarget, nDC, nPen, nBanishableHD, eVis);
         if(manif.bTwin)

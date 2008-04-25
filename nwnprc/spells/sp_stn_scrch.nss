@@ -28,7 +28,7 @@ Created:
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
@@ -43,7 +43,7 @@ void main()
 	//spellhook
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+	PRCSetSchool(SPELL_SCHOOL_EVOCATION);
 	
 	//check for drug
 	if(GetHasSpellEffect(SPELL_MUSHROOM_POWDER, oPC))
@@ -59,9 +59,9 @@ void main()
 		{
 			if(oTarget != oPC)
 			{
-				nDC = SPGetSpellSaveDC(oTarget, oPC);
+				nDC = PRCGetSaveDC(oTarget, oPC);
 				//SR
-				if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+				if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 				{
 					//Save
 					if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
@@ -78,6 +78,6 @@ void main()
 	}
 	
 	SPEvilShift(oPC);
-	SPSetSchool();
+	PRCSetSchool();
 }
 			

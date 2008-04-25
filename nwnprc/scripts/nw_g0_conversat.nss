@@ -9,8 +9,7 @@
 //              no OnConversation script is specified.
 ////////////////////////////////////////////////////////////
 
-#include "prc_alterations"
-#include "prc_inc_leadersh"
+#include "inc_eventhook"
 
 void main()
 {

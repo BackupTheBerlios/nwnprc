@@ -25,29 +25,29 @@ teleporation magic.
 **/
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+	PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
 	
 	object oPC = OBJECT_SELF;
 	object oTarget = GetSpellTargetObject();
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	int nCasterLvl = PRCGetCasterLevel(oPC);
-	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+	int nDC = PRCGetSaveDC(oTarget, oPC);
 	float fDur = RoundsToSeconds(1);
 	
-	SPRaiseSpellCastAt(oTarget,TRUE, SPELL_HALT, oPC);
+	PRCSignalSpellEvent(oTarget,TRUE, SPELL_HALT, oPC);
 	
 	if(nMetaMagic == METAMAGIC_EXTEND)
 	{
 		fDur += fDur;
 	}
 	
-	if (!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	if (!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 	{
 		if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_DEATH))
 		{
@@ -60,7 +60,7 @@ void main()
 		}
 	}
 	
-	SPSetSchool();
+	PRCSetSchool();
 }
 	
 

@@ -28,7 +28,7 @@ Created:   7/6/07
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void DoPush(object oTarget, object oCreator, int nReverse = FALSE);
 
@@ -37,7 +37,7 @@ void main()
         object oCaster = GetAreaOfEffectCreator();
         object oTarget = GetEnteringObject();
         
-        SetAllAoEInts(SPELL_OTILUKES_RESILIENT_SPHERE, OBJECT_SELF, SPGetSpellSaveDC(oTarget, oCaster)); 
+        SetAllAoEInts(SPELL_OTILUKES_RESILIENT_SPHERE, OBJECT_SELF, PRCGetSaveDC(oTarget, oCaster)); 
         
         //Look to see if it is for some reason the target
         if(GetLocalInt(oTarget, "PRC_OTILUKES_RS_TARGET"))

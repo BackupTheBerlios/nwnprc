@@ -26,13 +26,14 @@ saving throws.
 /////////////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
+#include "x2_inc_spellhook"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+	PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
 	
 	object oPC = OBJECT_SELF;
 	object oFamiliar = GetAssociate(ASSOCIATE_TYPE_FAMILIAR, oPC);
@@ -40,7 +41,7 @@ void main()
 	float fDur = RoundsToSeconds(nCasterLvl);
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	
-	 SPRaiseSpellCastAt(oPC,FALSE, SPELL_AUGMENT_FAMILIAR, oPC);
+	 PRCSignalSpellEvent(oPC,FALSE, SPELL_AUGMENT_FAMILIAR, oPC);
 	
 	if(nMetaMagic == METAMAGIC_EXTEND)
 	{
@@ -50,7 +51,7 @@ void main()
 	if(!GetIsObjectValid(oFamiliar))
 	{
 		FloatingTextStringOnCreature("Your familiar is not present.", oPC, FALSE);
-		SPSetSchool();
+		PRCSetSchool();
 		return;
 	}
 		
@@ -62,5 +63,5 @@ void main()
 	
 	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBuff, oFamiliar, fDur);
 	
-	SPSetSchool();
+	PRCSetSchool();
 }

@@ -47,13 +47,13 @@ Created:   7/6/07
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
         if(!X2PreSpellCastCode()) return;
         
-        SPSetSchool(SPELL_SCHOOL_ABJURATION);
+        PRCSetSchool(SPELL_SCHOOL_ABJURATION);
         
         object oPC = OBJECT_SELF;
         location lTarget = GetLocation(oPC);
@@ -85,13 +85,13 @@ void main()
                         if(GetHitDice(oTarget) <= 8)
                         {
                                 // Fire cast spell at event for the affected target
-                                SPRaiseSpellCastAt(oTarget, TRUE, SPELL_PRISMATIC_SPHERE, oPC);
+                                PRCSignalSpellEvent(oTarget, TRUE, SPELL_PRISMATIC_SPHERE, oPC);
                                 
                                 // Check if they can see
                                 if(!GetHasEffect(EFFECT_TYPE_BLINDNESS, oTarget))
                                 {
                                         // Check spell resistance
-                                        if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl))
+                                        if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl))
                                         {
                                                 // Get duration
                                                 fDuration = IntToFloat(d4(2) * 10);

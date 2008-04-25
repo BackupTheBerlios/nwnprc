@@ -34,7 +34,7 @@ Created:   6/13/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
@@ -60,7 +60,7 @@ void main()
 			eAOE = GetNextEffect(oTarget);
 		}
 	}
-	SPSetSchool();
+	PRCSetSchool();
 }
 	
 	

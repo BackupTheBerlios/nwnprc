@@ -1,13 +1,14 @@
 
-#include "prc_alterations"
-#include "spinc_common"
+//#include "prc_alterations"
+#include "prc_inc_spells"
+#include "x2_inc_spellhook"
 
 void main()
 {
     // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
     if (!X2PreSpellCastCode()) return;
     
-    SPSetSchool(SPELL_SCHOOL_CONJURATION);
+    PRCSetSchool(SPELL_SCHOOL_CONJURATION);
     
     // Get the spell target location as opposed to the spell target.
     location lTarget = PRCGetSpellTargetLocation();
@@ -37,23 +38,23 @@ void main()
         if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
         {
             // Fire cast spell at event for the specified target
-            SPRaiseSpellCastAt(oTarget);
+            PRCSignalSpellEvent(oTarget);
 
-            if (!SPResistSpell(OBJECT_SELF, oTarget,nPenetr))
+            if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nPenetr))
             {
                 // Make touch attack, saving result for possible critical
                 int nTouchAttack = PRCDoRangedTouchAttack(oTarget);;
                 if (nTouchAttack > 0)
                 {
                     // Roll the damage of (1d6+1) / level, doing double damage on a crit.
-                    int nDamage = SPGetMetaMagicDamage(DAMAGE_TYPE_BLUDGEONING, 
+                    int nDamage = PRCGetMetaMagicDamage(DAMAGE_TYPE_BLUDGEONING, 
                         1 == nTouchAttack ? nDice : (nDice * 2), 4);
 
                               nDamage = nDamage + nCasterLvl;
 
                     // Apply the damage and the damage visible effect to the target.                
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, 
-                        SPEffectDamage(nDamage, DAMAGE_TYPE_BLUDGEONING), oTarget);
+                        PRCEffectDamage(nDamage, DAMAGE_TYPE_BLUDGEONING), oTarget);
 //TODO: need VFX
 //                  SPApplyEffectToObject(DURATION_TYPE_INSTANT, 
 //                      EffectVisualEffect(VFX_IMP_FROST_S), oTarget);
@@ -65,6 +66,6 @@ void main()
             OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
     }
     
-    SPSetSchool();
+    PRCSetSchool();
 }
 

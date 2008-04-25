@@ -48,7 +48,7 @@ void main()
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF,
                     PRCGetSpellId()));
                 fDelay = GetRandomDelay(1.5, 2.5);
-                if(!MyPRCResistSpell(OBJECT_SELF, oTarget, GetTotalCastingLevel(OBJECT_SELF)+SPGetPenetr(OBJECT_SELF), fDelay))
+                if(!PRCDoResistSpell(OBJECT_SELF, oTarget, GetTotalCastingLevel(OBJECT_SELF)+SPGetPenetr(OBJECT_SELF), fDelay))
                 {
                     if(PRCGetCreatureSize(oTarget) == CREATURE_SIZE_TINY ||
                         PRCGetCreatureSize(oTarget) == CREATURE_SIZE_SMALL ||

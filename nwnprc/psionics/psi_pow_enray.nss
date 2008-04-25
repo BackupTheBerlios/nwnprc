@@ -41,7 +41,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "psi_inc_enrgypow"
 
 void main()
@@ -97,12 +97,12 @@ void main()
             EvaluateChainPower(manif, oMainTarget, TRUE);
 
         // Let the AI know
-        SPRaiseSpellCastAt(oMainTarget, TRUE, manif.nSpellID, oManifester);
+        PRCSignalSpellEvent(oMainTarget, TRUE, manif.nSpellID, oManifester);
         if(GetIsObjectValid(oSplitTarget))
-            SPRaiseSpellCastAt(oSplitTarget, TRUE, manif.nSpellID, oManifester);
+            PRCSignalSpellEvent(oSplitTarget, TRUE, manif.nSpellID, oManifester);
         if(manif.bChain)
             for(i = 0; i < array_get_size(oManifester, PRC_CHAIN_POWER_ARRAY); i++)
-                SPRaiseSpellCastAt(array_get_object(oManifester, PRC_CHAIN_POWER_ARRAY, i), TRUE, manif.nSpellID, oManifester);
+                PRCSignalSpellEvent(array_get_object(oManifester, PRC_CHAIN_POWER_ARRAY, i), TRUE, manif.nSpellID, oManifester);
 
         // Handle Twin Power
         int nRepeats = manif.bTwin ? 2 : 1;

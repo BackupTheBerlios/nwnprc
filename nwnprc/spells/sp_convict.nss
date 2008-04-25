@@ -18,8 +18,8 @@
 //  Variables passed may be changed if necessary
 int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 {
-    SPRaiseSpellCastAt(oTarget, FALSE);
-    float fDuration = SPGetMetaMagicDuration(MinutesToSeconds(nCasterLevel));
+    PRCSignalSpellEvent(oTarget, FALSE);
+    float fDuration = PRCGetMetaMagicDuration(MinutesToSeconds(nCasterLevel));
     int nBonus = 2 + (nCasterLevel / 6);
     if (nBonus > 5) nBonus = 5;
     effect eBuff = EffectSavingThrowIncrease(SAVING_THROW_ALL, nBonus, SAVING_THROW_TYPE_ALL);
@@ -35,7 +35,7 @@ void main()
 {
     object oCaster = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oCaster);
-    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    PRCSetSchool(GetSpellSchool(PRCGetSpellId()));
     if (!X2PreSpellCastCode()) return;
     object oTarget = PRCGetSpellTargetObject();
     int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
@@ -56,5 +56,5 @@ void main()
                 DecrementSpellCharges(oCaster);
         }
     }
-    SPSetSchool();
+    PRCSetSchool();
 }

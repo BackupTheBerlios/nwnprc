@@ -36,13 +36,13 @@ Created:   6/22/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+	PRCSetSchool(SPELL_SCHOOL_EVOCATION);
 	
 	object oPC = OBJECT_SELF;
 	location lLoc = GetSpellTargetLocation();
@@ -56,10 +56,10 @@ void main()
 	
 	while(GetIsObjectValid(oTarget))
 	{
-		if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
+		if(!PRCDoResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
 		{
 			nAlign = GetAlignmentGoodEvil(oTarget);
-			nDC = SPGetSpellSaveDC(oTarget, oPC);
+			nDC = PRCGetSaveDC(oTarget, oPC);
 			
 			if((MyPRCGetRacialType(oTarget) == RACIAL_TYPE_OUTSIDER) && (nAlign == ALIGNMENT_EVIL))
 			{
@@ -115,7 +115,7 @@ void main()
 		oTarget = MyNextObjectInShape(SHAPE_SPHERE, 6.10, lLoc, FALSE, OBJECT_TYPE_CREATURE);
 	}
 	SPGoodShift(oPC);
-	SPSetSchool();
+	PRCSetSchool();
 }
 			
 			

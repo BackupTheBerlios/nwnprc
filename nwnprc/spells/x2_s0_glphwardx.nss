@@ -20,7 +20,7 @@
 //:://////////////////////////////////////////////
 
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "x0_i0_spells"
 
@@ -91,7 +91,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_GLYPH_OF_WARDING,OBJECT_SELF, GetSpellSaveDC
                 //Fire cast spell at event for the specified target
                 SignalEvent(oTarget, EventSpellCastAt(oCreator, PRCGetSpellId()));
                 //Make SR check
-                if (!MyPRCResistSpell(oCreator, oTarget,nPenetr))
+                if (!PRCDoResistSpell(oCreator, oTarget,nPenetr))
                 {
                     int nDC = PRCGetSaveDC(oTarget,oCreator);
                     nDamage = d8(nDice);

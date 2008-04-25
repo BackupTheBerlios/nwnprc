@@ -28,7 +28,7 @@ still problem:
 //:: modified by mr_bumpkin Dec 4, 2003
 //:: modified by motu99 April 7, 2007
 
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "x2_inc_spellhook"
 #include "prc_alterations"
 

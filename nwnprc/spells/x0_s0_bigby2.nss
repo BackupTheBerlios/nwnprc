@@ -15,7 +15,7 @@
 //:: Last Updated By: Andrew Nobbs May 01, 2003
 
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "x0_i0_spells"
 #include "x2_inc_spellhook"
@@ -58,7 +58,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eImpact, oTarget);
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, 460, TRUE));
-        if(!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl+ SPGetPenetr()))
+        if(!PRCDoResistSpell(OBJECT_SELF, oTarget,CasterLvl+ SPGetPenetr()))
         {
 
             int nCasterRoll = d20(1) + 14;

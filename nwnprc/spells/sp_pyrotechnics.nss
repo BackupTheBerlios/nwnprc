@@ -43,13 +43,13 @@ Created:   7/6/07
 //:://////////////////////////////////////////////
 
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
         if(!X2PreSpellCastCode()) return;
         
-        SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+        PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
         
         object oPC = OBJECT_SELF;
         object oTarget;
@@ -58,7 +58,7 @@ void main()
         int nSpell = GetSpellId();
         int nMetaMagic = PRCGetMetaMagicFeat();
         int nCasterLvl = PRCGetCasterLevel(oPC);
-        int nDC = SPGetSpellSaveDC(oTarget, oPC);
+        int nDC = PRCGetSaveDC(oTarget, oPC);
         if(nMetaMagic == METAMAGIC_EXTEND) fDur += fDur;                
         
         //Fireworks
@@ -71,7 +71,7 @@ void main()
                 
                 while(GetIsObjectValid(oTarget))
                 {
-                        if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+                        if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
                         {
                                 //Will save
                                 if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
@@ -91,5 +91,5 @@ void main()
                 effect eAoE = EffectAreaOfEffect(AOE_PER_PYROTECHNICS_SMOKE);
                 ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAoE, lLoc, fDur);
         }        
-        SPSetSchool();
+        PRCSetSchool();
 }

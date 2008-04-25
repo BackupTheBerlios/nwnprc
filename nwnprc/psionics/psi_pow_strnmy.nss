@@ -31,7 +31,7 @@
              enhancement bonus you can add to your Strength increases by 2.
 */
 
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "psi_inc_onhit"
 #include "psi_inc_psifunc"
 #include "psi_spellhook"

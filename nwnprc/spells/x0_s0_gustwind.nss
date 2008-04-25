@@ -19,7 +19,7 @@
 //:://////////////////////////////////////////////
 
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "X0_I0_SPELLS"
 #include "x2_inc_spellhook"
@@ -101,7 +101,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                     }
                 }
                 int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
-                if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLvl) 
+                if(!PRCDoResistSpell(OBJECT_SELF, oTarget,nCasterLvl) 
                     && !/*Fort Save*/ PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (nDC)))
                 {
 

@@ -34,13 +34,13 @@ Created:   6/13/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
     if (!X2PreSpellCastCode()) return;
     
-    SPSetSchool(SPELL_SCHOOL_CONJURATION);
+    PRCSetSchool(SPELL_SCHOOL_CONJURATION);
     
     object oPC = OBJECT_SELF;
     int nCasterLvl = PRCGetCasterLevel(oPC);
@@ -66,5 +66,5 @@ void main()
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAOE, oPC, fDuration, TRUE, SPELL_BLINDING_GLORY, nCasterLvl);
     
     SPGoodShift(oPC);
-    SPSetSchool();
+    PRCSetSchool();
 }

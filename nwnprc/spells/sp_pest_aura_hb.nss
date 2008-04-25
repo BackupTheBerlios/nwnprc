@@ -19,14 +19,14 @@
 //:: Created On: December 26, 2004
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 
 void main()
 {
 	//SpawnScriptDebugger();
 	
-SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
 
 	object oCarrier, oCaster;
 	int nDC, nCasterLvl, nPenetr;
@@ -117,7 +117,7 @@ SPSetSchool(SPELL_SCHOOL_NECROMANCY);
 			if(MyPRCGetRacialType(oTarget) != RACIAL_TYPE_CONSTRUCT && MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)
 			{
 				//Make SR Check
-				if (!MyPRCResistSpell(oCaster, oTarget, nPenetr))
+				if (!PRCDoResistSpell(oCaster, oTarget, nPenetr))
 				{
 					if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_DISEASE))
 					{
@@ -142,5 +142,5 @@ SPSetSchool(SPELL_SCHOOL_NECROMANCY);
 	}// end while - cycle through all creatures in this AoE
 
 // Clean up the spell local
-SPSetSchool();
+PRCSetSchool();
 }

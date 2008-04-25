@@ -23,7 +23,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 {
     int nSpellID = PRCGetSpellId();
     int bMA = (nSpellID == SPELL_MAGE_ARMOR);
-    SPRaiseSpellCastAt(oTarget, FALSE);
+    PRCSignalSpellEvent(oTarget, FALSE);
     int nBonus;
     if(bMA)
         nBonus = 4;
@@ -31,7 +31,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
         nBonus = 3 + nCasterLevel / 2;
     if(nBonus > 8) nBonus = 8;
     effect eAC = EffectLinkEffects(EffectACIncrease(nBonus, AC_ARMOUR_ENCHANTMENT_BONUS), EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
-    float fDuration = SPGetMetaMagicDuration((bMA) ? HoursToSeconds(nCasterLevel) : MinutesToSeconds(nCasterLevel));
+    float fDuration = PRCGetMetaMagicDuration((bMA) ? HoursToSeconds(nCasterLevel) : MinutesToSeconds(nCasterLevel));
     RemoveEffectsFromSpell(oTarget, nSpellID);
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAC, oTarget, fDuration,TRUE,-1,nCasterLevel);
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_AC_BONUS), oTarget);
@@ -43,7 +43,7 @@ void main()
 {
     object oCaster = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oCaster);
-    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    PRCSetSchool(GetSpellSchool(PRCGetSpellId()));
     if (!X2PreSpellCastCode()) return;
     object oTarget = PRCGetSpellTargetObject();
     int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
@@ -64,5 +64,5 @@ void main()
                 DecrementSpellCharges(oCaster);
         }
     }
-    SPSetSchool();
+    PRCSetSchool();
 }

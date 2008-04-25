@@ -15,7 +15,7 @@
 //:: Last Updated By: Andrew Nobbs, 02/06/2003
 
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_inc_sp_tch"
 
 #include "NW_I0_SPELLS"
@@ -73,7 +73,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         int iAttackRoll = PRCDoRangedTouchAttack(oTarget);;
         if(iAttackRoll > 0)
         {
-             if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
+             if (!PRCDoResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
              {
                  //Roll damage for each target
                  nDamage = d4(nCasterLvl);

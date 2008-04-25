@@ -39,13 +39,13 @@ Material Component: A pinch of dried, powdered peas
 //////////////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_CONJURATION);
+	PRCSetSchool(SPELL_SCHOOL_CONJURATION);
 	
 	object oPC     = OBJECT_SELF;
 	location lTarget = PRCGetSpellTargetLocation();
@@ -62,7 +62,7 @@ void main()
 	// Duration Effects
 	ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAOE, lTarget,fDur);
 	
-	SPSetSchool();
+	PRCSetSchool();
 }
 
 		        

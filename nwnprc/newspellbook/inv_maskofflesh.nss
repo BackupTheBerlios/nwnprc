@@ -15,7 +15,7 @@
 //:://////////////////////////////////////////////
 
 #include "prc_inc_shifting"
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "inv_inc_invfunc"
 #include "inv_invokehook"
 
@@ -38,7 +38,7 @@ void main()
     if(nSpellID == INVOKE_MASK_OF_FLESH_HOSTILE)
     {
         
-	    SPRaiseSpellCastAt(oTarget, TRUE, INVOKE_MASK_OF_FLESH_HOSTILE, oPC);
+	    PRCSignalSpellEvent(oTarget, TRUE, INVOKE_MASK_OF_FLESH_HOSTILE, oPC);
 	    
         //save
 		if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, GetInvocationSaveDC(oTarget, oPC), SAVING_THROW_TYPE_SPELL))

@@ -13,7 +13,7 @@
 //:://////////////////////////////////////////////
 //:: VFX Pass By: Preston W, On: June 22, 2001
 
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "x2_inc_spellhook"
 #include "spinc_remeffct"
 

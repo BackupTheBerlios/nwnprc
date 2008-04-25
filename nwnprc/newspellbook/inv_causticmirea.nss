@@ -1,5 +1,5 @@
 
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "inv_inc_invfunc"
 #include "inv_invokehook"
 
@@ -20,7 +20,7 @@ void main()
             //Fire cast spell at event for the target
             SignalEvent(oTarget, EventSpellCastAt(GetAreaOfEffectCreator(), INVOKE_CAUSTIC_MIRE));
             //Spell resistance check
-            if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
+            if(!PRCDoResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
             {
                 //Slow down the creature within the mire
                 SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eSlow, oTarget);

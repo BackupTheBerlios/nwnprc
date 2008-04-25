@@ -22,14 +22,14 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 {
     if(GetAssociate(ASSOCIATE_TYPE_ANIMALCOMPANION) == oTarget)
     {
-        SPRaiseSpellCastAt(oTarget, FALSE);
+        PRCSignalSpellEvent(oTarget, FALSE);
         effect eff = EffectAttackIncrease(10);
         eff = EffectLinkEffects(eff,EffectDamageIncrease(DAMAGE_BONUS_10,DAMAGE_TYPE_SLASHING));
         eff = EffectLinkEffects(eff, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
         eff = EffectLinkEffects(eff, EffectHaste());
 
-        int HP = SPGetMetaMagicDamage(-1, nCasterLevel, 8);
-        float fDuration = SPGetMetaMagicDuration(TurnsToSeconds(nCasterLevel));
+        int HP = PRCGetMetaMagicDamage(-1, nCasterLevel, 8);
+        float fDuration = PRCGetMetaMagicDuration(TurnsToSeconds(nCasterLevel));
         RemoveEffectsFromSpell(oTarget, PRCGetSpellId());
         // Apply effects and VFX to target
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectTemporaryHitpoints(HP), oTarget, fDuration,TRUE,-1,nCasterLevel);
@@ -44,7 +44,7 @@ void main()
 {
     object oCaster = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oCaster);
-    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    PRCSetSchool(GetSpellSchool(PRCGetSpellId()));
     if (!X2PreSpellCastCode()) return;
     object oTarget = PRCGetSpellTargetObject();
     int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
@@ -65,5 +65,5 @@ void main()
                 DecrementSpellCharges(oCaster);
         }
     }
-    SPSetSchool();
+    PRCSetSchool();
 }

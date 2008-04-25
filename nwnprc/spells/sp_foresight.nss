@@ -28,13 +28,13 @@ Arcane Material Component: A hummingbird’s feather.
 **/
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
     if(!X2PreSpellCastCode()) return;
     
-    SPSetSchool(SPELL_SCHOOL_DIVINATION);
+    PRCSetSchool(SPELL_SCHOOL_DIVINATION);
     
     object oPC = OBJECT_SELF;
     int nCasterLvl = PRCGetCasterLevel(oPC);
@@ -54,7 +54,7 @@ void main()
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, fDur);
     IPSafeAddItemProperty(oArmor, iDodge, fDur);
     
-    SPSetSchool();
+    PRCSetSchool();
 }
     
     

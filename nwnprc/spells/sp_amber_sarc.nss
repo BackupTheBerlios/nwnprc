@@ -47,13 +47,14 @@ void SarcMonitor(object oTarget, object oPC, int nNormHP);
 void RemoveSarc(object oTarget, object oPC);
 void MakeImmune(object oTarget, float fDur);
 
-#include "spinc_common"
+#include "prc_inc_spells"
+#include "x2_inc_spellhook"
 
 void main()
 {
         if(!X2PreSpellCastCode()) return;
         
-        SPSetSchool(SPELL_SCHOOL_EVOCATION);
+        PRCSetSchool(SPELL_SCHOOL_EVOCATION);
                         
         object oPC = OBJECT_SELF;
         object oTarget = GetSpellTargetObject();
@@ -66,7 +67,7 @@ void main()
                 fDur += fDur;
         }
                 
-        SPRaiseSpellCastAt(oTarget,TRUE, SPELL_AMBER_SARCOPHAGUS, oPC);
+        PRCSignalSpellEvent(oTarget,TRUE, SPELL_AMBER_SARCOPHAGUS, oPC);
         
         //Make touch attack
         int nTouch = PRCDoRangedTouchAttack(oTarget);
@@ -75,7 +76,7 @@ void main()
         {
                 //Sphere projectile VFX         
                 
-                if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+                if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
                 {
                         //Get starting HP
                         int nNormHP = GetCurrentHitPoints(oTarget);
@@ -92,7 +93,7 @@ void main()
                         SarcMonitor(oPC, oTarget, nNormHP);
                 }
         }
-        SPSetSchool();
+        PRCSetSchool();
 }
 
 void SarcMonitor(object oPC, object oTarget, int nNormHP)

@@ -26,13 +26,13 @@ Created:   7/6/07
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_CONJURATION);
+	PRCSetSchool(SPELL_SCHOOL_CONJURATION);
 	
 	object oPC = OBJECT_SELF;
 	object oTarget = PRCGetSpellTargetObject();
@@ -46,7 +46,7 @@ void main()
 	
 	if(nMetaMagic == METAMAGIC_EMPOWER) nDam += (nDam/2);
 	
-	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_ORB_OF_FORCE);
+	PRCSignalSpellEvent(oTarget, TRUE, SPELL_ORB_OF_FORCE);
 	
 	if(nTouch)
 	{

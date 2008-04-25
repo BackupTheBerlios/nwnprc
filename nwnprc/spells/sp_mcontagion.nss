@@ -12,12 +12,12 @@
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 
 void main()
 {
-SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
 
 // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
 if (!X2PreSpellCastCode()) return;
@@ -71,9 +71,9 @@ if (!X2PreSpellCastCode()) return;
         
         if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
         {
-            SPRaiseSpellCastAt(oTarget);
+            PRCSignalSpellEvent(oTarget);
 
-            if (!MyPRCResistSpell(OBJECT_SELF, oTarget, nPenetr))
+            if (!PRCDoResistSpell(OBJECT_SELF, oTarget, nPenetr))
             {
                 // Make the real first save against the spell's DC
                 if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
@@ -89,5 +89,5 @@ if (!X2PreSpellCastCode()) return;
         oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
     }
 
-SPSetSchool();
+PRCSetSchool();
 }

@@ -26,7 +26,7 @@ Created:   5/10/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
@@ -38,7 +38,7 @@ void main()
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	int nType = MyPRCGetRacialType(oTarget);
-	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+	int nDC = PRCGetSaveDC(oTarget, oPC);
 	float fDur = (6.0f * (nCasterLvl/2));
 	
 	if (nMetaMagic == METAMAGIC_EXTEND)
@@ -48,14 +48,14 @@ void main()
 			
 	//Spellhook
 	if(!X2PreSpellCastCode()) return;
-	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+	PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
 	
 	while(GetIsObjectValid(oTarget))
 	{
 		//Check for "discernable anatomy"
 		if(nType != RACIAL_TYPE_OOZE)
 		{
-			if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+			if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 			{			
 				if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
 				{
@@ -68,5 +68,5 @@ void main()
 	}
 	
 	SPEvilShift(oPC);
-	SPSetSchool();
+	PRCSetSchool();
 }

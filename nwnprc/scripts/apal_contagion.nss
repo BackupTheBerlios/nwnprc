@@ -16,7 +16,7 @@
 
 //:: modified by mr_bumpkin Dec 4, 2003
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "x2_inc_spellhook"
 
 void main()
@@ -80,7 +80,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_CONTAGION));
         effect eDisease = EffectDisease(nDisease);
         //Make SR check
-        if (!MyPRCResistSpell(OBJECT_SELF, oTarget, CasterLvl + SPGetPenetr()))
+        if (!PRCDoResistSpell(OBJECT_SELF, oTarget, CasterLvl + SPGetPenetr()))
         {
             // Make the real first save against the spell's DC
             if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL))

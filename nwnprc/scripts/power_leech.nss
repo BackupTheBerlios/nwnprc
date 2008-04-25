@@ -14,7 +14,7 @@
 //:://////////////////////////////////////////////
 
 #include "inc_dynconv"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 //////////////////////////////////////////////////
 /* Constant defintions                          */

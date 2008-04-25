@@ -29,13 +29,13 @@ Created:   5/21/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_misc_const"
 
 void main()
 {
 	
-	SPSetSchool(SPELL_SCHOOL_CONJURATION);
+	PRCSetSchool(SPELL_SCHOOL_CONJURATION);
 	
 	if (!X2PreSpellCastCode()) return;
 		
@@ -60,5 +60,5 @@ void main()
 		
 	SPEvilShift(oPC);
 	
-	SPSetSchool();
+	PRCSetSchool();
 }

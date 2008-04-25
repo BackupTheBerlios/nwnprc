@@ -13,7 +13,7 @@
 //:://////////////////////////////////////////////
 
 #include "psi_inc_psifunc"
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "psi_inc_enrgypow"
 #include "prc_inc_breath"
 

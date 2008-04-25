@@ -43,13 +43,13 @@ Created:   6/21/06
 
 void EmberLoop(int nCounter, int nCasterLvl, int nMetaMagic, object oPC, location lLoc);
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+	PRCSetSchool(SPELL_SCHOOL_EVOCATION);
 	
 	object oPC = OBJECT_SELF;
 	location lLoc = GetSpellTargetLocation();
@@ -73,7 +73,7 @@ void main()
 	//Sanctified spells get mandatory 10 pt good adjustment, regardless of switch
 	AdjustAlignment(oPC, ALIGNMENT_GOOD, 10);
 	
-	SPSetSchool();
+	PRCSetSchool();
 	SPGoodShift(oPC);
 }
 	
@@ -88,9 +88,9 @@ void EmberLoop(int nCounter, int nCasterLvl, int nMetaMagic, object oPC, locatio
 		if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL)
 		{
 			//Spell Resist
-			if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
+			if(!PRCDoResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
 			{
-				int nDC = SPGetSpellSaveDC(oTarget, oPC);
+				int nDC = PRCGetSaveDC(oTarget, oPC);
 				//Save
 				
 				nDam = d6(10);

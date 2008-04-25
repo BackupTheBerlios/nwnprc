@@ -1,4 +1,4 @@
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "spinc_bolt"
 #include "spinc_serpsigh"
 

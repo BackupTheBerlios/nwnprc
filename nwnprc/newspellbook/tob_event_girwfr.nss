@@ -4,7 +4,7 @@
 // Tenjac 10/17/07
 //////////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {

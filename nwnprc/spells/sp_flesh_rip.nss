@@ -27,11 +27,11 @@ Created:
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
-        SPSetSchool(SPELL_SCHOOL_EVOCATION);
+        PRCSetSchool(SPELL_SCHOOL_EVOCATION);
         
         //Spellhook
         if (!X2PreSpellCastCode()) return;
@@ -44,7 +44,7 @@ void main()
         int nType2 = MyPRCGetRacialType(oTarget);
         int nDice = min(10, nCasterLvl);
         
-        SPRaiseSpellCastAt(oTarget,TRUE, SPELL_FLESH_RIPPER, oPC);
+        PRCSignalSpellEvent(oTarget,TRUE, SPELL_FLESH_RIPPER, oPC);
         
         //Caster must be undead.  If not, hit 'em with alignment change anyway.
         //Try reading the description of the spell moron. =P
@@ -55,7 +55,7 @@ void main()
                 if(nType2 != RACIAL_TYPE_UNDEAD && nType2 != RACIAL_TYPE_CONSTRUCT)
                 {
                         //Check spell resistance
-                        if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+                        if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
                         {
                                 int nDam = d8(nDice);
                                 
@@ -98,7 +98,7 @@ void main()
                 }
         }
         SPEvilShift(oPC);        
-        SPSetSchool();
+        PRCSetSchool();
 }
                                 
                         

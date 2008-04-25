@@ -1,11 +1,11 @@
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
     // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
     if (!X2PreSpellCastCode()) return;
 
-    SPSetSchool(SPELL_SCHOOL_EVOCATION);
+    PRCSetSchool(SPELL_SCHOOL_EVOCATION);
 
     // Apply a burst visual effect at the target location.    
     location lTarget = GetSpellTargetLocation();
@@ -25,7 +25,7 @@ void main()
     {
         if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
         {
-            SPRaiseSpellCastAt(oTarget);
+            PRCSignalSpellEvent(oTarget);
 
             // Apply impact vfx.            
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, 
@@ -35,14 +35,14 @@ void main()
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDazzle, oTarget, RoundsToSeconds(1),TRUE,-1,nCasterLvl);
             
             // Let the creature make a will save, if it fails it's blinded.
-            if (!SPResistSpell(OBJECT_SELF, oTarget) &&
+            if (!PRCDoResistSpell(OBJECT_SELF, oTarget) &&
                 !PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget,OBJECT_SELF)))
             {
                 // Determine the spell's duration, the duration can be empower,
                 // maximized, or extended (since it's variable, empower/maximize
                 // apply.
-                int nRounds = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 2, 8);
-                float fDuration = SPGetMetaMagicDuration(RoundsToSeconds(nRounds));
+                int nRounds = PRCGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 2, 8);
+                float fDuration = PRCGetMetaMagicDuration(RoundsToSeconds(nRounds));
 
                 SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBlindness, oTarget, fDuration,TRUE,-1,nCasterLvl);
             }
@@ -51,5 +51,5 @@ void main()
         oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lTarget);
     }
 
-    SPSetSchool();
+    PRCSetSchool();
 }

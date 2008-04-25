@@ -16,7 +16,7 @@
 //:://////////////////////////////////////////////
 
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_alterations"
 #include "x2_inc_spellhook"
 
@@ -84,7 +84,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
     float fDelay = GetDistanceBetween(oTarget, OBJECT_SELF)/13;
 
-    if(!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl))
+    if(!PRCDoResistSpell(OBJECT_SELF, oTarget,CasterLvl))
     {
         //----------------------------------------------------------------------
         // Engulf the target in flame

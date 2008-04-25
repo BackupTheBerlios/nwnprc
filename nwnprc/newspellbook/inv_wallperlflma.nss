@@ -13,7 +13,7 @@
 //:://////////////////////////////////////////////
 
 //:: modified by mr_bumpkin  Dec 4, 2003
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "X0_I0_SPELLS"
 #include "inv_inc_invfunc"
 
@@ -39,7 +39,7 @@ void main()
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, INVOKE_WALL_OF_PERILOUS_FLAME));
         //Make SR check, and appropriate saving throw(s).
-        if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
+        if(!PRCDoResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
         {
             //Roll damage.
             nDamage = d6(2 + nCasterLvl);

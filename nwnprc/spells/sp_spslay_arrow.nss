@@ -27,7 +27,7 @@ Created:
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_craft_inc"
 
 int GetHighestSpellLevel(object oTarget);
@@ -36,7 +36,7 @@ void main()
 {
        if(!X2PreSpellCastCode()) return;
        
-       SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+       PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
        
        object oPC = OBJECT_SELF;
        object oTarget = PRCGetSpellTargetObject();
@@ -53,7 +53,7 @@ void main()
           nType != BASE_ITEM_LIGHTCROSSBOW &&
           nType != BASE_ITEM_HEAVYCROSSBOW)
        {
-               SPSetSchool();
+               PRCSetSchool();
                return;
        }
        
@@ -72,7 +72,7 @@ void main()
        
        if((!(GetMaterialString(StringToInt(sMaterial)) == sMaterial && sMaterial != "000") && !GetIsMagicItem(oAmmo)))
        {
-               SPSetSchool();
+               PRCSetSchool();
                return;
        }
        
@@ -82,7 +82,7 @@ void main()
        //if hit
        if(GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
        {
-               if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+               if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
                {    
                        int nHighest = GetHighestSpellLevel(oTarget);
                        nDam = d4(nHighest);
@@ -90,7 +90,7 @@ void main()
                }
        }
        
-       SPSetSchool();
+       PRCSetSchool();
 }
 
 int GetHighestSpellLevel(object oTarget)

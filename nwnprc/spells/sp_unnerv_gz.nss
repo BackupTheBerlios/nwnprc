@@ -24,28 +24,28 @@ Created:   5/12/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	object oPC = OBJECT_SELF;
 	object oTarget = GetSpellTargetObject();
 	int nCasterLvl = PRCGetCasterLevel(oPC);
-	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+	int nDC = PRCGetSaveDC(oTarget, oPC);
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	float fDur = RoundsToSeconds(nCasterLvl);
 	
 	//spellhook
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_ILLUSION);
+	PRCSetSchool(SPELL_SCHOOL_ILLUSION);
 	
 	if(nMetaMagic == METAMAGIC_EXTEND)
 	{
 		fDur += fDur;
 	}
 	
-	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 	{
 		//Will save
 		if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
@@ -54,6 +54,6 @@ void main()
 		}
 	}
 	
-	SPSetSchool();
+	PRCSetSchool();
 }
 	

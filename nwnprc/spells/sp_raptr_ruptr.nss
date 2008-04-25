@@ -43,7 +43,7 @@ touched.
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_sp_func"
 
 
@@ -62,7 +62,7 @@ void main()
         return;
     }*/
 
-    SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+    PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
 
     /*
       Spellcast Hook Code
@@ -113,7 +113,7 @@ void main()
    //Corrupt spells get mandatory 10 pt evil adjustment, regardless of switch
    AdjustAlignment(oCaster, ALIGNMENT_EVIL, 10);
 
-   SPSetSchool();
+   PRCSetSchool();
 }
 
 //Implements the spell impact, put code here
@@ -145,7 +145,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent, string
            nRace != RACIAL_TYPE_UNDEAD
            )
         {
-            if(!MyPRCResistSpell(oCaster, oTarget, nPenetr))
+            if(!PRCDoResistSpell(oCaster, oTarget, nPenetr))
             {
                 // Roll damage and apply metamagic
                 int nDam = d6(6);

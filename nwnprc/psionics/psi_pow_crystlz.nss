@@ -33,7 +33,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
@@ -67,7 +67,7 @@ void main()
         int nPen     = GetPsiPenetration(oManifester);
 
         // Let the AI know
-        SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+        PRCSignalSpellEvent(oTarget, TRUE, manif.nSpellID, oManifester);
 
         // Handle Twin Power
         int nRepeats = manif.bTwin ? 2 : 1;

@@ -1,5 +1,5 @@
 
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_alterations"
 #include "inc_grapple"
 #include "inv_inc_invfunc"

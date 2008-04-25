@@ -26,11 +26,11 @@ Created:   5/14/06
 //:://////////////////////////////////////////////
 
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
-	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+	PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
 	
 	// Run the spellhook. 
 	if (!X2PreSpellCastCode()) return;
@@ -58,12 +58,12 @@ void main()
 		nDam += (nDam/2);
 	}
 	
-	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_LESSER_SHIVERING_TOUCH, oPC);
+	PRCSignalSpellEvent(oTarget, TRUE, SPELL_LESSER_SHIVERING_TOUCH, oPC);
 	
 	if(nTouch > 0)
 	{
 		//Check Spell Resistance
-		if (!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+		if (!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 		{
 			effect eDrain = EffectAbilityDecrease(ABILITY_DEXTERITY, nDam);
 			effect eVis = EffectVisualEffect(VFX_IMP_FROST_S);
@@ -74,5 +74,5 @@ void main()
 		
 		
 	}
-	SPSetSchool();
+	PRCSetSchool();
 }

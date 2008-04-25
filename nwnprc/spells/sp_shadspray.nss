@@ -1,4 +1,4 @@
-#include "spinc_common"
+#include "prc_inc_spells"
 
 //School: Illusion
 //Area of Effect / Target: Small
@@ -13,7 +13,7 @@ void main()
     // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
     if (!X2PreSpellCastCode()) return;
 
-    SPSetSchool(SPELL_SCHOOL_ILLUSION);
+    PRCSetSchool(SPELL_SCHOOL_ILLUSION);
 
     // Apply a burst visual effect at the target location.
     location lTarget = GetSpellTargetLocation();
@@ -23,7 +23,7 @@ void main()
 
     // Determine the spell's duration.
     int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-    float fDuration = SPGetMetaMagicDuration(RoundsToSeconds(nCasterLvl));
+    float fDuration = PRCGetMetaMagicDuration(RoundsToSeconds(nCasterLvl));
 
     // Build all of the detrimental effectsd, any target that fails its save takes
     // 2 points of strength damage, is dazed for 1 round, and has it's save against
@@ -37,7 +37,7 @@ void main()
     {
         if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
         {
-            SPRaiseSpellCastAt(oTarget);
+            PRCSignalSpellEvent(oTarget);
 
             // Let the creature make a fort save, if it fails it's apply the
             // detrimental effects.
@@ -54,5 +54,5 @@ void main()
         oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lTarget);
     }
 
-    SPSetSchool();
+    PRCSetSchool();
 }

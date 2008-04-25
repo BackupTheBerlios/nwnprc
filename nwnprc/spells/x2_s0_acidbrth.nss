@@ -15,7 +15,7 @@
 
 //float SpellDelay (object oTarget, int nShape);
 //:: modified by mr_bumpkin Dec 4, 2003 for prc stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "NW_I0_SPELLS"
 #include "x0_i0_spells"
@@ -74,7 +74,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             //Get the distance between the target and caster to delay the application of effects
             fDelay = GetDistanceBetween(OBJECT_SELF, oTarget)/20.0;
             //Make SR check, and appropriate saving throw(s).
-            if(!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay) && (oTarget != OBJECT_SELF))
+            if(!PRCDoResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay) && (oTarget != OBJECT_SELF))
             {
                 int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                 //Detemine damage

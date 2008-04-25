@@ -12,6 +12,7 @@
 */
 
 #include "prc_sp_func"
+#include "x2_inc_spellhook"
 
 //Implements the spell impact, put code here
 //  if called in many places, return TRUE if
@@ -36,7 +37,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
         //Signal spell cast at event
         SignalEvent(oTarget, EventSpellCastAt(oTarget, SPELL_BESTOW_CURSE));
          //Make SR Check
-         if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
+         if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nPenetr))
          {
             //Make Will Save
             if (!/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF)))
@@ -55,7 +56,7 @@ void main()
 {
     object oCaster = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oCaster);
-    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    PRCSetSchool(GetSpellSchool(PRCGetSpellId()));
     if (!X2PreSpellCastCode()) return;
     object oTarget = PRCGetSpellTargetObject();
     int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
@@ -76,5 +77,5 @@ void main()
                 DecrementSpellCharges(oCaster);
         }
     }
-    SPSetSchool();
+    PRCSetSchool();
 }

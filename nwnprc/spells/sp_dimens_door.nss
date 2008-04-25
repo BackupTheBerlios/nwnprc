@@ -44,7 +44,7 @@ const int SPELLID_TELEPORT_PARTY_DIRDIST     = 2897;
 
 void main()
 {
-    SPSetSchool(SPELL_SCHOOL_CONJURATION);
+    PRCSetSchool(SPELL_SCHOOL_CONJURATION);
     // Spellhook
     if(!X2PreSpellCastCode()) return;
 
@@ -62,7 +62,7 @@ void main()
 
 
     // Cleanup
-    SPSetSchool();
+    PRCSetSchool();
 }
 
 

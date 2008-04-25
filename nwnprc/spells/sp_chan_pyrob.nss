@@ -43,28 +43,28 @@ the appropriate time has passed.
 **/
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+	PRCSetSchool(SPELL_SCHOOL_EVOCATION);
 	
 	object oPC = OBJECT_SELF;
 	int nSpell = PRCGetSpellId();
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	object oTarget = GetSpellTargetObject();
 	location lLoc = GetSpellTargetLocation();
-	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+	int nDC = PRCGetSaveDC(oTarget, oPC);
 	int nDam;
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	float fRadius = 0.0f;
 	
-	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_CHANNELED_PYROBURST, oPC);
+	PRCSignalSpellEvent(oTarget, TRUE, SPELL_CHANNELED_PYROBURST, oPC);
 	
 	//Check Spell Resistance
-	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 	{
 		//swift
 		if(nSpell == SPELL_CHANNELED_PYROBURST_1)
@@ -120,7 +120,7 @@ void main()
 		
 		else
 		{
-			SPSetSchool();
+			PRCSetSchool();
 			return;
 		}
 		
@@ -154,7 +154,7 @@ void main()
 			}
 		}
 	}
-	SPSetSchool();
+	PRCSetSchool();
 }
 			
 			

@@ -15,7 +15,7 @@
 //:: Created On: Aug 28, 2003, GZ: Fixed stacking issue
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 //:: left the immunities as 50% cold and fire,  not variable.
 
 #include "x2_inc_spellhook"

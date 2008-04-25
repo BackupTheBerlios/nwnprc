@@ -5,7 +5,7 @@
 //
 /////////////////////////////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_inc_sp_tch"
 
 void main()
@@ -13,7 +13,7 @@ void main()
      // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
      if (!X2PreSpellCastCode()) return;
 
-     SPSetSchool(SPELL_SCHOOL_EVOCATION);
+     PRCSetSchool(SPELL_SCHOOL_EVOCATION);
      
      object oTarget = PRCGetSpellTargetObject();
      if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
@@ -30,13 +30,13 @@ void main()
           int nPenetr= nCasterLvl + SPGetPenetr();
           
           //Fire cast spell at event for the specified target
-          SPRaiseSpellCastAt(oTarget);
+          PRCSignalSpellEvent(oTarget);
 
           // Get the proper damage type adjusted for classes/feats.
-          int nDamageType = SPGetElementalDamageType(DAMAGE_TYPE_FIRE);
+          int nDamageType = PRCGetElementalDamageType(DAMAGE_TYPE_FIRE);
           
           //Make SR Check
-          if (!SPResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay))
+          if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay))
           {
                //Apply a single damage hit for each missile instead of as a single mass
                for (nCnt = 1; nCnt <= nMissiles; nCnt++)
@@ -44,7 +44,7 @@ void main()
                     int nDamage = 0;
                     int nTouchAttack = PRCDoRangedTouchAttack(oTarget);;
                     if (nTouchAttack > 0)
-                         nDamage = SPGetMetaMagicDamage(nDamageType, 1 == nTouchAttack ? 1 : 2, 4, 1);
+                         nDamage = PRCGetMetaMagicDamage(nDamageType, 1 == nTouchAttack ? 1 : 2, 4, 1);
                          
                     // if this is the first target / first attack do sneak damage
                     if(nCnt == 1)
@@ -61,7 +61,7 @@ void main()
                     // If the touch attack hit apply the damage and the damage visual effect.
                     if (nDamage > 0)
                     {
-                         effect eDamage = SPEffectDamage(nDamage, SPGetElementalDamageType(nDamageType, OBJECT_SELF));
+                         effect eDamage = PRCEffectDamage(nDamage, PRCGetElementalDamageType(nDamageType, OBJECT_SELF));
                          DelayCommand(fTime, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
                          DelayCommand(fTime, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
                     }
@@ -81,5 +81,5 @@ void main()
           }
      }
      
-     SPSetSchool();
+     PRCSetSchool();
 }

@@ -5,23 +5,23 @@
 //
 /////////////////////////////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	// If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
 	if (!X2PreSpellCastCode()) return;
 
-	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+	PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
 
 	object oTarget = GetSpellTargetObject();
 	if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
 	{
 		// Get the target and raise the spell cast event.
-		SPRaiseSpellCastAt(oTarget);
+		PRCSignalSpellEvent(oTarget);
 
 		// Determine the spell's duration, taking metamagic feats into account.
-		float fDuration = SPGetMetaMagicDuration(MinutesToSeconds(PRCGetCasterLevel()));
+		float fDuration = PRCGetMetaMagicDuration(MinutesToSeconds(PRCGetCasterLevel()));
 
 		// Determine the save bonus.
 		int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
@@ -37,5 +37,5 @@ void main()
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE), oTarget);
 	}
 
-	SPSetSchool();
+	PRCSetSchool();
 }

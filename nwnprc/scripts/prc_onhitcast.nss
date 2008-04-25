@@ -566,7 +566,7 @@ DoDebug("prc_onhitcast: Now executing Impact spell script "+sScript);
             {
                 if(spellsIsTarget(oFlareTarget, SPELL_TARGET_STANDARDHOSTILE, oSpellOrigin))
                 {
-                    if(!MyPRCResistSpell(oSpellOrigin, oFlareTarget, nSpellfire))
+                    if(!PRCDoResistSpell(oSpellOrigin, oFlareTarget, nSpellfire))
                     {
                         if (PRCMySavingThrow(SAVING_THROW_FORT, oFlareTarget, nDC))
                         {

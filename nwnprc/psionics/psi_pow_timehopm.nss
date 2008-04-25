@@ -29,7 +29,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
@@ -90,7 +90,7 @@ void main()
                )
             {
                 // Let the AI know
-                SPRaiseSpellCastAt(oTarget, FALSE, manif.nSpellID, oManifester);
+                PRCSignalSpellEvent(oTarget, FALSE, manif.nSpellID, oManifester);
 
                 // Apply effect. Not dispellable
                 SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, FALSE);

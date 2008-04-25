@@ -28,25 +28,25 @@ Created:   5/19/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	//spellhook
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+	PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
 	
 	object oPC = OBJECT_SELF;
 	object oTarget = GetSpellTargetObject();
-	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+	int nDC = PRCGetSaveDC(oTarget, oPC);
 	effect eVis = EffectVisualEffect(VFX_COM_BLOOD_CRT_RED);
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	
-	SPRaiseSpellCastAt(oTarget,TRUE, SPELL_LIQUID_PAIN, oPC);
+	PRCSignalSpellEvent(oTarget,TRUE, SPELL_LIQUID_PAIN, oPC);
 	
 	//SR
-	if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
+	if(!PRCDoResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
         {
 		//Save
 		if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
@@ -72,7 +72,7 @@ void main()
 	        }
 	   
 	 }
-	 SPSetSchool();	 
+	 PRCSetSchool();	 
  }
 			   
 			

@@ -60,7 +60,7 @@
 //  Variables passed may be changed if necessary
 int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 {
-    SPRaiseSpellCastAt(oTarget, TRUE, SPELL_NECROTIC_CYST, oCaster);
+    PRCSignalSpellEvent(oTarget, TRUE, SPELL_NECROTIC_CYST, oCaster);
 
     int iAttackRoll = PRCDoMeleeTouchAttack(oTarget);
     if (iAttackRoll > 0)
@@ -69,9 +69,9 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
         {
             if(!(GetHasSpellEffect(SPELL_PROTECTION_FROM_EVIL, oTarget) || GetHasSpellEffect(SPELL_MAGIC_CIRCLE_AGAINST_EVIL)))
             {
-                if(!MyPRCResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr()))
+                if(!PRCDoResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr()))
                 {
-                    if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, SPGetSpellSaveDC(oTarget, oCaster), SAVING_THROW_TYPE_EVIL))
+                    if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, PRCGetSaveDC(oTarget, oCaster), SAVING_THROW_TYPE_EVIL))
                     {
                         ApplyTouchAttackDamage(oCaster, oTarget, iAttackRoll, 0, DAMAGE_TYPE_POSITIVE, DAMAGE_TYPE_MAGICAL);
                         GiveNecroticCyst(oTarget);
@@ -88,7 +88,7 @@ void main()
 {
     object oCaster = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oCaster);
-    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    PRCSetSchool(GetSpellSchool(PRCGetSpellId()));
     if (!X2PreSpellCastCode()) return;
     object oTarget = PRCGetSpellTargetObject();
     int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
@@ -110,5 +110,5 @@ void main()
                 DecrementSpellCharges(oCaster);
         }
     }
-    SPSetSchool();
+    PRCSetSchool();
 }

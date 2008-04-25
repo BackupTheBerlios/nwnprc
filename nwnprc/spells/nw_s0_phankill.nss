@@ -14,7 +14,7 @@
 //:: Update Pass By: Preston W, On: Aug 3, 2001
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "prc_alterations"
 #include "x2_inc_spellhook"
@@ -54,7 +54,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_PHANTASMAL_KILLER));
         //Make an SR check
-        if(!MyPRCResistSpell(OBJECT_SELF, oTarget) && !GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS))
+        if(!PRCDoResistSpell(OBJECT_SELF, oTarget) && !GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS))
         {
             //Make a Will save
             // Feb 17, 2004

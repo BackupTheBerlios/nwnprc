@@ -1,4 +1,4 @@
-#include "spinc_common"
+#include "prc_inc_spells"
 
 
 int BiowareHoldPerson (int nPenetr, int nCasterLvl, int nMeta, object oTarget, float fDelay);
@@ -8,7 +8,7 @@ void main()
     // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
     if (!X2PreSpellCastCode()) return;
     
-    SPSetSchool(SPELL_SCHOOL_ENCHANTMENT);
+    PRCSetSchool(SPELL_SCHOOL_ENCHANTMENT);
     
     // Get the spell target location as opposed to the spell target.
     location lTarget = GetSpellTargetLocation();
@@ -39,7 +39,7 @@ void main()
         oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_GARGANTUAN, lTarget, TRUE, OBJECT_TYPE_CREATURE);
     }
     
-    SPSetSchool();
+    PRCSetSchool();
 }
 
 
@@ -57,7 +57,7 @@ int BiowareHoldPerson (int nPenetr, int nCasterLvl, int nMeta, object oTarget, f
     //Declare major variables
 //    int nDuration = nCasterLvl;
 //    nDuration = GetScaledDuration(nDuration, oTarget);
-    float fDuration = SPGetMetaMagicDuration(RoundsToSeconds(GetScaledDuration(nCasterLvl, oTarget)));
+    float fDuration = PRCGetMetaMagicDuration(RoundsToSeconds(GetScaledDuration(nCasterLvl, oTarget)));
     effect eParal = EffectParalyze();
     effect eVis = EffectVisualEffect(82);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
@@ -72,7 +72,7 @@ int BiowareHoldPerson (int nPenetr, int nCasterLvl, int nMeta, object oTarget, f
     if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
     {
         //Fire cast spell at event for the specified target
-        SPRaiseSpellCastAt(oTarget);
+        PRCSignalSpellEvent(oTarget);
         
         //Make sure the target is a humanoid
         if (GetIsPlayableRacialType(oTarget) ||
@@ -84,7 +84,7 @@ int BiowareHoldPerson (int nPenetr, int nCasterLvl, int nMeta, object oTarget, f
             nValidTarget = 1;
             
             //Make SR Check
-            if (!SPResistSpell(OBJECT_SELF, oTarget,nPenetr))
+            if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nPenetr))
             {
                 //Make Will save
                 if (!/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget,OBJECT_SELF)))

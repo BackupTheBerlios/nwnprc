@@ -20,7 +20,7 @@
 
 
 //:: modified by mr_bumpkin  Dec 4, 2003
-#include "spinc_common"
+#include "prc_inc_spells"
 
 
 #include "prc_alterations"
@@ -90,7 +90,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 //Fire cast spell at event for the specified target
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_WORD_OF_FAITH));
                 //Make SR check
-                if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay))
+                if(!PRCDoResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay))
                 {
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eSonic, oTarget);
 

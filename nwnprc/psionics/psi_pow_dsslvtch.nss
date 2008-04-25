@@ -43,14 +43,14 @@ int DoPower(object oManifester, object oTarget, struct manifestation manif)
         EvaluateChainPower(manif, oTarget, TRUE);
 
     // Let the AI know
-    SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+    PRCSignalSpellEvent(oTarget, TRUE, manif.nSpellID, oManifester);
     if(manif.bChain)
         for(i = 0; i < array_get_size(oManifester, PRC_CHAIN_POWER_ARRAY); i++)
-            SPRaiseSpellCastAt(array_get_object(oManifester, PRC_CHAIN_POWER_ARRAY, i), TRUE, manif.nSpellID, oManifester);
+            PRCSignalSpellEvent(array_get_object(oManifester, PRC_CHAIN_POWER_ARRAY, i), TRUE, manif.nSpellID, oManifester);
 
     int bHit = 0;
 
-    SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+    PRCSignalSpellEvent(oTarget, TRUE, manif.nSpellID, oManifester);
 
     int nRepeats = manif.bTwin ? 2 : 1;
     for(; nRepeats > 0; nRepeats--)

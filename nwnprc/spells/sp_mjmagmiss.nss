@@ -18,7 +18,7 @@
 //:: Last Updated By: Preston Watamaniuk, On: May 8, 2001
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "prc_alterations"
 #include "x2_inc_spellhook"
@@ -67,7 +67,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             nMissiles = 15;
         }
         //Make SR Check
-        if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLvl+SPGetPenetr(), fDelay))
+        if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nCasterLvl+SPGetPenetr(), fDelay))
         {
             //Apply a single damage hit for each missile instead of as a single mass
             for (nCnt = 1; nCnt <= nMissiles; nCnt++)

@@ -15,7 +15,7 @@
 //:://////////////////////////////////////////////
 
 //:: modified by mr_bumpkin  Dec 4, 2003
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "X0_I0_SPELLS"
 
@@ -46,7 +46,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
     //if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oCaster))
     //{
           int bHostile;
-          if(!MyPRCResistSpell(oCaster,oTarget,nPenetr))
+          if(!PRCDoResistSpell(oCaster,oTarget,nPenetr))
           {
                 bHostile = GetIsEnemy(oTarget);
                 //Fire cast spell at event for the specified target

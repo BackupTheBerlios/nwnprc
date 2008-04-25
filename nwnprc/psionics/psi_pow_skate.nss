@@ -43,7 +43,7 @@ int DoPower(object oManifester, object oTarget, struct manifestation manif)
        )
     {
         // Let the AI know
-        SPRaiseSpellCastAt(oTarget, FALSE, manif.nSpellID, oManifester);
+        PRCSignalSpellEvent(oTarget, FALSE, manif.nSpellID, oManifester);
 
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, manif.nSpellID,manif.nManifesterLevel);

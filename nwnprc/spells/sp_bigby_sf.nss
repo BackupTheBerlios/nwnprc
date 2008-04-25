@@ -37,13 +37,13 @@ void DoPush(object oTarget, object oCreator, int nReverse = FALSE);
 int EvalSizeBonus(object oSubject);
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+	PRCSetSchool(SPELL_SCHOOL_EVOCATION);
 	
 	object oPC = OBJECT_SELF;
 	object oTarget = GetSpellTargetObject();
@@ -73,7 +73,7 @@ void main()
 		}
 		
 		//save
-		if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, SPGetSpellSaveDC(oTarget, oPC), SAVING_THROW_TYPE_SPELL))
+		if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, PRCGetSaveDC(oTarget, oPC), SAVING_THROW_TYPE_SPELL))
 		{
 			//Bull Rush
 			if(DoBullRushAttack(oTarget, nAttackBonus, nCasterLevel))
@@ -89,7 +89,7 @@ void main()
 		
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_MAGICAL), oTarget);
 	}
-	SPSetSchool();	
+	PRCSetSchool();	
 }
 
 		

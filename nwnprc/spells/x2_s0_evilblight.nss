@@ -16,7 +16,7 @@
 //:: 2003-07-07: Stacking Spell Pass, Georg Zoeller
 
 //:: modified by mr_bumpkin Dec 4, 2003 for prc stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 
 
 #include "nw_i0_spells"
@@ -72,7 +72,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
             //Signal spell cast at event
             SignalEvent(oTarget, EventSpellCastAt(oTarget,  PRCGetSpellId()));
             //Make SR Check
-            if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl))
+            if (!PRCDoResistSpell(OBJECT_SELF, oTarget,CasterLvl))
             {
                int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                     //Make Will Save

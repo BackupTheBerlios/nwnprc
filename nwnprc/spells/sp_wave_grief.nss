@@ -26,7 +26,7 @@ Created:   5/9/2006
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
@@ -36,7 +36,7 @@ void main()
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	int nPenalty = 3;
-	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+	int nDC = PRCGetSaveDC(oTarget, oPC);
 	float fDur = RoundsToSeconds(nCasterLvl);
 	
 	if(nMetaMagic == METAMAGIC_EMPOWER)
@@ -58,7 +58,7 @@ void main()
 	       	
 	while(GetIsObjectValid(oTarget))
 	{		
-		if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+		if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 		{
 			//Save
 			if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
@@ -70,7 +70,7 @@ void main()
 	}
 	
 	SPEvilShift(oPC);
-	SPSetSchool();
+	PRCSetSchool();
 }
 	
 	

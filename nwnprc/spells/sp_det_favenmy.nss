@@ -20,13 +20,13 @@ area and the number of each type.
 
 void CheckForPresence(int nType, location lLoc, string sType, string sType2);
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
         if(!X2PreSpellCastCode()) return;
         
-        SPSetSchool(SPELL_SCHOOL_DIVINATION);
+        PRCSetSchool(SPELL_SCHOOL_DIVINATION);
         
         object oPC = OBJECT_SELF;
         int nType;
@@ -131,7 +131,7 @@ void main()
                 CheckForPresence(RACIAL_TYPE_VERMIN, lLoc, "vermin", "vermin");
         }
         
-        SPSetSchool();
+        PRCSetSchool();
 }
         
 void CheckForPresence(int nType, location lLoc, string sType, string sType2)

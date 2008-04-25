@@ -12,7 +12,7 @@
 //:://////////////////////////////////////////////
 
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_inc_sp_tch"
 
 #include "X0_I0_SPELLS"
@@ -53,7 +53,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         if(iAttackRoll > 0)
         {
              //Make SR Check
-             if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLevel))
+             if(!PRCDoResistSpell(OBJECT_SELF, oTarget,nCasterLevel))
              {
                  //Apply the VFX impact and damage effect
                  SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);

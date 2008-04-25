@@ -37,17 +37,16 @@
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common" 
+#include "prc_inc_spells" 
 #include "spinc_necro_cyst"
 #include "prc_inc_switch"
 #include "inc_utility"
-#include "prc_inc_spells"
 
 
 void main()
 {
     // Set the spellschool
-    SPSetSchool(SPELL_SCHOOL_NECROMANCY); 
+    PRCSetSchool(SPELL_SCHOOL_NECROMANCY); 
 
     // Run the spellhook. 
     if (!X2PreSpellCastCode()) return;
@@ -57,7 +56,7 @@ void main()
     int nLevel = min(PRCGetCasterLevel(oPC), 25);
     int nMetaMagic = PRCGetMetaMagicFeat();
     
-    SPRaiseSpellCastAt(oTarget, TRUE, SPELL_NECROTIC_TERMINATION, oPC);
+    PRCSignalSpellEvent(oTarget, TRUE, SPELL_NECROTIC_TERMINATION, oPC);
 
 
     if(!GetCanCastNecroticSpells(oPC))
@@ -86,7 +85,7 @@ void main()
 
     
     //Define nDC
-    int nDC = SPGetSpellSaveDC(oTarget, oPC);     
+    int nDC = PRCGetSaveDC(oTarget, oPC);     
     
     //Resolve spell
         
@@ -137,5 +136,5 @@ void main()
         
         RemoveCyst(oTarget);
     }
-    SPSetSchool(); 
+    PRCSetSchool(); 
 }

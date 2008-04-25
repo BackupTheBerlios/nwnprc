@@ -66,13 +66,13 @@ Created:   7/6/07
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
         object oPC = GetAreaOfEffectCreator();
         object oTarget = GetEnteringObject();
-        int nDC = SPGetSpellSaveDC(oTarget, oPC);
+        int nDC = PRCGetSaveDC(oTarget, oPC);
         int nCasterLvl = PRCGetCasterLevel(oPC);
         int nDam;
         int nPenetr =  nCasterLvl + SPGetPenetr();
@@ -80,7 +80,7 @@ void main()
         if(!GetIsReactionTypeFriendly(oTarget, oPC))
         {
                 //Red
-                if(!MyPRCResistSpell(oPC, oTarget,nPenetr))
+                if(!PRCDoResistSpell(oPC, oTarget,nPenetr))
                 {
                         nDam = 20;
                         
@@ -93,7 +93,7 @@ void main()
                 }
                 
                 //Orange
-                if(!MyPRCResistSpell(oPC, oTarget, nPenetr))
+                if(!PRCDoResistSpell(oPC, oTarget, nPenetr))
                 {
                         nDam = 40;
                         
@@ -106,7 +106,7 @@ void main()
                 }
                 
                 //Yellow
-                if(!MyPRCResistSpell(oPC, oTarget, nPenetr))
+                if(!PRCDoResistSpell(oPC, oTarget, nPenetr))
                 {
                         nDam = 80;
                         
@@ -119,7 +119,7 @@ void main()
                 }
                 
                 //Green
-                if(!MyPRCResistSpell(oPC, oTarget, nPenetr))
+                if(!PRCDoResistSpell(oPC, oTarget, nPenetr))
                 {
                         if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_POISON))
                         {
@@ -131,10 +131,10 @@ void main()
                 }
                 
                 //Blue
-                if(!MyPRCResistSpell(oPC, oTarget, nPenetr)) DoPetrification(nCasterLvl, oPC, oTarget, SPELL_PRISMATIC_RAY, nDC);
+                if(!PRCDoResistSpell(oPC, oTarget, nPenetr)) DoPetrification(nCasterLvl, oPC, oTarget, SPELL_PRISMATIC_RAY, nDC);
                 
                 //Indigo
-                if(!MyPRCResistSpell(oPC, oTarget, nPenetr))
+                if(!PRCDoResistSpell(oPC, oTarget, nPenetr))
                 {
                         if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
                         {
@@ -152,7 +152,7 @@ void main()
                 }
                 
                 //Violet
-                if(!MyPRCResistSpell(oPC, oTarget, nPenetr))
+                if(!PRCDoResistSpell(oPC, oTarget, nPenetr))
                 {
                         if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
                         {

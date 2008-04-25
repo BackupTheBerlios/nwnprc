@@ -1,4 +1,4 @@
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "spinc_greenfire"
 
 void main()
@@ -13,7 +13,7 @@ void main()
 	}
 
 	// Get the adjusted damage type.
-	int nDamageType = SPGetElementalDamageType(DAMAGE_TYPE_ACID, oCaster);
+	int nDamageType = PRCGetElementalDamageType(DAMAGE_TYPE_ACID, oCaster);
 	
 	// Run the greenfire logic on the entering object.
 	DoGreenfire(nDamageType, oCaster, GetEnteringObject());

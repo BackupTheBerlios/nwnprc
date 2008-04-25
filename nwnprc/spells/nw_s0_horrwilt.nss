@@ -14,7 +14,7 @@
 //:://////////////////////////////////////////////
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "X0_I0_SPELLS"
 #include "x2_inc_spellhook"
@@ -78,7 +78,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_HORRID_WILTING));
             //Get the distance between the explosion and the target to calculate delay
             fDelay = GetRandomDelay(1.5, 2.5);
-            if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
+            if (!PRCDoResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
             {
                 if(MyPRCGetRacialType(oTarget) != RACIAL_TYPE_CONSTRUCT && MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)
                 {

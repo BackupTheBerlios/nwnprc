@@ -33,13 +33,13 @@ Created:   7/14/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	object oTarget = GetEnteringObject();
 	object aoeCreator = GetAreaOfEffectCreator();
-	int nDC = SPGetSpellSaveDC(oTarget, aoeCreator);
+	int nDC = PRCGetSaveDC(oTarget, aoeCreator);
 	
 	//AoEInts
 	ActionDoCommand(SetAllAoEInts(SPELL_RAIN_OF_BLACK_TULIPS,OBJECT_SELF, GetSpellSaveDC()));

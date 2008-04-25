@@ -33,13 +33,13 @@ it does frees the victim from the item’s effects.
 void DispelLoop(object oTarget, int nCasterLevel);
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_ABJURATION);
+	PRCSetSchool(SPELL_SCHOOL_ABJURATION);
 	
 	object    oPC          = OBJECT_SELF;
 	effect    eVis         = EffectVisualEffect(VFX_IMP_BREACH);
@@ -63,7 +63,7 @@ void main()
 		i--;
 		oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE,lLocal, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_AREA_OF_EFFECT | OBJECT_TYPE_PLACEABLE);
 	}
-	SPSetSchool();
+	PRCSetSchool();
 }
 	
 void DispelLoop(object oTarget, int nCasterLevel)

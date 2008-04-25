@@ -89,7 +89,7 @@ void main()
     object oCaster = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oCaster);
     int nSpellID = PRCGetSpellId();
-    SPSetSchool(GetSpellSchool(nSpellID));
+    PRCSetSchool(GetSpellSchool(nSpellID));
     if (!X2PreSpellCastCode()) return;
     object oTarget = PRCGetSpellTargetObject();
     int nMetaMagic = PRCGetMetaMagicFeat();
@@ -135,7 +135,7 @@ void main()
 
         if(spellsIsTarget(oTarget, SPELL_TARGET_ALLALLIES, oCaster))
         {
-            SPRaiseSpellCastAt(oTarget, FALSE);
+            PRCSignalSpellEvent(oTarget, FALSE);
             if(bRace)
             {
                 bApply = TRUE;
@@ -143,7 +143,7 @@ void main()
         }
         else
         {
-            SPRaiseSpellCastAt(oTarget, TRUE);
+            PRCSignalSpellEvent(oTarget, TRUE);
             if(bRace)
             {
                 bApply = TRUE;
@@ -171,5 +171,5 @@ void main()
         oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, lTarget, TRUE, OBJECT_TYPE_CREATURE);
     }
 
-    SPSetSchool();
+    PRCSetSchool();
 }

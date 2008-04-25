@@ -51,7 +51,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "psi_inc_enrgypow"
 
 const string ENERGY_RETORT_VARNAME_BASE = "PRC_Power_EnergyRetort_";
@@ -149,10 +149,10 @@ void main()
                     EvaluateChainPower(manif, oMainTarget, TRUE);
 
                 // Let the AI know
-                SPRaiseSpellCastAt(oMainTarget, TRUE, manif.nSpellID, manif.oManifester);
+                PRCSignalSpellEvent(oMainTarget, TRUE, manif.nSpellID, manif.oManifester);
                 if(manif.bChain)
                     for(i = 0; i < array_get_size(manif.oManifester, PRC_CHAIN_POWER_ARRAY); i++)
-                        SPRaiseSpellCastAt(array_get_object(manif.oManifester, PRC_CHAIN_POWER_ARRAY, i), TRUE, manif.nSpellID, manif.oManifester);
+                        PRCSignalSpellEvent(array_get_object(manif.oManifester, PRC_CHAIN_POWER_ARRAY, i), TRUE, manif.nSpellID, manif.oManifester);
 
                 // Touch attack the main target
                 nTouchAttack = PRCDoRangedTouchAttack(oMainTarget);

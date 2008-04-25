@@ -17,7 +17,7 @@
 
 //:: modified by mr_bumpkin Dec 4, 2003
 //:: modified by Ornedan Dec 22, 2004 to PnP rules
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "prc_alterations"
 #include "x2_inc_spellhook"

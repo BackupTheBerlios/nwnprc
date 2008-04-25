@@ -15,14 +15,14 @@
 //:: Altered By: Lockindal
 
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "prc_alterations"
 #include "x2_inc_spellhook"
 
 void DoQuake(object oCaster, int nCasterLvl, location lTarget)
 {
-    SPSetSchool(SPELL_SCHOOL_EVOCATION);
+    PRCSetSchool(SPELL_SCHOOL_EVOCATION);
 
     //Declare major variables
     int nSpectacularDeath = TRUE;
@@ -95,7 +95,7 @@ void DoQuake(object oCaster, int nCasterLvl, location lTarget)
         oTarget = MyNextObjectInShape(SHAPE_SPHERE, fSize, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
     }
 
-    SPSetSchool();
+    PRCSetSchool();
 }
 
 

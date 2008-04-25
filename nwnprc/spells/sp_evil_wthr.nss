@@ -35,12 +35,11 @@ void VioletRain(object oObject);
 void RainOfFrogsOrFish(object oObject);
 
 #include "prc_alterations"
-#include "spinc_common"
 #include "prc_inc_spells"
 
 void main()
 {
-        SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+        PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
         
         // Run the spellhook. 
         if (!X2PreSpellCastCode()) return;
@@ -48,7 +47,7 @@ void main()
         object oPC = OBJECT_SELF;
         object oArea = GetArea(oPC);
         int nCasterLvl = PRCGetCasterLevel(oPC);
-        int nSpell = GetSpellId();
+        int nSpell = PRCGetSpellId();
         int nWeather = GetWeather(oArea);
         float fDuration = (d6(3) * 60.0f);
         
@@ -121,7 +120,7 @@ void main()
         
         DoCorruptionCost(oPC, ABILITY_CONSTITUTION, nCost, 0);
         
-        SPSetSchool();
+        PRCSetSchool();
 }
 
 void RainOfBlood(object oObject, effect eBuff, effect eDebuff, float fDuration)

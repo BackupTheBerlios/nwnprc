@@ -37,7 +37,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void RunImpact(object oManifester, object oTarget, int nSpellID, int nLastBeat, int nCurrentBeat = 0);
 
@@ -77,7 +77,7 @@ void main()
         float fDuration = 6.0f * nBeats;
 
         // Let the AI know
-        SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+        PRCSignalSpellEvent(oTarget, TRUE, manif.nSpellID, oManifester);
 
         // SR check
         if(PRCMyResistPower(oManifester, oTarget, nPen))

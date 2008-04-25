@@ -42,7 +42,7 @@ void main()
         //Signal spell cast at event
         SignalEvent(oTarget, EventSpellCastAt(oTarget, INVOKE_CURSE_OF_DESPAIR));
          //Make SR Check
-         if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
+         if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nPenetr))
          {
             //Make Will Save
             if (!/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, GetInvocationSaveDC(oTarget, OBJECT_SELF)))

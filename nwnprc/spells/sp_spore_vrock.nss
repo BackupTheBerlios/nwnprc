@@ -37,7 +37,7 @@ Created:   5/10/06
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 
 void SporeLoop(object oTarget, int nMetaMagic, int nRounds)
@@ -71,7 +71,7 @@ void main()
     int nDam = d8(1);
     int nRounds = 10;
     object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lLoc);
-    int nDC = SPGetSpellSaveDC(oTarget, oPC);
+    int nDC = PRCGetSaveDC(oTarget, oPC);
     int nCasterLvl = PRCGetCasterLevel(oTarget);
     int nMetaMagic = PRCGetMetaMagicFeat();
     
@@ -89,7 +89,7 @@ void main()
     
     while(GetIsObjectValid(oTarget))
     {
-        if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+        if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
         {
             if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
             {
@@ -101,6 +101,6 @@ void main()
         oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lLoc);
     }
     SPEvilShift(oPC);
-    SPSetSchool();
+    PRCSetSchool();
 }
     

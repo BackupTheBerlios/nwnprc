@@ -11,11 +11,11 @@
 //:: Created On: December 24, 2004
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
-SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
 /*
   Spellcast Hook Code
   Added 2003-06-20 by Georg
@@ -36,7 +36,7 @@ SPSetSchool(SPELL_SCHOOL_NECROMANCY);
     effect eDam;
     int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nPenetr = nCasterLvl + SPGetPenetr(OBJECT_SELF);
-    int nMetaMagic = SPGetMetaMagic();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nMax = GetHitDice(OBJECT_SELF);
     int nCount = 0;
     int nDC, nDamage;
@@ -57,16 +57,16 @@ SPSetSchool(SPELL_SCHOOL_NECROMANCY);
             fDelay = GetRandomDelay(0.5, 1.0);
 
             //Only living targets
-            if(MyPRCGetRacialType(oTarget) != RACIAL_TYPE_CONSTRUCT && MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)
+            if(PRCGetIsAliveCreature(oTarget))
             {
                 //We have a valid target, increment counter
                 nCount++;
 
-                if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nPenetr, fDelay))
+                if(!PRCDoResistSpell(OBJECT_SELF, oTarget, nPenetr, fDelay))
                 {
                     nDC = PRCGetSaveDC(oTarget, OBJECT_SELF);
                     //Roll damage for each target and resolve metamagic
-                    nDamage = SPGetMetaMagicDamage(-1, 1, 4, 0, 0, nMetaMagic);
+                    nDamage = PRCGetMetaMagicDamage(-1, 1, 4, 0, 0, nMetaMagic);
 
                     if(/*Fort Save*/ !PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL, OBJECT_SELF, fDelay))
                     {
@@ -85,5 +85,5 @@ SPSetSchool(SPELL_SCHOOL_NECROMANCY);
     }// end while - target getting
 
 // Getting rid of the integer used to hold the spells spell school
-SPSetSchool();
+PRCSetSchool();
 }

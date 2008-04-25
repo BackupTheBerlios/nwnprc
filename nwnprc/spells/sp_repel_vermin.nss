@@ -30,13 +30,13 @@ pain, which deters most vermin.
 //////////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_ABJURATION);
+	PRCSetSchool(SPELL_SCHOOL_ABJURATION);
 	
 	object oPC = OBJECT_SELF;
 	effect eAoE = EffectAreaOfEffect(AOE_PER_REPEL_VERMIN);
@@ -51,5 +51,5 @@ void main()
 	
 	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAoE, oPC, fDur);
 	
-	SPSetSchool();
+	PRCSetSchool();
 }

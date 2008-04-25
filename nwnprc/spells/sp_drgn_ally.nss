@@ -27,7 +27,7 @@ Created:   11/16/07
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 
 void SummonDragonAlly(location lLoc, float fDur)
@@ -41,7 +41,7 @@ void main()
 {
     if(!X2PreSpellCastCode()) return;
 
-    SPSetSchool(SPELL_SCHOOL_CONJURATION);
+    PRCSetSchool(SPELL_SCHOOL_CONJURATION);
 
     object oPC = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oPC);
@@ -63,7 +63,7 @@ void main()
         SetXP(oPC, nXP - 250);
     }
 
-    SPSetSchool();
+    PRCSetSchool();
 }
 
 

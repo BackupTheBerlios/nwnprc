@@ -52,13 +52,13 @@ Created:   7/7/06
 
 void TombLoop(object oPC, object oTarget);
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+	PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
 	
 	object oPC = OBJECT_SELF;
 	object oTarget = GetSpellTargetObject();
@@ -68,7 +68,7 @@ void main()
 	//Fire cast spell at event for the specified target
 	SignalEvent(oTarget, EventSpellCastAt(oPC, PRCGetSpellId()));
 	
-	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 	{
 		if(PRCDoMeleeTouchAttack(oTarget))
 		{
@@ -81,7 +81,7 @@ void main()
 	}
 	
 	SPGoodShift(oPC);
-	SPSetSchool();
+	PRCSetSchool();
 }
 	
 
@@ -97,7 +97,7 @@ void TombLoop(object oPC, object oTarget)
     
 	//Save
 	
-	if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, SPGetSpellSaveDC(oTarget, oPC), SAVING_THROW_TYPE_GOOD))
+	if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, PRCGetSaveDC(oTarget, oPC), SAVING_THROW_TYPE_GOOD))
 	{
 		//Hold
 		effect eLink = EffectLinkEffects(EffectVisualEffect(VFX_DUR_FREEZE_ANIMATION), EffectParalyze());

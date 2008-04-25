@@ -30,7 +30,7 @@ Created:   04/28/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
@@ -43,11 +43,11 @@ void main()
 	//Spellhook
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_ENCHANTMENT);
+	PRCSetSchool(SPELL_SCHOOL_ENCHANTMENT);
 	
 	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eMarker, oTarget, fDur);
 	
-	SPSetSchool();
+	PRCSetSchool();
 }
 	
 	

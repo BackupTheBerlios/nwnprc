@@ -50,13 +50,13 @@ Created:   7/6/07
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
         if(!X2PreSpellCastCode()) return;
         
-        SPSetSchool(SPELL_SCHOOL_EVOCATION);
+        PRCSetSchool(SPELL_SCHOOL_EVOCATION);
         
         object oPC = OBJECT_SELF;
         int nCasterLvl = PRCGetCasterLevel(oPC);
@@ -88,7 +88,7 @@ void main()
                 
         else
         {
-                SPSetSchool();
+                PRCSetSchool();
                 return;
         }
         
@@ -98,5 +98,5 @@ void main()
         //apply
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, fDur, TRUE, nSpell, nCasterLvl);
         
-        SPSetSchool();
+        PRCSetSchool();
 }

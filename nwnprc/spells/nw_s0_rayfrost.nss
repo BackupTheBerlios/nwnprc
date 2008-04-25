@@ -17,7 +17,7 @@
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
 //:: added hold ray functionality - HackyKid
 
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_inc_sp_tch"
 #include "prc_alterations"
 #include "x2_inc_spellhook"
@@ -50,7 +50,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
         if(iAttackRoll > 0)
         {
             //Make SR Check
-            if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nPenetr))
+            if(!PRCDoResistSpell(OBJECT_SELF, oTarget, nPenetr))
             {
                  //Enter Metamagic conditions
                  if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
@@ -83,7 +83,7 @@ void main()
 {
     object oCaster = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oCaster);
-    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    PRCSetSchool(GetSpellSchool(PRCGetSpellId()));
     if (!X2PreSpellCastCode()) return;
     object oTarget = PRCGetSpellTargetObject();
     int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
@@ -105,5 +105,5 @@ void main()
                 DecrementSpellCharges(oCaster);
         }
     }
-    SPSetSchool();
+    PRCSetSchool();
 }

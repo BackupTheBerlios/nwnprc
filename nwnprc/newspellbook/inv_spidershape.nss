@@ -13,7 +13,7 @@
 //:://////////////////////////////////////////////
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "pnp_shft_poly"
 #include "prc_inc_clsfunc"
 #include "inv_inc_invfunc"

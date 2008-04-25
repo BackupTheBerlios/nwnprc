@@ -41,7 +41,7 @@ int DoPower(object oManifester, object oTarget, struct manifestation manif)
 
     int bHit = 0;
 
-    SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+    PRCSignalSpellEvent(oTarget, TRUE, manif.nSpellID, oManifester);
 
     int nRepeats = manif.bTwin ? 2 : 1;
     for(; nRepeats > 0; nRepeats--)

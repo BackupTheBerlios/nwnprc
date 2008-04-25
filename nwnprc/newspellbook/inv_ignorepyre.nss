@@ -59,7 +59,7 @@ void main()
     effect eList = EffectDamageResistance(nDamageType, nCasterLevel);
     eList = EffectLinkEffects(eList, EffectVisualEffect(VFX_DUR_PROTECTION_ELEMENTS));
     eList = EffectLinkEffects(eList, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
-    SPRaiseSpellCastAt(oTarget, FALSE, INVOKE_IGNORE_THE_PYRE);
+    PRCSignalSpellEvent(oTarget, FALSE, INVOKE_IGNORE_THE_PYRE);
     
     //  Spell does not stack with itself, even if it is different immunity types
     if (GetHasSpellEffect(INVOKE_IGNORE_THE_PYRE_ACID,oTarget))

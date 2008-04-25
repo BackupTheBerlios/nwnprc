@@ -32,13 +32,13 @@ Created:   5/18/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	//spellhook
 	if(!X2PreSpellCastCode()) return;
-	SPSetSchool(SPELL_SCHOOL_CONJURATION);
+	PRCSetSchool(SPELL_SCHOOL_CONJURATION);
 	
 	object oPC = OBJECT_SELF;
 	object oTarget = GetSpellTargetObject();
@@ -46,13 +46,13 @@ void main()
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	int nPenalty = 4;
-	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+	int nDC = PRCGetSaveDC(oTarget, oPC);
 	int nDam = d6(2);
 	float fDur = (60.0f * nCasterLvl);
 		
-	SPRaiseSpellCastAt(oTarget,TRUE, SPELL_THOUSAND_NEEDLES, oPC);
+	PRCSignalSpellEvent(oTarget,TRUE, SPELL_THOUSAND_NEEDLES, oPC);
 	
-	if (!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
+	if (!PRCDoResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
         {
 		//metamagic
 		if(nMetaMagic == METAMAGIC_EXTEND)
@@ -99,7 +99,7 @@ void main()
 	}
 	
 	SPEvilShift(oPC);
-	SPSetSchool();
+	PRCSetSchool();
 }
 	
 		

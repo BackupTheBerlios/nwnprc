@@ -23,13 +23,13 @@ Created:   6/28/07
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
         if(!X2PreSpellCastCode()) return;
         
-        SPSetSchool(SPELL_SCHOOL_ILLUSION);
+        PRCSetSchool(SPELL_SCHOOL_ILLUSION);
         
         object oPC = OBJECT_SELF;
         int nCasterLvl = PRCGetCasterLevel(oPC);
@@ -46,5 +46,5 @@ void main()
         //Apply bonuses
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, fDur);
         
-        SPSetSchool();
+        PRCSetSchool();
 }

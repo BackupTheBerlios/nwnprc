@@ -40,7 +40,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 int CheckRace(struct manifestation manif, object oTarget);
 
@@ -110,7 +110,7 @@ void main()
             eLink = EffectLinkEffects(eLink, eDur);
 
             // Fire cast spell at event for the specified target
-            SPRaiseSpellCastAt(oTarget, FALSE, manif.nSpellID, oManifester);
+            PRCSignalSpellEvent(oTarget, FALSE, manif.nSpellID, oManifester);
 
             // Handle Twin Power
             int nRepeats = manif.bTwin ? 2 : 1;

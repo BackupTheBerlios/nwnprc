@@ -34,7 +34,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_inc_teleport"
 
 void main()
@@ -80,7 +80,7 @@ void main()
         nNumberOfDice += manif.nTimesAugOptUsed_1;
 
         // Let the target know
-        SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+        PRCSignalSpellEvent(oTarget, TRUE, manif.nSpellID, oManifester);
 
         // Handle Twin Power
         int nRepeats = manif.bTwin ? 2 : 1;

@@ -35,7 +35,7 @@ Created:   5/9/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
@@ -51,7 +51,7 @@ void main()
 	
 	//spellhook
 	if(!X2PreSpellCastCode()) return;
-	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+	PRCSetSchool(SPELL_SCHOOL_EVOCATION);
 	
 	object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lLoc, FALSE, OBJECT_TYPE_CREATURE);
 	
@@ -77,9 +77,9 @@ void main()
 		}
 		
 		//SR
-		if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+		if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 		{
-			nDC = SPGetSpellSaveDC(oTarget, oPC);
+			nDC = PRCGetSaveDC(oTarget, oPC);
 			if(nAlign == ALIGNMENT_GOOD)
 			{
 				//Save for 1/2 dam
@@ -126,7 +126,7 @@ void main()
 	}
 	
 	SPEvilShift(oPC);
-	SPSetSchool();
+	PRCSetSchool();
 }
 			
 			

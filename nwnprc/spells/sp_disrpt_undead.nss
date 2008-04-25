@@ -45,7 +45,7 @@ Created:   7/6/07
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
@@ -87,7 +87,7 @@ void main()
         {
                 if(nType == RACIAL_TYPE_UNDEAD)
                 {
-                        if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+                        if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
                         {
                                 if(nSpell == SPELL_GREATER_DISRUPT_UNDEAD)
                                 {
@@ -124,7 +124,7 @@ void main()
                 }
         }
         
-        SPSetSchool();
+        PRCSetSchool();
 }
 
                 

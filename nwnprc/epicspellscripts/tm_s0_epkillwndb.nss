@@ -39,7 +39,7 @@ void main()
             SignalEvent( oTarget,
                 EventSpellCastAt(OBJECT_SELF, SPELL_WAIL_OF_THE_BANSHEE) );
             //Make a SR check
-            if( !MyPRCResistSpell(oCaster, oTarget, GetTotalCastingLevel(oCaster)+SPGetPenetr(oCaster)) )
+            if( !PRCDoResistSpell(oCaster, oTarget, GetTotalCastingLevel(oCaster)+SPGetPenetr(oCaster)) )
             {
 
                 //Make a fortitude save (-4) to avoid death

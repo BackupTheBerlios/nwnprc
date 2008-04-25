@@ -31,13 +31,13 @@ Created:   7/6/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+	PRCSetSchool(SPELL_SCHOOL_EVOCATION);
 	
 	object oPC = OBJECT_SELF;
 	location lLoc = GetSpellTargetLocation();
@@ -47,14 +47,14 @@ void main()
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	int nMin = min(10, nCasterLvl);
 	int nDam;
-	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+	int nDC = PRCGetSaveDC(oTarget, oPC);
 	
 	ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_DISPEL_DISJUNCTION), lLoc);
 		
 	while(GetIsObjectValid(oTarget))
 	{				
 		//SR
-		if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+		if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 		{
 			//Should be non-lethal
 			nDam = d6(nMin);
@@ -92,7 +92,7 @@ void main()
 	
 	SPGoodShift(oPC);
 	
-	SPSetSchool();
+	PRCSetSchool();
 }
 					
 					

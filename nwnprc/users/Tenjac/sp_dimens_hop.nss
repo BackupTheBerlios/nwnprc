@@ -23,18 +23,18 @@ be an unoccupied space within line of sight.
 /////////////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
         if(!X2PreSpellCastCode()) return;
         
-        SPSetSchool(SPELL_SCHOOL_CONJURATION);
+        PRCSetSchool(SPELL_SCHOOL_CONJURATION);
         
         object oPC = OBJECT_SELF;
         object oTarget = PRCGetSpellTargetObject();
         int nCasterLvl = PRCGetCasterLevel(oPC);
-        int nDC = SPGetSpellSaveDC(oTarget, oPC);
+        int nDC = PRCGetSaveDC(oTarget, oPC);
         int nTouch = PRCDoMeleeTouchAttack(oTarget);
         
         // Calculate how far the creature gets pushed
@@ -50,7 +50,7 @@ void main()
         if(nTouch)
         {
                 //SR
-                if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+                if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
                 {
                         //Saving Throw
                         if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
@@ -94,5 +94,5 @@ void main()
                         }
                 }
         }
-        SPSetSchool();
+        PRCSetSchool();
 }      

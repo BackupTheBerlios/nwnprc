@@ -57,7 +57,7 @@ int DoPower(object oManifester, object oTarget, struct manifestation manif)
            eLink = EffectLinkEffects(eLink, EffectAbilityIncrease(ABILITY_WISDOM,       4));
            eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MAJOR));
 
-    SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+    PRCSignalSpellEvent(oTarget, TRUE, manif.nSpellID, oManifester);
 
     int nRepeats = manif.bTwin ? 2 : 1;
     for(; nRepeats > 0; nRepeats--)

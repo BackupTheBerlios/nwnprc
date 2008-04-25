@@ -18,7 +18,7 @@
 //::Added code to maximize for Faith Healing and Blast Infidel
 //::Aaon Graywolf - Jan 7, 2003
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "X0_I0_SPELLS"
 #include "x2_inc_spellhook"
@@ -103,7 +103,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                 //Fire cast spell at event for the specified target
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_CIRCLE_OF_DOOM));
                 //Make an SR Check
-                if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
+                if (!PRCDoResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
                 {
                     int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                     if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NEGATIVE, OBJECT_SELF, fDelay))

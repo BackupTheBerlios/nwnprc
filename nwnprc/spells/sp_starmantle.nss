@@ -40,13 +40,13 @@ Created:   7/17/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_ABJURATION);
+	PRCSetSchool(SPELL_SCHOOL_ABJURATION);
 	
 	object oPC = OBJECT_SELF;
 	object oTarget = GetSpellTargetObject();
@@ -62,7 +62,7 @@ void main()
 	
 	if(nType == RACIAL_TYPE_UNDEAD || (nType == RACIAL_TYPE_CONSTRUCT && GetRacialType(oTarget) != RACIAL_TYPE_WARFORGED))
 	{
-		SPSetSchool();
+		PRCSetSchool();
 		return;
 	}
 	
@@ -81,7 +81,7 @@ void main()
 	effect eReduce = EffectDamageReduction(0, DAMAGE_POWER_PLUS_ONE, 0);
 	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eReduce, oTarget, fDur);
 	
-	SPSetSchool();
+	PRCSetSchool();
 }
 	
 	

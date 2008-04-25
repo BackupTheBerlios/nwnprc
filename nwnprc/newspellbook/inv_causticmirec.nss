@@ -22,7 +22,7 @@ void main()
         effect eDam = EffectDamage(d6(nDam), DAMAGE_TYPE_ACID);
         effect eLink = EffectLinkEffects(eDam, EffectVisualEffect(VFX_IMP_ACID_S));
         
-        if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
+        if(!PRCDoResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink, oTarget);
         
         SetLocalLocation(oTarget, "LastMirePos", GetLocation(oTarget));

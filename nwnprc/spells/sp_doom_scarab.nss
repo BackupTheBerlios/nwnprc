@@ -32,13 +32,13 @@ for up to 1 hour.
 **/
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+	PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
 	
 	object oPC = OBJECT_SELF;
 	location lLoc = GetSpellTargetLocation();
@@ -64,7 +64,7 @@ void main()
 	while(GetIsObjectValid(oTarget))
 	{
 		nDam = d6(min(nCasterLvl/2, 10));
-		nDC = SPGetSpellSaveDC(oTarget, oPC);
+		nDC = PRCGetSaveDC(oTarget, oPC);
 			
 		if(nMetaMagic == METAMAGIC_MAXIMIZE)
 		{
@@ -82,14 +82,14 @@ void main()
 			
 			if(GetHasMettle(oTarget, SAVING_THROW_WILL))
 			{
-				SPSetSchool();
+				PRCSetSchool();
 				return;
 			}
 		}
 		
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_MAGICAL), oTarget);
 		
-		if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+		if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 		{
 			nBonusDice++;
 		}
@@ -101,7 +101,7 @@ void main()
 	
 	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBonus, oPC, fDur);
 	
-	SPSetSchool();
+	PRCSetSchool();
 }
 
 	

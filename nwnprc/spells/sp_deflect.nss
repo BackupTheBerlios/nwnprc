@@ -40,13 +40,13 @@ this bonus is equal to 1/2 your caster level
 **/
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_ABJURATION);
+	PRCSetSchool(SPELL_SCHOOL_ABJURATION);
 	
 	object oPC = OBJECT_SELF;
 	float fDur = RoundsToSeconds(1);
@@ -55,7 +55,7 @@ void main()
 	int nSpell = PRCGetSpellId();
 	int nBonus = min(5, (nCasterLvl/3));
 	
-	SPRaiseSpellCastAt(oPC,FALSE, nSpell, oPC);
+	PRCSignalSpellEvent(oPC,FALSE, nSpell, oPC);
 	
 	if(nSpell == SPELL_DEFLECT)
 	{
@@ -71,7 +71,7 @@ void main()
 	
 	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBonus, oPC, fDur);
 	
-	SPSetSchool();
+	PRCSetSchool();
 }
 	
 	

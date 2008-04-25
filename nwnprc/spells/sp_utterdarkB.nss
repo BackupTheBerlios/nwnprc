@@ -30,7 +30,7 @@ Created:   5/21/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
@@ -39,7 +39,7 @@ void main()
 	int bValid = FALSE;
 	effect eAOE;
 	
-	SPSetSchool(SPELL_SCHOOL_CONJURATION);
+	PRCSetSchool(SPELL_SCHOOL_CONJURATION);
 	
 	//Search through the valid effects on the target.
 	eAOE = GetFirstEffect(oTarget);
@@ -58,6 +58,6 @@ void main()
 		eAOE = GetNextEffect(oTarget);                
 	}
 	
-	SPSetSchool();
+	PRCSetSchool();
 }
 			

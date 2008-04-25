@@ -114,7 +114,7 @@ void main()
                     (nRacial == RACIAL_TYPE_HALFORC))
                 {
                    //Make SR Check
-                   if (!MyPRCResistSpell(oPC, oTarget, nCasterLevel + SPGetPenetr()))
+                   if (!PRCDoResistSpell(oPC, oTarget, nCasterLevel + SPGetPenetr()))
                    {
                         //Make Will Save
                         if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, 15 + GetAbilityModifier(ABILITY_CHARISMA, oPC), SAVING_THROW_TYPE_MIND_SPELLS, OBJECT_SELF, 1.0))

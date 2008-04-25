@@ -24,13 +24,13 @@ Created:   7/6/07
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_CONJURATION);
+	PRCSetSchool(SPELL_SCHOOL_CONJURATION);
 	
 	object oPC = OBJECT_SELF;
 	object oSword1 = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
@@ -54,6 +54,6 @@ void main()
 		IPSafeAddItemProperty(oSword2, iprop, fDur);
 	}
 	
-	SPSetSchool();
+	PRCSetSchool();
 }
 	

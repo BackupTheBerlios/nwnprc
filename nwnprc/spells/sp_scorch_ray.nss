@@ -41,12 +41,12 @@ each other and fired simultaneously.
     <END NOTES TO SCRIPTER>
 */
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if (!X2PreSpellCastCode()) return;
-	SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+	PRCSetSchool(GetSpellSchool(PRCGetSpellId()));
 	
 	object oCaster = OBJECT_SELF;
 	int nCasterLevel = PRCGetCasterLevel(oCaster);
@@ -58,7 +58,7 @@ void main()
 	int nDam;
 	int iAttackRoll;
 	
-	SPRaiseSpellCastAt(oTarget, TRUE);
+	PRCSignalSpellEvent(oTarget, TRUE);
 	
 	if(nCasterLevel < 11)
 	{
@@ -80,7 +80,7 @@ void main()
 		
 		if (iAttackRoll > 0)
 		{
-			if(!MyPRCResistSpell(oCaster, oTarget, nPenetr))
+			if(!PRCDoResistSpell(oCaster, oTarget, nPenetr))
 			{
 				nDam = d6(4);
 				
@@ -100,5 +100,5 @@ void main()
 			
 	}
 	
-	SPSetSchool();
+	PRCSetSchool();
 }

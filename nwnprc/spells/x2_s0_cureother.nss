@@ -12,7 +12,7 @@
 //:://////////////////////////////////////////////
 
 //:: modified by mr_bumpkin Dec 4, 2003 for prc stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "NW_I0_SPELLS"
 #include "x2_inc_spellhook"
@@ -111,7 +111,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             {
                 //Fire cast spell at event for the specified target
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, 31));
-                if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl))
+                if (!PRCDoResistSpell(OBJECT_SELF, oTarget,CasterLvl))
                 {
                     eDam = EffectDamage(nDamage,DAMAGE_TYPE_NEGATIVE);
                     //Apply the VFX impact and effects

@@ -98,7 +98,7 @@ void main()
 	                        AssignCommand(oTarget, ActionCloseDoor(oTarget));
 	                }
 	            }
-	            if(!MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen))
+	            if(!PRCDoResistSpell(oTrueSpeaker, oTarget, utter.nPen))
 	            {
 	
 	                effect eKnockdown = EffectKnockdown();

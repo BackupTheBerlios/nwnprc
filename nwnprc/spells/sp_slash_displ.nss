@@ -22,12 +22,12 @@ each one.
 **/
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "x2_inc_spellhook"
 
 void main()
 {
-	SPSetSchool(SPELL_SCHOOL_ABJURATION);
+	PRCSetSchool(SPELL_SCHOOL_ABJURATION);
 	
 	if (!X2PreSpellCastCode()) return;
 	
@@ -82,7 +82,7 @@ void main()
 		}
 	}
 	
-	SPSetSchool();
+	PRCSetSchool();
 }
 
 

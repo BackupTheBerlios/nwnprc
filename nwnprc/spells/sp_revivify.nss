@@ -32,13 +32,13 @@ Material Component: Diamonds worth at least 1000 gp.
 ///////////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_CONJURATION);
+	PRCSetSchool(SPELL_SCHOOL_CONJURATION);
 	
 	object oPC = OBJECT_SELF;
 	object oTarget = PRCGetSpellTargetObject();
@@ -49,7 +49,7 @@ void main()
 	if(GetIsDead(oTarget))
 	{
 		// Let the AI know - Special handling
-		SPRaiseSpellCastAt(oTarget, FALSE, SPELL_RAISE_DEAD, oPC);
+		PRCSignalSpellEvent(oTarget, FALSE, SPELL_RAISE_DEAD, oPC);
 		
 		// Apply effects
 		ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetLocation(oTarget));
@@ -62,5 +62,5 @@ void main()
 	}
 	// end if - Deadness check
 	
-	SPSetSchool();
+	PRCSetSchool();
 }

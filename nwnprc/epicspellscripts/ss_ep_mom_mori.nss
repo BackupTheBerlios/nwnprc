@@ -28,7 +28,7 @@ void main()
             GetHitDice(oTarget) < 50 && oTarget != OBJECT_SELF)
         {
             //Make SR check
-            if (!MyPRCResistSpell(OBJECT_SELF, oTarget, GetTotalCastingLevel(OBJECT_SELF)+SPGetPenetr(OBJECT_SELF)))
+            if (!PRCDoResistSpell(OBJECT_SELF, oTarget, GetTotalCastingLevel(OBJECT_SELF)+SPGetPenetr(OBJECT_SELF)))
                {
                  //Make Fortitude save
                  if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, GetEpicSpellSaveDC(OBJECT_SELF, oTarget)+10, SAVING_THROW_TYPE_DEATH))

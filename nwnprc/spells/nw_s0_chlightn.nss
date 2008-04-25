@@ -27,7 +27,7 @@ bugfix by Kovi 2002.07.28
 
 
 //:: modified by mr_bumpkin Dec 4, 2003
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "x0_I0_SPELLS"
 #include "x2_inc_spellhook"
@@ -97,7 +97,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         //Fire cast spell at event for the specified target
         SignalEvent(oFirstTarget, EventSpellCastAt(OBJECT_SELF, SPELL_CHAIN_LIGHTNING));
         //Make an SR Check
-        if (!MyPRCResistSpell(OBJECT_SELF, oFirstTarget,CasterLvl))
+        if (!PRCDoResistSpell(OBJECT_SELF, oFirstTarget,CasterLvl))
         {
            int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
             //Adjust damage via Reflex Save or Evasion or Improved Evasion
@@ -143,7 +143,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_CHAIN_LIGHTNING));
             //Do an SR check
-            if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
+            if (!PRCDoResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
             {
                 int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                 nDamage = d6(nCasterLevel) ;

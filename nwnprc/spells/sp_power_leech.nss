@@ -37,13 +37,13 @@ Corruption Cost: 1 point of Wisdom drain.
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "inc_dynconv"
 
 void main()
 {
 	
-	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+	PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
 	
 	//Spellhook
 	if (!X2PreSpellCastCode()) return;
@@ -60,7 +60,7 @@ void main()
 	effect eDur  = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
 	effect eDur2 = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
 	
-	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_POWER_LEECH, oPC);
+	PRCSignalSpellEvent(oTarget, TRUE, SPELL_POWER_LEECH, oPC);
 	
 	//Check for Extend
 	if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
@@ -97,5 +97,5 @@ void main()
 	
 	SPEvilShift(oPC);
 	
-	SPSetSchool();
+	PRCSetSchool();
 }

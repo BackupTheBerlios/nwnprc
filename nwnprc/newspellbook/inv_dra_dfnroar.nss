@@ -1,4 +1,4 @@
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "X0_I0_SPELLS"
 #include "inv_inc_invfunc"
 #include "inv_invokehook"
@@ -41,7 +41,7 @@ void main()
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, INVOKE_DEAFENING_ROAR));
             //Make SR Check
-            if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay))
+            if(!PRCDoResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay))
             {
                 //Make a fort save
                 if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetInvocationSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_SONIC, OBJECT_SELF, fDelay))

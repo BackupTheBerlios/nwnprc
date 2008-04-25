@@ -15,7 +15,7 @@
 //:://////////////////////////////////////////////
 
 //:: modified by mr_bumpkin  Dec 4, 2003
-#include "spinc_common"
+#include "prc_inc_spells"
 
 
 #include "NW_I0_SPELLS"
@@ -65,7 +65,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
 
     if(!GetIsFriend(oTarget))
     {
-        if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
+        if(!PRCDoResistSpell(OBJECT_SELF, oTarget,nPenetr))
         {
             if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (PRCGetSaveDC(oTarget,OBJECT_SELF))))
             {

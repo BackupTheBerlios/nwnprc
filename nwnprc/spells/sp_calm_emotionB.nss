@@ -26,7 +26,7 @@ or do anything destructive.
 // Author: Tenjac
 // Date:   8.10.06
 //////////////////////////////////////////////////////
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {

@@ -39,25 +39,25 @@ Created:   5/11/06
 
 void HiImABomb(object oTarget, int nCounter, int nHP, int nCasterLvl);
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
     // Set the spellschool
-    SPSetSchool(SPELL_SCHOOL_NECROMANCY); 
+    PRCSetSchool(SPELL_SCHOOL_NECROMANCY); 
         
     // Run the spellhook. 
     if (!X2PreSpellCastCode()) return;
     
     object oPC = OBJECT_SELF;
     object oTarget = GetSpellTargetObject();
-    int nDC = SPGetSpellSaveDC(oTarget, oPC);
+    int nDC = PRCGetSaveDC(oTarget, oPC);
     int nCasterLvl = PRCGetCasterLevel(oPC);
     float fDur = HoursToSeconds(nCasterLvl);
     int nCounter = (FloatToInt(fDur))/3;
             
     //Spell Resistance
-    if (!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+    if (!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
     {
         //Saving Throw
         if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
@@ -73,7 +73,7 @@ void main()
         }
     }
     SPEvilShift(oPC);
-    SPSetSchool();
+    PRCSetSchool();
 }
 
 void HiImABomb(object oTarget, int nCounter, int nHP, int nCasterLvl)

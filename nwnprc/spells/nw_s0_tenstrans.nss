@@ -52,7 +52,7 @@ Material Component: A potion of bull’s
 strength, which you drink (and whose
 effects are subsumed by the spell effects).
 */
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "x2_inc_spellhook"
 

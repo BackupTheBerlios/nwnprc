@@ -34,7 +34,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_inc_teleport"
 
 void main()
@@ -85,7 +85,7 @@ void main()
                 if(GetIsFriend(oTarget, oManifester))
                 {
                     // Let the AI know
-                    SPRaiseSpellCastAt(oTarget, FALSE, manif.nSpellID, oManifester);
+                    PRCSignalSpellEvent(oTarget, FALSE, manif.nSpellID, oManifester);
 
                     // Make sure the target is not prevented from extra-dimensional movement
                     if(GetCanTeleport(oTarget, GetLocation(oTarget), FALSE, TRUE))

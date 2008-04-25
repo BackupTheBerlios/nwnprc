@@ -24,20 +24,20 @@ cannot be seen once the alcohol or spirits evaporate.
 **/
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+	PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
 			
 	object oPC = OBJECT_SELF;
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	float fDur = HoursToSeconds(nCasterLvl);
 	
-	SPRaiseSpellCastAt(oPC,FALSE, SPELL_FALSE_LIFE, oPC);
+	PRCSignalSpellEvent(oPC,FALSE, SPELL_FALSE_LIFE, oPC);
 	
 	if(nMetaMagic == METAMAGIC_EXTEND)
 	{
@@ -58,7 +58,7 @@ void main()
 	
 	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectTemporaryHitpoints(nBonus), oPC, fDur);
 	
-	SPSetSchool();
+	PRCSetSchool();
 }
 
 	

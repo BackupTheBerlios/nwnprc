@@ -11,7 +11,7 @@
 //:: Created On: 6/30/06
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
@@ -28,7 +28,7 @@ void main()
                 if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL)
                 {
                         //Spell resistance
-                        if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+                        if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
                         {
                                 //Sicken
                                 effect eLink = EffectAttackDecrease(2, ATTACK_BONUS_MISC);

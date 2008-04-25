@@ -28,13 +28,12 @@ Corruption Cost: 1d6 points of Strength damage.
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_common"
 #include "prc_inc_spells"
 #include "inc_abil_damage"
 
 void main()
 {
-	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+	PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
 	
 	// Run the spellhook. 
 	if (!X2PreSpellCastCode()) return;
@@ -47,10 +46,10 @@ void main()
         int nPenetr = nCasterLvl + SPGetPenetr();
 	
 	//signal cast
-	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_RED_FESTER, oPC);
+	PRCSignalSpellEvent(oTarget, TRUE, SPELL_RED_FESTER, oPC);
 	
 	//Spell Resist
-	if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
+	if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nPenetr))
 	{
 		//Fort save
 		if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, PRCGetSaveDC(oTarget,oPC)))
@@ -71,5 +70,5 @@ void main()
 	AdjustAlignment(oPC, ALIGNMENT_EVIL, 10);
 	
 	SPEvilShift(oPC);
-	SPSetSchool();
+	PRCSetSchool();
 }

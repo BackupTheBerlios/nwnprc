@@ -23,7 +23,7 @@ void main()
     object oCaster = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oCaster);
     int nSpellID = PRCGetSpellId();
-    SPSetSchool(GetSpellSchool(nSpellID));
+    PRCSetSchool(GetSpellSchool(nSpellID));
     if (!X2PreSpellCastCode()) return;
     object oTarget = PRCGetSpellTargetObject();
     int nMetaMagic = PRCGetMetaMagicFeat();
@@ -32,8 +32,8 @@ void main()
     float fDuration = 60.0 * nCasterLevel; //modify if necessary
     if(nMetaMagic & METAMAGIC_EXTEND) fDuration *= 2;
 
-    SPRaiseSpellCastAt(oTarget, FALSE);
+    PRCSignalSpellEvent(oTarget, FALSE);
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectSkillIncrease(SKILL_BLUFF, 30), oTarget, fDuration, TRUE, -1, nCasterLevel);
 
-    SPSetSchool();
+    PRCSetSchool();
 }

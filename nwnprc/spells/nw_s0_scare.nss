@@ -50,7 +50,7 @@
  * Material Component: A bit of bone from an undead skeleton, zombie, ghoul, ghast, or mummy.
  */
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "X0_I0_SPELLS"
 #include "x2_inc_spellhook"
@@ -61,7 +61,7 @@ void ApplyScare(object oTarget, int nDuration);
 void main()
 {
     // Set the spell school
-    SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+    PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
 /*
   Spellcast Hook Code
   Added 2003-06-20 by Georg
@@ -101,7 +101,7 @@ void main()
              //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, nSpellID));
             //Make SR check
-            if(!MyPRCResistSpell(OBJECT_SELF, oTarget))
+            if(!PRCDoResistSpell(OBJECT_SELF, oTarget))
             {
                  ApplyScare(oTarget, nDuration);
             }
@@ -110,7 +110,7 @@ void main()
      
      if (nSpellID == SPELL_SCARE)
      {
-         SPSetSchool();
+         PRCSetSchool();
          return;
      }
      
@@ -128,7 +128,7 @@ void main()
                  //Fire cast spell at event for the specified target
                  SignalEvent(oNextTarget, EventSpellCastAt(OBJECT_SELF, nSpellID));
                  //Make SR check
-                 if(!MyPRCResistSpell(OBJECT_SELF, oNextTarget))
+                 if(!PRCDoResistSpell(OBJECT_SELF, oNextTarget))
                  {
                      ApplyScare(oNextTarget, nDuration);
                  }
@@ -138,7 +138,7 @@ void main()
          }
      }
 
-     SPSetSchool();
+     PRCSetSchool();
 }
 
 void ApplyScare(object oTarget, int nDuration)

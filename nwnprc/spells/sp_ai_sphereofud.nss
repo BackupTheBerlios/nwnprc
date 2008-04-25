@@ -1,6 +1,7 @@
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "nw_i0_generic"
 #include "x0_inc_generic"
+#include "x2_inc_spellhook"
 
 //
 // Does the disintegrate logic.
@@ -8,7 +9,7 @@
 void DoDisintegrate(object oCaster, object oTarget, int nSpellSaveDC, int nSR)
 {
     // Make SR check
-    if (!SPResistSpell(oCaster, oTarget, nSR))
+    if (!PRCDoResistSpell(oCaster, oTarget, nSR))
     {
         // Make the touch attack.               
         int nTouchAttack = PRCDoMeleeTouchAttack(oTarget);;
@@ -29,14 +30,14 @@ void DoDisintegrate(object oCaster, object oTarget, int nSpellSaveDC, int nSR)
 			// This script does nothing if it has Mettle, bail
 				return;
 			
-                nDamage = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 
+                nDamage = PRCGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 
                     1 == nTouchAttack ? 5 : 10, 6, 0, 0, 0); 
             }
             // Apply damage effect and VFX impact, and if the target is dead then apply
             // the fancy rune circle too.
             if (nDamage >= GetCurrentHitPoints (oTarget)) 
                 DelayCommand(0.25, SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_SUMMON_MONSTER_2), oTarget));
-            DelayCommand(0.25, SPApplyEffectToObject(DURATION_TYPE_INSTANT, SPEffectDamage(nDamage, DAMAGE_TYPE_MAGICAL), oTarget));
+            DelayCommand(0.25, SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(nDamage, DAMAGE_TYPE_MAGICAL), oTarget));
             DelayCommand(0.25, SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_MAGBLUE), oTarget));
         }
     }

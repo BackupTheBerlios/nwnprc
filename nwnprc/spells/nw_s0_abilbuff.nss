@@ -10,6 +10,7 @@
 */
 
 #include "prc_sp_func"
+#include "x2_inc_spellhook"
 
 void StripBuff(object oTarget, int nBuffSpellID, int nMassBuffSpellID)
 {
@@ -108,7 +109,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     {
         if((!bMass) || (spellsIsTarget(oTarget, SPELL_TARGET_ALLALLIES, oCaster)))
         {
-            SPRaiseSpellCastAt(oTarget, FALSE);
+            PRCSignalSpellEvent(oTarget, FALSE);
             //if(bMass) fDelay = GetSpellEffectDelay(lTarget, oTarget);
             int nStatMod = d4() + 1;
             if(nMetaMagic & METAMAGIC_MAXIMIZE) nStatMod = 5;
@@ -134,7 +135,7 @@ void main()
 {
     object oCaster = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oCaster);
-    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    PRCSetSchool(GetSpellSchool(PRCGetSpellId()));
     if (!X2PreSpellCastCode()) return;
     object oTarget = PRCGetSpellTargetObject();
     int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
@@ -155,5 +156,5 @@ void main()
                 DecrementSpellCharges(oCaster);
         }
     }
-    SPSetSchool();
+    PRCSetSchool();
 }

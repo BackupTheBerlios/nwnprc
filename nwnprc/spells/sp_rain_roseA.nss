@@ -37,14 +37,14 @@ Created:   7/17/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	object oTarget = GetEnteringObject();
 	object oCreator = GetAreaOfEffectCreator();
 	
-	int nDC = SPGetSpellSaveDC(oTarget, oCreator);
+	int nDC = PRCGetSaveDC(oTarget, oCreator);
 	int nCasterLvl = PRCGetCasterLevel(oCreator);
 	int nAlign = GetAlignmentGoodEvil(oTarget);
 	
@@ -54,7 +54,7 @@ void main()
 	if(nAlign == ALIGNMENT_EVIL)
 	{
 		//Check Spell Resistance
-		if(!MyPRCResistSpell(oCreator, oTarget, nCasterLvl + SPGetPenetr()))
+		if(!PRCDoResistSpell(oCreator, oTarget, nCasterLvl + SPGetPenetr()))
 		{
 			//Make reflex save
 			if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, (PRCGetSaveDC(oTarget, oCreator))))

@@ -15,7 +15,7 @@
 //:: Last Updated By: Andrew Nobbs May 02, 2003
 
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "prc_alterations"
 #include "x2_inc_spellhook"
@@ -58,7 +58,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
         //Make SR Check
         {
             // BK: No spell resistance for quillfire
-            //if(!MyPRCResistSpell(OBJECT_SELF, oTarget, fDelay))
+            //if(!PRCDoResistSpell(OBJECT_SELF, oTarget, fDelay))
             {
                 //eMissile = EffectVisualEffect(VFX_IMP_MIRV_FLAME);
                 //Roll damage

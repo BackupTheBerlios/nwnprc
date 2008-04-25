@@ -22,7 +22,7 @@ takes an extra 1d8 points of sonic damage.
 **/
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void DoPush(object oTarget, object oPC, int nReverse = FALSE);
 
@@ -30,7 +30,7 @@ void main()
 {
 	object oPC = OBJECT_SELF;
 	object oTarget = PRCGetSpellTargetObject();	
-	int nDC = SPGetSpellSaveDC(oTarget, oPC); 
+	int nDC = PRCGetSaveDC(oTarget, oPC); 
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	
 	// Make Save

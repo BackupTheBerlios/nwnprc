@@ -38,24 +38,24 @@ Created:   6/14/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
         if(!X2PreSpellCastCode()) return;
         
-        SPSetSchool(SPELL_SCHOOL_EVOCATION);
+        PRCSetSchool(SPELL_SCHOOL_EVOCATION);
         
         object oPC = OBJECT_SELF;
         object oTarget = GetSpellTargetObject();
         int nCasterLvl = PRCGetCasterLevel(oPC);
-        int nDC = SPGetSpellSaveDC(oTarget, oPC);
+        int nDC = PRCGetSaveDC(oTarget, oPC);
         int nAlign = GetAlignmentGoodEvil(oTarget);
         int nMetaMagic = PRCGetMetaMagicFeat();
                 
-        SPRaiseSpellCastAt(oTarget,TRUE, SPELL_HAMMER_OF_RIGHTEOUSNESS, oPC);
+        PRCSignalSpellEvent(oTarget,TRUE, SPELL_HAMMER_OF_RIGHTEOUSNESS, oPC);
         
-        if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
+        if(!PRCDoResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
         {
                 int nDam = d6(nCasterLvl);
                         
@@ -103,7 +103,7 @@ void main()
         
         SPGoodShift(oPC);
         
-        SPSetSchool();
+        PRCSetSchool();
 }
                 
                 

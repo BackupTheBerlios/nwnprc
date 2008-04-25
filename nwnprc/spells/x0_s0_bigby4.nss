@@ -25,7 +25,7 @@
 //:: Last Updated By: Georg Zoeller October 15, 2003
 
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "x0_i0_spells"
 #include "x2_inc_spellhook"
@@ -114,7 +114,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     if(!GetIsReactionTypeFriendly(oTarget))
     {
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, nSpellID, TRUE));
-        int nResult = MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl +SPGetPenetr());
+        int nResult = PRCDoResistSpell(OBJECT_SELF, oTarget,CasterLvl +SPGetPenetr());
 
         if(nResult  == 0)
         {

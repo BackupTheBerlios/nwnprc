@@ -43,7 +43,7 @@ int DoPower(object oManifester, object oTarget, struct manifestation manif)
     effect eVis       = EffectVisualEffect(VFX_IMP_DIVINE_STRIKE_HOLY);
     effect eDamage;
 
-    SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+    PRCSignalSpellEvent(oTarget, TRUE, manif.nSpellID, oManifester);
 
     int nRepeats = manif.bTwin ? 2 : 1;
     for(; nRepeats > 0; nRepeats--)

@@ -12,11 +12,11 @@
 //:://////////////////////////////////////////////
 
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
-	SPSetSchool(SPELL_SCHOOL_CONJURATION);
+	PRCSetSchool(SPELL_SCHOOL_CONJURATION);
 	
 	object oTarget = GetEnteringObject();
 	object oPC = GetAreaOfEffectCreator();
@@ -29,7 +29,7 @@ void main()
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	float fDuration = (nCasterLvl * 600.0f);
 	int nDam = d6(2);
-	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+	int nDC = PRCGetSaveDC(oTarget, oPC);
 	
 	//Enter Metamagic conditions
 	if ((nMetaMagic & METAMAGIC_EXTEND))
@@ -48,7 +48,7 @@ void main()
 	if(GetIsObjectValid(oTarget) && oTarget != oPC)
 	{
 		//Spell resistance
-		if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+		if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 		{	
 			//Save
 			if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
@@ -69,7 +69,7 @@ void main()
 		}
 	}	
 	
-	SPSetSchool();		
+	PRCSetSchool();		
 }
 
 

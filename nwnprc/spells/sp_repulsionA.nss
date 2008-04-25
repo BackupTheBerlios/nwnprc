@@ -43,19 +43,19 @@ whole array worth 50 gp.
 void DoPush(object oTarget, object oCaster);
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
         object oCaster = GetAreaOfEffectCreator();
         object oTarget = GetEnteringObject();
-        int nDC = SPGetSpellSaveDC(oTarget, oCaster);
+        int nDC = PRCGetSaveDC(oTarget, oCaster);
         
         
         if(oTarget != oCaster)
         {
                 //SR
-                if(!MyPRCResistSpell(oCaster, oTarget, PRCGetCasterLevel(oCaster) + SPGetPenetr()))
+                if(!PRCDoResistSpell(oCaster, oTarget, PRCGetCasterLevel(oCaster) + SPGetPenetr()))
                 {
                         //Saving Throw
                         if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_SPELL))

@@ -39,7 +39,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_inc_teleport"
 
 void main()
@@ -97,7 +97,7 @@ void main()
                 if(GetIsCreatureDisarmable(oTarget))
                 {
                     // Let the AI know
-                    SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+                    PRCSignalSpellEvent(oTarget, TRUE, manif.nSpellID, oManifester);
 
                     // Save - Will negates
                     if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_NONE))

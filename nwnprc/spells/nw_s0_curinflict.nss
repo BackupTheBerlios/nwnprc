@@ -139,7 +139,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent, int bI
                 SignalEvent(oTarget, EventSpellCastAt(oCaster, nSpellID));
 
                 // Roll SR
-                if(!MyPRCResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr()))
+                if(!PRCDoResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr()))
                 {
                     // Save for half
                     if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget,
@@ -186,7 +186,7 @@ void main()
     int bIsCure      = IsMassCure(nSpellID) || IsCure(nSpellID);  //whether it is a cure or inflict spell
 
     // Run the pre-spell code
-    SPSetSchool(GetSpellSchool(nSpellID));
+    PRCSetSchool(GetSpellSchool(nSpellID));
     if (!X2PreSpellCastCode()) return;
 
     // Check for holding charge
@@ -208,5 +208,5 @@ void main()
                 DecrementSpellCharges(oCaster);
         }
     }
-    SPSetSchool();
+    PRCSetSchool();
 }

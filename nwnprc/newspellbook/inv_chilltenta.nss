@@ -28,7 +28,7 @@ through the area at only half normal speed.
 //:: Primogenitor: Implemented 3.5ed rules
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_alterations"
 #include "inc_grapple"
 #include "inv_inc_invfunc"
@@ -55,7 +55,7 @@ ActionDoCommand(SetAllAoEInts(INVOKE_CHILLING_TENTACLES,OBJECT_SELF, GetSpellSav
         //firstly, make them half-speed
         SPApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectMovementSpeedDecrease(50), oTarget);
         
-        if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
+        if(!PRCDoResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
         {
             //apply cold damage
             effect eColdDamage = EffectDamage(d6(2), DAMAGE_TYPE_COLD);

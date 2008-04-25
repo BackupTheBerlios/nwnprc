@@ -44,7 +44,7 @@ Created:
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
@@ -52,18 +52,18 @@ void main()
 	object oTarget = GetSpellTargetObject();
 	int nGoodEvil = GetGoodEvilValue(oTarget);
 	int nCasterLvl = PRCGetCasterLevel(oPC);
-	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+	int nDC = PRCGetSaveDC(oTarget, oPC);
 	float fDur = (600.0f * nCasterLvl);
 	
 	//Spellhook
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_ENCHANTMENT);
+	PRCSetSchool(SPELL_SCHOOL_ENCHANTMENT);
 	
-	SPRaiseSpellCastAt(oTarget,TRUE, SPELL_MORALITY_UNDONE, oPC);
+	PRCSignalSpellEvent(oTarget,TRUE, SPELL_MORALITY_UNDONE, oPC);
 	
 	//Spell Resist
-	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 	{
 		//Saving Throw
 		if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
@@ -78,7 +78,7 @@ void main()
 	}
 	
 	SPEvilShift(oPC);
-	SPSetSchool();
+	PRCSetSchool();
 }
 			
 		

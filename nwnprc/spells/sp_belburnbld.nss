@@ -1,4 +1,4 @@
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "x2_i0_spells"
 
 //
@@ -25,15 +25,15 @@ void RunSpell(object oCaster, object oTarget, int nMetaMagic, int nSpellID,
      else
      {
           // The bad thing happens, 1d8 acid and fire damage, and slowed for 1 round.
-          int nDamage = SPGetMetaMagicDamage(DAMAGE_TYPE_FIRE, 1, 8, 0, 0, nMetaMagic);
-          effect eDamage = SPEffectDamage(nDamage, DAMAGE_TYPE_FIRE);
+          int nDamage = PRCGetMetaMagicDamage(DAMAGE_TYPE_FIRE, 1, 8, 0, 0, nMetaMagic);
+          effect eDamage = PRCEffectDamage(nDamage, DAMAGE_TYPE_FIRE);
           eDamage = EffectLinkEffects(eDamage, EffectVisualEffect(VFX_IMP_FLAME_S));
           SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
           PRCBonusDamage(oTarget);
           
-          nDamage = SPGetMetaMagicDamage(DAMAGE_TYPE_ACID, 1, 8, 0, 0, nMetaMagic);
+          nDamage = PRCGetMetaMagicDamage(DAMAGE_TYPE_ACID, 1, 8, 0, 0, nMetaMagic);
           nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
-          eDamage = SPEffectDamage(nDamage, DAMAGE_TYPE_ACID);
+          eDamage = PRCEffectDamage(nDamage, DAMAGE_TYPE_ACID);
           eDamage = EffectLinkEffects(eDamage, EffectVisualEffect(VFX_IMP_ACID_S));
           SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
           
@@ -54,7 +54,7 @@ void main()
      // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
      if (!X2PreSpellCastCode()) return;
 
-     SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+     PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
 
      object oTarget = GetSpellTargetObject();
      if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
@@ -63,12 +63,12 @@ void main()
              int nPenetr = nCasterLvl+SPGetPenetr();
      
           // Get the target and raise the spell cast event.
-          SPRaiseSpellCastAt(oTarget);
+          PRCSignalSpellEvent(oTarget);
 
-          if (!SPResistSpell(OBJECT_SELF, oTarget,nPenetr))
+          if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nPenetr))
           {
                // Determine the spell's duration, taking metamagic feats into account.
-               float fDuration = SPGetMetaMagicDuration(RoundsToSeconds(nCasterLvl));
+               float fDuration = PRCGetMetaMagicDuration(RoundsToSeconds(nCasterLvl));
 
                // Apply a persistent vfx to the target.
                // RunSpell uses our persistant vfx to determine it's duration.
@@ -78,9 +78,9 @@ void main()
                // Stick OBJECT_SELF into a local because it's a function under the hood,
                // and we need a real object reference.
                object oCaster = OBJECT_SELF;
-               DelayCommand(0.5, RunSpell(oCaster, oTarget, SPGetMetaMagic(), PRCGetSpellId(), fDuration,nCasterLvl));
+               DelayCommand(0.5, RunSpell(oCaster, oTarget, PRCGetMetaMagicFeat(), PRCGetSpellId(), fDuration,nCasterLvl));
           }
      }
 
-     SPSetSchool();
+     PRCSetSchool();
 }

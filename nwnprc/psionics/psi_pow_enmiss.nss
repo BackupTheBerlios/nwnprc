@@ -48,7 +48,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "psi_inc_enrgypow"
 
 void main()
@@ -128,7 +128,7 @@ void main()
             while((i++ < nMissileCount) && GetIsObjectValid(oTarget))
             {
                 // Let the AI know
-                SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+                PRCSignalSpellEvent(oTarget, TRUE, manif.nSpellID, oManifester);
                 // Calculate base delay and do the missile VFX
                 fDelay = 0.1f * i;
                 DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eMissile, oTarget));

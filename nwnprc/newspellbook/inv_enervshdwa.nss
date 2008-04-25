@@ -1,6 +1,6 @@
 
 
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "inv_inc_invfunc"
 #include "inv_invokehook"
 
@@ -24,7 +24,7 @@ void main()
         SignalEvent(oTarget, EventSpellCastAt(GetAreaOfEffectCreator(), INVOKE_ENERVATING_SHADOW, FALSE));
         
         //SR
-    	if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget, SPGetPenetrAOE(GetAreaOfEffectCreator(), CasterLvl)))
+    	if(!PRCDoResistSpell(GetAreaOfEffectCreator(), oTarget, SPGetPenetrAOE(GetAreaOfEffectCreator(), CasterLvl)))
     	{
     		//save
     		if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL))

@@ -53,7 +53,7 @@ void main()
     {
         // This is done so Speak Unto the Masses can read it out of the structure
         utter.nPen       = GetTrueSpeakPenetration(oTrueSpeaker);
-        int nSRCheck     = MyPRCResistSpell(oTrueSpeaker, GetItemPossessor(oTarget), utter.nPen);
+        int nSRCheck     = PRCDoResistSpell(oTrueSpeaker, GetItemPossessor(oTarget), utter.nPen);
         
         // If there is no possessor
         if (GetItemPossessor(oTarget) == OBJECT_INVALID)

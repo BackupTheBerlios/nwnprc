@@ -27,14 +27,14 @@ Created:
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_craft_inc"
 
 void main()
 {
         if(!X2PreSpellCastCode()) return;
         
-        SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+        PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
         
         object oPC = OBJECT_SELF;
         object oTarget = PRCGetSpellTargetObject();
@@ -56,7 +56,7 @@ void main()
         
         else
         {
-                SPSetSchool();
+                PRCSetSchool();
                 return;
         }
         
@@ -65,7 +65,7 @@ void main()
         
         if((!(GetMaterialString(StringToInt(sMaterial)) == sMaterial && sMaterial != "000") && !GetIsMagicItem(oAmmo)))
         {
-                SPSetSchool();
+                PRCSetSchool();
                 return;
         }
         
@@ -77,13 +77,13 @@ void main()
         
         if(nTouch)
         {
-                if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+                if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
                 {
                         ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, d6(1), DURATION_TYPE_TEMPORARY, TRUE, 0.0f, FALSE, SPELL_SHADOW_ARROW, nCasterLvl, oPC);
                 }
         }
         
-        SPSetSchool();
+        PRCSetSchool();
 }
         
         

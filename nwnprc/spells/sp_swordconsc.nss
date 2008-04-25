@@ -27,7 +27,7 @@ Evil outsider       HD
 Cleric of an evil deity     Caster Level   
 */
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
@@ -79,7 +79,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
 
     //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-    if (!MyPRCResistSpell(OBJECT_SELF, oTarget, nCaster+SPGetPenetr()))
+    if (!PRCDoResistSpell(OBJECT_SELF, oTarget, nCaster+SPGetPenetr()))
     {
     	if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
         {

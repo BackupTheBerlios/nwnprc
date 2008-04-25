@@ -31,7 +31,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
@@ -91,7 +91,7 @@ void main()
 			{
 
 	                    //Fire cast spell at event for the specified target
-        	            SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+        	            PRCSignalSpellEvent(oTarget, TRUE, manif.nSpellID, oManifester);
 	
         	            //Get the distance between the target and caster to delay the application of effects
                 	    fDelay = GetDistanceBetween(oManifester, oTarget) / 20.0;

@@ -15,7 +15,7 @@
 
 
 //:: modified by mr_bumpkin Dec 4, 2003
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "X0_I0_SPELLS"
 #include "inv_inc_invfunc"
 
@@ -54,7 +54,7 @@ void main()
             //Fire cast spell at event for the affected target
             SignalEvent(oTarget, EventSpellCastAt(GetAreaOfEffectCreator(), INVOKE_CHILLING_FOG));
             //Spell resistance check
-            if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr, fDelay))
+            if(!PRCDoResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr, fDelay))
             {
                //Apply damage and visuals
                 //Set the damage effect

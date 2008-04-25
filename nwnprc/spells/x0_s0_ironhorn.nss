@@ -17,7 +17,7 @@
 
 
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "prc_alterations"
 
@@ -78,7 +78,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, 436));
             //Get the distance between the explosion and the target to calculate delay
             fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget))/20;
-            if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay))
+            if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay))
             {
                 effect eTrip = EffectKnockdown();
                 // * DO a strength check vs. Strength 20

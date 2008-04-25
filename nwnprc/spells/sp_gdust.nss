@@ -1,11 +1,11 @@
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
     // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
     if (!X2PreSpellCastCode()) return;
     
-    SPSetSchool(SPELL_SCHOOL_CONJURATION);
+    PRCSetSchool(SPELL_SCHOOL_CONJURATION);
     
     // Apply a burst visual effect at the target location.    
     location lTarget = GetSpellTargetLocation();
@@ -19,7 +19,7 @@ void main()
   int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
    
     // Determine the spell's duration.    
-    float fDuration = SPGetMetaMagicDuration(RoundsToSeconds(nCasterLvl));
+    float fDuration = PRCGetMetaMagicDuration(RoundsToSeconds(nCasterLvl));
         
     effect eBlindness = EffectLinkEffects(EffectBlindness(), 
         EffectVisualEffect(VFX_DUR_BLIND));
@@ -31,7 +31,7 @@ void main()
     {
         if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
         {
-            SPRaiseSpellCastAt(oTarget);
+            PRCSignalSpellEvent(oTarget);
 
             // Apply impact vfx.            
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, 
@@ -63,5 +63,5 @@ void main()
         oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lTarget);
     }
     
-    SPSetSchool();
+    PRCSetSchool();
 }

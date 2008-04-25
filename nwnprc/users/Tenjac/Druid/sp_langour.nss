@@ -27,13 +27,13 @@ counters and is countered by haste.
 // Tenjac  10/2/07
 ////////////////////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
         if(!X2PreSpellCastCode()) return;
         
-        SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+        PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
         
         object oPC = OBJECT_SELF;
         object oTarget = PRCGetSpellTargetObject();
@@ -50,7 +50,7 @@ void main()
         
         if(nTouch)
         {
-                if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+                if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
                 {
                         int nSave = PRCMySavingThrow(SAVING_THROW_WILL, oTarget, SPGetSaveDC(oTarget, oPC), SAVING_THROW_TYPE_SPELL);
                         int nDam = d6(1);
@@ -71,7 +71,7 @@ void main()
                 }
         }
         
-        SPSetSchool();
+        PRCSetSchool();
 }
                         
 

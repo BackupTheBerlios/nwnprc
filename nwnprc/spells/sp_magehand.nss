@@ -26,7 +26,7 @@ void main()
     object oCaster = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oCaster);
     int nSpellID = PRCGetSpellId();
-    SPSetSchool(GetSpellSchool(nSpellID));
+    PRCSetSchool(GetSpellSchool(nSpellID));
     if (!X2PreSpellCastCode()) return;
     object oTarget = PRCGetSpellTargetObject();
     int nMaxWeight = 50;
@@ -46,5 +46,5 @@ void main()
     else
         FloatingTextStrRefOnCreature(16826245, oCaster, FALSE); // "* Target is not an item *"
 
-    SPSetSchool();
+    PRCSetSchool();
 }

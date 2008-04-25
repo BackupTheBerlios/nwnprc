@@ -1,19 +1,20 @@
-#include "spinc_common"
+#include "prc_inc_spells"
+#include "x2_inc_spellhook"
 
 void main()
 {
     // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
     if (!X2PreSpellCastCode()) return;
 
-    SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+    PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
 
     // Get the target and raise the spell cast event.
     object oTarget = OBJECT_SELF;
-    SPRaiseSpellCastAt(oTarget, FALSE);
+    PRCSignalSpellEvent(oTarget, FALSE);
 
     // Determine the spell's duration, taking metamagic feats into account.
     int nCasterLvl = GetLevelByClass(CLASS_TYPE_RUNESCARRED,OBJECT_SELF);
-    float fDuration = SPGetMetaMagicDuration(RoundsToSeconds(nCasterLvl));
+    float fDuration = PRCGetMetaMagicDuration(RoundsToSeconds(nCasterLvl));
 
     // Calculate the proper DR.
     int nDR = 5;
@@ -31,5 +32,5 @@ void main()
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBuff, oTarget, fDuration);
 //  SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_RESTORATION_GREATER), oTarget);
 
-    SPSetSchool();
+    PRCSetSchool();
 }

@@ -26,18 +26,18 @@ a maximum of 1d8+5.
 // Tenjac   10/1/07
 /////////////////////////////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
         if(!X2PreSpellCastCode()) return;
         
-        SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+        PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
         
         object oPC = OBJECT_SELF;
         object oTarget = PRCGetSpellTargetObject();
         int nCasterLvl = PRCGetCasterLevel(oPC);
-        int nDC = SPGetSpellSaveDC(oTarget, oPC);
+        int nDC = PRCGetSaveDC(oTarget, oPC);
         int nDam = d6();
         int nMetaMagic = PRCGetMetaMagicFeat();
         
@@ -57,7 +57,7 @@ void main()
                 nDam += (nDam/2);
         }
         
-        if(!MyPRCResistSpell(oTarget, oPC, nCasterLvl + SPGetPenetr()))
+        if(!PRCDoResistSpell(oTarget, oPC, nCasterLvl + SPGetPenetr()))
         {
                 if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
                 {
@@ -67,7 +67,7 @@ void main()
                         ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, DURATION_TYPE_TEMPORARY, TRUE, -1.0, FALSE, -1, -1, OBJECT_SELF_;
                 }
         }        
-        SPSetSchool();
+        PRCSetSchool();
 }
         
                 

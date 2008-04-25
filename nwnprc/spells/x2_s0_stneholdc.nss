@@ -14,7 +14,7 @@
 //:://////////////////////////////////////////////
 
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "NW_I0_SPELLS"
 #include "x0_i0_spells"
@@ -59,7 +59,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_STONEHOLD,OBJECT_SELF, GetSpellSaveDC()));
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_STONEHOLD));
             if (!GetHasSpellEffect(SPELL_STONEHOLD,oTarget))
             {
-                if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
+                if(!PRCDoResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
                 {
                     int nDC = PRCGetSaveDC(oTarget,GetAreaOfEffectCreator());
                     if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (nDC) , SAVING_THROW_TYPE_MIND_SPELLS))

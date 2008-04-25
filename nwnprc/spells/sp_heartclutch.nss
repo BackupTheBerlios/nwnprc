@@ -39,7 +39,7 @@ Created:
 void ClutchLoop(object oTarget, int nDelay, object oPC);
 int GetHasSoulRot(object oPC);
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
@@ -48,14 +48,14 @@ void main()
     int nCasterLvl = PRCGetCasterLevel(oPC);
     int nDelay = d3(1);
     int nType = MyPRCGetRacialType(oTarget);
-    int nDC = SPGetSpellSaveDC(oTarget, oPC);
+    int nDC = PRCGetSaveDC(oTarget, oPC);
         
     //Spellhook
     if(!X2PreSpellCastCode()) return;
     
-    SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+    PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
     
-    SPRaiseSpellCastAt(oTarget,TRUE, SPELL_HEARTCLUTCH, oPC);
+    PRCSignalSpellEvent(oTarget,TRUE, SPELL_HEARTCLUTCH, oPC);
     
     if(nType != RACIAL_TYPE_OOZE &&
        nType != RACIAL_TYPE_UNDEAD &&
@@ -68,7 +68,7 @@ void main()
         if(GetHasSoulRot(oPC))
         {
             //Check for Spell resistance
-            if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+            if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
             {
         	//Save
         	if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
@@ -88,7 +88,7 @@ void main()
         }
     }
     SPEvilShift(oPC);
-    SPSetSchool();
+    PRCSetSchool();
 }
 
 void ClutchLoop(object oTarget, int nDelay, object oPC)

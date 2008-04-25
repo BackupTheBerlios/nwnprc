@@ -15,7 +15,7 @@
 
 
 //:: modified by mr_bumpkin Dec 4, 2003
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "X0_I0_SPELLS"
 #include "x2_inc_spellhook"
@@ -70,7 +70,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
              {
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_DISMISSAL));
                  //Make SR and will save checks
-                if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl) 
+                if (!PRCDoResistSpell(OBJECT_SELF, oTarget,CasterLvl) 
                     && !PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF)+ 6))
                 {
                      //Apply the VFX and delay the destruction of the summoned monster so

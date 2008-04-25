@@ -28,7 +28,7 @@ Created:   05/04/06
 int GetHasSoulRot(object oPC);
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
@@ -36,25 +36,25 @@ void main()
     object oTarget = GetSpellTargetObject();
     int nCasterLvl = PRCGetCasterLevel(oPC);
     int nMetaMagic = PRCGetMetaMagicFeat();
-    int nDC = SPGetSpellSaveDC(oTarget, oPC);
+    int nDC = PRCGetSaveDC(oTarget, oPC);
     
     //spellhook
     if(!X2PreSpellCastCode()) return;
     
-    SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+    PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
     
-    SPRaiseSpellCastAt(oTarget,TRUE, SPELL_SHRIVELING, oPC);
+    PRCSignalSpellEvent(oTarget,TRUE, SPELL_SHRIVELING, oPC);
     
     //Check for Soul rot
     if(!GetHasSoulRot(oPC))
     {
             SendMessageToPC(oPC, "This spell requires the caster to have the Soul Rot disease.");
-            SPSetSchool();
+            PRCSetSchool();
             return;
     }
     
     //SR
-    if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+    if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
     {
             int nDam = d4(min(nCasterLvl, 10));
             
@@ -82,7 +82,7 @@ void main()
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
     }
     SPEvilShift(oPC);
-    SPSetSchool();
+    PRCSetSchool();
 }
 
 

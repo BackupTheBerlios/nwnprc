@@ -71,7 +71,7 @@ int DoPower(object oManifester, object oTarget, struct manifestation manif)
     if(manif.bExtend) fDuration *= 2;
 
     // Let the AI know
-    SPRaiseSpellCastAt(oTarget, FALSE, manif.nSpellID, oManifester);
+    PRCSignalSpellEvent(oTarget, FALSE, manif.nSpellID, oManifester);
 
     // Get the OnHitCast: Unique on the manifester's armor / hide
     ExecuteScript("prc_keep_onhit_a", oManifester);

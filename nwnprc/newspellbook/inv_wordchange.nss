@@ -42,7 +42,7 @@ can revert to its natural form as a standard action.
 //:://////////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "inv_inc_invfunc"
 #include "inv_invokehook"
 
@@ -57,10 +57,10 @@ void main()
 	
 	if (GetIsDM(oTarget)) return;
 	
-	SPRaiseSpellCastAt(oTarget,TRUE, INVOKE_WORD_OF_CHANGING, oPC);
+	PRCSignalSpellEvent(oTarget,TRUE, INVOKE_WORD_OF_CHANGING, oPC);
 	
 	//SR
-	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 	{
 		//First save
 		if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL))

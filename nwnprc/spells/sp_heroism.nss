@@ -21,7 +21,7 @@
 int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 {
     int nSpellID = PRCGetSpellId();
-    SPRaiseSpellCastAt(oTarget, FALSE);
+    PRCSignalSpellEvent(oTarget, FALSE);
     int bGreater = (nSpellID == SPELL_GREATER_HEROISM);
     if(bGreater && GetHasSpellEffect(SPELL_HEROISM, oTarget))
     {
@@ -32,7 +32,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
         FloatingTextStringOnCreature("Target already has Greater Heroism Effect!", oCaster);
         return TRUE;
     }
-    float fDuration = SPGetMetaMagicDuration(TenMinutesToSeconds(nCasterLevel));
+    float fDuration = PRCGetMetaMagicDuration(TenMinutesToSeconds(nCasterLevel));
     int nBonus = (bGreater) ? 4 : 2;
     // Create the chain of buffs to apply, including the vfx.
     effect eBuff = EffectSavingThrowIncrease(SAVING_THROW_ALL, nBonus, SAVING_THROW_TYPE_ALL);
@@ -43,7 +43,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBuff, oTarget, fDuration,TRUE,-1,nCasterLevel);
     //improperly removing gheroism when temp hp expire; fix by unlinking temp hp from other effect ~ Lockindal
     if(bGreater)
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, SPEffectTemporaryHitpoints(nCasterLevel > 20 ? 20 : nCasterLevel), oTarget, fDuration,TRUE,-1,nCasterLevel);
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectTemporaryHitpoints(nCasterLevel > 20 ? 20 : nCasterLevel), oTarget, fDuration,TRUE,-1,nCasterLevel);
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_RESTORATION), oTarget);
 
     return TRUE;    //return TRUE if spell charges should be decremented
@@ -53,7 +53,7 @@ void main()
 {
     object oCaster = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oCaster);
-    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    PRCSetSchool(GetSpellSchool(PRCGetSpellId()));
     if (!X2PreSpellCastCode()) return;
     object oTarget = PRCGetSpellTargetObject();
     int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
@@ -74,5 +74,5 @@ void main()
                 DecrementSpellCharges(oCaster);
         }
     }
-    SPSetSchool();
+    PRCSetSchool();
 }

@@ -31,13 +31,13 @@ Created:   6/28/07
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
-#include "spinc_common"
+#include "prc_inc_spells"
 
 int GetBolts(int nCasterLvl);
 
 void main()
 {
-        SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+        PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
         
         if(!X2PreSpellCastCode()) return;
         
@@ -59,7 +59,7 @@ void main()
                 {
                         //Tell them they can't cast this yet
                         SendMessageToPC(oPC, "You cannot create this many beams yet!");
-                        SPSetSchool();
+                        PRCSetSchool();
                         return;
                 }
         }
@@ -71,7 +71,7 @@ void main()
                 {
                         //Tell them they can't cast this yet
                         SendMessageToPC(oPC, "You cannot create this many beams yet!");
-                        SPSetSchool();
+                        PRCSetSchool();
                         return;
                 }
         }
@@ -83,7 +83,7 @@ void main()
                 {
                         //Tell them they can't cast this yet
                         SendMessageToPC(oPC, "You cannot create this many beams yet!");
-                        SPSetSchool();
+                        PRCSetSchool();
                         return;
                 }
         }
@@ -95,7 +95,7 @@ void main()
                 {
                         //Tell them they can't cast this yet
                         SendMessageToPC(oPC, "You cannot create this many beams yet!");
-                        SPSetSchool();
+                        PRCSetSchool();
                         return;
                 }
         }
@@ -111,7 +111,7 @@ void main()
         //Must be undead
         if(nType != RACIAL_TYPE_UNDEAD)
         {
-                SPSetSchool();
+                PRCSetSchool();
                 return;
         }
         
@@ -119,13 +119,13 @@ void main()
         if(nTouch)
         {
                 //SR check
-                if(!MyPRCResistSpell(OBJECT_SELF, oTarget, (nCasterLvl + SPGetPenetr())))
+                if(!PRCDoResistSpell(OBJECT_SELF, oTarget, (nCasterLvl + SPGetPenetr())))
                 {
                         nDam = d12(nBolts);
                         ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_POSITIVE), oTarget);
                 }
         }
-        SPSetSchool();
+        PRCSetSchool();
 }
 
 

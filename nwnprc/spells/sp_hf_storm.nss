@@ -17,7 +17,7 @@ Created:
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
@@ -34,7 +34,7 @@ void main()
         //spellhook
         if(!X2PreSpellCastCode()) return;
         
-        SPSetSchool(SPELL_SCHOOL_EVOCATION);
+        PRCSetSchool(SPELL_SCHOOL_EVOCATION);
         
         //Get the spell target location as opposed to the spell target.
         location lTarget = PRCGetSpellTargetLocation();  
@@ -81,5 +81,5 @@ void main()
                 oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
         }       
         SPEvilShift(oPC);
-        SPSetSchool();
+        PRCSetSchool();
 }

@@ -14,7 +14,7 @@
 //:: VFX Pass By: Preston W, On: June 20, 2001
 
 //:: modified by mr_bumpkin Dec 4, 2003
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "NW_I0_SPELLS"
 #include "x2_inc_spellhook"
@@ -74,7 +74,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
             (nRacial == RACIAL_TYPE_HALFORC))
         {
            //Make SR Check
-           if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLevel))
+           if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nCasterLevel))
            {
                 //Make Will Save
                 if (!/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (PRCGetSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_MIND_SPELLS, OBJECT_SELF, 1.0))

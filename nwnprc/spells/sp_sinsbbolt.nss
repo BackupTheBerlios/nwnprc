@@ -1,11 +1,11 @@
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
      // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
      if (!X2PreSpellCastCode()) return;
 
-     SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+     PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
 
     // Set the lightning stream to start at the caster's hands
     effect eBolt = EffectBeam(VFX_BEAM_BLACK, OBJECT_SELF, BODY_NODE_HAND);
@@ -36,13 +36,13 @@ void main()
                if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
                     {
                          //Fire cast spell at event for the specified target
-                         SPRaiseSpellCastAt(oTarget, TRUE);
+                         PRCSignalSpellEvent(oTarget, TRUE);
 
                          //Make an SR check
-                         if (!SPResistSpell(OBJECT_SELF, oTarget,nPenetr))
+                         if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nPenetr))
                          {
                               // Roll the drain damage and adjust for a reflex save/evasion.
-                              int nDamage = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 1, 3, nBonusDam);
+                              int nDamage = PRCGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 1, 3, nBonusDam);
                               nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
                               nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget,
                                    PRCGetSaveDC(oTarget,OBJECT_SELF), SAVING_THROW_TYPE_NEGATIVE);
@@ -98,5 +98,5 @@ void main()
         oTarget2 = GetNearestObject(OBJECT_TYPE_CREATURE, OBJECT_SELF, nCnt);
      }
 
-     SPSetSchool();
+     PRCSetSchool();
 }

@@ -17,7 +17,7 @@
 
 #include "x2_i0_spells"
 #include "inc_utility"
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_inc_sp_tch"
 
 void DoPnPAttack(object oSummon)
@@ -54,7 +54,7 @@ void DoPnPAttack(object oSummon)
             AssignCommand(oSummon, DelayCommand(1.0, DeleteLocalInt(oSummon, PRC_CASTERLEVEL_OVERRIDE)));
 
             // Make SR check
-           if (!SPResistSpell(OBJECT_SELF, oTarget))
+           if (!PRCDoResistSpell(OBJECT_SELF, oTarget))
            {
                 // Generate the RTA beam.
                 AssignCommand(oSummon, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY,
@@ -68,7 +68,7 @@ void DoPnPAttack(object oSummon)
                 int nDamage = 9999;
                 if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, PRCGetSaveDC(oTarget,OBJECT_SELF), SAVING_THROW_TYPE_SPELL))
                 {
-                     nDamage = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 1 == nAttackResult ? 5 : 10, 6);
+                     nDamage = PRCGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 1 == nAttackResult ? 5 : 10, 6);
                 }
                 else
                 {
@@ -84,7 +84,7 @@ void DoPnPAttack(object oSummon)
                 // the fancy rune circle too.
                 if (nDamage >= GetCurrentHitPoints (oTarget))
                      DelayCommand(0.25, SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_SUMMON_MONSTER_2), oTarget));
-                //DelayCommand(0.25, SPApplyEffectToObject(DURATION_TYPE_INSTANT, SPEffectDamage(nDamage, DAMAGE_TYPE_MAGICAL), oTarget));
+                //DelayCommand(0.25, SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(nDamage, DAMAGE_TYPE_MAGICAL), oTarget));
                 DelayCommand(0.25, SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_MAGBLUE), oTarget));
                 ApplyTouchAttackDamage(OBJECT_SELF, oTarget, nAttackResult, nDamage, DAMAGE_TYPE_MAGICAL);
            }

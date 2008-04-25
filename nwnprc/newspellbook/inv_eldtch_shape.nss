@@ -3,7 +3,7 @@
 //:: FileName  inv_eldtch_blast.nss
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "inv_inc_invfunc"
 
 //internal function for delayed damage
@@ -299,7 +299,7 @@ void main()
             if(nDamage > 0)
             {
                 //Make SR Check
-                if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nPenetr) && 
+                if(!PRCDoResistSpell(OBJECT_SELF, oTarget, nPenetr) && 
                    !(nEssence == INVOKE_VITRIOLIC_BLAST && !nEssence2))
                 {
                      // perform ranged touch attack

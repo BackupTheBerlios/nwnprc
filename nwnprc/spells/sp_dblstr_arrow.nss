@@ -32,14 +32,14 @@ Created:
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_craft_inc"
 
 void main()
 {
         if(!X2PreSpellCastCode()) return;
                 
-        SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+        PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
         
         object oPC = OBJECT_SELF;
         object oTarget = PRCGetSpellTargetObject();
@@ -60,7 +60,7 @@ void main()
         
         else
         {
-                SPSetSchool();
+                PRCSetSchool();
                 return;
         } 
         
@@ -69,7 +69,7 @@ void main()
         
         if((!(GetMaterialString(StringToInt(sMaterial)) == sMaterial && sMaterial != "000") && !GetIsMagicItem(oAmmo)))
         {
-                SPSetSchool();
+                PRCSetSchool();
                 return;
         }       
         
@@ -104,5 +104,5 @@ void main()
                 else oTarget2 = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), GetLocation(oTarget), OBJECT_TYPE_CREATURE);
         }
         
-        SPSetSchool();
+        PRCSetSchool();
 }

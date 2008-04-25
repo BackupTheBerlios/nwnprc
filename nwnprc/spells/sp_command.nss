@@ -27,11 +27,11 @@ Created:   29/4/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
-	SPSetSchool(SPELL_SCHOOL_ENCHANTMENT);
+	PRCSetSchool(SPELL_SCHOOL_ENCHANTMENT);
 	
 	// Run the spellhook. 
 	if (!X2PreSpellCastCode()) return;
@@ -58,7 +58,7 @@ void main()
     	//Fire cast spell at event for the specified target
     	SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
     
-        if (!MyPRCResistSpell(OBJECT_SELF, oTarget, nCaster+SPGetPenetr()))
+        if (!PRCDoResistSpell(OBJECT_SELF, oTarget, nCaster+SPGetPenetr()))
         {
             if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
             {
@@ -68,7 +68,7 @@ void main()
             }
         }	
 	
-	SPSetSchool();
+	PRCSetSchool();
 }
 				
 				

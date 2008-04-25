@@ -74,13 +74,13 @@ Created:   6/12/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
     if(!X2PreSpellCastCode()) return;
     
-    SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+    PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
     
     object oPC = OBJECT_SELF;
     object oSkin = GetPCSkin(oPC);
@@ -155,7 +155,7 @@ void main()
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSkill, oPC, fDur);
     
     SPEvilShift(oPC);
-    SPSetSchool();
+    PRCSetSchool();
 }
         
         

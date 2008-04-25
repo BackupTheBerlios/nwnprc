@@ -30,19 +30,19 @@ Created:   6/28/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+	PRCSetSchool(SPELL_SCHOOL_EVOCATION);
 	
 	object oPC = OBJECT_SELF;
 	location lLoc = GetLocation(oPC);
 	object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, 24.38f, lLoc, FALSE, OBJECT_TYPE_CREATURE);
 	int nCasterLvl = PRCGetCasterLevel(oPC);
-	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+	int nDC = PRCGetSaveDC(oTarget, oPC);
 	int nAlign;
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	
@@ -51,7 +51,7 @@ void main()
 	
 	while(GetIsObjectValid(oTarget))
 	{
-		if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
+		if(!PRCDoResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
 		{
 			nAlign = GetAlignmentGoodEvil(oTarget);
 			
@@ -90,7 +90,7 @@ void main()
 	
 	SPGoodShift(oPC);
 	DoCorruptionCost(oPC, ABILITY_STRENGTH, d3(1), 1);
-	SPSetSchool();
+	PRCSetSchool();
 }
 		
 				

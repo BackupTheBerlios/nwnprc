@@ -57,7 +57,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 
 
@@ -218,7 +218,7 @@ void main()
                 if(CheckRace(manif, oMainTarget))
                 {
                     // Let the AI know
-                    SPRaiseSpellCastAt(oMainTarget, TRUE, manif.nSpellID, oManifester);
+                    PRCSignalSpellEvent(oMainTarget, TRUE, manif.nSpellID, oManifester);
 
                     if(PRCMyResistPower(oManifester, oMainTarget, nPen))
                     {
@@ -257,7 +257,7 @@ void main()
                        CheckRace(manif, oAreaTarget))
                     {
                         // Let the AI know
-                        SPRaiseSpellCastAt(oAreaTarget, TRUE, manif.nSpellID, oManifester);
+                        PRCSignalSpellEvent(oAreaTarget, TRUE, manif.nSpellID, oManifester);
 
                         if(PRCMyResistPower(oManifester, oAreaTarget, nPen))
                         {

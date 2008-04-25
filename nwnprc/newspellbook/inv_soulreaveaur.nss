@@ -1,6 +1,6 @@
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "inv_inc_invfunc"
 #include "inv_invokehook"
 
@@ -43,7 +43,7 @@ void main()
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(oPC, INVOKE_SOULREAVING_AURA));
             
-            if(!MyPRCResistSpell(oPC, oTarget,nPenetr))
+            if(!PRCDoResistSpell(oPC, oTarget,nPenetr))
             {
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(1), oTarget);
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);

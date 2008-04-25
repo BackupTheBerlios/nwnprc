@@ -52,14 +52,14 @@ Corruption Cost: 1d6 points of Dexterity damage.
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	// Run the spellhook. 
 	if (!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+	PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
 	
 	//vars
 	object oPC = OBJECT_SELF;
@@ -114,5 +114,5 @@ void main()
 	AdjustAlignment(oPC, ALIGNMENT_EVIL, 10);
 	
 	SPEvilShift(oPC);
-	SPSetSchool();
+	PRCSetSchool();
 }

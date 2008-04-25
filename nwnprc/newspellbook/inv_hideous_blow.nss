@@ -3,7 +3,7 @@
 //:: FileName  inv_hideous_blow.nss
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "inv_inc_invfunc"
 #include "prc_inc_combat"
 
@@ -245,7 +245,7 @@ void main()
         if(iAttackRoll > 0)
         {
             //Make SR Check
-            if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nPenetr) && 
+            if(!PRCDoResistSpell(OBJECT_SELF, oTarget, nPenetr) && 
                !(nEssence == INVOKE_VITRIOLIC_BLAST && !nEssence2))
             {
                  // perform ranged touch attack and apply sneak attack if any exists

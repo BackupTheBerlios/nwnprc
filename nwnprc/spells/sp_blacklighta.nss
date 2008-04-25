@@ -12,11 +12,11 @@
 //:: Created On: Feb 28, 2002
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
-    SPSetSchool(SPELL_SCHOOL_EVOCATION);
+    PRCSetSchool(SPELL_SCHOOL_EVOCATION);
     ActionDoCommand(SetAllAoEInts(SPELL_BLACKLIGHT ,OBJECT_SELF, GetSpellSaveDC()));
     
     int nMetaMagic = PRCGetMetaMagicFeat();
@@ -51,7 +51,7 @@ void main()
         {
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_DARKNESS));
             //Make SR Check
-            if (!MyPRCResistSpell(OBJECT_SELF, oTarget,SPGetPenetrAOE(GetAreaOfEffectCreator())))
+            if (!PRCDoResistSpell(OBJECT_SELF, oTarget,SPGetPenetrAOE(GetAreaOfEffectCreator())))
             {
             	if (!iShadow)
             	  //Fire cast spell at event for the specified target
@@ -75,5 +75,5 @@ void main()
 
     }
     
-    SPSetSchool();
+    PRCSetSchool();
 }

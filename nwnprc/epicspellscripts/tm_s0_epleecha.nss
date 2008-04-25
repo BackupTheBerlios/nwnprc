@@ -59,7 +59,7 @@ void main()
         }
         else
         {
-            if( !MyPRCResistSpell(oCaster, oTarget, GetTotalCastingLevel(oCaster)+SPGetPenetr(oCaster), fDelay) )
+            if( !PRCDoResistSpell(oCaster, oTarget, GetTotalCastingLevel(oCaster)+SPGetPenetr(oCaster), fDelay) )
             {
                 // Debug message.
                 SendMessageToPC(oCaster, "Not resisted.");

@@ -22,7 +22,7 @@ void main()
 
     if(oTarget != oCaster)
     {
-        if(!MyPRCResistSpell(oCaster, oTarget, SPGetPenetrAOE(GetAreaOfEffectCreator(), nCasterLvl))
+        if(!PRCDoResistSpell(oCaster, oTarget, SPGetPenetrAOE(GetAreaOfEffectCreator(), nCasterLvl))
            && GetHitDice(oTarget) < 6)
     	{
     		//save

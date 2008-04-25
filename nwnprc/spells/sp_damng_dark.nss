@@ -36,12 +36,12 @@ Created:
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
     
-    SPSetSchool(SPELL_SCHOOL_EVOCATION);
+    PRCSetSchool(SPELL_SCHOOL_EVOCATION);
             
     if(!X2PreSpellCastCode()) return;
     
@@ -73,6 +73,6 @@ void main()
     
     SPEvilShift(oPC);
     
-    SPSetSchool();
+    PRCSetSchool();
     
 }

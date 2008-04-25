@@ -16,7 +16,7 @@ NOTE: Official rules say +6, we can only go to +5
 //:: VFX Pass By:
 
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "prc_alterations"
 

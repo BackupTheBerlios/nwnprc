@@ -1,11 +1,11 @@
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
     // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
     if (!X2PreSpellCastCode()) return;
     
-    SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+    PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
     object oTarget = GetSpellTargetObject();
     int nCasterLvl = PRCGetCasterLevel();
     int nMetaMagic = PRCGetMetaMagicFeat();
@@ -31,7 +31,7 @@ void main()
         if (nMissiles > 7) nMissiles = 7;
 
         //Make SR Check
-        if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
+        if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nPenetr))
         {
             //Apply a single damage hit for each missile instead of as a single mass
             for (nCnt = 1; nCnt <= nMissiles; nCnt++)
@@ -91,6 +91,6 @@ void main()
         }
 
 
-        SPSetSchool();
+        PRCSetSchool();
     
 }

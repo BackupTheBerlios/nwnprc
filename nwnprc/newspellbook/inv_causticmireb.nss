@@ -34,7 +34,7 @@ void main()
     effect eLink = EffectLinkEffects(eDam, EffectVisualEffect(VFX_IMP_ACID_S));
     int nPenetr = SPGetPenetrAOE(GetAreaOfEffectCreator(), CasterLvl);
     
-    if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
+    if(!PRCDoResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr))
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink, oTarget);
         
     DeleteLocalLocation(oTarget, "LastMirePos");

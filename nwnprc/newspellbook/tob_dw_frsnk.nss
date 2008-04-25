@@ -61,7 +61,7 @@ void main()
                    )
                 {
                     // Let the AI know
-                    SPRaiseSpellCastAt(oTarget, TRUE, move.nMoveId, oInitiator);
+                    PRCSignalSpellEvent(oTarget, TRUE, move.nMoveId, oInitiator);
                         // Roll damage
                         int nDamage = d6(6);
 

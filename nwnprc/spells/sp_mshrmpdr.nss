@@ -11,7 +11,7 @@ Created:   5/23/06
 //:://////////////////////////////////////////////
 // Mushroom powder initial effects and side effects
 
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_inc_drugfunc"
 
 void main()

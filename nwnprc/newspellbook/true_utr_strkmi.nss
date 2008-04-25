@@ -74,7 +74,7 @@ void main()
         else // UTTER_STRIKE_MIGHT_R
         {
 		// If the Spell Penetration fails, don't apply any effects
-		nSRCheck = MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen);
+		nSRCheck = PRCDoResistSpell(oTrueSpeaker, oTarget, utter.nPen);
 		if (!nSRCheck)
 		{
 			// Damage Decrease

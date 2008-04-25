@@ -26,11 +26,11 @@ Created:   5/14/06
 //:://////////////////////////////////////////////
 
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
-	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+	PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
 	
 	// Run the spellhook. 
 	if (!X2PreSpellCastCode()) return;
@@ -43,7 +43,7 @@ void main()
 	int nTouch = PRCDoMeleeTouchAttack(oTarget);
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	
-	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_SHIVERING_TOUCH, oPC);
+	PRCSignalSpellEvent(oTarget, TRUE, SPELL_SHIVERING_TOUCH, oPC);
 	
 	if (nMetaMagic == METAMAGIC_EXTEND)
 	{
@@ -63,7 +63,7 @@ void main()
 	if(nTouch > 0)
 	{
 		//Check Spell Resistance
-		if (!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+		if (!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 		{
 			effect eDrain = EffectAbilityDecrease(ABILITY_DEXTERITY, nDam);
 			effect eVis = EffectVisualEffect(VFX_IMP_FROST_L);
@@ -72,5 +72,5 @@ void main()
 			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDrain, oTarget, fDuration);
 		}
 	}
-	SPSetSchool();
+	PRCSetSchool();
 }

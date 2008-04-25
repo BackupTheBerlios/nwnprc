@@ -38,7 +38,7 @@ const int SPELLID_TELEPORT_PARTY     = 2895;
 void main()
 {
     // Set the spell school
-    SPSetSchool(SPELL_SCHOOL_CONJURATION);
+    PRCSetSchool(SPELL_SCHOOL_CONJURATION);
     // Spellhook
     if(!X2PreSpellCastCode()) return;
 
@@ -49,5 +49,5 @@ void main()
 
     Teleport(oCaster, nCasterLvl, nSpellID == SPELLID_TELEPORT_PARTY, TRUE, "");
 
-    SPSetSchool();
+    PRCSetSchool();
 }

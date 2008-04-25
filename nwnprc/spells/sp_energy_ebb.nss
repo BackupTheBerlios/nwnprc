@@ -37,7 +37,6 @@
  
  
 #include "prc_alterations"
-#include "spinc_common"
 #include "prc_inc_spells"
 
 
@@ -65,7 +64,7 @@ void Ebb(object oTarget, int nRounds)
  
 void main()
 {
-    SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+    PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
     
     //Spellhook
     if (!X2PreSpellCastCode()) return;
@@ -75,7 +74,7 @@ void main()
     object oTarget = GetSpellTargetObject();
     int nMetaMagic = PRCGetMetaMagicFeat();
  
-    SPRaiseSpellCastAt(oTarget, TRUE, SPELL_ENERGY_EBB, oPC);
+    PRCSignalSpellEvent(oTarget, TRUE, SPELL_ENERGY_EBB, oPC);
  
     //if undead
     if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD)
@@ -91,7 +90,7 @@ void main()
     //not undead
     else 
     {
-        int nDC = SPGetSpellSaveDC(oTarget, oPC);
+        int nDC = PRCGetSaveDC(oTarget, oPC);
         
         //Get nLevel = rounds remaining
         int nRounds = PRCGetCasterLevel(oPC);
@@ -109,5 +108,5 @@ void main()
     
     SPEvilShift(oPC);
     
-    SPSetSchool();
+    PRCSetSchool();
 } 

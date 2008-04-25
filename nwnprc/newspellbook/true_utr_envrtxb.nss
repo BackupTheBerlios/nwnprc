@@ -48,7 +48,7 @@ void main()
         //Fire cast spell at event for the target
     	SignalEvent(oTarget, EventSpellCastAt(GetAreaOfEffectCreator(), UTTER_ENERGY_VORTEX_ACID));
         //Spell resistance check
-        if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPen))
+        if(!PRCDoResistSpell(GetAreaOfEffectCreator(), oTarget,nPen))
         {
            nDamage = d6(2);
            if (GetLocalInt(GetAreaOfEffectCreator(), "UtterEnergyVortexEmpower"))

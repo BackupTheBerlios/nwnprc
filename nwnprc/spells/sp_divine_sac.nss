@@ -27,13 +27,13 @@ Created:   6/22/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+	PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
 	
 	object oPC = OBJECT_SELF;
 	int nCasterLvl = PRCGetCasterLevel(oPC);
@@ -83,7 +83,7 @@ void main()
 	
 	AddEventScript(oPC, EVENT_ONHIT, "prc_evnt_dvnsac", FALSE, FALSE);
 	
-	SPSetSchool();
+	PRCSetSchool();
 }
 		
 	

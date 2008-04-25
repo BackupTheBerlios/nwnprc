@@ -26,7 +26,7 @@ Created:   05/03/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 
 void main()
@@ -43,7 +43,7 @@ void main()
         
         //Spellhook
         if(!X2PreSpellCastCode()) return;
-        SPSetSchool(SPELL_SCHOOL_EVOCATION);
+        PRCSetSchool(SPELL_SCHOOL_EVOCATION);
                 
         //Apply the fireball explosion at the location captured above.
         ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eExplode, lLoc);
@@ -56,7 +56,7 @@ void main()
         {
                 if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
                 {
-                        if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+                        if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
                         {
                                 //Roll damage for each target
                                 nDamage = d6(3);
@@ -83,7 +83,7 @@ void main()
         }
         
         SPEvilShift(oPC);
-        SPSetSchool();
+        PRCSetSchool();
 }
                 
         

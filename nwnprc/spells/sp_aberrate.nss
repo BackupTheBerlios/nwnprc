@@ -28,7 +28,8 @@ Created:
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
+#include "x2_inc_spellhook"
 
 void main()
 {   
@@ -39,22 +40,22 @@ void main()
     int nMetaMagic = PRCGetMetaMagicFeat();
     float fDur = (600.0f * nCasterLvl);
     int bFriendly = TRUE;
-    int nDC = SPGetSpellSaveDC(oTarget, oPC);
+    int nDC = PRCGetSaveDC(oTarget, oPC);
     if(oPC == oTarget) bFriendly = FALSE;
     
     
     //spellhook
     if(!X2PreSpellCastCode()) return;
     
-    SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+    PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
     
     //Signal spell firing 
-    SPRaiseSpellCastAt(oTarget, bFriendly, SPELL_ABERRATE, oPC);
+    PRCSignalSpellEvent(oTarget, bFriendly, SPELL_ABERRATE, oPC);
     
     //if friendly
     if(GetIsReactionTypeFriendly(oTarget, oPC) || 
     //or failed SR check
-    (!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr())))
+    (!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr())))
     {
         //if friendly
         if(GetIsReactionTypeFriendly(oTarget, oPC) || 
@@ -82,7 +83,7 @@ void main()
     }
     
     SPEvilShift(oPC);
-    SPSetSchool();
+    PRCSetSchool();
 }
     
     

@@ -10,11 +10,11 @@
 //:: Created On: 3/24/06
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
-	SPSetSchool(SPELL_SCHOOL_CONJURATION);
+	PRCSetSchool(SPELL_SCHOOL_CONJURATION);
 	ActionDoCommand(SetAllAoEInts(SPELL_CLOUD_OF_THE_ACHAIERAI, OBJECT_SELF, GetSpellSaveDC()));
 	
 	//Declare major variables
@@ -42,5 +42,5 @@ void main()
 			eAOE = GetNextEffect(oTarget);
 		}
 	}	
-	SPSetSchool();
+	PRCSetSchool();
 }

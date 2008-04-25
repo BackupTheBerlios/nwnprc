@@ -15,7 +15,7 @@
 
 
 //:: modified by mr_bumpkin Dec 4, 2003
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "prc_alterations"
 #include "x2_inc_spellhook"
@@ -64,7 +64,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             // According to the book, SR Does not count against creeping doom
             //------------------------------------------------------------------
             //Spell resistance check
-//            if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget, fDelay))
+//            if(!PRCDoResistSpell(GetAreaOfEffectCreator(), oTarget, fDelay))
 //            {
                 SignalEvent(oTarget,EventSpellCastAt(GetAreaOfEffectCreator(), SPELL_CREEPING_DOOM));
                 //Roll Damage

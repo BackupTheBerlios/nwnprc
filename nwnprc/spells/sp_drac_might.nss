@@ -29,13 +29,13 @@ Created:   6/28/07
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
         if(!X2PreSpellCastCode()) return;
         
-        SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+        PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
         
         object oPC = OBJECT_SELF;
         object oTarget = PRCGetSpellTargetObject();
@@ -47,7 +47,7 @@ void main()
            
            {
                    SendMessageToPC(oPC, "This spell must be cast on a living target");
-                   SPSetSchool();
+                   PRCSetSchool();
                    return;
            }
         
@@ -87,5 +87,5 @@ void main()
         
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur, TRUE, SPELL_DRACONIC_MIGHT, nCasterLvl);
         
-        SPSetSchool();
+        PRCSetSchool();
 }      

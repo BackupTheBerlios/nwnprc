@@ -10,7 +10,7 @@
 //:: Created On: 3/24/06
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
@@ -35,5 +35,5 @@ void main()
 			eAOE = GetNextEffect(oTarget);
 		}
 	}	
-	SPSetSchool();
+	PRCSetSchool();
 }

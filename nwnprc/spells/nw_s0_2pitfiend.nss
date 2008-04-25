@@ -11,7 +11,7 @@
 //:: Created On: April 11, 2002
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {

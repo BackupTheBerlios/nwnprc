@@ -25,25 +25,25 @@ Created:   05/02/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
     object oPC = OBJECT_SELF;
     object oTarget = GetSpellTargetObject();
     int nCasterLvl = PRCGetCasterLevel(oPC);
-    int nDC = SPGetSpellSaveDC(oTarget, oPC);
+    int nDC = PRCGetSaveDC(oTarget, oPC);
     float fDur = RoundsToSeconds(nCasterLvl);
     effect eVis = EffectVisualEffect(VFX_DUR_GLOW_BLUE);
 
     //spellhook
     if(!X2PreSpellCastCode()) return;
 
-    SPSetSchool(SPELL_SCHOOL_ENCHANTMENT);
+    PRCSetSchool(SPELL_SCHOOL_ENCHANTMENT);
 
-        SPRaiseSpellCastAt(oTarget,TRUE, SPELL_SORROW, oPC);
+        PRCSignalSpellEvent(oTarget,TRUE, SPELL_SORROW, oPC);
 
-    if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+    if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
     {
         //Save
         if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
@@ -59,5 +59,5 @@ void main()
     }
 
     SPEvilShift(oPC);
-    SPSetSchool();
+    PRCSetSchool();
 }

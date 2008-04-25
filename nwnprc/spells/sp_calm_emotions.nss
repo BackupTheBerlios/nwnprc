@@ -30,13 +30,13 @@ or do anything destructive.
 void DoConcLoop(object oPC, float fDur, int nCounter);
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_ENCHANTMENT);
+	PRCSetSchool(SPELL_SCHOOL_ENCHANTMENT);
 	
 	object oPC = OBJECT_SELF;
 	effect eAoE = EffectAreaOfEffect(AOE_PER_CALM_EMOTIONS);
@@ -57,7 +57,7 @@ void main()
 	//Start conc monitor
 	DoConcLoop(oPC, fDur, nCounter);
 	
-	SPSetSchool();
+	PRCSetSchool();
 }
 
 void DoConcLoop(object oPC, float fDur, int nCounter)

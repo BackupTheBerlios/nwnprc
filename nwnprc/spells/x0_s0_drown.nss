@@ -20,7 +20,7 @@ May 2003:
 //:: Last Update By: Andrew Nobbs May 01, 2003
 
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "NW_I0_SPELLS"
 #include "x2_inc_spellhook"
@@ -60,7 +60,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, 437));
         //Make SR Check
-        if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLevel))
+        if(!PRCDoResistSpell(OBJECT_SELF, oTarget,nCasterLevel))
         {
             // * certain racial types are immune
             if ((MyPRCGetRacialType(oTarget) != RACIAL_TYPE_CONSTRUCT)

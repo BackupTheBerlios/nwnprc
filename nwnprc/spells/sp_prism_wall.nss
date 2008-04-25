@@ -66,13 +66,13 @@ Created:   7/6/07
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
         if(!X2PreSpellCastCode()) return;
         
-        SPSetSchool(SPELL_SCHOOL_ABJURATION);
+        PRCSetSchool(SPELL_SCHOOL_ABJURATION);
         
         object oPC = OBJECT_SELF;
         location lLoc = GetSpellTargetLocation();
@@ -85,7 +85,7 @@ void main()
         
         ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAoE, lLoc, fDur);
         
-        SPSetSchool();
+        PRCSetSchool();
 }
         
         

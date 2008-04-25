@@ -85,7 +85,7 @@ void main()
         else /* Effects of UTTER_INERTIAL_SURGE_R go here */
         {
         	// If the Spell Penetration fails, don't apply any effects
-        	nSRCheck = MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen);
+        	nSRCheck = PRCDoResistSpell(oTrueSpeaker, oTarget, utter.nPen);
         	if (!nSRCheck)
         	{
        			// Hold the Target

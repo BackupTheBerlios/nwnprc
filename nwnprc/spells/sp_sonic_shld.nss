@@ -22,20 +22,20 @@ takes an extra 1d8 points of sonic damage.
 **/
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+	PRCSetSchool(SPELL_SCHOOL_EVOCATION);
 	
 	object oPC = OBJECT_SELF;
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	float fDur = RoundsToSeconds(nCasterLvl);
 	
-	SPRaiseSpellCastAt(oPC, FALSE, SPELL_SONIC_SHIELD, oPC);
+	PRCSignalSpellEvent(oPC, FALSE, SPELL_SONIC_SHIELD, oPC);
 		
 	if(nMetaMagic == METAMAGIC_EXTEND)
 	{
@@ -55,6 +55,6 @@ void main()
 	//Add event script
 	AddEventScript(oPC, EVENT_ONHIT, "prc_evnt_snshld", TRUE, FALSE);		
 	
-	SPSetSchool();
+	PRCSetSchool();
 }
 	

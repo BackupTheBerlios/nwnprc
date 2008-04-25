@@ -13,7 +13,7 @@
 //:://////////////////////////////////////////////
 
 //:: modified by mr_bumpkin Dec 4, and 15, 2003 for PRC stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "x2_inc_spellhook"
 

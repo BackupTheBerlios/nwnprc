@@ -38,7 +38,7 @@ A drop of sweat.
 //::////////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_sp_func"
 
 int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
@@ -53,7 +53,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 		fDur += fDur;
 	}
 	
-	SPRaiseSpellCastAt(oTarget, TRUE);
+	PRCSignalSpellEvent(oTarget, TRUE);
 	
 	//INSERT SPELL CODE HERE
 	int iAttackRoll = PRCDoMeleeTouchAttack(oTarget);
@@ -64,7 +64,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 	if (iAttackRoll > 0)
 	{
 		//Touch attack code goes here
-		if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nPenetr))
+		if(!PRCDoResistSpell(OBJECT_SELF, oTarget, nPenetr))
 		{
 			effect eSpeed = EffectMovementSpeedDecrease(50);
 			int nDrain = 6;
@@ -74,7 +74,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 			{
 				if(GetHasMettle(oTarget, SAVING_THROW_FORT))
 				{
-					SPSetSchool();
+					PRCSetSchool();
 					return iAttackRoll;
 				}
 				
@@ -98,7 +98,7 @@ void main()
 {
 	object oCaster = OBJECT_SELF;
 	int nCasterLevel = PRCGetCasterLevel(oCaster);
-	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+	PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
 	if (!X2PreSpellCastCode()) return;
 	object oTarget = PRCGetSpellTargetObject();
 	int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
@@ -120,5 +120,5 @@ void main()
 			DecrementSpellCharges(oCaster);
 		}
 	}
-	SPSetSchool();
+	PRCSetSchool();
 }

@@ -29,7 +29,7 @@ void main()
         !GetIsDM(oTarget))
     {
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_INCENDIARY_CLOUD) );
-        if(!MyPRCResistSpell(oCaster, oTarget, GetTotalCastingLevel(oCaster)+SPGetPenetr(oCaster), fDelay))
+        if(!PRCDoResistSpell(oCaster, oTarget, GetTotalCastingLevel(oCaster)+SPGetPenetr(oCaster), fDelay))
         {
             fDelay = GetRandomDelay(0.5, 2.0);
             nDamage = d6(1);

@@ -27,7 +27,7 @@ snow, or water.
 //  Tenjac   10/1/07
 //////////////////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void ColdLoop(object oTarget, int nSave, int nCount, int nMetaMagic);
 
@@ -35,19 +35,19 @@ void main()
 {
         if(!X2PreSpellCastCode()) return;
         
-        SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+        PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
         
         object oPC = OBJECT_SELF;
         object oTarget = PRCGetSpellTargetObject();
         int nCasterLvl = PRCGetCasterLevel(oPC);
-        int nDC = SPGetSpellSaveDC(oTarget, oPC);
+        int nDC = PRCGetSaveDC(oTarget, oPC);
         int nSave = PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_COLD);
         
-        if(!MyPRCResistSpell(oTarget, oPC, nCasterLvl + SPGetPenetr()))
+        if(!PRCDoResistSpell(oTarget, oPC, nCasterLvl + SPGetPenetr()))
         {
                 ColdLoop(oTarget, nDC, 1, PRCGetMetaMagicFeat());
         }
-        SPSetSchool();
+        PRCSetSchool();
 }
 
 void ColdLoop(object oTarget, int nSave, int nCount, int nMetaMagic)

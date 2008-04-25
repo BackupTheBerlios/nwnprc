@@ -29,17 +29,15 @@ Focus: Caster must possess a mother cyst.
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common" 
+#include "prc_inc_spells" 
 #include "spinc_necro_cyst"
-#include "inc_item_props"
 #include "inc_utility"
-#include "prc_inc_spells"
 
 void main()
 {
 	
 	// Set the spellschool
-	SPSetSchool(SPELL_SCHOOL_NECROMANCY); 
+	PRCSetSchool(SPELL_SCHOOL_NECROMANCY); 
 	
 	// Run the spellhook. 
 	if (!X2PreSpellCastCode()) return;
@@ -87,7 +85,7 @@ void main()
 	
 	//Apply all effects
 	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, fDuration);
-	SPSetSchool();
+	PRCSetSchool();
 	
 	SPEvilShift(oPC);
 }

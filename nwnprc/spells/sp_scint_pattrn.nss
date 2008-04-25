@@ -45,13 +45,13 @@ Created:   7/6/07
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
         if(!X2PreSpellCastCode()) return;
         
-        SPSetSchool(SPELL_SCHOOL_ILLUSION);
+        PRCSetSchool(SPELL_SCHOOL_ILLUSION);
         
         object oPC = OBJECT_SELF;
         object oTarget;
@@ -140,7 +140,7 @@ void main()
                 if(GetIsObjectValid(oLowest))
                 {
                         // Fire cast spell at event for the specified target
-                        SPRaiseSpellCastAt(oLowest, TRUE, SPELL_SCINTILLATING_PATTERN, oPC);
+                        PRCSignalSpellEvent(oLowest, TRUE, SPELL_SCINTILLATING_PATTERN, oPC);
                         
                         // Set a local int to make sure the creature is not used twice in the
                         // pass.  Destroy that variable in 0.1 seconds to remove it from
@@ -149,7 +149,7 @@ void main()
                         DelayCommand(0.1, DeleteLocalInt(oLowest, sSpellLocal));
                                         
                         // Make SR check, immunity check
-                        if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()) && !GetIsImmune(oLowest, IMMUNITY_TYPE_MIND_SPELLS))
+                        if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()) && !GetIsImmune(oLowest, IMMUNITY_TYPE_MIND_SPELLS))
                         {
                                 // No save! But effects based on HD
                                 if(nLow <= 6)

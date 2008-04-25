@@ -21,7 +21,7 @@
 //:://////////////////////////////////////////////
 
 //:: modified by mr_bumpkin Dec 4, 2003 for prc stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 
 
 #include "x2_I0_SPELLS"
@@ -114,7 +114,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                  DelayCommand(fDelay,SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBeam,oTarget,1.5f));
             }
 
-            if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
+            if (!PRCDoResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
             {
 
                 int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);

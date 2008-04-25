@@ -31,13 +31,13 @@ Focus: A piece of shell from a tortoise or a turtle.
 /////////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_ABJURATION);
+	PRCSetSchool(SPELL_SCHOOL_ABJURATION);
 	
 	object oPC = OBJECT_SELF;
 	object oTarget = GetSpellTargetObject();
@@ -50,12 +50,12 @@ void main()
 		fDur += fDur;
 	}
 		
-	SPRaiseSpellCastAt(oTarget,FALSE, SPELL_PROTECTION_FROM_ARROWS, oPC);
+	PRCSignalSpellEvent(oTarget,FALSE, SPELL_PROTECTION_FROM_ARROWS, oPC);
 	
 	// Damage Resistance 10 piercing, max of 100 total
 	effect eBuff = EffectLinkEffects(EffectDamageResistance(DAMAGE_TYPE_PIERCING, 10, min((10 * nCasterLvl), 100)), EffectVisualEffect(VFX_DUR_PROTECTION_ARROWS));
 	
 	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBuff, oTarget, fDur);
 	
-	SPSetSchool();
+	PRCSetSchool();
 }

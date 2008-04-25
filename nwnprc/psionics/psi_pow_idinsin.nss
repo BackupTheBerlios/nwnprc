@@ -36,7 +36,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 void main()
 {
@@ -88,7 +88,7 @@ void main()
         {
             /* Affect the main target */
             // Let the AI know
-            SPRaiseSpellCastAt(oMainTarget, TRUE, manif.nSpellID, oManifester);
+            PRCSignalSpellEvent(oMainTarget, TRUE, manif.nSpellID, oManifester);
 
             // Check for Power Resistance
             if(PRCMyResistPower(oManifester, oMainTarget, nPen))
@@ -115,7 +115,7 @@ void main()
                        )
                     {
                         // Let the AI know
-                        SPRaiseSpellCastAt(oSecondaryTarget, TRUE, manif.nSpellID, oManifester);
+                        PRCSignalSpellEvent(oSecondaryTarget, TRUE, manif.nSpellID, oManifester);
 
                         // Check for Power Resistance
                         if(PRCMyResistPower(oManifester, oSecondaryTarget, nPen))

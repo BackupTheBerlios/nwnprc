@@ -22,7 +22,7 @@
 
 #include "prc_alterations"
 #include "inc_poison"
-#include "spinc_common"
+#include "prc_inc_spells"
 
 
 void main()

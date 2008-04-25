@@ -17,7 +17,7 @@
 //:: the Lightning part seemed like the better of the 2 to go with because it accounts for more
 //:: of the total damage than the acid does.
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "X0_I0_SPELLS"
 #include "x2_inc_spellhook"
@@ -58,7 +58,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             SignalEvent(oTarget, EventSpellCastAt(GetAreaOfEffectCreator(), SPELL_STORM_OF_VENGEANCE));
             //Make an SR Check
             fDelay = GetRandomDelay(0.5, 2.0);
-            if(MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr, fDelay) == 0)
+            if(PRCDoResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr, fDelay) == 0)
             {
                 int nDC = PRCGetSaveDC(oTarget,GetAreaOfEffectCreator());
 

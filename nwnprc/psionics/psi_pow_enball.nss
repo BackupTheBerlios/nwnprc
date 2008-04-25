@@ -48,7 +48,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "psi_inc_enrgypow"
 
 void main()
@@ -111,7 +111,7 @@ void main()
                 if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oManifester))
                 {
                     // Let the AI know
-                    SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+                    PRCSignalSpellEvent(oTarget, TRUE, manif.nSpellID, oManifester);
                     // Make an SR check
                     if(PRCMyResistPower(oManifester, oTarget, nPen))
                     {

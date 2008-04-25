@@ -38,7 +38,7 @@ Created:   7/6/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_inc_template.nss"
 
 
@@ -46,7 +46,7 @@ void main()
 {
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+	PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
 	
 	object oPC = OBJECT_SELF;
 	int nCasterLvl = PRCGetCasterLevel(oPC);
@@ -81,9 +81,9 @@ void main()
 							//decrement the counter
 							nToBeAffected--;
 							
-							if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+							if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 							{
-								nDC = SPGetSpellSaveDC(oTarget, oPC);
+								nDC = PRCGetSaveDC(oTarget, oPC);
 								
 								if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_DEATH))
 								{
@@ -111,7 +111,7 @@ void main()
 		else SendMessageToPC(oPC, "You do not meet the casting requirements for this spell.");
 	}	
 	SPGoodShift(oPC);
-	SPSetSchool();
+	PRCSetSchool();
 }
 								
 								

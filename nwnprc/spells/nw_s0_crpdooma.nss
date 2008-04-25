@@ -15,7 +15,7 @@
 
 
 //:: modified by mr_bumpkin Dec 4, 2003
-#include "spinc_common"
+#include "prc_inc_spells"
 
 #include "X0_I0_SPELLS"
 #include "x2_inc_spellhook"
@@ -48,7 +48,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         SignalEvent(oTarget, EventSpellCastAt(aoeCreator, SPELL_CREEPING_DOOM));
         fDelay = GetRandomDelay(1.0, 1.8);
         //Spell resistance check
-        if(!MyPRCResistSpell(aoeCreator, oTarget,nPenetr, fDelay))
+        if(!PRCDoResistSpell(aoeCreator, oTarget,nPenetr, fDelay))
         {
             //Roll Damage
             nDamage = d20();

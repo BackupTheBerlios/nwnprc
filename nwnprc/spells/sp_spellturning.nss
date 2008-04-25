@@ -32,7 +32,7 @@ void main()
     object oCaster = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oCaster);
     int nSpellID = PRCGetSpellId();
-    SPSetSchool(GetSpellSchool(nSpellID));
+    PRCSetSchool(GetSpellSchool(nSpellID));
     if (!X2PreSpellCastCode()) return;
     object oTarget = PRCGetSpellTargetObject();
     float fDuration = 600.0 * nCasterLevel;
@@ -46,5 +46,5 @@ void main()
     SetLocalInt(oTarget, "PRC_SPELL_TURNING_LEVELS", nTurn);
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_SPELLTURNING), oTarget, fDuration, TRUE, -1, nCasterLevel);
     DelayCommand(6.0f, DispelMonitor(oCaster, oTarget, PRCGetSpellId(), FloatToInt(fDuration) / 6));
-    SPSetSchool();
+    PRCSetSchool();
 }

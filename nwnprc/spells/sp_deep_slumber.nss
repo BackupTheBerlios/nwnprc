@@ -11,7 +11,7 @@ This spell functions like sleep, except that it affects 10 HD of creatures.
 **/
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "x2_inc_spellhook"
 
 void main()
@@ -124,7 +124,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
             //Fire cast spell at event for the specified target
             SignalEvent(oLowest, EventSpellCastAt(OBJECT_SELF, SPELL_DEEP_SLUMBER));
             //Make SR check
-            if (!MyPRCResistSpell(OBJECT_SELF, oLowest,nPenetr))
+            if (!PRCDoResistSpell(OBJECT_SELF, oLowest,nPenetr))
             {
                 int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                 //Make Fort save

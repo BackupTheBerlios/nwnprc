@@ -13,7 +13,7 @@
 //:: Created On: October 3, 2004
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 
 
 

@@ -31,9 +31,9 @@ Created:   1/25/06
 
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "inc_abil_damage"
-
+#include "x2_inc_spellhook"
 
 void DiseaseCheck(object oTarget, object oPC)
 {
@@ -59,7 +59,7 @@ void DiseaseCheck(object oTarget, object oPC)
 
 void main()
 {   
-    SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+    PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
     
     // Run the spellhook. 
     if (!X2PreSpellCastCode()) return;
@@ -71,7 +71,7 @@ void main()
     location lLoc = GetSpellTargetLocation();
     object oTarget = MyFirstObjectInShape(SHAPE_CUBE, RADIUS_SIZE_SMALL, lLoc, FALSE, OBJECT_TYPE_CREATURE);
     
-    SPRaiseSpellCastAt(oTarget, TRUE, SPELL_ABSORB_STRENGTH, oPC);
+    PRCSignalSpellEvent(oTarget, TRUE, SPELL_ABSORB_STRENGTH, oPC);
         
         while(!GetIsDead(oTarget) && GetIsObjectValid(oTarget))
         {
@@ -127,7 +127,7 @@ void main()
     
     SPEvilShift(oPC);
     
-    SPSetSchool();
+    PRCSetSchool();
 }
 
     

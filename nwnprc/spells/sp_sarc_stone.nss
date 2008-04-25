@@ -48,7 +48,7 @@ Created:   6/25/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "inc_dynconv"
 
 void GaspGaspCroak(object oTarget, int nCounter);
@@ -59,12 +59,12 @@ void main()
 {
         if(!X2PreSpellCastCode()) return;
         
-        SPSetSchool(SPELL_SCHOOL_CONJURATION);
+        PRCSetSchool(SPELL_SCHOOL_CONJURATION);
         
         object oPC = OBJECT_SELF;
         object oTarget = PRCGetSpellTargetObject();
         string sSarc = "prc_sarc_stone";
-        int nDC = SPGetSpellSaveDC(oTarget, oPC);
+        int nDC = PRCGetSaveDC(oTarget, oPC);
         int nCasterLvl = PRCGetCasterLevel(oPC);
         
         //Save
@@ -97,7 +97,7 @@ void main()
                 //Start Suffocation function
                 GaspGaspCroak(oTarget, nCounter);                
         }
-        SPSetSchool();
+        PRCSetSchool();
 }
 
 void GaspGaspCroak(object oTarget, int nCounter)

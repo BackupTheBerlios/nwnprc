@@ -1,6 +1,6 @@
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_alterations"
 #include "inv_inc_invfunc"
 #include "inv_invokehook"
@@ -29,7 +29,7 @@ void main()
     
     if(GetIsObjectValid(oTarget) && GetObjectType(oTarget) == OBJECT_TYPE_CREATURE)
     {
-	    SPRaiseSpellCastAt(oTarget,TRUE, INVOKE_BALEFUL_UTTERANCE, OBJECT_SELF);
+	    PRCSignalSpellEvent(oTarget,TRUE, INVOKE_BALEFUL_UTTERANCE, OBJECT_SELF);
 	    
         if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_SONIC))
 		{

@@ -38,7 +38,7 @@ remaining duration of the previous one.
 //////////////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_common"
+#include "prc_inc_spells"
 #include "prc_sp_func"
 
 //Implements the spell impact, put code here
@@ -64,7 +64,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 	
 	if (iAttackRoll > 0)
 	{
-		if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLevel + SPGetPenetr()))
+		if(!PRCDoResistSpell(OBJECT_SELF, oTarget, nCasterLevel + SPGetPenetr()))
 		{
 			//Touch attack code goes here
 			int nDam = d6(4);
@@ -97,7 +97,7 @@ void main()
 {
     object oCaster = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oCaster);
-    SPSetSchool(SPELL_SCHOOL_EVOCATION);
+    PRCSetSchool(SPELL_SCHOOL_EVOCATION);
     if (!X2PreSpellCastCode()) return;
     object oTarget = PRCGetSpellTargetObject();
     int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
@@ -118,7 +118,7 @@ void main()
                 DecrementSpellCharges(oCaster);
         }
     }
-    SPSetSchool();
+    PRCSetSchool();
 }
 			
 			

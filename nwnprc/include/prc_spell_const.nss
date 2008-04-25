@@ -793,6 +793,8 @@ const int SPELL_HEAL_ANIMAL_COMPANION               = 3709;
 const int SPELL_SHADOW_ARROW                        = 3710;
 const int SPELL_SNARE                               = 3711;
 const int SPELL_SPELLSLAYER_ARROW                   = 3712;
+
+const int SPELL_DAYLIGHT                            = 2971;
    
 const int SPELL_DISGUISE_SELF_LEARN                 = 2840;          
 const int SPELL_DISGUISE_SELF_OPTIONS               = 2841;      

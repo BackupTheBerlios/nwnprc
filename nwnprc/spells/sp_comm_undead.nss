@@ -51,63 +51,62 @@ Created:   02/21/06
 
 void main()
 {
-	PRCSetSchool(SPELL_SCHOOL_CONJURATION);
-	
-	// Run the spellhook. 
-	if (!X2PreSpellCastCode()) return;
-	
-	//Define vars
-	object oPC = OBJECT_SELF;
-	object oTarget = GetSpellTargetObject();
-	int nCasterLvl = PRCGetCasterLevel(oPC);
-	int nDC = PRCGetSaveDC(oTarget, oPC);
-	effect eCharm = EffectCharmed();
-	effect eVis = EffectVisualEffect(VFX_IMP_DOMINATE_S);
-	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
-	effect eDom = EffectDominated();
-	int nMetaMagic = PRCGetMetaMagicFeat();
-	float fDuration = HoursToSeconds(24 * nCasterLvl);
-	
-	//Link charm and persistant VFX
-	effect eLink = EffectLinkEffects(eVis, eDur);
+        PRCSetSchool(SPELL_SCHOOL_CONJURATION);
+        
+        // Run the spellhook. 
+        if (!X2PreSpellCastCode()) return;
+        
+        //Define vars
+        object oPC = OBJECT_SELF;
+        object oTarget = GetSpellTargetObject();
+        int nCasterLvl = PRCGetCasterLevel(oPC);
+        int nDC = PRCGetSaveDC(oTarget, oPC);
+        effect eCharm = EffectCharmed();
+        effect eVis = EffectVisualEffect(VFX_IMP_DOMINATE_S);
+        effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
+        effect eDom = EffectCutsceneDominated();
+        int nMetaMagic = PRCGetMetaMagicFeat();
+        float fDuration = HoursToSeconds(24 * nCasterLvl);
+        
+        //Link charm and persistant VFX
+        effect eLink = EffectLinkEffects(eVis, eDur);
+        eLink = EffectLinkEffects(eLink, eCharm);
         eLink = SupernaturalEffect(eLink);
-	
-	//Link domination and persistant VFX
-	effect eLink2 = EffectLinkEffects(eVis, eDom);
-	eLink2 = EffectLinkEffects(eLink2, eDur);
-	eLink2 = SupernaturalEffect(eLink2);
-	
-	PRCSignalSpellEvent(oTarget, TRUE, SPELL_COMMAND_UNDEAD, oPC);
-	
-	if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
-	{
-		fDuration = (fDuration * 2);
-	}
-	
-	//Undead
-	if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD)
-	{
-		//Check Spell Resistance
-		if (!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
-		{
-			//Dominate mindless
-			if(GetAbilityScore(oTarget, ABILITY_INTELLIGENCE) < 11)
-			
-			{
-				DelayCommand(1.0, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink2, oTarget, fDuration));
-			}
-			
-			else
-			{
-				if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_NONE))
-				{			
-					SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration);
-					SetIsTemporaryFriend(oTarget, oPC, TRUE, fDuration);
-				}
-			}
-		}
-	}
-	PRCSetSchool();
-}
-				
-				
+        
+        //Link domination and persistant VFX
+        effect eLink2 = EffectLinkEffects(eVis, eDom);
+        eLink2 = EffectLinkEffects(eLink2, eDur);
+        eLink2 = SupernaturalEffect(eLink2);
+        
+        PRCSignalSpellEvent(oTarget, TRUE, SPELL_COMMAND_UNDEAD, oPC);
+        
+        if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+        {
+                fDuration = (fDuration * 2);
+        }
+        
+        //Undead
+        if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD)
+        {
+                //Check Spell Resistance
+                if (!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+                {
+                        //Dominate mindless
+                        if(GetAbilityScore(oTarget, ABILITY_INTELLIGENCE) < 11)
+                        
+                        {
+                                DelayCommand(1.0, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink2, oTarget, fDuration));
+                        }
+                        
+                        else
+                        {
+                                if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_NONE))
+                                {                       
+                                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration);
+                                        SetIsTemporaryFriend(oTarget, oPC, TRUE, fDuration);
+                                }
+                        }
+                }
+        }
+        PRCSetSchool();
+}                             

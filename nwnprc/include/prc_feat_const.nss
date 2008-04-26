@@ -574,6 +574,10 @@ const int FEAT_ATTUNE_GEM                              = 2472;
 const int FEAT_FORCE_PERSONALITY                       = 2457;
 const int FEAT_INSIGHTFUL_REFLEXES                     = 2458;
 const int FEAT_TACTILE_TRAPSMITH                       = 2459;
+const int FEAT_APPRAISE_MAGIC_VALUE                    = 1998;
+const int FEAT_DIVE_FOR_COVER                          = 2578;
+const int FEAT_EXTRAORDINARY_SPELL_AIM                 = 2599;
+const int FEAT_OBSCURE_LORE                            = 2615;
 
 // Complete Divine
 const int FEAT_AUGMENT_HEALING                         = 2460;
@@ -2817,3 +2821,4 @@ const int FEAT_EPIC_ARTIFICER               = 4072;
 /*//////////////////////////////////////////////////
 ////////////////   END INFUSIONS   /////////////////
 //////////////////////////////////////////////////*/
+

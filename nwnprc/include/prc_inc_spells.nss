@@ -1606,6 +1606,13 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
         DeleteLocalInt(oTarget, "BondOfLoyalty");
         }
     }
+    // Dive for Cover reroll
+    if(nSaveRoll == 0 && nSavingThrow == SAVING_THROW_REFLEX)
+    {
+        // Reroll
+        nSaveRoll = BWSavingThrow(nSavingThrow, oTarget, nDC, nSaveType, oSaveVersus, fDelay);
+	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectKnockdown(), oTarget, 6.0);
+    }    
 
     return nSaveRoll;
 }
@@ -1707,7 +1714,14 @@ int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveTy
         // Ability Used
     DeleteLocalInt(oTarget, "ZealousSurge");
     }
-
+    // Dive for Cover reroll
+    if(nDamage == nOriginalDamage)
+    {
+        // Reroll
+        nDamage = GetReflexAdjustedDamage(nDamage, oTarget, nDC, nSaveType, oSaveVersus);
+	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectKnockdown(), oTarget, 6.0);
+    }
+    
     return nDamage;
 }
 

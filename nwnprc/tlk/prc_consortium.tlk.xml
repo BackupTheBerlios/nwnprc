@@ -18852,6 +18852,22 @@ Craft Reserve: An epic artificer's craft reserve increases by 1,000 points per l
   <entry id="49906" lang="en" sex="m">STUFF</entry>
   <entry id="49907" lang="en" sex="m">STUFF</entry>
   <entry id="49908" lang="en" sex="m">STUFF</entry>
+  <entry id="49909" lang="en" sex="m">Appraise Magic Value</entry>
+  <entry id="49910" lang="en" sex="m">Type of Feat: General
+Prerequisites: Appraise 5 ranks, Lore 5 ranks, Spellcraft 5 ranks.
+Benefit: If you know that an item is magical, you can use the Appraise skill to identify the item’s properties. The DC of the Appraise check is 10 + the caster level of the item.</entry>
+  <entry id="49911" lang="en" sex="m">Dive For Cover</entry>
+  <entry id="49912" lang="en" sex="m">Type of Feat: General
+Prerequisite: Base Reflex save bonus +4.
+Benefit: If you fail a Reflex saving throw, you can immediately attempt the saving throw again. You must take the second result, whether it succeeds or fails. You become prone  immediately  after  attempting the second roll.</entry>  
+  <entry id="49913" lang="en" sex="m">Extraordinary Spell Aim</entry>
+  <entry id="49914" lang="en" sex="m">Type of Feat: General
+Prerequisite: Spellcraft 15 ranks.
+Benefit: Whenever you cast a spell with an area, you can attempt to shape the spell’s area so that one creature within the area is unaffected by the spell. To accomplish this, you must succeed on a Spellcraft check (DC 25 + spell level).</entry>  
+  <entry id="49915" lang="en" sex="m">Obscure Lore</entry>
+  <entry id="49916" lang="en" sex="m">Type of Feat: General
+Prerequisite: Bardic Knowledge class feature
+Benefit: You gain a +4 insight bonus on checks using your bardic knowledge class feature.</entry>  
   <entry id="49999" lang="en" sex="m">**** 50,000 - 50,500 reserved for Race Pack Feats ****</entry>
   <entry id="50000" lang="en" sex="m">Light Sensitivity</entry>
   <entry id="50001" lang="en" sex="m">Type of Feat: Racial

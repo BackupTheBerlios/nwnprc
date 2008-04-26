@@ -132,7 +132,7 @@ int PRCDoResistSpell(object oCaster, object oTarget, int nEffCasterLvl=0, float 
     int nResist;
 
     // Check if the archmage shape mastery applies to this target
-    if (CheckSpellfire(oCaster, oTarget) || CheckMasteryOfShapes(oCaster, oTarget))
+    if (CheckSpellfire(oCaster, oTarget) || CheckMasteryOfShapes(oCaster, oTarget) || ExtraordinarySpellAim(oCaster, oTarget))
         nResist = SPELL_RESIST_MANTLE;
     else {
         // Check immunities and mantles, otherwise ignore the result completely

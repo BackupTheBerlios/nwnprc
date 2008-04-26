@@ -78,6 +78,9 @@ int CraftingFeats(object oPC = OBJECT_SELF);
 // Stop people from taking Sudden Metamagic feats they don't have the prereqs
 int SuddenMetamagic(object oPC = OBJECT_SELF);
 
+// This is for feats that have more than two skill requirements. It's fairly generic
+int SkillRequirements(object oPC = OBJECT_SELF);
+
 // ---------------
 // BEGIN FUNCTIONS
 // ---------------
@@ -997,6 +1000,23 @@ int Blightbringer(object oPC = OBJECT_SELF)
         return TRUE;
 }
 
+int SkillRequirements(object oPC = OBJECT_SELF)
+{
+    // You should only have the Blightbringer domain as a bonus domain
+    if (GetHasFeat(FEAT_APPRAISE_MAGIC_VALUE, oPC) && GetSkillRank(SKILL_SPELLCRAFT, oPC) < 5)
+    {
+            FloatingTextStringOnCreature("You need at least 5 ranks of Spellcraft to select this feat", oPC, FALSE);
+            return FALSE;
+    }
+    if (GetHasFeat(FEAT_DIVE_FOR_COVER, oPC) && GetReflexSavingThrow(oPC) < 4)
+    {
+            FloatingTextStringOnCreature("You need a Reflex save of at least 4 to select this feat", oPC, FALSE);
+            return FALSE;
+    }    
+
+        return TRUE;
+}
+
 int CraftingFeats(object oPC = OBJECT_SELF)
 {
     int nCasterLvl     = max(GetCasterLvl(TYPE_ARCANE, oPC), GetCasterLvl(TYPE_DIVINE, oPC)),
@@ -1895,6 +1915,7 @@ void main()
          || !Shaman(oPC)
          || !RacialFeats(oPC)
          || !WarlockFeats(oPC)
+         || !SkillRequirements(oPC)
        )
     {
        int nHD = GetHitDice(oPC);

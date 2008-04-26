@@ -98,6 +98,26 @@ int CheckMasteryOfShapes(object oCaster, object oTarget)
     return bRetVal;
 }
 
+int ExtraordinarySpellAim(object oCaster, object oTarget)
+{
+    int bRetVal = FALSE;
+
+    // This variable should not be set without the feat being available.
+    // If someone wants to cheat, let them.
+    if (GetHasFeat(FEAT_EXTRAORDINARY_SPELL_AIM, oCaster) && 
+        GetIsReactionTypeFriendly(oTarget, oCaster) &&
+        !GetLocalInt(oCaster, "ExtraordinarySpellAim"))
+    {
+    	// Only once per spell
+    	SetLocalInt(oCaster, "ExtraordinarySpellAim", TRUE);
+    	DelayCommand(1.0, DeleteLocalInt(oCaster, "ExtraordinarySpellAim"));
+    	if (GetIsSkillSuccessful(oCaster, SKILL_SPELLCRAFT, 25 + PRCGetSpellLevel(oCaster, PRCGetSpellId())))
+        	bRetVal = TRUE;
+    }
+
+    return bRetVal;
+}
+
 //
 //  Help with Visual Effects when setting feats
 //

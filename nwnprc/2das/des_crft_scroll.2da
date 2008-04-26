@@ -1736,7 +1736,7 @@
 1732 Turn_Fire                                  ****             ****             ****             ****             ****         ****             
 1733 Turn_Water                                 ****             ****             ****             ****             ****         ****             
 1734 Turn_Blightspawned                         ****             ****             ****             ****             ****         ****             
-1735 Disguise_Self                              ****             ****             ****             ****             ****         ****             
+1735 AppraiseMagicValue                         ****             ****             ****             ****             ****         ****             
 1736 Disguise_Self_Male                         ****             ****             ****             ****             ****         ****             
 1737 Disguise_Self_Female                       ****             ****             ****             ****             ****         ****             
 1738 Disguise_Self_normalform                   ****             ****             ****             ****             ****         ****             
@@ -2972,7 +2972,7 @@
 2968 Forestlord_Treewalk_Dirdist                ****             ****             ****             ****             ****         ****             
 2969 Glimmerskin_Touch_of_Luck                  ****             ****             ****             ****             ****         ****             
 2970 Forestlord_Treewalk_Master_Radial          ****             ****             ****             ****             ****         ****             
-2971 Daylight                                   ****             ****             ****             ****             ****         ****             
+2971 Daylight                                   prc_scr_1380     prc_scr_1380     prc_scr_1380     prc_scr_1380     ****         prc_scr_1380     
 2972 Clinging_Breath                            ****             ****             ****             ****             ****         ****             
 2973 Clinging_Conv                              ****             ****             ****             ****             ****         ****             
 2974 Clinging_Off                               ****             ****             ****             ****             ****         ****             

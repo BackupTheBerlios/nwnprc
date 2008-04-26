@@ -57,7 +57,7 @@ void main()
         int nCasterLevel = PRCGetCasterLevel(oPC);
         
         
-        if(nType == BASE_ITEM_ARROW)  sBone = "PRC_AB_ARROW";    
+        if(nType == BASE_ITEM_ARROW)  sBone = "PRC_AB_ARROW001";    
         
         else if (nType == BASE_ITEM_BOLT)  sBone = "PRC_AB_BOLT";
         

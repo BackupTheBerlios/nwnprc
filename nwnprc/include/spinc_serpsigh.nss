@@ -8,7 +8,7 @@ void DamageSelf (int nDamageCap, int nVfx)
 	nDamage = nDamage > nDamageCap ? nDamageCap : nDamage;
 
 	// Apply the damage and appropriate visual effect.
-	SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(nDamage, DAMAGE_TYPE_MAGICAL), OBJECT_SELF);
+	SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(OBJECT_SELF, nDamage, DAMAGE_TYPE_MAGICAL), OBJECT_SELF);
 	SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(nVfx), OBJECT_SELF);
 }
 

@@ -68,7 +68,7 @@ void DoGreenfire(int nDamageType, object oCaster, object oTarget)
                // If we really did damage apply it to the target.
                if (nDamage > 0)
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT,
-                         PRCEffectDamage(nDamage, nDamageType), oTarget);
+                         PRCEffectDamage(oTarget, nDamage, nDamageType), oTarget);
           }
      }
 }

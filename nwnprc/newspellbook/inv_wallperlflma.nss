@@ -48,9 +48,9 @@ void main()
             if(nDamage > 0)
             {
                 // Apply effects to the currently selected target.
-                eDam = PRCEffectDamage(nDamage / 2, DAMAGE_TYPE_FIRE);
+                eDam = PRCEffectDamage(oTarget, nDamage / 2, DAMAGE_TYPE_FIRE);
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
-                eDam = PRCEffectDamage(nDamage / 2, DAMAGE_TYPE_MAGICAL);
+                eDam = PRCEffectDamage(oTarget, nDamage / 2, DAMAGE_TYPE_MAGICAL);
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
                 PRCBonusDamage(oTarget);
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);

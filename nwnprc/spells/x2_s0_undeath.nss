@@ -33,7 +33,7 @@ void DoUndeadToDeath(object oCreature,int CasterLvl)
        float fDelay = GetRandomDelay(0.2f,0.4f);
        if (!PRCDoResistSpell(OBJECT_SELF, oCreature,CasterLvl, fDelay))
        {
-            effect eDeath = EffectDamage(GetCurrentHitPoints(oCreature),DAMAGE_TYPE_DIVINE,DAMAGE_POWER_ENERGY);
+            effect eDeath = PRCEffectDamage(oCreature, GetCurrentHitPoints(oCreature),DAMAGE_TYPE_DIVINE,DAMAGE_POWER_ENERGY);
             effect eVis = EffectVisualEffect(VFX_IMP_DEATH);
             DelayCommand(fDelay+0.5f,SPApplyEffectToObject(DURATION_TYPE_INSTANT,eDeath,oCreature));
             DelayCommand(fDelay,SPApplyEffectToObject(DURATION_TYPE_INSTANT,eVis,oCreature));

@@ -27,7 +27,7 @@
 void DoDamage(int nDamage, object oTarget)
 {
     effect eVis = EffectVisualEffect(VFX_IMP_SONIC);
-    effect eDam = EffectDamage(nDamage, ChangedElementalDamage(GetAreaOfEffectCreator(), DAMAGE_TYPE_SONIC));
+    effect eDam = PRCEffectDamage(oTarget, nDamage, ChangedElementalDamage(GetAreaOfEffectCreator(), DAMAGE_TYPE_SONIC));
     if(nDamage > 0)
     {
         //Apply VFX impact and damage effect

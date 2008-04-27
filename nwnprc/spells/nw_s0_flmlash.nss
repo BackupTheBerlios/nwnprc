@@ -84,7 +84,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         {
             nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
             nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, (nDC), SAVING_THROW_TYPE_FIRE);
-            effect eDam = EffectDamage(nDamage, EleDmg);
+            effect eDam = PRCEffectDamage(oTarget, nDamage, EleDmg);
             if(nDamage > 0)
             {
                 //Apply the VFX impact and effects

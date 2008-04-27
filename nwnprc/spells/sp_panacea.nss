@@ -91,7 +91,7 @@ void main()
                 }
                 
                 // Apply damage and VFX.
-                SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(nDamage, DAMAGE_TYPE_POSITIVE), oTarget);
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDamage, DAMAGE_TYPE_POSITIVE), oTarget);
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_SUNSTRIKE), oTarget);
             }
         }

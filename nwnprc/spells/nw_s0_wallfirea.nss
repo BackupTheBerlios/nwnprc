@@ -60,7 +60,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             if(nDamage > 0)
             {
                 // Apply effects to the currently selected target.
-                eDam = PRCEffectDamage(nDamage, ChangedElementalDamage(GetAreaOfEffectCreator(), DAMAGE_TYPE_FIRE));
+                eDam = PRCEffectDamage(oTarget, nDamage, ChangedElementalDamage(GetAreaOfEffectCreator(), DAMAGE_TYPE_FIRE));
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
                 PRCBonusDamage(oTarget);
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);

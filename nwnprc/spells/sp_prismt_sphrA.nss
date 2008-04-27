@@ -73,7 +73,7 @@ void main()
                                 nDam = 10;
                         }
                         
-                        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_FIRE), oTarget);
+                        ApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_FIRE), oTarget);
                 }
                 
                 //Orange
@@ -86,7 +86,7 @@ void main()
                                 nDam = 20;
                         }
                         
-                        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_ACID), oTarget);
+                        ApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_ACID), oTarget);
                 }
                 
                 //Yellow
@@ -99,7 +99,7 @@ void main()
                                 nDam = 40;
                         }
                         
-                        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_ELECTRICAL), oTarget);
+                        ApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_ELECTRICAL), oTarget);
                 }
                 
                 //Green

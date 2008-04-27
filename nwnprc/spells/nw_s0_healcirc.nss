@@ -116,7 +116,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                     //Calculate damage
                     nHurt =  nModify;
                     //Set damage effect
-                    eKill = EffectDamage(nHurt, DAMAGE_TYPE_POSITIVE);
+                    eKill = PRCEffectDamage(oTarget, nHurt, DAMAGE_TYPE_POSITIVE);
                     //Apply damage effect and VFX impact
                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eKill, oTarget));
                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));

@@ -58,8 +58,12 @@ int BardSorcPrCCheck();
 int Scrying();
 
 // Grappling
-// Rolls a Concentrationc check to cast a spell while grappling.
+// Rolls a Concentration check to cast a spell while grappling.
 int GrappleConc();
+
+// Dazzling Illusion feat
+// Dazzles enemies within radius
+void DazzlingIllusion();
 
 // Use Magic Device Check.
 // Returns TRUE if the Spell is allowed to be cast, either because the
@@ -439,6 +443,131 @@ void DraconicFeatsOnSpell()
        }
     }
 
+}
+
+void DazzlingIllusion()
+{
+    object oCaster = OBJECT_SELF;
+    int nFeat = GetHasFeat(FEAT_DAZZLING_ILLUSION, oCaster);
+
+    // No need for wasting CPU on non-Dazzles
+    if(nFeat > 0)
+    {
+        int nSpell     = PRCGetSpellId();
+        int iSchool    = GetSpellSchool(nSpell);
+        
+        if (iSchool == SPELL_SCHOOL_ILLUSION)
+        {
+        	effect eLink = EffectLinkEffects(EffectAttackDecrease(1), EffectSkillDecrease(SKILL_SEARCH, 1));
+		       eLink = EffectLinkEffects(eLink, EffectSkillDecrease(SKILL_SPOT, 1));
+        	       eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_IMP_PWBLIND));
+     		object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), GetLocation(oCaster), TRUE, OBJECT_TYPE_CREATURE);
+    		//Cycle through the targets within the spell shape until an invalid object is captured.
+    		while (GetIsObjectValid(oTarget))
+    		{
+        		if (!GetIsFriend(oTarget, oCaster) && !GetHasEffect(EFFECT_TYPE_BLINDNESS, oTarget))
+        		{
+        	    		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0);
+        		}
+       			//Select the next target within the spell shape.
+       			oTarget = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), GetLocation(oCaster), TRUE, OBJECT_TYPE_CREATURE);
+    		}       
+    	}
+        
+    }
+}
+
+void EnergyAbjuration()
+{
+    object oCaster = OBJECT_SELF;
+    int nFeat = GetHasFeat(FEAT_ENERGY_ABJURATION, oCaster);
+
+    // No need for wasting CPU on non-Abjures
+    if(nFeat > 0)
+    {
+        int nSpell     = PRCGetSpellId();
+        int iSchool    = GetSpellSchool(nSpell);
+
+        if (iSchool == SPELL_SCHOOL_ABJURATION)
+        {     
+		int nAmount = (1 + PRCGetSpellLevel(oCaster, nSpell)) * 5;
+
+		effect eCold = EffectDamageResistance(DAMAGE_TYPE_COLD, nAmount, nAmount);
+		effect eFire = EffectDamageResistance(DAMAGE_TYPE_FIRE, nAmount, nAmount);
+		effect eAcid = EffectDamageResistance(DAMAGE_TYPE_ACID, nAmount, nAmount);
+		effect eSonic = EffectDamageResistance(DAMAGE_TYPE_SONIC, nAmount, nAmount);
+		effect eElec = EffectDamageResistance(DAMAGE_TYPE_ELECTRICAL, nAmount, nAmount);
+		effect eDur = EffectVisualEffect(VFX_DUR_PROTECTION_ELEMENTS);
+		effect eVis = EffectVisualEffect(VFX_IMP_ELEMENTAL_PROTECTION);
+		effect eDur2 = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+
+		//Link Effects
+		effect eLink = EffectLinkEffects(eCold, eFire);
+		eLink = EffectLinkEffects(eLink, eAcid);
+		eLink = EffectLinkEffects(eLink, eSonic);
+		eLink = EffectLinkEffects(eLink, eElec);
+		eLink = EffectLinkEffects(eLink, eDur);
+		eLink = EffectLinkEffects(eLink, eDur2);
+		
+		ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oCaster);
+        }        
+    }
+}
+
+void InsightfulDivination()
+{
+    object oCaster = OBJECT_SELF;
+    int nFeat = GetHasFeat(FEAT_INSIGHTFUL_DIVINATION, oCaster);
+
+    // No need for wasting CPU on non-Abjures
+    if(nFeat > 0)
+    {
+        int nSpell     = PRCGetSpellId();
+        int iSchool    = GetSpellSchool(nSpell);
+
+        if (iSchool == SPELL_SCHOOL_DIVINATION)
+        {     
+		int nAmount = 1 + PRCGetSpellLevel(oCaster, nSpell);
+
+		SetLocalInt(oCaster, "InsightfulDivination", nAmount);
+        }        
+    }
+}
+
+void TougheningTransmutation()
+{
+    object oCaster = OBJECT_SELF;
+    int nFeat = GetHasFeat(FEAT_TOUGHENING_TRANSMUTATION, oCaster);
+
+    // No need for wasting CPU on non-Abjures
+    if(nFeat > 0)
+    {
+        int nSpell     = PRCGetSpellId();
+        int iSchool    = GetSpellSchool(nSpell);
+
+        if (iSchool == SPELL_SCHOOL_TRANSMUTATION)
+        {     
+		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectDamageReduction(5, DAMAGE_POWER_PLUS_ONE), oCaster, 6.0);
+        }        
+    }
+}
+
+void CloudyConjuration()
+{
+    object oCaster = OBJECT_SELF;
+    int nFeat = GetHasFeat(FEAT_CLOUDY_CONJURATION, oCaster);
+
+    // No need for wasting CPU on non-Abjures
+    if(nFeat > 0)
+    {
+        int nSpell     = PRCGetSpellId();
+        int iSchool    = GetSpellSchool(nSpell);
+
+        if (iSchool == SPELL_SCHOOL_CONJURATION)
+        {     
+		ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, EffectAreaOfEffect(VFX_MOB_CLOUDY_CONJURATION), PRCGetSpellTargetLocation(), 6.0);
+        }        
+    }
 }
 
 int BardSorcPrCCheck()
@@ -1501,6 +1630,16 @@ if(DEBUG) DoDebug("x2_inc_spellhook pre-X2CastOnItemWasAllowed "+IntToString(nCo
     //Draconic Feat effects
     if(nContinue)
         DraconicFeatsOnSpell();
+        
+    // Feats
+    if(nContinue)
+    {
+        DazzlingIllusion();
+        EnergyAbjuration();
+        InsightfulDivination();
+        TougheningTransmutation();
+        CloudyConjuration();
+    }
 
     //casting from staffs uses caster DC calculations
     if(nContinue

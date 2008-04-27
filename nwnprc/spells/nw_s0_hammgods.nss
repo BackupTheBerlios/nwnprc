@@ -115,7 +115,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                     DelayCommand(0.5, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(d6()),TRUE,-1,CasterLvl));
                 }
                 //Set damage effect
-                eDam = EffectDamage(nDamage, DAMAGE_TYPE_DIVINE );
+                eDam = PRCEffectDamage(oTarget, nDamage, DAMAGE_TYPE_DIVINE );
                 //Apply the VFX impact and damage effect
                 DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
                 DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));

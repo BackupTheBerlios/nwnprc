@@ -97,7 +97,7 @@ void Burn(object oTarget, int nCounter, int nCasterLvl)
 {
         if(!PRCDoResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
         {
-                ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(d6(2), DAMAGE_TYPE_MAGICAL), oTarget);
+                ApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, d6(2), DAMAGE_TYPE_MAGICAL), oTarget);
                 nCounter--;
                 DelayCommand(RoundsToSeconds(1), Burn(oTarget, nCounter, nCasterLvl));
         }

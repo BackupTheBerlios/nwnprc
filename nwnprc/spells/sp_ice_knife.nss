@@ -70,7 +70,7 @@ void main()
                         if (nMetaMagic == METAMAGIC_EMPOWER) nDam += (nDam/2);
                         
                         //Apply damage even if they are immune - can't hurt
-                        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_COLD), oTarget);
+                        ApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_COLD), oTarget);
                 }
         }
         
@@ -97,7 +97,7 @@ void main()
                                 
                                 if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_COLD))  nDam = nDam/2;
                                 
-                                ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_COLD), oTarget);
+                                ApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_COLD), oTarget);
                         }
                         
                         oTarget = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(10.0f), lAoE, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_PLACEABLE | OBJECT_TYPE_DOOR);

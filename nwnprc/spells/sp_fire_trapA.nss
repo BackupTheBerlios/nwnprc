@@ -87,7 +87,7 @@ void main()
                                                  //Change damage according to Reflex, Evasion and Improved Evasion
                                                  nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, nDC, SAVING_THROW_TYPE_FIRE, GetAreaOfEffectCreator());
                                                  //Set up the damage effect
-                                                 eDam = PRCEffectDamage(nDam, EleDmg);
+                                                 eDam = PRCEffectDamage(oTarget, nDam, EleDmg);
                                                  if(nDam > 0)
                                                  {
                                                          //Apply VFX impact and damage effect

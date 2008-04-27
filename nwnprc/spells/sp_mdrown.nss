@@ -68,7 +68,7 @@ void BioWareDrown(int nCasterLevel, object oCaster, object oTarget, float fDelay
                 if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, PRCGetSaveDC(oTarget, oCaster)))
                 {
                     nDam = FloatToInt(nDam * 0.9);
-                    eDam = EffectDamage(nDam, DAMAGE_TYPE_BLUDGEONING);
+                    eDam = PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_BLUDGEONING);
                     //Apply the VFX impact and damage effect
                     DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
                     DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));

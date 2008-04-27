@@ -86,7 +86,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
                          }
                          nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
                          //Set the damage property
-                         eDam = PRCEffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
+                         eDam = PRCEffectDamage(oTarget, nDamage, DAMAGE_TYPE_MAGICAL);
                          //Apply the damage effect and VFX impact
                          SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
                          SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);

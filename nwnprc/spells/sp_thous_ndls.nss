@@ -95,7 +95,7 @@ void main()
 		}
 		
 		//Apply damage
-		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_MAGICAL), oTarget);
+		SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_MAGICAL), oTarget);
 	}
 	
 	SPEvilShift(oPC);

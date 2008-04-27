@@ -95,7 +95,7 @@ void main()
                     nHeal *= 2;
                 }
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELLABILITY_LAY_ON_HANDS));
-                eDam = EffectDamage(nHeal, DAMAGE_TYPE_DIVINE);
+                eDam = PRCEffectDamage(oTarget, nHeal, DAMAGE_TYPE_DIVINE);
                 ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
                 ApplyEffectToObject(DURATION_TYPE_INSTANT, eEVis, oTarget);
             }
@@ -131,7 +131,7 @@ if (GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_GOOD || GetAlignmentGoodEvil(
                     nHeal *= 2;
                 }
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELLABILITY_LAY_ON_HANDS));
-                eDam = EffectDamage(nHeal, DAMAGE_TYPE_DIVINE);
+                eDam = PRCEffectDamage(oTarget, nHeal, DAMAGE_TYPE_DIVINE);
                 ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
                 ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);
             }

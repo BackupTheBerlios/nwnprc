@@ -53,7 +53,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             //Roll Damage
             nDamage = d20();
             //Set Damage Effect with the modified damage
-            eDam = EffectDamage(nDamage, DAMAGE_TYPE_PIERCING);
+            eDam = PRCEffectDamage(oTarget, nDamage, DAMAGE_TYPE_PIERCING);
             //Apply damage and visuals
             SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eSpeed, oTarget,0.0f,FALSE);
             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));

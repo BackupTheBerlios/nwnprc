@@ -99,7 +99,7 @@ void main()
 				 }
 				 
 				 //define damage
-				 effect eDam = EffectDamage(nDam, DAMAGE_TYPE_MAGICAL);
+				 effect eDam = PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_MAGICAL);
 				 
 				 
 				 //Apply damage

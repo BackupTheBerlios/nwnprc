@@ -131,7 +131,7 @@ void RunImpact(object oTarget, object oCaster, int nMetaMagic,int EleDmg)
         //----------------------------------------------------------------------
         int nDamage = PRCMaximizeOrEmpower(6,2,nMetaMagic);
         nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
-        effect eDam = EffectDamage(nDamage, EleDmg);
+        effect eDam = PRCEffectDamage(oTarget, nDamage, EleDmg);
         effect eVis = EffectVisualEffect(VFX_IMP_FLAME_S);
         eDam = EffectLinkEffects(eVis,eDam); // flare up
         SPApplyEffectToObject (DURATION_TYPE_INSTANT,eDam,oTarget);

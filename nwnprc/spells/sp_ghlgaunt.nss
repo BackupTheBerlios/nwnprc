@@ -126,7 +126,7 @@ void SummonGhoul(int nHD, object oTarget, object oPC, location lCorpse, int nCas
 void Gauntlet(object oTarget, object oPC, int nHD, int nCasterLevel)
 {
     //deal damage
-    SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(d6(3), DAMAGE_TYPE_MAGICAL), oTarget);
+    SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, d6(3), DAMAGE_TYPE_MAGICAL), oTarget);
     //if target still has HP, run again on next round.  Avoids use of loop.
     if(GetCurrentHitPoints(oTarget) > 1)
         DelayCommand(6.0f, Gauntlet(oTarget, oPC, nHD, nCasterLevel));

@@ -132,7 +132,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent, int bI
                         int nHP = GetCurrentHitPoints(oTarget);
                         if (nHeal > nHP - nModify)
                             nHeal = nHP - nModify;
-                        DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nHeal, nEnergyType), oTarget));
+                        DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nHeal, nEnergyType), oTarget));
                         DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(nHurtVFX), oTarget));
                     }
                 }

@@ -121,7 +121,7 @@ void DoBurst (int nCasterLvl, int nDieSize, int nBonusDam, int nDice, int nBurst
                          //Set the damage effect
                          if (nDam > 0)
                          {
-                              eDamage = PRCEffectDamage(nDam, nDamageType);
+                              eDamage = PRCEffectDamage(oTarget, nDam, nDamageType);
 
                               // Apply effects to the currently selected target.
                               DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
@@ -135,7 +135,7 @@ void DoBurst (int nCasterLvl, int nDieSize, int nBonusDam, int nDice, int nBurst
                          if (nDam2 > 0)
                          {
                               DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT,
-                                   PRCEffectDamage(nDam2, nBonusDamageType), oTarget));
+                                   PRCEffectDamage(oTarget, nDam2, nBonusDamageType), oTarget));
                          }
                     }
                }

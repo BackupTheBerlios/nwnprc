@@ -18,7 +18,7 @@ void main()
 	object oPC = OBJECT_SELF;
 	effect eMind = EffectSavingThrowDecrease(SAVING_THROW_WILL,2,SAVING_THROW_TYPE_MIND_SPELLS);
 	effect eWis = EffectAbilityIncrease(ABILITY_WISDOM,d6()+1);
-	effect eDam = EffectDamage(d6(2));
+	effect eDam = PRCEffectDamage(oPC, d6(2));
 	
 	//Handle resetting addiction DC
 	SetPersistantLocalInt(oPC, "PRC_Addiction_Baccaran_DC", 6);

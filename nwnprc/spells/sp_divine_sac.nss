@@ -72,7 +72,7 @@ void main()
 		nHPLoss = 10;
 	}
 	
-	SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nHPLoss, DAMAGE_TYPE_DIVINE), oPC);
+	SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oPC, nHPLoss, DAMAGE_TYPE_DIVINE), oPC);
 	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectDamageIncrease(nDam, DAMAGE_TYPE_MAGICAL), oPC, fDur);
 	
 	//Set up removal

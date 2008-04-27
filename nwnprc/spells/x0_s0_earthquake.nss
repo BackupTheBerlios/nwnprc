@@ -72,7 +72,7 @@ void DoQuake(object oCaster, int nCasterLvl, location lTarget)
             if(bInside)
             {
                 nDamage = PRCGetReflexAdjustedDamage(d6(8), oTarget, nDamageDC, SAVING_THROW_TYPE_SPELL, oCaster);
-                SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(nDamage, DAMAGE_TYPE_BLUDGEONING, DAMAGE_POWER_ENERGY),
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDamage, DAMAGE_TYPE_BLUDGEONING, DAMAGE_POWER_ENERGY),
                                       oTarget, 0.0f, FALSE, SPELL_EARTHQUAKE, nCasterLvl, oCaster);
             }
             // Outdoors, 25% chance to fall into a fissure and die

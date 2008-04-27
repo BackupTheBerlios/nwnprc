@@ -67,7 +67,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             nDamage = 30;
         }
         //Set damage type and amount
-        eDamage = EffectDamage(nDamage, DAMAGE_TYPE_DIVINE);
+        eDamage = PRCEffectDamage(oTarget, nDamage, DAMAGE_TYPE_DIVINE);
         //Link visual and damage effects
         eLink = EffectLinkEffects(eVis, eDamage);
         //Apply effects to oTarget

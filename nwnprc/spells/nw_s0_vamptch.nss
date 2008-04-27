@@ -43,7 +43,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
     effect eLink = EffectLinkEffects(eHeal, eDur);
 
-    //effect eDamage = EffectDamage(nDamage, DAMAGE_TYPE_NEGATIVE);
+    //effect eDamage = PRCEffectDamage(oTarget, nDamage, DAMAGE_TYPE_NEGATIVE);
     effect eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
     effect eVisHeal = EffectVisualEffect(VFX_IMP_HEALING_M);
 

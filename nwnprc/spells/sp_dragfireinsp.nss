@@ -76,7 +76,7 @@ DoDebug("x2_s3_flamingd: caster level = "+IntToString(PRCGetCasterLevel(oSpellOr
 
 		int nDmg = d6(nAmount);
 
-		effect eDmg = EffectDamage(nDmg,nDamageType);
+		effect eDmg = PRCEffectDamage(oTarget, nDmg,nDamageType);
 		effect eVis;
 		if (nDmg<10) // if we are doing below 10 point of damage, use small flame
 		{

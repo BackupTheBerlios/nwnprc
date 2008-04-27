@@ -111,7 +111,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                     if(nCnt == 1)  nDam += SpellSneakAttackDamage(OBJECT_SELF, oTarget);
                     
                     //Set damage effect
-                    effect eDam = PRCEffectDamage(nDam, EleDmg);
+                    effect eDam = PRCEffectDamage(oTarget, nDam, EleDmg);
                     //Apply the MIRV and damage effect
                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
                     

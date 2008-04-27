@@ -85,7 +85,7 @@ void main()
 						
 						else
 						{
-							SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(d6(5), DAMAGE_TYPE_MAGICAL), oTarget);
+							SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, d6(5), DAMAGE_TYPE_MAGICAL), oTarget);
 						}
 					}
 				}*/
@@ -110,7 +110,7 @@ void main()
 			}
 			if(nType == OBJECT_TYPE_DOOR || nType == OBJECT_TYPE_PLACEABLE)
 			{
-				SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(d6(1), DAMAGE_TYPE_MAGICAL), oTarget);
+				SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, d6(1), DAMAGE_TYPE_MAGICAL), oTarget);
 			}
 		}
 		

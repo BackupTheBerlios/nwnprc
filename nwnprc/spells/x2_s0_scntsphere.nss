@@ -98,7 +98,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.
                 nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, (nDC), SAVING_THROW_TYPE_ELECTRICITY);
                 //Set the damage effect
-                eDam = EffectDamage(nDamage, EleDmg);
+                eDam = PRCEffectDamage(oTarget, nDamage, EleDmg);
                 if(nDamage > 0)
                 {
                     // Apply effects to the currently selected target.

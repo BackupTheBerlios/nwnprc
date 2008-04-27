@@ -87,7 +87,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                 }
                 nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
                 //Set damage effect
-                eDam = EffectDamage(nDamage, DAMAGE_TYPE_DIVINE);
+                eDam = PRCEffectDamage(oTarget, nDamage, DAMAGE_TYPE_DIVINE);
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
             }
             //Apply VFX impact

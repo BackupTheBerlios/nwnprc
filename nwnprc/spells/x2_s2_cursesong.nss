@@ -348,12 +348,6 @@ void main()
         eReflex = EffectSavingThrowDecrease(SAVING_THROW_REFLEX, nReflex);
         eLink = EffectLinkEffects(eLink, eReflex);
     }
-    if(nHP > 0)
-    {
-        //SpeakString("HP Bonus " + IntToString(nHP));
-        eHP = EffectDamage(nHP, DAMAGE_TYPE_SONIC, DAMAGE_POWER_NORMAL);
-//        eLink = EffectLinkEffects(eLink, eHP);
-    }
     if(nAC > 0)
     {
         eAC = EffectACDecrease(nAC, AC_DODGE_BONUS);
@@ -401,6 +395,7 @@ void main()
 
                         if (nHP > 0 && !GetLocalInt(oTarget, sCurseSongHP))
                         {
+                            eHP = PRCEffectDamage(oTarget, nHP, DAMAGE_TYPE_SONIC, DAMAGE_POWER_NORMAL);
                             ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_SONIC), oTarget);
                             DelayCommand(0.01, ApplyEffectToObject(DURATION_TYPE_INSTANT, eHP, oTarget));
                             SetLocalInt(oTarget, sCurseSongHP, TRUE);
@@ -413,6 +408,7 @@ void main()
                             DelayCommand(GetRandomDelay(0.1,0.5), ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
                             //StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), nDuration);
                         }
+                        
                 }
             }
             else

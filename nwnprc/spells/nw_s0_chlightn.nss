@@ -103,7 +103,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             //Adjust damage via Reflex Save or Evasion or Improved Evasion
             nDamStrike = PRCGetReflexAdjustedDamage(nDamage, oFirstTarget, nDC, SAVING_THROW_TYPE_ELECTRICITY);
             //Set the damage effect for the first target
-            eDamage = PRCEffectDamage(nDamStrike, EleDmg);
+            eDamage = PRCEffectDamage(oTarget, nDamStrike, EleDmg);
             //Apply damage to the first target and the VFX impact.
             if(nDamStrike > 0)
             {
@@ -159,7 +159,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 //Adjust damage via Reflex Save or Evasion or Improved Evasion
                 nDamStrike = PRCGetReflexAdjustedDamage(nDamage, oTarget, nDC, SAVING_THROW_TYPE_ELECTRICITY);
                 //Apply the damage and VFX impact to the current target
-                eDamage = PRCEffectDamage(nDamStrike /2, EleDmg);
+                eDamage = PRCEffectDamage(oTarget, nDamStrike /2, EleDmg);
                 if(nDamStrike > 0) //age > 0)
                 {
                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT,eDamage,oTarget));

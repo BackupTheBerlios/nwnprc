@@ -54,7 +54,7 @@ void main()
 
                     // Apply the damage and the damage visible effect to the target.                
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, 
-                        PRCEffectDamage(nDamage, DAMAGE_TYPE_BLUDGEONING), oTarget);
+                        PRCEffectDamage(oTarget, nDamage, DAMAGE_TYPE_BLUDGEONING), oTarget);
 //TODO: need VFX
 //                  SPApplyEffectToObject(DURATION_TYPE_INSTANT, 
 //                      EffectVisualEffect(VFX_IMP_FROST_S), oTarget);

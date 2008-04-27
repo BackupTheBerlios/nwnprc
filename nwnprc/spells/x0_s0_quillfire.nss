@@ -80,7 +80,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
                 }
                 nDam = nDam + nBonus;
                 nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
-                effect eDam = EffectDamage(nDam, DAMAGE_TYPE_MAGICAL);
+                effect eDam = PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_MAGICAL);
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
                 SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget,0.0f,TRUE,-1,CasterLvl);
                 // * also applies poison damage

@@ -72,7 +72,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
         {
             //damage rounds up now
             int nDam = (nHP - (nHP / 2));
-            effect eDam = EffectDamage(nDam, DAMAGE_TYPE_MAGICAL);
+            effect eDam = PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_MAGICAL);
             effect eBeam = EffectBeam(VFX_BEAM_EVIL, oCaster, BODY_NODE_HAND);
             
             //Blood VFX.  Lots of em.

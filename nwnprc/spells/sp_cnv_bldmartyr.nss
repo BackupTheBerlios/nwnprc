@@ -146,7 +146,7 @@ void main()
             	
             	object oTarget = GetLocalObject(oPC, "BloodMartyrTarget");
 		effect eHeal = EffectHeal(nAmount);
-		effect eDam = EffectDamage(nAmount);
+		effect eDam = PRCEffectDamage(oTarget, nAmount);
     		effect eVis = EffectVisualEffect(VFX_IMP_HEALING_X);
     		effect eVis2 = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
     		effect eLinkHeal = EffectLinkEffects(eHeal, eVis);

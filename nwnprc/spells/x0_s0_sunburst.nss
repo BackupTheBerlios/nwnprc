@@ -112,7 +112,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                     // * if reflex saving throw fails no blindness
                     if (!ReflexSave(oTarget, (nDC), SAVING_THROW_TYPE_SPELL))
                     {
-                        effect eDead = PRCEffectDamage(GetCurrentHitPoints(oTarget));
+                        effect eDead = PRCEffectDamage(oTarget, GetCurrentHitPoints(oTarget));
                         //SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_FLAME_M), oTarget);
 
                         //Apply epicenter explosion on caster
@@ -130,7 +130,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 if ((nDamage > 0) && (bDoNotDoDamage == FALSE))
                 {
                     //Set the damage effect
-                    eDam = PRCEffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
+                    eDam = PRCEffectDamage(oTarget, nDamage, DAMAGE_TYPE_MAGICAL);
 
                     // Apply effects to the currently selected target.
                     DelayCommand(0.01, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));

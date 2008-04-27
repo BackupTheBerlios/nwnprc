@@ -84,7 +84,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 				fDur += fDur;
 			}
 			
-			SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_ELECTRICAL), oTarget);
+			SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_ELECTRICAL), oTarget);
 			
 			//Apply VFX for duration to enable "seeking" - add code to prc_inc_sp_touch!
 			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE), oTarget, fDur);

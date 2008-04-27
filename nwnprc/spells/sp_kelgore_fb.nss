@@ -67,7 +67,7 @@ void main()
     nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, nDC, SAVING_THROW_TYPE_FIRE);
 
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-    SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_FIRE), oTarget);
+    SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_FIRE), oTarget);
 
     PRCSetSchool();
 }

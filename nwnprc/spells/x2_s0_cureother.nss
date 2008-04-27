@@ -95,7 +95,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);
 
             //Apply Damage Effect to the Caster
-            SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(5), OBJECT_SELF);
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, 5), OBJECT_SELF);
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, 31, FALSE));
         }
@@ -113,14 +113,14 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, 31));
                 if (!PRCDoResistSpell(OBJECT_SELF, oTarget,CasterLvl))
                 {
-                    eDam = EffectDamage(nDamage,DAMAGE_TYPE_NEGATIVE);
+                    eDam = PRCEffectDamage(oTarget, nDamage,DAMAGE_TYPE_NEGATIVE);
                     //Apply the VFX impact and effects
                     DelayCommand(1.0, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
                 }
             }
             //Apply Damage Effect to the Caster
-            SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(5), OBJECT_SELF);
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, 5), OBJECT_SELF);
         }
     }
 

@@ -51,7 +51,7 @@ void main()
                     nDam = max(nDice, nDam - nDice);  //minimum of 1 per die
 
                 //Apply damage effect and VFX impact
-                SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(nDam, nDamageType), oTarget);
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDam, nDamageType), oTarget);
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(nImpactVFX), oTarget);
             }
         }

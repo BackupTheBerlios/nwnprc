@@ -68,7 +68,7 @@ void main()
                                 }
                                 
                                 //Set the damage effect
-                                eDam = EffectDamage(nDamage, DAMAGE_TYPE_DIVINE);
+                                eDam = PRCEffectDamage(oTarget, nDamage, DAMAGE_TYPE_DIVINE);
                                 if(nDamage > 0)
                                 {
                                         // Apply effects to the currently selected target.

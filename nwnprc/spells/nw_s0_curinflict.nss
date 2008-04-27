@@ -155,7 +155,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent, int bI
                     }
 
                     // Apply effects
-                    effect eDam = EffectDamage(nHeal, nEnergyType);
+                    effect eDam = PRCEffectDamage(oTarget, nHeal, nEnergyType);
                     DelayCommand(fDelay + 1.0, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
                     DelayCommand(fDelay,       SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(bIsCure ? VFX_IMP_SUNSTRIKE : VFX_IMP_HARM), oTarget));
                 }

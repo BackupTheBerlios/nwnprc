@@ -582,6 +582,16 @@ const int FEAT_OBSCURE_LORE                            = 2615;
 // Complete Divine
 const int FEAT_AUGMENT_HEALING                         = 2460;
 
+// Complete Mage
+const int FEAT_DAZZLING_ILLUSION                       = 2617;
+const int FEAT_ENERGY_ABJURATION                       = 2639;
+const int FEAT_FEARSOME_NECROMANCY                     = 2646;
+const int FEAT_INSIGHTFUL_DIVINATION                   = 2668;
+const int FEAT_PIERCING_EVOCATION                      = 2698;
+const int FEAT_UNSETTLING_ENCHANTMENT                  = 2824;
+const int FEAT_TOUGHENING_TRANSMUTATION                = 2897;
+const int FEAT_CLOUDY_CONJURATION                      = 3001;
+
 //Corpsecrafter
 const int FEAT_CORPSECRAFTER                           = 4014;
 const int FEAT_BOLSTER_RESISTANCE                      = 4015;
@@ -2821,4 +2831,5 @@ const int FEAT_EPIC_ARTIFICER               = 4072;
 /*//////////////////////////////////////////////////
 ////////////////   END INFUSIONS   /////////////////
 //////////////////////////////////////////////////*/
+
 

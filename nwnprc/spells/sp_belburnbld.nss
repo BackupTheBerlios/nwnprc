@@ -26,14 +26,14 @@ void RunSpell(object oCaster, object oTarget, int nMetaMagic, int nSpellID,
      {
           // The bad thing happens, 1d8 acid and fire damage, and slowed for 1 round.
           int nDamage = PRCGetMetaMagicDamage(DAMAGE_TYPE_FIRE, 1, 8, 0, 0, nMetaMagic);
-          effect eDamage = PRCEffectDamage(nDamage, DAMAGE_TYPE_FIRE);
+          effect eDamage = PRCEffectDamage(oTarget, nDamage, DAMAGE_TYPE_FIRE);
           eDamage = EffectLinkEffects(eDamage, EffectVisualEffect(VFX_IMP_FLAME_S));
           SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
           PRCBonusDamage(oTarget);
           
           nDamage = PRCGetMetaMagicDamage(DAMAGE_TYPE_ACID, 1, 8, 0, 0, nMetaMagic);
           nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
-          eDamage = PRCEffectDamage(nDamage, DAMAGE_TYPE_ACID);
+          eDamage = PRCEffectDamage(oTarget, nDamage, DAMAGE_TYPE_ACID);
           eDamage = EffectLinkEffects(eDamage, EffectVisualEffect(VFX_IMP_ACID_S));
           SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
           

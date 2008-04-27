@@ -70,7 +70,7 @@ void main()
                                 }
                                 
                                 //Non-descript
-                                effect eDam = EffectDamage(nDam, DAMAGE_TYPE_MAGICAL);
+                                effect eDam = PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_MAGICAL);
                                 
                                 //VFX
                                 effect eVis = EffectBeam(VFX_BEAM_BLACK, oPC, BODY_NODE_HAND);

@@ -78,7 +78,7 @@ void main()
                     //apply the damage
                     int nDamage = d6();
                     nDamage += 4;
-                    effect eDam = PRCEffectDamage(nDamage, DAMAGE_TYPE_BLUDGEONING, DAMAGE_POWER_NORMAL);
+                    effect eDam = PRCEffectDamage(oTarget, nDamage, DAMAGE_TYPE_BLUDGEONING, DAMAGE_POWER_NORMAL);
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
                 }
                 //now being grappled

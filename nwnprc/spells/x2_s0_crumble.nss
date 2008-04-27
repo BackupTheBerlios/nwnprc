@@ -112,7 +112,7 @@ void DoCrumble (int nDam, object oCaster, object oTarget)
 {
     float  fDist = GetDistanceBetween(oCaster, oTarget);
     float  fDelay = fDist/(3.0 * log(fDist) + 2.0);
-    effect eDam = EffectDamage(nDam, ChangedElementalDamage(oCaster, DAMAGE_TYPE_SONIC));
+    effect eDam = PRCEffectDamage(oTarget, nDam, ChangedElementalDamage(oCaster, DAMAGE_TYPE_SONIC));
     effect eMissile = EffectVisualEffect(477);
     effect eCrumb = EffectVisualEffect(VFX_FNF_SCREEN_SHAKE);
     effect eVis = EffectVisualEffect(135);

@@ -82,7 +82,7 @@ void main()
                                 }
                                 
                                 //Apply appropriate damage
-                                SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_MAGICAL), oTarget);
+                                SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_MAGICAL), oTarget);
                                 
                                 //Dazzled = -1 to Attack, Spot, and search
                                 effect eDazzle = EffectLinkEffects(EffectAttackDecrease(1), EffectSkillDecrease(SKILL_SPOT, 1)); 

@@ -40,7 +40,7 @@ void DoPnPAttack(object oSummon)
                 nDamage *=2; //critical doubles damage
             //its magical damage because the description is unclear
             AssignCommand(oSummon, ApplyEffectToObject(
-                DURATION_TYPE_INSTANT, EffectDamage(nDamage,
+                DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDamage,
                     DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_PLUS_FIVE), oTarget));
         }
         if(nAttackResult == 2)
@@ -84,7 +84,7 @@ void DoPnPAttack(object oSummon)
                 // the fancy rune circle too.
                 if (nDamage >= GetCurrentHitPoints (oTarget))
                      DelayCommand(0.25, SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_SUMMON_MONSTER_2), oTarget));
-                //DelayCommand(0.25, SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(nDamage, DAMAGE_TYPE_MAGICAL), oTarget));
+                //DelayCommand(0.25, SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDamage, DAMAGE_TYPE_MAGICAL), oTarget));
                 DelayCommand(0.25, SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_MAGBLUE), oTarget));
                 ApplyTouchAttackDamage(OBJECT_SELF, oTarget, nAttackResult, nDamage, DAMAGE_TYPE_MAGICAL);
            }

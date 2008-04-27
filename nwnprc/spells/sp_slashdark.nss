@@ -48,7 +48,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
                 // Apply the damage and the vfx to the target.
                 nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
                 effect eEffect = RACIAL_TYPE_UNDEAD == MyPRCGetRacialType(oTarget) ?
-                    EffectHeal(nDamage) : PRCEffectDamage(nDamage, nDamageType);
+                    EffectHeal(nDamage) : PRCEffectDamage(oTarget, nDamage, nDamageType);
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, eEffect, oTarget);
                 PRCBonusDamage(oTarget);
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY), oTarget);

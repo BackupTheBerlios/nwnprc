@@ -60,7 +60,7 @@ void main()
 	if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL))    
 	{
 		//Target effects
-		effect eDam = EffectDamage(nDam, DAMAGE_TYPE_MAGICAL);
+		effect eDam = PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_MAGICAL);
 		effect eVisDam = EffectVisualEffect(VFX_IMP_HARM);
 		effect eLink = EffectLinkEffects(eDam, eVisDam);
 		

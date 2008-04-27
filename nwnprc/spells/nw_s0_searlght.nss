@@ -98,7 +98,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
             
             nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
             //Set the damage effect
-            eDam = EffectDamage(nDamage, DAMAGE_TYPE_DIVINE);
+            eDam = PRCEffectDamage(oTarget, nDamage, DAMAGE_TYPE_DIVINE);
             //Apply the damage effect and VFX impact
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
             DelayCommand(0.5, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));

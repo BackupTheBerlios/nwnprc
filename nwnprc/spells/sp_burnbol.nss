@@ -61,7 +61,7 @@ void main()
                     // If the touch attack hit apply the damage and the damage visual effect.
                     if (nDamage > 0)
                     {
-                         effect eDamage = PRCEffectDamage(nDamage, PRCGetElementalDamageType(nDamageType, OBJECT_SELF));
+                         effect eDamage = PRCEffectDamage(oTarget, nDamage, PRCGetElementalDamageType(nDamageType, OBJECT_SELF));
                          DelayCommand(fTime, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
                          DelayCommand(fTime, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
                     }

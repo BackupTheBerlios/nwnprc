@@ -72,7 +72,7 @@ void main()
                 nDamage *= 2;
             }
             //Set damage effect
-            eBolt = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
+            eBolt = PRCEffectDamage(oTarget, nDamage, DAMAGE_TYPE_MAGICAL);
             if(nDamage > 0)
             {
                 //Apply the VFX impact and effects

@@ -114,7 +114,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                             }
                             else
                             {
-                                eKill  = EffectDamage(GetCurrentHitPoints(oTarget)+10);
+                                eKill  = PRCEffectDamage(oTarget, GetCurrentHitPoints(oTarget)+10);
                                 DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eKill, oTarget));
                             }
                          }

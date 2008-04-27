@@ -114,7 +114,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                         nDamage = nDamage/2;
                     }
                     //Set Damage
-                    eDam = EffectDamage(nDamage, DAMAGE_TYPE_NEGATIVE);
+                    eDam = PRCEffectDamage(oTarget, nDamage, DAMAGE_TYPE_NEGATIVE);
                     //Apply impact VFX and damage
                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));

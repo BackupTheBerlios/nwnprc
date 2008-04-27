@@ -83,7 +83,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                         //Change damage according to Reflex, Evasion and Improved Evasion
                         nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, nDC, SAVING_THROW_TYPE_FIRE, GetAreaOfEffectCreator());
                         //Set up the damage effect
-                        eDam = PRCEffectDamage(nDamage, EleDmg);
+                        eDam = PRCEffectDamage(oTarget, nDamage, EleDmg);
                         if(nDamage > 0)
                         {
                             //Apply VFX impact and damage effect

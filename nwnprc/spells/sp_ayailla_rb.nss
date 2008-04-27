@@ -87,7 +87,7 @@ void main()
                                         if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC)) nDam = (nDam/2);
                                         
                                         //Apply damage                                                                                                          
-                                        SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_DIVINE), oTarget);
+                                        SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_DIVINE), oTarget);
                                 }
                         }
                 }

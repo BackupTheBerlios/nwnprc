@@ -97,7 +97,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
                 nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
                 //Run the damage through the various reflex save and evasion feats
                 nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_FIRE);
-                eFire = PRCEffectDamage(nDamage, EleDmg);
+                eFire = PRCEffectDamage(oTarget, nDamage, EleDmg);
                 if(nDamage > 0)
                 {
                     // Apply effects to the currently selected target. 

@@ -96,7 +96,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 	
 	//damage rounds up
 	int nDam = (nHP - (nHP / 2));
-	effect eDam = EffectDamage(nDam, DAMAGE_TYPE_MAGICAL);
+	effect eDam = PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_MAGICAL);
 	
 	
 	//Blood gush

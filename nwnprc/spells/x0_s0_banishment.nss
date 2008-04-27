@@ -113,7 +113,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
                                 //bugfix: Simply destroying the object won't fire it's OnDeath script.
                                 //Which is bad when you have plot-specific things being done in that
                                 //OnDeath script... so lets kill it.
-                                effect eKill = EffectDamage(GetCurrentHitPoints(oTarget));
+                                effect eKill = PRCEffectDamage(oTarget, GetCurrentHitPoints(oTarget));
                                 //just to be extra-sure... :)
                             DeathlessFrenzyCheck(oTarget);
                                 effect eDeath = EffectDeath(FALSE, FALSE);

@@ -175,7 +175,7 @@ void main2()
     // images will have only 1 HP
     int iHP = GetCurrentHitPoints(oImage);
     --iHP;
-    effect eDamage = EffectDamage(iHP); // reduces image to 1 hp
+    effect eDamage = PRCEffectDamage(oImage, iHP); // reduces image to 1 hp
 
     // these need to be applied to every image
     ApplyEffectToObject(DURATION_TYPE_PERMANENT, eImage, oImage);

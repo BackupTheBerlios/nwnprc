@@ -92,7 +92,7 @@ void main()
 
 		int nDmg = d6() + nLevel;
 
-		effect eDmg = EffectDamage(nDmg,nDamageType);
+		effect eDmg = PRCEffectDamage(oTarget, nDmg,nDamageType);
 		effect eVis;
 		if (nDmg<10) // if we are doing below 12 point of damage, use small flame
 		{

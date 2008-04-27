@@ -45,11 +45,11 @@ void RunFlensing(object oCaster, object oTarget, int nSaveDC,
 	if (GetHasMettle(oTarget, SAVING_THROW_FORT))
 	// This script does nothing if it has Mettle, bail
 		return;    	
-        eDamage = PRCEffectDamage(nDamage / 2);
+        eDamage = PRCEffectDamage(oTarget, nDamage / 2);
     }
     else
     {
-        eDamage = PRCEffectDamage(nDamage);
+        eDamage = PRCEffectDamage(oTarget, nDamage);
         /*eDamage = EffectLinkEffects(eDamage,
             EffectAbilityDecrease(ABILITY_CONSTITUTION, nConDrain));
         eDamage = EffectLinkEffects(eDamage,

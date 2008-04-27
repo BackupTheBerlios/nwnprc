@@ -95,7 +95,7 @@ void main()
                                         int nHP = GetCurrentHitPoints(oTarget);
                                         
                                         //Apply Damage
-                                        SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_POSITIVE), oTarget);
+                                        SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_POSITIVE), oTarget);
                                         
                                         //if enough to kill target, bounce
                                         if(nDam >= nHP)
@@ -111,7 +111,7 @@ void main()
                                                         {
                                                                 //Black beam, origin chest of previous target
                                                                 ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectBeam(VFX_BEAM_BLACK, oTarget, BODY_NODE_CHEST), oTarget2);
-                                                                SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam/2, DAMAGE_TYPE_POSITIVE), oTarget2);
+                                                                SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDam/2, DAMAGE_TYPE_POSITIVE), oTarget2);
                                                                 break;
                                                         }
                                                         
@@ -119,7 +119,7 @@ void main()
                                                 }
                                         }                                                
                                 }
-                                else SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_POSITIVE), oTarget);
+                                else SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_POSITIVE), oTarget);
                         }
                 }
         }

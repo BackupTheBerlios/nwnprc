@@ -74,7 +74,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 				nDam += (nDam/2);
 			}
 						
-			SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(nDam, DAMAGE_TYPE_ELECTRICAL), oTarget);
+			SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_ELECTRICAL), oTarget);
 		}
 	}
 	

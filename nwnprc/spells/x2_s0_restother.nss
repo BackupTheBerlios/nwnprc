@@ -76,7 +76,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVisual, oTarget);
 
         //Apply Damage Effect to the Caster
-        SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(5), OBJECT_SELF);
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, 5), OBJECT_SELF);
     }
 
 

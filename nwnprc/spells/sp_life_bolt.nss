@@ -103,7 +103,7 @@ void main()
         else nOuch = 1;
         
         //Apply damage to caster
-        SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nOuch, DAMAGE_TYPE_MAGICAL), oPC);
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nOuch, DAMAGE_TYPE_MAGICAL), oPC);
         
         //Beam VFX
         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectBeam(VFX_BEAM_HOLY, oPC, BODY_NODE_HAND, !nTouch), oTarget, 1.0f); 
@@ -122,7 +122,7 @@ void main()
                 if(!PRCDoResistSpell(OBJECT_SELF, oTarget, (nCasterLvl + SPGetPenetr())))
                 {
                         nDam = d12(nBolts);
-                        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_POSITIVE), oTarget);
+                        ApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_POSITIVE), oTarget);
                 }
         }
         PRCSetSchool();

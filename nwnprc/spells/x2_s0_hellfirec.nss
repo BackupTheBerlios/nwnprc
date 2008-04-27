@@ -44,7 +44,7 @@ ActionDoCommand(SetAllAoEInts(761,OBJECT_SELF, GetSpellSaveDC()));
             if (GetHasMettle(oTarget, SAVING_THROW_FORT))
             	nDamage = 0;
             //Set the damage effect
-            eDam = EffectDamage(nDamage, EleDmg);
+            eDam = PRCEffectDamage(oTarget, nDamage, EleDmg);
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget,0.0f,FALSE);
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget,0.0f,FALSE);
         }

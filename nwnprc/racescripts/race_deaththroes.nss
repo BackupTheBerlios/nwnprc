@@ -27,7 +27,7 @@ void DoKapakAcidDamage(location lTarget)
 	        //Get the distance between the explosion and the target to calculate delay
 	        float fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget))/20;
 	         
-	        effect eDam = PRCEffectDamage(nDamage, DAMAGE_TYPE_ACID);
+	        effect eDam = PRCEffectDamage(oTarget, nDamage, DAMAGE_TYPE_ACID);
 	        effect eVis = EffectVisualEffect(VFX_IMP_ACID_S);
 	        // Apply effects to the currently selected target.
 	        DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
@@ -86,7 +86,7 @@ void main()
 	                if(nDamage > 0)
 	                {
 				//Set the damage effect
-				effect eDam = PRCEffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
+				effect eDam = PRCEffectDamage(oTarget, nDamage, DAMAGE_TYPE_MAGICAL);
 				effect eVis = EffectVisualEffect(VFX_IMP_FLAME_S);
 	                        // Apply effects to the currently selected target.
 	                        DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));

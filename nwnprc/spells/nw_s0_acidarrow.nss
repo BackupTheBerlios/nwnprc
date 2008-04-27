@@ -154,7 +154,7 @@ void RunImpact(object oTarget, object oCaster, int nMetaMagic,int EleDmg)
         // Calculate Damage
         //----------------------------------------------------------------------
         int nDamage = PRCMaximizeOrEmpower(6,1,nMetaMagic);
-        effect eDam = PRCEffectDamage(nDamage, EleDmg);
+        effect eDam = PRCEffectDamage(oTarget, nDamage, EleDmg);
         effect eVis = EffectVisualEffect(VFX_IMP_ACID_S);
         eDam = EffectLinkEffects(eVis,eDam); // flare up
         SPApplyEffectToObject (DURATION_TYPE_INSTANT,eDam,oTarget);

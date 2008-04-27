@@ -58,7 +58,7 @@ void main()
             {
                //Apply damage and visuals
                 //Set the damage effect
-    		eDam = PRCEffectDamage(nDamage, DAMAGE_TYPE_COLD);
+    		eDam = PRCEffectDamage(oTarget, nDamage, DAMAGE_TYPE_COLD);
                 DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
                 DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
             }

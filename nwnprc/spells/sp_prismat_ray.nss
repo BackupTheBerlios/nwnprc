@@ -143,7 +143,7 @@ void DoRay(object oTarget, int nSaveDC, int nRoll, int nCasterLvl, object oPC)
                                 nDam = nDam/2;
                         }
                         
-                        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_FIRE), oTarget);
+                        ApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_FIRE), oTarget);
                         break;
                 }
                 
@@ -156,7 +156,7 @@ void DoRay(object oTarget, int nSaveDC, int nRoll, int nCasterLvl, object oPC)
                                 nDam = nDam/2;
                         }
                         
-                        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_ACID), oTarget);
+                        ApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_ACID), oTarget);
                         break;                
                 }
                 
@@ -169,7 +169,7 @@ void DoRay(object oTarget, int nSaveDC, int nRoll, int nCasterLvl, object oPC)
                                 nDam = nDam/2;
                         }
                         
-                        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_ELECTRICAL), oTarget);
+                        ApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_ELECTRICAL), oTarget);
                         break;
                 }
                 

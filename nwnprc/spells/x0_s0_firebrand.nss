@@ -206,7 +206,7 @@ void DoFirebrand(int CasterLvl,int nD6Dice, int nCap, int nSpell, int nMIRV = VF
                               if (nDam > 0)
                               {
                                    //Set damage effect
-                                   effect eDam = EffectDamage(nDam, nDAMAGETYPE);
+                                   effect eDam = PRCEffectDamage(oTarget, nDam, nDAMAGETYPE);
                                    //Apply the MIRV and damage effect
                                    DelayCommand(fTime, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget,0.0f,TRUE,-1,CasterLvl));
                                    DelayCommand(fTime, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));

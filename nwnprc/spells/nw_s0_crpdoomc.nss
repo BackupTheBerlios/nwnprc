@@ -71,7 +71,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                 nDamage = d6(nSwarm);
                 nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
                 //Set Damage Effect with the modified damage
-                eDam = EffectDamage(nDamage, DAMAGE_TYPE_PIERCING);
+                eDam = PRCEffectDamage(oTarget, nDamage, DAMAGE_TYPE_PIERCING);
                 //Apply damage and visuals
                 DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
                 DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));

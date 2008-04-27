@@ -125,7 +125,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                     nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, 0, SAVING_THROW_TYPE_DIVINE);
                 }
                 //Set damage effect
-                eDam = PRCEffectDamage(nDamage, DAMAGE_TYPE_DIVINE);
+                eDam = PRCEffectDamage(oTarget, nDamage, DAMAGE_TYPE_DIVINE);
                 if(nDamage > 0)
                 {
                     //Apply the damage effect and VFX impact

@@ -129,12 +129,13 @@ int SpellBetrayalDamage(object oTarget, object oCaster);
 int SpellStrikeDamage(object oTarget, object oCaster);
 
 // Create a Damage effect
+// - oTarget: spell target
 // - nDamageAmount: amount of damage to be dealt. This should be applied as an
 //   instantaneous effect.
 // - nDamageType: DAMAGE_TYPE_*
 // - nDamagePower: DAMAGE_POWER_*
 // Used to add Warmage's Edge to spells.
-effect PRCEffectDamage(int nDamageAmount, int nDamageType=DAMAGE_TYPE_MAGICAL, int nDamagePower=DAMAGE_POWER_NORMAL);
+effect PRCEffectDamage(object oTarget, int nDamageAmount, int nDamageType=DAMAGE_TYPE_MAGICAL, int nDamagePower=DAMAGE_POWER_NORMAL);
 
 // Get altered damage type for energy sub feats.
 //      nDamageType - The DAMAGE_TYPE_xxx constant of the damage. All types other
@@ -1636,6 +1637,13 @@ int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveTy
         nDC -= nSaveBoost;
         DeleteLocalInt(oTarget, "IronMind_MindOverBody");
      }
+     
+       //check if Unsettling Enchantment applies
+       if(GetHasFeat(FEAT_UNSETTLING_ENCHANTMENT, oSaveVersus) && GetSpellSchool(PRCGetSpellId()) == SPELL_SCHOOL_ENCHANTMENT && !GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS))
+       {
+       		effect eLink = EffectLinkEffects(EffectACDecrease(2), EffectAttackDecrease(2));
+		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0);
+       }      
 
     // Racial ability adjustments
     if(nSaveType == SAVING_THROW_TYPE_FIRE && GetHasFeat(FEAT_HARD_FIRE, oTarget))
@@ -1662,6 +1670,14 @@ int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveTy
     if(GetLocalInt(oTarget, "PRC_TOB_DIAMOND_DEFENSE"))
     {
             int nBonus = GetLocalInt(oTarget, "PRC_TOB_DIAMOND_DEFENSE");
+            nDC -= nBonus;
+    }
+
+    //Insightful Divination
+    if(GetLocalInt(oTarget, "Insightful Divination"))
+    {
+            int nBonus = GetLocalInt(oTarget, "Insightful Divination");
+            DeleteLocalInt(oTarget, "Insightful Divination");
             nDC -= nBonus;
     }
 
@@ -3086,7 +3102,7 @@ int PRCGetElementalDamageType(int nDamageType, object oCaster = OBJECT_SELF)
     return nDamageType;
 }
 
-effect PRCEffectDamage(int nDamageAmount, int nDamageType=DAMAGE_TYPE_MAGICAL, int nDamagePower=DAMAGE_POWER_NORMAL)
+effect PRCEffectDamage(object oTarget, int nDamageAmount, int nDamageType=DAMAGE_TYPE_MAGICAL, int nDamagePower=DAMAGE_POWER_NORMAL)
 {
     if (PRCGetLastSpellCastClass(OBJECT_SELF) == CLASS_TYPE_WARMAGE)
     {
@@ -3098,6 +3114,28 @@ effect PRCEffectDamage(int nDamageAmount, int nDamageType=DAMAGE_TYPE_MAGICAL, i
             nDamageAmount += (GetLevelByClass(CLASS_TYPE_WARMAGE, OBJECT_SELF) / 4) + 1;
         }
     }
+    
+    // Piercing Evocation
+    if (GetHasFeat(FEAT_PIERCING_EVOCATION, OBJECT_SELF) && GetSpellSchool(PRCGetSpellId()) == SPELL_SCHOOL_EVOCATION)
+    {
+    	// Elemental damage only
+    	if (nDamageType == DAMAGE_TYPE_FIRE || nDamageType == DAMAGE_TYPE_ACID || nDamageType == DAMAGE_TYPE_COLD || 
+    	    nDamageType == DAMAGE_TYPE_ELECTRICAL || nDamageType == DAMAGE_TYPE_SONIC)
+    	{
+        	// Damage magical, max 10 to magical
+        	if (nDamageAmount > 10) 
+        	{
+        		nDamageAmount -= 10;       	
+        		ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(10), oTarget);
+        	}
+        	else
+        	{
+        		ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDamageAmount), oTarget);
+        		effect eEffect;
+        		return eEffect; // Null return
+        	}
+        }
+    }    
 
     return EffectDamage(nDamageAmount, nDamageType, nDamagePower);
 }

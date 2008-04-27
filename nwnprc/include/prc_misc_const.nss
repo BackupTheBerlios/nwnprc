@@ -35,6 +35,7 @@ const int AOE_PER_PYROTECHNICS_SMOKE            = 169;
 const int VFX_PER_SNARE                         = 168;
 const int AOE_MOB_MOUNTAIN_AVALANCHE            = 167;
 const int VFX_MOB_DAYLIGHT                      = 109;
+const int VFX_MOB_CLOUDY_CONJURATION            = 99;
 
 // Psionic Area of Effects
 const int AOE_PER_PSIGREASE                     = 131;

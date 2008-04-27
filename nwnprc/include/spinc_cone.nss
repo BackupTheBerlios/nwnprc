@@ -73,7 +73,7 @@ void DoCone (int nDieSize, int nBonusDam, int nDieCap, int nConeEffect /* unused
                     // Apply effects to the currently selected target.
                     if(nDamage > 0)
                     {
-                         effect eDamage = PRCEffectDamage(nDamage, nDamageType);
+                         effect eDamage = PRCEffectDamage(oTarget, nDamage, nDamageType);
                          effect eVis = EffectVisualEffect(nVictimEffect);
                          DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
                          DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));

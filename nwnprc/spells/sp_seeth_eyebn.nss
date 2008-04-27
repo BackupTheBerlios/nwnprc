@@ -65,7 +65,7 @@ void main()
 				{
 					//nDam = 1d6 acid
 					int nDam = d6(1);
-					effect eDam = EffectDamage(nDam, DAMAGE_TYPE_ACID);
+					effect eDam = PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_ACID);
 					
 					//apply damage
 					SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);

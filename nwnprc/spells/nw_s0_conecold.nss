@@ -101,7 +101,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                     nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, nDC, SAVING_THROW_TYPE_COLD);
 
                     // Apply effects to the currently selected target.
-                    effect eCold = PRCEffectDamage(nDamage, EleDmg);
+                    effect eCold = PRCEffectDamage(oTarget, nDamage, EleDmg);
                     effect eVis = EffectVisualEffect(VFX_IMP_FROST_L);
                     if(nDamage > 0)
                     {

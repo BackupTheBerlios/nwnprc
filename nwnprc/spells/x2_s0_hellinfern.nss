@@ -128,8 +128,8 @@ void RunImpact(object oTarget, object oCaster)
     if (GetIsDead(oTarget) == FALSE)
     {
         //* GZ: Removed Meta magic, does not work in delayed functions
-        effect eDam  = EffectDamage(d6(2), ChangedElementalDamage(oCaster, DAMAGE_TYPE_FIRE));
-        effect eDam2 = EffectDamage(d6(1), DAMAGE_TYPE_DIVINE);
+        effect eDam  = PRCEffectDamage(oTarget, d6(2), ChangedElementalDamage(oCaster, DAMAGE_TYPE_FIRE));
+        effect eDam2 = PRCEffectDamage(oTarget, d6(1), DAMAGE_TYPE_DIVINE);
         effect eVis = EffectVisualEffect(VFX_IMP_FLAME_S);
         eDam = EffectLinkEffects(eVis,eDam); // flare up
         SPApplyEffectToObject (DURATION_TYPE_INSTANT,eDam,oTarget);

@@ -153,7 +153,7 @@ int biowareSpellsCure(int nCasterLvl,object oTarget, int nDamage, int nMaxExtraD
                 PRCSignalSpellEvent(oTarget, TRUE, nSpellID);
                 if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nCasterLvl+SPGetPenetr()))
                 {
-                    eDam = PRCEffectDamage(nDamage,DAMAGE_TYPE_NEGATIVE);
+                    eDam = PRCEffectDamage(oTarget, nDamage,DAMAGE_TYPE_NEGATIVE);
                     //Apply the VFX impact and effects
                     DelayCommand(1.0, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);

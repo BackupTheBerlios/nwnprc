@@ -84,7 +84,7 @@ void main()
         {
                 if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
                 {
-                        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(d6(2), DAMAGE_TYPE_COLD), oTarget);
+                        ApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, d6(2), DAMAGE_TYPE_COLD), oTarget);
                         
                         int nDC = PRCGetSaveDC(oTarget, oPC);
                         

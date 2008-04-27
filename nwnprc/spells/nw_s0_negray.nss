@@ -59,7 +59,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
         nDamage = nDamage + (nDamage/2); //Damage/Healing is +50%
     }
     effect eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
-    //effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_NEGATIVE);
+    //effect eDam = PRCEffectDamage(oTarget, nDamage, DAMAGE_TYPE_NEGATIVE);
     effect eHeal = EffectHeal(nDamage);
     effect eVisHeal = EffectVisualEffect(VFX_IMP_HEALING_M);
     effect eRay;

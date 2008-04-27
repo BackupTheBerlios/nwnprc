@@ -72,10 +72,10 @@ int ApplyTouchAttackDamage(object oCaster, object oTarget, int iAttackRoll, int 
     if(iAttackRoll > 0)
     {
         if(iDamageType2 == -1)
-            ApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(iDamage, iDamageType), oTarget);
+            ApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, iDamage, iDamageType), oTarget);
         else
         {   //for touch attacks with 2 damage types, 1st damage type has priority
-            ApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(iDamage / 2, iDamageType2), oTarget);
+            ApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, iDamage / 2, iDamageType2), oTarget);
             ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(iDamage - (iDamage / 2), iDamageType), oTarget);
         }
     }

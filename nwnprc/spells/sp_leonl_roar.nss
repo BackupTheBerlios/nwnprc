@@ -62,7 +62,7 @@ void main()
 					nDam += (nDam/2);
 				}
 				
-				SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_SONIC), oTarget);
+				SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_SONIC), oTarget);
 			}
 		}
 		oTarget = MyNextObjectInShape(SHAPE_SPHERE, 12.192, lLoc, TRUE, OBJECT_TYPE_CREATURE);

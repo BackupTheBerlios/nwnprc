@@ -86,7 +86,7 @@ void main()
                {    
                        int nHighest = GetHighestSpellLevel(oTarget);
                        nDam = d4(nHighest);
-                       ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_MAGICAL), oTarget);
+                       ApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_MAGICAL), oTarget);
                }
        }
        

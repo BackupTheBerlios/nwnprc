@@ -94,8 +94,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 nDamage2 = nDamage2 + nDamage3;
                 nDamage2 += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
                 //Set the damage effect
-                eDam = PRCEffectDamage(nDamage, DAMAGE_TYPE_BLUDGEONING);
-                eDam2 = PRCEffectDamage(nDamage2, EleDmg);
+                eDam = PRCEffectDamage(oTarget, nDamage, DAMAGE_TYPE_BLUDGEONING);
+                eDam2 = PRCEffectDamage(oTarget, nDamage2, EleDmg);
                 // Apply effects to the currently selected target.
                 DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
                 PRCBonusDamage(oTarget);

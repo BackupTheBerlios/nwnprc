@@ -48,7 +48,7 @@ void main()
         
         if(nSpell == SPELL_BLADE_OF_BLOOD_EMP)
         {
-                SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(5, DAMAGE_TYPE_MAGICAL), oPC);
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, 5, DAMAGE_TYPE_MAGICAL), oPC);
         }
         
         //Set local ints

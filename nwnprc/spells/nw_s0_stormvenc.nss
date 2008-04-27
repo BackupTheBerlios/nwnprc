@@ -30,7 +30,6 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
  ActionDoCommand(SetAllAoEInts(SPELL_STORM_OF_VENGEANCE,OBJECT_SELF, GetSpellSaveDC()));
 
     //Declare major variables
-    effect eAcid = EffectDamage(d6(3), DAMAGE_TYPE_ACID);
     effect eStun = EffectStunned();
     effect eVisAcid = EffectVisualEffect(VFX_IMP_ACID_S);
     effect eVisElec = EffectVisualEffect(VFX_IMP_LIGHTNING_M);
@@ -50,7 +49,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     while(GetIsObjectValid(oTarget))
     {
         int nDamage  = d6(6) + ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
-        effect eElec = EffectDamage(nDamage, ChangedElementalDamage(GetAreaOfEffectCreator(), DAMAGE_TYPE_ELECTRICAL));
+        effect eElec = PRCEffectDamage(oTarget, nDamage, ChangedElementalDamage(GetAreaOfEffectCreator(), DAMAGE_TYPE_ELECTRICAL));
          
         if (spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE, GetAreaOfEffectCreator()))
         {
@@ -61,6 +60,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             if(PRCDoResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr, fDelay) == 0)
             {
                 int nDC = PRCGetSaveDC(oTarget,GetAreaOfEffectCreator());
+                effect eAcid = PRCEffectDamage(oTarget, d6(3), DAMAGE_TYPE_ACID);
 
                 //Make a saving throw check
                 // * if the saving throw is made they still suffer acid damage.

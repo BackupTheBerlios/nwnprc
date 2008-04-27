@@ -83,8 +83,8 @@ void main()
             nDamage = ArcaneArcherDamageDoneByBow(nTouch ==2);
 
             int  nBonus = ArcaneArcherCalculateBonus() ;
-            effect ePhysical = EffectDamage(nDamage, DAMAGE_TYPE_PIERCING,IPGetDamagePowerConstantFromNumber(nBonus));
-            effect eMagic = EffectDamage(nBonus, DAMAGE_TYPE_MAGICAL);
+            effect ePhysical = PRCEffectDamage(oTarget, nDamage, DAMAGE_TYPE_PIERCING,IPGetDamagePowerConstantFromNumber(nBonus));
+            effect eMagic = PRCEffectDamage(oTarget, nBonus, DAMAGE_TYPE_MAGICAL);
             ApplyEffectToObject(DURATION_TYPE_INSTANT, ePhysical, oTarget);
             ApplyEffectToObject(DURATION_TYPE_INSTANT, eMagic, oTarget);
           }
@@ -113,7 +113,7 @@ void main()
                 //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.
                 nDamage = GetReflexAdjustedDamage(nDamage, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_FIRE);
                 //Set the damage effect
-                eDam = EffectDamage(nDamage, DAMAGE_TYPE_FIRE);
+                eDam = PRCEffectDamage(oTarget, nDamage, DAMAGE_TYPE_FIRE);
                 if(nDamage > 0)
                 {
                     // Apply effects to the currently selected target.

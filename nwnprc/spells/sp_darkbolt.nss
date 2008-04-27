@@ -53,7 +53,7 @@ void main()
                fTime += fDelay2;
 
                //Set damage effect
-                effect eDam = EffectDamage(nDam, DAMAGE_TYPE_MAGICAL);
+                effect eDam = PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_MAGICAL);
 
               SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBolt, oTarget, 1.0,FALSE);
               

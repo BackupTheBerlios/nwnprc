@@ -113,8 +113,8 @@ void EmberLoop(int nCounter, int nCasterLvl, int nMetaMagic, object oPC, locatio
 				nDam2 = (nDam/2);
 				nDam = (nDam - nDam2);
 				
-				SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_FIRE), oTarget);
-				SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam2, DAMAGE_TYPE_DIVINE), oTarget);
+				SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_FIRE), oTarget);
+				SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDam2, DAMAGE_TYPE_DIVINE), oTarget);
 			}
 		}
 		oTarget = MyNextObjectInShape(SHAPE_SPHERE, 12.19f, lLoc, FALSE, OBJECT_TYPE_CREATURE);

@@ -92,7 +92,7 @@ void main()
                         nDam = d4(40);
                 }
                 
-                effect eDam = EffectDamage(nDam, nDamType);
+                effect eDam = PRCEffectDamage(oObject, nDam, nDamType);
                 
                 //Apply
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oObject);

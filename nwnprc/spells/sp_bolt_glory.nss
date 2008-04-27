@@ -100,7 +100,7 @@ void main()
 				}
 			}
 			
-			SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_DIVINE), oTarget);
+			SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_DIVINE), oTarget);
 		}
 	}
 	SPGoodShift(oPC);

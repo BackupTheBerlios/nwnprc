@@ -43,7 +43,7 @@ void main()
             nDamage = d6(2);
             //Run the damage through the various reflex save and evasion feats
             nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, nDC, SAVING_THROW_TYPE_NONE);
-            eRazor = PRCEffectDamage(nDamage, RzrDmg);
+            eRazor = PRCEffectDamage(oTarget, nDamage, RzrDmg);
             if(nDamage > 0)
             {
                 // Apply effects to the currently selected target. 

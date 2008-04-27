@@ -44,7 +44,7 @@ void RunCombustImpact(object oTarget, object oCaster, int nLevel, int nMetaMagic
                 }
             }
 
-            effect eDmg = EffectDamage(nDamage,EleDmg);
+            effect eDmg = PRCEffectDamage(oTarget, nDamage,EleDmg);
             effect eVFX = EffectVisualEffect(VFX_IMP_FLAME_S);
 
             SPApplyEffectToObject(DURATION_TYPE_INSTANT,eDmg,oTarget);
@@ -95,7 +95,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     {
         nDuration = 10;
     }
-    effect eDam      = EffectDamage(nDamage, EleDmg);
+    effect eDam      = PRCEffectDamage(oTarget, nDamage, EleDmg);
     effect eDur      = EffectVisualEffect(498);
 
     if(!GetIsReactionTypeFriendly(oTarget))

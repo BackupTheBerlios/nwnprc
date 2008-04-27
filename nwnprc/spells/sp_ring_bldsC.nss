@@ -46,7 +46,7 @@ void main()
         
         if(!GetIsReactionTypeFriendly(oTarget, oPC))
         {
-                ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_SLASHING, nDam), oTarget);
+                ApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, DAMAGE_TYPE_SLASHING, nDam), oTarget);
         }
 }
         

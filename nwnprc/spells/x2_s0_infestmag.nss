@@ -39,7 +39,7 @@ void RunInfestImpact(object oTarget, object oCaster, int nSaveDC, int nMetaMagic
                   if (!GetImmortal(oTarget))
                  {
                      FloatingTextStrRefOnCreature(100932,oTarget);
-                     effect eKill = EffectDamage(GetCurrentHitPoints(oTarget)+1);
+                     effect eKill = PRCEffectDamage(oTarget, GetCurrentHitPoints(oTarget)+1);
                      SPApplyEffectToObject(DURATION_TYPE_INSTANT,eKill,oTarget);
                      effect eVfx = EffectVisualEffect(VFX_IMP_DEATH_L);
                      SPApplyEffectToObject(DURATION_TYPE_INSTANT,eVfx,oTarget);

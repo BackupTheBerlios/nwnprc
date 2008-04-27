@@ -57,14 +57,14 @@ void main()
 	//Overdose 
 	if(GetOverdoseCounter(oPC, "PRC_MushroomOD2") == 4)
 	{
-		effect eDam2 = EffectDamage(d6(4));
+		effect eDam2 = PRCEffectDamage(oPC, d6(4));
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam2, oPC);
 		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectParalyze(), oPC, HoursToSeconds(d4(2)));		
 	}
 	
 	else if(GetOverdoseCounter(oPC, "PRC_MushroomOD") == 1)
 	{
-		effect eDam = EffectDamage(d6(2));
+		effect eDam = PRCEffectDamage(oPC, d6(2));
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oPC);
 	}
 	

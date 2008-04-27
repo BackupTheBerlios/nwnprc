@@ -38,7 +38,7 @@ void DarkBolt(object oTarget,int nMissiles, int nDC , int nMetaMagic)
       SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBolt, oTarget, 1.0,FALSE);
       
        //Set damage effect
-       effect eDam = EffectDamage(nDam, DAMAGE_TYPE_MAGICAL);
+       effect eDam = PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_MAGICAL);
        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBolt, oTarget, 1.0,FALSE);
         
        if(MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)
@@ -128,7 +128,7 @@ void main()
                fTime += fDelay2;
 
                //Set damage effect
-                effect eDam = EffectDamage(nDam, DAMAGE_TYPE_MAGICAL);
+                effect eDam = PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_MAGICAL);
                 SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBolt, oTarget, 1.0,FALSE);
                 
                 if(MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)

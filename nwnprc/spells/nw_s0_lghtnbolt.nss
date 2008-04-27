@@ -100,7 +100,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                         //Adjust damage based on Reflex Save, Evasion and Improved Evasion
                         nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, nDC,SAVING_THROW_TYPE_ELECTRICITY);
                         //Set damage effect
-                        eDamage = PRCEffectDamage(nDamage, EleDmg);
+                        eDamage = PRCEffectDamage(oTarget, nDamage, EleDmg);
                         if(nDamage > 0)
                         {
                             fDelay = GetSpellEffectDelay(GetLocation(oTarget), oTarget);

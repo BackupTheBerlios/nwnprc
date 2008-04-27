@@ -84,7 +84,7 @@ void main()
                 //Set the damage effect
                 if (nDam > 0)
                 {
-                    effect eDamage = PRCEffectDamage(nDam, nDamageType);
+                    effect eDamage = PRCEffectDamage(oTarget, nDam, nDamageType);
 
                     // Apply effects to the currently selected target.
                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));

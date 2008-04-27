@@ -37,7 +37,7 @@ void DoDisintegrate(object oCaster, object oTarget, int nSpellSaveDC, int nSR)
             // the fancy rune circle too.
             if (nDamage >= GetCurrentHitPoints (oTarget)) 
                 DelayCommand(0.25, SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_SUMMON_MONSTER_2), oTarget));
-            DelayCommand(0.25, SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(nDamage, DAMAGE_TYPE_MAGICAL), oTarget));
+            DelayCommand(0.25, SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDamage, DAMAGE_TYPE_MAGICAL), oTarget));
             DelayCommand(0.25, SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_MAGBLUE), oTarget));
         }
     }

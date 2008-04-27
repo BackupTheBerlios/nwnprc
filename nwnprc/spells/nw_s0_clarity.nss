@@ -43,7 +43,6 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
 
     //Declare major variables
     effect eImm1 = EffectImmunity(IMMUNITY_TYPE_MIND_SPELLS);
-    effect eDam = EffectDamage(1, DAMAGE_TYPE_NEGATIVE);
     effect eVis = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_POSITIVE);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
 
@@ -51,6 +50,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     eLink = EffectLinkEffects(eLink, eDur);
 
     object oTarget = GetSpellTargetObject();
+    effect eDam = PRCEffectDamage(oTarget, 1, DAMAGE_TYPE_NEGATIVE);
     effect eSearch = GetFirstEffect(oTarget);
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nDuration = CasterLvl;

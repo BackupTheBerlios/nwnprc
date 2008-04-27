@@ -371,7 +371,7 @@ void DispelMagicBestMod(object oTarget, int nCasterLevel)
                                         if(nDamage > 0)
                                         {
                                             //Set the damage effect
-                                            eDam = PRCEffectDamage(nDamage, DAMAGE_TYPE_SONIC);
+                                            eDam = PRCEffectDamage(oVictim, nDamage, DAMAGE_TYPE_SONIC);
                                             // Apply effects to the currently selected target.
                                             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oVictim));
                                             PRCBonusDamage(oVictim);
@@ -609,7 +609,7 @@ void DispelMagicAllMod(object oTarget, int nCasterLevel)
                                   if(nDamage > 0)
                                   {
                                       //Set the damage effect
-                                      eDam = PRCEffectDamage(nDamage, DAMAGE_TYPE_SONIC);
+                                      eDam = PRCEffectDamage(oVictim, nDamage, DAMAGE_TYPE_SONIC);
                                       // Apply effects to the currently selected target.
                                       DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oVictim));
                                       PRCBonusDamage(oVictim);
@@ -890,6 +890,15 @@ void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, fl
            int bHostileSpell = StringToInt(Get2DACache("spells", "HostileSetting", GetSpellId()));
            if(!bHostileSpell) fDuration = fDuration * 2;
        }
+       //check if Fearsome Necromancy applies
+       if(GetHasFeat(FEAT_FEARSOME_NECROMANCY, oCaster) && GetSpellSchool(PRCGetSpellId()) == SPELL_SCHOOL_NECROMANCY && !GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS))
+       {
+       		effect eReturn = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
+		eReturn = EffectLinkEffects(eReturn, EffectAttackDecrease(2));
+		eReturn = EffectLinkEffects(eReturn, EffectSavingThrowDecrease(SAVING_THROW_ALL,2));
+    		eReturn = EffectLinkEffects(eReturn, EffectSkillDecrease(SKILL_ALL_SKILLS, 2));
+		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eReturn, oTarget, 6.0);
+       }       
        ApplyEffectToObject(nDurationType, eEffect, oTarget, fDuration);
        // may have code traverse the lists right here and not add the new effect
        // if an identical one already appears in the list somewhere

@@ -96,7 +96,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
                         if (GetHasMettle(oTarget, SAVING_THROW_WILL)) nDamage = 0;
                     }
                     // Apply damage and VFX.
-                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(nDamage, DAMAGE_TYPE_POSITIVE), oTarget);
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDamage, DAMAGE_TYPE_POSITIVE), oTarget);
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_SUNSTRIKE), oTarget);
                 }
             }

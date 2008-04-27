@@ -29,7 +29,7 @@ void DamLoop(object oTarget, object oArea, int nCounter)
 {
         if(GetArea(oTarget) == oArea && nCounter > 0)
         {
-                SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(d3(1), DAMAGE_TYPE_BLUDGEONING), oTarget);
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, d3(1), DAMAGE_TYPE_BLUDGEONING), oTarget);
                 
                 //Decrement counter
                 nCounter--;

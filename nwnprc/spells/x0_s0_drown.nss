@@ -71,7 +71,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
                 if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (PRCGetSaveDC(oTarget,OBJECT_SELF))))
                 {
                     nDam = FloatToInt(nDam * 0.9);
-                    eDam = EffectDamage(nDam, DAMAGE_TYPE_BLUDGEONING);
+                    eDam = PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_BLUDGEONING);
                     //Apply the VFX impact and damage effect
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);

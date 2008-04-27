@@ -82,7 +82,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 //Adjust damage for Reflex Save, Evasion and Improved Evasion
                 nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, nDC,SAVING_THROW_TYPE_FIRE, aoeCreator);
                 // Apply effects to the currently selected target.
-                eDam = PRCEffectDamage(nDamage, EleDmg);
+                eDam = PRCEffectDamage(oTarget, nDamage, EleDmg);
                 if(nDamage > 0)
                 {
                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));

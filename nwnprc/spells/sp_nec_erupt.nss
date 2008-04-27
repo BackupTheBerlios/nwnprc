@@ -96,8 +96,8 @@ void main()
 		    int nVile = nDam/2;
 		    int nNorm = (nDam - nVile);
 		    //Vile damage is currently being applied as Positive damage
-		    effect eVileDam = EffectDamage(nVile, DAMAGE_TYPE_POSITIVE);
-		    effect eNormDam = EffectDamage(nNorm, DAMAGE_TYPE_MAGICAL);
+		    effect eVileDam = PRCEffectDamage(oTarget, nVile, DAMAGE_TYPE_POSITIVE);
+		    effect eNormDam = PRCEffectDamage(oTarget, nNorm, DAMAGE_TYPE_MAGICAL);
 		    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVileDam, oTarget); 
 		    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eNormDam, oTarget);
 	    }
@@ -125,8 +125,8 @@ void main()
 		    int nVile = nDam/2;
 		    int nNorm = (nDam - nVile);
 		    //Vile damage is currently being applied as Positive damage
-		    effect eVileDam = PRCEffectDamage(nVile, DAMAGE_TYPE_POSITIVE);
-		    effect eNormDam = PRCEffectDamage(nNorm, DAMAGE_TYPE_MAGICAL);
+		    effect eVileDam = PRCEffectDamage(oTarget, nVile, DAMAGE_TYPE_POSITIVE);
+		    effect eNormDam = PRCEffectDamage(oTarget, nNorm, DAMAGE_TYPE_MAGICAL);
 		    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVileDam, oTarget); 
 		    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eNormDam, oTarget);
 		    //Apply Necrotic Cyst to target

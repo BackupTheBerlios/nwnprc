@@ -108,7 +108,7 @@ void TombLoop(object oPC, object oTarget)
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE), oTarget);
 		
 		//Damage self
-		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(d6(1), DAMAGE_TYPE_MAGICAL), oPC);
+		SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, d6(1), DAMAGE_TYPE_MAGICAL), oPC);
 		
 		DelayCommand(6.0f, TombLoop(oPC, oTarget));
 	}

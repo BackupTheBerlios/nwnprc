@@ -37,7 +37,7 @@ Created:
 
 void DamageLoop(object oTarget, int nCount)
 {
-    effect eDam = EffectDamage(d6(1), DAMAGE_TYPE_MAGICAL);
+    effect eDam = PRCEffectDamage(oTarget, d6(1), DAMAGE_TYPE_MAGICAL);
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
     nCount--;
     

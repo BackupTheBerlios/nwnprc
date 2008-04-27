@@ -18899,7 +18899,7 @@ Benefit: Whenever you cast a transmutation spell, you grant yourself damage redu
   <entry id="49931" lang="en" sex="m">Cloudy Conjuration</entry>
   <entry id="49932" lang="en" sex="m">Type of Feat: General
 Prerequisite: Spell Focus Conjuration
-Benefit: Whenever you cast a transmutation spell, you grant yourself damage reduction 5/+1. This effect lasts for 1 round.</entry>
+Benefit: When you cast a conjuration spell, a 5-foot-radius cloud of sickening smoke manifests. The cloud appears in the space of your target (if any). The cloud lasts for 1 round. Any living creature is sickened while inside it. The cloud in all other ways acts like a small area of the fog cloud spell. Creatures immune to poison are immune to the sickening effect.</entry>
   <entry id="49999" lang="en" sex="m">**** 50,000 - 50,500 reserved for Race Pack Feats ****</entry>
   <entry id="50000" lang="en" sex="m">Light Sensitivity</entry>
   <entry id="50001" lang="en" sex="m">Type of Feat: Racial

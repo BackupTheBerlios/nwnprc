@@ -701,5 +701,3 @@ void ClearCurrentStage(object oPC = OBJECT_INVALID)
 
     MarkStageNotSetUp(GetStage(oPC), oPC);
 }
-
-void main(){}

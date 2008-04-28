@@ -371,7 +371,7 @@ int GetMeleeAttackers15ft(object oPC = OBJECT_SELF);
 
 // estimates how much the range between oAttacker and oDefender is reduced due to the size of both creatures
 // will add  a meter for every size integer above CREATURE_SIZE_MEDIUM
-float GetSizeAdjustment(object oAttacker, object oDefender);
+float GetSizeAdjustment(object oDefender, object oAttacker);
 
 // Returns true if melee attacker is in range to attack target (e.g. 10 feet)
 // if bSizeAdjustment is True, it will consider the creatures sizes

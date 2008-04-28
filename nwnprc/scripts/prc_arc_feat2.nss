@@ -29,7 +29,7 @@ void main()
     int i;
     for(i = 1; i <=10; i++)
     {
-        int ntemp = GetLocalArrayInt(oPC,"arcstrike",i);
+        int ntemp = array_get_int(oPC,"arcstrike",i);
         effect eAttack = EffectAttackIncrease(ntemp);
         DelayCommand(RoundsToSeconds(i), ApplyEffectToObject(DURATION_TYPE_TEMPORARY,eAttack,oPC,6.0));
         DelayCommand(RoundsToSeconds(i), SetLocalInt(oPC,"curentspell",ntemp));

@@ -9,44 +9,42 @@
 
 const int FEAT_ARCANE_STRIKE = 5172;
 
-void StoreSpells (int nSpell ,
-int nClevel ,
-object oWeapon ,
-object oPC)
+void StoreSpells (int nSpell, int nClevel, object oWeapon, object oPC)
 {
 
-//This is the number of the already stored spells
-    int temp = GetLocalInt(oPC,"charges");
+	//This is the number of the already stored spells	
+    	int temp = GetLocalInt(oPC,"charges");
 
-if(temp<10)
-{
-    SetLocalInt(oPC,"doarcstrike",TRUE);
-    if(temp<1)
-    {
-    temp = 1;
-    }
-    else
-    {
-    temp++;
-    }
-    int nLevel = StringToInt(Get2DACache("spells","Wiz_Sorc",nSpell));
-    if(nLevel > 0)
-    {
-    SetLocalArrayInt(oPC,"arcstrike",temp,nLevel);
-    FloatingTextStringOnCreature("You can store "+IntToString(10-temp)+" more spells into your weapon",OBJECT_SELF);
-    itemproperty ipTest = ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,nClevel);
-    IPSafeAddItemProperty(oWeapon, ipTest, 9999.0);
-    SetLocalInt(oPC,"charges",temp);
-    }
-    else
-    {
-    FloatingTextStringOnCreature("Arcane Strike only stores arcane spells of 1st level or higher",OBJECT_SELF);
-    }
-}
-else
-{
-FloatingTextStringOnCreature("You have already stored the maximum allowed number of spells",OBJECT_SELF);
-}
+	if(temp<10)
+	{
+    		SetLocalInt(oPC,"doarcstrike",TRUE);
+    		if(temp<1)
+    		{
+    			temp = 1;
+    		}
+    		else
+    		{
+    			temp++;
+    		}
+    		int nLevel = StringToInt(Get2DACache("spells","Wiz_Sorc",nSpell));
+    		if(nLevel > 0)
+    		{
+    			array_create(oPC, "arcstrike"); // This is used here and in prc_arc_feat2
+    			array_set_int(oPC,"arcstrike",temp,nLevel);
+    			FloatingTextStringOnCreature("You can store "+IntToString(10-temp)+" more spells into your weapon",OBJECT_SELF);
+    			itemproperty ipTest = ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,nClevel);
+    			IPSafeAddItemProperty(oWeapon, ipTest, 9999.0);
+    			SetLocalInt(oPC,"charges",temp);
+    		}
+    		else
+    		{
+    			FloatingTextStringOnCreature("Arcane Strike only stores arcane spells of 1st level or higher",OBJECT_SELF);
+    		}
+	}
+	else
+	{
+		FloatingTextStringOnCreature("You have already stored the maximum allowed number of spells",OBJECT_SELF);
+	}
 }
 
 

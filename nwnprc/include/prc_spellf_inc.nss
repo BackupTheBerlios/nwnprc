@@ -14,8 +14,9 @@
 
 */
 
-
-#include "prc_alterations"
+#include "inc_utility"
+//#include "prc_alterations"
+#include "prc_inc_sp_tch"
 //#include "prcsp_engine"
 //int CheckSpellfire(object oCaster, object oTarget, int bFriendly = FALSE);
 
@@ -582,3 +583,4 @@ void SpellfireCrown(object oPC)
         FloatingTextStringOnCreature("*Crown of Fire Activated*", oPC);
     }
 }
+

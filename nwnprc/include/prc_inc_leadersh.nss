@@ -43,7 +43,7 @@ void StoreCohort(object oCohort);
 //////////////////////////////////////////////////
 
 #include "prc_feat_const"
-#include "inc_utility"
+//#include "inc_utility"
 #include "inc_ecl"
 #include "pnp_shft_poly" //for DoDisguise
 
@@ -880,3 +880,4 @@ void AddPremadeCohortsToDB()
     //make sure this is only done once
     SetCampaignInt(COHORT_DATABASE, "PremadeCohorts", TRUE);
 }
+

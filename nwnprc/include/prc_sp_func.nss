@@ -83,8 +83,8 @@ const int SPELLS_SPELLS_HOLD_CHARGE_TOGGLE      = 3045;
 #include "prc_alterations"
 #include "psi_inc_manifest"
 //#include "spinc_common"
-#include "prc_spell_const"
-#include "prc_inc_combat"
+//#include "prc_spell_const"
+//#include "prc_inc_combat"
 
 //Deletes local variables used for spell functions
 //  To be called (or copied) on rest, from spellhook

@@ -14,17 +14,17 @@
 
 // Include Files:
 #include "prc_alterations"
-#include "prcsp_engine"
-#include "prc_inc_function"
+//#include "prcsp_engine"
+//#include "prc_inc_function"
 #include "x2_inc_itemprop"
 #include "prc_class_const"
 #include "prc_feat_const"
 #include "prc_ipfeat_const"
 #include "inc_utility"
-#include "nw_i0_spells"
+//#include "nw_i0_spells"
 #include "pnp_shft_poly"
 #include "x2_inc_spellhook"
-#include "prc_inc_combat"
+//#include "prc_inc_combat"
 #include "prc_inc_sp_tch"
 
 ////////////////End Generic////////////////

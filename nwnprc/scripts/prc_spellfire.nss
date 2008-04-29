@@ -18,6 +18,7 @@ Called Elsewhere:
 
 */
 #include "prc_alterations"
+#include "prc_spellf_inc"
 
 void main()
 {

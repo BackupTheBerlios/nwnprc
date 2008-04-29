@@ -142,9 +142,9 @@ void spellsDispelAoE(object oTargetAoE, object oCaster, int nCasterLevel);
 #include "x2_inc_switches"
 #include "x2_inc_itemprop"
 #include "x0_i0_henchman"
-#include "prc_inc_combat"
+//#include "prc_inc_combat" via prc_alterations
 #include "prc_inc_sp_tch"
-#include "prc_spellf_inc"
+//#include "prc_spellf_inc"
 
 //::///////////////////////////////////////////////
 //:: DoTrapSpike

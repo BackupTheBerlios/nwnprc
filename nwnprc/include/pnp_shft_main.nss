@@ -97,30 +97,9 @@ void SetShift_02(object oPC, object oTarget);
 
 
 // Generic includes
-#include "prcsp_engine"
-#include "inc_utility"
-#include "x2_inc_switches"
-#include "prc_feat_const"
-#include "prc_class_const"
-#include "prc_spell_const"
-#include "prc_racial_const"
-#include "prc_ipfeat_const"
 #include "prc_misc_const"
-
-// PRC Spell Engine Utility Functions
-#include "prc_inc_function"
-#include "nw_i0_spells"
-#include "lookup_2da_spell"
 #include "prc_inc_spells"
-#include "prcsp_reputation"
-#include "prcsp_archmaginc"
-#include "prcsp_spell_adjs"
-//#include "prc_inc_clsfunc"
-#include "prc_inc_racial"
-#include "inc_abil_damage"
-#include "NW_I0_GENERIC"
-#include "prc_alterations"
-#include "nw_o0_itemmaker"
+
 
 void StoreAppearance(object oPC)
 {
@@ -783,33 +762,43 @@ void ShiftFromKnownArray(int nIndex, int iEpic, object oPC)
     }
 }
 
+// This is a duplicate of RemoveEffectsFromSpell, it prevents calling unneeded includes
+void RemoveEffectsFromPoly(int SpellID, object oTarget)
+{
+  effect eLook = GetFirstEffect(oTarget);
+  while (GetIsEffectValid(eLook)) {
+    if (GetEffectSpellId(eLook) == SpellID)
+      RemoveEffect(oTarget, eLook);
+    eLook = GetNextEffect(oTarget);
+  }
+}
 
 // Remove "dangling" aura effects on trueform shift
 // Now only removes things it should remove (i.e., auras)
 void RemoveAuraEffect( object oPC )
 {
     if ( GetHasSpellEffect(SPELLABILITY_AURA_BLINDING, oPC) )
-        RemoveSpellEffects( SPELLABILITY_AURA_BLINDING, oPC, oPC );
+        RemoveEffectsFromPoly( SPELLABILITY_AURA_BLINDING, oPC);
     if ( GetHasSpellEffect(SPELLABILITY_AURA_COLD, oPC) )
-        RemoveSpellEffects( SPELLABILITY_AURA_COLD, oPC, oPC );
+        RemoveEffectsFromPoly( SPELLABILITY_AURA_COLD, oPC);
     if ( GetHasSpellEffect(SPELLABILITY_AURA_ELECTRICITY, oPC) )
-        RemoveSpellEffects( SPELLABILITY_AURA_ELECTRICITY, oPC, oPC );
+        RemoveEffectsFromPoly( SPELLABILITY_AURA_ELECTRICITY, oPC);
     if ( GetHasSpellEffect(SPELLABILITY_AURA_FEAR, oPC) )
-        RemoveSpellEffects( SPELLABILITY_AURA_FEAR, oPC, oPC );
+        RemoveEffectsFromPoly( SPELLABILITY_AURA_FEAR, oPC);
     if ( GetHasSpellEffect(SPELLABILITY_AURA_FIRE, oPC) )
-        RemoveSpellEffects( SPELLABILITY_AURA_FIRE, oPC, oPC );
+        RemoveEffectsFromPoly( SPELLABILITY_AURA_FIRE, oPC);
     if ( GetHasSpellEffect(SPELLABILITY_AURA_MENACE, oPC) )
-        RemoveSpellEffects( SPELLABILITY_AURA_MENACE, oPC, oPC );
+        RemoveEffectsFromPoly( SPELLABILITY_AURA_MENACE, oPC);
     if ( GetHasSpellEffect(SPELLABILITY_AURA_PROTECTION, oPC) )
-        RemoveSpellEffects( SPELLABILITY_AURA_PROTECTION, oPC, oPC );
+        RemoveEffectsFromPoly( SPELLABILITY_AURA_PROTECTION, oPC);
     if ( GetHasSpellEffect(SPELLABILITY_AURA_STUN, oPC) )
-        RemoveSpellEffects( SPELLABILITY_AURA_STUN, oPC, oPC );
+        RemoveEffectsFromPoly( SPELLABILITY_AURA_STUN, oPC);
     if ( GetHasSpellEffect(SPELLABILITY_AURA_UNEARTHLY_VISAGE, oPC) )
-        RemoveSpellEffects( SPELLABILITY_AURA_UNEARTHLY_VISAGE, oPC, oPC );
+        RemoveEffectsFromPoly( SPELLABILITY_AURA_UNEARTHLY_VISAGE, oPC);
     if ( GetHasSpellEffect(SPELLABILITY_AURA_UNNATURAL, oPC) )
-        RemoveSpellEffects( SPELLABILITY_AURA_UNNATURAL, oPC, oPC );
+        RemoveEffectsFromPoly( SPELLABILITY_AURA_UNNATURAL, oPC);
     if ( GetHasSpellEffect(SPELLABILITY_DRAGON_FEAR, oPC) )
-        RemoveSpellEffects( SPELLABILITY_DRAGON_FEAR, oPC, oPC );
+        RemoveEffectsFromPoly( SPELLABILITY_DRAGON_FEAR, oPC);
 }
 
 

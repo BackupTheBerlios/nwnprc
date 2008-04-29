@@ -21,13 +21,13 @@ Created:   7/17/06
 //:://////////////////////////////////////////////
 
 #include "prc_inc_spells"
+#include "x2_i0_spells"
 
 void main()
 {
 	//Get attacker that hit
 	object oSpellOrigin = OBJECT_SELF;
 	object oSpellTarget = PRCGetSpellTargetObject(oSpellOrigin);
-	// object oItem        = PRCGetSpellCastItem(oSpellOrigin); // motu99: oItem not used in the script, so why waste CPU time?
 	object oWeaponR     = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oSpellTarget);
 	object oWeaponL     = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oSpellTarget);
 	object oTarget;
@@ -41,14 +41,14 @@ void main()
 	}
 */
 	//If non-magical weapon in right hand
-	if(GetIsObjectValid(oWeaponR) && !GetIsMagical(oWeaponR))
+	if(GetIsObjectValid(oWeaponR) && !GetIsMagicalItem(oWeaponR))
 	{
 		DestroyObject(oWeaponR);
 		return;
 	}
 	
 	//if non-magical weapon in left hand
-	else if(GetIsObjectValid(oWeaponL) && !GetIsMagical(oWeaponL))
+	else if(GetIsObjectValid(oWeaponL) && !GetIsMagicalItem(oWeaponL))
 	{
 		DestroyObject(oWeaponL);
 		return;

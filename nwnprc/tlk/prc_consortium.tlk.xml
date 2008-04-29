@@ -4302,7 +4302,7 @@ Prerequisite: Lich Level 5
 Specifics: You take on a guise of the form you had while living. The living don't normally enjoy speaking with walking corpses, even if sentient.
 Use: Selected.</entry>
   <entry id="45920" lang="en" sex="m">Craft Lich Items</entry>
-  <entry id="45921" lang="en" sex="m">Type of feat: Class Specific
+  <entry id="45921" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Level 1 Lich
 Specifics: You have discovered how to upgrade your phylactery.
 Use: Selected. You must use this feat to upgrade your phylactery.
@@ -4341,7 +4341,7 @@ Level
 9: Black Magic Elixir -
 10: Black Magic Oil - </entry>
   <entry id="45928" lang="en" sex="m">True Death Attack</entry>
-  <entry id="45929" lang="en" sex="m">Type of feat: Class
+  <entry id="45929" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 1 Assassin
 Specifics: After studying your target for 3 rounds, you have 3 rounds to slay them vs. DC 10 + Assassin level + Int Mod.
 Use: Automatic.
@@ -4956,13 +4956,13 @@ BONUS DIVINE SPELLS
 
 Every other level in Black Flame Zealot, the character gains new spells per day as if he had also gained a level in his highest divine caster class (Cleric or Druid).</entry>
   <entry id="46144" lang="en" sex="m">Death Attack</entry>
-  <entry id="46145" lang="en" sex="m">Type of feat: Class
+  <entry id="46145" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 1 Black Flame Zealot
 Specifics: After studying your target for 3 rounds, you have 3 rounds to slay them vs. DC 10 + Black Flame Zealot + Assassin level + Int Mod.
 Use: Selected.
 *Note - using this feat will remove your stealth, you have 6 seconds to become stealthy again in order to continue studying the target.</entry>
   <entry id="46146" lang="en" sex="m">Zealous Heart</entry>
-  <entry id="46147" lang="en" sex="m">Type of feat: Class
+  <entry id="46147" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 1 Black Flame Zealot
 Specifics: You become immune to all forms of fear
 Use: Automatic.
@@ -4970,33 +4970,33 @@ Use: Automatic.
   <entry id="46148" lang="en" sex="m">Sneak Attack +1d6</entry>
   <entry id="46149" lang="en" sex="m">Sneak Attack +2d6</entry>
   <entry id="46150" lang="en" sex="m">Sneak Attack +3d6</entry>
-  <entry id="46151" lang="en" sex="m">Type of feat: Class
+  <entry id="46151" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 3 Black Flame Zealot
 Specifics: You gain +1d6 sneak attack. This increases to +2d6 at level 6, and +3d6 at level 9.
 Use: Automatic.
 </entry>
   <entry id="46152" lang="en" sex="m">Sacred Flame</entry>
-  <entry id="46153" lang="en" sex="m">Type of feat: Class
+  <entry id="46153" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 7 Black Flame Zealot
 Specifics: You add 1d6 fire damage to all melee attacks with a weapon.
 Use: Automatic.</entry>
   <entry id="46154" lang="en" sex="m">Fateful Stride</entry>
-  <entry id="46155" lang="en" sex="m">Type of feat: Class
+  <entry id="46155" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 5 Black Flame Zealot
 Specifics: You can cast Dimension Door 1/day as per the spell. This allows you to teleport to any area you can see on the screen.
 Use: Automatic.</entry>
   <entry id="46156" lang="en" sex="m">Strength Boost</entry>
-  <entry id="46157" lang="en" sex="m">Type of feat: Class
+  <entry id="46157" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 2 Fist of Hextor
 Specifics: Starting at 2nd level, a Fist can call upon Hextor for a +4 Strength bonus once per day. This bonus lasts for 4 rounds + the Fist's level. The Fist gains an extra use of this ability at levels 5, 8, 12, 15, 18, 22, 25, 28.
 Use: Selected</entry>
   <entry id="46158" lang="en" sex="m">Frightful Presence</entry>
-  <entry id="46159" lang="en" sex="m">Type of feat: Class
+  <entry id="46159" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 3 Fist of Hextor
 Specifics: When a Fist of Hextor reaches 3rd level, he gains the extraordinary ability to instill fear in others once per day. All those (except for other Fist's) who fail the save are frightened for 5d6 rounds. Those who succeed are merely shaken (Doom effect). The DC is 10 + Fist level + Cha modifier. The Fist gains an extra use of this ability at levels 6, 9, 13, 16, 19, 23, 26, 29.
 Use: Selected</entry>
   <entry id="46160" lang="en" sex="m">Eternal Freedom</entry>
-  <entry id="46161" lang="en" sex="m">Type of feat: Epic Spell Effect
+  <entry id="46161" lang="en" sex="m">Type of Feat: Epic Spell Effect
 Prerequisite: Successful casting of Eternal Freedom epic spell
 Specifics: You are able to move as if you had the Freedom spell cast upon you. Most spells and spell-like abilities that would slow you down or stop you will not work.
 Use: Automatic.</entry>
@@ -5140,18 +5140,18 @@ BONUS DIVINE SPELLS
 
 Every other level in Shining Blade, the character gains new spells per day as if he had also gained a level in his highest divine caster class (Cleric or Paladin).</entry>
   <entry id="46234" lang="en" sex="m">Shock Blade</entry>
-  <entry id="46235" lang="en" sex="m">Type of feat: Class
+  <entry id="46235" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 1 Shining Blade
 Specifics: Adds 1d6 Electrical damage to your weapon. Duration is a number of rounds equal to your class level + charisma modifier. Can be used 2/day at level 1, and 3/day at level 3.
 Use: Selected.
 </entry>
   <entry id="46236" lang="en" sex="m">Holy Blade</entry>
-  <entry id="46237" lang="en" sex="m">Type of feat: Class
+  <entry id="46237" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 5 Shining Blade
 Specifics: Adds damage bonuses of 1d6 Electrical and 2d6 Divine vs. Evil to your weapon. Duration is a number of rounds equal to your class level + charisma modifier. Can be used 4/day at level 5, and 5/day at level 7.
 Use: Selected.</entry>
   <entry id="46238" lang="en" sex="m">Brilliant Blade</entry>
-  <entry id="46239" lang="en" sex="m">Type of feat: Class
+  <entry id="46239" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 9 Shining Blade
 Specifics: Adds a damage bonuses of 1d6 Electrical and 2d6 Divine vs. Evil to your longsword. Also adds +20 to all attack rolls. Only works if a longsword is equipped in the main hand. Duration is a number of rounds equal to your class level + charisma modifier. Can be used 6/day at level 9, and gains 1 use a day every two levels further on (7 at 11, 8 at 13, etc).
 Use: Selected.</entry>
@@ -5364,28 +5364,28 @@ Level
   Final Stand 1/day - All allies gain 2d10 temporary HP for a number of rounds equal to class level + Cha modifier.
 5: Zulkir's Champion: +2 Reflex saves, +4 Intimidate.</entry>
   <entry id="46294" lang="en" sex="m">Horrors of Thay</entry>
-  <entry id="46295" lang="en" sex="m">Type of feat: Class
+  <entry id="46295" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 1 Thayan Knight
 Specifics: Adds +2 Saves against Fear and +1 against Mind Affecting. This increases to +4 against Fear and +2 against Mind Affecting at level 4.
 Use: Automatic
 </entry>
   <entry id="46296" lang="en" sex="m">Zulkir's Favor</entry>
-  <entry id="46297" lang="en" sex="m">Type of feat: Class
+  <entry id="46297" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 1 Thayan Knight
 Specifics: Adds +2 Reflex saves and +2 Intimidate. The Thayan Knight automatically fails any Mind Affecting saving throw vs. a Red Wizard.
 Use: Automatic</entry>
   <entry id="46298" lang="en" sex="m">Zulkir's Defender</entry>
-  <entry id="46299" lang="en" sex="m">Type of feat: Class
+  <entry id="46299" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 2 Thayan Knight
 Specifics: Adds +2 Attack and +2 Damage against any monster attacking you.
 Use: Automatic</entry>
   <entry id="46300" lang="en" sex="m">Final Stand</entry>
-  <entry id="46301" lang="en" sex="m">Type of feat: Class
+  <entry id="46301" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 4 Thayan Knight
 Specifics: Adds 2d10 temporary HP to all allies in a 30' radius for a number of rounds equal to your class level + Cha modifier.
 Use: Selected.</entry>
   <entry id="46302" lang="en" sex="m">Zulkir's Champion</entry>
-  <entry id="46303" lang="en" sex="m">Type of feat: Class
+  <entry id="46303" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 5 Thayan Knight
 Specifics: Adds +2 Reflex saves and +4 Intimidate.
 Use: Automatic</entry>
@@ -5424,42 +5424,42 @@ Level
 
 10: Flurry of Swords 1/day/level: The pinnacle of the arcane duelist's power is to create a flurry of sword attacks against a single target. When this power is activated, the arcane duelist makes one additional attack each round at her highest base attack bonus, but each attack that round suffers a -2 penalty. All attacks must be made on the same opponent. Further, the arcane duelist creates 1d4 quasi-real images plus 1 additional image per three levels of arcane duelist. Each image attacks the same opponent as the arcane duelist herself using the same bonuses as the arcane duelist. The images last for 1 minute per Arcane Duelist Level or the demise of their target, whichever lasts longest. You may target any given enemy only once per day with this ability.</entry>
   <entry id="46308" lang="en" sex="m">Chosen Weapon</entry>
-  <entry id="46309" lang="en" sex="m">Type of feat: Class
+  <entry id="46309" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 1 Arcane Duelist
 Specifics: Since much of the arcane duelist's apparent ability is tied to magic, the arcane duelist can imbue a specific melee weapon with powers to make herself appear more skilled. The arcane duelist must choose a specific melee weapon to be her chosen weapon.
 Use: Selected.</entry>
   <entry id="46310" lang="en" sex="m">Enchant Chosen Weapon</entry>
-  <entry id="46311" lang="en" sex="m">Type of feat: Class
+  <entry id="46311" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 2 Arcane Duelist
 Specifics: The arcane duelist's chosen melee weapon acts as if it has an enhancement bonus, even if it does not. If it does have an enhancement bonus, the arcane duelist adds this bonus to the weapon as an effective bonus. This can bring a weapon's effective enhancement bonus above +5. However, no weapon can have more than a +10 total effective bonus, so this class-granted effective bonus cannot be added to a weapon if the addition would increase the weapon's total effective bonus above +10. This class-granted bonus works only for the arcane duelist when wielding her chosen melee weapon. The enhancement bonus is +1 at 1st level, and rises to +2 at 4th level, +3 at 6th level, and +4 at 8th level.
 Use: Automatic.</entry>
   <entry id="46312" lang="en" sex="m">Apparent Defense</entry>
-  <entry id="46313" lang="en" sex="m">Type of feat: Class
+  <entry id="46313" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 2 Arcane Duelist
 Specifics: Due to trickery and force of personality, the arcane duelist adds her Charisma bonus to her Armor Class, in addition to her Dexterity bonus.
 Use: Automatic.</entry>
   <entry id="46314" lang="en" sex="m">Dexterous Attack</entry>
-  <entry id="46315" lang="en" sex="m">Type of feat: Class
+  <entry id="46315" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 3 Arcane Duelist
 Specifics: Because the arcane duelist values successful hits over actual damage dealt, she can subtract damage from her chosen melee weapon's potential damage and add the same amount to her attack bonus. However, the weapon must do a minimum 1 point of damage.
 Use: Selected.</entry>
   <entry id="46316" lang="en" sex="m">Blur</entry>
-  <entry id="46317" lang="en" sex="m">Type of feat: Class
+  <entry id="46317" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 5 Arcane Duelist
 Specifics: The arcane duelist can activate a blur effect, as the spell cast by a caster of her arcane duelist level. She can use this power once per day per arcane duelist level.
 Use: Selected.</entry>
   <entry id="46318" lang="en" sex="m">False Keenness</entry>
-  <entry id="46319" lang="en" sex="m">Type of feat: Class
+  <entry id="46319" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 7 Arcane Duelist
 Specifics: To create the idea that she is more effective than she really is, the arcane duelist can make her chosen melee weapon keen once per day per arcane duelist level. To activate the keen effect, she must subtract the weapon's normal threat range for critical hits from her attack bonus. For example, if the arcane duelist wields a rapier, she must subtract 3 from her attack bonus, since the rapier has a threat range of 18-20, to make it keen. The keen effect lasts for 1 round per arcane duelist level, and it does not stack with the keen edge spell or other magical effects that make a weapon keen.
 Use: Selected.</entry>
   <entry id="46320" lang="en" sex="m">Flurry of Swords</entry>
-  <entry id="46321" lang="en" sex="m">Type of feat: Class
+  <entry id="46321" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 10 Arcane Duelist
 Specifics: The pinnacle of the arcane duelist's power is to create a flurry of sword attacks against a single target. When this power is activated, the arcane duelist makes one additional attack each round at her highest base attack bonus, but each attack that round suffers a -2 penalty. All attacks must be made on the same opponent. Further, the arcane duelist creates 1d4 quasi-real images plus 1 additional image per three levels of arcane duelist. Each image attacks the same opponent as the arcane duelist herself using the same bonuses as the arcane duelist. The images last for 1 minute per Arcane Duelist Level or the demise of their target, whichever lasts longest. You may target any given enemy only once per day with this ability.
 Use: Selected.</entry>
   <entry id="46322" lang="en" sex="m">Mirror Image</entry>
-  <entry id="46323" lang="en" sex="m">Type of feat: Class
+  <entry id="46323" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 9 Arcane Duelist
 Specifics: The arcane duelist can activate mirror image effect as the spell cast by a caster of her arcane duelist level. The images last one minute per level.
 Use: Selected.</entry>
@@ -11167,7 +11167,7 @@ Prerequisite: Skullclan Hunter level 3.
 Specifics: As the Skullclan Hunter gains in power and ability, he adds a number of immunities. At level 3, he is immune to fear, at level 4 disease, at level 7 paralysis, at level 8 ability damage, and at level 10, he is immune to energy drain.
 Use: Automatic.</entry>
   <entry id="47665" lang="en" sex="m">Armored Mage (Ex)</entry>
-  <entry id="47666" lang="en" sex="m">Type of feat: Class Specific
+  <entry id="47666" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Duskblade level 1
 A duskblade suffers no chance of arcane spell failure when wearing light armor and using light shields.
 
@@ -11833,33 +11833,33 @@ Prerequisite: Henshin Mystic Level 1
 Specifics: The Henshin Mystic can use scrying as a spell-like ability once per day. This grants the Henshin Mystic a +4 insight bonus on all Listen, Search and Spot checks for 1 minute per level. Scrying isn?t in Neverwinter Nights but the bonuses are translated.
 Use: Selected.H</entry>
   <entry id="47867" lang="en" sex="m">Happo Zanshin</entry>
-  <entry id="47868" lang="en" sex="m">Type of feat: Class Specific
+  <entry id="47868" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Henshin Mystic Level 3
 Specifics: A Henshin Mystic has a preternatural awareness of danger and can no longer be flanked. This gives the Henshin Mystic immunity to sneak attacks.
 Use: Automatic.</entry>
   <entry id="47869" lang="en" sex="m">Riddle of Interaction</entry>
-  <entry id="47870" lang="en" sex="m">Type of feat: Class Specific
+  <entry id="47870" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Henshin Mystic Level 4
 Specifics: The Henshin Mystic can use charm monster as a spell-like ability three times per day. In addition the Henshin Mystic gains a +4 insight bonus on all Bluff, Persuade, Taunt and Intimidate checks.
 Use: Selected/Automatic.
 </entry>
   <entry id="47871" lang="en" sex="m">Blindsight</entry>
-  <entry id="47872" lang="en" sex="m">Type of feat: Class Specific
+  <entry id="47872" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Henshin Mystic Level 6
 Specifics: Henshin Mystic gains the ability to perfectly sense his surroundings without relying on sight. This ability makes invisibility and darkness irrelevant to the Mystic (though he still can't detect ethereal creatures).
 Use: Automatic.</entry>
   <entry id="47873" lang="en" sex="m">Hitsu-Do</entry>
-  <entry id="47874" lang="en" sex="m">Type of feat: Class Specific
+  <entry id="47874" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Henshin Mystic Level 6
 Specifics: The Mystic gains the ability to cause his hands and weapons to light up with fire. This adds 1d6 fire damage to all attacks. This ability can be used for a duration of 2 rounds per mystic level per day.
 Use: Selected.</entry>
   <entry id="47875" lang="en" sex="m">Walk Through The Mountains</entry>
-  <entry id="47876" lang="en" sex="m">Type of feat: Class Specific
+  <entry id="47876" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Henshin Mystic Level 9
 Specifics: Henshin Mystic can assume an ethereal state for 2 rounds per level per day, as per the spell etherealness.
 Use: Selected.</entry>
   <entry id="47877" lang="en" sex="m">Riddle of Invulnerability</entry>
-  <entry id="47878" lang="en" sex="m">Type of feat: Class Specific
+  <entry id="47878" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Henshin Mystic Level 10
 Specifics: Henshin Mystic gains damage reduction 20/+1. This means that the mystic ignores the first 20 points of damage from any attack unless the damage from that attack is dealt by a weapon with a +1 enhancement bonus (or better), by a spell, or by a form of energy.
 Use: Automatic.</entry>
@@ -14346,7 +14346,7 @@ Use: Selected.</entry>
   <entry id="48564" lang="en" sex="m">10d12 Damage</entry>
   <entry id="48565" lang="en" sex="m">10d12</entry>
   <entry id="48566" lang="en" sex="m">Hexblade's Curse</entry>
-  <entry id="48567" lang="en" sex="m">type of feat: Class
+  <entry id="48567" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Hexblade level 1
 Once per day + the Hexblade's CHA modifier, as a free action, a hexblade can unleash a curse upon a foe. The target must be visible to the Hexblade and within 60 feet. The target of a Hexblade's curse takes a -2 penalty on attacks, saves, ability checks, skill checks and weapon damage rolls for one hour thereafter. A successful Will save (DC 10 + 1/2 Hexblade's class level + Hexblade's CHA mod)negates the effect. At every 4th level beyond 1st, a Hexblade gains the ability to use his curse one additional time per day.
 
@@ -14362,15 +14362,15 @@ Epic Hexblade's Curse
 
 When a Hexblade attains 37th level, the penalties incurred by a target of his curse become -8 instead of -6.</entry>
   <entry id="48568" lang="en" sex="m">Mettle</entry>
-  <entry id="48569" lang="en" sex="m">type of feat: Class
+  <entry id="48569" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Hexblade level 3, Crusader level 13.
 A Hexblade or Crusader can resist magical and unusual attacks with great willpower or fortitude. If he makes a successful Will or Fortitude save against an attack that would normally have a lesser effect on a successful save, he instead completely negates the effect.</entry>
   <entry id="48570" lang="en" sex="m">Aura of Unluck</entry>
-  <entry id="48571" lang="en" sex="m">type of feat: Class
+  <entry id="48571" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Hexblade level 12
 Once per day, a Hexblade of 12th level or higher can create a baleful aura of misfortune. Any melee or ranged attack made against the Hexblade while this Aura of Unluck is active has a 20 % miss chance. Activating this aura is a free action, and the aura lasts for a number of rounds equal to 3 + the Hexblade's Charisma bonus (if any). At 16th level and every 4 levels onward, a Hexblade can use his Aura of Unluck one additional time per day</entry>
   <entry id="48572" lang="en" sex="m">Arcane Resistance</entry>
-  <entry id="48573" lang="en" sex="m">type of feat: Class
+  <entry id="48573" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Hexblade level 2
 At 2nd level a Hexblade gains a bonus equal to his Charisma bonus (minimum +1) on saving throws against spells and spell-like effects.</entry>
   <entry id="48574" lang="en" sex="m">Epic Hexblade</entry>
@@ -18509,8 +18509,12 @@ Specifics:</entry>
 Prerequisites: 
 Specifics:</entry>
   <entry id="49812" lang="en" sex="m">Armored spellcasting</entry>
-  <entry id="49813" lang="en" sex="m">A Hexblade does not suffer a chance of spell failure when casting in light or medium armor or while using small shields.</entry>
-  <entry id="49814" lang="en" sex="m">At 6th level, the hexblade can cast one hexblade spell per day as a swift action, as long as its original casting time is a standard action or faster. He gains an additional use of this power at levels 8, 11, 14, 18, 22, 26, 30, 34 and 38.</entry>
+  <entry id="49813" lang="en" sex="m">Type of Feat: Class specific
+Prerequisites: Hexblade level 4
+Specifics: A Hexblade does not suffer a chance of spell failure when casting in light or medium armor or while using small shields.</entry>
+  <entry id="49814" lang="en" sex="m">Type of Feat: Class specific
+Prerequisites: Hexblade level 6
+Specifics: The hexblade can cast one hexblade spell per day as a swift action, as long as its original casting time is a standard action or faster. He gains an additional use of this power at levels 8, 11, 14, 18, 22, 26, 30, 34 and 38.</entry>
   <entry id="49815" lang="en" sex="m">Swift Cast</entry>
   <entry id="49816" lang="en" sex="m">Caster Level(s): Bard 0, Cleric 0, Druid 0
 Innate Level: 0
@@ -22256,31 +22260,31 @@ Level
   9: Superior Defense +3
 10: Bonus Feat</entry>
   <entry id="51173" lang="en" sex="m">Corellon's Blessing (Su)</entry>
-  <entry id="51174" lang="en" sex="m">Type of feat: Class
+  <entry id="51174" lang="en" sex="m">Type of Feat: Class
 Requirements: Champion of Corellon level 1
 You gain the ability to heal wounds by touch, much like a Paladin's Lay on Hands ability. Each day you can heal a total number of hitpoints of damage equal to your Champion level x your Charisma modifier (minimum 1). For example, a 6th level Champion of corellon with a Charisma score of 14 can heal 12 points of damage per day. You can choose to divide the healing among multiple recipients and you don't have to do it all at once. Using this ability is a standard action.
 You can use any or all of this healing power to deal damage to undead creatures. Using Corellon's blessing in this way requires a successful melee touch attack and doesn't provoke attacks of opportunity. You decide how much of your daily allotment of healing to use as damage after successfully touching your undead foe.
 If you have levels in Paladin, you add your levels of Champion of Corellon and Paladin together and determine your ability to heal accordingly (although if you have a Charisma score lower than 12, your Paladin levels do not contribute to your ability to heal).</entry>
   <entry id="51175" lang="en" sex="m">Elegant Strike (Ex)</entry>
-  <entry id="51176" lang="en" sex="m">Type of feat: Class
+  <entry id="51176" lang="en" sex="m">Type of Feat: Class
 Requirements: Champion of Corellon level 2
 Upon reaching 2nd level, you become able to place your attacks where they deal greater damage. You apply your Dexterity bonus as a bonus on damage rolls (in addition to any Strength bonus you may have) with any of the following weapons: longsword, rapier, greatsword, shortsword, dagger, or scimitar. Targets immune to sneak attacks or extra damage from critical hits are immune to your Elegant Strike.</entry>
   <entry id="51177" lang="en" sex="m">Superior Defense (Ex)</entry>
-  <entry id="51178" lang="en" sex="m">Type of feat: Class
+  <entry id="51178" lang="en" sex="m">Type of Feat: Class
 Requirements: Champion of Corellon level 3
 At 3rd level, you learn special techniques for making the best use of an elf's natural agility even while wearing restrictive armor. The maximum Dexterity bonus for any medium or heavy armor you wear (including mithral versions) is increased by 1. For example, full plate armor normally has a maximum Dexterity bonus of +1, but the Superior Defense ability increases this to +2.
 Every three levels after 3rd, you improve the maximum Dexterity bonus of medium or heavy armor by +1.</entry>
   <entry id="51179" lang="en" sex="m">Unimpeded Movement (Ex)</entry>
-  <entry id="51180" lang="en" sex="m">Type of feat: class
+  <entry id="51180" lang="en" sex="m">Type of Feat: class
 Requirements: Champion of Corellon level 5
 At 5th level, you no longer reduce your movement when wearing medium or heavy armor. (You still reduce your movement if carrying a medium or heavy load, however.)
 If you know the Spring Attack feat, your unimpeded movement ability allows you to use Spring Attack even while wearing heavy armor.</entry>
   <entry id="51181" lang="en" sex="m">Corellon's Wrath (Su)</entry>
-  <entry id="51182" lang="en" sex="m">Type of feat: Class
+  <entry id="51182" lang="en" sex="m">Type of Feat: Class
 Requirements: Champion of Corellon level 8
 At 8th level, you gain the ability to briefly channel the divine power of Corellon Larethian, enveloping one melee weapon you wield in a veil of incandescent light as a free action. You gain a +2 sacred bonus on attack rolls and deal an extra 2d6 points of damage with each melee attack you make with the affected weapon for 1 round. While Corellon's Wrath is in effect, the weapon is considered magic and good-aligned for the purpose of overcoming damage reduction. You can use this ability a number of times a day equal to 3 + your Charisma modifier (minimum once per day)</entry>
   <entry id="51183" lang="en" sex="m">Epic Champion of Corellon</entry>
-  <entry id="51184" lang="en" sex="m">Type of feat: Class
+  <entry id="51184" lang="en" sex="m">Type of Feat: Class
 Requirements: Champion of Corellon level 11
 Masters of the blade and fearing no enemy, Epic Champions of Corellon Larethian are the absolute elite. They lead the elven warbands, maybe even command entire armies. Still they also fight in the front ranks, taking on the toughest foes.
 
@@ -28015,7 +28019,7 @@ Level
 10: -
 </entry>
   <entry id="52204" lang="en" sex="m">Fist of Energy</entry>
-  <entry id="52205" lang="en" sex="m">Type of feat: Class
+  <entry id="52205" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 2 Enlightened Fist
 Specifics: You can spend one of your daily stunning attempts to add 1d6 fire or electricity damage to all attacks for one round, you need to be fighting unarmed or with a kama to use this ability.
 Use: Selected.
@@ -37508,63 +37512,63 @@ Level 19: Sneak Attack +10d6
 Level 20: Ghost Walk
 </entry>
   <entry id="55104" lang="en" sex="m">Ki Power</entry>
-  <entry id="55105" lang="en" sex="m">Type of feat: Class Specific
+  <entry id="55105" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Ninja Level 1
 Specifics: A ninja can channel her ki energy to manifest special powers of stealth and mobility. She can use her ki powers a number of times per day equal to one half her class level (minimum 1) plus her Wisdom bonus (if any). Ki powers can be used only if a ninja is wearing no armor and is unencumbered.
 As long as a ninja's ki pool isn't empty (that is, as long as she has at least one daily use remaining), she gains a +2 bonus to her Will saves.
 Use: Automatic.</entry>
   <entry id="55106" lang="en" sex="m">Acrobatics +2</entry>
-  <entry id="55107" lang="en" sex="m">Type of feat: Class Specific
+  <entry id="55107" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Ninja Level 6
 Specifics: Starting at 6th level, a ninja gains a +2 bonus to Jump and Tumble checks. This bonus increases to +4 at 12th level and +6 at 18th level.
 Use: Automatic.</entry>
   <entry id="55108" lang="en" sex="m">Acrobatics +4</entry>
-  <entry id="55109" lang="en" sex="m">Type of feat: Class Specific
+  <entry id="55109" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Ninja Level 12
 Specifics: Starting at 6th level, a ninja gains a +2 bonus to Jump and Tumble checks. This bonus increases to +4 at 12th level and +6 at 18th level.
 Use: Automatic.</entry>
   <entry id="55110" lang="en" sex="m">Acrobatics +6</entry>
-  <entry id="55111" lang="en" sex="m">Type of feat: Class Specific
+  <entry id="55111" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Ninja Level 18
 Specifics: Starting at 6th level, a ninja gains a +2 bonus to Jump and Tumble checks. This bonus increases to +4 at 12th level and +6 at 18th level.
 Use: Automatic.</entry>
   <entry id="55112" lang="en" sex="m">Ghost Sight</entry>
-  <entry id="55113" lang="en" sex="m">Type of feat: Class Specific
+  <entry id="55113" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Ninja Level 16
 Specifics: At 16th level and higher, a ninja can see invisible and ethereal creatures as easily as she sees material creatures and objects.
 Use: Automatic.</entry>
   <entry id="55114" lang="en" sex="m">Ghost Step</entry>
-  <entry id="55115" lang="en" sex="m">Type of feat: Class Specific
+  <entry id="55115" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Ninja Level
 Specifics: Starting at 2nd level, a ninja can spend one daily use of her ki power to become invisible for 1 round. Using this ability is a swift action that does not provoke attacks of opportunity.
 Use: Selected.</entry>
   <entry id="55116" lang="en" sex="m">Ghost Strike</entry>
-  <entry id="55117" lang="en" sex="m">Type of feat: Class Specific
+  <entry id="55117" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Ninja Level 8
 Specifics: At 8th level and higher, a ninja can spend one daily use of her ki power to strike incorporeal and ethereal creatures as if they were corporeal. She also can use this ability to strike foes on the Material Plane normally while ethereal.
 Use: Selected.</entry>
   <entry id="55118" lang="en" sex="m">Ghost Walk</entry>
-  <entry id="55119" lang="en" sex="m">Type of feat: Class Specific
+  <entry id="55119" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Ninja Level 20
 A 20th-level ninja can spend two daily uses of her ki power to enter the Ethereal Plane for an extended period of time. This ability functions as the ethereal jaunt spell with a caster level equal to the ninja's class level.
 Use: Selected.</entry>
   <entry id="55120" lang="en" sex="m">Great Leap</entry>
-  <entry id="55121" lang="en" sex="m">Type of feat: Class Specific
+  <entry id="55121" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Ninja Level 4
 Specifics: At 4th level and higher, a ninja always makes Jump checks as if she were running and had the Run feat, enabling her to make long jumps without a running start and granting a +4 bonus to the jump. This ability can be used only if she is wearing no armor and is carrying no more than a light load.
 Use: Automatic.</entry>
   <entry id="55122" lang="en" sex="m">Greater Ki Dodge</entry>
-  <entry id="55123" lang="en" sex="m">Type of feat: Class Specific
+  <entry id="55123" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Ninja Level 18
 Starting at 19th level, a ninja's ki dodge ability grants total concealment (50% miss chance).
 Use: Selected</entry>
   <entry id="55124" lang="en" sex="m">Ki Dodge</entry>
-  <entry id="55125" lang="en" sex="m">Type of feat: Class Specific
+  <entry id="55125" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Ninja Level 6
 Specifics: At 6th level and higher, a ninja can spend one daily use of her ki power to cause an attack against her to miss when it might otherwise hit. When a ninja activates this ability, her outline shifts and wavers, granting her concealment (20% miss chance) against all attacks for 1 round.
 Use: Selected.</entry>
   <entry id="55126" lang="en" sex="m">Ghost Step (ethereal)</entry>
-  <entry id="55127" lang="en" sex="m">Type of feat: Class Specific
+  <entry id="55127" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Ninja Level 10
 Specifics: At 10th level, a ninja can become ethereal when using Ghost step instead of becoming invisible.</entry>
   <entry id="55128" lang="en" sex="m">Epic Ninja</entry>
@@ -37581,7 +37585,7 @@ Blinding Speed, Crippling Strike, Defensive Roll, Epic Skill Focus, Epic Dodge, 
   <entry id="55130" lang="en" sex="m">Acrobatics +8</entry>
   <entry id="55131" lang="en" sex="m">Acrobatics +10</entry>
   <entry id="55132" lang="en" sex="m">Acrobatics +12</entry>
-  <entry id="55133" lang="en" sex="m">Type of feat: Class Specific
+  <entry id="55133" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Epic Ninja
 At level 24, the Ninja is capable of enhanced acrobatics gaining a +8 bonus to Tumble and Jump. This bonus increases +10 at level 30 and to +12 at level 36.</entry>
   <entry id="55134" lang="en" sex="m">Ninja AC Bonus</entry>
@@ -37628,12 +37632,12 @@ Abilities:
 10: Frightful Cleave
      Ghost step 4/day
 </entry>
-  <entry id="55140" lang="en" sex="m">Type of feat: Class Specific
+  <entry id="55140" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Ghost-Faced Killer
 Specifics: A Ghost-Faced Killer can become invisible for 1 round. Using this ability is a swift action that does not provoke attacks of opportunity.  An extra use per day is given at every 3 levels after first.  A level 6 Ghost-Faced Killer can become ethereal instead of invisible.
 Use: Selected.</entry>
   <entry id="55141" lang="en" sex="m">Frightful Attack</entry>
-  <entry id="55142" lang="en" sex="m">Type of feat: Class Specific
+  <entry id="55142" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Ghost-Faced Killer Level 3
 Specifics: Once per day a Ghost-Faced Killer can panic onlookers and even frighten his victim to death by making a sudden strike attack.  The ghost-faced killer must use his power attack feat on the attack.
 The victim must make a Will save (DC 10 + ghost-faced killer class level + ghost-faced killer Cha modifier) or die.  If the victim succeeds at the save, the victim becomes shaken for 1 round per class level of the ghost-faced killer.
@@ -37641,7 +37645,7 @@ Onlookers within a 30 foot radius (not including the victim, the ghost-faced kil
 If the onlooker fails this save, she will become panicked (if her hit dice are less than the ghost-faced killer's class level + the ghost-faced killer's Cha modifier) or shaken.
 The Ghost-Faced Killer gains another use per day every 3 levels.</entry>
   <entry id="55143" lang="en" sex="m">Frightful Cleave</entry>
-  <entry id="55144" lang="en" sex="m">Type of feat: Class Specific
+  <entry id="55144" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Ghost-Faced Killer Level 10
 Specifics: If a ghost-faced killer slays a foe with his frightful attack, (either from the damage dealt or because of a failed save against its fear effect), he gets an immediate extra melee attack against another target within reach.
 If the new target is flat-footed, this extra attack is also a frightful attack, though it doesn't count against the ghost-faced killer's daily limit of frightful attacks.  This ability otherwise functions exactly as the Cleave feat.</entry>
@@ -37650,6 +37654,9 @@ If the new target is flat-footed, this extra attack is also a frightful attack, 
   <entry id="55147" lang="en" sex="m">Failed Frightful Attack: Target is immune to fear.</entry>
   <entry id="55148" lang="en" sex="m">Failed Frightful Attack: Target has too many Hit Dice.</entry>
   <entry id="55149" lang="en" sex="m">Failed Frightful Attack: Target must not be immune to Sneak Attacks, Mind Affecting Effects, or Fear.</entry>
+<<<<<<< prc_consortium.tlk.xml
+  <entry id="55160" lang="en" sex="m">Type of Feat: Class Specific
+=======
   <entry id="55150" lang="en" sex="m">Type of Feat: Racial
 Prerequisite: Race-Specific.
 
@@ -37670,6 +37677,7 @@ Sonic: A ray of this energy type deals -1 point of damage per die and ignores an
 This power's subtype is the same as the type of energy you manifest.
 </entry>
   <entry id="55160" lang="en" sex="m">Type of feat: Class Specific
+>>>>>>> 1.413
 Prerequisite: None
 Specifics: This feat allows the caster to gain spells per day as if they had gained a level in the specified class.</entry>
   <entry id="55161" lang="en" sex="m">Spellcasting: Wizard</entry>
@@ -40954,7 +40962,7 @@ The goddess Shar is called the Mistress of the Night, the Lady of Loss, and the 
   <entry id="57000" lang="en" sex="m">##PnP Weapon Proficiencies##</entry>
   <entry id="57001" lang="en" sex="m">Weapon Proficiencies</entry>
   <entry id="57002" lang="en" sex="m">These feats represent the familiarization of yourself with various weapons.  Where classes give training in several weapons at once, feats are used to grant training in specific weapons.</entry>
-  <entry id="57003" lang="en" sex="m">Type of feat: Proficiency
+  <entry id="57003" lang="en" sex="m">Type of Feat: Proficiency
 
 This feat grants you proficiency in the named weapon.
 Use: Automatic.</entry>

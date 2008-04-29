@@ -37654,9 +37654,6 @@ If the new target is flat-footed, this extra attack is also a frightful attack, 
   <entry id="55147" lang="en" sex="m">Failed Frightful Attack: Target is immune to fear.</entry>
   <entry id="55148" lang="en" sex="m">Failed Frightful Attack: Target has too many Hit Dice.</entry>
   <entry id="55149" lang="en" sex="m">Failed Frightful Attack: Target must not be immune to Sneak Attacks, Mind Affecting Effects, or Fear.</entry>
-<<<<<<< prc_consortium.tlk.xml
-  <entry id="55160" lang="en" sex="m">Type of Feat: Class Specific
-=======
   <entry id="55150" lang="en" sex="m">Type of Feat: Racial
 Prerequisite: Race-Specific.
 
@@ -37676,8 +37673,7 @@ Sonic: A ray of this energy type deals -1 point of damage per die and ignores an
 
 This power's subtype is the same as the type of energy you manifest.
 </entry>
-  <entry id="55160" lang="en" sex="m">Type of feat: Class Specific
->>>>>>> 1.413
+  <entry id="55160" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: None
 Specifics: This feat allows the caster to gain spells per day as if they had gained a level in the specified class.</entry>
   <entry id="55161" lang="en" sex="m">Spellcasting: Wizard</entry>

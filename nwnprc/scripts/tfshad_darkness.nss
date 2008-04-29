@@ -41,7 +41,6 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
     //Declare major variables including Area of Effect Object
     effect eAOE = EffectAreaOfEffect(AOE_PER_DARKNESS,"tfshad_darknessa","","nw_s0_darknessb");
-    location lTarget = PRCGetSpellTargetLocation();
     int nDuration =GetLevelByClass(CLASS_TYPE_SHADOWLORD,OBJECT_SELF);
 
     //Make sure duration does no equal 0

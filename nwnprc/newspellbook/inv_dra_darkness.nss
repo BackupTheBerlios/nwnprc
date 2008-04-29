@@ -28,8 +28,8 @@ void main()
     int iAttackRoll = 1;
 
     if(GetObjectType(oTarget) == OBJECT_TYPE_CREATURE)
-    {   //touch attack roll if target creature is hostile
-        if(!GetIsReactionTypeFriendly(oTarget))
+    {   //touch attack roll if target creature is not an ally
+        if(!spellsIsTarget(oTarget, SPELL_TARGET_ALLALLIES, oCaster))
             iAttackRoll = PRCDoMeleeTouchAttack(oTarget);
 
         if (iAttackRoll > 0)

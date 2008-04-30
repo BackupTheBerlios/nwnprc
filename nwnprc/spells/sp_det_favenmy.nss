@@ -145,6 +145,7 @@ void CheckForPresence(int nType, location lLoc, string sType, string sType2)
                 if(MyPRCGetRacialType(oTarget) == nType)
                 {
                         if(oTarget != OBJECT_SELF) nCount++;
+                        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE), oTarget);
                 }
                 oTarget = GetNextObjectInShape(SHAPE_SPHERE, FeetToMeters(60.0f), lLoc, FALSE, OBJECT_TYPE_CREATURE);
         }
@@ -153,10 +154,10 @@ void CheckForPresence(int nType, location lLoc, string sType, string sType2)
         {
                 if(nCount <2)
                 {
-                        SendMessageToPC(OBJECT_SELF, "You detect " + IntToString(nCount) + sType + "nearby.");
+                        SendMessageToPC(OBJECT_SELF, "You detect " + IntToString(nCount) + " " + sType + "nearby.");
                 }
                 
-                else SendMessageToPC(OBJECT_SELF, "You detect " + IntToString(nCount) + sType2 + " nearby.");
+                else SendMessageToPC(OBJECT_SELF, "You detect " + IntToString(nCount) + " " + sType2 + " nearby.");
         }
 }
                 

@@ -164,7 +164,7 @@ const int ERROR_CODE_5_FIX_YET_ANOTHER_TIME = 1;
 #include "prc_inc_racial"
 #include "inc_abil_damage"
 #include "NW_I0_GENERIC"
-#include "prc_inc_combat"
+//#include "prc_inc_combat"
 #include "inc_lookups"
 #include "x0_I0_spells"
 #include "x2_i0_spells"

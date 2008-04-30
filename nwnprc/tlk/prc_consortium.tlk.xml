@@ -18863,27 +18863,27 @@ Benefit: If you know that an item is magical, you can use the Appraise skill to 
   <entry id="49911" lang="en" sex="m">Dive For Cover</entry>
   <entry id="49912" lang="en" sex="m">Type of Feat: General
 Prerequisite: Base Reflex save bonus +4.
-Benefit: If you fail a Reflex saving throw, you can immediately attempt the saving throw again. You must take the second result, whether it succeeds or fails. You become prone  immediately  after  attempting the second roll.</entry>  
+Benefit: If you fail a Reflex saving throw, you can immediately attempt the saving throw again. You must take the second result, whether it succeeds or fails. You become prone  immediately  after  attempting the second roll.</entry>
   <entry id="49913" lang="en" sex="m">Extraordinary Spell Aim</entry>
   <entry id="49914" lang="en" sex="m">Type of Feat: General
 Prerequisite: Spellcraft 15 ranks.
-Benefit: Whenever you cast a spell with an area, you can attempt to shape the spell’s area so that one creature within the area is unaffected by the spell. To accomplish this, you must succeed on a Spellcraft check (DC 25 + spell level).</entry>  
+Benefit: Whenever you cast a spell with an area, you can attempt to shape the spell’s area so that one creature within the area is unaffected by the spell. To accomplish this, you must succeed on a Spellcraft check (DC 25 + spell level).</entry>
   <entry id="49915" lang="en" sex="m">Obscure Lore</entry>
   <entry id="49916" lang="en" sex="m">Type of Feat: General
 Prerequisite: Bardic Knowledge class feature
-Benefit: You gain a +4 insight bonus on checks using your bardic knowledge class feature.</entry>  
+Benefit: You gain a +4 insight bonus on checks using your bardic knowledge class feature.</entry>
   <entry id="49917" lang="en" sex="m">Dazzling Illusion</entry>
   <entry id="49918" lang="en" sex="m">Type of Feat: General
 Prerequisite: Spell Focus Illusion
-Benefit: You render all enemies within 30 feet dazzled for 1 round. Blind creatures are immune to this effect.</entry>  
+Benefit: You render all enemies within 30 feet dazzled for 1 round. Blind creatures are immune to this effect.</entry>
   <entry id="49919" lang="en" sex="m">Energy Abjuration</entry>
   <entry id="49920" lang="en" sex="m">Type of Feat: General
 Prerequisite: Spell Focus Abjuration
-Benefit: When you cast an abjuration spell, you gain a special energy resistance equal to (1 + the spell's level) x 5. This will stop that much energy damage before dissipating.</entry>  
+Benefit: When you cast an abjuration spell, you gain a special energy resistance equal to (1 + the spell's level) x 5. This will stop that much energy damage before dissipating.</entry>
   <entry id="49921" lang="en" sex="m">Fearsome Necromancy</entry>
   <entry id="49922" lang="en" sex="m">Type of Feat: General
 Prerequisite: Spell Focus Necromancy
-Benefit: Any foe affected by a necromancy spell you cast is shaken for 1 round, regardless of the result of the save. This mind-affecting fear ability does not stack with any other fear effect (it can't make a foe worse than shaken).</entry>  
+Benefit: Any foe affected by a necromancy spell you cast is shaken for 1 round, regardless of the result of the save. This mind-affecting fear ability does not stack with any other fear effect (it can't make a foe worse than shaken).</entry>
   <entry id="49923" lang="en" sex="m">Insightful Divination</entry>
   <entry id="49924" lang="en" sex="m">Type of Feat: General
 Prerequisite: Spell Focus Divination
@@ -20729,6 +20729,7 @@ Use: Automatic.</entry>
   <entry id="50638" lang="en" sex="m">&lt;CUSTOM0&gt; turns water creatures.</entry>
   <entry id="50639" lang="en" sex="m">&lt;CUSTOM0&gt; turns fire creatures.</entry>
   <entry id="50640" lang="en" sex="m">&lt;CUSTOM0&gt; turns blightspawned.</entry>
+  <entry id="50656" lang="en" sex="m">Discharge Crown</entry>
   <entry id="50658" lang="en" sex="m">Shadowmaster Shades</entry>
   <entry id="50659" lang="en" sex="m">Dominate Elemental</entry>
   <entry id="50660" lang="en" sex="m">Epic Fiendish Resilience II</entry>
@@ -37245,7 +37246,7 @@ Specifics: This feat allows you to select which maneuvers to recover for your bl
 If you are a Warblade, this will recover all expended maneuvers in one round, during which time you can attack normally, but may not use a maneuver.
 If you are a Swordsage, this will allow recovery of a single expended maneuver as a full-round action.
 Use: Selected.</entry>
-<entry id="55055" lang="en" sex="m">School: Divination
+  <entry id="55055" lang="en" sex="m">School: Divination
 Level: Clr 1, Pal 1, Sor/Wiz 1
 Components: V, S, M/DF
 Casting Time: 1 standard action

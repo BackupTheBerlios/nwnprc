@@ -120,7 +120,7 @@ int PRCGetUserSpecificSpellScriptFinished();
 #include "prc_alterations"
 #include "x2_inc_craft"
 #include "prc_inc_spells"
-#include "prc_inc_combat"
+//#include "prc_inc_combat"
 #include "inc_utility"
 #include "prc_inc_itmrstr"
 #include "inc_newspellbook"

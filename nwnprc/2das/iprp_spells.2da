@@ -1373,7 +1373,7 @@
 1369 ArrowStorm                        16829338 5         3         11250  3702       0         0       1          is_arrow_storm    
 1370 ArrowSplit                        16829340 5         3         11250  3703       0         0       1          is_arrowsplit     
 1371 BloodfreezeArrow                  16829342 7         4         21000  3704       0         0       1          is_bldfrz_arrow   
-1372 DischargeCrown                    16827870 1         1         750    3705       0         0       1          ife_augment_off   
+1372 DischargeCrown                    16827872 1         1         750    3705       0         0       1          ife_augment_off   
 1373 DoublestrikeArrow                 16829346 7         4         21000  3706       0         0       1          is_dblstr_arrow   
 1374 DetectFavoredEnemies              16829348 1         1         750    3707       1         0       1          is_det_favenmy    
 1375 DarkflameArrow                    16829350 5         3         11250  3708       0         0       1          is_drkflm_arrow   

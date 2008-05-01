@@ -23,7 +23,7 @@ int GetXPReward(object oPC, object oTarget, int nCR = 0);
 /* Include section                              */
 //////////////////////////////////////////////////
 
-#include "inc_utility"
+//#include "inc_utility"
 #include "prc_inc_template"
 
 //////////////////////////////////////////////////
@@ -263,3 +263,4 @@ void ApplyECLToXP(object oPC)
         SetPersistantLocalInt(oPC, sXP_AT_LAST_HEARTBEAT, newXP);
     }
 }
+

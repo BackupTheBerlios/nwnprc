@@ -32,9 +32,10 @@ int ApplyTemplateToObject(int nTemplate, object oPC = OBJECT_SELF, int bApply = 
 
 int GetHasTemplate(int nTemplate, object oPC = OBJECT_SELF)
 {
-    if(GetPersistantLocalInt(oPC, "template_"+IntToString(nTemplate)))
+    int bHasTemplate = GetPersistantLocalInt(oPC, "template_"+IntToString(nTemplate));
+    if(bHasTemplate)
         DoDebug("GetHasTemplate("+IntToString(nTemplate)+", "+GetName(oPC)+") is true");
-    return GetPersistantLocalInt(oPC, "template_"+IntToString(nTemplate));
+    return bHasTemplate;
 }
 
 int GetTemplateLA(object oPC)

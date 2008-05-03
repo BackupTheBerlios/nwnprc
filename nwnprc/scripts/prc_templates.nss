@@ -14,7 +14,7 @@
 //:: Created On: 18/04/06
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+//#include "prc_alterations"
 #include "prc_inc_template"
 
 void RunTemplateStuff(int nTemplate, object oPC = OBJECT_SELF)

@@ -344,12 +344,13 @@ void DeletePRCLocalInts(object oSkin)
     DeleteNamedComposites(oPC, "PRC_ComAttBon");
 
     // PRCGetClassByPosition and PRCGetLevelByPosition cleanup
-    DeleteLocalInt(oPC, "PRC_ClassInPos1");
-    DeleteLocalInt(oPC, "PRC_ClassInPos2");
-    DeleteLocalInt(oPC, "PRC_ClassInPos3");
-    DeleteLocalInt(oPC, "PRC_ClassLevelInPos1");
-    DeleteLocalInt(oPC, "PRC_ClassLevelInPos2");
-    DeleteLocalInt(oPC, "PRC_ClassLevelInPos3");
+    // not needed now that GetClassByPosition() works for custom classes
+    // DeleteLocalInt(oPC, "PRC_ClassInPos1");
+    // DeleteLocalInt(oPC, "PRC_ClassInPos2");
+    // DeleteLocalInt(oPC, "PRC_ClassInPos3");
+    // DeleteLocalInt(oPC, "PRC_ClassLevelInPos1");
+    // DeleteLocalInt(oPC, "PRC_ClassLevelInPos2");
+    // DeleteLocalInt(oPC, "PRC_ClassLevelInPos3");
 
     //persistant local token object cache
     //looks like logging off then back on without the server rebooting breaks it
@@ -503,13 +504,13 @@ void DeletePRCLocalInts(object oSkin)
 
     //clear Dragonfriend/Dragonthrall flag so effect properly reapplies
     if (GetHasFeat(FEAT_DRAGONFRIEND, oPC)
-       || GetHasFeat(FEAT_DRAGONTHRALL, oPC)) DeleteLocalInt(GetPCSkin(oPC), "DragonThrall");
+       || GetHasFeat(FEAT_DRAGONTHRALL, oPC)) DeleteLocalInt(oSkin, "DragonThrall");
 
     //Invocations
-    if(GetLocalInt(OBJECT_SELF, "ChillingFogLock")) //Chilling Fog lock
-        DeleteLocalInt(OBJECT_SELF, "ChillingFogLock");
-    if(array_exists(OBJECT_SELF, "BreathProtected")) //Endure Exposure wearing off
-        array_delete(OBJECT_SELF, "BreathProtected");
+    if(GetLocalInt(oPC, "ChillingFogLock")) //Chilling Fog lock
+        DeleteLocalInt(oPC, "ChillingFogLock");
+    if(array_exists(oPC, "BreathProtected")) //Endure Exposure wearing off
+        array_delete(oPC, "BreathProtected");
     DeleteLocalInt(oPC, "DragonWard");
 
     // future PRCs Go below here

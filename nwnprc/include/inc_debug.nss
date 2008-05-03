@@ -115,6 +115,14 @@ string DebugIProp2Str(itemproperty iprop);
  */
 string DebugBool2String(int bool);
 
+/**
+ * Converts the given effect into a string representation.
+ *
+ * @param eEffect   effect to convert into a string
+ * @return          A string representation of effect
+ */
+string DebugEffect2String(effect eEffect);
+
 //////////////////////////////////////////////////
 /*             Function definitions             */
 //////////////////////////////////////////////////
@@ -203,4 +211,26 @@ string DebugIProp2Str(itemproperty iprop)
 string DebugBool2String(int bool)
 {
     return bool ? "True" : "False";
+}
+
+string DebugEffect2String(effect eEffect)
+{
+    string sString = "";
+
+    int nType = GetEffectType(eEffect);
+    sString += "Effect; Type = " + IntToString(nType);
+
+    int nSpell = GetEffectSpellId(eEffect);
+    sString += ", SpellID: " + IntToString(nSpell);
+
+    int nSubType = GetEffectSubType(eEffect);
+    sString += ", Subtype: " + IntToString(nSubType);
+
+    int nDurationType = GetEffectDurationType(eEffect);
+    sString += ", Duration: " + IntToString(nDurationType);
+
+    object oCreator = GetEffectCreator(eEffect);
+    sString += ", Creator: " + GetName(oCreator);
+
+    return sString;
 }

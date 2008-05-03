@@ -11,7 +11,7 @@
 //:: Created On: Feb 2, 2008
 //:://////////////////////////////////////////////
 
-#include "prc_inc_combat"
+//#include "prc_inc_combat"
 #include "prc_alterations"
 
 
@@ -27,17 +27,20 @@
  //handles the feat chain for Elven Lightblades
 void DoEquipLightblade(object oPC, object oItem, int nHand)
 {
-	if(DEBUG) DoDebug("Checking Lightblade feats");
+	if(DEBUG) DoDebug("Checking Lightblade feats"); // optimised as some feats are prereq for others
 	if(GetHasFeat(FEAT_WEAPON_FOCUS_SHORT_SWORD, oPC) || GetHasFeat(FEAT_WEAPON_FOCUS_RAPIER, oPC))
 	{
 	    SetCompositeAttackBonus(oPC, "LightbladeWF" + IntToString(nHand), 1, nHand);
+        if(GetHasFeat(FEAT_WEAPON_SPECIALIZATION_SHORT_SWORD, oPC) || GetHasFeat(FEAT_WEAPON_SPECIALIZATION_RAPIER, oPC))
+        {
+            SetCompositeDamageBonusT(oItem, "LightbladeWS", 2);
+            if(GetHasFeat(FEAT_EPIC_WEAPON_SPECIALIZATION_SHORTSWORD, oPC) || GetHasFeat(FEAT_EPIC_WEAPON_SPECIALIZATION_RAPIER, oPC))
+                SetCompositeDamageBonusT(oItem, "LightbladeEpicWS", 4);
+        }
+        if(GetHasFeat(FEAT_EPIC_WEAPON_FOCUS_SHORTSWORD, oPC) || GetHasFeat(FEAT_EPIC_WEAPON_FOCUS_RAPIER, oPC))
+            SetCompositeAttackBonus(oPC, "LightbladeEpicWF" + IntToString(nHand), 2, nHand);
 	}
-	if(GetHasFeat(FEAT_EPIC_WEAPON_FOCUS_SHORTSWORD, oPC) || GetHasFeat(FEAT_EPIC_WEAPON_FOCUS_RAPIER, oPC))
-	    SetCompositeAttackBonus(oPC, "LightbladeEpicWF" + IntToString(nHand), 2, nHand);
-	if(GetHasFeat(FEAT_WEAPON_SPECIALIZATION_SHORT_SWORD, oPC) || GetHasFeat(FEAT_WEAPON_SPECIALIZATION_RAPIER, oPC))
-	    SetCompositeDamageBonusT(oItem, "LightbladeWS", 2);
-	if(GetHasFeat(FEAT_EPIC_WEAPON_SPECIALIZATION_SHORTSWORD, oPC) || GetHasFeat(FEAT_EPIC_WEAPON_SPECIALIZATION_RAPIER, oPC))
-	    SetCompositeDamageBonusT(oItem, "LightbladeEpicWS", 4);
+	
 	if(GetHasFeat(FEAT_IMPROVED_CRITICAL_SHORT_SWORD, oPC) || GetHasFeat(FEAT_IMPROVED_CRITICAL_RAPIER, oPC))
 	    IPSafeAddItemProperty(oItem, ItemPropertyKeen(), 99999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
 }
@@ -46,13 +49,17 @@ void DoEquipLightblade(object oPC, object oItem, int nHand)
 void DoEquipThinblade(object oPC, object oItem, int nHand)
 {
 	if(GetHasFeat(FEAT_WEAPON_FOCUS_LONG_SWORD, oPC) || GetHasFeat(FEAT_WEAPON_FOCUS_RAPIER, oPC))
+    {
 	    SetCompositeAttackBonus(oPC, "ThinbladeWF" + IntToString(nHand), 1, nHand);
-	if(GetHasFeat(FEAT_EPIC_WEAPON_FOCUS_LONGSWORD, oPC) || GetHasFeat(FEAT_EPIC_WEAPON_FOCUS_RAPIER, oPC))
-	    SetCompositeAttackBonus(oPC, "ThinbladeEpicWF" + IntToString(nHand), 2, nHand);
-	if(GetHasFeat(FEAT_WEAPON_SPECIALIZATION_LONG_SWORD, oPC) || GetHasFeat(FEAT_WEAPON_SPECIALIZATION_RAPIER, oPC))
-	    SetCompositeDamageBonusT(oItem, "ThinbladeWS", 2);
-	if(GetHasFeat(FEAT_EPIC_WEAPON_SPECIALIZATION_LONGSWORD, oPC) || GetHasFeat(FEAT_EPIC_WEAPON_SPECIALIZATION_RAPIER, oPC))
-	    SetCompositeDamageBonusT(oItem, "ThinbladeEpicWS", 4);
+        if(GetHasFeat(FEAT_WEAPON_SPECIALIZATION_LONG_SWORD, oPC) || GetHasFeat(FEAT_WEAPON_SPECIALIZATION_RAPIER, oPC))
+        {
+            SetCompositeDamageBonusT(oItem, "ThinbladeWS", 2);
+            if(GetHasFeat(FEAT_EPIC_WEAPON_SPECIALIZATION_LONGSWORD, oPC) || GetHasFeat(FEAT_EPIC_WEAPON_SPECIALIZATION_RAPIER, oPC))
+                SetCompositeDamageBonusT(oItem, "ThinbladeEpicWS", 4);
+        }
+        if(GetHasFeat(FEAT_EPIC_WEAPON_FOCUS_LONGSWORD, oPC) || GetHasFeat(FEAT_EPIC_WEAPON_FOCUS_RAPIER, oPC))
+            SetCompositeAttackBonus(oPC, "ThinbladeEpicWF" + IntToString(nHand), 2, nHand);
+    }
 	if(GetHasFeat(FEAT_IMPROVED_CRITICAL_LONG_SWORD, oPC) || GetHasFeat(FEAT_IMPROVED_CRITICAL_RAPIER, oPC))
 	    IPSafeAddItemProperty(oItem, ItemPropertyKeen(), 99999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
 }
@@ -61,13 +68,17 @@ void DoEquipThinblade(object oPC, object oItem, int nHand)
 void DoEquipCourtblade(object oPC, object oItem, int nHand)
 {
 	if(GetHasFeat(FEAT_WEAPON_FOCUS_GREAT_SWORD, oPC))
+    {
 	    SetCompositeAttackBonus(oPC, "CourtbladeWF" + IntToString(nHand), 1, nHand);
-	if(GetHasFeat(FEAT_EPIC_WEAPON_FOCUS_GREATSWORD, oPC))
-	    SetCompositeAttackBonus(oPC, "CourtbladeEpicWF" + IntToString(nHand), 2, nHand);
-	if(GetHasFeat(FEAT_WEAPON_SPECIALIZATION_GREAT_SWORD, oPC))
-	    SetCompositeDamageBonusT(oItem, "CourtbladeWS", 2);
-	if(GetHasFeat(FEAT_EPIC_WEAPON_SPECIALIZATION_GREATSWORD, oPC))
-	    SetCompositeDamageBonusT(oItem, "CourtbladeEpicWS", 4);
+        if(GetHasFeat(FEAT_WEAPON_SPECIALIZATION_GREAT_SWORD, oPC))
+        {
+            SetCompositeDamageBonusT(oItem, "CourtbladeWS", 2);
+            if(GetHasFeat(FEAT_EPIC_WEAPON_SPECIALIZATION_GREATSWORD, oPC))
+                SetCompositeDamageBonusT(oItem, "CourtbladeEpicWS", 4);
+        }
+        if(GetHasFeat(FEAT_EPIC_WEAPON_FOCUS_GREATSWORD, oPC))
+            SetCompositeAttackBonus(oPC, "CourtbladeEpicWF" + IntToString(nHand), 2, nHand);
+    }
 	if(GetHasFeat(FEAT_IMPROVED_CRITICAL_GREAT_SWORD, oPC))
 	    IPSafeAddItemProperty(oItem, ItemPropertyKeen(), 99999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
 }
@@ -90,6 +101,7 @@ void DoEquipAptitude(object oPC, object oItem, int nHand)
 //clears any bonuses used to simulate feat chains on unequip
 void DoWeaponFeatUnequip(object oPC, object oItem, int nHand)
 {
+    // fluffyamoeba - going to assume redundant local var clearing isn't worth tradeoff
 	if(GetBaseItemType(oItem) == BASE_ITEM_ELF_LIGHTBLADE)
 	{
 	    if(DEBUG) DoDebug("Clearing Lightblade variables.");
@@ -98,14 +110,14 @@ void DoWeaponFeatUnequip(object oPC, object oItem, int nHand)
 	    SetCompositeDamageBonusT(oItem, "LightbladeWS", 0);
 	    SetCompositeDamageBonusT(oItem, "LightbladeEpicWS", 0);
 	}
-	if(GetBaseItemType(oItem) == BASE_ITEM_ELF_THINBLADE)
+	else if(GetBaseItemType(oItem) == BASE_ITEM_ELF_THINBLADE)
 	{
 	    SetCompositeAttackBonus(oPC, "ThinbladeWF" + IntToString(nHand), 0, nHand);
 	    SetCompositeAttackBonus(oPC, "ThinbladeEpicWF" + IntToString(nHand), 0, nHand);
 	    SetCompositeDamageBonusT(oItem, "ThinbladeWS", 0);
 	    SetCompositeDamageBonusT(oItem, "ThinbladeEpicWS", 0);
 	}
-	if(GetBaseItemType(oItem) == BASE_ITEM_ELF_COURTBLADE)
+	else if(GetBaseItemType(oItem) == BASE_ITEM_ELF_COURTBLADE)
 	{
 	    SetCompositeAttackBonus(oPC, "CourtbladeWF" + IntToString(nHand), 0, nHand);
 	    SetCompositeAttackBonus(oPC, "CourtbladeEpicWF" + IntToString(nHand), 0, nHand);
@@ -163,10 +175,10 @@ int IsWeaponMartial(int nBaseItemType, object oPC)
 void DoProficiencyCheck(object oPC, object oItem, int nHand)
 {
 	int bProficient = FALSE;
+	// minor optimisation - can return as soon as bProficient is true
+	if(!GetIsWeapon(oItem)) return;
 	
-	if(!GetIsWeapon(oItem)) bProficient = TRUE;
-	
-	if(GetTag(oItem) == "prc_eldrtch_glv") bProficient = TRUE;
+	if(GetTag(oItem) == "prc_eldrtch_glv") return;
 	
 	switch(GetBaseItemType(oItem))
 	{ 

@@ -8,9 +8,6 @@
 // Returns the number of henchmen a player has.
 int GetNumHenchmen(object oPC);
 
-// converts float meters into float feet
-float MetersToFeet(float fMeters);
-
 // returns the float time in seconds to close the given distance
 float GetTimeToCloseDistance(float fMeters, object oPC, int bIsRunning = FALSE);
 
@@ -38,12 +35,6 @@ int GetNumHenchmen(object oPC)
      }
 
      return nCount;
-}
-
-float MetersToFeet(float fMeters)
-{
-     fMeters *= 3.281;
-     return fMeters;
 }
 
 float GetTimeToCloseDistance(float fMeters, object oPC, int bIsRunning = FALSE)

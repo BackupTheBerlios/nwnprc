@@ -332,7 +332,7 @@ int ContinueOnHitCastSpell(object oSpellOrigin = OBJECT_SELF);
 // In order to find out, whether the spell was actually cast from a weapon/armor in a physical attack action
 // we check whether the current action is ACTION_ATTACKOBJECT and whether the attempted attack
 // target is equal to the spell's target
-int GetIsOnHitCastSpell(object oTarget = OBJECT_INVALID, object oSpellCastItem = OBJECT_SELF, object oSpellOrigin = OBJECT_SELF);
+int GetIsOnHitCastSpell(object oSpellTarget = OBJECT_INVALID, object oSpellCastItem = OBJECT_SELF, object oSpellOrigin = OBJECT_SELF);
 
 // this will force the instantaneous execution of any onhitcast spell script, even if it is set up to be
 // routed through prc_onhitcast (for more info on forced execution look at the code of ContinueOnHitCastSpell)
@@ -610,7 +610,7 @@ void ApplyAllOnHitCastSpellsOnItem(object oTarget = OBJECT_INVALID, object oItem
 
 	while(GetIsItemPropertyValid(ip))
 	{
-// DoDebug("ApplyAllOnHitCastSpellsExcludingSubType: found " + DebugStringItemProperty(ip));
+// DoDebug("ApplyAllOnHitCastSpellsExcludingSubType: found " + DebugIProp2Str(ip));
 		if (GetItemPropertyType(ip) ==ITEM_PROPERTY_ONHITCASTSPELL)
 		{
 			// retrieve the spell ID
@@ -652,7 +652,7 @@ void ApplyAllOnHitCastSpellsOnItemExcludingSubType(int iExcludeSubType, object o
 
 	while(GetIsItemPropertyValid(ip))
 	{
-// DoDebug("ApplyAllOnHitCastSpellsExcludingSubType: found " + DebugStringItemProperty(ip));
+// DoDebug("ApplyAllOnHitCastSpellsExcludingSubType: found " + DebugIProp2Str(ip));
 		if (GetItemPropertyType(ip) ==ITEM_PROPERTY_ONHITCASTSPELL)
 		{
 			iSubType = GetItemPropertySubType(ip);

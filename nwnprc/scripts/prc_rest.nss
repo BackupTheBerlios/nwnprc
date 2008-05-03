@@ -16,6 +16,7 @@
 #include "prc_inc_dragsham"
 #include "prc_inc_wpnrest"
 #include "inc_dynconv"
+#include "prc_inc_util" // for PRCForceRest() which is only called here so could be moved
 
 void PrcFeats(object oPC)
 {

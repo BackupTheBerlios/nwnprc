@@ -7,6 +7,10 @@ const int SPELL_CONCECRATE                  = 2167;
 const int SPELL_SOL_CONCECRATE              = 2108;
 const int SPELL_BLACKLIGHT                  = 2091;
 
+// bard
+const int SPELL_BARD_SONG = 411;
+const int SPELL_BARD_CURSE_SONG = 644;
+
 //marshal
 const int SPELL_MINAUR_DEMFORT              = 3500;
 const int SPELL_MINAUR_FORCEWILL            = 3501;
@@ -323,7 +327,7 @@ const int SPELL_PANACEA                             = 3162;
 const int SPELL_LEGIONS_SHIELD_OF_FAITH             = 3163;
 const int SPELL_SLASHING_DARKNESS                   = 3164;
 const int SPELL_ANGAZZARS_SCORCHER                  = 3165;
-const int SPELL_CREATE_MAGIC_TATOO                  = 3166;
+const int SPELL_CREATE_MAGIC_TATTOO                 = 3166;
 const int SPELL_FLASHBURST                          = 3168;
 const int SPELL_FLENSING                            = 3169;
 const int SPELL_SHADOW_SPRAY                        = 3170;

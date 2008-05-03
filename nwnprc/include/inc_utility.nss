@@ -111,6 +111,13 @@ float MinutesToSeconds(int minutes);
  * @return              Float of duration in seconds
  */
 float TenMinutesToSeconds(int tenMinutes);
+
+/**
+ * Converts metres to feet. Moved from prc_inc_util.
+ * @param fMeters   distance in metres
+ * @return          float of distance in feet
+ */
+float MetersToFeet(float fMeters);
  
 /**
  * Checks whether an alignment matches given restrictions.
@@ -567,6 +574,12 @@ float TenMinutesToSeconds(int tenMinutes)
 float MinutesToSeconds(int minutes)
 {
     return TurnsToSeconds(minutes);
+}
+
+float MetersToFeet(float fMeters)
+{
+     fMeters *= 3.281;
+     return fMeters;
 }
 
 int GetIsValidAlignment ( int iLawChaos, int iGoodEvil,int iAlignRestrict, int iAlignRstrctType, int iInvertRestriction )

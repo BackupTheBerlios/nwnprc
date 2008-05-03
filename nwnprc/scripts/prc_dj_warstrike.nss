@@ -14,6 +14,7 @@ of the Drow Judicator prestige class.
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
+#include "prc_inc_util"
 
 void main()
 {

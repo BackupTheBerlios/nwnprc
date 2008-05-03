@@ -13,6 +13,7 @@ The Selvetarm's Wrath feat for the Drow Judicator
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
+#include "prc_inc_util"
 
 void main()
 {

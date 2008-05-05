@@ -564,7 +564,7 @@ void SetupSpells(object oPC, int nClass)
     string sClass = IntToString(nClass);
     string sArrayName = "NewSpellbookMem_" + sClass;
     object oSkin = GetPCSkin(oPC);
-    int nLevel = GetPrCAdjustedClassLevel(nClass, oPC);
+    int nLevel = GetSpellslotLevel(nClass, oPC);
     int nAbility = GetAbilityForClass(nClass, oPC);
     int nSpellbookType = GetSpellbookTypeForClass(nClass);
 

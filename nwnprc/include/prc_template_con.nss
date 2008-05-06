@@ -6,3 +6,4 @@ const int TEMPLATE_HALF_FIEND       = 2;
 const int TEMPLATE_HALF_CELESTIAL   = 3;
 const int TEMPLATE_LICH             = 101;
 const int TEMPLATE_DEMILICH         = 102;
+const int TEMPLATE_NECROPOLITAN     = 105;

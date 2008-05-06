@@ -11,7 +11,6 @@
 //:: Created On: 5/6/28
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
 #include "prc_inc_template"
 
 void main()
@@ -21,10 +20,10 @@ void main()
         
         //if it's already undead, it can't become undead again
         if(GetHasTemplate(TEMPLATE_LICH, oPC) || 
-        GetHasTemplate(TEMPLATE_BAELNORN, oPC) ||
+        /* GetHasTemplate(TEMPLATE_BAELNORN, oPC) || */
         GetHasTemplate(TEMPLATE_DEMILICH, oPC) ||        
         GetLevelByClass(CLASS_TYPE_BAELNORN, oPC) > 0 ||
-        GetLevelByClass(CLASS_TYPE_LICH, oPC) > 0
+        GetLevelByClass(CLASS_TYPE_LICH, oPC) > 0)
         {
                 SetExecutedScriptReturnValue(X2_EXECUTE_SCRIPT_END);
         }

@@ -5,15 +5,11 @@
 //includes shifter changed forms
 int MyPRCGetRacialType(object oTarget);
 
-//routes to action cast spell, but puts a wrapper around to tell other functions its a
-//SLA, so dont craft etc
-//also defaults th totalDC to 10+spellevel+chamod
-void DoRacialSLA(int nSpellID, int nCasterlevel = 0, int nTotalDC = 0);
+// DoRacialSLA() moved to prc_alterations as it is used by other spell-like scripts, not just race specific
 
 #include "prc_class_const"
 #include "prc_feat_const"
 #include "prc_racial_const"
-#include "prc_alterations"
 
 
 int MyPRCGetRacialType(object oCreature)
@@ -102,23 +98,4 @@ int MyPRCGetRacialType(object oCreature)
         return RACIAL_TYPE_VERMIN;
 
     return GetRacialType(oCreature);
-}
-
-
-//routes to action cast spell, but puts a wrapper around to tell other functions its a
-//SLA, so dont craft etc
-//also defaults th totalDC to 10+spellevel+chamod
-//this is Base DC, not total DC. SLAs are still spells, so spell focus should still apply.
-void DoRacialSLA(int nSpellID, int nCasterlevel = 0, int nTotalDC = 0)
-{
-    if(DEBUG) DoDebug("Spell DC passed to DoRacialSLA: " + IntToString(nTotalDC));
-    if(nTotalDC == 0)
-        nTotalDC = 10
-            +StringToInt(Get2DACache("spells", "Innate", nSpellID))
-            +GetAbilityModifier(ABILITY_CHARISMA);
-
-    ActionDoCommand(SetLocalInt(OBJECT_SELF, "SpellIsSLA", TRUE));
-    if(DEBUG) DoDebug("Spell DC entered in ActionCastSpell: " + IntToString(nTotalDC));
-    ActionCastSpell(nSpellID, nCasterlevel, 0, nTotalDC);
-    ActionDoCommand(DeleteLocalInt(OBJECT_SELF, "SpellIsSLA"));
 }

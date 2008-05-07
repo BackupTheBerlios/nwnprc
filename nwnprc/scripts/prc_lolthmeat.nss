@@ -12,6 +12,8 @@
 //:://////////////////////////////////////////////
 
 #include "prc_inc_racial"
+#include "inc_prc_npc"
+#include "prc_inc_combat"
 
 void main()
 {

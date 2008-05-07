@@ -407,6 +407,7 @@ string DebugAppearancevalues2Str(struct appearancevalues appval);
 #include "inc_utility"
 #include "prc_inc_switch"
 #include "prc_inc_racial"
+#include "prc_alterations"
 
 
 //////////////////////////////////////////////////

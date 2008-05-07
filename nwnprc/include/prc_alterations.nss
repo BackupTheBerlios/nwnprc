@@ -46,6 +46,12 @@ void ActionCastSpellOnSelf(int iSpell, int nMetaMagic = METAMAGIC_NONE);
 void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotalDC = 0,
     int nMetaMagic = METAMAGIC_NONE, int nClass = CLASS_TYPE_INVALID,
     int bUseOverrideTargetLocation=FALSE, int bUseOverrideTargetObject=FALSE, object oOverrideTarget=OBJECT_INVALID);
+    
+//routes to action cast spell, but puts a wrapper around to tell other functions its a
+//SLA, so dont craft etc
+//also defaults th totalDC to 10+spellevel+chamod
+// moved from prc_inc_racial
+void DoRacialSLA(int nSpellID, int nCasterlevel = 0, int nTotalDC = 0);
 
 /**
  * Checks if target is a Frenzied Bersker with Deathless Frenzy Active
@@ -274,6 +280,24 @@ void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotal
     string sScript = Get2DACache("spells", "ImpactScript", iSpell);
     ExecuteScript(sScript, OBJECT_SELF);
 */
+}
+
+//routes to action cast spell, but puts a wrapper around to tell other functions its a
+//SLA, so dont craft etc
+//also defaults th totalDC to 10+spellevel+chamod
+//this is Base DC, not total DC. SLAs are still spells, so spell focus should still apply.
+void DoRacialSLA(int nSpellID, int nCasterlevel = 0, int nTotalDC = 0)
+{
+    if(DEBUG) DoDebug("Spell DC passed to DoRacialSLA: " + IntToString(nTotalDC));
+    if(nTotalDC == 0)
+        nTotalDC = 10
+            +StringToInt(Get2DACache("spells", "Innate", nSpellID))
+            +GetAbilityModifier(ABILITY_CHARISMA);
+
+    ActionDoCommand(SetLocalInt(OBJECT_SELF, "SpellIsSLA", TRUE));
+    if(DEBUG) DoDebug("Spell DC entered in ActionCastSpell: " + IntToString(nTotalDC));
+    ActionCastSpell(nSpellID, nCasterlevel, 0, nTotalDC);
+    ActionDoCommand(DeleteLocalInt(OBJECT_SELF, "SpellIsSLA"));
 }
 
 // Added by Oni5115

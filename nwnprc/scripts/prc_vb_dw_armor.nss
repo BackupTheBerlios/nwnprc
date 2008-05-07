@@ -12,6 +12,7 @@
 
 #include "prc_inc_racial"
 #include "prc_class_const"
+#include "prc_inc_spells"
 
 void main()
 {

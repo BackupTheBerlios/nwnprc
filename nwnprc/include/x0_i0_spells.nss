@@ -136,6 +136,7 @@ void spellApplyMindBlank(object oTarget, int nSpellId, float fDelay=0.0);
 // * Handle dispel magic of AoEs
 void spellsDispelAoE(object oTargetAoE, object oCaster, int nCasterLevel);
 
+#include "prc_misc_const"
 #include "prc_alterations"
 //#include "NW_I0_SPELLS"
 //#include "x0_i0_match"

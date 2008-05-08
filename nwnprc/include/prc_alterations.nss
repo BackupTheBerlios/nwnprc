@@ -137,6 +137,8 @@ object GetObjectToApplyNewEffect(string sTag, object oPC, int nStripEffects = TR
 
 int GetPRCIsSkillSuccessful(object oCreature, int nSkill, int nDifficulty, int nRollOverride = -1);
 
+int GetIsPolyMorphedOrShifted(object oCreature);
+
 const int ERROR_CODE_5_FIX_YET_ANOTHER_TIME = 1;
 
 //////////////////////////////////////////////////
@@ -145,6 +147,7 @@ const int ERROR_CODE_5_FIX_YET_ANOTHER_TIME = 1;
 
 // Generic includes
 //#include "prc_inc_effect"
+#include "prc_misc_const"
 #include "inc_item_props"
 #include "inc_utility"
 #include "prc_inc_spells"
@@ -155,7 +158,6 @@ const int ERROR_CODE_5_FIX_YET_ANOTHER_TIME = 1;
 #include "prc_spell_const"
 #include "prc_racial_const"
 #include "prc_ipfeat_const"
-#include "prc_misc_const"
 #include "tob_move_const"
 #include "inc_acp"
 //#include "prc_inc_leadersh"
@@ -298,6 +300,29 @@ void DoRacialSLA(int nSpellID, int nCasterlevel = 0, int nTotalDC = 0)
     if(DEBUG) DoDebug("Spell DC entered in ActionCastSpell: " + IntToString(nTotalDC));
     ActionCastSpell(nSpellID, nCasterlevel, 0, nTotalDC);
     ActionDoCommand(DeleteLocalInt(OBJECT_SELF, "SpellIsSLA"));
+}
+
+// Determine whether the character is polymorphed or shfited.
+int GetIsPolyMorphedOrShifted(object oCreature)
+{
+    int bPoly = FALSE;
+
+    object oHide = GetPCSkin(oCreature);
+
+    effect eChk = GetFirstEffect(oCreature);
+
+    while (GetIsEffectValid(eChk))
+    {
+        if (GetEffectType(eChk) == EFFECT_TYPE_POLYMORPH)
+            bPoly = TRUE;
+
+        eChk = GetNextEffect(oCreature);
+    }
+
+    if (GetLocalInt(oHide, "nPCShifted"))
+        bPoly = TRUE;
+
+    return bPoly;
 }
 
 // Added by Oni5115

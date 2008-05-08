@@ -10,7 +10,7 @@
 //:: Created On: Nov 20, 2007
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "pnp_shft_poly"
 
 //internal fucntion to remove wings
 void RemoveSWWings(object oPC)

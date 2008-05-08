@@ -13,8 +13,7 @@
 
 //Modified for use with Hound Archon
 
-#include "prc_inc_clsfunc"
-#include "prc_feat_const"
+#include "pnp_shft_poly"
 
 void main()
 {

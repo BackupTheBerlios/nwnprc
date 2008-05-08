@@ -67,10 +67,10 @@ object AddCohortToPlayer(int nCohortID, object oPC)
 
 //changes portrait, head, and appearance
 //based on the target race with a degree of randomization.
+//This should only be used on NPCs, not players.
 void DoRandomAppearance(int nRace, object oTarget = OBJECT_SELF)
 {
     //store current appearance to be safe
-    StoreAppearance(oTarget);
     int nAppearance; //appearance to change into
     int nHeadMax;    //max head ID, changed to random 1-max
     int nGender = GetGender(oTarget);

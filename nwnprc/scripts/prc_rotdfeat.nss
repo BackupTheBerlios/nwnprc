@@ -15,7 +15,7 @@
 
 void dragonwrought(object oSkin);
 
-#include "prc_alterations"
+#include "pnp_shft_poly"
 #include "prc_ipfeat_const"
 #include "x2_inc_itemprop"
 

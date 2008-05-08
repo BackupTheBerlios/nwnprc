@@ -11,8 +11,7 @@
 //:: Created On: May 11, 2004
 //:://////////////////////////////////////////////
 
-#include "prc_feat_const"
-#include "prc_inc_clsfunc"
+#include "pnp_shft_poly"
 
 void main()
 {

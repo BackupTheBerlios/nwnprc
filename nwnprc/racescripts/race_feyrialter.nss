@@ -12,7 +12,7 @@
 //:://////////////////////////////////////////////
 // disguise for fey'ri
 
-#include "prc_alterations"
+#include "pnp_shft_poly"
 
 //internal function to remove wings
 void RemoveWings(object oPC)

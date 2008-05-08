@@ -409,7 +409,6 @@ string DebugAppearancevalues2Str(struct appearancevalues appval);
 #include "prc_inc_racial"
 #include "prc_alterations"
 
-
 //////////////////////////////////////////////////
 /*             Internal functions               */
 //////////////////////////////////////////////////
@@ -1057,7 +1056,7 @@ void _prc_inc_shifting_ShiftIntoTemplateAux(object oShifter, int nShifterType, o
             if(nShiftedNumber > 9) nShiftedNumber = 0;
             nShiftedNumber++;
             SetPersistantLocalInt(oShifter, "nTimesShifted", nShiftedNumber);
-            int nDuration = GetInvokerLevel(oShifter, CLASS_TYPE_WARLOCK);
+            int nDuration = GetLocalInt(oShifter, "MaskOfFleshInvocation");
             DelayCommand(HoursToSeconds(nDuration), ForceUnshift(oShifter, nShiftedNumber));
         }
 

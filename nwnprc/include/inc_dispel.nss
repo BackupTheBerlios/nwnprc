@@ -74,7 +74,7 @@ void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, fl
 #include "nw_i0_spells"
 #include "x2_i0_spells"
 #include "spinc_remeffct"
-#include "inv_inc_invfunc"
+#include "inv_invoc_const"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -337,7 +337,7 @@ void DispelMagicBestMod(object oTarget, int nCasterLevel)
                         int nDamage;
                         int nDC;
                         float fDelay;
-                        int RICasterLvl = GetInvokerLevel(oTarget, CLASS_TYPE_WARLOCK);
+                        int RICasterLvl = GetLocalInt(oTarget, "DangerousInvis");
                         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eRetrPulse, oTarget);
                         DeleteLocalInt(oTarget, "DangerousInvis");
                         
@@ -388,7 +388,7 @@ void DispelMagicBestMod(object oTarget, int nCasterLevel)
                       }
                       else if(GetEffectSpellId(eToDispel) == INVOKE_PAINFUL_SLUMBER_OF_AGES && GetLocalInt(oTarget, "PainfulSleep"))
                       {
-                          effect eSleepDam = EffectDamage(GetInvokerLevel(GetEffectCreator(eToDispel), CLASS_TYPE_WARLOCK), DAMAGE_TYPE_MAGICAL);
+                          effect eSleepDam = EffectDamage(GetLocalInt(oTarget, "PainfulSleep"), DAMAGE_TYPE_MAGICAL);
                           ApplyEffectToObject(DURATION_TYPE_INSTANT, eSleepDam, oTarget);
                           DeleteLocalInt(oTarget, "PainfulSleep");
                           RemoveEventScript(oTarget, EVENT_VIRTUAL_ONDAMAGED, "inv_painsleep", FALSE, FALSE);
@@ -571,7 +571,7 @@ void DispelMagicAllMod(object oTarget, int nCasterLevel)
                   effect eRetrVis = EffectVisualEffect(VFX_IMP_SONIC);
                   effect eRetrPulse = EffectVisualEffect(VFX_IMP_PULSE_WIND);
                   effect eRetrStun = EffectStunned();
-                  int RICasterLvl = GetInvokerLevel(oTarget, GetInvokingClass());
+                  int RICasterLvl = GetLocalInt(oTarget, "DangerousInvis");
                   effect eDam;
                   int nDamage;
                   float fDelay;
@@ -627,7 +627,7 @@ void DispelMagicAllMod(object oTarget, int nCasterLevel)
                
                else if(GetEffectSpellId(eToDispel) == INVOKE_PAINFUL_SLUMBER_OF_AGES && GetLocalInt(oTarget, "PainfulSleep"))
                {
-                    effect eSleepDam = EffectDamage(GetInvokerLevel(GetEffectCreator(eToDispel), CLASS_TYPE_WARLOCK), DAMAGE_TYPE_MAGICAL);
+                    effect eSleepDam = EffectDamage(GetLocalInt(oTarget, "PainfulSleep"), DAMAGE_TYPE_MAGICAL);
                     ApplyEffectToObject(DURATION_TYPE_INSTANT, eSleepDam, oTarget);
                     DeleteLocalInt(oTarget, "PainfulSleep");
                     RemoveEventScript(oTarget, EVENT_VIRTUAL_ONDAMAGED, "inv_painsleep", FALSE, FALSE);

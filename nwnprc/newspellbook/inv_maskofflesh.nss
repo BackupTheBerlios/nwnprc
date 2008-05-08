@@ -33,7 +33,7 @@ void main()
     int nShiftType = SHIFTER_TYPE_DISGUISE_SELF;
     int nCasterLvl = GetInvokerLevel(oPC, GetInvokingClass());
     
-    SetLocalInt(oPC, "MaskOfFleshInvocation", TRUE);
+    SetLocalInt(oPC, "MaskOfFleshInvocation", nCasterLvl);
     
     if(nSpellID == INVOKE_MASK_OF_FLESH_HOSTILE)
     {

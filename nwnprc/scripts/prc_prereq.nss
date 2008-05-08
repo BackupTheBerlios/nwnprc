@@ -13,7 +13,7 @@
 #include "tob_inc_tobfunc"
 #include "inc_newspellbook"
 #include "prc_allow_const"
-
+#include "inv_inc_invfunc"
 
 void SneakRequirement(object oPC)
 {

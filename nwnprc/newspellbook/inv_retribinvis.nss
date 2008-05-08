@@ -43,6 +43,6 @@ void main()
 
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur,TRUE,-1,nCasterLvl);
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eInvis, oTarget, fDur,TRUE,-1,nCasterLvl);
-    SetLocalInt(oTarget, "DangerousInvis", TRUE);
+    SetLocalInt(oTarget, "DangerousInvis", nCasterLvl);
 
 }

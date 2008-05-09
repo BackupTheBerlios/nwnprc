@@ -35,12 +35,12 @@ void DeletePRCLocalInts(object oSkin);
 #include "prcsp_engine"
 #include "inc_utility"
 #include "x2_inc_switches"
-#include "prc_feat_const"
-#include "prc_class_const"
-#include "prc_spell_const"
-#include "prc_racial_const"
-#include "prc_ipfeat_const"
-#include "prc_misc_const"
+//#include "prc_feat_const"
+//#include "prc_class_const"
+//#include "prc_spell_const"
+//#include "prc_racial_const"
+//#include "prc_ipfeat_const"
+//#include "prc_misc_const"
 #include "prc_inc_stunfist"
 
 // PRC Spell Engine Utility Functions
@@ -56,7 +56,7 @@ void DeletePRCLocalInts(object oSkin);
 #include "x2_inc_itemprop"
 //#include "pnp_shft_poly"
 #include "x2_i0_spells"
-#include "prc_inc_natweap"
+//#include "prc_inc_natweap"
 //#include "true_inc_trufunc"
 
 int nbWeaponFocus(object oPC);
@@ -557,7 +557,12 @@ void ScrubPCSkin(object oPC, object oSkin)
     DelayCommand(0.0f, ReApplyUnhealableAbilityDamage(oPC));
 
     // Remove all natural weapons too
-    ClearNaturalWeapons(oPC);
+    // ClearNaturalWeapons(oPC);
+    // Done this way to remove prc_inc_natweap and prc_inc_combat from the include
+    // Should help with compile speeds and the like
+    array_delete(oPC, "ARRAY_NAT_SEC_WEAP_RESREF");
+    array_delete(oPC, "ARRAY_NAT_PRI_WEAP_RESREF");
+    array_delete(oPC, "ARRAY_NAT_PRI_WEAP_ATTACKS");
 }
 
 int BlastInfidelOrFaithHeal(object oCaster, object oTarget, int iEnergyType, int iDisplayFeedback)

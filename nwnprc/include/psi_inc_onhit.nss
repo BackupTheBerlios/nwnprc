@@ -7,7 +7,7 @@
 
 // Include Files:
 #include "psi_inc_psifunc"
-#include "X0_I0_SPELLS"
+//#include "X0_I0_SPELLS"
 #include "psi_inc_pwresist"
 #include "prc_inc_combat"
 

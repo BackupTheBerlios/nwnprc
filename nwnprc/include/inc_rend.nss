@@ -24,7 +24,7 @@ void DoRend(object oTarget, object oAttacker, object oWeapon);
 int GetDamageFromConstant(int nIPConst);
 
 
-#include "prc_inc_combat"
+//#include "prc_inc_combat"
 #include "prc_ipfeat_const"
 
 

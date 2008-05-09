@@ -1,7 +1,7 @@
 
 #include "prc_inc_sp_tch"
-#include "prc_inc_combat"
-#include "prc_inc_spells"
+//#include "prc_inc_combat"
+//#include "prc_inc_spells"
 
 void DoLesserOrb(effect eVis, int nDamageType, int nSpellID = -1)
 {

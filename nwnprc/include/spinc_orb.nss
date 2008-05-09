@@ -1,4 +1,4 @@
-#include "prc_inc_spells"
+#include "prc_inc_sp_tch"
 
 
 void DoOrb(effect eVis, effect eFailSave, int nSaveType, int nDamageType, int nSpellID = -1)

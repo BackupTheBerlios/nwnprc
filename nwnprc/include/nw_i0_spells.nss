@@ -95,7 +95,7 @@ void RemoveEffectsFromSpell(object oTarget, int SpellID);
 #include "prc_inc_function"
 #include "inc_dispel"
 //#include "prc_inc_combat"
-#include "prc_inc_sp_tch"
+//#include "prc_inc_sp_tch"
 
 
 // * Returns true if Target is a humanoid

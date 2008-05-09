@@ -23,9 +23,9 @@
 #include "inc_utility"
 //#include "nw_i0_spells"
 //#include "pnp_shft_poly"
-#include "x2_inc_spellhook"
+//#include "x2_inc_spellhook"
 //#include "prc_inc_combat"
-#include "prc_inc_sp_tch"
+//#include "prc_inc_sp_tch"
 
 ////////////////End Generic////////////////
 
@@ -1338,7 +1338,7 @@ void ActiveModeCIMM(object oTarget)
     if (sScript != "mh_spell_at_inst")
     {
         SetLocalString(OBJECT_SELF,"temp_spell_at_inst",sScript);
-        PRCSetUserSpecificSpellScript("mh_spell_at_inst");
+        SetLocalString(OBJECT_SELF, "PRC_OVERRIDE_SPELLSCRIPT", "mh_spell_at_inst");
     }
     SetLocalInt(OBJECT_SELF,"nb_spell_at_inst",GetLocalInt(OBJECT_SELF,"nb_spell_at_inst")+1);
     FloatingTextStrRefOnCreature(16825240,oTarget);
@@ -1354,7 +1354,7 @@ void UnactiveModeCIMM(object oTarget)
     SetLocalInt(OBJECT_SELF,"nb_spell_at_inst",GetLocalInt(OBJECT_SELF,"nb_spell_at_inst")-1);
     if (sScript == "mh_spell_at_inst" && GetLocalInt(OBJECT_SELF,"nb_spell_at_inst") == 0)
     {
-        PRCSetUserSpecificSpellScript(GetLocalString(OBJECT_SELF,"temp_spell_at_inst"));
+        SetLocalString(OBJECT_SELF, "PRC_OVERRIDE_SPELLSCRIPT", GetLocalString(OBJECT_SELF,"temp_spell_at_inst"));
         GetLocalString(OBJECT_SELF,"temp_spell_at_inst");
         SetLocalString(OBJECT_SELF,"temp_spell_at_inst","");
     }

@@ -14,10 +14,26 @@
 
 
 //Modified by WodahsEht -- Item Properties were being removed even if a new property wasn't applied.
-#include "prc_alterations"
-#include "x2_inc_craft"
-#include "prc_inc_clsfunc"
+//#include "prc_alterations"
+//#include "x2_inc_craft"
+#include "x2_inc_spellhook"
 
+void UnactiveModeCIMM(object oTarget)
+{
+    if(GetLocalInt(oTarget,"use_CIMM") )
+    {
+    string sScript =  GetModuleOverrideSpellscript();
+    SetLocalInt(OBJECT_SELF,"nb_spell_at_inst",GetLocalInt(OBJECT_SELF,"nb_spell_at_inst")-1);
+    if (sScript == "mh_spell_at_inst" && GetLocalInt(OBJECT_SELF,"nb_spell_at_inst") == 0)
+    {
+        SetLocalString(OBJECT_SELF, "PRC_OVERRIDE_SPELLSCRIPT", GetLocalString(OBJECT_SELF,"temp_spell_at_inst"));
+        GetLocalString(OBJECT_SELF,"temp_spell_at_inst");
+        SetLocalString(OBJECT_SELF,"temp_spell_at_inst","");
+    }
+    FloatingTextStrRefOnCreature(16825241,oTarget);
+    SetLocalInt(oTarget,"use_CIMM",FALSE);
+    }
+}
 
 void finish(object oTarget,int iDesactive = FALSE)
 {

@@ -102,9 +102,9 @@ void main()
     if(GetIsPsionicCharacter(oDead))
         LoseAllPowerPoints(oDead, TRUE);
 
-    DeleteLocalInt(oDead, PRC_SPELL_CHARGE_COUNT);
-    if(GetLocalInt(oDead, PRC_SPELL_HOLD))
-        DeleteLocalInt(oDead, PRC_SPELL_HOLD);
+    DeleteLocalInt(oDead, "PRC_SPELL_CHARGE_COUNT");
+    if(GetLocalInt(oDead, "PRC_SPELL_HOLD"))
+        DeleteLocalInt(oDead, "PRC_SPELL_HOLD");
 
     DoDied(OBJECT_SELF, TRUE);
 

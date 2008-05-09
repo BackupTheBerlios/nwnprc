@@ -176,7 +176,7 @@ int persistant_array_exists(object store, string name);
 /////////////////////////////////////
 
 #include "inc_persist_loca"
-
+#include "inc_array" // yes this is also got via inc_persist_loca if rather indirectly
 
 /////////////////////////////////////
 // Implementation
@@ -187,8 +187,6 @@ int persistant_array_create(object store, string name)
     // error checking
     if(!GetIsObjectValid(store))
         return SDL_ERROR_NOT_VALID_OBJECT;
-    else if(GetPersistantLocalInt(store,name))
-        return SDL_ERROR_ALREADY_EXISTS;
     else if(persistant_array_exists(store,name))
         return SDL_ERROR_ALREADY_EXISTS;
     else
@@ -323,10 +321,10 @@ int persistant_array_get_size(object store, string name)
 
 int persistant_array_exists(object store, string name)
 {
-    if (GetPersistantLocalInt(store,name)==0)
-        return FALSE;
-    else
+    if (GetPersistantLocalInt(store,name))
         return TRUE;
+    else
+        return FALSE;
 }
 
 // Test main

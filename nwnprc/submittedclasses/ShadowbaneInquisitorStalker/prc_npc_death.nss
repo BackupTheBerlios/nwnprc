@@ -3,7 +3,7 @@
 //:: prc_npc_death
 //:://////////////////////////////////////////////
 
-#include "prc_inc_clsfunc"
+
 #include "inc_eventhook"
 
 void main()

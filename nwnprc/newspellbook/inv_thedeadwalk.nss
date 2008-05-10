@@ -15,7 +15,7 @@
 
 //:: modified by mr_bumpkin Dec 4, 2003
 #include "prc_alterations"
-#include "prc_inc_clsfunc"
+
 #include "inv_inc_invfunc"
 #include "inv_invokehook"
 

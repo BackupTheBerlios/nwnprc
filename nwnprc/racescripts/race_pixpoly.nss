@@ -13,7 +13,7 @@
 #include "prc_inc_spells"
 #include "x2_inc_spellhook"
 #include "pnp_shft_poly"
-#include "prc_inc_clsfunc"
+
 
 void main()
 {

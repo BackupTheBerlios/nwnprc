@@ -10,10 +10,6 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "prc_inc_clsfunc"
-#include "prc_feat_const"
-#include "prc_class_const"
-#include "prc_spell_const"
 
 void ApplyAbsAmbidex(object oPC)
 {

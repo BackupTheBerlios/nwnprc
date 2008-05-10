@@ -4,8 +4,7 @@
 /*
  Makes allies immune to fear for the duration of the song.
 */
-#include "prc_alterations"
-#include "prc_class_const"
+
 #include "prc_inc_clsfunc"
 
 void main()

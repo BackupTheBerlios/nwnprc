@@ -7,7 +7,7 @@
 */
 
 #include "inc_eventhook"
-#include "prc_inc_clsfunc"
+
 #include "psi_inc_psifunc"
 #include "inc_ecl"
 #include "inc_2dacache"

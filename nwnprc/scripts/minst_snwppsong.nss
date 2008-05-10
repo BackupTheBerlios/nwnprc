@@ -4,8 +4,7 @@
 /*
    Song that gives everybody +1 to +8 Sonic Damage on their attacks.
 */
-#include "prc_alterations"
-#include "prc_class_const"
+
 #include "prc_inc_clsfunc"
 
 void main()

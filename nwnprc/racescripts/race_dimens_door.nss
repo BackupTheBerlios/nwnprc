@@ -6,8 +6,8 @@ const int SPELLID_TELEPORT_PARTY             = 2892;
 const int SPELLID_TELEPORT_SELF_ONLY_DIRDIST = 2896;
 const int SPELLID_TELEPORT_PARTY_DIRDIST     = 2897;
 
-#include "prc_inc_racial"
-#include "prc_inc_clsfunc"
+#include "prc_alterations"
+
 
 void main()
 {

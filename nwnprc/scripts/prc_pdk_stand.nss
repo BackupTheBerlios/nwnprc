@@ -2,7 +2,7 @@
     Purple Dragon Knight's Final Stand
 */
 
-#include "prc_inc_clsfunc"
+#include "prc_alterations"
 
 void main()
 {

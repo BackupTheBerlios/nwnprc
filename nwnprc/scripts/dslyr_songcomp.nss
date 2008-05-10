@@ -1,5 +1,3 @@
-#include "prc_alterations"
-#include "prc_inc_spells"
 #include "prc_inc_clsfunc"
 
 void DominatedDuration(object oTarget, object oCaster)

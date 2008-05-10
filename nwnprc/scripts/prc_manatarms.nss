@@ -1,5 +1,3 @@
-#include "prc_alterations"
-#include "prc_feat_const"
 #include "prc_inc_clsfunc"
 
 void OnEquip(object oPC,object oSkin,int iLevel,object  oWeapR)

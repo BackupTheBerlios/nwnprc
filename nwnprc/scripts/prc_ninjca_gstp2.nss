@@ -11,13 +11,7 @@
 //:: Created On: July 18, 2005
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
-#include "prc_inc_spells"
-#include "x2_inc_spellhook"
-#include "prc_feat_const"
-#include "prc_class_const"
 #include "prc_inc_clsfunc"
-
 
 void main()
 {

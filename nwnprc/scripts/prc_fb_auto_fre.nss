@@ -9,7 +9,7 @@
 //:: Created By: Oni5115
 //:://////////////////////////////////////////////
 
-#include "prc_inc_clsfunc"
+
 #include "prc_spell_const"
 
 void main()

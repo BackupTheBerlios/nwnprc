@@ -6,8 +6,6 @@
 * by Ryan Smith
 *****************************************************/
 
-#include "prc_class_const"
-#include "prc_feat_const"
 #include "prc_inc_clsfunc"
 
 void main()

@@ -16,11 +16,11 @@
 #include "prc_alterations"
 //#include "prcsp_engine"
 //#include "prc_inc_function"
-#include "x2_inc_itemprop"
-#include "prc_class_const"
-#include "prc_feat_const"
-#include "prc_ipfeat_const"
-#include "inc_utility"
+//#include "x2_inc_itemprop"
+//#include "prc_class_const"
+//#include "prc_feat_const"
+//#include "prc_ipfeat_const"
+//#include "inc_utility"
 //#include "nw_i0_spells"
 //#include "pnp_shft_poly"
 //#include "x2_inc_spellhook"
@@ -967,36 +967,6 @@ void ImpCrit(object oPC,object oSkin)
 
 }
 
-int CanCastSpell(int iSpelllvl = 0,int iAbi = ABILITY_WISDOM,int iASF = 0,object oCaster=OBJECT_SELF)
-{
-   string iMsg =" You cant cast your spell because your ability score is too low";
-   int iScore = GetAbilityScore(oCaster,iAbi);
-   if (iScore < 10 + iSpelllvl)
-   {
-       FloatingTextStringOnCreature(iMsg, oCaster, FALSE);
-       return 0;
-   }
-   if (iASF)
-   {
-     int ASF = GetArcaneSpellFailure(oCaster);
-     int idice = d100(1);
-     if (idice <= ASF && idice!=100)
-     {
-        FloatingTextStringOnCreature("Spell failed due to arcane spell failure (roll:"+IntToString(idice)+")", oCaster, FALSE);
-        return 0;
-     }
-
-   }
-
-   return 1;
-}
-
-
-int GetSpellDCSLA(object oCaster, int iSpelllvl,int iAbi = ABILITY_WISDOM)
-{
-  return GetAbilityModifier(iAbi,oCaster)+10+iSpelllvl;
-}
-
 ////////////////End Soul Inc//////////////////
 
 ////////////////Begin Martial Strike//////////////////
@@ -1459,26 +1429,6 @@ void RemoveOldSongEffects(object oSinger, int iSongID)
 
 
 ////////////////End Minstrel of the Edge//////////////////
-
-////////////////Begin Lolth Meat//////////////////
-
-void LolthMeat(object oPC)
-{
-
-//SendMessageToPC(oPC, "You have killed an intelligent creature");
-
-if(GetHasFeat(FEAT_LOLTHS_MEAT, oPC))
-    {
-    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectAttackIncrease(1, ATTACK_BONUS_MISC), oPC, 24.0);
-    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectDamageIncrease(1, DAMAGE_TYPE_DIVINE), oPC, 24.0);
-    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectSavingThrowIncrease(SAVING_THROW_ALL, 1, SAVING_THROW_TYPE_ALL), oPC, 24.0);
-    ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_EVIL_HELP), oPC);
-    //SendMessageToPC(oPC, "You have Lolth's Meat");
-    }
-
-}
-
-////////////////End Lolth Meat//////////////////
 
 ////////////////Begin Arcane Duelist//////////////////
 

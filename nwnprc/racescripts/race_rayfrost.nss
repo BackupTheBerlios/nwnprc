@@ -1,9 +1,8 @@
 /*
     Racepack Ray of Frost
 */
-#include "prc_inc_racial"
-#include "prc_inc_clsfunc"
-#include "prc_racial_const"
+#include "prc_alterations"
+
 void main()
 {
     int CasterLvl;

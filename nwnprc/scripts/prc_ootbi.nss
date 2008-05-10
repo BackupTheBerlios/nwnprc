@@ -8,7 +8,7 @@
 //:: Created On: April 20, 2004
 //:://////////////////////////////////////////////
 
-#include "prc_inc_clsfunc"
+#include "prc_alterations"
 
 void RemoveGreaterWeaponFocus(object oPC, object oWeap)
 {

@@ -3,7 +3,7 @@
     Morpheme Savant
 */
 #include "prc_inc_racial"
-#include "prc_inc_clsfunc"
+
 #include "inv_inc_invfunc"
 
 void main()

@@ -1,5 +1,4 @@
 #include "prc_inc_clsfunc"
-#include "x2_i0_spells"
 
 void CleanCopy(object oImage)
 {     

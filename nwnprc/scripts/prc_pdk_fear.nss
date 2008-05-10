@@ -2,7 +2,7 @@
     Purple Dragon Knight's Fear
 */
 
-#include "prc_inc_clsfunc"
+#include "prc_alterations"
 
 void main()
 {

@@ -2,7 +2,7 @@
     Purple Dragon Knight's Inspire Courage.
 */
 
-#include "prc_inc_clsfunc"
+#include "prc_alterations"
 
 void main()
 {

@@ -2,7 +2,7 @@
     Healer's Remove Poison
 */
 
-#include "prc_inc_clsfunc"
+#include "prc_alterations"
 
 void main()
 {

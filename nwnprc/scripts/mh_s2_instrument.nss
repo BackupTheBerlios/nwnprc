@@ -1,5 +1,3 @@
-#include "prc_alterations"
-#include "x2_inc_craft"
 #include "prc_inc_clsfunc"
 
 void main()

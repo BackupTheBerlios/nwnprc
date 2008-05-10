@@ -2,7 +2,7 @@
 //:: OnSpawn NPC eventscript
 //:: prc_npc_spawn
 //:://////////////////////////////////////////////
-#include "prc_alterations"
+
 #include "prc_inc_clsfunc"
 
 void ChecksOnMaster()

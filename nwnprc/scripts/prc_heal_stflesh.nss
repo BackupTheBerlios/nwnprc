@@ -2,7 +2,7 @@
     Healer's Stone to Flesh
 */
 
-#include "prc_inc_clsfunc"
+#include "prc_alterations"
 
 void main()
 {

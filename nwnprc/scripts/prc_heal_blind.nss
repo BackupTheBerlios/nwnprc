@@ -2,7 +2,7 @@
     Healer's Remove Blindness/Deafness
 */
 
-#include "prc_inc_clsfunc"
+#include "prc_alterations"
 
 void main()
 {

@@ -10,10 +10,6 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "prc_feat_const"
-#include "prc_class_const"
-#include "prc_inc_clsfunc"
-
 
 void HorrorOfThay(object oPC, object oSkin)
 { 

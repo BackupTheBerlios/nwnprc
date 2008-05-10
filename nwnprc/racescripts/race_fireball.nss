@@ -1,8 +1,8 @@
 /*
     Sarrukh Fireball
 */
-#include "prc_inc_racial"
-#include "prc_inc_clsfunc"
+#include "prc_alterations"
+
 void main()
 {
     int CasterLvl = 14;

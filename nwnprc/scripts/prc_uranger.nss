@@ -1,7 +1,4 @@
 #include "prc_alterations"
-#include "prc_feat_const"
-#include "prc_ipfeat_const"
-#include "prc_inc_clsfunc"
 
 void FavoriteEnemy(object oPC)
 {

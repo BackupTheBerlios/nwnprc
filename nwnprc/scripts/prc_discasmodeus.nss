@@ -8,7 +8,7 @@
 //:: Created On: Jan 27, 2006
 //:://////////////////////////////////////////////
 
-#include "prc_inc_clsfunc"
+#include "prc_alterations"
 
 void main()
 {

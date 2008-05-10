@@ -6,8 +6,7 @@
     Duration is 10 rounds normally, 15 rounds with lingering
     song, and 105 (!) rounds with lasting inspiration.
 */
-#include "prc_alterations"
-#include "prc_class_const"
+
 #include "prc_inc_clsfunc"
 
 void main()

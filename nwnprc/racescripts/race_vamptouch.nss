@@ -1,8 +1,8 @@
 /*
     Racepack Vampiric Touch
 */
-#include "prc_inc_racial"
-#include "prc_inc_clsfunc"
+#include "prc_alterations"
+
 #include "prc_racial_const"
 #include "prc_spell_const"
 void main()

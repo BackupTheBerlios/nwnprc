@@ -7,7 +7,6 @@
 	Begins Ki Dodge Mode
 */
 
-
 #include "prc_inc_clsfunc"
 
 void main()

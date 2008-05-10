@@ -13,7 +13,7 @@
 #include "prc_alterations"
 #include "prc_inc_spells"
 #include "x2_inc_spellhook"
-#include "prc_inc_clsfunc"
+
 
 
 void main()

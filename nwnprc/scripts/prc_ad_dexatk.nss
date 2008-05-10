@@ -1,4 +1,6 @@
+
 #include "prc_inc_clsfunc"
+
 void main()
 {
 object oPC = OBJECT_SELF;

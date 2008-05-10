@@ -13,7 +13,7 @@
 //:: Updated By: Georg Zoeller, Oct 2003
 //:://////////////////////////////////////////////
 
-#include "prc_inc_clsfunc"
+
 
 void PMUpgradeSummon(object oSelf, string sScript)
 {

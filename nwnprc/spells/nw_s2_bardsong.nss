@@ -18,8 +18,6 @@ bugfix by Kovi 2002.07.30
 - loosing temporary hp resulted in loosing the other bonuses
 */
 
-#include "prc_alterations"
-#include "prc_class_const"
 #include "prc_inc_clsfunc"
 #include "prc_inc_sneak"  //for Dragonfire type getting
 

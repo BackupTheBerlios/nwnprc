@@ -6,8 +6,7 @@
     for 10 rounds, 15 rounds with lingering song, and 105 rounds
     with lasting impression.
 */
-#include "prc_alterations"
-#include "prc_class_const"
+
 #include "prc_inc_clsfunc"
 
 void main()

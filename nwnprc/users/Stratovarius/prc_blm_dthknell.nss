@@ -14,7 +14,7 @@
 #include "prc_alterations"
 #include "prc_inc_spells"
 #include "prc_alterations"
-#include "prc_inc_clsfunc"
+
 #include "prc_alterations"
 
 void DeathKnellCheck(object oPC)

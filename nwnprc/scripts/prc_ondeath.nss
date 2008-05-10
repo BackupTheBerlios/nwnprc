@@ -7,7 +7,7 @@
 */
 
 #include "prc_alterations"
-#include "prc_inc_clsfunc"
+
 #include "psi_inc_psifunc"
 #include "prc_inc_death"
 #include "inc_ecl"
@@ -31,9 +31,13 @@ void main()
     SetLocalInt(oDead, "PC_Damage", 0);
 
     // Do Lolth's Meat for the killer
-    if(GetAbilityScore(oDead, ABILITY_INTELLIGENCE)>4)
+    if(GetAbilityScore(oDead, ABILITY_INTELLIGENCE) > 4 && GetHasFeat(FEAT_LOLTHS_MEAT, oKiller))
     {
-        LolthMeat(oKiller);
+    	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectAttackIncrease(1, ATTACK_BONUS_MISC), oKiller, 24.0);
+    	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectDamageIncrease(1, DAMAGE_TYPE_DIVINE), oKiller, 24.0);
+    	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectSavingThrowIncrease(SAVING_THROW_ALL, 1, SAVING_THROW_TYPE_ALL), oKiller, 24.0);
+    	ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_EVIL_HELP), oKiller);
+    
     }
 
     if(GetPRCSwitch(PRC_XP_USE_PNP_XP))

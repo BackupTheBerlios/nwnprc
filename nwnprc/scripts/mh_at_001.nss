@@ -5,7 +5,9 @@
 //:: Created By: Script Wizard
 //:: Created On: 11/02/2004 15:33:49
 //:://////////////////////////////////////////////
+
 #include "prc_inc_clsfunc"
+
 void main()
 {
     // Donner les objets à la personne qui parle

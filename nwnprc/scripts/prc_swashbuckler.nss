@@ -1,7 +1,5 @@
 #include "prc_alterations"
-#include "prc_feat_const"
-#include "prc_ipfeat_const"
-#include "prc_inc_clsfunc"
+
 
 //DAMAGE_TYPE_BASE_WEAPON
 //GetAbilityModifier(ABILITY_INTELLIGENCE, oPC)

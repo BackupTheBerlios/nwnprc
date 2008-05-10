@@ -16,8 +16,8 @@
 
 // shaken   -2 attack,weapon dmg,save.
 // panicked -2 save + flee away ,50 % drop object holding
+
 #include "prc_alterations"
-#include "prc_inc_clsfunc"
 
 void main()
 {

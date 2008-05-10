@@ -9,11 +9,6 @@
 //:: Created On: July 18, 2005
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
-#include "prc_class_const"
-#include "prc_feat_const"
-#include "prc_ipfeat_const"
-#include "prc_inc_skills"
 #include "prc_inc_clsfunc"
 
 void Ninja_GhostSight (object oPC, int bOn=TRUE)

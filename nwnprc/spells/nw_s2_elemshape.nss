@@ -11,7 +11,7 @@
 //:: Created On: Jan 22, 2002
 //:://////////////////////////////////////////////
 
-#include "prc_inc_clsfunc"
+
 #include "prc_alterations"
 
 #include "pnp_shft_poly"

@@ -17,7 +17,7 @@
 //:: modified by mr_bumpkin Dec 4, 2003
 #include "prc_alterations"
 #include "prc_inc_spells"
-#include "prc_inc_clsfunc"
+
 #include "x2_inc_spellhook"
 
 void main()
@@ -39,7 +39,6 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     }
 
 // End of Spell Cast Hook
-   if (!CanCastSpell(4)) return;
 
 
     //Declare major variables

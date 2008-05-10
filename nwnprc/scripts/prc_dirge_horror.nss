@@ -2,7 +2,7 @@
     Dirgesinger's Song of Horror
 */
 
-#include "prc_inc_clsfunc"
+#include "prc_alterations"
 
 void main()
 {

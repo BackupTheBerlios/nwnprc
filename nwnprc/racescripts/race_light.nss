@@ -2,8 +2,8 @@
     Racepack Light
     Used for: Gloaming, Aasimar, Irda
 */
-#include "prc_inc_racial"
-#include "prc_inc_clsfunc"
+#include "prc_alterations"
+
 
 void main()
 {

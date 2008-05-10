@@ -15,7 +15,7 @@
 //:: Last Updated By: Andrew Nobbs, 02/06/2003
 
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
-#include "prc_inc_spells"
+
 #include "prc_inc_sp_tch"
 
 #include "NW_I0_SPELLS"

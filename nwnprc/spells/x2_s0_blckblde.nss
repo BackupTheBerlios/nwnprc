@@ -13,9 +13,7 @@
 //:: Last Updated By: Georg Zoeller, July 28 - 2003
 
 //:: modified by mr_bumpkin Dec 4, 2003 for prc stuff
-#include "prc_alterations"
 
-#include "x2_i0_spells"
 #include "inc_utility"
 #include "prc_inc_spells"
 #include "prc_inc_sp_tch"

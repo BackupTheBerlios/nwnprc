@@ -21,10 +21,10 @@
 
 
 //:: modified by mr_bumpkin Dec 4, and 15, 2003
-#include "prc_inc_spells"
+
 #include "prc_inc_sp_tch"
 #include "x2_inc_spellhook"
-#include "prc_alterations"
+
 
 
 

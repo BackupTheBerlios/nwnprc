@@ -51,7 +51,7 @@
 //:: Added hold ray functionality - HackyKid
 //:://////////////////////////////////////////////
 
-#include "prc_inc_spells"
+
 #include "prc_inc_sp_tch"
 #include "prc_sp_func"
 

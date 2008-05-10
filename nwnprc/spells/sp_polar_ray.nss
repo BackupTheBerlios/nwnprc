@@ -21,9 +21,9 @@ caster level (maximum 25d6).
 
 //::Added hold ray functionality - HackyKid
 
-#include "prc_inc_spells"
+
 #include "prc_inc_sp_tch"
-#include "prc_alterations"
+
 #include "x2_inc_spellhook"
 #include "prc_sp_func"
 

@@ -39,10 +39,10 @@ void ConvertStunFistUses(object oPC);
 
 //================================
 
-#include "prc_feat_const"
-#include "prc_class_const"
-#include "inc_item_props"
-#include "prc_ipfeat_const"
+//#include "prc_feat_const"
+//#include "prc_class_const"
+//#include "inc_item_props"
+//#include "prc_ipfeat_const"
 #include "prc_alterations"
 
 // Try to expend a number of stunning fist uses, returns true if succesfull

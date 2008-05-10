@@ -12,7 +12,7 @@
 //:://////////////////////////////////////////////
 
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
-#include "prc_inc_spells"
+
 #include "prc_inc_sp_tch"
 
 #include "X0_I0_SPELLS"

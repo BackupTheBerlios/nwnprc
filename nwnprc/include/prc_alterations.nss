@@ -149,13 +149,13 @@ const int ERROR_CODE_5_FIX_YET_ANOTHER_TIME = 1;
 //#include "prc_inc_effect"
 #include "prc_misc_const"
 #include "inc_item_props"
-#include "inc_utility"
+//#include "inc_utility"
 #include "prc_inc_spells"
-#include "prcsp_engine"
+//#include "prcsp_engine"
 #include "x2_inc_switches"
-#include "prc_feat_const"
-#include "prc_class_const"
-#include "prc_spell_const"
+//#include "prc_feat_const"
+//#include "prc_class_const"
+//#include "prc_spell_const"
 #include "prc_racial_const"
 #include "prc_ipfeat_const"
 #include "tob_move_const"
@@ -164,20 +164,20 @@ const int ERROR_CODE_5_FIX_YET_ANOTHER_TIME = 1;
 
 
 // PRC Spell Engine Utility Functions
-#include "lookup_2da_spell"
+//#include "lookup_2da_spell"
 #include "prcsp_reputation"
-#include "prcsp_archmaginc"
-#include "prcsp_spell_adjs"
+//#include "prcsp_archmaginc"
+//#include "prcsp_spell_adjs"
 //#include "prc_inc_clsfunc"
 #include "prc_inc_racial"
 #include "inc_abil_damage"
 #include "NW_I0_GENERIC"
 //#include "prc_inc_combat"
-#include "inc_lookups"
-//#include "x0_I0_spells" included via x2_i0_spells
-#include "x2_i0_spells"
+//#include "inc_lookups"
+#include "x0_I0_spells" //included via x2_i0_spells
+//#include "x2_i0_spells"
 //#include "prc_inc_s_det"
-#include "prc_inc_descrptr"
+//#include "prc_inc_descrptr"
 //#include "x2_inc_spellhook"
 
 

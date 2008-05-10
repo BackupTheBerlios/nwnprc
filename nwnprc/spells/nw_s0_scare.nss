@@ -52,8 +52,8 @@
 
 #include "prc_inc_spells"
 
-#include "X0_I0_SPELLS"
-#include "x2_inc_spellhook"
+
+
 
 // If the target fails their will save they are frightened, otherwise they are shaken
 void ApplyScare(object oTarget, int nDuration);

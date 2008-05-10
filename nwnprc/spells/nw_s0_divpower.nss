@@ -29,8 +29,8 @@ still problem:
 //:: modified by motu99 April 7, 2007
 
 #include "prc_inc_spells"
-#include "x2_inc_spellhook"
-#include "prc_alterations"
+
+
 
 /*
 #include "prc_inc_combat"

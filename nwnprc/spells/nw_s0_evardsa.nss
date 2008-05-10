@@ -29,9 +29,6 @@ through the area at only half normal speed.
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
 #include "prc_inc_spells"
-
-#include "prc_alterations"
-#include "x2_inc_spellhook"
 #include "inc_grapple"
 
 void DecrementTentacleCount(object oTarget, string sVar)

@@ -19,7 +19,7 @@
 //:: modified by Ornedan Dec 22, 2004
 #include "prc_inc_spells"
 
-#include "x2_inc_spellhook"
+
 
 void main()
 {

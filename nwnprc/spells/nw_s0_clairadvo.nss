@@ -14,7 +14,7 @@
 
 #include "inc_dynconv"
 #include "prc_alterations"
-#include "x2_inc_spellhook"
+
 
 void ApplyScryEffects(object oPC)
 {

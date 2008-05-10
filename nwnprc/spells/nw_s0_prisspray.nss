@@ -21,8 +21,8 @@ int ApplyPrismaticEffect(int nEffect, object oTarget,int nDC,int CasterLvl);
 #include "prc_inc_spells"
 //:: left its elemental damage alone, since it's already determined randomly.
 
-#include "X0_I0_SPELLS"
-#include "x2_inc_spellhook"
+
+
 
 void main()
 {

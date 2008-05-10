@@ -11,7 +11,6 @@
 //:: Created On: Nov 4, 2001
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-#include "prc_class_const"
 
 void main()
 {

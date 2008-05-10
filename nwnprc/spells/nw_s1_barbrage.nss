@@ -16,7 +16,6 @@
 //:: Created On: Aug 13, 2001
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
 #include "prc_inc_spells"
 #include "inc_addragebonus"
 

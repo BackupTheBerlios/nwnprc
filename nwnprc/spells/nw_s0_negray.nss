@@ -24,7 +24,7 @@
 #include "prc_inc_sp_tch"
 
 
-#include "x2_inc_spellhook"
+
 
 //Implements the spell impact, put code here
 //  if called in many places, return TRUE if

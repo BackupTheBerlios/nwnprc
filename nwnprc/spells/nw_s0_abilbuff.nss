@@ -10,7 +10,7 @@
 */
 
 #include "prc_sp_func"
-#include "x2_inc_spellhook"
+
 
 void StripBuff(object oTarget, int nBuffSpellID, int nMassBuffSpellID)
 {

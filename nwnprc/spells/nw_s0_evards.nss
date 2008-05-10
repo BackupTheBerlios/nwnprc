@@ -28,7 +28,7 @@ through the area at only half normal speed.
 //:: Primogenitor: Implemented 3.5ed rules
 
 #include "prc_alterations"
-#include "x2_inc_spellhook"
+
 void main()
 {
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

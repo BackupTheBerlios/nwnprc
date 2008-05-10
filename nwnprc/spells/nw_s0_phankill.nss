@@ -16,8 +16,7 @@
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
 #include "prc_inc_spells"
 
-#include "prc_alterations"
-#include "x2_inc_spellhook"
+
 
 int PRCMySavingThrow2(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE, object oSaveVersus = OBJECT_SELF, float fDelay = 0.0);
 

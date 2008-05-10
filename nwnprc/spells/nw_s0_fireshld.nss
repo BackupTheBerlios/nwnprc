@@ -18,8 +18,8 @@
 #include "prc_inc_spells"
 //:: left the immunities as 50% cold and fire,  not variable.
 
-#include "x2_inc_spellhook"
-#include "x0_i0_spells"
+
+
 void main()
 {
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

@@ -19,7 +19,7 @@
 #include "prc_inc_sp_tch"
 
 
-#include "x2_inc_spellhook"
+
 
 void main()
 {

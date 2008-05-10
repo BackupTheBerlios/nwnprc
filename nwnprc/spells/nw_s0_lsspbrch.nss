@@ -10,9 +10,9 @@
 //:: Created By: Preston Watamaniuk
 //:: Created On: Jan 10, 2002
 //:://////////////////////////////////////////////
-#include "prc_alterations"
+
 #include "prc_inc_spells"
-#include "x2_inc_spellhook"
+
 
 void main()
 {

@@ -54,7 +54,7 @@ effects are subsumed by the spell effects).
 */
 #include "prc_inc_spells"
 
-#include "x2_inc_spellhook"
+
 
 #include "prc_alterations"
 #include "x2_inc_shifter"

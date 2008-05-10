@@ -18,9 +18,6 @@
 
 //::Added hold ray functionality - HackyKid
 
-#include "prc_inc_spells"
-#include "prc_alterations"
-#include "x2_inc_spellhook"
 #include "prc_sp_func"
 
 //Implements the spell impact, put code here

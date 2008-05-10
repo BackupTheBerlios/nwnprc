@@ -10,7 +10,7 @@
 */
 
 #include "prc_sp_func"
-#include "x2_inc_spellhook"
+
 
 //Implements the spell impact, put code here
 //  if called in many places, return TRUE if

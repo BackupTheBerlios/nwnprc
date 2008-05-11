@@ -69,7 +69,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     {
         if(!GetIsReactionTypeFriendly(oTarget))
         {
-            iAttackRoll = PRCDoRangedTouchAttack(oTarget);;
+            iAttackRoll = PRCDoRangedTouchAttack(oTarget);
             if(iAttackRoll > 0)
             {
                 //Fire cast spell at event for the specified target

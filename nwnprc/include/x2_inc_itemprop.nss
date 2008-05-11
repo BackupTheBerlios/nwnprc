@@ -206,7 +206,8 @@ int   IPGetNumberOfItemProperties(object oItem);
 
 #include "prc_class_const"
 #include "prc_inc_switch"
-#include "prc_alterations"
+#include "inc_item_props"
+#include "prc_inc_spells"
 
 //------------------------------------------------------------------------------
 //                         I M P L E M E N T A T I O N
@@ -670,38 +671,41 @@ int IPGetIsMeleeWeapon(object oItem)
     //Declare major variables
     int nItem = GetBaseItemType(oItem);
 
-    if((nItem == 3) || //BASE_ITEM_BASTARDSWORD
-      (nItem ==  2) || //BASE_ITEM_BATTLEAXE
-      (nItem == 33) || //BASE_ITEM_BATTLEAXE
-      (nItem == 18) || //BASE_ITEM_GREATAXE
-      (nItem == 13) || //BASE_ITEM_GREATSWORD
-      (nItem == 10) || //BASE_ITEM_HALBERD
-      (nItem == 38) || //BASE_ITEM_HANDAXE
-      (nItem == 40) || //BASE_ITEM_KAMA
-      (nItem == 41) || //BASE_ITEM_KATANA
-      (nItem == 42) || //BASE_ITEM_KUKRI
-      (nItem ==  1) || //BASE_ITEM_LONGSWORD
-      (nItem == 53) || //BASE_ITEM_SCIMITAR
-      (nItem == 55) || //BASE_ITEM_SCYTHE
-      (nItem == 60) || //BASE_ITEM_SICKLE
-      (nItem == 12) || //BASE_ITEM_TWOBLADEDSWORD
-      (nItem == 28) || //BASE_ITEM_CLUB
-      (nItem == 22) || //BASE_ITEM_DAGGER
-      (nItem == 32) || //BASE_ITEM_DIREMACE
-      (nItem == 35) || //BASE_ITEM_HEAVYFLAIL
-      (nItem ==  4) || //BASE_ITEM_LIGHTFLAIL
-      (nItem == 37) || //BASE_ITEM_LIGHTHAMMER
-      (nItem ==  9) || //BASE_ITEM_LIGHTMACE
-      (nItem == 47) || //BASE_ITEM_MORNINGSTAR
-      (nItem == 50) || //BASE_ITEM_QUARTERSTAFF
-      (nItem == 45) || //BASE_ITEM_MAGICSTAFF
-      (nItem == 51) || //BASE_ITEM_RAPIER
-      (nItem == 111) || //BASE_ITEM_WHIP
-      (nItem == 58) || //BASE_ITEM_SHORTSPEAR
-      (nItem ==  0) || //BASE_ITEM_SHORTSWORD
-      (nItem ==  5) || //BASE_ITEM_WARHAMMER
-      (nItem == 108)|| //BASE_ITEM_DWARVENWARAXE
-      (nItem == 95) //1.67 trident BASE_ITEM_TRIDENT
+    if((nItem == BASE_ITEM_BASTARDSWORD) ||
+      (nItem == BASE_ITEM_BATTLEAXE) ||
+      (nItem == BASE_ITEM_DOUBLEAXE) ||
+      (nItem == BASE_ITEM_GREATAXE) ||
+      (nItem == BASE_ITEM_GREATSWORD) ||
+      (nItem == BASE_ITEM_HALBERD) ||
+      (nItem == BASE_ITEM_HANDAXE) ||
+      (nItem == BASE_ITEM_KAMA) ||
+      (nItem == BASE_ITEM_KATANA) ||
+      (nItem == BASE_ITEM_KUKRI) ||
+      (nItem == BASE_ITEM_LONGSWORD) ||
+      (nItem == BASE_ITEM_SCIMITAR) ||
+      (nItem == BASE_ITEM_SCYTHE) ||
+      (nItem == BASE_ITEM_SICKLE) ||
+      (nItem == BASE_ITEM_TWOBLADEDSWORD) ||
+      (nItem == BASE_ITEM_CLUB) ||
+      (nItem == BASE_ITEM_DAGGER) ||
+      (nItem == BASE_ITEM_DIREMACE) ||
+      (nItem == BASE_ITEM_HEAVYFLAIL) ||
+      (nItem == BASE_ITEM_LIGHTFLAIL) ||
+      (nItem == BASE_ITEM_LIGHTHAMMER) ||
+      (nItem == BASE_ITEM_LIGHTMACE) ||
+      (nItem == BASE_ITEM_MORNINGSTAR) ||
+      (nItem == BASE_ITEM_QUARTERSTAFF) ||
+      (nItem == BASE_ITEM_MAGICSTAFF) ||
+      (nItem == BASE_ITEM_RAPIER) ||
+      (nItem == BASE_ITEM_WHIP) ||
+      (nItem == BASE_ITEM_SHORTSPEAR) ||
+      (nItem == BASE_ITEM_SHORTSWORD) ||
+      (nItem == BASE_ITEM_WARHAMMER)  ||
+      (nItem == BASE_ITEM_DWARVENWARAXE) ||
+      (nItem == BASE_ITEM_TRIDENT) ||
+      (nItem == BASE_ITEM_ELF_LIGHTBLADE) || // PRC weapons
+      (nItem == BASE_ITEM_ELF_THINBLADE) ||
+      (nItem == BASE_ITEM_ELF_COURTBLADE)
       || (nItem == 201) //crafted staffs - BASE_ITEM_CRAFTED_STAFF
       || (nItem == 300) //CEP Trident
       || (nItem == 303) //CEP Sai
@@ -752,7 +756,7 @@ int IPGetIPConstCastSpellFromSpellID(int nSpellID)
 
     if (sTemp == "") // invalid nSpellID
     {
-        DoDebug("x2_inc_craft.nss::GetIPConstCastSpellFromSpellID called with invalid nSpellID" + IntToString(nSpellID));
+        if (DEBUG) DoDebug("x2_inc_craft.nss::GetIPConstCastSpellFromSpellID called with invalid nSpellID" + IntToString(nSpellID));
         return -1;
     }
 
@@ -1704,6 +1708,3 @@ int IPGetNumberOfItemProperties(object oItem)
     return nCount;
 }
 
-
-// Test main
-//void main(){}

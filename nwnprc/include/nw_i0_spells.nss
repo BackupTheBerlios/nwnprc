@@ -91,8 +91,8 @@ void RemoveEffectsFromSpell(object oTarget, int SpellID);
 
 
 
-#include "prcsp_engine"
-#include "prc_inc_function"
+//#include "prcsp_engine"
+//#include "prc_inc_function"
 #include "inc_dispel"
 //#include "prc_inc_combat"
 //#include "prc_inc_sp_tch"
@@ -568,13 +568,13 @@ float GetSpellEffectDelay(location SpellTargetLocation, object oTarget)
 float GetRandomDelay(float fMinimumTime = 0.4, float MaximumTime = 1.1)
 {
     float fRandom = MaximumTime - fMinimumTime;
-    int nRandom;
     if(fRandom < 0.0)
     {
         return 0.0;
     }
     else
     {
+        int nRandom;
         nRandom = FloatToInt(fRandom  * 10.0);
         nRandom = Random(nRandom) + 1;
         fRandom = IntToFloat(nRandom);

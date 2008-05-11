@@ -145,6 +145,8 @@ void spellsDispelAoE(object oTargetAoE, object oCaster, int nCasterLevel);
 //#include "prc_inc_combat" via prc_alterations
 #include "prc_inc_sp_tch"
 //#include "prc_spellf_inc"
+#include "prcsp_engine"
+#include "prc_inc_function"
 
 //::///////////////////////////////////////////////
 //:: DoTrapSpike

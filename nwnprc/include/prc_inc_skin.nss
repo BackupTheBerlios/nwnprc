@@ -42,7 +42,7 @@ object GetPCSkin(object oPC);
 object GetPCSkin(object oPC)
 {
     // According to a bug report, this is being called on non-creature objects. This should catch the culprit
-    if(DEBUG) Assert(GetObjectType(oPC) == OBJECT_TYPE_CREATURE, "GetObjectType(oPC) == OBJECT_TYPE_CREATURE", "GetPRCSkin() called on non-creature object: " + DebugObject2Str(oPC), "inc_item_props", "object GetPCSkin(object oPC)");
+    if(DEBUG) Assert(GetObjectType(oPC) == OBJECT_TYPE_CREATURE, "GetObjectType(oPC) == OBJECT_TYPE_CREATURE", "GetPRCSkin() called on non-creature object: " + DebugObject2Str(oPC, "inc_item_props", "object GetPCSkin(object oPC)");
     object oSkin = GetItemInSlot(INVENTORY_SLOT_CARMOUR, oPC);
     if (!GetIsObjectValid(oSkin))
     {

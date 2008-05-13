@@ -1441,8 +1441,9 @@ namespace HakInstaller
 				moduleInfo.Save();
 
 				// Backup the old module file before saving.
+                // changed to not use the same extension as the toolset
 				string backupName = Path.Combine(NWNInfo.GetPathForFile(moduleFile), 
-					Path.GetFileNameWithoutExtension(moduleFile) + ".BackupMod");
+					Path.GetFileNameWithoutExtension(moduleFile) + ".prc.BackupMod");
 				File.Copy(NWNInfo.GetFullFilePath(moduleFile), backupName, true);
 
 				// Recreate the module file with our changed files.

@@ -78,13 +78,13 @@ int DoGrappleCheck(object oAttacker, object oDefender,
         nResult = TRUE;
         
     string sMessage;
-    if(GetIsPC(oAttacker)) sMessage += COLOR_LIGHT_BLUE;
-    else                   sMessage += COLOR_LIGHT_PURPLE;
+    if(GetIsPC(oAttacker)) sMessage += PRC_TEXT_LIGHT_BLUE;
+    else                   sMessage += PRC_TEXT_LIGHT_PURPLE;
     if(GetIsObjectValid(oAttacker))
         sMessage += GetName(oAttacker);
     else    
         sMessage += sAttackerName;
-    sMessage += COLOR_ORANGE;
+    sMessage += PRC_TEXT_ORANGE;
     sMessage += " grapples ";
     if(GetIsObjectValid(oDefender))
         sMessage += GetName(oDefender);

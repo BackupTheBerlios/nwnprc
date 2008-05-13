@@ -139,21 +139,6 @@ const float RANGE_5_FEET_IN_METERS = 1.64;
 // maximum distance (in meters) where we actually rush to do an attack
 const float fMaxAttackDistance = 20.;
 
-// Colors in String messages to PCs
-const string COLOR_BLUE         = "<cfÌþ>";    // used by saving throws.
-const string COLOR_DARK_BLUE    = "<c fþ>";    // used for electric damage.
-const string COLOR_GRAY         = "<c™™™>";    // used for negative damage.
-const string COLOR_GREEN        = "<c þ >";    // used for acid damage.
-const string COLOR_LIGHT_BLUE   = "<c™þþ>";    // used for the player's name, and cold damage.
-const string COLOR_LIGHT_GRAY   = "<c°°°>";    // used for system messages.
-const string COLOR_LIGHT_ORANGE = "<cþ™ >";    // used for sonic damage.
-const string COLOR_LIGHT_PURPLE = "<cÌ™Ì>";    // used for a target's name.
-const string COLOR_ORANGE       = "<cþf >";    // used for attack rolls and physical damage.
-const string COLOR_PURPLE       = "<cÌwþ>";    // used for spell casts, as well as magic damage.
-const string COLOR_RED          = "<cþ  >";    // used for fire damage.
-const string COLOR_WHITE        = "<cþþþ>";    // used for positive damage.
-const string COLOR_YELLOW       = "<cþþ >";    // used for healing, and sent messages.
-
 // constants to select certain types of feats (associated with a weapon)
 const int FEAT_TYPE_FOCUS = 1;
 const int FEAT_TYPE_SPECIALIZATION = 2;
@@ -3731,7 +3716,7 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iOffhan
 
     if (GetPRCSwitch(PRC_COMBAT_DEBUG))
     {
-        string sDebugFeedback = COLOR_WHITE;
+        string sDebugFeedback = PRC_TEXT_WHITE;
         sDebugFeedback += ("AB = " + IntToString(iAttackBonus) + " : ");
         sDebugFeedback += ("BAB (" + IntToString(iBAB) + ")");
         sDebugFeedback += (" + Feats (" + IntToString(iFeatBonus) + ")");
@@ -3880,11 +3865,11 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iOffha
 
     // print off-hand of off-hand attack
     string sFeedback ="";
-    if(iOffhand) sFeedback += COLOR_ORANGE + "Off Hand : ";
+    if(iOffhand) sFeedback += PRC_TEXT_ORANGE + "Off Hand : ";
 
     // change color of attacker if it is Player or NPC
-    if(GetIsPC(oAttacker)) sFeedback += COLOR_LIGHT_BLUE;
-    else                   sFeedback += COLOR_LIGHT_PURPLE;
+    if(GetIsPC(oAttacker)) sFeedback += PRC_TEXT_LIGHT_BLUE;
+    else                   sFeedback += PRC_TEXT_LIGHT_PURPLE;
 
     // display name of attacker
     sFeedback +=  GetName(oAttacker);
@@ -3893,11 +3878,11 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iOffha
     int bIsRangedTouchAttack = iTouchAttackType == TOUCH_ATTACK_RANGED || iTouchAttackType == TOUCH_ATTACK_RANGED_SPELL;
     // show proper message for touch attacks or normal attacks.
     if(bIsRangedTouchAttack)
-        sFeedback += COLOR_PURPLE + " attempts ranged touch attack on ";
+        sFeedback += PRC_TEXT_PURPLE + " attempts ranged touch attack on ";
     else if(bIsMeleeTouchAttack)
-        sFeedback += COLOR_PURPLE + " attempts touch attack on ";
+        sFeedback += PRC_TEXT_PURPLE + " attempts touch attack on ";
     else
-        sFeedback += COLOR_ORANGE + " attacks ";
+        sFeedback += PRC_TEXT_ORANGE + " attacks ";
 
     sFeedback +=  GetName(oDefender) + ": ";
     if (DEBUG) DoDebug("GetAttackRoll: End Section #2");
@@ -5227,7 +5212,7 @@ struct BonusDamage GetMagicalBonusDamage(object oAttacker)
 // motu99: This partially depends on the defender, which might change during a round. But usually it is only calculated once at beginning of round
 int GetWeaponDamagePerRound(object oDefender, object oAttacker, object oWeap, int iOffhand = 0)
 {
-    string sDebugMessage = COLOR_WHITE;
+    string sDebugMessage = PRC_TEXT_WHITE;
     int bDebug = GetPRCSwitch(PRC_COMBAT_DEBUG);
 
     int iDamage = 0;
@@ -5334,7 +5319,7 @@ int GetWeaponDamagePerRound(object oDefender, object oAttacker, object oWeap, in
     iDamage += iFavoredEnemyBonus;
 
     if (bDebug) sDebugMessage += " + FavEnmy (" + IntToString(iFavoredEnemyBonus) + ")";
-    if (bDebug) sDebugMessage = COLOR_WHITE + "Weapon Damage = " + IntToString(iDamage) + ": " + sDebugMessage;
+    if (bDebug) sDebugMessage = PRC_TEXT_WHITE + "Weapon Damage = " + IntToString(iDamage) + ": " + sDebugMessage;
     if (bDebug) DoDebug(sDebugMessage);
 
     return iDamage;
@@ -5684,15 +5669,15 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
 
         if (bDebug)
         {
-            if (iAcid) sDebugMessage += COLOR_GREEN + " + Acid (" + IntToString(iAcid) + ")";
-            if (iCold) sDebugMessage += COLOR_LIGHT_BLUE + " + Cold (" + IntToString(iCold) + ")";
-            if (iFire) sDebugMessage += COLOR_RED + " + Fire (" + IntToString(iFire) + ")";
-            if (iElec) sDebugMessage += COLOR_DARK_BLUE + " + Elec (" + IntToString(iElec) + ")";
-            if (iSon) sDebugMessage += COLOR_LIGHT_ORANGE + " + Son (" + IntToString(iSon) + ")";
-            if (iDiv) sDebugMessage += COLOR_PURPLE + " + Div (" + IntToString(iDiv) + ")";
-            if (iNeg) sDebugMessage += COLOR_GRAY + " + Neg (" + IntToString(iNeg) + ")";
+            if (iAcid) sDebugMessage += PRC_TEXT_GREEN + " + Acid (" + IntToString(iAcid) + ")";
+            if (iCold) sDebugMessage += PRC_TEXT_LIGHT_BLUE + " + Cold (" + IntToString(iCold) + ")";
+            if (iFire) sDebugMessage += PRC_TEXT_RED + " + Fire (" + IntToString(iFire) + ")";
+            if (iElec) sDebugMessage += PRC_TEXT_DARK_BLUE + " + Elec (" + IntToString(iElec) + ")";
+            if (iSon) sDebugMessage += PRC_TEXT_LIGHT_ORANGE + " + Son (" + IntToString(iSon) + ")";
+            if (iDiv) sDebugMessage += PRC_TEXT_PURPLE + " + Div (" + IntToString(iDiv) + ")";
+            if (iNeg) sDebugMessage += PRC_TEXT_GRAY + " + Neg (" + IntToString(iNeg) + ")";
             if (iPos) sDebugMessage += " + Pos (" + IntToString(iPos) + ")";
-            if (iMag) sDebugMessage += COLOR_PURPLE + " + Mag (" + IntToString(iMag) + ")";
+            if (iMag) sDebugMessage += PRC_TEXT_PURPLE + " + Mag (" + IntToString(iMag) + ")";
         }
 
         // sum up all magical damage, as we need it later
@@ -5773,7 +5758,7 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
             if (iMag  > 0) eLink = EffectLinkEffects(EffectLinkEffects(eLink, EffectDamage(iMag, DAMAGE_TYPE_MAGICAL)), EffectVisualEffect(VFX_COM_HIT_DIVINE));
 
         }
-        if (bDebug) sDebugMessage = COLOR_WHITE + "Damage = " + IntToString(iWeaponDamage +iMagicalDamage) + ": " + sDebugMessage;
+        if (bDebug) sDebugMessage = PRC_TEXT_WHITE + "Damage = " + IntToString(iWeaponDamage +iMagicalDamage) + ": " + sDebugMessage;
         if (bDebug) DoDebug(sDebugMessage);
     }
     return eLink;
@@ -7042,7 +7027,7 @@ object CheckForChangeOfTarget(object oAttacker, object oDefender, int bAllowSwit
     // find the "best pick" of oDefender and oTarget and make it oTarget
     if (oTarget != oDefender)
     {
-        if (DEBUG) DoDebug(COLOR_WHITE + "PRC combat system: prc_inc_combat and aurora engine have selected different targets.");
+        if (DEBUG) DoDebug(PRC_TEXT_WHITE + "PRC combat system: prc_inc_combat and aurora engine have selected different targets.");
         // our preference is for oTarget, on which we attempted the most recent attack
         // so we will return oTarget, unless
         // the attempted (or last attacked) target is invalid or dead
@@ -7237,7 +7222,7 @@ void AttackLoopLogic(object oDefender, object oAttacker,
         // if after all the trouble looking for a valid target we did not find one, abort the attack
         if(oDefender == OBJECT_INVALID || GetIsDead(oDefender))
         {
-            if (DEBUG) DoDebug(COLOR_WHITE + "AttackLoopLogic: no enemies left - aborting");
+            if (DEBUG) DoDebug(PRC_TEXT_WHITE + "AttackLoopLogic: no enemies left - aborting");
             return;
         }
 
@@ -7247,10 +7232,10 @@ void AttackLoopLogic(object oDefender, object oAttacker,
         {
             // can we do a 5 foot step in order to get into melee range?
             float fDistance = GetDistanceBetween(oDefender, oAttacker) - GetSizeAdjustment(oDefender, oAttacker);
-            if (DEBUG) DoDebug(COLOR_WHITE + "AttackLoopLogic: target is out of melee range, size adjusted distance = "+FloatToString(fDistance)+", size adjustment = "+FloatToString(GetSizeAdjustment(oDefender, oAttacker)));
+            if (DEBUG) DoDebug(PRC_TEXT_WHITE + "AttackLoopLogic: target is out of melee range, size adjusted distance = "+FloatToString(fDistance)+", size adjustment = "+FloatToString(GetSizeAdjustment(oDefender, oAttacker)));
             if (!sAttackVars.bFiveFootStep && fDistance <= RANGE_15_FEET_IN_METERS)
             {
-                if (DEBUG) DoDebug(COLOR_WHITE + "AttackLoopLogic: waiting for aurora engine to do 5 foot step to move to melee range of " + GetName(oDefender) + ", current action: " + GetActionName(GetCurrentAction(oAttacker)));
+                if (DEBUG) DoDebug(PRC_TEXT_WHITE + "AttackLoopLogic: waiting for aurora engine to do 5 foot step to move to melee range of " + GetName(oDefender) + ", current action: " + GetActionName(GetCurrentAction(oAttacker)));
 
                 // motu99: The problem is, in order to move into range we must clear the attack action, otherwise the move will not be done
                 // If we clear the attack action, we must issue an ActionAttack after the move
@@ -7275,7 +7260,7 @@ void AttackLoopLogic(object oDefender, object oAttacker,
                 // This means we need a full move action, e.g. we must give up all remaining attacks in the round
                 // so we call ActionAttack() in order to move to our enemy and let the aurora engine start a new combat round
                 // against oDefender, whenever we are in range
-                if (DEBUG) DoDebug(COLOR_WHITE + "AttackLoopLogic: doing full move action to get into melee range of " + GetName(oDefender) + ", current action: " + GetActionName(GetCurrentAction(oAttacker)));
+                if (DEBUG) DoDebug(PRC_TEXT_WHITE + "AttackLoopLogic: doing full move action to get into melee range of " + GetName(oDefender) + ", current action: " + GetActionName(GetCurrentAction(oAttacker)));
 
                 // Note that in general we do not wan't to use the ActionAttack() command within PRC combat, because this will initiate
                 // a new attack round by the aurora engine. But here the rules require us to start a new combat round anyway.
@@ -7303,7 +7288,7 @@ void AttackLoopLogic(object oDefender, object oAttacker,
             else
             {
                 // our closest enemy is so far away, it does not make sense to attack it; just drop the attack
-                if (DEBUG) DoDebug(COLOR_WHITE + "AttackLoopLogic: target " + GetName(oDefender) + " is too far away, current action: " + GetActionName(GetCurrentAction(oAttacker)));
+                if (DEBUG) DoDebug(PRC_TEXT_WHITE + "AttackLoopLogic: target " + GetName(oDefender) + " is too far away, current action: " + GetActionName(GetCurrentAction(oAttacker)));
                 // The following return statement will terminate the whole combat round
                 return;
             }
@@ -7423,7 +7408,7 @@ void AttackLoopLogic(object oDefender, object oAttacker,
             && !bHasCriticalImmunity
             && GetIsHelpless(oDefender))
         {
-            if(DEBUG) DoDebug(COLOR_WHITE + "AttackLoopLogic: attempting coup the grace");
+            if(DEBUG) DoDebug(PRC_TEXT_WHITE + "AttackLoopLogic: attempting coup the grace");
             // make hit a crit
             iAttackRoll     = 2;
 
@@ -7487,7 +7472,7 @@ void AttackLoopLogic(object oDefender, object oAttacker,
         // if critical hit and vorpal weapon, apply vorpal effect, but only if we didn't coup de grace them before
         if(!bInstantKill && bIsCritcal && bIsVorpalWeaponEquiped)
         {
-            if (DEBUG) DoDebug(COLOR_WHITE + "AttackLoopLogic: critical hit with vorpal weapon effect - Defender must do fortitude save with DC " + IntToString(iVorpalSaveDC));
+            if (DEBUG) DoDebug(PRC_TEXT_WHITE + "AttackLoopLogic: critical hit with vorpal weapon effect - Defender must do fortitude save with DC " + IntToString(iVorpalSaveDC));
             if( !FortitudeSave(oDefender, iVorpalSaveDC, SAVING_THROW_TYPE_NONE) )
             {
                 sMes = "*Vorpal Blade*";
@@ -7669,7 +7654,7 @@ void AttackLoopLogic(object oDefender, object oAttacker,
             && GetHasMonkWeaponEquipped(oAttacker) // we must be unarmed (or wield a kama)
             && GetHasFeat(FEAT_CIRCLE_KICK, oAttacker) ) // and we need the feat
         {
-            if (DEBUG) DoDebug(COLOR_WHITE + "AttackLoopLogic: *hit* - now attempting circle kick");
+            if (DEBUG) DoDebug(PRC_TEXT_WHITE + "AttackLoopLogic: *hit* - now attempting circle kick");
             // Find nearest enemy creature within 10 feet
             /*
             // motu99: logic is screwed. Mostly we will be taking the second nearest creature, because we discard the nearest before looking whether it is valid and in range
@@ -7741,10 +7726,10 @@ void AttackLoopLogic(object oDefender, object oAttacker,
         if( !GetIsObjectValid(oDefender) || GetIsDead(oDefender))
         {
             oDefender = OBJECT_INVALID;
-            if(DEBUG) DoDebug(COLOR_WHITE + "No new valid targets to attack - Aborting");
+            if(DEBUG) DoDebug(PRC_TEXT_WHITE + "No new valid targets to attack - Aborting");
             return;
         }
-        if (DEBUG) DoDebug(COLOR_WHITE+"AttackLoopLogic: old target dead or invalid, found new target - " + GetName(oDefender));
+        if (DEBUG) DoDebug(PRC_TEXT_WHITE+"AttackLoopLogic: old target dead or invalid, found new target - " + GetName(oDefender));
 
         if (!bIsRangedAttack) // if it is not a ranged attack, we check if we are in range for a cleave
         {
@@ -7752,7 +7737,7 @@ void AttackLoopLogic(object oDefender, object oAttacker,
             {
                 if (GetDistanceBetween(oDefender, oAttacker) <= fMaxAttackDistance)
                 {
-                    if (DEBUG) DoDebug(COLOR_WHITE+"AttackLoopLogic: new target not in melee range - move to and attack new target; current action = " + GetActionName(GetCurrentAction(oAttacker)));
+                    if (DEBUG) DoDebug(PRC_TEXT_WHITE+"AttackLoopLogic: new target not in melee range - move to and attack new target; current action = " + GetActionName(GetCurrentAction(oAttacker)));
                     // if no enemy is close enough, move to the nearest target and attack
                     // note that this will initiate a new combat round by the aurora engine
                     // ClearAllActionsMoveToObjectAndAttack(oDefender, MELEE_RANGE_METERS-1.);
@@ -7761,7 +7746,7 @@ void AttackLoopLogic(object oDefender, object oAttacker,
                 }
                 else
                 {
-                    if (DEBUG) DoDebug(COLOR_WHITE+"AttackLoopLogic: new target not in melee range and too far away - do nothing; current action = " + GetActionName(GetCurrentAction(oAttacker)));
+                    if (DEBUG) DoDebug(PRC_TEXT_WHITE+"AttackLoopLogic: new target not in melee range and too far away - do nothing; current action = " + GetActionName(GetCurrentAction(oAttacker)));
                 }
 
                 // motu99: commented out the return statement, because we still want to continue fighting
@@ -7784,7 +7769,7 @@ void AttackLoopLogic(object oDefender, object oAttacker,
 
                 if(bHasCleave)
                 {
-                    if (DEBUG) DoDebug(COLOR_WHITE + "AttackLoopLogic: we can cleave - initiate cleave attack");
+                    if (DEBUG) DoDebug(PRC_TEXT_WHITE + "AttackLoopLogic: we can cleave - initiate cleave attack");
                     // perform cleave
                     // recall this function with Cleave = TRUE
                     sAttackVars.iCleaveAttacks++; // note that due to the recursive calls this does not count any subsequent cleaves in the cleave attack itself!

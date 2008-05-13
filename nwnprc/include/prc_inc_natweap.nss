@@ -187,7 +187,7 @@ void DoNaturalAttack(object oWeapon)
 	// set the prc combat mode
 	int bCombatMode = PRC_COMBATMODE_HB & PRC_COMBATMODE_ALLOW_TARGETSWITCH & PRC_COMBATMODE_ABORT_WHEN_OUT_OF_RANGE;
 
-	if (DEBUG) DoDebug(COLOR_WHITE + "initiating a secondary natural attack with "+GetName(oWeapon)+" and attack mod " + IntToString(nAttackMod));     
+	if (DEBUG) DoDebug(PRC_TEXT_WHITE + "initiating a secondary natural attack with "+GetName(oWeapon)+" and attack mod " + IntToString(nAttackMod));     
 
     PerformAttack(oTarget, 
         oPC,                //
@@ -264,7 +264,7 @@ void DoOffhandAttack(int nAttackMod)
 	// set the prc combat mode
 	int bCombatMode = PRC_COMBATMODE_HB & PRC_COMBATMODE_ALLOW_TARGETSWITCH & PRC_COMBATMODE_ABORT_WHEN_OUT_OF_RANGE;
 
-	if (DEBUG) DoDebug(COLOR_WHITE + "initiating an overflow offhand attack with "+GetName(oWeapon)+" and attack mod "+IntToString(nAttackMod));  	
+	if (DEBUG) DoDebug(PRC_TEXT_WHITE + "initiating an overflow offhand attack with "+GetName(oWeapon)+" and attack mod "+IntToString(nAttackMod));  	
 
 	PerformAttack(oTarget, 
         oPC,                //
@@ -329,7 +329,7 @@ void DoOffhandAttackRound(object oPC = OBJECT_SELF)
 	// set the prc combat mode
 	int bCombatMode = PRC_COMBATMODE_HB & PRC_COMBATMODE_ALLOW_TARGETSWITCH & PRC_COMBATMODE_ABORT_WHEN_OUT_OF_RANGE;
 
-	DoDebug(COLOR_WHITE + "initiating an overflow offhand attack round");  	
+	DoDebug(PRC_TEXT_WHITE + "initiating an overflow offhand attack round");  	
 
 	PerformAttackRound(oTarget, // object oDefender
 		oPC, // object oAttacker,
@@ -400,7 +400,7 @@ void DoOverflowOnhandAttack(int nAttackMod)
 	// set the prc combat mode
 	int bCombatMode = PRC_COMBATMODE_HB & PRC_COMBATMODE_ALLOW_TARGETSWITCH & PRC_COMBATMODE_ABORT_WHEN_OUT_OF_RANGE;
 
-    if (DEBUG) DoDebug(COLOR_WHITE+"initiating an overflow onhand attack with "+GetName(oWeapon)+" and attack mod "+IntToString(nAttackMod));     
+    if (DEBUG) DoDebug(PRC_TEXT_WHITE+"initiating an overflow onhand attack with "+GetName(oWeapon)+" and attack mod "+IntToString(nAttackMod));     
 
     PerformAttack(oTarget, 
         oPC,                //

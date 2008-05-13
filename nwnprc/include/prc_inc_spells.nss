@@ -137,6 +137,8 @@ int SpellStrikeDamage(object oTarget, object oCaster);
 // Used to add Warmage's Edge to spells.
 effect PRCEffectDamage(object oTarget, int nDamageAmount, int nDamageType=DAMAGE_TYPE_MAGICAL, int nDamagePower=DAMAGE_POWER_NORMAL);
 
+int IsSpellDamageElemental(int nDamageType);
+
 // Get altered damage type for energy sub feats.
 //      nDamageType - The DAMAGE_TYPE_xxx constant of the damage. All types other
 //          than elemental damage types are ignored.
@@ -174,27 +176,6 @@ int PRCGetIsRealSpellKnownByClass(int nRealSpellID, int nClass, object oPC = OBJ
 // returns the spelllevel of nSpell as it can be cast by oCreature
 int PRCGetSpellLevel(object oCreature, int nSpell);
 
-/**
- * A wrapper for GetSpellTargetObject().
- * Handles effects that redirect spell targeting, currently:
- * - Reddopsi
- * - Casting from runes
- *
- * NOTE: Will probably not return a sensible value outside of a spellscript. Assumes
- *       OBJECT_SELF is the object doing the casting.
- *
- * @return The target for the spell whose spellscript is currently being executed.
- */
-object PRCGetSpellTargetObject(object oCaster   = OBJECT_SELF);
-
-/**
- * A wrapper for GetSpellCastItem().
- *
- * NOTE: Will probably not return a sensible value outside of a spellscript.
- *
- * @return The item from which the spell was cast.
- */
-object PRCGetSpellCastItem(object oPC = OBJECT_SELF);
 
 /**
  * Determines and applies the alignment shift for using spells/powers with the
@@ -330,10 +311,6 @@ int PRCGetMetaMagicDamage(int nDamageType, int nDice, int nDieSize,
 //      deleted.
 // moved from spinc_common and renamed
 void PRCSetSchool(int nSchool = SPELL_SCHOOL_GENERAL);
-
-//wrapper for biowares GetSpellId()
-//used for actioncastspell
-int PRCGetSpellId(object oCaster = OBJECT_SELF);
 
 /**
  * Signals a spell has been cast. Acts as a wrapper to fire EVENT_SPELL_CAST_AT
@@ -1988,177 +1965,6 @@ location PRCGetSpellTargetLocation(object oCaster = OBJECT_SELF)
     return GetSpellTargetLocation();
 }
 
-//wrapper for GetSpellTargetObject()
-object PRCGetSpellTargetObject(object oCaster   = OBJECT_SELF)
-{
-    if(GetLocalInt(oCaster, "PRC_EF_ARCANE_FIST"))
-        return oCaster;
-
-    object oSpellTarget;
-
-    // is there an override target on the module? (this is only valid if a local int is set)
-    if(GetLocalInt(GetModule(), PRC_SPELL_TARGET_OBJECT_OVERRIDE))
-    {
-        // this could also be an invalid target (so that the module builder can disable targeting)
-        oSpellTarget = GetLocalObject(GetModule(), PRC_SPELL_TARGET_OBJECT_OVERRIDE);
-        if (DEBUG) DoDebug("PRCGetSpellTargetObject: module override target = "+GetName(oSpellTarget)+", original target = "+GetName(GetSpellTargetObject()));
-        return oSpellTarget;
-    }
-
-    // motu99: added code to put an override target on the caster
-    // we might want to change the preference: so far module overrides have higher preference (to give module builders some extra power :-)
-    // if we want caster overrides to have higher preference, put this before the module override check
-    oSpellTarget = GetLocalObject(oCaster, PRC_SPELL_TARGET_OBJECT_OVERRIDE);
-    if (GetIsObjectValid(oSpellTarget))
-    {
-        if (DEBUG) DoDebug("PRCGetSpellTargetObject: caster override target = "+GetName(oSpellTarget)+", original target = "+GetName(GetSpellTargetObject()));
-        return oSpellTarget;
-    }
-
-    object oBWTarget = GetSpellTargetObject();
-    int nSpellID     = PRCGetSpellId(oCaster);
-
-    int bTouch = GetStringUpperCase(Get2DACache("spells", "Range", nSpellID)) == "T";
-    // Reddopsi power causes spells and powers to rebound onto the caster.
-    if(GetLocalInt(oBWTarget, "PRC_Power_Reddopsi_Active")                 &&  // Reddopsi is active on the target
-        !GetLocalInt(oCaster, "PRC_Power_Reddopsi_Active")                  &&  // And not on the manifester
-        !(nSpellID == SPELL_LESSER_DISPEL             ||                        // And the spell/power is not a dispelling one
-        nSpellID == SPELL_DISPEL_MAGIC              ||
-        nSpellID == SPELL_GREATER_DISPELLING        ||
-        nSpellID == SPELL_MORDENKAINENS_DISJUNCTION ||
-        nSpellID == POWER_DISPELPSIONICS
-        )                                                                 &&
-        !bTouch     // And the spell/power is not touch range
-        )
-        return oCaster;
-
-    if(GetLocalInt(oBWTarget, "PRC_SPELL_TURNING") &&
-        !(nSpellID == SPELL_LESSER_DISPEL             ||                        // And the spell/power is not a dispelling one
-                 nSpellID == SPELL_DISPEL_MAGIC              ||
-                 nSpellID == SPELL_GREATER_DISPELLING        ||
-                 nSpellID == SPELL_MORDENKAINENS_DISJUNCTION ||
-                 nSpellID == POWER_DISPELPSIONICS) &&
-        !bTouch
-        )
-    {
-        int nSpellLevel = StringToInt(Get2DACache("spells", "Innate", nSpellID));//lookup_spell_innate(nSpellID));
-        object oTarget = oBWTarget;
-        int nLevels = GetLocalInt(oTarget, "PRC_SPELL_TURNING_LEVELS");
-        int bCasterTurning = GetLocalInt(oCaster, "PRC_SPELL_TURNING");
-        int nCasterLevels = GetLocalInt(oCaster, "PRC_SPELL_TURNING_LEVELS");
-        if(!bCasterTurning)
-        {
-            if(nSpellLevel > nLevels)
-            {
-                if((Random(nSpellLevel) + 1) <= nLevels)
-                    oTarget = oCaster;
-            }
-            else
-                oTarget = oCaster;
-        }
-        else
-        {
-            if((Random(nCasterLevels + nLevels) + 1) <= nLevels)
-                oTarget = oCaster;
-            nCasterLevels -= nSpellLevel;
-            if(nCasterLevels < 0) nCasterLevels = 0;
-            SetLocalInt(oCaster, "PRC_SPELL_TURNING_LEVELS", nCasterLevels);
-        }
-        nLevels -= nSpellLevel;
-        if(nLevels < 0) nLevels = 0;
-        SetLocalInt(oBWTarget, "PRC_SPELL_TURNING_LEVELS", nLevels);
-        return oTarget;
-    }
-
-    // The rune/gem always targets the one who activates it.
-    object oItem     = PRCGetSpellCastItem(oCaster);
-    if(GetIsObjectValid(oItem) && (GetResRef(oItem) == "prc_rune_1" ||
-            GetTag(oItem) == "prc_attunegem"))
-    {
-        if(DEBUG) DoDebug(GetName(oCaster) + " has cast a spell using a rune");
-        // Making sure that the owner of the item is correct
-        if (GetIsObjectValid(GetItemPossessor(oItem)))
-        {
-            if(DEBUG) DoDebug(GetName(oCaster) + " is the owner of the Spellcasting item");
-            return GetItemPossessor(oItem);
-        }
-    }
-
-
-    // return Bioware's target
-    return oBWTarget;
-}
-
-/**
- * PRCGetSpellCastItem(object oCaster = OBJECT_SELF)
- * wrapper function for GetSpellCastItem()
- *
- * Note that we are giving preference for the local object, "PRC_SPELLCASTITEM_OVERRIDE", stored on oCaster
- * Therefore it is absolutely essential, in order to have this variable not interfere with "normal" spell casting,
- * to delete it *immediately after* the spell script executed. All of this is taken care of in the function
- * ExecuteSpellScript(), which should be used instead of any direct calls to the spell scripts.
- * In particular, NEVER MANUALLY set the overrides. You might ruin the whole spell casting system!
- *
- * Another possibility would have been, to give preference to the GetSpellCastItem() call and only fetch the
- * local object "PRC_SPELLCASTITEM_OVERRIDE" when GetSpellCastItem() returns an invalid object.
- * This is how it is was done in the PRC 3.1c version of prc_onhitcast (lines 58-61), and in psi_sk_onhit, prc_evnt_bonebld, prc_evnt_strmtl
- * [In those scripts the local (override) object was called "PRC_CombatSystem_OnHitCastSpell_Item". In order to be consistent with
- * the naming conventions of the other override variables, I changed the name of the override object to PRC_SPELLCASTITEM_OVERRIDE
- * and provided the wrapper PRCGetSpellCastItem for an easy use of the onhitcast system]
- * However, that approach DOES NOT WORK, because Bioware didn't bother to implement GetSpellCastItem() properly.
- * In a proper implementation GetSpellCastItem() word return OBJECT_INVALID, when called outside of an item spell script,
- * But this is not the case. GetSpellCastItem() will always return the item, from which (according to Bioware's knowledge)
- * the last item spell was cast. As long as the item still exists, the call to GetSpellCastItem() will always return a valid item,
- * even if the item spell long expired and we are casting a completely differnt spell. So GetSpellCastItem() practically
- * NEVER returns an invalid object. [We only get an invalid object, when we didn't yet cast any item spell at all]
- *
- * Possible caveats:
- * You should never cast spells as an action, when the local override object "PRC_SPELLCASTITEM_OVERRIDE"
- * is set (and subsequently deleted) *outside* the action script. This also pertains to other override variables, such as
- * PRC_SPELL_TARGET_OBJECT_OVERRIDE, PRC_METAMAGIC_OVERRIDE, etc.
- * If you set (and delete) a local override (object or int) *within* one single action, thats ok. For instance putting
- * ExecuteSpellScript() into an ActionDoCommand, an AssignCommand or a DelayCommand will work.
- * But (manually) setting "PRC_SPELLCASTITEM_OVERRIDE", then calling ActionCastSpellAt*
- * (which will insert the spell cast action into the action queue) and after that trying to delete the overrides
- * via a DelayCommand or an AssignCommand(), often just guessing how long it takes the spell cast action to run,
- * will most likely break any other spell casting that is done between manually setting the override and deleting it.
- * So please follow the advise to never MANUALLY set the override variables. Use the functions provided here
- * (ExecuteSpellScript, CastSpellAtObject, CastSpellAtLocation, etc. ) or - if you must - build your own
- * functions by using the provided functions either directly or as templates (they show you how to do things right)
- */
-
-
-// wrapper function for GetSpellCastItem. Anything that depends on it will only be fully functional,
-// if the relevant spell scripts have been modified, replacing Bioware's GetSpellCastItem with PRCGetSpellCastItem
-object PRCGetSpellCastItem(object oCaster = OBJECT_SELF)
-{
-    // if the local object "PRC_SPELLCASTITEM_OVERRIDE" is valid, we take it without even looking for anything else
-    object oItem = GetLocalObject(oCaster, PRC_SPELLCASTITEM_OVERRIDE);
-    if (GetIsObjectValid(oItem))
-    {
-        // OBJECT_SELF counts as invalid item
-        if (oItem == OBJECT_SELF)
-        {
-//DoDebug("PRCGetSpellCastItem: oItem == OBJECT_SELF = "+GetName(OBJECT_SELF)+", setting spell cast item to OBJECT_INVALID = "+GetName(OBJECT_INVALID));
-            oItem = OBJECT_INVALID;
-        }
-
-        if (DEBUG) DoDebug("PRCGetSpellCastItem: found override spell cast item = "+GetName(oItem)+", original item = " + GetName(GetSpellCastItem()));
-        return oItem;
-    }
-
-    // otherwise simply return Bioware's GetSpellCastItem
-    oItem = GetSpellCastItem();
-    if (DEBUG) DoDebug("PRCGetSpellCastItem: no override, returning bioware spell cast item = "+GetName(oItem));
-    return oItem;
-/*
-// motu99: disabled the old stuff; was only used in three scripts (changed them)
-// and couldn't work anyway (because of Bioware's improper implementation of GetSpellCastItem)
-        // if Bioware's functions doesn't return a valid object, maybe the scripted combat system will
-        if(!GetIsObjectValid(oItem))
-            oItem = GetLocalObject(oPC, "PRC_CombatSystem_OnHitCastSpell_Item");
-*/
-}
 
 ////////////////Begin Spellsword//////////////////
 
@@ -2446,19 +2252,6 @@ void PRCSetSchool(int nSchool = SPELL_SCHOOL_GENERAL)
         SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", nSchool);
 }
 
-
-int PRCGetSpellId(object oCaster = OBJECT_SELF)
-{
-    int nID = GetLocalInt(oCaster, PRC_SPELLID_OVERRIDE);
-    if(!nID)
-        return GetSpellId();
-
-    if (DEBUG) DoDebug("PRCGetSpellId: found override spell id = "+IntToString(nID)+", original id = "+IntToString(GetSpellId()));
-
-    if(nID == -1)
-        nID = 0;
-    return nID;
-}
 
 void PRCSignalSpellEvent(object oTarget, int bHostile = TRUE, int nSpellID = -1, object oCaster = OBJECT_SELF)
 {
@@ -3082,6 +2875,35 @@ int PRCGetSpellLevel(object oCreature, int nSpell)
 
     //return innate level?
     return -1;
+}
+
+//
+//  This function determines if spell damage is elemental
+//
+int
+IsSpellDamageElemental(int nDamageType)
+{
+    return nDamageType == DAMAGE_TYPE_ACID
+        || nDamageType == DAMAGE_TYPE_COLD
+        || nDamageType == DAMAGE_TYPE_ELECTRICAL
+        || nDamageType == DAMAGE_TYPE_FIRE
+        || nDamageType == DAMAGE_TYPE_SONIC;
+}
+
+//
+//  This function converts spell damage into the correct type
+//  TODO: Change the name to consistent (large churn project).
+//
+int
+ChangedElementalDamage(object oCaster, int nDamageType){
+    // Check if an override is set
+    int nNewType = GetLocalInt(oCaster, MASTERY_OF_ELEMENTS_TAG);
+
+    // If so, check if the spell qualifies for a change
+    if (!nNewType || !IsSpellDamageElemental(nDamageType))
+        nNewType = nDamageType;
+
+    return nNewType;
 }
 
 // this is possibly used in variations elsewhere

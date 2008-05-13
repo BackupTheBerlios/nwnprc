@@ -33,6 +33,13 @@
 //Added code into spellsInflictTouchAttack to maximize for Faith Healing and Blast Infidel
 //Aaon Graywolf - Jan 6, 2003
 
+#include "prcsp_reputation" // mostly stuff pulled out of x0_i0_spells
+
+//:://////////////////////////////////////////////
+//:: Saving Throw Const - only used in this include
+//:://////////////////////////////////////////////
+
+const int SAVING_THROW_NONE = 4;
 
 //* get the hightest spellcasting class level of oCreature)
 int GZGetHighestSpellcastingClassLevel(object oCreature);
@@ -136,8 +143,8 @@ void spellApplyMindBlank(object oTarget, int nSpellId, float fDelay=0.0);
 // * Handle dispel magic of AoEs
 void spellsDispelAoE(object oTargetAoE, object oCaster, int nCasterLevel);
 
-#include "prc_alterations"
-//#include "NW_I0_SPELLS"
+//#include "prc_alterations"
+#include "NW_I0_SPELLS"
 //#include "x0_i0_match"
 #include "x2_inc_switches"
 #include "x2_inc_itemprop"
@@ -1827,6 +1834,3 @@ void spellsDispelAoE(object oTargetAoE, object oCaster, int nCasterLevel)
 
 }
 
-
-// Test main
-//void main(){}

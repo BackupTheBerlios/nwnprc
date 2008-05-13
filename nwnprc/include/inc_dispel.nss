@@ -75,6 +75,7 @@ void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, fl
 #include "x2_i0_spells"
 #include "spinc_remeffct"
 #include "inv_invoc_const"
+#include "prcsp_engine"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 

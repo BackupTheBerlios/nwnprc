@@ -264,11 +264,6 @@ void DeleteNamedComposites(object oItem, string sBase);
  */
 int GetIsMagicItem(object oItem);
 
-/*
- *  Caches bonus feat itemproperties rather than creating new ones each time
- */
-itemproperty PRCItemPropertyBonusFeat(int nBonusFeatID);
-
 //////////////////////////////////////////////////
 /* Include section                              */
 //////////////////////////////////////////////////
@@ -1558,27 +1553,4 @@ int FocusToWeapProf(int nFeat)
     return - 1;
 }
 
-itemproperty PRCItemPropertyBonusFeat(int nBonusFeatID)
-{
-    string sTag = "PRC_IPBF_"+IntToString(nBonusFeatID);
-    object oTemp = GetObjectByTag(sTag);
-    if(!GetIsObjectValid(oTemp))
-    {
-        if(DEBUG) DoDebug("PRCItemPropertyBonusFeat() : Cache object " + sTag + " is not valid, creating");
-        location lLimbo;
-        object oLimbo = GetObjectByTag("HEARTOFCHAOS");
-        if(GetIsObjectValid(oLimbo))
-            lLimbo = GetLocation(oLimbo);
-        else
-            lLimbo = GetStartingLocation();
-        oTemp = CreateObject(OBJECT_TYPE_ITEM, "base_prc_skin", lLimbo, FALSE, sTag);
-    }
-    itemproperty ipReturn = GetFirstItemProperty(oTemp);
-    if(!GetIsItemPropertyValid(ipReturn))
-    {
-        if(DEBUG) DoDebug("PRCItemPropertyBonusFeat() : Itemproperty was not present on cache object, adding");
-        ipReturn = ItemPropertyBonusFeat(nBonusFeatID);
-        AddItemProperty(DURATION_TYPE_PERMANENT, ipReturn, oTemp);
-    }
-    return ipReturn;
-}
+

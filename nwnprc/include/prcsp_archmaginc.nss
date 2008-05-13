@@ -67,8 +67,6 @@ void ToggleMasteryOfShapes(object oCaster);
 
 void SetMasteryOfElements();
 
-int IsSpellDamageElemental(int nDamageType);
-
 string ChangedElementalType(int spell_id, object oCaster = OBJECT_SELF);
 
 //////////////////////////////////////////////////
@@ -201,35 +199,6 @@ SetMasteryOfElements()
     SetLocalInt(OBJECT_SELF, MASTERY_OF_ELEMENTS_TAG, dmgType);
     SetLocalString(OBJECT_SELF, MASTERY_OF_ELEMENTS_NAME_TAG, sElem);
     SetFeatVisualEffects(PRCGetSpellTargetObject(), nEffect, msg);
-}
-
-//
-//  This function determines if spell damage is elemental
-//
-int
-IsSpellDamageElemental(int nDamageType)
-{
-    return nDamageType == DAMAGE_TYPE_ACID
-        || nDamageType == DAMAGE_TYPE_COLD
-        || nDamageType == DAMAGE_TYPE_ELECTRICAL
-        || nDamageType == DAMAGE_TYPE_FIRE
-        || nDamageType == DAMAGE_TYPE_SONIC;
-}
-
-//
-//  This function converts spell damage into the correct type
-//  TODO: Change the name to consistent (large churn project).
-//
-int
-ChangedElementalDamage(object oCaster, int nDamageType){
-    // Check if an override is set
-    int nNewType = GetLocalInt(oCaster, MASTERY_OF_ELEMENTS_TAG);
-
-    // If so, check if the spell qualifies for a change
-    if (!nNewType || !IsSpellDamageElemental(nDamageType))
-        nNewType = nDamageType;
-
-    return nNewType;
 }
 
 //

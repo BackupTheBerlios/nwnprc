@@ -329,6 +329,32 @@ const string PRC_SPELLID_OVERRIDE                     = "PRC_SPELLID_OVERRIDE";
 
 const string PRC_AFTS_EXTRA_DAMAGE                         = "PRC_AFTS_EXTRA_DAMAGE";
 
+
+// switch whether unlearning spells for spont casters at level up should go according to PnP or Bioware rules
+// if on, will unlearn according to Bioware rules (e.g. as many as you want)
+const string PRC_BIO_UNLEARN = "PRC_BIO_UNLEARN";
+
+/** PRC_UNLEARN_SPELL_MAXNR
+If PRC_BIO_UNLEARN is ON, you may want to restrict the nr of spells that a spontaneous caster
+can unlearn to just a few spells ("normal" Bioware rules allow unlearning all spells at every level).
+When PRC_UNLEARN_SPELL_MAXNR is set to (hopefully) a small value, the spontaneous caster
+will still be able to unlearn spells at EVERY level up with no restrictions to the spell level that may
+be unlearned, but the maximum nr of spells that can be unlearned are determined by the value on the switch
+When PRC_UNLEARN_SPELL_MAXNR is not set and PRC_BIO_UNLEARN is ON, the spont caster
+may unlearn as many spells as he wishes at every level up
+
+If PRC_BIO_UNLEARN is Off, the maximum spell level that can be unlearned and the caster level
+at which unlearning a spell becomes possible will be determined according to PnP rules. However,
+you may want to give your spont casters more than one single spell to unlearn via this switch. If
+PRC_UNLEARN_SPELL_MAXNR is set to a positive value, this is the nr of spells that the spontaneous
+caster may unlearn (assuming he is allowed to unlearn at least one spell according to PnP rules). If
+PRC_UNLEARN_SPELL_MAXNR is not set and PRC_BIO_UNLEARN is Off, unlearning spells goes
+according to the exact PnP rules, e.g. at most one spell may be unlearned (at specific caster levels and
+with restrictions on the maximum spell level that can be unlearned)
+*/
+// holds the maximum nr of spells that can be unlearned when the spont caster is entitled to unlearn at least one spell
+const string PRC_UNLEARN_SPELL_MAXNR = "PRC_UNLEARN_SPELL_MAXNR";
+
 /******************************************************************************\
 *                                  Class switches                              *
 \******************************************************************************/

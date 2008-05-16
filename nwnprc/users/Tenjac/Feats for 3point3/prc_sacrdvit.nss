@@ -12,6 +12,8 @@ immunity to ability damage, ability drain, and energy drain for 1 minute.
 // Created: 4/22/08
 //////////////////////////////////////////////////////////////////////////////////
 
+#include "prc_alterations"
+
 void main()
 {
         object oPC = OBJECT_SELF;

@@ -19,6 +19,8 @@ Special: This feat deals no damage to constructs or undead.
 // Created: 4/22/08
 ///////////////////////////////////////////////////////////////////////////////////
 
+#include "prc_alterations"
+
 void main()
 {
         object oPC = OBJECT_SELF;

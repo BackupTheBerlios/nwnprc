@@ -12,6 +12,9 @@ attacks against undead until the end of the current round.
 ////////////////////////////////////////////////////////
 // Tenjac 5/15/08
 ////////////////////////////////////////////////////////
+
+#include "prc_alterations"
+
 void main()
 {
         object oPC = OBJECT_SELF;

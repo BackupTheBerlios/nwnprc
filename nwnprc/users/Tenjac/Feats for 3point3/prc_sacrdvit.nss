@@ -21,7 +21,7 @@ void main()
                 SendMessageToPC(oPC, "You must be able to Turn Undead to use this feat.");
                 return;
         }
-        
+             
         if(GetHasFeat(oPC, FEAT_TURN_UNDEAD))
         {
                 DecrementRemainingFeatUses(oPC, FEAT_TURN_UNDEAD);

@@ -41,7 +41,7 @@ void main()
                 GetItemPropertyType(ipTest) == ITEM_PROPERTY_DECREASED_ABILITY_SCORE)
                 {
                         //CON?
-                        if()
+                        if(GetItemPropertySubType(ipTest) == ABILITY_CONSTITUTION)
                         {
                                 AssignCommand(oPC, ClearAllActions());
                                 AssignCommand(oPC, ActionUnequipItem(oItem));

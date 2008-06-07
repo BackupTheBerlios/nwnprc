@@ -41,12 +41,12 @@ string StatToName(int nStat)
     return "";
 }
 
-void DrainLoop(object oTarget, object oPC, float fRemove, int nRoundCounter)
+void DrainLoop(object oTarget, object oPC, float fRemove, int nRoundCounter, int nStat)
 {
 	if ((nRoundCounter > 0) && (!GetIsDead(oTarget)))
 	{
-		effect eDex  = EffectAbilityIncrease(GetLocalInt(oPC, "PRC_Power_Leech_Stat"), 1);
-		effect eDex2 = EffectAbilityDecrease(GetLocalInt(oPC, "PRC_Power_Leech_Stat"), 1);
+		effect eDex  = EffectAbilityIncrease(nStat, 1);
+		effect eDex2 = EffectAbilityDecrease(nStat, 1);
 
 		//Impact VFX
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE), oPC);
@@ -59,12 +59,28 @@ void DrainLoop(object oTarget, object oPC, float fRemove, int nRoundCounter)
 		fRemove = (fRemove - 6.0f);
 		nRoundCounter--;
 
-		DelayCommand(6.0f, DrainLoop(oTarget, oPC, fRemove, nRoundCounter));
+		DelayCommand(6.0f, DrainLoop(oTarget, oPC, fRemove, nRoundCounter, nStat));
 
 	}
 	else
 	{
-		DeleteLocalInt(oPC, "PRC_Power_Leech_Stat");
+		// finished, so remove from target list
+        int nArraySize = array_get_size(oPC, "PRC_PowerLeechTarget");
+        if (nArraySize <= 1 || !GetIsObjectValid(array_get_object(oPC, "PRC_PowerLeechTarget", (nArraySize-1)))) // then we delete the array to clear up the mess
+            array_delete(oPC, "PRC_PowerLeechTarget");
+        else // just delete oTarget from it
+        {
+            int i;
+            object oCompare;
+            for(i = 0; i < nArraySize; i++)
+            {
+                oCompare = array_get_object(oPC, "PRC_PowerLeechTarget", i);
+                if (oCompare == oTarget) // delete this one
+                {
+                    array_set_object(oPC, "PRC_PowerLeechTarget", i, OBJECT_INVALID);
+                }
+            }
+        }
 	}
 }
 
@@ -177,7 +193,7 @@ void main()
             int nRoundCounter = GetLocalInt(oPC, "PRC_Power_Leech_Counter");
             float fRemove = GetLocalFloat(oPC, "PRC_Power_Leech_fDur");
 
-            DrainLoop(oTarget, oPC, fRemove, nRoundCounter);
+            DrainLoop(oTarget, oPC, fRemove, nRoundCounter, GetLocalInt(oPC, "PRC_Power_Leech_Stat"));
 
             }
             else

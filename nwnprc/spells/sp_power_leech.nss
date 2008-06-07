@@ -73,9 +73,33 @@ void main()
 	
 	//Set counter int
 	SetLocalInt(oPC, "PRC_Power_Leech_Counter", nRoundCounter);
+    
+    // don't allow it to be cast again on the same object if it's still under the effect
+    if (array_exists(OBJECT_SELF, "PRC_PowerLeechTarget"))
+    {
+        int nArraySize = array_get_size(oPC, "PRC_PowerLeechTarget");
+        int i;
+        object oCompare;
+        for(i = 0; i < nArraySize; i++)
+        {
+            oCompare = array_get_object(oPC, "PRC_PowerLeechTarget", i);
+            if (oCompare == oTarget) // the the target is still under the spell's effects
+            {
+                // spell has no effect
+                FloatingTextStrRefOnCreature(100775,OBJECT_SELF,FALSE); // "Target already has this effect!"
+                PRCSetSchool();
+                return;
+            }
+        }
+        array_set_object(oPC, "PRC_PowerLeechTarget", nArraySize, oTarget);
+    }
+    else
+    {
+        // Add target to local object array
+        array_create(oPC, "PRC_PowerLeechTarget");
+        array_set_object(oPC, "PRC_PowerLeechTarget", array_get_size(oPC, "PRC_PowerLeechTarget"), oTarget);
+    }
 	
-	//Set target as local object
-	SetLocalObject(oPC, "PRC_PowerLeechTarget", oTarget);
 	
 	//Clear actions for the convo
 		ClearAllActions(TRUE);

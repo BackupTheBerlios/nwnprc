@@ -59,8 +59,8 @@ public final class SpellbookMaker{
 				readMe();
 			}
 		}
-		
-		
+
+
 		//load all the data files in advance
 		//this is quite slow, but needed
 		classes2da    = Data_2da.load2da("2das" + File.separator + "classes.2da",    true);
@@ -70,7 +70,7 @@ public final class SpellbookMaker{
 		customtlk = new Data_TLK("tlk" + File.separator + "prc_consortium.tlk");
 		dialogtlk = new Data_TLK("tlk" + File.separator + "dialog.tlk");
 		spellLabels = spells2da.getLabels();
-		
+
 		//get the start/end rows for each file for the reserved blocks
 		getFirstSpells2daRow();
 		getFirstFeat2daRow();
@@ -80,24 +80,24 @@ public final class SpellbookMaker{
 		System.out.println("First free feat.2da row is "       + feat2daRow);
 		System.out.println("First free iprp_feats.2da row is " + iprp_feats2daRow);
 		System.out.println("First free tlk row is "            + tlkRow);
-		
+
 		//now process each class in turn
 		for(int classRow = 0; classRow < classes2da.getEntryCount(); classRow++){
 			//the feat file is the root of the file naming layout
 			String classfilename = classes2da.getEntry("FeatsTable", classRow);
-			
+
 			//check its a real class not padding
 			if(classfilename != null && classfilename.length() > 9) {
 				classfilename = classfilename.substring(9, classfilename.length());
 				String classCoreFilename = "cls_spcr_" + classfilename;
-				
+
 				//check the file exists
 				File classCoreFile = new File("2das" + File.separator + classCoreFilename + ".2da");
-				
+
 				if(classCoreFile.exists()) {
 					//open the core spell file
 					Data_2da classCoreSpell2da = Data_2da.load2da(classCoreFile.getPath(), true);
-					
+
 					// If the cls_spell file for this class does not exist yet, create it
 					File classSpell2daFile = new File("2das" + File.separator + "cls_spell_" + classfilename + ".2da");
 					if(!classSpell2daFile.exists())
@@ -115,40 +115,40 @@ public final class SpellbookMaker{
 					else
 					{
 						classSpell2da = Data_2da.load2da(classSpell2daFile.getPath(), true);
-						
+
 						// Clear all the existing rows
 						for(String label : classSpell2da.getLabels())
 							for(int i = 0; i < classSpell2da.getEntryCount(); i++)
 								classSpell2da.setEntry(label, i, "****");
 					}
-					
+
 					// Make sure the file contains at least one line
 					if(classSpell2da.getEntryCount() == 0){
 						classSpell2da.appendRow();
 					}
-					
+
 					// The first line should be left blank, so initialise index to 1
 					classSpellRow = 1;
-					
+
 					// Load the class feats 2da
 					classFeat2da = Data_2da.load2da("2das" + File.separator + "cls_feat_" + classfilename + ".2da", true);
 					getFirstClassFeat2daRow();
-					
+
 					//get the class name
 					String className = getCheckedTlkEntry(classes2da.getBiowareEntryAsInt("Name", classRow)) + " ";
-					
+
 					// Construct the class portion of labels to be generated
 					String classLabel = classes2da.getEntry("Label", classRow);
 					// Nothing longer than Suel_Archanamach (16 chars) allowed in order to avoid extending the length of all spells.2da rows again
 					if(classLabel.length() > 16)
 						classLabel = classLabel.substring(0, 17);
 					classLabel += "_";
-					
+
 					//get the maximum spell level
 					int maxLevel = 0;
 					for(int row = 0; row < classCoreSpell2da.getEntryCount(); row ++)
 						maxLevel = Math.max(maxLevel, classCoreSpell2da.getBiowareEntryAsInt("Level", row));
-					
+
 					//loop over all the spells
 					for(int row = 0; row < classCoreSpell2da.getEntryCount(); row ++) {
 						//check its not a null row
@@ -161,7 +161,7 @@ public final class SpellbookMaker{
 							int metamagic = spells2da.getBiowareEntryAsInt("Metamagic", spellID);
 							if(metamagic == 0)
 								System.out.println("Check metamagic for spell " + spellID);
-							
+
 							// Hack - Determine how radial masters there might be: 1 + metamagics
 							int masterCount = 1;
 							for(int metamagicFlag = 0x1; metamagicFlag <= 0x20; metamagicFlag <<= 1)
@@ -181,7 +181,7 @@ public final class SpellbookMaker{
 									else if(metamagicFlag == 0x08) metaCost = 4;
 									else if(metamagicFlag == 0x10) metaCost = 1;
 									else if(metamagicFlag == 0x20) metaCost = 1;
-									
+
 									if(spellLevel + metaCost <= maxLevel)
 										masterCount += 1;
 								}
@@ -196,7 +196,7 @@ public final class SpellbookMaker{
 							}
 							// Generate an iterator for it
 							Iterator<Integer> preReservedClassSpell2daRowIterator = preReservedClassSpell2daRows.iterator();
-							
+
 							//now loop over the metamagic varients
 							//-1 represents no metamagic
 							for(int metamagicNo = -1; metamagicNo < 6; metamagicNo++){
@@ -280,7 +280,7 @@ public final class SpellbookMaker{
 							}//end of metamagic loop
 						}// end if - The cls_spcr row contains an entry
 					}//end of cls_spells_*_core.2da loop
-					
+
 					//save the new cls_spell_*.2da file
 					classSpell2da.save2da("2das", true, true);
 					classFeat2da.save2da("2das", true, true);
@@ -317,7 +317,7 @@ public final class SpellbookMaker{
 			// Grab the current value of classSpellRow for use and then increment it
 			localClassSpellRow = classSpellRow++;
 		}
-		
+
 		//get the name of the spell
 		String spellName = getCheckedTlkEntry(spells2da.getBiowareEntryAsInt("Name", spellID));
 		//get the label of the spell
@@ -334,7 +334,7 @@ public final class SpellbookMaker{
 		for(int i = 0; i < originalSpellRow.length; i++){
 			spells2da.setEntry(spellLabels[i], spells2daRow, spells2da.getEntry(spellLabels[i], spellID));
 		}
-		
+
 		//change the ImpactScript
 		String script = "prc_" + (classfilename.length() <= 5 ? classfilename : classfilename.substring(0, 5)) + "_" + metaScript + "_gen";
 		spells2da.setEntry("ImpactScript", spells2daRow, script);
@@ -342,7 +342,7 @@ public final class SpellbookMaker{
 		spells2da.setEntry("Label", spells2daRow, label);
 		//change the Name
 		spells2da.setEntry("Name", spells2daRow, Integer.toString(tlkRow + MAGIC_TLK));
-		
+
 		//if quickened, set conjuring/casting duration to zero
 		if(metamagicNo == 3){
 			spells2da.setEntry("ConjTime", spells2daRow, "0");
@@ -360,7 +360,7 @@ public final class SpellbookMaker{
 			spells2da.setEntry("CastAnim", spells2daRow, "****");
 			spells2da.setEntry("ConjAnim", spells2daRow, "****");
 		}
-		
+
 		//set the level to the correct value, including metamagic
 		spells2da.setEntry("Innate", spells2daRow, Integer.toString(metamagicLevel + spellLevel));
 		//clear class levels
@@ -370,7 +370,7 @@ public final class SpellbookMaker{
 		spells2da.setEntry("Paladin", 	spells2daRow, "****");
 		spells2da.setEntry("Ranger", 	spells2daRow, "****");
 		spells2da.setEntry("Wiz_Sorc", 	spells2daRow, "****");
-		
+
 		// set subradial master, if applicable
 		if(subradialMaster != 0){
 			spells2da.setEntry("Master", spells2daRow, Integer.toString(subradialMaster));
@@ -385,7 +385,7 @@ public final class SpellbookMaker{
 			//make it point to the new feat.2da line that will be added soon
 			spells2da.setEntry("FeatID", spells2daRow, Integer.toString(feat2daRow));
 		}
-		
+
 		//remove projectiles from firing because the real spell will do this
 		spells2da.setEntry("Proj", 				spells2daRow, "0");
 		spells2da.setEntry("ProjModel", 		spells2daRow, "****");
@@ -400,10 +400,10 @@ public final class SpellbookMaker{
 			// Clear the line of old values
 			for(String featLabel : feat2da.getLabels())
 				feat2da.setEntry(featLabel, feat2daRow, "****");
-			
+
 			// Reset the ReqAction column to 1
 			feat2da.setEntry("ReqAction", feat2daRow, "1");
-			
+
 			//make it point to the new spells.2da line
 			feat2da.setEntry("SPELLID", feat2daRow, Integer.toString(spells2daRow));
 			//change the Name
@@ -414,6 +414,8 @@ public final class SpellbookMaker{
 			feat2da.setEntry("DESCRIPTION", feat2daRow, spells2da.getEntry("SpellDesc", spells2daRow));
 			//change the icon
 			feat2da.setEntry("ICON", feat2daRow, spells2da.getEntry("IconResRef", spells2daRow));
+			//personal range
+			feat2da.setEntry("TARGETSELF", feat2daRow, spells2da.getEntry("Range", spellID).equals("P") ? "1" : "0");
 			//if spell is hostile, make feat hostile
 			if(spells2da.getEntry("HostileSetting", spellID).equals("1")){
 				feat2da.setEntry("HostileFeat", feat2daRow, "1");
@@ -430,7 +432,7 @@ public final class SpellbookMaker{
 			// Clear the line of old values
 			for(String iprpLabel : iprp_feats2da.getLabels())
 				iprp_feats2da.setEntry(iprpLabel, iprp_feats2daRow, "****");
-			
+
 			//set its label
 			iprp_feats2da.setEntry("Label", iprp_feats2daRow, label);
 			//set its name
@@ -451,7 +453,7 @@ public final class SpellbookMaker{
 		classSpell2da.setEntry("SpellID", localClassSpellRow, Integer.toString(spells2daRow));
 		//make it point to the old spells.2da
 		classSpell2da.setEntry("RealSpellID", localClassSpellRow, Integer.toString(spellID));
-		
+
 		//if its a subradial, dont do this
 		if(subradialMaster == 0){
 			//make it point to the new feat.2da
@@ -509,7 +511,7 @@ public final class SpellbookMaker{
 					// about the BioBug triggered by using subradial feats directly from class radial
 					if(!doOnce) {
 						doOnce = true;
-						
+
 						spells2da.setEntry("ImpactScript", masterSpellID, "prc_radialbug");
 					}
 					addNewSpellbookData(spells2da.getBiowareEntryAsInt("SubRadSpell" + subradial, spellID),
@@ -636,7 +638,7 @@ public final class SpellbookMaker{
 		}
 		return dialogtlk.getEntry(entryNo);
 	}
-	
+
 	private static void readMe(){
 		//                  0        1         2         3         4         5         6         7         8
 		//					12345678901234567890123456789012345678901234567890123456789012345678901234567890

@@ -189,8 +189,10 @@ public final class AMSSpellbookMaker{
 							int spellLevel = classCoreSpell2da.getBiowareEntryAsInt("Level", row);
 							//get the metamagic reference to know what types work
 							int metamagic = spells2da.getBiowareEntryAsInt("Metamagic", spellID);
+							/*	not really necessary
 							if(metamagic == 0)
 								System.out.println("Check metamagic for spell " + spellID);
+							*/
 
 							// Hack - Determine how radial masters there might be: 1 + metamagics
 							int masterCount = 1;
@@ -444,6 +446,8 @@ public final class AMSSpellbookMaker{
 			feat2da.setEntry("DESCRIPTION", feat2daRow, spells2da.getEntry("SpellDesc", spells2daRow));
 			//change the icon
 			feat2da.setEntry("ICON", feat2daRow, spells2da.getEntry("IconResRef", spells2daRow));
+			//personal range
+			feat2da.setEntry("TARGETSELF", feat2daRow, spells2da.getEntry("Range", spellID).equals("P") ? "1" : "0");
 			//if spell is hostile, make feat hostile
 			if(spells2da.getEntry("HostileSetting", spellID).equals("1")){
 				feat2da.setEntry("HostileFeat", feat2daRow, "1");

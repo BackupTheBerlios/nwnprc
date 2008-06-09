@@ -18859,7 +18859,7 @@ Craft Reserve: An epic artificer's craft reserve increases by 1,000 points per l
   <entry id="49909" lang="en" sex="m">Appraise Magic Value</entry>
   <entry id="49910" lang="en" sex="m">Type of Feat: General
 Prerequisites: Appraise 5 ranks, Lore 5 ranks, Spellcraft 5 ranks.
-Benefit: If you know that an item is magical, you can use the Appraise skill to identify the item’s properties. The DC of the Appraise check is 10 + the caster level of the item.</entry>
+Benefit: If you know that an item is magical, you can use the Appraise skill to identify the item?s properties. The DC of the Appraise check is 10 + the caster level of the item.</entry>
   <entry id="49911" lang="en" sex="m">Dive For Cover</entry>
   <entry id="49912" lang="en" sex="m">Type of Feat: General
 Prerequisite: Base Reflex save bonus +4.
@@ -18867,7 +18867,7 @@ Benefit: If you fail a Reflex saving throw, you can immediately attempt the savi
   <entry id="49913" lang="en" sex="m">Extraordinary Spell Aim</entry>
   <entry id="49914" lang="en" sex="m">Type of Feat: General
 Prerequisite: Spellcraft 15 ranks.
-Benefit: Whenever you cast a spell with an area, you can attempt to shape the spell’s area so that one creature within the area is unaffected by the spell. To accomplish this, you must succeed on a Spellcraft check (DC 25 + spell level).</entry>
+Benefit: Whenever you cast a spell with an area, you can attempt to shape the spell?s area so that one creature within the area is unaffected by the spell. To accomplish this, you must succeed on a Spellcraft check (DC 25 + spell level).</entry>
   <entry id="49915" lang="en" sex="m">Obscure Lore</entry>
   <entry id="49916" lang="en" sex="m">Type of Feat: General
 Prerequisite: Bardic Knowledge class feature
@@ -43071,28 +43071,23 @@ Use: Selected.</entry>
   <entry id="63044" lang="en" sex="m">Sorcerer Mass Fire Shield
 </entry>
   <entry id="63045" lang="en" sex="m">Sorcerer Mass Fire Shield: Red</entry>
-  <entry id="63046" lang="en" sex="m">Sorcerer Mass Fire Shield: Blue
-</entry>
+  <entry id="63046" lang="en" sex="m">Sorcerer Mass Fire Shield: Blue</entry>
   <entry id="63047" lang="en" sex="m">Sorcerer Extended Mass Fire Shield
 </entry>
   <entry id="63048" lang="en" sex="m">Sorcerer Extended Mass Fire Shield: Red</entry>
-  <entry id="63049" lang="en" sex="m">Sorcerer Extended Mass Fire Shield: Blue
-</entry>
+  <entry id="63049" lang="en" sex="m">Sorcerer Extended Mass Fire Shield: Blue</entry>
   <entry id="63050" lang="en" sex="m">Sorcerer Quickened Mass Fire Shield
 </entry>
   <entry id="63051" lang="en" sex="m">Sorcerer Quickened Mass Fire Shield: Red</entry>
-  <entry id="63052" lang="en" sex="m">Sorcerer Quickened Mass Fire Shield: Blue
-</entry>
+  <entry id="63052" lang="en" sex="m">Sorcerer Quickened Mass Fire Shield: Blue</entry>
   <entry id="63053" lang="en" sex="m">Sorcerer Silent Mass Fire Shield
 </entry>
   <entry id="63054" lang="en" sex="m">Sorcerer Silent Mass Fire Shield: Red</entry>
-  <entry id="63055" lang="en" sex="m">Sorcerer Silent Mass Fire Shield: Blue
-</entry>
+  <entry id="63055" lang="en" sex="m">Sorcerer Silent Mass Fire Shield: Blue</entry>
   <entry id="63056" lang="en" sex="m">Sorcerer Still Mass Fire Shield
 </entry>
   <entry id="63057" lang="en" sex="m">Sorcerer Still Mass Fire Shield: Red</entry>
-  <entry id="63058" lang="en" sex="m">Sorcerer Still Mass Fire Shield: Blue
-</entry>
+  <entry id="63058" lang="en" sex="m">Sorcerer Still Mass Fire Shield: Blue</entry>
   <entry id="63059" lang="en" sex="m">Sorcerer Prismatic Ray</entry>
   <entry id="63060" lang="en" sex="m">Sorcerer Quickened Prismatic Ray</entry>
   <entry id="63061" lang="en" sex="m">Sorcerer Silent Prismatic Ray</entry>
@@ -48635,28 +48630,23 @@ Use: Selected.</entry>
   <entry id="68561" lang="en" sex="m">Warmage Mass Fire Shield
 </entry>
   <entry id="68562" lang="en" sex="m">Warmage Mass Fire Shield: Red</entry>
-  <entry id="68563" lang="en" sex="m">Warmage Mass Fire Shield: Blue
-</entry>
+  <entry id="68563" lang="en" sex="m">Warmage Mass Fire Shield: Blue</entry>
   <entry id="68564" lang="en" sex="m">Warmage Extended Mass Fire Shield
 </entry>
   <entry id="68565" lang="en" sex="m">Warmage Extended Mass Fire Shield: Red</entry>
-  <entry id="68566" lang="en" sex="m">Warmage Extended Mass Fire Shield: Blue
-</entry>
+  <entry id="68566" lang="en" sex="m">Warmage Extended Mass Fire Shield: Blue</entry>
   <entry id="68567" lang="en" sex="m">Warmage Quickened Mass Fire Shield
 </entry>
   <entry id="68568" lang="en" sex="m">Warmage Quickened Mass Fire Shield: Red</entry>
-  <entry id="68569" lang="en" sex="m">Warmage Quickened Mass Fire Shield: Blue
-</entry>
+  <entry id="68569" lang="en" sex="m">Warmage Quickened Mass Fire Shield: Blue</entry>
   <entry id="68570" lang="en" sex="m">Warmage Silent Mass Fire Shield
 </entry>
   <entry id="68571" lang="en" sex="m">Warmage Silent Mass Fire Shield: Red</entry>
-  <entry id="68572" lang="en" sex="m">Warmage Silent Mass Fire Shield: Blue
-</entry>
+  <entry id="68572" lang="en" sex="m">Warmage Silent Mass Fire Shield: Blue</entry>
   <entry id="68573" lang="en" sex="m">Warmage Still Mass Fire Shield
 </entry>
   <entry id="68574" lang="en" sex="m">Warmage Still Mass Fire Shield: Red</entry>
-  <entry id="68575" lang="en" sex="m">Warmage Still Mass Fire Shield: Blue
-</entry>
+  <entry id="68575" lang="en" sex="m">Warmage Still Mass Fire Shield: Blue</entry>
   <entry id="68576" lang="en" sex="m">Warmage Prismatic Ray</entry>
   <entry id="68577" lang="en" sex="m">Warmage Quickened Prismatic Ray</entry>
   <entry id="68578" lang="en" sex="m">Warmage Silent Prismatic Ray</entry>

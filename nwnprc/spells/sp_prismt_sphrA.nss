@@ -61,7 +61,7 @@ void main()
         //Passing into the wall
         SetLocalInt(oTarget, "PRC_INSIDE_PRISMATIC_SPHERE", 1);
         
-        if(!GetIsReactionTypeFriendly(oTarget, oPC))
+        if(!GetIsReactionTypeFriendly(oTarget, oPC) && (oTarget != oPC))
         {
                 //Red
                 if(!PRCDoResistSpell(oPC, oTarget,nPenetr))

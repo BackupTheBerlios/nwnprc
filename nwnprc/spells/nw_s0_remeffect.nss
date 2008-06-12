@@ -62,7 +62,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     {
         while(GetIsEffectValid(eEffect))
         {   //Effect removal - see prc_sp_func for list of effects removed
-            if(CheckRemoveEffects(nSpellID, GetEffectType(eEffect)) && !GetIsSupernaturalCurse(eEffect))
+            if(CheckRemoveEffects(nSpellID, GetEffectType(eEffect)) && !GetIsSupernaturalCurse(eEffect) && (GetEffectSubType(eEffect) != SUBTYPE_EXTRAORDINARY))
                 RemoveEffect(oTarget, eEffect);
             eEffect = GetNextEffect(oTarget);
         }

@@ -1567,12 +1567,11 @@ if(DEBUG) DoDebug("x2_inc_spellhook pre-X2CastOnItemWasAllowed "+IntToString(nCo
         && GetHasFeat(FEAT_SUMMON_FAMILIAR, oCaster)
         && (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oCaster)
             || !GetPRCSwitch(PRC_PNP_FAMILIARS)
-        && oTarget == oCaster
         && GetIsObjectValid(GetLocalObject(oCaster, "Familiar"))
         && (PRCGetLastSpellCastClass() == CLASS_TYPE_WIZARD ||
             PRCGetLastSpellCastClass() == CLASS_TYPE_SORCERER)
         && !GetLocalInt(oCaster, "PRC_SPELL_HOLD")     //holding the charge doesnt work
-        && Get2DACache("spells", "Range", nSpellID) == "P"
+        && (Get2DACache("spells", "Range", nSpellID) == "P" || oTarget == oCaster) // Either of these is legal
         && !GetIsObjectValid(oSpellCastItem)     // no item spells
         && nSpellID != SPELL_SHAPECHANGE         // no polymorphs
         && nSpellID != SPELL_POLYMORPH_SELF

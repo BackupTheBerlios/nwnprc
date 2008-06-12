@@ -76,6 +76,9 @@ void main()
     // Construct the bonuses
     /*DelayCommand(0.25f, */BuildMindblade(oPC, oMbld, nMbldType)/*)*/;
 
+    // check for existing one before equipping and destroy
+    if(GetStringLeft(GetTag(GetItemInSlot(nHand, oPC)), 14) == "prc_sk_mblade_")
+            MyDestroyObject(GetItemInSlot(nHand, oPC));
     // Force equip
     AssignCommand(oPC, ActionEquipItem(oMbld, nHand));
 

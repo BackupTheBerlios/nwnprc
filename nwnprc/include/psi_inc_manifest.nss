@@ -237,6 +237,24 @@ struct manifestation _GetPPCostReduced(struct manifestation manif)
             DeleteLocalInt(manif.oManifester, "ThrallDom");
             manif.nPPCost -= nThrall;
         }
+
+        // Reduced cost for augmenting the Dominate power. These do not count for the DC increase
+        if(nThrall >= 7 && nSpell == POWER_DOMINATE && manif.nTimesAugOptUsed_1 > 0)
+        {
+            manif.nPPCost -= 2;
+            manif.nTimesGenericAugUsed -= 1;
+        }
+        if(nThrall >= 9 && nSpell == POWER_DOMINATE && manif.nTimesAugOptUsed_2 > 0)
+        {
+            manif.nPPCost -= 4;
+            manif.nTimesGenericAugUsed -= 2;
+        }
+
+        if(manif.nPPCost < 1) manif.nPPCost = 1;
+    }
+    
+    if (nShadow > 0)
+    {
         if(GetLocalInt(manif.oManifester, "ShadowDistract") && nSpell == POWER_DISTRACT)
         {
             DeleteLocalInt(manif.oManifester, "ShadowDistract");
@@ -252,19 +270,7 @@ struct manifestation _GetPPCostReduced(struct manifestation manif)
             DeleteLocalInt(manif.oManifester, "ShadowCloudMindMass");
             manif.nPPCost -= nShadow;
         }
-
-        // Reduced cost for augmenting the Dominate power. These do not count for the DC increase
-        if(nThrall >= 7 && nSpell == POWER_DOMINATE && manif.nTimesAugOptUsed_1 > 0)
-        {
-            manif.nPPCost -= 2;
-            manif.nTimesGenericAugUsed -= 1;
-        }
-        if(nThrall >= 9 && nSpell == POWER_DOMINATE && manif.nTimesAugOptUsed_2 > 0)
-        {
-            manif.nPPCost -= 4;
-            manif.nTimesGenericAugUsed -= 2;
-        }
-
+        
         if(manif.nPPCost < 1) manif.nPPCost = 1;
     }
 

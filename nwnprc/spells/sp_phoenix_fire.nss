@@ -60,7 +60,7 @@ void main()
     int nCasterLvl = PRCGetCasterLevel(oPC);
     int nMetaMagic = PRCGetMetaMagicFeat();
     int nDam;
-    
+    float fDur = TurnsToSeconds(10);
         
     //Immolate VFX on caster - VFX_IMP_HOLY_AID for casting VFX
     effect eFire = EffectVisualEffect(VFX_FNF_FIREBALL);
@@ -69,11 +69,18 @@ void main()
     DelayCommand(0.3f, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eFire, oPC));
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDivine, oPC);
                             
-    //Ash/smoke VFX at player's location?
+    //Ash/smoke VFX at player's location
+    object oDust = CreateObject(OBJECT_TYPE_PLACEABLE,"plc_dustplume", lLoc, FALSE);
+    object oFire = CreateObject(OBJECT_TYPE_PLACEABLE,"plc_weathmark", lLoc, FALSE);
             
-    //Kill player
-    DeathlessFrenzyCheck(oPC);
-    SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oPC);
+    //"Kill" player
+    effect eLink = EffectLinkEffects(EffectCutsceneParalyze(), EffectCutsceneGhost());
+    eLink = EffectLinkEffects(EffectVisualEffect(VFX_DUR_CUTSCENE_INVISIBILITY), eLink);    
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, fDur);
+    
+    SetPlotFlag(oPC, TRUE);
+    DelayCommand(fDur, SetPlotFlag(oPC, FALSE));
+    DelayCommand(fDur, ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(GetMaxHitPoints(oPC)), oPC));    
             
     //Get first object in shape
     object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lLoc, TRUE, OBJECT_TYPE_CREATURE);
@@ -137,26 +144,9 @@ void main()
         object oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lLoc, TRUE, OBJECT_TYPE_CREATURE);
     }
     
-    //Wait 10 minutes, then rebirth
-    DelayCommand(TurnsToSeconds(10), Rebirth(oPC));
-    
     //Sanctified spells get mandatory 10 pt good adjustment, regardless of switch
     AdjustAlignment(oPC, ALIGNMENT_GOOD, 10);
     
     PRCSetSchool();
     SPGoodShift(oPC);
 }
-    
-void Rebirth(object oPC)
-{
-    //Rebirth VFX ?
-    
-    //Resurrection
-    SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectResurrection(), oPC);
-        
-    //Level loss via death is going to be handled in different ways
-    //in different modules, so I'm going to leave this out of the script
-    //and opt to let the default death penalty of the module handle it
-    //This provides continuity and ease of scripting.
-}
-

@@ -15,10 +15,13 @@
 #include "prc_alterations"
 
 //removes wings at the end of the power
-void RemoveWings(object oPC)
+void RemoveWings(object oPC, int nWingCounter)
 {
-    SetPersistantLocalInt(oPC, "ChannelingWings", FALSE);
-    SetCreatureWingType(CREATURE_WING_TYPE_NONE, oPC);
+    if(GetPersistantLocalInt(oPC, "ChannelingWings") == nWingCounter)
+    {
+        SetPersistantLocalInt(oPC, "ChannelingWings", FALSE);
+        SetCreatureWingType(CREATURE_WING_TYPE_NONE, oPC);
+    }
 }
 
 //internal function to handle turning the wings on and off
@@ -29,10 +32,12 @@ void ChannelWings(object oPC, float fDuration)
         return;   
     //otherwise grant wings
     SetCreatureWingType(CREATURE_WING_TYPE_DRAGON, oPC);
-    SetPersistantLocalInt(oPC, "ChannelingWings", TRUE);
+    int nWingCounter = GetPersistantLocalInt(oPC, "ChannelingWings");
+    if(nWingCounter > 9) nWingCounter = 0;
+    SetPersistantLocalInt(oPC, "ChannelingWings", nWingCounter + 1);
     
     //set up wing removal after power expiration
-    DelayCommand(fDuration, RemoveWings(oPC));
+    DelayCommand(fDuration, RemoveWings(oPC, nWingCounter + 1));
 }
 
 void main()

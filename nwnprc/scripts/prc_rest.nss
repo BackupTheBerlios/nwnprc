@@ -96,6 +96,21 @@ void RestFinished(object oPC)
         }
     }
     // end flurry or swords array
+    
+    //Check for leftover Diamond Dragon appendages
+    if (GetLevelByClass(CLASS_TYPE_DIAMOND_DRAGON, oPC))
+    {
+        if(GetPersistantLocalInt(oPC, "ChannelingTail"))
+        {
+            SetPersistantLocalInt(oPC, "ChannelingTail", FALSE);
+            SetCreatureTailType(CREATURE_TAIL_TYPE_NONE, oPC);
+        }
+        if(GetPersistantLocalInt(oPC, "ChannelingWings"))
+        {
+            SetPersistantLocalInt(oPC, "ChannelingWings", FALSE);
+            SetCreatureWingType(CREATURE_WING_TYPE_NONE, oPC);
+        }
+    }
 
     if(GetPRCSwitch(PRC_PNP_REST_HEALING))
     {

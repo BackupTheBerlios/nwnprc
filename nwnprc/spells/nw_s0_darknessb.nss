@@ -13,6 +13,7 @@
 //:://////////////////////////////////////////////
 
 #include "prc_inc_spells"
+#include "inv_invoc_const"
 
 void main()
 {
@@ -42,6 +43,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_DARKNESS ,OBJECT_SELF, GetSpellSaveDC()));
             nID == SHADOWLORD_DARKNESS               ||
             nID == SPELL_RACE_DARKNESS               ||
             nID == SPELL_DEEPER_DARKNESS             ||
+            nID == INVOKE_DARKNESS                   ||
             (nID == -1 && (GetObjectType(GetEffectCreator(eAOE)) == OBJECT_TYPE_ITEM) && GetLocalInt(OBJECT_SELF, "PRC_AoE_IPRP_Init")) // Item-based AoE
             )                                       &&
            GetEffectCreator(eAOE) == oCreator       &&

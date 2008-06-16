@@ -109,9 +109,10 @@ void main()
                         GetHasFeat(FEAT_DRAGONSHAMAN_RED, OBJECT_SELF)       ? CREATURE_WING_TYPE_DRAGON :
                         CREATURE_WING_TYPE_NONE;
          }
-         if(GetHasFeat(FEAT_DRAGONSHAMAN_WINGS, OBJECT_SELF))
+         if(GetHasFeat(FEAT_DRAGONSHAMAN_WINGS, OBJECT_SELF) && GetPersistantLocalInt(OBJECT_SELF, "DragShamanWingsApplied"))
          {
              SetCompositeBonus(oArmor, "WingBonus", 10, ITEM_PROPERTY_SKILL_BONUS, SKILL_JUMP);
              DoWings(OBJECT_SELF, nWingType);
+             SetPersistantLocalInt(OBJECT_SELF, "DragShamanWingsApplied", TRUE);
          }
 }

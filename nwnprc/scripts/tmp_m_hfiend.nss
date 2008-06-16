@@ -126,7 +126,7 @@
 //:: Created On: 18/04/06
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "pnp_shft_poly"
 #include "prc_inc_template"
 
 void main()
@@ -137,7 +137,8 @@ void main()
     itemproperty ipIP;
     
     //wings
-    SetCreatureWingType(CREATURE_WING_TYPE_BAT, oPC);
+    //SetCreatureWingType(CREATURE_WING_TYPE_BAT, oPC);
+    DoWings(oPC, CREATURE_WING_TYPE_BAT);
     //naturalAC
     SetCompositeBonus(oSkin, "Template_hcfiend_natAC", 1, ITEM_PROPERTY_AC_BONUS); 
     //darkvision

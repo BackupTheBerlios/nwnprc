@@ -17,24 +17,29 @@
 
 
 //removes wings at the end of the power
-void RemoveTail(object oPC)
+void RemoveTail(object oPC, int nTailCounter)
 {
-    SetPersistantLocalInt(oPC, "ChannelingTail", FALSE);
-    SetCreatureTailType(CREATURE_TAIL_TYPE_NONE, oPC);
+    if(GetPersistantLocalInt(oPC, "ChannelingTail") == nTailCounter)
+    {
+        SetPersistantLocalInt(oPC, "ChannelingTail", FALSE);
+        SetCreatureTailType(CREATURE_TAIL_TYPE_NONE, oPC);
+    }
 }
 
 //internal function to handle turning the wings on and off
 void ChannelTail(object oPC, float fDuration)
 {
-    //already has wings, keep them
+    //already has tail, keep it
     if(GetCreatureTailType(oPC) != CREATURE_TAIL_TYPE_NONE) 
         return;   
-    //otherwise grant wings
+    //otherwise grant tail
     SetCreatureTailType(CREATURE_TAIL_TYPE_LIZARD, oPC);
-    SetPersistantLocalInt(oPC, "ChannelingTail", TRUE);
+    int nTailCounter = GetPersistantLocalInt(oPC, "ChannelingTail");
+    if(nTailCounter > 9) nTailCounter = 0;
+    SetPersistantLocalInt(oPC, "ChannelingTail", nTailCounter + 1);
     
     //set up tail removal after power expiration
-    DelayCommand(fDuration, RemoveTail(oPC));
+    DelayCommand(fDuration, RemoveTail(oPC, nTailCounter + 1));
 }
 
 

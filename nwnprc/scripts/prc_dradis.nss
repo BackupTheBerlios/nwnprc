@@ -257,7 +257,15 @@ void main()
     if (bResisEle>0) SmallResist(oPC,oSkin,bResisEle,sResis);
     if (bResisEle>0) LargeResist(oPC,oSkin,bResisEle,lResis);
     if (nLevel>17) SpellResis(oPC,oSkin,nLevel);
-    if (nLevel>17) DoTail(oPC, nTailType);
-    if (nLevel>9)  DoWings(oPC, nWingType);
+    if (nLevel>17 && GetPersistantLocalInt(oPC, "DragonDiscipleTailApplied"))
+    {
+        SetPersistantLocalInt(oPC, "DragonDiscipleTailApplied", TRUE);
+        DoTail(oPC, nTailType);
+    }
+    if (nLevel>9 && GetPersistantLocalInt(oPC, "DragonDiscipleWingsApplied"))
+    {
+        SetPersistantLocalInt(oPC, "DragonDiscipleWingsApplied", TRUE);
+        DoWings(oPC, nWingType);
+    }
     if (nLevel>19) SeeTrue(oPC,oSkin,nLevel);
 }

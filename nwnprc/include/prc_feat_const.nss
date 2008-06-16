@@ -245,8 +245,8 @@ const int FEAT_WATER_BREATHING          = 4793;
 const int FEAT_MINOT_SCENT              = 4795;
 
 const int FEAT_CHAMELEON           = 4576;
-const int FEAT_BONUS_RIVER         = 4577;
-const int FEAT_BONUS_BAMBOO        = 4578;
+const int FEAT_BONUS_RIVER         = 4578;
+const int FEAT_BONUS_BAMBOO        = 4577;
 const int FEAT_BONUS_SEA           = 4579;
 const int FEAT_SA_LISTEN_4         = 4581;
 const int FEAT_SA_BLUFF_4          = 4582;

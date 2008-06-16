@@ -1589,15 +1589,17 @@ namespace HakInstaller
 				// already there.
 				scriptsToExecute.AddRange(scripts);
 				foreach (string script in otherScripts)
-					if (!scriptsToExecute.Contains(script)) scriptsToExecute.Add(script);
+					if (!scriptsToExecute.Contains(script)) scriptsToExecute.Insert(0, script);
 			}
 			else
 			{
-				// Add the original script if there was on, then add all of the
-				// other scripts to our execute list.
-				if (string.Empty != originalScript) scriptsToExecute.Add(originalScript);
+                // Add all of the other scripts to our execute list, then add the
+                // original script if there was one.
+                // modified by fluffyamoeba 2008-06-16 
+                // swapped so original script is executed last
 				foreach (string script in otherScripts)
 					scriptsToExecute.Add(script);
+                if (string.Empty != originalScript) scriptsToExecute.Add(originalScript);
 			}
 
 			// Create the script file.

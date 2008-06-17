@@ -148,7 +148,7 @@ string IntToSummonResref(int nChoice)
         else if (nChoice == 5 ) return "NW_S_CLANTERN";   
         else if (nChoice == 6 ) return "true_wordarch";   
         // Demons/Devils
-        else if (nChoice == 7 ) return "tog_balor";       
+        else if (nChoice == 7 ) return "NW_S_BALOR";       
         else if (nChoice == 8 ) return "prc_doa_hellcat"; 
         else if (nChoice == 9 ) return "prc_sum_cornugon";
         else if (nChoice == 10) return "erinyes";        
@@ -223,7 +223,7 @@ void main()
                 AddChoice("Lantern Archon",        SummonResrefToInt("NW_S_CLANTERN"),    oPC);
                 AddChoice("Word Archon",           SummonResrefToInt("true_wordarch"),    oPC);
                 // Demons/Devils
-                AddChoice("Balor",                 SummonResrefToInt("tog_balor"),        oPC);
+                AddChoice("Balor",                 SummonResrefToInt("NW_S_BALOR"),        oPC);
                 AddChoice("Bezekira",              SummonResrefToInt("prc_doa_hellcat"),  oPC);
                 AddChoice("Cornugon",              SummonResrefToInt("prc_sum_cornugon"), oPC);
                 AddChoice("Erinyes",               SummonResrefToInt("erinyes"),          oPC);

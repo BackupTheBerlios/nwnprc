@@ -400,6 +400,8 @@ const int FEAT_LEGENDARY_COMMANDER                     = 4367;
 
 const int FEAT_TWO_WEAPON_REND                         = 3113;
 
+const int FEAT_EPIC_SPELLCASTING                       = 4073;
+
 //RotD feats
 const int FEAT_KOB_DRAGON_TAIL                         = 3837;
 const int FEAT_KOB_DRAGON_WING_A                       = 3838;

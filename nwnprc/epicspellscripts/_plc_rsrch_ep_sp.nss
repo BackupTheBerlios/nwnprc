@@ -59,18 +59,21 @@ void main()
         string sSc = GetSchoolForSpell(nEpicSpell);
         // Make sure the player is allowed to research from this placeable.
         int nAllowed = FALSE;
-        if (WHO_CAN_RESEARCH == "CLERIC" && GetIsEpicCleric(oPC)) nAllowed = TRUE;
-        if (WHO_CAN_RESEARCH == "DRUID" && GetIsEpicDruid(oPC)) nAllowed = TRUE;
-        if (WHO_CAN_RESEARCH == "HEALER" && GetIsEpicHealer(oPC)) nAllowed = TRUE;
-        if (WHO_CAN_RESEARCH == "FAVSOUL" && GetIsEpicFavSoul(oPC)) nAllowed = TRUE;
-        if (WHO_CAN_RESEARCH == "DIVINE" &&
-            (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC) || 
-            GetIsEpicHealer(oPC) || GetIsEpicFavSoul(oPC) ||
-            GetIsEpicShaman(oPC))) nAllowed = TRUE;
-        if (WHO_CAN_RESEARCH == "ARCANE" && (GetIsEpicSorcerer(oPC) ||
-            GetIsEpicWizard(oPC) || GetIsEpicWarmage(oPC))) nAllowed = TRUE;
-        if (WHO_CAN_RESEARCH == "ALL" &&
-            GetIsEpicSpellcaster(oPC)) nAllowed = TRUE;
+        // check they have the epic spellcasting feat
+        if (GetHasFeat(FEAT_EPIC_SPELLCASTING, oPC))
+        {
+            if (WHO_CAN_RESEARCH == "ALL") nAllowed = TRUE;
+            else if (WHO_CAN_RESEARCH == "CLERIC" && GetIsEpicCleric(oPC)) nAllowed = TRUE;
+            else if (WHO_CAN_RESEARCH == "DRUID" && GetIsEpicDruid(oPC)) nAllowed = TRUE;
+            else if (WHO_CAN_RESEARCH == "HEALER" && GetIsEpicHealer(oPC)) nAllowed = TRUE;
+            else if (WHO_CAN_RESEARCH == "FAVSOUL" && GetIsEpicFavSoul(oPC)) nAllowed = TRUE;
+            else if (WHO_CAN_RESEARCH == "DIVINE" &&
+                (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC) || 
+                GetIsEpicHealer(oPC) || GetIsEpicFavSoul(oPC) ||
+                GetIsEpicShaman(oPC))) nAllowed = TRUE;
+            else if (WHO_CAN_RESEARCH == "ARCANE" && (GetIsEpicSorcerer(oPC) ||
+                GetIsEpicWizard(oPC) || GetIsEpicWarmage(oPC))) nAllowed = TRUE;
+        }
         if (nAllowed == TRUE)
         {
             // Make sure the player doesn't already know this spell.

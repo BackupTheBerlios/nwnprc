@@ -19,6 +19,7 @@
 #include "psi_inc_psifunc"
 #include "inv_inc_invfunc"
 #include "inc_ecl"
+#include "inc_epicspells"
 
 //  Prevents a Man at Arms from taking improved critical
 //  in a weapon that he does not have focus in.
@@ -984,6 +985,11 @@ int CasterFeats(object oPC = OBJECT_SELF)
     {
             FloatingTextStringOnCreature("Attune Gem requires level 2 Arcane Spells", oPC, FALSE);
             return FALSE;
+    }
+    if(GetHasFeat(FEAT_EPIC_SPELLCASTING, oPC) && !GetIsEpicSpellcaster(oPC))
+    {
+        FloatingTextStringOnCreature("Epic Spellcasting requires level 9 Arcane or Divine spells", oPC, FALSE);
+        return FALSE;
     }
 
     return TRUE;

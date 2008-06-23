@@ -36831,6 +36831,11 @@ Large - 1d6
 Huge - 1d8
 Gigantic - 2d6
 Colossal - 3d6</entry>
+  <entry id="54991" lang="en" sex="m">Epic Spellcasting</entry>
+  <entry id="54992" lang="en" sex="m">Type of Feat: Epic
+Prerequisite: Spellcraft 24 ranks, Lore 24 ranks, ability to cast 9th-level arcane or divine spells
+Specifics: You may develop and cast epic spells. You may cast a number of epic spells per day equal to your ranks in Lore divided by 10.
+</entry>
   <entry id="54998" lang="en" sex="m">Daylight</entry>
   <entry id="54999" lang="en" sex="m">Daylight 
 Evocation [Light]

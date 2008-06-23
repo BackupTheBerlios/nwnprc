@@ -32,7 +32,7 @@ void PRCLetoExit(object oPC)
     }
 
 
-    if(GetLocalInt(oSkin,"nPCShifted") || GetLocalInt(oPC, "WWHybrid") || GetLocalInt(oPC, "WWWolf"))
+    if(GetPersistantLocalInt(oPC, SHIFTER_ISSHIFTED_MARKER) || GetLocalInt(oSkin,"nPCShifted") || GetLocalInt(oPC, "WWHybrid") || GetLocalInt(oPC, "WWWolf"))
         return;
     while(GetIsItemPropertyValid(ipTest))
     {

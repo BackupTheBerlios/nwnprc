@@ -1,7 +1,7 @@
 // Favoured Soul passive abilities.
 // Resist 3 elements, DR, Weapon Focus/Spec
 
-#include "prc_alterations"
+#include "prc_inc_wpnrest"
 #include "pnp_shft_poly"
 
 void ResistElement(object oPC, object oSkin, int iLevel, int iType, string sVar)
@@ -126,12 +126,11 @@ void main()
             else if(GetHasFeat(FEAT_WEAPON_FOCUS_WAR_HAMMER,       oPC)) nBaseItem = FocusToWeapProf(FEAT_WEAPON_FOCUS_WAR_HAMMER      );
             else if(GetHasFeat(FEAT_WEAPON_FOCUS_WHIP,             oPC)) nBaseItem = FocusToWeapProf(FEAT_WEAPON_FOCUS_WHIP            );
    
-            int nProf = StringToInt(Get2DACache("baseitems", "ReqFeat0", nBaseItem));
-            if (nProf == FEAT_WEAPON_PROFICIENCY_EXOTIC) nIprop = IP_CONST_FEAT_WEAPON_PROF_EXOTIC;
-            else if (nProf == FEAT_WEAPON_PROFICIENCY_MARTIAL) nIprop = IP_CONST_FEAT_WEAPON_PROF_MARTIAL;
-            
-            // Finally, apply it
-            if(!GetHasFeat(nProf, oPC)) IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(nIprop), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+            if(!IsProficient(oPC, nBaseItem))
+            {
+                nIprop = GetWeaponProfIPFeat(GetWeaponProfFeatByType(nBaseItem));
+                IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(nIprop), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+            }
         }
     
         // Do Weapon spec

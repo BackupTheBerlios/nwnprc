@@ -602,7 +602,7 @@ void DoWeaponEquip(object oPC, object oItem, int nHand)
        || ((nWeaponSize > nSize || GetWeaponSize(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC)) > nSize) && nHand == ATTACK_BONUS_OFFHAND)
        )
         // Force unequip
-        AssignCommand(oPC, ActionUnequipItem(oItem));
+        ForceUnequip(oPC, oItem, nHand);
                    
     //check for proficiency
     DoProficiencyCheck(oPC, oItem, nHand);
@@ -626,7 +626,7 @@ void DoWeaponEquip(object oPC, object oItem, int nHand)
     //if a 2-hander, then unequip shield/offhand weapon
     if(nWeaponSize == 1 + nSize && nHand == ATTACK_BONUS_ONHAND)
         // Force unequip
-        AssignCommand(oPC, ActionUnequipItem(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC)));
+        ForceUnequip(oPC, GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC), INVENTORY_SLOT_LEFTHAND);
            
                 
     //apply TWF penalty if a one-handed, not light weapon in offhand - -4/-4 etc isntead of -2/-2

@@ -597,6 +597,8 @@ void ApplyAllOnHitCastSpellsOnItem(object oTarget = OBJECT_INVALID, object oItem
 {
 	int iSubType;
 	int iNr = 0;
+    if(!array_exists(oCaster, "ohspl"))
+        array_create(oCaster, "ohspl");
 
 	// remember the item that was passed to the function (in case it is invalid we simply pass it through to the function that does the spells)
 	object oItemPassed = oItem;
@@ -632,12 +634,15 @@ void ApplyAllOnHitCastSpellsOnItem(object oTarget = OBJECT_INVALID, object oItem
 		ApplyOnHitCastSpellSubType(iSubType, oTarget, oItemPassed, oCaster);
 		iNr--;
 	}	
+    array_delete(oCaster, "ohspl");
 }
 
 void ApplyAllOnHitCastSpellsOnItemExcludingSubType(int iExcludeSubType, object oTarget = OBJECT_INVALID, object oItem = OBJECT_SELF, object oCaster = OBJECT_SELF)
 {
 	int iSubType;
 	int iNr = 0;
+    if(!array_exists(oCaster, "ohspl"))
+        array_create(oCaster, "ohspl");
 
 	// remember the item that was passed to the function (in case it is invalid we pass it through to the spell cast functions)
 	object oItemPassed = oItem;
@@ -678,6 +683,7 @@ void ApplyAllOnHitCastSpellsOnItemExcludingSubType(int iExcludeSubType, object o
 		ApplyOnHitCastSpellSubType(iSubType, oTarget, oItemPassed, oCaster);
 		iNr--;
 	}	
+    array_delete(oCaster, "ohspl");
 }
 
 // returns true, if oItem has at least one onhitcast spell (of any subtype)

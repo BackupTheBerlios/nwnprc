@@ -87,11 +87,11 @@
 83  Earthquake                   384      426        8    
 84  Sunburst                     385      427        8    
 85  Banishment                   387      430        6    
-86  Inflict_Minor_Wounds         ****     431        0.5  
-87  Inflict_Light_Wounds         ****     432        1    
-88  Inflict_Moderate_Wounds      ****     433        2    
-89  Inflict_Serious_Wounds       ****     434        3    
-90  Inflict_Critical_Wounds      ****     435        4    
+86  Inflict_Minor_Wounds         388      431        0.5  
+87  Inflict_Light_Wounds         389      432        1    
+88  Inflict_Moderate_Wounds      390      433        2    
+89  Inflict_Serious_Wounds       391      434        3    
+90  Inflict_Critical_Wounds      392      435        4    
 91  BalagarnsIronHorn            502      436        2    
 92  Drown                        508      437        6    
 93  Electric_Jolt                1852     439        0.5  

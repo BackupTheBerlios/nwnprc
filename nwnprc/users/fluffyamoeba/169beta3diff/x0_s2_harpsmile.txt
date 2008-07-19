@@ -1,4 +1,0 @@
-27c27
-<     int nLevel = GetLevelByClass(CLASS_TYPE_DIVINECHAMPION,oTarget)  ;
----
->     int nLevel = GetLevelByClass(CLASS_TYPE_HARPER,oTarget)  ;

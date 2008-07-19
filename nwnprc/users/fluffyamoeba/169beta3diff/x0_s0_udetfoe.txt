@@ -1,4 +1,0 @@
-30c30
-<     effect eAC = EffectACIncrease(4);
----
->     effect eAC = EffectACIncrease(4,AC_DEFLECTION_BONUS);

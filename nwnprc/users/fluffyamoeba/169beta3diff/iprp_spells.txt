@@ -1,6 +1,0 @@
-199,200c199,200
-< 195        Ethereal_Visage                  1299    9           5           33750    121          1           0         1            iss_Mislead        
-< 196        Ethereal_Visage                  1300    15          5           56250    121          1           0         1            iss_Mislead        
----
-> 195        Ethereal_Visage                  1299    9           5           33750    121          1           0         1            iss_EthVis        
-> 196        Ethereal_Visage                  1300    15          5           56250    121          1           0         1            iss_EthVis        

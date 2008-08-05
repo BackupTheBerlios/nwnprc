@@ -31,7 +31,7 @@ void GrantProtection(object oTarget, int CasterLvl)
     effect eAbil = EffectImmunity(IMMUNITY_TYPE_ABILITY_DECREASE);
     effect ePoison = EffectImmunity(IMMUNITY_TYPE_POISON);
     effect eDisease = EffectImmunity(IMMUNITY_TYPE_DISEASE);
-    effect eAC = EffectACIncrease(4);
+    effect eAC = EffectACIncrease(4,AC_DEFLECTION_BONUS);
 
     int nDuration = PRCGetCasterLevel(OBJECT_SELF);
     int nMetaMagic = PRCGetMetaMagicFeat();

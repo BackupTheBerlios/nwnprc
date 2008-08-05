@@ -51,6 +51,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
 
     int nMetaMagic = PRCGetMetaMagicFeat();
     int nDamage;
+    int nAdditionalLevelDamage;
     float fDelay;
     effect eExplode = EffectVisualEffect(VFX_FNF_LOS_EVIL_20); //Replace with Negative Pulse
     effect eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
@@ -60,6 +61,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     if (nStr == 0)
     {
         nStr = 1;
+    }
+    nAdditionalLevelDamage = CasterLvl;
+    if ( nAdditionalLevelDamage > 20 )
+    {
+       nAdditionalLevelDamage = 20;
     }
     effect eStr = EffectAbilityIncrease(ABILITY_STRENGTH, nStr);
     //effect eStr_Low = EffectAbilityDecrease(ABILITY_STRENGTH, nStr);
@@ -85,12 +91,12 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
        {
             int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
             //Roll damage for each target
-            nDamage = d8() + CasterLvl;
+            nDamage = d8() + nAdditionalLevelDamage;
             //Resolve metamagic
             int iBlastFaith = BlastInfidelOrFaithHeal(OBJECT_SELF, oTarget, DAMAGE_TYPE_NEGATIVE, FALSE);
             if (nMetaMagic & METAMAGIC_MAXIMIZE || iBlastFaith)
             {
-                nDamage = 8 + CasterLvl;
+                nDamage = 8 + nAdditionalLevelDamage;
             }
             if ((nMetaMagic & METAMAGIC_EMPOWER))
             {

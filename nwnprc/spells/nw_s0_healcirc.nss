@@ -59,7 +59,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
   
 
   int nCasterLvl = CasterLvl;
-  int nDamagen, nModify, nHurt, nHP;
+  int nDamagen, nModify, nHP;
   int nMetaMagic = PRCGetMetaMagicFeat();
   effect eKill;
   effect eHeal;
@@ -113,10 +113,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 				nModify = 0;;                    
                         nModify /= 2;
                     }
-                    //Calculate damage
-                    nHurt =  nModify;
                     //Set damage effect
-                    eKill = PRCEffectDamage(oTarget, nHurt, DAMAGE_TYPE_POSITIVE);
+                    eKill = PRCEffectDamage(oTarget, nModify, DAMAGE_TYPE_POSITIVE);
                     //Apply damage effect and VFX impact
                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eKill, oTarget));
                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
@@ -130,19 +128,18 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             {
                 //Fire cast spell at event for the specified target
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_HEALING_CIRCLE, FALSE));
-                nHP = d8();
+                nHP = d8() + nCasterLvl;
                 //Enter Metamagic conditions
                 int iBlastFaith = BlastInfidelOrFaithHeal(OBJECT_SELF, oTarget, DAMAGE_TYPE_POSITIVE, FALSE);
                 if (nMetaMagic & METAMAGIC_MAXIMIZE || iBlastFaith)
                 {
-                    nHP = 8;//Damage is at max
+                    nHP = 8 + nCasterLvl;//Damage is at max
                 }
                 if ((nMetaMagic & METAMAGIC_EMPOWER))
                 {
                     nHP = nHP + (nHP/2); //Damage/Healing is +50%
                 }
                 //Set healing effect
-                nHP = nHP + nCasterLvl;
                 if (GetLevelByClass(CLASS_TYPE_HEALER, OBJECT_SELF))
                     nHP += GetAbilityModifier(ABILITY_CHARISMA, OBJECT_SELF);
                 eHeal = EffectHeal(nHP);

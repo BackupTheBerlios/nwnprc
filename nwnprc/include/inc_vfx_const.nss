@@ -35,7 +35,6 @@ const int VFX_IMP_PULSE_BOMB            = 469;
 const int VFX_IMP_SILENCE_NO_SOUND      = 470;
 
 const int VFX_BEAM_FLAME                = 444;
-const int VFX_BEAM_DISINTEGRATE         = 447;
 
 const int VFX_DUR_GHOSTLY_PULSE_QUICK   = 295;
 const int VFX_DUR_PROT_ACIDSHIELD       = 448;

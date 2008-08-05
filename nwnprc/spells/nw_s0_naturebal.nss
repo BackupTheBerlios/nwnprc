@@ -51,7 +51,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     effect eNature = EffectVisualEffect(VFX_FNF_NATURES_BALANCE);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
 
-    int nRand;
+    int nRand, nNumDice;
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nCasterLevel = CasterLvl;
     //Determine spell duration as an integer for later conversion to Rounds, Turns or Hours.
@@ -68,6 +68,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     if ((nMetaMagic & METAMAGIC_EXTEND))
     {
         nDuration = nDuration *2;   //Duration is +100%
+    }
+    nNumDice = nCasterLevel / 5;
+    if(nNumDice == 0)
+    {
+        nNumDice = 1;
     }
     object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, GetLocation(OBJECT_SELF), FALSE);
     //Cycle through the targets within the spell shape until an invalid object is captured.
@@ -105,16 +110,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
                 //Check for saving throw
                 if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (nDC)))
                 {
-                      nCasterLevel /= 5;
-                      if(nCasterLevel == 0)
-                      {
-                        nCasterLevel = 1;
-                      }
-                      nRand = d4(nCasterLevel);
+                    nRand = d4(nNumDice);
                       //Enter Metamagic conditions
                       if ((nMetaMagic & METAMAGIC_MAXIMIZE))
                       {
-                         nRand = 4 * nCasterLevel;//Damage is at max
+                         nRand = 4 * nNumDice;//Damage is at max
                       }
                       else if ((nMetaMagic & METAMAGIC_EMPOWER))
                       {

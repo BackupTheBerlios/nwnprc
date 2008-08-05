@@ -46,6 +46,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
 
     //Declare major variables
+    string sAOETag;
     object oCaster = OBJECT_SELF;
     
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
@@ -76,7 +77,19 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     {
         if (GetObjectType(oTarget) == OBJECT_TYPE_AREA_OF_EFFECT)
         {
-            DestroyObject(oTarget);
+            // 1.69 change
+            // Gust of wind should only destroy "cloud/fog like" area of effect spells.
+            sAOETag = GetTag(oTarget);
+            if ( sAOETag == "VFX_PER_FOGACID" ||
+                 sAOETag == "VFX_PER_FOGKILL" ||
+                 sAOETag == "VFX_PER_FOGBEWILDERMENT" ||
+                 sAOETag == "VFX_PER_FOGSTINK" ||
+                 sAOETag == "VFX_PER_FOGFIRE" ||
+                 sAOETag == "VFX_PER_FOGMIND" ||
+                 sAOETag == "VFX_PER_CREEPING_DOOM")
+            {
+                DestroyObject(oTarget);
+            }
         }
         else
         if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))

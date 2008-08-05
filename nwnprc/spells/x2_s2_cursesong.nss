@@ -259,7 +259,7 @@ void main()
         nAC = 3;
         nSkill = 2;
     }
-    else if(nPerform >= 18 && nLevel >= 12)
+    else if(nPerform >= 18 && nLevel >= 11)
     {
         nAttack = 2;
         nDamage = 2;
@@ -379,7 +379,7 @@ void main()
         if(spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE, OBJECT_SELF))
         {
              // * GZ Oct 2003: If we are deaf, we do not have negative effects from curse song
-            if (!GetHasEffect(EFFECT_TYPE_DEAF,oTarget))
+            if (!GetHasEffect(EFFECT_TYPE_SILENCE,oTarget) && !GetHasEffect(EFFECT_TYPE_DEAF,oTarget))
             {
                 RemoveSongEffects(GetSpellId(),OBJECT_SELF,oTarget);
                 int nRace = MyPRCGetRacialType(oTarget);

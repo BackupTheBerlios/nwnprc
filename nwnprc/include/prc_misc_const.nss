@@ -141,12 +141,12 @@ const int POISON_RAVAGE_UNICORN_BLOOD           = 146;
 //:: Skill Const
 //:://////////////////////////////////////////////
 
-const int SKILL_IAIJUTSU_FOCUS  = 27;
 const int SKILL_JUMP            = 28;
 const int SKILL_TRUESPEAK       = 29;
 const int SKILL_SENSE_MOTIVE    = 30;
 const int SKILL_MARTIAL_LORE    = 31;
 const int SKILL_BALANCE         = 32;
+const int SKILL_IAIJUTSU_FOCUS  = 33; // moved for ride
 
 //:://////////////////////////////////////////////
 //:: Size Const

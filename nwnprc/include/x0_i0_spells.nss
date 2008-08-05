@@ -715,7 +715,11 @@ void DoMissileStorm(int nD6Dice, int nCap, int nSpell, int nMIRV = VFX_IMP_MIRV,
         if (spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE, OBJECT_SELF) && (oTarget != OBJECT_SELF))
         {
             // GZ: You can only fire missiles on visible targets
-            if (GetObjectSeen(oTarget,OBJECT_SELF))
+            // 1.69 change
+            // If the firing object is a placeable (such as a projectile trap),
+            // we skip the line of sight check as placeables can't "see" things.
+            if ( ( GetObjectType(OBJECT_SELF) == OBJECT_TYPE_PLACEABLE ) ||
+                GetObjectSeen(oTarget,OBJECT_SELF))
             {
                 nEnemies++;
             }
@@ -748,7 +752,9 @@ void DoMissileStorm(int nD6Dice, int nCap, int nSpell, int nMIRV = VFX_IMP_MIRV,
     while (GetIsObjectValid(oTarget) && nCnt <= nEnemies)
     {
         // * caster cannot be harmed by this spell
-        if (spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE, OBJECT_SELF) && (oTarget != OBJECT_SELF) && (GetObjectSeen(oTarget,OBJECT_SELF)))
+        if (spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE, OBJECT_SELF) && (oTarget != OBJECT_SELF) && 
+            (( GetObjectType(OBJECT_SELF) == OBJECT_TYPE_PLACEABLE ) || 
+            (GetObjectSeen(oTarget,OBJECT_SELF))))
         {
                 //Fire cast spell at event for the specified target
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, nSpell));
@@ -972,6 +978,7 @@ int CanCreatureBeDestroyed(object oTarget)
 }
 
 //*GZ: 2003-07-23. honor critical and weapon spec
+// Updated: 02/14/2008 CraigW - Added support for Epic Weapon Specialization.
 // nCrit -
 
 int ArcaneArcherDamageDoneByBow(int bCrit = FALSE, object oUser = OBJECT_SELF)
@@ -979,6 +986,7 @@ int ArcaneArcherDamageDoneByBow(int bCrit = FALSE, object oUser = OBJECT_SELF)
     object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND);
     int nDamage;
     int bSpec = FALSE;
+    int bEpicSpecialization = FALSE;
 
     if (GetIsObjectValid(oItem) == TRUE)
     {
@@ -989,6 +997,10 @@ int ArcaneArcherDamageDoneByBow(int bCrit = FALSE, object oUser = OBJECT_SELF)
             {
               bSpec = TRUE;
             }
+            if (GetHasFeat(FEAT_EPIC_WEAPON_SPECIALIZATION_LONGBOW,oUser))
+            {
+              bEpicSpecialization = TRUE;
+            }
         }
         else
         if (GetBaseItemType(oItem) == BASE_ITEM_SHORTBOW)
@@ -997,6 +1009,10 @@ int ArcaneArcherDamageDoneByBow(int bCrit = FALSE, object oUser = OBJECT_SELF)
             if (GetHasFeat(FEAT_WEAPON_SPECIALIZATION_SHORTBOW,oUser))
             {
               bSpec = TRUE;
+            }
+            if (GetHasFeat(FEAT_EPIC_WEAPON_SPECIALIZATION_SHORTBOW,oUser))
+            {
+              bEpicSpecialization = TRUE;
             }
         }
         else
@@ -1014,6 +1030,10 @@ int ArcaneArcherDamageDoneByBow(int bCrit = FALSE, object oUser = OBJECT_SELF)
     if (bSpec == TRUE)
     {
         nDamage +=2;
+    }
+    if ( bEpicSpecialization == TRUE )
+    {
+        nDamage +=4;
     }
     if (bCrit == TRUE)
     {

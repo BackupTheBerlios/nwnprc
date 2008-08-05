@@ -161,7 +161,6 @@ int GetSlashingWeapon(object oItem)
       || (nItem == 322) //CEP goad
       || (nItem == 323) //CEP windfirewheel
       || (nItem == 324) //CEP maugdoublesword
-      || (nItem == 300) //CEP Trident
 
       )
    {
@@ -219,7 +218,9 @@ int GetMeleeWeapon(object oItem)
       (nItem == BASE_ITEM_SHORTSWORD) ||
       (nItem == BASE_ITEM_WARHAMMER)  ||
       (nItem == BASE_ITEM_WHIP)  ||
-      (nItem == BASE_ITEM_DWARVENWARAXE)
+      (nItem == BASE_ITEM_DWARVENWARAXE) ||
+      (nItem == BASE_ITEM_MAGICSTAFF) || // 1.69 changes
+      (nItem == BASE_ITEM_TRIDENT)
       || (nItem == 300) //CEP Trident
       || (nItem == 303) //CEP Sai
       || (nItem == 304) //CEP nunchaku
@@ -237,7 +238,6 @@ int GetMeleeWeapon(object oItem)
       || (nItem == 322) //CEP goad
       || (nItem == 323) //CEP windfirewheel
       || (nItem == 324) //CEP maugdoublesword
-      || (nItem == 300) //CEP Trident
       )
    {
         return TRUE;

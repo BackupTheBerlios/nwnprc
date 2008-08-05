@@ -165,7 +165,7 @@ string SetItemName(string sName);
 //returns a script to set description
 //for items this is unidentified description
 //use SetIdentifiedDescription for an identified description
-string SetDescription(string sDescription);
+string LetoSetDescription(string sDescription);
 
 //returns a script to set an identified description
 //only works with items
@@ -365,7 +365,7 @@ string SetItemName(string sName)
     return LetoSet("LocalizedName", sName, "locstring");
 }
 
-string SetDescription(string sDescription)
+string LetoSetDescription(string sDescription)
 {
 //phoenix
 //<gff:set 'Description' <qq:A mighty warrior of the realm.>>

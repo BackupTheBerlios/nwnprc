@@ -18,7 +18,21 @@
 //:: Created On: 2003-06-04
 //:: Updated On: 2003-10-25
 //:://////////////////////////////////////////////
+//:: Modified By: Deva Winblood
+//:: Modified Date: January 15th-16th, 2008
+//:://////////////////////////////////////////////
+/*
+    Modified to insure no shapeshifting spells are castable upon
+    mounted targets.  This prevents problems that can occur due
+    to dismounting after shape shifting, or other issues that can
+    occur due to preserved appearances getting out of synch.
 
+    This can additional check can be disabled by setting the variable
+    X3_NO_SHAPESHIFT_SPELL_CHECK to 1 on the module object.  If this
+    variable is set then this script will function as it did prior to
+    this modification.
+
+*/
 
 const int X2_EVENT_CONCENTRATION_BROKEN = 12400;
 
@@ -119,6 +133,7 @@ int PRCGetUserSpecificSpellScriptFinished();
 //#include "x2_inc_itemprop" - Inherited from x2_inc_craft
 #include "prc_alterations"
 #include "x2_inc_craft"
+#include "x3_inc_horse"
 #include "prc_inc_spells"
 //#include "prc_inc_combat"
 #include "inc_utility"
@@ -1079,6 +1094,19 @@ void X2DoBreakConcentrationCheck()
     }
 }
 
+//------------------------------------------------------------------------------
+// This function will return TRUE if the spell that is cast is a shape shifting
+// spell.
+//------------------------------------------------------------------------------
+int X3ShapeShiftSpell(object oTarget)
+{ // PURPOSE: Return TRUE if a shape shifting spell was cast at oTarget
+    int nSpellID=GetSpellId();
+    string sUp=GetStringUpperCase(Get2DAString("x3restrict","SHAPESHIFT", nSpellID));
+    if (sUp=="YES") return TRUE;
+    return FALSE;
+} // X3ShapeShiftSpell()
+
+
 int CounterspellExploitCheck()
 {
     if(GetCurrentAction(OBJECT_SELF) ==  ACTION_COUNTERSPELL)
@@ -1137,6 +1165,24 @@ int X2PreSpellCastCode2()
 
     DeleteLocalInt(oCaster, "SpellConc"); // Something to do with Drangosong Lyrist? - Ornedan
     nContinue = !ExecuteScriptAndReturnInt("prespellcode", oCaster);
+    // 1.69 change
+   //---------------------------------------------------------------------------
+   // This small addition will check to see if the target is mounted and the
+   // spell is therefor one that should not be permitted.
+   //---------------------------------------------------------------------------
+   if (!GetLocalInt(GetModule(),"X3_NO_SHAPESHIFT_SPELL_CHECK"))
+   { // do check for abort due to being mounted check
+       if (HorseGetIsMounted(oTarget)&&X3ShapeShiftSpell(oTarget))
+       { // shape shifting not allowed while mounted
+           if(GetIsPC(oTarget))
+           {
+               FloatingTextStrRefOnCreature(111982,oTarget,FALSE);
+           }
+           return FALSE;
+       } // shape shifting not allowed while mounted
+   } // do check for abort due to being mounted check
+
+
 
     //---------------------------------------------------------------------------
     // This stuff is only interesting for player characters we assume that use

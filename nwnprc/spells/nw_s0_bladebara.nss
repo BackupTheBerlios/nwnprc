@@ -65,10 +65,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         //Make SR Check
         if (!PRCDoResistSpell(aoeCreator, oTarget,nPenetr) )
         {
-            if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, (PRCGetSaveDC(oTarget,aoeCreator))))
-            {
-                nDamage = nDamage/2;
-            }
+            // 1.69 change
+            //Adjust damage according to Reflex Save, Evasion or Improved Evasion
+            nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, PRCGetSaveDC(oTarget,aoeCreator),SAVING_THROW_TYPE_SPELL);
+
             //Set damage effect
             eDam = PRCEffectDamage(oTarget, nDamage, DAMAGE_TYPE_SLASHING);
             //Apply damage and VFX

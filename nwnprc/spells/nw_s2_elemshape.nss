@@ -10,8 +10,23 @@
 //:: Created By: Preston Watamaniuk
 //:: Created On: Jan 22, 2002
 //:://////////////////////////////////////////////
+//:: Modified By: Deva Winblood
+//:: Modified Date: January 15th-16th, 2008
+//:://////////////////////////////////////////////
+/*
+    Modified to insure no shapeshifting spells are castable upon
+    mounted targets.  This prevents problems that can occur due
+    to dismounting after shape shifting, or other issues that can
+    occur due to preserved appearances getting out of synch.
 
+    This can additional check can be disabled by setting the variable
+    X3_NO_SHAPESHIFT_SPELL_CHECK to 1 on the module object.  If this
+    variable is set then this script will function as it did prior to
+    this modification.
 
+*/
+
+//#include "x3_inc_horse"
 #include "prc_alterations"
 
 #include "pnp_shft_poly"
@@ -27,6 +42,14 @@ void main()
     int nPoly;
     int nDuration = GetLevelByClass(CLASS_TYPE_DRUID);
     int bElder = FALSE;
+    //if (!GetLocalInt(GetModule(),"X3_NO_SHAPESHIFT_SPELL_CHECK"))
+    // { // check to see if abort due to being mounted
+        // if (HorseGetIsMounted(oTarget))
+        // { // abort
+            // if (GetIsPC(oTarget)) FloatingTextStrRefOnCreature(111982,oTarget,FALSE);
+                // return;
+        // } // abort
+    // } // check to see if abort due to being mounted
     if(GetLevelByClass(CLASS_TYPE_DRUID) >= 20)
     {
         bElder = TRUE;

@@ -1,0 +1,26 @@
+2008-08-04
+==========
+- prc's PDK constant changed to CLASS_TYPE_PRC_PDK
+- references all changed to use it
+- skills.2da fully updated to 1.69 (ride is at 27, iaijutsu focus at 33)
+- inc_letocommands: SetDescription() changed to LetoSetDescription()
+- iaijitsu focus, ride updated in cls_skill*** (phantom's stuff)
+- balance and sense motive added to cls_skill*** from wojtekpod's list plus fox's post
+- classes corrected to use the cls_skill_sol 2da for soldier of light
+- added script diffs to user directory
+- updated scripts: nw_c2_default7, nw_s0_healcirc, nw_s0_naturebal, nw_s0_negburst, 
+  nw_s2_elemshape, nw_s2_wildshape, x0_s0_gustwind, x0_s0_udetfoe, x2_s2_cursesong, x2_s2_wildshape
+- updated includes: x0_i0_spells, x2_i0_spells, x2_inc_spellhook
+
+NOTE: X3ShapeShiftSpell() in x2_inc_spellhook needs other things adding to the 2da it references, plus 2da -> cache?
+      nw_s2_elemshape, nw_s2_wildshape, x2_s2_wildshape won't compile with the horse stuff
+
+
+2008-08-06
+==========
+
+- PRCHorseGetIsMounted() added to duplicate HorseGetIsMounted() without including x3_inc_horse 
+  because of circular includes
+- mount checks added to shifter includes and polymorph spells that use ShifterCheck() 
+
+NOTE: hostile poly spells dont seem to use ShifterCheck(), might need to do something with those

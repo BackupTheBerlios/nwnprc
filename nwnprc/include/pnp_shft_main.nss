@@ -44,6 +44,17 @@ int GetIsCreatureHarmless(object oCreature);
 // based on the players RACIAL type
 int GetTrueForm(object oPC);
 
+/**
+* Checks if the target is mounted by checking the bX3_IS_MOUNTED variable (Bioware's default).
+* A duplicate of Bioware's HorseGetIsMounted() script with no changes. From x3_inc_horse.
+* Here because it's called most places ShifterCheck() is called, also added to CanShift()
+* Bioware's one not used to avoid circular include hell
+* @param oTarget
+* @return TRUE if oTarget is mounted
+*/
+int PRCHorseGetIsMounted(object oTarget);
+
+
 //is inventory full if yes then CanShift = false else CanShift = true
 int CanShift(object oPC);
 
@@ -128,12 +139,28 @@ void StoreAppearance(object oPC)
     }
 }
 
+int PRCHorseGetIsMounted(object oTarget)
+{ // PURPOSE: Return whether oTarget is mounted
+    if (GetObjectType(oTarget)==OBJECT_TYPE_CREATURE)
+    { // valid parameter
+        if (GetPersistantLocalInt(oTarget,"bX3_IS_MOUNTED")) return TRUE;
+    } // valid parameter
+    return FALSE;
+} // HorseGetIsMounted()
 
 int CanShift(object oPC)
 {
 
 
     int iOutcome = FALSE;
+    // stop if mounted
+    if(PRCHorseGetIsMounted(oPC))
+    {
+        // bio default poly floaty text
+        // "You cannot shapeshift while mounted."
+        if (GetIsPC(oPC)) FloatingTextStrRefOnCreature(111982,oPC,FALSE);
+        return iOutcome;
+    }
 
     if (GetLocalInt(oPC, "shifting") || GetPersistantLocalInt(oPC, "nPCShifted"))
     {

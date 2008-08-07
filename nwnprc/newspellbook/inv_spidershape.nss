@@ -50,6 +50,15 @@ void main()
     //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, INVOKE_SPIDER_SHAPE, FALSE));
 
+    // abort if mounted
+    if (!GetLocalInt(GetModule(),"X3_NO_SHAPESHIFT_SPELL_CHECK"))
+    { // check to see if abort due to being mounted
+        if (PRCHorseGetIsMounted(oTarget))
+        { // abort
+            if (GetIsPC(oTarget)) FloatingTextStrRefOnCreature(111982,oTarget,FALSE);
+              return;
+        } // abort
+    } // check to see if abort due to being mounted
 	//this command will make shore that polymorph plays nice with the shifter
 	ShifterCheck(oTarget);
 	

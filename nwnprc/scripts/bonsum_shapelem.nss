@@ -29,6 +29,16 @@ void main()
        iPoly = POLYMORPH_TYPE_ELDER_WATER_ELEMENTAL;
     }
 
+    // abort if mounted
+    if (!GetLocalInt(GetModule(),"X3_NO_SHAPESHIFT_SPELL_CHECK"))
+    { // check to see if abort due to being mounted
+        if (PRCHorseGetIsMounted(OBJECT_SELF))
+        { // abort
+            if (GetIsPC(OBJECT_SELF)) FloatingTextStrRefOnCreature(111982,OBJECT_SELF,FALSE);
+              return;
+        } // abort
+    } // check to see if abort due to being mounted
+    
     //this command will make shore that polymorph plays nice with the shifter
     ShifterCheck(OBJECT_SELF);
 

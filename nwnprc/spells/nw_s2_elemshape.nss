@@ -42,14 +42,15 @@ void main()
     int nPoly;
     int nDuration = GetLevelByClass(CLASS_TYPE_DRUID);
     int bElder = FALSE;
-    //if (!GetLocalInt(GetModule(),"X3_NO_SHAPESHIFT_SPELL_CHECK"))
-    // { // check to see if abort due to being mounted
-        // if (HorseGetIsMounted(oTarget))
-        // { // abort
-            // if (GetIsPC(oTarget)) FloatingTextStrRefOnCreature(111982,oTarget,FALSE);
-                // return;
-        // } // abort
-    // } // check to see if abort due to being mounted
+    if (!GetLocalInt(GetModule(),"X3_NO_SHAPESHIFT_SPELL_CHECK"))
+    { // check to see if abort due to being mounted
+    if (PRCHorseGetIsMounted(oTarget))
+        { // abort
+            if (GetIsPC(oTarget)) FloatingTextStrRefOnCreature(111982,oTarget,FALSE);
+                return;
+        } // abort
+    } // check to see if abort due to being mounted
+    
     if(GetLevelByClass(CLASS_TYPE_DRUID) >= 20)
     {
         bElder = TRUE;

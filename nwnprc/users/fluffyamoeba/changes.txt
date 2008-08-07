@@ -24,3 +24,8 @@ NOTE: X3ShapeShiftSpell() in x2_inc_spellhook needs other things adding to the 2
 - mount checks added to shifter includes and polymorph spells that use ShifterCheck() 
 
 NOTE: hostile poly spells dont seem to use ShifterCheck(), might need to do something with those
+
+2008-08-07
+==========
+
+- feat.2da done

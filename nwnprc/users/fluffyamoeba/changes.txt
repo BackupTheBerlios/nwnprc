@@ -29,3 +29,8 @@ NOTE: hostile poly spells dont seem to use ShifterCheck(), might need to do some
 ==========
 
 - feat.2da done
+
+2008-08-08
+==========
+
+- iprp_feat.2da done, (des_craft_spells.2da, des_craft_scrolls done via scroll maker)

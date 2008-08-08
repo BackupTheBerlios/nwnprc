@@ -147,6 +147,7 @@ const int SKILL_SENSE_MOTIVE    = 30;
 const int SKILL_MARTIAL_LORE    = 31;
 const int SKILL_BALANCE         = 32;
 const int SKILL_IAIJUTSU_FOCUS  = 33; // moved for ride
+const int SKILL_CRAFT_ALCHEMY   = 34;
 
 //:://////////////////////////////////////////////
 //:: Size Const

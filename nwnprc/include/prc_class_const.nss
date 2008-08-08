@@ -121,7 +121,6 @@ const int CLASS_TYPE_MARSHAL                 = 59;
 const int CLASS_TYPE_CONTEMPLATIVE           = 215;
 const int CLASS_TYPE_BLOOD_MAGUS             = 153;
 const int CLASS_TYPE_RUNECASTER              = 216;
-const int CLASS_TYPE_PRC_PDK                 = 157;
 const int CLASS_TYPE_LASHER                  = 160;
 const int CLASS_TYPE_WARCHIEF                = 217;
 const int CLASS_TYPE_WAYFARER_GUIDE          = 142;

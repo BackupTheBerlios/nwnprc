@@ -7,7 +7,7 @@
 void main()
 {
 	object oPDK = OBJECT_SELF;
-	int nCount = GetLevelByClass(CLASS_TYPE_PRC_PDK, oPDK) + GetAbilityModifier(ABILITY_CHARISMA, oPDK);
+	int nCount = GetLevelByClass(CLASS_TYPE_PDK, oPDK) + GetAbilityModifier(ABILITY_CHARISMA, oPDK);
 	
 	int nHP = d10(2);
 	effect eHP = EffectTemporaryHitpoints(nHP);

@@ -17,7 +17,7 @@ void main()
     object oPC = OBJECT_SELF;
     object oTarget = PRCGetSpellTargetObject();
     int nRace = MyPRCGetRacialType(oTarget);
-    int nClass = GetLevelByClass(CLASS_TYPE_PRC_PDK, oPC);
+    int nClass = GetLevelByClass(CLASS_TYPE_PDK, oPC);
     int nDur = nClass * 2;
     int nBonus = 2;
 

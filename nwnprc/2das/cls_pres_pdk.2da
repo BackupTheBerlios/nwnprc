@@ -8,3 +8,5 @@
 4 Intimidate  SKILL   24           1         
 5 ScriptVar   VAR     PRC_AllowPDK 0         
 6 Leadership  FEAT    4365         ****      
+6   MountedCom   FEAT     1087          ****
+7   Ride         SKILL    27            2

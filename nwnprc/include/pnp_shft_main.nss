@@ -143,7 +143,7 @@ int PRCHorseGetIsMounted(object oTarget)
 { // PURPOSE: Return whether oTarget is mounted
     if (GetObjectType(oTarget)==OBJECT_TYPE_CREATURE)
     { // valid parameter
-        if (GetPersistantLocalInt(oTarget,"bX3_IS_MOUNTED")) return TRUE;
+        if (GetPersistantLocalInt(oTarget,"bX3ISMOUNTED")) return TRUE;
     } // valid parameter
     return FALSE;
 } // HorseGetIsMounted()

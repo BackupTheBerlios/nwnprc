@@ -36824,13 +36824,6 @@ Huge - 1d6
 Gigantic - 1d8
 Colossal - 2d6</entry>
   <entry id="54990" lang="en" sex="m">Draconic Tail</entry>
-  <entry id="54991" lang="en" sex="m">At 17nd level, a dragon disciple grows a tail that can be used to make a natural attack with, if of large size or bigger. You can use your tail slap in addition to any weapons wielding in your hands.
-
-Size - Damage
-Large - 1d6
-Huge - 1d8
-Gigantic - 2d6
-Colossal - 3d6</entry>
   <entry id="54991" lang="en" sex="m">Epic Spellcasting</entry>
   <entry id="54992" lang="en" sex="m">Type of Feat: Epic
 Prerequisite: Spellcraft 24 ranks, Lore 24 ranks, ability to cast 9th-level arcane or divine spells
@@ -48924,4 +48917,51 @@ Description: This allows the character to turn undead as a cleric of the same le
   <entry id="70020" lang="en" sex="m">Feat Type:  Template Feat
 
 Description: This allows the character to see in the dark.</entry>
+  <entry id="70021" lang="en" sex="m">Alchemy</entry>
+  <entry id="70022" lang="en" sex="m">Ability: Intelligence.
+Requires Training: no.
+Classes: All.
+
+A successful check allows a character to perform feats of alchemy.
+
+Use: Automatic.</entry>
+  <entry id="70023" lang="en" sex="m">Master Alchemist</entry>
+  <entry id="70024" lang="en" sex="m">Master Alchemists</entry>
+  <entry id="70025" lang="en" sex="m">master alchemists</entry>
+  <entry id="70026" lang="en" sex="m">The master alchemist is a spellcaster who specializes in producing potions and elixirs that reproduce the effects of spells of 4th level or higher. Even spellcasters who dabble in alchemy gain the ability to improve the rate at which they can produce potions, which for adventuring spellcasters can reduce the amount of time they must spend preparing for their next quest. At its highest levels, the alchemist prestige class allows spellcasters to create potions that reproduce some of the most powerful magical effects available. 
+
+Requirements:
+
+Skills: Alchemy 10 ranks, Spellcraft 10 ranks.
+Feats: Brew Potion, Magical Artisan, Skill Focus (Alchemy).
+Spellcasting: Ability to cast 4th level arcane spells.
+
+Skill points at each level: 2 + Int modifier.
+
+Class Features
+Spells per Day: A master alchemist’s training focuses on magic. Thus, when a character gains a new level of master alchemist, she gains new spells per day as if she had also gained a level in whatever arcane spellcasting class she belonged to before she added the prestige class.
+
+1st: Brew 2/day: The master alchemist has perfected the art of brewing potions. As such, she can brew two potions in one day(an 8-hour period) instead of one.
+
+2nd: Brew Potion (4th): Beginning at 2nd level, the master alchemist’s advanced study of alchemy and magic allows her to brew potions of 4th-level spells. 
+
+3rd: Brew Potion (5th): The master alchemist can brew potions of 5th-level spells.
+
+4th: Brew Potion (6th): The master alchemist can brew potions of 6th-level spells.
+
+5th: Brew 3/day: The master alchemist may brew three potions in one day.
+
+7th: Brew Potion (7th): The master alchemist can brew potions of 7th-level spells.
+
+8th: Brew Potion (8th): The master alchemist can brew potions of 8th-level spells.
+
+9th: Brew 4/day: The master alchemist may brew four potions in one day.
+
+10th: Brew Potion (9th): The master alchemist can brew potions of 9th-level spells.</entry>
+  <entry id="70027" lang="en" sex="m">Skill Focus: Alchemy
+</entry>
+  <entry id="70028" lang="en" sex="m">Type of Feat: General
+Prerequisite: Alchemy rank 1.
+Specifics: You gain a +3 bonus to Alchemy.
+Use: Automatic.</entry>
 </tlk>

@@ -579,27 +579,18 @@ Specifics: The character gains a natural +2 bonus to armor class.
 
 Use: Automatic.</entry>
   <entry id="20400" lang="en" sex="m">++++++++++ ACP Styles ++++++++++</entry>
-  <entry id="20401" lang="en" sex="m">Kensai</entry>
+    <entry id="20401" lang="en" sex="m">Kensai</entry>
   <entry id="20402" lang="en" sex="m">Assassin</entry>
   <entry id="20403" lang="en" sex="m">Heavy</entry>
   <entry id="20404" lang="en" sex="m">Fencing</entry>
-  <entry id="20405" lang="en" sex="m">Varied Fighting Styles</entry>
-  <entry id="20406" lang="en" sex="m">Type of Feat: Special.
-Prerequisite: Level 1.
-
-Specifics: You have learned to fight with your weapons in different ways. A character with this feat can, assuming he does not have an unusual phenotype, change his fighting style every so often (90 seconds).
-Use: Selected.</entry>
-  <entry id="20407" lang="en" sex="m">Fighting Style: Kensai.</entry>
-  <entry id="20408" lang="en" sex="m">You prepare to skillfully wield your blades like a Kensai.</entry>
-  <entry id="20409" lang="en" sex="m">Fighting Style: Assassin.</entry>
-  <entry id="20410" lang="en" sex="m">You prepare to stab your opponents in critical spots like an assassin.</entry>
-  <entry id="20411" lang="en" sex="m">Fighting Style: Heavy.</entry>
-  <entry id="20412" lang="en" sex="m">You heft your weapons and prepare for some power hitting.</entry>
-  <entry id="20413" lang="en" sex="m">Fighting Style: Fencing.</entry>
-  <entry id="20414" lang="en" sex="m">You prepare to goad your opponents into a mistake with your fencing style.</entry>
-  <entry id="20415" lang="en" sex="m">Fighting Style: Normal (Reset).</entry>
-  <entry id="20416" lang="en" sex="m">You prepare to fight normally once more.</entry>
-  <entry id="20417" lang="en" sex="m">&lt;CUSTOM0&gt; changes stance.</entry>
+  <entry id="20405" lang="en" sex="m">Katar/Claws</entry>
+  <entry id="20406" lang="en" sex="m">Arcane</entry>
+  <entry id="20407" lang="en" sex="m">Demon Blade</entry>
+  <entry id="20408" lang="en" sex="m">Warrior</entry>
+  <entry id="20409" lang="en" sex="m">Tiger Fang</entry>
+  <entry id="20410" lang="en" sex="m">Sun Fist</entry>
+  <entry id="20411" lang="en" sex="m">Dragon Palm</entry>
+  <entry id="20412" lang="en" sex="m">Bear's Claw</entry>
   <entry id="20500" lang="en" sex="m">Treant (DLA)</entry>
   <entry id="20501" lang="en" sex="m">Monodrone (CODI)</entry>
   <entry id="20502" lang="en" sex="m">Marut (CODI)</entry>

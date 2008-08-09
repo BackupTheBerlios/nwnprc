@@ -34,3 +34,6 @@ NOTE: hostile poly spells dont seem to use ShifterCheck(), might need to do some
 ==========
 
 - iprp_feat.2da done, (des_craft_spells.2da, des_craft_scrolls done via scroll maker)
+- baseitems.2da, cls_pres_wm.2da, visualeffects.2da, vfx_persistent.2da, polymorph.2da done
+- phenotype.2da has acpv4 phenos in
+- removed acp feat descriptions from tlk, added new acp pheno descriptions

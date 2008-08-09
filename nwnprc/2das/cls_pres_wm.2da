@@ -38,4 +38,5 @@
 34 WeapFocDWAxe          FEATOR  952        ****      
 35 WeapFocWhip           FEATOR  993        ****      
 36 WeaponFocus_Mindblade FEATOR  3602       ****      
-37 ScriptVar             VAR     X2_AllowWM 0         
+37 WeapFocTrident        FEATOR  1072       ****      
+38 ScriptVar             VAR     X2_AllowWM 0         

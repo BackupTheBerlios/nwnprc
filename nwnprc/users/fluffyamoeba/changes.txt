@@ -37,3 +37,10 @@ NOTE: hostile poly spells dont seem to use ShifterCheck(), might need to do some
 - baseitems.2da, cls_pres_wm.2da, visualeffects.2da, vfx_persistent.2da, polymorph.2da done
 - phenotype.2da has acpv4 phenos in
 - removed acp feat descriptions from tlk, added new acp pheno descriptions
+
+2008-08-09
+==========
+
+- added player tools and horse menu feat to all base classes 2da and run update_all_base_classes_feats.bat
+- added the weapon feats for tridents to the bio classes' cls_feat*** 2das (prc classes still to do)
+- run the resaver on all cls_feat*** 2das

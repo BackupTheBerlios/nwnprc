@@ -2701,6 +2701,30 @@ const int FEAT_EPIC_FIENDISH_RESILIENCE_VIII      = 7727;
 const int FEAT_EPIC_FIENDISH_RESILIENCE_IX        = 7728;
 const int FEAT_EPIC_FIENDISH_RESILIENCE_X         = 7729;
 
+//Master Alchemist and various crafting
+
+const int FEAT_SKILL_FOCUS_ALCHEMY                = 24000;
+const int FEAT_EPIC_SKILL_FOCUS_ALCHEMY           = 24001;
+const int FEAT_MAGICAL_ARTISAN_CRAFT_MAGIC_ARMS_AND_ARMOR = 24002;
+const int FEAT_MAGICAL_ARTISAN_CRAFT_ROD          = 24003;
+const int FEAT_MAGICAL_ARTISAN_CRAFT_STAFF        = 24004;
+const int FEAT_MAGICAL_ARTISAN_CRAFT_WAND         = 24005;
+const int FEAT_MAGICAL_ARTISAN_CRAFT_WONDROUS_ITEM        = 24006;
+const int FEAT_MAGICAL_ARTISAN_FORGE_RING         = 24007;
+const int FEAT_MAGICAL_ARTISAN_SCRIBE_SCROLL      = 24008;
+const int FEAT_MAGICAL_ARTISAN_ATTUNE_GEM         = 24009;
+const int FEAT_MAGICAL_ARTISAN_INSCRIBE_RUNE      = 24010;
+const int FEAT_MAGICAL_ARTISAN_BREW_POTION        = 24011;
+const int FEAT_BREW_2PERDAY                       = 24012;
+const int FEAT_BREW_3PERDAY                       = 24013;
+const int FEAT_BREW_4PERDAY                       = 24014;
+const int FEAT_BREW_POTION_4TH                    = 24015;
+const int FEAT_BREW_POTION_5TH                    = 24016;
+const int FEAT_BREW_POTION_6TH                    = 24017;
+const int FEAT_BREW_POTION_7TH                    = 24018;
+const int FEAT_BREW_POTION_8TH                    = 24019;
+const int FEAT_BREW_POTION_9TH                    = 24020;
+
 
 
 /*//////////////////////////////////////////////////

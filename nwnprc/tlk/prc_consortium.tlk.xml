@@ -579,7 +579,7 @@ Specifics: The character gains a natural +2 bonus to armor class.
 
 Use: Automatic.</entry>
   <entry id="20400" lang="en" sex="m">++++++++++ ACP Styles ++++++++++</entry>
-    <entry id="20401" lang="en" sex="m">Kensai</entry>
+  <entry id="20401" lang="en" sex="m">Kensai</entry>
   <entry id="20402" lang="en" sex="m">Assassin</entry>
   <entry id="20403" lang="en" sex="m">Heavy</entry>
   <entry id="20404" lang="en" sex="m">Fencing</entry>
@@ -48956,4 +48956,58 @@ Spells per Day: A master alchemist’s training focuses on magic. Thus, when a cha
 Prerequisite: Alchemy rank 1.
 Specifics: You gain a +3 bonus to Alchemy.
 Use: Automatic.</entry>
+  <entry id="70029" lang="en" sex="m">Epic Skill Focus: Alchemy</entry>
+  <entry id="70030" lang="en" sex="m">Type of Feat: General
+Prerequisite: Alchemy rank 20, Epic Character
+Specifics: You gain a +10 bonus to Alchemy.
+Use: Automatic.</entry>
+  <entry id="70031" lang="en" sex="m">Magical Artisan: Craft Magic Arms and Armor</entry>
+  <entry id="70032" lang="en" sex="m">Magical Artisan: Craft Rod</entry>
+  <entry id="70033" lang="en" sex="m">Magical Artisan: Craft Staff</entry>
+  <entry id="70034" lang="en" sex="m">Magical Artisan: Craft Wand</entry>
+  <entry id="70035" lang="en" sex="m">Magical Artisan: Craft Wonderous Item</entry>
+  <entry id="70036" lang="en" sex="m">Magical Artisan: Forge Ring</entry>
+  <entry id="70037" lang="en" sex="m">Magical Artisan: Scribe Scroll</entry>
+  <entry id="70038" lang="en" sex="m">Magical Artisan: Attune Gem</entry>
+  <entry id="70039" lang="en" sex="m">Magical Artisan: Inscribe Rune</entry>
+  <entry id="70040" lang="en" sex="m">Magical Artisan: Brew Potion</entry>
+  <entry id="70041" lang="en" sex="m">Type of Feat: General
+Prerequisite: Any Item Crafting Feat
+Description: When you make an item using the specified feat, you pay only 75% of the normal cost to create the item.</entry>
+  <entry id="70042" lang="en" sex="m">Brew 2x</entry>
+  <entry id="70043" lang="en" sex="m">Type of Feat: Class
+
+Description: You can use Brew Potion 2 times per day.</entry>
+  <entry id="70044" lang="en" sex="m">Brew 3x</entry>
+  <entry id="70045" lang="en" sex="m">Type of Feat: Class
+
+Description: You can use Brew Potion 3 times per day.</entry>
+  <entry id="70046" lang="en" sex="m">Brew 4x</entry>
+  <entry id="70047" lang="en" sex="m">Type of Feat: Class
+
+Description: You can use Brew Potion 4 times per day.</entry>
+  <entry id="70048" lang="en" sex="m">Brew Potion 4th</entry>
+  <entry id="70049" lang="en" sex="m">Type of Feat: Class
+
+Description: You can brew potions of spells up to level 4.</entry>
+  <entry id="70050" lang="en" sex="m">Brew Potion 5th</entry>
+  <entry id="70051" lang="en" sex="m">Type of Feat: Class
+
+Description: You can brew potions of spells up to level 5.</entry>
+  <entry id="70052" lang="en" sex="m">Brew Potion 6th</entry>
+  <entry id="70053" lang="en" sex="m">Type of Feat: Class
+
+Description: You can brew potions of spells up to level 6.</entry>
+  <entry id="70054" lang="en" sex="m">Brew Potion 7th</entry>
+  <entry id="70055" lang="en" sex="m">Type of Feat: Class
+
+Description: You can brew potions of spells up to level 7.</entry>
+  <entry id="70056" lang="en" sex="m">Brew Potion 8th</entry>
+  <entry id="70057" lang="en" sex="m">Type of Feat: Class
+
+Description: You can brew potions of spells up to level 8.</entry>
+  <entry id="70058" lang="en" sex="m">Brew Potion 9th</entry>
+  <entry id="70059" lang="en" sex="m">Type of Feat: Class
+
+Description: You can brew potions of spells up to level 9.</entry>
 </tlk>

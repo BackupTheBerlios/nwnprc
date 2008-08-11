@@ -249,3 +249,8 @@
 245 DevCrit_Mindblade                              3616      1    -1             0      
 246 Epic_WeaponFocus_Mindblade                     3618      1    -1             0      
 247 ImpCrit_Mindblade                              3614      1    -1             0      
+248 FEAT_WEAPON_FOCUS_TRIDENT                      1072      1    -1             0      
+249 FEAT_IMPROVED_CRITICAL_TRIDENT                 1074      1    -1             0      
+250 FEAT_EPIC_DEVASTATING_CRITICAL_TRIDENT         1075      1    -1             0      
+251 FEAT_EPIC_WEAPON_FOCUS_TRIDENT                 1076      1    -1             0      
+252 FEAT_EPIC_OVERWHELMING_CRITICAL_TRIDENT        1078      1    -1             0      

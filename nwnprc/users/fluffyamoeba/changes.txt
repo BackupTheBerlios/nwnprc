@@ -44,3 +44,17 @@ NOTE: hostile poly spells dont seem to use ShifterCheck(), might need to do some
 - added player tools and horse menu feat to all base classes 2da and run update_all_base_classes_feats.bat
 - added the weapon feats for tridents to the bio classes' cls_feat*** 2das (prc classes still to do)
 - run the resaver on all cls_feat*** 2das
+
+2008-08-11
+==========
+- added weapon feats for trident to PRC classes' cls_feat*** 2das (cls_feat_samur.2da, cls_feat_aber.2da, cls_feat_antipl.2da,
+  cls_feat_brage.2da, cls_feat_brawl.2da, cls_feat_chaban.2da, cls_feat_coc.2da, cls_feat_corup.2da, cls_feat_crea.2da,
+  cls_feat_wilder.2da, cls_feat_warmnd.2da, cls_feat_warchf.2da, cls_feat_vigil.2da, cls_feat_vassal.2da, cls_feat_urang.2da,
+  cls_feat_thaykt.2da, cls_feat_tempst.2da, cls_feat_cwsm.2da, cls_feat_swash.2da, cls_feat_dradev.2da, cls_feat_drag.2da,
+  cls_feat_drgshm.2da, cls_feat_drslyr.2da, cls_feat_duskbl.2da, cls_feat_eldkni.2da, cls_feat_favsol.2da,
+  cls_feat_fistra.2da, cls_feat_gian.2da, cls_feat_hextor.2da, cls_feat_hosp.2da, cls_feat_iaij.2da, cls_feat_kotmc.2da,
+  cls_feat_lgdr.2da, cls_feat_manat.2da, cls_feat_marsh.2da, cls_feat_mharp.2da, cls_feat_outs.2da, cls_feat_psion.2da,
+  cls_feat_psywar.2da, cls_feat_pyro.2da, cls_feat_rava.2da, cls_feat_sbheir.2da, cls_feat_scout.2da, cls_feat_shaman.2da,
+  cls_feat_shou.2da, cls_feat_sohei.2da, cls_feat_sol.2da, cls_feat_soulkn.2da, cls_feat_spells.2da)
+
+NOTE: Fist of Raziel needs sanctify martial strike: trident feat

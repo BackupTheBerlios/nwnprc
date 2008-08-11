@@ -183,3 +183,4 @@ const int CLASS_TYPE_ELDRITCH_DISCIPLE       = 184;
 const int CLASS_TYPE_ELDRITCH_THEURGE        = 185;
 const int CLASS_TYPE_DRAGON_DESCENDENT       = 252;
 const int CLASS_TYPE_ARTIFICER               = 94;
+const int CLASS_TYPE_MASTER_ALCHEMIST        = 229;

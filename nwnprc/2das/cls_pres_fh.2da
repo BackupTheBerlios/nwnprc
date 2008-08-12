@@ -43,5 +43,6 @@
 39 WeapFocDWAxe      FEATOR  952          ****      
 40 WeapFocWhip       FEATOR  993          ****      
 41 WeapFocMindblade  FEATOR  3602         ****      
-42 ScriptVar         VAR     PRC_AllowFH  0         
-43 ScriptVar         VAR     PRC_PrereqFH 0         
+42 WeapFocTrident    FEATOR  1072         ****      
+43 ScriptVar         VAR     PRC_AllowFH  0         
+44 ScriptVar         VAR     PRC_PrereqFH 0         

@@ -45,4 +45,5 @@
 41 ImpCrit_DwAxe     FEATOR  954           ****      
 42 ImpCrit_Whip      FEATOR  995           ****      
 43 ImpCrit_Mindblade FEATOR  3614          ****      
-44 ScriptVar         VAR     PRC_AllowLgDr 0         
+44 ImpCrit_Trident   FEATOR  1074          ****      
+45 ScriptVar         VAR     PRC_AllowLgDr 0         

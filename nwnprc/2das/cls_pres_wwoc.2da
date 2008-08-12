@@ -21,5 +21,6 @@
 17 ProfRapier  FEATOR  7924          ****      
 18 ProfScimtar FEATOR  7925          ****      
 19 ProfThrwAxe FEATOR  7931          ****      
-20 Spellcraft  SKILL   16            10        
-21 ScriptVar   VAR     PRC_AllowWWoC 0         
+20 ProfTrident FEATOR  7932          ****      
+21 Spellcraft  SKILL   16            10        
+22 ScriptVar   VAR     PRC_AllowWWoC 0         

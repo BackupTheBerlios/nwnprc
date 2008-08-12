@@ -2595,14 +2595,24 @@ itemproperty ConstructIP(int nType, int nSubTypeValue = 0, int nCostTableValue =
             ip = ItemPropertyPnPHolyAvenger();
             break;
         }
+        case ITEM_PROPERTY_MATERIAL:
+        {
+            ip = ItemPropertyMaterial(nCostTableValue);
+            break;
+        }
+        case ITEM_PROPERTY_QUALITY:
+        {
+            ip = ItemPropertyQuality(nCostTableValue);
+            break;
+        }
+        case ITEM_PROPERTY_ADDITIONAL:
+        {
+            ip = ItemPropertyAdditional(nCostTableValue);
+            break;
+        }
 
         //ROOM FOR MORE - 89 so far, need increase/decrease cost
         /*
-        case ITEM_PROPERTY_ABILITY_BONUS:
-        {
-            ip = ItemPropertyAbilityBonus(nSubTypeValue, nCostTableValue);
-            break;
-        }
         case ITEM_PROPERTY_ABILITY_BONUS:
         {
             ip = ItemPropertyAbilityBonus(nSubTypeValue, nCostTableValue);

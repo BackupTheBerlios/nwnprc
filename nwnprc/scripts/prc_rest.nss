@@ -201,6 +201,9 @@ void RestFinished(object oPC)
         //also need to remove spells of prohibited schools
     }
     
+    //Reset potions brewed
+    DeleteLocalInt(oPC, "PRC_POTIONS_BREWED");
+    
     //for Touch of Vitality point resetting
     ResetTouchOfVitality(oPC);
 

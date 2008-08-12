@@ -261,6 +261,25 @@ object CICraftBrewPotion(object oCreator, int nSpellID )
         return OBJECT_INVALID;
     }
     
+    //Uses per day
+    int nUsesAllowed;
+    
+    if(GetHasFeat(FEAT_BREW_4PERDAY,oCreator)) nUsesAllowed = 4;
+    
+    else if(GetHasFeat(FEAT_BREW_3PERDAY, oCreator)) nUsesAllowed = 3;
+    
+    else if(GetHasFeat(FEAT_BREW_2PERDAY, oCreator)) nUsesAllowed = 2;
+    
+    else nUsesAllowed = 1;
+    
+    int nUsed = GetLocalInt(oCreator, "PRC_POTIONS_BREWED");
+    
+    if(nUsed >= nUsesAllowed)
+    {
+            SendMessageToPC(oCreator, "You must rest before you can brew any more potions");
+            return OBJECT_INVALID;
+    }
+    
     int nCasterLevel = PRCGetCasterLevel();
     if(GetLocalInt(oCreator, "UsingImbueItem"))
     {
@@ -278,9 +297,12 @@ object CICraftBrewPotion(object oCreator, int nSpellID )
             AddItemProperty(DURATION_TYPE_PERMANENT,ipLevel,oTarget);
             itemproperty ipMeta = ItemPropertyCastSpellMetamagic(nSpellID, PRCGetMetaMagicFeat());
             AddItemProperty(DURATION_TYPE_PERMANENT,ipMeta,oTarget);
-        itemproperty ipDC = ItemPropertyCastSpellDC(nSpellID, PRCGetSaveDC(PRCGetSpellTargetObject(), OBJECT_SELF));
+            itemproperty ipDC = ItemPropertyCastSpellDC(nSpellID, PRCGetSaveDC(PRCGetSpellTargetObject(), OBJECT_SELF));
             AddItemProperty(DURATION_TYPE_PERMANENT,ipDC,oTarget);
         }
+        
+        //Increment usage
+        SetLocalInt(oCreator, "PRC_POTIONS_BREWED", nUsed++);
     }
     return oTarget;
 }
@@ -550,6 +572,16 @@ These dont work as IPs since they are hardcoded */
     int nPotionMaxLevel = GetPRCSwitch(X2_CI_BREWPOTION_MAXLEVEL);
     if(nPotionMaxLevel == 0)
         nPotionMaxLevel = 3;
+        
+    //Master Alchemist
+    
+    if(GetHasFeat(FEAT_BREW_POTION_9TH, oCaster)) nPotionMaxLevel = 9;
+    else if(GetHasFeat(FEAT_BREW_POTION_8TH, oCaster)) nPotionMaxLevel = 8;
+    else if(GetHasFeat(FEAT_BREW_POTION_7TH, oCaster)) nPotionMaxLevel = 7;
+    else if(GetHasFeat(FEAT_BREW_POTION_6TH, oCaster)) nPotionMaxLevel = 6;
+    else if(GetHasFeat(FEAT_BREW_POTION_5TH, oCaster)) nPotionMaxLevel = 5;
+    else if(GetHasFeat(FEAT_BREW_POTION_4TH, oCaster)) nPotionMaxLevel = 4;
+        
     if (nLevel > nPotionMaxLevel)
     {
         FloatingTextStrRefOnCreature(76416, oCaster);
@@ -572,6 +604,15 @@ These dont work as IPs since they are hardcoded */
     if(nCostModifier == 0)
         nCostModifier = 50;
     int nCost = CIGetCraftGPCost(nLevel, nCostModifier, PRC_BREW_POTION_CASTER_LEVEL);
+    
+    //Magical Artisan
+    if(GetHasFeat(FEAT_MAGICAL_ARTISAN_BREW_POTION, oCaster))
+    {
+            float fCost = IntToFloat(nCost);
+            float fDisc = fCost * 0.25;            
+            nCost = FloatToInt(fCost - fDisc);
+    }
+    
     float nExperienceCost = 0.04  * nCost; // xp = 1/25 of gp value
     int nGoldCost = nCost ;
 
@@ -667,6 +708,15 @@ int CICraftCheckScribeScroll(object oSpellTarget, object oCaster, int nID = 0)
     if(nCostModifier == 0)
         nCostModifier = 25;
     int nCost = CIGetCraftGPCost(nLevel, nCostModifier, PRC_SCRIBE_SCROLL_CASTER_LEVEL);
+    
+    //Magical Artisan
+    if(GetHasFeat(FEAT_MAGICAL_ARTISAN_SCRIBE_SCROLL, oCaster))
+    {
+            float fCost = IntToFloat(nCost);
+            float fDisc = fCost * 0.25;            
+            nCost = FloatToInt(fCost - fDisc);
+    }            
+    
     float fExperienceCost = 0.04 * nCost;
     int nGoldCost = nCost ;
 
@@ -830,6 +880,15 @@ These dont work as IPs since they are hardcoded */
     if(nCostMod == 0)
         nCostMod = 750;
     int nCost = CIGetCraftGPCost(nLevel, nCostMod, PRC_CRAFT_WAND_CASTER_LEVEL);
+    
+    //Magical Artisan
+    if(GetHasFeat(FEAT_MAGICAL_ARTISAN_CRAFT_WAND, oCaster))
+    {
+            float fCost = IntToFloat(nCost);
+            float fDisc = fCost * 0.25;            
+            nCost = FloatToInt(fCost - fDisc);
+    }           
+    
     float nExperienceCost = 0.04 * nCost;
     int nGoldCost = nCost;
 
@@ -962,6 +1021,15 @@ These dont work as IPs since they are hardcoded */
     int nLvlRow = IPGetIPConstCastSpellFromSpellID(nSpellID);
     int nCLevel = StringToInt(Get2DACache("iprp_spells","CasterLvl",nLvlRow));
     int nCost = CIGetCraftGPCost(nLevel, nCostMod, PRC_CRAFT_STAFF_CASTER_LEVEL);
+    
+    //Magical Artisan
+    if(GetHasFeat(FEAT_MAGICAL_ARTISAN_CRAFT_STAFF, oCaster))
+    {
+            float fCost = IntToFloat(nCost);
+            float fDisc = fCost * 0.25;            
+            nCost = FloatToInt(fCost - fDisc);
+    }            
+    
     //discount for second or 3+ spells
     if(nCount+1 == 2)
         nCost = (nCost*3)/4;
@@ -1132,6 +1200,15 @@ int InscribeRune()
 
     // Cost of the rune in gold and XP
     int nGoldCost = nSpellLevel * nCaster * nCharges * nMultiplier;
+    
+    //Magical Artisan
+    if(GetHasFeat(FEAT_MAGICAL_ARTISAN_INSCRIBE_RUNE, oCaster)) 
+    {
+            float fCost = IntToFloat(nGoldCost);
+            float fDisc = fCost * 0.25;            
+            nGoldCost = FloatToInt(fCost - fDisc);
+    }
+    
     int nXPCost = nGoldCost/25;
 
     FloatingTextStringOnCreature("Gold Cost: " + IntToString(nGoldCost), OBJECT_SELF, FALSE);
@@ -1279,8 +1356,8 @@ int AttuneGem()
         DoDebug("Checking for One Use Gems");
         // This check is used to clear up the one use Gems
         itemproperty ip = GetFirstItemProperty(oItem);
-    	while(GetIsItemPropertyValid(ip))
-    	{
+        while(GetIsItemPropertyValid(ip))
+        {
             if(GetItemPropertyType(ip) == ITEM_PROPERTY_CAST_SPELL)
             {
                 DoDebug("Gem can cast spells");
@@ -1293,7 +1370,7 @@ int AttuneGem()
                 }
             }
 
-    	ip = GetNextItemProperty(oItem);
+        ip = GetNextItemProperty(oItem);
         }
     }
 
@@ -1343,6 +1420,15 @@ int AttuneGem()
 
     // Cost of the Gem in gold and XP
     int nGoldCost = nSpellLevel * nCaster * nMultiplier;
+    
+    //Magical Artisan
+    if(GetHasFeat(FEAT_MAGICAL_ARTISAN_ATTUNE_GEM, oCaster))
+    {
+            float fCost = IntToFloat(nGoldCost);
+            float fDisc = fCost * 0.25;            
+            nGoldCost = FloatToInt(fCost - fDisc);
+    }
+    
     int nXPCost = nGoldCost/25;
 
     FloatingTextStringOnCreature("XP Cost: " + IntToString(nXPCost), OBJECT_SELF, FALSE);

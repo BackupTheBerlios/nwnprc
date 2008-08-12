@@ -48909,7 +48909,7 @@ Description: This allows the character to turn undead as a cleric of the same le
   <entry id="70020" lang="en" sex="m">Feat Type:  Template Feat
 
 Description: This allows the character to see in the dark.</entry>
-  <entry id="70021" lang="en" sex="m">Alchemy</entry>
+  <entry id="70021" lang="en" sex="m">Craft Alchemy</entry>
   <entry id="70022" lang="en" sex="m">Ability: Intelligence.
 Requires Training: no.
 Classes: All.

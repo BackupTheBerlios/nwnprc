@@ -58,3 +58,9 @@ NOTE: hostile poly spells dont seem to use ShifterCheck(), might need to do some
   cls_feat_shou.2da, cls_feat_sohei.2da, cls_feat_sol.2da, cls_feat_soulkn.2da, cls_feat_spells.2da)
 
 NOTE: Fist of Raziel needs sanctify martial strike: trident feat
+
+2008-08-12
+==========
+
+- added trident feats to cls_pres_*** that needed them (trident is martial as of 1.69)
+- iprp_spells.2da updated

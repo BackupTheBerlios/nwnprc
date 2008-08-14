@@ -137,7 +137,7 @@
 133  Hammer_of_the_Gods                1237     7         4         21000  76         0         1       1          iss_HammGods      
 134  Hammer_of_the_Gods                1238     12        4         36000  76         0         1       1          iss_HammGods      
 135  Hammer_of_the_Gods                1239     20        4         60000  76         0         1       1          iss_HammGods      
-136  Harm                              1240     11        6         49500  77         0         0       1          iss_Harm          
+136  Harm                              1240     11        6         49500  77         1         0       1          iss_Harm          
 137  Haste                             1241     5         3         11250  78         1         1       1          iss_Haste         
 138  Haste                             1242     10        3         22500  78         1         1       1          iss_Haste         
 139  Heal                              1243     11        6         49500  79         1         0       1          iss_Heal          
@@ -150,7 +150,7 @@
 146  Holy_Sword                        ****     ****      ****      ****   ****       ****      ****    ****       ****              
 147  Identify                          1251     3         2         4500   86         1         1       1          iss_Identify      
 148  Implosion                         1252     17        9         114750 87         0         0       1          iss_Implosion     
-149  Improved_Invisibility             1253     7         4         21000  88         0         1       1          iss_ImprInvis     
+149  Improved_Invisibility             1253     7         4         21000  88         1         1       1          iss_ImprInvis     
 150  Incendiary_Cloud                  1254     15        8         90000  89         0         0       1          iss_IncCloud      
 151  Invisibility                      1255     3         2         4500   90         1         1       1          iss_Invisib       
 152  Invisibility_Purge                1256     5         3         11250  91         1         1       1          iss_InvPurge      
@@ -241,7 +241,7 @@
 237  Resistance                        1341     5         1         3750   151        1         1       1          iss_Resis         
 238  Restoration                       1342     7         4         21000  152        1         1       1          iss_Restore       
 239  Resurrection                      1343     13        7         68250  153        1         0       1          iss_Resurrec      
-240  Sanctuary                         1344     2         1         1500   154        0         1       1          iss_Sanctuary     
+240  Sanctuary                         1344     2         1         1500   154        1         1       1          iss_Sanctuary     
 241  Scare                             1345     2         1         1500   155        0         1       1          iss_Scare         
 242  Searing_Light                     1346     5         3         11250  156        0         1       1          iss_SearLght      
 243  See_Invisibility                  1347     3         2         4500   157        1         1       1          iss_SeeInvis      
@@ -275,7 +275,7 @@
 271  Summon_Creature_VIII              1375     15        8         90000  182        0         0       1          iss_Summon8       
 272  Sunbeam                           1376     13        7         68250  183        0         0       1          iss_Sunbeam       
 273  Tensers_Transformation            1377     11        6         49500  184        1         0       1          iss_TensTrans     
-274  Time_Stop                         1378     17        9         114750 185        0         0       1          iss_TimeStop      
+274  Time_Stop                         1378     17        9         114750 185        1         0       1          iss_TimeStop      
 275  True_Seeing                       1379     9         5         33750  186        1         0       1          iss_TrueSee       
 276  Unholy_Aura                       ****     ****      ****      ****   ****       ****      ****    ****       ****              
 277  Vampiric_Touch                    1381     5         3         7500   188        0         1       1          iss_VampTch       
@@ -363,11 +363,11 @@
 359  ACTIVATE_ITEM_SELF2               6802     5         1         1000   428        1         1       1          ****              
 360  AuraOfGlory                       9105     7         2         4500   429        1         1       1          iss_X1AurGlo      
 361  Banishment                        9106     15        6         49500  430        0         1       1          iss_X1Banish      
-362  Inflict_Minor_Wounds              9107     1         0         500    431        0         1       1          iss_X1InfMin      
-363  Inflict_Light_Wounds              9108     5         1         1500   432        0         1       1          iss_X1InfLig      
-364  Inflict_Moderate_Wounds           9109     7         2         4500   433        0         1       1          iss_X1InfMod      
-365  Inflict_Serious_Wounds            9110     9         3         11250  434        0         1       1          iss_X1InfSer      
-366  Inflict_Critical_Wounds           9111     12        4         21000  435        0         1       1          iss_X1InfCri      
+362  Inflict_Minor_Wounds              9107     1         0         500    431        1         1       1          iss_X1InfMin      
+363  Inflict_Light_Wounds              9108     5         1         1500   432        1         1       1          iss_X1InfLig      
+364  Inflict_Moderate_Wounds           9109     7         2         4500   433        1         1       1          iss_X1InfMod      
+365  Inflict_Serious_Wounds            9110     9         3         11250  434        1         1       1          iss_X1InfSer      
+366  Inflict_Critical_Wounds           9111     12        4         21000  435        1         1       1          iss_X1InfCri      
 367  BalagarnsIronHorn                 9112     7         2         4500   436        0         1       1          iss_X1Bala        
 368  Drown                             9113     15        6         49500  437        0         1       1          iss_X1Drown       
 369  Owls_Insight                      9114     15        5         33750  438        1         1       1          iss_X1OwlIns      

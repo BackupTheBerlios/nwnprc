@@ -48950,13 +48950,13 @@ Spells per Day: A master alchemist’s training focuses on magic. Thus, when a cha
 9th: Brew 4/day: The master alchemist may brew four potions in one day.
 
 10th: Brew Potion (9th): The master alchemist can brew potions of 9th-level spells.</entry>
-  <entry id="70027" lang="en" sex="m">Skill Focus: Alchemy
+  <entry id="70027" lang="en" sex="m">Skill Focus (Alchemy)
 </entry>
   <entry id="70028" lang="en" sex="m">Type of Feat: General
 Prerequisite: Alchemy rank 1.
 Specifics: You gain a +3 bonus to Alchemy.
 Use: Automatic.</entry>
-  <entry id="70029" lang="en" sex="m">Epic Skill Focus: Alchemy</entry>
+  <entry id="70029" lang="en" sex="m">Epic Skill Focus (Alchemy)</entry>
   <entry id="70030" lang="en" sex="m">Type of Feat: General
 Prerequisite: Alchemy rank 20, Epic Character
 Specifics: You gain a +10 bonus to Alchemy.

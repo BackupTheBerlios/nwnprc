@@ -59,12 +59,12 @@ void main()
         
         if(nType == BASE_ITEM_LONGBOW || nType == BASE_ITEM_SHORTBOW)
         {
-		oAmmo = GetItemInSlot(INVENTORY_SLOT_ARROWS, oPC);
-	}
-	
-	else if (nType == BASE_ITEM_LIGHTCROSSBOW || nType == BASE_ITEM_HEAVYCROSSBOW)
-	{
-		oAmmo = GetItemInSlot(INVENTORY_SLOT_BOLTS, oPC);
+                oAmmo = GetItemInSlot(INVENTORY_SLOT_ARROWS, oPC);
+        }
+        
+        else if (nType == BASE_ITEM_LIGHTCROSSBOW || nType == BASE_ITEM_HEAVYCROSSBOW)
+        {
+                oAmmo = GetItemInSlot(INVENTORY_SLOT_BOLTS, oPC);
         }
         
         //Check for Masterwork or magical
@@ -73,6 +73,7 @@ void main()
         if((!(GetMaterialString(StringToInt(sMaterial)) == sMaterial && sMaterial != "000") && !GetIsMagicItem(oAmmo)))
         {
                         PRCSetSchool();
+                        SendMessageToPC(oPC, "Invalid ammo type.");
                         return;
         }
         

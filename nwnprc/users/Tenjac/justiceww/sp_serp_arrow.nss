@@ -54,4 +54,11 @@ void main()
         
         object oSerp = CreateItemOnObject(sSerp, oPC, nCreate);
         
+        //Item Prop already on item, so just add event script
+        
+        AddEventScript(oArrowBone, EVENT_ONHIT, "prc_evnt_serparw", FALSE, FALSE);
+        
+        SPSetSchool();
+}
+        
         

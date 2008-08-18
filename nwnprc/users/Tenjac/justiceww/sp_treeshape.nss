@@ -40,7 +40,8 @@ void main()
         int nRandom = d4();
         string sTree;
         int nCasterLvl = PRCGetCasterLevel(oPC);
-        float fDur = HoursToSeconds(nCasterLvl);        
+        float fDur = HoursToSeconds(nCasterLvl);
+        string sNewTag = "Tree" + GetName(oPC);
         
         switch(nRandom)
         {
@@ -62,7 +63,7 @@ void main()
         eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_CUTSCENE_INVISIBILITY));
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC);        
         
-        object oTree = CreateObject(OBJECT_TYPE_PLACEABLE, sTree, GetLocation(oPC));
+        object oTree = CreateObject(OBJECT_TYPE_PLACEABLE, sTree, GetLocation(oPC), FALSE, sNewTag);
         
         SPSetSchool();
 }        

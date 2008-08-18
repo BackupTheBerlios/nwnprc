@@ -8,6 +8,7 @@ Area: One 20-ft. square/level
 Duration: 1 hour/level (D)
 Saving Throw: Reflex partial
 Spell Resistance: Yes
+
 Rocky ground, stone floors, and similar
 surfaces shape themselves into long, sharp
 points that blend into the background.

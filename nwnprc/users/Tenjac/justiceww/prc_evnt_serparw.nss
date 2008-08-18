@@ -11,16 +11,21 @@ void main()
         object oTarget = PRCGetSpellTargetObject(oSpellOrigin);
         object oItem = PRCGetSpellCastItem(oSpellOrigin);
         
+        //Damage of the bite
+        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(1, DAMAGE_TYPE_PIERCING), oTarget);
+        
         //Save for poison
         if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, 11, SAVING_THROW_TYPE_POISON))
         {
                 //DC 11, 1d6 CON, 1d6 CON
-                SPApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectPosion(105) 
+                SPApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectPosion(105), oTarget); 
         }
         
-        //Make snake and make it friendly to
+        //Make snake and make it friendly too
         object oSnake = CreateObject(OBJECT_TYPE_CREATURE, "spitcobra002", GetLocation(oTarget), TRUE);
-        SetStandardFactionReputation(STANDARD_FACTION_HOSTILE, STANDARD_FACTION_DEFENDER, oSnake);
-                
-}
         
+        int nMax = GetMaxHenchmen();
+        SetMaxHenchmen(99);
+        AddHenchman(oSpellOrigin, oSnake);
+        SetMaxHenchmen(nMax);        
+}

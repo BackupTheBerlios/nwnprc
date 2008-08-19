@@ -61,6 +61,7 @@ void main()
         //Make invis, ghost, and immobile
         effect eLink = EffectLinkEffects(EffectCutsceneGhost(), EffectCutsceneParalyze());
         eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_CUTSCENE_INVISIBILITY));
+        eLink = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_CRITICAL_HIT));
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC);        
         
         object oTree = CreateObject(OBJECT_TYPE_PLACEABLE, sTree, GetLocation(oPC), FALSE, sNewTag);

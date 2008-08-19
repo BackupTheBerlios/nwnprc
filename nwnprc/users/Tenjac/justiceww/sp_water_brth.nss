@@ -4,7 +4,7 @@
 //:://////////////////////////////////////////////
 /** @file Water Breathing
 Transmutation
-Level: Clr 3, Drd 3, Sor/Wiz 3, Water 3
+Level: Clr 3, Drd 3, Sor/Wiz 3
 Components: V, S, M/DF
 Casting Time: 1 standard action
 Range: Touch

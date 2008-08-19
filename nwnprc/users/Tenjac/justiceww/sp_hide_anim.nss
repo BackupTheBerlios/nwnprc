@@ -41,11 +41,12 @@ void main()
         PRCSetSchool(SPELL_SCHOOL_ABJURATION);
         
         object oPC = OBJECT_SELF;
+        object oTarget = PRCGetSpellTarget();
         int nCasterLvl = PRCGetCasterLevel(oPC);
         float fDur = TurnsToSeconds(nCasterLvl) * 10;
         
         effect eInvis = VersusRacialTypeEffect(EffectInvisibility(INVISIBILITY_TYPE_NORMAL), RACIAL_TYPE_ANIMAL);
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eInvis, oPC, fDur);
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eInvis, oTarget, fDur);
         
         SPSetSchool();
 }

@@ -4,7 +4,7 @@
 //:://////////////////////////////////////////////
 /** @file Tree Shape
 Transmutation
-Level: Drd 2, Rgr 3
+Level: Drd 2, Rgr 3, Justice of Weald and Woe 2
 Components: V, S
 Casting Time: 1 standard action
 Range: Personal

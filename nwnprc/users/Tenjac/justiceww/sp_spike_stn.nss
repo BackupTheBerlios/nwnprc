@@ -1,4 +1,8 @@
-Spike Stones
+//::///////////////////////////////////////////////
+//:: Name      Spike Stones
+//:: FileName  sp_spike_stn.nss
+//:://////////////////////////////////////////////
+/** @file Spike Stones
 Transmutation [Earth]
 Level: Drd 4, Earth 4
 Components: V, S, DF
@@ -37,3 +41,20 @@ Note: Magic traps such as spike stones are
 hard to detect. A rogue (only) can use the
 Search skill to find spike stones. The DC is
 25 + spell level, or DC 29 for spike stones.
+
+Author:    Tenjac
+Created:   8/14/08
+*/
+//:://////////////////////////////////////////////
+//:://////////////////////////////////////////////
+
+#include "prc_inc_spells"
+
+void main()
+{
+        if(!X2PreSpellCastCode()) return;
+        
+        PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+        
+        object oPC = OBJECT_SELF;
+        

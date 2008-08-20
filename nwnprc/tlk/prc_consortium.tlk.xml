@@ -49020,7 +49020,6 @@ Requirements:
 Base Attack Bonus: +6
 Skills: Craft Weapon 8, Hide 8, Lore 4, Move Silently 8
 
-
 Class Features:
 Hit die: d8
 
@@ -49140,4 +49139,9 @@ Saving Throw: Will negates (harmless)
 Spell Resistance: Yes (harmless)
 
 You and your allies can breathe water freely. The spell does not make creatures unable to breathe air.</entry>
+  <entry id="70076" lang="en" sex="m">End Treeshape</entry>
+  <entry id="70077" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: None.
+Specifics: Using this feat will end the Treeshape spell on the user.
+Use: Selected.</entry>
 </tlk>

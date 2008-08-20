@@ -176,6 +176,12 @@ int GetRogueSneak(object oPC)
       iClassLevel = GetLevelByClass(CLASS_TYPE_LASHER, oPC);
       if (iClassLevel > 0) iRogueSneak += ((iClassLevel - 1) / 4) + 1;
    }
+   
+   //Justice of Weald and Woe
+   iClassLevel = GetLevelByClass(CLASS_TYPE_JUSTICEWW, oPC);
+   if(iClassLevel > 1) iRogueSneak++;
+   if(iClassLevel > 6) iRogueSneak++;
+   
     /*
    if(GetHasSpellEffect(MOVE_SH_ASSASSIN_STANCE, oPC))
    {
@@ -281,7 +287,7 @@ int GetIsFlanked(object oDefender, object oAttacker)
         vector vDefender = AngleToVector(GetFacing(oDefender));
         vector vAttacker = AngleToVector(GetFacing(oAttacker));
         vector vResult = vDefender + vAttacker;
-	if (DEBUG) DoDebug("GetIsFlanked: End Section #1");
+        if (DEBUG) DoDebug("GetIsFlanked: End Section #1");
         float iMagDefender = VectorMagnitude(vDefender);
         float iMagResult = VectorMagnitude(vResult);
 

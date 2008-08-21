@@ -1,18 +1,18 @@
 2DA V2.0
 
-     FeatLabel                                      FeatIndex List GrantedOnLevel OnMenu 
-0    ***Class_Feats***                              ****      **** ****           ****   
-**** WoodlandStride                                 200       **** ****           ****   
-**** LuckyShot                                      ****      **** ****           ****   
-**** TracklessStep                                  201       **** ****           ****   
-**** PoisonUse                                      960       **** ****           ****   
-**** HideInPlainSight                               433       **** ****           ****   
-**** DeathAttack                                    ****      **** ****           ****   
-**** ImmunityPoison                                 3590      **** ****           ****   
-5    ***Bonus_Feats***                              ****      **** ****           ****   
-46   DefArrow                                       8         1    -1             0      
-61   ImpCritLongBow                                 63        1    -1             0      
-**** Manyshot                                       3306      **** -1             ****   
-**** MountedArchery                                 1088      **** ****           ****   
-99   RapidShot                                      30        1    -1             0      
-18   WeapSpeLongBow                                 139       2    -1             0      
+     FeatLabel         FeatIndex List GrantedOnLevel OnMenu 
+0    ***Class_Feats*** ****      **** ****           ****   
+1    WoodlandStride    200       3    2              0      
+2    LuckyShot         24021     3    4              1      
+3    TracklessStep     201       3    4              0      
+4    PoisonUse         960       3    5              0      
+5    HideInPlainSight  433       3    9              1      
+6    DeathAttack       4421      3    10             1      
+7    ImmunityPoison    3590      3    10             0      
+8    ***Bonus_Feats*** ****      **** ****           ****   
+9    DefArrow          8         1    -1             0      
+10   ImpCritLongBow    63        1    -1             0      
+11   Manyshot          3306      1    -1             1      
+12   MountedArchery    1088      1    -1             0      
+13   RapidShot         30        1    -1             0      
+14   WeapSpeLongBow    139       1    -1             0      

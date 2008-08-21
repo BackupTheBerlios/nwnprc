@@ -799,6 +799,13 @@ const int SPELL_SNARE                               = 3711;
 const int SPELL_SPELLSLAYER_ARROW                   = 3712;
 
 const int SPELL_DAYLIGHT                            = 2971;
+
+const int SPELL_BRILLIANT_ENERGY_ARROW              = 3394;
+const int SPELL_HIDE_FROM_ANIMALS                   = 3395;
+const int SPELL_LONGSTRIDER                         = 3396;
+const int SPELL_SERPENT_ARROW                       = 3397;
+const int SPELL_TREESHAPE                           = 3398;
+const int SPELL_WATER_BREATHING                     = 3399;
    
 const int SPELL_DISGUISE_SELF_LEARN                 = 2840;          
 const int SPELL_DISGUISE_SELF_OPTIONS               = 2841;      

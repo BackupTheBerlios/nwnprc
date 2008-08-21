@@ -2858,4 +2858,5 @@ const int FEAT_EPIC_ARTIFICER               = 4072;
 ////////////////   END INFUSIONS   /////////////////
 //////////////////////////////////////////////////*/
 
-
+//Justice of Weald and Woe
+const int FEAT_LUCKY_SHOT                   = 24021;

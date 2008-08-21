@@ -42,7 +42,7 @@ void main()
     float fApplyDATime = GetLocalFloat(oPC,"PRC_ASSN_DEATHATTACK_APPLY");
     if (fApplyDATime > 0.0)
     {
-        SendMessageToPC(oPC,"Your are still studying your target wait "+IntToString(FloatToInt(fApplyDATime))+ " seconds before you can perform the death attack");
+        SendMessageToPC(oPC,"You are still studying your target + ";" + wait "+IntToString(FloatToInt(fApplyDATime))+ " second(s) before you can perform the death attack");
         return;
     }   
 

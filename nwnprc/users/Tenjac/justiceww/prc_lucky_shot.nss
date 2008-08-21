@@ -14,4 +14,5 @@ void main()
 {
         object oPC = OBJECT_SELF;        
         effect eLink = EffectLinkEffects(SupernaturalEffect(EffectAttackIncrease(10)), EffectVisualEffect(VFX_DUR_MAGICAL_SIGHT));        
-        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, 3.0);             
+        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, 3.0);
+}

@@ -24,7 +24,7 @@ Add class to GetIsArcaneClass() or GetIsDivineClass() in prc_inc_spells as appro
 Add class to GetCasterLevelModifier() in prc_inc_spells if necessary
 Add class to MakeLookupLoopMaster() in inc_lookups
 Add class to prc_amagsys_gain if(CheckMissingSpells(oPC, CLASS_TYPE_SORCERER, MinimumSpellLevel, MaximumSpellLevel))
-Add class to ExecuteScript("prc_spellgain", oPC) list in EvalPRCFeats in prc_inc_function
+Add class to ExecuteScript("prc_amagsys_gain", oPC) list in EvalPRCFeats in prc_inc_function
 Run the assemble_spellbooks.bat file
 Make the prc_* scripts in newspellbook
 

@@ -1,0 +1,30 @@
+2DA V2.0
+
+   Label             Level FeatID IPFeatID SpellID RealSpellID ReqFeat 
+0  ****              ****  ****   ****     ****    ****        ****    
+1  Camoflague        1     ****   ****     ****    421         ****    
+2  EndureElements    1     ****   ****     ****    50          ****    
+3  FaerieFire        1     ****   ****     ****    1965        ****    
+4  HideFromAnim      1     ****   ****     ****    3395        ****    
+5  Jump              1     ****   ****     ****    2070        ****    
+6  Longstrider       1     ****   ****     ****    3396        ****    
+7  ObscuringMist     1     ****   ****     ****    3085        ****    
+8  Barkskin          2     ****   ****     ****    3           ****    
+9  BrillEnergyArrow  2     ****   ****     ****    3394        ****    
+10 CatsGrace         2     ****   ****     ****    13          ****    
+11 FogCloud          2     ****   ****     ****    ****        ****    
+12 Snare             2     ****   ****     ****    3711        ****    
+13 SpellslayerArrow  2     ****   ****     ****    3712        ****    
+14 Treeshape         2     ****   ****     ****    3398        ****    
+15 Arrowsplit        3     ****   ****     ****    3703        ****    
+16 DarkflameArrow    3     ****   ****     ****    3708        ****    
+17 Darkvision        3     ****   ****     ****    365         ****    
+18 SerpentArrow      3     ****   ****     ****    3397        ****    
+19 SpikeGrowth       3     ****   ****     ****    454         ****    
+20 WaterBreathing    3     ****   ****     ****    3399        ****    
+21 BloodfreezeArrow  4     ****   ****     ****    3704        ****    
+22 DoublestrikeArrow 4     ****   ****     ****    3706        ****    
+23 FreedomOfMovem    4     ****   ****     ****    62          ****    
+24 Poison            4     ****   ****     ****    129         ****    
+25 Scrying           4     ****   ****     ****    3219        ****    
+26 ShadowArrow       4     ****   ****     ****    3710        ****    

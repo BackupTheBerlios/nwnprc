@@ -1382,3 +1382,13 @@
 1378 Snare                             16829356 3         2         4500   3711       0         0       1          is_snare          
 1379 SpellslayerArrow                  16829358 3         2         4500   3712       0         0       1          is_spslay_arrow   
 1380 Daylight                          16832214 5         3         11250  2971       0         1       1          iss_light         
+1381 LuckyShot                         16832030 1         1         750    2144       0         0       1          ****              
+1382 FogCloud                          16847294 3         2         4500   1998       0         1       1          iss_StinkCld      
+1383 BrilliantEnergyArrows             16847280 3         2         4500   3394       0         0       1          iss_brill_enarr   
+1384 HideFromAnimals                   16847282 1         1         750    3395       0         0       1          iss_hide_anim     
+1385 Longstrider                       16847284 1         1         750    3396       1         0       1          iss_longtrider    
+1386 SerpentArrows                     16847286 7         4         21000  3397       0         0       1          iss_serp_arrow    
+1387 Treeshape                         16847288 3         2         4500   3398       1         0       1          iss_treeshape     
+1388 Waterbreathing                    16847290 5         3         11250  3399       1         0       1          iss_water_brth    
+1389 ****                              ****     ****      ****      ****   ****       ****      ****    ****       ****              
+1390 ****                              ****     ****      ****      ****   ****       ****      ****    ****       ****              

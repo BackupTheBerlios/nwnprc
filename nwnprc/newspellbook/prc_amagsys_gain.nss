@@ -85,6 +85,9 @@ void main()
         return;
     if(CheckMissingSpells(oPC, CLASS_TYPE_DUSKBLADE, 0, 5))
         return;
+    if(CheckMissingSpells(oPC, CLASS_TYPE_JUSTICEWW, 1, 4))
+        return;
+        
 
     // Handle Truenaming - Three different Lexicons to check
     if(CheckMissingUtterances(oPC, CLASS_TYPE_TRUENAMER, LEXICON_EVOLVING_MIND))

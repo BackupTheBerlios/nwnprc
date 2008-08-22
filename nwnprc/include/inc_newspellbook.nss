@@ -126,7 +126,8 @@ int GetSpellbookTypeForClass(int nClass)
         case CLASS_TYPE_FAVOURED_SOUL:
         case CLASS_TYPE_HEXBLADE:
         case CLASS_TYPE_DUSKBLADE:
-    case CLASS_TYPE_WARMAGE:
+        case CLASS_TYPE_WARMAGE:
+        case CLASS_TYPE_JUSTICEWW:
             return SPELLBOOK_TYPE_SPONTANEOUS;
         //outsider HD count as sorc for raks
         case CLASS_TYPE_OUTSIDER: {
@@ -160,6 +161,7 @@ int GetAbilityForClass(int nClass, object oPC)
         case CLASS_TYPE_SLAYER_OF_DOMIEL:
         case CLASS_TYPE_HEALER:
         case CLASS_TYPE_SHAMAN:
+        case CLASS_TYPE_JUSTICEWW:
             return GetAbilityScore(oPC, ABILITY_WISDOM);
         case CLASS_TYPE_WIZARD:
         case CLASS_TYPE_PSION:

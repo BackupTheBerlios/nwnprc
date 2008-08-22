@@ -485,7 +485,7 @@ int GetDivinePRCLevels (object oCaster)
            +  GetLevelByClass(CLASS_TYPE_CONTEMPLATIVE,     oCaster)
            +  GetLevelByClass(CLASS_TYPE_RUNECASTER,        oCaster)
            +  GetLevelByClass(CLASS_TYPE_SWIFT_WING,        oCaster)
-
+           
            +  (GetLevelByClass(CLASS_TYPE_OLLAM,                 oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_BRIMSTONE_SPEAKER,     oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_TEMPUS,                oCaster) + 1) / 2
@@ -559,6 +559,7 @@ int GetIsDivineClass (int nClass, object oCaster = OBJECT_SELF)
             nClass==CLASS_TYPE_HEALER ||
             nClass==CLASS_TYPE_SHAMAN ||
             nClass==CLASS_TYPE_SLAYER_OF_DOMIEL ||
+            nClass==CLASS_TYPE_JUSTICEWW ||
             nClass==CLASS_TYPE_OCULAR);
 }
 
@@ -1589,7 +1590,7 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
     {
         // Reroll
         nSaveRoll = BWSavingThrow(nSavingThrow, oTarget, nDC, nSaveType, oSaveVersus, fDelay);
-	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectKnockdown(), oTarget, 6.0);
+        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectKnockdown(), oTarget, 6.0);
     }    
 
     return nSaveRoll;
@@ -1618,8 +1619,8 @@ int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveTy
        //check if Unsettling Enchantment applies
        if(GetHasFeat(FEAT_UNSETTLING_ENCHANTMENT, oSaveVersus) && GetSpellSchool(PRCGetSpellId()) == SPELL_SCHOOL_ENCHANTMENT && !GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS))
        {
-       		effect eLink = EffectLinkEffects(EffectACDecrease(2), EffectAttackDecrease(2));
-		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0);
+                effect eLink = EffectLinkEffects(EffectACDecrease(2), EffectAttackDecrease(2));
+                ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0);
        }      
 
     // Racial ability adjustments
@@ -1712,7 +1713,7 @@ int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveTy
     {
         // Reroll
         nDamage = GetReflexAdjustedDamage(nDamage, oTarget, nDC, nSaveType, oSaveVersus);
-	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectKnockdown(), oTarget, 6.0);
+        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectKnockdown(), oTarget, 6.0);
     }
     
     return nDamage;
@@ -2940,22 +2941,22 @@ effect PRCEffectDamage(object oTarget, int nDamageAmount, int nDamageType=DAMAGE
     // Piercing Evocation
     if (GetHasFeat(FEAT_PIERCING_EVOCATION, OBJECT_SELF) && GetSpellSchool(PRCGetSpellId()) == SPELL_SCHOOL_EVOCATION)
     {
-    	// Elemental damage only
-    	if (nDamageType == DAMAGE_TYPE_FIRE || nDamageType == DAMAGE_TYPE_ACID || nDamageType == DAMAGE_TYPE_COLD || 
-    	    nDamageType == DAMAGE_TYPE_ELECTRICAL || nDamageType == DAMAGE_TYPE_SONIC)
-    	{
-        	// Damage magical, max 10 to magical
-        	if (nDamageAmount > 10) 
-        	{
-        		nDamageAmount -= 10;       	
-        		ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(10), oTarget);
-        	}
-        	else
-        	{
-        		ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDamageAmount), oTarget);
-        		effect eEffect;
-        		return eEffect; // Null return
-        	}
+        // Elemental damage only
+        if (nDamageType == DAMAGE_TYPE_FIRE || nDamageType == DAMAGE_TYPE_ACID || nDamageType == DAMAGE_TYPE_COLD || 
+            nDamageType == DAMAGE_TYPE_ELECTRICAL || nDamageType == DAMAGE_TYPE_SONIC)
+        {
+                // Damage magical, max 10 to magical
+                if (nDamageAmount > 10) 
+                {
+                        nDamageAmount -= 10;            
+                        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(10), oTarget);
+                }
+                else
+                {
+                        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDamageAmount), oTarget);
+                        effect eEffect;
+                        return eEffect; // Null return
+                }
         }
     }    
 

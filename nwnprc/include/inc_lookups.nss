@@ -188,7 +188,8 @@ void MakeLookupLoopMaster()
     DelayCommand(14.1, MakeSpellbookLevelLoop(CLASS_TYPE_WARLOCK,  0, GetPRCSwitch(FILE_END_CLASS_POWER) , "SpellLvl", "Level", "1"));
     DelayCommand(14.1, MakeSpellbookLevelLoop(CLASS_TYPE_WARLOCK,  0, GetPRCSwitch(FILE_END_CLASS_POWER) , "SpellLvl", "Level", "2"));
     DelayCommand(14.1, MakeSpellbookLevelLoop(CLASS_TYPE_WARLOCK,  0, GetPRCSwitch(FILE_END_CLASS_POWER) , "SpellLvl", "Level", "3"));
-    DelayCommand(14.1, MakeSpellbookLevelLoop(CLASS_TYPE_WARLOCK,  0, GetPRCSwitch(FILE_END_CLASS_POWER) , "SpellLvl", "Level", "4"))
+    DelayCommand(14.1, MakeSpellbookLevelLoop(CLASS_TYPE_WARLOCK,  0, GetPRCSwitch(FILE_END_CLASS_POWER) , "SpellLvl", "Level", "4"));
+    
     //add new psionic classes here
     //also add them later too
 
@@ -386,9 +387,7 @@ void MakeLookupLoopMaster()
     DelayCommand(4.9, MakeSpellIDLoop(CLASS_TYPE_WARMAGE,               0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "RealSpellID", "GetRowFromRealSpellID"));
     DelayCommand(5.0, MakeSpellIDLoop(CLASS_TYPE_SHAMAN,                0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "RealSpellID", "GetRowFromRealSpellID"));
     DelayCommand(5.1, MakeSpellIDLoop(CLASS_TYPE_JUSTICEWW,             0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "RealSpellID", "GetRowFromRealSpellID"));
-    
-    DelayCommand
-}
+    }
 
 void MakeSpellbookLevelLoop(int nClass, int nMin, int nMax, string sVarNameBase,
     string sColumnName, string sColumnValue, int nLoopSize = 100, string sTag = "")

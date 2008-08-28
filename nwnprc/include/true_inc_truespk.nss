@@ -50,7 +50,7 @@ int GetBaseUtteranceDC(object oTarget, object oTrueSpeaker, int nLexicon);
  * @param nSpellId        SpellId of the Utterance
  * @return                The DC boost for this particular power from the Law of Resistance
  */
-int GetLawOfResistanceDCIncrease(object oTrueSpeaker, int nSpellID);
+int GetLawOfResistanceDCIncrease(object oTrueSpeaker, int nSpellId);
 
 /**
  * Stores the Law Of Resistance DC increase
@@ -58,7 +58,7 @@ int GetLawOfResistanceDCIncrease(object oTrueSpeaker, int nSpellID);
  * @param oTrueSpeaker    Caster of the Utterance
  * @param nSpellId        SpellId of the Utterance
  */
-void DoLawOfResistanceDCIncrease(object oTrueSpeaker, int nSpellID);
+void DoLawOfResistanceDCIncrease(object oTrueSpeaker, int nSpellId);
 
 /**
  * Deletes all of the Local Ints stored by the laws.

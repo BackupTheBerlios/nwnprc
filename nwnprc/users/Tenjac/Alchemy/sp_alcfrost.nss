@@ -10,25 +10,16 @@ the initial damage.
 */   
 
 #include "X2_I0_SPELLS"
-
 #include "x2_inc_itemprop"
-
 #include "x2_inc_spellhook"
 
-
-
 void AddFrostEffectToWeapon(object oTarget, float fDuration)
-
-{
-
-  // If the spell is cast again, any previous itemproperties matching are removed.
-
-  IPSafeAddItemProperty(oTarget, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_COLD, IP_CONST_DAMAGEBONUS_1d8), fDuration, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
-
-  IPSafeAddItemProperty(oTarget, ItemPropertyVisualEffect(ITEM_VISUAL_COLD), fDuration,X2_IP_ADDPROP_POLICY_REPLACE_EXISTING,FALSE,TRUE);
-
-  return;
-
+{        
+        // If the spell is cast again, any previous itemproperties matching are removed.
+        IPSafeAddItemProperty(oTarget, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_COLD, IP_CONST_DAMAGEBONUS_1d8), fDuration, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+        IPSafeAddItemProperty(oTarget, ItemPropertyVisualEffect(ITEM_VISUAL_COLD), fDuration,X2_IP_ADDPROP_POLICY_REPLACE_EXISTING,FALSE,TRUE);
+        
+        return;
 }
 
 void main()

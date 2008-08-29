@@ -17,8 +17,8 @@ Taken from x0_s3_alchem
 void AddFlamingEffectToWeapon(object oTarget, float fDuration)
 {
    // If the spell is cast again, any previous itemproperties matching are removed.
-   IPSafeAddItemProperty(oTarget, ItemPropertyOnHitCastSpell(124,1), fDuration, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
-   IPSafeAddItemProptery(oTArget, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ACID_SPLASH, 1), fDuration, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+   IPSafeAddItemProperty(oTarget, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_FIRE, IP_CONST_DAMAGEBONUS_1d4), fDuration, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+   IPSafeAddItemProptery(oTArget, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_ACID, IP_CONST_DAMAGEBONUS_1d4), fDuration, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
    IPSafeAddItemProperty(oTarget, ItemPropertyVisualEffect(ITEM_VISUAL_FIRE), fDuration,X2_IP_ADDPROP_POLICY_REPLACE_EXISTING,FALSE,TRUE);
    return;
 }

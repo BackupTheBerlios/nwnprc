@@ -972,7 +972,8 @@ void main()
                     int nCostDiff;
                     int nXPDiff = 0;
                     struct itemvars strTempOld, strTempNew;
-                    if(GetCraftingFeat(oItem) == FEAT_CRAFT_ARMS_ARMOR)
+                    int nFeat = GetCraftingFeat(oItem);
+                    if(nFeat == FEAT_CRAFT_ARMS_ARMOR)
                     {
                         ApplyItemProps(oNewItem, sFile, nLine);
                         strTempOld.item = oItem;
@@ -994,7 +995,7 @@ void main()
                     else
                     {
                         nCostDiff = StringToInt(Get2DACache(sFile, "AdditionalCost", nLine));
-                        nCostDiff = GetModifiedGoldCost(nCostDiff, oPC);
+                        nCostDiff = GetModifiedGoldCost(nCostDiff, oPC, nFeat);
                         if(!bToken)
                             nXPDiff = GetPnPItemXPCost(nCostDiff, StringToInt(Get2DACache(sFile, "Epic", nLine)));
                     }
@@ -1005,9 +1006,9 @@ void main()
                         nCostDiff /= 2;
                         nXPDiff /= 2;
                     }
-                    nCostDiff = GetModifiedGoldCost(nCostDiff, oPC);
-                    nXPDiff = GetModifiedXPCost(nXPDiff, oPC);
-                    nTime = GetModifiedTimeCost(nTime, oPC);
+                    nCostDiff = GetModifiedGoldCost(nCostDiff, oPC, nFeat);
+                    nXPDiff = GetModifiedXPCost(nXPDiff, oPC, nFeat);
+                    nTime = GetModifiedTimeCost(nTime, oPC, nFeat);
                     if(nCostDiff < 1) nCostDiff = 1;
                     if(nXPDiff < 0) nXPDiff = 0;
                     SetLocalInt(oPC, PRC_CRAFT_COST, nCostDiff);
@@ -1050,6 +1051,7 @@ void main()
                 {
                     AllowExit(DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, FALSE, oPC);
                     string sMaterial = GetStringLeft(GetTag(oTarget), 3);
+                    int nFeat = GetCraftingFeat(oItem);
                     if(GetPRCSwitch(PRC_CRAFTING_ARBITRARY) || (GetMaterialString(StringToInt(sMaterial)) != sMaterial))
                     {
                         itemproperty ip = GetFirstItemProperty(oNewItem);
@@ -1076,9 +1078,9 @@ void main()
                         nXP = GetPnPItemXPCost(GetPnPItemCost(strTemp, FALSE), nEpic);
                         nTime = GetCraftingTime(nCost);
                     }
-                    nCost = GetModifiedGoldCost(nCost, oPC);
-                    nXP = GetModifiedXPCost(nXP, oPC);
-                    nTime = GetModifiedTimeCost(nTime, oPC);
+                    nCost = GetModifiedGoldCost(nCost, oPC, nFeat);
+                    nXP = GetModifiedXPCost(nXP, oPC, nFeat);
+                    nTime = GetModifiedTimeCost(nTime, oPC, nFeat);
                     if(nCost < 1) nCost = 1;
                     if(nXP < 0) nXP = 0;
                     SetLocalInt(oPC, PRC_CRAFT_COST, nCost);

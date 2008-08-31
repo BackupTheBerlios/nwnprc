@@ -1493,6 +1493,50 @@ int GetCraftingFeat(object oItem)
     return -1;
 }
 
+int GetMagicalArtisanFeat(int nCraftingFeat)
+{
+    int nReturn = 0;
+    switch(nCraftingFeat)
+    {
+        case FEAT_CRAFT_ARMS_ARMOR:
+        {
+            nReturn = FEAT_MAGICAL_ARTISAN_CRAFT_MAGIC_ARMS;
+            break;
+        }
+        case FEAT_CRAFT_ROD:
+        {
+            nReturn = FEAT_MAGICAL_ARTISAN_CRAFT_ROD;
+            break;
+        }
+        case FEAT_CRAFT_STAFF:
+        {
+            nReturn = FEAT_MAGICAL_ARTISAN_CRAFT_STAFF;
+            break;
+        }
+        case FEAT_CRAFT_WAND:
+        {
+            nReturn = FEAT_MAGICAL_ARTISAN_CRAFT_WAND;
+            break;
+        }
+        case FEAT_CRAFT_WONDROUS:
+        {
+            nReturn = FEAT_MAGICAL_ARTISAN_CRAFT_WONDROUS;
+            break;
+        }
+        case FEAT_FORGE_RING:
+        {
+            nReturn = FEAT_MAGICAL_ARTISAN_FORGE_RING;
+            break;
+        }
+        default:
+        {
+            if(DEBUG) DoDebug("GetMagicalArtisanFeat: invalid crafting feat");
+            break;
+        }
+    }
+    return nReturn;
+}
+
 int GetEpicCraftingFeat(int nFeat)
 {
     switch(nFeat)
@@ -1792,14 +1836,16 @@ int GetEnhancementBaseCost(object oItem)
 
     return 0;
 }
+//int GetMagicalArtisanFeat(int nCraftingFeat)
 
-int GetModifiedGoldCost(int nCost, object oPC)
+int GetModifiedGoldCost(int nCost, object oPC, int nCraftingFeat)
 {
     if(nCost == 0)
         return nCost;
-    if(GetHasFeat(FEAT_EXTRAORDINARY_ARTISAN_I  , oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
-    if(GetHasFeat(FEAT_EXTRAORDINARY_ARTISAN_II , oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
-    if(GetHasFeat(FEAT_EXTRAORDINARY_ARTISAN_III, oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
+    if(GetHasFeat(FEAT_EXTRAORDINARY_ARTISAN_I        , oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
+    if(GetHasFeat(FEAT_EXTRAORDINARY_ARTISAN_II       , oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
+    if(GetHasFeat(FEAT_EXTRAORDINARY_ARTISAN_III      , oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
+    if(GetHasFeat(GetMagicalArtisanFeat(nCraftingFeat), oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
     int nScale = GetPRCSwitch(PRC_CRAFTING_COST_SCALE);
     if(nScale > 0)
     {   //you're not getting away with negative values that easily :P
@@ -1808,24 +1854,36 @@ int GetModifiedGoldCost(int nCost, object oPC)
     return nCost;
 }
 
-int GetModifiedXPCost(int nCost, object oPC)
+int GetModifiedXPCost(int nCost, object oPC, int nCraftingFeat)
 {
     if(nCost == 0)
         return nCost;
-    if(GetHasFeat(FEAT_LEGENDARY_ARTISAN_I  , oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
-    if(GetHasFeat(FEAT_LEGENDARY_ARTISAN_II , oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
-    if(GetHasFeat(FEAT_LEGENDARY_ARTISAN_III, oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
+    if(GetHasFeat(FEAT_LEGENDARY_ARTISAN_I            , oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
+    if(GetHasFeat(FEAT_LEGENDARY_ARTISAN_II           , oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
+    if(GetHasFeat(FEAT_LEGENDARY_ARTISAN_III          , oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
+    if(GetHasFeat(GetMagicalArtisanFeat(nCraftingFeat), oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
+    int nScale = GetPRCSwitch(PRC_CRAFTING_COST_SCALE);
+    if(nScale > 0)
+    {   //you're not getting away with negative values that easily :P
+        nCost = FloatToInt(IntToFloat(nCost) * IntToFloat(nScale) / 100.0);
+    }
     return nCost;
 }
 
-int GetModifiedTimeCost(int nCost, object oPC)
+int GetModifiedTimeCost(int nCost, object oPC, int nCraftingFeat)
 {
     if(nCost == 0)
         return nCost;
     if(GetLevelByClass(CLASS_TYPE_MAESTER, oPC)) nCost /= 2;
-    if(GetHasFeat(FEAT_EXCEPTIONAL_ARTISAN_I  , oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
-    if(GetHasFeat(FEAT_EXCEPTIONAL_ARTISAN_II , oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
-    if(GetHasFeat(FEAT_EXCEPTIONAL_ARTISAN_III, oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
+    if(GetHasFeat(FEAT_EXCEPTIONAL_ARTISAN_I          , oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
+    if(GetHasFeat(FEAT_EXCEPTIONAL_ARTISAN_II         , oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
+    if(GetHasFeat(FEAT_EXCEPTIONAL_ARTISAN_III        , oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
+    if(GetHasFeat(GetMagicalArtisanFeat(nCraftingFeat), oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
+    int nScale = GetPRCSwitch(PRC_CRAFTING_COST_SCALE);
+    if(nScale > 0)
+    {   //you're not getting away with negative values that easily :P
+        nCost = FloatToInt(IntToFloat(nCost) * IntToFloat(nScale) / 100.0);
+    }
     return nCost;
 }
 

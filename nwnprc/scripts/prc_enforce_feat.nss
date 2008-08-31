@@ -1018,7 +1018,7 @@ int SkillRequirements(object oPC = OBJECT_SELF)
     {
             FloatingTextStringOnCreature("You need a Reflex save of at least 4 to select this feat", oPC, FALSE);
             return FALSE;
-    }    
+    }
 
         return TRUE;
 }
@@ -1113,15 +1113,25 @@ int CraftingFeats(object oPC = OBJECT_SELF)
     int iCraft = GetItemCreationFeatCount(oPC);
     if(iCraft &&
         iCraft == (
-            GetHasFeat(FEAT_EXCEPTIONAL_ARTISAN_I       , oPC) +
-            GetHasFeat(FEAT_EXCEPTIONAL_ARTISAN_II      , oPC) +
-            GetHasFeat(FEAT_EXCEPTIONAL_ARTISAN_III     , oPC) +
-            GetHasFeat(FEAT_EXTRAORDINARY_ARTISAN_I     , oPC) +
-            GetHasFeat(FEAT_EXTRAORDINARY_ARTISAN_II    , oPC) +
-            GetHasFeat(FEAT_EXTRAORDINARY_ARTISAN_III   , oPC) +
-            GetHasFeat(FEAT_LEGENDARY_ARTISAN_I         , oPC) +
-            GetHasFeat(FEAT_LEGENDARY_ARTISAN_II        , oPC) +
-            GetHasFeat(FEAT_LEGENDARY_ARTISAN_III       , oPC)))
+            GetHasFeat(FEAT_EXCEPTIONAL_ARTISAN_I               , oPC) +
+            GetHasFeat(FEAT_EXCEPTIONAL_ARTISAN_II              , oPC) +
+            GetHasFeat(FEAT_EXCEPTIONAL_ARTISAN_III             , oPC) +
+            GetHasFeat(FEAT_EXTRAORDINARY_ARTISAN_I             , oPC) +
+            GetHasFeat(FEAT_EXTRAORDINARY_ARTISAN_II            , oPC) +
+            GetHasFeat(FEAT_EXTRAORDINARY_ARTISAN_III           , oPC) +
+            GetHasFeat(FEAT_LEGENDARY_ARTISAN_I                 , oPC) +
+            GetHasFeat(FEAT_LEGENDARY_ARTISAN_II                , oPC) +
+            GetHasFeat(FEAT_LEGENDARY_ARTISAN_III               , oPC) +
+            GetHasFeat(FEAT_MAGICAL_ARTISAN_CRAFT_MAGIC_ARMS    , oPC) +
+            GetHasFeat(FEAT_MAGICAL_ARTISAN_CRAFT_ROD           , oPC) +
+            GetHasFeat(FEAT_MAGICAL_ARTISAN_CRAFT_STAFF         , oPC) +
+            GetHasFeat(FEAT_MAGICAL_ARTISAN_CRAFT_WAND          , oPC) +
+            GetHasFeat(FEAT_MAGICAL_ARTISAN_CRAFT_WONDROUS      , oPC) +
+            GetHasFeat(FEAT_MAGICAL_ARTISAN_FORGE_RING          , oPC) +
+            GetHasFeat(FEAT_MAGICAL_ARTISAN_SCRIBE_SCROLL       , oPC) +
+            GetHasFeat(FEAT_MAGICAL_ARTISAN_ATTUNE_GEM          , oPC) +
+            GetHasFeat(FEAT_MAGICAL_ARTISAN_INSCRIBE_RUNE       , oPC) +
+            GetHasFeat(FEAT_MAGICAL_ARTISAN_BREW_POTION         , oPC)))
     {
         bOK = FALSE;
     }

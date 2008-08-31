@@ -511,45 +511,56 @@ void DoSpeakUntoTheMasses(object oTrueSpeaker, object oTarget, struct utterance 
         object oAreaTarget = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), GetLocation(oTarget), TRUE, OBJECT_TYPE_CREATURE);
         while(GetIsObjectValid(oAreaTarget))
         {
+        	if(DEBUG) DoDebug("Speak Unto the Masses: While entered");
             // Skip the original target/truespeaker, its already been hit
             if (oAreaTarget != oTarget && oAreaTarget != oTrueSpeaker)
             {
-
+		if(DEBUG) DoDebug("Speak Unto the Masses: Target check");
                 // Targeting limitations
                 if(MyPRCGetRacialType(oAreaTarget) == nRacial)
                 {
+                	if(DEBUG) DoDebug("Speak Unto the Masses: Racial Check");
                     // Only affect friends or ignore it
                     if (GetIsFriend(oAreaTarget, oTrueSpeaker) || !utter.bFriend)
                     {
+                    if(DEBUG) DoDebug("Speak Unto the Masses: Friend Check");
                         // Do SR, or ignore if its a friendly utterance.
                     if (!PRCDoResistSpell(utter.oTrueSpeaker, oAreaTarget, utter.nPen) || utter.bIgnoreSR)
                     {
+                    if(DEBUG) DoDebug("Speak Unto the Masses: SR Check");
                         // Saving throw, ignore it if there is no DC to check
                         if(!PRCMySavingThrow(utter.nSaveThrow, oAreaTarget, utter.nSaveDC, utter.nSaveType, OBJECT_SELF) ||
                            utter.nSaveDC == 0)
                             {
+                            if(DEBUG) DoDebug("Speak Unto the Masses: Saving Throw");
                                 // Itemproperty, if there is one
                                 oSkin = GetPCSkin(oAreaTarget);
                                 if (GetIsItemPropertyValid(utter.ipIProp1))
                                 {
+                                	if(DEBUG) DoDebug("Speak Unto the Masses: IProp1");
                                     IPSafeAddItemProperty(oSkin, utter.ipIProp1, utter.fDur, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
                                 }
                                 // Itemproperty, if there is one
                                 if (GetIsItemPropertyValid(utter.ipIProp2))
                                 {
+                                if(DEBUG) DoDebug("Speak Unto the Masses: IProp2");
                                     IPSafeAddItemProperty(oSkin, utter.ipIProp2, utter.fDur, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
                                 }
                                 // Itemproperty, if there is one
                                 if (GetIsItemPropertyValid(utter.ipIProp3))
                                 {
+                                if(DEBUG) DoDebug("Speak Unto the Masses: IProp3");
                                     IPSafeAddItemProperty(oSkin, utter.ipIProp3, utter.fDur, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
                                 }
                                         // Duration Effects
                                 SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, utter.eLink, oAreaTarget, utter.fDur, TRUE, utter.nSpellId, utter.nTruespeakerLevel);
+                                if(DEBUG) DoDebug("Speak Unto the Masses: Duration");
                                 // Impact Effects
                             SPApplyEffectToObject(DURATION_TYPE_INSTANT, utter.eLink2, oAreaTarget);
+                            if(DEBUG) DoDebug("Speak Unto the Masses: Instant");
                             // Utterance Specific code down here
                             DoWordOfNurturingReverse(oTrueSpeaker, oAreaTarget, utter);
+                            if(DEBUG) DoDebug("Speak Unto the Masses: Word of Nurturing Reverse");
                             if (utter.nSpellId == UTTER_ENERGY_NEGATION_R)
                                 DoEnergyNegation(oTrueSpeaker, oTarget, utter, FloatToInt(utter.fDur / 6.0), GetLocalInt(oTrueSpeaker, "TrueEnergyNegation"));
                         } // end if - Saving Throw

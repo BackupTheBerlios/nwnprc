@@ -80,6 +80,13 @@ void main()
 			
 			oParty = GetNextFactionMember(oPC);
                 }
+                if (DEBUG)
+                {
+                	object oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED, OBJECT_SELF, 1);
+                	SetLocalObject(oPC, "TrueSayPartyChoice" + IntToString(i), oSummon);
+                	AddChoice(GetName(oSummon), i, oPC);
+                	i++;
+                }
                 SetLocalInt(oPC, "TrueSayPartyMax", i);
 
                 MarkStageSetUp(STAGE_MEMBER_CHOICE, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
@@ -150,14 +157,18 @@ void main()
             {
             	if (!GetLocalInt(OBJECT_SELF, "DimAnchor"))
             	{
-            		object oPM = GetLocalObject(oPC, "TrueSayPartyChoice");
-            	
+            		object oPM = GetLocalObject(oPC, "TrueSayPartyChoice" + IntToString(GetLocalInt(oPC, "TruePartyChoiceNum")));
+            		if(DEBUG) DoDebug("Say My Name and I Am There: Target Name: " + GetName(oPM));
             		// Get Location of the target Party Member
             		location lPM   = GetLocation(oPM);
             
             		// Move the PC to the ally
+            		effect eVis = EffectVisualEffect(PSI_FNF_PSYCHIC_CHIRURGY);
+            		ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetLocation(oPC));
+            		DelayCommand(1.0, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oPM));
             		AssignCommand(oPC, ClearAllActions(TRUE));
             		AssignCommand(oPC, JumpToLocation(lPM));
+            		if(DEBUG) DoDebug("Say My Name and I Am There: Jumped");
                 }
                 else
                 {

@@ -272,6 +272,7 @@ int GetBaseUtteranceDC(object oTarget, object oTrueSpeaker, int nLexicon)
 		// Check for Speak Unto the Masses. Syllables use the Evolving Mind formula, but can't Speak Unto Masses
 		if (GetLocalInt(oTrueSpeaker, TRUE_SPEAK_UNTO_MASSES) && !GetIsSyllable(PRCGetSpellId()))
 		{
+			if(DEBUG) DoDebug("GetBaseUtteranceDC: Entered");
 			// Speak to the Masses affects all creatures of the same race in the AoE
 			// Grants a +2 DC for each of them
 			int nRacial = MyPRCGetRacialType(oTarget);
@@ -279,26 +280,33 @@ int GetBaseUtteranceDC(object oTarget, object oTrueSpeaker, int nLexicon)
 			// So we loop through and count all the targets, as well as figure out the highest CR
 			int nMaxCR = FloatToInt(GetChallengeRating(oTarget));
 			int nCurCR, nTargets;
+			if(DEBUG) DoDebug("GetBaseUtteranceDC: Variables");
 
 			// Loop over targets
                         object oAreaTarget = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), GetLocation(oTarget), TRUE, OBJECT_TYPE_CREATURE);
                         while(GetIsObjectValid(oAreaTarget))
                         {
+                        	if(DEBUG) DoDebug("GetBaseUtteranceDC: While");
                             // Skip the original target, it doesn't count as a target
-                            if (oAreaTarget == oTarget) continue;
-
-                            // Targeting limitations
-                            if(MyPRCGetRacialType(oAreaTarget) == nRacial)
+                            if (oAreaTarget != oTarget)
                             {
-                            	// CR Check
-				nCurCR = FloatToInt(GetChallengeRating(oAreaTarget));
-				// Update if you find something bigger
-				if (nCurCR > nMaxCR) nMaxCR = nCurCR;
-				// Increment Targets
-				nTargets++;
-                            }// end if - Targeting check
+                            	if(DEBUG) DoDebug("GetBaseUtteranceDC: Continue");
+	
+                            	// Targeting limitations
+                            	if(MyPRCGetRacialType(oAreaTarget) == nRacial)
+                            	{
+                            		if(DEBUG) DoDebug("GetBaseUtteranceDC: race check");
+                            		// CR Check
+					nCurCR = FloatToInt(GetChallengeRating(oAreaTarget));
+					// Update if you find something bigger
+					if (nCurCR > nMaxCR) nMaxCR = nCurCR;
+					// Increment Targets
+					nTargets++;
+                            	}// end if - Targeting check
+                            }
 
                             // Get next target
+                            if(DEBUG) DoDebug("GetBaseUtteranceDC: Next Target");
                             oAreaTarget = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), GetLocation(oTarget), TRUE, OBJECT_TYPE_CREATURE);
     	    	    	}// end while - Target loop
 
@@ -380,7 +388,6 @@ void ClearLawLocalVars(object oTrueSpeaker)
 		DeleteLocalInt(oTrueSpeaker, LAW_OF_RESIST_VARNAME + IntToString(i));
 		DeleteLocalInt(oTrueSpeaker, LAW_OF_SEQUENCE_VARNAME + IntToString(i));
 	}
-	DeleteLocalInt(oTrueSpeaker, LAW_OF_SEQUENCE_VARNAME + IntToString(UTTER_CONJUNCTIVE_GATE));
 }
 
 int AddPersonalTruenameDC(object oTrueSpeaker, object oTarget)

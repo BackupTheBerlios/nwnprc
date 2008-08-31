@@ -35,7 +35,7 @@ if(DEBUG) DoDebug("m1q0dchest2 running");
         {
             sItemTemplate1 = "NW_AARCL005"; //Splintmail
         }
-        else if(GetLevelByClass(CLASS_TYPE_ARCHER,oPC) > 0 ||
+        else if(GetLevelByClass(CLASS_TYPE_BOWMAN,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_DRAGON_SHAMAN,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_HEXBLADE,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_WARLOCK,oPC) > 0 ||

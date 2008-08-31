@@ -29,7 +29,7 @@ if(DEBUG) DoDebug("m1q0bteach_item running");
                 GetLevelByClass(CLASS_TYPE_CRUSADER,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_WARLOCK,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_DRAGON_SHAMAN,oPC) > 0 ||
-                GetLevelByClass(CLASS_TYPE_ARCHER,oPC) > 0 ||
+                GetLevelByClass(CLASS_TYPE_BOWMAN,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_DRAGONFIRE_ADEPT,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_SOHEI,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_SHAMAN,oPC) > 0 ||

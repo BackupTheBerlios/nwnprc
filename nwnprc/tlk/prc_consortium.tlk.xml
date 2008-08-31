@@ -15048,44 +15048,40 @@ Use: Automatic.</entry>
 Prerequisite: Archer level 1
 Specifics: When he using a bow, he gains a attack bonus +2 to level 1, +3 to level 5, +4 to level 10, +5 to level 15, +6 to level 20, +7 to level 25, +8 to level 30, +9 to level 30.
 Use: Automatic.</entry>
-  <entry id="48761" lang="en" sex="m">Archer</entry>
-  <entry id="48762" lang="en" sex="m">Archers</entry>
-  <entry id="48763" lang="en" sex="m">archer</entry>
+  <entry id="48761" lang="en" sex="m">Bowman</entry>
+  <entry id="48762" lang="en" sex="m">Bowmen</entry>
+  <entry id="48763" lang="en" sex="m">bowman</entry>
   <entry id="48764" lang="en" sex="m">(BASE CLASS)
 The Archer is a variant of the Fighter class, relying upon their skill with a bow.
 
-- Hit Die: d8.
-- Proficiencies: Simple and Martial Weapon, Light and Medium Armor Proficiency.
-- Skill Points: 3 + Int Modifier.
+- Hit Die: d10.
+- Proficiencies: Bowman are proficient with all simple and martial weapons, and light and medium armour. 
+- Skill Points: 6 + Int Modifier.
 
 ABILITIES:
 
-Level
-1: Bow +2
-  Point Blank Shot
-2: Extra Shot - Using a bow, he gains a extra attack.
-3: Archery Feat - (Killing Shot, Many Shot, Perfect Shot, Call Shot, Rapid Shot, Zen Archery, Improved Critical (Ranged), Weapon Focus (Ranged)).
-4: Pinpoint Accuracy - Spending rounds to aim, gains +2 to attack per concentration round.
-5: Bow +3
-7: Archery Feat
-8: Weapon Specialization - Become eligible to take Bow Mastery (attack +1).
-10: Bow +4
-11: Archery Feat
-15: Bow +5
-  Archery Feat
-18: Ranged Disarm
-19: Archery Feat
-20: Bow +6
-
-Base Attack Bonus: Fighter -1
-
-EPIC:
-
-Bonus Feats: The epic Archer gains a bonus feat every three levels after 20th.
-Every five levels his Bow bonus increase by +1.
-
-Archer Bonus Feats List:
-Armor Skin, Blinding Speed, Devastating Critical (Ranged Weapon), Epic Toughness, Epic Weapon Focus (Ranged Weapon), Epic Prowess, Great Dexterity, Overwhelming Critical (Ranged Weapon), Superior Initiative.</entry>
+Level  BAB   Ref   Fort  Will  Abilities                        
+----------------------------------------------------------------
+1      +1    +2    +2    +0    Sneak Attack +1d6, Fast Movement
+2      +2    +3    +3    +1    Bonus Feats, Archer's Focus 1/day                     
+3      +3    +3    +3    +1                                     
+4      +4    +4    +4    +2    Sneak Attack +2d6                
+5      +5    +4    +4    +2    Sniper's Skill, Archer's Focus 2/day                                 
+6      +6    +5    +5    +3    Bonus Feats                      
+7      +7    +5    +5    +3                                     
+8      +8    +6    +6    +2    Sneak Attack +3d6, Archer's Focus 3/day
+9      +9    +6    +6    +3    Agile Focus                                 
+10     +10   +7    +7    +3    Bonus Feats                      
+11     +11   +7    +7    +3    Archer's Focus 4/day                                 
+12     +12   +8    +8    +4    Sneak Attack +4d6                
+13     +13   +8    +8    +4    Adept Focus                                 
+14     +14   +9    +9    +4    Bonus Feats, Archer's Focus 5/day                      
+15     +15   +9    +9    +5                                     
+16     +16   +10   +10   +5    Sneak Attack +5d6                
+17     +17   +10   +10   +5    Archer's Focus 6/day                                 
+18     +18   +11   +11   +6    Bonus Feats                      
+19     +19   +11   +11   +6    Supreme Focus                                 
+20     +20   +12   +12   +6    Sneak Attack +6d6, Archer's Focus 7/day</entry>
   <entry id="48765" lang="en" sex="m">Unarmed Damage Stance 1</entry>
   <entry id="48766" lang="en" sex="m">Unarmed Damage Stance 2</entry>
   <entry id="48767" lang="en" sex="m">Unarmed Damage Stance 3</entry>
@@ -20721,6 +20717,31 @@ Use: Automatic.</entry>
   <entry id="50638" lang="en" sex="m">&lt;CUSTOM0&gt; turns water creatures.</entry>
   <entry id="50639" lang="en" sex="m">&lt;CUSTOM0&gt; turns fire creatures.</entry>
   <entry id="50640" lang="en" sex="m">&lt;CUSTOM0&gt; turns blightspawned.</entry>
+  <entry id="50641" lang="en" sex="m">Archer's Focus</entry>
+  <entry id="50642" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Bowman level 2
+Benefit: Scorching enemies with his focus, the bowman's arrows strike with precision and deadly force. He gains +4 to Dexterity and 1 extra attack per round. Duration of the focus is 3 rounds + one round per two class levels. He starts with one use per day. At levels 5, 8, 11, 14, 17, and 20 he gains another use.
+Use: Selected.</entry>
+  <entry id="50643" lang="en" sex="m">Sniper's Skill</entry>
+  <entry id="50644" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Bowman level 5
+Benefit: The Bowman adds his dexterity to damage when wielding a bow.
+Use: Automatic.</entry>
+  <entry id="50645" lang="en" sex="m">Agile Focus</entry>
+  <entry id="50646" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Bowman level 9
+Benefit: At 9th level, a Bowman’s bonus to Dexterity during his focus increase to +6, and a second extra attack per round.
+Use: Automatic.</entry>
+  <entry id="50647" lang="en" sex="m">Adept Focus</entry>
+  <entry id="50648" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Bowman level 13
+Benefit: At 13th level, a Bowman’s bonus to Dexterity during his focus increase to +8, and a third extra attack per round.
+Use: Automatic.</entry>
+  <entry id="50649" lang="en" sex="m">Supreme Focus</entry>
+  <entry id="50650" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Bowman level 19
+Benefit: At 19th level, a Bowman’s bonus to Dexterity during his focus increase to +10, and a fourth extra attack per round.
+Use: Automatic.</entry>
   <entry id="50656" lang="en" sex="m">Discharge Crown</entry>
   <entry id="50658" lang="en" sex="m">Shadowmaster Shades</entry>
   <entry id="50659" lang="en" sex="m">Dominate Elemental</entry>

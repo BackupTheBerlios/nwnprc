@@ -15,7 +15,7 @@ if(DEBUG) DoDebug("m1q0dchest1 running");
     {
         SetLocalInt(oPC,"NW_L_M1Q0Item3",TRUE);
         if(GetLevelByClass(CLASS_TYPE_BARBARIAN,oPC) > 0 ||
-           GetLevelByClass(CLASS_TYPE_ARCHER,oPC) > 0 ||
+           GetLevelByClass(CLASS_TYPE_BOWMAN,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_WARBLADE,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_SWORDSAGE,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_DUSKBLADE,oPC) > 0 ||

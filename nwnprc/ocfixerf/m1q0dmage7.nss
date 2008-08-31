@@ -59,7 +59,7 @@ if(DEBUG) DoDebug("m1q0dmage7 running");
             GetLevelByClass(CLASS_TYPE_SWASHBUCKLER,oPC) > 0 ||
             GetLevelByClass(CLASS_TYPE_SOULKNIFE,oPC) > 0 ||
             GetLevelByClass(CLASS_TYPE_HEXBLADE,oPC) > 0 ||
-            GetLevelByClass(CLASS_TYPE_ARCHER,oPC) > 0 ||
+            GetLevelByClass(CLASS_TYPE_BOWMAN,oPC) > 0 ||
             GetLevelByClass(CLASS_TYPE_ROGUE,oPC) > 0)
     {
         sItemTemplate = "nw_it_mglove009"; //Gloves of Swordplay

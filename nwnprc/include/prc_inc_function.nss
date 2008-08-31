@@ -111,7 +111,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_INITIATE_DRACONIC,oPC) > 0)    ExecuteScript("prc_initdraconic", oPC);
     if(GetLevelByClass(CLASS_TYPE_BLADESINGER,oPC) > 0)          ExecuteScript("prc_bladesinger", oPC);
     if(GetLevelByClass(CLASS_TYPE_HEXTOR,oPC) > 0)               ExecuteScript("prc_hextor", oPC);
-    if(GetLevelByClass(CLASS_TYPE_ARCHER,oPC) > 0)               ExecuteScript("prc_archer", oPC);
+    if(GetLevelByClass(CLASS_TYPE_BOWMAN,oPC) > 0)               ExecuteScript("prc_bowman", oPC);
     if(GetLevelByClass(CLASS_TYPE_TEMPUS,oPC) > 0)               ExecuteScript("prc_battletempus", oPC);
     if(GetLevelByClass(CLASS_TYPE_DISPATER,oPC) > 0)             ExecuteScript("prc_dispater", oPC);
     if(GetLevelByClass(CLASS_TYPE_MANATARMS,oPC) > 0)            ExecuteScript("prc_manatarms", oPC);

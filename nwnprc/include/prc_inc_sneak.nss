@@ -177,6 +177,13 @@ int GetRogueSneak(object oPC)
       if (iClassLevel > 0) iRogueSneak += ((iClassLevel - 1) / 4) + 1;
    }
    
+   if (GetWeaponRanged(oWeapon))
+   {
+      // Bowman
+      iClassLevel = GetLevelByClass(CLASS_TYPE_BOWMAN, oPC);
+      if (iClassLevel > 0) iRogueSneak += ((iClassLevel) / 4) + 1;
+   }   
+   
    //Justice of Weald and Woe
    iClassLevel = GetLevelByClass(CLASS_TYPE_JUSTICEWW, oPC);
    if(iClassLevel > 1) iRogueSneak++;

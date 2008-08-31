@@ -227,8 +227,8 @@ int GetNormalUtterSpellId(int nSpellId)
 	else if (nSpellId == BRIMSTONE_FIRE_3D6 || nSpellId == BRIMSTONE_FIRE_5D6 || nSpellId == BRIMSTONE_FIRE_8D6) return BRIMSTONE_FIRE_3D6;
 	else if (nSpellId == BRIMSTONE_HEAVEN_LESSER || nSpellId == BRIMSTONE_HEAVEN_NORMAL || nSpellId == BRIMSTONE_HEAVEN_GREATER) return BRIMSTONE_HEAVEN_LESSER;
 
-	// This should never be triggered
-	return -1;
+	// This is the return for those with no reverse.
+	return nSpellId;
 }
 
 int GetSwitchAdjustedDC(int nCR, int nTargets, object oTrueSpeaker)
@@ -380,6 +380,7 @@ void ClearLawLocalVars(object oTrueSpeaker)
 		DeleteLocalInt(oTrueSpeaker, LAW_OF_RESIST_VARNAME + IntToString(i));
 		DeleteLocalInt(oTrueSpeaker, LAW_OF_SEQUENCE_VARNAME + IntToString(i));
 	}
+	DeleteLocalInt(oTrueSpeaker, LAW_OF_SEQUENCE_VARNAME + IntToString(UTTER_CONJUNCTIVE_GATE));
 }
 
 int AddPersonalTruenameDC(object oTrueSpeaker, object oTarget)

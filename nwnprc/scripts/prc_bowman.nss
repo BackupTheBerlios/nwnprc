@@ -45,7 +45,7 @@ void main()
         AddEventScript(oPC, EVENT_ONPLAYERUNEQUIPITEM, "prc_bowman", TRUE, FALSE);
     }
     // We are called from the OnPlayerEquipItem eventhook. Add OnHitCast: Unique Power to oPC's weapon
-    else if(nEvent == EVENT_ONPLAYEREQUIPITEM)
+    else if(nEvent == EVENT_ONPLAYEREQUIPITEM && nClass >= 5)
     {
         oPC   = GetItemLastEquippedBy();
         oItem = GetItemLastEquipped();
@@ -73,7 +73,7 @@ void main()
         }
     }
     // We are called from the OnPlayerUnEquipItem eventhook. Remove OnHitCast: Unique Power from oPC's weapon
-    else if(nEvent == EVENT_ONPLAYERUNEQUIPITEM)
+    else if(nEvent == EVENT_ONPLAYERUNEQUIPITEM && nClass >= 5)
     {
         oPC   = GetItemLastUnequippedBy();
         oItem = GetItemLastUnequipped();

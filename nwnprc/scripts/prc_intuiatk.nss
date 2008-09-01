@@ -55,7 +55,8 @@ int isLight(object oItem)
 void main()
 {
     if(DEBUG) DoDebug("prc_intuiatk: Running main()");
-   object oPC = GetSpellTargetObject();
+   //object oPC = GetSpellTargetObject();
+   object oPC = OBJECT_SELF; // This should only be called via ExecuteScript on the target, so...
    object oSkin = GetPCSkin(oPC);
 
    if (GetHasFeat(FEAT_RAVAGEGOLDENICE, oPC))

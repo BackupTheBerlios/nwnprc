@@ -86,6 +86,13 @@ void main()
                     if(GetIsMetalocationInModule(mlocL))
                         AddChoice(MetalocationToString(mlocL), i, oPC);
                 }
+                
+                if (nMax == 0) // This ejects people from the conversation for having no locations
+                {
+                        FloatingTextStringOnCreature("You do not have any teleport locations stored, aborting teleport.", oPC, FALSE);
+                        // Mark the conversation as finished and allow exiting
+		       	AllowExit(DYNCONV_EXIT_FORCE_EXIT);
+                }
 
                 MarkStageSetUp(STAGE_MAIN, oPC);
                 SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values

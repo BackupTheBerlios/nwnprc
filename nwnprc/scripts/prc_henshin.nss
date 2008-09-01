@@ -18,10 +18,11 @@
 /// Immune to Sneak Attacks /////////
 void HappoZanshin(object oPC, object oSkin)
 {
-    if(GetLocalInt(oSkin, "Happo") == TRUE) return;
+    if(DEBUG) DoDebug("Happo Zanshin: Entered");
 
-    AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyImmunityMisc(IMMUNITY_TYPE_SNEAK_ATTACK), oSkin);
-    SetLocalInt(oSkin, "Happo", TRUE);
+    if(DEBUG) DoDebug("Happo Zanshin: Applied");
+    ApplyEffectToObject(DURATION_TYPE_PERMANENT, ExtraordinaryEffect(EffectImmunity(IMMUNITY_TYPE_SNEAK_ATTACK)), oPC);
+    if(DEBUG) DoDebug("Happo Zanshin: Exited");
 }
 
 

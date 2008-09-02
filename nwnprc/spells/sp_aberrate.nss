@@ -35,7 +35,7 @@ void main()
 {   
     object oPC = OBJECT_SELF;
     object oTarget = GetSpellTargetObject();
-    object oSkin = GetPCSkin(oPC);
+    object oSkin = GetPCSkin(oTarget);
     int nCasterLvl = PRCGetCasterLevel(oPC);
     int nMetaMagic = PRCGetMetaMagicFeat();
     float fDur = (600.0f * nCasterLvl);

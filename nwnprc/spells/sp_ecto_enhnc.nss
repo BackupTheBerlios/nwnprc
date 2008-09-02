@@ -33,48 +33,49 @@ Created:   5/9/06
 
 void main()
 {
-	//vars
-	object oPC = OBJECT_SELF;
-	location lLoc = GetSpellTargetLocation();
-	int nCasterLvl = PRCGetCasterLevel(oPC);
-	int nBonus = max((nCasterLvl/3), 1);
-	int nRace; 
-	
-	//Spellhook
-	if(!X2PreSpellCastCode()) return;
-	
-	PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
-	
-	object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lLoc, FALSE, OBJECT_TYPE_CREATURE);
-		
-	//loop
-	while(GetIsObjectValid(oTarget))
-	{
-		nRace = MyPRCGetRacialType(oTarget);
-		//Check for incorporeal undead
-		if(GetIsIncorporeal(oTarget))
-		
-		{
-			effect eLink = EffectACIncrease(nBonus, AC_DEFLECTION_BONUS);
-			       eLink = EffectLinkEffects(eLink, EffectTurnResistanceIncrease(nBonus + 1));
-			       eLink = EffectLinkEffects(eLink, EffectTemporaryHitpoints(d8(1) + nBonus - 1));
-			       eLink = EffectLinkEffects(eLink, EffectAttackIncrease(nBonus));
-			       eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_PARALYZED));
-			
-			//Apply for 1 day
-			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(24));
-			
-		}
-	}
-	
-	SPEvilShift(oPC);
-	PRCSetSchool();
-}
-			
-			
-	
-	
-	
-	
-	
-	
+        //vars
+        object oPC = OBJECT_SELF;
+        location lLoc = GetSpellTargetLocation();
+        int nCasterLvl = PRCGetCasterLevel(oPC);
+        int nBonus = max((nCasterLvl/3), 1);
+        int nRace; 
+        
+        //Spellhook
+        if(!X2PreSpellCastCode()) return;
+        
+        PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
+        
+        object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lLoc, FALSE, OBJECT_TYPE_CREATURE);
+                
+        //loop
+        while(GetIsObjectValid(oTarget))
+        {
+                nRace = MyPRCGetRacialType(oTarget);
+                //Check for incorporeal undead
+                if(nRace == RACIAL_TYPE_UNDEAD)
+                {                        
+                        if(GetIsIncorporeal(oTarget))
+                        {                       
+                                effect eLink = EffectACIncrease(nBonus, AC_DEFLECTION_BONUS);
+                                eLink = EffectLinkEffects(eLink, EffectTurnResistanceIncrease(nBonus + 1));
+                                eLink = EffectLinkEffects(eLink, EffectTemporaryHitpoints(d8(1) + nBonus - 1));
+                                eLink = EffectLinkEffects(eLink, EffectAttackIncrease(nBonus));
+                                eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_PARALYZED));
+                                
+                                //Apply for 1 day
+                                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(24));
+                        }
+                        
+                        else
+                        {
+                                SendMessageToPC(oPC, "Target creature is not incorporeal.");
+                }                
+                else
+                {
+                        SendMessageToPC(oPC, "Target creature is not undead.");
+                        return;
+                }
+        }        
+        SPEvilShift(oPC);
+        PRCSetSchool();
+}      

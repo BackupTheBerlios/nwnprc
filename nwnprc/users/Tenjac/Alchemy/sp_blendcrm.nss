@@ -20,4 +20,5 @@ void main()
 {
         object oTarget = PRCGetSpellTargetObject();
         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectSkillIncrease(SKILL_HIDE), oTarget, HoursToSeconds(1));
+        SendMessageToPC(oTarget, "The color of your skin, hair, and clothing dulls.");
 }

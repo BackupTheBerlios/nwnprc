@@ -1,3 +1,9 @@
+////////////////////////////////////////////////////////
+// Softfoot
+// sp_softfoot.nss
+////////////////////////////////////////////////////////
+
+/*
 Softfoot: Softfoot is a fine gray powder that muffles
 sound when applied to the bottom of a foot or boot. It
 provides a +1 alchemical bonus on Move Silently checks
@@ -11,3 +17,13 @@ or other foot covering, its benefit is lost if the foot covering
 is removed. Likewise, if it is applied to a creature’s
 skin or hide, its benefit is lost if the creature later dons
 footwear.
+*/
+
+#include "prc_inc_spells"
+
+void main()
+{
+        object oTarget = PRCGetSpellTargetObject();
+        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectSkillIncrease(SKILL_MOVE_SILENTLY), oTarget, HoursToSeconds(1));
+        SendMessageToPC(oTarget, "Your footsteps are muffled.");
+}

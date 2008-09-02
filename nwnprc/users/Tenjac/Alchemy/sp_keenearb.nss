@@ -1,3 +1,9 @@
+//////////////////////////////////////////////////////////////
+// Keenear Powder
+// sp_keenear.nss
+//////////////////////////////////////////////////////////////
+
+/*
 Keenear Powder: This dry white powder sharpens a
 creature’s hearing when applied to the ear. The powder
 is effective for only a short time, so it is more often used
@@ -10,3 +16,12 @@ hearing of a creature of any size, but the creature must
 have ears to gain any benefit from the powder. Applying
 keenear powder is a standard action that provokes attacks
 of opportunity.
+*/
+
+#include "prc_inc_spells"
+
+void main()
+{
+        object oTarget = PRCGetSpellTargetObject();
+        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectSkillIncrease(SKILL_LISTEN), oTarget, TurnsToSeconds(1));
+}

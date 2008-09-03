@@ -24,4 +24,5 @@ void main()
 {
         object oTarget = PRCGetSpellTargetObject();
         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectSkillIncrease(SKILL_LISTEN), oTarget, TurnsToSeconds(1));
+        SendMessageToPC(oTarget, "Your hearing is enchanced.");
 }

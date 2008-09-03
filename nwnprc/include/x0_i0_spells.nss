@@ -260,7 +260,7 @@ void DoGrenade(int nDirectDamage, int nSplashDamage, int vSmallHit, int vRingHit
         happening away from where the grenade hits.
         We could convert everything to splash...
         */
-            nTouch = PRCDoRangedTouchAttack(oTarget);;
+            nTouch = PRCDoRangedTouchAttack(oTarget);
 
     }
     else

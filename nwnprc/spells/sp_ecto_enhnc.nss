@@ -69,6 +69,7 @@ void main()
                         else
                         {
                                 SendMessageToPC(oPC, "Target creature is not incorporeal.");
+                        }
                 }                
                 else
                 {

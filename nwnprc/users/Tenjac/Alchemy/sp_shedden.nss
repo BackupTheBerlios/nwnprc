@@ -38,5 +38,5 @@ void main()
         
         else return;
         
-        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectACIncrease(nBonus, AC_NATURAL_BONUS, TurnsToSeconds(2)));
+        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectACIncrease(nBonus, AC_NATURAL_BONUS), oTarget, TurnsToSeconds(2)));
 }

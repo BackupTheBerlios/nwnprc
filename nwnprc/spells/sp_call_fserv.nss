@@ -41,60 +41,60 @@ void SummonLoop(int nCounter, location lLoc, object oPC);
 
 void main()
 {
-	if(!X2PreSpellCastCode()) return;
-	
-	PRCSetSchool(SPELL_SCHOOL_CONJURATION);
-	
-	object oPC = OBJECT_SELF;
-	location lLoc = GetSpellTargetLocation();
-	int nCounter = d4(1);
-	int nMetaMagic = PRCGetMetaMagicFeat();
-	
-	if(nMetaMagic == METAMAGIC_MAXIMIZE)
-	{
-		nCounter = 4;
-	}
-	if(nMetaMagic == METAMAGIC_EMPOWER)
-	{
-		nCounter += (nCounter/2);
-	}
-	
-	//Must be celestial
-	 if(GetHasTemplate(TEMPLATE_CELESTIAL) || 
-	    GetHasTemplate(TEMPLATE_HALF_CELESTIAL) ||
-	    (MyPRCGetRacialType(oPC) == RACIAL_TYPE_OUTSIDER && GetAlignmentGoodEvil(oPC) == ALIGNMENT_GOOD)
-	    )
-	 
-	 {
-		 //Get original max henchmen
-		 int nMax = GetMaxHenchmen();
-		 
-		 //Set new max henchmen high
-		 SetMaxHenchmen(150);
-		 
-		 SummonLoop(nCounter, lLoc, oPC);
-		 
-		 //Restore original max henchmen		 
-		 SetMaxHenchmen(nMax);
-	 }
-	 
-	 PRCSetSchool();
-	 SPGoodShift(oPC);
+        if(!X2PreSpellCastCode()) return;
+        
+        PRCSetSchool(SPELL_SCHOOL_CONJURATION);
+        
+        object oPC = OBJECT_SELF;
+        location lLoc = GetSpellTargetLocation();
+        int nCounter = d4(1);
+        int nMetaMagic = PRCGetMetaMagicFeat();
+        
+        if(nMetaMagic == METAMAGIC_MAXIMIZE)
+        {
+                nCounter = 4;
+        }
+        if(nMetaMagic == METAMAGIC_EMPOWER)
+        {
+                nCounter += (nCounter/2);
+        }
+        
+        //Must be celestial
+         if(GetHasTemplate(TEMPLATE_CELESTIAL) || 
+            GetHasTemplate(TEMPLATE_HALF_CELESTIAL) ||
+            (MyPRCGetRacialType(oPC) == RACIAL_TYPE_OUTSIDER && GetAlignmentGoodEvil(oPC) == ALIGNMENT_GOOD)
+            )
+         
+         {
+                 //Get original max henchmen
+                 int nMax = GetMaxHenchmen();
+                 
+                 //Set new max henchmen high
+                 SetMaxHenchmen(150);
+                 
+                 SummonLoop(nCounter, lLoc, oPC);
+                 
+                 //Restore original max henchmen                 
+                 SetMaxHenchmen(nMax);
+         }
+         
+         PRCSetSchool();
+         SPGoodShift(oPC);
 }
 
 void SummonLoop(int nCounter, location lLoc, object oPC)
 {
-	while(nCounter > 0)
-	{
-		//Create appropriate Ghoul henchman
-		object oArchon = CreateObject(OBJECT_TYPE_CREATURE, "nw_clantern", lLoc, TRUE, "Archon" + IntToString(nCounter)); 
-		
-		//Make henchman
-		AddHenchman(oPC, oArchon);
-		
-		nCounter--;
-		SummonLoop(nCounter, lLoc, oPC);
-	}
+        while(nCounter > 0)
+        {
+                //Create appropriate Ghoul henchman
+                object oArchon = CreateObject(OBJECT_TYPE_CREATURE, "nw_s_clantern", lLoc, TRUE, "Archon" + IntToString(nCounter)); 
+                
+                //Make henchman
+                AddHenchman(oPC, oArchon);
+                
+                nCounter--;
+                SummonLoop(nCounter, lLoc, oPC);
+        }
 }
-	
-	
+        
+        

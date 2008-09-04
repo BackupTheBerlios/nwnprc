@@ -72,6 +72,8 @@ void main()
         //only pay the cost if cast sucessfully
         DoCorruptionCost(oPC, ABILITY_CONSTITUTION, d3(), 0);
     }
+    
+    else FloatingTextStringOnCreature("This spell must be cast outdoors and aboveground.", oPC, FALSE);
 
     //Sanctified spells get mandatory 10 pt good adjustment, regardless of switch
     AdjustAlignment(oPC, ALIGNMENT_GOOD, 10);

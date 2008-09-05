@@ -49219,4 +49219,30 @@ You and your allies can breathe water freely. The spell does not make creatures 
 Prerequisite: None.
 Specifics: Using this feat will end the Treeshape spell on the user.
 Use: Selected.</entry>
+  <entry id="70078" lang="en" sex="m">Acidic Fire</entry>
+  <entry id="70079" lang="en" sex="m">Alchemist's Frost
+</entry>
+  <entry id="70080" lang="en" sex="m">Alchemical Sleeping Gas</entry>
+  <entry id="70081" lang="en" sex="m">Alchemist's Spark</entry>
+  <entry id="70082" lang="en" sex="m">Blend Cream</entry>
+  <entry id="70083" lang="en" sex="m">Brittlebone</entry>
+  <entry id="70084" lang="en" sex="m">Cracklepowder</entry>
+  <entry id="70085" lang="en" sex="m">Embalming Fire</entry>
+  <entry id="70086" lang="en" sex="m">Fareye Oil</entry>
+  <entry id="70087" lang="en" sex="m">Festering Bomb</entry>
+  <entry id="70088" lang="en" sex="m">Flash Pellet</entry>
+  <entry id="70089" lang="en" sex="m">Healer's Balm</entry>
+  <entry id="70090" lang="en" sex="m">Keenear Powder</entry>
+  <entry id="70091" lang="en" sex="m">Lockslip Grease</entry>
+  <entry id="70092" lang="en" sex="m">Natures Draught</entry>
+  <entry id="70093" lang="en" sex="m">Nerv</entry>
+  <entry id="70094" lang="en" sex="m">Screaming Flask</entry>
+  <entry id="70095" lang="en" sex="m">Softfoot</entry>
+  <entry id="70096" lang="en" sex="m">Weeping Stone</entry>
+  <entry id="70097" lang="en" sex="m">Bile Droppings</entry>
+  <entry id="70098" lang="en" sex="m">Shedden</entry>
+  <entry id="70099" lang="en" sex="m">Shedden +2</entry>
+  <entry id="70100" lang="en" sex="m">Shedden +3</entry>
+  <entry id="70101" lang="en" sex="m">Shedden +4</entry>
+  <entry id="70102" lang="en" sex="m">Shedden +5</entry>
 </tlk>

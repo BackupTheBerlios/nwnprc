@@ -87,7 +87,7 @@ void main()
         //Hook the onhit script
         itemproperty ipHook = ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1);
         IPSafeAddItemProperty(oArrowBone, ipHook, 0.0f);
-        AddEventScript(oArrowBone, EVENT_ONHIT, "prc_evnt_arrbone", FALSE, FALSE);        
+        AddEventScript(oArrowBone, EVENT_ITEM_ONHIT, "prc_evnt_arrbone", FALSE, FALSE);        
                 
         PRCSetSchool();
 }

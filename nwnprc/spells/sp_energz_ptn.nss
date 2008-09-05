@@ -81,7 +81,7 @@ void main()
         else DestroyObject(oPotion);
         
         //Create the grenade            
-        object oGrenade = CreateItemOnObject("nw_it_enrgpot", oPC, 1);
+        object oGrenade = CreateItemOnObject("prc_it_enrgpot", oPC, 1);
         
         if(nSpell == SPELL_ENERGIZE_POTION_ACID)
         {

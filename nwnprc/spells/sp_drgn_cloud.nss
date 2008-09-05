@@ -46,7 +46,7 @@ void SummonDragonCloud(location lLoc, float fDur)
 {
     MultisummonPreSummon();
     effect sSummon = EffectSummonCreature("prc_drag_cld");
-    ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, sSummon, lLoc, fDur);
+    ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, sSummon, lLoc, fDur); 
 }
 
 void main()
@@ -67,8 +67,8 @@ void main()
     if(nAbove == AREA_ABOVEGROUND && nInside == FALSE)
     {
         effect eVis = EffectVisualEffect(VFX_FNF_SUMMONDRAGON);
-        DelayCommand(60.0f, ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, lLoc));
-        DelayCommand(60.0f, SummonDragonCloud(lLoc, fDur));
+        DelayCommand(TurnsToSeconds(1), ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, lLoc));
+        DelayCommand(TurnsToSeconds(1), SummonDragonCloud(lLoc, fDur));
         //only pay the cost if cast sucessfully
         DoCorruptionCost(oPC, ABILITY_CONSTITUTION, d3(), 0);
     }

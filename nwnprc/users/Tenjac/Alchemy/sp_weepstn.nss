@@ -16,9 +16,10 @@ void main()
 {
         object oTarget = GetSpellTargetObject();
         int nTouch = PRCDoRangedTouchAttack(oTarget);
-        
+                
         if(nTouch)
         {
-                //-2 attack, skills, saves, and ability checks
-                effect eShaken = EffectLinkEffects(EffectAttackDecrease(2), EffectSkillDecrease(SKILL_ALL_SKILLS, 2));
-                       eShaken = EffectLinkEffects(eShaken, EffectSavingThrowDecrease(SAVING_THROW_ALL, 2, SAVING_THROW_TYPE_ALL));
+                int nRounds = d6(1);
+                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectShaken(), oTarget, RoundsToSeconds(nRounds));
+        }
+}

@@ -74,7 +74,11 @@ void main()
         }
         
         //Remove potion being converted
-        DestroyObject(oPotion);
+        int nStack = GetItemStackSize(oPotion);
+        
+        if(nStack > 1) SetItemStackSize(oPotion, (nStack - 1));
+        
+        else DestroyObject(oPotion);
         
         //Create the grenade            
         object oGrenade = CreateItemOnObject("nw_it_enrgpot", oPC, 1);

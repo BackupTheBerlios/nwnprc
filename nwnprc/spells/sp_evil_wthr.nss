@@ -130,7 +130,7 @@ void RainOfBlood(object oObject, effect eBuff, effect eDebuff, float fDuration)
                 //Send message to PCs
                 if(GetIsPC(oObject))
                 {
-                        SendMessageToPC(oObject, "The sky pours a thick rain of blood");
+                        FloatingTextStringOnCreature("Blood pours from the sky.", oObject, FALSE);
                 }
                 
                 int nType = MyPRCGetRacialType(oObject);
@@ -161,10 +161,10 @@ void VioletRain(object oObject)
                 //Send message to PCs
                 if(GetIsPC(oObject))
                 {
-                        SendMessageToPC(oObject, "Drops of deep violet rain fall, severing the connection to the divine of those in the area.");
+                        FloatingTextStringOnCreature("Drops of deep violet rain fall, severing the connection to the divine of those in the area.", oObject, FALSE);
                 }
                 
-                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE), oObject, HoursToSeconds(24));
+                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_BRIGHT_LIGHT_INDIGO_PULSE_SLOW), oObject, HoursToSeconds(24));
                 
                 oObject = GetNextObjectInArea();
                 
@@ -178,7 +178,7 @@ void RainOfFrogsOrFish(object oObject)
         {
                 if(GetIsPC(oObject))
                 {
-                        SendMessageToPC(oObject, "Frogs and fish rain from the sky, pummeling all in the area.");
+                        FloatingTextStringOnCreature("Frogs and fish rain from the sky, pummeling all in the area.", oObject, FALSE);
                 }
                 
                 //Asign local obj to check Area
@@ -190,5 +190,4 @@ void RainOfFrogsOrFish(object oObject)
                 oObject = GetNextObjectInArea();
                 RainOfFrogsOrFish(oObject);
         }
-}
-        
+}     

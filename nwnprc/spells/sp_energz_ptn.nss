@@ -137,6 +137,4 @@ void main()
         SetName(oGrenade, sStrength + " " + "Energized" + " " + sDamageType + " " + "Potion");   
         
         PRCSetSchool();
-}
-        
-        
+}   

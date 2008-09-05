@@ -1,6 +1,6 @@
 //::///////////////////////////////////////////////
 //:: Name      Repulsion
-//:: FileName  sp_repulsionA.nss
+//:: FileName  sp_repulsionC.nss
 //:://////////////////////////////////////////////7
 /** @file Repulsion
 Abjuration
@@ -35,11 +35,11 @@ Arcane Focus: A pair of small iron bars attached to two
 small canine statuettes, one black and one white, the 
 whole array worth 50 gp. 
 
-On Enter script
+HB script
 **/
 //////////////////////////////////////////////////////
-// Author: Tenjac
-// Date:   7.10.06
+// Author: fluffyamoeba
+// Date:   2008-09-05
 //////////////////////////////////////////////////////
 
 void DoPush(object oTarget, object oCaster);
@@ -49,24 +49,19 @@ void DoPush(object oTarget, object oCaster);
 
 void main()
 {
-        object oCaster = GetAreaOfEffectCreator();
-        object oTarget = GetEnteringObject();
-        int nDC = PRCGetSaveDC(oTarget, oCaster);
-        
-        
-        if(oTarget != oCaster && (GetObjectType(oTarget) == OBJECT_TYPE_CREATURE))
+    object oCaster = GetAreaOfEffectCreator();
+    object oTarget = GetFirstInPersistentObject(OBJECT_SELF);
+    while(GetIsObjectValid(oTarget))
+    {
+        if(oTarget != oCaster)
         {
-                //SR
-                if(!PRCDoResistSpell(oCaster, oTarget, PRCGetCasterLevel(oCaster) + SPGetPenetr()))
-                {
-                        //Saving Throw
-                        if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
-                        {
-                            SetLocalInt(oTarget,"repulsive",1);
-                            DoPush(oTarget, oCaster);
-                        }
-                }
-        }                       
+            // check if they're supposed to be there
+            if(GetLocalInt(oTarget,"repulsive"))
+                DoPush(oTarget, oCaster);
+        }
+        //Get next target.
+        oTarget = GetNextInPersistentObject(OBJECT_SELF);
+    }
 }
 
 void DoPush(object oTarget, object oCaster)

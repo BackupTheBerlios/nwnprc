@@ -5,11 +5,9 @@
 
 /*
 Acidic Fire: The alchemical concoction combines alchemical fire with a strong acid. 
-A direct hit with acidic fire deals 1d4 points of acid damage and 1d4 points of fire damage.
+A direct hit with acidic fire deals 1d4 points of acid damage and 1d8 points of fire damage.
 Every creature within 5 feet of the point where the acidic fire hits takes 1 point of acid 
-damage and 1 point of fire damage from the splash. On the round following a direct hit, the 
-target takes an additional 1d4 points of fire damage; this damage can be avoided in the same
-way as for alchemist’s fire.
+damage and 1 point of fire damage from the splash. 
 
 Taken from x0_s3_alchem
 */
@@ -61,7 +59,7 @@ void main()
     }
     else if(nTarget == OBJECT_TYPE_CREATURE || OBJECT_TYPE_DOOR || OBJECT_TYPE_PLACEABLE)
     {
-        DoGrenade(d4(1),1, VFX_IMP_FLAME_M, VFX_FNF_FIREBALL,DAMAGE_TYPE_FIRE,RADIUS_SIZE_HUGE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+        DoGrenade(d8(1),1, VFX_IMP_FLAME_M, VFX_FNF_FIREBALL,DAMAGE_TYPE_FIRE,RADIUS_SIZE_HUGE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
         DoGrenade(d4(1),1, VFX_IMP_ACID_L, VFX_FNF_GAS_EXPLOSION_ACID, DAMAGE_TYPE_ACID, RADIUS_SIZE_HUGE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
     }
 }

@@ -387,7 +387,8 @@ void _UtteranceRangeCheck(object oTrueSpeaker, int nUtter, location lTarget)
         object oWP = CreateObject(OBJECT_TYPE_WAYPOINT, "nw_waypoint001", lTarget);
 
         // Move into range, with a bit of fudge-factor
-        ActionMoveToObject(oWP, TRUE, fRangeLimit - 0.15f);
+        //fRangeLimit /= 2;
+        //ActionMoveToObject(oWP, TRUE, fRangeLimit - 0.15f);
 
         // CleanUp
         ActionDoCommand(DestroyObject(oWP));
@@ -592,7 +593,7 @@ void UseUtterance(int nUtter, int nClass, int nLevelOverride = 0)
     _UtteranceRangeCheck(oTrueSpeaker, nUtter, GetIsObjectValid(oTarget) ? GetLocation(oTarget) : lTarget);
 
     // Start the utterance monitor HB
-    ActionDoCommand(_UtteranceHB(oTrueSpeaker, GetLocation(oTrueSpeaker), oUtrToken));
+    DelayCommand(nUtterDur / 1000.0f, ActionDoCommand(_UtteranceHB(oTrueSpeaker, GetLocation(oTrueSpeaker), oUtrToken)));
 
     // Assuming the spell isn't used as a swift action, fakecast for visuals
     if(nUtterDur > 0)

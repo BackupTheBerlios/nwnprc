@@ -334,7 +334,7 @@ void _InvocationRangeCheck(object oInvoker, int nInvocation, location lTarget)
         object oWP = CreateObject(OBJECT_TYPE_WAYPOINT, "nw_waypoint001", lTarget);
 
         // Move into range, with a bit of fudge-factor
-        ActionMoveToObject(oWP, TRUE, fRangeLimit - 0.15f);
+        //ActionMoveToObject(oWP, TRUE, fRangeLimit - 0.15f);
 
         // CleanUp
         ActionDoCommand(DestroyObject(oWP));
@@ -499,7 +499,7 @@ void UseInvocation(int nInvocation, int nClass, int nLevelOverride = 0)
     _InvocationRangeCheck(oInvoker, nInvocation, GetIsObjectValid(oTarget) ? GetLocation(oTarget) : lTarget);
 
     // Start the invocation monitor HB
-    ActionDoCommand(_InvocationHB(oInvoker, GetLocation(oInvoker), oInvokeToken));
+    DelayCommand(IntToFloat(nInvocationDur), ActionDoCommand(_InvocationHB(oInvoker, GetLocation(oInvoker), oInvokeToken)));
 
     // Assuming the spell isn't used as a swift action, fakecast for visuals
     if(nInvocationDur > 0)

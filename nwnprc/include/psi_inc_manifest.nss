@@ -667,7 +667,7 @@ void _ManifestationRangeCheck(object oManifester, int nPower, location lTarget)
         object oWP = CreateObject(OBJECT_TYPE_WAYPOINT, "nw_waypoint001", lTarget);
 
         // Move into range, with a bit of fudge-factor
-        ActionMoveToObject(oWP, TRUE, fRangeLimit - 0.15f);
+        //ActionMoveToObject(oWP, TRUE, fRangeLimit - 0.15f);
 
         // Cleanup
         ActionDoCommand(DestroyObject(oWP));
@@ -939,7 +939,7 @@ void UsePower(int nPower, int nClass, int bIsPsiLike = FALSE, int nLevelOverride
     _ManifestationRangeCheck(oManifester, nPower, GetIsObjectValid(oTarget) ? GetLocation(oTarget) : lTarget);
 
     // Start the manifestation monitor HB
-    ActionDoCommand(_ManifestationHB(oManifester, GetLocation(oManifester), oMfToken));
+    DelayCommand(nManifDur / 1000.0f, ActionDoCommand(_ManifestationHB(oManifester, GetLocation(oManifester), oMfToken)));
 
     // Assuming the spell isn't used as a swift action, fakecast for visuals
     if(nManifDur > 0)

@@ -319,7 +319,7 @@ void _ManeuverRangeCheck(object oInitiator, int nManeuver, location lTarget)
         object oWP = CreateObject(OBJECT_TYPE_WAYPOINT, "nw_waypoint001", lTarget);
 
         // Move into range, with a bit of fudge-factor
-        ActionMoveToObject(oWP, TRUE, fRangeLimit - 0.15f);
+        //ActionMoveToObject(oWP, TRUE, fRangeLimit - 0.15f);
 
         // CleanUp
         ActionDoCommand(DestroyObject(oWP));
@@ -576,7 +576,7 @@ void UseManeuver(int nManeuver, int nClass, int nLevelOverride = 0)
     _ManeuverRangeCheck(oInitiator, nManeuver, GetIsObjectValid(oTarget) ? GetLocation(oTarget) : lTarget);
 
     // Start the maneuver monitor HB
-    ActionDoCommand(_ManeuverHB(oInitiator, GetLocation(oInitiator), oMoveToken));
+    DelayCommand(nMoveDur / 1000.0f, ActionDoCommand(_ManeuverHB(oInitiator, GetLocation(oInitiator), oMoveToken)));
     if(DEBUG) DoDebug("Starting _ManeuverHB");
 
     // Assuming the spell isn't used as a swift action, fakecast for visuals

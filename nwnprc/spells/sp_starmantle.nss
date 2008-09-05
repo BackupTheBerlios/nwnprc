@@ -44,48 +44,49 @@ Created:   7/17/06
 
 void main()
 {
-	if(!X2PreSpellCastCode()) return;
-	
-	PRCSetSchool(SPELL_SCHOOL_ABJURATION);
-	
-	object oPC = OBJECT_SELF;
-	object oTarget = GetSpellTargetObject();
-	int nType = MyPRCGetRacialType(oTarget);
-	int nCasterLvl = PRCGetCasterLevel(oPC);
-	float fDur = (60.0f * nCasterLvl);
-	int nMetaMagic = PRCGetMetaMagicFeat();
-	
-	if(nMetaMagic == METAMAGIC_EXTEND)
-	{
-		fDur += fDur;
-	}
-	
-	if(nType == RACIAL_TYPE_UNDEAD || (nType == RACIAL_TYPE_CONSTRUCT && GetRacialType(oTarget) != RACIAL_TYPE_WARFORGED))
-	{
-		PRCSetSchool();
-		return;
-	}
-	
-	//VFX
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_SANCTUARY), oTarget, fDur);
-	
-	object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oTarget);
-	
-	itemproperty ipOnHit = ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1);
-	IPSafeAddItemProperty(oArmor, ipOnHit, fDur);
-	
-	//Add event script
-	AddEventScript(oTarget, EVENT_ONHIT, "prc_evnt_strmtl", TRUE, FALSE);
-	
-	//impervious to non-magical weapons for the duration
-	effect eReduce = EffectDamageReduction(0, DAMAGE_POWER_PLUS_ONE, 0);
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eReduce, oTarget, fDur);
-	
-	PRCSetSchool();
+        if(!X2PreSpellCastCode()) return;
+        
+        PRCSetSchool(SPELL_SCHOOL_ABJURATION);
+        
+        object oPC = OBJECT_SELF;
+        object oTarget = GetSpellTargetObject();
+        int nType = MyPRCGetRacialType(oTarget);
+        int nCasterLvl = PRCGetCasterLevel(oPC);
+        float fDur = TurnsToSeconds(nCasterLvl);
+        int nMetaMagic = PRCGetMetaMagicFeat();
+        
+        if(nMetaMagic == METAMAGIC_EXTEND)
+        {
+                fDur += fDur;
+        }
+        
+        if(nType == RACIAL_TYPE_UNDEAD || (nType == RACIAL_TYPE_CONSTRUCT && GetRacialType(oTarget) != RACIAL_TYPE_WARFORGED))
+        {
+                FloatingTextStringOnCreature("Must target a living creature!", oPC, FALSE);
+                PRCSetSchool();
+                return;
+        }
+        
+        //VFX
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_SANCTUARY), oTarget, fDur);
+        
+        object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oTarget);
+        
+        itemproperty ipOnHit = ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1);
+        IPSafeAddItemProperty(oArmor, ipOnHit, fDur);
+        
+        //Add event script
+        AddEventScript(oTarget, EVENT_ONHIT, "prc_evnt_strmtl", TRUE, FALSE);
+        
+        //impervious to non-magical weapons for the duration
+        effect eReduce = EffectDamageReduction(0, DAMAGE_POWER_PLUS_ONE, 0);
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eReduce, oTarget, fDur);
+        
+        PRCSetSchool();
 }
-	
-	
-	
-	   
-	   
-	   
+        
+        
+        
+           
+           
+           

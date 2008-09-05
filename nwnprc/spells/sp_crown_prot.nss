@@ -35,45 +35,42 @@ Focus: An iron hoop 6 inches in diameter.
 
 void main()
 {
-	if(!X2PreSpellCastCode()) return;
-	
-	PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
-	
-	object oPC = OBJECT_SELF;
-	object oTarget = GetSpellTargetObject();
-	int nCasterLevel = PRCGetCasterLevel(oPC);
-	object oCrown = CreateItemOnObject("prc_crown_prot", oTarget, 1);
-	float fDur = HoursToSeconds(nCasterLevel);
-	effect eVis = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_POSITIVE);
-	int nMetaMagic = PRCGetMetaMagicFeat();
-	
-	PRCSignalSpellEvent(oTarget,FALSE, SPELL_CROWN_OF_PROTECTION, oPC);
-	
-	if(nMetaMagic == METAMAGIC_EXTEND)
-	{
-		fDur += fDur;
-	}
-	
-	itemproperty iBonus = ItemPropertyACBonus(1);
-	itemproperty iBonus2 = ItemPropertyBonusSavingThrow(IP_CONST_SAVEBASETYPE_FORTITUDE, 1);
-	itemproperty iBonus3 = ItemPropertyBonusSavingThrow(IP_CONST_SAVEBASETYPE_REFLEX, 1);
-	itemproperty iBonus4 = ItemPropertyBonusSavingThrow(IP_CONST_SAVEBASETYPE_WILL, 1);
-	
-	IPSafeAddItemProperty(oCrown, iBonus, fDur, X2_IP_ADDPROP_POLICY_IGNORE_EXISTING);
-	IPSafeAddItemProperty(oCrown, iBonus2, fDur, X2_IP_ADDPROP_POLICY_IGNORE_EXISTING);
-	IPSafeAddItemProperty(oCrown, iBonus3, fDur, X2_IP_ADDPROP_POLICY_IGNORE_EXISTING);
-	IPSafeAddItemProperty(oCrown, iBonus4, fDur, X2_IP_ADDPROP_POLICY_IGNORE_EXISTING);
-	 
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget, fDur);
-	
-	//ClearActions
-	ClearAllActions(TRUE);
-	
-	//Force equip
-	ForceEquip(oTarget, oCrown, INVENTORY_SLOT_HEAD);
-	
-	//Schedule Destruction
-	DelayCommand(fDur, DestroyObject(oCrown));
-	
-	PRCSetSchool();
+        if(!X2PreSpellCastCode()) return;
+        
+        PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+        
+        object oPC = OBJECT_SELF;
+        object oTarget = GetSpellTargetObject();
+        int nCasterLevel = PRCGetCasterLevel(oPC);
+        object oCrown = CreateItemOnObject("prc_crown_prot", oTarget, 1);
+        float fDur = HoursToSeconds(nCasterLevel);      
+        int nMetaMagic = PRCGetMetaMagicFeat();
+        
+        PRCSignalSpellEvent(oTarget,FALSE, SPELL_CROWN_OF_PROTECTION, oPC);
+        
+        if(nMetaMagic == METAMAGIC_EXTEND)
+        {
+                fDur += fDur;
+        }
+        
+        itemproperty iBonus = ItemPropertyACBonus(1);
+        itemproperty iBonus2 = ItemPropertyBonusSavingThrow(IP_CONST_SAVEBASETYPE_FORTITUDE, 1);
+        itemproperty iBonus3 = ItemPropertyBonusSavingThrow(IP_CONST_SAVEBASETYPE_REFLEX, 1);
+        itemproperty iBonus4 = ItemPropertyBonusSavingThrow(IP_CONST_SAVEBASETYPE_WILL, 1);
+        
+        IPSafeAddItemProperty(oCrown, iBonus, fDur, X2_IP_ADDPROP_POLICY_IGNORE_EXISTING);
+        IPSafeAddItemProperty(oCrown, iBonus2, fDur, X2_IP_ADDPROP_POLICY_IGNORE_EXISTING);
+        IPSafeAddItemProperty(oCrown, iBonus3, fDur, X2_IP_ADDPROP_POLICY_IGNORE_EXISTING);
+        IPSafeAddItemProperty(oCrown, iBonus4, fDur, X2_IP_ADDPROP_POLICY_IGNORE_EXISTING);     
+        
+        //ClearActions
+        ClearAllActions(TRUE);
+        
+        //Force equip
+        ForceEquip(oTarget, oCrown, INVENTORY_SLOT_HEAD);
+        
+        //Schedule Destruction
+        DelayCommand(fDur, DestroyObject(oCrown));
+        
+        PRCSetSchool();
 }

@@ -4,9 +4,6 @@
 ////////////////////////////////////////
 #include "prc_inc_spells"
 
-//temp for compiling ease
-const int SPELL_CRACKLEPOWDER = 3719;
-
 void main()
 {
         object oTarget = GetExitingObject();

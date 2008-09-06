@@ -20,13 +20,6 @@ increases the price as follows: 200 gp for +2, 500 gp for +3,
 
 #include "prc_inc_spells"
 
-//temp constants
-const int SPELL_SHEDDEN = 1;
-const int SPELL_SHEDDEN2 = 2;
-const int SPELL_SHEDDEN3 = 3;
-const int SPELL_SHEDDEN4 = 4;
-const int SPELL_SHEDDEN5 = 5;
-
 void main()
 {
         object oTarget = GetSpellTargetObject();

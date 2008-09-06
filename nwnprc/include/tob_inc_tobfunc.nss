@@ -1078,5 +1078,58 @@ int GetHasDefensiveStance(object oInitiator, int nDiscipline)
         return FALSE;
 }
 
+int TOBGetHasDiscipline(object oInitiator, int nDiscipline)
+{
+
+	int nCru = GetLevelByClass(CLASS_TYPE_CRUSADER, oInitiator);
+	int nSwd = GetLevelByClass(CLASS_TYPE_SWORDSAGE, oInitiator);
+	int nWar = GetLevelByClass(CLASS_TYPE_WARBLADE, oInitiator);
+	
+	if (nCru > 0 && (nDiscipline == DISCIPLINE_DEVOTED_SPIRIT || 
+	                 nDiscipline == DISCIPLINE_STONE_DRAGON || 
+	                 nDiscipline == DISCIPLINE_WHITE_RAVEN)) return TRUE;
+	if (nSwd > 0 && (nDiscipline == DISCIPLINE_DIAMOND_MIND || 
+	                 nDiscipline == DISCIPLINE_IRON_HEART || 
+	                 nDiscipline == DISCIPLINE_STONE_DRAGON || 
+	                 nDiscipline == DISCIPLINE_TIGER_CLAW || 
+	                 nDiscipline == DISCIPLINE_WHITE_RAVEN)) return TRUE;
+	if (nWar > 0 && (nDiscipline == DISCIPLINE_DESERT_WIND || 
+	                 nDiscipline == DISCIPLINE_DIAMOND_MIND || 
+	                 nDiscipline == DISCIPLINE_SETTING_SUN || 
+	                 nDiscipline == DISCIPLINE_SHADOW_HAND || 
+	                 nDiscipline == DISCIPLINE_STONE_DRAGON || 
+	                 nDiscipline == DISCIPLINE_TIGER_CLAW)) return TRUE;	                 
+
+	// If none of those trigger.	                 
+	return FALSE;	                 
+}
+
+int TOBGetHasDisciplineFocus(object oInitiator, int nDiscipline)
+{
+	// Set one of the Discipline Focus feats
+        if      (GetHasFeat(FEAT_SS_DF_DS_DW, oInitiator) && nDiscipline == DISCIPLINE_DESERT_WIND)  return TRUE;
+        else if (GetHasFeat(FEAT_SS_DF_DS_DM, oInitiator) && nDiscipline == DISCIPLINE_DIAMOND_MIND) return TRUE;
+        else if (GetHasFeat(FEAT_SS_DF_DS_SS, oInitiator) && nDiscipline == DISCIPLINE_SETTING_SUN)  return TRUE;
+        else if (GetHasFeat(FEAT_SS_DF_DS_SH, oInitiator) && nDiscipline == DISCIPLINE_SHADOW_HAND)  return TRUE;
+        else if (GetHasFeat(FEAT_SS_DF_DS_SD, oInitiator) && nDiscipline == DISCIPLINE_STONE_DRAGON) return TRUE;
+        else if (GetHasFeat(FEAT_SS_DF_DS_TC, oInitiator) && nDiscipline == DISCIPLINE_TIGER_CLAW)   return TRUE;
+        // Set two of the Discipline Focus feats
+        if      (GetHasFeat(FEAT_SS_DF_IS_DW, oInitiator) && nDiscipline == DISCIPLINE_DESERT_WIND)  return TRUE;
+        else if (GetHasFeat(FEAT_SS_DF_IS_DM, oInitiator) && nDiscipline == DISCIPLINE_DIAMOND_MIND) return TRUE;
+        else if (GetHasFeat(FEAT_SS_DF_IS_SS, oInitiator) && nDiscipline == DISCIPLINE_SETTING_SUN)  return TRUE;
+        else if (GetHasFeat(FEAT_SS_DF_IS_SH, oInitiator) && nDiscipline == DISCIPLINE_SHADOW_HAND)  return TRUE;
+        else if (GetHasFeat(FEAT_SS_DF_IS_SD, oInitiator) && nDiscipline == DISCIPLINE_STONE_DRAGON) return TRUE;
+        else if (GetHasFeat(FEAT_SS_DF_IS_TC, oInitiator) && nDiscipline == DISCIPLINE_TIGER_CLAW)   return TRUE;        
+        // Set three of the Discipline Focus feats
+        if      (GetHasFeat(FEAT_SS_DF_WF_DW, oInitiator) && nDiscipline == DISCIPLINE_DESERT_WIND)  return TRUE;
+        else if (GetHasFeat(FEAT_SS_DF_WF_DM, oInitiator) && nDiscipline == DISCIPLINE_DIAMOND_MIND) return TRUE;
+        else if (GetHasFeat(FEAT_SS_DF_WF_SS, oInitiator) && nDiscipline == DISCIPLINE_SETTING_SUN)  return TRUE;
+        else if (GetHasFeat(FEAT_SS_DF_WF_SH, oInitiator) && nDiscipline == DISCIPLINE_SHADOW_HAND)  return TRUE;
+        else if (GetHasFeat(FEAT_SS_DF_WF_SD, oInitiator) && nDiscipline == DISCIPLINE_STONE_DRAGON) return TRUE;
+        else if (GetHasFeat(FEAT_SS_DF_WF_TC, oInitiator) && nDiscipline == DISCIPLINE_TIGER_CLAW)   return TRUE;        
+
+	// If none of those trigger.	                 
+	return FALSE;	
+}
 // Test main
 //void main(){}

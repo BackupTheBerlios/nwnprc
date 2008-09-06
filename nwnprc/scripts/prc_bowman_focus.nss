@@ -36,7 +36,7 @@ void main()
     eLink = EffectLinkEffects(eLink, eAtk);
     
     eLink = ExtraordinaryEffect(eLink);
-    int nDur = (GetAbilityModifier(3 + nClass/2));
+    int nDur = 3 + nClass/2;
 
     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, OBJECT_SELF, RoundsToSeconds(nDur));

@@ -33,7 +33,8 @@ void main()
     if(GetHasFeat(FEAT_INTUITIVE_ATTACK, oPC))
     {
         RemoveEffectsFromSpell(oPC, SPELL_INTUITIVE_ATK);
-        ActionCastSpellOnSelf(SPELL_INTUITIVE_ATK);
+        //ActionCastSpellOnSelf(SPELL_INTUITIVE_ATK);
+        ExecuteScript("prc_intuiatk", oPC); // Done this way to fix a TMI error.
     }
     if(GetHasFeat(FEAT_OBSCURE_LORE, oPC))
     {

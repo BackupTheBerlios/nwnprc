@@ -331,6 +331,7 @@ int IsRaySpell(int nSpell)
     ||     (nSpell == SPELL_SEARING_LIGHT)      // searing light
     ||     (nSpell == SPELL_SEEKING_RAY)        // seeking ray
     ||     (nSpell == SPELL_SCORCHING_RAY)      // scorching ray
+    ||     (nSpell == SPELL_PRISMATIC_RAY)      // prismatic ray
 //  ||     (nSpell ==    0) //
     ;
 }

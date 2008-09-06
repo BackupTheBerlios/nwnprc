@@ -26,22 +26,23 @@ void PrcFeats(object oPC)
 void main()
 {
     object oPC = GetPCLevellingUp();
-//if(DEBUG) DoDebug("prc_levelup running for '" + GetName(oPC) + "'");
+    if(DEBUG) DoDebug("prc_levelup running for '" + GetName(oPC) + "'");
 
     object oSkin = GetPCSkin(oPC);
     ScrubPCSkin(oPC, oSkin);
     DeletePRCLocalInts(oSkin);
+    if(DEBUG) DoDebug("prc_levelup: DeleteLocals");
 
     // Gives people the proper spells from their bonus domains
     // This should run before EvalPRCFeats, because it sets a variable
     CheckBonusDomains(oPC);
-
+    if(DEBUG) DoDebug("prc_levelup: BonusDomain");
     //All of the PRC feats have been hooked into EvalPRCFeats
     //The code is pretty similar, but much more modular, concise
     //And easy to maintain.
     //  - Aaon Graywolf
     DelayCommand(0.1, PrcFeats(oPC));
-
+    if(DEBUG) DoDebug("prc_levelup: PRCFeats");
     // Check to see which special prc requirements (i.e. those that can't be done)
     // through the .2da's, the newly leveled up player meets.
     DelayCommand(0.5, ExecuteScript("prc_prereq", oPC)); // Delayed so that deleveling gets to happen before it.
@@ -49,7 +50,7 @@ void main()
     ExecuteScript("prc_enforce_psi", oPC);
     //Restore Power Points for Psionics
     ExecuteScript("prc_psi_ppoints", oPC);
-
+    if(DEBUG) DoDebug("prc_levelup: PowerPoints");
     DelayCommand(1.0, FeatSpecialUsePerDay(oPC));
 
     // These scripts fire events that should only happen on levelup
@@ -58,4 +59,5 @@ void main()
 
     // Execute scripts hooked to this event for the player triggering it
     ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYERLEVELUP);
+    if(DEBUG) DoDebug("prc_levelup: Exiting");
 }

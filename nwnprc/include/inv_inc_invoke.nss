@@ -87,7 +87,7 @@ void UseInvocation(int nInvocation, int nClass, int nLevelOverride = 0);
  * @param move A set of invocation data
  * @return      A string describing the contents of move
  */
-string DebugInvocation2Str(struct invocation move);
+string DebugInvocation2Str(struct invocation invoked);
 
 /**
  * Stores a invocation structure as a set of local variables. If
@@ -98,7 +98,7 @@ string DebugInvocation2Str(struct invocation move);
  * @param sName   The name under which to store the structure
  * @param move   The invocation structure to store
  */
-void SetLocalInvocation(object oObject, string sName, struct invocation move);
+void SetLocalInvocation(object oObject, string sName, struct invocation invoked);
 
 /**
  * Retrieves a previously stored invocation structure. If no structure is stored

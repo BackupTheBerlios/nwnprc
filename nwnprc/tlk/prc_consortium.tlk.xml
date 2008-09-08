@@ -27652,6 +27652,7 @@ Classes: Crusader, Swordsage, Warblade, Bloodclaw Master, Bloodstorm Blade, Deep
 You can identify maneuvers and disciplines used by a combattant.
 
 Use: Automatic.</entry>
+  <entry id="52099" lang="en" sex="m">Throw Energized Potion</entry>
   <entry id="52100" lang="en" sex="m">Necrotic cyst implanted.</entry>
   <entry id="52101" lang="en" sex="m">Your target does not have a Necrotic Cyst!</entry>
   <entry id="52102" lang="en" sex="m">You must have a Mother Cyst to cast this spell!</entry>

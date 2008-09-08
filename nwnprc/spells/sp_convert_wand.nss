@@ -64,128 +64,107 @@ void WandCounter(object oPC, object oSkin, object oNewWand, int nCounter);
 
 void main()
 {
-	if(!X2PreSpellCastCode()) return;
-	
-	PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
-	
-	object oPC = OBJECT_SELF;
-	object oTargetWand = GetSpellTargetObject();
-	int nLevel;
-	int nSpellID;
-	itemproperty ipSpell;
-	
-	//Check to be sure the target is a wand.  If a creature, get first wand.
-	if(GetObjectType(oTargetWand) == OBJECT_TYPE_CREATURE)
-	{
-		object oTest = GetFirstItemInInventory(oTargetWand);
-		
-		while(GetIsObjectValid(oTest))
-		{
-			if(GetBaseItemType(oTest) == BASE_ITEM_MAGICWAND)
-			{
-				oTargetWand = oTest;
-				break;
-			}
-			oTest = GetNextItemInInventory(oTargetWand);
-		}
-	}
-	
-	//Make sure it's a wand
-	if(GetBaseItemType(oTargetWand) != BASE_ITEM_MAGICWAND)
-	{
-		FloatingTextStringOnCreature("The target item is not a wand", oPC, FALSE);
-		return;
-	}
-		
-	int nCasterLvl = PRCGetCasterLevel(oPC);
-	float fDur = (60.0f * nCasterLvl);
-	int nMetaMagic = PRCGetMetaMagicFeat();
-	
-	if(nMetaMagic == METAMAGIC_EXTEND)
-	{
-		fDur += fDur;
-	}
-	
-	int nDC;
-	
-	//Get spell level
-	itemproperty ipTest = GetFirstItemProperty(oTargetWand);
-		
-	while(GetIsItemPropertyValid(ipTest))
-	{
-		if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_CAST_SPELL)
-		{ 
-			//Get row
-			int nRow = GetItemPropertySubType(ipTest);
-			
-			//Get spellID
-			nSpellID = StringToInt(Get2DACache("iprp_spells", "SpellIndex", nRow));
-			
-			//Get spell level
-			nLevel = StringToInt(Get2DACache("spells", "Innate", nSpellID));
-			
-		}		
-		if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_CAST_SPELL_DC)
-		{
-			int nSubType = GetItemPropertySubType(ipTest);
-			nSubType = StringToInt(Get2DACache("iprp_spells", "SpellIndex", nSubType));
-			
-			if(nSubType == nSpellID)
-			{
-				nDC = GetItemPropertyCostTableValue (ipTest);
-			}
-		}
-		ipTest = GetNextItemProperty(oTargetWand);		
-	}
-	
-	//if it is already a healing wand, abort
-	if(nSpellID == SPELL_CURE_MINOR_WOUNDS ||
-	   nSpellID == SPELL_CURE_LIGHT_WOUNDS ||
-	   nSpellID == SPELL_CURE_MODERATE_WOUNDS ||
-	   nSpellID == SPELL_CURE_SERIOUS_WOUNDS ||
-	   nSpellID == SPELL_CURE_CRITICAL_WOUNDS ||
-	   nSpellID == SPELL_HEAL)
-	{
-		FloatingTextStringOnCreature("The target wand is already a healing wand.", oPC, FALSE);
-		return;
-	}
-		
-	//Store the current spellID, caster level, DC, & spell level on the wand from cast spell itemproperty
-	SetLocalInt(oTargetWand, "PRC_ConvertWandSpellID", nSpellID);
-	SetLocalInt(oTargetWand, "PRC_ConvertWandDC", nDC);
-	SetLocalInt(oTargetWand, "PRC_ConvertWandCL", PRCGetCasterLevel(oTargetWand));
-	
-	//Determine ip	
-	if(nLevel > 4)
-	{
-		nLevel = 4;
-	}
-	
-	switch(nLevel)
-	{
-		case 0: ipSpell = ItemPropertyCastSpell(SPELL_CURE_MINOR_WOUNDS, IP_CONST_CASTSPELL_NUMUSES_1_CHARGE_PER_USE);
-		
-		case 1: ipSpell = ItemPropertyCastSpell(SPELL_CURE_LIGHT_WOUNDS, IP_CONST_CASTSPELL_NUMUSES_1_CHARGE_PER_USE);
-		        break;
-		
-		case 2: ipSpell = ItemPropertyCastSpell(SPELL_CURE_MODERATE_WOUNDS, IP_CONST_CASTSPELL_NUMUSES_1_CHARGE_PER_USE);
-		        break;
-		
-		case 3: ipSpell = ItemPropertyCastSpell(SPELL_CURE_SERIOUS_WOUNDS, IP_CONST_CASTSPELL_NUMUSES_1_CHARGE_PER_USE);
-		        break;
-		
-		case 4: ipSpell = ItemPropertyCastSpell(SPELL_CURE_CRITICAL_WOUNDS, IP_CONST_CASTSPELL_NUMUSES_1_CHARGE_PER_USE);
-		        break;
-		
-		default: break;
-	}
-	
-	//Add props
-	IPSafeAddItemProperty(oTargetWand, ipSpell, fDur, X2_IP_ADDPROP_POLICY_IGNORE_EXISTING);
-		
-	//Mark the item with a local variable
-	SetLocalInt(oTargetWand, "PRC_IsConvertedWand", 1);
+        if(!X2PreSpellCastCode()) return;
+        
+        PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+        
+        object oPC = OBJECT_SELF;
+        object oTargetWand = GetSpellTargetObject();
+        int nLevel;
+        int nSpellID;
+        string sWand;
+        
+        //Check to be sure the target is a wand.  If a creature, get first wand.
+        if(GetObjectType(oTargetWand) == OBJECT_TYPE_CREATURE)
+        {
+                object oTest = GetFirstItemInInventory(oTargetWand);
+                
+                while(GetIsObjectValid(oTest))
+                {
+                        if(GetBaseItemType(oTest) == BASE_ITEM_MAGICWAND)
+                        {
+                                oTargetWand = oTest;
+                                oPC = GetItemPossessor(oTargetWand);
+                                break;
+                        }
+                        oTest = GetNextItemInInventory(oTargetWand);
+                }
+        }
+        
+        //Make sure it's a wand
+        if(GetBaseItemType(oTargetWand) != BASE_ITEM_MAGICWAND)
+        {
+                FloatingTextStringOnCreature("The target item is not a wand", oPC, FALSE);
+                return;
+        }
+                
+        int nCasterLvl = PRCGetCasterLevel(oPC);
+        float fDur = (60.0f * nCasterLvl);
+        int nMetaMagic = PRCGetMetaMagicFeat();
+        
+        if(nMetaMagic == METAMAGIC_EXTEND)
+        {
+                fDur += fDur;
+        }       
+                
+        //Get spell level
+        itemproperty ipTest = GetFirstItemProperty(oTargetWand);
+                
+        while(GetIsItemPropertyValid(ipTest))
+        {
+                if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_CAST_SPELL)
+                { 
+                        //Get row
+                        int nRow = GetItemPropertySubType(ipTest);
+                        
+                        //Get spellID
+                        nSpellID = StringToInt(Get2DACache("iprp_spells", "SpellIndex", nRow));
+                        
+                        //Get spell level
+                        nLevel = StringToInt(Get2DACache("spells", "Innate", nSpellID));
+                        
+                }                               
+                ipTest = GetNextItemProperty(oTargetWand);              
+        }        
+        //if it is already a healing wand, abort
+        if(nSpellID == SPELL_CURE_MINOR_WOUNDS ||
+           nSpellID == SPELL_CURE_LIGHT_WOUNDS ||
+           nSpellID == SPELL_CURE_MODERATE_WOUNDS ||
+           nSpellID == SPELL_CURE_SERIOUS_WOUNDS ||
+           nSpellID == SPELL_CURE_CRITICAL_WOUNDS ||
+           nSpellID == SPELL_HEAL)
+        {
+                FloatingTextStringOnCreature("The target wand is already a healing wand.", oPC, FALSE);
+                return;
+        }
+        
+        //GetCharges
+        int nCharges = GetItemCharges(oTargetWand);
+                 
+        //Determine wand  
+        if(nLevel > 4) nLevel = 4;
+        
+        switch(nLevel)
+        {
+                case 0: sWand = "prc_cwand_cmw";
+                        break;
+                
+                case 1: sWand = "prc_cwand_clw";
+                        break;
+                
+                case 2: sWand = "prc_cwand_cmdw";
+                        break;
+                
+                case 3: sWand = "prc_cwand_csw";
+                        break;
+                
+                case 4: sWand = "prc_cwand_ccw";
+                        break;
+                
+                default: break;
+        }
+        
+        DestroyObject(oTargetWand);        
+        object oNewWand = CreateItemOnObject("sWand", oPC, 1);
+        SetItemCharges(oNewWand, nCharges);        
 }
-
-
-

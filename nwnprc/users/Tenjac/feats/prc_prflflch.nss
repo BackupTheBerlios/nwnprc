@@ -48,7 +48,10 @@ void main()
                 //burn the other use required
                 DecrementRemainingFeatUses(oPC, FEAT_TURN_UNDEAD);
                 
-                int nDam;
+                //VFX
+                ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_PWKILL), lLoc);
+                
+                int nDam;                
                 
                 object oTarget = MyGetFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), lLoc, FALSE, OBJECT_TYPE_CREATURE);
                 

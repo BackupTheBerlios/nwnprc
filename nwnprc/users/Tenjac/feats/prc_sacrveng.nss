@@ -33,15 +33,8 @@ void main()
         
         DecrementRemainingFeatUses(oPC, FEAT_TURN_UNDEAD);
         
-        itemproperty ipDam = ItemPropertyDamageBonusVsRace(IP_CONST_RACIALTYPE_UNDEAD, IP_CONST_DAMAGETYPE_MAGICAL, IP_CONST_DAMAGEBONUS_2d6);
-        
-        AddItemProperty(DURATION_TYPE_TEMPORARY, ipDam, GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC), RoundsToSeconds(1.0f));
-        
-        object oLefthand = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
-        
-        if(GetIsObjectValid(oLefthand) && 
-           GetBaseItemType(oLefthand) != BASE_ITEM_LARGESHIELD && 
-           GetBaseItemType(oLefthand) != BASE_ITEM_SMALLSHIELD &&
-           GetBaseItemType(oLefthand) != BASE_ITEM_TOWERSHIELD) AddItemProptery(DURATION_TYPE_TEMPORARY, ipDam, oLefthand, RoundsToSeconds(1.0f));
-        }
+        effect eBonus = VersusRacialTypeEffect(EffectDamageIncrease(DAMAGE_BONUS_2d6, DAMAGE_TYPE_DIVINE) ,RACIAL_TYPE_UNDEAD);
+               eBonus = EffectLinkEffects(eBonus, EffectVisualEffect(VFX_DUR_PROTECTION_ELEMENTS));
+               
+        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBonus, oPC, 6.0f);
 }  

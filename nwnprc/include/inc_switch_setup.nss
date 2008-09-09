@@ -1752,7 +1752,6 @@ void CreateSwitchNameArray()
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_SUMMON_ROUND_PER_LEVEL);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PNP_FAMILIARS);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PNP_FAMILIAR_FEEDING);
-    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_NO_HP_REROLL);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_NO_FREE_WIZ_SPELLS);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_POWER_ATTACK);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_POWER_ATTACK_STACK_WITH_BW);

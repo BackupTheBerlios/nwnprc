@@ -753,12 +753,6 @@ const string PRC_PNP_FAMILIARS                       = "PRC_PNP_FAMILIARS";
 const string PRC_PNP_FAMILIAR_FEEDING                = "PRC_PNP_FAMILIAR_FEEDING";
 
 /**
- * This disables the ability to reroll HP at levelup
- * It requires letoscript to work.
- */
-const string PRC_NO_HP_REROLL                        = "PRC_NO_HP_REROLL";
-
-/**
  * This disables the 2 free spells wizards get at levelup
  * The GUI still shows, but it does nothing or rather its effects are undone afterwards
  * It requires letoscript to work.

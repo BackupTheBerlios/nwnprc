@@ -87,59 +87,17 @@ void PRCLetoLevelup(object oPC)
     int nClass = -1;
     //so we know what the last level taken was
     int nLevel = GetHitDice(oPC);
-    if(GetPRCSwitch(PRC_NO_HP_REROLL))
-    {
-        //first 3 levels are always maxed
-        if(nLevel > 3)
-        {
-            //add the command to get the last class to the stack
-            StackedLetoScript(LetoGet("LvlStatList/["+IntToString(nLevel)+"]/LvlStatClass"));
-            //run that command on the PC
-            //need this long command to put nDestroyOriginal to false
-            //this means that the PC wont be booted, since we are only reading his .bic at the moment
-            RunStackedLetoScriptOnObject(oPC, "OBJECT", "SCRIPT", "", FALSE);
-            //the return from leto is stored as nClass
-            nClass = StringToInt(GetLocalString(GetModule(), "LetoResult"));
-
-            //now the 2da lookup to get the maximum hp
-            //uses the same cache system as the ConvoCC
-            int nMax = StringToInt(Get2DACache("classes", "HitDie", nClass));
-            if(nClass == CLASS_TYPE_DRAGON_DISCIPLE)
-            {
-                int nClassLevel = GetLevelByClass(CLASS_TYPE_DRAGON_DISCIPLE, oPC) ;
-                switch(nClassLevel)
-                {
-                    case 1: nMax = 6; break;
-                    case 2: nMax = 6; break;
-                    case 3: nMax = 6; break;
-                    case 4: nMax = 8; break;
-                    case 5: nMax = 8; break;
-                    default:
-                        if(nClassLevel>5)
-                            nMax = 10;
-                        else
-                            DoDebug("Error in inc_leto_prc @ 121");
-                }
-            }
-            int nHP = Random(nMax)+1;
-            //this is the letoscript we need to run to fix the HP
-            StackedLetoScript(LetoSet("LvlStatList/["+IntToString(nLevel)+"]/LvlStatHitDie", IntToString(nHP),  "byte"));
-            bChange = TRUE;
-        }
-    }
     if(GetPRCSwitch(PRC_NO_FREE_WIZ_SPELLS))
     {
-        if(nClass == -1)
-        {
-            //add the command to get the last class to the stack
-            StackedLetoScript(LetoGet("LvlStatList/["+IntToString(nLevel)+"]/LvlStatClass"));
-            //run that command on the PC
-            //need this long command to put nDestroyOriginal to false
-            //this means that the PC wont be booted, since we are only reading his .bic at the moment
-            RunStackedLetoScriptOnObject(oPC, "OBJECT", "SCRIPT", "", FALSE);
-            //the return from leto is stored as nClass
-            nClass = StringToInt(GetLocalString(GetModule(), "LetoResult"));
-        }
+        //add the command to get the last class to the stack
+        StackedLetoScript(LetoGet("LvlStatList/["+IntToString(nLevel)+"]/LvlStatClass"));
+        //run that command on the PC
+        //need this long command to put nDestroyOriginal to false
+        //this means that the PC wont be booted, since we are only reading his .bic at the moment
+        RunStackedLetoScriptOnObject(oPC, "OBJECT", "SCRIPT", "", FALSE);
+        //the return from leto is stored as nClass
+        nClass = StringToInt(GetLocalString(GetModule(), "LetoResult"));
+
         if(nClass == CLASS_TYPE_WIZARD)
         {
             //string sScript

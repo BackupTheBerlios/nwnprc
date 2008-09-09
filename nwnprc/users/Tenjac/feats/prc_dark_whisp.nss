@@ -19,3 +19,5 @@ you. This bonus stacks with the +4 circumstance bonus from
 Dark Speech.
 Special: If you cannot take ability damage, you cannot
 select this feat.
+
+Immobilize

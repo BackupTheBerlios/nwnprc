@@ -1,0 +1,141 @@
+DASH [GENERAL]
+Benefit: If you are wearing light armor or no armor and are carrying a light load, your speed is 5 feet faster.
+
+
+EXTEND RAGE [GENERAL]
+Prerequisites: Rage or frenzy ability.
+Benefit: Each of the uses of your rage or frenzy ability lasts an additional 5 rounds beyond its normal duration.
+Special: You can take this feat multiple times. Its effects stack.
+
+
+EXTRA RAGE [GENERAL]
+Prerequisites: Rage or frenzy ability.
+Benefit: You rage or frenzy two more times per day than you otherwise could.
+Special: You can take this feat multiple times. Its effects stack.
+
+
+EXTRA SMITING [GENERAL]
+Prerequisites: Smite ability, base attack bonus +4.
+Benefit: When you take this feat, you gain two extra attempts to smite per day. 
+Use whatever smite ability you have (the paladin’s smite evil ability or the hunter of the dead’s ability to smite undead, for example).
+Special: You can take this feat multiple times. Its effects stack.
+
+
+EXTRA STUNNING [GENERAL]
+Prerequisites: Stunning Fist, base attack bonus +2.
+Benefit: You gain the ability to make three extra stunningattacks per day.
+Special: You can take this feat multiple times. Its effects stack.
+
+
+FAVORED POWER ATTACK [GENERAL]
+Prerequisites: Favored enemy ability, Power Attack, base attack bonus +4.
+Benefit: When you use the Power Attack feat against a favored enemy, you may subtract a number from your melee
+attack rolls and add twice that number to your melee damage rolls. If you attack with a weapon in two hands, add three
+times the number. The normal restrictions of the Power Attack feat apply.
+
+
+FLYING KICK [GENERAL]
+Prerequisites: Str 13, Jump 4 ranks, Improved Unarmed Strike, Power Attack.
+Benefit: When fighting unarmed and using the charge action, you deal an extra 1d12 points of damage with your unarmed attack.
+
+
+FREEZING THE LIFEBLOOD [GENERAL]
+Prerequisites: Wis 17, Improved Unarmed Strike, Stunning Fist, base attack bonus +10.
+Benefit: Declare that you are using this feat before you make your attack roll (thus, a missed attack roll ruins the
+attempt). Against a humanoid opponent, you can make an unarmed attack that deals no damage but has a chance of
+paralyzing your target. If your attack is successful, your target must attempt a Fortitude saving throw (DC 10 + 1/2
+your character level + your Wis modifi er). If the target fails this saving throw, it is paralyzed for 1d4+1 rounds. Each
+attempt to paralyze an opponent counts as one of your uses of the Stunning Fist feat for the day. Creatures immune to
+stunning cannot be paralyzed in this manner.
+Special: A fighter may select Freezing the Lifeblood as one of his fighter bonus feats.
+
+
+GREATER KIAI SHOUT [GENERAL]
+Prerequisites: Cha 13, Kiai Shout, base attack bonus +9.
+Benefit: When you make a kiai shout, your opponents are panicked for 2d6 rounds unless they succeed on Will saves
+(DC 10 + 1/2 your character level + your Cha modifi er). The kai shout affects only opponents with fewer Hit Dice or
+levels than you have.
+
+
+GREATER TWO-WEAPON DEFENSE[GENERAL]
+Prerequisites: Dex 19, Improved Two-Weapon Defense, Two-Weapon Defense, Two-Weapon Fighting, base attack bonus +11.
+Benefit: When wielding two weapons (not including natural weapons or unarmed strikes), you gain a +3 shield bonus
+to your AC. When you are fighting defensively or using the total defense action, this shield bonus increases to +6.
+Special: A fi ghter may select Greater Two-Weapon Defense as one of his fi ghter bonus feats.
+
+
+IMPROVED FAVORED ENEMY[GENERAL]
+Prerequisites: Favored enemy ability, base attack bonus +5.
+Benefit: You deal an extra 3points of damage to your favored enemies. This benefit stacks with any existing favored
+enemy bonus gained from another class.
+
+
+IMPROVED MOUNTED ARCHERY [GENERAL]
+Prerequisites: Ride 1 rank, Mounted Archery, Mounted Combat.
+Benefit: The penalty you take when using a ranged weapon if your mount is taking a double move is eliminated, and
+the penalty for using a ranged weapon when your mount is running is lessened from –4 to –2. You can attack at any
+time during your mount’s move.
+Special: A fighter may select Improved Mounted Archery as one of his fighter bonus feats.
+
+
+IMPROVED RAPID SHOT [GENERAL]
+Prerequisites: Manyshot, Point Blank Shot, Rapid Shot.
+Benefit: When using the Rapid Shot feat, you may ignore the –2 penalty on all your ranged attack rolls.
+Special: A fighter may select Improved Rapid Shot as one of his fi ghter bonus feats.
+
+
+PAIN TOUCH [GENERAL]
+Prerequisites: Wis 15, Stunning Fist, base attack bonus +2.
+Benefit: Victims of a successful stunning attack are subject to such debilitating pain that they are nauseated for 1
+round following the round they are stunned. Creatures that are immune to stunning attacks are also immune to the effect
+of this feat, as are any creatures that are more than one size category larger than the feat user.
+
+RANGED DISARM [GENERAL]
+Prerequisites: Dex 15, Point Blank Shot, Precise Shot, base attack bonus +5.
+Benefit: Choose one type of ranged weapon with which you are profi cient. You can make a disarm attempt with this
+weapon as long as your target is within 30 feet.
+Special: A fighter may select Ranged Disarm as one of his fighter bonus feats.
+
+
+RANGED PIN [GENERAL]
+Prerequisites: Dex 15, Point Blank Shot, Precise Shot,base attack bonus +5.
+Benefit: You can perform a ranged grapple attempt against an opponent by pinning a bit of its clothing to a
+nearby surface. The target must be within 5 feet of a wall, tree, or other surface in which a thrown weapon or projectile can
+be stuck and must be wearing some sort of clothing, armor, or other accoutrement. You must succeed on a ranged attack
+(not a ranged touch attack) and then win an opposed grapple check (your size modifier and the target’s size modifiers still
+apply). To break free, the victim must make a DC 15 Strength check or a DC 15 Escape Artist check as a standard action.
+Special: A fighter may select Ranged Pin as one of his fighter bonus feats. When using this feat, a character gains
+no benefit from the Improved Grapple feat.
+
+WEAKENING TOUCH [GENERAL] Prerequisites: Wis 17, Improved Unarmed Strike, Stunning Fist, base attack bonus +2.
+Benefit: Declare that you are using this feat before you make your attack roll (thus, a missed attack roll ruins the
+attempt). You can make an unarmed attack that deals no damage, but instead applies a –6 penalty to the target’s
+Strength score for 1 minute. Multiple weakening touches delivered on the same target are not cumulative. Each
+attempt to deliver a weakening touch counts as one of your Stunning Fist attacks for the day. Creatures with immunity
+to stun effects cannot be affected by this feat. 
+Special: A fighter may select Weakening Touch as one of his fighter bonus feats.
+
+
+DIVINE CLEANSING [DIVINE]
+Prerequisites: Turn or rebuke undead ability.
+Benefi t: As a standard action, you can spend one of your turn or rebuke undead attempts to grant all allies (including
+yourself) within a 60-foot burst a +2 sacred bonus on Fortitude saving throws for a number of rounds equal to your
+Charisma modifier.
+
+
+DIVINE RESISTANCE [DIVINE]
+Prerequisites: Turn or rebuke undead ability, Divine Cleansing.
+Benefit: As a standard action, spend one of your turn or rebuke undead attempts to imbue all allies within a 60-foot
+burst (including yourself) with resistance to cold 5, electricity 5, and fi re 5. This resistance does not stack with similar
+resistances, such as those granted by spells or special abilities. The protection lasts for a number of rounds equal to your
+Charisma modifier.
+
+
+DIVINE VIGOR [DIVINE]
+Prerequisites: Turn or rebuke undead ability.
+Benefit: As a standard action, spend one of your turn or rebuke undead attempts to increase your base speed by 10 feet
+and gain +2 temporary hit points per character level. These effects last a number of minutes equal to your Charisma
+modifier.
+
+
+

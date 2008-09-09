@@ -36,3 +36,4 @@
 32 Balance        16829376 16829377    isk_balance    1         DEX        1                 1                ****     ****  SKILL_BALANCE          0            
 33 IaijutsuFocus  16826112 16826113    is_iaijutsu    0         CHA        0                 1                ****     ****  SKILL_IAIJUTSU_FOCUS   0            
 34 CraftAlchemy   16847237 16847238    isk_alchemy    1         INT        0                 1                ****     ****  SKILL_CRAFT_ALCHEMY    0            
+35 CraftPoison    16832401 16832402    isk_poison     1         INT        0                 1                ****     ****  SKILL_CRAFT_POISON     0            

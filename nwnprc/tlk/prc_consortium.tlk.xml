@@ -3377,7 +3377,7 @@ REQUIREMENTS:
 
 Alignment: Any Non-Lawful.
 Feats: Combat Casting, Weapon Focus (any melee weapon), Leadership.
-Skills: Craft (Weapon) 5, Craft (Armor) 5 ranks, Lore 5 ranks.
+Skills: Craft (Weapon) 5, 	rmor) 5 ranks, Lore 5 ranks.
 Base Attack Bonus: 4
 Divine Spellcasting: Level 2
 Special: Must worship Tempus. (Clerics must have the War domain, as well as one of Strength or Protection)
@@ -37710,6 +37710,14 @@ Specifics: This feat allows the caster to gain spells per day as if they had gai
   <entry id="55182" lang="en" sex="m">Spellcasting: Healer</entry>
   <entry id="55183" lang="en" sex="m">Spellcasting: Slayer of Domiel</entry>
   <entry id="55184" lang="en" sex="m">Spellcasting: Ocular Adept</entry>
+  <entry id="55185" lang="en" sex="m">Craft(poisonmaking)</entry>
+  <entry id="55186" lang="en" sex="m">Ability: Intelligence.
+Requires Training: no.
+Classes: All.
+
+A successful check allows a character to perform feats of poisonmaking.
+
+Use: Automatic.</entry>
   <entry id="55187" lang="en" sex="m">** Start Dragon Magic **</entry>
   <entry id="55188" lang="en" sex="m">Dragon Tail</entry>
   <entry id="55189" lang="en" sex="m">Type of Feat: General
@@ -49003,7 +49011,7 @@ Description: This allows the character to turn undead as a cleric of the same le
   <entry id="70020" lang="en" sex="m">Feat Type:  Template Feat
 
 Description: This allows the character to see in the dark.</entry>
-  <entry id="70021" lang="en" sex="m">Craft Alchemy</entry>
+  <entry id="70021" lang="en" sex="m">Craft(alchemy)</entry>
   <entry id="70022" lang="en" sex="m">Ability: Intelligence.
 Requires Training: no.
 Classes: All.

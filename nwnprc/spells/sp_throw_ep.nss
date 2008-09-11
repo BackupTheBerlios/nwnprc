@@ -11,7 +11,7 @@ void main()
         int nDamType = GetLocalInt(oGrenade, "PRC_GrenadeDamageType");
         int nStrength = GetLocalInt(oGrenade, "PRC_GrenadeLevel");
         int nSaveType = GetLocalInt(oGrenade, "PRC_EnergizedPotionSave");
-        int nDC = 10 + nStrength;
+        int nDC = GetLocalInt(oGrenade, "PRC_EnPotSaveDC");
         int nDam;
         location lLoc = GetSpellTargetLocation();
         object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(10.0), lLoc, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);

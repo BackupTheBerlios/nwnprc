@@ -41,12 +41,12 @@ void main()
 {
         if(!X2PreSpellCastCode()) return;
         
-        PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
-        
+        PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);        
         object oPC = OBJECT_SELF;
         object oPotion = GetSpellTargetObject();
         int nSpell = GetSpellId();
         int nCasterLvl = PRCGetCasterLevel(oPC);
+        int nDC = GetSpellSaveDC();
         string sDamageType;
         
         if(GetBaseItemType(oPotion) != BASE_ITEM_POTIONS)
@@ -122,6 +122,7 @@ void main()
         }
         
         SetLocalInt(oGrenade, "PRC_GrenadeLevel", min(3, nLevel));
+        SetLocalInt(oGrenade, "PRC_EnPotSaveDC", nDC);
         
         string sStrength;
                                 

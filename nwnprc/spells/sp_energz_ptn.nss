@@ -47,8 +47,13 @@ void main()
         object oPotion = GetSpellTargetObject();
         int nSpell = GetSpellId();
         int nCasterLvl = PRCGetCasterLevel(oPC);
-        SetLocalInt(oPotion, "PRC_EnergizePotionCL", nCasterLvl);
         string sDamageType;
+        
+        if(GetBaseItemType(oPotion) != BASE_ITEM_POTIONS)
+        {
+                FloatingTextStringOnCreature("Invalid item type.", oPC, FALSE);
+                return;
+        }
         
         //Get spell level
         int nLevel = 0; //define it outside the loop
@@ -88,28 +93,28 @@ void main()
                 sDamageType = "Acid";
         }
         
-        if(nSpell == SPELL_ENERGIZE_POTION_COLD)
+        else if(nSpell == SPELL_ENERGIZE_POTION_COLD)
         {
                 SetLocalInt(oGrenade, "PRC_GrenadeDamageType", DAMAGE_TYPE_COLD);
                 SetLocalInt(oGrenade, "PRC_EnergizedPotionSave", SAVING_THROW_TYPE_COLD);
                 sDamageType = "Cold";
         }
         
-        if(nSpell == SPELL_ENERGIZE_POTION_ELECTRICITY)
+        else if(nSpell == SPELL_ENERGIZE_POTION_ELECTRICITY)
         {
                 SetLocalInt(oGrenade, "PRC_GrenadeDamageType", DAMAGE_TYPE_ELECTRICAL);
                 SetLocalInt(oGrenade, "PRC_EnergizedPotionSave", SAVING_THROW_TYPE_ELECTRICITY);
                 sDamageType = "Electrical";
         }
         
-        if(nSpell == SPELL_ENERGIZE_POTION_FIRE)
+        else if(nSpell == SPELL_ENERGIZE_POTION_FIRE)
         {
                 SetLocalInt(oGrenade, "PRC_GrenadeDamageType", DAMAGE_TYPE_FIRE);
                 SetLocalInt(oGrenade, "PRC_EnergizedPotionSave", SAVING_THROW_TYPE_FIRE);
                 sDamageType = "Fire";
         }
         
-        if(nSpell == SPELL_ENERGIZE_POTION_SONIC)
+        else if(nSpell == SPELL_ENERGIZE_POTION_SONIC)
         {
                 SetLocalInt(oGrenade, "PRC_GrenadeDamageType", DAMAGE_TYPE_SONIC);
                 SetLocalInt(oGrenade, "PRC_EnergizedPotionSave", SAVING_THROW_TYPE_SONIC);

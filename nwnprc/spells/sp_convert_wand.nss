@@ -161,7 +161,9 @@ void main()
                 case 4: sWand = "prc_cwand_ccw";
                         break;
                 
-                default: break;
+                default: 
+                FloatingTextStringOnCreature("No spell data read.", oPC, FALSE);
+                break;
         }
         
         DestroyObject(oTargetWand);        

@@ -288,7 +288,7 @@ void main()
             
 	    if(DEBUG) DoDebug("inv_eldtch_shape: Is target friendly? " + IntToString(GetIsReactionTypeFriendly(oTarget)));
     
-        if(!GetIsReactionTypeFriendly(oTarget) && oTarget != oPC)
+        if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oPC) && oTarget != oPC)
         {
 	        if(DEBUG) DoDebug("inv_eldtch_shape: Target is neutral or hostile");
             //Fire cast spell at event for the specified target

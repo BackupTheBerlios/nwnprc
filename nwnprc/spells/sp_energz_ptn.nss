@@ -60,12 +60,10 @@ void main()
                 {       
                         //Get row
                         int nRow = GetItemPropertySubType(ipTest);
-                        
-                        //Get spellID
-                        int nSpellID = StringToInt(Get2DACache("iprp_spells", "SpellIndex", nRow));
-                        
+                                                
                         //Get spell level
-                        nLevel = StringToInt(Get2DACache("spells", "Innate", nSpellID));
+                        nLevel = StringToInt(Get2DACache("iprp_spells", "Innate", nRow));
+                        if(DEBUG) DoDebug("Spell level read as: " + IntToString(nLevel));
                         
                         //no need to check rest of the ips
                         break;

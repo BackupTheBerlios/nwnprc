@@ -1,8 +1,0 @@
-2DA V2.0
-
-     LABEL                          ReqType     ReqParam1          ReqParam2   
-0    Eyes_of_Charming               RESULT      x0_armhe003        ****
-1    CasterLevel7th                 CASTERLVL   7                  ****        
-2    Craft_Wondrous_Item_Feat       FEAT        2925               ****        
-3    Charm_Person                   SPELL       16                 ****        
-4    Heighten_Feat                  ****        ****               ****        

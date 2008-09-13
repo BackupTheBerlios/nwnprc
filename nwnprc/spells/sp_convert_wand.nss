@@ -72,8 +72,8 @@ void main()
         
         //Make sure it's a wand
         int nType = GetBaseItemType(oTargetWand);
-        if(nType != BASE_ITEM_MAGICWAND && nType != BASE_ITEM_BLANK_WAND)
-           
+        if(nType != BASE_ITEM_MAGICWAND || nType != 106)
+        if(DEBUG) DoDebug("GetBaseItemType returns: " + IntToString(nType));           
            
         {
                 FloatingTextStringOnCreature("The target item is not a wand", oPC, FALSE);

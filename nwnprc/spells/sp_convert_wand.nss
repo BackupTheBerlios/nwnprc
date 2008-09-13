@@ -60,7 +60,8 @@ void main()
                 
                 while(GetIsObjectValid(oTest))
                 {
-                        if(GetBaseItemType(oTest) == BASE_ITEM_MAGICWAND)
+                        int nTestType = GetBaseItemType(oTest);
+                        if(nTestType == BASE_ITEM_MAGICWAND || nTestType == 106)
                         {
                                 oTargetWand = oTest;
                                 oPC = GetItemPossessor(oTargetWand);
@@ -72,11 +73,10 @@ void main()
         
         //Make sure it's a wand
         int nType = GetBaseItemType(oTargetWand);
-        if(nType != BASE_ITEM_MAGICWAND || nType != 106)
-        if(DEBUG) DoDebug("GetBaseItemType returns: " + IntToString(nType));           
-           
+        if(nType != BASE_ITEM_MAGICWAND && nType != 106)      
         {
                 FloatingTextStringOnCreature("The target item is not a wand", oPC, FALSE);
+                if(DEBUG) DoDebug("GetBaseItemType returns invalid type: " + IntToString(nType));
                 return;
         }
                 

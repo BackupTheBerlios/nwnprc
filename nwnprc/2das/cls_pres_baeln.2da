@@ -15,6 +15,11 @@
 11 wild-Elf     RACE    167            ****      
 12 wood-Elf     RACE    168            ****      
 13 dark-Elf     RACE    169            ****      
-14 NoLichLevels VAR     PRC_NoLich     0         
-15 Spellcraft   SKILL   16             14        
-16 ScriptVar    VAR     PRC_AllSpell6  0         
+14 DarksunElf   RACE    34             ****      
+15 Kagonesti    RACE    44             ****      
+16 Sylvanesti   RACE    45             ****      
+17 FrstlrdElf   RACE    107            ****     
+18 SnowElf      RACE    165            ****     
+19 NoLichLevels VAR     PRC_NoLich     0         
+20 Spellcraft   SKILL   16             14        
+21 ScriptVar    VAR     PRC_AllSpell6  0         

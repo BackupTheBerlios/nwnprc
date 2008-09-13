@@ -36835,8 +36835,15 @@ Huge - 1d6
 Gigantic - 1d8
 Colossal - 2d6</entry>
   <entry id="54990" lang="en" sex="m">Draconic Tail</entry>
-  <entry id="54991" lang="en" sex="m">Epic Spellcasting</entry>
-  <entry id="54992" lang="en" sex="m">Type of Feat: Epic
+  <entry id="54991" lang="en" sex="m">At 17nd level, a dragon disciple grows a tail that can be used to make a natural attack with, if of large size or bigger. You can use your tail slap in addition to any weapons weilding in your hands.
+
+Size - Damage
+Large - 1d6
+Huge - 1d8
+Gigantic - 2d6
+Colossal - 3d6</entry>
+  <entry id="54992" lang="en" sex="m">Epic Spellcasting</entry>
+  <entry id="54993" lang="en" sex="m">Type of Feat: Epic
 Prerequisite: Spellcraft 24 ranks, Lore 24 ranks, ability to cast 9th-level arcane or divine spells
 Specifics: You may develop and cast epic spells. You may cast a number of epic spells per day equal to your ranks in Lore divided by 10.
 </entry>

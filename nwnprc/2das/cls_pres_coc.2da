@@ -23,6 +23,12 @@
 19 Half_aquatic-Elf RACE    182          ****      
 20 Half-drow        RACE    183          ****      
 21 feyri            RACE    201          ****      
-22 Base_Attack      BAB     7            ****      
-23 ScriptVar        VAR     PRC_AllowCoC 0         
-24 ScriptVar        VAR     PRC_PrereqCoC 0
+22 DarksunElf       RACE    34           ****      
+23 DarksunHalfelf   RACE    35           ****      
+24 Kagonesti        RACE    44           ****      
+25 Sylvanesti       RACE    45           ****       
+26 FrstlrdElf       RACE    107          ****     
+27 SnowElf          RACE    165          ****     
+28 Base_Attack      BAB     7            ****      
+29 ScriptVar        VAR     PRC_AllowCoC 0         
+30 ScriptVar        VAR     PRC_PrereqCoC 0

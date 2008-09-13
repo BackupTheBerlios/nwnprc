@@ -6,9 +6,11 @@
 2  HalfOrc       RACE    5             ****      
 3  Gray_Orc      RACE    184           ****      
 4  Orog          RACE    187           ****      
-5  Tanarukk      RACE    203           ****      
-6  Exotic_Prof   FEATOR  44            ****      
-7  WeapProfEx    FEATOR  7916          ****      
-8  Focus_Orc_axe FEAT    126           ****      
-9  ScriptVar     VAR     PRC_AllowEoG  0         
-10 ScriptVar     VAR     PRC_PrereqEOG 0         
+5  Tanarukk      RACE    203           ****       
+6  FrstbldOrc    RACE    108           ****     
+7  Scro          RACE    182           ****     
+8  Exotic_Prof   FEATOR  44            ****      
+9  WeapProfEx    FEATOR  7916          ****      
+10 Focus_Orc_axe FEAT    126           ****      
+11 ScriptVar     VAR     PRC_AllowEoG  0         
+12 ScriptVar     VAR     PRC_PrereqEOG 0         

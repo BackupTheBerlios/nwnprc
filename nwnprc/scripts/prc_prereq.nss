@@ -764,7 +764,7 @@ void RacialHD(object oPC)
     SetLocalInt(oPC, "PRC_PrereqConstruct", 1);
     SetLocalInt(oPC, "PRC_PrereqHumanoid", 1);
     SetLocalInt(oPC, "PRC_PrereqMonstrous", 1);
-    SetLocalInt(oPC, "PRC_PrereqElemental", 1);
+    SetLocalInt(oPC, "PRC_PrereqEle", 1);
     SetLocalInt(oPC, "PRC_PrereqFey", 1);
     SetLocalInt(oPC, "PRC_PrereqDragon", 1);
     SetLocalInt(oPC, "PRC_PrereqUndead", 1);
@@ -789,7 +789,7 @@ void RacialHD(object oPC)
                 case CLASS_TYPE_CONSTRUCT: SetLocalInt(oPC, "PRC_PrereqConstruct", 0); break;
                 case CLASS_TYPE_HUMANOID: SetLocalInt(oPC, "PRC_PrereqHumanoid", 0); break;
                 case CLASS_TYPE_MONSTROUS: SetLocalInt(oPC, "PRC_PrereqMonstrous", 0); break;
-                case CLASS_TYPE_ELEMENTAL: SetLocalInt(oPC, "PRC_PrereqElemental", 0); break;
+                case CLASS_TYPE_ELEMENTAL: SetLocalInt(oPC, "PRC_PrereqEle", 0); break;
                 case CLASS_TYPE_FEY: SetLocalInt(oPC, "PRC_PrereqFey", 0); break;
                 case CLASS_TYPE_DRAGON: SetLocalInt(oPC, "PRC_PrereqDragon", 0); break;
                 case CLASS_TYPE_UNDEAD: SetLocalInt(oPC, "PRC_PrereqUndead", 0); break;
@@ -800,6 +800,7 @@ void RacialHD(object oPC)
                 case CLASS_TYPE_SHAPECHANGER: SetLocalInt(oPC, "PRC_PrereqShapechanger", 0); break;
                 case CLASS_TYPE_VERMIN: SetLocalInt(oPC, "PRC_PrereqVermin", 0); break;
                 case CLASS_TYPE_PLANT: SetLocalInt(oPC, "PRC_PrereqPlant", 0); break;
+                default: SetLocalInt(oPC, "NoRace", 0);
             }
         }
 

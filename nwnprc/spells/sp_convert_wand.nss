@@ -82,13 +82,7 @@ void main()
                 
         int nCasterLvl = PRCGetCasterLevel(oPC);
         float fDur = (60.0f * nCasterLvl);
-        int nMetaMagic = PRCGetMetaMagicFeat();
-        
-        if(nMetaMagic == METAMAGIC_EXTEND)
-        {
-                fDur += fDur;
-        }       
-                
+                       
         //Get spell level
         itemproperty ipTest = GetFirstItemProperty(oTargetWand);
                 
@@ -100,7 +94,8 @@ void main()
                         int nRow = GetItemPropertySubType(ipTest);
                                           
                         //Get spell level
-                        nLevel = StringToInt(Get2DACache("iprp_spells", "Innate", nRow));                        
+                        nLevel = StringToInt(Get2DACache("iprp_spells", "Innate", nRow));  
+                        if(DEBUG) DoDebug("Spell level read as" + IntToString(nLevel));
                 }                               
                 ipTest = GetNextItemProperty(oTargetWand);              
         }  

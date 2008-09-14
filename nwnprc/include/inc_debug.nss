@@ -23,7 +23,7 @@
  * Prefix all your debug calls with an if(DEBUG) so that they get stripped away
  * during compilation as dead code when this is turned off.
  */
-const int DEBUG = TRUE;
+const int DEBUG = FALSE;
 
 
 //////////////////////////////////////////////////

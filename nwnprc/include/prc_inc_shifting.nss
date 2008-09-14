@@ -538,7 +538,8 @@ void _prc_inc_shifting_CopyAllItemProperties(object oFrom, object oTo)
 
     while(GetIsItemPropertyValid(iProp))
     {
-        AddItemProperty(GetItemPropertyDurationType(iProp), iProp, oTo);
+        if(GetItemPropertyDurationType(iProp) == DURATION_TYPE_PERMANENT)
+            AddItemProperty(GetItemPropertyDurationType(iProp), iProp, oTo);
         iProp = GetNextItemProperty(oFrom);
     }
 }
@@ -682,7 +683,8 @@ int _prc_inc_shifting_GetCanShift(object oShifter)
     DestroyObject(o2);
     DestroyObject(o3);
 
-    // Polymorph effect and shifting are mutually exclusive. Letting them stack is inviting massive fuckups
+    // Polymorph effect and shifting are mutually exclusive. Letting them stack
+    // is inviting massive fuckups.
     effect eTest = GetFirstEffect(oShifter);
     while(GetIsEffectValid(eTest))
     {
@@ -951,7 +953,7 @@ void _prc_inc_shifting_ShiftIntoTemplateAux(object oShifter, int nShifterType, o
 
         // Feats - read from shifter_feats.2da, check if template has it and copy over if it does
         // Delayed, since this takes way too long
-        DelayCommand(0.0f, _prc_inc_shifting_CopyFeats(oTemplate, oShifterHide));
+        //DelayCommand(0.0f, _prc_inc_shifting_CopyFeats(oTemplate, oShifterHide)); @todo Re-enable once it is known whether this is the cause of the lag.
 
         // Casting restrictions if our - inaccurate - check indicates the template can't cast spells
         if(!_prc_inc_shifting_GetCanFormCast(oTemplate))
@@ -1601,7 +1603,7 @@ int GetCanShiftIntoCreature(object oShifter, int nShifterType, object oTemplate)
             }// end if - PnP Shifter checks
         
             //Change Shape checks
-            if(nShifterType == SHIFTER_TYPE_HUMANOIDSHAPE)
+            else if(nShifterType == SHIFTER_TYPE_HUMANOIDSHAPE)
             {                    
                 int nTargetSize        = PRCGetCreatureSize(oTemplate);
                 int nRacialType        = MyPRCGetRacialType(oTemplate);

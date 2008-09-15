@@ -92,9 +92,9 @@ void main()
                 { 
                         //Get row
                         int nRow = GetItemPropertySubType(ipTest);
-                                          
+                        if(DEBUG) DoDebug("nRow = " + IntToString(nRow));
                         //Get spell level
-                        nLevel = StringToInt(Get2DACache("iprp_spells", "Innate", nRow));  
+                        nLevel = StringToInt(Get2DACache("iprp_spells", "InnateLvl", nRow));  
                         if(DEBUG) DoDebug("Spell level read as" + IntToString(nLevel));
                 }                               
                 ipTest = GetNextItemProperty(oTargetWand);              

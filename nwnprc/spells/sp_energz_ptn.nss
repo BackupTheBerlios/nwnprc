@@ -67,7 +67,7 @@ void main()
                         int nRow = GetItemPropertySubType(ipTest);
                                                 
                         //Get spell level
-                        nLevel = StringToInt(Get2DACache("iprp_spells", "Innate", nRow));
+                        nLevel = StringToInt(Get2DACache("iprp_spells", "InnateLvl", nRow));
                         if(DEBUG) DoDebug("Spell level read as: " + IntToString(nLevel));
                         
                         //no need to check rest of the ips

@@ -80,13 +80,10 @@ void main()
         
         //impervious to non-magical weapons for the duration
         effect eReduce = EffectDamageReduction(0, DAMAGE_POWER_PLUS_ONE, 0);
+        eReduce = EffectLinkEffects(eReduce, EffectDamageImmunityIncrease(DAMAGE_TYPE_BLUDGEONING, 50));
+        eReduce = EffectLinkEffects(eReduce, EffectDamageImmunityIncrease(DAMAGE_TYPE_SLASHING, 50));
+        eReduce = EffectLinkEffects(eReduce, EffectDamageImmunityIncrease(DAMAGE_TYPE_PIERCING, 50));
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eReduce, oTarget, fDur);
-        
+           
         PRCSetSchool();
-}
-        
-        
-        
-           
-           
-           
+}      

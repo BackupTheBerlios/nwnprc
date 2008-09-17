@@ -21,7 +21,7 @@ void main()
     SetPersistantLocalInt(oPC, "PRC_Addiction_Luhix_DC", 36);
     
     //Handle satiation
-    SetPersistantLocalInt(oPC, "PRC_AgonySatiation", 1);    
+    SetPersistantLocalInt(oPC, "PRC_LuhixSatiation", 1);    
     
     //Make addiction check
     if(!GetHasSpellEffect(SPELL_DRUG_RESISTANCE, oPC))
@@ -70,12 +70,12 @@ void main()
     // Luhix overdose
     if(GetOverdoseCounter(oPC, "PRC_LuhixOD"))
     {
-	    if(!FortitudeSave(oPC, 25, SAVING_THROW_TYPE_POISON))
-	    {
-		    PlayVoiceChat(VOICE_CHAT_PAIN3);
-		    DeathlessFrenzyCheck(oPC);
-		    DelayCommand(3.0,SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oPC));
-	    }
+            if(!FortitudeSave(oPC, 25, SAVING_THROW_TYPE_POISON))
+            {
+                    PlayVoiceChat(VOICE_CHAT_PAIN3);
+                    DeathlessFrenzyCheck(oPC);
+                    DelayCommand(3.0,SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oPC));
+            }
     }
     //OD increment
     IncrementOverdoseTracker(oPC, "PRC_LuhixOD", HoursToSeconds(24));

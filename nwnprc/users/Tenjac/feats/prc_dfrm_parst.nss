@@ -16,7 +16,7 @@ void main()
         int bRemoved = FALSE;
         effect eTest = GetFirstEffect(oPC);
                 
-        while(GetIsEffectValid(eTest))
+        while(GetIsEffectValid(eTest) && bRemoved == FALSE)
         {
                 int nType = GetEffectType(eTest);
                 if(nType == EFFECT_TYPE_DISEASE || nType == EFFECT_TYPE_POISON)

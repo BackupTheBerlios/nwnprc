@@ -283,6 +283,7 @@ const int BREATH_SICKENING   = 9;
 
 // BaseItems
 
+const int BASE_ITEM_CRAFTED_ROD     = 200;
 const int BASE_ITEM_CRAFTED_STAFF   = 201;
 const int BASE_ITEM_ELF_LIGHTBLADE  = 202;
 const int BASE_ITEM_ELF_THINBLADE   = 203;

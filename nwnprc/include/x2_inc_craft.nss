@@ -31,6 +31,13 @@ struct craft_receipe_struct
     object oMinor;
 };
 
+struct craft_cost_struct
+{
+    int nGoldCost;
+    int nXPCost;
+    int nTimeCost;
+};
+
 const string  X2_CI_CRAFTSKILL_CONV ="x2_p_craftskills";
 
 // Brew Potion related Constants
@@ -101,7 +108,7 @@ const int PRC_RUNE_CHARGES         = 1;
 const int PRC_RUNE_PERDAY          = 2;
 const int PRC_RUNE_MAXCHARGES      = 3;
 const int PRC_RUNE_MAXUSESPERDAY   = 4;
-// Attune Gem constants 
+// Attune Gem constants
 const int PRC_GEM_BASECOST         = 5;
 const int PRC_GEM_PERLEVEL         = 6;
 
@@ -135,14 +142,37 @@ int   CIGetSpellWasUsedForItemCreation(object oSpellTarget);
 // and if so, deducts the appropriate experience and gold
 // then creates the rune in the caster's inventory.
 // This will also cause the spell to fail if turned on.
-int InscribeRune();
+int InscribeRune(object oTarget = OBJECT_INVALID, object oCaster = OBJECT_INVALID, int nSpell = 0);
 
 // This function checks whether Attune Gem is turned on
 // and if so, deducts the appropriate experience and gold
 // then creates the gem in the caster's inventory.
 // This will also cause the spell to fail if turned on.
-int AttuneGem();
+int AttuneGem(object oTarget = OBJECT_INVALID, object oCaster = OBJECT_INVALID, int nSpell = 0);
 
+// Gets the Magical Artisan feat given a particular crafting feat
+int GetMagicalArtisanFeat(int nCraftingFeat);
+
+// Gets the modified gold cost taking cost reduction feats and cost
+// scaling switches into account
+int GetModifiedGoldCost(int nCost, object oPC, int nCraftingFeat);
+
+// Gets the modified xp cost taking cost reduction feats and cost
+// scaling switches into account
+int GetModifiedXPCost(int nCost, object oPC, int nCraftingFeat);
+
+// Gets the modified time cost taking cost reduction feats and cost
+// scaling switches into account
+int GetModifiedTimeCost(int nCost, object oPC, int nCraftingFeat);
+
+// Imbue item check for warlocks, returns TRUE if a spell requirement is met
+int CheckImbueItem(object oPC, int nSpell);
+
+// Gets PnP xp cost given a gold cost and whether the item is epic
+int GetPnPItemXPCost(int nCost, int bEpic);
+
+// Returns a struct containing gold, xp and time costs given the base cost and other arguments
+struct craft_cost_struct GetModifiedCostsFromBase(int nCost, object oPC, int nCraftingFeat, int bEpic);
 
 //////////////////////////////////////////////////
 /* Include section                              */
@@ -212,12 +242,12 @@ int CI_GetClassMagicType(int nClass)
         case CLASS_TYPE_WIZARD:
                 return X2_CI_MAGICTYPE_ARCANE; break;
     }
-    
+
     if(GetIsArcaneClass(nClass))
         return X2_CI_MAGICTYPE_ARCANE;
     else if(GetIsDivineClass(nClass))
         return X2_CI_MAGICTYPE_DIVINE;
-    
+
     return X2_CI_MAGICTYPE_INVALID;
 }
 
@@ -235,7 +265,11 @@ int CIGetIsCraftFeatBaseItem(object oItem)
 {
     int nBt = GetBaseItemType(oItem);
     // blank scroll, empty potion, wand
-    if (nBt == 101 || nBt == 102 || nBt == 103 || nBt == 200 || nBt == BASE_ITEM_CRAFTED_STAFF)
+    if (nBt == BASE_ITEM_BLANK_POTION ||
+        nBt == BASE_ITEM_BLANK_SCROLL ||
+        nBt == BASE_ITEM_BLANK_WAND ||
+        nBt == BASE_ITEM_CRAFTED_ROD ||
+        nBt == BASE_ITEM_CRAFTED_STAFF)
       return TRUE;
     else
       return FALSE;
@@ -260,26 +294,26 @@ object CICraftBrewPotion(object oCreator, int nSpellID )
         FloatingTextStrRefOnCreature(84544,oCreator);
         return OBJECT_INVALID;
     }
-    
+
     //Uses per day
     int nUsesAllowed;
-    
+
     if(GetHasFeat(FEAT_BREW_4PERDAY,oCreator)) nUsesAllowed = 4;
-    
+
     else if(GetHasFeat(FEAT_BREW_3PERDAY, oCreator)) nUsesAllowed = 3;
-    
+
     else if(GetHasFeat(FEAT_BREW_2PERDAY, oCreator)) nUsesAllowed = 2;
-    
+
     else nUsesAllowed = 1;
-    
+
     int nUsed = GetLocalInt(oCreator, "PRC_POTIONS_BREWED");
-    
+
     if(nUsed >= nUsesAllowed)
     {
             SendMessageToPC(oCreator, "You must rest before you can brew any more potions");
             return OBJECT_INVALID;
     }
-    
+
     int nCasterLevel = PRCGetCasterLevel();
     if(GetLocalInt(oCreator, "UsingImbueItem"))
     {
@@ -300,7 +334,7 @@ object CICraftBrewPotion(object oCreator, int nSpellID )
             itemproperty ipDC = ItemPropertyCastSpellDC(nSpellID, PRCGetSaveDC(PRCGetSpellTargetObject(), OBJECT_SELF));
             AddItemProperty(DURATION_TYPE_PERMANENT,ipDC,oTarget);
         }
-        
+
         //Increment usage
         SetLocalInt(oCreator, "PRC_POTIONS_BREWED", nUsed++);
     }
@@ -354,8 +388,8 @@ object CICraftCraftWand(object oCreator, int nSpellID )
         FloatingTextStrRefOnCreature(84544,oCreator);
         return OBJECT_INVALID;
     }
-    
-    
+
+
     int nCasterLevel = PRCGetCasterLevel();
     int nClass = PRCGetLastSpellCastClass();
     if(GetLocalInt(oCreator, "UsingImbueItem"))
@@ -403,7 +437,7 @@ object CICraftCraftWand(object oCreator, int nSpellID )
              ipLimit = ItemPropertyLimitUseByClass(CLASS_TYPE_BARD);
              AddItemProperty(DURATION_TYPE_PERMANENT,ipLimit,oTarget);
         }
-        
+
         if(nClass != CLASS_TYPE_WARLOCK)
         {
             ipLimit = ItemPropertyLimitUseByClass(nClass);
@@ -572,16 +606,16 @@ These dont work as IPs since they are hardcoded */
     int nPotionMaxLevel = GetPRCSwitch(X2_CI_BREWPOTION_MAXLEVEL);
     if(nPotionMaxLevel == 0)
         nPotionMaxLevel = 3;
-        
+
     //Master Alchemist
-    
+
     if(GetHasFeat(FEAT_BREW_POTION_9TH, oCaster)) nPotionMaxLevel = 9;
     else if(GetHasFeat(FEAT_BREW_POTION_8TH, oCaster)) nPotionMaxLevel = 8;
     else if(GetHasFeat(FEAT_BREW_POTION_7TH, oCaster)) nPotionMaxLevel = 7;
     else if(GetHasFeat(FEAT_BREW_POTION_6TH, oCaster)) nPotionMaxLevel = 6;
     else if(GetHasFeat(FEAT_BREW_POTION_5TH, oCaster)) nPotionMaxLevel = 5;
     else if(GetHasFeat(FEAT_BREW_POTION_4TH, oCaster)) nPotionMaxLevel = 4;
-        
+
     if (nLevel > nPotionMaxLevel)
     {
         FloatingTextStrRefOnCreature(76416, oCaster);
@@ -604,23 +638,14 @@ These dont work as IPs since they are hardcoded */
     if(nCostModifier == 0)
         nCostModifier = 50;
     int nCost = CIGetCraftGPCost(nLevel, nCostModifier, PRC_BREW_POTION_CASTER_LEVEL);
-    
-    //Magical Artisan
-    if(GetHasFeat(FEAT_MAGICAL_ARTISAN_BREW_POTION, oCaster))
-    {
-            float fCost = IntToFloat(nCost);
-            float fDisc = fCost * 0.25;            
-            nCost = FloatToInt(fCost - fDisc);
-    }
-    
-    float nExperienceCost = 0.04  * nCost; // xp = 1/25 of gp value
-    int nGoldCost = nCost ;
+
+    struct craft_cost_struct costs = GetModifiedCostsFromBase(nCost, oCaster, FEAT_BREW_POTION, FALSE);
 
     // -------------------------------------------------------------------------
     // Does Player have enough gold?
     // -------------------------------------------------------------------------
     //if (GetGold(oCaster) < nGoldCost)
-    if(!GetHasGPToSpend(oCaster, nGoldCost))
+    if(!GetHasGPToSpend(oCaster, costs.nGoldCost))
     {
         FloatingTextStrRefOnCreature(3786, oCaster); // Item Creation Failed - not enough gold!
         return TRUE;
@@ -628,14 +653,14 @@ These dont work as IPs since they are hardcoded */
 
     int nHD = GetHitDice(oCaster);
     int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
-    int nNewXP = FloatToInt(GetXP(oCaster) - nExperienceCost);
+    int nNewXP = GetXP(oCaster) - costs.nXPCost;
 
 
     // -------------------------------------------------------------------------
     // check for sufficient XP to cast spell
     // -------------------------------------------------------------------------
     //if (nMinXPForLevel > nNewXP || nNewXP == 0 )
-    if (!GetHasXPToSpend(oCaster, FloatToInt(nExperienceCost)))
+    if (!GetHasXPToSpend(oCaster, costs.nXPCost))
     {
         FloatingTextStrRefOnCreature(3785, oCaster); // Item Creation Failed - Not enough XP
         return TRUE;
@@ -653,12 +678,14 @@ These dont work as IPs since they are hardcoded */
     {
         //TakeGoldFromCreature(nGoldCost, oCaster, TRUE);
         //SetXP(oCaster, nNewXP);
-        SpendXP(oCaster, FloatToInt(nExperienceCost));
-        SpendGP(oCaster, nGoldCost);
+        SpendXP(oCaster, costs.nXPCost);
+        SpendGP(oCaster, costs.nGoldCost);
         DestroyObject (oSpellTarget);
         FloatingTextStrRefOnCreature(8502, oCaster); // Item Creation successful
-        //if time is enabled, fast forward
-        AdvanceTimeForPlayer(oCaster, HoursToSeconds(24));
+
+        //advance time here
+        if(!costs.nTimeCost) costs.nTimeCost = 1;
+        AdvanceTimeForPlayer(oCaster, RoundsToSeconds(costs.nTimeCost));
         string sName;
         sName = Get2DACache("spells", "Name", nID);
         sName = "Potion of "+GetStringByStrRef(StringToInt(sName));
@@ -708,17 +735,8 @@ int CICraftCheckScribeScroll(object oSpellTarget, object oCaster, int nID = 0)
     if(nCostModifier == 0)
         nCostModifier = 25;
     int nCost = CIGetCraftGPCost(nLevel, nCostModifier, PRC_SCRIBE_SCROLL_CASTER_LEVEL);
-    
-    //Magical Artisan
-    if(GetHasFeat(FEAT_MAGICAL_ARTISAN_SCRIBE_SCROLL, oCaster))
-    {
-            float fCost = IntToFloat(nCost);
-            float fDisc = fCost * 0.25;            
-            nCost = FloatToInt(fCost - fDisc);
-    }            
-    
-    float fExperienceCost = 0.04 * nCost;
-    int nGoldCost = nCost ;
+
+    struct craft_cost_struct costs = GetModifiedCostsFromBase(nCost, oCaster, FEAT_SCRIBE_SCROLL, FALSE);
 
     if(GetPRCSwitch(PRC_SCRIBE_SCROLL_CASTER_LEVEL))
     {
@@ -750,7 +768,7 @@ These dont work as IPs since they are hardcoded */
     // -------------------------------------------------------------------------
     // Does Player have enough gold?
     // -------------------------------------------------------------------------
-    if(!GetHasGPToSpend(oCaster, nGoldCost))
+    if(!GetHasGPToSpend(oCaster, costs.nGoldCost))
     {
         FloatingTextStrRefOnCreature(3786, oCaster); // Item Creation Failed - not enough gold!
         return TRUE;
@@ -758,13 +776,13 @@ These dont work as IPs since they are hardcoded */
 
     int nHD = GetHitDice(oCaster);
     int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
-    int nNewXP = FloatToInt(GetXP(oCaster) - fExperienceCost);
+    int nNewXP = GetXP(oCaster) - costs.nXPCost;
 
     // -------------------------------------------------------------------------
     // check for sufficient XP to cast spell
     // -------------------------------------------------------------------------
     //if (nMinXPForLevel > nNewXP || nNewXP == 0 )
-    if (!GetHasXPToSpend(oCaster, FloatToInt(fExperienceCost)))
+    if (!GetHasXPToSpend(oCaster, costs.nXPCost))
     {
          FloatingTextStrRefOnCreature(3785, oCaster); // Item Creation Failed - Not enough XP
          return TRUE;
@@ -785,16 +803,14 @@ These dont work as IPs since they are hardcoded */
         //----------------------------------------------------------------------
         SetIdentified(oScroll,TRUE);
         ActionPlayAnimation (ANIMATION_FIREFORGET_READ,1.0);
-        SpendXP(oCaster, FloatToInt(fExperienceCost));
-        SpendGP(oCaster, nGoldCost);
+        SpendXP(oCaster, costs.nXPCost);
+        SpendGP(oCaster, costs.nGoldCost);
         DestroyObject (oSpellTarget);
         FloatingTextStrRefOnCreature(8502, oCaster); // Item Creation successful
-        //1 day per 1000GP base cost, min 1
-        int nDays = nGoldCost/500;
-        // Maester class cuts crafting time in half.
-        if (GetLevelByClass(CLASS_TYPE_MAESTER, oCaster)) nDays /= 2;
-        if(!nDays) nDays = 1;
-        AdvanceTimeForPlayer(oCaster, HoursToSeconds(nDays*24));
+
+        //advance time here
+        if(!costs.nTimeCost) costs.nTimeCost = 1;
+        AdvanceTimeForPlayer(oCaster, RoundsToSeconds(costs.nTimeCost));
         return TRUE;
      }
      else
@@ -880,22 +896,13 @@ These dont work as IPs since they are hardcoded */
     if(nCostMod == 0)
         nCostMod = 750;
     int nCost = CIGetCraftGPCost(nLevel, nCostMod, PRC_CRAFT_WAND_CASTER_LEVEL);
-    
-    //Magical Artisan
-    if(GetHasFeat(FEAT_MAGICAL_ARTISAN_CRAFT_WAND, oCaster))
-    {
-            float fCost = IntToFloat(nCost);
-            float fDisc = fCost * 0.25;            
-            nCost = FloatToInt(fCost - fDisc);
-    }           
-    
-    float nExperienceCost = 0.04 * nCost;
-    int nGoldCost = nCost;
+
+    struct craft_cost_struct costs = GetModifiedCostsFromBase(nCost, oCaster, FEAT_CRAFT_WAND, FALSE);
 
     // -------------------------------------------------------------------------
     // Does Player have enough gold?
     // -------------------------------------------------------------------------
-    if(!GetHasGPToSpend(oCaster, nGoldCost))
+    if(!GetHasGPToSpend(oCaster, costs.nGoldCost))
     {
         FloatingTextStrRefOnCreature(3786, oCaster); // Item Creation Failed - not enough gold!
         return TRUE;
@@ -904,12 +911,12 @@ These dont work as IPs since they are hardcoded */
     // more calculations on XP cost
     int nHD = GetHitDice(oCaster);
     int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
-    int nNewXP = FloatToInt(GetXP(oCaster) - nExperienceCost);
+    int nNewXP = GetXP(oCaster) - costs.nXPCost;
 
     // -------------------------------------------------------------------------
     // check for sufficient XP to cast spell
     // -------------------------------------------------------------------------
-     if (!GetHasXPToSpend(oCaster, FloatToInt(nExperienceCost)))
+     if (!GetHasXPToSpend(oCaster, costs.nXPCost))
     {
          FloatingTextStrRefOnCreature(3785, oCaster); // Item Creation Failed - Not enough XP
          return TRUE;
@@ -925,17 +932,14 @@ These dont work as IPs since they are hardcoded */
     // -------------------------------------------------------------------------
     if (GetIsObjectValid(oWand))
     {
-        SpendXP(oCaster, FloatToInt(nExperienceCost));
-        SpendGP(oCaster, nGoldCost);
+        SpendXP(oCaster, costs.nXPCost);
+        SpendGP(oCaster, costs.nGoldCost);
         DestroyObject (oSpellTarget);
         FloatingTextStrRefOnCreature(8502, oCaster); // Item Creation successful
-        //if time is enabled, fast forward
-        //1 day per 1000GP base cost, min 1
-        int nDays = nGoldCost/500;
-        // Maester class cuts crafting time in half.
-        if (GetLevelByClass(CLASS_TYPE_MAESTER, oCaster)) nDays /= 2;
-        if(!nDays) nDays = 1;
-        AdvanceTimeForPlayer(oCaster, HoursToSeconds(nDays*24));
+
+        //advance time here
+        if(!costs.nTimeCost) costs.nTimeCost = 1;
+        AdvanceTimeForPlayer(oCaster, RoundsToSeconds(costs.nTimeCost));
         string sName;
         sName = Get2DACache("spells", "Name", nID);
         sName = "Wand of "+GetStringByStrRef(StringToInt(sName));
@@ -1021,36 +1025,29 @@ These dont work as IPs since they are hardcoded */
     int nLvlRow = IPGetIPConstCastSpellFromSpellID(nSpellID);
     int nCLevel = StringToInt(Get2DACache("iprp_spells","CasterLvl",nLvlRow));
     int nCost = CIGetCraftGPCost(nLevel, nCostMod, PRC_CRAFT_STAFF_CASTER_LEVEL);
-    
-    //Magical Artisan
-    if(GetHasFeat(FEAT_MAGICAL_ARTISAN_CRAFT_STAFF, oCaster))
-    {
-            float fCost = IntToFloat(nCost);
-            float fDisc = fCost * 0.25;            
-            nCost = FloatToInt(fCost - fDisc);
-    }            
-    
+
     //discount for second or 3+ spells
     if(nCount+1 == 2)
         nCost = (nCost*3)/4;
     else if(nCount+1 >= 3)
         nCost = nCost/2;
 
-    int nXP = nCost / 25;
-    int nGoldCost = nCost / 2;
-    if(nGoldCost < 1) nXP = 1;
-    if(nXP < 1) nXP = 1;
+    //takes epic xp costs into account
+    struct craft_cost_struct costs = GetModifiedCostsFromBase(nCost, oCaster, FEAT_CRAFT_STAFF, (nMetaMagic > 0));
+
+    if(costs.nGoldCost < 1) costs.nXPCost = 1;
+    if(costs.nXPCost < 1) costs.nXPCost = 1;
     //if(GetGold(oCaster) < nGoldCost)  //  enough gold?
-    if (!GetHasGPToSpend(oCaster, nGoldCost))
+    if (!GetHasGPToSpend(oCaster, costs.nGoldCost))
     {
         FloatingTextStrRefOnCreature(3786, oCaster); // Item Creation Failed - not enough gold!
         return TRUE;
     }
     int nHD = GetHitDice(oCaster);
     int nMinXPForLevel = (nHD * (nHD - 1)) * 500;
-    int nNewXP = GetXP(oCaster) - nXP;
+    int nNewXP = GetXP(oCaster) - costs.nXPCost;
     //if (nMinXPForLevel > nNewXP || nNewXP == 0 )
-    if (!GetHasXPToSpend(oCaster, nXP))
+    if (!GetHasXPToSpend(oCaster, costs.nXPCost))
     {
          FloatingTextStrRefOnCreature(3785, oCaster); // Item Creation Failed - Not enough XP
          return TRUE;
@@ -1079,17 +1076,14 @@ These dont work as IPs since they are hardcoded */
     {
         //TakeGoldFromCreature(nGoldCost, oCaster, TRUE);
         //SetXP(oCaster, nNewXP);
-        SpendXP(oCaster, nXP);
-        SpendGP(oCaster, nGoldCost);
+        SpendXP(oCaster, costs.nXPCost);
+        SpendGP(oCaster, costs.nGoldCost);
         //DestroyObject (oSpellTarget);
         FloatingTextStrRefOnCreature(8502, oCaster); // Item Creation successful
-        //if time is enabled, fast forward
-        //1 day per 1000GP base cost, min 1
-        int nDays = nCost/1000;
-        // Maester class cuts crafting time in half.
-        if (GetLevelByClass(CLASS_TYPE_MAESTER, oCaster)) nDays /= 2;
-        if(!nDays) nDays = 1;
-        AdvanceTimeForPlayer(oCaster, HoursToSeconds(nDays*24));
+
+        //advance time here
+        if(!costs.nTimeCost) costs.nTimeCost = 1;
+        AdvanceTimeForPlayer(oCaster, RoundsToSeconds(costs.nTimeCost));
         string sName;
         sName = GetName(oCaster)+"'s Magic Staff";
         //sName = Get2DACache("spells", "Name", nID);
@@ -1105,9 +1099,9 @@ These dont work as IPs since they are hardcoded */
     return TRUE;
 }
 
-int InscribeRune()
+int InscribeRune(object oTarget = OBJECT_INVALID, object oCaster = OBJECT_INVALID, int nSpell = 0)
 {
-    object oCaster = OBJECT_SELF;
+    if(!GetIsObjectValid(oCaster)) oCaster = OBJECT_SELF;
     // Get the item used to cast the spell
     object oItem = GetSpellCastItem();
     if (GetResRef(oItem) == "prc_rune_1")
@@ -1140,7 +1134,11 @@ int InscribeRune()
     if(!GetLocalInt(oCaster, "InscribeRune")) return TRUE;
 
     // No point being in here if you don't have runes.
-    if (!GetHasFeat(FEAT_INSCRIBE_RUNE, oCaster)) return TRUE;
+    if(!GetHasFeat(FEAT_INSCRIBE_RUNE, oCaster))
+    {
+        FloatingTextStrRefOnCreature(40487, oCaster); // Item Creation Failed - Don't know how to create that type of item
+        return TRUE; // tried item creation but do not know how to do it
+    }
 
         // No point scribing runes from items, and its not allowed.
         if (oItem != OBJECT_INVALID)
@@ -1149,10 +1147,10 @@ int InscribeRune()
             return TRUE;
         }
 
-    object oTarget = PRCGetSpellTargetObject();
+    if(!GetIsObjectValid(oTarget)) oTarget = PRCGetSpellTargetObject();
     int nCaster = PRCGetCasterLevel(oCaster);
     int nDC = PRCGetSaveDC(oTarget, oCaster);
-    int nSpell = PRCGetSpellId();
+    if(!nSpell) nSpell = PRCGetSpellId();
     int nSpellLevel;
     int nClass = GetLevelByClass(CLASS_TYPE_RUNECASTER, oCaster);
 
@@ -1199,27 +1197,19 @@ int InscribeRune()
     if (GetLocalInt(oCaster, "RuneUsesPerDay")) nMultiplier = StringToInt(Get2DACache("prc_rune_craft", "Cost", PRC_RUNE_PERDAY));
 
     // Cost of the rune in gold and XP
-    int nGoldCost = nSpellLevel * nCaster * nCharges * nMultiplier;
-    
-    //Magical Artisan
-    if(GetHasFeat(FEAT_MAGICAL_ARTISAN_INSCRIBE_RUNE, oCaster)) 
-    {
-            float fCost = IntToFloat(nGoldCost);
-            float fDisc = fCost * 0.25;            
-            nGoldCost = FloatToInt(fCost - fDisc);
-    }
-    
-    int nXPCost = nGoldCost/25;
+    int nCost = nSpellLevel * nCaster * nCharges * nMultiplier;
 
-    FloatingTextStringOnCreature("Gold Cost: " + IntToString(nGoldCost), OBJECT_SELF, FALSE);
-    FloatingTextStringOnCreature("XP Cost: " + IntToString(nXPCost), OBJECT_SELF, FALSE);
+    struct craft_cost_struct costs = GetModifiedCostsFromBase(nCost, oCaster, FEAT_INSCRIBE_RUNE, FALSE);
+
+    FloatingTextStringOnCreature("Gold Cost: " + IntToString(costs.nGoldCost), OBJECT_SELF, FALSE);
+    FloatingTextStringOnCreature("XP Cost: " + IntToString(costs.nXPCost), OBJECT_SELF, FALSE);
 
     // See if the caster has enough gold and XP to scribe a rune, and that he passes the skill check.
     int nHD = GetHitDice(oCaster);
     int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
-    int nNewXP = GetXP(oCaster) - nXPCost;
+    int nNewXP = GetXP(oCaster) - costs.nXPCost;
     int nGold = GetGold(oCaster);
-    int nNewGold = nGold - nGoldCost;
+    int nNewGold = nGold - costs.nGoldCost;
     int nCheck = FALSE;
     // Does the PC have Maximize Rune turned on?
     int nMaximize = 0;
@@ -1228,13 +1218,13 @@ int InscribeRune()
     if ((GetSkillRank(SKILL_CRAFT_ARMOR, oCaster) + d20() + nRuneCraft) >= (20 + nSpellLevel + nMaximize)) nCheck = TRUE;
 
 
-    if (!GetHasGPToSpend(oCaster, nGoldCost))
+    if (!GetHasGPToSpend(oCaster, costs.nGoldCost))
     {
         FloatingTextStringOnCreature("You do not have enough gold to scribe this rune.", oCaster, FALSE);
         // Since they don't have enough, the spell casts normally
         return TRUE;
     }
-    if (!GetHasXPToSpend(oCaster, nXPCost) )
+    if (!GetHasXPToSpend(oCaster, costs.nXPCost) )
     {
         FloatingTextStringOnCreature("You do not have enough experience to scribe this rune.", oCaster, FALSE);
         // Since they don't have enough, the spell casts normally
@@ -1323,14 +1313,11 @@ int InscribeRune()
         }
         SetItemCharges(oRune,nCharges);
         SetXP(oCaster,nNewXP);
-        TakeGoldFromCreature(nGoldCost, oCaster, TRUE);
-        //if time is enabled, fast forward
-        //1 day per 1000GP base cost, min 1
-        int nDays = nGoldCost/1000;
-        // Maester class cuts crafting time in half.
-        if (GetLevelByClass(CLASS_TYPE_MAESTER, oCaster)) nDays /= 2;
-        if(!nDays) nDays = 1;
-        AdvanceTimeForPlayer(oCaster, HoursToSeconds(nDays*24));
+        TakeGoldFromCreature(costs.nGoldCost, oCaster, TRUE);
+
+        //advance time here
+        if(!costs.nTimeCost) costs.nTimeCost = 1;
+        AdvanceTimeForPlayer(oCaster, RoundsToSeconds(costs.nTimeCost));
         string sName;
         sName = Get2DACache("spells", "Name", nSpell);
         sName = "Rune of "+GetStringByStrRef(StringToInt(sName));
@@ -1343,9 +1330,9 @@ int InscribeRune()
     return FALSE;
 }
 
-int AttuneGem()
+int AttuneGem(object oTarget = OBJECT_INVALID, object oCaster = OBJECT_INVALID, int nSpell = 0)
 {
-    object oCaster = OBJECT_SELF;
+    if(!GetIsObjectValid(oCaster)) oCaster = OBJECT_SELF;
     // Get the item used to cast the spell
     object oItem = GetSpellCastItem();
     if (GetTag(oItem) == "prc_attunegem")
@@ -1378,7 +1365,11 @@ int AttuneGem()
     if(!GetLocalInt(oCaster, "AttuneGem")) return TRUE;
 
     // No point being in here if you don't have Gems.
-    if (!GetHasFeat(FEAT_ATTUNE_GEM, oCaster)) return TRUE;
+    if(!GetHasFeat(FEAT_ATTUNE_GEM, oCaster))
+    {
+        FloatingTextStrRefOnCreature(40487, oCaster); // Item Creation Failed - Don't know how to create that type of item
+        return TRUE; // tried item creation but do not know how to do it
+    }
 
         // No point scribing Gems from items, and its not allowed.
         if (oItem != OBJECT_INVALID)
@@ -1387,18 +1378,18 @@ int AttuneGem()
             return TRUE;
         }
     // oTarget here should be the gem. If it's not, fail.
-    object oTarget = PRCGetSpellTargetObject();
+    if(!GetIsObjectValid(oTarget)) oTarget = PRCGetSpellTargetObject();
     // Only accepts bioware gems
     if (GetStringLeft(GetResRef(oTarget), 5) == "it_gem")
     {
         FloatingTextStringOnCreature("Spell target is not a valid gem.", oCaster, FALSE);
         // And out we go
         return TRUE;
-    }    
-    
+    }
+
     int nCaster = PRCGetCasterLevel(oCaster);
     int nDC = PRCGetSaveDC(oTarget, oCaster);
-    int nSpell = PRCGetSpellId();
+    if(!nSpell) nSpell = PRCGetSpellId();
     int nSpellLevel;
 
     if (PRCGetLastSpellCastClass() == CLASS_TYPE_CLERIC) nSpellLevel = StringToInt(lookup_spell_cleric_level(nSpell));
@@ -1419,55 +1410,44 @@ int AttuneGem()
     int nMultiplier = StringToInt(Get2DACache("prc_rune_craft", "Cost", PRC_GEM_BASECOST));
 
     // Cost of the Gem in gold and XP
-    int nGoldCost = nSpellLevel * nCaster * nMultiplier;
-    
-    //Magical Artisan
-    if(GetHasFeat(FEAT_MAGICAL_ARTISAN_ATTUNE_GEM, oCaster))
-    {
-            float fCost = IntToFloat(nGoldCost);
-            float fDisc = fCost * 0.25;            
-            nGoldCost = FloatToInt(fCost - fDisc);
-    }
-    
-    int nXPCost = nGoldCost/25;
+    int nCost = nSpellLevel * nCaster * nMultiplier;
 
-    FloatingTextStringOnCreature("XP Cost: " + IntToString(nXPCost), OBJECT_SELF, FALSE);
-    
-    // Gold cost for crafting is one half the base price. See Magic of Faerun p22
-    nGoldCost /= 2;
-    FloatingTextStringOnCreature("Gold Cost: " + IntToString(nGoldCost), OBJECT_SELF, FALSE);
+    struct craft_cost_struct costs = GetModifiedCostsFromBase(nCost, oCaster, FEAT_ATTUNE_GEM, FALSE);
+
+    FloatingTextStringOnCreature("Gold Cost: " + IntToString(costs.nGoldCost), OBJECT_SELF, FALSE);
+    FloatingTextStringOnCreature("XP Cost: " + IntToString(costs.nXPCost), OBJECT_SELF, FALSE);
 
     // See if the caster has enough gold and XP to scribe a Gem, and that he passes the skill check.
     int nHD = GetHitDice(oCaster);
     int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
-    int nNewXP = GetXP(oCaster) - nXPCost;
+    int nNewXP = GetXP(oCaster) - costs.nXPCost;
     int nGold = GetGold(oCaster);
-    int nNewGold = nGold - nGoldCost;
+    int nNewGold = nGold - costs.nGoldCost;
     int nCheck = FALSE;
 
-    if (!GetHasGPToSpend(oCaster, nGoldCost))
+    if (!GetHasGPToSpend(oCaster, costs.nGoldCost))
     {
         FloatingTextStringOnCreature("You do not have enough gold to scribe this Gem.", oCaster, FALSE);
         // Since they don't have enough, the spell casts normally
         return TRUE;
     }
-    if (!GetHasXPToSpend(oCaster, nXPCost) )
+    if (!GetHasXPToSpend(oCaster, costs.nXPCost) )
     {
         FloatingTextStringOnCreature("You do not have enough experience to scribe this Gem.", oCaster, FALSE);
         // Since they don't have enough, the spell casts normally
         return TRUE;
     }
-    
+
     // Is the gem worth enough?
     int nGemGold = GetGoldPieceValue(oTarget);
     int nGemLevel = nGemGold / StringToInt(Get2DACache("prc_rune_craft", "Cost", PRC_GEM_PERLEVEL));
-    if (nGemLevel > 9) nGemLevel = 9;       
+    if (nGemLevel > 9) nGemLevel = 9;
     if (nSpellLevel > nGemLevel)
     {
         FloatingTextStringOnCreature("Gem is not high enough level for this spell", oCaster, FALSE);
         // The spell casts normally
         return TRUE;
-    }    
+    }
 
     // Steal all the code from craft wand.
     int nPropID = IPGetIPConstCastSpellFromSpellID(nSpell);
@@ -1500,13 +1480,13 @@ int AttuneGem()
 
         SetItemCharges(oTarget, nCharges);
         SetXP(oCaster, nNewXP);
-        TakeGoldFromCreature(nGoldCost, oCaster, TRUE);
+        TakeGoldFromCreature(costs.nGoldCost, oCaster, TRUE);
 
         string sName;
         sName = Get2DACache("spells", "Name", nSpell);
         sName = "Gem of "+GetStringByStrRef(StringToInt(sName));
         SetName(oTarget, sName);
-        
+
         // This is done to allow the item to be set properly, and then alter the tag
         CopyObject(oTarget, GetLocation(oCaster), oCaster, "prc_attunegem");
         DestroyObject(oTarget, 0.1);
@@ -1567,7 +1547,7 @@ int CIGetSpellWasUsedForItemCreation(object oSpellTarget)
         int nRet = FALSE;
         switch (nBt)
         {
-                case 101 :
+                case BASE_ITEM_BLANK_POTION :
                             // -------------------------------------------------
                             // Brew Potion
                             // -------------------------------------------------
@@ -1575,7 +1555,7 @@ int CIGetSpellWasUsedForItemCreation(object oSpellTarget)
                            break;
 
 
-                case 102 :
+                case BASE_ITEM_BLANK_SCROLL :
                             // -------------------------------------------------
                             // Scribe Scroll
                             // -------------------------------------------------
@@ -1583,14 +1563,14 @@ int CIGetSpellWasUsedForItemCreation(object oSpellTarget)
                            break;
 
 
-                case 103 :
+                case BASE_ITEM_BLANK_WAND :
                             // -------------------------------------------------
                             // Craft Wand
                             // -------------------------------------------------
                            nRet = CICraftCheckCraftWand(oSpellTarget,oCaster);
                            break;
 
-                case 200 :
+                case BASE_ITEM_CRAFTED_ROD :
                             // -------------------------------------------------
                             // Craft Rod
                             // -------------------------------------------------
@@ -2344,6 +2324,207 @@ int CIGetWeaponModificationCost(object oOldItem, object oNewItem)
    return nTotal;
 }
 
+int GetMagicalArtisanFeat(int nCraftingFeat)
+{
+    int nReturn = 0;
+    switch(nCraftingFeat)
+    {
+        case FEAT_BREW_POTION:
+        {
+            nReturn = FEAT_MAGICAL_ARTISAN_BREW_POTION;
+            break;
+        }
+        case FEAT_SCRIBE_SCROLL:
+        {
+            nReturn = FEAT_MAGICAL_ARTISAN_SCRIBE_SCROLL;
+            break;
+        }
+        case FEAT_INSCRIBE_RUNE:
+        {
+            nReturn = FEAT_MAGICAL_ARTISAN_INSCRIBE_RUNE;
+            break;
+        }
+        case FEAT_ATTUNE_GEM:
+        {
+            nReturn = FEAT_MAGICAL_ARTISAN_ATTUNE_GEM;
+            break;
+        }
+        case FEAT_CRAFT_ARMS_ARMOR:
+        {
+            nReturn = FEAT_MAGICAL_ARTISAN_CRAFT_MAGIC_ARMS;
+            break;
+        }
+        case FEAT_CRAFT_ROD:
+        {
+            nReturn = FEAT_MAGICAL_ARTISAN_CRAFT_ROD;
+            break;
+        }
+        case FEAT_CRAFT_STAFF:
+        {
+            nReturn = FEAT_MAGICAL_ARTISAN_CRAFT_STAFF;
+            break;
+        }
+        case FEAT_CRAFT_WAND:
+        {
+            nReturn = FEAT_MAGICAL_ARTISAN_CRAFT_WAND;
+            break;
+        }
+        case FEAT_CRAFT_WONDROUS:
+        {
+            nReturn = FEAT_MAGICAL_ARTISAN_CRAFT_WONDROUS;
+            break;
+        }
+        case FEAT_FORGE_RING:
+        {
+            nReturn = FEAT_MAGICAL_ARTISAN_FORGE_RING;
+            break;
+        }
+        default:
+        {
+            if(DEBUG) DoDebug("GetMagicalArtisanFeat: invalid crafting feat");
+            break;
+        }
+    }
+    return nReturn;
+}
+
+int GetPnPItemXPCost(int nCost, int bEpic)
+{
+    int nXP = nCost / 25;
+    if(bEpic) nXP = (nCost / 100) + 10000;
+    return nXP;
+}
+
+int GetCraftingTime(int nCost)
+{
+    int nTemp = nCost / 1000;
+    if(nCost % 1000) nTemp++;
+    float fDelay;
+    switch(GetPRCSwitch(PRC_CRAFTING_TIME_SCALE))
+    {
+        case 0: fDelay = HoursToSeconds(nTemp); break;          //1 hour/1000gp, default
+        case 1: fDelay = 0.0; break;                            //off, no delay
+        case 2: fDelay = RoundsToSeconds(nTemp); break;         //1 round/1000gp
+        case 3: fDelay = TurnsToSeconds(nTemp); break;          //1 turn/1000gp
+        case 4: fDelay = HoursToSeconds(nTemp); break;          //1 hour/1000gp
+        case 5: fDelay = 24 * HoursToSeconds(nTemp); break;     //1 day/1000gp
+    }
+    int nMultiplyer = GetPRCSwitch(PRC_CRAFT_TIMER_MULTIPLIER);
+    if(nMultiplyer)
+        fDelay *= (IntToFloat(nMultiplyer) / 100.0);
+    return FloatToInt(fDelay / 6);
+}
+
+int GetModifiedGoldCost(int nCost, object oPC, int nCraftingFeat)
+{
+    if(nCost == 0)
+        return nCost;
+    float fCost = IntToFloat(nCost);
+    if(GetHasFeat(FEAT_EXTRAORDINARY_ARTISAN_I        , oPC)) fCost *= 0.75;
+    if(GetHasFeat(FEAT_EXTRAORDINARY_ARTISAN_II       , oPC)) fCost *= 0.75;
+    if(GetHasFeat(FEAT_EXTRAORDINARY_ARTISAN_III      , oPC)) fCost *= 0.75;
+    if(GetHasFeat(GetMagicalArtisanFeat(nCraftingFeat), oPC)) fCost *= 0.75;
+    int nScale = GetPRCSwitch(PRC_CRAFTING_COST_SCALE);
+    if(nScale > 0)
+    {   //you're not getting away with negative values that easily :P
+        fCost = fCost * IntToFloat(nScale) / 100.0;
+    }
+    return FloatToInt(fCost);
+}
+
+int GetModifiedXPCost(int nCost, object oPC, int nCraftingFeat)
+{
+    if(nCost == 0)
+        return nCost;
+    float fCost = IntToFloat(nCost);
+    if(GetHasFeat(FEAT_LEGENDARY_ARTISAN_I            , oPC)) fCost *= 0.75;
+    if(GetHasFeat(FEAT_LEGENDARY_ARTISAN_II           , oPC)) fCost *= 0.75;
+    if(GetHasFeat(FEAT_LEGENDARY_ARTISAN_III          , oPC)) fCost *= 0.75;
+    if(GetHasFeat(GetMagicalArtisanFeat(nCraftingFeat), oPC)) fCost *= 0.75;
+    int nScale = GetPRCSwitch(PRC_CRAFTING_COST_SCALE);
+    if(nScale > 0)
+    {   //you're not getting away with negative values that easily :P
+        fCost = fCost * IntToFloat(nScale) / 100.0;
+    }
+    return FloatToInt(fCost);
+}
+
+int GetModifiedTimeCost(int nCost, object oPC, int nCraftingFeat)
+{
+    if(nCost == 0)
+        return nCost;
+    float fCost = IntToFloat(nCost);
+    if(GetLevelByClass(CLASS_TYPE_MAESTER, oPC)) fCost /= 2;
+    if(GetHasFeat(FEAT_EXCEPTIONAL_ARTISAN_I          , oPC)) fCost *= 0.75;
+    if(GetHasFeat(FEAT_EXCEPTIONAL_ARTISAN_II         , oPC)) fCost *= 0.75;
+    if(GetHasFeat(FEAT_EXCEPTIONAL_ARTISAN_III        , oPC)) fCost *= 0.75;
+    if(GetHasFeat(GetMagicalArtisanFeat(nCraftingFeat), oPC)) fCost *= 0.75;
+    int nScale = GetPRCSwitch(PRC_CRAFTING_COST_SCALE);
+    if(nScale > 0)
+    {   //you're not getting away with negative values that easily :P
+        fCost = fCost * IntToFloat(nScale) / 100.0;
+    }
+    return FloatToInt(fCost);
+}
+
+struct craft_cost_struct GetModifiedCostsFromBase(int nCost, object oPC, int nCraftingFeat, int bEpic)
+{
+    struct craft_cost_struct costs;
+
+    costs.nGoldCost = GetModifiedGoldCost(nCost / 2, oPC, nCraftingFeat);
+    costs.nXPCost = GetModifiedXPCost(GetPnPItemXPCost(nCost, bEpic), oPC, nCraftingFeat);
+    costs.nTimeCost = GetModifiedTimeCost(GetCraftingTime(nCost), oPC, nCraftingFeat);
+
+    return costs;
+}
+
+//Checks crafting prereqs for warlocks
+int CheckImbueItem(object oPC, int nSpell)
+{
+    if(!GetHasFeat(FEAT_IMBUE_ITEM, oPC)) return FALSE;
+    int nImbueDC;
+    int bArcane = TRUE;
+    int nLevel;
+    int nArcaneSpellLevel;
+    int nDivineSpellLevel;
+    string sTemp;
+
+    sTemp = Get2DACache("spells", "Wiz_Sorc", nSpell);
+    if(sTemp == "")
+    {
+        sTemp = Get2DACache("spells", "Bard", nSpell);
+        if(sTemp == "")
+        {
+            bArcane = FALSE;    //now checking the divine classes
+            sTemp = Get2DACache("spells", "Cleric", nSpell);
+            if(sTemp == "")
+            {
+                sTemp = Get2DACache("spells", "Druid", nSpell);
+                if(sTemp == "")
+                {
+                    sTemp = Get2DACache("spells", "Paladin", nSpell);
+                    if(sTemp == "")
+                    {
+                        sTemp = Get2DACache("spells", "Ranger", nSpell);
+                        if(sTemp == "")
+                        {
+                            if(DEBUG) DoDebug("CheckImbueItem: ERROR - spell is neither arcane nor divine");
+                            return FALSE;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    //warlocks with deceive item get to take 10
+    return GetPRCIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, StringToInt(sTemp) + (bArcane ? 15 : 25), GetHasFeat(FEAT_DECEIVE_ITEM, oPC) ? 10 : -1);
+}
+
+// checks alternative crafting, eg. warlock, artificer
+int CheckAlternativeCrafting(object oPC, int nSpell, int nCost)
+{
+    return 0;
+}
 
 // Test main
 //void main(){}

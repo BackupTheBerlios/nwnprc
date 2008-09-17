@@ -37,6 +37,7 @@ struct ipstruct GetIpStructFromString(string sIp);
 #include "inc_newspellbook"
 #include "prc_inc_spells"
 #include "prc_inc_listener"
+#include "x2_inc_craft"
 
 const int NUM_MAX_PROPERTIES            = 200;
 const int NUM_MAX_SUBTYPES              = 256;
@@ -114,26 +115,6 @@ struct ipstruct
     int costtablevalue;
     int param1value;
 };
-
-int GetCraftingTime(int nCost)
-{
-    int nTemp = nCost / 1000;
-    if(nCost % 1000) nTemp++;
-    float fDelay;
-    switch(GetPRCSwitch(PRC_CRAFTING_TIME_SCALE))
-    {
-        case 0: fDelay = HoursToSeconds(nTemp); break;          //1 hour/1000gp, default
-        case 1: fDelay = 0.0; break;                            //off, no delay
-        case 2: fDelay = RoundsToSeconds(nTemp); break;         //1 round/1000gp
-        case 3: fDelay = TurnsToSeconds(nTemp); break;          //1 turn/1000gp
-        case 4: fDelay = HoursToSeconds(nTemp); break;          //1 hour/1000gp
-        case 5: fDelay = 24 * HoursToSeconds(nTemp); break;     //1 day/1000gp
-    }
-    int nMultiplyer = GetPRCSwitch(PRC_CRAFT_TIMER_MULTIPLIER);
-    if(nMultiplyer)
-        fDelay *= (IntToFloat(nMultiplyer) / 100.0);
-    return FloatToInt(fDelay / 6);
-}
 
 object GetCraftChest()
 {
@@ -597,48 +578,6 @@ int PrereqSpecialHandling(string sFile, object oItem, int nLine)
     if(sFile == "craft_wondrous")
         return nBase == StringToInt(Get2DACache(sFile, "BaseItem", nLine));
     return TRUE;
-}
-
-//Checks crafting prereqs for warlocks
-int CheckImbueItem(object oPC, int nSpell)
-{
-    if(!GetHasFeat(FEAT_IMBUE_ITEM, oPC)) return FALSE;
-    int nImbueDC;
-    int bArcane = TRUE;
-    int nLevel;
-    int nArcaneSpellLevel;
-    int nDivineSpellLevel;
-    string sTemp;
-
-    sTemp = Get2DACache("spells", "Wiz_Sorc", nSpell);
-    if(sTemp == "")
-    {
-        sTemp = Get2DACache("spells", "Bard", nSpell);
-        if(sTemp == "")
-        {
-            bArcane = FALSE;    //now checking the divine classes
-            sTemp = Get2DACache("spells", "Cleric", nSpell);
-            if(sTemp == "")
-            {
-                sTemp = Get2DACache("spells", "Druid", nSpell);
-                if(sTemp == "")
-                {
-                    sTemp = Get2DACache("spells", "Paladin", nSpell);
-                    if(sTemp == "")
-                    {
-                        sTemp = Get2DACache("spells", "Ranger", nSpell);
-                        if(sTemp == "")
-                        {
-                            if(DEBUG) DoDebug("CheckImbueItem: ERROR - spell is neither arcane nor divine");
-                            return FALSE;
-                        }
-                    }
-                }
-            }
-        }
-    }
-    //warlocks with deceive item get to take 10
-    return GetPRCIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, StringToInt(sTemp) + (bArcane ? 15 : 25), GetHasFeat(FEAT_DECEIVE_ITEM, oPC) ? 10 : -1);
 }
 
 //Checks and decrements spells based on property to add
@@ -1450,6 +1389,8 @@ string GetCrafting2DA(object oItem)
     if(nBase == BASE_ITEM_MAGICSTAFF) return FEAT_CRAFT_STAFF;
     if(nBase == BASE_ITEM_MAGICWAND) return FEAT_CRAFT_WAND;
     */
+
+    //bioware crafting, castspell itemprops only
     return "";
 }
 
@@ -1473,12 +1414,22 @@ int GetCraftingFeat(object oItem)
     }
 
     if(nBase == BASE_ITEM_RING) return FEAT_FORGE_RING;
-    if(nBase == BASE_ITEM_MAGICROD) return FEAT_CRAFT_ROD;
+
+    //routing bioware feats through this convo
+    if((nBase == BASE_ITEM_MAGICROD) ||
+        (nBase == BASE_ITEM_CRAFTED_ROD)
+        )
+        return FEAT_CRAFT_ROD;
     if((nBase == BASE_ITEM_MAGICSTAFF) ||
         (nBase == BASE_ITEM_CRAFTED_STAFF)
         )
         return FEAT_CRAFT_STAFF;
-    if(nBase == BASE_ITEM_MAGICWAND) return FEAT_CRAFT_WAND;
+    if((nBase == BASE_ITEM_MAGICWAND) ||
+        (nBase == BASE_ITEM_BLANK_WAND)
+        )
+        return FEAT_CRAFT_WAND;
+    if(nBase == BASE_ITEM_BLANK_POTION) return FEAT_BREW_POTION;
+    if(nBase == BASE_ITEM_BLANK_SCROLL) return FEAT_SCRIBE_SCROLL;
 
     if(((nBase == BASE_ITEM_HELMET) ||
         (nBase == BASE_ITEM_AMULET) ||
@@ -1491,50 +1442,6 @@ int GetCraftingFeat(object oItem)
     return FEAT_CRAFT_WONDROUS;
 
     return -1;
-}
-
-int GetMagicalArtisanFeat(int nCraftingFeat)
-{
-    int nReturn = 0;
-    switch(nCraftingFeat)
-    {
-        case FEAT_CRAFT_ARMS_ARMOR:
-        {
-            nReturn = FEAT_MAGICAL_ARTISAN_CRAFT_MAGIC_ARMS;
-            break;
-        }
-        case FEAT_CRAFT_ROD:
-        {
-            nReturn = FEAT_MAGICAL_ARTISAN_CRAFT_ROD;
-            break;
-        }
-        case FEAT_CRAFT_STAFF:
-        {
-            nReturn = FEAT_MAGICAL_ARTISAN_CRAFT_STAFF;
-            break;
-        }
-        case FEAT_CRAFT_WAND:
-        {
-            nReturn = FEAT_MAGICAL_ARTISAN_CRAFT_WAND;
-            break;
-        }
-        case FEAT_CRAFT_WONDROUS:
-        {
-            nReturn = FEAT_MAGICAL_ARTISAN_CRAFT_WONDROUS;
-            break;
-        }
-        case FEAT_FORGE_RING:
-        {
-            nReturn = FEAT_MAGICAL_ARTISAN_FORGE_RING;
-            break;
-        }
-        default:
-        {
-            if(DEBUG) DoDebug("GetMagicalArtisanFeat: invalid crafting feat");
-            break;
-        }
-    }
-    return nReturn;
 }
 
 int GetEpicCraftingFeat(int nFeat)
@@ -1836,56 +1743,6 @@ int GetEnhancementBaseCost(object oItem)
 
     return 0;
 }
-//int GetMagicalArtisanFeat(int nCraftingFeat)
-
-int GetModifiedGoldCost(int nCost, object oPC, int nCraftingFeat)
-{
-    if(nCost == 0)
-        return nCost;
-    if(GetHasFeat(FEAT_EXTRAORDINARY_ARTISAN_I        , oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
-    if(GetHasFeat(FEAT_EXTRAORDINARY_ARTISAN_II       , oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
-    if(GetHasFeat(FEAT_EXTRAORDINARY_ARTISAN_III      , oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
-    if(GetHasFeat(GetMagicalArtisanFeat(nCraftingFeat), oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
-    int nScale = GetPRCSwitch(PRC_CRAFTING_COST_SCALE);
-    if(nScale > 0)
-    {   //you're not getting away with negative values that easily :P
-        nCost = FloatToInt(IntToFloat(nCost) * IntToFloat(nScale) / 100.0);
-    }
-    return nCost;
-}
-
-int GetModifiedXPCost(int nCost, object oPC, int nCraftingFeat)
-{
-    if(nCost == 0)
-        return nCost;
-    if(GetHasFeat(FEAT_LEGENDARY_ARTISAN_I            , oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
-    if(GetHasFeat(FEAT_LEGENDARY_ARTISAN_II           , oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
-    if(GetHasFeat(FEAT_LEGENDARY_ARTISAN_III          , oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
-    if(GetHasFeat(GetMagicalArtisanFeat(nCraftingFeat), oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
-    int nScale = GetPRCSwitch(PRC_CRAFTING_COST_SCALE);
-    if(nScale > 0)
-    {   //you're not getting away with negative values that easily :P
-        nCost = FloatToInt(IntToFloat(nCost) * IntToFloat(nScale) / 100.0);
-    }
-    return nCost;
-}
-
-int GetModifiedTimeCost(int nCost, object oPC, int nCraftingFeat)
-{
-    if(nCost == 0)
-        return nCost;
-    if(GetLevelByClass(CLASS_TYPE_MAESTER, oPC)) nCost /= 2;
-    if(GetHasFeat(FEAT_EXCEPTIONAL_ARTISAN_I          , oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
-    if(GetHasFeat(FEAT_EXCEPTIONAL_ARTISAN_II         , oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
-    if(GetHasFeat(FEAT_EXCEPTIONAL_ARTISAN_III        , oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
-    if(GetHasFeat(GetMagicalArtisanFeat(nCraftingFeat), oPC)) nCost = FloatToInt(IntToFloat(nCost) * 0.75);
-    int nScale = GetPRCSwitch(PRC_CRAFTING_COST_SCALE);
-    if(nScale > 0)
-    {   //you're not getting away with negative values that easily :P
-        nCost = FloatToInt(IntToFloat(nCost) * IntToFloat(nScale) / 100.0);
-    }
-    return nCost;
-}
 
 //returns pnp market price of an item
 int GetPnPItemCost(struct itemvars strTemp, int bIncludeBaseCost = TRUE)
@@ -2005,13 +1862,6 @@ int GetPnPItemCost(struct itemvars strTemp, int bIncludeBaseCost = TRUE)
     if(nTemp < 1) nTemp = 1;
 
     return nTemp;
-}
-
-int GetPnPItemXPCost(int nCost, int bEpic)
-{
-    int nXP = nCost / 25;
-    if(bEpic) nXP = (nCost / 100) + 10000;
-    return nXP;
 }
 
 //Creates an item for oPC of nBaseItemType, made of nMaterial

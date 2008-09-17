@@ -277,8 +277,9 @@ int SkipLineSpells(int i)
         case 487: i = 511; break;
         case 513: i++; break;
         case 521: i = 538; break;
-        case 540: i = 900; break;
-        case 928: i = 1000; break;
+        case 540: i = 899; break;
+        case 948: i = 1000; break;
+        case 1390: i = 1416; break;
     }
     return i;
 }
@@ -319,8 +320,22 @@ void PopulateList(object oPC, int MaxValue, int bSort, string sTable, object oIt
         sTemp = Get2DACache(sTable, "Name", i);
         if((sTemp != "") && bValid)//this is going to kill
         {
-            if(bSort)   AddToTempList(oPC, ActionString(GetStringByStrRef(StringToInt(sTemp))), i);
-            else        AddChoice(ActionString(GetStringByStrRef(StringToInt(sTemp))), i, oPC);
+            if(sTable == "iprp_spells")
+            {
+                string sIndex = Get2DACache(sTable, "SpellIndex", i);
+                if(sIndex != GetLocalString(oPC, "LastSpell"))
+                {   //don't add if it's a repeat
+                    if(bSort)   AddToTempList(oPC, ActionString(GetStringByStrRef(StringToInt(sTemp))), i);
+                    else        AddChoice(ActionString(GetStringByStrRef(StringToInt(sTemp))), i, oPC);
+                    SetLocalString(oPC, "LastSpell", sIndex);
+                }
+            }
+            else
+            {
+                if(bSort)   AddToTempList(oPC, ActionString(GetStringByStrRef(StringToInt(sTemp))), i);
+                else        AddChoice(ActionString(GetStringByStrRef(StringToInt(sTemp))), i, oPC);
+            }
+
         }
         if(!(i % 100) && i) //i != 0, i % 100 == 0
             FloatingTextStringOnCreature("*Tick*", oPC, FALSE);
@@ -771,6 +786,13 @@ void main()
                         {
                             AddChoice(ActionString("Clone Item"), CHOICE_CLONE, oPC);
                             SetLocalInt(oPC, "DynConv_Waiting", TRUE);
+                            SetLocalInt(oPC, PRC_CRAFT_TYPE, -1);
+                            SetLocalString(oPC, PRC_CRAFT_SUBTYPE, "");
+                            SetLocalInt(oPC, PRC_CRAFT_SUBTYPEVALUE, -1);
+                            SetLocalString(oPC, PRC_CRAFT_COSTTABLE, "");
+                            SetLocalInt(oPC, PRC_CRAFT_COSTTABLEVALUE, -1);
+                            SetLocalString(oPC, PRC_CRAFT_PARAM1, "");
+                            SetLocalInt(oPC, PRC_CRAFT_PARAM1VALUE, -1);
                             if(GetPRCSwitch(PRC_CRAFTING_ARBITRARY))
                             {
                                 sFile = "itempropdef";
@@ -780,29 +802,22 @@ void main()
                             else if(sFile == "")
                             {
                                 sFile = "iprp_spells";
+                                SetLocalInt(oPC, PRC_CRAFT_TYPE, ITEM_PROPERTY_CAST_SPELL);
                                 PopulateList(oPC, PRCGetFileEnd(sFile), TRUE, sFile);
                             }
                             else
                             {
                                 PopulateList(oPC, PRCGetFileEnd(sFile), FALSE, sFile);
+                                //don't copy the item if we're using bioware crafting (it gets copied later)
+                                string sMaterial = GetStringLeft(GetTag(oTarget), 3);
+                                object oChest = GetCraftChest();
+                                string sTag = sMaterial + GetUniqueID() + PRC_CRAFT_UID_SUFFIX;
+                                while(GetIsObjectValid(GetItemPossessedBy(oChest, sTag)))//make sure there aren't any tag conflicts
+                                    sTag = sMaterial + GetUniqueID() + PRC_CRAFT_UID_SUFFIX;    //may choke if all uids are taken :P
+                                oNewItem = CopyObject(oItem, GetLocation(oChest), oChest, sTag);
+                                SetIdentified(oNewItem, TRUE);  //just in case
+                                SetLocalString(oPC, PRC_CRAFT_TAG, GetTag(oNewItem));
                             }
-                            string sMaterial = GetStringLeft(GetTag(oTarget), 3);
-                            object oChest = GetCraftChest();
-                            string sTag = sMaterial + GetUniqueID() + PRC_CRAFT_UID_SUFFIX;
-                            while(GetIsObjectValid(GetItemPossessedBy(oChest, sTag)))//make sure there aren't any tag conflicts
-                                sTag = sMaterial + GetUniqueID() + PRC_CRAFT_UID_SUFFIX;    //may choke if all uids are taken :P
-                            oNewItem = CopyObject(oItem, GetLocation(oChest), oChest, sTag);
-                            SetIdentified(oNewItem, TRUE);  //just in case
-                            SetLocalString(oPC, PRC_CRAFT_TAG, GetTag(oNewItem));
-
-                            SetLocalInt(oPC, PRC_CRAFT_TYPE, -1);
-                            SetLocalString(oPC, PRC_CRAFT_SUBTYPE, "");
-                            SetLocalInt(oPC, PRC_CRAFT_SUBTYPEVALUE, -1);
-                            SetLocalString(oPC, PRC_CRAFT_COSTTABLE, "");
-                            SetLocalInt(oPC, PRC_CRAFT_COSTTABLEVALUE, -1);
-                            SetLocalString(oPC, PRC_CRAFT_PARAM1, "");
-                            SetLocalInt(oPC, PRC_CRAFT_PARAM1VALUE, -1);
-                            //PopulateList(oPC, NUM_MAX_PROPERTIES, TRUE, "itempropdef");
                         }
                     }
                     SetDefaultTokens();
@@ -1238,6 +1253,104 @@ void main()
                             SetLocalInt(oPC, PRC_CRAFT_PROPLIST, nPropList);
 
                             nStage = GetNextItemPropStage(nStage, oPC, nPropList);
+                        }
+                        else if(sFile == "")
+                        {
+                            int nSpell = StringToInt(Get2DACache("iprp_spells", "SpellIndex", nChoice));
+                            int bHasSpell = PRCGetHasSpell(nSpell, oPC);
+                            int bFailed;
+                            if(bHasSpell)
+                            {
+                                PRCDecrementRemainingSpellUses(oPC, nSpell);
+                            }
+                            else if(GetLevelByClass(CLASS_TYPE_ARTIFICER, oPC))
+                            {
+                                SetLocalInt(oPC, "ArtificerCrafting", TRUE);
+                            }
+                            //imbue item toggled by another feat
+                            /*
+                            else if(GetHasFeat(FEAT_IMBUE_ITEM, oPC))
+                            {
+                                SetLocalInt(oPC, "UsingImbueItem", TRUE);
+                            }
+                            */
+
+                            switch(GetBaseItemType(oItem))
+                            {
+                                case BASE_ITEM_BLANK_POTION :
+                                    // -------------------------------------------------
+                                    // Brew Potion
+                                    // -------------------------------------------------
+                                   bFailed = CICraftCheckBrewPotion(oItem,oPC,nSpell);
+                                   break;
+
+                                case BASE_ITEM_BLANK_SCROLL :
+                                   // -------------------------------------------------
+                                   // Scribe Scroll
+                                   // -------------------------------------------------
+                                   bFailed = CICraftCheckScribeScroll(oItem,oPC,nSpell);
+                                   break;
+
+                                case BASE_ITEM_BLANK_WAND :
+                                   // -------------------------------------------------
+                                   // Craft Wand
+                                   // -------------------------------------------------
+                                   bFailed = CICraftCheckCraftWand(oItem,oPC,nSpell);
+                                   break;
+
+                                case BASE_ITEM_CRAFTED_ROD :
+                                   // -------------------------------------------------
+                                   // Craft Rod
+                                   // -------------------------------------------------
+                                   //bFailed = CICraftCheckCraftWand(oItem,oPC,nSpell);
+                                   break;
+
+                                case BASE_ITEM_CRAFTED_STAFF :
+                                   // -------------------------------------------------
+                                   // Craft Staff
+                                   // -------------------------------------------------
+                                   bFailed = CICraftCheckCraftStaff(oItem,oPC,nSpell);
+                                   break;
+
+                                default:
+                                    if(GetLocalInt(oPC, "InscribeRune"))
+                                    {
+                                        bFailed = InscribeRune(oItem,oPC,nSpell);
+                                    }
+                                    else if (GetStringLeft(GetResRef(oTarget), 5) == "it_gem")
+                                    {
+                                        bFailed = AttuneGem(oItem,oPC,nSpell);
+                                    }
+
+                                    break;
+
+/*
+                                case BASE_ITEM_CRAFTED_STAFF :
+                                   // -------------------------------------------------
+                                   // Craft Staff
+                                   // -------------------------------------------------
+                                   CICraftCheckCraftStaff(oItem,oPC,nSpell);
+                                   break;
+
+                                case BASE_ITEM_CRAFTED_STAFF :
+                                   // -------------------------------------------------
+                                   // Craft Staff
+                                   // -------------------------------------------------
+                                   CICraftCheckCraftStaff(oItem,oPC,nSpell);
+                                   break;*/
+                            }
+                            //do something different if we fail? retry?
+                            AllowExit(DYNCONV_EXIT_FORCE_EXIT);
+                            /*
+                            //hardcoding of above for spells
+                            sSubtype = "IPRP_SPELLS";
+                            sCostTable = "IPRP_CHARGECOST";
+                            SetLocalString(oPC, PRC_CRAFT_COSTTABLE, "3");
+                            sCostTable = Get2DACache("itempropdef", "CostTableResRef", nType);
+                            SetLocalInt(oPC, PRC_CRAFT_PROPLIST, 0);
+                            SetLocalInt(oPC, PRC_CRAFT_SUBTYPEVALUE, nChoice);
+                            nStage = GetNextItemPropStage(nStage, oPC, nPropList);
+                            */
                         }
                         else
                         {

@@ -3,8 +3,7 @@
 //:: inv_imbue_item
 //:://////////////////////////////////////////////
 /** @file
-    Starts the Imbue Item crafting dynamic conversation.
-
+    Toggles imbue item flag
 
     @author Shane Hennessy
     @date   Modified - 2006.10.08 - rewritten by Ornedan - modified by Fox
@@ -12,15 +11,17 @@
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "inc_dynconv"
-#include "prc_alterations"
-
+//#include "inc_dynconv"
+//#include "prc_alterations"
 
 void main()
 {
     object oPC = OBJECT_SELF;
-    
-    SetLocalObject(oPC, "CraftingBaseItem", PRCGetSpellTargetObject());
-    
-    StartDynamicConversation("inv_imbueitemcon", oPC, DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, TRUE, FALSE, oPC);
+    int bImbue = !GetLocalInt(oPC, "UsingImbueItem");
+
+    SetLocalInt(oPC, "UsingImbueItem", bImbue);
+    if(bImbue)
+        FloatingTextStringOnCreature("*Imbue Item On*", oPC);
+    else
+        FloatingTextStringOnCreature("*Imbue Item Off*", oPC);
 }

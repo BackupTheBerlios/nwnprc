@@ -28,6 +28,7 @@ void main()
         }
         if(bRemoved)
         {
+                ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_DISEASE_S), oPC);
                 ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectCutsceneImmobilize(), oPC, TurnsToSeconds(1);
                 FloatingTextStringOnCreature("You are unable to move as the parasites within you wriggle in your flesh.", oPC, FALSE);
         }

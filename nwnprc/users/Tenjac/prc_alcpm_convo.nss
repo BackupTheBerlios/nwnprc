@@ -74,6 +74,7 @@ void main()
             // Function AddChoice to add a response option for the PC. The responses are show in order added
             if(nStage == STAGE_ENTRY)
             {
+                    AllowExit(DYNCONV_EXIT_FORCE_EXIT);
                     SetHeader("What do you want to do?");
                     AddChoice("Craft a poison.", 1);
                     AddChoice("Craft an alchemical item.", 2);
@@ -217,9 +218,7 @@ void main()
             {
                     if(DEBUG) DoDebug("Invalid Stage: " + IntToString(nStage));
                     break;
-            }
-            
-            
+            }        
         }
 
         // Do token setup
@@ -228,7 +227,11 @@ void main()
     // End of conversation cleanup
     else if(nValue == DYNCONV_EXITED)
     {
-        // Add any locals set through this conversation
+            // Add any locals set through this conversation
+            DeleteLocalInt(oPC, "PRC_CRAFT_COST");
+            DeleteLocalInt(oPC, "PRC_CRAFT_DC");
+            DeleteLocalString(oPC, "PRC_CRAFT_RESREF");
+            DeleteLocalInt(oPC, "PRC_CRAFT_SKILLUSED");
     }
     // Abort conversation cleanup.
     // NOTE: This section is only run when the conversation is aborted
@@ -236,6 +239,10 @@ void main()
     // handles restoring the conversation in a transparent manner
     else if(nValue == DYNCONV_ABORTED)
     {
+            DeleteLocalInt(oPC, "PRC_CRAFT_COST");
+            DeleteLocalInt(oPC, "PRC_CRAFT_DC");
+            DeleteLocalString(oPC, "PRC_CRAFT_RESREF");
+            DeleteLocalInt(oPC, "PRC_CRAFT_SKILLUSED");
         // Add any locals set through this conversation
         if(DEBUG) DoDebug("prc_craft: ERROR: Conversation abort section run");
     }
@@ -247,6 +254,9 @@ void main()
         int nChoice = GetChoice(oPC);
         if(nStage == STAGE_ENTRY)
         {
+                if(nChoice == 1) nStage = STAGE_POISON;
+                
+                else if(nChoice == 2) nStage = STAGE_ALCHEM;
             // Move to another stage based on response, for example
             //nStage = STAGE_QUUX;
         }
@@ -697,21 +707,25 @@ void main()
                         nDC = 34;
                 }
                                                                      
-                nSkill = SKILL_CRAFT_POISON;
+                nSkill = SKILL_CRAFT_POISON;             
                 
                 //Use alchemy skill if it is 5 or more higher than craft(poisonmaking). DC is increased by 4.
                 if((nAlchem - nPoison) >4)
                 {
                         nSkill = SKILL_CRAFT_ALCHEMY;
                         nDC += 4;
-                }                
+                }
+                
+                //set locals
+                SetLocalInt(oPC, "PRC_CRAFT_ALCPOS_COST", nCost);
+                SetLocalInt(oPC, "PRC_CRAFT_ALCPOS_DC", nDC);
+                SetLocalString(oPC, "PRC_CRAFT_ALCPOS_RESREF", sItem);
+                SetLocalInt(oPC, "PRC_CRAFT_SKILLUSED", nSkill);
         }
         
         //Alchemy
         else if(nStage == STAGE_ALCHEM)
-        {
-                nSkill = SKILL_CRAFT_ALCHEMY;
-                
+        {                
                 if(nChoice == 1)
                 {
                         sItem = "x1_wmgrenade001";
@@ -982,6 +996,12 @@ void main()
                 {
                         nStage = STAGE_ENTRY;
                 }
+                
+                //set locals
+                SetLocalInt(oPC, "PRC_CRAFT_COST", nCost);
+                SetLocalInt(oPC, "PRC_CRAFT_DC", nDC);
+                SetLocalString(oPC, "PRC_CRAFT_RESREF", sItem);
+                SetLocalInt(oPC, "PRC_CRAFT_SKILLUSED", SKILL_CRAFT_ALCHEMY);
         }
         
         else if(nStage == STAGE_CONFIRM)
@@ -994,8 +1014,8 @@ void main()
                 else if(nChoice == CHOICE_CONFIRM_CRAFT)
                 {
                         int nRank = GetSkillRank(nSkill, oPC);                        
-                        TakeGold(nCost)
-                        if(GetIsSkillSuccessful(oPC, nSkill, nDC)) CreateItemOnObject(sItem, oPC, 1);
+                        TakeGold(GetLocalInt(oPC, "PRC_CRAFT_COST"))
+                        if(GetIsSkillSuccessful(oPC, GetLocalInt(oPC,"PRC_CRAFT_SKILLUSED"), GetLocalInt(oPC, "PRC_CRAFT_DC"))) CreateItemOnObject(GetLocalString(oPC, "PRC_CRAFT_RESREF"), oPC, 1);
                         AllowExit(DYNCONV_EXIT_FORCE_EXIT);
                 }                
         }  

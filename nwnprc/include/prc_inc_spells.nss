@@ -1961,11 +1961,10 @@ location PRCGetSpellTargetLocation(object oCaster = OBJECT_SELF)
     }
 
 
-    // The rune/gem always targets the one who activates it.
+    // The rune/gem/skull always targets the one who activates it.
     object oItem     = PRCGetSpellCastItem(oCaster);
-    if( GetIsObjectValid(oItem)
-        && (GetResRef(oItem) == "prc_rune_1" ||
-            GetTag(oItem) == "prc_attunegem"))
+    if(GetIsObjectValid(oItem) && (GetResRef(oItem) == "prc_rune_1" || 
+       GetResRef(oItem) == "prc_skulltalis" || GetTag(oItem) == "prc_attunegem"))
         return GetLocation(GetItemPossessor(oItem));
 
     // if we made it here, we must use Bioware's function

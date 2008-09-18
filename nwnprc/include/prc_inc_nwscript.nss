@@ -154,10 +154,10 @@ object PRCGetSpellTargetObject(object oCaster = OBJECT_SELF)
         return oTarget;
     }
 
-    // The rune/gem always targets the one who activates it.
+    // The rune/gem/skull always targets the one who activates it.
     object oItem     = PRCGetSpellCastItem(oCaster);
-    if(GetIsObjectValid(oItem) && (GetResRef(oItem) == "prc_rune_1" ||
-            GetTag(oItem) == "prc_attunegem"))
+    if(GetIsObjectValid(oItem) && (GetResRef(oItem) == "prc_rune_1" || 
+       GetResRef(oItem) == "prc_skulltalis" || GetTag(oItem) == "prc_attunegem"))
     {
         if(DEBUG) DoDebug(GetName(oCaster) + " has cast a spell using a rune");
         // Making sure that the owner of the item is correct

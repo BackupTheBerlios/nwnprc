@@ -1321,6 +1321,10 @@ void main()
                                     {
                                         bFailed = AttuneGem(oItem,oPC,nSpell);
                                     }
+                                    else if(GetLocalInt(oPC, "CraftSkullTalisman"))
+                                    {
+                                        bFailed = CraftSkullTalisman(oItem,oPC,nSpell);
+                                    }                                    
 
                                     break;
 

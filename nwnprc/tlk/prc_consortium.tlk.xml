@@ -36847,6 +36847,19 @@ Colossal - 3d6</entry>
 Prerequisite: Spellcraft 24 ranks, Lore 24 ranks, ability to cast 9th-level arcane or divine spells
 Specifics: You may develop and cast epic spells. You may cast a number of epic spells per day equal to your ranks in Lore divided by 10.
 </entry>
+<entry id="54994" lang="en" sex="m">Psicraft</entry>
+<entry id="54995" lang="en" sex="m">Ability: Intelligence.
+Requires Training: Yes.
+Classes: Psion, Wilder
+
+You can identify psionic powers used by a combattant.
+
+Use: Automatic.</entry>
+  <entry id="54996" lang="en" sex="m">Craft Skull Talisman</entry>
+  <entry id="54997" lang="en" sex="m">Type of Feat: Item Creation
+Prerequisite: Caster level 6th
+Specifics: You can cast any spell you have prepared as a skull talisman. The caster must have the spell memorized to be able to create the skull talisman. Crafting a skull talisman costs Spell level * Caster level * 50 in gold pieces for a normal caster (half base cost). It also takes XP equal to 1/25th of the base cost. If you cannot pay the casting cost or the XP loss would drop you a level, the crafting will fail, and the spell will be lost. A skull talisman is permanent until used. Skull talismans target those who activate them.
+Use: Selected.</entry>
   <entry id="54998" lang="en" sex="m">Daylight</entry>
   <entry id="54999" lang="en" sex="m">Daylight 
 Evocation [Light]
@@ -49281,4 +49294,5 @@ Use: Selected.</entry>
   <entry id="70101" lang="en" sex="m">Shedden +4</entry>
   <entry id="70102" lang="en" sex="m">Shedden +5</entry>
   <entry id="70103" lang="en" sex="m">Antitoxin</entry>
+  <entry id="70104" lang="en" sex="m">Magical Artisan: Craft Skull Talisman</entry>
 </tlk>

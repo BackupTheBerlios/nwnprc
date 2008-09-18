@@ -833,6 +833,7 @@ int GetItemCreationFeatCount(object oPC)
             GetHasFeat(FEAT_LEGENDARY_ARTISAN_II        , oPC) +
             GetHasFeat(FEAT_LEGENDARY_ARTISAN_III       , oPC) +
             GetHasFeat(FEAT_ATTUNE_GEM                  , oPC) +
+            GetHasFeat(FEAT_CRAFT_SKULL_TALISMAN        , oPC) +
             GetHasFeat(FEAT_INSCRIBE_RUNE               , oPC) //+
             );
 }

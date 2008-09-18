@@ -565,6 +565,9 @@ const int FEAT_DRAGONFIRE_CHANNELING                   = 1843;
 const int FEAT_DRAGONFIRE_INSPIRATION                  = 1844;
 
 
+// Frostburn
+const int FEAT_CRAFT_SKULL_TALISMAN                    = 3004;
+
 // Libris Mortis
 const int FEAT_REQUIEM                                 = 2455;
 
@@ -2724,6 +2727,7 @@ const int FEAT_BREW_POTION_6TH                    = 24017;
 const int FEAT_BREW_POTION_7TH                    = 24018;
 const int FEAT_BREW_POTION_8TH                    = 24019;
 const int FEAT_BREW_POTION_9TH                    = 24020;
+const int FEAT_MAGICAL_ARTISAN_CRAFT_SKULL_TALISMAN = 24022;
 
 
 

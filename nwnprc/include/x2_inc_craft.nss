@@ -111,6 +111,8 @@ const int PRC_RUNE_MAXUSESPERDAY   = 4;
 // Attune Gem constants
 const int PRC_GEM_BASECOST         = 5;
 const int PRC_GEM_PERLEVEL         = 6;
+// Craft Skull Talisman constants
+const int PRC_SKULL_BASECOST       = 7;
 
 // *  Returns TRUE if an item is a Craft Base Item
 // *  to be used in spellscript that can be cast on items - i.e light
@@ -1496,6 +1498,156 @@ int AttuneGem(object oTarget = OBJECT_INVALID, object oCaster = OBJECT_INVALID, 
     return FALSE;
 }
 
+int CraftSkullTalisman(object oTarget = OBJECT_INVALID, object oCaster = OBJECT_INVALID, int nSpell = 0)
+{
+    if(!GetIsObjectValid(oCaster)) oCaster = OBJECT_SELF;
+    // Get the item used to cast the spell
+    object oItem = GetSpellCastItem();
+    if (GetTag(oItem) == "prc_skulltalis")
+    {
+        string sName = GetName(GetItemPossessor(oItem));
+        if (DEBUG) FloatingTextStringOnCreature(sName + " has just cast a skull talisman spell", oCaster, FALSE);
+
+        if (DEBUG) DoDebug("Checking for One Use Skulls");
+        // This check is used to clear up the one use SkullTalismans
+        itemproperty ip = GetFirstItemProperty(oItem);
+        while(GetIsItemPropertyValid(ip))
+        {
+            if(GetItemPropertyType(ip) == ITEM_PROPERTY_CAST_SPELL)
+            {
+                if (DEBUG) DoDebug("Skull Talisman can cast spells");
+                if (GetItemPropertyCostTableValue(ip) == 5) // Only one use Skull Talismans have 2 charges per use
+                {
+                    DoDebug("Skull Talisman has 2 charges a use, marking it a one use Skull Talisman");
+                    // Give it enough time for the spell to finish casting
+                    DestroyObject(oItem, 1.0);
+                    DoDebug("Skull Talisman destroyed.");
+                }
+            }
+
+        ip = GetNextItemProperty(oItem);
+        }
+    }
+
+    // If Inscribing is turned off, the spell functions as normal
+    if(!GetLocalInt(oCaster, "CraftSkullTalisman")) return TRUE;
+
+    // No point being in here if you don't have SkullTalismans.
+    if(!GetHasFeat(FEAT_CRAFT_SKULL_TALISMAN, oCaster))
+    {
+        FloatingTextStrRefOnCreature(40487, oCaster); // Item Creation Failed - Don't know how to create that type of item
+        return TRUE; // tried item creation but do not know how to do it
+    }
+
+        // No point scribing SkullTalismans from items, and its not allowed.
+        if (oItem != OBJECT_INVALID)
+        {
+            FloatingTextStringOnCreature("You cannot scribe a Skull Talisman from an item.", oCaster, FALSE);
+            return TRUE;
+        }
+    // oTarget here should be the Caster. 
+    if(!GetIsObjectValid(oTarget)) oTarget = PRCGetSpellTargetObject();
+
+    int nCaster = PRCGetCasterLevel(oCaster);
+    int nDC = PRCGetSaveDC(oTarget, oCaster);
+    if(!nSpell) nSpell = PRCGetSpellId();
+    int nSpellLevel;
+
+    if (PRCGetLastSpellCastClass() == CLASS_TYPE_CLERIC) nSpellLevel = StringToInt(lookup_spell_cleric_level(nSpell));
+    else if (PRCGetLastSpellCastClass() == CLASS_TYPE_DRUID) nSpellLevel = StringToInt(lookup_spell_druid_level(nSpell));
+    else if (PRCGetLastSpellCastClass() == CLASS_TYPE_WIZARD || PRCGetLastSpellCastClass() == CLASS_TYPE_SORCERER) nSpellLevel = StringToInt(lookup_spell_level(nSpell));
+    // If none of these work, check the innate level of the spell
+    if (nSpellLevel == 0) nSpellLevel = StringToInt(lookup_spell_innate(nSpell));
+    // Minimum level.
+    if (nSpellLevel == 0) nSpellLevel = 1;
+
+    int nCharges = 1;
+
+    FloatingTextStringOnCreature("Spell Level: " + IntToString(nSpellLevel), OBJECT_SELF, FALSE);
+    FloatingTextStringOnCreature("Caster Level: " + IntToString(nCaster), OBJECT_SELF, FALSE);
+
+    // Gold cost multipler, varies depending on the ability used to craft
+    int nMultiplier = StringToInt(Get2DACache("prc_rune_craft", "Cost", PRC_SKULL_BASECOST));
+
+    // Cost of the Skull Talisman in gold and XP
+    int nCost = nSpellLevel * nCaster * nMultiplier;
+
+    struct craft_cost_struct costs = GetModifiedCostsFromBase(nCost, oCaster, FEAT_CRAFT_SKULL_TALISMAN, FALSE);
+
+    FloatingTextStringOnCreature("Gold Cost: " + IntToString(costs.nGoldCost), OBJECT_SELF, FALSE);
+    FloatingTextStringOnCreature("XP Cost: " + IntToString(costs.nXPCost), OBJECT_SELF, FALSE);
+
+    // See if the caster has enough gold and XP to scribe a Skull Talisman, and that he passes the skill check.
+    int nHD = GetHitDice(oCaster);
+    int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
+    int nNewXP = GetXP(oCaster) - costs.nXPCost;
+    int nGold = GetGold(oCaster);
+    int nNewGold = nGold - costs.nGoldCost;
+    int nCheck = FALSE;
+
+    if (!GetHasGPToSpend(oCaster, costs.nGoldCost))
+    {
+        FloatingTextStringOnCreature("You do not have enough gold to scribe this SkullTalisman.", oCaster, FALSE);
+        // Since they don't have enough, the spell casts normally
+        return TRUE;
+    }
+    if (!GetHasXPToSpend(oCaster, costs.nXPCost) )
+    {
+        FloatingTextStringOnCreature("You do not have enough experience to scribe this SkullTalisman.", oCaster, FALSE);
+        // Since they don't have enough, the spell casts normally
+        return TRUE;
+    }
+    
+    // Create the item to have all the effects applied to
+    oTarget = CreateItemOnObject("prc_skulltalis", oCaster, 1);
+
+    // Steal all the code from craft wand.
+    int nPropID = IPGetIPConstCastSpellFromSpellID(nSpell);
+
+    // * GZ 2003-09-11: If the current spell cast is not acid fog, and
+    // *                returned property ID is 0, bail out to prevent
+    // *                creation of acid fog items.
+    if (nPropID == 0 && nSpell != 0)
+    {
+        FloatingTextStrRefOnCreature(84544,oCaster);
+        return TRUE;
+    }
+
+    if (nPropID != -1)
+    {
+        itemproperty ipLevel = ItemPropertyCastSpellCasterLevel(nSpell, PRCGetCasterLevel());
+        AddItemProperty(DURATION_TYPE_PERMANENT,ipLevel,oTarget);
+        itemproperty ipMeta = ItemPropertyCastSpellMetamagic(nSpell, PRCGetMetaMagicFeat());
+        AddItemProperty(DURATION_TYPE_PERMANENT,ipMeta,oTarget);
+        itemproperty ipDC = ItemPropertyCastSpellDC(nSpell, PRCGetSaveDC(PRCGetSpellTargetObject(), OBJECT_SELF));
+        AddItemProperty(DURATION_TYPE_PERMANENT,ipDC,oTarget);
+
+        if (nCharges == 1) // This is to handle one use Skull Talismans so the spellhooking works
+        {
+            itemproperty ipProp = ItemPropertyCastSpell(nPropID,IP_CONST_CASTSPELL_NUMUSES_2_CHARGES_PER_USE);
+            AddItemProperty(DURATION_TYPE_PERMANENT,ipProp,oTarget);
+            // This is done so the item exists when it is used for the game to read data off of
+            nCharges = 3;
+        }
+
+        SetItemCharges(oTarget, nCharges);
+        SetXP(oCaster, nNewXP);
+        TakeGoldFromCreature(costs.nGoldCost, oCaster, TRUE);
+
+        string sName;
+        sName = Get2DACache("spells", "Name", nSpell);
+        sName = "Skull Talisman of "+ GetStringByStrRef(StringToInt(sName));
+        SetName(oTarget, sName);
+
+        // This is done to allow the item to be set properly, and then alter the tag
+        CopyObject(oTarget, GetLocation(oCaster), oCaster, "prc_skulltalis");
+        DestroyObject(oTarget, 0.1);
+    }
+
+    // If we have made it this far, they have crafted the Skull Talisman and the spell has been used up, so it returns false.
+    return FALSE;
+}
+
 
 // -----------------------------------------------------------------------------
 // Georg, July 2003
@@ -2379,6 +2531,11 @@ int GetMagicalArtisanFeat(int nCraftingFeat)
             nReturn = FEAT_MAGICAL_ARTISAN_FORGE_RING;
             break;
         }
+        case FEAT_CRAFT_SKULL_TALISMAN:
+        {
+            nReturn = FEAT_MAGICAL_ARTISAN_CRAFT_SKULL_TALISMAN;
+            break;
+        }        
         default:
         {
             if(DEBUG) DoDebug("GetMagicalArtisanFeat: invalid crafting feat");

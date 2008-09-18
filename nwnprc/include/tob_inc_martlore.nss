@@ -66,11 +66,11 @@ void _DoMartialLoreCheck(object oInitiator, object oCheck, int nManeuverLevel, i
 	// Roll the check, DC is reduced by Swordsage bonus instead of bonus on check. Same end result.
 	if(GetIsSkillSuccessful(oCheck, SKILL_MARTIAL_LORE, 10 + nManeuverLevel - nSwordSage))
 	{	// get the name of the initiator and maneuver
-		SendMessageToPC(oCheck, GetName(oInitiator) + " Initiates" + GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", nSpellId))));
+		FloatingTextStringOnCreature(GetName(oInitiator) + " Initiates " + GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", nSpellId))), oCheck, FALSE);
 	}
 	else // Skill check failed
 	{
-		SendMessageToPC(oCheck, GetName(oInitiator) + " Initiates Unknown Maneuver");
+		FloatingTextStringOnCreature(GetName(oInitiator) + " Initiates Unknown Maneuver", oCheck, FALSE);
 	}
 }
 

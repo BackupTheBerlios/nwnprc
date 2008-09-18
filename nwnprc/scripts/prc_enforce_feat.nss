@@ -973,19 +973,23 @@ int MarshalAuraLimit(object oPC = OBJECT_SELF)
 
 int CasterFeats(object oPC = OBJECT_SELF)
 {
-    int nCaster = GetCasterLvl(TYPE_DIVINE, oPC);
-    if(DEBUG) DoDebug("GetCasterLevel: " + IntToString(nCaster));
-    if (nCaster < 3 && GetHasFeat(FEAT_INSCRIBE_RUNE, oPC))
+    int nDivCaster = GetCasterLvl(TYPE_DIVINE, oPC);
+    int nArcCaster = GetCasterLvl(TYPE_ARCANE, oPC);
+    if (nDivCaster < 3 && GetHasFeat(FEAT_INSCRIBE_RUNE, oPC))
     {
             FloatingTextStringOnCreature("Inscribe Rune requires level 2 Divine Spells", oPC, FALSE);
             return FALSE;
     }
-    nCaster = GetCasterLvl(TYPE_ARCANE, oPC);
-    if (nCaster < 3 && GetHasFeat(FEAT_ATTUNE_GEM, oPC))
+    if (nArcCaster < 3 && GetHasFeat(FEAT_ATTUNE_GEM, oPC))
     {
             FloatingTextStringOnCreature("Attune Gem requires level 2 Arcane Spells", oPC, FALSE);
             return FALSE;
     }
+    if (nArcCaster < 6 && GetHasFeat(FEAT_CRAFT_SKULL_TALISMAN, oPC) && nDivCaster < 6)
+    {
+            FloatingTextStringOnCreature("Craft Skull Talisman requires caster level 6", oPC, FALSE);
+            return FALSE;
+    }    
     if(GetHasFeat(FEAT_EPIC_SPELLCASTING, oPC) && !GetIsEpicSpellcaster(oPC))
     {
         FloatingTextStringOnCreature("Epic Spellcasting requires level 9 Arcane or Divine spells", oPC, FALSE);

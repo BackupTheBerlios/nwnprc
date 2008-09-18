@@ -203,8 +203,9 @@ struct manifestation EvaluateDiaDragChannel(object oManifester, object oTarget, 
 //////////////////////////////////////////////////
 
 #include "psi_inc_metapsi"
-#include "psi_inc_ppoints" // Provides psi_inc_focus and psi_inc_psifunc
-#include "psi_inc_augment" // Provides inc_utility
+#include "psi_inc_ppoints"  // Provides psi_inc_focus and psi_inc_psifunc
+#include "psi_inc_augment"  // Provides inc_utility
+#include "psi_inc_psicraft" // Provides Psicraft identifying 
 
 
 //////////////////////////////////////////////////
@@ -855,6 +856,8 @@ struct manifestation EvaluateManifestation(object oManifester, object oTarget, s
                 }
 
                 //* APPLY SIDE-EFFECTS THAT RESULT FROM SUCCESSFULL MANIFESTATION HERE *//
+                // Psicraft for all those who can see
+                IdentifyPower(oManifester, manif.nSpellID);
                 // Damage from overchanneling happens only if one actually spends PP
                 _DoOverchannelDamage(oManifester, bIsPsiLike);
                 // Apply Hostile Mind damage, as necessary

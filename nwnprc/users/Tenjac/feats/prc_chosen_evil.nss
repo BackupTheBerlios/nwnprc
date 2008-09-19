@@ -1,3 +1,5 @@
+/////////////////////////////////////////////////////////
+/*
 Chosen of Evil [Vile]
 Your naked devotion to wickedness causes dark powers to
 take an interest in your well-being.
@@ -6,6 +8,15 @@ Benefit: As an immediate action, you can take 1 point
 of Constitution damage to gain an insight bonus equal
 to the number of vile feats you have, including this one.
 Until the end of your next turn, you can apply this bonus
-on one attack roll, saving throw, ability check, or skill
-check. Make this decision before determining the result
-of the roll.
+to attack rolls, saving throws, or skill checks.*/
+/////////////////////////////////////////////////////////
+#include "prc_inc_spells"
+
+void main()
+{
+        object oPC = OBJECT_SELF;
+        ApplyAbilityDamage(oPC, ABILITY_CONSTITUTION, 1, -1.0)
+        int nBonus = GetVileFeats(oPC);
+        
+        if(
+}

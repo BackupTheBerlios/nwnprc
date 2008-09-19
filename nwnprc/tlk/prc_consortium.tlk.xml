@@ -49295,4 +49295,14 @@ Use: Selected.</entry>
   <entry id="70102" lang="en" sex="m">Shedden +5</entry>
   <entry id="70103" lang="en" sex="m">Antitoxin</entry>
   <entry id="70104" lang="en" sex="m">Magical Artisan: Craft Skull Talisman</entry>
+<entry id="70105" lang="en" sex="m">Blazing Berserker</entry>
+<entry id="70106" lang="en" sex="m">Type of Feat: General
+Prerequisite: Ability to Rage
+Specifics: You gain immunity to fire, but have vulnerability to cold, which means you take +50% damage from cold, regardless of whether a saving throw is allowed, or if the save is a success or failure.
+Use: Automatic.</entry>
+<entry id="70107" lang="en" sex="m">Scorpion's Resolve</entry>
+<entry id="70108" lang="en" sex="m">Type of Feat: General
+Prerequisite: None
+Specifics: You gain a +4 bonus on saving throws against mind-affecting spells and abilities.
+Use: Automatic.</entry>
 </tlk>

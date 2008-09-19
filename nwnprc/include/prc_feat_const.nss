@@ -564,6 +564,9 @@ const int FEAT_DRAGONFIRE_ASSAULT                      = 1842;
 const int FEAT_DRAGONFIRE_CHANNELING                   = 1843;
 const int FEAT_DRAGONFIRE_INSPIRATION                  = 1844;
 
+// Sandstorm
+const int FEAT_BLAZING_BERSERKER                       = 24023;
+const int FEAT_SCORPIONS_RESOLVE                       = 24024;
 
 // Frostburn
 const int FEAT_CRAFT_SKULL_TALISMAN                    = 3004;

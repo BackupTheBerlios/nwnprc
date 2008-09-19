@@ -90,7 +90,8 @@ void main()
         //Make effect extraordinary
         eLink = ExtraordinaryEffect(eLink);
         effect eVis = EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE); //Change to the Rage VFX
-
+        
+        
         if (nCon > 0)
         {
             // 2004-01-18 mr_bumpkin: determine the ability scores before adding bonuses, so the values
@@ -104,6 +105,21 @@ void main()
             //Apply the VFX impact and effects
             ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, OBJECT_SELF, RoundsToSeconds(nCon));
             ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF) ;
+            
+	        // Blazing Berserker
+	        if(GetHasFeat(FEAT_BLAZING_BERSERKER, OBJECT_SELF))
+	        {
+	    		effect eVis = EffectVisualEffect(VFX_DUR_ELEMENTAL_SHIELD);
+	    		effect eCold = EffectDamageImmunityDecrease(DAMAGE_TYPE_COLD, 50);
+	    		effect eFire = EffectDamageImmunityIncrease(DAMAGE_TYPE_FIRE, 100);
+	
+	    		//Link effects
+	    		effect eBers = EffectLinkEffects(eShield, eCold);
+	    		eBers = EffectLinkEffects(eBers, eFire);
+	    		eBers = EffectLinkEffects(eBers, eDur);
+	    		eBers = EffectLinkEffects(eBers, eVis);
+	    		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBers, OBJECT_SELF, RoundsToSeconds(nCon));
+	        }            
 
             // 2003-07-08, Georg: Rage Epic Feat Handling
             CheckAndApplyEpicRageFeats(nCon);

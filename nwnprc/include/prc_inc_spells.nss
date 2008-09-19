@@ -1464,6 +1464,9 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
     // +2 bonus on saves against mind affecting, done here
     if(nSaveType == SAVING_THROW_TYPE_MIND_SPELLS && GetLevelByClass(CLASS_TYPE_FIST_DAL_QUOR, oTarget) >= 2)
         nDC -= 2;
+    // Scorpion's Resolve gives a +4 bonus on mind affecting saves
+    if(nSaveType == SAVING_THROW_TYPE_MIND_SPELLS && GetHasFeat(FEAT_SCORPIONS_RESOLVE, oSaveVersus))
+        nDC -= 4;        
 
     //racial pack code
     //this works by lowering the DC rather than adding to the save

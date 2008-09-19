@@ -106,20 +106,19 @@ void main()
             ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, OBJECT_SELF, RoundsToSeconds(nCon));
             ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF) ;
             
-	        // Blazing Berserker
-	        if(GetHasFeat(FEAT_BLAZING_BERSERKER, OBJECT_SELF))
-	        {
-	    		effect eVis = EffectVisualEffect(VFX_DUR_ELEMENTAL_SHIELD);
-	    		effect eCold = EffectDamageImmunityDecrease(DAMAGE_TYPE_COLD, 50);
-	    		effect eFire = EffectDamageImmunityIncrease(DAMAGE_TYPE_FIRE, 100);
-	
-	    		//Link effects
-	    		effect eBers = EffectLinkEffects(eShield, eCold);
-	    		eBers = EffectLinkEffects(eBers, eFire);
-	    		eBers = EffectLinkEffects(eBers, eDur);
-	    		eBers = EffectLinkEffects(eBers, eVis);
-	    		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBers, OBJECT_SELF, RoundsToSeconds(nCon));
-	        }            
+                // Blazing Berserker
+                if(GetHasFeat(FEAT_BLAZING_BERSERKER, OBJECT_SELF))
+                {
+                        effect eVis = EffectVisualEffect(VFX_DUR_ELEMENTAL_SHIELD);
+                        effect eCold = EffectDamageImmunityDecrease(DAMAGE_TYPE_COLD, 50);
+                        effect eFire = EffectDamageImmunityIncrease(DAMAGE_TYPE_FIRE, 100);
+        
+                        //Link effects
+                        effect eBers = EffectLinkEffects(eFire, eCold);                 
+                        eBers = EffectLinkEffects(eBers, eDur);
+                        eBers = EffectLinkEffects(eBers, eVis);
+                        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBers, OBJECT_SELF, RoundsToSeconds(nCon));
+                }            
 
             // 2003-07-08, Georg: Rage Epic Feat Handling
             CheckAndApplyEpicRageFeats(nCon);

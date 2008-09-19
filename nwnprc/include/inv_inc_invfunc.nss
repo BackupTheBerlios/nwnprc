@@ -110,15 +110,6 @@ string GetInvocationName(int nSpellId);
 int GetInvocationPRCLevels(object oCreature);
 
 /**
- * Determines whether a given class is an invocation class or not. An invocation
- * class is defined as one that gives base invocation casting.
- *
- * @param nClass CLASS_TYPE_* of the class to test
- * @return       TRUE if the class is an invocation class, FALSE otherwise
- */
-int GetIsInvocationClass(int nClass);
-
-/**
  * Determines which of the character's classes is their first invocation casting
  * class, if any. This is the one which gains invoker level raise benefits from
  * prestige classes.

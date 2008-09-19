@@ -2732,6 +2732,23 @@ const int FEAT_BREW_POTION_8TH                    = 24019;
 const int FEAT_BREW_POTION_9TH                    = 24020;
 const int FEAT_MAGICAL_ARTISAN_CRAFT_SKULL_TALISMAN = 24022;
 
+//Tenjac's 3.3 feats
+const int FEAT_DAUNTING_PRESENCE                  = 24025;
+const int FEAT_PROFANE_LIFELEECH                  = 24026;
+const int FEAT_SACRED_VITALITY                    = 24027;
+const int FEAT_SACRED_VENGEANCE                   = 24028;
+const int FEAT_DEFORM_EYES                        = 24029;
+const int FEAT_DEFORM_FACE                        = 24030;
+const int FEAT_DEFORM_PARASITE                    = 24031;
+const int FEAT_APOSTATE                           = 24032;
+const int FEAT_DARK_SPEECH                        = 24033;
+const int FEAT_DARK_WHISPERS                      = 24034;
+const int FEAT_MASTERS_WILL                       = 24035;
+const int FEAT_DEFORM_MADNESS                     = 24036;
+const int FEAT_REFLEXIVE_PSYCHOSIS                = 24037;
+const int FEAT_CHOSEN_OF_EVIL                     = 24038;
+
+
 
 
 /*//////////////////////////////////////////////////

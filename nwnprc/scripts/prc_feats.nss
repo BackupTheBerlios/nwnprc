@@ -134,6 +134,10 @@ void main()
     //Dragonfriend/thrall
     if (GetHasFeat(FEAT_DRAGONFRIEND, oPC)
        || GetHasFeat(FEAT_DRAGONTHRALL, oPC))                     ExecuteScript("prc_drgnthrall", oPC);
+       
+    //Tenjac's 3.3 feats
+    if(GetHasFeat(FEAT_DEFORM_EYES, oPC))                         SetCompositeBonus(GetPCSkin(oPC), "DeformEyes", 2, ITEM_PROPERTY_DECREASED_SKILL_MODIFIER, SKILL_SPOT);
+    if(GetHasFeat(FEAT_DEFORM_FACE, oPC))                         ExecuteScript("prc_dfrm_face", oPC);
 
     // Feats that require OnHitCastSpell: Unique on armor
     /* Commented out until needed

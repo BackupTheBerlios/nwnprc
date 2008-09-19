@@ -1,0 +1,161 @@
+# python
+
+"""
+TODO:
+- TLK
+
+- Scroll merchant creation & update
+
+- Database?
+
+- Dependencies
+-- Doable using just Scons?
+-- If not fast enough, can probably be made fast by explicitly declaring
+   them with the Java dependecy builder.
+--- env.Depends()
+
+- Only directly build haks/erfs, make .ncs files their dependencies
+  and let Scons derive from there?
+
+"""
+
+from os.path import basename, exists, join
+import re
+
+## Builders
+# NWScript
+
+nwscript = Builder(
+    action = "wine tools/nwnnsscomp.exe -cq -i include $SOURCE $TARGET",
+    suffix = ".ncs",
+    src_suffix = ".nss")
+
+
+# Haks / Erf
+
+erf = Builder(
+    action = ["-@rm -f $TARGET",
+              Action("wine tools/erf.exe --create $TARGET $SOURCES",
+                     "Packaging $TARGET")]
+    )
+
+# TLK
+
+tlk = Builder(
+    action = ["-@rm -f $TARGET",
+              Action("tools/linux/xml2tlk $SOURCE $TARGET",
+                     "Building TLK from XML")]
+    )
+
+## Include scanner
+
+include_regex = re.compile("^#include\s+\"(\w+)\"", re.MULTILINE)
+includedir = Dir("include")
+
+def scan_nwscript(node, env, path):
+    contents = node.get_contents()
+    return ["../include/%s.nss" % (name,)
+            for name in include_regex.findall(contents)
+            if exists(includedir.File("%s.nss" % (name,)).abspath)]
+
+nss_scan = Scanner(function = scan_nwscript,
+                   skeys = [".nss"],
+                   recursive = True)
+
+## File lists
+def mkobjectlist(scripts, objectdir):
+    return [join(objectdir, basename(script).replace(".nss", ".ncs"))
+            for script in scripts]
+
+# Scripts
+scripts          = Glob("#/scripts/*.nss",          strings=True)
+spells           = Glob("#/spells/*.nss",           strings=True)
+epicspellscripts = Glob("#/epicspellscripts/*.nss", strings=True)
+racescripts      = Glob("#/racescripts/*.nss",      strings=True)
+psionics         = Glob("#/psionics/*.nss",         strings=True)
+newspellbooks    = Glob("#/newspellbook/*.nss",     strings=True)
+includes         = Glob("#/include/*.nss",          strings=True)
+
+# Object files
+objects          = mkobjectlist(scripts, "objects")
+spellobjs        = mkobjectlist(spells, "spellobjs")
+epicspellobjs    = mkobjectlist(epicspellscripts, "epicspellobjs")
+raceobjs         = mkobjectlist(racescripts, "raceobjs")
+psionicsobjs     = mkobjectlist(psionics, "psionicsobjs")
+newspellbookobjs = mkobjectlist(newspellbooks, "newspellbookobjs")
+
+# 2das
+_2das            = Glob("#/2das/*.2da",             strings=True)
+race2das         = Glob("#/race2das/*.2da",         strings=True)
+craft2das        = Glob("#/Craft2das/*.2da",        strings=True)
+
+# Misc
+gfx              = Glob("#/gfx/*.*",                strings=True)
+others           = Glob("#/others/*.*",             strings=True)
+
+# Erfs
+erffiles         = Glob("#/erf/*.*",                strings=True)
+ocfixscripts     = Glob("#/ocfixerf/*.nss",         strings=True)
+ocfixobjs        = mkobjectlist(ocfixscripts, "ocfixerfobjs")
+
+
+
+## Building
+
+env = Environment(BUILDERS = {'NWScript' : nwscript,
+                              'Erf' : erf,
+                              'Tlk' : tlk})
+env.Append(SCANNERS = nss_scan)
+
+def buildscripts(scriptlist, objectlist):
+    # Note: Assumes objectlist was directly derived from scriptlist
+    #       and is therefore in the same order.
+    for (script, object) in zip(scriptlist, objectlist):
+        env.NWScript(object, script)
+
+def buildhak(name, filelist):
+    env.Erf("CompiledResources/%s.hak" % (name,), filelist)
+
+def builderf(name, filelist):
+    env.Erf("CompiledResources/%s.erf" % (name,), filelist)
+
+# Compiling scripts
+
+buildscripts(scripts, objects)
+buildscripts(spells, spellobjs)
+buildscripts(epicspellscripts, epicspellobjs)
+buildscripts(racescripts, raceobjs)
+buildscripts(psionics, psionicsobjs)
+buildscripts(newspellbooks, newspellbookobjs)
+buildscripts(ocfixscripts, ocfixobjs)
+
+# Convert TLK
+
+env.Tlk("#/tlk/prc_consortium.tlk", "#/tlk/prc_consortium.tlk.xml")
+
+# Building haks
+
+buildhak("prc_scripts", scripts + objects)
+buildhak("prc_spells", spells + spellobjs)
+buildhak("prc_epicspells", epicspellscripts + epicspellobjs)
+buildhak("prc_psionics", psionics + psionicsobjs)
+buildhak("prc_newspellbook", newspellbooks + newspellbookobjs)
+buildhak("prc_include", includes)
+buildhak("prc_race", racescripts + raceobjs + race2das)
+
+
+buildhak("prc_2das", _2das)
+buildhak("prc_textures", gfx)
+buildhak("prc_craft2das", craft2das)
+
+
+# Building erfs
+
+builderf("prc_consortium", erffiles)
+builderf("prc_ocfix", ocfixscripts + ocfixobjs)
+
+
+# Special handling for misc hak:
+# - Depends on files under others/, but too many files there for erf creator
+# - Depends on the scroll merchant file, which may need to be generated / updated
+# TODO

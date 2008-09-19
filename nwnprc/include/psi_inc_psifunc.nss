@@ -229,7 +229,7 @@ int GetFirstPsionicClassPosition(object oCreature = OBJECT_SELF);
  * @return              The newly created creature weapon. Or an existing weapon,
  *                      if there was one.
  */
-object CreatePsionicCreatureWeapon(object oCreature, string sResRef, int nInventorySlot, float fDuration);
+object GetPsionicCreatureWeapon(object oCreature, string sResRef, int nInventorySlot, float fDuration);
 
 /**
  * Gets the amount of manifester levels the given creature is Wild Surging by.

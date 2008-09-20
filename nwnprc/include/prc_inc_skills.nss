@@ -100,6 +100,13 @@ int PerformJump(object oPC, location lLoc, int bDoKnockDown = TRUE)
 
      // skill 28 = jump
      int iJumpRoll = d20() + GetSkillRank(SKILL_JUMP, oPC) + iBonus + GetAbilityModifier(ABILITY_STRENGTH, oPC);
+     
+     // Use Dex instead of Strength
+     if (GetHasFeat(FEAT_AGILE_ATHLETE, oPC))
+     {
+     	iJumpRoll -= GetAbilityModifier(ABILITY_STRENGTH, oPC);
+     	iJumpRoll += GetAbilityModifier(ABILITY_DEXTERITY, oPC);
+     }
 
      if(GetSkillRank(SKILL_TUMBLE, oPC, TRUE) >= 5) iJumpRoll += 2;
 

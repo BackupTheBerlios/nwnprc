@@ -1500,6 +1500,9 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
         nDC -= 4;  
     // Plague Resistant gives a +4 bonus on disease saves
     if(nSaveType == SAVING_THROW_TYPE_DISEASE && GetHasFeat(FEAT_PLAGUE_RESISTANT, oSaveVersus))
+        nDC -= 4;    
+    // Piercing Sight gives a +4 bonus on illusion saves
+    if(GetSpellSchool(nSpell) == SPELL_SCHOOL_ILLUSION && GetHasFeat(FEAT_PIERCING_SIGHT, oSaveVersus))
         nDC -= 4;          
 
     //racial pack code

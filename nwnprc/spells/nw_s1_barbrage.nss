@@ -99,6 +99,31 @@ void main()
         eLink = ExtraordinaryEffect(eLink);
         effect eVis = EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE); //Change to the Rage VFX
         
+        // Blazing Berserker
+        if(GetHasFeat(FEAT_BLAZING_BERSERKER, OBJECT_SELF))
+        {
+                effect eVis = EffectVisualEffect(VFX_DUR_ELEMENTAL_SHIELD);
+                effect eCold = EffectDamageImmunityDecrease(DAMAGE_TYPE_COLD, 50);
+                effect eFire = EffectDamageImmunityIncrease(DAMAGE_TYPE_FIRE, 100);
+        
+                //Link effects
+                eLink = EffectLinkEffects(eLink, eCold);                 
+                eLink = EffectLinkEffects(eLink, eDur);
+                eLink = EffectLinkEffects(eLink, eFire);
+        }  
+        // Frozen Berserker
+        if(GetHasFeat(FEAT_FROZEN_BERSERKER, OBJECT_SELF))
+        {
+                effect eVis = EffectVisualEffect(VFX_DUR_ELEMENTAL_SHIELD);
+                effect eCold = EffectDamageImmunityDecrease(DAMAGE_TYPE_FIRE, 50);
+                effect eFire = EffectDamageImmunityIncrease(DAMAGE_TYPE_COLD, 100);
+        
+                //Link effects
+                eLink = EffectLinkEffects(eLink, eCold);                 
+                eLink = EffectLinkEffects(eLink, eDur);
+                eLink = EffectLinkEffects(eLink, eFire);
+        }         
+        
         
         if (nCon > 0)
         {
@@ -113,33 +138,18 @@ void main()
             //Apply the VFX impact and effects
             ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, OBJECT_SELF, RoundsToSeconds(nCon));
             ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF) ;
+            // Shared Fury
+            if(GetHasFeat(FEAT_SHARED_FURY, OBJECT_SELF))
+            {
+            	object oComp = GetAssociate(ASSOCIATE_TYPE_ANIMALCOMPANION, OBJECT_SELF);
+            	// Range check
+            	if (GetIsInMeleeRange(oComp, OBJECT_SELF))
+            	{
+            		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oComp, RoundsToSeconds(nCon));
+            		ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oComp) ;
+            	}
+            }
             
-                // Blazing Berserker
-                if(GetHasFeat(FEAT_BLAZING_BERSERKER, OBJECT_SELF))
-                {
-                        effect eVis = EffectVisualEffect(VFX_DUR_ELEMENTAL_SHIELD);
-                        effect eCold = EffectDamageImmunityDecrease(DAMAGE_TYPE_COLD, 50);
-                        effect eFire = EffectDamageImmunityIncrease(DAMAGE_TYPE_FIRE, 100);
-        
-                        //Link effects
-                        effect eBers = EffectLinkEffects(eFire, eCold);                 
-                        eBers = EffectLinkEffects(eBers, eDur);
-                        eBers = EffectLinkEffects(eBers, eVis);
-                        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBers, OBJECT_SELF, RoundsToSeconds(nCon));
-                }  
-                // Frozen Berserker
-                if(GetHasFeat(FEAT_FROZEN_BERSERKER, OBJECT_SELF))
-                {
-                        effect eVis = EffectVisualEffect(VFX_DUR_ELEMENTAL_SHIELD);
-                        effect eCold = EffectDamageImmunityDecrease(DAMAGE_TYPE_FIRE, 50);
-                        effect eFire = EffectDamageImmunityIncrease(DAMAGE_TYPE_COLD, 100);
-        
-                        //Link effects
-                        effect eBers = EffectLinkEffects(eFire, eCold);                 
-                        eBers = EffectLinkEffects(eBers, eDur);
-                        eBers = EffectLinkEffects(eBers, eVis);
-                        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBers, OBJECT_SELF, RoundsToSeconds(nCon));
-                }                 
 
             // 2003-07-08, Georg: Rage Epic Feat Handling
             CheckAndApplyEpicRageFeats(nCon);

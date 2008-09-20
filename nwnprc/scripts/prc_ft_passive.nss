@@ -40,4 +40,28 @@ void main()
     {
         SetCompositeBonus(oSkin, "ObscureLore", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_LORE);
     }    
+    if(GetHasFeat(FEAT_HEAVY_LITHODERMS, oPC))
+    {
+        SetCompositeBonus(oSkin, "HeavyLithoderms", 1, AC_NATURAL_BONUS, ITEM_PROPERTY_AC_BONUS);
+    }      
+    if(GetHasFeat(FEAT_MORADINS_SMILE, oPC))
+    {
+            SetCompositeBonus(oSkin, "MoradinsSmileA",   2, ITEM_PROPERTY_SKILL_BONUS,SKILL_ANIMAL_EMPATHY);
+	    SetCompositeBonus(oSkin, "MoradinsSmileP",   2, ITEM_PROPERTY_SKILL_BONUS,SKILL_PERFORM);
+	    SetCompositeBonus(oSkin, "MoradinsSmilePe",  2, ITEM_PROPERTY_SKILL_BONUS,SKILL_PERSUADE);
+	    SetCompositeBonus(oSkin, "MoradinsSmileT",   2, ITEM_PROPERTY_SKILL_BONUS,SKILL_TAUNT);
+	    SetCompositeBonus(oSkin, "MoradinsSmileUMD", 2, ITEM_PROPERTY_SKILL_BONUS,SKILL_USE_MAGIC_DEVICE);
+	    SetCompositeBonus(oSkin, "MoradinsSmileB",   2, ITEM_PROPERTY_SKILL_BONUS,SKILL_BLUFF);
+    	    SetCompositeBonus(oSkin, "MoradinsSmileI",   2, ITEM_PROPERTY_SKILL_BONUS,SKILL_INTIMIDATE);
+    	    SetCompositeBonus(oSkin, "MoradinsSmileIj",  2, ITEM_PROPERTY_SKILL_BONUS,SKILL_IAIJUTSU_FOCUS);
+    }   
+    if(GetHasFeat(FEAT_MENACING_DEMEANOUR, oPC))
+    {
+        SetCompositeBonus(oSkin, "MenacingDemeanour", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_INTIMIDATE);
+    } 
+    if(GetHasFeat(FEAT_RELIC_HUNTER, oPC))
+    {
+        SetCompositeBonus(oSkin, "RelicHunterL", 5, ITEM_PROPERTY_SKILL_BONUS, SKILL_LORE);
+        SetCompositeBonus(oSkin, "RelicHunterA", 5, ITEM_PROPERTY_SKILL_BONUS, SKILL_APPRAISE);
+    }     
 }

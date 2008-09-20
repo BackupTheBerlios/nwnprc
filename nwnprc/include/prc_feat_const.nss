@@ -82,49 +82,6 @@ const int FEAT_KAPAK_SALIVA          = 4546;
 const int FEAT_IRDA_FLARE            = 4551;
 const int FEAT_IRDA_CHANGE_SHAPE     = 4562;
 
-const int FEAT_LIVING_CONSTRUCT        = 4556;
-const int FEAT_COMPOSITE_PLATING       = 4554;
-const int FEAT_UNARMORED_BODY          = 4591;
-const int FEAT_IRONWOOD_PLATING        = 4598;
-const int FEAT_MITHRIL_PLATING         = 4599;
-const int FEAT_ADAMANTINE_PLATING      = 4781;
-const int FEAT_ZAKYA_TRUESTRIKE        = 4557;
-const int FEAT_ZAKYA_CHILLTOUCH        = 4570;
-const int FEAT_ZAKYA_VAMPTOUCH         = 4558;
-const int FEAT_BONUS_MIND_2            = 4559;
-const int FEAT_RACE_MINOR_SHAPE_CHANGE = 4560;
-const int FEAT_IMPROVED_FORTIFICATION  = 4580;
-const int FEAT_SOULBLADE_WARRIOR       = 4854;
-const int FEAT_SPIRITUAL_FORCE         = 4855;
-const int FEAT_STRENGTH_OF_TWO         = 4965;
-const int FEAT_CHANGELING_CHANGE_SHAPE = 4561;
-const int FEAT_RACIAL_EMULATION        = 4564;
-const int FEAT_CHANGELING_QUICK_CHANGE = 4563;
-const int FEAT_SHIELD_OF_THOUGHT       = 4565;
-const int FEAT_SHIFTER_SHIFTING        = 4566;
-const int FEAT_SHIFTER_WILDHUNT        = 4575;
-const int FEAT_SHIFTER_RAZORCLAW       = 4567;
-const int FEAT_SHIFTER_LONGTOOTH       = 4568;
-const int FEAT_SHIFTER_LONGSTRIDE      = 4569;
-const int FEAT_SHIFTER_BEASTHIDE       = 4571;
-const int FEAT_SHIFTER_DREAMSIGHT      = 4572;
-const int FEAT_SHIFTER_GOREBRUTE       = 4573;
-const int FEAT_BEASTHIDE_ELITE         = 1808;
-const int FEAT_DREAMSIGHT_ELITE        = 1809;
-const int FEAT_GOREBRUTE_ELITE         = 1810;
-const int FEAT_LONGSTRIDE_ELITE        = 1811;
-const int FEAT_LONGTOOTH_ELITE         = 1812;
-const int FEAT_RAZORCLAW_ELITE         = 1813;
-const int FEAT_WILDHUNT_ELITE          = 1814;
-const int FEAT_EXTRA_SHIFTER_TRAIT     = 1815;
-const int FEAT_HEALING_FACTOR          = 1816;
-const int FEAT_SHIFTER_AGILITY         = 1817;
-const int FEAT_SHIFTER_DEFENSE         = 1818;
-const int FEAT_GREATER_SHIFTER_DEFENSE = 1819;
-const int FEAT_SHIFTER_FEROCITY        = 1820;
-const int FEAT_SHIFTER_INSTINCTS       = 1821;
-const int FEAT_SHIFTER_SAVAGERY        = 1822;
-
 const int FEAT_NIXIE_CHARMPERSON       = 4597;
 const int FEAT_NIXIE_WATERBREATHING    = 4641;
 const int FEAT_NYMPH_DIMENSION_DOOR    = 4755;
@@ -593,6 +550,61 @@ const int FEAT_STRONG_MIND                             = 24048;
 
 // Races of Stone
 const int FEAT_RECKLESS_RAGE                           = 24049;
+const int FEAT_HEAVY_LITHODERMS                        = 24050;
+const int FEAT_MORADINS_SMILE                          = 24051;
+const int FEAT_PIERCING_SIGHT                          = 24052;
+
+// Races of Destiny
+const int FEAT_MENACING_DEMEANOUR                      = 24053;
+
+// Races of Eberron
+const int FEAT_RELIC_HUNTER                            = 24054;
+const int FEAT_LIVING_CONSTRUCT        = 4556;
+const int FEAT_COMPOSITE_PLATING       = 4554;
+const int FEAT_UNARMORED_BODY          = 4591;
+const int FEAT_IRONWOOD_PLATING        = 4598;
+const int FEAT_MITHRIL_PLATING         = 4599;
+const int FEAT_ADAMANTINE_PLATING      = 4781;
+const int FEAT_ZAKYA_TRUESTRIKE        = 4557;
+const int FEAT_ZAKYA_CHILLTOUCH        = 4570;
+const int FEAT_ZAKYA_VAMPTOUCH         = 4558;
+const int FEAT_BONUS_MIND_2            = 4559;
+const int FEAT_RACE_MINOR_SHAPE_CHANGE = 4560;
+const int FEAT_IMPROVED_FORTIFICATION  = 4580;
+const int FEAT_SOULBLADE_WARRIOR       = 4854;
+const int FEAT_SPIRITUAL_FORCE         = 4855;
+const int FEAT_STRENGTH_OF_TWO         = 4965;
+const int FEAT_CHANGELING_CHANGE_SHAPE = 4561;
+const int FEAT_RACIAL_EMULATION        = 4564;
+const int FEAT_CHANGELING_QUICK_CHANGE = 4563;
+const int FEAT_SHIELD_OF_THOUGHT       = 4565;
+const int FEAT_SHIFTER_SHIFTING        = 4566;
+const int FEAT_SHIFTER_WILDHUNT        = 4575;
+const int FEAT_SHIFTER_RAZORCLAW       = 4567;
+const int FEAT_SHIFTER_LONGTOOTH       = 4568;
+const int FEAT_SHIFTER_LONGSTRIDE      = 4569;
+const int FEAT_SHIFTER_BEASTHIDE       = 4571;
+const int FEAT_SHIFTER_DREAMSIGHT      = 4572;
+const int FEAT_SHIFTER_GOREBRUTE       = 4573;
+const int FEAT_BEASTHIDE_ELITE         = 1808;
+const int FEAT_DREAMSIGHT_ELITE        = 1809;
+const int FEAT_GOREBRUTE_ELITE         = 1810;
+const int FEAT_LONGSTRIDE_ELITE        = 1811;
+const int FEAT_LONGTOOTH_ELITE         = 1812;
+const int FEAT_RAZORCLAW_ELITE         = 1813;
+const int FEAT_WILDHUNT_ELITE          = 1814;
+const int FEAT_EXTRA_SHIFTER_TRAIT     = 1815;
+const int FEAT_HEALING_FACTOR          = 1816;
+const int FEAT_SHIFTER_AGILITY         = 1817;
+const int FEAT_SHIFTER_DEFENSE         = 1818;
+const int FEAT_GREATER_SHIFTER_DEFENSE = 1819;
+const int FEAT_SHIFTER_FEROCITY        = 1820;
+const int FEAT_SHIFTER_INSTINCTS       = 1821;
+const int FEAT_SHIFTER_SAVAGERY        = 1822;
+
+// Races of the Wild
+const int FEAT_AGILE_ATHLETE                           = 24055;
+const int FEAT_SHARED_FURY                             = 24056;
 
 // Libris Mortis
 const int FEAT_REQUIEM                                 = 2455;

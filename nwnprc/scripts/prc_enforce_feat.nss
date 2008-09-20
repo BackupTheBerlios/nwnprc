@@ -1752,11 +1752,26 @@ int RacialFeats(object oPC = OBJECT_SELF)
           FloatingTextStringOnCreature("You must be a Human or a Fire Planetouched to take this feat. Please reselect your feats.", oPC, FALSE);
                return FALSE;
      }
-     if (GetHasFeat(FEAT_PLAGUE_RESISTANT, oPC) && !GetRacialType(oPC) == RACIAL_TYPE_HUMAN)
+     if (GetHasFeat(FEAT_PLAGUE_RESISTANT, oPC) && GetRacialType(oPC) != RACIAL_TYPE_HUMAN)
      {
           FloatingTextStringOnCreature("You must be a Human to take this feat. Please reselect your feats.", oPC, FALSE);
                return FALSE;
-     }     
+     }   
+     if (GetHasFeat(FEAT_HEAVY_LITHODERMS, oPC) && GetRacialType(oPC) != RACIAL_TYPE_GOLIATH)
+     {
+          FloatingTextStringOnCreature("You must be a Goliath to take this feat. Please reselect your feats.", oPC, FALSE);
+               return FALSE;
+     }  
+     if (GetHasFeat(FEAT_MORADINS_SMILE, oPC) && MyPRCGetRacialType(oPC) != RACIAL_TYPE_DWARF)
+     {
+          FloatingTextStringOnCreature("You must be a Dwarf to take this feat. Please reselect your feats.", oPC, FALSE);
+               return FALSE;
+     } 
+     if (GetHasFeat(FEAT_MENACING_DEMEANOUR, oPC) && MyPRCGetRacialType(oPC) != RACIAL_TYPE_HUMANOID_ORC && MyPRCGetRacialType(oPC) != RACIAL_TYPE_HALFORC)
+     {
+          FloatingTextStringOnCreature("You must be an Orc to take this feat. Please reselect your feats.", oPC, FALSE);
+               return FALSE;
+     }       
 
     int nNumFeats;
     nNumFeats +=   GetHasFeat(FEAT_DREAMSIGHT_ELITE, oPC) +

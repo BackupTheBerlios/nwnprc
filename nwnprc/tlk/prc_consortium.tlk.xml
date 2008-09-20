@@ -49360,4 +49360,39 @@ Use: Automatic.</entry>
 Prerequisite: Ability to Rage, Con 13
 Specifics: You gain an additional +2 bonus to Strength and Rage, and a further -2 penalty to AC.
 Use: Automatic.</entry>
+<entry id="70131" lang="en" sex="m">Heavy Lithoderms</entry>
+<entry id="70132" lang="en" sex="m">Type of Feat: General
+Prerequisite: Goliath
+Specifics: You gain a +1 bonus to natural armour.
+Use: Automatic.</entry>
+<entry id="70133" lang="en" sex="m">Moradin's Smile</entry>
+<entry id="70134" lang="en" sex="m">Type of Feat: General
+Prerequisite: Dwarf
+Specifics: You gain a +2 bonus to charisma based skills.
+Use: Automatic.</entry>
+<entry id="70135" lang="en" sex="m">Piercing Sight</entry>
+<entry id="70136" lang="en" sex="m">Type of Feat: General
+Prerequisite: Gnome
+Specifics: You gain a +4 save bonus against illusions.
+Use: Automatic.</entry>
+<entry id="70137" lang="en" sex="m">Menacing Demeanour</entry>
+<entry id="70138" lang="en" sex="m">Type of Feat: General
+Prerequisite: Orc or Half-Orc
+Specifics: You gain a +4 bonus to intimidate.
+Use: Automatic.</entry>
+<entry id="70139" lang="en" sex="m">Relic Hunter</entry>
+<entry id="70140" lang="en" sex="m">Type of Feat: General
+Prerequisite: Appraise 1, Lore 1
+Specifics: You gain a +5 bonus to Lore and Appraise
+Use: Automatic.</entry>
+<entry id="70141" lang="en" sex="m">Agile Athlete</entry>
+<entry id="70142" lang="en" sex="m">Type of Feat: General
+Prerequisite: Jump 1
+Specifics: You use Dexterity instead of Strength to jump.
+Use: Automatic.</entry>
+<entry id="70141" lang="en" sex="m">Shared Fury</entry>
+<entry id="70142" lang="en" sex="m">Type of Feat: General
+Prerequisite: Ability to Rage, Animal Companion
+Specifics: You share your rage with your animal companion if he is within 5 ft. of you.
+Use: Automatic.</entry>
 </tlk>

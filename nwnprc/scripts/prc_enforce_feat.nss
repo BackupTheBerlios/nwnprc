@@ -82,6 +82,9 @@ int SuddenMetamagic(object oPC = OBJECT_SELF);
 // This is for feats that have more than two skill requirements. It's fairly generic
 int SkillRequirements(object oPC = OBJECT_SELF);
 
+// This is for feats that need races. It's fairly generic
+int RacialFeats(object oPC);
+
 // ---------------
 // BEGIN FUNCTIONS
 // ---------------
@@ -989,7 +992,12 @@ int CasterFeats(object oPC = OBJECT_SELF)
     {
             FloatingTextStringOnCreature("Craft Skull Talisman requires caster level 6", oPC, FALSE);
             return FALSE;
-    }    
+    } 
+    if (nArcCaster < 3 && GetHasFeat(FEAT_CORMANTHYRAN_MOON_MAGIC, oPC) && nDivCaster < 3)
+    {
+            FloatingTextStringOnCreature("Cormanthyran Moon Magic requires 3rd level spells", oPC, FALSE);
+            return FALSE;
+    }     
     if(GetHasFeat(FEAT_EPIC_SPELLCASTING, oPC) && !GetIsEpicSpellcaster(oPC))
     {
         FloatingTextStringOnCreature("Epic Spellcasting requires level 9 Arcane or Divine spells", oPC, FALSE);
@@ -1734,6 +1742,21 @@ int RacialFeats(object oPC = OBJECT_SELF)
         FloatingTextStringOnCreature("You must be Kalashtar.", oPC, FALSE);
         return FALSE;
     }
+    
+     if (GetHasFeat(FEAT_BLOODLINE_OF_FIRE, oPC) &&
+        !(GetRacialType(oPC) == RACIAL_TYPE_HUMAN ||
+          GetRacialType(oPC) == RACIAL_TYPE_TIEFLING   ||
+          GetRacialType(oPC) == RACIAL_TYPE_TANARUKK         ||
+          GetRacialType(oPC) == RACIAL_TYPE_FIRE_GEN        ) )
+     {
+          FloatingTextStringOnCreature("You must be a Human or a Fire Planetouched to take this feat. Please reselect your feats.", oPC, FALSE);
+               return FALSE;
+     }
+     if (GetHasFeat(FEAT_PLAGUE_RESISTANT, oPC) && !GetRacialType(oPC) == RACIAL_TYPE_HUMAN)
+     {
+          FloatingTextStringOnCreature("You must be a Human to take this feat. Please reselect your feats.", oPC, FALSE);
+               return FALSE;
+     }     
 
     int nNumFeats;
     nNumFeats +=   GetHasFeat(FEAT_DREAMSIGHT_ELITE, oPC) +

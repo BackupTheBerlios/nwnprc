@@ -59,6 +59,14 @@ void main()
            iStr += 4;
            iAC += 2;
         }
+        
+        // +2 Str/Con -2 AC
+        if(GetHasFeat(FEAT_RECKLESS_RAGE, OBJECT_SELF) )
+        {
+           iStr += 2;
+           iCon += 2;
+           iAC += 2;
+        }        
 
         // play a random voice chat instead of just VOICE_CHAT_BATTLECRY1
         int iVoiceConst = 0;
@@ -118,7 +126,20 @@ void main()
                         eBers = EffectLinkEffects(eBers, eDur);
                         eBers = EffectLinkEffects(eBers, eVis);
                         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBers, OBJECT_SELF, RoundsToSeconds(nCon));
-                }            
+                }  
+                // Frozen Berserker
+                if(GetHasFeat(FEAT_FROZEN_BERSERKER, OBJECT_SELF))
+                {
+                        effect eVis = EffectVisualEffect(VFX_DUR_ELEMENTAL_SHIELD);
+                        effect eCold = EffectDamageImmunityDecrease(DAMAGE_TYPE_FIRE, 50);
+                        effect eFire = EffectDamageImmunityIncrease(DAMAGE_TYPE_COLD, 100);
+        
+                        //Link effects
+                        effect eBers = EffectLinkEffects(eFire, eCold);                 
+                        eBers = EffectLinkEffects(eBers, eDur);
+                        eBers = EffectLinkEffects(eBers, eVis);
+                        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBers, OBJECT_SELF, RoundsToSeconds(nCon));
+                }                 
 
             // 2003-07-08, Georg: Rage Epic Feat Handling
             CheckAndApplyEpicRageFeats(nCon);

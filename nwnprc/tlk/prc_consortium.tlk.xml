@@ -49305,4 +49305,59 @@ Use: Automatic.</entry>
 Prerequisite: None
 Specifics: You gain a +4 bonus on saving throws against mind-affecting spells and abilities.
 Use: Automatic.</entry>
+<entry id="70109" lang="en" sex="m">Spell Focus: Cold</entry>
+<entry id="70110" lang="en" sex="m">Type of Feat: General
+Prerequisite: None
+Specifics: You gain a +1 DC bonus on cold spells.
+Use: Automatic.</entry>
+<entry id="70111" lang="en" sex="m">Greater Spell Focus: Cold</entry>
+<entry id="70112" lang="en" sex="m">Type of Feat: General
+Prerequisite: Spell Focus: Cold
+Specifics: You gain a +2 DC bonus on cold spells.
+Use: Automatic.</entry>
+<entry id="70113" lang="en" sex="m">Frozen Berserker</entry>
+<entry id="70114" lang="en" sex="m">Type of Feat: General
+Prerequisite: Ability to Rage
+Specifics: You gain immunity to cold, but have vulnerability to fire, which means you take +50% damage from fire, regardless of whether a saving throw is allowed, or if the save is a success or failure.
+Use: Automatic.</entry>
+<entry id="70115" lang="en" sex="m">Cormanthyran Moon Magic</entry>
+<entry id="70116" lang="en" sex="m">Type of Feat: General
+Prerequisite: 3rd level spells, Lore 4.
+Specifics: When you cast a spell at night, you gain a +2 bonus to your caster level. This provides no benefit during the day, when underground, or during stormy weather.
+Use: Automatic.</entry>
+<entry id="70117" lang="en" sex="m">Jergal's Pact</entry>
+<entry id="70118" lang="en" sex="m">Type of Feat: General
+Prerequisite: Great Fortitude, Lore 4.
+Specifics: You gain a +2 bonus on saves vs negative energy.
+Use: Automatic.</entry>
+<entry id="70119" lang="en" sex="m">Bloodline of Fire</entry>
+<entry id="70120" lang="en" sex="m">Type of Feat: General
+Prerequisite: Human or Fire Planetouched
+Specifics: You receive a +4 bonus on saving throws against fire effects. In addition, you cast spells with the fire descriptor at +2 caster level. You may only take this feat at level 1.
+Use: Automatic.</entry>
+<entry id="70121" lang="en" sex="m">Rulership</entry>
+<entry id="70122" lang="en" sex="m">Type of Feat: General
+Prerequisite: Leadership
+Specifics: You receive a +4 bonus on your leadership score.
+Use: Automatic.</entry>
+<entry id="70123" lang="en" sex="m">Might Makes Right</entry>
+<entry id="70124" lang="en" sex="m">Type of Feat: General
+Prerequisite: Leadership, Strength 13
+Specifics: You add your strength modifier to your leadership score.
+Use: Automatic.</entry>
+<entry id="70125" lang="en" sex="m">Plague Resistant</entry>
+<entry id="70126" lang="en" sex="m">Type of Feat: General
+Prerequisite: Human
+Specifics: You gain a +4 bonus on saves against disease.
+Use: Automatic.</entry>
+<entry id="70127" lang="en" sex="m">Strong Mind</entry>
+<entry id="70128" lang="en" sex="m">Type of Feat: General
+Prerequisite: None
+Specifics: You gain a +3 bonus on saves against psionics.
+Use: Automatic.</entry>
+<entry id="70129" lang="en" sex="m">Reckless Rage</entry>
+<entry id="70130" lang="en" sex="m">Type of Feat: General
+Prerequisite: Ability to Rage, Con 13
+Specifics: You gain an additional +2 bonus to Strength and Rage, and a further -2 penalty to AC.
+Use: Automatic.</entry>
 </tlk>

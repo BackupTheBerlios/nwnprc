@@ -424,6 +424,8 @@ int GetManifesterDC(object oManifester = OBJECT_SELF)
     nDC += (GetLocalInt(oManifester, "PRC_SoulEater_HasDrained") && GetLevelByClass(CLASS_TYPE_SOUL_EATER, oManifester) >= 10) ? 2 : 0;
     // Closed Mind
     if(GetHasFeat(FEAT_CLOSED_MIND, oTarget)) nDC -= 2;
+    // Strong Mind
+    if(GetHasFeat(FEAT_STRONG_MIND, oTarget)) nDC -= 3;
     // Fist of Dal Quor
     if(GetLevelByClass(CLASS_TYPE_FIST_DAL_QUOR, oTarget) >= 4) nDC -= 2;
 

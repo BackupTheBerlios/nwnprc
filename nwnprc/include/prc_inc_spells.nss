@@ -337,6 +337,7 @@ int ArchmageSpellPower (object oCaster);
 int TrueNecromancy (object oCaster, int iSpellID, string sType);
 int DomainPower(object oCaster, int nSpellID);
 int StormMagic(object oCaster);
+int CormanthyranMoonMagic(object oCaster);
 int DeathKnell(object oCaster);
 int ShadowWeave (object oCaster, int iSpellID);
 string GetChangedElementalType(int spell_id, object oCaster = OBJECT_SELF);
@@ -799,6 +800,7 @@ int GetLevelByTypeArcaneFeats(object oCaster = OBJECT_SELF, int iSpellID = -1)
                  FireAdept(oCaster, iSpellID) +
                  DomainPower(oCaster, iSpellID) +
                  StormMagic(oCaster) +
+                 CormanthyranMoonMagic(oCaster) +
                  DraconicPower(oCaster);
 
     if (iClass1 == CLASS_TYPE_HEXBLADE) iClass1Lev = (iClass1Lev >= 4) ? (iClass1Lev / 2) : 0;
@@ -845,6 +847,7 @@ int GetLevelByTypeDivineFeats(object oCaster = OBJECT_SELF, int iSpellID = -1)
                  ShadowWeave(oCaster, iSpellID) +
                  FireAdept(oCaster, iSpellID) +
                  DomainPower(oCaster, iSpellID) +
+                 CormanthyranMoonMagic(oCaster) +
                  StormMagic(oCaster);
 
     if (iClass1 == CLASS_TYPE_PALADIN
@@ -1002,6 +1005,7 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
             +  ShadowWeave(oCaster, iSpellId)
             +  FireAdept(oCaster, iSpellId)
             +  StormMagic(oCaster)
+            +  CormanthyranMoonMagic(oCaster)
             +  DomainPower(oCaster, iSpellId)
             +  DeathKnell(oCaster)
             +  DraconicPower(oCaster);
@@ -1022,6 +1026,7 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
             +  ShadowWeave(oCaster, iSpellId)
             +  FireAdept(oCaster, iSpellId)
             +  StormMagic(oCaster)
+            +  CormanthyranMoonMagic(oCaster)
             +  DomainPower(oCaster, iSpellId)
             +  DeathKnell(oCaster);
         iReturnLevel += PractisedSpellcasting(oCaster, iCastingClass, iReturnLevel); //gotta be the last one
@@ -1121,6 +1126,21 @@ int StormMagic(object oCaster)
     return 0;
 }
 
+int CormanthyranMoonMagic(object oCaster)
+{
+    if (!GetHasFeat(FEAT_CORMANTHYRAN_MOON_MAGIC, oCaster)) return 0;
+
+    object oArea = GetArea(oCaster);
+
+    // The moon must be visible. Thus, outdoors, at night, with no rain.
+    if (GetWeather(oArea) != WEATHER_RAIN && GetWeather(oArea) != WEATHER_SNOW &&
+        GetIsNight() && !GetIsAreaInterior(oArea))
+    {
+        return 2;
+    }
+    return 0;
+}
+
 int DomainPower(object oCaster, int nSpellID)
 {
     int nBonus = 0;
@@ -1201,10 +1221,15 @@ string GetChangedElementalType(int spell_id, object oCaster = OBJECT_SELF)
 
 int FireAdept (object oCaster, int iSpellID)
 {
+	int nBoost = 0;
+	
     if (GetHasFeat(FEAT_FIRE_ADEPT, oCaster) && GetChangedElementalType(iSpellID, oCaster) == "Fire")
-        return 1;
-    else
-        return 0;
+        nBoost += 1;
+        
+    if (GetHasFeat(FEAT_BLOODLINE_OF_FIRE, oCaster) && GetChangedElementalType(iSpellID, oCaster) == "Fire")
+        nBoost += 2;        
+    
+        return nBoost;
 }
 
 int DraconicPower (object oCaster = OBJECT_SELF)
@@ -1466,7 +1491,16 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
         nDC -= 2;
     // Scorpion's Resolve gives a +4 bonus on mind affecting saves
     if(nSaveType == SAVING_THROW_TYPE_MIND_SPELLS && GetHasFeat(FEAT_SCORPIONS_RESOLVE, oSaveVersus))
-        nDC -= 4;        
+        nDC -= 4; 
+    // Jergal's Pact gives a +2 bonus on negative energy saves
+    if(nSaveType == SAVING_THROW_TYPE_NEGATIVE && GetHasFeat(FEAT_JERGALS_PACT, oSaveVersus))
+        nDC -= 2;  
+    // Bloodline of Fire gives a +4 bonus on fire saves
+    if(nSaveType == SAVING_THROW_TYPE_FIRE && GetHasFeat(FEAT_BLOODLINE_OF_FIRE, oSaveVersus))
+        nDC -= 4;  
+    // Plague Resistant gives a +4 bonus on disease saves
+    if(nSaveType == SAVING_THROW_TYPE_DISEASE && GetHasFeat(FEAT_PLAGUE_RESISTANT, oSaveVersus))
+        nDC -= 4;          
 
     //racial pack code
     //this works by lowering the DC rather than adding to the save
@@ -1627,7 +1661,11 @@ int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveTy
        {
                 effect eLink = EffectLinkEffects(EffectACDecrease(2), EffectAttackDecrease(2));
                 ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0);
-       }      
+       }  
+       
+    // Bloodline of Fire gives a +4 bonus on fire saves
+    if(nSaveType == SAVING_THROW_TYPE_FIRE && GetHasFeat(FEAT_BLOODLINE_OF_FIRE, oSaveVersus))
+        nDC -= 4;        
 
     // Racial ability adjustments
     if(nSaveType == SAVING_THROW_TYPE_FIRE && GetHasFeat(FEAT_HARD_FIRE, oTarget))

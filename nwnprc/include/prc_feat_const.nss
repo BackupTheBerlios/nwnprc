@@ -570,9 +570,38 @@ const int FEAT_SCORPIONS_RESOLVE                       = 24024;
 
 // Frostburn
 const int FEAT_CRAFT_SKULL_TALISMAN                    = 3004;
+const int FEAT_FROZEN_BERSERKER                        = 24039;
+const int FEAT_SPELL_FOCUS_COLD                        = 24040;
+const int FEAT_GREATER_SPELL_FOCUS_COLD                = 24041;
+
+// Lost Empires of Faerun
+const int FEAT_CORMANTHYRAN_MOON_MAGIC                 = 24042;
+const int FEAT_JERGALS_PACT                            = 24043;
+
+// Player's Guide to Faerun
+const int FEAT_BLOODLINE_OF_FIRE                       = 24044;
+
+// Power of Faerun
+const int FEAT_RULERSHIP                               = 24045;
+
+// Races of Faerun
+const int FEAT_MIGHT_MAKES_RIGHT                       = 24046;
+const int FEAT_PLAGUE_RESISTANT                        = 24047;
+
+// Underdark
+const int FEAT_STRONG_MIND                             = 24048;
+
+// Races of Stone
+const int FEAT_RECKLESS_RAGE                           = 24049;
 
 // Libris Mortis
 const int FEAT_REQUIEM                                 = 2455;
+const int FEAT_CORPSECRAFTER                           = 4014;
+const int FEAT_BOLSTER_RESISTANCE                      = 4015;
+const int FEAT_DEADLY_CHILL                            = 4016;
+const int FEAT_DESTRUCTION_RETRIBUTION                 = 4017;
+const int FEAT_HARDENED_FLESH                          = 4018;
+const int FEAT_NIMBLE_BONES                            = 4019;
 
 // Magic of Faerun
 const int FEAT_SPELL_GIRDING                           = 2456;
@@ -599,14 +628,6 @@ const int FEAT_PIERCING_EVOCATION                      = 2698;
 const int FEAT_UNSETTLING_ENCHANTMENT                  = 2824;
 const int FEAT_TOUGHENING_TRANSMUTATION                = 2897;
 const int FEAT_CLOUDY_CONJURATION                      = 3001;
-
-//Corpsecrafter
-const int FEAT_CORPSECRAFTER                           = 4014;
-const int FEAT_BOLSTER_RESISTANCE                      = 4015;
-const int FEAT_DEADLY_CHILL                            = 4016;
-const int FEAT_DESTRUCTION_RETRIBUTION                 = 4017;
-const int FEAT_HARDENED_FLESH                          = 4018;
-const int FEAT_NIMBLE_BONES                            = 4019;
 
 // Forgotten Realms Campaign Setting
 const int FEAT_INSCRIBE_RUNE                           = 2462;

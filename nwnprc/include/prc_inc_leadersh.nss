@@ -517,6 +517,8 @@ int GetLeadershipScore(object oPC = OBJECT_SELF)
 {
     int nLeadership = GetECL(oPC);
     nLeadership += GetAbilityModifier(ABILITY_CHARISMA, oPC);
+    if(GetHasFeat(FEAT_RULERSHIP, oPC)) nLeadership += 4;
+    if(GetHasFeat(FEAT_MIGHT_MAKES_RIGHT, oPC)) nLeadership += GetAbilityModifier(ABILITY_STRENGTH, oPC);;
     //without epic leadership its capped at 25
     if(!GetHasFeat(FEAT_EPIC_LEADERSHIP, oPC) && nLeadership > 25)
         nLeadership = 25;

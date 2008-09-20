@@ -51,6 +51,7 @@
 47  ****                                             ****      **** ****           ****   
 48  **GeneralActivatableFeats**                      ****      **** ****           ****   
 49  FEAT_INSCRIBE_RUNE                               2462      0    -1             1      
+49  FEAT_CRAFT_SKULL_TALISMAN                        3004      0    -1             1      
 50  FEAT_THRALL_TO_DEMON                             2616      0    -1             1      
 51  FEAT_HOLYRADIANCE                                3164      0    -1             1      
 52  FEAT_NIMBUSOFLIGHT                               3165      0    -1             1      

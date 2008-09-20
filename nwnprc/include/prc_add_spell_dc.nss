@@ -98,6 +98,23 @@ int ElementalSavantDC(int spell_id, object oCaster = OBJECT_SELF)
     return nDC;
 }
 
+// This does other spell focus feats, starting with Spell Focus: Cold
+int SpellFocus(int nSpellId, object oCaster = OBJECT_SELF)
+{
+    	int nDC = 0;
+        string sElement = ChangedElementalType(nSpellId, oCaster);
+
+
+        // Specify the elemental type 
+        if (sElement == "Cold")
+        {
+		if (GetHasFeat(FEAT_GREATER_SPELL_FOCUS_COLD, oCaster)) nDC += 2;
+		else if (GetHasFeat(FEAT_SPELL_FOCUS_COLD, oCaster)) nDC += 1;
+        }
+
+    	return nDC;
+}
+
 
 
 //Red Wizard DC boost based on spell school specialization
@@ -636,6 +653,7 @@ int GetChangesToSaveDC(object oTarget, object oCaster = OBJECT_SELF, int nSpellI
     nDC += ShadowWeaveDC(nSpellID, oCaster);
     nDC += RedWizardDC(nSpellID, oCaster);
     nDC += TattooFocus(nSpellID, oCaster);
+    nDC += SpellFocus(nSpellID, oCaster);
     nDC += KOTCSpellFocusVsDemons(oTarget, oCaster);
     nDC += BloodMagusBloodComponent(oCaster);
     nDC += RunecasterRunePowerDC(oCaster);

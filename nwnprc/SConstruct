@@ -22,6 +22,14 @@ TODO:
 from os.path import basename, exists, join
 import re
 
+## Specific files and directories we need to muck about with
+
+includedir = Dir("include")
+othersdir = Dir("others")
+_2dasdir = Dir("2das")
+
+scrollmerch = othersdir.File("prc_scrolls.utm")
+
 ## Builders
 # NWScript
 
@@ -39,6 +47,13 @@ erf = Builder(
                      "Packaging $TARGET")]
     )
 
+erffromdir = Builder(
+    action = ["-@rm -f $TARGET",
+              Action("wine tools/erf.exe --create $TARGET $SOURCE/*",
+                     "Packaging $TARGET from files in directory $SOURCE")],
+    source_factory=Dir
+    )
+
 # TLK
 
 tlk = Builder(
@@ -47,10 +62,26 @@ tlk = Builder(
                      "Building TLK from XML")]
     )
 
+# Other stuff
+
+scrollmerchbuild = Builder(
+    action = ["-@mkdir scrolltemp",
+              Action("java -Xmx200m -jar tools/prc.jar buildscrhack 2das tlk scrolltemp",
+                     "Creating scrolls and updating 2das"),
+              Action("java -cp ./tools/modpacker/nwn-tools.jar org.progeeks.nwn.XmlToGff scrolltemp scrolltemp/*.uti.xml",
+                     "Converting scroll XML to UTI"),
+              Action("java -cp ./tools/modpacker/nwn-tools.jar org.progeeks.nwn.XmlToGff . prc_scrolls.utm.xml",
+                     "Converting scroll merchant XML to UTM"),
+              "@mv scrolltemp/*.uti others/",
+              "@mv prc_scrolls.utm others/",
+              "@rm -rf scrolltemp",
+              "@rm -f prc_scrolls.utm.xml",
+              "@rm -f System.out"] # Bug in nwn-tools, produces this file
+    )
+
 ## Include scanner
 
 include_regex = re.compile("^#include\s+\"(\w+)\"", re.MULTILINE)
-includedir = Dir("include")
 
 def scan_nwscript(node, env, path):
     contents = node.get_contents()
@@ -77,7 +108,7 @@ newspellbooks    = Glob("#/newspellbook/*.nss",     strings=True)
 includes         = Glob("#/include/*.nss",          strings=True)
 
 # Object files
-objects          = mkobjectlist(scripts, "objects")
+objects          = mkobjectlist(scripts, "objs")
 spellobjs        = mkobjectlist(spells, "spellobjs")
 epicspellobjs    = mkobjectlist(epicspellscripts, "epicspellobjs")
 raceobjs         = mkobjectlist(racescripts, "raceobjs")
@@ -104,7 +135,9 @@ ocfixobjs        = mkobjectlist(ocfixscripts, "ocfixerfobjs")
 
 env = Environment(BUILDERS = {'NWScript' : nwscript,
                               'Erf' : erf,
-                              'Tlk' : tlk})
+                              'ErfFromDir' : erffromdir,
+                              'Tlk' : tlk,
+                              'ScrollMerch' : scrollmerchbuild})
 env.Append(SCANNERS = nss_scan)
 
 def buildscripts(scriptlist, objectlist):
@@ -114,10 +147,10 @@ def buildscripts(scriptlist, objectlist):
         env.NWScript(object, script)
 
 def buildhak(name, filelist):
-    env.Erf("CompiledResources/%s.hak" % (name,), filelist)
+    env.Erf("#/CompiledResources/%s.hak" % (name,), filelist)
 
 def builderf(name, filelist):
-    env.Erf("CompiledResources/%s.erf" % (name,), filelist)
+    env.Erf("#/CompiledResources/%s.erf" % (name,), filelist)
 
 # Compiling scripts
 
@@ -156,6 +189,20 @@ builderf("prc_ocfix", ocfixscripts + ocfixobjs)
 
 
 # Special handling for misc hak:
-# - Depends on files under others/, but too many files there for erf creator
-# - Depends on the scroll merchant file, which may need to be generated / updated
-# TODO
+# Depends on the scroll merchant file, which may need to be generated / updated
+
+env.ScrollMerch(scrollmerch,
+                [_2dasdir.File("spells.2da"),
+                 _2dasdir.File("des_crft_scroll.2da"),
+                 _2dasdir.File("des_crft_spells.2da"),
+                 _2dasdir.File("iprp_spells.2da")
+                 ] +
+                Glob("#/2das/cls_spcr_*.2da"))
+
+# Can't use Erf rule, since something crashes with it
+# So instead declared the dependencies explicitly and then use dir build rule
+env.Depends("#/CompiledResources/prc_misc.hak",
+            others + [scrollmerch])
+
+env.ErfFromDir("#/CompiledResources/prc_misc.hak", "others")
+

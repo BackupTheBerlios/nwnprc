@@ -3,7 +3,7 @@
     FeatLabel                                      FeatIndex List GrantedOnLevel OnMenu 
 0   **Class_feats**                                ****      **** ****           ****   
 1   ReadyManeuver                                  1960      3    1              1      
-2   ReadyManeuver                                  1973      3    1              1      
+2   RecoverManeuvers                               1973      3    1              1      
 3   Aptitude_Weapon_Focus                          2123      0    99             0      
 4   Aptitude_Weapon_Specialization                 2125      0    99             0      
 5   Aptitude_Improved_Critical                     2127      0    99             0      

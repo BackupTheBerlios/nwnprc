@@ -1,4 +1,5 @@
-Dark Speech [Vile]
+//////////////////////////////////////////////////////////////////////
+/* Dark Speech [Vile]
 You learn a smattering of the language of truly dark power.
 Prerequisites: Will save bonus +5, Int 15, Cha 15.
 Benefit: You can use the Dark Speech to bring loathing and fear to others, to help cast evil spells and create evil magic
@@ -29,3 +30,73 @@ you.
 
 Special: If you cannot take ability damage, you cannot
 select this feat.
+*/
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+#include "prc_inc_spells"
+
+void main()
+{
+        object oPC = OBJECT_SELF;
+        location lLoc = GetLocation(oPC);
+        int nSpell = GetSpellId();
+        object oTarget;
+        int nDC = 10 + (GetHitDice(oPC) / 2) + GetAbilityModifier(ABILITY_CHARISMA, oPC));
+        
+        if(GetIsImmune(oPC, IMMUNITY_TYPE_ABILITY_DECREASE))
+        {
+                FloatingTextStringOnCreature("If you cannot take ability damage, you cannot use this feat", oPC, FALSE);
+                return;
+        }
+        
+        if(nSpell = SPELL_DARK_SPEECH_DREAD)
+        {
+                int nAlign;
+                int nHD;
+                oTarget = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), lLoc, FALSE, OBJECT_TYPE_CREATURE);         
+                
+                ApplyAbilityDamage(oTarget, ABILITY_CHARISMA, d4(1), DURATION_TYPE_TEMPORARY, -1.0f);
+                
+                while(GetIsObjectValid(oTarget))
+                {
+                        if(oTarget =! oPC)
+                        {
+                                if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+                                {
+                                        nAlign = GetAlignmentGoodEvil(oTarget);
+                                        nHD = GetHitDice(oTarget);
+                                        
+                                        if(nAlign == ALIGNMENT_EVIL)
+                                        {
+                                                if(nHD < 5) SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, SupernaturalEffect(EffectLinkEffects(EffectFrightened(), EffectVisualEffect(VFX_DUR_MIND_AFFECTING_FEAR)), oTarget, RoundsToSeconds(10));
+                                                
+                                                else if (nHD > 4 && nHD < 11) SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, SupernaturalEffect(EffectCharmed()), oTarget, RoundsToSeconds(10));
+                                                
+                                                else FloatingTextStringOnCreature(GetName(oTarget) + " is filled with loathing for you.", oPC, FALSE);
+                                        }
+                                        
+                                        else
+                                        {
+                                                if(nHD < 5)
+                                                {
+                                                        effect eLink = EffectLinkEffects(EffectFrightened(), EffectVisualEffect(VFX_DUR_MIND_AFFECTING_FEAR));
+                                                               eLink = EffectLinkEffects(eLink, EffectShaken());
+                                                        
+                                                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, SupernaturalEffect(eLink), oTarget, RoundsToSeconds(10));
+                                                }
+                                                
+                                                else if (nHD > 4 && nHD < 11) SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, SupernaturalEffect(EffectShaken()), oTarget, RoundsToSeconds(10));
+                                                
+                                                else FloatingTextStringOnCreature(GetName(oTarget) + " is impressed by your Dark Speech.", oPC, FALSE);                                }
+                                }
+                                oTarget = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), lLoc, FALSE, OBJECT_TYPE_CREATURE);
+                        }
+                }
+        }
+        
+        else if(nSpell == SPELL_DARK_SPEECH_POWER)
+        {
+                ApplyAbilityDamage(oPC, ABILITY_CHARISMA, d4(1), DURATION_TYPE_TEMPORARY, -1.0f);                
+                ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE), oPC);
+        }
+}

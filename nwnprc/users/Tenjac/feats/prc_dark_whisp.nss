@@ -38,7 +38,7 @@ void main()
                 return;
         }        
         
-        ApplyAbilityDamage(oTarget, ABILITY_CHARISMA, 1, DURATION_TYPE_TEMPORARY, -1.0f);
+        ApplyAbilityDamage(oPC, ABILITY_CHARISMA, 1, DURATION_TYPE_TEMPORARY, -1.0f);
         ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_LOS_EVIL_30), lLoc);
         
         object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), lLoc, FALSE, OBJECT_TYPE_CREATURE);

@@ -22,7 +22,7 @@ Source code for NWNX and its plugins is available from the above sites.
 SQLite is avaliable from www.sqlite.org
 The Precacher is based on a version made for the PRC by Yuritch, but rewritten into java by the PRC. As a jar file its source code is included in the jar
 
-For full instructions, see the PRC Web site http://nwnprc.netgamers.co.uk/manual/index.html In particular see the PRC Server Pack installation instructions, http://nwnprc.netgamers.co.uk/manual/english/content/installation/prc_server_pg01.htm
+For full instructions, see the PRC Web site http://www.nwn2prc.com/index.php?location=manual . In particular see the PRC Server Pack installation instructions (server_pack_install.html) and http://www.nwn2prc.com/index.php?location=manual&lang=en&section=installation&page=prc_server_pg01 (these are a little out of date but may be useful).
 
 Changelog
 v1.8    Removed NWNX-InvFixpl as no longer needed. Removed linux nwnx as there's now a precompiled binary (see http://www.nwnx.org/phpBB2/viewtopic.php?t=1038).

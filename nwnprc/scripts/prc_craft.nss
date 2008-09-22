@@ -535,15 +535,15 @@ int ArtificerPrereqCheck(object oPC, string sFile, int nLine, int nCost)
             )
             return TRUE;
 
-        if(nRace == -1)     nRace       = (GetPRCIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, 25, bTake10)) ? -1 : nRace;
-        if(nAlignGE == -1)  nAlignGE    = (GetPRCIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, 30, bTake10)) ? -1 : nAlignGE;
-        if(nAlignLC == -1)  nAlignLC    = (GetPRCIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, 30, bTake10)) ? -1 : nAlignLC;
-        if(nClass == -1)    nClass      = (GetPRCIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, 21, bTake10)) ? -1 : nClass;
-        if(nSpell1 == -1)   nSpell1     = (GetPRCIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, nSpell1, bTake10)) ? -1 : nSpell1;
-        if(nSpell2 == -1)   nSpell2     = (GetPRCIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, nSpell2, bTake10)) ? -1 : nSpell2;
-        if(nSpell3 == -1)   nSpell3     = (GetPRCIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, nSpell3, bTake10)) ? -1 : nSpell3;
-        if(nSpellOR1 == -1) nSpellOR1   = (GetPRCIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, nSpellOR1, bTake10)) ? -1 : nSpellOR1;
-        if(nSpellOR2 == -1) nSpellOR2   = (GetPRCIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, nSpellOR2, bTake10)) ? -1 : nSpellOR2;
+        if(nRace != -1)     nRace       = (GetPRCIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, 25, bTake10)) ? -1 : nRace;
+        if(nAlignGE != -1)  nAlignGE    = (GetPRCIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, 30, bTake10)) ? -1 : nAlignGE;
+        if(nAlignLC != -1)  nAlignLC    = (GetPRCIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, 30, bTake10)) ? -1 : nAlignLC;
+        if(nClass != -1)    nClass      = (GetPRCIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, 21, bTake10)) ? -1 : nClass;
+        if(nSpell1 != -1)   nSpell1     = (GetPRCIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, nSpell1, bTake10)) ? -1 : nSpell1;
+        if(nSpell2 != -1)   nSpell2     = (GetPRCIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, nSpell2, bTake10)) ? -1 : nSpell2;
+        if(nSpell3 != -1)   nSpell3     = (GetPRCIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, nSpell3, bTake10)) ? -1 : nSpell3;
+        if(nSpellOR1 != -1) nSpellOR1   = (GetPRCIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, nSpellOR1, bTake10)) ? -1 : nSpellOR1;
+        if(nSpellOR2 != -1) nSpellOR2   = (GetPRCIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, nSpellOR2, bTake10)) ? -1 : nSpellOR2;
     }
     if((nRace == -1) &&
         (nAlignGE == -1) &&
@@ -1259,13 +1259,23 @@ void main()
                             int nSpell = StringToInt(Get2DACache("iprp_spells", "SpellIndex", nChoice));
                             int bHasSpell = PRCGetHasSpell(nSpell, oPC);
                             int bFailed;
+                            int bAllow = FALSE;
                             if(bHasSpell)
                             {
+                                bAllow = TRUE;
                                 PRCDecrementRemainingSpellUses(oPC, nSpell);
                             }
-                            else if(GetLevelByClass(CLASS_TYPE_ARTIFICER, oPC))
+                            else
                             {
-                                SetLocalInt(oPC, "ArtificerCrafting", TRUE);
+                                if(GetLevelByClass(CLASS_TYPE_ARTIFICER, oPC))
+                                {
+                                    bAllow = TRUE;
+                                    SetLocalInt(oPC, "ArtificerCrafting", TRUE);    //temporary
+                                }
+                                if(GetLocalInt(oPC, "UsingImbueItem"))
+                                {
+                                    bAllow = TRUE;
+                                }
                             }
                             //imbue item toggled by another feat
                             /*
@@ -1274,75 +1284,83 @@ void main()
                                 SetLocalInt(oPC, "UsingImbueItem", TRUE);
                             }
                             */
-
-                            switch(GetBaseItemType(oItem))
+                            if(!bAllow)
                             {
-                                case BASE_ITEM_BLANK_POTION :
-                                    // -------------------------------------------------
-                                    // Brew Potion
-                                    // -------------------------------------------------
-                                   bFailed = CICraftCheckBrewPotion(oItem,oPC,nSpell);
-                                   break;
-
-                                case BASE_ITEM_BLANK_SCROLL :
-                                   // -------------------------------------------------
-                                   // Scribe Scroll
-                                   // -------------------------------------------------
-                                   bFailed = CICraftCheckScribeScroll(oItem,oPC,nSpell);
-                                   break;
-
-                                case BASE_ITEM_BLANK_WAND :
-                                   // -------------------------------------------------
-                                   // Craft Wand
-                                   // -------------------------------------------------
-                                   bFailed = CICraftCheckCraftWand(oItem,oPC,nSpell);
-                                   break;
-
-                                case BASE_ITEM_CRAFTED_ROD :
-                                   // -------------------------------------------------
-                                   // Craft Rod
-                                   // -------------------------------------------------
-                                   //bFailed = CICraftCheckCraftWand(oItem,oPC,nSpell);
-                                   break;
-
-                                case BASE_ITEM_CRAFTED_STAFF :
-                                   // -------------------------------------------------
-                                   // Craft Staff
-                                   // -------------------------------------------------
-                                   bFailed = CICraftCheckCraftStaff(oItem,oPC,nSpell);
-                                   break;
-
-                                default:
-                                    if(GetLocalInt(oPC, "InscribeRune"))
-                                    {
-                                        bFailed = InscribeRune(oItem,oPC,nSpell);
-                                    }
-                                    else if (GetStringLeft(GetResRef(oTarget), 5) == "it_gem")
-                                    {
-                                        bFailed = AttuneGem(oItem,oPC,nSpell);
-                                    }
-                                    else if(GetLocalInt(oPC, "CraftSkullTalisman"))
-                                    {
-                                        bFailed = CraftSkullTalisman(oItem,oPC,nSpell);
-                                    }                                    
-
-                                    break;
-
-/*
-                                case BASE_ITEM_CRAFTED_STAFF :
-                                   // -------------------------------------------------
-                                   // Craft Staff
-                                   // -------------------------------------------------
-                                   CICraftCheckCraftStaff(oItem,oPC,nSpell);
-                                   break;
-
-                                case BASE_ITEM_CRAFTED_STAFF :
-                                   // -------------------------------------------------
-                                   // Craft Staff
-                                   // -------------------------------------------------
-                                   CICraftCheckCraftStaff(oItem,oPC,nSpell);
-                                   break;*/
+                                FloatingTextStringOnCreature("You cannot craft using that spell", oPC, FALSE);
+                                bFailed = TRUE;
                             }
+                            else
+                            {
+                                switch(GetBaseItemType(oItem))
+                                {
+                                    case BASE_ITEM_BLANK_POTION :
+                                        // -------------------------------------------------
+                                        // Brew Potion
+                                        // -------------------------------------------------
+                                       bFailed = CICraftCheckBrewPotion(oItem,oPC,nSpell);
+                                       break;
+
+                                    case BASE_ITEM_BLANK_SCROLL :
+                                       // -------------------------------------------------
+                                       // Scribe Scroll
+                                       // -------------------------------------------------
+                                       bFailed = CICraftCheckScribeScroll(oItem,oPC,nSpell);
+                                       break;
+
+                                    case BASE_ITEM_BLANK_WAND :
+                                       // -------------------------------------------------
+                                       // Craft Wand
+                                       // -------------------------------------------------
+                                       bFailed = CICraftCheckCraftWand(oItem,oPC,nSpell);
+                                       break;
+
+                                    case BASE_ITEM_CRAFTED_ROD :
+                                       // -------------------------------------------------
+                                       // Craft Rod
+                                       // -------------------------------------------------
+                                       //bFailed = CICraftCheckCraftWand(oItem,oPC,nSpell);
+                                       break;
+
+                                    case BASE_ITEM_CRAFTED_STAFF :
+                                       // -------------------------------------------------
+                                       // Craft Staff
+                                       // -------------------------------------------------
+                                       bFailed = CICraftCheckCraftStaff(oItem,oPC,nSpell);
+                                       break;
+
+                                    default:
+                                        if(GetLocalInt(oPC, "InscribeRune"))
+                                        {
+                                            bFailed = InscribeRune(oItem,oPC,nSpell);
+                                        }
+                                        else if (GetStringLeft(GetResRef(oTarget), 5) == "it_gem")
+                                        {
+                                            bFailed = AttuneGem(oItem,oPC,nSpell);
+                                        }
+                                        else if(GetLocalInt(oPC, "CraftSkullTalisman"))
+                                        {
+                                            bFailed = CraftSkullTalisman(oItem,oPC,nSpell);
+                                        }
+
+                                        break;
+
+    /*
+                                    case BASE_ITEM_CRAFTED_STAFF :
+                                       // -------------------------------------------------
+                                       // Craft Staff
+                                       // -------------------------------------------------
+                                       CICraftCheckCraftStaff(oItem,oPC,nSpell);
+                                       break;
+
+                                    case BASE_ITEM_CRAFTED_STAFF :
+                                       // -------------------------------------------------
+                                       // Craft Staff
+                                       // -------------------------------------------------
+                                       CICraftCheckCraftStaff(oItem,oPC,nSpell);
+                                       break;*/
+                                }
+                            }
+
                             //do something different if we fail? retry?
                             AllowExit(DYNCONV_EXIT_FORCE_EXIT);
                             /*

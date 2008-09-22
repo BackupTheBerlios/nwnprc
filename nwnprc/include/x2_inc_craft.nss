@@ -176,6 +176,12 @@ int GetPnPItemXPCost(int nCost, int bEpic);
 // Returns a struct containing gold, xp and time costs given the base cost and other arguments
 struct craft_cost_struct GetModifiedCostsFromBase(int nCost, object oPC, int nCraftingFeat, int bEpic);
 
+// Additional checking for emulating spells during crafting
+int CheckAlternativeCrafting(object oPC, int nSpell, struct craft_cost_struct costs);
+
+// Returns the maximum of caster level used and other effective levels from emulating spells
+int GetAlternativeCasterLevel(object oPC, int nLevel);
+
 //////////////////////////////////////////////////
 /* Include section                              */
 //////////////////////////////////////////////////
@@ -297,6 +303,7 @@ object CICraftBrewPotion(object oCreator, int nSpellID )
         return OBJECT_INVALID;
     }
 
+    /* //just a tad retarded, don't you think? other crafting feats are not similarly restricted
     //Uses per day
     int nUsesAllowed;
 
@@ -315,12 +322,9 @@ object CICraftBrewPotion(object oCreator, int nSpellID )
             SendMessageToPC(oCreator, "You must rest before you can brew any more potions");
             return OBJECT_INVALID;
     }
+    */
 
-    int nCasterLevel = PRCGetCasterLevel();
-    if(GetLocalInt(oCreator, "UsingImbueItem"))
-    {
-       nCasterLevel = GetInvokerLevel(oCreator, CLASS_TYPE_WARLOCK);
-    }
+    int nCasterLevel = GetAlternativeCasterLevel(oCreator, PRCGetCasterLevel(oCreator));
 
     if (nPropID != -1)
     {
@@ -338,7 +342,7 @@ object CICraftBrewPotion(object oCreator, int nSpellID )
         }
 
         //Increment usage
-        SetLocalInt(oCreator, "PRC_POTIONS_BREWED", nUsed++);
+        //SetLocalInt(oCreator, "PRC_POTIONS_BREWED", nUsed++);
     }
     return oTarget;
 }
@@ -392,13 +396,8 @@ object CICraftCraftWand(object oCreator, int nSpellID )
     }
 
 
-    int nCasterLevel = PRCGetCasterLevel();
-    int nClass = PRCGetLastSpellCastClass();
-    if(GetLocalInt(oCreator, "UsingImbueItem"))
-    {
-       nCasterLevel = GetInvokerLevel(oCreator, CLASS_TYPE_WARLOCK);
-       nClass = GetLocalInt(oCreator, "SpellType");
-    }
+    //int nClass = PRCGetLastSpellCastClass();
+    int nCasterLevel = GetAlternativeCasterLevel(oCreator, PRCGetCasterLevel(oCreator));
 
     if (nPropID != -1)
     {
@@ -416,9 +415,10 @@ object CICraftCraftWand(object oCreator, int nSpellID )
             AddItemProperty(DURATION_TYPE_PERMANENT,ipDC,oTarget);
         }
 
-        int nType = CI_GetClassMagicType(nClass);
-        itemproperty ipLimit;
+        //int nType = CI_GetClassMagicType(nClass);
+        //itemproperty ipLimit;
 
+        /*  //this is a bit silly, really, removed in line with other crafting types
         if (nType == X2_CI_MAGICTYPE_DIVINE)
         {
              ipLimit = ItemPropertyLimitUseByClass(CLASS_TYPE_PALADIN);
@@ -445,6 +445,7 @@ object CICraftCraftWand(object oCreator, int nSpellID )
             ipLimit = ItemPropertyLimitUseByClass(nClass);
             AddItemProperty(DURATION_TYPE_PERMANENT,ipLimit,oTarget);
         }
+        */
 
         int nCharges = nCasterLevel + d20();
 
@@ -494,12 +495,7 @@ object CICraftScribeScroll(object oCreator, int nSpellID)
 
     // get scroll resref from scrolls lookup 2da
     int nClass =PRCGetLastSpellCastClass ();
-    string sClass = "Wiz_Sorc";
-    if(GetLocalInt(oCreator, "UsingImbueItem"))
-    {
-       nClass = GetLocalInt(oCreator, "SpellType");
-       if(nClass == CLASS_TYPE_FAVOURED_SOUL) nClass = CLASS_TYPE_CLERIC;
-    }
+    string sClass = "";
     switch (nClass)
     {
        case CLASS_TYPE_WIZARD:
@@ -525,32 +521,38 @@ object CICraftScribeScroll(object oCreator, int nSpellID)
             sClass = "Bard";
             break;
     }
-
+    string sResRef;
     if (sClass != "")
     {
-        string sResRef = Get2DACache(X2_CI_2DA_SCROLLS,sClass,nSpellID);
+        sResRef = Get2DACache(X2_CI_2DA_SCROLLS,sClass,nSpellID);
         if (sResRef != "")
         {
             oTarget = CreateItemOnObject(sResRef,oCreator);
         }
 
-        if(GetPRCSwitch(PRC_SCRIBE_SCROLL_CASTER_LEVEL))
-        {
-            int nCasterLevel = PRCGetCasterLevel();
-            if(GetLocalInt(oCreator, "UsingImbueItem"))
-                nCasterLevel = GetInvokerLevel(oCreator, CLASS_TYPE_WARLOCK);
-            itemproperty ipLevel = ItemPropertyCastSpellCasterLevel(nSpellID, nCasterLevel);
-            AddItemProperty(DURATION_TYPE_PERMANENT,ipLevel,oTarget);
-            itemproperty ipMeta = ItemPropertyCastSpellMetamagic(nSpellID, PRCGetMetaMagicFeat());
-            AddItemProperty(DURATION_TYPE_PERMANENT,ipMeta,oTarget);
+    }
+    else
+    {
+        sResRef = "craft_scroll";
+        oTarget = CreateItemOnObject(sResRef ,oCreator);
+        RemoveItemProperty(oTarget, GetFirstItemProperty(oTarget));
+        itemproperty ipSpell = ItemPropertyCastSpell(nPropID, IP_CONST_CASTSPELL_NUMUSES_SINGLE_USE);
+        AddItemProperty(DURATION_TYPE_PERMANENT,ipSpell,oTarget);
+    }
+    if(GetPRCSwitch(PRC_SCRIBE_SCROLL_CASTER_LEVEL))
+    {
+        int nCasterLevel = GetAlternativeCasterLevel(oCreator, PRCGetCasterLevel(oCreator));
+        itemproperty ipLevel = ItemPropertyCastSpellCasterLevel(nSpellID, nCasterLevel);
+        AddItemProperty(DURATION_TYPE_PERMANENT,ipLevel,oTarget);
+        itemproperty ipMeta = ItemPropertyCastSpellMetamagic(nSpellID, PRCGetMetaMagicFeat());
+        AddItemProperty(DURATION_TYPE_PERMANENT,ipMeta,oTarget);
         itemproperty ipDC = ItemPropertyCastSpellDC(nSpellID, PRCGetSaveDC(PRCGetSpellTargetObject(), OBJECT_SELF));
-            AddItemProperty(DURATION_TYPE_PERMANENT,ipDC,oTarget);
-        }
+        AddItemProperty(DURATION_TYPE_PERMANENT,ipDC,oTarget);
+    }
 
-        if (oTarget == OBJECT_INVALID)
-        {
-           WriteTimestampedLogEntry("x2_inc_craft::CICraftScribeScroll failed - Resref: " + sResRef + " Class: " + sClass + "(" +IntToString(nClass) +") " + " SpellID " + IntToString (nSpellID));
-        }
+    if (oTarget == OBJECT_INVALID)
+    {
+       WriteTimestampedLogEntry("x2_inc_craft::CICraftScribeScroll failed - Resref: " + sResRef + " Class: " + sClass + "(" +IntToString(nClass) +") " + " SpellID " + IntToString (nSpellID));
     }
     return oTarget;
 }
@@ -665,6 +667,13 @@ These dont work as IPs since they are hardcoded */
     if (!GetHasXPToSpend(oCaster, costs.nXPCost))
     {
         FloatingTextStrRefOnCreature(3785, oCaster); // Item Creation Failed - Not enough XP
+        return TRUE;
+    }
+
+    //check spell emulation
+    if(!CheckAlternativeCrafting(oCaster, nID, costs))
+    {
+        FloatingTextStringOnCreature("*Crafting failed!*", oCaster, FALSE);
         return TRUE;
     }
 
@@ -788,6 +797,13 @@ These dont work as IPs since they are hardcoded */
     {
          FloatingTextStrRefOnCreature(3785, oCaster); // Item Creation Failed - Not enough XP
          return TRUE;
+    }
+
+    //check spell emulation
+    if(!CheckAlternativeCrafting(oCaster, nID, costs))
+    {
+        FloatingTextStringOnCreature("*Crafting failed!*", oCaster, FALSE);
+        return TRUE;
     }
 
     // -------------------------------------------------------------------------
@@ -918,10 +934,17 @@ These dont work as IPs since they are hardcoded */
     // -------------------------------------------------------------------------
     // check for sufficient XP to cast spell
     // -------------------------------------------------------------------------
-     if (!GetHasXPToSpend(oCaster, costs.nXPCost))
+    if (!GetHasXPToSpend(oCaster, costs.nXPCost))
     {
          FloatingTextStrRefOnCreature(3785, oCaster); // Item Creation Failed - Not enough XP
          return TRUE;
+    }
+
+    //check spell emulation
+    if(!CheckAlternativeCrafting(oCaster, nID, costs))
+    {
+        FloatingTextStringOnCreature("*Crafting failed!*", oCaster, FALSE);
+        return TRUE;
     }
 
     // -------------------------------------------------------------------------
@@ -961,11 +984,7 @@ int CICraftCheckCraftStaff(object oSpellTarget, object oCaster, int nSpellID = 0
 {
 
     if(nSpellID == 0) nSpellID = PRCGetSpellId();
-    int nCasterLevel = PRCGetCasterLevel();
-    if(GetLocalInt(oCaster, "UsingImbueItem"))
-    {
-       nCasterLevel = GetInvokerLevel(oCaster, CLASS_TYPE_WARLOCK);
-    }
+    int nCasterLevel = GetAlternativeCasterLevel(oCaster, PRCGetCasterLevel(oCaster));
     int bSuccess = TRUE;
     int nCount = 0;
     itemproperty ip = GetFirstItemProperty(oSpellTarget);
@@ -1053,6 +1072,12 @@ These dont work as IPs since they are hardcoded */
     {
          FloatingTextStrRefOnCreature(3785, oCaster); // Item Creation Failed - Not enough XP
          return TRUE;
+    }
+    //check spell emulation
+    if(!CheckAlternativeCrafting(oCaster, nSpellID, costs))
+    {
+        FloatingTextStringOnCreature("*Crafting failed!*", oCaster, FALSE);
+        return TRUE;
     }
     int nPropID = IPGetIPConstCastSpellFromSpellID(nSpellID);
     if (nPropID == 0 && nSpellID != 0)
@@ -1150,10 +1175,10 @@ int InscribeRune(object oTarget = OBJECT_INVALID, object oCaster = OBJECT_INVALI
         }
 
     if(!GetIsObjectValid(oTarget)) oTarget = PRCGetSpellTargetObject();
-    int nCaster = PRCGetCasterLevel(oCaster);
+    int nCaster = GetAlternativeCasterLevel(oCaster, PRCGetCasterLevel(oCaster));
     int nDC = PRCGetSaveDC(oTarget, oCaster);
     if(!nSpell) nSpell = PRCGetSpellId();
-    int nSpellLevel;
+    int nSpellLevel = 0;
     int nClass = GetLevelByClass(CLASS_TYPE_RUNECASTER, oCaster);
 
     // This accounts for the fact that there is no bonus to runecraft at level 10
@@ -1164,9 +1189,10 @@ int InscribeRune(object oTarget = OBJECT_INVALID, object oCaster = OBJECT_INVALI
     // Runecraft local int that counts uses/charges
     int nCount = GetLocalInt(oCaster, "RuneCounter");
 
-    if (PRCGetLastSpellCastClass() == CLASS_TYPE_CLERIC) nSpellLevel = StringToInt(lookup_spell_cleric_level(nSpell));
-    else if (PRCGetLastSpellCastClass() == CLASS_TYPE_DRUID) nSpellLevel = StringToInt(lookup_spell_druid_level(nSpell));
-    else if (PRCGetLastSpellCastClass() == CLASS_TYPE_WIZARD || PRCGetLastSpellCastClass() == CLASS_TYPE_SORCERER) nSpellLevel = StringToInt(lookup_spell_level(nSpell));
+    int nLastClass = PRCGetLastSpellCastClass();
+    if (nLastClass == CLASS_TYPE_CLERIC) nSpellLevel = StringToInt(lookup_spell_cleric_level(nSpell));
+    else if (nLastClass == CLASS_TYPE_DRUID) nSpellLevel = StringToInt(lookup_spell_druid_level(nSpell));
+    else if (nLastClass == CLASS_TYPE_WIZARD || nLastClass == CLASS_TYPE_SORCERER) nSpellLevel = StringToInt(lookup_spell_level(nSpell));
     // If none of these work, check the innate level of the spell
     if (nSpellLevel == 0) nSpellLevel = StringToInt(lookup_spell_innate(nSpell));
     // Minimum level.
@@ -1249,6 +1275,13 @@ int InscribeRune(object oTarget = OBJECT_INVALID, object oCaster = OBJECT_INVALI
     if (nPropID == 0 && nSpell != 0)
     {
         FloatingTextStrRefOnCreature(84544,oCaster);
+        return TRUE;
+    }
+
+    //check spell emulation
+    if(!CheckAlternativeCrafting(oCaster, nSpell, costs))
+    {
+        FloatingTextStringOnCreature("*Crafting failed!*", oCaster, FALSE);
         return TRUE;
     }
 
@@ -1389,7 +1422,7 @@ int AttuneGem(object oTarget = OBJECT_INVALID, object oCaster = OBJECT_INVALID, 
         return TRUE;
     }
 
-    int nCaster = PRCGetCasterLevel(oCaster);
+    int nCaster = GetAlternativeCasterLevel(oCaster, PRCGetCasterLevel(oCaster));
     int nDC = PRCGetSaveDC(oTarget, oCaster);
     if(!nSpell) nSpell = PRCGetSpellId();
     int nSpellLevel;
@@ -1460,6 +1493,13 @@ int AttuneGem(object oTarget = OBJECT_INVALID, object oCaster = OBJECT_INVALID, 
     if (nPropID == 0 && nSpell != 0)
     {
         FloatingTextStrRefOnCreature(84544,oCaster);
+        return TRUE;
+    }
+
+    //check spell emulation
+    if(!CheckAlternativeCrafting(oCaster, nSpell, costs))
+    {
+        FloatingTextStringOnCreature("*Crafting failed!*", oCaster, FALSE);
         return TRUE;
     }
 
@@ -1545,10 +1585,10 @@ int CraftSkullTalisman(object oTarget = OBJECT_INVALID, object oCaster = OBJECT_
             FloatingTextStringOnCreature("You cannot scribe a Skull Talisman from an item.", oCaster, FALSE);
             return TRUE;
         }
-    // oTarget here should be the Caster. 
+    // oTarget here should be the Caster.
     if(!GetIsObjectValid(oTarget)) oTarget = PRCGetSpellTargetObject();
 
-    int nCaster = PRCGetCasterLevel(oCaster);
+    int nCaster = GetAlternativeCasterLevel(oCaster, PRCGetCasterLevel(oCaster));
     int nDC = PRCGetSaveDC(oTarget, oCaster);
     if(!nSpell) nSpell = PRCGetSpellId();
     int nSpellLevel;
@@ -1597,7 +1637,7 @@ int CraftSkullTalisman(object oTarget = OBJECT_INVALID, object oCaster = OBJECT_
         // Since they don't have enough, the spell casts normally
         return TRUE;
     }
-    
+
     // Create the item to have all the effects applied to
     oTarget = CreateItemOnObject("prc_skulltalis", oCaster, 1);
 
@@ -1610,6 +1650,13 @@ int CraftSkullTalisman(object oTarget = OBJECT_INVALID, object oCaster = OBJECT_
     if (nPropID == 0 && nSpell != 0)
     {
         FloatingTextStrRefOnCreature(84544,oCaster);
+        return TRUE;
+    }
+
+    //check spell emulation
+    if(!CheckAlternativeCrafting(oCaster, nSpell, costs))
+    {
+        FloatingTextStringOnCreature("*Crafting failed!*", oCaster, FALSE);
         return TRUE;
     }
 
@@ -2535,7 +2582,7 @@ int GetMagicalArtisanFeat(int nCraftingFeat)
         {
             nReturn = FEAT_MAGICAL_ARTISAN_CRAFT_SKULL_TALISMAN;
             break;
-        }        
+        }
         default:
         {
             if(DEBUG) DoDebug("GetMagicalArtisanFeat: invalid crafting feat");
@@ -2616,6 +2663,12 @@ int GetModifiedTimeCost(int nCost, object oPC, int nCraftingFeat)
     if(GetHasFeat(FEAT_EXCEPTIONAL_ARTISAN_II         , oPC)) fCost *= 0.75;
     if(GetHasFeat(FEAT_EXCEPTIONAL_ARTISAN_III        , oPC)) fCost *= 0.75;
     if(GetHasFeat(GetMagicalArtisanFeat(nCraftingFeat), oPC)) fCost *= 0.75;
+    if(nCraftingFeat == FEAT_BREW_POTION)
+    {   //master alchemist stuff here
+                if(GetHasFeat(FEAT_BREW_4PERDAY       , oPC)) fCost /= 4;
+        else    if(GetHasFeat(FEAT_BREW_3PERDAY       , oPC)) fCost /= 3;
+        else    if(GetHasFeat(FEAT_BREW_2PERDAY       , oPC)) fCost /= 2;
+    }
     int nScale = GetPRCSwitch(PRC_CRAFTING_COST_SCALE);
     if(nScale > 0)
     {   //you're not getting away with negative values that easily :P
@@ -2678,10 +2731,55 @@ int CheckImbueItem(object oPC, int nSpell)
 }
 
 // checks alternative crafting, eg. warlock, artificer
-int CheckAlternativeCrafting(object oPC, int nSpell, int nCost)
+int CheckAlternativeCrafting(object oPC, int nSpell, struct craft_cost_struct costs)
 {
-    return 0;
+    //nSpell1 = (PRCGetHasSpell(nTemp, oPC)) ? -1 : StringToInt(Get2DACache("spells", "Innate", nTemp)) + 20;
+    //if(nSpell1 == -1)   nSpell1     = (GetPRCIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, nSpell1, bTake10)) ? -1 : nSpell1;
+
+    int bChecked = FALSE;
+    int bSuccess = FALSE;
+    int i;
+    int bTake10 = GetHasFeat(FEAT_SKILL_MASTERY_ARTIFICER, oPC) ? 10 : -1;
+
+    //artificer crafting check
+    if(!bSuccess && GetLocalInt(oPC, "ArtificerCrafting"))
+    {
+        bChecked = TRUE;
+        //bSuccess = CheckImbueItem(oPC, nSpell);
+        for(i = 0; i < costs.nTimeCost; i++)
+        {
+            bSuccess = GetPRCIsSkillSuccessful(oPC, SKILL_USE_MAGIC_DEVICE, StringToInt(Get2DACache("spells", "Innate", nSpell)) + 20, bTake10);
+            if(bSuccess)
+                break;
+        }
+    }
+    //warlock crafting check
+    if(!bSuccess && GetLocalInt(oPC, "UsingImbueItem"))
+    {
+        bChecked = TRUE;
+        bSuccess = CheckImbueItem(oPC, nSpell);
+    }
+
+
+    if(!bChecked)
+        return TRUE;    //we never checked because we had the actual spell, so successful
+    else
+        return bSuccess;
 }
+
+int GetAlternativeCasterLevel(object oPC, int nLevel)
+{
+    if(GetLocalInt(oPC, "UsingImbueItem"))
+    {
+       nLevel = max(GetInvokerLevel(oPC, CLASS_TYPE_WARLOCK), nLevel);
+    }
+    if(GetLocalInt(oPC, "ArtificerCrafting"))
+    {
+       nLevel = max(GetLevelByClass(CLASS_TYPE_ARTIFICER, oPC), nLevel);
+    }
+    return nLevel;
+}
+
 
 // Test main
 //void main(){}

@@ -1,32 +1,31 @@
-PRC Server Pack v1.7
+PRC Server Pack v1.8
 
-This is an server package for the PRC, avalibale in self-install and manual-install editions. This should only be installed after the main PRC packages. To make full use of this you should be using PRC 3.0c or higher. 
+This is an server package for the PRC, avalibale in self-install and manual-install editions. This should only be installed after the main PRC packages. To make full use of this you should be using PRC 3.2 or higher. 
 
 More detailed install information in server_pack_install.html, mostly useful if doing a manual install.
 
 This package includes:
 
-NWNX               2.6.1
+NWNX             2.6.1
+NWNX-core        2.7-beta4 (this is the dll)
 NWNX-ODBC        0.9.2.4
-NWNX-Letoscript  build 23 beta 4
-NWNX-Profiler      1.60
-SQLite             3.3.6
+NWNX-Letoscript  03+build 24
+NWNX-Profiler    1.62
+SQLite           3.3.6
 Precacher, part of prc.jar
-NWNX for Linux  2.5.3rc1  (source plus precompiled binary)
-NWNX-InvFixpl	1.0
 
-NWNX-InvFixpl - Fixes the inventory lag caused by the prc creature hides, however it also alters the value of some items - see invfixpl_readme.txt for details.
-
-Note: the Linux version has important information in nwnx_linux_readme.txt. It ONLY supports mySQL.
-You do not need to download anything else, buf for reference:
-NWNX, NWNX profiler and NWNX-ODBC are avaliable from www.nwnx.org Source code for these applications are in nwnxsrc.exe and odbc2src.exe in accordance with the lisence.
-NWNX-Letoscript is avaliable from http://weathersong.infopop.cc/groupee/forums/a/frm/f/9616039431
+You do not need to download anything else, but for reference:
+NWNX is avaliable from www.nwnx.org.
+NWNX core, NWNX profiler and NWNX-ODBC are available from Virusman's site (see http://www.nwnx.org/phpBB2/viewtopic.php?t=1141)
+NWNX-Letoscript is avaliable from http://sourceforge.net/projects/leto
+Source code for NWNX and its plugins is available from the above sites.
 SQLite is avaliable from www.sqlite.org
 The Precacher is based on a version made for the PRC by Yuritch, but rewritten into java by the PRC. As a jar file its source code is included in the jar
 
 For full instructions, see the PRC Web site http://nwnprc.netgamers.co.uk/manual/index.html In particular see the PRC Server Pack installation instructions, http://nwnprc.netgamers.co.uk/manual/english/content/installation/prc_server_pg01.htm
 
 Changelog
+v1.8    Removed NWNX-InvFixpl as no longer needed. Removed linux nwnx as there's now a precompiled binary (see http://www.nwnx.org/phpBB2/viewtopic.php?t=1038).
 v1.7    Installation instructions added, plus precacher is now much faster
 v1.6    Removed a few unneeded bioware 2das, updated rest to NWN 1.68, added NWNx for Linux to the manual-install version
 v1.3    New version to go with PRC 3.0c & NWN 1.67

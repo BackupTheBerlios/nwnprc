@@ -1,11 +1,11 @@
 ; Script generated with the Venis Install Wizard
 
 !ifndef PRCSPVERSION
-	!define PRCSPVERSION "17"
+	!define PRCSPVERSION "18"
 !endif
 
 !ifndef PRCSPINSTALLVERSION
-	!define PRCSPINSTALLVERSION "1.7"
+	!define PRCSPINSTALLVERSION "1.8"
 !endif
 
 ; Define your application name
@@ -60,19 +60,14 @@ Section "PRC Pack" Section1
 	File "nwnx changelog.txt"
 	File "NWNX.html"
 	File "NWNX.ini"
+    File "nwnx_core_readme.txt"
 	File "nwnx_leto.dll"
 	File "nwnx_odbc2.html"
 	File "nwnx_odbc.dll"
 	File "nwnx-module.dll"
-	File "nwnxsrc.exe"
 	File "odbc2 changelog.txt"
-	File "odbc2src.exe"
     File "nwnx_profiler.dll"
     File "nwnx_profiler.html"
-    File "profilersrc.exe"
-    File "nwnx_invfixpl.dll"
-    File "invfixpl_src.exe"
-    File "invfixpl_readme.txt"
     File "server_pack_install.html"
 	
 	;Precacher specifics
@@ -143,19 +138,14 @@ Section Uninstall
 	Delete "$NWNPATH\nwnx changelog.txt"
 	Delete "$NWNPATH\NWNX.html"
 	Delete "$NWNPATH\NWNX.ini"
+    Delete "$NWNPATH\nwnx_core_readme.txt"
 	Delete "$NWNPATH\nwnx_leto.dll"
 	Delete "$NWNPATH\nwnx_odbc2.html"
 	Delete "$NWNPATH\nwnx.odbc.dll"
 	Delete "$NWNPATH\nwnx-module.dll"
-	Delete "$NWNPATH\nwnxsrc.exe"
 	Delete "$NWNPATH\odbc2 changelog.txt"
-	Delete "$NWNPATH\odbc2src.exe"
     Delete "$NWNPATH\nwnx_profiler.dll"
     Delete "$NWNPATH\nwnx_profiler.html"
-    Delete "$NWNPATH\profilersrc.exe"
-    Delete "$NWNPATH\nwnx_invfixpl.dll"
-    Delete "$NWNPATH\invfixpl_src.exe"
-    Delete "$NWNPATH\invfixpl_readme.txt"
     Delete "$NWNPATH\server_pack_install.html"
         Delete "$NWNPATH\override\directory.2da"
 	

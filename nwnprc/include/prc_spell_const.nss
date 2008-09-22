@@ -834,6 +834,13 @@ const int SPELL_SHEDDEN3                            = 3735;
 const int SPELL_SHEDDEN4                            = 3736;
 const int SPELL_SHEDDEN5                            = 3737;
 
+//3.3 Tenjac feats
+const int SPELL_DARK_SPEECH                         = 3837;
+const int SPELL_DARK_SPEECH_DREAD                   = 3838;
+const int SPELL_DARK_SPEECH_POWER                   = 3839;
+
+
+//Disguise self
 const int SPELL_DISGUISE_SELF_LEARN                 = 2840;
 const int SPELL_DISGUISE_SELF_OPTIONS               = 2841;
 const int SPELL_DISGUISE_SELF_QS1                   = 2842;

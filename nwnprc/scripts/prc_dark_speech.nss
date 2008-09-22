@@ -41,7 +41,7 @@ void main()
         location lLoc = GetLocation(oPC);
         int nSpell = GetSpellId();
         object oTarget;
-        int nDC = 10 + (GetHitDice(oPC) / 2) + GetAbilityModifier(ABILITY_CHARISMA, oPC));
+        int nDC = 10 + (GetHitDice(oPC) / 2) + GetAbilityModifier(ABILITY_CHARISMA, oPC);
         
         if(GetIsImmune(oPC, IMMUNITY_TYPE_ABILITY_DECREASE))
         {
@@ -55,11 +55,11 @@ void main()
                 int nHD;
                 oTarget = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), lLoc, FALSE, OBJECT_TYPE_CREATURE);         
                 
-                ApplyAbilityDamage(oTarget, ABILITY_CHARISMA, d4(1), DURATION_TYPE_TEMPORARY, -1.0f);
+                ApplyAbilityDamage(oTarget, ABILITY_CHARISMA, d4(1), DURATION_TYPE_TEMPORARY, TRUE, -1.0f);
                 
                 while(GetIsObjectValid(oTarget))
                 {
-                        if(oTarget =! oPC)
+                        if(oTarget != oPC)
                         {
                                 if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
                                 {
@@ -67,8 +67,8 @@ void main()
                                         nHD = GetHitDice(oTarget);
                                         
                                         if(nAlign == ALIGNMENT_EVIL)
-                                        {
-                                                if(nHD < 5) SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, SupernaturalEffect(EffectLinkEffects(EffectFrightened(), EffectVisualEffect(VFX_DUR_MIND_AFFECTING_FEAR)), oTarget, RoundsToSeconds(10));
+                                        {                                               
+                                                if(nHD < 5) SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, SupernaturalEffect(EffectLinkEffects(EffectFrightened(), EffectVisualEffect(VFX_DUR_MIND_AFFECTING_FEAR))), oTarget, RoundsToSeconds(10));
                                                 
                                                 else if (nHD > 4 && nHD < 11) SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, SupernaturalEffect(EffectCharmed()), oTarget, RoundsToSeconds(10));
                                                 
@@ -96,7 +96,7 @@ void main()
         
         else if(nSpell == SPELL_DARK_SPEECH_POWER)
         {
-                ApplyAbilityDamage(oPC, ABILITY_CHARISMA, d4(1), DURATION_TYPE_TEMPORARY, -1.0f);                
+                ApplyAbilityDamage(oPC, ABILITY_CHARISMA, d4(1), DURATION_TYPE_TEMPORARY, TRUE, -1.0f);                
                 ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE), oPC);
         }
 }

@@ -12,6 +12,8 @@ to attack rolls, saving throws, or skill checks.*/
 /////////////////////////////////////////////////////////
 #include "prc_inc_spells"
 
+int GetVileFeats(object oTarget);
+
 void main()
 {
         object oPC = OBJECT_SELF;
@@ -20,3 +22,9 @@ void main()
         
         if(
 }
+
+int GetVileFeats(object oTarget)
+{
+        int nCount;
+        
+        if(GetHasFeat(FEAT_

@@ -27,8 +27,8 @@ select this feat.*/
 void main()
 {
         object oPC = OBJECT_SELF;
-        location lLoc = GetLocation(oPC));
-        int nDC = 10 + (GetHitDice(oPC) / 2) + GetAbilityModifier(ABILITY_CHARISMA, oPC));
+        location lLoc = GetLocation(oPC);
+        int nDC = 10 + (GetHitDice(oPC) / 2) + GetAbilityModifier(ABILITY_CHARISMA, oPC);
         effect eStaggered = SupernaturalEffect(EffectCutsceneImmobilize());
         int nMyHitDice = GetHitDice(oPC);        
         
@@ -38,14 +38,14 @@ void main()
                 return;
         }        
         
-        ApplyAbilityDamage(oPC, ABILITY_CHARISMA, 1, DURATION_TYPE_TEMPORARY, -1.0f);
+        ApplyAbilityDamage(oPC, ABILITY_CHARISMA, 1, DURATION_TYPE_TEMPORARY, TRUE, -1.0f);
         ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_LOS_EVIL_30), lLoc);
         
         object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), lLoc, FALSE, OBJECT_TYPE_CREATURE);
               
         while(GetIsObjectValid(oTarget))
         {
-                if(oTarget != OPC)
+                if(oTarget != oPC)
                 {
                         if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
                         {

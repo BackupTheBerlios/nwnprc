@@ -1,22 +1,20 @@
 # python
 
 """
-TODO:
-- TLK
+Notes:
 
-- Scroll merchant creation & update
-
-- Database?
+- TODO:
+-- Database?
+-- Install?
+-- Debug compile
 
 - Dependencies
 -- Doable using just Scons?
 -- If not fast enough, can probably be made fast by explicitly declaring
    them with the Java dependecy builder.
 --- env.Depends()
-
-- Only directly build haks/erfs, make .ncs files their dependencies
-  and let Scons derive from there?
-
+-- Only directly build haks/erfs, make .ncs files their dependencies
+   and let Scons derive from there?
 """
 
 from os.path import basename, exists, join

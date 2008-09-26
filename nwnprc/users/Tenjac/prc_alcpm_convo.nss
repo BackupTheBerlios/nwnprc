@@ -3,7 +3,7 @@
 //:: prc_alcpm_convo.nss
 //:://////////////////////////////////////////////
 /** @file
-    Long description
+    This is used to created poisons and alchemical items.
 
 
     @author Tenjac
@@ -1014,7 +1014,7 @@ void main()
                 else if(nChoice == CHOICE_CONFIRM_CRAFT)
                 {
                         int nRank = GetSkillRank(nSkill, oPC);                        
-                        TakeGold(GetLocalInt(oPC, "PRC_CRAFT_COST"))
+                        TakeGold(GetLocalInt(oPC, "PRC_CRAFT_COST"));
                         if(GetIsSkillSuccessful(oPC, GetLocalInt(oPC,"PRC_CRAFT_SKILLUSED"), GetLocalInt(oPC, "PRC_CRAFT_DC"))) CreateItemOnObject(GetLocalString(oPC, "PRC_CRAFT_RESREF"), oPC, 1);
                         AllowExit(DYNCONV_EXIT_FORCE_EXIT);
                 }                

@@ -3377,7 +3377,7 @@ REQUIREMENTS:
 
 Alignment: Any Non-Lawful.
 Feats: Combat Casting, Weapon Focus (any melee weapon), Leadership.
-Skills: Craft (Weapon) 5, 	rmor) 5 ranks, Lore 5 ranks.
+Skills: Craft (Weapon) 5,       rmor) 5 ranks, Lore 5 ranks.
 Base Attack Bonus: 4
 Divine Spellcasting: Level 2
 Special: Must worship Tempus. (Clerics must have the War domain, as well as one of Strength or Protection)
@@ -36863,14 +36863,14 @@ Use: Selected.</entry>
   <entry id="54998" lang="en" sex="m">Daylight</entry>
   <entry id="54999" lang="en" sex="m">Daylight 
 Evocation [Light]
-Level: 	Brd 3, Clr 3, Drd 3, Pal 3, Sor/Wiz 3
-Components: 	V, S
-Casting Time: 	1 standard action
-Range: 	Touch
-Target: 	Object touched
-Duration: 	10 min./level 
-Saving Throw: 	None
-Spell Resistance: 	No
+Level:  Brd 3, Clr 3, Drd 3, Pal 3, Sor/Wiz 3
+Components:     V, S
+Casting Time:   1 standard action
+Range:  Touch
+Target:         Object touched
+Duration:       10 min./level 
+Saving Throw:   None
+Spell Resistance:       No
 
 The object touched sheds light as bright as full daylight in a 60-foot radius, and dim light for an additional 60 feet beyond that. Creatures that take penalties in bright light also take them while within the radius of this magical light. Despite its name, this spell is not the equivalent of daylight for the purposes of creatures that are damaged or destroyed by bright light.
 
@@ -49396,19 +49396,97 @@ Prerequisite: Ability to Rage, Animal Companion
 Specifics: You share your rage with your animal companion if he is within 5 ft. of you.
 Use: Automatic.</entry>
   <entry id="70145" lang="en" sex="m">Daunting Presence</entry>
+  <entry id="70146" lang="en" sex="m">Type of Feat: General
+Prerequisites: Cha 13, base attack bonus +1.
+Benefit: You are skilled at inducing fear in your opponents. You may take a standard action to awe an opponent. If the opponent fails a Will saving throw (DC 10 + 1/2 your character level + your Cha modifier), it is shaken for 10 minutes. This is a mind-affecting ability.
+Special: A fighter may select Daunting Presence as one of his fighter bonus feats.</entry>
   <entry id="70147" lang="en" sex="m">Profane Lifeleech</entry>
+  <entry id="70148" lang="en" sex="m">Type of Feat: Divine
+Prerequisite: Ability to rebuke undead.
+Benefit: As a standard action, you can spend two of your rebuke attempts to deal 1d6 points of damage to all living creatures within a 30-foot burst. You are healed of an amount of damage equal to the total amount of hit points that you drain from  affected creatures, but this healing does not allow you to exceed your full normal hit point total.
+
+Special: This feat deals no damage to constructs or undead.</entry>
   <entry id="70149" lang="en" sex="m">Sacred Vitality</entry>
+  <entry id="70150" lang="en" sex="m">Type of Feat: Divine
+Prerequisite: Ability to turn undead.
+Benefit: As a standard action, you can spend one of your turning attempts to gain immunity to ability damage, ability drain, and energy drain for 1 minute.</entry>
   <entry id="70151" lang="en" sex="m">Sacred Vengeance</entry>
+  <entry id="70152" lang="en" sex="m">Type of Feat: Divine
+Prerequisite: Ability to turn undead.
+Benefit: As a free action, spend one of your turn undead attempts to add 2d6 points of damage to all your successful melee attacks against undead until the end of the current round.</entry>
   <entry id="70153" lang="en" sex="m">Deformity(eyes)</entry>
+  <entry id="70154" lang="en" sex="m">Type of Feat: Vile, Deformity
+You have either drilled a hole in your forehead trying to add a third eye, or you have supernaturally scarred one of your regular eyes.
+Prerequisite: Willing Deformity.
+Benefit: As a supernatural ability, you can use see invisibility for 1 minute per day.
+Special: You take a -2 penalty on Spot and Search checks.</entry>
   <entry id="70155" lang="en" sex="m">Deformity(face)</entry>
+  <entry id="70156" lang="en" sex="m">Type of Feat: Vile, Deformity
+Because of intentional self-mutilation, you have a hideous face.
+Prerequisite: Willing Deformity.
+Benefit: You gain a +2 circumstance bonus on Intimidate checks and a +2 deformity bonus on Diplomacy checks dealing with evil creatures.</entry>
   <entry id="70157" lang="en" sex="m">Deformity(parasite)</entry>
+  <entry id="70158" lang="en" sex="m">Type of Feat: Vile, Deformity
+You invite parasites into your body in exchange for a greater hardiness against diseases and poisons.
+Prerequisite: Willing Deformity.
+Benefit: As an immediate action, you can negate any disease or poison affecting you. On your next turn, you are immobilized as the agitated parasites wriggle in your flesh.</entry>
   <entry id="70159" lang="en" sex="m">Apostate</entry>
+  <entry id="70160" lang="en" sex="m">Type of Feat: Vile
+Your hatred of the gods cloaks you with potent resistance against their works.
+Prerequisite: Wis 15.
+Benefit: You gain a profane bonus equal to one-half your character level on saving throws against divine spells. 
+Special: If you are a divine spellcaster with a code of conduct (such as a paladin), selecting this feat violates your code of conduct regardless of your alignment.</entry>
   <entry id="70161" lang="en" sex="m">Dark Speech</entry>
+  <entry id="70162" lang="en" sex="m">Type of Feat: Vile
+You learn a smattering of the language of truly dark power.
+Prerequisites: Will save bonus +5, Int 15, Cha 15.
+Benefit: You can use the Dark Speech to bring loathing and fear to others, to help cast evil spells and create evil magic items, and to weaken physical objects.
+
+Dread: Whenever you use Dark Speech in this manner, you take 1d4 points of Charisma damage, and every other creature in a 30-foot radius must attempt a Will save (DC 10 + 1/2 your character level + your Cha modifi er). The result of a failed save by a listener depends on the listener’s character level and alignment, as detailed in the table below. 
+Level      (Alignment)     Result
+1st-4th    (non-evil)      Listener is shaken for 10 rounds and must flee from you until you are out of sight.
+1st-4th    (evil)          Listener cowers in fear for 10 rounds.
+5th-10th   (non-evil)      Listener is shaken for 10 rounds.
+5th-10th   (evil)          Listener is charmed by you (as charm monster) for 10 rounds.
+11th+      (non-evil)      Listener is filled with loathing for you but is not otherwise influenced.
+11th+      (evil)          Listener is impressed, and you gain a +2 competence bonus on attempts to change its attitude in the future.
+
+Power: Whenever you use Dark Speech in this manner, you take 1d4 points of Charisma damage. By incorporating the Dark Speech into the verbal component of a spell, you increase its effective caster level by 1. 
+
+Special: You gain a +4 circumstance bonus on saving throws made when someone uses the Dark Speech against you.
+
+Special: If you cannot take ability damage, you cannot select this feat.</entry>
   <entry id="70163" lang="en" sex="m">Dark Whispers</entry>
+  <entry id="70164" lang="en" sex="m">Type of Feat: Vile 
+By whispering foul utterances in the Dark Speech, you can drive your enemies insane.
+Prerequisite: Dark Speech.
+Benefit: You can whisper words of incredible wickedness to form grotesque visions in the minds of those who hear you. All living creatures within a 30-foot radius that can hear your words must make Will saves (DC 10 + 1/2 your character level + your Cha modifier). On a failure, creatures with fewer Hit Dice than you are staggered for 1d10 rounds; those with as many or more Hit Dice are confused for 1 round. This is a mind-affecting, supernatural effect.
+Whenever you use Dark Speech in this manner, you take 1 point of Charisma damage.
+
+Special: You gain a +2 circumstance bonus on saving throws made when someone uses the Dark Speech against you. This bonus stacks with the +4 circumstance bonus from Dark Speech.
+
+Special: If you cannot take ability damage, you cannotselect this feat.</entry>
   <entry id="70165" lang="en" sex="m">Master's Will</entry>
+  <entry id="70166" lang="en" sex="m">Type of Feat: Vile
+The elder evil you serve is fickle in its rewards and punishments.
+Prerequisites: Chosen of Evil or undead type, Evil Brand. 
+Benefit: As an immediate action, you can beseech the elder evil for assistance. Roll 1d20. If the result of the die roll is an odd number, you gain a +8 bonus on attack rolls, saving throws, and skill checks for 1 round. If the result is even, you take 1 point of damage for each Hit Die or character level you possess.</entry>
   <entry id="70167" lang="en" sex="m">Deformity(madness)</entry>
+  <entry id="70168" lang="en" sex="m">Type of Feat: Vile, Deformity
+You revel in madness, embracing your hallucinations, erratic behavior, and deviant cravings. Your mind cannot be touched by outside influences.
+Prerequisite: Willing Deformity.
+Benefit: You take a permanent -4 profane penalty to your Wisdom score to become immune to all mind-affecting spells and abilities. As an immediate action, you can derive clarity from your madness to add a bonus equal to one-half your character level to a single Will save. Make this decision before determining
+the results of the saving throw. You must wait 1 minute before you can take this action again.</entry>
   <entry id="70169" lang="en" sex="m">Reflexive Psychosis</entry>
+  <entry id="70170" lang="en" sex="m">Type of Feat: Vile, Deformity
+In the face of adversity, you withdraw into the haunted corridors of your mind.
+Prerequisite: Deformity (Madness)
+Benefit: As an immediate action, you can gain damage reduction 5/- for 1 round. After using this ability, you are confused until the end of your next turn.</entry>
   <entry id="70171" lang="en" sex="m">Chosen of Evil</entry>
+  <entry id="70172" lang="en" sex="m">Type of Feat: Vile
+Your naked devotion to wickedness causes dark powers to take an interest in your well-being.
+Prerequisites: Con 13, any other vile feat.
+Benefit: As an immediate action, you can take 1 point of Constitution damage to gain an insight bonus equal to the number of vile feats you have, including this one. Until the end of your next turn, you can apply this bonus to attack rolls, saving throws, or skill checks.</entry>
   <entry id="70173" lang="en" sex="m">Dark Speech: Dread</entry>
   <entry id="70174" lang="en" sex="m">Dark Speech: Power</entry>
   <entry id="70175" lang="en" sex="m">Chosen of Evil: Attack Bonus</entry>

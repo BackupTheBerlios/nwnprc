@@ -36847,8 +36847,8 @@ Colossal - 3d6</entry>
 Prerequisite: Spellcraft 24 ranks, Lore 24 ranks, ability to cast 9th-level arcane or divine spells
 Specifics: You may develop and cast epic spells. You may cast a number of epic spells per day equal to your ranks in Lore divided by 10.
 </entry>
-<entry id="54994" lang="en" sex="m">Psicraft</entry>
-<entry id="54995" lang="en" sex="m">Ability: Intelligence.
+  <entry id="54994" lang="en" sex="m">Psicraft</entry>
+  <entry id="54995" lang="en" sex="m">Ability: Intelligence.
 Requires Training: Yes.
 Classes: Psion, Wilder
 
@@ -49295,104 +49295,123 @@ Use: Selected.</entry>
   <entry id="70102" lang="en" sex="m">Shedden +5</entry>
   <entry id="70103" lang="en" sex="m">Antitoxin</entry>
   <entry id="70104" lang="en" sex="m">Magical Artisan: Craft Skull Talisman</entry>
-<entry id="70105" lang="en" sex="m">Blazing Berserker</entry>
-<entry id="70106" lang="en" sex="m">Type of Feat: General
+  <entry id="70105" lang="en" sex="m">Blazing Berserker</entry>
+  <entry id="70106" lang="en" sex="m">Type of Feat: General
 Prerequisite: Ability to Rage
 Specifics: You gain immunity to fire, but have vulnerability to cold, which means you take +50% damage from cold, regardless of whether a saving throw is allowed, or if the save is a success or failure.
 Use: Automatic.</entry>
-<entry id="70107" lang="en" sex="m">Scorpion's Resolve</entry>
-<entry id="70108" lang="en" sex="m">Type of Feat: General
+  <entry id="70107" lang="en" sex="m">Scorpion's Resolve</entry>
+  <entry id="70108" lang="en" sex="m">Type of Feat: General
 Prerequisite: None
 Specifics: You gain a +4 bonus on saving throws against mind-affecting spells and abilities.
 Use: Automatic.</entry>
-<entry id="70109" lang="en" sex="m">Spell Focus: Cold</entry>
-<entry id="70110" lang="en" sex="m">Type of Feat: General
+  <entry id="70109" lang="en" sex="m">Spell Focus: Cold</entry>
+  <entry id="70110" lang="en" sex="m">Type of Feat: General
 Prerequisite: None
 Specifics: You gain a +1 DC bonus on cold spells.
 Use: Automatic.</entry>
-<entry id="70111" lang="en" sex="m">Greater Spell Focus: Cold</entry>
-<entry id="70112" lang="en" sex="m">Type of Feat: General
+  <entry id="70111" lang="en" sex="m">Greater Spell Focus: Cold</entry>
+  <entry id="70112" lang="en" sex="m">Type of Feat: General
 Prerequisite: Spell Focus: Cold
 Specifics: You gain a +2 DC bonus on cold spells.
 Use: Automatic.</entry>
-<entry id="70113" lang="en" sex="m">Frozen Berserker</entry>
-<entry id="70114" lang="en" sex="m">Type of Feat: General
+  <entry id="70113" lang="en" sex="m">Frozen Berserker</entry>
+  <entry id="70114" lang="en" sex="m">Type of Feat: General
 Prerequisite: Ability to Rage
 Specifics: You gain immunity to cold, but have vulnerability to fire, which means you take +50% damage from fire, regardless of whether a saving throw is allowed, or if the save is a success or failure.
 Use: Automatic.</entry>
-<entry id="70115" lang="en" sex="m">Cormanthyran Moon Magic</entry>
-<entry id="70116" lang="en" sex="m">Type of Feat: General
+  <entry id="70115" lang="en" sex="m">Cormanthyran Moon Magic</entry>
+  <entry id="70116" lang="en" sex="m">Type of Feat: General
 Prerequisite: 3rd level spells, Lore 4.
 Specifics: When you cast a spell at night, you gain a +2 bonus to your caster level. This provides no benefit during the day, when underground, or during stormy weather.
 Use: Automatic.</entry>
-<entry id="70117" lang="en" sex="m">Jergal's Pact</entry>
-<entry id="70118" lang="en" sex="m">Type of Feat: General
+  <entry id="70117" lang="en" sex="m">Jergal's Pact</entry>
+  <entry id="70118" lang="en" sex="m">Type of Feat: General
 Prerequisite: Great Fortitude, Lore 4.
 Specifics: You gain a +2 bonus on saves vs negative energy.
 Use: Automatic.</entry>
-<entry id="70119" lang="en" sex="m">Bloodline of Fire</entry>
-<entry id="70120" lang="en" sex="m">Type of Feat: General
+  <entry id="70119" lang="en" sex="m">Bloodline of Fire</entry>
+  <entry id="70120" lang="en" sex="m">Type of Feat: General
 Prerequisite: Human or Fire Planetouched
 Specifics: You receive a +4 bonus on saving throws against fire effects. In addition, you cast spells with the fire descriptor at +2 caster level. You may only take this feat at level 1.
 Use: Automatic.</entry>
-<entry id="70121" lang="en" sex="m">Rulership</entry>
-<entry id="70122" lang="en" sex="m">Type of Feat: General
+  <entry id="70121" lang="en" sex="m">Rulership</entry>
+  <entry id="70122" lang="en" sex="m">Type of Feat: General
 Prerequisite: Leadership
 Specifics: You receive a +4 bonus on your leadership score.
 Use: Automatic.</entry>
-<entry id="70123" lang="en" sex="m">Might Makes Right</entry>
-<entry id="70124" lang="en" sex="m">Type of Feat: General
+  <entry id="70123" lang="en" sex="m">Might Makes Right</entry>
+  <entry id="70124" lang="en" sex="m">Type of Feat: General
 Prerequisite: Leadership, Strength 13
 Specifics: You add your strength modifier to your leadership score.
 Use: Automatic.</entry>
-<entry id="70125" lang="en" sex="m">Plague Resistant</entry>
-<entry id="70126" lang="en" sex="m">Type of Feat: General
+  <entry id="70125" lang="en" sex="m">Plague Resistant</entry>
+  <entry id="70126" lang="en" sex="m">Type of Feat: General
 Prerequisite: Human
 Specifics: You gain a +4 bonus on saves against disease.
 Use: Automatic.</entry>
-<entry id="70127" lang="en" sex="m">Strong Mind</entry>
-<entry id="70128" lang="en" sex="m">Type of Feat: General
+  <entry id="70127" lang="en" sex="m">Strong Mind</entry>
+  <entry id="70128" lang="en" sex="m">Type of Feat: General
 Prerequisite: None
 Specifics: You gain a +3 bonus on saves against psionics.
 Use: Automatic.</entry>
-<entry id="70129" lang="en" sex="m">Reckless Rage</entry>
-<entry id="70130" lang="en" sex="m">Type of Feat: General
+  <entry id="70129" lang="en" sex="m">Reckless Rage</entry>
+  <entry id="70130" lang="en" sex="m">Type of Feat: General
 Prerequisite: Ability to Rage, Con 13
 Specifics: You gain an additional +2 bonus to Strength and Rage, and a further -2 penalty to AC.
 Use: Automatic.</entry>
-<entry id="70131" lang="en" sex="m">Heavy Lithoderms</entry>
-<entry id="70132" lang="en" sex="m">Type of Feat: General
+  <entry id="70131" lang="en" sex="m">Heavy Lithoderms</entry>
+  <entry id="70132" lang="en" sex="m">Type of Feat: General
 Prerequisite: Goliath
 Specifics: You gain a +1 bonus to natural armour.
 Use: Automatic.</entry>
-<entry id="70133" lang="en" sex="m">Moradin's Smile</entry>
-<entry id="70134" lang="en" sex="m">Type of Feat: General
+  <entry id="70133" lang="en" sex="m">Moradin's Smile</entry>
+  <entry id="70134" lang="en" sex="m">Type of Feat: General
 Prerequisite: Dwarf
 Specifics: You gain a +2 bonus to charisma based skills.
 Use: Automatic.</entry>
-<entry id="70135" lang="en" sex="m">Piercing Sight</entry>
-<entry id="70136" lang="en" sex="m">Type of Feat: General
+  <entry id="70135" lang="en" sex="m">Piercing Sight</entry>
+  <entry id="70136" lang="en" sex="m">Type of Feat: General
 Prerequisite: Gnome
 Specifics: You gain a +4 save bonus against illusions.
 Use: Automatic.</entry>
-<entry id="70137" lang="en" sex="m">Menacing Demeanour</entry>
-<entry id="70138" lang="en" sex="m">Type of Feat: General
+  <entry id="70137" lang="en" sex="m">Menacing Demeanour</entry>
+  <entry id="70138" lang="en" sex="m">Type of Feat: General
 Prerequisite: Orc or Half-Orc
 Specifics: You gain a +4 bonus to intimidate.
 Use: Automatic.</entry>
-<entry id="70139" lang="en" sex="m">Relic Hunter</entry>
-<entry id="70140" lang="en" sex="m">Type of Feat: General
+  <entry id="70139" lang="en" sex="m">Relic Hunter</entry>
+  <entry id="70140" lang="en" sex="m">Type of Feat: General
 Prerequisite: Appraise 1, Lore 1
 Specifics: You gain a +5 bonus to Lore and Appraise
 Use: Automatic.</entry>
-<entry id="70141" lang="en" sex="m">Agile Athlete</entry>
-<entry id="70142" lang="en" sex="m">Type of Feat: General
+  <entry id="70141" lang="en" sex="m">Agile Athlete</entry>
+  <entry id="70142" lang="en" sex="m">Type of Feat: General
 Prerequisite: Jump 1
 Specifics: You use Dexterity instead of Strength to jump.
 Use: Automatic.</entry>
-<entry id="70143" lang="en" sex="m">Shared Fury</entry>
-<entry id="70144" lang="en" sex="m">Type of Feat: General
+  <entry id="70143" lang="en" sex="m">Shared Fury</entry>
+  <entry id="70144" lang="en" sex="m">Type of Feat: General
 Prerequisite: Ability to Rage, Animal Companion
 Specifics: You share your rage with your animal companion if he is within 5 ft. of you.
 Use: Automatic.</entry>
+  <entry id="70145" lang="en" sex="m">Daunting Presence</entry>
+  <entry id="70147" lang="en" sex="m">Profane Lifeleech</entry>
+  <entry id="70149" lang="en" sex="m">Sacred Vitality</entry>
+  <entry id="70151" lang="en" sex="m">Sacred Vengeance</entry>
+  <entry id="70153" lang="en" sex="m">Deformity(eyes)</entry>
+  <entry id="70155" lang="en" sex="m">Deformity(face)</entry>
+  <entry id="70157" lang="en" sex="m">Deformity(parasite)</entry>
+  <entry id="70159" lang="en" sex="m">Apostate</entry>
+  <entry id="70161" lang="en" sex="m">Dark Speech</entry>
+  <entry id="70163" lang="en" sex="m">Dark Whispers</entry>
+  <entry id="70165" lang="en" sex="m">Master's Will</entry>
+  <entry id="70167" lang="en" sex="m">Deformity(madness)</entry>
+  <entry id="70169" lang="en" sex="m">Reflexive Psychosis</entry>
+  <entry id="70171" lang="en" sex="m">Chosen of Evil</entry>
+  <entry id="70173" lang="en" sex="m">Dark Speech: Dread</entry>
+  <entry id="70174" lang="en" sex="m">Dark Speech: Power</entry>
+  <entry id="70175" lang="en" sex="m">Chosen of Evil: Attack Bonus</entry>
+  <entry id="70176" lang="en" sex="m">Chosen of Evil: Skill Bonus</entry>
+  <entry id="70177" lang="en" sex="m">Chosen of Evil: Save Bonus</entry>
 </tlk>

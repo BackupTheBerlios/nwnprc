@@ -161,25 +161,31 @@
     </Compile>
     <EmbeddedResource Include="AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GffForm.resx">
       <DependentUpon>GffForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="HakInstaller.ico" />
     <EmbeddedResource Include="HifConflictsForm.resx">
       <DependentUpon>HifConflictsForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="InstallForm.resx">
       <DependentUpon>InstallForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="InstallFormBase.resx">
       <DependentUpon>InstallFormBase.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="InstallProgressForm.resx">
       <DependentUpon>InstallProgressForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="OverwriteWarningsForm.resx">
       <DependentUpon>OverwriteWarningsForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ReplacingFilesForm.resx">
       <DependentUpon>ReplacingFilesForm.cs</DependentUpon>
@@ -187,14 +193,20 @@
     <EmbeddedResource Include="SingleHIFInstallForm.resx">
       <DependentUpon>SingleHIFInstallForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="strings.resx" />
+    <EmbeddedResource Include="strings.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <Content Include="HakInstaller.exe.manifest" />
     <Content Include="strings.xsd" />
+    <None Include="app.config" />
     <None Include="spellPak.hif" />
     <None Include="spellPRCMerge.hif" />
     <None Include="strings.xsx">
       <DependentUpon>strings.xsd</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

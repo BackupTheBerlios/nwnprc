@@ -18,12 +18,18 @@ namespace NWN
 		/// <summary>
 		/// Returns true if XP1 is installed.
 		/// </summary>
-		public static bool IsXP1Installed { get { return singleton.isXP1Installed; } }
+		public static bool IsXP1Installed { 
+            get { return singleton.isXP1Installed; }
+            set { singleton.isXP1Installed = value; }
+        }
 
 		/// <summary>
 		/// Returns true if XP2 is installed.
 		/// </summary>
-		public static bool IsXP2Installed { get { return singleton.isXP2Installed; } }
+		public static bool IsXP2Installed { 
+            get { return singleton.isXP2Installed; }
+            set { singleton.isXP2Installed = value; }
+        }
 	
 		/// <summary>
 		/// Returns true if the OC modules are installed.
@@ -138,7 +144,10 @@ namespace NWN
 		/// <summary>
 		/// Gets the installed NWN version.
 		/// </summary>
-		public static string Version { get { return singleton.version; } }
+		public static string Version { 
+            get { return singleton.version; }
+            set { singleton.version = value; }
+        }
 
 		/// <summary>
 		/// Gets the full path for the specified NWN file.

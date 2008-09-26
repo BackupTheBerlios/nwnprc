@@ -87,6 +87,10 @@ namespace HakInstaller
 							// Make sure that the directory exists.
 							if (!Directory.Exists(NWNInfo.InstallPath))
 								Terminate("The path '{0}' does not exist.", NWNInfo.InstallPath);
+                            // the registry values were irrelevant so replace with sensible defaults
+                            NWNInfo.Version = "1.69";
+                            NWNInfo.IsXP1Installed = true;
+                            NWNInfo.IsXP2Installed = true;
 							break;
 						case 'l':
 						case 'L':

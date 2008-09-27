@@ -25871,7 +25871,22 @@ Cost:
 
 +12000gp
 </entry>
-  <entry id="51842" lang="en" sex="m">A 10th-level Sublime Chord with 20 or more ranks in the Perform skill learns the Song of Cosmic Fire. Using this ability costs a Sublime Chord two of her daily uses of Bardic Music. The Song of Cosmic Fire creates a 20-foot-radius spread of fire anywhere within 100 feet of the Sublime Chord (provided she has line of effect to the fire's point of origin). Creatures in the area take damage equal to the Sublime Chord's Perform check result. All affected creatures are entitled to a Reflex save (DC10 + Sublime Chord level + Cha modifier) for half damage.</entry>
+  <entry id="51842" lang="en" sex="m">Base Item: Amulet
+
+Description: 
+
+Skill Bonus: Truespeak +5
+
+Prerequisites: 
+
+Caster Level: 7
+Skill: Truespeak 5 ranks 
+Spell(s): Glibness
+
+Cost: 
+
++2500gp
+</entry>
   <entry id="51843" lang="en" sex="m">Base Item: Amulet
 
 Description: 
@@ -26078,6 +26093,22 @@ Spell(s): Animate Objects, Finger of Death
 Cost: 
 
 +22000gp
+</entry>
+  <entry id="51856" lang="en" sex="m">Base Item: Amulet
+
+Description: 
+
+Skill Bonus: Truespeak +10
+
+Prerequisites: 
+
+Caster Level: 7
+Skill: Truespeak 10 ranks 
+Spell(s): Glibness
+
+Cost: 
+
++10000gp
 </entry>
   <entry id="51857" lang="en" sex="m">Base Item: Amulet
 
@@ -28095,6 +28126,7 @@ Prerequisite: Enlightened Fist level 6
 Specifics: Your fist of energy ability also adds an extra 1d10 damage when a critical hit is scored.
 Use: Automatic.</entry>
   <entry id="52231" lang="en" sex="m">WhiteRavenHammer</entry>
+  <entry id="52232" lang="en" sex="m">A 10th-level Sublime Chord with 20 or more ranks in the Perform skill learns the Song of Cosmic Fire. Using this ability costs a Sublime Chord two of her daily uses of Bardic Music. The Song of Cosmic Fire creates a 20-foot-radius spread of fire anywhere within 100 feet of the Sublime Chord (provided she has line of effect to the fire's point of origin). Creatures in the area take damage equal to the Sublime Chord's Perform check result. All affected creatures are entitled to a Reflex save (DC10 + Sublime Chord level + Cha modifier) for half damage.</entry>
   <entry id="52233" lang="en" sex="m">WhiteRavenStrike</entry>
   <entry id="52235" lang="en" sex="m">WhiteRavenTactics</entry>
   <entry id="52236" lang="en" sex="m">Sublime Chord</entry>

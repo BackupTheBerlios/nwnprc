@@ -17,7 +17,7 @@ int PRCGetSpellId(object oCaster = OBJECT_SELF);
 object PRCGetSpellTargetObject(object oCaster = OBJECT_SELF);
 
 /**
- * A wrapper for GetSpellCastItem(). 
+ * A wrapper for GetSpellCastItem().
  *
  * NOTE: Will probably not return a sensible value outside of a spellscript.
  *
@@ -156,7 +156,7 @@ object PRCGetSpellTargetObject(object oCaster = OBJECT_SELF)
 
     // The rune/gem/skull always targets the one who activates it.
     object oItem     = PRCGetSpellCastItem(oCaster);
-    if(GetIsObjectValid(oItem) && (GetResRef(oItem) == "prc_rune_1" || 
+    if(GetIsObjectValid(oItem) && (GetResRef(oItem) == "prc_rune_1" ||
        GetResRef(oItem) == "prc_skulltalis" || GetTag(oItem) == "prc_attunegem"))
     {
         if(DEBUG) DoDebug(GetName(oCaster) + " has cast a spell using a rune");
@@ -267,15 +267,15 @@ itemproperty PRCItemPropertyBonusFeat(int nBonusFeatID)
 int GetPRCIsSkillSuccessful(object oCreature, int nSkill, int nDifficulty, int nRollOverride = -1)
 {
     int nRanks = GetSkillRank(nSkill, oCreature);
-    if(nRollOverride < 0)
+    if(nRollOverride > 20)
+    {
+        nRollOverride = 20;
+        if(DEBUG) DoDebug("GetPRCIsSkillSuccessful: nRollOverride > 20");
+    }
+    if(nRollOverride < 0 || (nSkill + nRollOverride) < nDifficulty)
         return GetIsSkillSuccessful(oCreature, nSkill, nDifficulty);
     else
     {   //we're going to fake a skill check here
-        if(nRollOverride > 20)
-        {
-            nRollOverride = 20;
-            if(DEBUG) DoDebug("GetPRCIsSkillSuccessful: nRollOverride > 20");
-        }
         SendMessageToPC(oCreature,
             PRC_TEXT_LIGHT_BLUE + GetName(oCreature) + PRC_TEXT_DARK_BLUE + " : " +
             GetStringByStrRef(StringToInt(Get2DACache("skills", "Name", nSkill))) + " : *" +

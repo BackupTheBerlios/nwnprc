@@ -32,6 +32,8 @@ function openContent(type)
 		case "races" : top.content.location = "../content/manual_content_blank.html"; top.contentmenu.location = "manual_menus_races.html"; break;
 		case "psionicpowers" : top.content.location = "../content/manual_content_blank.html"; top.contentmenu.location = "manual_menus_psionic_powers.html"; break;
 		case "utterances" : top.content.location = "../content/manual_content_blank.html"; top.contentmenu.location = "manual_menus_truename_utterances.html"; break;
+		case "invocations" : top.content.location = "../content/manual_content_blank.html"; top.contentmenu.location = "manual_menus_invocations.html"; break;
+		case "maneuvers" : top.content.location = "../content/manual_content_blank.html"; top.contentmenu.location = "manual_menus_maneuvers.html"; break;
 
 		case "skills" : top.content.location = "../content/manual_content_blank.html"; top.contentmenu.location = "manual_menus_skills.html"; break;
 

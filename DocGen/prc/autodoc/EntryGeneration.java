@@ -227,7 +227,9 @@ public class EntryGeneration {
 		String spellPath = contentPath + "spells"         + fileSeparator,
 		       epicPath  = contentPath + "epic_spells"    + fileSeparator,
 		       psiPath   = contentPath + "psionic_powers" + fileSeparator,
-		       utterPath = contentPath + "utterances"     + fileSeparator;
+		       utterPath = contentPath + "utterances"     + fileSeparator,
+		       invocPath = contentPath + "invocations"    + fileSeparator,
+		       manPath   = contentPath + "maneuvers"      + fileSeparator;
 
 		String path = null,
 		       name = null,
@@ -252,6 +254,8 @@ public class EntryGeneration {
 			else if(isEpicSpell        (spells2da, i)) spelltype = EPIC;
 			else if(isPsionicPower     (spells2da, i)) spelltype = PSIONIC;
 			else if(isTruenameUtterance(spells2da, i)) spelltype = UTTERANCE;
+			else if(isInvocation       (spells2da, i)) spelltype = INVOCATION;
+			else if(isManeuver         (spells2da, i)) spelltype = MANEUVER;
 
 			if(spelltype != NONE) {
 				name = tlk.get(spells2da.getEntry("Name", i))
@@ -331,6 +335,12 @@ public class EntryGeneration {
 					case UTTERANCE:
 						path = utterPath + i + ".html";
 						break;
+					case INVOCATION:
+						path = invocPath + i + ".html";
+						break;
+					case MANEUVER:
+						path = manPath + i + ".html";
+						break;
 
 					default:
 						throw new AssertionError("Unhandled spelltype: " + spelltype);
@@ -385,6 +395,42 @@ public class EntryGeneration {
 	}
 
 	/**
+	 * Creates a list of spells.2da rows that should contain invocations
+	 */
+	public static void listInvocations() {
+		// A map of power name to class-specific spells.2da entry
+		invMap = new HashMap<String, Integer>();
+
+		// Load cls_*_utter.2da
+		String[] fileNames = new File("2da").list(new FilenameFilter() {
+			public boolean accept(File dir, String name) {
+				return name.toLowerCase().startsWith("cls_inv_") &&
+				       name.toLowerCase().endsWith(".2da");
+			}
+		});
+
+		listAMSEntries(fileNames, invMap);
+	}
+
+	/**
+	 * Creates a list of spells.2da rows that should contain maneuvers
+	 */
+	public static void listManeuvers() {
+		// A map of power name to class-specific spells.2da entry
+		maneuverMap = new HashMap<String, Integer>();
+
+		// Load cls_*_utter.2da
+		String[] fileNames = new File("2da").list(new FilenameFilter() {
+			public boolean accept(File dir, String name) {
+				return name.toLowerCase().startsWith("cls_move_") &&
+				       name.toLowerCase().endsWith(".2da");
+			}
+		});
+
+		listAMSEntries(fileNames, maneuverMap);
+	}
+
+	/**
 	 * Does the actual list generation for listPsionicPowers() and
 	 * listTruenameUtterances().
 	 *
@@ -392,6 +438,7 @@ public class EntryGeneration {
 	 * @param storeMap  Map to store the entries in
 	 */
 	private static void listAMSEntries(String[] fileNames, Map<String, Integer> storeMap) {
+		Data_2da spells2da = twoDA.get("spells");
 		Data_2da[] list2das = new Data_2da[fileNames.length];
 		for(int i = 0; i < fileNames.length; i++)
 			//Strip out the ".2da" from the filenames before loading, since the loader function assumes it's missing
@@ -403,7 +450,15 @@ public class EntryGeneration {
 				// Column FeatID is used to determine if the row specifies the main entry of a power
 				if(!list2da.getEntry("FeatID", i).equals("****")) {
 					try {
-						storeMap.put(tlk.get(list2da.getEntry("Name", i)), Integer.parseInt(list2da.getEntry("SpellID", i)));
+						//look up spells.2da name of the realspellid if we don't have a name column
+						if(list2da.getEntry("Name", i) == null)
+						{
+							storeMap.put(tlk.get(spells2da.getEntry("Name", list2da.getEntry("RealSpellID", i))), Integer.parseInt(list2da.getEntry("RealSpellID", i)));
+						}
+						else
+						{
+							storeMap.put(tlk.get(list2da.getEntry("Name", i)), Integer.parseInt(list2da.getEntry("SpellID", i)));
+						}
 					} catch(NumberFormatException e) {
 						err_pr.println("Invalid SpellID entry in " + list2da.getName() + ", line " + i);
 					}
@@ -478,6 +533,36 @@ public class EntryGeneration {
 	 */
 	private static boolean isTruenameUtterance(Data_2da spells2da, int entryNum) {
 		return utterMap.containsValue(entryNum);
+	}
+
+	/**
+	 * A small convenience method for testing if the given entry contains an
+	 * invocation. This is determined by whether the power's id is
+	 * in the utterMap Map.
+	 *
+	 * @param spells2da the Data_2da entry containing spells.2da
+	 * @param entryNum  the line number to use for testing
+	 *
+	 * @return <code>true</code> if entryNum in spells2da contains an utterance,
+	 *           <code>false</code> otherwise
+	 */
+	private static boolean isInvocation(Data_2da spells2da, int entryNum) {
+		return invMap.containsValue(entryNum);
+	}
+
+	/**
+	 * A small convenience method for testing if the given entry contains a
+	 * maneuver. This is determined by whether the power's id is
+	 * in the utterMap Map.
+	 *
+	 * @param spells2da the Data_2da entry containing spells.2da
+	 * @param entryNum  the line number to use for testing
+	 *
+	 * @return <code>true</code> if entryNum in spells2da contains an utterance,
+	 *           <code>false</code> otherwise
+	 */
+	private static boolean isManeuver(Data_2da spells2da, int entryNum) {
+		return maneuverMap.containsValue(entryNum);
 	}
 
 
@@ -1396,7 +1481,13 @@ public class EntryGeneration {
 			new ArrayList<Tuple<Tuple<String, String>, TreeMap<Integer, TreeMap<String, SpellEntry>>>>();
 		String classAbrev = null;
 		Data_2da spellList = null,
-		         powerList = null;
+		         powerList = null,
+		         utterList = null,
+		         //invocations and maneuvers are a bit different because they don't have their own name column
+		         invocList = null,
+		         maneuList = null,
+		         spells2da = twoDA.get("spells");
+
 
 		// Check for correctly formed table name
 		if(!classes2da.getEntry("FeatsTable", entryNum).toLowerCase().startsWith("cls_feat_")) {
@@ -1413,6 +1504,15 @@ public class EntryGeneration {
 		try {
 			powerList = twoDA.get("cls_psipw_" + classAbrev);
 		} catch(TwoDAReadException e) { /* Ensure nullness */ powerList = null; }
+		try {
+			utterList = twoDA.get("cls_" + classAbrev + "_utter");
+		} catch(TwoDAReadException e) { /* Ensure nullness */ utterList = null; }
+		try {
+			invocList = twoDA.get("cls_inv_" + classAbrev);
+		} catch(TwoDAReadException e) { /* Ensure nullness */ invocList = null; }
+		try {
+			maneuList = twoDA.get("cls_move_" + classAbrev);
+		} catch(TwoDAReadException e) { /* Ensure nullness */ maneuList = null; }
 
 		// Do spellbook
 		if(spellList != null) {
@@ -1514,6 +1614,168 @@ public class EntryGeneration {
 
 			toReturn.add(new Tuple<Tuple<String, String>, TreeMap<Integer, TreeMap<String, SpellEntry>>>(
 					new Tuple<String, String>(curLanguageData[LANGDATA_PSIONICPOWERSTXT], curLanguageData[LANGDATA_POWERTXT]),
+					levelLists));
+		}
+
+		// Do truenaming
+		if(utterList != null) {
+			// Map of level numbers to maps of spell names to html links
+			TreeMap<Integer, TreeMap<String, SpellEntry>> levelLists = new TreeMap<Integer, TreeMap<String, SpellEntry>>();
+			SpellEntry utterance = null;
+			int level;
+
+			for(int i = 0; i < utterList.getEntryCount(); i++) {
+				// Skip rows that do not define a power
+				if(utterList.getEntry("Level", i).equals("****"))
+					continue;
+
+				// Make sure the Level entry is a number
+				try {
+					level = Integer.parseInt(utterList.getEntry("Level", i));
+				} catch (NumberFormatException e) {
+					if(tolErr){
+						err_pr.println("Invalid Level entry in " + utterList.getName() + " on row " + i + ": " + utterList.getEntry("Level", i));
+						continue;
+					}else throw new PageGenerationException("Invalid Level entry in " + utterList.getName() + " on row " + i + ": " + utterList.getEntry("Level", i));
+				}
+
+				// Make sure the SpellID is valid
+				utterance = null;
+				try {
+					// Attempt to get the spell entry via a mapping of power names to spellIDs
+					utterance = spells.get(utterMap.get(tlk.get(Integer.parseInt(utterList.getEntry("Name", i)))));
+				} catch (NumberFormatException e) {
+					if(tolErr){
+						err_pr.println("Invalid Name entry in " + utterList.getName() + " on row " + i + ": " + utterList.getEntry("Name", i));
+						continue;
+					}else throw new PageGenerationException("Invalid Name entry in " + utterList.getName() + " on row " + i + ": " + utterList.getEntry("Name", i));
+				}
+				if(utterance == null){
+					if(tolErr){
+						err_pr.println("Unable to map Name entry in " + utterList.getName() + " on row " + i + " to a spellEntry: " + tlk.get(utterList.getEntry("Name", i)));
+						continue;
+					}else throw new PageGenerationException("Unable to map Name entry in " + utterList.getName() + " on row " + i + " to a spellEntry: " + tlk.get(utterList.getEntry("Name", i)));
+				}
+
+				// If no map for this level yet, fill it in
+				if(!levelLists.containsKey(level))
+					levelLists.put(level, new TreeMap<String, SpellEntry>());
+
+				// Add the spell to the map
+				levelLists.get(level)
+				          .put(utterance.name, utterance);
+			}
+
+			toReturn.add(new Tuple<Tuple<String, String>, TreeMap<Integer, TreeMap<String, SpellEntry>>>(
+					new Tuple<String, String>(curLanguageData[LANGDATA_TRUENAMEUTTERANCETXT], curLanguageData[LANGDATA_UTTERANCETXT]),
+					levelLists));
+		}
+
+		// Do invocations
+		if(invocList != null) {
+			// Map of level numbers to maps of spell names to html links
+			TreeMap<Integer, TreeMap<String, SpellEntry>> levelLists = new TreeMap<Integer, TreeMap<String, SpellEntry>>();
+			SpellEntry invocation = null;
+			int level;
+
+			for(int i = 0; i < invocList.getEntryCount(); i++) {
+				// Skip rows that do not define a power
+				if(invocList.getEntry("Level", i).equals("****"))
+					continue;
+
+				// Make sure the Level entry is a number
+				try {
+					level = Integer.parseInt(invocList.getEntry("Level", i));
+				} catch (NumberFormatException e) {
+					if(tolErr){
+						err_pr.println("Invalid Level entry in " + invocList.getName() + " on row " + i + ": " + invocList.getEntry("Level", i));
+						continue;
+					}else throw new PageGenerationException("Invalid Level entry in " + invocList.getName() + " on row " + i + ": " + invocList.getEntry("Level", i));
+				}
+
+				// Make sure the SpellID is valid
+				invocation = null;
+				try {
+					// Look in spells.2da for name
+					invocation = spells.get(invMap.get(tlk.get(spells2da.getEntry("Name", invocList.getEntry("RealSpellID", i)))));
+				} catch (NumberFormatException e) {
+					if(tolErr){
+						err_pr.println("Invalid Name entry in " + invocList.getName() + " on row " + i + ": " + invocList.getEntry("Name", i));
+						continue;
+					}else throw new PageGenerationException("Invalid Name entry in " + invocList.getName() + " on row " + i + ": " + invocList.getEntry("Name", i));
+				}
+				if(invocation == null){
+					if(tolErr){
+						err_pr.println("Unable to map Name entry in " + invocList.getName() + " on row " + i + " to a spellEntry: " + tlk.get(invocList.getEntry("Name", i)));
+						continue;
+					}else throw new PageGenerationException("Unable to map Name entry in " + invocList.getName() + " on row " + i + " to a spellEntry: " + tlk.get(invocList.getEntry("Name", i)));
+				}
+
+				// If no map for this level yet, fill it in
+				if(!levelLists.containsKey(level))
+					levelLists.put(level, new TreeMap<String, SpellEntry>());
+
+				// Add the spell to the map
+				levelLists.get(level)
+				          .put(invocation.name, invocation);
+			}
+
+			toReturn.add(new Tuple<Tuple<String, String>, TreeMap<Integer, TreeMap<String, SpellEntry>>>(
+					new Tuple<String, String>(curLanguageData[LANGDATA_INVOCATIONTXT], curLanguageData[LANGDATA_INVOCATIONTXT]),
+					levelLists));
+		}
+
+		// Do maneuvers
+		if(maneuList != null) {
+			// Map of level numbers to maps of spell names to html links
+			TreeMap<Integer, TreeMap<String, SpellEntry>> levelLists = new TreeMap<Integer, TreeMap<String, SpellEntry>>();
+			SpellEntry maneuver = null;
+			int level;
+
+			for(int i = 0; i < maneuList.getEntryCount(); i++) {
+				// Skip rows that do not define a power
+				if(maneuList.getEntry("Level", i).equals("****"))
+					continue;
+
+				// Make sure the Level entry is a number
+				try {
+					level = Integer.parseInt(maneuList.getEntry("Level", i));
+				} catch (NumberFormatException e) {
+					if(tolErr){
+						err_pr.println("Invalid Level entry in " + maneuList.getName() + " on row " + i + ": " + maneuList.getEntry("Level", i));
+						continue;
+					}else throw new PageGenerationException("Invalid Level entry in " + maneuList.getName() + " on row " + i + ": " + maneuList.getEntry("Level", i));
+				}
+
+				// Make sure the SpellID is valid
+				maneuver = null;
+				try {
+					// Look in spells.2da for name
+					maneuver = spells.get(maneuverMap.get(tlk.get(spells2da.getEntry("Name", maneuList.getEntry("RealSpellID", i)))));
+				} catch (NumberFormatException e) {
+					if(tolErr){
+						err_pr.println("Invalid Name entry in " + maneuList.getName() + " on row " + i + ": " + maneuList.getEntry("Name", i));
+						continue;
+					}else throw new PageGenerationException("Invalid Name entry in " + maneuList.getName() + " on row " + i + ": " + maneuList.getEntry("Name", i));
+				}
+				if(maneuver == null){
+					if(tolErr){
+						err_pr.println("Unable to map Name entry in " + maneuList.getName() + " on row " + i + " to a spellEntry: " + tlk.get(maneuList.getEntry("Name", i)));
+						continue;
+					}else throw new PageGenerationException("Unable to map Name entry in " + maneuList.getName() + " on row " + i + " to a spellEntry: " + tlk.get(maneuList.getEntry("Name", i)));
+				}
+
+				// If no map for this level yet, fill it in
+				if(!levelLists.containsKey(level))
+					levelLists.put(level, new TreeMap<String, SpellEntry>());
+
+				// Add the spell to the map
+				levelLists.get(level)
+				          .put(maneuver.name, maneuver);
+			}
+
+			toReturn.add(new Tuple<Tuple<String, String>, TreeMap<Integer, TreeMap<String, SpellEntry>>>(
+					new Tuple<String, String>(curLanguageData[LANGDATA_MANEUVERTXT], curLanguageData[LANGDATA_MANEUVERTXT]),
 					levelLists));
 		}
 

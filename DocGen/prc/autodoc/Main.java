@@ -383,6 +383,21 @@ public class Main{
 								paraMatch.find();
 								temp[LANGDATA_TRUENAMEUTTERANCETXT] = paraMatch.group().substring(1, paraMatch.group().length() - 1);
 							}
+							else if(result.startsWith("invocations=")){
+								paraMatch.reset(result);
+								paraMatch.find();
+								temp[LANGDATA_INVOCATIONTXT] = paraMatch.group().substring(1, paraMatch.group().length() - 1);
+							}
+							else if(result.startsWith("maneuvers=")){
+								paraMatch.reset(result);
+								paraMatch.find();
+								temp[LANGDATA_MANEUVERTXT] = paraMatch.group().substring(1, paraMatch.group().length() - 1);
+							}
+							else if(result.startsWith("utterances=")){
+								paraMatch.reset(result);
+								paraMatch.find();
+								temp[LANGDATA_UTTERANCETXT] = paraMatch.group().substring(1, paraMatch.group().length() - 1);
+							}
 
 							else
 								throw new Exception("Unknown language parameter encountered\n" + check);
@@ -436,7 +451,15 @@ public class Main{
 		/**
 		 * The spell is a truename utterance.
 		 */
-		UTTERANCE
+		UTTERANCE,
+		/**
+		 * The spell is an invocation.
+		 */
+		INVOCATION,
+		/**
+		 * The spell is a maneuver.
+		 */
+		MANEUVER
 		};
 
 	/** A switche determinining how errors are handled */
@@ -458,7 +481,7 @@ public class Main{
 	public static String[] curLanguageData = null;
 
 	/** Size of the curLanguageData array */
-	public static final int LANGDATA_NUMENTRIES           = 19;
+	public static final int LANGDATA_NUMENTRIES           = 22;
 	/** curLanguageData index of the language name */
 	public static final int LANGDATA_LANGNAME             = 0;
 	/** curLanguageData index of the name of the dialog.tlk equivalent for this language */
@@ -497,6 +520,12 @@ public class Main{
 	public static final int LANGDATA_POWERTXT             = 17;
 	/** curLanguageData index of the name of the "Truename Utterances" string equivalent for this language */
 	public static final int LANGDATA_TRUENAMEUTTERANCETXT = 18;
+	/** curLanguageData index of the name of the "Invocations" string equivalent for this language */
+	public static final int LANGDATA_INVOCATIONTXT        = 19;
+	/** curLanguageData index of the name of the "Maneuvers" string equivalent for this language */
+	public static final int LANGDATA_MANEUVERTXT          = 20;
+	/** curLanguageData index of the name of the "Utterances" string equivalent for this language */
+	public static final int LANGDATA_UTTERANCETXT         = 21;
 
 
 	/** Current language name */
@@ -568,6 +597,12 @@ public class Main{
 
 	/** Map of truenaming utterance names to the spells.2da indexes that contain utterance feat-linked entries */
 	public static HashMap<String, Integer> utterMap;
+
+	/** Map of invocations to spells.2da */
+	public static HashMap<String, Integer> invMap;
+
+	/** Map of maneuvers to spells.2da */
+	public static HashMap<String, Integer> maneuverMap;
 
 
 	/**
@@ -756,6 +791,8 @@ public class Main{
 		           && buildDir(dirPath + "skills")
 		           && buildDir(dirPath + "spells")
 		           && buildDir(dirPath + "utterances")
+		           && buildDir(dirPath + "invocations")
+		           && buildDir(dirPath + "maneuvers")
 
 		           && buildDir(mainPath + "menus");
 
@@ -839,6 +876,8 @@ public class Main{
 		doCrafting();
 		listPsionicPowers();
 		listTruenameUtterances();
+		listInvocations();
+		listManeuvers();
 		doSpells();
 
 		/* Then, build the feats */

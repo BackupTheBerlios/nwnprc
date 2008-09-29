@@ -838,7 +838,9 @@ const int SPELL_SHEDDEN5                            = 3737;
 const int SPELL_DARK_SPEECH                         = 3837;
 const int SPELL_DARK_SPEECH_DREAD                   = 3838;
 const int SPELL_DARK_SPEECH_POWER                   = 3839;
-
+const int SPELL_CHOSEN_EVIL_ATTACK                  = 3845;
+const int SPELL_CHOSEN_EVIL_SKILL                   = 3846;
+const int SPELL_CHOSEN_EVIL_SAVE                    = 3847;
 
 //Disguise self
 const int SPELL_DISGUISE_SELF_LEARN                 = 2840;

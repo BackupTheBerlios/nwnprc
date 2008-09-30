@@ -49524,4 +49524,178 @@ Benefit: As an immediate action, you can take 1 point of Constitution damage to 
   <entry id="70175" lang="en" sex="m">Chosen of Evil: Attack Bonus</entry>
   <entry id="70176" lang="en" sex="m">Chosen of Evil: Skill Bonus</entry>
   <entry id="70177" lang="en" sex="m">Chosen of Evil: Save Bonus</entry>
+  <entry id="70178" lang="en" sex="m">Shadowcaster</entry>
+  <entry id="70179" lang="en" sex="m">Shadowcasters</entry>
+  <entry id="70180" lang="en" sex="m">shadowcasters</entry>
+  <entry id="70181" lang="en" sex="m">(BASE CLASS)
+The shadowcaster understands the true, primal power of darkness, attunes herself to the Plane of Shadow, and learns great shadow mysteries the equal of any mundane spell. These dark casters are workers of alien magic, possessing an occult understanding of the world and magic that even other spellcasters find disturbing. They are masters of a dark power — and perhaps, as some worry, its servants as well.
+
+- Hit Die: d6
+- Proficiencies: You are proficient with all simple weapons. You are not proficient with any type of armor or shield. Armor of any type interferes with your gestures, which can cause your mysteries to fail when they function as spells.
+- Skill Points at Each Level: 2+ Int Modifier.
+
+ABILITIES:
+
+Level
+1:  Fundamentals of Shadow - You start with access to 3 fundamentals, which function as spell like abilities and can be used 3 times/day.
+    Apprentice Mysteries - You can learn apprentice mysteries.
+2:  Bonus Feats
+3:  Umbral Sight - Darkvision (30ft)
+4:  Bonus fundamental
+7:  Apprentice Mysteries (spell-like), Initiate Mysteries
+8:  Bonus fundamental
+11: Umbral Sight - Darkvision (60ft)
+12: Bonus fundamental
+13: Apprentice Mysteries (supernatural), Initiate Mysteries (spell-like), Master Mysteries
+14: Unlimited use of fundamentals
+15: SSustaining Shadow I - Immune to poison and disease
+16: Bonus fundamental
+20: Bonus fundamental
+    Sustaining Shadow II - No need to breathe, eat, or sleep
+</entry>
+  <entry id="70182" lang="en" sex="m">Child of Night</entry>
+  <entry id="70183" lang="en" sex="m">Children of Night</entry>
+  <entry id="70184" lang="en" sex="m">Children of Night</entry>
+  <entry id="70185" lang="en" sex="m">(PRESTIGE CLASS)
+They prefer to call themselves “black transmogrifists”, but most know them as the Children of Night. They are more than spellcasters, more than scholars, and — they claim — more than mortal. For those who have the will and the depth of knowledge to join their ranks, ascension beyond the earthly form awaits, for the children of night become the stuff of shadow itself.
+
+- Hit Die: d6
+- Skill Points at Each Level: 2+ Int Modifier.
+
+REQUIREMENTS:
+Skills: Lore 8 ranks
+Shadowcasting/Spellcasting: Ability to cast mysteries or ability to cast spells with the darkness descriptor or from the shadow subschool
+
+ABILITIES:
+
+Level
+1:  Cloak of Shadows (Su) - Your flesh takes on a hazy, almost translucent hue, granting a bonus equal to your child of night level on Hide checks.
+    Cold resistence 5
+3:  Dancing Shadows - 1/day
+4:  Cloak of Shadows II - Blur 1/day
+5:  Cold resistance 10
+6:  Cloak of Shadows III - Blur 3/day
+    Sustaining Shadow I - Immune to poison and disease
+7:  Dancing Shadows - 2/day
+8:  Cloak of Shadows IV - Blur (continuous)
+    Sustaining Shadow II - No need to breathe, eat, or sleep
+9:  Cold resistance 15
+10: Cloak of Shadows V - Displacement 2/day
+
+Mysteries/Spellcasting: At each level beyond 1st, you gain new mysteries or spells per day and an increase in caster level (and mysteries or spells known, if applicable) as if you had also attained a level in a casting class to which you belonged before adding the prestige class level.</entry>
+  <entry id="70186" lang="en" sex="m">Master of Shadow</entry>
+  <entry id="70187" lang="en" sex="m">Masters of Shadow</entry>
+  <entry id="70188" lang="en" sex="m">Masters of Shadow</entry>
+  <entry id="70189" lang="en" sex="m">(PRESTIGE CLASS)
+Some driven or domineering souls seek nothing less than mastery of darkness itself—the ability to turn the very shadows into their agents and allies. These are the masters of shadow, commanders of soldiers as dark and insubstantial as night itself. For those with the force of will to enter their ranks, the very shadows serve at their beck and call.
+
+- Hit Die: d8
+- Skill Points at Each Level: 2+ Int Modifier.
+
+REQUIREMENTS:
+Skills: Lore 8 ranks
+Feat: Shadow Familiar
+Shadowcasting/Spellcasting: Caster level 5th
+
+ABILITIES:
+Level
+1:  Shadow Servant
+    Master's Bidding (standard action) - You can focus your affinity with shadow to enhance your shadow servant with one special ability for 1 round.
+2:  Resistance to cold 5
+4:  Resistance to cold 10
+5:  Master's bidding (move action)
+6:  Resistance to cold 20
+10: Immunity to cold
+    Master's bidding (swift action)
+    Rapid Shadow - If your shadow servant dies you can summon a replacement 10 minutes later.
+
+Mysteries/Spellcasting: At each level beyond 1st, you gain new mysteries or spells per day and an increase in caster level (and mysteries or spells known, if applicable) as if you had also attained a level in a casting class to which you belonged before adding the prestige class level.</entry>
+  <entry id="70190" lang="en" sex="m">Noctumancer</entry>
+  <entry id="70191" lang="en" sex="m">Noctumancers</entry>
+  <entry id="70192" lang="en" sex="m">noctumancers</entry>
+  <entry id="70193" lang="en" sex="m">(PRESTIGE CLASS)
+Noctumancers bridge the gap between shadow and arcane magic. Those who succeed in becoming one of these elite not only gain a boost to their mystery user and arcane caster abilities, but are able to manipulate the mysteries and spells of others as no others can.
+
+- Hit Die: d4
+- Skill Points at Each Level: 2+ Int Modifier.
+
+REQUIREMENTS:
+Skills: Lore rank 6, Spellcraft rank 6
+Shadowcasting: Able to cast level 2 mysteries
+Spellcasting: Able to cast level 2 arcane spells
+
+ABILITIES:
+Level
+1:  Capture Magic's Shadow (Su) - At 1st level, when you successfully dispel a mystery or spell you can absorb its energy. You add one-half
+    the level of the mystery or spell you dispelled to the caster level of any mystery or spell you cast in the next round.
+2:  Innate Counterspell - Starting at 2nd level, you can attempt to counter a mystery or spell without using a readied action. Once per day, you can counter     a spell as an immediate action by expending a mystery use per day, a spell slot, or a spell use as long as the mystery or spell expended is of the same      level or higher as the mystery or spell to be countered.
+5:  Innate Counterspell - 2/day
+6:  Eldritch Disruption - As a standard action, you can disrupt the magical energies of a single target within 60 feet. That target must make a Will saving
+    throw (DC 10 + your noctumancer level + your Cha modifier) or take a –4 penalty to its caster level for any mysteries or spells it casts for 1 minute.       You can use eldritch disruption three times per day.
+7:  Innate Counterspell(retain power) - When you successfully counter a mystery or spell using this ability, you gain the use of a mystery of 1/2 the            countered spell or mystery level.
+8:  Innate Counterspell - 3/day
+10: Eldritch Vortex - You can emit mystic energies in a 20-foot-radius burst around yourself. Any creature other than you within that area takes a –4            penalty to caster level for any mysteries or spells.  The vortex lasts 1 minute and can be used once per day.
+    Shadow's Persistence - You gain temporary immunity to any mystery or spell captured or countered by means of your capture magic’s shadow or innate
+    counterspell ability. For 1 minute, you cannot be affected by any casting of that mystery or spell.
+
+Mysteries/Spellcasting: At each level, you gain new mysteries or spells per day and an increase in caster level (and mysteries or spells known, if applicable) as if you had also gained a level in both your mystery-using class and your arcane spellcasting class.</entry>
+  <entry id="70194" lang="en" sex="m">Shadowblade</entry>
+  <entry id="70195" lang="en" sex="m">Shadowblades</entry>
+  <entry id="70196" lang="en" sex="m">shadowblades</entry>
+  <entry id="70197" lang="en" sex="m">(PRESTIGE CLASS)Shadowblades are martial combatants with an innate link to shadow. While some deliberately study the arts of shadow, most develop their abilities instinctively, making them more akin to shadowdancers than shadowcasters. Those who master the arts of the unseen weapon become warriors with
+few equals. Their ability to manipulate darkness and shadow enhances their martial skills, allowing them to target weak points, land blows that should not strike true, and even attack foes who are paces away.
+
+- Hit Die: d8
+- Skill Points at Each Level: 2+ Int Modifier.
+
+REQUIREMENTS:
+Base Attack Bonus: +5
+Skills: Bluff 5 ranks, Hide 5 ranks, Move Silently 5 ranks
+Feats: Blind-Fight
+
+ABILITIES:
+Level
+1:  Unseen Weapon (unerring strike) - Once per day per shadowblade level, you can activate one of the powers of your unseen weapon as a swift action.  Your      next melee attack ignores any miss chance because of concealment or total concealment.
+2:  Shadow and Stealth - You gain a circumstance bonus equal to half your class level (round down) on Hide and Move Silently checks.
+    Sudden Strike +1d6 - You can sneak attack enemies.
+3:  Shadow Vision - You are able to see clearly in shadowy illumination.
+    Unseen weapon (unexpected strike) - Your opponent is denied its Dexterity bonus against your next melee attack.
+4:  Sudden Strike +2d6
+5:  Unseen Weapon (ephemeral weapon) - Your next melee attack deals an extra 2d6 points of damage, as extraplanar darkness momentarilyreplaces portions of       your opponent’s body.
+6:  Sudden Strike + 3d6
+7:  See in Darkness - You can see perfectly in darkness of any kind.
+    Unseen Weapon (shadowy strike) - Your next melee attack is resolved as a melee touch attack, ignoring armor and natural armor.
+8:  Sudden Strike +4d6
+9:  Unseen Weapon (far shadow) - Your melee reach is increased by 10 feet for 1 round.
+10: Sudden Strike +5d6
+    Unseen Weapon (free action)
+ </entry>
+  <entry id="70198" lang="en" sex="m">Shadowsmith</entry>
+  <entry id="70199" lang="en" sex="m">Shadowsmiths</entry>
+  <entry id="70200" lang="en" sex="m">shadowsmiths</entry>
+  <entry id="70201" lang="en" sex="m">(PRESTIGE CLASS)
+Shadowcasters draw power from darkness, and masters of shadow command it, but no one truly manipulates the drakness as does the shadowsmith. Combining martial and mystical skills, and possessed of a driving will, the shadowsmith forms his tools and weapons from shadowstuff itself, drawing forth matter from empty night.
+
+- Hit Die: d8
+- Skill Points at Each Level: 6+ Int Modifier.
+
+PREREQUISITES:
+Base Attack Bonus: +5
+Skills: Craft(armor) 5 ranks,  Craft(weapon) 5 ranks, Lore 3 ranks
+
+ABILITIES:
+Level
+1:  Touch of Shadow - For 1 minute per level you can surround your hands and feet in a layer of shadow. This ability grants you a bonus on Climb checks
+    equal to your class level. Further, it distributes your weight more evenly, so you cannot be tracked.
+2:  Shroud of Shadow - You gain a bonus on Hide checks and Move Silently checks equal to your class level. Shroud of shadow lasts for 1 minute per class         level and is usable a number of times per day equal to your class level.
+3:  Shadow Craft(basic) - you can craft basic, non-moving items from shadow
+4:  Armor of Shadow +2
+5:  Widen Shroud - Your Touch of Shadow ability affects friendly creatures in a 10 foot area around you.
+6:  Shadow Craft(enchanted) 
+7:  Armor of Shadow +4
+8:  Shadow Craft(armor)
+9:  Shadow Craft(quickened)
+10: Shadow Craft(shadow striking)
+    Armor of Shadow(quickened)
+</entry>
 </tlk>

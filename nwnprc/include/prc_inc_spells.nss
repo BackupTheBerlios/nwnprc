@@ -1717,6 +1717,18 @@ int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveTy
             DeleteLocalInt(oTarget, "Insightful Divination");
             nDC -= nBonus;
     }
+    
+    // Apostate - 1/2 HD bonus to resist divine spells
+        if(GetHasFeat(FEAT_APOSTATE, oTarget))
+        {
+                //if divine
+                if(GetIsDivineClass(PRCGetLastSpellCastClass(), oSaveVersus))
+                {
+                        //GetHD
+                        int nBonus = GetHitDice(oSaveVersus) / 2;
+                        nDC -= nBonus;
+                }
+    }         
 
     // This ability removes evasion from the target
     if (GetLocalInt(oTarget, "TrueConfoundingResistance"))

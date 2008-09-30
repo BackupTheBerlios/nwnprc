@@ -1221,8 +1221,8 @@ string GetChangedElementalType(int spell_id, object oCaster = OBJECT_SELF)
 
 int FireAdept (object oCaster, int iSpellID)
 {
-	int nBoost = 0;
-	
+        int nBoost = 0;
+        
     if (GetHasFeat(FEAT_FIRE_ADEPT, oCaster) && GetChangedElementalType(iSpellID, oCaster) == "Fire")
         nBoost += 1;
         
@@ -1533,7 +1533,19 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
     // Necrotic Cyst penalty on Necromancy spells
     if(GetPersistantLocalInt(oTarget, NECROTIC_CYST_MARKER) && (GetSpellSchool(nSpell) == SPELL_SCHOOL_NECROMANCY))
         nDC += 2;
-
+        
+    // Apostate - 1/2 HD bonus to resist divine spells
+    if(GetHasFeat(FEAT_APOSTATE, oTarget))
+    {
+            //if divine
+            if(GetIsDivineClass(PRCGetLastSpellCastClass(), oSaveVersus))
+            {
+                    //GetHD
+                    int nBonus = GetHitDice(oSaveVersus) / 2;
+                    nDC -= nBonus;
+            }
+    }                    
+    
     // This Maneuver allows people to use a skill check instead of a save on a Will save
     if (nSavingThrow == SAVING_THROW_WILL && GetLocalInt(oTarget, "MomentOfPerfectMind"))
     {

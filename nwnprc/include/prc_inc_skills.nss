@@ -4,6 +4,12 @@
 */
 //:://////////////////////////////////////////////
 
+/** 
+ * Returns the height differential between the two locations.
+ * Return value is in feet.
+ */
+float GetHeight(location lPC, location lTarget);
+
 #include "prc_inc_clsfunc"
 //#include "prc_inc_util"
 //#include "inc_utility"
@@ -27,6 +33,12 @@ int PerformJump(object oPC, location lLoc, int bDoKnockDown = TRUE)
           SendMessageToPC(oPC, "Jumping is not allowed in this area.");
           return FALSE;
      }
+     // Height restriction on jumping
+     if (GetHeight(GetLocation(oPC), lLoc) > 5.0)
+     {
+          SendMessageToPC(oPC, "The target location is too high to jump to. Please pick a lower target.");
+          return FALSE;
+     }     
 
     // Immobilized creatures can't jump
     effect eCheck = GetFirstEffect(oPC);
@@ -139,4 +151,82 @@ int PerformJump(object oPC, location lLoc, int bDoKnockDown = TRUE)
      }
 
      return bPassedJumpCheck;
+}
+
+float GetHeight(location lPC, location lTarget)
+{
+	vector vPC = GetPositionFromLocation(lPC);
+	vector vTarget = GetPositionFromLocation(lTarget);
+
+	return MetersToFeet(vTarget.z - vPC.z);
+}
+
+int DoClimb(object oPC, location lLoc, int bDoKnockDown = TRUE)
+{
+     object oArea = GetArea(oPC);
+     // if Climbing is disabled in this place.
+     if( GetLocalInt(oArea, "AreaClimbOff") == TRUE )
+     {
+          SendMessageToPC(oPC, "Climbing is not allowed in this area.");
+          return FALSE;
+     }
+     
+     int bPassedClimbCheck = FALSE;
+
+    // Immobilized creatures can't Climb
+    effect eCheck = GetFirstEffect(oPC);
+    int nCheck;
+    while(GetIsEffectValid(eCheck)){
+        nCheck = GetEffectType(eCheck);
+        if(nCheck == EFFECT_TYPE_CUTSCENEIMMOBILIZE ||
+           nCheck == EFFECT_TYPE_ENTANGLE)
+        {
+            SendMessageToPC(oPC, "You cannot move.");
+            return FALSE;
+        }
+
+        eCheck = GetNextEffect(oPC);
+    }
+
+     int iDistance = FloatToInt(MetersToFeet(GetDistanceBetweenLocations(GetLocation(oPC), lLoc ) ) );
+     
+     if (iDistance > 10)
+     {
+          SendMessageToPC(oPC, "The target location is too far away to climb to. Please pick a closer target.");
+          return FALSE;
+     }
+     // Height restriction on climbing. Has to be at least 5 up or 5 down.
+     if (5.0 > GetHeight(GetLocation(oPC), lLoc) && GetHeight(GetLocation(oPC), lLoc) > -5.0)
+     {
+          SendMessageToPC(oPC, "The target location is too low to climb to. Please pick a higher target.");
+          return FALSE;
+     }   
+
+
+     // skill 37 = Climb
+     int iClimbRoll = d20() + GetSkillRank(SKILL_CLIMB, oPC) + GetAbilityModifier(ABILITY_STRENGTH, oPC);
+     
+     // Flat DC, one of the hardest
+     if(iClimbRoll >= 25)
+     {
+          // they passed Climb check
+          bPassedClimbCheck = TRUE;
+
+          effect eClimb = EffectDisappearAppear(lLoc);
+          ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eClimb, oPC, 3.1);
+     }
+     else
+     {
+          // they failed Climb check
+          FloatingTextStringOnCreature("Climb check failed.", oPC);
+          bPassedClimbCheck = FALSE;
+
+          if(bDoKnockDown)
+          {
+               effect eKnockDown = EffectKnockdown();
+               ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eKnockDown, oPC, 5.0);
+          }
+     }
+
+     return bPassedClimbCheck;
 }

@@ -151,6 +151,7 @@ const int SKILL_IAIJUTSU_FOCUS  = 33; // moved for ride
 const int SKILL_CRAFT_ALCHEMY   = 34;
 const int SKILL_CRAFT_POISON    = 35;
 const int SKILL_PSICRAFT        = 36;
+const int SKILL_CLIMB           = 37;
 
 //:://////////////////////////////////////////////
 //:: Size Const

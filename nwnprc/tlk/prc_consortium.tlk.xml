@@ -49698,4 +49698,12 @@ Level
 10: Shadow Craft(shadow striking)
     Armor of Shadow(quickened)
 </entry>
+  <entry id="70202" lang="en" sex="m">Climb</entry>
+  <entry id="70203" lang="en" sex="m">Ability: Strength.
+Requires Training: No.
+Classes: Many.
+
+You can climb up cliffs and other obstacles. The DC for most walls is 25.
+
+Use: Automatic.</entry>
 </tlk>

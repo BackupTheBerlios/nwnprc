@@ -27660,10 +27660,10 @@ Description: Your next melee attack is resolved as a melee touch attack, ignorin
   <entry id="52090" lang="en" sex="m">Feat Type: Class Feat
 Prerequisite: Shadowblade 9
 Description:  Your melee reach is increased by 10 feet for 1 round.</entry>
-  <entry id="52091" lang="en" sex="m">Unseen Weapon: Free Action</entry>
+  <entry id="52091" lang="en" sex="m">Unseen Weapon: Activate</entry>
   <entry id="52092" lang="en" sex="m">Feat Type: Class Feat
-Prerequisite: Shadowblade 10
-Description: At 10th level, you can use your unseen weapon abilities as a free action, though you are still limited to one use per day per class level.</entry>
+Prerequisite: Shadowblade 1
+Description: The feat allows the activation of the Unseen Weapon abilities</entry>
   <entry id="52093" lang="en" sex="m">Lesser Amulet of the Silver Tongue</entry>
   <entry id="52094" lang="en" sex="m">Greater Amulet of the Silver Tongue</entry>
   <entry id="52095" lang="en" sex="m">Sense Motive</entry>

@@ -45,7 +45,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     
     CasterLvl +=SPGetPenetr();
     
-    int EleDmg = ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_FIRE);
+    int EleDmg = GetLocalInt(oCaster, "DelayedBlastFireballDamage");
+    DeleteLocalInt(oCaster, "DelayedBlastFireballDamage");
 
     effect eDam;
     effect eExplode = EffectVisualEffect(VFX_FNF_FIREBALL);

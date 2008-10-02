@@ -60,6 +60,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     }
     //Create an instance of the AOE Object using the Apply Effect function
     ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAOE, lTarget, RoundsToSeconds(nDuration));
+    SetLocalInt(OBJECT_SELF, "DelayedBlastFireballDamage", ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_FIRE));
 
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

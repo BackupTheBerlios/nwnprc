@@ -49706,4 +49706,65 @@ Classes: Many.
 You can climb up cliffs and other obstacles. The DC for most walls is 25.
 
 Use: Automatic.</entry>
+  <entry id="70204" lang="en" sex="m">Summon Undead I</entry>
+  <entry id="70205" lang="en" sex="m">Conjuration (Summoning) [Evil]
+Level: Blackguard 1, cleric 1, dread necromancer 1, sorcerer/wizard 1
+Components: V, S
+Casting Time: 1 round
+Range: Close (25 ft. + 5 ft./2 levels)
+Effect: One summoned creature
+Duration: 1 round/level
+Saving Throw: None
+Spell Resistance: No
+
+This spells summons 1 skeleton.  Summoned undead do not count toward the total Hit Dice of undead that you can control with animate dead, plague of undead, or other command undead abilities. No undead creature you summon can have more Hit Dice than your caster level +1.</entry>
+  <entry id="70206" lang="en" sex="m">Summon Undead 2</entry>
+  <entry id="70207" lang="en" sex="m">Conjuration (Summoning) [Evil]
+Level: Blackguard 2, cleric 2, dread necromancer 2, sorcerer/wizard 2
+Components: V, S
+Casting Time: 1 round
+Range: Close (25 ft. + 5 ft./2 levels)
+Effect: One summoned creature
+Duration: 1 round/level
+Saving Throw: None
+Spell Resistance: No
+
+This spell summons one zombie bugbear. Summoned undead do not count toward the total Hit Dice of undead that you can control with animate dead, plague of undead, or other command undead abilities. No undead creature you summon can have more Hit Dice than your caster level +1.</entry>
+  <entry id="70208" lang="en" sex="m">Summon Undead 3</entry>
+  <entry id="70209" lang="en" sex="m">Summon Undead III
+Conjuration (Summoning) [Evil]
+Level: Blackguard 3, cleric 3, dread necromancer 3, sorcerer/wizard 3
+Components: V, S
+Casting Time: 1 round
+Range: Close (25 ft. + 5 ft./2 levels)
+Effect: One summoned creature
+Duration: 1 round/level
+Saving Throw: None
+Spell Resistance: No
+
+This spell summons one zombie ogre. Summoned undead do not count toward the total Hit Dice of undead that you can control with animate dead, plague of undead, or other command undead abilities. No undead creature you summon can have more Hit Dice than your caster level +1.</entry>
+  <entry id="70210" lang="en" sex="m">Summon Undead 4</entry>
+  <entry id="70211" lang="en" sex="m">Conjuration (Summoning) [Evil]
+Level: Blackguard 4, cleric 4, dread necromancer 4, sorcerer/wizard 4
+Components: V, S
+Casting Time: 1 round
+Range: Close (25 ft. + 5 ft./2 levels)
+Effect: One summoned creature
+Duration: 1 round/level
+Saving Throw: None
+Spell Resistance: No
+
+This spell summons one zombie wyvern.  Summoned undead do not count toward the total Hit Dice of undead that you can control with animate dead, plague of undead, or other command undead abilities. No undead creature you summon can have more Hit Dice than your caster level +1.</entry>
+  <entry id="70212" lang="en" sex="m">Summon Undead 5</entry>
+  <entry id="70213" lang="en" sex="m">Conjuration (Summoning) [Evil]
+Level: Blackguard 5, cleric 5, dread necromancer 5, sorcerer/wizard 5
+Components: V, S
+Casting Time: 1 round
+Range: Close (25 ft. + 5 ft./2 levels)
+Effect: One summoned creature
+Duration: 1 round/level
+Saving Throw: None
+Spell Resistance: No
+
+This spell summons one mummy.  Summoned undead do not count toward the total Hit Dice of undead that you can control with animate dead, plague of undead, or other command undead abilities. No undead creature you summon can have more Hit Dice than your caster level +1.</entry>
 </tlk>

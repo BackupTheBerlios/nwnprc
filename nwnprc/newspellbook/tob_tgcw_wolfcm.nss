@@ -79,7 +79,7 @@ void main()
                 
                 //Run to target
                 AssignCommand(oInitiator, ActionForceMoveToObject(oTarget, TRUE));
-                
-                PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(5), GetWeaponDamageType(oWeap), "Wolf Climbs the Mountain Hit", "Wolf Climbs the Mountain Miss");
+                int nBonus = TOBSituationalAttackBonuses(oInitiator, DISCIPLINE_TIGER_CLAW);
+                PerformAttack(oTarget, oInitiator, eNone, 0.0, nBonus, d6(5), GetWeaponDamageType(oWeap), "Wolf Climbs the Mountain Hit", "Wolf Climbs the Mountain Miss");
         }
 }

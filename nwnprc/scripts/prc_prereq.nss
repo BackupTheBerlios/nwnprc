@@ -926,7 +926,7 @@ void TomeOfBattle(object oPC = OBJECT_SELF)
     {
         // Needs two Stone Dragon maneuvers
         int nMove = _CheckPrereqsByDiscipline(oPC, DISCIPLINE_STONE_DRAGON, 2, GetFirstBladeMagicClass(oPC));
-        // Needs two Stone Dragon maneuvers
+        // Needs one Stone Dragon Stance
         int nStance = _CheckPrereqsByDiscipline(oPC, DISCIPLINE_STONE_DRAGON, 1, GetFirstBladeMagicClass(oPC), MANEUVER_TYPE_STANCE);
 
         if (nMove >=2 && nStance >= 1)
@@ -934,6 +934,20 @@ void TomeOfBattle(object oPC = OBJECT_SELF)
             SetLocalInt(oPC, "PRC_PrereqDeepSt", 0);
         }
     }
+    
+    nClass = GetLevelByClass(CLASS_TYPE_BLOODCLAW_MASTER, oPC);
+    SetLocalInt(oPC, "PRC_PrereqBloodclaw", 1);
+
+    if (nClass > 0)
+    {
+        // Needs three Tiger Claw maneuvers
+        int nMove = _CheckPrereqsByDiscipline(oPC, DISCIPLINE_TIGER_CLAW, 3, GetFirstBladeMagicClass(oPC));
+
+        if (nMove >= 3)
+        {
+            SetLocalInt(oPC, "PRC_PrereqBloodclaw", 0);
+        }
+    }    
 }
 
 void main()

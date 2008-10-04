@@ -75,8 +75,8 @@ void main()
                         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eJump, oInitiator, 3.1);
                         
                         int nAB = GetAbilityModifier(ABILITY_DEXTERITY, oTarget);
-                        
-                        PerformAttack(oTarget, oInitiator, eNone, 0.0, nAB, d6(10), GetWeaponDamageType(oWeap), "Swooping Dragon Strike Hit", "Swooping Dragon Strike Miss");
+                        int nBonus = TOBSituationalAttackBonuses(oInitiator, DISCIPLINE_TIGER_CLAW);
+                        PerformAttack(oTarget, oInitiator, eNone, 0.0, nAB + nBonus, d6(10), GetWeaponDamageType(oWeap), "Swooping Dragon Strike Hit", "Swooping Dragon Strike Miss");
                         
                         if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
                         {

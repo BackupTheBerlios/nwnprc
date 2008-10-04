@@ -1,0 +1,20 @@
+2DA V2.0
+
+   FeatLabel                 FeatIndex List GrantedOnLevel OnMenu 
+0  WeapProfSim               46        0    -1             0      
+1  WeapProfEx                44        0    -1             0      
+2  WeapProfMar               45        0    -1             0      
+3  FEAT_EPIC_BLINDING_SPEED  491       0    -1             1      
+4  DefArrow                  8         0    -1             0      
+5  TwoWeap                   41        0    -1             0      
+6  Ambidex                   1         0    -1             0      
+7  ClawsOfTheBeast           24062     3    1              0      
+8  SuperiorTwoWeaponFighting 24063     3    2              0      
+9  TigerClawSynergy          24064     3    2              0      
+10 RendingClaws              24065     3    5              0      
+11 PouncingStrike            24066     3    3              1      
+12 Shifting1                 24067     3    1              1      
+13 Shifting2                 24068     3    3              1      
+14 Shifting3                 24069     3    5              1      
+15 Darkvision                228       3    3              0
+16 Scent                     24070     3    5              0

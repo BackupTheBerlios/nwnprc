@@ -3610,13 +3610,14 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iOffhan
 
             // a tempest using two sided weapons or in medium or heavy armor looses absolute ambidex feat
             int iTempestLevel = GetLevelByClass(CLASS_TYPE_TEMPEST, oAttacker);
+            int nBloodclaw    = GetLevelByClass(CLASS_TYPE_BLOODCLAW_MASTER, oAttacker);
             if(iTempestLevel)
             {
                 object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oAttacker);
                 int iArmorType = GetArmorType(oArmor);
                 if(bIsDoubleSidedWeapon || iArmorType == ARMOR_TYPE_MEDIUM || iArmorType == ARMOR_TYPE_HEAVY)
                     bHasAbsoluteAmbidex = FALSE;
-                else if (iTempestLevel >= TEMPEST_LEVEL_ABS_AMBIDEX)
+                else if (iTempestLevel >= TEMPEST_LEVEL_ABS_AMBIDEX || nBloodclaw >= 2)
                     bHasAbsoluteAmbidex = TRUE;
             }
 

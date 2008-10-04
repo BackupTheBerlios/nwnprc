@@ -25,6 +25,8 @@ const int MANEUVER_RECOVERED = 2;
 const int MANEUVER_GRANTED   = 3;
 const int MANEVUER_WITHHELD  = 4;
 
+const string _MANEUVER_LIST_RDYMODIFIER      = "_ReadyModifier";
+
 //////////////////////////////////////////////////
 /*             Function prototypes              */
 //////////////////////////////////////////////////
@@ -46,6 +48,26 @@ int GetReadiedCount(object oPC, int nList);
  * @return          Maximum number of Maneuvers that oPC may ready
  */
 int GetMaxReadiedCount(object oPC, int nList);
+
+/**
+ * Gets the value of the Maneuvers readied modifier, which is a value that is added
+ * to the 2da-specified maximum Maneuvers readied to determine the actual maximum.
+ *
+ * @param oCreature The creature whose modifier to get
+ * @param nList     The list the maximum Maneuvers readied from which the modifier
+ *                  modifies. One of MANEUVER_LIST_*
+ */
+int GetReadiedManeuversModifier(object oCreature, int nList);
+
+/**
+ * Sets the value of the Maneuvers readied modifier, which is a value that is added
+ * to the 2da-specified maximum Maneuvers readied to determine the actual maximum.
+ *
+ * @param oCreature The creature whose modifier to set
+ * @param nList     The list the maximum Maneuvers readied from which the modifier
+ *                  modifies. One of MANEUVER_LIST_*
+ */
+void SetReadiedManeuversModifier(object oCreature, int nList, int nNewValue);
 
 /**
  * Readies the chosen Maneuver. Also checks to see if there are any slots left
@@ -172,6 +194,17 @@ void BeginCrusaderGranting(object oPC);
  */
 void DoCrusaderGranting(object oPC, int nTrip);
 
+
+/**
+ * Returns TRUE if a maneuver was expended, FALSE otherwise
+ * @param oPC           Character to check
+ * @param nList         MANEUVER_LIST_*
+ * @param nDiscipline   DISCIPLINE_* the maneuver has to be from
+ *
+ * @return              TRUE or FALSE
+ */
+int ExpendRandomManeuver(object oPC, int nList, int nDiscipline = -1);
+
 //////////////////////////////////////////////////
 /*                  Includes                    */
 //////////////////////////////////////////////////
@@ -209,9 +242,21 @@ int GetMaxReadiedCount(object oPC, int nList)
     string sPsiFile = GetAMSKnownFileName(nList);
     // 2das start at Row 0
     int nMaxReadied = StringToInt(Get2DACache(sPsiFile, "ManeuversReadied", nLevel-1));
+    // Add in the custom modifier
+    nMaxReadied += GetReadiedManeuversModifier(oPC, nList);
     if(DEBUG) DoDebug("tob_inc_recovery: MaxManeuvers Readied: " +IntToString(nMaxReadied));
 
     return nMaxReadied;
+}
+
+int GetReadiedManeuversModifier(object oCreature, int nList)
+{
+    return GetPersistantLocalInt(oCreature, _MANEUVER_LIST_NAME_BASE + IntToString(nList) + _MANEUVER_LIST_RDYMODIFIER);
+}
+
+void SetReadiedManeuversModifier(object oCreature, int nList, int nNewValue)
+{
+    SetPersistantLocalInt(oCreature, _MANEUVER_LIST_NAME_BASE + IntToString(nList) + _MANEUVER_LIST_RDYMODIFIER, nNewValue);
 }
 
 void ReadyManeuver(object oPC, int nList, int nMoveId)
@@ -252,7 +297,7 @@ int GetIsManeuverReadied(object oPC, int nList, int nMoveId)
             if(DEBUG) DoDebug("tob_inc_recovery: GetIsManeuverReadied: " +IntToString(nMoveId));
             return TRUE;
         }
-        }
+    }
 
     return FALSE;
 }
@@ -270,7 +315,7 @@ int GetIsManeuverExpended(object oPC, int nList, int nMoveId)
             if(DEBUG) DoDebug("tob_inc_recovery: GetIsManeuverExpended: " +IntToString(nMoveId));
             return TRUE;
         }
-        }
+    }
 
     return FALSE;
 }
@@ -488,4 +533,33 @@ void DoCrusaderGranting(object oPC, int nTrip)
         DeleteLocalInt(oPC, "CrusaderGrantLoop");
     }
     if(DEBUG) DoDebug("DoCrusaderGranting(): Ending");
+}
+
+int ExpendRandomManeuver(object oPC, int nList, int nDiscipline = -1)
+{
+    	// Counting through the local ints to determine if maneuver can be expended
+    	int i = 1;
+    	// 25 is the max possible for any class
+        for(i = 0; i < 25; i++)
+    	{
+        	// If the value is valid, next step
+        	int nMoveId = GetLocalInt(oPC, "ManeuverReadied" + IntToString(nList) + IntToString(i));
+        	if (nMoveId > 0)
+        	{
+        		// Make sure the disciplines match
+        		if (GetDisciplineByManeuver(nMoveId, nList) == nDiscipline || nDiscipline == -1)
+        		{
+        			// If not expended
+            			if (!GetIsManeuverExpended(oPC, nList, nMoveId))
+            			{
+            				// Expend the damn thing and go home
+            				ExpendManeuver(oPC, nList, nMoveId);
+            				return TRUE;
+            			}
+            		}
+        	}
+    	}	
+
+	// If we're here, failed.
+	return FALSE;
 }

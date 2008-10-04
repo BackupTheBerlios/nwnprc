@@ -45,6 +45,7 @@ void main()
     if(move.bCanManeuver)
     {
     	// Yup, thats it.
-	DoCharge(oInitiator, oTarget, TRUE, TRUE, 0, -1, FALSE, 0, FALSE, FALSE, 0, TRUE);
+    	int nBonus = TOBSituationalAttackBonuses(oInitiator, DISCIPLINE_TIGER_CLAW);
+	DoCharge(oInitiator, oTarget, TRUE, TRUE, 0, -1, FALSE, 0, FALSE, FALSE, nBonus, TRUE);
     }
 }

@@ -44,7 +44,8 @@ void main()
     if(move.bCanManeuver)
     {
     	effect eNone = EffectVisualEffect(PSI_IMP_CONCUSSION_BLAST);
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Flesh Ripper Hit", "Flesh Ripper Miss");
+    	int nBonus = TOBSituationalAttackBonuses(oInitiator, DISCIPLINE_TIGER_CLAW);
+	PerformAttack(oTarget, oInitiator, eNone, 0.0, nBonus, 0, 0, "Flesh Ripper Hit", "Flesh Ripper Miss");
 	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
     	{
     		// Saving Throw

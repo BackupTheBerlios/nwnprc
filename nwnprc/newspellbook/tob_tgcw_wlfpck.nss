@@ -49,6 +49,11 @@ void WolfPackTactics()
 	// Add the OnHit
 	IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 9999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
         effect eDur = ExtraordinaryEffect(EffectVisualEffect(PSI_DUR_BURST));
+        if (GetLevelByClass(CLASS_TYPE_BLOODCLAW_MASTER, oInitiator) >= 2)
+        {
+    		eDur = EffectLinkEffects(eDur, EffectMovementSpeedIncrease(33));
+    		eDur = EffectLinkEffects(eDur, EffectACIncrease(1));
+    	}         
         ApplyEffectToObject(DURATION_TYPE_PERMANENT, ExtraordinaryEffect(eDur), oTarget);
         AddEventScript(oInitiator, EVENT_ONHEARTBEAT, "tob_tgcw_wlfpck", TRUE, FALSE);
         AddEventScript(oItem,        EVENT_ONHIT,     "tob_tgcw_wlfpck", TRUE, FALSE);

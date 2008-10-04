@@ -58,7 +58,8 @@ void main()
                 if(GetIsSkillSuccessful(oInitiator, SKILL_JUMP, nArmor))
                 {
                         int nHP = GetCurrentHitPoints(oTarget);
-                        PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Feral Death Blow Hit", "Feral Death Blow Miss");
+                        int nBonus = TOBSituationalAttackBonuses(oInitiator, DISCIPLINE_TIGER_CLAW);
+                        PerformAttack(oTarget, oInitiator, eNone, 0.0, nBonus, 0, 0, "Feral Death Blow Hit", "Feral Death Blow Miss");
                         
                         if(GetCurrentHitPoints(oTarget) < nHP)
                         {

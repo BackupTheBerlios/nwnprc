@@ -48,7 +48,8 @@ void main()
     	{
     		object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
 	    	AssignCommand(oTarget, ClearAllActions(TRUE));
-		PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(4), GetWeaponDamageType(oWeap), "Death From Above Hit", "Death From Above Miss");
+	    	int nBonus = TOBSituationalAttackBonuses(oInitiator, DISCIPLINE_TIGER_CLAW);
+		PerformAttack(oTarget, oInitiator, eNone, 0.0, nBonus, d6(4), GetWeaponDamageType(oWeap), "Death From Above Hit", "Death From Above Miss");
 		// Land 20 feet away from target.
 		_DoBullRushKnockBack(oInitiator, oTarget, 20.0);
     	}

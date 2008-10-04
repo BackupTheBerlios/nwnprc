@@ -185,3 +185,4 @@ const int CLASS_TYPE_DRAGON_DESCENDENT       = 252;
 const int CLASS_TYPE_ARTIFICER               = 94;
 const int CLASS_TYPE_MASTER_ALCHEMIST        = 229;
 const int CLASS_TYPE_JUSTICEWW               = 157;
+const int CLASS_TYPE_BLOODCLAW_MASTER        = 193;

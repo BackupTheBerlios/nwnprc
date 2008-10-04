@@ -49,7 +49,8 @@ void main()
     	{
     		effect eNone;
 	    	object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
-		PerformAttack(oTarget, oInitiator, eNone, 0.0, 4, d6(6), GetWeaponDamageType(oWeap), "Soaring Raptor Strike Hit", "Soaring Raptor Strike Miss");
+	    	int nBonus = TOBSituationalAttackBonuses(oInitiator, DISCIPLINE_TIGER_CLAW);
+		PerformAttack(oTarget, oInitiator, eNone, 0.0, 4 + nBonus, d6(6), GetWeaponDamageType(oWeap), "Soaring Raptor Strike Hit", "Soaring Raptor Strike Miss");
     	}
     }
 }

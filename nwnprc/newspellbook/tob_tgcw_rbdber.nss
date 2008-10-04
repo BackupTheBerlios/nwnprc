@@ -44,8 +44,8 @@ void main()
         {
                 object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
                 effect eNone;
-                
-                PerformAttack(oTarget, oInitiator, eNone, 0.0, 4, d6(10), GetWeaponDamageType(oWeap), "Rabid Bear Strike Hit", "Rabid Bear Strike Miss");
+                int nBonus = TOBSituationalAttackBonuses(oInitiator, DISCIPLINE_TIGER_CLAW);
+                PerformAttack(oTarget, oInitiator, eNone, 0.0, 4 + nBonus, d6(10), GetWeaponDamageType(oWeap), "Rabid Bear Strike Hit", "Rabid Bear Strike Miss");
                 
                 SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectACDecrease(4), oTarget, RoundsToSeconds(1));
         }

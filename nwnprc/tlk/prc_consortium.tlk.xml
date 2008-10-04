@@ -18892,6 +18892,82 @@ Benefit: Whenever you cast a transmutation spell, you grant yourself damage redu
   <entry id="49932" lang="en" sex="m">Type of Feat: General
 Prerequisite: Spell Focus Conjuration
 Benefit: When you cast a conjuration spell, a 5-foot-radius cloud of sickening smoke manifests. The cloud appears in the space of your target (if any). The cloud lasts for 1 round. Any living creature is sickened while inside it. The cloud in all other ways acts like a small area of the fog cloud spell. Creatures immune to poison are immune to the sickening effect.</entry>
+<entry id="49933" lang="en" sex="m">Bloodclaw Master</entry>
+  <entry id="49934" lang="en" sex="m">Bloodclaw Masters</entry>
+  <entry id="49935" lang="en" sex="m">bloodclaw master</entry>
+  <entry id="49936" lang="en" sex="m">(PRESTIGE CLASS)
+A bloodclaw master embraces the animal within to a degree that it becomes external, partially transforming him into the beast from which the discipline was inspired. He employs small, light weapons almost like claws. He focuses on the Tiger Claw discipline, and his maneuvers speak to the quick-striking nature of his discipline's feline namesake.
+
+- Hit Die: d12
+- Proficiencies: A Bloodclaw Master gains no additional proficiencies.
+- Skill Points: 2 + Int Modifier
+
+REQUIREMENTS:
+
+Skills: Jump 9 ranks.
+Feats: Two-Weapon Fighting.
+Maneuvers: Must know at least three Tiger Claw maneuvers.
+
+ABILITIES:
+
+Level
+1: Shifting 1/day - Gains some aspects of the tiger.
+   Claws of the Beast - Damage bonus with two weapons
+2: Superior Two-Weapon Fighting - Attack bonus using two weapons
+   Tiger Claw Synergy - Adapts to Tiger Claw stances
+3: Pouncing Strike - Able to perform a pouncing charge
+   Shifting 2/day
+   Darkvision
+4: Tiger Claw Synergy - Adapts to Tiger Claw strikes
+5: Rending Claws - Damage when hitting with both weapons
+   Scent
+   Shifting 3/day
+
+Maneuvers
+
+The Bloodclaw Master may only select maneuvers from the Tiger Claw discipline. He adds his full class level to his initiator level. He gains new maneuvers known and readied at the indicated levels.
+
+Level  Maneuvers Known   Maneuvers Readied
+1      1                 0                 
+2      0                 0                 
+3      1                 1                 
+4      0                 0                 
+5      1                 0</entry>
+  <entry id="49937" lang="en" sex="m">Claws of the Beast</entry>
+  <entry id="49938" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Bloodclaw Master 1.
+Specifics: When attacking with two daggers or Tiger Claw weapons (Kukri, Kama, Handaxe, or Unarmed), you add your full strength bonus to off-hand attacks.
+Use: Automatic</entry>
+  <entry id="49939" lang="en" sex="m">Superior Two Weapon Fighting</entry>
+  <entry id="49940" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Bloodclaw Master 2.
+Specifics: When attacking with two daggers or Tiger Claw weapons (Kukri, Kama, Handaxe, or Unarmed), you gain a +2 bonus to attack.
+Use: Automatic</entry>
+  <entry id="49941" lang="en" sex="m">Tiger Claw Synergy</entry>
+  <entry id="49942" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Bloodclaw Master 2.
+Specifics: While under the effects of a Tiger Claw Stance, you gain a +1 dodge bonus to AC, and a +10 ft. bonus to speed. At level 4, you gain a +1 bonus to attack on all Tiger Claw strikes.
+Use: Automatic</entry>
+  <entry id="49943" lang="en" sex="m">Rending Claws</entry>
+  <entry id="49944" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Bloodclaw Master 5.
+Specifics: When attacking with two daggers or Tiger Claw weapons (Kukri, Kama, Handaxe, or Unarmed), on each successful left-handed attack, you do an additional 2d6 damage. This will automatically expend one readied Tiger Claw maneuver each time it is used, and can only be used while shifting.
+Use: Automatic</entry>
+  <entry id="49945" lang="en" sex="m">Pouncing Strike</entry>
+  <entry id="49946" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Bloodclaw Master 3.
+Specifics: When attacking with two daggers or Tiger Claw weapons (Kukri, Kama, Handaxe, or Unarmed), you may make a charge attack that allows you to full attack at the end of the charge. This will automatically expend one readied Tiger Claw maneuver each time it is used.
+Use: Selected</entry>
+  <entry id="49947" lang="en" sex="m">Shifting</entry>
+  <entry id="49948" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Bloodclaw Master 1.
+Specifics: You gain a +2 bonus to strength, and grow two claws that each do 1d4 damage. This lasts for a number of rounds equal to you class level + your constitution modifier.
+Use: Selected</entry>
+  <entry id="49949" lang="en" sex="m">Scent</entry>
+  <entry id="49950" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Bloodclaw Master 5.
+Specifics: You gain a +4 bonus to Spot, Listen, and Search.
+Use: Automatic</entry>
   <entry id="49999" lang="en" sex="m">**** 50,000 - 50,500 reserved for Race Pack Feats ****</entry>
   <entry id="50000" lang="en" sex="m">Light Sensitivity</entry>
   <entry id="50001" lang="en" sex="m">Type of Feat: Racial

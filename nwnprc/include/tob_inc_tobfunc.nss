@@ -294,6 +294,25 @@ int GetHasInsightfulStrike(object oInitiator);
  */
 int GetHasDefensiveStance(object oInitiator, int nDiscipline);
 
+/**
+ * Returns true if it is a weapon of the appropriate discipline
+ * @param oWeapon       Weapon to check
+ * @param nDiscipline   DISCIPLINE_ constant of the school of the maneuver.
+ *
+ * @return              TRUE or FALSE
+ */
+int GetIsDisciplineWeapon(object oWeapon, int nDiscipline);
+
+/**
+ * Returns a numerical bonus to attacks for use in strikes
+ * @param oInitiator    Person to check
+ * @param nDiscipline   DISCIPLINE_ constant of the school of the maneuver.
+ * @param nClass        CLASS_TYPE_ constant
+ *
+ * @return              Bonus total
+ */
+int TOBSituationalAttackBonuses(object oInitiator, int nDiscipline, int nClass = CLASS_TYPE_INVALID);
+
 //////////////////////////////////////////////////
 /*                  Includes                    */
 //////////////////////////////////////////////////
@@ -646,6 +665,7 @@ int GetBladeMagicPRCLevels(object oInitiator)
     	int nLevel = 0;
 	
 	nLevel += GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL, oInitiator);
+	nLevel += GetLevelByClass(CLASS_TYPE_BLOODCLAW_MASTER, oInitiator);
 	
     	return nLevel;
 }
@@ -1130,6 +1150,83 @@ int TOBGetHasDisciplineFocus(object oInitiator, int nDiscipline)
 
 	// If none of those trigger.	                 
 	return FALSE;	
+}
+
+int GetIsDisciplineWeapon(object oWeapon, int nDiscipline)
+{
+	if (nDiscipline == DISCIPLINE_DESERT_WIND)
+	{
+		if (GetBaseItemType(oWeapon) == BASE_ITEM_SCIMITAR || GetBaseItemType(oWeapon) == BASE_ITEM_LIGHTMACE ||
+		    GetBaseItemType(oWeapon) == BASE_ITEM_SHORTSPEAR) 
+		    	return TRUE;
+	}
+	else if (nDiscipline == DISCIPLINE_DEVOTED_SPIRIT)
+	{
+		if (GetBaseItemType(oWeapon) == BASE_ITEM_LONGSWORD || GetBaseItemType(oWeapon) == BASE_ITEM_HEAVYFLAIL ||
+		    GetBaseItemType(oWeapon) == BASE_ITEM_LIGHTFLAIL) 
+		    	return TRUE;	
+	}	
+	else if (nDiscipline == DISCIPLINE_DIAMOND_MIND)
+	{
+		if (GetBaseItemType(oWeapon) == BASE_ITEM_BASTARDSWORD || GetBaseItemType(oWeapon) == BASE_ITEM_KATANA ||
+		    GetBaseItemType(oWeapon) == BASE_ITEM_SHORTSPEAR || GetBaseItemType(oWeapon) == BASE_ITEM_RAPIER) 
+		    	return TRUE;	
+	}
+	else if (nDiscipline == DISCIPLINE_IRON_HEART)
+	{
+		if (GetBaseItemType(oWeapon) == BASE_ITEM_BASTARDSWORD || GetBaseItemType(oWeapon) == BASE_ITEM_KATANA ||
+		    GetBaseItemType(oWeapon) == BASE_ITEM_LONGSWORD || GetBaseItemType(oWeapon) == BASE_ITEM_TWOBLADEDSWORD ||
+		    GetBaseItemType(oWeapon) == BASE_ITEM_DWARVENWARAXE) 
+		    	return TRUE;	
+	}
+	else if (nDiscipline == DISCIPLINE_SETTING_SUN)
+	{
+		// Invalid is empty handed / Unarmed strike
+		if (GetBaseItemType(oWeapon) == BASE_ITEM_QUARTERSTAFF || GetBaseItemType(oWeapon) == BASE_ITEM_INVALID ||
+		    GetBaseItemType(oWeapon) == BASE_ITEM_SHORTSWORD) 
+		    	return TRUE;	
+	}
+	else if (nDiscipline == DISCIPLINE_SHADOW_HAND)
+	{
+		// Invalid is empty handed / Unarmed strike
+		if (GetBaseItemType(oWeapon) == BASE_ITEM_DAGGER || GetBaseItemType(oWeapon) == BASE_ITEM_INVALID ||
+		    GetBaseItemType(oWeapon) == BASE_ITEM_SHORTSWORD) 
+		    	return TRUE;
+	}
+	else if (nDiscipline == DISCIPLINE_STONE_DRAGON)
+	{
+		// Invalid is empty handed / Unarmed strike
+		if (GetBaseItemType(oWeapon) == BASE_ITEM_GREATAXE || GetBaseItemType(oWeapon) == BASE_ITEM_INVALID ||
+		    GetBaseItemType(oWeapon) == BASE_ITEM_GREATSWORD || GetBaseItemType(oWeapon) == BASE_ITEM_WARHAMMER) 
+		    	return TRUE;	
+	}
+	else if (nDiscipline == DISCIPLINE_TIGER_CLAW)
+	{
+		// Invalid is empty handed / Unarmed strike
+		if (GetBaseItemType(oWeapon) == BASE_ITEM_KUKRI || GetBaseItemType(oWeapon) == BASE_ITEM_KAMA ||
+		    GetBaseItemType(oWeapon) == BASE_ITEM_HANDAXE || GetBaseItemType(oWeapon) == BASE_ITEM_GREATAXE || 
+		    GetBaseItemType(oWeapon) == BASE_ITEM_INVALID) 
+		    	return TRUE;	
+	}
+	else if (nDiscipline == DISCIPLINE_WHITE_RAVEN)
+	{
+		if (GetBaseItemType(oWeapon) == BASE_ITEM_BATTLEAXE || GetBaseItemType(oWeapon) == BASE_ITEM_LONGSWORD ||
+		    GetBaseItemType(oWeapon) == BASE_ITEM_HALBERD || GetBaseItemType(oWeapon) == BASE_ITEM_WARHAMMER ||
+		    GetBaseItemType(oWeapon) == BASE_ITEM_GREATSWORD) 
+		    	return TRUE;	
+	}	
+
+	// If none of those trigger.	                 
+	return FALSE;	                 
+}
+
+int TOBSituationalAttackBonuses(object oInitiator, int nDiscipline, int nClass = CLASS_TYPE_INVALID)
+{
+	int nBonus = 0;
+	if (GetLevelByClass(CLASS_TYPE_BLOODCLAW_MASTER, oInitiator) >= 4 && nDiscipline == DISCIPLINE_TIGER_CLAW)
+		nBonus += 1;
+
+	return nBonus;
 }
 // Test main
 //void main(){}

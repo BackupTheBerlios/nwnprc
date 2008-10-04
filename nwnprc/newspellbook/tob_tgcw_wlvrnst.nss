@@ -45,6 +45,11 @@ void main()
         effect eDur = EffectVisualEffect(VFX_DUR_BLOOD_FOUNTAIN);
         if (GetHasDefensiveStance(oInitiator, DISCIPLINE_TIGER_CLAW))
     		eDur = EffectLinkEffects(eDur, EffectSavingThrowIncrease(SAVING_THROW_ALL, 2, SAVING_THROW_TYPE_ALL));
+        if (GetLevelByClass(CLASS_TYPE_BLOODCLAW_MASTER, oInitiator) >= 2)
+        {
+    		eDur = EffectLinkEffects(eDur, EffectMovementSpeedIncrease(33));
+    		eDur = EffectLinkEffects(eDur, EffectACIncrease(1));
+    	}
         SPApplyEffectToObject(DURATION_TYPE_PERMANENT, ExtraordinaryEffect(eDur), oTarget);
     }
 }

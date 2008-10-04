@@ -47,6 +47,7 @@ void main()
     	if(GetIsSkillSuccessful(oInitiator, SKILL_JUMP, nAC)) nDamage = d6(2);
     	effect eNone;
     	object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, nDamage, GetWeaponDamageType(oWeap), "Claw at the Moon Hit", "Claw at the Moon Miss");
+    	int nBonus = TOBSituationalAttackBonuses(oInitiator, DISCIPLINE_TIGER_CLAW);
+	PerformAttack(oTarget, oInitiator, eNone, 0.0, nBonus, nDamage, GetWeaponDamageType(oWeap), "Claw at the Moon Hit", "Claw at the Moon Miss");
     }
 }

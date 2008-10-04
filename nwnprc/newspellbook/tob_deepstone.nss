@@ -21,6 +21,7 @@ void main()
     object oItem;
     int nClass = GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL, oInitiator);
     int nMoveTotal = GetKnownManeuversModifier(oInitiator, nClass, MANEUVER_TYPE_MANEUVER);
+    int nRdyTotal  = GetReadiedManeuversModifier(oInitiator, nClass);
 
     // We aren't being called from any event, instead from EvalPRCFeats
     if(nEvent == FALSE)
@@ -49,6 +50,7 @@ void main()
         {
             if(DEBUG) DoDebug("tob_deepstone: Adding Maneuver 3");
             SetKnownManeuversModifier(oInitiator, GetFirstBladeMagicClass(oInitiator), ++nMoveTotal, MANEUVER_TYPE_MANEUVER);
+            SetReadiedManeuversModifier(oInitiator, GetFirstBladeMagicClass(oInitiator), ++nRdyTotal);
             SetPersistantLocalInt(oInitiator, "ToBDeepstone3", TRUE);
             SetPersistantLocalInt(oInitiator, "RestrictedDiscipline1", DISCIPLINE_STONE_DRAGON);
         } 
@@ -73,8 +75,8 @@ void main()
            GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL,oInitiator) < 1
            )
         {
-            DeletePersistantLocalInt(oInitiator, "PRC_Thrallherd_CharmGained");
-            SetKnownManeuversModifier(oInitiator, nClass, --nMoveTotal, MANEUVER_TYPE_MANEUVER);
+            DeletePersistantLocalInt(oInitiator, "ToBDeepstone1");
+            SetKnownManeuversModifier(oInitiator, GetFirstBladeMagicClass(oInitiator), --nMoveTotal, MANEUVER_TYPE_MANEUVER);
         }
         // Has lost MAneuver, but the slot is still present
         if(GetPersistantLocalInt(oInitiator, "ToBDeepstone3") &&
@@ -82,7 +84,8 @@ void main()
            )
         {
             DeletePersistantLocalInt(oInitiator, "ToBDeepstone3");
-            SetKnownManeuversModifier(oInitiator, nClass, --nMoveTotal, MANEUVER_TYPE_MANEUVER);
+            SetKnownManeuversModifier(oInitiator, GetFirstBladeMagicClass(oInitiator), --nMoveTotal, MANEUVER_TYPE_MANEUVER);
+            SetReadiedManeuversModifier(oInitiator, GetFirstBladeMagicClass(oInitiator), --nRdyTotal);
         }
         // Has lost MAneuver, but the slot is still present
         if(GetPersistantLocalInt(oInitiator, "ToBDeepstone3") &&
@@ -90,7 +93,7 @@ void main()
            )
         {
             DeletePersistantLocalInt(oInitiator, "ToBDeepstone5");
-            SetKnownManeuversModifier(oInitiator, nClass, --nMoveTotal, MANEUVER_TYPE_MANEUVER);
+            SetKnownManeuversModifier(oInitiator, GetFirstBladeMagicClass(oInitiator), --nMoveTotal, MANEUVER_TYPE_MANEUVER);
         }        
 
         // Remove eventhook if the character no longer has levels in Deepstone

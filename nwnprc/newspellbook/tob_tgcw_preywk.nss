@@ -46,8 +46,8 @@ void main()
                 effect eVis = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
         	if (GetLevelByClass(CLASS_TYPE_BLOODCLAW_MASTER, oInitiator) >= 2)
         	{
-    			eVis = EffectLinkEffects(eVis, EffectMovementSpeedIncrease(33));
-    			eVis = EffectLinkEffects(eVis, EffectACIncrease(1));
+    			eDur = EffectLinkEffects(eVis, EffectMovementSpeedIncrease(33));
+    			eDur = EffectLinkEffects(eVis, EffectACIncrease(1));
     		}                
                 ApplyEffectToObject(DURATION_TYPE_PERMANENT, eVis, oTarget);
         }

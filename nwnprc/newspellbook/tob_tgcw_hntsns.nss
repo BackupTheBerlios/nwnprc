@@ -51,8 +51,8 @@ void main()
     		eScent = EffectLinkEffects(eScent, EffectSavingThrowIncrease(SAVING_THROW_ALL, 2, SAVING_THROW_TYPE_ALL));
         if (GetLevelByClass(CLASS_TYPE_BLOODCLAW_MASTER, oInitiator) >= 2)
         {
-    		eScent = EffectLinkEffects(eScent, EffectMovementSpeedIncrease(33));
-    		eScent = EffectLinkEffects(eScent, EffectACIncrease(1));
+    		eDur = EffectLinkEffects(eDur, EffectMovementSpeedIncrease(33));
+    		eDur = EffectLinkEffects(eDur, EffectACIncrease(1));
     	}    		
 	eScent = ExtraordinaryEffect(eScent);
 	SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eScent, oTarget);

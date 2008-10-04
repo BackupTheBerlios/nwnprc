@@ -170,7 +170,7 @@ void main()
         if(GetLevelByClass(CLASS_TYPE_BLOODCLAW_MASTER,oInitiator) == 0)
             RemoveEventScript(oInitiator, EVENT_ONPLAYERLEVELDOWN, "tob_bloodclaw", TRUE, FALSE);
     }    
-    else if(nEvent == EVENT_ITEM_ONHIT && nClass >= 4 && !GetLocalInt(oInitiator, "DSPStoneCurse"))
+    else if(nEvent == EVENT_ITEM_ONHIT)
     {
         oItem          = GetSpellCastItem();
         object oTarget = PRCGetSpellTargetObject();
@@ -184,7 +184,7 @@ void main()
         }// end if - Item is a melee weapon
     }// end if - Running OnHit event
     // We are called from the OnPlayerEquipItem eventhook. Add OnHitCast: Unique Power to oInitiator's weapon
-    else if(nEvent == EVENT_ONPLAYEREQUIPITEM && nClass >= 4)
+    else if(nEvent == EVENT_ONPLAYEREQUIPITEM)
     {
         oInitiator = GetItemLastEquippedBy();
         oItem = GetItemLastEquipped();
@@ -205,7 +205,7 @@ void main()
         }
     }
     // We are called from the OnPlayerUnEquipItem eventhook. Remove OnHitCast: Unique Power from oInitiator's weapon
-    else if(nEvent == EVENT_ONPLAYERUNEQUIPITEM && nClass >= 4)
+    else if(nEvent == EVENT_ONPLAYERUNEQUIPITEM)
     {
         oInitiator   = GetItemLastUnequippedBy();
         oItem = GetItemLastUnequipped();

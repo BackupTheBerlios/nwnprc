@@ -3839,6 +3839,8 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iOffha
     iAttackBonus += iMod;
     // Battle Mastery ability
     if (GetLevelByClass(CLASS_TYPE_WARBLADE, oAttacker) >= 15)  iAttackBonus += GetAbilityModifier(ABILITY_INTELLIGENCE, oAttacker);
+    // Divine Fury ability
+    if (GetLocalInt(oAttacker, "RKVDivineFury")) iAttackBonus += 4;
 
     //if (DEBUG) DoDebug("GetAttackRoll: Line #5");
     //if(bDebug) sDebugFeedback += " - APR penalty ("  + IntToString(iMod * -1) + ")";
@@ -5728,6 +5730,12 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
             {
                 iWeaponDamage += GetAbilityModifier(ABILITY_WISDOM, oAttacker);
             }
+            // RKV Divine Fury grants 1d10 bonus damage
+            if (GetLocalInt(oAttacker, "RKVDivineFury"))
+            {
+                iWeaponDamage += d10();
+                DeleteLocalInt(oAttacker, "RKVDivineFury");
+            }            
             // Warblade Battle Cunning: Int To Damage on Flatfoots.
             if (GetLevelByClass(CLASS_TYPE_WARBLADE, oAttacker) >= 7 && (GetIsFlanked(oDefender, oAttacker) || GetIsDeniedDexBonusToAC(oDefender, oAttacker)))
             {

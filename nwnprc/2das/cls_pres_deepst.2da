@@ -1,15 +1,15 @@
 2DA V2.0
 
-   LABEL       ReqType ReqParam1     ReqParam2 
-0  Dwarf       RACE    0             ****      
-1  ArcticDwarf RACE    151           ****      
-2  GoldDwarf   RACE    152           ****      
-3  GreyDwarf   RACE    153           ****      
-4  ShieldDwarf RACE    154           ****      
-5  Urdunnir    RACE    155           ****      
-6  WildDwarf   RACE    156           ****      
-7  PowerAtk    FEATOR  28            ****      
-8  Base_Attack BAB     10            ****      
-9  ScriptVar   VAR     PRC_AllowDeepSt 0         
-10 ScriptVar   VAR     PRC_PrereqDeepSt   0         
-12 Balance     SKILL   31            13        
+   LABEL       ReqType ReqParam1        ReqParam2 
+0  Dwarf       RACE    0                ****      
+1  ArcticDwarf RACE    151              ****      
+2  GoldDwarf   RACE    152              ****      
+3  GreyDwarf   RACE    153              ****      
+4  ShieldDwarf RACE    154              ****      
+5  Urdunnir    RACE    155              ****      
+6  WildDwarf   RACE    156              ****      
+7  PowerAtk    FEATOR  28               ****      
+8  Base_Attack BAB     10               ****      
+9  ScriptVar   VAR     PRC_AllowDeepSt  0         
+10 ScriptVar   VAR     PRC_PrereqDeepSt 0         
+11 Balance     SKILL   31               13        

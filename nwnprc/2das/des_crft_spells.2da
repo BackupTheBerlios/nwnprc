@@ -2122,7 +2122,7 @@
 2118  Adept_Force_Line                                          ****            1        1      1        9     0           
 2119  Adept_Paralyzation_Cone                                   ****            1        1      1        9     0           
 2120  Adept_Tiamat_Breath                                       ****            1        1      1        9     0           
-2121  ****                                                      ****            1        1      1        ****  0           
+2121  RKVDivineRecovery                                         ****            1        1      1        8     0           
 2122  Mass_Contagion                                            1133            1        0      0        5     0           
 2123  SPELL_SACREDSPEED                                         ****            1        1      1        5     0           
 2124  SPELL_INNERARMOR                                          ****            1        1      1        5     0           
@@ -2147,7 +2147,7 @@
 2143  SPELL_UR_HIPS                                             ****            1        1      1        1     0           
 2144  LuckyShot                                                 1381            1        1      0        1     0           
 2145  MINSTREL_SONG_CHARM                                       ****            1        1      1        1     0           
-2146  ****                                                      ****            1        1      1        ****  0           
+2146  RKVDivineImpteus                                          ****            1        1      1        8     0           
 2147  MINSTREL_SONG_IMM_FEAR                                    ****            1        1      1        1     0           
 2148  MINSTREL_SONG_SHIELD_AC                                   ****            1        1      1        1     0           
 2149  MINSTREL_SONG_SONIC_WEAP                                  ****            1        1      1        1     0           
@@ -2189,7 +2189,7 @@
 2185  SPELL_DIVINE_VENGEANCE                                    ****            1        1      1        1     0           
 2186  SPELL_POSITIVE_ENERGY_BURST                               ****            1        1      1        1     0           
 2187  SPELL_FIST_OF_IRON                                        ****            1        1      1        1     0           
-2188  ****                                                      ****            1        1      1        ****  0           
+2188  RKVDivineFury                                             ****            1        1      1        8     0           
 2189  Summon_Familiar                                           ****            1        1      1        1     0           
 2190  RavageGoldenIce                                           ****            1        1      1        3     0           
 2191  SPELL_STIGMATA                                            ****            1        1      1        1     0           

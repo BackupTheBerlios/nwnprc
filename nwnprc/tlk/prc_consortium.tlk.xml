@@ -18968,6 +18968,76 @@ Use: Selected</entry>
 Prerequisites: Bloodclaw Master 5.
 Specifics: You gain a +4 bonus to Spot, Listen, and Search.
 Use: Automatic</entry>
+<entry id="49951" lang="en" sex="m">Ruby Knight Vindicator</entry>
+<entry id="49952" lang="en" sex="m">Ruby Knight Vindicators</entry>
+  <entry id="49953" lang="en" sex="m">Ruby Knight Vindicator</entry>
+  <entry id="49954" lang="en" sex="m">(PRESTIGE CLASS)
+The Ruby Knights are a crusader order in the service of Wee Jas, goddess of death and magic. Inscrutible and mysterious, these secretive warriors serve as the militant arm of the Jasite faith. They protect the temples of Wee Jas, guard important leaders of the church, aid powerful sorcerers and necromancers sworn to the Witch Goddess, and help to train novice clergy. When called upon, they also serve as spies and assassins. Within the Ruby Knight order, the knights-vindicator are responsible for undertaking duties of the last variety. Most of the time, a knights-vindicator is free to do as he pleases, but every so often leaders of the knightly order or high priests of the faith come to him with a special assignment that requires stealth, intimidation, or assassination. A Ruby Knight vindicator relies on his spiritual strength and skill in martial disciplines rarely mastered by crusaders to capture or dispatch marked enemies of the faith. He strikes with unflinching determination and righteous vengeance, and his benefactors within the church sleep comfortably knowing the Ruby Knights always stand ready to do the church's bidding.
+
+- Hit Die: d8
+- Proficiencies: A Ruby Knight Vindicator gains no additional proficiencies.
+- Skill Points: 4 + Int Modifier
+
+REQUIREMENTS:
+
+Skills: Hide 4 ranks, Intimidate 4 ranks, Lore 8 ranks.
+Maneuvers: Must know at least one Devoted Spirit maneuver, and one Devoted Spirit stance.
+Special: Must be able to turn undead, and must worship Wee Jas. Clerics must have the Death and Magic domains.
+
+ABILITIES:
+
+Level
+1: 
+2: Divine Recovery - Expend a Turning attempt to recover a maneuver
+3:
+4:
+5: Armoured Stealth - No Armour Check Penalty to Hide
+6:
+7: Divine Impetus - Expend a Turning attempt to gain a swift action
+8:
+9: Divine Fury - Expend a Turning attempt to gain +4 attack, 1d10 damage
+10: 
+
+Maneuvers
+
+The Ruby Knight Vindicator may only select maneuvers from the Devoted Spirit, Shadow Hand, Stone Dragon, or White Raven disciplines. He adds his full class level to his initiator level. He gains new maneuvers known and readied at the indicated levels.
+
+Level  Maneuvers Known   Maneuvers Readied   Stances Known
+1      0                 0                   1              
+2      1                 0                   0              
+3      0                 0                   0              
+4      1                 0                   0              
+5      0                 1		     0              
+6      1                 0                   1              
+7      0                 0                   0              
+8      1                 0                   0              
+9      0                 1                   0              
+10     1                 0		     0              
+
+
+BONUS DIVINE SPELLS
+
+Every level in Ruby Knight Vindicator, the character gains new spells per day as if he had also gained a level in his highest divine caster class.</entry>
+  <entry id="49955" lang="en" sex="m">Divine Recovery</entry>
+  <entry id="49956" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Ruby Knight Vindicator 2.
+Specifics: By expending a use of Turn Undead, you can recover a single maneuver as a swift action.
+Use: Selected</entry>
+  <entry id="49957" lang="en" sex="m">Divine Impetus</entry>
+  <entry id="49958" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Ruby Knight Vindicator 7.
+Specifics: By expending a use of Turn Undead, you can use two swift action maneuvers in the same round.
+Use: Selected</entry>
+  <entry id="49959" lang="en" sex="m">Divine Fury</entry>
+  <entry id="49960" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Ruby Knight Vindicator 9.
+Specifics: By expending a use of Turn Undead, you can gain a +4 bonus to attack and a +1d10 bonus to damage on your next strike maneuver.
+Use: Selected</entry>
+  <entry id="49961" lang="en" sex="m">Armoured Stealth</entry>
+  <entry id="49962" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Ruby Knight Vindicator 5.
+Specifics: You gain a bonus to Hide equal to the Armour Check Penalty of the armour that you wear.
+Use: Automatic</entry>
   <entry id="49999" lang="en" sex="m">**** 50,000 - 50,500 reserved for Race Pack Feats ****</entry>
   <entry id="50000" lang="en" sex="m">Light Sensitivity</entry>
   <entry id="50001" lang="en" sex="m">Type of Feat: Racial

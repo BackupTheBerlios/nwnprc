@@ -484,6 +484,7 @@ int GetDivinePRCLevels (object oCaster)
            +  GetLevelByClass(CLASS_TYPE_COMBAT_MEDIC,      oCaster)
            +  GetLevelByClass(CLASS_TYPE_BLIGHTLORD,        oCaster)
            +  GetLevelByClass(CLASS_TYPE_CONTEMPLATIVE,     oCaster)
+           +  GetLevelByClass(CLASS_TYPE_RUBY_VINDICATOR,   oCaster)
            +  GetLevelByClass(CLASS_TYPE_RUNECASTER,        oCaster)
            +  GetLevelByClass(CLASS_TYPE_SWIFT_WING,        oCaster)
            

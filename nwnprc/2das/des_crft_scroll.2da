@@ -2122,7 +2122,7 @@
 2118 Adept_Force_Line                           ****             ****             ****             ****             ****         ****             
 2119 Adept_Paralyzation_Cone                    ****             ****             ****             ****             ****         ****             
 2120 Adept_Tiamat_Breath                        ****             ****             ****             ****             ****         ****             
-2121 ****                                       ****             ****             ****             ****             ****         ****             
+2121 RKVDivineRecovery                          ****             ****             ****             ****             ****         ****             
 2122 Mass_Contagion                             prc_scr_1133     prc_scr_1133     ****             prc_scr_1133     ****         ****             
 2123 SPELL_SACREDSPEED                          ****             ****             ****             ****             ****         ****             
 2124 SPELL_INNERARMOR                           ****             ****             ****             ****             ****         ****             
@@ -2147,7 +2147,7 @@
 2143 SPELL_UR_HIPS                              ****             ****             ****             ****             ****         ****             
 2144 LuckyShot                                  ****             ****             ****             ****             ****         ****             
 2145 MINSTREL_SONG_CHARM                        ****             ****             ****             ****             ****         ****             
-2146 ****                                       ****             ****             ****             ****             ****         ****             
+2146 RKVDivineImpteus                           ****             ****             ****             ****             ****         ****             
 2147 MINSTREL_SONG_IMM_FEAR                     ****             ****             ****             ****             ****         ****             
 2148 MINSTREL_SONG_SHIELD_AC                    ****             ****             ****             ****             ****         ****             
 2149 MINSTREL_SONG_SONIC_WEAP                   ****             ****             ****             ****             ****         ****             
@@ -2189,7 +2189,7 @@
 2185 SPELL_DIVINE_VENGEANCE                     ****             ****             ****             ****             ****         ****             
 2186 SPELL_POSITIVE_ENERGY_BURST                ****             ****             ****             ****             ****         ****             
 2187 SPELL_FIST_OF_IRON                         ****             ****             ****             ****             ****         ****             
-2188 ****                                       ****             ****             ****             ****             ****         ****             
+2188 RKVDivineFury                              ****             ****             ****             ****             ****         ****             
 2189 Summon_Familiar                            ****             ****             ****             ****             ****         ****             
 2190 RavageGoldenIce                            ****             ****             ****             ****             ****         ****             
 2191 SPELL_STIGMATA                             ****             ****             ****             ****             ****         ****             

@@ -525,18 +525,8 @@ void UseManeuver(int nManeuver, int nClass, int nLevelOverride = 0)
     int nSpellID       = PRCGetSpellId();
     int nMoveDur       = StringToInt(Get2DACache("spells", "ConjTime", nManeuver)) + StringToInt(Get2DACache("spells", "CastTime", nManeuver));
 
-    // Normally swift action maneuvers check
-    if((Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "SWIFT_ACTION" ||
-        Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "MANEUVER_BOOST" ||
-        Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "MANEUVER_COUNTER" ||
-        Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "MANEUVER_STANCE") && // The maneuver is swift action to use
-       TakeSwiftAction(oInitiator)                                                                        // And the initiator can take a swift action now
-       )
-    {
-        nMoveDur = 0;
-    }
     // Dual Boost check
-    else if(Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "MANEUVER_BOOST" && // If the maneuver is a boost
+    if(Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "MANEUVER_BOOST" && // If the maneuver is a boost
             GetLocalInt(oInitiator, "SSDualBoost")                         // And the initiator can Dual boost.
             )
     {
@@ -553,6 +543,25 @@ void UseManeuver(int nManeuver, int nClass, int nLevelOverride = 0)
         // Set the maneuver time to 0 to skip VFX
         nMoveDur = 0;
     }
+    else if((Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "SWIFT_ACTION" || // Normally swift action maneuvers check
+        Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "MANEUVER_BOOST" ||
+        Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "MANEUVER_COUNTER" ||
+        Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "MANEUVER_STANCE") && // The maneuver is swift action to use
+       GetLocalInt(oInitiator, "RKVDivineImpetus")                                                                        // And the initiator can take a swift action now
+       )
+    {
+        nMoveDur = 0;
+        DeleteLocalInt(oInitiator, "RKVDivineImpetus");
+    }     
+    else if((Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "SWIFT_ACTION" || // Normally swift action maneuvers check
+        Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "MANEUVER_BOOST" ||
+        Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "MANEUVER_COUNTER" ||
+        Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "MANEUVER_STANCE") && // The maneuver is swift action to use
+       TakeSwiftAction(oInitiator)                                                                        // And the initiator can take a swift action now
+       )
+    {
+        nMoveDur = 0;
+    }    
 
     if(DEBUG) DoDebug("UseManeuver(): initiator is " + DebugObject2Str(oInitiator) + "\n"
                     + "nManeuver = " + IntToString(nManeuver) + "\n"

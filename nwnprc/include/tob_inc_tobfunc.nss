@@ -666,6 +666,7 @@ int GetBladeMagicPRCLevels(object oInitiator)
 	
 	nLevel += GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL, oInitiator);
 	nLevel += GetLevelByClass(CLASS_TYPE_BLOODCLAW_MASTER, oInitiator);
+	nLevel += GetLevelByClass(CLASS_TYPE_RUBY_VINDICATOR, oInitiator);
 	
     	return nLevel;
 }

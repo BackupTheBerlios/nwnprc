@@ -155,8 +155,9 @@ void ClearReadiedManeuvers(object oPC, int nList);
  *
  * @param oPC       Character to grant maneuvers to
  * @param nList     MANEUVER_LIST_*
+ * @param nMoveId   Maneuver to grant
  */
-void GrantWithheldManeuver(object oPC, int nList);
+void GrantWithheldManeuver(object oPC, int nList, int nMoveId = -1);
 
 /**
  * Returns whether maneuver is granted or not
@@ -429,29 +430,56 @@ void ClearReadiedManeuvers(object oPC, int nList)
         }
 }
 
-void GrantWithheldManeuver(object oPC, int nList)
+void GrantWithheldManeuver(object oPC, int nList, int nMoveId = -1)
 {
-    int i, nMoveId;
-        string sPsiFile = GetAMSKnownFileName(nList);
+    int i;
+    string sPsiFile = GetAMSKnownFileName(nList);
     // 2das start at Row 0
     int nLevel = GetInitiatorLevel(oPC, nList);
     int nGranted = StringToInt(Get2DACache(sPsiFile, "ManeuversGranted", nLevel-1));
     int nReadied = StringToInt(Get2DACache(sPsiFile, "ManeuversReadied", nLevel-1));
     if(DEBUG) DoDebug("tob_inc_recovery: Maneuvers Granted: " + IntToString(nGranted));
     if(DEBUG) DoDebug("tob_inc_recovery: Maneuvers Readied: " + IntToString(nReadied));
-    // 3 is always the number withheld
-        for(i = nGranted; i < nReadied; i++)
+    
+    // If someone input a maneuver
+    if (nMoveId > 0)
     {
-        nMoveId = GetLocalInt(oPC, "ManeuverWithheld" + IntToString(i));
-        // If it exists, mark it as ready and break out
-        if (nMoveId > 0)
-        {
-            if(DEBUG) DoDebug("tob_inc_recovery: Withheld Maneuver Granted: " + IntToString(nMoveId));
-            DeleteLocalInt(oPC, "ManeuverWithheld" + IntToString(i));
-            FloatingTextStringOnCreature(GetManeuverName(nMoveId) + " is granted", oPC, FALSE);
-            SetLocalInt(oPC, "ManeuverGranted" + IntToString(i), nMoveId);
-            break;
-        }
+    	// No point in granting an expended maneuver
+    	if (GetIsManeuverExpended(oPC, nList, nMoveId))
+    		RecoverManeuver(oPC, nList, nMoveId);
+    		
+    	// 3 is always the number withheld
+    	for(i = nGranted; i < nReadied; i++)
+    	{
+    	    // Making sure it gets marked properly
+    	    int nGrantId = GetLocalInt(oPC, "ManeuverWithheld" + IntToString(i));
+    	    // If it exists, mark it as ready and break out
+    	    if (nMoveId == nGrantId)
+    	    {
+    	        if(DEBUG) DoDebug("tob_inc_recovery: Withheld Maneuver Granted: " + IntToString(nMoveId));
+    	        DeleteLocalInt(oPC, "ManeuverWithheld" + IntToString(i));
+    	        FloatingTextStringOnCreature(GetManeuverName(nMoveId) + " is granted", oPC, FALSE);
+    	        SetLocalInt(oPC, "ManeuverGranted" + IntToString(i), nMoveId);
+    	        break;
+    	    }
+    	}    		
+    }
+    else
+    {
+    	// 3 is always the number withheld
+    	for(i = nGranted; i < nReadied; i++)
+    	{
+    	    nMoveId = GetLocalInt(oPC, "ManeuverWithheld" + IntToString(i));
+    	    // If it exists, mark it as ready and break out
+    	    if (nMoveId > 0)
+    	    {
+    	        if(DEBUG) DoDebug("tob_inc_recovery: Withheld Maneuver Granted: " + IntToString(nMoveId));
+    	        DeleteLocalInt(oPC, "ManeuverWithheld" + IntToString(i));
+    	        FloatingTextStringOnCreature(GetManeuverName(nMoveId) + " is granted", oPC, FALSE);
+    	        SetLocalInt(oPC, "ManeuverGranted" + IntToString(i), nMoveId);
+    	        break;
+    	    }
+    	}
     }
 }
 

@@ -947,7 +947,28 @@ void TomeOfBattle(object oPC = OBJECT_SELF)
         {
             SetLocalInt(oPC, "PRC_PrereqBloodclaw", 0);
         }
-    }    
+    }
+    
+    nClass = GetLevelByClass(CLASS_TYPE_RUBY_VINDICATOR, oPC);
+    SetLocalInt(oPC, "PRC_PrereqRubyKnight", 1);
+
+    if (nClass > 0)
+    {
+        // Needs one Devoted Spirit maneuver
+        int nMove = _CheckPrereqsByDiscipline(oPC, DISCIPLINE_DEVOTED_SPIRIT, 1, GetFirstBladeMagicClass(oPC));
+        // Needs one Devoted Spirit stance
+        int nStance = _CheckPrereqsByDiscipline(oPC, DISCIPLINE_DEVOTED_SPIRIT, 1, GetFirstBladeMagicClass(oPC), MANEUVER_TYPE_STANCE);
+        
+        // If it's a cleric, needs to have Death, Law and Magic as domains.
+        int nDomains = GetHasFeat(FEAT_DEATH_DOMAIN_POWER,oPC) +
+                       GetHasFeat(FEAT_MAGIC_DOMAIN_POWER,oPC);
+        int nCleric  = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
+                       
+        if (nMove >= 1 && nStance >= 1 && (nDomains == 2 || nCleric == 0))
+        {
+            SetLocalInt(oPC, "PRC_PrereqRubyKnight", 0);
+        }
+    }     
 }
 
 void main()

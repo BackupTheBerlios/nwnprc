@@ -64,18 +64,18 @@ mkdir ocfixerfobjs 2>nul
 #  each of these temp files will be stuffed into a macro
 #  in the makefile.
 dir -1 ./erf                    | sort | grep -E "^[^.]" | ssed -R '$! {s/$/ \\/g};s/^/erf\//g'              >erffiles.temp
-dir -1 ./scripts/*.nss          | sort | grep -E "^[^.]" | ssed -R '$! {s/$/ \\/g};s/^/scripts\//g'          >scripts.temp
-dir -1 ./spells/*.nss           | sort | grep -E "^[^.]" | ssed -R '$! {s/$/ \\/g};s/^/spells\//g'           >spells.temp
-dir -1 ./epicspellscripts/*.nss | sort | grep -E "^[^.]" | ssed -R '$! {s/$/ \\/g};s/^/epicspellscripts\//g' >epicspellscripts.temp
-dir -1 ./racescripts/*.nss      | sort | grep -E "^[^.]" | ssed -R '$! {s/$/ \\/g};s/^/racescripts\//g'      >racescripts.temp
-dir -1 ./psionics/*.nss         | sort | grep -E "^[^.]" | ssed -R '$! {s/$/ \\/g};s/^/psionics\//g'         >psionics.temp
+dir -1 ./scripts |grep nss           | sort | grep -E "^[^.]" | ssed -R '$! {s/$/ \\/g};s/^/scripts\//g'          >scripts.temp
+dir -1 ./spells | grep nss            | sort | grep -E "^[^.]" | ssed -R '$! {s/$/ \\/g};s/^/spells\//g'           >spells.temp
+dir -1 ./epicspellscripts | grep nss  | sort | grep -E "^[^.]" | ssed -R '$! {s/$/ \\/g};s/^/epicspellscripts\//g' >epicspellscripts.temp
+dir -1 ./racescripts | grep nss       | sort | grep -E "^[^.]" | ssed -R '$! {s/$/ \\/g};s/^/racescripts\//g'      >racescripts.temp
+dir -1 ./psionics | grep nss          | sort | grep -E "^[^.]" | ssed -R '$! {s/$/ \\/g};s/^/psionics\//g'         >psionics.temp
 dir -1 ./gfx                    | sort | grep -E "^[^.]" | ssed -R '$! {s/$/ \\/g};s/^/gfx\//g'              >gfx.temp
 dir -1 ./2das                   | sort | grep -E "^[^.]" | ssed -R '$! {s/$/ \\/g};s/^/2das\//g'             >2das.temp
 dir -1 ./race2das               | sort | grep -E "^[^.]" | ssed -R '$! {s/$/ \\/g};s/^/race2das\//g'         >race2das.temp
 dir -1 ./others                 | sort | grep -E "^[^.]" | ssed -R '$! {s/$/ \\/g};s/^/others\//g'           >others.temp
 dir -1 ./Craft2das              | sort | grep -E "^[^.]" | ssed -R '$! {s/$/ \\/g};s/^/Craft2das\//g'        >craft2das.temp
 dir -1 ./include                | sort | grep -E "^[^.]" | ssed -R '$! {s/$/ \\/g};s/^/include\//g'          >include.temp
-dir -1 ./newspellbook/*.nss     | sort | grep -E "^[^.]" | ssed -R '$! {s/$/ \\/g};s/^/newspellbook\//g'     >newspellbook.temp
+dir -1 ./newspellbook | grep nss      | sort | grep -E "^[^.]" | ssed -R '$! {s/$/ \\/g};s/^/newspellbook\//g'     >newspellbook.temp
 dir -1 ./ocfixerf               | sort | grep -E "^[^.]" | ssed -R '$! {s/$/ \\/g};s/^/ocfixerf\//g'         >ocfix.temp
 #
 #  use FINDSTR to find script files with "void main()" or "int StartingConditional()"
@@ -123,7 +123,7 @@ make -f makefile.linux.temp MAKEFILE=makefile.linux.temp depends
 mkdir $MAKEOBJSPATH >nul 2>nul
 #
 #  run nmake to do the build.
-make -f makefile.linux.temp $1 $2 $3 $4 $5 $6 $7 $8 $9
+make -d -f makefile.linux.temp $1 $2 $3 $4 $5 $6 $7 $8 $9 > debug.txt
 #
 # ENDLOCAL
 #

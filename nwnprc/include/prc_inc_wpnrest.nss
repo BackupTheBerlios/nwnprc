@@ -619,6 +619,7 @@ void DoWeaponEquip(object oPC, object oItem, int nHand)
     //Two-hand damage bonus
     if(nWeaponSize == nSize + 1 || (nWeaponSize == nRealSize + 1 && GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC) == OBJECT_INVALID) && nRealSize > CREATURE_SIZE_SMALL)
     {
+        nTHFDmgBonus += GetWeaponEnhancement(oItem, oPC, oPC);
         if(DEBUG) DoDebug("Applying THF damage bonus");
         SetCompositeDamageBonusT(oItem, "THFBonus", nTHFDmgBonus);
     }

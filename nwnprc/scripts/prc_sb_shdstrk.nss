@@ -2,10 +2,11 @@
 // Shadowy Strike
 // prc_sb_shdstrk.nss
 /////////////////////////////////////////////////
+#include "prc_feat_const"
 void main()
 {
         object oPC = OBJECT_SELF;
-        if(GetLocalInt(oPC, "PRC_SB_SHADOWY", 1))
+        if(GetLocalInt(oPC, "PRC_SB_SHADOWY"))
         {
                 DeleteLocalInt(oPC, "PRC_SB_SHADOWY");
                 FloatingTextStringOnCreature("Shadowy Strike deactivated.", oPC, FALSE);

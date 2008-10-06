@@ -2,10 +2,12 @@
 // Unexpected Strike
 // prc_sb_enxpctd.nss
 /////////////////////////////////////////////////
+#include "prc_feat_const"
+
 void main()
 {
         object oPC = OBJECT_SELF;
-        if(GetLocalInt(oPC, "PRC_SB_UNEXPECTED", 1))
+        if(GetLocalInt(oPC, "PRC_SB_UNEXPECTED"))
         {
                 DeleteLocalInt(oPC, "PRC_SB_UNEXPECTED");
                 FloatingTextStringOnCreature("Unexpected Strike deactivated.", oPC, FALSE);

@@ -2436,6 +2436,11 @@ const int FEAT_RAY_SLOW                       = 2234;
 const int FEAT_RAY_INFLICT_MODERATE_WOUNDS    = 2235;
 const int FEAT_RAY_FINGER_OF_DEATH            = 2236;
 
+//Shadowblade
+const int FEAT_UNSEEN_WEAPON_ACTIVATE         = 3657;
+const int FEAT_SHADOW_AND_STEALTH             = 3651;
+const int FEAT_ULTRAVISION                    = 3658;
+
 //Lasher
 const int FEAT_LASHER_SNEAK1D6                = 4075;
 const int FEAT_LASHER_SNEAK2D6                = 4076;
@@ -2483,17 +2488,6 @@ const int FEAT_FAVOURED_SOUL_FIRE             = 2240;
 const int FEAT_FAVOURED_SOUL_SONIC            = 2241;
 const int FEAT_FAVOURED_SOUL_WINGS            = 2242;
 const int FEAT_FAVOURED_SOUL_DAMRED           = 2243;
-
-//Shadowblade
-const int FEAT_UNSEEN_WEAPON_UNERRING_STRIKE  = 3650;
-const int FEAT_SHADOW_AND_STEALTH             = 3651;
-const int FEAT_SUDDEN_STRIKE                  = 3652;
-const int FEAT_UNSEEN_WEAPON_UNEXPECTED_STRIKE= 3653;
-const int FEAT_UNSEEN_WEAPON_EPHEMERAL_WEAPON = 3654;
-const int FEAT_UNSEEN_WEAPON_SHADOWY_STRIKE   = 3655;
-const int FEAT_UNSEEN_WEAPON_FAR_SHADOW       = 3656;
-const int FEAT_UNSEEN_WEAPON_FREE_ACTION      = 3657;
-const int FEAT_ULTRAVISION                    = 3658;
 
 // War Wizard of Cormyr
 const int FEAT_WWOC_WIDEN_SPELL               = 2473;

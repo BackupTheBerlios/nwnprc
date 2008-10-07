@@ -138,6 +138,7 @@ void main()
     //Tenjac's 3.3 feats
     if(GetHasFeat(FEAT_DEFORM_EYES, oPC))                         SetCompositeBonus(GetPCSkin(oPC), "DeformEyes", 2, ITEM_PROPERTY_DECREASED_SKILL_MODIFIER, SKILL_SPOT);
     if(GetHasFeat(FEAT_DEFORM_FACE, oPC))                         ExecuteScript("prc_dfrm_face", oPC);
+    if(GetHasFeat(FEAT_SHADOW_AND_STEALTH, oPC))                  ExecuteScript("prc_sb_shdstlth", oPC);
 
     // Feats that require OnHitCastSpell: Unique on armor
     /* Commented out until needed

@@ -189,6 +189,14 @@ int GetRogueSneak(object oPC)
    if(iClassLevel > 1) iRogueSneak++;
    if(iClassLevel > 6) iRogueSneak++;
    
+   //Shadowblade
+   iClassLevel = GetLevelByClass(CLASS_TYPE_SHADOWBLADE, oPC);
+   if(iClassLevel > 1) iRogueSneak++;
+   if(iClassLevel > 3) iRogueSneak++;
+   if(iClassLevel > 5) iRogueSneak++;
+   if(iClassLevel > 7) iRogueSneak++;
+   if(iClassLevel > 9) iRogueSneak++;
+   
     /*
    if(GetHasSpellEffect(MOVE_SH_ASSASSIN_STANCE, oPC))
    {

@@ -2345,6 +2345,9 @@ int GetIsInMeleeRange(object oDefender, object oAttacker, int bSizeAdjustment = 
         fDistance -= RANGE_5_FEET_IN_METERS;
     if (GetLocalInt(oAttacker, "IHDancingBladeForm"))
         fDistance -= RANGE_5_FEET_IN_METERS;
+    
+    //Shadowblade Far Shadow
+    if(GetLocalInt(oAttacker, "PRC_SB_FARSHAD")) fDistance -= FeetToMeters(10.0);
 
     if (DEBUG) DoDebug("Exiting GetIsInMeleeRange");
     return fDistance <= MELEE_RANGE_METERS;

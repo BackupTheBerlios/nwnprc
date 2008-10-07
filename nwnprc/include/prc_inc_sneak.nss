@@ -498,7 +498,12 @@ int GetIsConcealed(object oDefender, object oAttacker)
      {
           if(bIsConcealed == FALSE) bIsConcealed = TRUE;
      }
-
+     
+     if(GetLocalInt(oAttacker, "PRC_SB_UNERRING"))
+     {
+             bIsConcealed = FALSE;
+             return bIsConcealed;
+     }
      return bIsConcealed;
 }
 
@@ -529,7 +534,8 @@ int GetCanSneakAttack(object oDefender, object oAttacker)
           // Skullclan Hunters can sneak attack undead, so they return true here.
           if( GetLevelByClass(CLASS_TYPE_SKULLCLAN_HUNTER, oAttacker) && GetRacialType(oDefender) == RACIAL_TYPE_UNDEAD) bReturnVal = TRUE;
 
-          if( GetIsConcealed(oDefender, oAttacker) )   bReturnVal = FALSE;
+          if( GetIsConcealed(oDefender, oAttacker) )
+          bReturnVal = FALSE;
      }
 
      return bReturnVal;

@@ -65,11 +65,11 @@ int DoGrappleCheck(object oAttacker, object oDefender,
         return FALSE;
         
     int nResult;
-    int nDefenderGrapple;
+    int nDefenderGrapple = nDefenderMod;
     int nDefenderRoll = d20();
     nDefenderGrapple += GetGrappleMod(oDefender);
     nDefenderGrapple += nDefenderRoll;
-    int nAttackerGrapple;
+    int nAttackerGrapple = nAttackerMod;
     int nAttackerRoll = d20();
     nAttackerGrapple += GetGrappleMod(oAttacker);
     nAttackerGrapple += nAttackerRoll;

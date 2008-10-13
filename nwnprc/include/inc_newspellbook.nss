@@ -5,14 +5,14 @@
 Prepared:
 Make cls_spbk_*.2da
 Make cls_spcr_*.2da
-Add the spellbook feat to cls_feat_*.2da at the appropriate level
+Add the spellbook feat (#1999) to cls_feat_*.2da at the appropriate level
 Add class to GetSpellbookTypeForClass() below
 Add class to GetAbilityForClass() below
 Add class to GetIsArcaneClass() or GetIsDivineClass() in prc_inc_spells as appropriate
 Add class to GetCasterLevelModifier() in prc_inc_spells if necessary
 Add class to MakeLookupLoopMaster() in inc_lookups
 Run the assemble_spellbooks.bat file
-Make the prc_* scripts in newspellbook
+Make the prc_* scripts in newspellbook. The filenames can be found under the spell entries for the class in spells.2da.
 
 Spont:
 Make cls_spbk_*.2da

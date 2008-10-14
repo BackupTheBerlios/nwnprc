@@ -19007,12 +19007,12 @@ Level  Maneuvers Known   Maneuvers Readied   Stances Known
 2      1                 0                   0              
 3      0                 0                   0              
 4      1                 0                   0              
-5      0                 1		     0              
+5      0                 1                   0              
 6      1                 0                   1              
 7      0                 0                   0              
 8      1                 0                   0              
 9      0                 1                   0              
-10     1                 0		     0              
+10     1                 0                   0              
 
 
 BONUS DIVINE SPELLS
@@ -49913,4 +49913,46 @@ Saving Throw: None
 Spell Resistance: No
 
 This spell summons one mummy.  Summoned undead do not count toward the total Hit Dice of undead that you can control with animate dead, plague of undead, or other command undead abilities. No undead creature you summon can have more Hit Dice than your caster level +1.</entry>
+<entry id="70214" lang="en" sex="m">Acid Flask</entry>
+<entry id="70215" lang="en" sex="m">Alchemist's Fire</entry>
+<entry id="70216" lang="en" sex="m">Tanglefoot Bag</entry>
+<entry id="70217" lang="en" sex="m">Thunderstone</entry>
+<entry id="70218" lang="en" sex="m">AcidFlask         </entry>
+<entry id="70219" lang="en" sex="m">AcidicFire        </entry>
+<entry id="70220" lang="en" sex="m">Agony             </entry>
+<entry id="70221" lang="en" sex="m">AlchemicalSleepGas</entry>
+<entry id="70222" lang="en" sex="m">AlchemistsFire    </entry>
+<entry id="70223" lang="en" sex="m">AlchemistsFrost   </entry>
+<entry id="70224" lang="en" sex="m">AkchemistsSpark   </entry>
+<entry id="70225" lang="en" sex="m">Antitoxin         </entry>
+<entry id="70226" lang="en" sex="m">Baccaran          </entry>
+<entry id="70227" lang="en" sex="m">BileDroppings     </entry>
+<entry id="70228" lang="en" sex="m">BlendCream        </entry>
+<entry id="70229" lang="en" sex="m">Brittlebone       </entry>
+<entry id="70230" lang="en" sex="m">CracklePowder     </entry>
+<entry id="70231" lang="en" sex="m">Devilweed         </entry>
+<entry id="70232" lang="en" sex="m">EmbalmingFire     </entry>
+<entry id="70233" lang="en" sex="m">FareyeOil         </entry>
+<entry id="70234" lang="en" sex="m">FesteringBomb     </entry>
+<entry id="70235" lang="en" sex="m">FlashPellet       </entry>
+<entry id="70236" lang="en" sex="m">HealersBalm       </entry>
+<entry id="70237" lang="en" sex="m">KeenearPowder     </entry>
+<entry id="70238" lang="en" sex="m">LockslipGrease    </entry>
+<entry id="70239" lang="en" sex="m">Luhix             </entry>
+<entry id="70240" lang="en" sex="m">MushroomPowder    </entry>
+<entry id="70241" lang="en" sex="m">NaturesDraught    </entry>
+<entry id="70242" lang="en" sex="m">Nerv              </entry>
+<entry id="70243" lang="en" sex="m">Sannish           </entry>
+<entry id="70244" lang="en" sex="m">ScreamingFlask    </entry>
+<entry id="70245" lang="en" sex="m">Shedden           </entry>
+<entry id="70246" lang="en" sex="m">Shedden+2         </entry>
+<entry id="70247" lang="en" sex="m">Shedden+3         </entry>
+<entry id="70248" lang="en" sex="m">Shedden+4         </entry>
+<entry id="70249" lang="en" sex="m">Shedden+5         </entry>
+<entry id="70250" lang="en" sex="m">Softfoot          </entry>
+<entry id="70251" lang="en" sex="m">TanglefootBag     </entry>
+<entry id="70252" lang="en" sex="m">TerranBrandy      </entry>
+<entry id="70253" lang="en" sex="m">Thunderstone      </entry>
+<entry id="70254" lang="en" sex="m">Vodare            </entry>
+<entry id="70255" lang="en" sex="m">WeepingStone      </entry>
 </tlk>

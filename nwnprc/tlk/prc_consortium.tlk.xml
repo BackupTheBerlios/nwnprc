@@ -49917,42 +49917,84 @@ This spell summons one mummy.  Summoned undead do not count toward the total Hit
 <entry id="70215" lang="en" sex="m">Alchemist's Fire</entry>
 <entry id="70216" lang="en" sex="m">Tanglefoot Bag</entry>
 <entry id="70217" lang="en" sex="m">Thunderstone</entry>
-<entry id="70218" lang="en" sex="m">AcidFlask         </entry>
-<entry id="70219" lang="en" sex="m">AcidicFire        </entry>
-<entry id="70220" lang="en" sex="m">Agony             </entry>
-<entry id="70221" lang="en" sex="m">AlchemicalSleepGas</entry>
-<entry id="70222" lang="en" sex="m">AlchemistsFire    </entry>
-<entry id="70223" lang="en" sex="m">AlchemistsFrost   </entry>
-<entry id="70224" lang="en" sex="m">AkchemistsSpark   </entry>
-<entry id="70225" lang="en" sex="m">Antitoxin         </entry>
-<entry id="70226" lang="en" sex="m">Baccaran          </entry>
-<entry id="70227" lang="en" sex="m">BileDroppings     </entry>
-<entry id="70228" lang="en" sex="m">BlendCream        </entry>
-<entry id="70229" lang="en" sex="m">Brittlebone       </entry>
-<entry id="70230" lang="en" sex="m">CracklePowder     </entry>
-<entry id="70231" lang="en" sex="m">Devilweed         </entry>
-<entry id="70232" lang="en" sex="m">EmbalmingFire     </entry>
-<entry id="70233" lang="en" sex="m">FareyeOil         </entry>
-<entry id="70234" lang="en" sex="m">FesteringBomb     </entry>
-<entry id="70235" lang="en" sex="m">FlashPellet       </entry>
-<entry id="70236" lang="en" sex="m">HealersBalm       </entry>
-<entry id="70237" lang="en" sex="m">KeenearPowder     </entry>
-<entry id="70238" lang="en" sex="m">LockslipGrease    </entry>
-<entry id="70239" lang="en" sex="m">Luhix             </entry>
-<entry id="70240" lang="en" sex="m">MushroomPowder    </entry>
-<entry id="70241" lang="en" sex="m">NaturesDraught    </entry>
-<entry id="70242" lang="en" sex="m">Nerv              </entry>
-<entry id="70243" lang="en" sex="m">Sannish           </entry>
-<entry id="70244" lang="en" sex="m">ScreamingFlask    </entry>
-<entry id="70245" lang="en" sex="m">Shedden           </entry>
-<entry id="70246" lang="en" sex="m">Shedden+2         </entry>
-<entry id="70247" lang="en" sex="m">Shedden+3         </entry>
-<entry id="70248" lang="en" sex="m">Shedden+4         </entry>
-<entry id="70249" lang="en" sex="m">Shedden+5         </entry>
-<entry id="70250" lang="en" sex="m">Softfoot          </entry>
-<entry id="70251" lang="en" sex="m">TanglefootBag     </entry>
-<entry id="70252" lang="en" sex="m">TerranBrandy      </entry>
-<entry id="70253" lang="en" sex="m">Thunderstone      </entry>
-<entry id="70254" lang="en" sex="m">Vodare            </entry>
-<entry id="70255" lang="en" sex="m">WeepingStone      </entry>
+<entry id="70218" lang="en" sex="m">Acid Flask: You can throw a flask of acid as a splash weapon.  A direct hit deals 1d6 points ofacid damage. Every creature within 5 feet of the point where the acid hits takes 1 point of acid damage from the splash.</entry>
+<entry id="70219" lang="en" sex="m">AcidicFire: This alchemical concoction combines alchemical fire with a strong acid. A direct hit with acidic fire deals 1d4 points of acid damage and 1d8 points of fire damage. Every creature within 5 feet of the point where the acidic fire hits takes 1 point of acid damage and 1 point of fire damage from the splash.</entry>
+<entry id="70220" lang="en" sex="m">Agony (Liquid Pain): This thick, reddish liquid is the distilled essence of pain, captured using special spells or items. It is highly sought after by outsiders.
+                                    Initial Effect: User is stunned for 1d4+1 rounds and can take only partial actions for 1d6 minutes after that.
+                                    Secondary Effect: 1d4+1 enhancement bonus to Charisma for 1d10+50 minutes.
+                                    Side Effects: Feelings of intense pleasure last for 1d4 hours.
+                                    Overdose: If more than one dose is taken in a 24-hour period, the user immediately falls unconscious for 1d4 hours (Fort DC 18 negates).
+                                    Addiction: Agony has an addiction rating of Extreme (DC 25). Failing to take a drug you are addicted to once per 24 hours and failing the resulting Fort save results in ability damage.</entry>
+<entry id="70221" lang="en" sex="m">Alchemical Sleep Gas: This liquid evaporates quickly when exposed to air, creating a temporary, mildly toxic cloud that puts living creatures to sleep. You can throw a flask of sleep gas as a grenadelike weapon. On a direct hit a living target must succeed on a Fortitude save (DC 15) or fall asleep for 1 minute. After 1 minute, the target must make another Fortitude save (DC 15) or sleep 1d4 additional minutes. The sleep gas does not affect creatures that are immune to poison.</entry>
+<entry id="70222" lang="en" sex="m">Alchemist’s Fire: Alchemist’s fire is sticky, adhesive substance that ignites when exposed to air. You can throw a flask of alchemist’s fire as a splash weapon. A direct hit deals 1d6 points of fire damage. Every creature within 5 feet of the point where the flask hits takes 1 point of fire damage from the splash.</entry>
+<entry id="70223" lang="en" sex="m">Alchemist’s Frost: A thin liquid that grows extremely cold when exposed to air, alchemist’s frost functions like alchemists fire except that it deals 1d8 points of cold damage on a direct hit (and 1 point of cold damage on a splash), rather than fire damage. It deals no additional damage after the initial damage.</entry>
+<entry id="70224" lang="en" sex="m">Alchemist’s Spark: Alchemist’s spark combines two substances that react violently when mixed. A flask of alchemist’s spark has two compartments that keep the two substances separate;  throwing the flask shatters it and allows the substances to mix, releasing a powerful electrical discharge. Otherwise, alchemical sparl functions like alchemist’s fire except that it deals 1d8  points of electricity damage on a direct hit (and 1 point of electricity damage to those it splashes), rather than fire damage. It deals no additional damage after the initial damage.</entry>
+<entry id="70225" lang="en" sex="m">Antitoxin:This substance, when taken internally, gives a +5 bonus to Fortitude saves vs poison for 1 hour.</entry>
+<entry id="70226" lang="en" sex="m">Baccaran: This pasty substance is dried and kept as a powder or sometimes left as a paste. The ingredients are numerous and difficult to obtain. 
+                                    Initial Effect: 1d4 points of Strength damage.
+                                    Secondary Effect: 1d4+1 enhancement bonus to Wisdom for 1d10+15 minutes.
+                                    Side Effects: Those under the effect of baccaran take a -4 circumstance penalty on saving throws involving illusions for 2d4 hours after using this mild hallucinogen. 
+                                    Overdose: If more than one dose is taken in a 24-hour period, the user immediately takes 2d6 points of damage and the side effect is doubled.
+                                    Addiction: Baccaran has an addiction rating of Low (DC 6). Failing to take a drug you are addicted to once per 24 hours and failing the resulting Fort save results in ability damage.
+                                    </entry>
+<entry id="70227" lang="en" sex="m">Bile Droppings: Distilled from the venomous excreta of certain breeds of monstrous spiders, this substance is a thick, viscous fluid. You can throw a flask of bile droppings as a ranged touch attack with a range increment of 10 feet. Upon hitting a target, this sticky fluid deals 1d6 points of acid damage in the first round and 1d6 points of acid damage in the second round. If the target takes a full-round action to scrape it off, he takes no damage in the second round.
+                                    In addition to causing acid damage, a flask of bile droppings releases a powerful stench when broken open, forcing anyone within 5 feet to make a successful DC 13 Fortitude save or be sickened for 1 round. Anyone actually struck by the vile stuff takes a -4 penalty on the save.</entry>
+<entry id="70228" lang="en" sex="m">Blend Cream: This pale gray cream dulls the color of flesh, fur, scales, and hair. It allows those affected to better blend with background and shadow, making it easier to hide. Applying blend cream is a standard action that provokes attacks of opportunity. Blend cream provides a +1 alchemical bonus on Hide checks. The effects of blend cream last for 1 hour. Blend cream gives no ability to hide in plain sight or without sufficient cover.</entry>
+<entry id="70229" lang="en" sex="m">Brittlebone: This unguent must be applied to a skeleton. The ointment reduces the skeleton’s natural armor by 2 points (to a minimum of 0), but when the skeleton is destroyed, its bones splinter and fly apart, sending shards in all directions. Any creature within the skeleton’s reach takes 1 point of piercing damage per HD of the skeleton (Reflex DC 15 half; minimum 1 point).</entry>
+<entry id="70230" lang="en" sex="m">Crackle Powder: This alchemical powder creates a loud crackling noise, like a broomstick breaking, whenever it is jostled or struck. A single packet covers a 5-foot-radius area; applying the powder requires a full-round action. Once in place, the powder remains active for 1 hour and imposes a -10 penalty on Move Silently checks made when traversing the area.</entry>
+<entry id="70231" lang="en" sex="m">Devilweed: Leaves from the wyssin plant are dried and rolled into a tobaccolike substance and smoked.
+                                    Initial Effect: 1 point of Wisdom damage. 
+                                    Secondary Effect: The smoker gains a +2 alchemical bonus to Strength for 1d3 hours.
+                                    Side Effects: A creature under the effect of devilweed is easily confused and acts skittish (treat as shaken).
+                                    Overdose: None.
+                                    Addiction: Devilweed has an addiction rating of Low (DC 6). Failing to take a drug you are addicted to once per 24 hours and failing the resulting Fort save results in ability damage.</entry>
+<entry id="70232" lang="en" sex="m">Embalming Fire: This bitter-smelling liquid is poured over a zombie. Once applied, if the zombie takes even a single point of damage, it bursts into blue flame for 1 minute. This fire does no damage to the zombie, but its attacks during that time deal an additional 1d6 points of fire damage.</entry>
+<entry id="70233" lang="en" sex="m">Fareye Oil: When applied to the eyes, this clear oil sharpens the user’s vision for a short time, providing a +1 alchemical bonus on Spot checks for 1 minute. One dose of fareye oil is enough to affect the eyes of a creature of any size, but the creature must have eyes to gain any benefit from the oil.</entry>
+<entry id="70234" lang="en" sex="m">Festering Bomb: This small ceramic sphere is packed with alchemical explosives, rotting meat, and offal infected with filth fever. When thrown as a grenadelike weapon, it spreads disease in its wake. The explosion on impact is not enough to cause physical harm, but it does spray the rotten contents and infection in a 20-foot burst. All within the burst must make saving throws as if exposed to filth fever Unlike normal exposure to filth fever, the victim need not be injured.</entry>
+<entry id="70235" lang="en" sex="m">Flash Pellet: This tiny brittle object is often disguised as a button or other decoration. You can throw a flash pellet as a ranged attack with a range increment of 5 feet. When thrown against a hard surface, it bursts with a bright flash of light. All creatures within a 5-foot-radius burst must succeed on a DC 15 Fortitude save or be blinded for 1 round and dazzled for 1 round after that.</entry>
+<entry id="70236" lang="en" sex="m">This smooth, sweet-smelling balm allows a healer to better soothe the effects of wounds, disease, and poison. Healer’s balm provides a +1 alchemical bonus on Heal checks made by an affected creature. The effects of healer’s balm last for 1 minute.</entry>
+<entry id="70237" lang="en" sex="m">Keenear Powder: This dry white powder sharpens a creature’s hearing when applied to the ear. The powder is effective for only a short time, so it is more often used by those trying to avoid guards or sentries than by those tasked with guarding an area for a longer time. Keenear powder provides a +1 alchemical bonus on Listen checks for 1 minute.</entry>
+<entry id="70238" lang="en" sex="m">Lockslip Grease: Lockslip grease is a thick reddish oil that loosens the mechanical workings of nonmagical locks. The grease is effective for a short time and provides a slight edge to those attempting to pick a lock. Applying lockslip grease provides a +1 alchemical bonus on Open Lock checks made by the character using it for 1 minute.</entry>
+<entry id="70239" lang="en" sex="m">Luhix: Powdered stalks of plants that grow only in the Abyss, luhix is normally sprinkled onto a bleeding, selfinflicted wound. Then the wound is sealed either with magical healing or tightly wound bandages. 
+                                    Initial Effect: 1 point of ability score damage to all ability scores.
+                                    Secondary Effect: The imbiber gains a +2 alchemical bonus to all ability scores for 1d2 hours.
+                                    Side Effects: For the first minute of application, the user feels intense pain. During the time that the secondary effect is in effect, the user is immune to pain (including the effects of spells such as symbol of pain). The character takes damage as normal, but may not react normally to that damage.
+                                    Overdose: Those who take this drug more than once in 24 hours must make a separate save (Fort DC 25 negates) or die in terrible pain.
+                                    Addiction: Luhix has an addiction rating of Vicious (DC 36). Failing to take a drug you are addicted to once per 24 hours and failing the resulting Fort save results in ability damage.</entry>
+<entry id="70240" lang="en" sex="m">Mushroom Powder: Taken from a rare blue mushroom, this powder must be inhaled. It is popular among arcane spellcasters. 
+                                    Initial Effect: +2 alchemical bonus to Intelligence and Charisma for 1 hour.
+                                    Secondary Effect: 1 point of Strength damage.
+                                    Side Effects: This is a mild hallucinogen. The user takes a -2alchemical penalty to Wisdom for 1d4 hours and a -2 alchemical penalty to Strength and Constitution for 2d4 hours.
+                                    Overdose: If more than one dose is taken in a 12 hour period, the user takes 2d6 points of damage. Using it more than three times in any 24-hour period deals 4d6 points of damage and paralyzes the user for 2d4 hours.
+                                    Addiction: Mushroom Powder has an addiction rating of Medium (DC 10). Failing to take a drug you are addicted to once per 24 hours and failing the resulting Fort save results in ability damage.</entry>
+<entry id="70241" lang="en" sex="m">Nature’s Draught: This substance is a murky, pungent liquid. When consumed, nature’s draught causes subtle changes in the user’s scent. Animals respond well to a character who has consumed nature’s draught, finding her less threatening and easier to trust. Drinking a vial of nature’s draught provides a +1 alchemical bonus on Animal Empathy checks made during the next 12 hours.</entry>
+<entry id="70242" lang="en" sex="m">Nerv: This is the street name for a substance also known as liquid courage, a gold-colored syrup in a clear glass bottle painted with interweaving blue and red swirls. Drinking a dose of nerv grants the drinker a +2 alchemical bonus on saves against fear effects for 1 hour.</entry>
+<entry id="70243" lang="en" sex="m">Sannish: A bluish liquid distilled from wolves’ milk and a powdered desert plant, this concoction is very popular. Addicts are easily found by the permanent blue stains on their lips. 
+                                    Initial Effect: 1 point of Wisdom damage.
+                                    Secondary Effect: The user becomes numbed to pain for 1d4 hours, immune to pain-induced penalties (such as from a symbol of pain). 
+                                    Side Effects: Sannish causes euphoria. While the drug is in effect, the user takes a -2 penalty on all initiative checks.
+                                    Overdose: A second dose taken while the first dose is still in effect causes a numbing stupor for 2d4 hours. The user can only take partial actions until the stupor wears off.
+                                    Addiction: Sannish has an addiction rating of Medium (DC 10).  Failing to take a drug you are addicted to once per 24 hours and failing the resulting Fort save results in ability damage.</entry>
+<entry id="70244" lang="en" sex="m">Screaming Flask: This container is made from thick leather with a cap sewn on tight and fitted with a ripcord. Pulling the cord rips open the flask and activates the alchemical substance within. The flask emits a high-pitched shriek in a 15-foot cone. Anything in the cone takes ld8 points of sonic damage and is deafened for 1 minute (Fortitude DC 15 negates).</entry>
+<entry id="70245" lang="en" sex="m">Shedden: This gray paste is brewed from the exoskeletons of monstrous spiders ground with silk-based oils and mixed with various chemicals and reagents. When spread on your exposed flesh, it temporarily hardens your skin, granting you a +1 bonus to natural armor for 2 minutes. This bonus stacks with any other natural armor you already have.</entry>
+<entry id="70246" lang="en" sex="m">Shedden +2: This gray paste is brewed from the exoskeletons of monstrous spiders ground with silk-based oils and mixed with various chemicals and reagents. When spread on your exposed flesh, it temporarily hardens your skin, granting you a +2 bonus to natural armor for 2 minutes. This bonus stacks with any other natural armor you already have.</entry>
+<entry id="70247" lang="en" sex="m">Shedden +3: This gray paste is brewed from the exoskeletons of monstrous spiders ground with silk-based oils and mixed with various chemicals and reagents. When spread on your exposed flesh, it temporarily hardens your skin, granting you a +3 bonus to natural armor for 2 minutes. This bonus stacks with any other natural armor you already have.</entry>
+<entry id="70248" lang="en" sex="m">Shedden +4: This gray paste is brewed from the exoskeletons of monstrous spiders ground with silk-based oils and mixed with various chemicals and reagents. When spread on your exposed flesh, it temporarily hardens your skin, granting you a +4 bonus to natural armor for 2 minutes. This bonus stacks with any other natural armor you already have.</entry>
+<entry id="70249" lang="en" sex="m">Shedden +5: This gray paste is brewed from the exoskeletons of monstrous spiders ground with silk-based oils and mixed with various chemicals and reagents. When spread on your exposed flesh, it temporarily hardens your skin, granting you a +5 bonus to natural armor for 2 minutes. This bonus stacks with any other natural armor you already have.</entry>
+<entry id="70250" lang="en" sex="m">Softfoot: Softfoot is a fine gray powder that muffles sound when applied to the bottom of a foot or boot. It provides a +1 alchemical bonus on Move Silently checks for 1 hour.</entry>
+<entry id="70251" lang="en" sex="m">Tanglefoot Bag: This round leather bag is full of alchemical goo. When you throw a tanglefoot bag at a creature, the bag comes apart and the goo bursts out, entangling the target and then becoming tough and resilient upon exposure to air. An entangled creature takes a -2 penalty on attack rolls and a –4 penalty to Dexterity and must make a DC 15 Reflex save or be glued to the floor, unable to move.</entry>
+<entry id="70252" lang="en" sex="m">Terran Brandy: A potent alcohol, this magical drink is favored by heartless spellcasters of all types. This green liquid is distilled from the essence of dying fey. 
+                                    Initial Effect: +2 alchemical bonus to effective caster level for 1d20+20 minutes. 
+                                    Secondary Effect: 2 points of Constitution damage. 
+                                    Side Effects: None. 
+                                    Overdose: If more than one dose is taken in a 8-hour period, the user immediately takes 1 point of Constitution damage.
+                                    Addiction: Terran Brandy has an addiction rating of Low (DC 6). Failing to take a drug you are addicted to once per 24 hours and failing the resulting Fort save results in ability damage.</entry>
+<entry id="70253" lang="en" sex="m">Thunderstone: You can throw this stone as a ranged attack with a range increment of 20 feet. When it strikes a hard surface (or is struck hard), it creates a deafening bang that is treated as a sonic attack. Each creature within a 10-foot-radius spread must make a DC 15 Fortitude save or be deafened for 1 hour.</entry>
+<entry id="70254" lang="en" sex="m">Vodare: An extremely bitter brown powder, vodare is usually mixed with honeyed water or sweet wine to dilute the taste. It is made from the crushed petals of a flower that grows only on the graves of those who dedicated their lives to the worship of Rallaster. 
+                                    Initial Effect: +2 alchemical bonus on Intimidate checks and saving throws against fear effects for 1d4 hours.
+                                    Secondary Effect: -4 alchemical penalty on Diplomacy and Bluff checks for 2d4 hours.
+                                    Side Effects: Mild euphoria and fierce confidence while the drug is in effect.
+                                    Overdose: If more than one dose is taken in a 4-hour period, the user becomes catatonic (Fort DC 15 negates).
+                                    Addiction: Vodare has an addiction rating of High (DC 14). Failing to take a drug you are addicted to once per 24 hours and failing the resulting Fort save results in ability damage.</entry>
+<entry id="70255" lang="en" sex="m">Weeping Stone: Created through alchemical processes that inflict terrible - and sometimes lethal - pain on a living being, a weeping stone causes anyone touching it to begin to weep and feel great sorrow. Such a character is considered shaken for 1d6 rounds.</entry>
 </tlk>

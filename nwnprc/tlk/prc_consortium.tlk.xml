@@ -49997,4 +49997,99 @@ This spell summons one mummy.  Summoned undead do not count toward the total Hit
                                     Overdose: If more than one dose is taken in a 4-hour period, the user becomes catatonic (Fort DC 15 negates).
                                     Addiction: Vodare has an addiction rating of High (DC 14). Failing to take a drug you are addicted to once per 24 hours and failing the resulting Fort save results in ability damage.</entry>
 <entry id="70255" lang="en" sex="m">Weeping Stone: Created through alchemical processes that inflict terrible - and sometimes lethal - pain on a living being, a weeping stone causes anyone touching it to begin to weep and feel great sorrow. Such a character is considered shaken for 1d6 rounds.</entry>
+<entry id="70256" lang="en" sex="m">Arsenic: Ingested DC 13
+                                    Initial Damage:   1 CON
+                                    Secondary Damage: 1d8 CON</entry>
+<entry id="70257" lang="en" sex="m">Balor Bile: Contact DC 25
+                                    Initial Damage:   1d6 STR
+                                    Secondary Damage: 1d6 STR</entry>
+<entry id="70258" lang="en" sex="m">Bebilith Venom: Injury DC 20
+                                    Initial Damage:   1d6 CON 
+                                    Secondary Damage: 2d6 CON</entry>
+<entry id="70259" lang="en" sex="m">Black Adder Venom: Injury DC 11
+                                    Initial Damage:   1d6 CON
+                                    Secondary Damage: 1d6 CON</entry>
+<entry id="70260" lang="en" sex="m">Black Lotus Extract: Contact DC 20
+                                    Initial Damage:   3d6 CON
+                                    Secondary Damage: 3d6 CON</entry>
+<entry id="70261" lang="en" sex="m">Bloodroot: Injury DC 12
+                                    Initial Damage:   0
+                                    Secondary Damage: 1d4 CON + 1d3 WIS</entry>
+<entry id="70262" lang="en" sex="m">Blue Whinnis: Injury DC 14
+                                    Initial Damage:   1 CON
+                                    Secondary Damage: Unconsciousness</entry>
+<entry id="70263" lang="en" sex="m">Burning Angel Wing Fumes: Inhaled DC 18
+                                    Initial Damage:   1d6 CHA
+                                    Secondary Damage: 2d6 CHA</entry>
+<entry id="70264" lang="en" sex="m">Burnt Othur Fumes: Inhaled DC 18
+                                    Initial Damage:   1 CON drain
+                                    Secondary Damage: 3d6 CON</entry>
+<entry id="70265" lang="en" sex="m">Carrior Crawler Brain Juice: Contact DC 13
+                                    Initial Damage:   Paralysis
+                                    Secondary Damage: 0</entry>
+<entry id="70266" lang="en" sex="m">Celestial Lightsblood (Ravage): Ingested DC 20
+                                    Initial Damage:   1d4 DEX
+                                    Secondary Damage: 1d4 CON</entry>
+<entry id="70267" lang="en" sex="m">Chaos Mist: Inhaled DC 15
+                                    Initial Damage:   1d4 WIS
+                                    Secondary Damage: 2d6 WIS</entry>
+<entry id="70268" lang="en" sex="m">Colossal Centipede Venom: Injury DC 36
+                                    Initial Damage:   2d6 DEX
+                                    Secondary Damage: 2d6 DEX</entry>
+<entry id="70269" lang="en" sex="m">Colossal Scorpion Venom: Injury DC 54
+                                    Initial Damage:   2d8 STR
+                                    Secondary Damage: 2d8 STR</entry>
+<entry id="70270" lang="en" sex="m">Colossal Spider Venom: Injury DC 35
+                                    Initial Damage:   2d8 STR
+                                    Secondary Damage: 2d8 STR</entry>
+<entry id="70271" lang="en" sex="m">Dark Reaver Powder: Ingested DC 18
+                                    Initial Damage:   2d6 CON
+                                    Secondary Damage: 1d6 CON + 1d6 STR</entry>
+<entry id="70272" lang="en" sex="m"></entry>
+<entry id="70273" lang="en" sex="m"></entry>
+<entry id="70274" lang="en" sex="m"></entry>
+<entry id="70275" lang="en" sex="m"></entry>
+<entry id="70276" lang="en" sex="m"></entry>
+<entry id="70277" lang="en" sex="m"></entry>
+<entry id="70278" lang="en" sex="m"></entry>
+<entry id="70279" lang="en" sex="m"></entry>
+<entry id="70280" lang="en" sex="m"></entry>
+<entry id="70281" lang="en" sex="m"></entry>
+<entry id="70282" lang="en" sex="m"></entry>
+<entry id="70283" lang="en" sex="m"></entry>
+<entry id="70284" lang="en" sex="m"></entry>
+<entry id="70285" lang="en" sex="m"></entry>
+<entry id="70286" lang="en" sex="m"></entry>
+<entry id="70287" lang="en" sex="m"></entry>
+<entry id="70288" lang="en" sex="m"></entry>
+<entry id="70289" lang="en" sex="m"></entry>
+<entry id="70290" lang="en" sex="m"></entry>
+<entry id="70291" lang="en" sex="m"></entry>
+<entry id="70292" lang="en" sex="m"></entry>
+<entry id="70293" lang="en" sex="m"></entry>
+<entry id="70294" lang="en" sex="m"></entry>
+<entry id="70295" lang="en" sex="m"></entry>
+<entry id="70296" lang="en" sex="m"></entry>
+<entry id="70297" lang="en" sex="m"></entry>
+<entry id="70298" lang="en" sex="m"></entry>
+<entry id="70299" lang="en" sex="m"></entry>
+<entry id="70300" lang="en" sex="m"></entry>
+<entry id="70301" lang="en" sex="m"></entry>
+<entry id="70302" lang="en" sex="m"></entry>
+<entry id="70303" lang="en" sex="m"></entry>
+<entry id="70304" lang="en" sex="m"></entry>
+<entry id="70305" lang="en" sex="m"></entry>
+<entry id="70306" lang="en" sex="m"></entry>
+<entry id="70307" lang="en" sex="m"></entry>
+<entry id="70308" lang="en" sex="m"></entry>
+<entry id="70309" lang="en" sex="m"></entry>
+<entry id="70310" lang="en" sex="m"></entry>
+<entry id="70311" lang="en" sex="m"></entry>
+<entry id="70312" lang="en" sex="m"></entry>
+<entry id="70313" lang="en" sex="m"></entry>
+<entry id="70314" lang="en" sex="m"></entry>
+<entry id="70315" lang="en" sex="m"></entry>
+<entry id="70316" lang="en" sex="m"></entry>
+<entry id="70317" lang="en" sex="m"></entry>
+
 </tlk>

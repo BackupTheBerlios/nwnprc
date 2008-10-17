@@ -49998,98 +49998,192 @@ This spell summons one mummy.  Summoned undead do not count toward the total Hit
                                     Addiction: Vodare has an addiction rating of High (DC 14). Failing to take a drug you are addicted to once per 24 hours and failing the resulting Fort save results in ability damage.</entry>
 <entry id="70255" lang="en" sex="m">Weeping Stone: Created through alchemical processes that inflict terrible - and sometimes lethal - pain on a living being, a weeping stone causes anyone touching it to begin to weep and feel great sorrow. Such a character is considered shaken for 1d6 rounds.</entry>
 <entry id="70256" lang="en" sex="m">Arsenic: Ingested DC 13
-                                    Initial Damage:   1 CON
-                                    Secondary Damage: 1d8 CON</entry>
+                                    Initial Damage:   1 Con
+                                    Secondary Damage: 1d8 Con</entry>
 <entry id="70257" lang="en" sex="m">Balor Bile: Contact DC 25
-                                    Initial Damage:   1d6 STR
-                                    Secondary Damage: 1d6 STR</entry>
+                                    Initial Damage:   1d6 Str
+                                    Secondary Damage: 1d6 Str</entry>
 <entry id="70258" lang="en" sex="m">Bebilith Venom: Injury DC 20
-                                    Initial Damage:   1d6 CON 
-                                    Secondary Damage: 2d6 CON</entry>
+                                    Initial Damage:   1d6 Con 
+                                    Secondary Damage: 2d6 Con</entry>
 <entry id="70259" lang="en" sex="m">Black Adder Venom: Injury DC 11
-                                    Initial Damage:   1d6 CON
-                                    Secondary Damage: 1d6 CON</entry>
+                                    Initial Damage:   1d6 Con
+                                    Secondary Damage: 1d6 Con</entry>
 <entry id="70260" lang="en" sex="m">Black Lotus Extract: Contact DC 20
-                                    Initial Damage:   3d6 CON
-                                    Secondary Damage: 3d6 CON</entry>
+                                    Initial Damage:   3d6 Con
+                                    Secondary Damage: 3d6 Con</entry>
 <entry id="70261" lang="en" sex="m">Bloodroot: Injury DC 12
                                     Initial Damage:   0
-                                    Secondary Damage: 1d4 CON + 1d3 WIS</entry>
+                                    Secondary Damage: 1d4 Con + 1d3 Wis</entry>
 <entry id="70262" lang="en" sex="m">Blue Whinnis: Injury DC 14
-                                    Initial Damage:   1 CON
+                                    Initial Damage:   1 Con
                                     Secondary Damage: Unconsciousness</entry>
 <entry id="70263" lang="en" sex="m">Burning Angel Wing Fumes: Inhaled DC 18
-                                    Initial Damage:   1d6 CHA
-                                    Secondary Damage: 2d6 CHA</entry>
+                                    Initial Damage:   1d6 Cha
+                                    Secondary Damage: 2d6 Cha</entry>
 <entry id="70264" lang="en" sex="m">Burnt Othur Fumes: Inhaled DC 18
-                                    Initial Damage:   1 CON drain
-                                    Secondary Damage: 3d6 CON</entry>
+                                    Initial Damage:   1 Con drain
+                                    Secondary Damage: 3d6 Con</entry>
 <entry id="70265" lang="en" sex="m">Carrior Crawler Brain Juice: Contact DC 13
                                     Initial Damage:   Paralysis
                                     Secondary Damage: 0</entry>
 <entry id="70266" lang="en" sex="m">Celestial Lightsblood (Ravage): Ingested DC 20
-                                    Initial Damage:   1d4 DEX
-                                    Secondary Damage: 1d4 CON</entry>
+                                    Initial Damage:   1d4 Dex
+                                    Secondary Damage: 1d4 Con</entry>
 <entry id="70267" lang="en" sex="m">Chaos Mist: Inhaled DC 15
-                                    Initial Damage:   1d4 WIS
-                                    Secondary Damage: 2d6 WIS</entry>
+                                    Initial Damage:   1d4 Wis
+                                    Secondary Damage: 2d6 Wis</entry>
 <entry id="70268" lang="en" sex="m">Colossal Centipede Venom: Injury DC 36
-                                    Initial Damage:   2d6 DEX
-                                    Secondary Damage: 2d6 DEX</entry>
+                                    Initial Damage:   2d6 Dex
+                                    Secondary Damage: 2d6 Dex</entry>
 <entry id="70269" lang="en" sex="m">Colossal Scorpion Venom: Injury DC 54
-                                    Initial Damage:   2d8 STR
-                                    Secondary Damage: 2d8 STR</entry>
+                                    Initial Damage:   2d8 Str
+                                    Secondary Damage: 2d8 Str</entry>
 <entry id="70270" lang="en" sex="m">Colossal Spider Venom: Injury DC 35
-                                    Initial Damage:   2d8 STR
-                                    Secondary Damage: 2d8 STR</entry>
+                                    Initial Damage:   2d8 Str
+                                    Secondary Damage: 2d8 Str</entry>
 <entry id="70271" lang="en" sex="m">Dark Reaver Powder: Ingested DC 18
-                                    Initial Damage:   2d6 CON
-                                    Secondary Damage: 1d6 CON + 1d6 STR</entry>
-<entry id="70272" lang="en" sex="m"></entry>
-<entry id="70273" lang="en" sex="m"></entry>
-<entry id="70274" lang="en" sex="m"></entry>
-<entry id="70275" lang="en" sex="m"></entry>
-<entry id="70276" lang="en" sex="m"></entry>
-<entry id="70277" lang="en" sex="m"></entry>
-<entry id="70278" lang="en" sex="m"></entry>
-<entry id="70279" lang="en" sex="m"></entry>
-<entry id="70280" lang="en" sex="m"></entry>
-<entry id="70281" lang="en" sex="m"></entry>
-<entry id="70282" lang="en" sex="m"></entry>
-<entry id="70283" lang="en" sex="m"></entry>
-<entry id="70284" lang="en" sex="m"></entry>
-<entry id="70285" lang="en" sex="m"></entry>
-<entry id="70286" lang="en" sex="m"></entry>
-<entry id="70287" lang="en" sex="m"></entry>
-<entry id="70288" lang="en" sex="m"></entry>
-<entry id="70289" lang="en" sex="m"></entry>
-<entry id="70290" lang="en" sex="m"></entry>
-<entry id="70291" lang="en" sex="m"></entry>
-<entry id="70292" lang="en" sex="m"></entry>
-<entry id="70293" lang="en" sex="m"></entry>
-<entry id="70294" lang="en" sex="m"></entry>
-<entry id="70295" lang="en" sex="m"></entry>
-<entry id="70296" lang="en" sex="m"></entry>
-<entry id="70297" lang="en" sex="m"></entry>
-<entry id="70298" lang="en" sex="m"></entry>
-<entry id="70299" lang="en" sex="m"></entry>
-<entry id="70300" lang="en" sex="m"></entry>
-<entry id="70301" lang="en" sex="m"></entry>
-<entry id="70302" lang="en" sex="m"></entry>
-<entry id="70303" lang="en" sex="m"></entry>
-<entry id="70304" lang="en" sex="m"></entry>
-<entry id="70305" lang="en" sex="m"></entry>
-<entry id="70306" lang="en" sex="m"></entry>
-<entry id="70307" lang="en" sex="m"></entry>
-<entry id="70308" lang="en" sex="m"></entry>
-<entry id="70309" lang="en" sex="m"></entry>
-<entry id="70310" lang="en" sex="m"></entry>
-<entry id="70311" lang="en" sex="m"></entry>
-<entry id="70312" lang="en" sex="m"></entry>
-<entry id="70313" lang="en" sex="m"></entry>
-<entry id="70314" lang="en" sex="m"></entry>
-<entry id="70315" lang="en" sex="m"></entry>
-<entry id="70316" lang="en" sex="m"></entry>
-<entry id="70317" lang="en" sex="m"></entry>
-
+                                    Initial Damage:   2d6 Con
+                                    Secondary Damage: 1d6 Con + 1d6 Str</entry>
+<entry id="70272" lang="en" sex="m">Deathblade: Injury DC 20
+                                    Initial Damage:   1d6 Con
+                                    Secondary Damage: 2d6 Con</entry>
+<entry id="70273" lang="en" sex="m">Dragon Bile: Contact DC 26
+                                    Initial Damage:   3d6 Str
+                                    Secondary Damage: 0</entry>
+<entry id="70274" lang="en" sex="m">Epic Wyvern Poison: Injury DC 26
+                                    Initial Damage:   2d6 Con
+                                    Secondary Damage: 2d6 Con</entry>
+<entry id="70275" lang="en" sex="m">Eyeblast: Injury DC 22
+                                    Initial Damage:   Blindness
+                                    Secondary Damage: Blindness</entry>
+<entry id="70276" lang="en" sex="m">Gargantuan Centipede Poison: Injury DC 26
+                                    Initial Damage:   1d8 Dex
+                                    Secondary Damage: 1d8 Dex</entry>
+<entry id="70277" lang="en" sex="m">Gargantuan Scorpion Poison: Injury DC 36
+                                    Initial Damage:   2d6 Str
+                                    Secondary Damage: 2d6 Str</entry>
+<entry id="70278" lang="en" sex="m">Gargantuan Spider Venom: Injury DC 31
+                                    Initial Damage:   2d6 Str
+                                    Secondary Damage: 2d6 Str</entry>
+<entry id="70279" lang="en" sex="m">Giant Wasp Poison: Injury DC 18
+                                    Initial Damage:   1d6 Dex
+                                    Secondary Damage: 1d6 Dex</entry>
+<entry id="70280" lang="en" sex="m">Golden Ice (Ravage): Contact DC 14
+                                    Initial Damage:   1d6 Dex
+                                    Secondary Damage: 2d6 Dex</entry>
+<entry id="70281" lang="en" sex="m">Greenblood Oil: Injury DC 13
+                                    Initial Damage:   1 Con
+                                    Secondary Damage: 1d2 Con</entry>
+<entry id="70282" lang="en" sex="m">Huge Centipede Poison: Injury DC 18
+                                    Initial Damage:   1d6 Dex
+                                    Secondary Damage: 1d6 Dex</entry>
+<entry id="70283" lang="en" sex="m">Huge Scorpion Poison: Injury DC 26
+                                    Initial Damage:   1d8 Str
+                                    Secondary Damage: 1d8 Str</entry>
+<entry id="70284" lang="en" sex="m">Huge Spider Venom: Injury DC 22
+                                    Initial Damage:   1d8 Str
+                                    Secondary Damage: 1d8 Str</entry>
+<entry id="70285" lang="en" sex="m">Id Moss: Ingested DC 14
+                                    Initial Damage:   1d4 Int
+                                    Secondary Damage: 2d6 Int</entry>
+<entry id="70286" lang="en" sex="m">Ishentav: Inhaled DC 13
+                                    Initial Damage:   1d6 Str
+                                    Secondary Damage: 1d6 Str</entry>
+<entry id="70287" lang="en" sex="m">Jade Water (Ravage): Injury DC 14
+                                    Initial Damage:   1d4 Wis
+                                    Secondary Damage: 1d4 Int + 1d4 Wis</entry>
+<entry id="70288" lang="en" sex="m">Large Centipede Poison: Injury DC 16
+                                    Initial Damage:   1d4 Dex
+                                    Secondary Damage: 1d4 Dex</entry>
+<entry id="70289" lang="en" sex="m">Large Scorpion Poison: Injury DC 18
+                                    Initial Damage:   1d6 Str
+                                    Secondary Damage: 1d6 Str</entry>
+<entry id="70290" lang="en" sex="m">Large Spider Venom: Injury DC 16
+                                    Initial Damage:   1d6 Str
+                                    Secondary Damage: 1d6 Str</entry>
+<entry id="70291" lang="en" sex="m">Lich Dust: Ingested DC 17
+                                    Initial Damage:   2d6 Str
+                                    Secondary Damage: 1d6 Str</entry>
+<entry id="70292" lang="en" sex="m">Malyss Root Paste: Contact DC 16
+                                    Initial Damage:   1 Dex
+                                    Secondary Damage: 2d4 Dex</entry>
+<entry id="70293" lang="en" sex="m">Medium Centipede Poison: Injury DC 13
+                                    Initial Damage:   1d3 Dex
+                                    Secondary Damage: 1d3 Dex</entry>
+<entry id="70294" lang="en" sex="m">Medium Scorpion Poison: Injury DC 15
+                                    Initial Damage:   1d4 Str
+                                    Secondary Damage: 1d4 Str</entry>
+<entry id="70295" lang="en" sex="m">Medium Spider Venom: Injury DC 13
+                                    Initial Damage:   1d4 Str
+                                    Secondary Damage: 1d4 Str</entry>
+<entry id="70296" lang="en" sex="m">Mist of Nourn: Inhaled DC 25
+                                    Initial Damage:   1d8 Con
+                                    Secondary Damage: 1d8 Con</entry>
+<entry id="70297" lang="en" sex="m">Nightshade: Contact DC 10
+                                    Initial Damage:   1 Dex
+                                    Secondary Damage: 1d2 Dex</entry>
+<entry id="70298" lang="en" sex="m">Nitharit: Contact DC 13
+                                    Initial Damage:   0
+                                    Secondary Damage: 3d6 Con</entry>
+<entry id="70299" lang="en" sex="m">Oil of Taggit: Ingested DC 15
+                                    Initial Damage:   0
+                                    Secondary Damage: Unconsciousness</entry>
+<entry id="70300" lang="en" sex="m">Purified Couatl Venom (Ravage): Injury DC 16
+                                    Initial Damage:   2d4 Str
+                                    Secondary Damage: 4d4 Str</entry>
+<entry id="70301" lang="en" sex="m">Purple Worm Poison: Injury DC 24
+                                    Initial Damage:   1d6 Str
+                                    Secondary Damage: 2d6 Str</entry>
+<entry id="70302" lang="en" sex="m">Sasson Juice: Contact DC 18
+                                    Initial Damage:   1d4 Dex
+                                    Secondary Damage: 1d4 Dex</entry>
+<entry id="70303" lang="en" sex="m">Sasson Leaf Residue: Contact DC 16
+                                    Initial Damage:   2d12hp
+                                    Secondary Damage: 1d6 Con</entry>
+<entry id="70304" lang="en" sex="m">Shadow Essence: Injury DC 17
+                                    Initial Damage:   1 Str drain
+                                    Secondary Damage: 2d6 Str</entry>
+<entry id="70305" lang="en" sex="m">Small Centipede Poison: Injury DC 11
+                                    Initial Damage:   1d2 Dex
+                                    Secondary Damage: 1d2 Dex</entry>
+<entry id="70306" lang="en" sex="m">Small Scorpion Poison:  Injury DC 11
+                                    Initial Damage:   1d3 Str
+                                    Secondary Damage: 1d3 Str</entry>
+<entry id="70307" lang="en" sex="m">Small Spider Venom: Injury DC 11
+                                    Initial Damage:   1d3 Str
+                                    Secondary Damage: 1d3 Str</entry>
+<entry id="70308" lang="en" sex="m">Stripded Toadstool: Ingested DC 11
+                                    Initial Damage:   1 Wis
+                                    Secondary Damage: 2d6 Wis + 1d4 Int</entry>
+<entry id="70309" lang="en" sex="m">Sufferfume: Inhaled DC 20
+                                    Initial Damage:   1 all scores
+                                    Secondary Damage: 1 all scores</entry>
+<entry id="70310" lang="en" sex="m">Terinav Root: Contact DC 16
+                                    Initial Damage:   1d6 Dex
+                                    Secondary Damage: 2d6 Dex</entry>
+<entry id="70311" lang="en" sex="m">Tiny Centipede Poison: Injury DC 11
+                                    Initial Damage:   1 Dex
+                                    Secondary Damage: 1 Dex</entry>
+<entry id="70312" lang="en" sex="m">Tiny Scorpion Poison: Injury DC 11
+                                    Initial Damage:   1d2 Str
+                                    Secondary Damage: 1d2 Str</entry>
+<entry id="70313" lang="en" sex="m">Tiny Spider Venom: Injury DC 11
+                                    Initial Damage:   1d2 Str
+                                    Secondary Damage: 1d2 Str</entry>
+<entry id="70314" lang="en" sex="m">Ungol Dust: Inhaled DC 15
+                                    Initial Damage:   1 Cha
+                                    Secondary Damage: 1d6 Cha + 1 Cha drain</entry>
+<entry id="70315" lang="en" sex="m">Unicorn Blood (Ravage): Injury DC 17
+                                    Initial Damage:   1d3 Str
+                                    Secondary Damage: 1d4 Str</entry>
+<entry id="70316" lang="en" sex="m">Urthanyk: Inhaled DC 19
+                                    Initial Damage:   1d6 Str
+                                    Secondary Damage: 1d6 Str</entry>
+<entry id="70317" lang="en" sex="m">Vilestar: Contact DC 24
+                                    Initial Damage:   2d6 Str
+                                    Secondary Damage: 2d6 Str</entry>
+<entry id="70318" lang="en" sex="m">Wyvern Poison: Injury DC 17
+                                    Initial Damage:   2d6 Con
+                                    Secondary Damage: 2d6 Con</entry>
 </tlk>

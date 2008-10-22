@@ -436,6 +436,7 @@ void RunScript(string sEvent)
     }
     else if(sEvent == "damaged")
     {
+        SignalEvent(oSelf, EventUserDefined(EVENT_DAMAGED));
         ExecuteAllScriptsHookedToEvent(oSelf, EVENT_VIRTUAL_ONDAMAGED);
     }
     else if(sEvent == "death")

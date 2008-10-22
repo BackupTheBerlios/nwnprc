@@ -1147,3 +1147,6 @@ const int SPELL_SUMMON_UNDEAD_2                     = 1785;
 const int SPELL_SUMMON_UNDEAD_3                     = 1786;
 const int SPELL_SUMMON_UNDEAD_4                     = 1787;
 const int SPELL_SUMMON_UNDEAD_5                     = 1788;
+
+// Flaming_Sword's Spells
+const int SPELL_SHIELD_OTHER                        = 3848;

@@ -1,6 +1,6 @@
 2DA V2.0
 
-    Name     Label                               Description PropertyType Level Race       Skill SkillRanks Spells             Enhancement AdditionalCost BaseItem IP1          IP2         IP3          IP4        IP5         IP6      Epic Special 
+    Name     Label                               Description PropertyType Level PrereqMisc Skill SkillRanks Spells             Enhancement AdditionalCost BaseItem IP1          IP2         IP3          IP4        IP5         IP6      Epic Special 
 0   16828912 Amulet_of_Health_+2                 16828979    M            8     ****       ****  ****       49_*_*_*_*         ****        4000           19       0_2_2_*      ****        ****         ****       ****        ****     0    ****    
 1   16828913 Amulet_of_Health_+4                 16828980    M            8     ****       ****  ****       49_*_*_*_*         ****        16000          19       0_2_4_*      ****        ****         ****       ****        ****     0    ****    
 2   16828914 Amulet_of_Health_+6                 16828981    M            8     ****       ****  ****       49_*_*_*_*         ****        36000          19       0_2_6_*      ****        ****         ****       ****        ****     0    ****    

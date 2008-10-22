@@ -29,10 +29,6 @@ int AbleToTalk(object oSelf)
    return TRUE;
 }
 
-
-#include "x0_i0_henchman"
-
-
 void main()
 {
 

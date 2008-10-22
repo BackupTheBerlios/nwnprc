@@ -34,10 +34,6 @@ int AbleToTalk(object oSelf)
    return TRUE;
 }
 
-
-#include "x0_i0_henchman"
-
-
 void main()
 {
   // * XP2, special handling code for interjections

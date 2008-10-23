@@ -152,6 +152,7 @@ const int SKILL_CRAFT_ALCHEMY   = 34;
 const int SKILL_CRAFT_POISON    = 35;
 const int SKILL_PSICRAFT        = 36;
 const int SKILL_CLIMB           = 37;
+const int SKILL_CRAFT_GENERAL   = 38;
 
 //:://////////////////////////////////////////////
 //:: Size Const

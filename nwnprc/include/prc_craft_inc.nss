@@ -133,7 +133,11 @@ int GetCraftingSkill(object oItem)
         (nType == PRC_CRAFT_ITEM_TYPE_AMMO)
         )
         return SKILL_CRAFT_WEAPON;
-    return SKILL_CRAFT_ARMOR;
+    if((nType == PRC_CRAFT_ITEM_TYPE_ARMOUR) ||
+        (nType == PRC_CRAFT_ITEM_TYPE_SHIELD)
+        )
+        return SKILL_CRAFT_ARMOR;
+    return SKILL_CRAFT_GENERAL;
 }
 
 string GetMaterialString(int nType)

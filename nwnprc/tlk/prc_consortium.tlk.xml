@@ -37899,6 +37899,14 @@ If you and the subject of the spell move out of range of each other, the spell e
 Focus: A pair of platinum rings (worth at least 50 gp each) worn by both you and the warded creature.
 
 NOTE: This spell does not stack and applies damage to the last caster (I think, actually depends on the order of the applied effects).</entry>
+  <entry id="55153" lang="en" sex="m">Craft(General)</entry>
+  <entry id="55154" lang="en" sex="m">Ability: Intelligence.
+Requires Training: no.
+Classes: All.
+
+A successful check allows a character to craft various items.
+
+Use: Automatic.</entry>
   <entry id="55160" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: None
 Specifics: This feat allows the caster to gain spells per day as if they had gained a level in the specified class.</entry>

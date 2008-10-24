@@ -29,7 +29,7 @@ equal to the result of your attack roll. A successful save halves the damage dea
 Your weapon automatically returns to your hand at the end of the round.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

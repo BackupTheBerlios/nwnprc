@@ -23,7 +23,7 @@
     lands prone on the ground.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

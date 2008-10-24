@@ -1,7 +1,7 @@
 /*
     This is the delayed recovery script that the player has to manually fire outside of combat to recover maneuvers.
 */
-#include "tob_inc_tobfunc"
+#include "tob_inc_recovery"
 
 // Counts down a minute, then recovers the maneuvers.
 void Countdown(object oInitiator, int nTime)

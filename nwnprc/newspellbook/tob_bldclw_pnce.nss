@@ -12,9 +12,9 @@
     you perform a full attack. You also expend a maneuver
 */
 
-#include "tob_inc_tobfunc"
-#include "tob_movehook"
-#include "prc_alterations"
+#include "tob_inc_recovery"
+#include "tob_inc_moveknwn"
+#include "prc_inc_combmove"
 
 void main()
 {

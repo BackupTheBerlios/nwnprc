@@ -22,7 +22,7 @@
     You make a single attack against an enemy. If this attack his, you ignore all DR and do an extra 2d6 damage.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

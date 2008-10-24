@@ -25,7 +25,7 @@
     5 feet for every 5 you succeed on the trip check by. The target takes 8d6 damage.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

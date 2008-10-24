@@ -25,7 +25,7 @@
     Reflex save against 12 + your Wisdom modifier, he takes two points of Constitution damage.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

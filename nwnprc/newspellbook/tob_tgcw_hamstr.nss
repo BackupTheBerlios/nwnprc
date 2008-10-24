@@ -21,7 +21,7 @@ speed for 1 minute. A successful Fortitude save (DC 17 + your Str modifier) halv
 Dexterity damage and the speed penalty.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

@@ -23,7 +23,7 @@
     Whenever you successfully strike a creature, you or your ally within 30 feet heals 2 hit points.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

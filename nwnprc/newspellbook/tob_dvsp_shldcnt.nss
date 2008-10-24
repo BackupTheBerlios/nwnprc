@@ -22,7 +22,7 @@
     You make a single attack against an enemy at a -2 penalty. If this attack hits, your opponent takes a -20 penalty on his next strike.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

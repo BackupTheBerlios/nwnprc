@@ -22,7 +22,7 @@
     Make an opposed attack roll against the targeted creature. If you succeed, he damages himself rather than you.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

@@ -23,7 +23,7 @@
     If there is no enemy, he damages no one.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

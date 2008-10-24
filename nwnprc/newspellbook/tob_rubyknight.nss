@@ -1,4 +1,5 @@
-#include "tob_inc_tobfunc"
+#include "tob_inc_moveknwn"
+#include "tob_inc_recovery"
 #include "prc_craft_inc"
 
 void ArmouredStealth(object oInitiator)

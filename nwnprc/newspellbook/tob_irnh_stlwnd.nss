@@ -21,7 +21,7 @@
     Make two melee attacks, each against a different foe within melee range.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

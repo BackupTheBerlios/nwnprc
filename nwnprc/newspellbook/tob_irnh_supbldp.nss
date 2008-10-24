@@ -25,7 +25,7 @@ catch you flat-footed. To gain this benefit, you must be proficient with the wea
 You gain this benefit while unarmed only if you have the Improved Unarmed Strike feat.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

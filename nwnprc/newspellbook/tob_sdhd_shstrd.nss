@@ -13,7 +13,7 @@ You dissipate into a puff of black shadow. A moment later, the shadow coalesces,
 This maneuver functions as the shadow jaunt maneuver, except that it can be initiated as a move action.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_inc_teleport"
 #include "prc_alterations"

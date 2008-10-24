@@ -26,7 +26,7 @@
     flanking your foe make a single attack against the struck creature.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

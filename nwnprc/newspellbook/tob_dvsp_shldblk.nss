@@ -23,7 +23,7 @@
     Your grant your ally a +4 shield bonus against the next attack made against him.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

@@ -1,7 +1,7 @@
 /*
     Choose which maneuvers to ready for the Warblade
 */
-#include "tob_inc_tobfunc"
+#include "tob_inc_recovery"
 #include "inc_dynconv"
 void main()
 {

@@ -25,7 +25,7 @@
     the foe, he is stunned for one round. Your and your allies do not block one another while charging.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

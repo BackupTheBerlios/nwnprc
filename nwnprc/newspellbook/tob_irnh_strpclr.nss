@@ -24,7 +24,7 @@ You make a single melee attack as part of this strike. If your attack hits, it d
 extra 100 points of damage (in addition to your normal melee damage).
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

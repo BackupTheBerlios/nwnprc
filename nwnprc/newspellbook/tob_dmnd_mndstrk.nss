@@ -23,7 +23,7 @@
     If you succeed at your attack, your foe must make a save vs DC 14 + Strength or take 1d4 wisdom damage. 
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

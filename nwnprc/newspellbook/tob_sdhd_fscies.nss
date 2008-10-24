@@ -40,7 +40,7 @@ and takes half the indicated ability damage (but still takes normal melee damage
 This maneuver is a supernatural ability.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

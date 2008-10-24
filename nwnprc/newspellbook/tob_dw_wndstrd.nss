@@ -22,7 +22,7 @@
     You gain +10 feet to your move speed.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

@@ -23,7 +23,7 @@
     All allies gain a bonus while flanking equal to +1/2 per your initiator level. 
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

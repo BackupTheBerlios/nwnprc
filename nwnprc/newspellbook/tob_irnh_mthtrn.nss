@@ -24,7 +24,7 @@
     You make a single attack against each adjacent opponent with a +2 bonus.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

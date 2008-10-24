@@ -24,7 +24,7 @@
     You make a single attack against an enemy. If this attack his, you deal 8d8 extra damage.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

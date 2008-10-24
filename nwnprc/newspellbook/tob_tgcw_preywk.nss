@@ -22,7 +22,7 @@ attack, an ally's strike, or some other cause, you can immediately make an attac
 against any opponent within your threatened area.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 
@@ -46,8 +46,8 @@ void main()
                 effect eVis = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
         	if (GetLevelByClass(CLASS_TYPE_BLOODCLAW_MASTER, oInitiator) >= 2)
         	{
-    			eDur = EffectLinkEffects(eVis, EffectMovementSpeedIncrease(33));
-    			eDur = EffectLinkEffects(eVis, EffectACIncrease(1));
+    			eVis = EffectLinkEffects(eVis, EffectMovementSpeedIncrease(33));
+    			eVis = EffectLinkEffects(eVis, EffectACIncrease(1));
     		}                
                 ApplyEffectToObject(DURATION_TYPE_PERMANENT, eVis, oTarget);
         }

@@ -24,7 +24,7 @@
     You gain a +4 bonus to AC versus one attack.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

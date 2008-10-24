@@ -22,7 +22,7 @@
     You gain a +10 bonus on jump checks, and always count as if you are running.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

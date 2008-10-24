@@ -26,7 +26,7 @@
     A result of 1 on the roll is not an automatic failure.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

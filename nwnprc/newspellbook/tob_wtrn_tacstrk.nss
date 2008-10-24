@@ -24,7 +24,7 @@
     a 5' boost to movement speed for one round.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

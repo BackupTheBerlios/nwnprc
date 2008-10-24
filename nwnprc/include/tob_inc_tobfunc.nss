@@ -30,6 +30,12 @@ const int    DISCIPLINE_STONE_DRAGON   = 7;
 const int    DISCIPLINE_TIGER_CLAW     = 8;
 const int    DISCIPLINE_WHITE_RAVEN    = 9;
 
+const string PRC_INITIATING_CLASS        = "PRC_CurrentManeuver_InitiatingClass";
+const string PRC_MANEUVER_LEVEL          = "PRC_CurrentManeuver_Level";
+
+const int MANEUVER_TYPE_STANCE            = 1;
+const int MANEUVER_TYPE_MANEUVER          = 2;
+
 //////////////////////////////////////////////////
 /*             Function prototypes              */
 //////////////////////////////////////////////////
@@ -319,8 +325,8 @@ int TOBSituationalAttackBonuses(object oInitiator, int nDiscipline, int nClass =
 
 #include "tob_move_const"
 #include "prc_alterations"
-#include "tob_inc_move"
-#include "tob_inc_moveknwn"
+//#include "tob_inc_move"
+//#include "tob_inc_moveknwn"
 
 //////////////////////////////////////////////////
 /*             Internal functions               */

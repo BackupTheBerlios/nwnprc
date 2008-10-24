@@ -22,7 +22,7 @@ This stance immediately ends if you move more than 5 feet for any reason, such a
 bull rush attack, a telekinesis spell, and so forth.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

@@ -33,8 +33,6 @@
 const int MANEUVER_LIST_CRUSADER          = CLASS_TYPE_CRUSADER;
 const int MANEUVER_LIST_SWORDSAGE         = CLASS_TYPE_SWORDSAGE;
 const int MANEUVER_LIST_WARBLADE          = CLASS_TYPE_WARBLADE;
-const int MANEUVER_TYPE_STANCE            = 1;
-const int MANEUVER_TYPE_MANEUVER          = 2;
 
 /// Special Maneuver list. Maneuvers gained via Martial Study or other sources.
 const int MANEUVER_LIST_MISC          = CLASS_TYPE_INVALID;//-1;

@@ -24,7 +24,7 @@ When you use this maneuver, you make a single melee attack. If this attack hits,
 damage reduction 10/+5 for 1 round.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

@@ -26,7 +26,7 @@
     initiator level (max of +10).
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

@@ -23,7 +23,7 @@
     Whenever you initiate a strike, your attack roll is always 11.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

@@ -24,7 +24,7 @@
     and you foe takes a 20 ft penalty to his movement speed.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

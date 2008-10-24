@@ -24,7 +24,7 @@
     Make a melee touch attack. If it succeeds, the target must save or be paralyzed.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

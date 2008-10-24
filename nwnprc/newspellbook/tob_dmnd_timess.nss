@@ -26,7 +26,7 @@ cannot combine the attacks provided by both atcions as you wish. Instead, you mu
 take them separately and in order as normal for a full attack.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

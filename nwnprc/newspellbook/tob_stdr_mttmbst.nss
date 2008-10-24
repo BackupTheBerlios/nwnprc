@@ -18,7 +18,7 @@ you make a single melee attack. If this attack hits, you deal 2d6 points of Cons
 damage in addition to your normal damage.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

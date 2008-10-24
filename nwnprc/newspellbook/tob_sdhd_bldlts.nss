@@ -20,7 +20,7 @@ A successful Fortitude save (DC 15 + your Wis modifier) reduces this Constitutio
 to 2 points, although the foe still takes full normal melee damage.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

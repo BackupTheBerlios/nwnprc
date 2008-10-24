@@ -24,7 +24,7 @@
     If your strike hits, your target suffers a -4 penalty to attacks and attacks you.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

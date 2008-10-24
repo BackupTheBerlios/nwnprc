@@ -25,7 +25,7 @@
     the target gets a +2 bonus to its attack.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

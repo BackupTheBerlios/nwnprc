@@ -24,7 +24,7 @@
     to attack and a +4 bonus on Bull Rush attempts, both to attack and to defend.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

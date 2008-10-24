@@ -17,7 +17,7 @@ If you have half or fewer of your full normal hit points remaining, you can
 initiate this maneuver to heal hit points equal to 2 x your level.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

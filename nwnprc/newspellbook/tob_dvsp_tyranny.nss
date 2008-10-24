@@ -23,7 +23,7 @@
     Each round, you damage all allies within 10 feet 2 hit points, and you heal 1 hit point for each ally struck.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

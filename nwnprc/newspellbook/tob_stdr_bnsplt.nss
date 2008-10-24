@@ -23,7 +23,7 @@
     You make a single attack against an enemy. If this attack his, you do 2 Constitution damage.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

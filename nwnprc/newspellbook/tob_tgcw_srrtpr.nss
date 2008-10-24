@@ -24,7 +24,7 @@
     This must be used on a creature larger than you are.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

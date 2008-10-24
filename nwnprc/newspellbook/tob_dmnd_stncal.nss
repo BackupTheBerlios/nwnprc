@@ -24,7 +24,7 @@
     You gain the ability to use a second counter each round when in this stance.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

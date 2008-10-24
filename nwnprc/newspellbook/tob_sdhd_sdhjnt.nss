@@ -23,7 +23,7 @@
     You teleport up to 50'.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 #include "prc_inc_teleport"

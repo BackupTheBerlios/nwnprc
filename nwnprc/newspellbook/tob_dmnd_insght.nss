@@ -23,7 +23,7 @@
     Your weapon's normal damage modifiers do not apply.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

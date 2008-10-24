@@ -25,7 +25,7 @@
     the creature. If it hits, all of your allies who threaten that creature can make an attack against it.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

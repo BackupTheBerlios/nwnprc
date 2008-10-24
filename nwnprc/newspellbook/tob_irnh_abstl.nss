@@ -24,7 +24,7 @@
     You gain a +10' movement speed bonus. If you move more than 10' in a round, you gain +2 AC.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

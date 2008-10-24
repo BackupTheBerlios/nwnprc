@@ -23,7 +23,7 @@
     and the target is pushed back 5 feet, and possibly more.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

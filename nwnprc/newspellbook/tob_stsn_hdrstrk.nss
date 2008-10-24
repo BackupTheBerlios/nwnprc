@@ -23,7 +23,7 @@
     You make an attack that deals deals normal damage, and leaves the creature unable to take the full-attack action.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

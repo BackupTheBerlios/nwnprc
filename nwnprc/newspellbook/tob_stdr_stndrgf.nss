@@ -22,7 +22,7 @@
     You deal an extra 4d6 damage to objects or constructs with this strike.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

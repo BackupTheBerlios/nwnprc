@@ -13,7 +13,7 @@ In the blink of an eye, you disappear and emerge from a mote of shadow energy ac
 This maneuver functions as the shadow jaunt maneuver, except that it can be initiated as a swift action.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_inc_teleport"
 #include "prc_alterations"

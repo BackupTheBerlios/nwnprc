@@ -25,7 +25,7 @@
     takes quadruple normal damage. If you fail, you take a -2 penalty on the attack.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

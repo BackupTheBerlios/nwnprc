@@ -23,7 +23,7 @@
     You take a -4 penalty to AC for the rest of the round.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

@@ -23,7 +23,7 @@
     Make a jump check vs DC 20. If you succeed, your target is flatfooted versus the attack, deal 4d6 damage and land within 20' of your opponent. Otherwise, perform only a normal attack.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

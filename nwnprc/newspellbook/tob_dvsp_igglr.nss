@@ -25,7 +25,7 @@
     (Mechnical implementation: AoE that grants allies +4 Dodge AC when they are in it).
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

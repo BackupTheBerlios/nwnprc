@@ -24,7 +24,7 @@
     different from yours. If you hit, you or an ally with 10 feet is healed, as per the heal spell.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

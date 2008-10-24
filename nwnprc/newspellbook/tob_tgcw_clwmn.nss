@@ -22,7 +22,7 @@
     2d6 damage on your attack. If it fails, you deal damage normally.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

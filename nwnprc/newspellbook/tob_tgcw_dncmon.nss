@@ -24,7 +24,7 @@ All of these attacks mus be directed against the same opponent.
 //  Tenjac   10/4/07
 ///////////////////////////////////////////////////////
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

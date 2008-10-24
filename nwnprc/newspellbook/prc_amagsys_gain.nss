@@ -25,7 +25,7 @@
 #include "psi_inc_psifunc"
 #include "inc_newspellbook"
 #include "true_inc_trufunc"
-#include "tob_inc_tobfunc"
+#include "tob_inc_moveknwn"
 #include "inv_inc_invfunc"
 
 //////////////////////////////////////////////////

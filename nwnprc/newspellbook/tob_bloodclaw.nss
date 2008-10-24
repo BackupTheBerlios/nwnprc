@@ -1,4 +1,5 @@
-#include "tob_inc_tobfunc"
+#include "tob_inc_recovery"
+#include "tob_inc_moveknwn"
 
 void ApplySuperiorTWF(object oInitiator)
 {

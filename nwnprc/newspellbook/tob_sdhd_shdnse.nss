@@ -24,7 +24,7 @@ non-living creatures, such as constructs and the undead.
 This maneuver is a supernatural ability.
 
 */
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

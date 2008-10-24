@@ -26,7 +26,7 @@ when you make an attack of opportunity. You cannot improve your reach by more th
 ability in conjunction with other maneuvers.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

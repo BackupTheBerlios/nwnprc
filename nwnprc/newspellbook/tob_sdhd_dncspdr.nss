@@ -23,7 +23,7 @@
     You become immune to the web spell and poison.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

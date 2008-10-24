@@ -2,7 +2,7 @@
     Recover all warblade maneuvers
     Only functions in combat, otherwise call delayed recovery
 */
-#include "tob_inc_tobfunc"
+#include "tob_inc_recovery"
 
 void main()
 {

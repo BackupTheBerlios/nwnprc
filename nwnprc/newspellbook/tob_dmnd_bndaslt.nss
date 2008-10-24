@@ -23,7 +23,7 @@
     You make a double move and attack a foe with a +2 bonus to attack. This counts as a charge attack.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

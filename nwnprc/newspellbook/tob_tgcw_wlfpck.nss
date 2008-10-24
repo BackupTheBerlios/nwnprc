@@ -25,7 +25,7 @@
     up to a maximum of 30 feet. This bonus applies the round after the hits strike.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

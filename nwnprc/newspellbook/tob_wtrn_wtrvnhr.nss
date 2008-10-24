@@ -24,7 +24,7 @@
     If your strike hits, you deal an extra 6d6 damage and your opponent is stunned.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

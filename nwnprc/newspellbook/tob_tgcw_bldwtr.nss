@@ -23,7 +23,7 @@
     Whenever you successfully critical hit a creature, you gain a +1 Attack and Damage bonus for one minute.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

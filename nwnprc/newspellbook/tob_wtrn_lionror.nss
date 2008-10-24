@@ -23,7 +23,7 @@
     All allies within range gain a +5 damage bonus.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

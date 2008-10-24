@@ -211,8 +211,7 @@ int ExpendRandomManeuver(object oPC, int nList, int nDiscipline = -1);
 //////////////////////////////////////////////////
 
 #include "inc_lookups"
-#include "tob_move_const"
-#include "tob_inc_tobfunc"
+#include "tob_inc_moveknwn"
 
 //////////////////////////////////////////////////
 /*             Internal functions               */
@@ -288,14 +287,14 @@ void ReadyManeuver(object oPC, int nList, int nMoveId)
 int GetIsManeuverReadied(object oPC, int nList, int nMoveId)
 {
     // Counting through the local ints to determine if this one is readied
-    int i = 1;
+    int i;
     // 25 is the max possible for any class
-        for(i = 0; i < 25; i++)
+    for(i = 1; i < 26; i++)
     {
-        // If the value is valid, add to the count
+        // If the value is valid, return true
         if (GetLocalInt(oPC, "ManeuverReadied" + IntToString(nList) + IntToString(i)) == nMoveId)
         {
-            if(DEBUG) DoDebug("tob_inc_recovery: GetIsManeuverReadied: " +IntToString(nMoveId));
+            if(DEBUG) DoDebug("tob_inc_recovery: GetIsManeuverReadied: " + IntToString(nMoveId));
             return TRUE;
         }
     }
@@ -306,9 +305,9 @@ int GetIsManeuverReadied(object oPC, int nList, int nMoveId)
 int GetIsManeuverExpended(object oPC, int nList, int nMoveId)
 {
     // Counting through the local ints to determine if this one is expended
-    int i = 1;
+    int i;
     // 25 is the max possible for any class
-        for(i = 0; i < 25; i++)
+    for(i = 1; i < 26; i++)
     {
         // returns if the maneuver is expended
         if (GetLocalInt(oPC, "ManeuverExpended" + IntToString(nList) + IntToString(i)) == nMoveId)
@@ -325,15 +324,15 @@ void ExpendManeuver(object oPC, int nList, int nMoveId)
 {
     // Counting through the local ints
     int i = 1;
-        while (i > 0)
+    while (i > 0)
     {
         // If it hits a non-valid, break
         if (GetLocalInt(oPC, "ManeuverExpended" + IntToString(nList) + IntToString(i)) == 0) break;
         i++;
-        }
+    }
 
     // This will mark the Maneuver Expended, one further on than before
-    SetLocalInt(oPC, "ManeuverExpended" + IntToString(nList) + IntToString(i+1), nMoveId);
+    SetLocalInt(oPC, "ManeuverExpended" + IntToString(nList) + IntToString(i), nMoveId);
     if(DEBUG) DoDebug("tob_inc_recovery: Expending Maneuver: " + IntToString(nMoveId));
 }
 

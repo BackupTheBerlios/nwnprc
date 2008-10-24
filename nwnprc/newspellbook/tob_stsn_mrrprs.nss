@@ -23,7 +23,7 @@
     You immediately move to any spot adjacent to your enemy, provided it is within range.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 #include "prc_inc_teleport"

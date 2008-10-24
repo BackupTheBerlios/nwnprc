@@ -25,7 +25,7 @@
     and all creatures in the line take 6d6 damage.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

@@ -33,7 +33,7 @@ This attack deals an extra 10d6 points of damage, and the target must succeed on
 save (DC equal to your Jump check result) or be stunned for 1 round.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

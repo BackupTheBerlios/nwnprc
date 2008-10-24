@@ -13,7 +13,7 @@
 //:://////////////////////////////////////////////
 
 #include "inc_dynconv"
-#include "tob_inc_tobfunc"
+#include "tob_inc_recovery"
 
 //////////////////////////////////////////////////
 /* Constant defintions                          */
@@ -82,16 +82,13 @@ void main()
             if(nStage == STAGE_SELECT_MANEUVER)
             {
                 if(DEBUG) DoDebug("tob_swd_rcrcnv: Building maneuver selection");
-                int nBrowseLevel = GetLocalInt(oPC, "nManeuverLevelToBrowse");
-	        int nMaxReady   = GetMaxReadiedCount(oPC, nClass);
-            	int nCountReady = GetReadiedCount(oPC, nClass);   
             	int nMoveId;
                 string sToken = "Select a Maneuver to recover.";
                 SetHeader(sToken);
                 
-                // Max number of expended maneuvers.
+                // Max number of expended maneuvers. Storing starts at 1
                 int i;
-		for(i = 0; i < 12; i++)
+		for(i = 1; i < 13; i++)
 		{	
 			nMoveId = GetLocalInt(oPC, "ManeuverExpended" + IntToString(nClass) + IntToString(i));
 			// If it is not 0, it is a MoveId

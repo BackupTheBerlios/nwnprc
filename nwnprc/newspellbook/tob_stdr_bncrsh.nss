@@ -23,7 +23,7 @@
     If the target fails a Fortitude save vs 13 + Strength modifier, all further strikes gain a +10 to confirm critical hits.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

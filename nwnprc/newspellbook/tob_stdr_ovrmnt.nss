@@ -24,7 +24,7 @@
     If the target fails a Fortitude save vs 14 + Strength modifier, it is slowed.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

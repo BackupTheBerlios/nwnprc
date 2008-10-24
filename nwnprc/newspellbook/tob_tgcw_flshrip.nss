@@ -23,7 +23,7 @@
     If the target fails a Fortitude save vs 13 + Strength modifier, he takes a -4 penalty to attacks and AC.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

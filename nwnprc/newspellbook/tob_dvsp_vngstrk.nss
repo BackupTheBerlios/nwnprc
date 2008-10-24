@@ -22,7 +22,7 @@
     You make a single attack against an enemy. If you hit, that enemy takes a -4 AC penalty for one round.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

@@ -23,7 +23,7 @@
     to disarm the target. This will not work against creatures that cannot be disarmed.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

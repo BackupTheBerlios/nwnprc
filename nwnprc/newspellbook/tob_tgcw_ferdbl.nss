@@ -31,7 +31,7 @@ If your Jump check fails, you can make a singe attack normally. The maneuver is 
 expended.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

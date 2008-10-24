@@ -21,7 +21,7 @@ points of damage. After completing this maneuver, you take a -4 penalty to AC un
 the start of your next turn.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

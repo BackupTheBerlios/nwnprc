@@ -25,7 +25,7 @@
     and damage reduction of 10/- for one round.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

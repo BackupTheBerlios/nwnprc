@@ -23,7 +23,7 @@
     provoke attacks of opportunity, and if you fail, you are not knocked prone, you simply halt.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

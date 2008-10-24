@@ -22,7 +22,7 @@
     You may use any weapon in a grapple, and do not take the -4 penalty to attack. If grappling a foe larger than you, you gain a +4 damage bonus.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

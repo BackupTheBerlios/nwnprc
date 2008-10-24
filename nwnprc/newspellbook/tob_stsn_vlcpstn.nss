@@ -24,7 +24,7 @@
     Reflex save against 12 + your Dexterity modifier, you swap positions with your target.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 #include "spinc_trans"

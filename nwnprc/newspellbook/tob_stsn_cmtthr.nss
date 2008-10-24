@@ -26,7 +26,7 @@
     foe within the range of the throw, he is struck by the thrown foe and takes 4d6, reflex half.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

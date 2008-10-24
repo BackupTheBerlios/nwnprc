@@ -25,7 +25,7 @@ You can only gain one free attack each time you initiate this maneuver, regardle
 how many successful attacks you make in this round.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

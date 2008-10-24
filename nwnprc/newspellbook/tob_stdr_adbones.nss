@@ -29,7 +29,7 @@ you gain damage reduction 20/+5 for one round.
 //   10.9.07
 //////////////////////////////////////////////
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

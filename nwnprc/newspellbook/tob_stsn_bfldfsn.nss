@@ -25,7 +25,7 @@
     of the roll becomes your armour class until the end of the round.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

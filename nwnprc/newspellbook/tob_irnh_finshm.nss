@@ -27,7 +27,7 @@ If its hit points are equal to or less than one-half its full normal hit points,
 attack instead deals an extra 14d6 points of damage.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

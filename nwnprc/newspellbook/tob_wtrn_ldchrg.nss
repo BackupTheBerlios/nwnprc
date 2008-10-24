@@ -24,7 +24,7 @@
     All allies gain a +1 damage bonus on charge attacks per initiator level. 
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

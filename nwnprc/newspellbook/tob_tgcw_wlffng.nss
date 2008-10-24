@@ -23,7 +23,7 @@
     You must fight with two weapons to use this maneuver. 
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

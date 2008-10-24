@@ -18,7 +18,7 @@ You gain a bonus on that save equal to your initiator level. You must use this m
 before you roll the saving throw.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

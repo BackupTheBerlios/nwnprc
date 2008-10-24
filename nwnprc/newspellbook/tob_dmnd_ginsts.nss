@@ -18,7 +18,7 @@ This maneuver functions like insightful strike, except that you deal damage
 equal to 2x your Concentration check result.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

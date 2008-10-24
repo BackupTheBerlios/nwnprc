@@ -25,7 +25,7 @@
     and a -2 AC penalty against all other creatures attacking you.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

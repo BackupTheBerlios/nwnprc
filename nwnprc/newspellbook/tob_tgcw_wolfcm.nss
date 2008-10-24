@@ -21,7 +21,7 @@ of damage. You remain within your opponent's space after you complete this maneu
 cover against all attacks until the end of the round, including those made by the target. 
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

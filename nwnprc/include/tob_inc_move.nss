@@ -18,8 +18,6 @@
 /*                 Constants                    */
 //////////////////////////////////////////////////
 
-const string PRC_INITIATING_CLASS        = "PRC_CurrentManeuver_InitiatingClass";
-const string PRC_MANEUVER_LEVEL           = "PRC_CurrentManeuver_Level";
 const string TOB_DEBUG_IGNORE_CONSTRAINTS = "TOB_DEBUG_IGNORE_CONSTRAINTS";
 
 /**
@@ -123,7 +121,6 @@ void DeleteLocalManeuver(object oObject, string sName);
 //////////////////////////////////////////////////
 
 #include "tob_inc_recovery"
-#include "tob_inc_tobfunc"
 #include "tob_inc_martlore"
 
 //////////////////////////////////////////////////

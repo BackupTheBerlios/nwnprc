@@ -24,7 +24,7 @@
     All attacks are made at a -2 penalty.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

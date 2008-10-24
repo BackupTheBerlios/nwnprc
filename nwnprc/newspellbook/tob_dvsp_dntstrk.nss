@@ -25,7 +25,7 @@
     You make a single melee attack. If it hits, the foe must save against DC 15 + Charisma or be shaken.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

@@ -26,7 +26,7 @@ otherwise made with your highest attack bonus.
 
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

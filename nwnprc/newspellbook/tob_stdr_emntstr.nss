@@ -24,7 +24,7 @@ when you use this maneuver, you make a single melee attack. That attack deals an
 
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

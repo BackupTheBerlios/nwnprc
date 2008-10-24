@@ -10,7 +10,7 @@ You lash out, your weapon a blur, hammering at the slightest gap that appears in
 
 The attack granted by the maneuver is not an extra attack of opportunity. You can initiate this maneuver before, after, in addition to, or instead of making an attack of opportunity against an opponent (thus possibly saving your attack of opportunity to use against another enemy later in the round).*/
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

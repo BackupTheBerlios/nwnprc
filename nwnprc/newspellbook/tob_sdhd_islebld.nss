@@ -25,7 +25,7 @@
     +2 bonus to attack rolls.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

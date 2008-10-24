@@ -19,7 +19,7 @@ If her save succeeds, she takes an extra 5d6 points of damage. This maneuver fun
 opponents who are vulnerable to critical hits.
 
 */
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

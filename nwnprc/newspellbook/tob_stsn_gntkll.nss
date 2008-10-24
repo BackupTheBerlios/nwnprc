@@ -24,7 +24,7 @@
     You gain a +2 Attack, +4 Damage boost against creatures larger than you.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

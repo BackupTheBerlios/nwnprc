@@ -24,7 +24,7 @@
     Any creature who attempts to move near you provokes an AoO.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

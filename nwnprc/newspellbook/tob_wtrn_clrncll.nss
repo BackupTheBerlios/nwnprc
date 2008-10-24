@@ -24,7 +24,7 @@
     gain a single extra attack in their next round.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

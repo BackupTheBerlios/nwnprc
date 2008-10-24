@@ -31,7 +31,7 @@ or fewer. You must direct all of these attacks at a single foe.
 
 void Owieowieowowow(object oInitiator, object oTarget, int nHit, int nPenalty);
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

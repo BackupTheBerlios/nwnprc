@@ -25,7 +25,7 @@ target takes melee damage normally and must make a Fortitude save (DC 15 + your
 Str modifier) or be dazed for 1 round.
 */
 
-#include "tob_inc_tobfunc"
+#include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 

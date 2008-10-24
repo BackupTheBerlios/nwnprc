@@ -799,6 +799,12 @@ void HexCurse(object oPC)
     FeatUsePerDay(oPC, FEAT_HEXCURSE, ABILITY_CHARISMA, nUses);
 }
 
+void FeatShadowblade(object oPC)
+{
+        int nUses = (GetLevelByClass(CLASS_TYPE_SHADOWBLADE, oPC));
+        FeatUsePerDay(oPC, FEAT_UNSEEN_WEAPON_ACTIVATE, -1, nUses);
+}        
+
 void FeatRacial(object oPC)
 {
     //Shifter bonus shifting uses
@@ -872,6 +878,7 @@ void FeatSpecialUsePerDay(object oPC)
     FeatUsePerDay(oPC, FEAT_FIST_DAL_QUOR_STUNNING_STRIKE, -1, GetLevelByClass(CLASS_TYPE_FIST_DAL_QUOR, oPC));
     HexCurse(oPC);
     FeatRacial(oPC);
+    FeatShadowblade(oPC);
 
     if(GetPersistantLocalInt(oPC, "PRC_SLA_Uses_1"))
         FeatUsePerDay(oPC, FEAT_SPELL_LIKE_ABILITY_1, -1, GetPersistantLocalInt(oPC, "PRC_SLA_Uses_1"));

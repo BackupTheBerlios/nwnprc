@@ -96,7 +96,11 @@ int SpellfireVerifyExpend(object oPC, int nExpend, int nStored)
     int nCON = GetAbilityScore(oPC, ABILITY_CONSTITUTION);
 
     //sanity check, at least 1, capped by CON and stored
-    if(nExpend < 1) nExpend = 1;
+    if(nExpend < 1)
+    {
+        nExpend = 1;
+        SetPersistantLocalInt(oPC, "SpellfireLevelExpend", nExpend);
+    }
     if(nExpend > nCON) nExpend = nCON;  //in case CON has changed
     if(nExpend > nStored) nExpend = nStored;    //can't spend more than you've got
 
@@ -173,13 +177,13 @@ void SpellfireDamage(object oCaster, object oTarget, int nRoll, int nDamage, int
 void SpellfireAttackRoll(object oCaster, object oTarget, int nExpend, int iMod = 0, int nDC = 20, int bBeam = FALSE, int bMaelstrom = FALSE)
 {
     int nRoll, nDamage;
-    
+
     //Account for Energy Draconic Aura
     if (GetLocalInt(oCaster, "FireEnergyAura") > 0)
     {
         nDC += GetLocalInt(oCaster, "FireEnergyAura");
     }
-    
+
     //Weapon Focus (spellfire) applies to spellfire only
     if(GetHasFeat(FEAT_WEAPON_FOCUS_SPELLFIRE, oCaster)) iMod++;
     if(GetHasFeat(FEAT_EPIC_WEAPON_FOCUS_SPELLFIRE, oCaster)) iMod += 2;
@@ -254,13 +258,13 @@ void SpellfireMaelstrom(object oCaster)
     int nLevel = GetLevelByClass(CLASS_TYPE_SPELLFIRE, oCaster);
     int nCHA = GetAbilityModifier(ABILITY_CHARISMA, oCaster);
     int nDC = 10 + nLevel + nCHA;
-    
+
     //Account for Energy Draconic Aura
     if (GetLocalInt(oCaster, "FireEnergyAura") > 0)
     {
         nDC += GetLocalInt(oCaster, "FireEnergyAura");
     }
-    
+
     //expend once, hit multiple targets
     int nExpend = ExpendSpellfire(oCaster);
     float fDelay;
@@ -315,6 +319,11 @@ int SpellfireDrainItem(object oPC, object oItem, int bCharged = TRUE, int bSingl
         {
             int nBase = GetBaseItemType(oItem);
             int nExpend = GetPersistantLocalInt(oPC, "SpellfireLevelExpend");
+            if(nExpend < 1)
+            {
+                nExpend = 1;
+                SetPersistantLocalInt(oPC, "SpellfireLevelExpend", nExpend);
+            }
             int nStored = GetPersistantLocalInt(oPC, "SpellfireLevelStored");
             int nCap = SpellfireMax(oPC) - nStored;
             itemproperty ip;

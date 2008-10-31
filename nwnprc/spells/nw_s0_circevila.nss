@@ -35,7 +35,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
         //Declare major variables
         int nDuration = PRCGetCasterLevel(OBJECT_SELF);
         //effect eVis = EffectVisualEffect(VFX_IMP_GOOD_HELP);
-        effect eLink = CreateProtectionFromAlignmentLink(ALIGNMENT_EVIL);
+        effect eLink = PRCCreateProtectionFromAlignmentLink(ALIGNMENT_EVIL);
 
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_MAGIC_CIRCLE_AGAINST_EVIL, FALSE));

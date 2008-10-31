@@ -15,7 +15,7 @@ void main()
     object oPC = PRCGetSpellTargetObject();
     
     // Removes effects
-    RemoveEffectsFromSpell(oPC, GetSpellId());
+    PRCRemoveEffectsFromSpell(oPC, GetSpellId());
     if(DEBUG) DoDebug("Shou Flurry All: Removing Spell Effects");
     
           string nMesA = "";

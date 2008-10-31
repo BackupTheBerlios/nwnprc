@@ -14,7 +14,7 @@
 //   - (Very) Easy = 1/4th of the duration.
 //   - Normal = 1/2th of the duration
 // Scales for Confusion.
-float SMP_GetScaledDuration(float fActualDuration, object oTarget);
+float SMP_PRCGetScaledDuration(float fActualDuration, object oTarget);
 // SMP_INC_DIFFICLT. Get Scaled Effect
 // - Works on PC's or Henchmen/familiars of a PC.
 // - Frightened
@@ -30,7 +30,7 @@ effect SMP_GetScaledEffect(effect eStandard, object oTarget);
 //   - (Very) Easy = 1/4th of the duration.
 //   - Normal = 1/2th of the duration
 // Scales for Confusion.
-float SMP_GetScaledDuration(float fActualDuration, object oTarget)
+float SMP_PRCGetScaledDuration(float fActualDuration, object oTarget)
 {
     int nDiff = GetGameDifficulty();
     float fNew = fActualDuration;

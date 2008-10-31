@@ -25,7 +25,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     int bGreater = (nSpellID == SPELL_GREATER_HEROISM);
     if(bGreater && GetHasSpellEffect(SPELL_HEROISM, oTarget))
     {
-        RemoveSpellEffects(SPELL_HEROISM, oCaster, oTarget);
+        PRCRemoveSpellEffects(SPELL_HEROISM, oCaster, oTarget);
     }
     else if(!bGreater && GetHasSpellEffect(SPELL_GREATER_HEROISM, oTarget))
     {

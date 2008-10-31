@@ -85,7 +85,7 @@ void main()
 
          if(GetHasSpellEffect(SPELL_T_TWO_WEAPON_FIGHTING, oPC) )
          {
-              RemoveSpellEffects(SPELL_T_TWO_WEAPON_FIGHTING, oPC, oPC);
+              PRCRemoveSpellEffects(SPELL_T_TWO_WEAPON_FIGHTING, oPC, oPC);
          }
     }
     // Removes effects is armor is not light
@@ -96,7 +96,7 @@ void main()
 
          if(GetHasSpellEffect(SPELL_T_TWO_WEAPON_FIGHTING, oPC) )
          {
-              RemoveSpellEffects(SPELL_T_TWO_WEAPON_FIGHTING, oPC, oPC);
+              PRCRemoveSpellEffects(SPELL_T_TWO_WEAPON_FIGHTING, oPC, oPC);
          }
 
          nMes = "*Two-Weapon Fighting Abilities Disabled Due To Equipped Armor*";
@@ -116,7 +116,7 @@ void main()
 
          if(GetHasSpellEffect(SPELL_T_TWO_WEAPON_FIGHTING, oPC) )
          {
-              RemoveSpellEffects(SPELL_T_TWO_WEAPON_FIGHTING, oPC, oPC);
+              PRCRemoveSpellEffects(SPELL_T_TWO_WEAPON_FIGHTING, oPC, oPC);
          }
 
          nMes = "*Two-Weapon Fighting Abilities Disabled Due To Invallid Weapon*";

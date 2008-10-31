@@ -155,7 +155,7 @@ void SMP_RunWhipImpact(object oTarget, object oCaster)
         else
         {
             // Remove the spells effects
-            SMP_RemoveSpellEffects(SMP_SPELL_WARDING_WHIP, oCaster, oTarget);
+            SMP_PRCRemoveSpellEffects(SMP_SPELL_WARDING_WHIP, oCaster, oTarget);
         }
     }
 }

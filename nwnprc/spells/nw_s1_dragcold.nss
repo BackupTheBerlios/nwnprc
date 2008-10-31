@@ -87,7 +87,7 @@ void main()
     ColdBreath = CreateBreath(OBJECT_SELF, FALSE, 40.0, DAMAGE_TYPE_COLD, 6, nDamageDice, ABILITY_CONSTITUTION, nDCBoost);
     
     //Apply the breath
-    PlayDragonBattleCry();
+    PRCPlayDragonBattleCry();
     ApplyBreath(ColdBreath, GetSpellTargetLocation());
     
     //Apply the recharge lock

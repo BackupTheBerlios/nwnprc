@@ -26,7 +26,7 @@ void main()
     object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
     while (GetIsObjectValid(oTarget))
     {
-        fDelay = GetSpellEffectDelay(lTarget, oTarget);
+        fDelay = PRCGetSpellEffectDelay(lTarget, oTarget);
         
         // Run the Bioware drown code.
         object oCaster = OBJECT_SELF;

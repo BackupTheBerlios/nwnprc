@@ -19,6 +19,7 @@
 //::Added hold ray functionality - HackyKid
 
 #include "prc_sp_func"
+#include "prc_inc_function"
 
 //Implements the spell impact, put code here
 //  if called in many places, return TRUE if

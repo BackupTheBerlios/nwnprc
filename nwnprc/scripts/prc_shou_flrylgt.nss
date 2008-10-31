@@ -15,7 +15,7 @@ void main()
     object oPC = PRCGetSpellTargetObject();
     
     // Removes effects
-    RemoveEffectsFromSpell(oPC, GetSpellId());
+    PRCRemoveEffectsFromSpell(oPC, GetSpellId());
     if(DEBUG) DoDebug("Shou Flurry Light: Removing Spell Effects");
     
 

@@ -811,7 +811,7 @@ int GetIsOnHitCastSpell(object oSpellTarget = OBJECT_INVALID, object oSpellCastI
 		if (DEBUG) DoDebug("GetIsOnHitCastSpell: item "+GetName(oSpellCastItem)+" is armor; attacker = "+GetName(oAttacker)+", defender = "+GetName(oDefender));
 	}
 	// is the spell type item a weapon?
-	else if (iWeaponType = GetIsWeaponType(iBaseType))
+	else if (iWeaponType == StringToInt(Get2DACache("baseitems", "WeaponType", iBaseType)))
 	{		
 		// determine the target, if not already given
 		if (oSpellTarget == OBJECT_INVALID)

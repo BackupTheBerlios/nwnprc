@@ -11,10 +11,7 @@
 //:: Modified On: 30.03.2005
 //:: Modfication: Changed to work as the spell Disintegrate
 //:://////////////////////////////////////////////
-#include "prc_alterations"
-#include "prc_feat_const"
-#include "prc_class_const"
-#include "prc_spell_const"
+#include "prc_inc_sp_tch"
 
 void main()
 {

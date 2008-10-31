@@ -19,8 +19,7 @@
 
 
 #include "prc_inc_sp_tch"
-
-
+#include "prc_inc_function"
 #include "prc_sp_func"
 
 //Implements the spell impact, put code here

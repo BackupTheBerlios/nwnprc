@@ -138,7 +138,7 @@ void main()
         // if they have PTWF and frenzy, they should get their attacks re-checked.
         if(GetHasFeat(FEAT_PERFECT_TWO_WEAPON_FIGHTING, OBJECT_SELF) )
         {
-             RemoveSpellEffects(SPELL_T_TWO_WEAPON_FIGHTING, OBJECT_SELF, OBJECT_SELF);
+             PRCRemoveSpellEffects(SPELL_T_TWO_WEAPON_FIGHTING, OBJECT_SELF, OBJECT_SELF);
              DelayCommand(0.3, ActionCastSpellOnSelf(SPELL_T_TWO_WEAPON_FIGHTING) );
         }
     }

@@ -2,7 +2,7 @@
 // Unseen Weapon: Activate
 // prc_sb_uwactiv.nss
 /////////////////////////////////////////////////////////
-#include "prc_inc_spells"
+#include "prc_inc_combat"
 void main()
 {
         object oPC = OBJECT_SELF;

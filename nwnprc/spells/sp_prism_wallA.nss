@@ -131,7 +131,7 @@ void main()
                 }
                 
                 //Blue
-                if(!PRCDoResistSpell(oPC, oTarget, nPenetr)) DoPetrification(nCasterLvl, oPC, oTarget, SPELL_PRISMATIC_RAY, nDC);
+                if(!PRCDoResistSpell(oPC, oTarget, nPenetr)) PRCDoPetrification(nCasterLvl, oPC, oTarget, SPELL_PRISMATIC_RAY, nDC);
                 
                 //Indigo
                 if(!PRCDoResistSpell(oPC, oTarget, nPenetr))

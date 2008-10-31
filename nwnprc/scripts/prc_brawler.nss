@@ -1,11 +1,11 @@
-#include "prc_alterations"
+#include "prc_inc_unarmed"
 
 
 void RemoveExtraAttacks(object oCreature)
 {
     if (GetHasSpellEffect(SPELL_BRAWLER_EXTRA_ATT))
     {
-        RemoveSpellEffects(SPELL_BRAWLER_EXTRA_ATT, oCreature, oCreature);
+        PRCRemoveSpellEffects(SPELL_BRAWLER_EXTRA_ATT, oCreature, oCreature);
         if (GetLocalInt(oCreature, "BrawlerAttacks"))
         {
             FloatingTextStringOnCreature("*Extra unarmed attacks disabled*", oCreature, FALSE);

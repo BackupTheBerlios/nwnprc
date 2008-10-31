@@ -1,8 +1,6 @@
 
-#include "prc_alterations"
-#include "prc_class_const"
-#include "prc_feat_const"
-#include "nw_i0_spells"
+#include "prc_inc_combat"
+
 
 int BonusAtk(int iDmg)
 {
@@ -72,7 +70,7 @@ void FavEn(int iFeat,int iBonus ,int nLevel, int iDmgType, int iFEAC, int iFERE,
 void main()
 {
     object oPC = GetSpellTargetObject();
-    RemoveEffectsFromSpell(oPC,GetSpellId());   
+    PRCRemoveEffectsFromSpell(oPC,GetSpellId());   
     int nLevel = (GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER,oPC)+3)/5;
     int iIFE= GetHasFeat(FEAT_IMPROVED_FAVORED_ENEMY, oPC) ? 3: 0;
     

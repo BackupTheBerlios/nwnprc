@@ -95,7 +95,7 @@ void main()
                 return;
             }
             eLink = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DOMINATED);
-            eLink = EffectLinkEffects(eLink, GetScaledEffect(EffectDominated(), oTarget));
+            eLink = EffectLinkEffects(eLink, PRCGetScaledEffect(EffectDominated(), oTarget));
             eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE));
 
             int nRacial = MyPRCGetRacialType(oTarget);
@@ -194,7 +194,7 @@ void main()
     while(GetIsObjectValid(oAffected))
     {
 
-        RemoveEffectsFromSpell(oAffected, nSpellID);
+        PRCRemoveEffectsFromSpell(oAffected, nSpellID);
         if(oAffected == oPC)
         {
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(EffectVisualEffect(VFX_DUR_BARD_SONG)), oAffected, fDuration,TRUE,-1,nCasterLevel);

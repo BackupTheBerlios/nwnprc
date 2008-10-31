@@ -1527,7 +1527,7 @@ void main()
                 {
                     int nSkill = GetCraftingSkill(oNewItem);
                     int bCheck = FALSE;
-                    TakeGold(GetLocalInt(oPC, PRC_CRAFT_COST), oPC);
+                    TakeGoldFromCreature(GetLocalInt(oPC, PRC_CRAFT_COST), oPC, TRUE);
                     if(GetCraftingFeat(oNewItem) != FEAT_CRAFT_ARMS_ARMOR)
                         CopyItem(oNewItem, oPC, TRUE);
                     else if(GetIsSkillSuccessful(oPC, nSkill, GetCraftingDC(oNewItem)))

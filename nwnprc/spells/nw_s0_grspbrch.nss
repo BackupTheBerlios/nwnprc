@@ -39,7 +39,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
 // End of Spell Cast Hook
 
 
-    DoSpellBreach(GetSpellTargetObject(), 4, 5);
+    PRCDoSpellBreach(GetSpellTargetObject(), 4, 5);
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 // Getting rid of the local integer storing the spellschool name

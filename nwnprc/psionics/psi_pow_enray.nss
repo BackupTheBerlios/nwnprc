@@ -41,7 +41,7 @@
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_inc_spells"
+#include "prc_inc_sp_tch"
 #include "psi_inc_enrgypow"
 
 void main()

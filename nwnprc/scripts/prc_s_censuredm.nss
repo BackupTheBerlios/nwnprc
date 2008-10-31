@@ -11,6 +11,15 @@
 //:: Created On: Mar 17, 2004
 //:://////////////////////////////////////////////
 
+int PRCCanCreatureBeDestroyed(object oTarget)
+{
+    if (GetPlotFlag(oTarget) == FALSE && GetImmortal(oTarget) == FALSE)
+    {
+        return TRUE;
+    }
+    return FALSE;
+}
+
 
 #include "prc_alterations"
 
@@ -45,7 +54,7 @@ void main()
             //Second check to banish weaker fiends
             if(GetHitDice(oTarget) < nLevel*2 && !WillSave(oTarget, nDC, SAVING_THROW_TYPE_GOOD)){
                 ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eBanish, GetLocation(oTarget));
-                if (CanCreatureBeDestroyed(oTarget) == TRUE)
+                if (PRCCanCreatureBeDestroyed(oTarget) == TRUE)
                     DestroyObject(oTarget, 0.3);
             }
         }

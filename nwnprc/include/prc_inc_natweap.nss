@@ -684,7 +684,7 @@ void NaturalSecondaryWeaponTempCheck(object oManifester, object oTarget, int nSp
     else
     {
         if(DEBUG) DoDebug(sResRef+": Power expired, exiting HB");
-        RemoveSpellEffects(nSpellID, oManifester, oTarget);
+        PRCRemoveSpellEffects(nSpellID, oManifester, oTarget);
         RemoveNaturalSecondaryWeapons(oTarget, sResRef);
     }
 }
@@ -838,7 +838,7 @@ void NaturalPrimaryWeaponTempCheck(object oManifester, object oTarget, int nSpel
     else
     {
         if(DEBUG) DoDebug(sResRef+": Power expired, exiting HB");
-        RemoveSpellEffects(nSpellID, oManifester, oTarget);
+        PRCRemoveSpellEffects(nSpellID, oManifester, oTarget);
         RemoveNaturalPrimaryWeapon(oTarget, sResRef);
     }
 }

@@ -1,8 +1,7 @@
 //  Clangeddin's Strike Feat
 //  Created 10/30/04
 //  By Vaeliorin
-#include "prc_alterations"
-#include "prc_feat_const"
+#include "prc_inc_combat"
 
 void main()
 {

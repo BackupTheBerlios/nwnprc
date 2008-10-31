@@ -1,6 +1,6 @@
 
 #include "prc_alterations"
-#include "nw_i0_spells"
+
 
 void main()
 {
@@ -17,7 +17,7 @@ void main()
     int iCur = GetLocalInt(oPC, sBonus);
     int iAB, iAP, iHand;
 
-    RemoveEffectsFromSpell(oPC, GetSpellId());
+    PRCRemoveEffectsFromSpell(oPC, GetSpellId());
 
     switch (iSubType)
     {

@@ -53,6 +53,6 @@ void main()
     }
     else
     {
-        RemoveEffectsFromSpell(oPC, SPELL_MANATARMS_DAMAGE);
+        PRCRemoveEffectsFromSpell(oPC, SPELL_MANATARMS_DAMAGE);
     }
 }

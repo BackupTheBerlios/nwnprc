@@ -27,7 +27,7 @@
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
 #include "prc_inc_spells"
 
-#include "x0_i0_spells"
+
 #include "x2_inc_spellhook"
 #include "x2_i0_spells"
 
@@ -44,7 +44,7 @@ void RunHandImpact(object oTarget, object oCaster,int CasterLvl )
         return;
     }
 
-    int nCasterModifiers = GetCasterAbilityModifier(oCaster)
+    int nCasterModifiers = PRCGetCasterAbilityModifier(oCaster)
                + PRCGetCasterLevel(oCaster);
     int nCasterRoll = d20(1) + nCasterModifiers + 11 + -1;
     int nTargetRoll = GetAC(oTarget);
@@ -118,7 +118,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
         if(nResult  == 0)
         {
-            int nCasterModifier = GetCasterAbilityModifier(OBJECT_SELF);
+            int nCasterModifier = PRCGetCasterAbilityModifier(OBJECT_SELF);
             effect eHand = EffectVisualEffect(VFX_DUR_BIGBYS_CLENCHED_FIST);
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHand, oTarget, RoundsToSeconds(nDuration),FALSE);
 

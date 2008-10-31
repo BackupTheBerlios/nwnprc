@@ -29,7 +29,7 @@ void ShieldDuration()
    {
      if ( !GetHasFeat(FEAT_SA_SHIELDSHADOW))
      {
-       RemoveSpellEffects(SPELL_SHADOWSHIELD,oCaster,oCaster);
+       PRCRemoveSpellEffects(SPELL_SHADOWSHIELD,oCaster,oCaster);
        return;
      }
      else
@@ -61,7 +61,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
 
    if (GetHasSpellEffect(SPELL_SHADOWSHIELD))
    {
-       RemoveSpellEffects(SPELL_SHADOWSHIELD,OBJECT_SELF,OBJECT_SELF);
+       PRCRemoveSpellEffects(SPELL_SHADOWSHIELD,OBJECT_SELF,OBJECT_SELF);
        IncrementRemainingFeatUses(OBJECT_SELF,FEAT_SA_SHIELDSHADOW);
        return;
    }
@@ -89,7 +89,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
     //Fire spell cast at event for target
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, 417, FALSE));
 
-    RemoveEffectsFromSpell(OBJECT_SELF, GetSpellId());
+    PRCRemoveEffectsFromSpell(OBJECT_SELF, GetSpellId());
 
     //Apply VFX impact and bonus effects
     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);

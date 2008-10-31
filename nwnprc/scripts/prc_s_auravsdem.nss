@@ -21,7 +21,7 @@ void main()
     //--------------------------------------------------------------------------
     // GZ: Make sure this aura is only active once
     //--------------------------------------------------------------------------
-    RemoveSpellEffects(GetSpellId(),OBJECT_SELF,PRCGetSpellTargetObject());
+    PRCRemoveSpellEffects(GetSpellId(),OBJECT_SELF,PRCGetSpellTargetObject());
 
     //Declare major variables
     object oTarget = PRCGetSpellTargetObject();

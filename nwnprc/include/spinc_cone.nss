@@ -57,7 +57,7 @@ void DoCone (int nDieSize, int nBonusDam, int nDieCap, int nConeEffect /* unused
                PRCSignalSpellEvent(oTarget, TRUE, nSpellID);
 
                //Get the distance between the target and caster to delay the application of effects
-               fDelay = GetSpellEffectDelay(lTargetLocation, oTarget);
+               fDelay = PRCGetSpellEffectDelay(lTargetLocation, oTarget);
 
                //Make SR check, and appropriate saving throw(s).
                if(!PRCDoResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay) && (oTarget != OBJECT_SELF))

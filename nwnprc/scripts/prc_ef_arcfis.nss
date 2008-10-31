@@ -1,6 +1,5 @@
-#include "prc_spell_const"
+#include "prc_inc_stunfist"
 #include "prc_sp_func"
-#include "prc_alterations"
 
 void main()
 {

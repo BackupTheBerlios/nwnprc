@@ -8,7 +8,7 @@
     If your strike hits, you deal your opponent is stunned.
 */
 
-#include "prc_alterations"
+#include "prc_inc_combat"
 
 void main()
 {

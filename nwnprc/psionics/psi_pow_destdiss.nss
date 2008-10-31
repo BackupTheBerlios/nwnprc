@@ -26,12 +26,13 @@
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
 #include "prc_sp_func"
+#include "prc_inc_sp_tch"
 
 int DoPower(object oManifester, object oTarget, struct manifestation manif)
 {
     int nDC         = GetManifesterDC(oManifester);
     int nPen        = GetPsiPenetration(oManifester);
-    effect eShaken  = CreateDoomEffectsLink();
+    effect eShaken  = EffectShaken();
     effect eImpact  = EffectVisualEffect(VFX_IMP_DOOM);
     float fDuration = RoundsToSeconds(manif.nManifesterLevel);
     if(manif.bExtend) fDuration *= 2;

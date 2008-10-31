@@ -40,7 +40,7 @@ void DawnCheck(object oTarget, object oPC, int nRemove)
     
     if((nRemove == 1) && (GetIsDawn()))
     {
-        RemoveSpellEffects(SPELL_EVIL_EYE, oPC, oTarget);
+        PRCRemoveSpellEffects(SPELL_EVIL_EYE, oPC, oTarget);
         return;
     }
     

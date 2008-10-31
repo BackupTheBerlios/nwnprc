@@ -330,14 +330,14 @@ void DoScryEnd(object oPC, object oCopy)
         SetImmortal(oPC, FALSE);
 
     // Remove the VFX and the attack penalty from all spells.
-    RemoveSpellEffects(SPELL_SCRY            , oPC, oPC);
-    RemoveSpellEffects(SPELL_GREATER_SCRYING , oPC, oPC);
-    RemoveSpellEffects(SPELL_DISCERN_LOCATION, oPC, oPC);
-    RemoveSpellEffects(SPELL_LOCATE_CREATURE , oPC, oPC);
-    RemoveSpellEffects(SPELL_LOCATE_OBJECT   , oPC, oPC);
-    RemoveSpellEffects(SPELL_ARCANE_EYE      , oPC, oPC);
-    RemoveSpellEffects(SPELL_OBSCURE_OBJECT  , oPC, oPC);
-    RemoveSpellEffects(SPELL_SEQUESTER       , oPC, oPC);
+    PRCRemoveSpellEffects(SPELL_SCRY            , oPC, oPC);
+    PRCRemoveSpellEffects(SPELL_GREATER_SCRYING , oPC, oPC);
+    PRCRemoveSpellEffects(SPELL_DISCERN_LOCATION, oPC, oPC);
+    PRCRemoveSpellEffects(SPELL_LOCATE_CREATURE , oPC, oPC);
+    PRCRemoveSpellEffects(SPELL_LOCATE_OBJECT   , oPC, oPC);
+    PRCRemoveSpellEffects(SPELL_ARCANE_EYE      , oPC, oPC);
+    PRCRemoveSpellEffects(SPELL_OBSCURE_OBJECT  , oPC, oPC);
+    PRCRemoveSpellEffects(SPELL_SEQUESTER       , oPC, oPC);
     
     // Remove the local signifying that the PC is a projection
     DeleteLocalInt(oPC, "Scry_Active");

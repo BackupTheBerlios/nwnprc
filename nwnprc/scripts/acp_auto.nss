@@ -1,7 +1,4 @@
-#include "prc_alterations"
-#include "prc_feat_const"
-#include "prc_class_const"
-#include "prc_ipfeat_const"
+#include "prc_inc_combat"
 
 const int PHENOTYPE_KENSAI      = 5;
 const int PHENOTYPE_ASSASSIN    = 6;

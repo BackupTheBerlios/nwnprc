@@ -35,7 +35,7 @@ void main()
      else     
      {
 	// Removes effects
-	RemoveSpellEffects(GetSpellId(), oPC, oPC);
+	PRCRemoveSpellEffects(GetSpellId(), oPC, oPC);
 	sMes = "*Consecrated Aura Deactivated*";
      }
 

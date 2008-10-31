@@ -4,7 +4,7 @@ void main()
 
  if (GetHasSpellEffect(SPELL_FURIOUS_ASSAULT))
  {
-     RemoveSpellEffects(SPELL_FURIOUS_ASSAULT,OBJECT_SELF,OBJECT_SELF);
+     PRCRemoveSpellEffects(SPELL_FURIOUS_ASSAULT,OBJECT_SELF,OBJECT_SELF);
      string nMes = "*Furious Assault Mode Deactivated*";
      FloatingTextStringOnCreature(nMes, OBJECT_SELF, FALSE);
  }

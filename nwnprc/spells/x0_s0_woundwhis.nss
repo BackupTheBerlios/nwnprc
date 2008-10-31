@@ -21,7 +21,7 @@
 #include "prc_spell_const"
 
 #include "x2_inc_spellhook"
-#include "x0_i0_spells"
+
 void main()
 {
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
@@ -62,12 +62,12 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
 
     if (GetHasSpellEffect(GetSpellId()))
     {
-        RemoveSpellEffects(GetSpellId(),OBJECT_SELF,OBJECT_SELF);
+        PRCRemoveSpellEffects(GetSpellId(),OBJECT_SELF,OBJECT_SELF);
     }
     
     if(GetHasSpellEffect(SPELL_MINSTREL_SONG_WOUND_WHISP))
     {
-        RemoveSpellEffects(SPELL_MINSTREL_SONG_WOUND_WHISP,OBJECT_SELF,OBJECT_SELF);
+        PRCRemoveSpellEffects(SPELL_MINSTREL_SONG_WOUND_WHISP,OBJECT_SELF,OBJECT_SELF);
     }
 
     //Enter Metamagic conditions

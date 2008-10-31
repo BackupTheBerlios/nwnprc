@@ -31,7 +31,7 @@ void DispelMonitor(object oCaster, object oTarget, int nSpellID, int nBeatsRemai
        )
     {
         if(DEBUG) DoDebug("sp_pattern: Spell expired, clearing");
-        RemoveEffectsFromSpell(oTarget, nSpellID);
+        PRCRemoveEffectsFromSpell(oTarget, nSpellID);
 
     }
     else

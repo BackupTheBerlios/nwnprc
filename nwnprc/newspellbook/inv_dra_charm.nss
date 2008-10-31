@@ -15,7 +15,7 @@
 
 //:: modified by mr_bumpkin Dec 4, 2003
 #include "prc_inc_spells"
-#include "NW_I0_SPELLS"
+
 #include "inv_inc_invfunc"
 #include "inv_invokehook"
 
@@ -35,7 +35,7 @@ void main()
     object oTarget = GetSpellTargetObject();
     effect eVis = EffectVisualEffect(VFX_IMP_CHARM);
     effect eCharm = EffectDominated();  //EffectDominated is limited to 1 creature at a time
-    eCharm = GetScaledEffect(eCharm, oTarget);
+    eCharm = PRCGetScaledEffect(eCharm, oTarget);
     effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
 
@@ -46,7 +46,7 @@ void main()
     int CasterLvl = GetInvokerLevel(OBJECT_SELF, GetInvokingClass());
     int nDuration = CasterLvl;
     int nPenetr = CasterLvl + SPGetPenetr();
-    nDuration = GetScaledDuration(nDuration, oTarget);
+    nDuration = PRCGetScaledDuration(nDuration, oTarget);
     int nRacial = MyPRCGetRacialType(oTarget);
 
     if(!GetIsReactionTypeFriendly(oTarget))

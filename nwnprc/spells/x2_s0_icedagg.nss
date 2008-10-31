@@ -18,7 +18,7 @@
 
 #include "prc_inc_sp_tch"
 
-#include "NW_I0_SPELLS"
+
 #include "x2_inc_spellhook"
 
 void main()

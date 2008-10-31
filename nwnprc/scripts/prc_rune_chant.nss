@@ -12,7 +12,7 @@ void main()
      if (GetIsImmune(oPC, IMMUNITY_TYPE_SLOW))
      {
 	// Removes effects
-	RemoveSpellEffects(GetSpellId(), oPC, oPC);
+	PRCRemoveSpellEffects(GetSpellId(), oPC, oPC);
 	DeleteLocalInt(oPC, "RuneChant");
 	nMes = "*Immune to Slowing - Canceling Rune Chant*";
      }
@@ -27,7 +27,7 @@ void main()
      else     
      {
 	// Removes effects
-	RemoveSpellEffects(GetSpellId(), oPC, oPC);
+	PRCRemoveSpellEffects(GetSpellId(), oPC, oPC);
 	DeleteLocalInt(oPC, "RuneChant");
 	nMes = "*Rune Chant Deactivated*";
      }

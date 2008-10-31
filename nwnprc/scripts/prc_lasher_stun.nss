@@ -10,9 +10,7 @@
 //:: Modified: Sept 29, 2005
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
-#include "inc_2dacache"
-#include "prc_inc_spells"
+#include "prc_inc_combat"
 
 void main()
 {
@@ -33,7 +31,7 @@ void main()
         {
             SignalEvent(oTarget, EventSpellCastAt(oPC, nSpellId));
 
-            if(!MySavingThrow(SAVING_THROW_FORT, oTarget, nDC))
+            if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC))
                 ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectStunned(), oTarget, 6.0);
 
             ActionDoCommand(PerformAttackRound(oTarget, oPC, eBlank));

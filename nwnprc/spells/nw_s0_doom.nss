@@ -47,7 +47,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     //Declare major variables
     object oTarget = GetSpellTargetObject();
     effect eVis = EffectVisualEffect(VFX_IMP_DOOM);
-    effect eLink = CreateDoomEffectsLink();
+    effect eLink = EffectShaken();
 
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 

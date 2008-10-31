@@ -16,8 +16,7 @@
 //:: Edited for PRC use. aser
 //::
 
-#include "NW_I0_GENERIC"
-#include "prc_alterations"
+#include "prc_inc_combat"
 
 ///Checks to see if weapon is metal///
 int IsItemMetal(object oItem)

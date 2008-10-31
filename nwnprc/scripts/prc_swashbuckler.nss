@@ -62,9 +62,9 @@ void SmartWound(object oPC, object oSkin, int iStrike, int iEquip)
        iLight = GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC))==BASE_ITEM_SICKLE      ? 1 : iLight;
        iLight = GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC))==BASE_ITEM_WHIP        ? 1 : iLight;
 
-   if  (GetBaseAC(oArmor)>iMax ) RemoveEffectsFromSpell(oPC, SPELL_SWASH_DAMAGE);
+   if  (GetBaseAC(oArmor)>iMax ) PRCRemoveEffectsFromSpell(oPC, SPELL_SWASH_DAMAGE);
 
-   else if (iLight<1) RemoveEffectsFromSpell(oPC, SPELL_SWASH_DAMAGE);
+   else if (iLight<1) PRCRemoveEffectsFromSpell(oPC, SPELL_SWASH_DAMAGE);
    else
    {
           if (GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC)))
@@ -73,7 +73,7 @@ void SmartWound(object oPC, object oSkin, int iStrike, int iEquip)
             }
           else
             {
-                RemoveEffectsFromSpell(oPC, SPELL_SWASH_DAMAGE);
+                PRCRemoveEffectsFromSpell(oPC, SPELL_SWASH_DAMAGE);
             }
    }
 }

@@ -544,7 +544,7 @@ int SMP_DispelBestSpellFromGoodEvilAlignment(object oTarget, int nCasterLevel, i
                 if(nCasterLevel + d20() >= nDC)
                 {
                     // Remove all effects from the spell by oCreator
-                    SMP_RemoveSpellEffects(nSpellId, oCreator, oTarget, 0.1);
+                    SMP_PRCRemoveSpellEffects(nSpellId, oCreator, oTarget, 0.1);
                     bReturn = TRUE;
                 }
             }
@@ -677,7 +677,7 @@ int SMP_DispelBestSpellFromLawChaosAlignment(object oTarget, int nCasterLevel, i
                 if(nCasterLevel + d20() >= nDC)
                 {
                     // Remove all effects from the spell by oCreator
-                    SMP_RemoveSpellEffects(nSpellId, oCreator, oTarget, 0.1);
+                    SMP_PRCRemoveSpellEffects(nSpellId, oCreator, oTarget, 0.1);
                     bReturn = TRUE;
                 }
             }

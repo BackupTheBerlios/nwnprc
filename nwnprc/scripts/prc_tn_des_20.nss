@@ -30,7 +30,7 @@ void main()
     else     
     {
         // Removes effects
-        RemoveSpellEffects(SPELL_DES_20, oPC, oPC);
+        PRCRemoveSpellEffects(SPELL_DES_20, oPC, oPC);
         nMes = "*Lesser Desecrate Deactivated*";
     }
 

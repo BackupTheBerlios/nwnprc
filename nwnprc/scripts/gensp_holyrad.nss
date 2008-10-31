@@ -43,7 +43,7 @@ void main()
     if (GetHasSpellEffect(SPELL_HOLYRADIANCE)
         || GetAlignmentGoodEvil(OBJECT_SELF)!= ALIGNMENT_GOOD )
     {
-       RemoveSpellEffects(GetSpellId(),OBJECT_SELF,PRCGetSpellTargetObject());
+       PRCRemoveSpellEffects(GetSpellId(),OBJECT_SELF,PRCGetSpellTargetObject());
        return;
     }
 

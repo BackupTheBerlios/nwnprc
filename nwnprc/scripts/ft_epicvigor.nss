@@ -19,13 +19,13 @@ void main()
 
    if (!nTouch || GetHasSpellEffect(SPELL_DIVINE_VIGOR) == FALSE )
    {
-       RemoveEffectsFromSpell(OBJECT_SELF, SPELL_DIVINE_VIGOR);
+       PRCRemoveEffectsFromSpell(OBJECT_SELF, SPELL_DIVINE_VIGOR);
        nTouch = GetAbilityModifier(ABILITY_CHARISMA)<1 ? 1 : GetAbilityModifier(ABILITY_CHARISMA);
        DecrementRemainingFeatUses(OBJECT_SELF, FEAT_TURN_UNDEAD);
        ActionCastSpellAtObject(SPELL_DIVINE_VIGOR,OBJECT_SELF,METAMAGIC_ANY,TRUE,0,PROJECTILE_PATH_TYPE_DEFAULT,TRUE);
    }
 
-   RemoveEffectsFromSpell(OBJECT_SELF, GetSpellId());
+   PRCRemoveEffectsFromSpell(OBJECT_SELF, GetSpellId());
    SetLocalInt(OBJECT_SELF,"EpicVigor",nTouch-1);
 
    if (nTouch<1)

@@ -78,7 +78,7 @@ void main()
 
         // Remove the marker and remove the duration VFX
         DeleteLocalInt(oUser, "PRC_Power_GreaterPrecognition_Active");
-        RemoveSpellEffects(POWER_GREATERPRECOGNITION_MAIN, oUser, oUser); // Assumption: The power is personal range, as such the effect applier is always same as the target
+        PRCRemoveSpellEffects(POWER_GREATERPRECOGNITION_MAIN, oUser, oUser); // Assumption: The power is personal range, as such the effect applier is always same as the target
     }
     else
     {

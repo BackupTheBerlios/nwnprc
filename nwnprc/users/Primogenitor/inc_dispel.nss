@@ -405,7 +405,7 @@ void DispelMagicAllMod(object oTarget, int nCasterLevel)
         //:: Was going to use this function but upon reading it it became apparent it might not remove
         //:: all of the given spells effects, but just one instead.
 
-        //RemoveSpellEffects(nEffectSpellID, oEffectCaster, oTarget);
+        //PRCRemoveSpellEffects(nEffectSpellID, oEffectCaster, oTarget);
 
         //:: If the check is successful, go through and remove all effects originating
         //:: from that particular spell.

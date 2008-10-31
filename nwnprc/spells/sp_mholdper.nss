@@ -29,7 +29,7 @@ void main()
     object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_GARGANTUAN, lTarget, TRUE, OBJECT_TYPE_CREATURE);
     while (GetIsObjectValid(oTarget))
     {
-        fDelay = GetSpellEffectDelay(lTarget, oTarget);
+        fDelay = PRCGetSpellEffectDelay(lTarget, oTarget);
         
         // Run the Bioware hold person script on the target, if the target is a valid target for the script increment
         // our target count and check to see if we've used up all our targets, if we have then exit out of the loop.
@@ -56,8 +56,8 @@ int BiowareHoldPerson (int nPenetr, int nCasterLvl, int nMeta, object oTarget, f
     
     //Declare major variables
 //    int nDuration = nCasterLvl;
-//    nDuration = GetScaledDuration(nDuration, oTarget);
-    float fDuration = PRCGetMetaMagicDuration(RoundsToSeconds(GetScaledDuration(nCasterLvl, oTarget)));
+//    nDuration = PRCGetScaledDuration(nDuration, oTarget);
+    float fDuration = PRCGetMetaMagicDuration(RoundsToSeconds(PRCGetScaledDuration(nCasterLvl, oTarget)));
     effect eParal = EffectParalyze();
     effect eVis = EffectVisualEffect(82);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);

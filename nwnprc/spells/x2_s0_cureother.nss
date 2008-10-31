@@ -12,9 +12,9 @@
 //:://////////////////////////////////////////////
 
 //:: modified by mr_bumpkin Dec 4, 2003 for prc stuff
-#include "prc_inc_spells"
 
-#include "NW_I0_SPELLS"
+#include "prc_inc_sp_tch"
+#include "prc_inc_function"
 #include "x2_inc_spellhook"
 
 void main()

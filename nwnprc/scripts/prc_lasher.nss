@@ -110,7 +110,7 @@ void RemoveBonuses(object oPC, object oWeapon)
         }
 
         if(GetHasSpellEffect(SPELL_LASHER_LASHW, oPC)) //lashing whip
-            RemoveEffectsFromSpell(oPC, SPELL_LASHER_LASHW);
+            PRCRemoveEffectsFromSpell(oPC, SPELL_LASHER_LASHW);
 
         if(iClassLevel > 5)    //improved disarm (whip)
         {
@@ -124,12 +124,12 @@ void RemoveBonuses(object oPC, object oWeapon)
 
         if(GetHasSpellEffect(SPELL_LASHER_CRACK_FATE, oPC))
         {
-            RemoveEffectsFromSpell(oPC, SPELL_LASHER_CRACK_FATE);
+            PRCRemoveEffectsFromSpell(oPC, SPELL_LASHER_CRACK_FATE);
             FloatingTextStringOnCreature("*Crack of Fate Deactivated*", oPC, FALSE);
         }
         if(GetHasSpellEffect(SPELL_LASHER_CRACK_DOOM, oPC))
         {
-            RemoveEffectsFromSpell(oPC, SPELL_LASHER_CRACK_DOOM);
+            PRCRemoveEffectsFromSpell(oPC, SPELL_LASHER_CRACK_DOOM);
             FloatingTextStringOnCreature("*Crack of Doom Deactivated*", oPC, FALSE);
         }
 

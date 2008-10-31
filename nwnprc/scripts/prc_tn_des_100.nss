@@ -30,7 +30,7 @@ void main()
     else     
     {
         // Removes effects
-        RemoveSpellEffects(SPELL_DES_100, oPC, oPC);
+        PRCRemoveSpellEffects(SPELL_DES_100, oPC, oPC);
         nMes = "*Major Desecrate Deactivated*";
     }
     FloatingTextStringOnCreature(nMes, oPC, FALSE);

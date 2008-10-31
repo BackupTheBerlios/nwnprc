@@ -16,7 +16,7 @@
 void main()
 {
     object oPC = PRCGetSpellTargetObject();
-    RemoveEffectsFromSpell(oPC, GetSpellId());
+    PRCRemoveEffectsFromSpell(oPC, GetSpellId());
     ApplyEffectToObject(DURATION_TYPE_PERMANENT,
         SupernaturalEffect(
             EffectDamageIncrease(DAMAGE_BONUS_2, IP_CONST_DAMAGETYPE_PHYSICAL)

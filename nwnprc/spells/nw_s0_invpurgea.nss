@@ -16,6 +16,32 @@
 
 #include "prc_inc_spells"
 
+//------------------------------------------------------------------------------
+// Doesn't care who the caster was removes the effects of the spell nSpell_ID.
+// will ignore the subtype as well...
+// GZ: Removed the check that made it remove only one effect.
+//------------------------------------------------------------------------------
+void PRCRemoveAnySpellEffects(int nSpell_ID, object oTarget)
+{
+    //Declare major variables
+
+    effect eAOE;
+    if(GetHasSpellEffect(nSpell_ID, oTarget))
+    {
+        //Search through the valid effects on the target.
+        eAOE = GetFirstEffect(oTarget);
+        while (GetIsEffectValid(eAOE))
+        {
+            //If the effect was created by the spell then remove it
+            if(GetEffectSpellId(eAOE) == nSpell_ID)
+            {
+                RemoveEffect(oTarget, eAOE);
+            }
+            //Get next effect on the target
+            eAOE = GetNextEffect(oTarget);
+        }
+    }
+}
 
 void main()
 {
@@ -29,22 +55,22 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
     if (GetHasSpellEffect(SPELL_IMPROVED_INVISIBILITY, oTarget) == TRUE)
     {
-        RemoveAnySpellEffects(SPELL_IMPROVED_INVISIBILITY, oTarget);
+        PRCRemoveAnySpellEffects(SPELL_IMPROVED_INVISIBILITY, oTarget);
     }
     else
     if (GetHasSpellEffect(SPELL_INVISIBILITY, oTarget) == TRUE)
     {
-        RemoveAnySpellEffects(SPELL_INVISIBILITY, oTarget);
+        PRCRemoveAnySpellEffects(SPELL_INVISIBILITY, oTarget);
     }
     else 
     if (GetHasSpellEffect(SPELLABILITY_AS_INVISIBILITY, oTarget) == TRUE) 
     { 
-        RemoveAnySpellEffects(SPELLABILITY_AS_INVISIBILITY , oTarget); 
+        PRCRemoveAnySpellEffects(SPELLABILITY_AS_INVISIBILITY , oTarget); 
     } 
     else 
     if(GetHasSpellEffect(SPELLABILITY_AS_IMPROVED_INVISIBLITY , oTarget) == TRUE) 
     { 
-        RemoveAnySpellEffects(SPELLABILITY_AS_IMPROVED_INVISIBLITY , oTarget); 
+        PRCRemoveAnySpellEffects(SPELLABILITY_AS_IMPROVED_INVISIBLITY , oTarget); 
     }
 
     
@@ -78,7 +104,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             RemoveEffect(oTarget, eInvis);
             if (bIsImprovedInvis)
             {
-                RemoveSpellEffects(SPELL_IMPROVED_INVISIBILITY, oTarget, oTarget);
+                PRCRemoveSpellEffects(SPELL_IMPROVED_INVISIBILITY, oTarget, oTarget);
             }
         }
         //Get Next Effect

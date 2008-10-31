@@ -18,7 +18,7 @@ void main()
           && GetIsAreaAboveGround(oArea) == AREA_ABOVEGROUND
           && !GetIsAreaInterior(oArea)
          )
-         RemoveSpellEffects(INVOKE_ENERVATING_SHADOW, oCaster, oCaster);
+         PRCRemoveSpellEffects(INVOKE_ENERVATING_SHADOW, oCaster, oCaster);
         
 }
 

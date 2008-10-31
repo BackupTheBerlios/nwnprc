@@ -33,7 +33,7 @@ from a bull rush attack, a telekinesis spell, and so forth.
 
 #include "tob_inc_move"
 #include "tob_movehook"
-#include "prc_alterations"
+#include "prc_inc_function"
 
 void main()
 {

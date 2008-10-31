@@ -20,9 +20,9 @@ void CheckPowerShot(object oPC)
          GetHasSpellEffect(SPELL_PA_SUP_POWERSHOT, oPC))
       {
          FloatingTextStringOnCreature("*Power Shot Deactivated - No Bow Equipped*", OBJECT_SELF, FALSE);
-         RemoveSpellEffects(SPELL_PA_POWERSHOT, OBJECT_SELF, OBJECT_SELF);
-	 RemoveSpellEffects(SPELL_PA_IMP_POWERSHOT, OBJECT_SELF, OBJECT_SELF);
-	 RemoveSpellEffects(SPELL_PA_SUP_POWERSHOT, OBJECT_SELF, OBJECT_SELF);
+         PRCRemoveSpellEffects(SPELL_PA_POWERSHOT, OBJECT_SELF, OBJECT_SELF);
+	 PRCRemoveSpellEffects(SPELL_PA_IMP_POWERSHOT, OBJECT_SELF, OBJECT_SELF);
+	 PRCRemoveSpellEffects(SPELL_PA_SUP_POWERSHOT, OBJECT_SELF, OBJECT_SELF);
       }
 }
 

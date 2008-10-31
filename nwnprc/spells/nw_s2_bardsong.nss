@@ -19,7 +19,7 @@ bugfix by Kovi 2002.07.30
 */
 
 #include "prc_inc_clsfunc"
-#include "prc_inc_sneak"  //for Dragonfire type getting
+#include "prc_inc_combat"  //for Dragonfire type getting
 
 void ApplyDragonfire(int nAmount, int nDuration, object oPC, object oCaster)
 {

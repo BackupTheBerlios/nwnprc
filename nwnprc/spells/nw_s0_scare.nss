@@ -147,7 +147,7 @@ void ApplyScare(object oTarget, int nDuration)
     effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_FEAR);
     effect eLink = EffectLinkEffects(eMind, eScare);
     
-    effect eShaken = CreateDoomEffectsLink();
+    effect eShaken = EffectShaken();
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     
     //Make Will save versus fear

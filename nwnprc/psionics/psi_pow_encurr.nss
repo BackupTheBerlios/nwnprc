@@ -245,7 +245,7 @@ void EnergyCurrentHB(struct manifestation manif, struct energy_adjustments enAdj
     else
     {
         if(DEBUG) DoDebug("psi_pow_encurr: Power expired");
-        RemoveSpellEffects(manif.nSpellID, manif.oManifester, manif.oManifester);
+        PRCRemoveSpellEffects(manif.nSpellID, manif.oManifester, manif.oManifester);
         DeleteLocalInt(manif.oManifester, "PRC_Power_EnergyCurrent_ConcentrationBroken");
         array_delete(manif.oManifester, SECONDARY_TARGETS_ARRAY);
     }

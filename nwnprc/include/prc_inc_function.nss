@@ -328,7 +328,7 @@ void EvalPRCFeats(object oPC)
 
     // Gathers all the calls to UnarmedFists & Feats to one place.
     // Must be after all evaluationscripts that need said functions.
-    if(GetLocalInt(oPC, CALL_UNARMED_FEATS) || GetLocalInt(oPC, CALL_UNARMED_FISTS)) // ExecuteScript() is pretty expensive, do not run it needlessly - 20060702, Ornedan
+    if(GetLocalInt(oPC, "CALL_UNARMED_FEATS") || GetLocalInt(oPC, "CALL_UNARMED_FISTS")) // ExecuteScript() is pretty expensive, do not run it needlessly - 20060702, Ornedan
         ExecuteScript("unarmed_caller", oPC);
 
     // Gathers all the calls to SetBaseAttackBonus() to one place

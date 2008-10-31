@@ -3,7 +3,7 @@
 //:: FileName  sp_ray_sleep.nss
 //:://////////////////////////////////////////////
 
-#include "prc_inc_spells"
+#include "prc_inc_sp_tch"
 
 
 void main()

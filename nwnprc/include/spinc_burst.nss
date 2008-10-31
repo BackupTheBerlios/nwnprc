@@ -69,7 +69,7 @@ void DoBurst (int nCasterLvl, int nDieSize, int nBonusDam, int nDice, int nBurst
                     //Fire cast spell at event for the specified target
                     PRCSignalSpellEvent(oTarget, TRUE, nSpellID);
 
-                    fDelay = GetSpellEffectDelay(lTarget, oTarget);
+                    fDelay = PRCGetSpellEffectDelay(lTarget, oTarget);
                     if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay))
                     {
                          int nSaveDC = PRCGetSaveDC(oTarget, OBJECT_SELF);

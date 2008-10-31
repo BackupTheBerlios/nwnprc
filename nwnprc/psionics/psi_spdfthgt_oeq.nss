@@ -18,5 +18,5 @@ void main()
 {
     object oCreature = GetItemLastEquippedBy();
     if(GetBaseAC(GetItemInSlot(INVENTORY_SLOT_CHEST, oCreature)) >= 6)
-        RemoveSpellEffects(SPELL_FEAT_SPEED_OF_THOUGHT_BONUS, oCreature, oCreature);
+        PRCRemoveSpellEffects(SPELL_FEAT_SPEED_OF_THOUGHT_BONUS, oCreature, oCreature);
 }

@@ -11,7 +11,8 @@
 //:: Created On: 09/04/2006
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "prc_inc_combat"
+#include "prc_inc_sp_tch"
 
 int GetGrappleSizeMod(int nSize)
 {

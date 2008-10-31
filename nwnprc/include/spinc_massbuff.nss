@@ -79,7 +79,7 @@ void DoMassBuff (int nBuffType, int nBuffSubType, int nBuffSpellID, int nSpellID
 			//Fire cast spell at event for the specified target
 			PRCSignalSpellEvent(oTarget, FALSE);
 
-			fDelay = GetSpellEffectDelay(lTarget, oTarget);
+			fDelay = PRCGetSpellEffectDelay(lTarget, oTarget);
 
 			// Calculate stat mod and adjust for metamagic.
 			int nStatMod = PRCGetMetaMagicDamage(-1, 1, 4, 0, 1);

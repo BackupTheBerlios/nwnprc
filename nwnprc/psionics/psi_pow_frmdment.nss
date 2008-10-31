@@ -59,7 +59,7 @@ void main()
 {
     //Declare major variables
     object oTarget = GetEnteringObject();
-    effect eLink   =                          CreateDoomEffectsLink();
+    effect eLink   =                          EffectShaken();
            eLink   = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_MIND_AFFECTING_FEAR));
            eLink   = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE));
     effect eVis    = EffectVisualEffect(VFX_IMP_FEAR_S);

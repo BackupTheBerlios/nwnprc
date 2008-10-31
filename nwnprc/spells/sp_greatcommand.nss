@@ -52,7 +52,7 @@ void DoGreaterCommandRecursion(object oCaster, object oTarget, int nSpellId, int
             }
             else // The spell fizzles, and this will shutdown on the next beat
             {
-                RemoveEffectsFromSpell(oTarget, nSpellId);
+                PRCRemoveEffectsFromSpell(oTarget, nSpellId);
             }
         }
         // Schedule next impact

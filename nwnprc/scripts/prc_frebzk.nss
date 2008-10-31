@@ -34,7 +34,7 @@ void CheckSupremePowerAttack(object oPC, int iEquip)
       if(GetHasFeatEffect(FEAT_SUPREME_POWER_ATTACK) && bIsWeapon)
       {    
           // Removes effects
-          RemoveSpellEffects(SPELL_SUPREME_POWER_ATTACK, oPC, oPC);
+          PRCRemoveSpellEffects(SPELL_SUPREME_POWER_ATTACK, oPC, oPC);
 
           string nMes = "*Supreme Power Attack Mode Deactivated*";
           FloatingTextStringOnCreature(nMes, OBJECT_SELF, FALSE);

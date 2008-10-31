@@ -45,7 +45,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     object oTarget = GetSpellTargetObject();
     effect eVis = EffectVisualEffect(VFX_IMP_CHARM);
     effect eCharm = EffectCharmed();
-    eCharm = GetScaledEffect(eCharm, oTarget);
+    eCharm = PRCGetScaledEffect(eCharm, oTarget);
     effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
 
@@ -57,7 +57,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nDuration = 2 + CasterLvl/3;
     int nPenetr = CasterLvl + SPGetPenetr();
-    nDuration = GetScaledDuration(nDuration, oTarget);
+    nDuration = PRCGetScaledDuration(nDuration, oTarget);
     int nRacial = MyPRCGetRacialType(oTarget);
     //Make Metamagic check for extend
     if ((nMetaMagic & METAMAGIC_EXTEND))

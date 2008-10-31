@@ -42,7 +42,7 @@ Created:   7/6/07
 
 void DoRay(object oTarget, int nSaveDC, int nRoll, int nCasterLvl, object oPC);
 
-#include "prc_inc_spells"
+#include "prc_inc_sp_tch"
 
 void main()
 {
@@ -187,7 +187,7 @@ void DoRay(object oTarget, int nSaveDC, int nRoll, int nCasterLvl, object oPC)
                 
                 case 5: 
                 {
-                        DoPetrification(nCasterLvl, oPC, oTarget, SPELL_PRISMATIC_RAY, nSaveDC);
+                        PRCDoPetrification(nCasterLvl, oPC, oTarget, SPELL_PRISMATIC_RAY, nSaveDC);
                         break;
                 }
                         

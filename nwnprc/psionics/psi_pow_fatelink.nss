@@ -214,8 +214,8 @@ void DispelMonitor(object oManifester, object oTarget1, object oTarget2, int nSp
         RemoveEventScript(oTarget2, EVENT_ONHIT, "psi_pow_fatelink", TRUE, FALSE);
 
         // Remove remaining effects
-        RemoveSpellEffects(nSpellID, oManifester, oTarget1);
-        RemoveSpellEffects(nSpellID, oManifester, oTarget2);
+        PRCRemoveSpellEffects(nSpellID, oManifester, oTarget1);
+        PRCRemoveSpellEffects(nSpellID, oManifester, oTarget2);
     }
     else
        DelayCommand(6.0f, DispelMonitor(oManifester, oTarget1, oTarget2, nSpellID, nBeatsRemaining));

@@ -88,7 +88,7 @@ void main()
     SlowBreath = CreateBreath(OBJECT_SELF, FALSE, 40.0, -1, 10, nCount, ABILITY_CONSTITUTION, nDCBoost, BREATH_SLOW);
     
     //Apply the breath
-    PlayDragonBattleCry();
+    PRCPlayDragonBattleCry();
     ApplyBreath(SlowBreath, GetSpellTargetLocation());
     
     //Apply the recharge lock

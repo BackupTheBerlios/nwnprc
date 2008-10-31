@@ -15,9 +15,9 @@
 //:: Last Updated By: Andrew Nobbs May 01, 2003
 
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
-#include "prc_inc_spells"
 
-#include "x0_i0_spells"
+#include "prc_inc_spells"
+#include "prc_inc_combmove"
 #include "x2_inc_spellhook"
 
 void main()
@@ -62,7 +62,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         {
 
             int nCasterRoll = d20(1) + 14;
-            int nTargetRoll = d20(1) + GetAbilityModifier(ABILITY_STRENGTH, oTarget) + GetSizeModifier(oTarget);
+            int nTargetRoll = d20(1) + GetAbilityModifier(ABILITY_STRENGTH, oTarget) + PRCGetSizeModifier(oTarget);
             // * bullrush succesful, knockdown target for duration of spell
             if (nCasterRoll >= nTargetRoll)
             {

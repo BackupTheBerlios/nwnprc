@@ -24,7 +24,7 @@ void main()
      if (GetIsImmune(oPC, IMMUNITY_TYPE_SLOW))
      {
 	// Removes effects
-	RemoveSpellEffects(GetSpellId(), oPC, oPC);
+	PRCRemoveSpellEffects(GetSpellId(), oPC, oPC);
 	FloatingTextStringOnCreature("*Immune to Slowing - Cannot use this Ability*", oPC, FALSE);
 	IncrementRemainingFeatUses(oPC, FEAT_SANCMIND_PARTITION_MIND);
 	return;

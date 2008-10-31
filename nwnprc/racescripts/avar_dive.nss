@@ -10,8 +10,8 @@
 //:: Created On: Sept. 24, 2004
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
-#include "prc_inc_util"
+#include "prc_inc_combat"
+//#include "prc_inc_util"
 #include "prc_inc_skills"
 
 void main()

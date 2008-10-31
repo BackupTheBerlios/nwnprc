@@ -17,10 +17,19 @@
 //:: VFX Pass By: Preston W, On: June 20, 2001
 
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
-#include "prc_alterations"
 
-#include "X0_I0_SPELLS"
+#include "prc_inc_spells"
 #include "x2_inc_spellhook"
+
+
+int PRCCanCreatureBeDestroyed(object oTarget)
+{
+    if (GetPlotFlag(oTarget) == FALSE && GetImmortal(oTarget) == FALSE)
+    {
+        return TRUE;
+    }
+    return FALSE;
+}
 
 void main()
 {
@@ -108,7 +117,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
 
                             nPool = nPool - GetHitDice(oTarget);
                             ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetLocation(oTarget));
-                            if (CanCreatureBeDestroyed(oTarget) == TRUE)
+                            if (PRCCanCreatureBeDestroyed(oTarget) == TRUE)
                             {
                                 //bugfix: Simply destroying the object won't fire it's OnDeath script.
                                 //Which is bad when you have plot-specific things being done in that

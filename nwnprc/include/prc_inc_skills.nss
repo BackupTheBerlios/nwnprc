@@ -16,7 +16,7 @@ float GetHeight(location lPC, location lTarget);
 //#include "prc_class_const"
 //#include "prc_misc_const"
 // Rework if this file (prc_inc_skills) is ever included to the massive include complex
-//#include "x0_i0_spells"
+//
 
 //:://////////////////////////////////////////////
 //:: Skill Functions

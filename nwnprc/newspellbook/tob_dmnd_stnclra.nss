@@ -50,7 +50,7 @@ void main()
 			oToughest = oTarget;
 			// Make sure it doesnt get applied more than once to any given target
 			// The negative is 4 to counter out the -2 overall AC of the Initiator
-			if(GetHasSpellEffect(MOVE_DM_STANCE_OF_CLARITY, oTarget))  RemoveEffectsFromSpell(oTarget, MOVE_DM_STANCE_OF_CLARITY);
+			if(GetHasSpellEffect(MOVE_DM_STANCE_OF_CLARITY, oTarget))  PRCRemoveEffectsFromSpell(oTarget, MOVE_DM_STANCE_OF_CLARITY);
 			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, VersusRacialTypeEffect(EffectAttackDecrease(4), MyPRCGetRacialType(GetAreaOfEffectCreator())), oToughest, 6.0);
 		}
                 

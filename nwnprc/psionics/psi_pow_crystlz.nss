@@ -80,7 +80,7 @@ void main()
                 //that works better for henchmen, DMs, etc
                 //as well as not petrifying undead, constructs, etc
                 //and putting all petrification code in one place, so builder hooks can work
-                DoPetrification(manif.nManifesterLevel, oManifester, oTarget, manif.nSpellID, nDC);
+                PRCDoPetrification(manif.nManifesterLevel, oManifester, oTarget, manif.nSpellID, nDC);
 
                 /*
                 if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_DEATH))

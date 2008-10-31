@@ -125,8 +125,8 @@ void DispelMonitor(object oManifester, object oTarget, int nSpellID, int nManife
         RemoveEventScript(oManifester, EVENT_ONHIT, "psi_pow_shrpnaux", TRUE, FALSE);
 
         // Remove remaining effects
-        RemoveSpellEffects(nSpellID, oManifester, oTarget);
-        RemoveSpellEffects(nSpellID, oManifester, oManifester);
+        PRCRemoveSpellEffects(nSpellID, oManifester, oTarget);
+        PRCRemoveSpellEffects(nSpellID, oManifester, oManifester);
     }
     else
        DelayCommand(6.0f, DispelMonitor(oManifester, oTarget, nSpellID, nManifesterLevel, nBeatsRemaining));

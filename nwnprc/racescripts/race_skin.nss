@@ -2,8 +2,7 @@
 // Handle skin and other mods for races.
 // This file is where various content users can customize races.
 
-#include "prc_alterations"
-#include "prc_ipfeat_const"
+#include "prc_inc_natweap"
 #include "inc_dynconv"
 
 void main()

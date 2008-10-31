@@ -5,7 +5,7 @@ void main()
 {
     object oPC = GetSpellTargetObject();
 
-    RemoveEffectsFromSpell(oPC, GetSpellId());
+    PRCRemoveEffectsFromSpell(oPC, GetSpellId());
 
     int nLevel = GetLevelByClass(CLASS_TYPE_SACREDFIST,oPC);
     int iSpeed = (nLevel > 2) ? 10 : 0;

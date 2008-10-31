@@ -52,7 +52,7 @@ void main()
                 {
                         //Get the distance between the explosion and the target to calculate delay
                         fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget))/20;
-                        if (!MyResistSpell(OBJECT_SELF, oTarget, fDelay))
+                        if (!PRCDoResistSpell(OBJECT_SELF, oTarget, nCasterLvl))
                         {
                                 //Roll damage for each target
                                 nDamage = d6(5);

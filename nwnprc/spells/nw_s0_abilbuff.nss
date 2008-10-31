@@ -110,7 +110,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
         if((!bMass) || (spellsIsTarget(oTarget, SPELL_TARGET_ALLALLIES, oCaster)))
         {
             PRCSignalSpellEvent(oTarget, FALSE);
-            //if(bMass) fDelay = GetSpellEffectDelay(lTarget, oTarget);
+            //if(bMass) fDelay = PRCGetSpellEffectDelay(lTarget, oTarget);
             int nStatMod = d4() + 1;
             if(nMetaMagic & METAMAGIC_MAXIMIZE) nStatMod = 5;
             if(nMetaMagic & METAMAGIC_EMPOWER) nStatMod += (nStatMod / 2);

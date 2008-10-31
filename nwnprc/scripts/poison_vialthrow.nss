@@ -25,7 +25,7 @@
 //:: Updated On: 20.12.2004
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "prc_inc_sp_tch"
 #include "inc_poison"
 
 void main(){
@@ -65,7 +65,7 @@ void main(){
     }
 
 
-    /** All is OK. Following mostly ripped from DoGrenade in x0_i0_spells **/
+    /** All is OK. Following mostly ripped from PRCDoGrenade in x0_i0_spells **/
 
     effect ePoison = EffectPoison(nPoisonIdx);
 

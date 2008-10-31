@@ -14,9 +14,9 @@
 
 */
 
-#include "inc_utility"
+//#include "inc_utility"
 //#include "prc_alterations"
-//#include "prc_inc_sp_tch"
+#include "prc_inc_sp_tch"
 //#include "prcsp_engine"
 //int CheckSpellfire(object oCaster, object oTarget, int bFriendly = FALSE);
 
@@ -568,7 +568,7 @@ void SpellfireCrown(object oPC)
     if(GetLocalInt(oPC, "SpellfireCrown"))
     {
         DeleteLocalInt(oPC, "SpellfireCrown");
-        RemoveEffectsFromSpell(oPC, SPELL_SPELLFIRE_CROWN);
+        PRCRemoveEffectsFromSpell(oPC, SPELL_SPELLFIRE_CROWN);
         FloatingTextStringOnCreature("*Crown of Fire Deactivated*", oPC);
     }
     else

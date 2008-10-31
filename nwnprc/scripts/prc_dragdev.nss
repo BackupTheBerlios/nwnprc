@@ -11,7 +11,7 @@
 //:://////////////////////////////////////////////
 
 
-#include "prc_alterations"
+#include "prc_inc_natweap"
 
 void main()
 {

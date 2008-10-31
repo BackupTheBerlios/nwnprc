@@ -8,7 +8,7 @@ void main()
     object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
     int iDamageType = (!GetIsObjectValid(oWeap)) ? DAMAGE_TYPE_BLUDGEONING : GetItemDamageType(oWeap);
 
-    RemoveEffectsFromSpell(oPC, GetSpellId());
+    PRCRemoveEffectsFromSpell(oPC, GetSpellId());
 
     int iBonus = GetHasFeat(FEAT_LEGENDARY_PROWESS, oPC) ? 3 : 1;
 

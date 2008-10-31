@@ -104,7 +104,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         //SR
         if(!PRCDoResistSpell(OBJECT_SELF, oTarget,CasterLvl+ SPGetPenetr()))
         {
-            int nCasterModifier = GetCasterAbilityModifier(OBJECT_SELF);
+            int nCasterModifier = PRCGetCasterAbilityModifier(OBJECT_SELF);
             int nCasterRoll = d20(1)
                 + nCasterModifier
                 + CasterLvl + 12 + -1;

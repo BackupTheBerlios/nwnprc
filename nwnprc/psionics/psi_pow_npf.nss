@@ -53,7 +53,7 @@ void main()
     // Check if NPF is already active on the manifester
     if(PresenceCheck(oManifester))
     {
-        RemoveSpellEffects(POWER_NULL_PSIONICS_FIELD, oManifester, oManifester);
+        PRCRemoveSpellEffects(POWER_NULL_PSIONICS_FIELD, oManifester, oManifester);
         return;
     }
 

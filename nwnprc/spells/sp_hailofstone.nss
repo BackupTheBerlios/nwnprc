@@ -1,4 +1,4 @@
-#include "prc_inc_spells"
+#include "prc_inc_sp_tch"
 
 void main()
 {
@@ -31,7 +31,7 @@ void main()
           OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
      while (GetIsObjectValid(oTarget))
      {
-          fDelay = GetSpellEffectDelay(lTarget, oTarget);
+          fDelay = PRCGetSpellEffectDelay(lTarget, oTarget);
           if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
           {
                // Fire cast spell at event for the specified target

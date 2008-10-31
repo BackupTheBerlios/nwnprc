@@ -64,7 +64,7 @@ void DoConcLoop(object oPC, float fDur, int nCounter)
 {
 	if((nCounter == 0) || GetBreakConcentrationCheck(oPC) > 0)
 	{
-		RemoveSpellEffects(SPELL_CALM_EMOTIONS, oPC, oPC);
+		PRCRemoveSpellEffects(SPELL_CALM_EMOTIONS, oPC, oPC);
 	}
 	
 	else

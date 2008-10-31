@@ -49,7 +49,7 @@ void main()
                 //Fire cast spell at event for the specified target
                 SignalEvent( oTarget, EventSpellCastAt(OBJECT_SELF,
                     SPELL_GREATER_SPELL_MANTLE, FALSE) );
-                RemoveEffectsFromSpell( oTarget, GetSpellId() );
+                PRCRemoveEffectsFromSpell( oTarget, GetSpellId() );
                 //Apply the VFX impact and effects
                 SPApplyEffectToObject( DURATION_TYPE_TEMPORARY, eLink,
                     oTarget, RoundsToSeconds(nDuration), TRUE, -1, GetTotalCastingLevel(OBJECT_SELF) );

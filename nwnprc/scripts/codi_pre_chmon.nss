@@ -8,10 +8,7 @@
 //:: Created By: James Stoneburner
 //:: Created On: 2003-11-30
 //:://////////////////////////////////////////////
-#include "prc_alterations"
-#include "prc_feat_const"
-#include "prc_class_const"
-#include "prc_spell_const"
+#include "prc_inc_sp_tch"
 
 void main()
 {

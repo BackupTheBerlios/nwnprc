@@ -26,7 +26,7 @@ void main()
     //first, look to see if effect is already activated
     if ( GetHasSpellEffect(SPELLABILITY_DRAGON_FEAR, OBJECT_SELF) )
     {
-        RemoveSpellEffects( SPELLABILITY_DRAGON_FEAR, OBJECT_SELF, OBJECT_SELF );
+        PRCRemoveSpellEffects( SPELLABILITY_DRAGON_FEAR, OBJECT_SELF, OBJECT_SELF );
         return;
     }
 

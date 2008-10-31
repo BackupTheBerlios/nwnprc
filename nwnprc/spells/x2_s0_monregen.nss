@@ -31,7 +31,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     }
 
     // Stacking Spellpass, 2003-07-07, Georg   ... just in case
-    RemoveEffectsFromSpell(oTarget, PRCGetSpellId());
+    PRCRemoveEffectsFromSpell(oTarget, PRCGetSpellId());
 
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId(), FALSE));
 

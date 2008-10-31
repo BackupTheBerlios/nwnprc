@@ -36,8 +36,7 @@ int DoBullRushAttack(object oTarget, int nAttackBonus, int nCasterLevel);
 void DoPush(object oTarget, object oCreator, int nReverse = FALSE);
 int EvalSizeBonus(object oSubject);
 
-#include "prc_alterations"
-#include "prc_inc_spells"
+#include "prc_inc_combat"
 
 void main()
 {

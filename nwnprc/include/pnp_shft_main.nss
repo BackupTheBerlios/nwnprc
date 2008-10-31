@@ -108,8 +108,7 @@ void SetShift_02(object oPC, object oTarget);
 
 
 // Generic includes
-#include "prc_misc_const"
-#include "prc_inc_spells"
+#include "prc_inc_function"
 
 
 void StoreAppearance(object oPC)
@@ -789,7 +788,7 @@ void ShiftFromKnownArray(int nIndex, int iEpic, object oPC)
     }
 }
 
-// This is a duplicate of RemoveEffectsFromSpell, it prevents calling unneeded includes
+// This is a duplicate of PRCRemoveEffectsFromSpell, it prevents calling unneeded includes
 void RemoveEffectsFromPoly(int SpellID, object oTarget)
 {
   effect eLook = GetFirstEffect(oTarget);

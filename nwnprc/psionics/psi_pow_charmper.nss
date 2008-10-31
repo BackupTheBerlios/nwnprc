@@ -95,13 +95,13 @@ void main()
             /*
             effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
             effect eCharm = EffectCharmed();
-                   eCharm = GetScaledEffect(eCharm, oTarget); // Game difficulty adjustments
+                   eCharm = PRCGetScaledEffect(eCharm, oTarget); // Game difficulty adjustments
             effect eLink = EffectLinkEffects(eMind, eCharm);
             */
 
             effect eVis = EffectVisualEffect(VFX_IMP_CHARM);
             effect eCharm = EffectCharmed();
-            eCharm = GetScaledEffect(eCharm, oTarget);
+            eCharm = PRCGetScaledEffect(eCharm, oTarget);
             effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
             effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
 

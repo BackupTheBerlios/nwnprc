@@ -37,8 +37,7 @@ remaining duration of the previous one.
 // Date:   26.9.06
 //////////////////////////////////////////////////////
 
-#include "prc_alterations"
-#include "prc_inc_spells"
+#include "prc_inc_sp_tch"
 #include "prc_sp_func"
 
 //Implements the spell impact, put code here

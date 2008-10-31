@@ -17,7 +17,7 @@
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
 #include "prc_inc_spells"
 #include "inv_inc_invfunc"
-#include "x0_i0_spells"
+
 #include "inv_invokehook"
 
 void main()
@@ -48,7 +48,7 @@ void main()
     //  *GZ: No longer stack this spell
     if (GetHasSpellEffect(GetSpellId(),oTarget))
     {
-         RemoveSpellEffects(GetSpellId(), OBJECT_SELF, oTarget);
+         PRCRemoveSpellEffects(GetSpellId(), OBJECT_SELF, oTarget);
     }
 
     //Apply the VFX impact and effects

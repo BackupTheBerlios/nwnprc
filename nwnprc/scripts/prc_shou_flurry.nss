@@ -19,15 +19,15 @@ void main()
      {
             if (GetLevelByClass(CLASS_TYPE_SHOU, oPC) == 5)
             {
-            RemoveEffectsFromSpell(oPC, SPELL_MARTIAL_FLURRY_LIGHT);
-            RemoveEffectsFromSpell(oPC, SPELL_MARTIAL_FLURRY_ALL);
+            PRCRemoveEffectsFromSpell(oPC, SPELL_MARTIAL_FLURRY_LIGHT);
+            PRCRemoveEffectsFromSpell(oPC, SPELL_MARTIAL_FLURRY_ALL);
                 ActionCastSpellOnSelf(SPELL_MARTIAL_FLURRY_ALL);
                 nMes = "*Martial Flurry All Activated*";
             }
             else if (GetLevelByClass(CLASS_TYPE_SHOU, oPC) >= 3  && GetLevelByClass(CLASS_TYPE_SHOU, oPC) < 5)
             {
-                RemoveEffectsFromSpell(oPC, SPELL_MARTIAL_FLURRY_LIGHT);
-            RemoveEffectsFromSpell(oPC, SPELL_MARTIAL_FLURRY_ALL);
+                PRCRemoveEffectsFromSpell(oPC, SPELL_MARTIAL_FLURRY_LIGHT);
+            PRCRemoveEffectsFromSpell(oPC, SPELL_MARTIAL_FLURRY_ALL);
                 ActionCastSpellOnSelf(SPELL_MARTIAL_FLURRY_LIGHT);
                 nMes = "*Martial Flurry Light Activated*";
             }
@@ -35,8 +35,8 @@ void main()
      else
      {
           // Removes effects
-          RemoveEffectsFromSpell(oPC, SPELL_MARTIAL_FLURRY_LIGHT);
-          RemoveEffectsFromSpell(oPC, SPELL_MARTIAL_FLURRY_ALL);
+          PRCRemoveEffectsFromSpell(oPC, SPELL_MARTIAL_FLURRY_LIGHT);
+          PRCRemoveEffectsFromSpell(oPC, SPELL_MARTIAL_FLURRY_ALL);
 
           // Display message to player
           nMes = "*Martial Flurry Deactivated*";

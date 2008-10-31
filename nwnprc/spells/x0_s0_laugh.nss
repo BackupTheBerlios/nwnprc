@@ -15,10 +15,27 @@
 
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
 #include "prc_inc_spells"
-
-#include "X0_I0_SPELLS"
-
 #include "x2_inc_spellhook"
+
+// * returns true if oCreature does not have a mind
+int PRCIsMindless(object oCreature)
+{
+    int nRacialType = MyPRCGetRacialType(oCreature);
+    int nMindless;
+    switch(nRacialType)
+    {
+        case RACIAL_TYPE_ELEMENTAL:
+        case RACIAL_TYPE_UNDEAD:
+        case RACIAL_TYPE_VERMIN:
+        case RACIAL_TYPE_CONSTRUCT:
+        case RACIAL_TYPE_OOZE:
+        nMindless = TRUE;
+    }
+    if(GetAbilityScore(oCreature, ABILITY_INTELLIGENCE) > 3)
+        nMindless = FALSE;
+
+    return nMindless;
+}
 
 void main()
 {
@@ -73,7 +90,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_TASHAS_HIDEOUS_LAUGHTER));
  
-        if (spellsIsMindless(oTarget) == FALSE)   {
+        if (PRCIsMindless(oTarget) == FALSE)   {
             if ( !GetIsImmune(oTarget,IMMUNITY_TYPE_MIND_SPELLS ))   {
 
         if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nCasterLvl) 

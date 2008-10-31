@@ -103,7 +103,7 @@ void main()
                 int nCounterIncrease = nMagmaBurstCounter +1;
                 SetLocalInt( oTarget, "MagmaBurst", nCounterIncrease );
                 if( nCounterIncrease >= 5 )
-                    DoPetrification(GetTotalCastingLevel(GetAreaOfEffectCreator()), 
+                    PRCDoPetrification(GetTotalCastingLevel(GetAreaOfEffectCreator()), 
                         OBJECT_SELF, oTarget, PRCGetSpellId(), 
                         GetEpicSpellSaveDC(GetAreaOfEffectCreator(), oTarget));
             }

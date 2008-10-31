@@ -65,7 +65,7 @@ void main()
     {
         int nDC         = GetManifesterDC(oManifester) + manif.nTimesAugOptUsed_1;
         int nPen        = GetPsiPenetration(oManifester);
-        effect eDoom    = CreateDoomEffectsLink();
+        effect eDoom    = EffectShaken();
     	effect eImpact  = EffectVisualEffect(VFX_IMP_DOOM);
     	effect eFNF     = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
         float fWidth    = EvaluateWidenPower(manif, FeetToMeters(30.0f + (5.0f * manif.nTimesAugOptUsed_1)));

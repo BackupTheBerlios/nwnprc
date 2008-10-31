@@ -49,8 +49,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
     int nAbsorb = d4() + 6;
     int nMetaMagic = PRCGetMetaMagicFeat();
     
-    RemoveEffectsFromSpell(oTarget, SPELL_GREATER_SPELL_MANTLE);
-    RemoveEffectsFromSpell(oTarget, SPELL_SPELL_MANTLE);
+    PRCRemoveEffectsFromSpell(oTarget, SPELL_GREATER_SPELL_MANTLE);
+    PRCRemoveEffectsFromSpell(oTarget, SPELL_SPELL_MANTLE);
 
     //Enter Metamagic conditions
     if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
@@ -71,7 +71,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
     eLink = EffectLinkEffects(eLink, eDur);
     //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_LESSER_SPELL_MANTLE, FALSE));
-      RemoveEffectsFromSpell(oTarget, GetSpellId());
+      PRCRemoveEffectsFromSpell(oTarget, GetSpellId());
     //Apply the VFX impact and effects
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration),TRUE,-1,CasterLvl);
 

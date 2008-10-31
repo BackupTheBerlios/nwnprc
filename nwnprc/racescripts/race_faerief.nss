@@ -31,7 +31,7 @@ cause any harm to the objects or creatures thus outlined.
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
 #include "prc_inc_spells"
-#include "X0_I0_SPELLS"
+
 #include "x2_inc_spellhook"
 
 void main()
@@ -100,10 +100,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         if (!PRCDoResistSpell(oCaster, oTarget,CasterLvl))
         {
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget, fDuration);
-            RemoveSpecificEffect(EFFECT_TYPE_IMPROVEDINVISIBILITY, oTarget);
-            RemoveSpecificEffect(EFFECT_TYPE_INVISIBILITY, oTarget);
-            RemoveSpecificEffect(EFFECT_TYPE_DARKNESS, oTarget);
-            RemoveSpecificEffect(EFFECT_TYPE_CONCEALMENT, oTarget);
+            PRCRemoveSpecificEffect(EFFECT_TYPE_IMPROVEDINVISIBILITY, oTarget);
+            PRCRemoveSpecificEffect(EFFECT_TYPE_INVISIBILITY, oTarget);
+            PRCRemoveSpecificEffect(EFFECT_TYPE_DARKNESS, oTarget);
+            PRCRemoveSpecificEffect(EFFECT_TYPE_CONCEALMENT, oTarget);
         }
         //Select the next target within the spell shape.
        oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lTarget, TRUE, OBJECT_TYPE_CREATURE);

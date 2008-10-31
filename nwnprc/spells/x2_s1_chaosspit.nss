@@ -22,9 +22,9 @@
 
 // Modified 2004/01/31 (Brian Greinke)
 // Reordered checks--PnP shifter as black/white slaad works now
-#include "prc_alterations"
-#include "x0_i0_spells"
-#include "NW_I0_SPELLS"
+#include "prc_inc_sp_tch"
+
+
 void main()
 {
     //Declare major variables

@@ -88,7 +88,7 @@ void main()
     SleepBreath = CreateBreath(OBJECT_SELF, FALSE, 40.0, -1, 10, nCount, ABILITY_CONSTITUTION, nDCBoost, BREATH_SLEEP);
     
     //Apply the breath
-    PlayDragonBattleCry();
+    PRCPlayDragonBattleCry();
     ApplyBreath(SleepBreath, GetSpellTargetLocation());
     
     //Apply the recharge lock

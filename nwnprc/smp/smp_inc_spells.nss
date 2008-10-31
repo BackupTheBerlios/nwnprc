@@ -1777,7 +1777,7 @@ void SMP_AddChargesForSpell(int nSpellId, int nCharges, float fDuration, object 
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
 
     // Remove previous effects and apply this one
-    SMP_RemoveSpellEffects(nSpellId, oCaster, oCaster);
+    SMP_PRCRemoveSpellEffects(nSpellId, oCaster, oCaster);
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oCaster, fDuration);
 
     // New charges
@@ -1812,7 +1812,7 @@ int SMP_CheckChargesForSpell(int nSpellId, int bFeedback = TRUE, object oCaster 
             // No charges left
             if(bFeedback) SendMessageToPC(oCaster, "You have no more charges of this spell to release.");
             DeleteLocalInt(oCaster, sVariableName);
-            SMP_RemoveSpellEffects(nSpellId, oCaster, oCaster);
+            SMP_PRCRemoveSpellEffects(nSpellId, oCaster, oCaster);
             return FALSE;
         }
         else

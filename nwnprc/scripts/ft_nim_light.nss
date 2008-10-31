@@ -14,7 +14,7 @@ void main()
 {
    object oPC = OBJECT_SELF;
    string nMes = "";
-    RemoveSpellEffects(GetSpellId(), oPC, oPC);
+    PRCRemoveSpellEffects(GetSpellId(), oPC, oPC);
 
    effect ePersuade = EffectSkillIncrease(SKILL_PERSUADE, 2);
    effect eTaunt = EffectSkillIncrease(SKILL_TAUNT, 2);

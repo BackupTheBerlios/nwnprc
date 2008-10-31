@@ -68,7 +68,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     
 
     int nDuration = CasterLvl;
-    nDuration = 3 + GetScaledDuration(nDuration, oTarget);
+    nDuration = 3 + PRCGetScaledDuration(nDuration, oTarget);
     int nPenetr = CasterLvl + SPGetPenetr();
 
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, PRCGetSpellTargetLocation());

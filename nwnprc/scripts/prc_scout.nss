@@ -1,4 +1,4 @@
-#include "prc_alterations"
+#include "prc_inc_combat"
 #include "prc_inc_sneak"
 
 int SkirmishDamage(object oPC, object oTarget, int nClass)

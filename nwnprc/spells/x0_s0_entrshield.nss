@@ -19,7 +19,7 @@
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
 #include "prc_inc_spells"
 
-#include "NW_I0_SPELLS"
+
 
 #include "x2_inc_spellhook"
 
@@ -62,7 +62,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
 
     effect eLink = EffectLinkEffects(eShield, eDur);
-//    RemoveEffectsFromSpell(oTarget, GetSpellId());
+//    PRCRemoveEffectsFromSpell(oTarget, GetSpellId());
 
     //Apply the armor bonuses and the VFX impact
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, TurnsToSeconds(nDuration),TRUE,-1,CasterLvl);

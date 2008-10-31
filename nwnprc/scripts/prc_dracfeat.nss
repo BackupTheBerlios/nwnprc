@@ -11,8 +11,7 @@
 //:: Created On: Nov 16, 2007
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
-#include "prc_ipfeat_const"
+#include "prc_inc_natweap"
 #include "x2_inc_itemprop"
 
 

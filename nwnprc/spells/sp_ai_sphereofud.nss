@@ -1,6 +1,6 @@
-#include "prc_inc_spells"
-#include "nw_i0_generic"
-#include "x0_inc_generic"
+#include "prc_inc_sp_tch"
+//#include "nw_i0_generic"
+//#include "x0_inc_generic"
 #include "x2_inc_spellhook"
 
 //

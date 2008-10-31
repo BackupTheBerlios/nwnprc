@@ -23,7 +23,7 @@ void main()
 {
     if(GetLocalInt(OBJECT_SELF, "DarkDiscorporation"))
     {
-        RemoveSpellEffects(INVOKE_DARK_DISCORPORATION, OBJECT_SELF, OBJECT_SELF);
+        PRCRemoveSpellEffects(INVOKE_DARK_DISCORPORATION, OBJECT_SELF, OBJECT_SELF);
         DeleteLocalInt(OBJECT_SELF, "DarkDiscorporation");
         object oNoAtk = GetItemPossessedBy(OBJECT_SELF, "prc_eldrtch_glv");
         DestroyObject(oNoAtk);

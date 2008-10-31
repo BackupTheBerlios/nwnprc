@@ -41,7 +41,7 @@ void main()
                 if(!GetIsImmune(oTarget, IMMUNITY_TYPE_DOMINATE) && !GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS))
                 {
                     // Determine effect and apply it
-                    eLink = EffectLinkEffects(eMindVFX, GetScaledEffect(eDominate, oTarget));
+                    eLink = EffectLinkEffects(eMindVFX, PRCGetScaledEffect(eDominate, oTarget));
                     DelayCommand(1.0, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, PRCGetSpellId(), PRCGetCasterLevel(oPC)));
                     if(DEBUG) DoDebug("prc_doa_evilauth - Duration is " + FloatToString(fDuration));
                 }

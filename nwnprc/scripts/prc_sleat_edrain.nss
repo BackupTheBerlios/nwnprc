@@ -41,7 +41,7 @@
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "prc_inc_sp_tch"
 #include "prc_inc_shifting"
 
 
@@ -101,7 +101,7 @@ void DoEnergyDrain(object oEater, object oTarget,int nDamage)
 
         /// Soul X side effects
         // Clear out old effects
-        RemoveSpellEffects(GetSpellId(), oEater, oEater);
+        PRCRemoveSpellEffects(GetSpellId(), oEater, oEater);
 
         // Generate new effects
         int nClassLevel    = GetLevelByClass(CLASS_TYPE_SOUL_EATER, oEater);

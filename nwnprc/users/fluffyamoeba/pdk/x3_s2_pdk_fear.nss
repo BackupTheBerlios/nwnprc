@@ -9,7 +9,7 @@
 //:: Created On: Sept 22, 2005
 //:://////////////////////////////////////////////
 
-#include "X0_I0_SPELLS"
+
 #include "x2_inc_spellhook"
 
 void main()

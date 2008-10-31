@@ -62,6 +62,33 @@ int GetShouldNotBeRemoved(effect eEff)
     return FALSE;
 }
 
+//------------------------------------------------------------------------------
+// Doesn't care who the caster was removes the effects of the spell nSpell_ID.
+// will ignore the subtype as well...
+// GZ: Removed the check that made it remove only one effect.
+//------------------------------------------------------------------------------
+void PRCRemoveAnySpellEffects(int nSpell_ID, object oTarget)
+{
+    //Declare major variables
+
+    effect eAOE;
+    if(GetHasSpellEffect(nSpell_ID, oTarget))
+    {
+        //Search through the valid effects on the target.
+        eAOE = GetFirstEffect(oTarget);
+        while (GetIsEffectValid(eAOE))
+        {
+            //If the effect was created by the spell then remove it
+            if(GetEffectSpellId(eAOE) == nSpell_ID)
+            {
+                RemoveEffect(oTarget, eAOE);
+            }
+            //Get next effect on the target
+            eAOE = GetNextEffect(oTarget);
+        }
+    }
+}
+
 void main()
 {
 /*
@@ -99,11 +126,11 @@ void main()
 
         // Check for some specific stuff and remove if present
         if(GetHasSpellEffect(POWER_DECEREBRATE, oTarget))
-            RemoveAnySpellEffects(POWER_DECEREBRATE, oTarget);
+            PRCRemoveAnySpellEffects(POWER_DECEREBRATE, oTarget);
         if(GetHasSpellEffect(POWER_INSANITY, oTarget))
-            RemoveAnySpellEffects(POWER_INSANITY, oTarget);
+            PRCRemoveAnySpellEffects(POWER_INSANITY, oTarget);
         if(GetHasSpellEffect(POWER_MICROCOSM, oTarget))
-            RemoveAnySpellEffects(POWER_MICROCOSM, oTarget);
+            PRCRemoveAnySpellEffects(POWER_MICROCOSM, oTarget);
 
         // Loop over remaining effects, remove any negative ones
         eTest = GetFirstEffect(oTarget);

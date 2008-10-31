@@ -13,6 +13,7 @@
 */
 
 #include "prc_sp_func"
+#include "prc_inc_sp_tch"
 
 void DoPoison(object oTarget, object oCaster, int nDC, int CasterLvl, int nMetaMagic){
    //Declare major variables

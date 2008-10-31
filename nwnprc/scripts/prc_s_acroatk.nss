@@ -11,7 +11,7 @@
 //:: Rewritten By: Oni5115 -  to use new combat engine and jump skill
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "prc_inc_combat"
 #include "prc_inc_util"
 #include "prc_inc_skills"
 

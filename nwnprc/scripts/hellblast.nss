@@ -2,7 +2,7 @@
 
 //Fixed some run-time errors that caused spell to do nothing
 //Aaon Graywolf - Jan 9, 2004
-#include "prc_alterations"
+#include "prc_inc_sp_tch"
 void main()
 {
     //Declare major variables

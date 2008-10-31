@@ -204,7 +204,7 @@ void DispelMonitor(object oManifester, object oTarget, object oWeapon, int nSpel
         if(DEBUG) DoDebug("psi_pow_strnmy: Power expired, clearing");
 
         // Remove effects
-        RemoveSpellEffects(nSpellID, oManifester, oTarget);
+        PRCRemoveSpellEffects(nSpellID, oManifester, oTarget);
 
         // Unhook event
         RemoveEventScript(oTarget, EVENT_ONHIT, "psi_pow_strnmy", TRUE, FALSE);

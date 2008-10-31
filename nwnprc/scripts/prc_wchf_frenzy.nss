@@ -18,7 +18,7 @@ void FrenzyHB(object oPC, int nStr)
     if (DEBUG) DoDebug("prc_wchf_frenzy: LocalInt: " + IntToString(GetLocalInt(oPC, "WarchiefFrenzy")));
     if (!GetIsInCombat(oPC) || !GetLocalInt(oPC, "WarchiefFrenzy"))
     {
-        RemoveSpellEffects(SPELL_TRIBAL_FRENZY, oPC, oPC);
+        PRCRemoveSpellEffects(SPELL_TRIBAL_FRENZY, oPC, oPC);
         if (DEBUG) DoDebug("prc_wchf_frenzy: Exit Function");
         return;
     }
@@ -86,7 +86,7 @@ void main()
      	{
 		// Removes effects
 		if (DEBUG) DoDebug("prc_wchf_frenzy: Remove Effects");
-		RemoveSpellEffects(SPELL_TRIBAL_FRENZY, oPC, oPC);
+		PRCRemoveSpellEffects(SPELL_TRIBAL_FRENZY, oPC, oPC);
 		nMes = "*Tribal Frenzy Deactivated*";
 		DeleteLocalInt(oPC, "WarchiefFrenzy");
      	}

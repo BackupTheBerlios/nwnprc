@@ -67,9 +67,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     }
 
     //Apply effects and VFX to target
-    RemoveSpellEffects(SPELL_BULLS_STRENGTH, OBJECT_SELF, oTarget);
-    RemoveSpellEffects(SPELLABILITY_BG_BULLS_STRENGTH, OBJECT_SELF, oTarget);
-    RemoveSpellEffects(SPELL_GREATER_BULLS_STRENGTH, OBJECT_SELF, oTarget);
+    PRCRemoveSpellEffects(SPELL_BULLS_STRENGTH, OBJECT_SELF, oTarget);
+    PRCRemoveSpellEffects(SPELLABILITY_BG_BULLS_STRENGTH, OBJECT_SELF, oTarget);
+    PRCRemoveSpellEffects(SPELL_GREATER_BULLS_STRENGTH, OBJECT_SELF, oTarget);
 
     //Set Adjust Ability Score effect
     eRaise = EffectAbilityIncrease(ABILITY_STRENGTH, nRaise);

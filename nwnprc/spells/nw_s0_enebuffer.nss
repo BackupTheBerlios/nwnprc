@@ -72,7 +72,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
         nDuration = nDuration *2; //Duration is +100%
     }
 
-     RemoveEffectsFromSpell(oTarget, GetSpellId());
+     PRCRemoveEffectsFromSpell(oTarget, GetSpellId());
 
     //Apply the VFX impact and effects
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, TurnsToSeconds(nDuration),TRUE,-1,CasterLvl);

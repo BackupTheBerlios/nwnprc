@@ -22,7 +22,7 @@ void main()
     int nInt = GetAbilityModifier(ABILITY_DEXTERITY, oPC);
     int nBonus = (nInt > 5) ? nInt + 10 : nInt;     //more efficient int conversion
 
-    RemoveEffectsFromSpell(oPC, GetSpellId());
+    PRCRemoveEffectsFromSpell(oPC, GetSpellId());
 
     ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectDamageIncrease(nBonus, iDamageType), oPC);
 }

@@ -143,7 +143,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
                     if (GetIsImmune(oLowest, IMMUNITY_TYPE_SLEEP) == FALSE)
                     {
                         effect eLink2 = EffectLinkEffects(eLink, eVis);
-                        nScaledDuration = GetScaledDuration(nDuration, oLowest);
+                        nScaledDuration = PRCGetScaledDuration(nDuration, oLowest);
                         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink2, oLowest, RoundsToSeconds(nScaledDuration));
                     }
                     else

@@ -20,7 +20,7 @@ void main()
 	int nDur = 5 + GetAbilityModifier(ABILITY_CHARISMA, oPC);
 	int nDC = 10 + (nClass/2) + GetAbilityModifier(ABILITY_CHARISMA, oPC);
         effect eVis = EffectVisualEffect(VFX_IMP_DOOM);
-    	effect eLink = CreateDoomEffectsLink();	
+    	effect eLink = EffectShaken();	
 	
 	int nKC = GetLocalInt(oPC, "KnightsChallenge");
 	

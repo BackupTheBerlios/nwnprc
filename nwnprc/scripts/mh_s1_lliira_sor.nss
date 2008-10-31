@@ -19,5 +19,5 @@ int test = SPELLABILITY_AURA_LLIIRA;
 int eRemove = GetEffectSpellId(GetFirstEffect(oTarget));
 //if (GetLocalInt(oTarget, "Lliira") == 1);
 //ApplyEffectToObject(DURATION_TYPE_PERMANENT
-    RemoveSpellEffects(SPELLABILITY_AURA_LLIIRA, GetAreaOfEffectCreator(), GetExitingObject());
+    PRCRemoveSpellEffects(SPELLABILITY_AURA_LLIIRA, GetAreaOfEffectCreator(), GetExitingObject());
 }

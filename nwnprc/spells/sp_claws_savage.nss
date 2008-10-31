@@ -59,6 +59,7 @@ Created:
 object GetClawWeapon (object oCreature, string sResRef, int nInventorySlot, float fDuration);
 
 #include "prc_inc_spells"
+#include "prc_inc_unarmed"
 
 void main()
 {

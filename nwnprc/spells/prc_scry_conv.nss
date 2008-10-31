@@ -223,7 +223,7 @@ void main()
                 	}
                 	else // Clean up effects
                 	{
-                		RemoveSpellEffects(TRUE_SEE_THE_NAMED, oPC, oPC);
+                		PRCRemoveSpellEffects(TRUE_SEE_THE_NAMED, oPC, oPC);
                 	}
                 }
                 else 

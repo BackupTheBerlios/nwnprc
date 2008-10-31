@@ -102,7 +102,7 @@ void main()
     
     //Apply the breath - note: Level drain was included but commented out in the original, thus not currently implemented in the include.
     //Information on the level drain amount is kept just in case.
-    PlayDragonBattleCry();
+    PRCPlayDragonBattleCry();
     ApplyBreath(NegBreath, GetSpellTargetLocation());
     
     //Apply the recharge lock

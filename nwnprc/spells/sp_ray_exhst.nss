@@ -38,7 +38,7 @@ A drop of sweat.
 //::////////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "prc_inc_spells"
+#include "prc_inc_sp_tch"
 #include "prc_sp_func"
 
 int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)

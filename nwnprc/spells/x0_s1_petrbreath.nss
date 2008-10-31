@@ -10,7 +10,7 @@
 
 
 #include "prc_alterations"
-#include "x0_i0_spells"
+
 
 void main()
 {
@@ -27,7 +27,7 @@ void main()
         float fDelay = GetDistanceBetween(OBJECT_SELF, oTarget)/20;
         int nSpellID = GetSpellId();
         object oSelf = OBJECT_SELF;
-        DelayCommand(fDelay,  DoPetrification(nHitDice, oSelf, oTarget, nSpellID, 17));
+        DelayCommand(fDelay,  PRCDoPetrification(nHitDice, oSelf, oTarget, nSpellID, 17));
 
         //Get next target in spell area
         oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 11.0, lTargetLocation, TRUE);

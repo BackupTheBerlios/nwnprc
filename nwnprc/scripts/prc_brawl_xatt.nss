@@ -49,7 +49,7 @@ void main()
     // Remove the old effects
     if (GetHasSpellEffect(SPELL_BRAWLER_EXTRA_ATT, oCreature))
     {
-        RemoveSpellEffects(SPELL_BRAWLER_EXTRA_ATT, oCreature, oCreature);
+        PRCRemoveSpellEffects(SPELL_BRAWLER_EXTRA_ATT, oCreature, oCreature);
     }
     
     if (!iExtraAttacks)

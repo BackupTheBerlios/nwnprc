@@ -54,7 +54,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
     // * Brent, Nov 24, making extraodinary so cannot be dispelled
     eLink = ExtraordinaryEffect(eLink);
 
-    RemoveEffectsFromSpell(OBJECT_SELF, GetSpellId());
+    PRCRemoveEffectsFromSpell(OBJECT_SELF, GetSpellId());
     //Apply the armor bonuses and the VFX impact
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration));
 

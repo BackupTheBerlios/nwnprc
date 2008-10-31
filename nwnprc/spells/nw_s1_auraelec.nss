@@ -21,7 +21,7 @@ void main()
     //first, look to see if effect is already activated
     if ( GetHasSpellEffect(SPELLABILITY_AURA_ELECTRICITY, OBJECT_SELF) )
     {
-        RemoveSpellEffects( SPELLABILITY_AURA_ELECTRICITY, OBJECT_SELF, OBJECT_SELF );
+        PRCRemoveSpellEffects( SPELLABILITY_AURA_ELECTRICITY, OBJECT_SELF, OBJECT_SELF );
         return;
     }
 

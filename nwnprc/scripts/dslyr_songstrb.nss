@@ -2,11 +2,11 @@
 
 void RemoveOldSongs(object oTarget)
 {
-   if (GetHasSpellEffect(SPELL_DSL_SONG_STRENGTH,oTarget)) RemoveEffectsFromSpell(oTarget, SPELL_DSL_SONG_STRENGTH);
-   if (GetHasSpellEffect(SPELL_DSL_SONG_COMPULSION,oTarget)) RemoveEffectsFromSpell(oTarget, SPELL_DSL_SONG_COMPULSION);
-   if (GetHasSpellEffect(SPELL_DSL_SONG_SPEED,oTarget)) RemoveEffectsFromSpell(oTarget, SPELL_DSL_SONG_SPEED);
-   if (GetHasSpellEffect(SPELL_DSL_SONG_FEAR,oTarget)) RemoveEffectsFromSpell(oTarget, SPELL_DSL_SONG_FEAR);
-   if (GetHasSpellEffect(SPELL_DSL_SONG_HEALING,oTarget)) RemoveEffectsFromSpell(oTarget, SPELL_DSL_SONG_HEALING);
+   if (GetHasSpellEffect(SPELL_DSL_SONG_STRENGTH,oTarget)) PRCRemoveEffectsFromSpell(oTarget, SPELL_DSL_SONG_STRENGTH);
+   if (GetHasSpellEffect(SPELL_DSL_SONG_COMPULSION,oTarget)) PRCRemoveEffectsFromSpell(oTarget, SPELL_DSL_SONG_COMPULSION);
+   if (GetHasSpellEffect(SPELL_DSL_SONG_SPEED,oTarget)) PRCRemoveEffectsFromSpell(oTarget, SPELL_DSL_SONG_SPEED);
+   if (GetHasSpellEffect(SPELL_DSL_SONG_FEAR,oTarget)) PRCRemoveEffectsFromSpell(oTarget, SPELL_DSL_SONG_FEAR);
+   if (GetHasSpellEffect(SPELL_DSL_SONG_HEALING,oTarget)) PRCRemoveEffectsFromSpell(oTarget, SPELL_DSL_SONG_HEALING);
 
 }
 

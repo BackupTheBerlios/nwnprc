@@ -13,9 +13,8 @@
 //:: Created On: Oct. 3, 2004
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
-#include "prc_inc_util"
-#include "prc_inc_skills"
+#include "prc_inc_combat"
+//#include "prc_inc_skills"
 
 void HitString(int iHit)
 {

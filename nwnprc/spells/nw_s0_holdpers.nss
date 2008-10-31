@@ -49,7 +49,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nMeta = PRCGetMetaMagicFeat();
     int nDuration = CasterLvl;
-    nDuration = GetScaledDuration(nDuration, oTarget);
+    nDuration = PRCGetScaledDuration(nDuration, oTarget);
     effect eParal = EffectParalyze();
     effect eVis = EffectVisualEffect(82);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);

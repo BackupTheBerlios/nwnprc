@@ -13,7 +13,7 @@ the target must make another Fortitude save (DC 15) or sleep 1d4 additional
 minutes. The sleep gas does not affect creatures that are immune to poison.
 */
 
-#include "prc_inc_spells"
+#include "prc_inc_sp_tch"
 
 void SleepSave(object oTarget)
 {

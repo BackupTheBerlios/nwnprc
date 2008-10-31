@@ -14,7 +14,6 @@
 
 const string DRAGBREATHLOCK = "DragonBreathLock";
 
-
 //modified to use the breath include - Fox
 #include "prc_alterations"
 #include "prc_inc_breath"
@@ -47,7 +46,7 @@ void main()
     FireBreath = CreateBreath(OBJECT_SELF, FALSE, 50.0, DAMAGE_TYPE_FIRE, 10, nDamageDice, ABILITY_CONSTITUTION, nDCBoost);
     
     //Apply the breath
-    PlayDragonBattleCry();
+    PRCPlayDragonBattleCry();
     ApplyBreath(FireBreath, GetSpellTargetLocation());
     
     //Apply the recharge lock

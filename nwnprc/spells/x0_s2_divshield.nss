@@ -12,7 +12,7 @@
 //:: Created On: Sep 13, 2002
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-#include "x0_i0_spells"
+
 #include "x2_inc_itemprop"
 #include "prc_feat_const"
 
@@ -42,7 +42,7 @@ void main()
         eLink = SupernaturalEffect(eLink);
 
          // * Do not allow this to stack
-        RemoveEffectsFromSpell(oTarget, GetSpellId());
+        PRCRemoveEffectsFromSpell(oTarget, GetSpellId());
 
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, 474, FALSE));

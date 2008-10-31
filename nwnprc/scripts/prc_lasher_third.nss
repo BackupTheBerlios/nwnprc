@@ -13,9 +13,7 @@
 //:: Modified: Sept 27, 2005
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
-#include "inc_2dacache"
-#include "prc_inc_spells"
+#include "prc_inc_combat"
 
 void main()
 {

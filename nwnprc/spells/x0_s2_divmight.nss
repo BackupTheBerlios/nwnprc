@@ -52,7 +52,7 @@ void main()
             eLink = SupernaturalEffect(eLink);
 
             // * Do not allow this to stack
-            RemoveEffectsFromSpell(oTarget, GetSpellId());
+            PRCRemoveEffectsFromSpell(oTarget, GetSpellId());
 
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_DIVINE_MIGHT, FALSE));

@@ -10,10 +10,7 @@
 //:: Created On: April 09, 2004
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
-#include "prc_feat_const"
-#include "prc_class_const"
-#include "prc_spell_const"
+#include "prc_inc_combat"
 
 void main()
 {
@@ -30,9 +27,9 @@ void main()
      if (!bHasBow)
      {
          FloatingTextStringOnCreature("*No Bow Equipped*", OBJECT_SELF, FALSE);
-         RemoveSpellEffects(SPELL_PA_POWERSHOT, OBJECT_SELF, OBJECT_SELF);
-     RemoveSpellEffects(SPELL_PA_IMP_POWERSHOT, OBJECT_SELF, OBJECT_SELF);
-     RemoveSpellEffects(SPELL_PA_SUP_POWERSHOT, OBJECT_SELF, OBJECT_SELF);
+         PRCRemoveSpellEffects(SPELL_PA_POWERSHOT, OBJECT_SELF, OBJECT_SELF);
+     PRCRemoveSpellEffects(SPELL_PA_IMP_POWERSHOT, OBJECT_SELF, OBJECT_SELF);
+     PRCRemoveSpellEffects(SPELL_PA_SUP_POWERSHOT, OBJECT_SELF, OBJECT_SELF);
          return;
      }
 
@@ -51,9 +48,9 @@ void main()
      }
      else
      {
-          RemoveSpellEffects(SPELL_PA_POWERSHOT, OBJECT_SELF, OBJECT_SELF);
-          RemoveSpellEffects(SPELL_PA_IMP_POWERSHOT, OBJECT_SELF, OBJECT_SELF);
-          RemoveSpellEffects(SPELL_PA_SUP_POWERSHOT, OBJECT_SELF, OBJECT_SELF);
+          PRCRemoveSpellEffects(SPELL_PA_POWERSHOT, OBJECT_SELF, OBJECT_SELF);
+          PRCRemoveSpellEffects(SPELL_PA_IMP_POWERSHOT, OBJECT_SELF, OBJECT_SELF);
+          PRCRemoveSpellEffects(SPELL_PA_SUP_POWERSHOT, OBJECT_SELF, OBJECT_SELF);
 
           string nMes = "*Power Shot Mode Deactivated*";
           FloatingTextStringOnCreature(nMes, OBJECT_SELF, FALSE);

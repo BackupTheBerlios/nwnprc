@@ -113,7 +113,7 @@ void main()
                         if(!GetIsImmune(oTarget, IMMUNITY_TYPE_DOMINATE) && !GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS))
                         {
                             // Determine effect and apply it
-                            eLink = EffectLinkEffects(eMindVFX, GetScaledEffect(eDominate, oTarget));
+                            eLink = EffectLinkEffects(eMindVFX, PRCGetScaledEffect(eDominate, oTarget));
                             DelayCommand(1.0, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel));
                         }
                     }// end if - Save
@@ -146,7 +146,7 @@ void main()
                                 if(!GetIsImmune(oTarget, IMMUNITY_TYPE_DOMINATE) && !GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS))
                                 {
                                     // Determine effect and apply it
-                                    eLink = EffectLinkEffects(eMindVFX, GetScaledEffect(eDominate, oExtraTarget));
+                                    eLink = EffectLinkEffects(eMindVFX, PRCGetScaledEffect(eDominate, oExtraTarget));
                                     DelayCommand(1.0, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oExtraTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel));
                                 }
                             }// end if - Save

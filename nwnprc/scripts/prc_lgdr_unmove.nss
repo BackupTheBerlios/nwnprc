@@ -29,7 +29,7 @@ void main()
      else
      {
           // The code to cancel the effects
-            RemoveSpellEffects(GetSpellId(), OBJECT_SELF, OBJECT_SELF);
+            PRCRemoveSpellEffects(GetSpellId(), OBJECT_SELF, OBJECT_SELF);
 
           //RemoveEffect(OBJECT_SELF, eLinkSet);
      }

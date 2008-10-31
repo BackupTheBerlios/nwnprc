@@ -266,7 +266,7 @@ int GetTargetSpecificChangesToDamage(object oTarget, object oManifester, int nDa
 //////////////////////////////////////////////////
 
 #include "prc_power_const"
-#include "prc_alterations"
+#include "prc_inc_unarmed"
 #include "psi_inc_manifest" // Provides psi_inc_augment, psi_inc_focus, psi_inc_metapsi and psi_inc_ppoints
 #include "psi_inc_powknown"
 

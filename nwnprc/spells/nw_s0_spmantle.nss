@@ -44,9 +44,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
     int nAbsorb = d8() + 8;
     int nMetaMagic = PRCGetMetaMagicFeat();
 
-    RemoveEffectsFromSpell(oTarget, GetSpellId());
-    RemoveEffectsFromSpell(oTarget, SPELL_LESSER_SPELL_MANTLE);
-    RemoveEffectsFromSpell(oTarget, SPELL_GREATER_SPELL_MANTLE);
+    PRCRemoveEffectsFromSpell(oTarget, GetSpellId());
+    PRCRemoveEffectsFromSpell(oTarget, SPELL_LESSER_SPELL_MANTLE);
+    PRCRemoveEffectsFromSpell(oTarget, SPELL_GREATER_SPELL_MANTLE);
 
     //Enter Metamagic conditions
     if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))

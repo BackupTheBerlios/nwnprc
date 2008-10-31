@@ -28,7 +28,7 @@ void main()
 	effect eVFX = EffectVisualEffect(VFX_IMP_AC_BONUS);
 
 	// Remove existing effect, if any.	
-    RemoveEffectsFromSpell(oTarget, GetSpellId());
+    PRCRemoveEffectsFromSpell(oTarget, GetSpellId());
 
 	// Apply effects and VFX to target
 	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAC, oTarget, fDuration,TRUE,-1,nCasterLevel);

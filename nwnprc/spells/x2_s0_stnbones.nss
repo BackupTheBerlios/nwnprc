@@ -38,7 +38,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     effect eLink = EffectLinkEffects(eAC1, eDur);
 
     //Stacking Spellpass, 2003-07-07, Georg
-    RemoveEffectsFromSpell(oTarget, GetSpellId());
+    PRCRemoveEffectsFromSpell(oTarget, GetSpellId());
 
     //Apply the armor bonuses and the VFX impact
     if(nRacial == RACIAL_TYPE_UNDEAD)

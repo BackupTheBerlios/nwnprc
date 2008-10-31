@@ -31,8 +31,8 @@ void CheckStillUnarmed(object oTarget)
     {
         FloatingTextStrRefOnCreature(8962, OBJECT_SELF, FALSE);
         //remove other magic fang effects
-        RemoveSpellEffects(452, OBJECT_SELF, oTarget);
-        RemoveSpellEffects(453, OBJECT_SELF, oTarget);
+        PRCRemoveSpellEffects(452, OBJECT_SELF, oTarget);
+        PRCRemoveSpellEffects(453, OBJECT_SELF, oTarget);
         return; // has neither an animal companion
     }
     DelayCommand(1.0, CheckStillUnarmed(oTarget));    
@@ -95,8 +95,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     }
 
     //remove other magic fang effects
-    RemoveSpellEffects(452, OBJECT_SELF, oTarget);
-    RemoveSpellEffects(453, OBJECT_SELF, oTarget);
+    PRCRemoveSpellEffects(452, OBJECT_SELF, oTarget);
+    PRCRemoveSpellEffects(453, OBJECT_SELF, oTarget);
     effect eVis = EffectVisualEffect(VFX_IMP_HOLY_AID);
     int nMetaMagic = PRCGetMetaMagicFeat();
 

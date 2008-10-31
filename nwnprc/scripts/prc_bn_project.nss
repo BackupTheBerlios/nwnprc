@@ -201,7 +201,7 @@ void EndPosses(object oPC, object oCopy)
         SetImmortal(oPC, FALSE);
 
     // Remove the VFX and the attack penalty
-    RemoveSpellEffects(SPELL_BAELNORN_PROJECTION, oPC, oPC);
+    PRCRemoveSpellEffects(SPELL_BAELNORN_PROJECTION, oPC, oPC);
         
     // Remove the local signifying that the PC is a projection
     DeleteLocalInt(oPC, "BaelnornProjection_Active");

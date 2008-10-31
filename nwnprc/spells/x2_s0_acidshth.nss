@@ -22,7 +22,7 @@
 
 
 #include "x2_inc_spellhook"
-#include "x0_i0_spells"
+
 
 void main()
 {
@@ -68,7 +68,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     }
 
     // 2003-07-07: Stacking Spell Pass, Georg
-    RemoveEffectsFromSpell(oTarget, GetSpellId());
+    PRCRemoveEffectsFromSpell(oTarget, GetSpellId());
 
     //Apply the VFX impact and effects
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration));

@@ -40,7 +40,7 @@ void main()
                 //Fire cast spell at event for the specified target
                 PRCSignalSpellEvent(oTarget, TRUE, SPELL_CONFLAGRATION);
 
-                fDelay = GetSpellEffectDelay(lTarget, oTarget);
+                fDelay = PRCGetSpellEffectDelay(lTarget, oTarget);
 
                 int nDam = (nDamageType == DAMAGE_TYPE_SONIC) ? d4(nDice) : d6(nDice);  //reduced damage dice
                 if((nDamageType == DAMAGE_TYPE_COLD) || (nDamageType == DAMAGE_TYPE_ELECTRICAL) || (nDamageType == DAMAGE_TYPE_ACID))

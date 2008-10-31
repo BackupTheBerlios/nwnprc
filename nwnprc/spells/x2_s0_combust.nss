@@ -56,7 +56,7 @@ void RunCombustImpact(object oTarget, object oCaster, int nLevel, int nMetaMagic
         else
         {
             DeleteLocalInt(oTarget,"XP2_L_SPELL_SAVE_DC_" + IntToString (SPELL_COMBUST));
-            GZRemoveSpellEffects(SPELL_COMBUST, oTarget);
+            GZPRCRemoveSpellEffects(SPELL_COMBUST, oTarget);
         }
    }
 }

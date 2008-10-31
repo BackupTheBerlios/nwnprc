@@ -51,7 +51,7 @@ void main()
     int nSpellID = PRCGetSpellId();/*
     if(PresenceCheck(oCaster))
     {
-        RemoveSpellEffects(SPELL_ANTIMAGIC_FIELD, oCaster, oCaster);
+        PRCRemoveSpellEffects(SPELL_ANTIMAGIC_FIELD, oCaster, oCaster);
         return;
     }*/
     PRCSetSchool(GetSpellSchool(nSpellID));

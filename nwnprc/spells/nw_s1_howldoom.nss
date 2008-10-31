@@ -21,7 +21,7 @@ void main()
     int nHD = GetHitDice(OBJECT_SELF);
     int nDC = 10 + (nHD/4);
     int nDuration = 1 + (nHD/4);
-    effect eLink = CreateDoomEffectsLink();
+    effect eLink = EffectShaken();
     effect eVis = EffectVisualEffect(VFX_IMP_DOOM);
     effect eImpact = EffectVisualEffect(VFX_FNF_HOWL_ODD);
     float fDelay;

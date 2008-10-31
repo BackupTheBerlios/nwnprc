@@ -34,9 +34,9 @@ void main()
        GetHasSpellEffect(INVOKE_DARK_ONES_OWN_LUCK_REFLEX, oTarget) ||
        GetHasSpellEffect(INVOKE_DARK_ONES_OWN_LUCK_WILL, oTarget)) 
     {
-        RemoveSpellEffects(INVOKE_DARK_ONES_OWN_LUCK_FORT, OBJECT_SELF, oTarget);
-        RemoveSpellEffects(INVOKE_DARK_ONES_OWN_LUCK_REFLEX, OBJECT_SELF, oTarget);
-        RemoveSpellEffects(INVOKE_DARK_ONES_OWN_LUCK_WILL, OBJECT_SELF, oTarget);
+        PRCRemoveSpellEffects(INVOKE_DARK_ONES_OWN_LUCK_FORT, OBJECT_SELF, oTarget);
+        PRCRemoveSpellEffects(INVOKE_DARK_ONES_OWN_LUCK_REFLEX, OBJECT_SELF, oTarget);
+        PRCRemoveSpellEffects(INVOKE_DARK_ONES_OWN_LUCK_WILL, OBJECT_SELF, oTarget);
     }
     //Apply the VFX impact and effect
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(24),TRUE,-1,CasterLvl);

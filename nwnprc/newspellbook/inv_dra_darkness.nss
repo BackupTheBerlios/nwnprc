@@ -12,6 +12,7 @@
 */
 
 #include "prc_sp_func"
+#include "prc_inc_sp_tch"
 #include "inv_inc_invfunc"
 #include "inv_invokehook"
 

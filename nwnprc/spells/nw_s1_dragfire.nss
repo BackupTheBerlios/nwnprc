@@ -88,7 +88,7 @@ void main()
     FireBreath = CreateBreath(OBJECT_SELF, FALSE, 40.0, DAMAGE_TYPE_FIRE, 10, nDamageDice, ABILITY_CONSTITUTION, nDCBoost);
     
     //Apply the breath
-    PlayDragonBattleCry();
+    PRCPlayDragonBattleCry();
     ApplyBreath(FireBreath, GetSpellTargetLocation());
     
     //Apply the recharge lock

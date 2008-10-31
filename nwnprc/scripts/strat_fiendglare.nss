@@ -5,7 +5,7 @@ void main()
 
     //Declare major variables
     object oTarget = PRCGetSpellTargetObject();
-    effect eLink = CreateDoomEffectsLink();
+    effect eLink = EffectShaken();
     effect eStun = EffectStunned();
     int nLevel = 10;
 

@@ -35,9 +35,9 @@ void main()
 			//Fire cast spell at event for the specified target
 			PRCSignalSpellEvent(oTarget, FALSE);
 			
-			RemoveSpellEffects(GetSpellId(), OBJECT_SELF, oTarget);
+			PRCRemoveSpellEffects(GetSpellId(), OBJECT_SELF, oTarget);
 
-			float fDelay = GetSpellEffectDelay(lTarget, oTarget);
+			float fDelay = PRCGetSpellEffectDelay(lTarget, oTarget);
 
 			// Apply the curse and vfx.
 			effect eCurse = EffectSavingThrowIncrease(SAVING_THROW_ALL, 1);

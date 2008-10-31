@@ -34,7 +34,7 @@ void main()
 	effect eVFX = EffectVisualEffect(VFX_IMP_HEAD_ELECTRICITY);
 
 	// Remove existing effect, if any.	
-    RemoveEffectsFromSpell(oTarget, GetSpellId());
+    PRCRemoveEffectsFromSpell(oTarget, GetSpellId());
 
 	// Apply effects and VFX to target
 	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBuff, oTarget, fDuration,TRUE,-1,nCasterLevel);

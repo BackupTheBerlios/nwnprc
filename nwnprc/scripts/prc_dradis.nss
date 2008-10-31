@@ -10,10 +10,7 @@
 //:: Created On: Apr 27, 2005
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
-#include "prc_class_const"
-#include "prc_feat_const"
-#include "prc_spell_const"
+#include "prc_inc_natweap"
 #include "prc_ip_srcost"
 #include "pnp_shft_poly"
 #include "prc_compan_inc"

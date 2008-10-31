@@ -12,8 +12,8 @@ The Selvetarm's Wrath feat for the Drow Judicator
 //:: Updated by Oni5115 9/23/2004 to use new combat engine
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
-#include "prc_inc_util"
+#include "prc_inc_combat"
+//#include "prc_inc_util"
 
 void main()
 {
@@ -37,7 +37,6 @@ void main()
      string sSuccess = "";
      string sMiss = "";
      float fDistance = GetDistanceBetween(oPC, oTarget);
-     float fDelay = GetTimeToCloseDistance(fDistance, oPC, TRUE);
      
      if(oPC == oTarget)
      {
@@ -63,5 +62,5 @@ void main()
      effect eVis2 = EffectVisualEffect(VFX_IMP_HARM);
      effect eLink = EffectLinkEffects(eVis1, eVis2);
      
-     DelayCommand(fDelay, PerformAttackRound(oTarget, oPC, eLink, 0.0, 0, iDamageBonus, DAMAGE_TYPE_DIVINE, FALSE, sSuccess, sMiss) );
+     PerformAttackRound(oTarget, oPC, eLink, 0.0, 0, iDamageBonus, DAMAGE_TYPE_DIVINE, FALSE, sSuccess, sMiss);
 }

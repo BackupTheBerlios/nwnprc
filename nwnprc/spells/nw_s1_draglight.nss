@@ -89,7 +89,7 @@ void main()
     ElecBreath = CreateBreath(OBJECT_SELF, TRUE, 80.0, DAMAGE_TYPE_ELECTRICAL, 8, nDamageDice, ABILITY_CONSTITUTION, nDCBoost);
     
     //Apply the breath
-    PlayDragonBattleCry();
+    PRCPlayDragonBattleCry();
     ApplyBreath(ElecBreath, GetSpellTargetLocation());
     
     //Apply the recharge lock

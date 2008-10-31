@@ -61,7 +61,7 @@ int iLevel = GetLevelByClass(CLASS_TYPE_ARCANE_DUELIST, OBJECT_SELF);
 int iAdd = iLevel/3;
 int iImages = d4(1) + 3;
 
-RemoveEffectsFromSpell(OBJECT_SELF, GetSpellId());
+PRCRemoveEffectsFromSpell(OBJECT_SELF, GetSpellId());
 
 SetLocalObject(OBJECT_SELF, "FLURRY_TARGET", oTarget);
 

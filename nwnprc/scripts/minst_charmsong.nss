@@ -57,7 +57,7 @@ void main()
 
     while(GetIsObjectValid(oTarget))
     {
-        eCharm = GetScaledEffect(eCharmed, oTarget);
+        eCharm = PRCGetScaledEffect(eCharmed, oTarget);
         eCharm = EffectLinkEffects(eCharm, eMind);
         eCharm = EffectLinkEffects(eCharm, eDur);
 

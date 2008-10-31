@@ -19,8 +19,8 @@
 #include "prc_inc_spells"
 
 
-#include "nw_i0_spells"
-#include "x0_i0_spells"
+
+
 
 #include "x2_inc_spellhook"
 

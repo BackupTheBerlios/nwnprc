@@ -114,7 +114,7 @@ void main()
     // Remove effects from it
     if(nOld)
     {
-        RemoveSpellEffects(nOld, oUser, oUser);
+        PRCRemoveSpellEffects(nOld, oUser, oUser);
         DeleteLocalInt(oUser, "PRC_PowerAttackSpellID");
         DeleteLocalInt(oUser, "PRC_PowerAttack_DamageBonus");
     }

@@ -123,7 +123,7 @@ arcanamach spell with a new spell at every even-numbered
 class level beginning at 4th
 */
 
-
+#include "prc_inc_function"
 #include "inc_dynconv"
 #include "inc_newspellbook"
 #include "inc_sp_gain_mem"

@@ -54,7 +54,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     //Enter Metamagic conditions
     if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
         fDuration *= 2; //Duration is +100%
-    RemoveEffectsFromSpell(oTarget, nSpellID);
+    PRCRemoveEffectsFromSpell(oTarget, nSpellID);
     //Apply the VFX impact and effects
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration,TRUE,-1,nCasterLevel);
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);

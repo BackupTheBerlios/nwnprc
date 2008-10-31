@@ -45,6 +45,7 @@ Created:   7/6/07
 //:://////////////////////////////////////////////
 
 #include "prc_inc_spells"
+#include "prc_inc_natweap"
 
 void main()
 {

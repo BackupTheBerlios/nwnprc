@@ -31,6 +31,8 @@ Magic items carried by a creature are not affected.
     <END NOTES TO SCRIPTER>
 */
 
+
+#include "prc_inc_sp_tch"
 #include "prc_sp_func"
 
 //Implements the spell impact, put code here

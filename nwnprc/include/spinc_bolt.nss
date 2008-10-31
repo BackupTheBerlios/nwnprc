@@ -18,6 +18,10 @@
 
 #include "prc_inc_spells"
 
+
+//* fires a storm of nCap missiles at targets in area
+void PRCDoMissileStorm(int nD6Dice, int nCap, int nSpell, int nMIRV = VFX_IMP_MIRV, int nVIS = VFX_IMP_MAGBLUE, int nDAMAGETYPE = DAMAGE_TYPE_MAGICAL, int nONEHIT = FALSE, int nReflexSave = FALSE);
+
 float GetVFXLength(location lCaster, float fLength, float fAngle);
 
 void DoBolt(int nCasterLevel, int nDieSize, int nBonusDam, int nDice, int nBoltEffect,
@@ -172,6 +176,185 @@ float GetVFXLength(location lCaster, float fLength, float fAngle)
     return fVFXLength;
 }
 
+//::///////////////////////////////////////////////
+//:: PRCDoMissileStorm
+//:: Copyright (c) 2002 Bioware Corp.
+//:://////////////////////////////////////////////
+/*
+    Fires a volley of missiles around the area
+    of the object selected.
+
+    Each missiles (nD6Dice)d6 damage.
+    There are casterlevel missiles (to a cap as specified)
+*/
+//:://////////////////////////////////////////////
+//:: Created By: Brent
+//:: Created On: July 31, 2002
+//:://////////////////////////////////////////////
+//:: Modified March 14 2003: Removed the option to hurt chests/doors
+//::  was potentially causing bugs when no creature targets available.
+void PRCDoMissileStorm(int nD6Dice, int nCap, int nSpell, int nMIRV = VFX_IMP_MIRV, int nVIS = VFX_IMP_MAGBLUE, int nDAMAGETYPE = DAMAGE_TYPE_MAGICAL, int nONEHIT = FALSE, int nReflexSave = FALSE)
+{
+    object oTarget = OBJECT_INVALID;
+    int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
+//    int nDamage = 0;
+    int nMetaMagic = PRCGetMetaMagicFeat();
+    int nCnt = 1;
+    effect eMissile = EffectVisualEffect(nMIRV);
+    effect eVis = EffectVisualEffect(nVIS);
+    float fDist = 0.0;
+    float fDelay = 0.0;
+    float fDelay2, fTime;
+    location lTarget = GetSpellTargetLocation(); // missile spread centered around caster
+    int nMissiles = nCasterLvl;
+
+    nCasterLvl +=SPGetPenetr();
+
+    if (nMissiles > nCap)
+    {
+        nMissiles = nCap;
+    }
+
+        /* New Algorithm
+            1. Count # of targets
+            2. Determine number of missiles
+            3. First target gets a missile and all Excess missiles
+            4. Rest of targets (max nMissiles) get one missile
+       */
+    int nEnemies = 0;
+
+    oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_GARGANTUAN, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+    //Cycle through the targets within the spell shape until an invalid object is captured.
+    while (GetIsObjectValid(oTarget) )
+    {
+        // * caster cannot be harmed by this spell
+        if (spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE, OBJECT_SELF) && (oTarget != OBJECT_SELF))
+        {
+            // GZ: You can only fire missiles on visible targets
+            // 1.69 change
+            // If the firing object is a placeable (such as a projectile trap),
+            // we skip the line of sight check as placeables can't "see" things.
+            if ( ( GetObjectType(OBJECT_SELF) == OBJECT_TYPE_PLACEABLE ) ||
+                GetObjectSeen(oTarget,OBJECT_SELF))
+            {
+                nEnemies++;
+            }
+        }
+        oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_GARGANTUAN, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+     }
+
+     if (nEnemies == 0) return; // * Exit if no enemies to hit
+     int nExtraMissiles = nMissiles / nEnemies;
+
+     // April 2003
+     // * if more enemies than missiles, need to make sure that at least
+     // * one missile will hit each of the enemies
+     if (nExtraMissiles <= 0)
+     {
+        nExtraMissiles = 1;
+     }
+
+     // by default the Remainder will be 0 (if more than enough enemies for all the missiles)
+     int nRemainder = 0;
+
+     if (nExtraMissiles >0)
+        nRemainder = nMissiles % nEnemies;
+
+     if (nEnemies > nMissiles)
+        nEnemies = nMissiles;
+
+    oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_GARGANTUAN, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+    //Cycle through the targets within the spell shape until an invalid object is captured.
+    while (GetIsObjectValid(oTarget) && nCnt <= nEnemies)
+    {
+        // * caster cannot be harmed by this spell
+        if (spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE, OBJECT_SELF) && (oTarget != OBJECT_SELF) && 
+            (( GetObjectType(OBJECT_SELF) == OBJECT_TYPE_PLACEABLE ) || 
+            (GetObjectSeen(oTarget,OBJECT_SELF))))
+        {
+                //Fire cast spell at event for the specified target
+                SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, nSpell));
+
+                // * recalculate appropriate distances
+                fDist = GetDistanceBetween(OBJECT_SELF, oTarget);
+                fDelay = fDist/(3.0 * log(fDist) + 2.0);
+
+                // Firebrand.
+                // It means that once the target has taken damage this round from the
+                // spell it won't take subsequent damage
+                if (nONEHIT == TRUE)
+                {
+                    nExtraMissiles = 1;
+                    nRemainder = 0;
+                }
+
+                int i = 0;
+                //--------------------------------------------------------------
+                // GZ: Moved SR check out of loop to have 1 check per target
+                //     not one check per missile, which would rip spell mantels
+                //     apart
+                //--------------------------------------------------------------
+                if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nCasterLvl, fDelay))
+                {
+                    for (i=1; i <= nExtraMissiles + nRemainder; i++)
+                    {
+                        //Roll damage
+                        int nDam = d6(nD6Dice);
+                        //Enter Metamagic conditions
+                        if ((nMetaMagic & METAMAGIC_MAXIMIZE))
+                        {
+                             nDam = nD6Dice*6;//Damage is at max
+                        }
+                        if ((nMetaMagic & METAMAGIC_EMPOWER))
+                        {
+                              nDam = nDam + nDam/2; //Damage/Healing is +50%
+                        }
+
+                        if(i == 1)
+                        {
+                            nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
+                            DelayCommand(fDelay, PRCBonusDamage(oTarget));
+                        }
+
+                        // Jan. 29, 2004 - Jonathan Epp
+                        // Reflex save was not being calculated for Firebrand
+                        if(nReflexSave)
+                        {
+                            if(nDAMAGETYPE == DAMAGE_TYPE_FIRE)
+                                nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_FIRE);
+                            else if(nDAMAGETYPE == DAMAGE_TYPE_ELECTRICAL)
+                                nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_ELECTRICITY);
+                            else if(nDAMAGETYPE == DAMAGE_TYPE_COLD)
+                                nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_COLD);
+                            else if(nDAMAGETYPE == DAMAGE_TYPE_ACID)
+                                nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_ACID);
+                            else if(nDAMAGETYPE == DAMAGE_TYPE_SONIC)
+                                nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_SONIC);
+                        }
+
+                        fTime = fDelay;
+                        fDelay2 += 0.1;
+                        fTime += fDelay2;
+
+                        //Set damage effect
+                        effect eDam = EffectDamage(nDam, nDAMAGETYPE);
+                        //Apply the MIRV and damage effect
+                        DelayCommand(fTime, ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget));
+                        DelayCommand(fDelay2, ApplyEffectToObject(DURATION_TYPE_INSTANT, eMissile, oTarget));
+                        DelayCommand(fTime, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+                    }
+                } // for
+                else
+                {  // * apply a dummy visual effect
+                 ApplyEffectToObject(DURATION_TYPE_INSTANT, eMissile, oTarget);
+                }
+                nCnt++;// * increment count of missiles fired
+                nRemainder = 0;
+        }
+        oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_GARGANTUAN, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+    }
+
+}
 
 // Test main
 //void main(){}

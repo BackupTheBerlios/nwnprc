@@ -20,7 +20,7 @@ void main()
  
     if(GetHasSpellEffect(SPELL_ANTIPAL_AURAFEAR))
     {
-        RemoveEffectsFromSpell(OBJECT_SELF,SPELL_ANTIPAL_AURAFEAR);
+        PRCRemoveEffectsFromSpell(OBJECT_SELF,SPELL_ANTIPAL_AURAFEAR);
         return;
     }
     

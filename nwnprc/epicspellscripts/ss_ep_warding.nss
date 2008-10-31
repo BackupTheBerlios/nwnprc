@@ -44,7 +44,7 @@ void main()
         // * Brent, Nov 24, making extraodinary so cannot be dispelled
         eLink = ExtraordinaryEffect(eLink);
 
-        RemoveEffectsFromSpell(OBJECT_SELF, GetSpellId());
+        PRCRemoveEffectsFromSpell(OBJECT_SELF, GetSpellId());
         //Apply the armor bonuses and the VFX impact
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration), TRUE, -1, GetTotalCastingLevel(OBJECT_SELF));
     }

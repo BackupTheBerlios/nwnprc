@@ -20,7 +20,7 @@ void main()
     eLink = EffectLinkEffects(eLink, eSave);
     eLink = ExtraordinaryEffect(eLink);
 
-    RemoveEffectsFromSpell(oPC, GetSpellId());
+    PRCRemoveEffectsFromSpell(oPC, GetSpellId());
 
     if(DEBUG) DoDebug("prc_doa_drdmight - Applying Spell");
     ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oPC);

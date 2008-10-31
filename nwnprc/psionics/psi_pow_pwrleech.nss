@@ -118,6 +118,6 @@ void DoDrain(struct manifestation manif, location lManifesterOld, object oTarget
     else
     {
         if(DEBUG) DoDebug("psi_pow_pwrleech: Power expired, clearing VFX");
-        RemoveSpellEffects(manif.nSpellID, manif.oManifester, oTarget);
+        PRCRemoveSpellEffects(manif.nSpellID, manif.oManifester, oTarget);
     }
 }

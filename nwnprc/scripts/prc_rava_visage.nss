@@ -7,8 +7,8 @@ Once per day on a successful touch attack you can trigger a spell like ability
 similar to the spell phantasmal killer with a DC equal to 14 + Ravager levels.
 */
 
-#include "prc_alterations"
-#include "prc_class_const"
+#include "prc_inc_sp_tch"
+
 void main()
 {
     //Declare major variables

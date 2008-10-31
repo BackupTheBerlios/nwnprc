@@ -40,8 +40,7 @@ each other and fired simultaneously.
         touch or ranged attack is used
     <END NOTES TO SCRIPTER>
 */
-#include "prc_alterations"
-#include "prc_inc_spells"
+#include "prc_inc_sp_tch"
 
 void main()
 {

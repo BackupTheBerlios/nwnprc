@@ -355,7 +355,7 @@ void main()
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oSpellTarget);
                 FloatingTextStringOnCreature("Fire Riposte Hit", oSpellOrigin, FALSE);
                 // Clean up
-                RemoveSpellEffects(MOVE_DW_FIRE_RIPOSTE, oSpellOrigin, oSpellOrigin);
+                PRCRemoveSpellEffects(MOVE_DW_FIRE_RIPOSTE, oSpellOrigin, oSpellOrigin);
         }
     }
 

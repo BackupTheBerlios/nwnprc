@@ -55,7 +55,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, nSpellID, FALSE));
     if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
         nDuration *= 2;
-    RemoveEffectsFromSpell(oTarget, nSpellID);
+    PRCRemoveEffectsFromSpell(oTarget, nSpellID);
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(nDuration),TRUE,-1,nCasterLevel);
 
     return TRUE;    //return TRUE if spell charges should be decremented

@@ -6,14 +6,13 @@
 //:  Causes blindness
 //:////////////////////////////////////
 
-#include "prc_class_const"
-#include "prc_alterations"
+#include "prc_inc_sp_tch"
 
 void CheckBlindness(object oTarget)
 {
     if (GetIsDead(oTarget) || !GetIsFighting(oTarget) && GetHasEffect(EFFECT_TYPE_BLINDNESS, oTarget) )
     {
-         RemoveSpecificEffect(EFFECT_TYPE_BLINDNESS, oTarget);
+         PRCRemoveSpecificEffect(EFFECT_TYPE_BLINDNESS, oTarget);
     }
     else if(GetHasEffect(EFFECT_TYPE_BLINDNESS, oTarget) )
     {

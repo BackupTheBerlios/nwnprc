@@ -65,6 +65,7 @@
 */
 
 #include "prc_sp_func"
+#include "prc_inc_sp_tch"
 
 void SummonGhoul(int nHD, object oTarget, object oPC, location lCorpse, int nCasterLevel)
 {

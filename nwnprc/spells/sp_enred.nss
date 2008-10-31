@@ -63,6 +63,7 @@
 */
 
 #include "prc_sp_func"
+#include "prc_inc_function"
 
 void DispelMonitor(object oCaster, object oTarget, int nSpellID, int nBeatsRemaining)
 {

@@ -12,6 +12,7 @@
 */
 
 #include "prc_sp_func"
+#include "prc_inc_sp_tch"
 #include "prc_inc_itmrstr"
 
 //Implements the spell impact, put code here

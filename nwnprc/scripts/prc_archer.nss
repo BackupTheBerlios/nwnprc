@@ -27,7 +27,7 @@ void UnEquip(object oPC,int bBowSpec,object oSkin,int bXShot)
   if (!(iType == BASE_ITEM_LONGBOW ||iType == BASE_ITEM_SHORTBOW )) return;
 
   if ( GetHasSpellEffect(SPELL_EXTRASHOT,oPC))
-          RemoveSpellEffects(SPELL_EXTRASHOT,oPC,oPC);
+          PRCRemoveSpellEffects(SPELL_EXTRASHOT,oPC,oPC);
 }
 
 

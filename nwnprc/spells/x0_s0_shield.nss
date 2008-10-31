@@ -19,7 +19,7 @@
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
 #include "prc_inc_spells"
 
-#include "NW_I0_SPELLS"
+
 
 #include "x2_inc_spellhook"
 
@@ -67,7 +67,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
     //Fire spell cast at event for target
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, 417, FALSE));
 
-    RemoveEffectsFromSpell(OBJECT_SELF, GetSpellId());
+    PRCRemoveEffectsFromSpell(OBJECT_SELF, GetSpellId());
 
     //Apply VFX impact and bonus effects
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);

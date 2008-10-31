@@ -4,6 +4,9 @@
 //:: these both be just one file by adding my text to theirs.
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
+// GZ: Number of spells in GetSpellBreachProtections
+const int PRC_SPELLS_MAX_BREACH = 33;
+
 //:: This function is called from withing PRCApplyEffectToObject().  It's purpose is to
 //:: clean up the three arrays that hold the caster level and references to all
 //:: effects on the object having this effect applied to it.
@@ -61,6 +64,32 @@ void DeleteAllAoEInts(object oAoE);
 // Returns the AoE's entire caster level, including any from prc's as stored in the local variable
 int AoECasterLevel(object oAoE = OBJECT_SELF);
 
+// * Performs a spell breach up to nTotal spell are removed and
+// * nSR spell resistance is  lowered. nSpellId can be used to override
+// * the originating spell ID. If not specified, SPELL_GREATER_SPELL_BREACH
+// * is used
+void PRCDoSpellBreach(object oTarget, int nTotal, int nSR, int nSpellId = -1);
+
+// * Performs a spell breach up to nTotal spells are removed and nSR spell
+// * resistance is lowered.
+int PRCGetSpellBreachProtection(int nLastChecked);
+
+// * Remove all spell protections of a specific type
+int PRCRemoveProtections(int nSpell_ID, object oTarget, int nCount);
+
+// * Handle dispel magic of AoEs
+void spellsDispelAoE(object oTargetAoE, object oCaster, int nCasterLevel);
+
+// * dispel magic on one or multiple targets.
+// * if bAll is set to TRUE, all effects are dispelled from a creature
+// * else it will only dispel the best effect from each creature (used for AoE)
+// * Specify bBreachSpells to add Mord's Disjunction to the dispel
+void spellsDispelMagic(object oTarget, int nCasterLevel, effect eVis, effect eImpac, int bAll = TRUE, int bBreachSpells = FALSE);
+
+// *  Returns the modifier from the ability    score that matters for this caster
+// *  Bad bioware function that only works on wizards, sorcs, and bards
+int PRCGetCasterAbilityModifier(object oCaster);
+
 float GetRandomDelay(float fMinimumTime = 0.4, float MaximumTime = 1.1);
 
 void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, float fDuration = 0.0f,
@@ -71,7 +100,7 @@ void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, fl
 #include "prc_feat_const"
 #include "lookup_2da_spell"
 #include "prcsp_spell_adjs"
-#include "nw_i0_spells"
+
 #include "x2_i0_spells"
 #include "spinc_remeffct"
 #include "inv_invoc_const"
@@ -204,7 +233,7 @@ void spellsDispelMagicMod(object oTarget, int nCasterLevel, effect eVis, effect 
         //----------------------------------------------------------------------
         if (bBreachSpells)
         {
-            DoSpellBreach(oTarget, 6, 10, nId);
+            PRCDoSpellBreach(oTarget, 6, 10, nId);
         }
     }
     else
@@ -218,7 +247,7 @@ void spellsDispelMagicMod(object oTarget, int nCasterLevel, effect eVis, effect 
 
         if (bBreachSpells)
         {
-           DoSpellBreach(oTarget, 2, 10, nId);
+           PRCDoSpellBreach(oTarget, 2, 10, nId);
         }
     }
 
@@ -417,7 +446,7 @@ void DispelMagicBestMod(object oTarget, int nCasterLevel)
                           //can't stack HP from multiple dispels
                           if (GetHasSpellEffect(GetSpellId(),OBJECT_SELF))
                           {
-                              RemoveSpellEffects(GetSpellId(), OBJECT_SELF, OBJECT_SELF);
+                              PRCRemoveSpellEffects(GetSpellId(), OBJECT_SELF, OBJECT_SELF);
                           }
                   
                           SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDracHP, OBJECT_SELF, 60.0);
@@ -554,7 +583,7 @@ void DispelMagicAllMod(object oTarget, int nCasterLevel)
         //:: Was going to use this function but upon reading it it became apparent it might not remove
         //:: all of the given spells effects, but just one instead.
 
-        //RemoveSpellEffects(nEffectSpellID, oEffectCaster, oTarget);
+        //PRCRemoveSpellEffects(nEffectSpellID, oEffectCaster, oTarget);
 
         //:: If the check is successful, go through and remove all effects originating
         //:: from that particular spell.
@@ -656,7 +685,7 @@ void DispelMagicAllMod(object oTarget, int nCasterLevel)
                   //can't stack HP from multiple dispels
                   if (GetHasSpellEffect(GetSpellId(),OBJECT_SELF))
                   {
-                      RemoveSpellEffects(GetSpellId(), OBJECT_SELF, OBJECT_SELF);
+                      PRCRemoveSpellEffects(GetSpellId(), OBJECT_SELF, OBJECT_SELF);
                   }
 
                   SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDracHP, OBJECT_SELF, 60.0);
@@ -857,7 +886,7 @@ void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, fl
 {
     //if it was cast from the new spellbook, remove previous effects
     if(GetLocalInt(OBJECT_SELF, "UsingActionCastSpell"))
-        GZRemoveSpellEffects(nSpellID, oTarget);
+        GZPRCRemoveSpellEffects(nSpellID, oTarget);
 
     // Extraordinary/Supernatural effects are not supposed to be dispellable.
     if (GetEffectSubType(eEffect) == SUBTYPE_EXTRAORDINARY
@@ -867,7 +896,7 @@ void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, fl
     }
         //if it was cast from the new spellbook, remove previous effects
         if(GetLocalInt(OBJECT_SELF, "UsingActionCastSpell"))
-            GZRemoveSpellEffects(nSpellID, oTarget);
+            GZPRCRemoveSpellEffects(nSpellID, oTarget);
 
     // Instant duration effects can use BioWare code, the PRC code doesn't care about those
     if (DURATION_TYPE_INSTANT == nDurationType)
@@ -950,6 +979,268 @@ int AoECasterLevel(object oAoE = OBJECT_SELF)
    return toReturn;
 }
 
+void PRCDoSpellBreach(object oTarget, int nTotal, int nSR, int nSpellId = -1)
+{
+    if (nSpellId == -1)
+    {
+        nSpellId =  SPELL_GREATER_SPELL_BREACH;
+    }
+    effect eSR = EffectSpellResistanceDecrease(nSR);
+    effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
+
+    effect eVis = EffectVisualEffect(VFX_IMP_BREACH);
+    int nCnt, nIdx;
+    if(!GetIsReactionTypeFriendly(oTarget))
+    {
+        //Fire cast spell at event for the specified target
+        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, nSpellId ));
+        //Search through and remove protections.
+        while(nCnt <= PRC_SPELLS_MAX_BREACH && nIdx < nTotal)
+        {
+            nIdx = nIdx + PRCRemoveProtections(PRCGetSpellBreachProtection(nCnt), oTarget, nCnt);
+            nCnt++;
+        }
+        effect eLink = EffectLinkEffects(eDur, eSR);
+        //--------------------------------------------------------------------------
+        // This can not be dispelled
+        //--------------------------------------------------------------------------
+        eLink = ExtraordinaryEffect(eLink);
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(10),TRUE);
+    }
+    ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+
+}
+
+//------------------------------------------------------------------------------
+// Returns the nLastChecked-nth highest spell on the creature for use in
+// the spell breach routines
+// Please modify the constatn PRC_SPELLS_MAX_BREACH at the top of this file
+// if you change the number of spells.
+//------------------------------------------------------------------------------
+int PRCGetSpellBreachProtection(int nLastChecked)
+{
+    //--------------------------------------------------------------------------
+    // GZ: Protections are stripped in the order they appear here
+    //--------------------------------------------------------------------------
+    if(nLastChecked == 1) {return SPELL_GREATER_SPELL_MANTLE;}
+    else if (nLastChecked == 2){return SPELL_PREMONITION;}
+    else if(nLastChecked == 3) {return SPELL_SPELL_MANTLE;}
+    else if(nLastChecked == 4) {return SPELL_SHADOW_SHIELD;}
+    else if(nLastChecked == 5) {return SPELL_GREATER_STONESKIN;}
+    else if(nLastChecked == 6) {return SPELL_ETHEREAL_VISAGE;}
+    else if(nLastChecked == 7) {return SPELL_GLOBE_OF_INVULNERABILITY;}
+    else if(nLastChecked == 8) {return SPELL_ENERGY_BUFFER;}
+    else if(nLastChecked == 9) {return 443;} // greater sanctuary
+    else if(nLastChecked == 10) {return SPELL_MINOR_GLOBE_OF_INVULNERABILITY;}
+    else if(nLastChecked == 11) {return SPELL_SPELL_RESISTANCE;}
+    else if(nLastChecked == 12) {return SPELL_STONESKIN;}
+    else if(nLastChecked == 13) {return SPELL_LESSER_SPELL_MANTLE;}
+    else if(nLastChecked == 14) {return SPELL_MESTILS_ACID_SHEATH;}
+    else if(nLastChecked == 15) {return SPELL_MIND_BLANK;}
+    else if(nLastChecked == 16) {return SPELL_ELEMENTAL_SHIELD;}
+    else if(nLastChecked == 17) {return SPELL_PROTECTION_FROM_SPELLS;}
+    else if(nLastChecked == 18) {return SPELL_PROTECTION_FROM_ELEMENTS;}
+    else if(nLastChecked == 19) {return SPELL_RESIST_ELEMENTS;}
+    else if(nLastChecked == 20) {return SPELL_DEATH_ARMOR;}
+    else if(nLastChecked == 21) {return SPELL_GHOSTLY_VISAGE;}
+    else if(nLastChecked == 22) {return SPELL_ENDURE_ELEMENTS;}
+    else if(nLastChecked == 23) {return SPELL_SHADOW_SHIELD;}
+    else if(nLastChecked == 24) {return SPELL_SHADOW_CONJURATION_MAGE_ARMOR;}
+    else if(nLastChecked == 25) {return SPELL_NEGATIVE_ENERGY_PROTECTION;}
+    else if(nLastChecked == 26) {return SPELL_SANCTUARY;}
+    else if(nLastChecked == 27) {return SPELL_MAGE_ARMOR;}
+    else if(nLastChecked == 28) {return SPELL_STONE_BONES;}
+    else if(nLastChecked == 29) {return SPELL_SHIELD;}
+    else if(nLastChecked == 30) {return SPELL_SHIELD_OF_FAITH;}
+    else if(nLastChecked == 31) {return SPELL_LESSER_MIND_BLANK;}
+    else if(nLastChecked == 32) {return SPELL_IRONGUTS;}
+    else if(nLastChecked == 33) {return SPELL_RESISTANCE;}
+    return nLastChecked;
+}
+
+int PRCRemoveProtections(int nSpell_ID, object oTarget, int nCount)
+{
+    //Declare major variables
+    effect eProtection;
+    int nCnt = 0;
+    if(GetHasSpellEffect(nSpell_ID, oTarget))
+    {
+        //Search through the valid effects on the target.
+        eProtection = GetFirstEffect(oTarget);
+        while (GetIsEffectValid(eProtection))
+        {
+            //If the effect was created by the spell then remove it
+            if(GetEffectSpellId(eProtection) == nSpell_ID)
+            {
+                RemoveEffect(oTarget, eProtection);
+                //return 1;
+                nCnt++;
+            }
+            //Get next effect on the target
+            eProtection = GetNextEffect(oTarget);
+        }
+    }
+    if(nCnt > 0)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+//------------------------------------------------------------------------------
+// Attempts a dispel on one target, with all safety checks put in.
+//------------------------------------------------------------------------------
+void spellsDispelMagic(object oTarget, int nCasterLevel, effect eVis, effect eImpac, int bAll = TRUE, int bBreachSpells = FALSE)
+{
+    //--------------------------------------------------------------------------
+    // Don't dispel magic on petrified targets
+    // this change is in to prevent weird things from happening with 'statue'
+    // creatures. Also creature can be scripted to be immune to dispel
+    // magic as well.
+    //--------------------------------------------------------------------------
+    if (GetHasEffect(EFFECT_TYPE_PETRIFY, oTarget) == TRUE || GetLocalInt(oTarget, "X1_L_IMMUNE_TO_DISPEL") == 10)
+    {
+        return;
+    }
+
+    effect eDispel;
+    float fDelay = GetRandomDelay(0.1, 0.3);
+    int nId = PRCGetSpellId();
+
+    //--------------------------------------------------------------------------
+    // Fire hostile event only if the target is hostile...
+    //--------------------------------------------------------------------------
+    if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
+    {
+
+        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, nId));
+    }
+    else
+    {
+        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, nId, FALSE));
+    }
+
+    //--------------------------------------------------------------------------
+    // GZ: Bugfix. Was always dispelling all effects, even if used for AoE
+    //--------------------------------------------------------------------------
+    if (bAll == TRUE )
+    {
+        eDispel = EffectDispelMagicAll(nCasterLevel);
+        //----------------------------------------------------------------------
+        // GZ: Support for Mord's disjunction
+        //----------------------------------------------------------------------
+        if (bBreachSpells)
+        {
+            PRCDoSpellBreach(oTarget, 6, 10, nId);
+        }
+    }
+    else
+    {
+        eDispel = EffectDispelMagicBest(nCasterLevel);
+        if (bBreachSpells)
+        {
+           PRCDoSpellBreach(oTarget, 2, 10, nId);
+        }
+    }
+
+    DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+    DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDispel, oTarget));
+}
+
+//------------------------------------------------------------------------------
+// Handle Dispelling Area of Effects
+// Before adding this AoE's got automatically destroyed. Since NWN does not give
+// the required information to do proper dispelling on AoEs, we do some simulated
+// stuff here:
+// - Base chance to dispel is 25, 50, 75 or 100% depending on the spell
+// - Chance is modified positive by the caster level of the spellcaster as well
+// - as the relevant ability score
+// - Chance is modified negative by the highest spellcasting class level of the
+//   AoE creator and the releavant ability score.
+// Its bad, but its not worse than just dispelling the AoE as the game did until
+// now
+//------------------------------------------------------------------------------
+void spellsDispelAoE(object oTargetAoE, object oCaster, int nCasterLevel)
+{
+    object oCreator = GetAreaOfEffectCreator(oTargetAoE);
+    int nChance;
+    int nId   = PRCGetSpellId();
+    if ( nId == SPELL_LESSER_DISPEL )
+    {
+        nChance = 25;
+    }
+    else if ( nId == SPELL_DISPEL_MAGIC)
+    {
+        nChance = 50;
+    }
+    else if ( nId == SPELL_GREATER_DISPELLING )
+    {
+        nChance = 75;
+    }
+    else if ( nId == SPELL_MORDENKAINENS_DISJUNCTION )
+    {
+        nChance = 100;
+    }
+
+
+    nChance += ((nCasterLevel + PRCGetCasterAbilityModifier(oCaster)) - (10  + PRCGetCasterAbilityModifier(oCreator))*2) ;
+
+    //--------------------------------------------------------------------------
+    // the AI does cheat here, because it can not react as well as a player to
+    // AoE effects. Also DMs are always successful
+    //--------------------------------------------------------------------------
+    if (!GetIsPC(oCaster))
+    {
+        nChance +=30;
+    }
+
+    if (oCaster == oCreator)
+    {
+        nChance = 100;
+    }
+
+    int nRand = Random(100);
+
+    if ((nRand < nChance )|| GetIsDM(oCaster) || GetIsDMPossessed(oCaster))
+    {
+        FloatingTextStrRefOnCreature(100929,oCaster);  // "AoE dispelled"
+        DestroyObject (oTargetAoE);
+    }
+    else
+    {
+        FloatingTextStrRefOnCreature(100930,oCaster); // "AoE not dispelled"
+    }
+
+}
+
+//::///////////////////////////////////////////////
+//:: PRCGetCasterAbilityModifier
+//:: Copyright (c) 2001 Bioware Corp.
+//:://////////////////////////////////////////////
+/*
+    Returns the modifier from the ability
+    score that matters for this caster
+*/
+//:://////////////////////////////////////////////
+//:: Created By:
+//:: Created On:
+//:://////////////////////////////////////////////
+int PRCGetCasterAbilityModifier(object oCaster)
+{
+    int nClass = GetLevelByClass(CLASS_TYPE_WIZARD, oCaster);
+    int nAbility;
+    if (nClass > 0)
+    {
+        nAbility = ABILITY_INTELLIGENCE;
+    }
+    else
+        nAbility = ABILITY_CHARISMA;
+
+    return GetAbilityModifier(nAbility, oCaster);
+}
 
 // Test main
 //void main(){}

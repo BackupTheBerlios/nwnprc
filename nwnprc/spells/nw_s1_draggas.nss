@@ -88,7 +88,7 @@ void main()
     GasBreath = CreateBreath(OBJECT_SELF, FALSE, 40.0, DAMAGE_TYPE_ACID, 6, nDamageDice, ABILITY_CONSTITUTION, nDCBoost, BREATH_TOPAZ);
     
     //Apply the breath
-    PlayDragonBattleCry();
+    PRCPlayDragonBattleCry();
     ApplyBreath(GasBreath, GetSpellTargetLocation());
     
     //Apply the recharge lock

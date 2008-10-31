@@ -21,7 +21,7 @@
 //#include "prc_feat_const"
 //#include "prc_ipfeat_const"
 //#include "inc_utility"
-//#include "nw_i0_spells"
+//
 //#include "pnp_shft_poly"
 //#include "x2_inc_spellhook"
 //#include "prc_inc_combat"
@@ -153,7 +153,7 @@ void CreateBottleOnObject(object oPC, string sTag)
 void RemoveDrunkenRageEffects(object oTarget = OBJECT_SELF)
 {
 
-    RemoveSpellEffects(2271, oTarget, oTarget);
+    PRCRemoveSpellEffects(2271, oTarget, oTarget);
 
     SetLocalInt(oTarget, "DRUNKEN_MASTER_IS_IN_DRUNKEN_RAGE", 0);
 }

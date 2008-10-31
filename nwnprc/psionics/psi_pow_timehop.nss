@@ -181,7 +181,7 @@ void WisCheck(object oManifester, object oTarget, int nSpellID, int nBeatsRemain
         if(DEBUG) DoDebug("psi_pow_timehop: Power expired or Wis check succeeded, clearing");
 
         // Remove the effects
-        RemoveSpellEffects(nSpellID, oManifester, oTarget);
+        PRCRemoveSpellEffects(nSpellID, oManifester, oTarget);
     }
     else
        DelayCommand(6.0f, WisCheck(oManifester, oTarget, nSpellID, nBeatsRemaining));

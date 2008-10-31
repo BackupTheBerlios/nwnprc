@@ -205,7 +205,7 @@ void LosePsionicFocus(object oLoser = OBJECT_SELF)
         SetLocalInt(oLoser, PSIONIC_FOCUS, FALSE);
 
         // Loss of Speed of Thought effects
-        RemoveSpellEffects(SPELL_FEAT_SPEED_OF_THOUGHT_BONUS, oLoser, oLoser);
+        PRCRemoveSpellEffects(SPELL_FEAT_SPEED_OF_THOUGHT_BONUS, oLoser, oLoser);
         RemoveEventScript(oLoser, EVENT_ONPLAYEREQUIPITEM, "psi_spdfthgt_oeq", TRUE);
         RemoveEventScript(oLoser, EVENT_ONPLAYERUNEQUIPITEM, "psi_spdfthgt_ueq", TRUE);
         // Loss of Psionic Dodge effects

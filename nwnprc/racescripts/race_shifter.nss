@@ -10,8 +10,8 @@
 //:: Created On: Feb 19, 2008
 //:://////////////////////////////////////////////
 
-
-#include "prc_alterations"
+#include "prc_inc_function"
+#include "prc_inc_natweap"
 
 void ApplyPrimaryTrait(object oPC, int nAbility, int nDuration)
 {

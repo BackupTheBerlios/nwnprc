@@ -74,7 +74,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
     eLink = EffectLinkEffects(eStone, eVis);
     eLink = EffectLinkEffects(eLink, eDur);
 
-    RemoveEffectsFromSpell(oTarget, SPELL_STONESKIN);
+    PRCRemoveEffectsFromSpell(oTarget, SPELL_STONESKIN);
 
     //Apply the linked effects.
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);

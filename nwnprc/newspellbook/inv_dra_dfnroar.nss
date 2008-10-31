@@ -1,5 +1,5 @@
 #include "prc_inc_spells"
-#include "X0_I0_SPELLS"
+
 #include "inv_inc_invfunc"
 #include "inv_invokehook"
 

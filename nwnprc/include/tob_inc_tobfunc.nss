@@ -436,7 +436,7 @@ void _RecursiveStanceCheck(object oPC, object oTestWP, int nMoveId, float fFeet 
         // Stances that clean up
         if (nMoveId == MOVE_SD_STONEFOOT_STANCE) 
         {
-                RemoveEffectsFromSpell(oPC, nMoveId);
+                PRCRemoveEffectsFromSpell(oPC, nMoveId);
                 if(DEBUG) DoDebug("_RecursiveStanceCheck: Moved too far, cancelling stances.");
                 // Clean up the test WP as well
                 DestroyObject(oTestWP);
@@ -444,7 +444,7 @@ void _RecursiveStanceCheck(object oPC, object oTestWP, int nMoveId, float fFeet 
         // Stances that clean up
         else if (nMoveId == MOVE_MOUNTAIN_FORTRESS) 
         {
-                RemoveEffectsFromSpell(oPC, nMoveId);
+                PRCRemoveEffectsFromSpell(oPC, nMoveId);
                 if(DEBUG) DoDebug("_RecursiveStanceCheck: Moved too far, cancelling stances.");
                 // Clean up the test WP as well
                 DestroyObject(oTestWP);
@@ -452,7 +452,7 @@ void _RecursiveStanceCheck(object oPC, object oTestWP, int nMoveId, float fFeet 
         // Stances that clean up
         else if (nMoveId == MOVE_SD_ROOT_MOUNTAIN) 
         {
-                RemoveEffectsFromSpell(oPC, nMoveId);
+                PRCRemoveEffectsFromSpell(oPC, nMoveId);
                 if(DEBUG) DoDebug("_RecursiveStanceCheck: Moved too far, cancelling stances.");
                 // Clean up the test WP as well
                 DestroyObject(oTestWP);
@@ -480,7 +480,7 @@ void _RecursiveStanceCheck(object oPC, object oTestWP, int nMoveId, float fFeet 
         {
                 DeleteLocalInt(oPC, "DWGiantsStance");
                 DeleteLocalInt(oPC, "PRC_Power_Expansion_SizeIncrease");
-                RemoveEffectsFromSpell(oPC, nMoveId);
+                PRCRemoveEffectsFromSpell(oPC, nMoveId);
                 DestroyObject(oTestWP);        
         }
         
@@ -816,112 +816,112 @@ void ClearStances(object oInitiator, int nDontClearMove)
         // Clears spell effects, will not clear DontClearMove
         // This is used to allow Warblades to have two stances.
 	if (GetHasSpellEffect(MOVE_DW_FLAMES_BLESSING, oInitiator) && nDontClearMove != MOVE_DW_FLAMES_BLESSING)
-           RemoveEffectsFromSpell(oInitiator, MOVE_DW_FLAMES_BLESSING);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DW_FLAMES_BLESSING);	
 	if (GetHasSpellEffect(MOVE_DS_IRON_GUARDS_GLARE, oInitiator) && nDontClearMove != MOVE_DS_IRON_GUARDS_GLARE)
-           RemoveEffectsFromSpell(oInitiator, MOVE_DS_IRON_GUARDS_GLARE);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DS_IRON_GUARDS_GLARE);	
 	if (GetHasSpellEffect(MOVE_DS_MARTIAL_SPIRIT, oInitiator) && nDontClearMove != MOVE_DS_MARTIAL_SPIRIT)
-           RemoveEffectsFromSpell(oInitiator, MOVE_DS_MARTIAL_SPIRIT);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DS_MARTIAL_SPIRIT);	
 	if (GetHasSpellEffect(MOVE_DM_STANCE_OF_CLARITY, oInitiator) && nDontClearMove != MOVE_DM_STANCE_OF_CLARITY)
-           RemoveEffectsFromSpell(oInitiator, MOVE_DM_STANCE_OF_CLARITY);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DM_STANCE_OF_CLARITY);	
 	if (GetHasSpellEffect(MOVE_IH_PUNISHING_STANCE, oInitiator) && nDontClearMove != MOVE_IH_PUNISHING_STANCE)
-           RemoveEffectsFromSpell(oInitiator, MOVE_IH_PUNISHING_STANCE);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_IH_PUNISHING_STANCE);	
 	if (GetHasSpellEffect(MOVE_SS_STEP_WIND, oInitiator) && nDontClearMove != MOVE_SS_STEP_WIND)
-           RemoveEffectsFromSpell(oInitiator, MOVE_SS_STEP_WIND);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SS_STEP_WIND);	
 	if (GetHasSpellEffect(MOVE_SH_CHILD_SHADOW, oInitiator) && nDontClearMove != MOVE_SH_CHILD_SHADOW)
-           RemoveEffectsFromSpell(oInitiator, MOVE_SH_CHILD_SHADOW);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SH_CHILD_SHADOW);	
 	if (GetHasSpellEffect(MOVE_SH_ISLAND_BLADES, oInitiator) && nDontClearMove != MOVE_SH_ISLAND_BLADES)
-           RemoveEffectsFromSpell(oInitiator, MOVE_SH_ISLAND_BLADES);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SH_ISLAND_BLADES);	
 	if (GetHasSpellEffect(MOVE_SD_STONEFOOT_STANCE, oInitiator) && nDontClearMove != MOVE_SD_STONEFOOT_STANCE)
-           RemoveEffectsFromSpell(oInitiator, MOVE_SD_STONEFOOT_STANCE);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SD_STONEFOOT_STANCE);	
 	if (GetHasSpellEffect(MOVE_TC_BLOOD_WATER, oInitiator) && nDontClearMove != MOVE_TC_BLOOD_WATER)
-           RemoveEffectsFromSpell(oInitiator, MOVE_TC_BLOOD_WATER);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_TC_BLOOD_WATER);	
            
            if(DEBUG) DoDebug("tob_inc_tobfunc: ClearStances Part #1");
            
 	if (GetHasSpellEffect(MOVE_TC_HUNTERS_SENSE, oInitiator) && nDontClearMove != MOVE_TC_HUNTERS_SENSE)
-           RemoveEffectsFromSpell(oInitiator, MOVE_TC_HUNTERS_SENSE);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_TC_HUNTERS_SENSE);	
 	if (GetHasSpellEffect(MOVE_WR_BOLSTERING_VOICE, oInitiator) && nDontClearMove != MOVE_WR_BOLSTERING_VOICE)
-           RemoveEffectsFromSpell(oInitiator, MOVE_WR_BOLSTERING_VOICE);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_WR_BOLSTERING_VOICE);	
 	if (GetHasSpellEffect(MOVE_WR_LEADING_CHARGE, oInitiator) && nDontClearMove != MOVE_WR_LEADING_CHARGE)
-           RemoveEffectsFromSpell(oInitiator, MOVE_WR_LEADING_CHARGE);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_WR_LEADING_CHARGE);	
 	if (GetHasSpellEffect(MOVE_DW_HOLOCAUST_CLOAK, oInitiator) && nDontClearMove != MOVE_DW_HOLOCAUST_CLOAK)
-           RemoveEffectsFromSpell(oInitiator, MOVE_DW_HOLOCAUST_CLOAK);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DW_HOLOCAUST_CLOAK);	
         if (GetHasSpellEffect(MOVE_DS_THICKET_BLADES, oInitiator) && nDontClearMove != MOVE_DS_THICKET_BLADES)
-           RemoveEffectsFromSpell(oInitiator, MOVE_DS_THICKET_BLADES);        
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DS_THICKET_BLADES);        
 	if (GetHasSpellEffect(MOVE_DM_PEARL_BLACK_DOUBT, oInitiator) && nDontClearMove != MOVE_DM_PEARL_BLACK_DOUBT)
-           RemoveEffectsFromSpell(oInitiator, MOVE_DM_PEARL_BLACK_DOUBT);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DM_PEARL_BLACK_DOUBT);	
 	if (GetHasSpellEffect(MOVE_IH_ABSOLUTE_STEEL, oInitiator) && nDontClearMove != MOVE_IH_ABSOLUTE_STEEL)
-           RemoveEffectsFromSpell(oInitiator, MOVE_IH_ABSOLUTE_STEEL);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_IH_ABSOLUTE_STEEL);	
 	if (GetHasSpellEffect(MOVE_SS_GIANT_KILLING_STYLE, oInitiator) && nDontClearMove != MOVE_SS_GIANT_KILLING_STYLE)
-           RemoveEffectsFromSpell(oInitiator, MOVE_SS_GIANT_KILLING_STYLE);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SS_GIANT_KILLING_STYLE);	
 	if (GetHasSpellEffect(MOVE_SH_ASSASSINS_STANCE, oInitiator) && nDontClearMove != MOVE_SH_ASSASSINS_STANCE)
-           RemoveEffectsFromSpell(oInitiator, MOVE_SH_ASSASSINS_STANCE);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SH_ASSASSINS_STANCE);	
 	if (GetHasSpellEffect(MOVE_SH_DANCE_SPIDER, oInitiator) && nDontClearMove != MOVE_SH_DANCE_SPIDER)
-           RemoveEffectsFromSpell(oInitiator, MOVE_SH_DANCE_SPIDER);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SH_DANCE_SPIDER);	
 	if (GetHasSpellEffect(MOVE_SD_CRUSHING_WEIGHT, oInitiator) && nDontClearMove != MOVE_SD_CRUSHING_WEIGHT)
-           RemoveEffectsFromSpell(oInitiator, MOVE_SD_CRUSHING_WEIGHT);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SD_CRUSHING_WEIGHT);	
            
            if(DEBUG) DoDebug("tob_inc_tobfunc: ClearStances Part #2");
        	
 	if (GetHasSpellEffect(MOVE_SD_ROOT_MOUNTAIN, oInitiator) && nDontClearMove != MOVE_SD_ROOT_MOUNTAIN)
-           RemoveEffectsFromSpell(oInitiator, MOVE_SD_ROOT_MOUNTAIN);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SD_ROOT_MOUNTAIN);	
 	if (GetHasSpellEffect(MOVE_TC_LEAPING_DRAGON, oInitiator) && nDontClearMove != MOVE_TC_LEAPING_DRAGON)
-           RemoveEffectsFromSpell(oInitiator, MOVE_TC_LEAPING_DRAGON);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_TC_LEAPING_DRAGON);	
 	if (GetHasSpellEffect(MOVE_TC_WOLVERINE_STANCE, oInitiator) && nDontClearMove != MOVE_TC_WOLVERINE_STANCE)
-           RemoveEffectsFromSpell(oInitiator, MOVE_TC_WOLVERINE_STANCE);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_TC_WOLVERINE_STANCE);	
 	if (GetHasSpellEffect(MOVE_WR_TACTICS_WOLF, oInitiator) && nDontClearMove != MOVE_WR_TACTICS_WOLF)
-           RemoveEffectsFromSpell(oInitiator, MOVE_WR_TACTICS_WOLF);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_WR_TACTICS_WOLF);	
 	if (GetHasSpellEffect(MOVE_DM_HEARING_AIR, oInitiator) && nDontClearMove != MOVE_DM_HEARING_AIR)
-           RemoveEffectsFromSpell(oInitiator, MOVE_DM_HEARING_AIR);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DM_HEARING_AIR);	
 	if (GetHasSpellEffect(MOVE_IH_DANCING_BLADE_FORM, oInitiator) && nDontClearMove != MOVE_IH_DANCING_BLADE_FORM)
-           RemoveEffectsFromSpell(oInitiator, MOVE_IH_DANCING_BLADE_FORM);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_IH_DANCING_BLADE_FORM);	
 	if (GetHasSpellEffect(MOVE_SS_SHIFTING_DEFENSE, oInitiator) && nDontClearMove != MOVE_SS_SHIFTING_DEFENSE)
-           RemoveEffectsFromSpell(oInitiator, MOVE_SS_SHIFTING_DEFENSE);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SS_SHIFTING_DEFENSE);	
         if (GetHasSpellEffect(MOVE_SH_STEP_DANCING_MOTH, oInitiator) && nDontClearMove != MOVE_SH_STEP_DANCING_MOTH)
-           RemoveEffectsFromSpell(oInitiator, MOVE_SH_STEP_DANCING_MOTH);        
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SH_STEP_DANCING_MOTH);        
 	if (GetHasSpellEffect(MOVE_SD_GIANTS_STANCE, oInitiator) && nDontClearMove != MOVE_SD_GIANTS_STANCE)
-           RemoveEffectsFromSpell(oInitiator, MOVE_SD_GIANTS_STANCE);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SD_GIANTS_STANCE);	
 	if (GetHasSpellEffect(MOVE_WR_PRESS_ADVANTAGE, oInitiator) && nDontClearMove != MOVE_WR_PRESS_ADVANTAGE)
-           RemoveEffectsFromSpell(oInitiator, MOVE_WR_PRESS_ADVANTAGE);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_WR_PRESS_ADVANTAGE);	
 	if (GetHasSpellEffect(MOVE_DW_FIERY_ASSAULT, oInitiator) && nDontClearMove != MOVE_DW_FIERY_ASSAULT)
-           RemoveEffectsFromSpell(oInitiator, MOVE_DW_FIERY_ASSAULT);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DW_FIERY_ASSAULT);	
 	if (GetHasSpellEffect(MOVE_DS_AURA_CHAOS, oInitiator) && nDontClearMove != MOVE_DS_AURA_CHAOS)
     	{
-           RemoveEffectsFromSpell(oInitiator, MOVE_DS_AURA_CHAOS);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DS_AURA_CHAOS);	
            DeleteLocalInt(oInitiator, "DSChaos");
     	}
 	if (GetHasSpellEffect(MOVE_DS_PERFECT_ORDER, oInitiator) && nDontClearMove != MOVE_DS_PERFECT_ORDER)
 	{
-           RemoveEffectsFromSpell(oInitiator, MOVE_DS_PERFECT_ORDER);
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DS_PERFECT_ORDER);
            DeleteLocalInt(oInitiator, "DSPerfectOrder");	
     	}
     	
     	if(DEBUG) DoDebug("tob_inc_tobfunc: ClearStances Part #3");
     	
 	if (GetHasSpellEffect(MOVE_DS_AURA_TRIUMPH, oInitiator) && nDontClearMove != MOVE_DS_AURA_TRIUMPH)
-           RemoveEffectsFromSpell(oInitiator, MOVE_DS_AURA_TRIUMPH);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DS_AURA_TRIUMPH);	
 	if (GetHasSpellEffect(MOVE_DS_AURA_TYRANNY, oInitiator) && nDontClearMove != MOVE_DS_AURA_TYRANNY)
-           RemoveEffectsFromSpell(oInitiator, MOVE_DS_AURA_TYRANNY);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DS_AURA_TYRANNY);	
 	if (GetHasSpellEffect(MOVE_TC_PREY_ON_THE_WEAK, oInitiator) && nDontClearMove != MOVE_TC_PREY_ON_THE_WEAK)
-           RemoveEffectsFromSpell(oInitiator, MOVE_TC_PREY_ON_THE_WEAK);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_TC_PREY_ON_THE_WEAK);	
 	if (GetHasSpellEffect(MOVE_DW_RISING_PHOENIX, oInitiator) && nDontClearMove != MOVE_DW_RISING_PHOENIX)
-           RemoveEffectsFromSpell(oInitiator, MOVE_DW_RISING_PHOENIX);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DW_RISING_PHOENIX);	
 	if (GetHasSpellEffect(MOVE_DS_IMMORTAL_FORTITUDE, oInitiator) && nDontClearMove != MOVE_DS_IMMORTAL_FORTITUDE)
-           RemoveEffectsFromSpell(oInitiator, MOVE_DS_IMMORTAL_FORTITUDE);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DS_IMMORTAL_FORTITUDE);	
 	if (GetHasSpellEffect(MOVE_DM_STANCE_ALACRITY, oInitiator) && nDontClearMove != MOVE_DM_STANCE_ALACRITY)
-           RemoveEffectsFromSpell(oInitiator, MOVE_DM_STANCE_ALACRITY);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DM_STANCE_ALACRITY);	
 	if (GetHasSpellEffect(MOVE_IH_SUPREME_BLADE_PARRY, oInitiator) && nDontClearMove != MOVE_IH_SUPREME_BLADE_PARRY)
-           RemoveEffectsFromSpell(oInitiator, MOVE_IH_SUPREME_BLADE_PARRY);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_IH_SUPREME_BLADE_PARRY);	
 	if (GetHasSpellEffect(MOVE_SS_GHOSTLY_DEFENSE, oInitiator) && nDontClearMove != MOVE_SS_GHOSTLY_DEFENSE)
-           RemoveEffectsFromSpell(oInitiator, MOVE_SS_GHOSTLY_DEFENSE);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SS_GHOSTLY_DEFENSE);	
         if (GetHasSpellEffect(MOVE_SH_BALANCE_SKY, oInitiator) && nDontClearMove != MOVE_SH_BALANCE_SKY)  
-           RemoveEffectsFromSpell(oInitiator, MOVE_SH_BALANCE_SKY);        
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SH_BALANCE_SKY);        
 	if (GetHasSpellEffect(MOVE_SD_STRENGTH_STONE, oInitiator) && nDontClearMove != MOVE_SD_STRENGTH_STONE)
-           RemoveEffectsFromSpell(oInitiator, MOVE_SD_STRENGTH_STONE);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SD_STRENGTH_STONE);	
 	if (GetHasSpellEffect(MOVE_TC_WOLF_PACK_TACTICS, oInitiator) && nDontClearMove != MOVE_TC_WOLF_PACK_TACTICS)
-           RemoveEffectsFromSpell(oInitiator, MOVE_TC_WOLF_PACK_TACTICS);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_TC_WOLF_PACK_TACTICS);	
 	if (GetHasSpellEffect(MOVE_WR_SWARM_TACTICS, oInitiator) && nDontClearMove != MOVE_WR_SWARM_TACTICS)  
-                RemoveEffectsFromSpell(oInitiator, MOVE_WR_SWARM_TACTICS);
+                PRCRemoveEffectsFromSpell(oInitiator, MOVE_WR_SWARM_TACTICS);
                 
         if(DEBUG) DoDebug("tob_inc_tobfunc: ClearStances Part #4");
 }

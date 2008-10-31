@@ -354,7 +354,7 @@ void Pwatk(object oPC)
 
         if(iSpell)
         {
-            RemoveSpellEffects(iSpell,oPC,oPC);
+            PRCRemoveSpellEffects(iSpell,oPC,oPC);
 
             string nMes = "*Power Shot Mode Deactivated*";
             FloatingTextStringOnCreature(nMes, oPC, FALSE);

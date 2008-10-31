@@ -14,7 +14,7 @@ void main()
 
     if(GetHasSpellEffect(SPELL_HEROISM, oTarget))
     {
-            RemoveSpellEffects(SPELL_HEROISM,OBJECT_SELF,OBJECT_SELF);
+            PRCRemoveSpellEffects(SPELL_HEROISM,OBJECT_SELF,OBJECT_SELF);
     }
     
     // Determine the spell's duration, taking metamagic feats into account.

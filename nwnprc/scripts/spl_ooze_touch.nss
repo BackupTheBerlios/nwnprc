@@ -1,5 +1,5 @@
-#include "prc_alterations"
-#include "x2_inc_spellhook"
+#include "prc_inc_sp_tch"
+#include "x2_inc_craft"
 
 /* Fungus touch */
 void ooze_touch_fungus()

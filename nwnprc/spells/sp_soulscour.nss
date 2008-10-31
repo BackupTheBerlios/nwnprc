@@ -11,6 +11,7 @@
 */
 
 #include "prc_sp_func"
+#include "prc_inc_sp_tch"
 
 //
 // Does the secondary charisma drain that happens 1 minute after initial effect.

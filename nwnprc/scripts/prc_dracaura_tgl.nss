@@ -56,12 +56,12 @@ void main()
      else     
      {
         // Removes effects
-        RemoveSpellEffects(nCurrentAura, oPC, oPC);
+        PRCRemoveSpellEffects(nCurrentAura, oPC, oPC);
         sMes = "*Draconic Aura Deactivated*";
         DeleteLocalInt(oPC,"DraconicAura");
         DeleteLocalInt(oPC,"DraconicAura1");
         //clear the old aura a second time to ensure it clears
-        RemoveSpellEffects(nCurrentAura, oPC, oPC);
+        PRCRemoveSpellEffects(nCurrentAura, oPC, oPC);
      }
 
      FloatingTextStringOnCreature(sMes, oPC, FALSE);

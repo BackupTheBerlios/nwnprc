@@ -34,11 +34,11 @@ void main()
         
         while (GetIsObjectValid(oCre))
         {
-            RemoveSpellEffects(GetSpellId(), OBJECT_SELF, oCre);
+            PRCRemoveSpellEffects(GetSpellId(), OBJECT_SELF, oCre);
             oCre = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetLocation(OBJECT_SELF), FALSE);
         }
 
-        RemoveEffectsFromSpell(OBJECT_SELF, GetSpellId());
+        PRCRemoveEffectsFromSpell(OBJECT_SELF, GetSpellId());
         
         FloatingTextStringOnCreature("*Blood of the Warlord Deactivated*", OBJECT_SELF, FALSE);
     }

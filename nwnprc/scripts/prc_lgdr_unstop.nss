@@ -27,8 +27,7 @@ void main()
 
 }
 */
-#include "prc_alterations"
-#include "NW_I0_GENERIC"
+#include "prc_inc_combat"
 void main()
 {
     object oPC = OBJECT_SELF;

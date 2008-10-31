@@ -14,7 +14,7 @@
 //:: Updated by Strat   12/11/2006 to make it work.
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "prc_inc_combat"
 
 void main()
 {

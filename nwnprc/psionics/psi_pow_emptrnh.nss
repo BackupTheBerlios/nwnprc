@@ -43,6 +43,7 @@
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
 #include "prc_sp_func"
+#include "prc_inc_sp_tch"
 
 void AvoidDR(object oTarget, int nDamage)
 {

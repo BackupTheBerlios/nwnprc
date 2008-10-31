@@ -14,7 +14,7 @@ void RemoveGreaterWeaponFocus(object oPC, object oWeap)
 {
     if (DEBUG) FloatingTextStringOnCreature("Remove GreaterWeaponFocus is run", oPC);
 
-    RemoveEffectsFromSpell(oPC, SPELL_OOTBI_GREATER_WEAPON_FOCUS);
+    PRCRemoveEffectsFromSpell(oPC, SPELL_OOTBI_GREATER_WEAPON_FOCUS);
     DeleteLocalInt(oWeap, "GreaterWeaponFocus");
 }
 

@@ -33,8 +33,7 @@ touch or ranged attack is used
 <END NOTES TO SCRIPTER>
 */
 
-#include "prc_alterations"
-#include "prc_inc_spells"
+#include "prc_inc_sp_tch"
 #include "prc_sp_func"
 
 //Implements the spell impact, put code here

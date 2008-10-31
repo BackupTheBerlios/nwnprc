@@ -1,5 +1,4 @@
-#include "prc_alterations"
-#include "x2_inc_spellhook"
+#include "prc_inc_sp_tch"
 
 int ooze_ranged_damage(effect eDamage, int splash_type)
 {

@@ -38,7 +38,7 @@ void main()
 
     effect eLink = EffectLinkEffects(eShield, eDur);
            eLink = EffectLinkEffects(eLink, eVis);
-    RemoveSpellEffects(GetSpellId(), oTarget, oTarget);
+    PRCRemoveSpellEffects(GetSpellId(), oTarget, oTarget);
 
     //Apply the armor bonuses and the VFX impact
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, nDuration * 60.0, TRUE, -1, CasterLvl);

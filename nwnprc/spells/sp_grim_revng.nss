@@ -171,7 +171,8 @@ void main()
                 IPSafeAddItemProperty(GetPCSkin(oHand), iUndead);
 
                 //Make hand hostile to target
-                AssignCommand(oHand, SetIsEnemy(oTarget));
+                AssignCommand(oHand, AdjustReputation(oTarget, oHand,-100));
+                AssignCommand(oHand, ActionAttack(oTarget));
             }
         }
     }

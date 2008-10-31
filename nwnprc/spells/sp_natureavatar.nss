@@ -30,7 +30,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 
         int HP = PRCGetMetaMagicDamage(-1, nCasterLevel, 8);
         float fDuration = PRCGetMetaMagicDuration(TurnsToSeconds(nCasterLevel));
-        RemoveEffectsFromSpell(oTarget, PRCGetSpellId());
+        PRCRemoveEffectsFromSpell(oTarget, PRCGetSpellId());
         // Apply effects and VFX to target
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectTemporaryHitpoints(HP), oTarget, fDuration,TRUE,-1,nCasterLevel);
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eff, oTarget, fDuration,TRUE,-1,nCasterLevel);

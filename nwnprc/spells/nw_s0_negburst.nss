@@ -19,8 +19,7 @@
 //::Aaon Graywolf - Jan 7, 2004
 
 #include "prc_inc_spells"
-
-
+#include "prc_inc_function"
 
 void main()
 {

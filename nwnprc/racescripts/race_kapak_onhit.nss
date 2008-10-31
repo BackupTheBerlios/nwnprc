@@ -25,6 +25,7 @@
 // Converted to control Kapak poison Feb 10, 2008 by Fox
 
 #include "prc_alterations"
+#include "prc_inc_onhit"
 
 
 void main()

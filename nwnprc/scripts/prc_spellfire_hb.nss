@@ -99,7 +99,7 @@ void main()
         if(nStored < 10)
         {
             DeleteLocalInt(oPC, "SpellfireCrown");
-            RemoveEffectsFromSpell(oPC, SPELL_SPELLFIRE_CROWN);
+            PRCRemoveEffectsFromSpell(oPC, SPELL_SPELLFIRE_CROWN);
             FloatingTextStringOnCreature("*Crown of Fire Failed*", oPC);
         }
         else

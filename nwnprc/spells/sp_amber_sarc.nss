@@ -47,7 +47,7 @@ void SarcMonitor(object oTarget, object oPC, int nNormHP);
 void RemoveSarc(object oTarget, object oPC);
 void MakeImmune(object oTarget, float fDur);
 
-#include "prc_inc_spells"
+#include "prc_inc_sp_tch"
 #include "x2_inc_spellhook"
 
 void main()

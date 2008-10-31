@@ -26,7 +26,7 @@ Created:   5/14/06
 //:://////////////////////////////////////////////
 
 
-#include "prc_inc_spells"
+#include "prc_inc_sp_tch"
 
 void main()
 {

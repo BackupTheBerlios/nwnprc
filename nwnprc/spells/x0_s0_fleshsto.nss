@@ -14,7 +14,7 @@
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
 #include "prc_alterations"
 
-#include "X0_I0_SPELLS"
+
 #include "x2_inc_spellhook"
 
 void main()
@@ -44,7 +44,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
 
     if (PRCDoResistSpell(OBJECT_SELF,oTarget,nCasterLvl+SPGetPenetr()) <1)
     {
-       DoPetrification(nCasterLvl, OBJECT_SELF, oTarget, GetSpellId(), (PRCGetSaveDC(oTarget,OBJECT_SELF)));
+       PRCDoPetrification(nCasterLvl, OBJECT_SELF, oTarget, GetSpellId(), (PRCGetSaveDC(oTarget,OBJECT_SELF)));
      }
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

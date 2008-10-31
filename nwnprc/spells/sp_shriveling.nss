@@ -27,7 +27,6 @@ Created:   05/04/06
 
 int GetHasSoulRot(object oPC);
 
-#include "prc_alterations"
 #include "prc_inc_spells"
 
 void main()

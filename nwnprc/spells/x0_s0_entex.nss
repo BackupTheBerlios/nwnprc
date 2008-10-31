@@ -23,7 +23,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
     object oTarget = GetEnteringObject();
     if(!GetIsReactionTypeFriendly(oTarget, GetAreaOfEffectCreator()))
     {
-        RemoveSpellEffects(SPELL_ENTROPIC_SHIELD, GetAreaOfEffectCreator(), oTarget);
+        PRCRemoveSpellEffects(SPELL_ENTROPIC_SHIELD, GetAreaOfEffectCreator(), oTarget);
     }
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

@@ -191,7 +191,7 @@ void SMP_RunCrippleImpact(int nMetaMagic, object oTarget, object oCaster)
         else
         {
             // Remove the spells effects
-            SMP_RemoveSpellEffects(SMP_SPELL_CRIPPLE_UNDEAD, oCaster, oTarget);
+            SMP_PRCRemoveSpellEffects(SMP_SPELL_CRIPPLE_UNDEAD, oCaster, oTarget);
         }
     }
 }

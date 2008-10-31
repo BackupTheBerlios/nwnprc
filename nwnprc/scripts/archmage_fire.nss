@@ -1,6 +1,5 @@
-#include "prc_alterations"
-#include "lookup_2da_spell"
 #include "x2_inc_spellhook"
+#include "prc_inc_sp_tch"
 
 /*
  * This is the spellhook code, called when the Arcane Fire feat is activated

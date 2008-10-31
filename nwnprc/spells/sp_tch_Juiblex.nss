@@ -28,9 +28,7 @@ Created:   2/19/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
-#include "prc_inc_spells"
-
+#include "prc_inc_sp_tch"
 
 void CountdownToSlime(object oTarget, int nCounter)
 {

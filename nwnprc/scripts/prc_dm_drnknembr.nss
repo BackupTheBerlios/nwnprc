@@ -1,6 +1,4 @@
-#include "prc_alterations"
-#include "prc_class_const"
-#include "prc_feat_const"
+#include "prc_inc_combmove"
 
 void main()
 {
@@ -11,8 +9,8 @@ void main()
     AdjustReputation(oTarget, oPC, -100);
 
     //              Base Attack Bonus                    Strength Modifier                Size Modifier   Drunken Embrace Bonus
-    int nPCRoll = GetBaseAttackBonus(oPC) + GetAbilityModifier(ABILITY_STRENGTH, oPC) + GetSizeModifier(oPC) + 4;
-    int nNPCRoll = GetBaseAttackBonus(oTarget) + GetAbilityModifier(ABILITY_STRENGTH, oTarget) + GetSizeModifier(oTarget);
+    int nPCRoll = GetBaseAttackBonus(oPC) + GetAbilityModifier(ABILITY_STRENGTH, oPC) + PRCGetSizeModifier(oPC) + 4;
+    int nNPCRoll = GetBaseAttackBonus(oTarget) + GetAbilityModifier(ABILITY_STRENGTH, oTarget) + PRCGetSizeModifier(oTarget);
 
     if(nPCRoll > nNPCRoll)
     {//oTarget is grappled for next 3 rounds

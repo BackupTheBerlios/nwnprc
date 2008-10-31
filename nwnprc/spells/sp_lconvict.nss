@@ -34,7 +34,7 @@ void main()
 			//Fire cast spell at event for the specified target
 			PRCSignalSpellEvent(oTarget, FALSE);
 
-			float fDelay = GetSpellEffectDelay(lTarget, oTarget);
+			float fDelay = PRCGetSpellEffectDelay(lTarget, oTarget);
 
 			// Apply the buff and vfx.
 			effect eBuff = EffectSavingThrowIncrease(SAVING_THROW_ALL, nBonus, SAVING_THROW_TYPE_ALL);

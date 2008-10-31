@@ -222,7 +222,7 @@ void SMP_ConcentrationAOEHeartbeat(object oSelf, object oCaster, int nSpell)
             while(nCnt <= nMax)
             {
                 // Remove it
-                SMP_RemoveSpellEffects(nSpell, oCaster, oRemoveFrom);
+                SMP_PRCRemoveSpellEffects(nSpell, oCaster, oRemoveFrom);
                 // Delete from array
                 DeleteLocalObject(oCaster, sArray + IntToString(nCnt));
                 // Next one

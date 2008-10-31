@@ -24,8 +24,8 @@ void main()
           int willSave = WillSave(OBJECT_SELF, 20, SAVING_THROW_TYPE_NONE, OBJECT_SELF);
           if(willSave == 1)
           {
-               RemoveSpellEffects(SPELL_FRENZY, OBJECT_SELF, OBJECT_SELF);
-               RemoveSpellEffects(SPELL_SUPREME_POWER_ATTACK, OBJECT_SELF, OBJECT_SELF);
+               PRCRemoveSpellEffects(SPELL_FRENZY, OBJECT_SELF, OBJECT_SELF);
+               PRCRemoveSpellEffects(SPELL_SUPREME_POWER_ATTACK, OBJECT_SELF, OBJECT_SELF);
           }
      }
 }

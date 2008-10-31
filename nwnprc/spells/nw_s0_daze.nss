@@ -60,7 +60,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     int nPenetr = CasterLvl + SPGetPenetr();
 
     //Make sure the target is a humaniod
-    if (AmIAHumanoid(oTarget) == TRUE)
+    if (PRCAmIAHumanoid(oTarget) == TRUE)
     {
         if(GetHitDice(oTarget) <= 5)
         {

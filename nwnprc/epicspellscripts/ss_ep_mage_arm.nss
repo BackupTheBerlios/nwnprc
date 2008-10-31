@@ -42,7 +42,7 @@ void main()
         eAC = EffectACIncrease(20, AC_ARMOUR_ENCHANTMENT_BONUS);
         effect eDur = EffectVisualEffect(VFX_DUR_SANCTUARY);
 
-        RemoveEffectsFromSpell(oTarget, GetSpellId());
+        PRCRemoveEffectsFromSpell(oTarget, GetSpellId());
 
         // * Brent, Nov 24, making extraodinary so cannot be dispelled
         eAC = ExtraordinaryEffect(eAC);

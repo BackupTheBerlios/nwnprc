@@ -3,7 +3,7 @@
 //:: FileName  inv_hideous_blow.nss
 //:://////////////////////////////////////////////
 
-#include "prc_inc_spells"
+#include "prc_inc_sp_tch"
 #include "inv_inc_invfunc"
 #include "prc_inc_combat"
 

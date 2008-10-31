@@ -13,7 +13,7 @@
 //:: Updated On: Oct 20, 2003
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "prc_inc_sp_tch"
 void main()
 {
 

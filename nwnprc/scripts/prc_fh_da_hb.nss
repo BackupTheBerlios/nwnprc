@@ -12,7 +12,7 @@
 //:: Created On: July 12, 2004
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "prc_inc_combat"
 void main()
 {
     object oPC = OBJECT_SELF;

@@ -33,8 +33,8 @@ void main()
      else
      {
           // Removes effects from any version of the spell
-          RemoveSpellEffects(SPELL_ELABORATE_PARRY_P, oPC, oPC);
-          RemoveSpellEffects(SPELL_ELABORATE_PARRY_FD, oPC, oPC);
+          PRCRemoveSpellEffects(SPELL_ELABORATE_PARRY_P, oPC, oPC);
+          PRCRemoveSpellEffects(SPELL_ELABORATE_PARRY_FD, oPC, oPC);
 
           FloatingTextStringOnCreature("*Elaborate Parry Off*", oPC, FALSE);
      }

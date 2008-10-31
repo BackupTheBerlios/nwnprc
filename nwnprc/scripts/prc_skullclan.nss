@@ -11,7 +11,7 @@
 
 // To-Do: Use +20 / -20 Item prop vs undead on weapon
 
-#include "prc_alterations"
+#include "prc_inc_combat"
 
 //modification of GetWeaponAttackBonusProperty - hardcoded to NE Undead
 //Used to make reduction adjust to match weapon, due to +20/-20 cap

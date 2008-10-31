@@ -148,7 +148,7 @@ int GetIsPolyMorphedOrShifted(object oCreature);
 #include "prc_misc_const"
 #include "inc_item_props"
 //#include "inc_utility"
-#include "prc_inc_spells"
+//#include "prc_inc_spells"
 //#include "prcsp_engine"
 #include "x2_inc_switches"
 //#include "prc_feat_const"
@@ -172,7 +172,7 @@ int GetIsPolyMorphedOrShifted(object oCreature);
 #include "NW_I0_GENERIC"
 //#include "prc_inc_combat"
 //#include "inc_lookups"
-#include "x0_I0_spells" //included via x2_i0_spells
+ //included via x2_i0_spells
 //#include "x2_i0_spells"
 //#include "prc_inc_s_det"
 //#include "prc_inc_descrptr"
@@ -740,7 +740,7 @@ void CheckConcentrationOnEffect(object oCaster, int SpellID, object oTarget, int
     {
         FloatingTextStringOnCreature("*Concentration Broken*", oCaster);
         DeleteLocalInt(oCaster, "Conc" + IntToString(SpellID));
-        RemoveSpellEffects(SpellID, oCaster, oTarget);
+        PRCRemoveSpellEffects(SpellID, oCaster, oTarget);
     }
     else if(nDur < nDuration)
     {

@@ -29,7 +29,7 @@ void main()
     	object oTarget       = PRCGetSpellTargetObject();
     	if (GetHasSpellEffect(MOVE_MOUNTAIN_FORTRESS, oInitiator))
     	{
-    		RemoveEffectsFromSpell(oInitiator, MOVE_MOUNTAIN_FORTRESS);
+    		PRCRemoveEffectsFromSpell(oInitiator, MOVE_MOUNTAIN_FORTRESS);
     		object oProneTarget = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(10.0), GetLocation(oInitiator));
     		while(GetIsObjectValid(oProneTarget))
     		{

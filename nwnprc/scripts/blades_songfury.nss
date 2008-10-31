@@ -6,7 +6,7 @@ void main()
 
   if (GetHasFeatEffect(FEAT_SONG_OF_FURY,OBJECT_SELF))
    {
-     RemoveSpellEffects(SPELL_SONG_OF_FURY,oTarget,oTarget);
+     PRCRemoveSpellEffects(SPELL_SONG_OF_FURY,oTarget,oTarget);
      return;
    }
 

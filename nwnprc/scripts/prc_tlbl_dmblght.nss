@@ -16,7 +16,7 @@ void main()
     object oTarget = PRCGetSpellTargetObject();
     object oPC = OBJECT_SELF;
     effect eDom = EffectDominated();
-    eDom = GetScaledEffect(eDom, oTarget);
+    eDom = PRCGetScaledEffect(eDom, oTarget);
     effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DOMINATED);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
     effect eCommand = SupernaturalEffect(EffectCutsceneDominated());

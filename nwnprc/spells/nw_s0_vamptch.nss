@@ -11,7 +11,25 @@
     Cleaned up
 */
 
+//------------------------------------------------------------------------------
+// GZ: gets rids of temporary hit points so that they will not stack
+//------------------------------------------------------------------------------
+void PRCRemoveTempHitPoints()
+{
+    effect eProtection;
+    int nCnt = 0;
+
+    eProtection = GetFirstEffect(OBJECT_SELF);
+    while (GetIsEffectValid(eProtection))
+    {
+      if(GetEffectType(eProtection) == EFFECT_TYPE_TEMPORARY_HITPOINTS)
+        RemoveEffect(OBJECT_SELF, eProtection);
+      eProtection = GetNextEffect(OBJECT_SELF);
+    }
+}
+
 #include "prc_sp_func"
+#include "prc_inc_sp_tch"
 
 //Implements the spell impact, put code here
 //  if called in many places, return TRUE if
@@ -69,7 +87,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
                     ApplyTouchAttackDamage(oCaster, oTarget, iAttackRoll, nDamage, DAMAGE_TYPE_NEGATIVE);
                     PRCBonusDamage(oTarget);
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVisHeal, oCaster);
-                    RemoveTempHitPoints();
+                    PRCRemoveTempHitPoints();
                     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oCaster, HoursToSeconds(nDuration),TRUE,-1,nCasterLevel);
                  }
             }

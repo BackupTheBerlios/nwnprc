@@ -22,7 +22,7 @@ void main()
     else
     {
         // Removes effects
-        RemoveSpellEffects(SPELL_BATTLECAST, oPC, oPC);
+        PRCRemoveSpellEffects(SPELL_BATTLECAST, oPC, oPC);
         DeleteLocalInt(oPC, "HavocMageBattlecast");
         nMes = "*Battlecast Deactivated*";
         RemoveSpecificProperty(oSkin, ITEM_PROPERTY_BONUS_FEAT, IP_CONST_IMP_CC);

@@ -88,7 +88,7 @@ void main()
     ParalBreath = CreateBreath(OBJECT_SELF, FALSE, 40.0, -1, 10, nCount, ABILITY_CONSTITUTION, nDCBoost, BREATH_PARALYZE);
     
     //Apply the breath
-    PlayDragonBattleCry();
+    PRCPlayDragonBattleCry();
     ApplyBreath(ParalBreath, GetSpellTargetLocation());
     
     //Apply the recharge lock

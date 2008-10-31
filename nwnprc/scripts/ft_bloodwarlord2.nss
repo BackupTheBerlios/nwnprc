@@ -9,7 +9,7 @@ void main()
 
     if (GetHasSpellEffect(SPELL_BLOOD_OF_THE_WARLORD, oExit))
     {
-        RemoveSpellEffects(SPELL_BLOOD_OF_THE_WARLORD, oCreator, oExit);
+        PRCRemoveSpellEffects(SPELL_BLOOD_OF_THE_WARLORD, oCreator, oExit);
     }
 }
 

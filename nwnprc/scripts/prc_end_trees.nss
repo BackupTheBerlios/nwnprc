@@ -13,5 +13,5 @@ void main()
         object oTree = GetObjectByTag(sTag);
         DestroyObject(oTree);
         
-        RemoveSpellEffects(SPELL_TREESHAPE, oPC, oPC);
+        PRCRemoveSpellEffects(SPELL_TREESHAPE, oPC, oPC);
 }

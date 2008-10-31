@@ -26,7 +26,7 @@ void main()
     //  Spell does not stack with itself
     if (GetHasSpellEffect(INVOKE_DRACONIC_TOUGHNESS,oTarget))
     {
-         RemoveSpellEffects(INVOKE_DRACONIC_TOUGHNESS, oCaster, oTarget);
+         PRCRemoveSpellEffects(INVOKE_DRACONIC_TOUGHNESS, oCaster, oTarget);
     }
 
     effect eHP = EffectTemporaryHitpoints(nBonus);

@@ -8,13 +8,13 @@
 //::///////////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "x0_i0_spells"
+
 
 void main()
 {
     object oTarget = GetSpellTargetObject();
     int nHitDice = GetHitDice(oTarget);
     
-    DoPetrification(nHitDice, OBJECT_SELF, oTarget, GetSpellId(), 15);
+    PRCDoPetrification(nHitDice, OBJECT_SELF, oTarget, GetSpellId(), 15);
 }
 

@@ -10,7 +10,7 @@
 //:: Modified On: 7.4.2006
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "prc_inc_combat"
 
 void main()
 {

@@ -11,9 +11,7 @@
 //:: Created On: Feb 2, 2008
 //:://////////////////////////////////////////////
 
-//#include "prc_inc_combat"
-#include "prc_alterations"
-
+#include "prc_inc_combat"
 
 /**
  * All of the following functions use the following parameters:

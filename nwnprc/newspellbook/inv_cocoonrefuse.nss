@@ -10,7 +10,7 @@ void DoRefuseEscapeCheck(object oTarget, int nDurationRemaining, object oCaster)
     int nStrChk = d20() + GetAbilityModifier(ABILITY_STRENGTH, oTarget);
     if(nStrChk > 20)
     {
-        RemoveSpellEffects(INVOKE_COCOON_OF_REFUSE, oCaster, oTarget);
+        PRCRemoveSpellEffects(INVOKE_COCOON_OF_REFUSE, oCaster, oTarget);
         FloatingTextStringOnCreature("*Strength check successful!*", oTarget, FALSE);
     }
     else if(nDurationRemaining > 0)

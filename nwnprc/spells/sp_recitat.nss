@@ -59,7 +59,7 @@ void main()
 				PRCSignalSpellEvent(oTarget, nHostile);
 			
 				// Check for SR vs. hostile targets before applying effects.
-				fDelay = GetSpellEffectDelay(lTarget, oTarget);
+				fDelay = PRCGetSpellEffectDelay(lTarget, oTarget);
 				if (nFriendly || !PRCDoResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay))
 					DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eTarget, oTarget, fDuration,TRUE,-1,nCasterLvl));
 			}

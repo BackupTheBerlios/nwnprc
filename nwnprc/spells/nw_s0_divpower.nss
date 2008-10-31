@@ -28,7 +28,7 @@ still problem:
 //:: modified by mr_bumpkin Dec 4, 2003
 //:: modified by motu99 April 7, 2007
 
-#include "prc_inc_spells"
+#include "prc_inc_combat"
 
 
 
@@ -145,7 +145,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         eLink = EffectLinkEffects(eLink,EffectAbilityIncrease(ABILITY_STRENGTH, iStrengthBonus));
  
 	// remove any effects from any previous Divine Power Spell
-	RemoveEffectsFromSpell(oTarget, GetSpellId());
+	PRCRemoveEffectsFromSpell(oTarget, GetSpellId());
     RemoveTempHitPointsFromObject(oTarget);
 
     //Fire cast spell at event for the specified target

@@ -17,7 +17,7 @@ void main ()
     ePen = EffectLinkEffects(ePen, EffectAttackIncrease(iFin)); // weapon finesse bonus
     ePen = SupernaturalEffect(ePen);
 
-    RemoveEffectsFromSpell(oPC, GetSpellId());
+    PRCRemoveEffectsFromSpell(oPC, GetSpellId());
     
     ApplyEffectToObject(DURATION_TYPE_PERMANENT, ePen, oPC);
     

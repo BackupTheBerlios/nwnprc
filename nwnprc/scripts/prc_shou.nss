@@ -80,8 +80,8 @@ void main()
 
         if(GetHasSpellEffect(SPELL_MARTIAL_FLURRY_LIGHT, oPC) || GetHasSpellEffect(SPELL_MARTIAL_FLURRY_ALL, oPC))
         {
-          RemoveEffectsFromSpell(oPC, SPELL_MARTIAL_FLURRY_LIGHT);
-          RemoveEffectsFromSpell(oPC, SPELL_MARTIAL_FLURRY_ALL);
+          PRCRemoveEffectsFromSpell(oPC, SPELL_MARTIAL_FLURRY_LIGHT);
+          PRCRemoveEffectsFromSpell(oPC, SPELL_MARTIAL_FLURRY_ALL);
         }
 
         FloatingTextStringOnCreature("*Shou Disciple Abilities Disabled Due To Equipped Armour*", oPC);
@@ -92,8 +92,8 @@ void main()
 
         if(GetHasSpellEffect(SPELL_MARTIAL_FLURRY_LIGHT, oPC) || GetHasSpellEffect(SPELL_MARTIAL_FLURRY_ALL, oPC))
         {
-          RemoveEffectsFromSpell(oPC, SPELL_MARTIAL_FLURRY_LIGHT);
-          RemoveEffectsFromSpell(oPC, SPELL_MARTIAL_FLURRY_ALL);
+          PRCRemoveEffectsFromSpell(oPC, SPELL_MARTIAL_FLURRY_LIGHT);
+          PRCRemoveEffectsFromSpell(oPC, SPELL_MARTIAL_FLURRY_ALL);
         }
 
         FloatingTextStringOnCreature("*Shou Disciple Abilities Disabled Due To Equipped Shield*", oPC);
@@ -101,7 +101,7 @@ void main()
     // This checks to make sure he doesnt have a non-light weapon equipped for Martial Flurry Light
     else if(StringToInt(Get2DACache("baseitems", "WeaponSize", iBaseL)) > 2 || StringToInt(Get2DACache("baseitems", "WeaponSize", iBaseR)) > 2)
     {
-        RemoveEffectsFromSpell(oPC, SPELL_MARTIAL_FLURRY_LIGHT);
+        PRCRemoveEffectsFromSpell(oPC, SPELL_MARTIAL_FLURRY_LIGHT);
         FloatingTextStringOnCreature("*Martial Flurry Light Disabled Due to Equipped Weapons*", oPC);
     }
     else

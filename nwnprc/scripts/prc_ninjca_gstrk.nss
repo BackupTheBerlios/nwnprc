@@ -8,6 +8,7 @@
 */
 
 #include "prc_inc_clsfunc"
+#include "prc_inc_combat"
 
 void main()
 {

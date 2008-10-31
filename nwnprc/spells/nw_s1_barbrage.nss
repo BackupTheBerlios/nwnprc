@@ -16,7 +16,7 @@
 //:: Created On: Aug 13, 2001
 //:://////////////////////////////////////////////
 
-#include "prc_inc_spells"
+#include "prc_inc_combat"
 #include "inc_addragebonus"
 
 void main()
@@ -179,7 +179,7 @@ void main()
                if(nResult == 0)
                {
                             // Same effect as Doom Spell
-                            effect eLink = CreateDoomEffectsLink();
+                            effect eLink = EffectShaken();
                             effect eVis = EffectVisualEffect(VFX_IMP_DOOM);
                             ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink , oTarget, TurnsToSeconds(nCon));
                             ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);

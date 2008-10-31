@@ -31,7 +31,7 @@ void main()
      else     
      {
 	// Removes effects
-	RemoveSpellEffects(SPELL_TO_CARRION, oPC, oPC);
+	PRCRemoveSpellEffects(SPELL_TO_CARRION, oPC, oPC);
 	nMes = "*Carrion Stench Deactivated*";
      }
 

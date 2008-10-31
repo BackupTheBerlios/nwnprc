@@ -17,11 +17,11 @@ void main()
      else
      {
         // Removes effects
-        RemoveSpellEffects(GetSpellId(), oPC, oPC);
+        PRCRemoveSpellEffects(GetSpellId(), oPC, oPC);
         sMes = "*Major Aura Deactivated*";
         DeleteLocalInt(oPC,"MarshalMajor");
         // Removes effects a second time to make sure it works
-        RemoveSpellEffects(GetSpellId(), oPC, oPC);
+        PRCRemoveSpellEffects(GetSpellId(), oPC, oPC);
      }
 
      FloatingTextStringOnCreature(sMes, oPC, FALSE);

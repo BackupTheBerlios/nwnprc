@@ -70,7 +70,7 @@ void main()
     if(GetHasSpellEffect(PRCGetSpellId(), oTarget))
     {
         // Remove effects
-        RemoveSpellEffects(PRCGetSpellId(), oManifester, oTarget);
+        PRCRemoveSpellEffects(PRCGetSpellId(), oManifester, oTarget);
         // Restore teleportability
         AllowTeleport(oTarget);
     }
@@ -117,7 +117,7 @@ void DispelMonitor(object oManifester, object oTarget, int nSpellID)
         // @todo Lose concentration
 
         // Remove effects
-        RemoveSpellEffects(nSpellID, oManifester, oTarget);
+        PRCRemoveSpellEffects(nSpellID, oManifester, oTarget);
 
         // Restore teleportability
         AllowTeleport(oTarget);

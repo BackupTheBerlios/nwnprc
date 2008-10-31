@@ -35,7 +35,7 @@ void main()
     object oWeap1 = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
     object oWeap2 = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
 
-    RemoveEffectsFromSpell(oPC, GetSpellId());
+    PRCRemoveEffectsFromSpell(oPC, GetSpellId());
 
     // thankfully damage effects actually use the IP_CONST_DAMAGEBONUS constants too! :)  Thus
     // you can apply non-bioware damage bonuses as defined in the 2da.

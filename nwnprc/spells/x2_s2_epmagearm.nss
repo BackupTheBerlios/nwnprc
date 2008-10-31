@@ -60,7 +60,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     eLink = EffectLinkEffects(eLink, eAC4);
     eLink = EffectLinkEffects(eLink, eDur);
 
-    RemoveEffectsFromSpell(oTarget, GetSpellId());
+    PRCRemoveEffectsFromSpell(oTarget, GetSpellId());
 
     // * Brent, Nov 24, making extraodinary so cannot be dispelled
     eLink = ExtraordinaryEffect(eLink);

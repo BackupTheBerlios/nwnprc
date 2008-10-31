@@ -18,7 +18,7 @@ within 5 feet to make a successful DC 13 Fortitude save or be
 sickened for 1 round. Anyone actually struck by the vile stuff
 takes a -4 penalty on the save.*/
 
-#include "prc_inc_spells"
+#include "prc_inc_sp_tch"
 
 void main()
 {

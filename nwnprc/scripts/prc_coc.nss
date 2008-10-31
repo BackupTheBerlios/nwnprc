@@ -59,7 +59,7 @@ void main()
             ))
             ActionCastSpellOnSelf(SPELL_COC_DAMAGE);
         else
-            RemoveEffectsFromSpell(oPC, SPELL_COC_DAMAGE);
+            PRCRemoveEffectsFromSpell(oPC, SPELL_COC_DAMAGE);
         CritSTR(oPC, iEquip);
     }
 }

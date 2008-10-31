@@ -27,8 +27,8 @@ void CheckStillUnarmed(object oTarget)
     {
         FloatingTextStrRefOnCreature(8962, oTarget, FALSE);
         //remove other magic fang effects
-        RemoveSpellEffects(452, OBJECT_SELF, oTarget);
-        RemoveSpellEffects(453, OBJECT_SELF, oTarget);
+        PRCRemoveSpellEffects(452, OBJECT_SELF, oTarget);
+        PRCRemoveSpellEffects(453, OBJECT_SELF, oTarget);
         return; // has neither an animal companion
     }
     DelayCommand(1.0, CheckStillUnarmed(oTarget));
@@ -77,8 +77,8 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     }
 
     //remove other magic fang effects
-    RemoveSpellEffects(452, OBJECT_SELF, oTarget);
-    RemoveSpellEffects(453, OBJECT_SELF, oTarget);
+    PRCRemoveSpellEffects(452, OBJECT_SELF, oTarget);
+    PRCRemoveSpellEffects(453, OBJECT_SELF, oTarget);
     int nMetaMagic = PRCGetMetaMagicFeat();
 
     effect eLink = EffectLinkEffects(EffectAttackIncrease(nPower), EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));

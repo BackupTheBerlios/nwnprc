@@ -10,7 +10,7 @@
 //:: Created By: Georg Zoeller
 //:: Created On: 2003-07-16
 //:://////////////////////////////////////////////
-#include "prc_alterations"
+#include "prc_inc_function"
 #include "inc_timestop"
 #include "prc_inc_itmrstr"
 

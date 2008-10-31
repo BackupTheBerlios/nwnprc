@@ -18,7 +18,7 @@ void DispelMonitor(object oCaster, object oTarget, int nSpellID, int nBeatsRemai
        (!GetLocalInt(oTarget, "PRC_SPELL_TURNING_LEVELS"))
        )
     {
-        RemoveEffectsFromSpell(oTarget, nSpellID);
+        PRCRemoveEffectsFromSpell(oTarget, nSpellID);
         if(DEBUG) DoDebug("sp_spellturning: Spell expired, clearing");
         DeleteLocalInt(oTarget, "PRC_SPELL_TURNING");
         DeleteLocalInt(oTarget, "PRC_SPELL_TURNING_LEVELS");
@@ -38,7 +38,7 @@ void main()
     float fDuration = 600.0 * nCasterLevel;
     int nMetaMagic = PRCGetMetaMagicFeat();
     int nTurn = d4() + 6;
-    RemoveEffectsFromSpell(oTarget, nSpellID);
+    PRCRemoveEffectsFromSpell(oTarget, nSpellID);
     if(nMetaMagic & METAMAGIC_MAXIMIZE) nTurn = 10;
     if(nMetaMagic & METAMAGIC_EMPOWER) nTurn += nTurn / 2;
     if(nMetaMagic & METAMAGIC_EXTEND) fDuration *= 2;

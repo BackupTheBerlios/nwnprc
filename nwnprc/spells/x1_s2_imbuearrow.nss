@@ -9,9 +9,87 @@
 //Last Edited : 7-26-2004                                                     //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "prc_alterations"
-#include "X0_I0_SPELLS"
+#include "prc_inc_sp_tch"
 #include "x2_inc_spellhook"
+
+//*GZ: 2003-07-23. honor critical and weapon spec
+// Updated: 02/14/2008 CraigW - Added support for Epic Weapon Specialization.
+// nCrit -
+
+int PRCArcaneArcherDamageDoneByBow(int bCrit = FALSE, object oUser = OBJECT_SELF)
+{
+    object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND);
+    int nDamage;
+    int bSpec = FALSE;
+    int bEpicSpecialization = FALSE;
+
+    if (GetIsObjectValid(oItem) == TRUE)
+    {
+        if (GetBaseItemType(oItem) == BASE_ITEM_LONGBOW )
+        {
+            nDamage = d8();
+            if (GetHasFeat(FEAT_WEAPON_SPECIALIZATION_LONGBOW,oUser))
+            {
+              bSpec = TRUE;
+            }
+            if (GetHasFeat(FEAT_EPIC_WEAPON_SPECIALIZATION_LONGBOW,oUser))
+            {
+              bEpicSpecialization = TRUE;
+            }
+        }
+        else
+        if (GetBaseItemType(oItem) == BASE_ITEM_SHORTBOW)
+        {
+            nDamage = d6();
+            if (GetHasFeat(FEAT_WEAPON_SPECIALIZATION_SHORTBOW,oUser))
+            {
+              bSpec = TRUE;
+            }
+            if (GetHasFeat(FEAT_EPIC_WEAPON_SPECIALIZATION_SHORTBOW,oUser))
+            {
+              bEpicSpecialization = TRUE;
+            }
+        }
+        else
+            return 0;
+    }
+    else
+    {
+            return 0;
+    }
+
+    // add strength bonus
+    int nStrength = GetAbilityModifier(ABILITY_STRENGTH,oUser);
+    nDamage += nStrength;
+
+    if (bSpec == TRUE)
+    {
+        nDamage +=2;
+    }
+    if ( bEpicSpecialization == TRUE )
+    {
+        nDamage +=4;
+    }
+    if (bCrit == TRUE)
+    {
+         nDamage *=3;
+    }
+
+    return nDamage;
+}
+
+//*GZ: 2003-07-23. Properly calculated enhancement bonus
+int PRCArcaneArcherCalculateBonus()
+{
+    int nLevel = GetLevelByClass(CLASS_TYPE_ARCANE_ARCHER, OBJECT_SELF);
+
+    if (nLevel == 0) //not an arcane archer?
+    {
+        return 0;
+    }
+    int nBonus = ((nLevel+1)/2); // every odd level after 1 get +1
+    return nBonus;
+}
 
 void main()
 {
@@ -80,9 +158,9 @@ void main()
           if (nTouch > 0)
           {
 
-            nDamage = ArcaneArcherDamageDoneByBow(nTouch ==2);
+            nDamage = PRCArcaneArcherDamageDoneByBow(nTouch ==2);
 
-            int  nBonus = ArcaneArcherCalculateBonus() ;
+            int  nBonus = PRCArcaneArcherCalculateBonus() ;
             effect ePhysical = PRCEffectDamage(oTarget, nDamage, DAMAGE_TYPE_PIERCING,IPGetDamagePowerConstantFromNumber(nBonus));
             effect eMagic = PRCEffectDamage(oTarget, nBonus, DAMAGE_TYPE_MAGICAL);
             ApplyEffectToObject(DURATION_TYPE_INSTANT, ePhysical, oTarget);

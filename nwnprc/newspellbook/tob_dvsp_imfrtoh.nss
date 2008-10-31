@@ -56,7 +56,7 @@ void main()
 			// Reset the count
 			DeleteLocalInt(oInitiator, "DSImmortalFortSave");
 			// Remove the stance
-			RemoveEffectsFromSpell(oInitiator, MOVE_DS_IMMORTAL_FORTITUDE);
+			PRCRemoveEffectsFromSpell(oInitiator, MOVE_DS_IMMORTAL_FORTITUDE);
 			// Got to remove this as well
 			SetImmortal(oInitiator, FALSE);
 			FloatingTextStringOnCreature("You have saved for Immortal Fortitude 3 times, ending stance", oInitiator, FALSE);

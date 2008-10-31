@@ -1,5 +1,6 @@
 #include "tob_inc_moveknwn"
 #include "tob_inc_recovery"
+#include "prc_inc_combat"
 
 void main()
 {

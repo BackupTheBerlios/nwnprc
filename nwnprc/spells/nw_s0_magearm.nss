@@ -32,7 +32,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     if(nBonus > 8) nBonus = 8;
     effect eAC = EffectLinkEffects(EffectACIncrease(nBonus, AC_ARMOUR_ENCHANTMENT_BONUS), EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
     float fDuration = PRCGetMetaMagicDuration((bMA) ? HoursToSeconds(nCasterLevel) : MinutesToSeconds(nCasterLevel));
-    RemoveEffectsFromSpell(oTarget, nSpellID);
+    PRCRemoveEffectsFromSpell(oTarget, nSpellID);
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAC, oTarget, fDuration,TRUE,-1,nCasterLevel);
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_AC_BONUS), oTarget);
 

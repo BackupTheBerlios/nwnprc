@@ -19,7 +19,7 @@ void main()
      else
      {
           // The code to cancel the effects
-            RemoveSpellEffects(SPELL_ONE_STRIKE_TWO_CUTS, oPC, oPC);
+            PRCRemoveSpellEffects(SPELL_ONE_STRIKE_TWO_CUTS, oPC, oPC);
             FloatingTextStringOnCreature("One Strike Two Cuts Removed",OBJECT_SELF);
      }
 

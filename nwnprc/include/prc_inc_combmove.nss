@@ -185,12 +185,15 @@ int GetIsLightWeapon(object oPC);
  */
 int DoOverrun(object oPC, object oTarget, int nGenerateAoO = TRUE, int nExtraBonus = 0, int nAvoid = TRUE, int nCounter = TRUE);
 
+// * returns the size modifier for bullrush in spells
+// * Bioware function renamed.
+int PRCGetSizeModifier(object oCreature);
+
 //////////////////////////////////////////////////
 /*                  Includes                    */
 //////////////////////////////////////////////////
 
-//#include "prc_alterations"
-#include "prc_inc_spells"
+#include "prc_inc_combat"
 
 //////////////////////////////////////////////////
 /*             Internal functions               */
@@ -245,8 +248,8 @@ int _DoGrappleCheck(object oPC, object oTarget, int nExtraBonus)
         int nSucceed = FALSE;
         int nPCStr = GetAbilityModifier(ABILITY_STRENGTH, oPC);
         int nTargetStr = GetAbilityModifier(ABILITY_STRENGTH, oTarget);
-        int nPCBonus = GetSizeModifier(oPC);
-        int nTargetBonus = GetSizeModifier(oTarget);
+        int nPCBonus = PRCGetSizeModifier(oPC);
+        int nTargetBonus = PRCGetSizeModifier(oTarget);
         // Other ability bonuses
         nPCBonus += GetAbilityCheckBonus(oPC, ABILITY_STRENGTH);
         // Extra bonus
@@ -402,8 +405,8 @@ int DoBullRush(object oPC, object oTarget, int nExtraBonus, int nGenerateAoO = T
         int nSucceed = FALSE;
         int nPCStr = GetAbilityModifier(ABILITY_STRENGTH, oPC);
         int nTargetStr = GetAbilityModifier(ABILITY_STRENGTH, oTarget);
-        int nPCBonus = GetSizeModifier(oPC);
-        int nTargetBonus = GetSizeModifier(oTarget);
+        int nPCBonus = PRCGetSizeModifier(oPC);
+        int nTargetBonus = PRCGetSizeModifier(oTarget);
         if (GetLevelByClass(CLASS_TYPE_WARBLADE, oPC) >= 11)  nPCBonus += GetAbilityModifier(ABILITY_INTELLIGENCE, oPC);
         if (GetLevelByClass(CLASS_TYPE_WARBLADE, oTarget) >= 11)  nTargetBonus += GetAbilityModifier(ABILITY_INTELLIGENCE, oTarget);
         effect eNone;
@@ -471,8 +474,8 @@ int DoTrip(object oPC, object oTarget, int nExtraBonus, int nGenerateAoO = TRUE,
         else
                 nTargetStat = GetAbilityModifier(ABILITY_DEXTERITY, oTarget) + GetAbilityCheckBonus(oTarget, ABILITY_DEXTERITY);
         // Get mods for size
-        int nPCBonus = GetSizeModifier(oPC);
-        int nTargetBonus = GetSizeModifier(oTarget);
+        int nPCBonus = PRCGetSizeModifier(oPC);
+        int nTargetBonus = PRCGetSizeModifier(oTarget);
         if (GetLevelByClass(CLASS_TYPE_WARBLADE, oPC) >= 11)  nPCBonus += GetAbilityModifier(ABILITY_INTELLIGENCE, oPC);
         if (GetLevelByClass(CLASS_TYPE_WARBLADE, oTarget) >= 11)  nTargetBonus += GetAbilityModifier(ABILITY_INTELLIGENCE, oTarget);
         
@@ -777,8 +780,8 @@ int DoOverrun(object oPC, object oTarget, int nGenerateAoO = TRUE, int nExtraBon
         else
                 nTargetStat = GetAbilityModifier(ABILITY_DEXTERITY, oTarget) + GetAbilityCheckBonus(oTarget, ABILITY_DEXTERITY);
         // Get mods for size
-        int nPCBonus = GetSizeModifier(oPC);
-        int nTargetBonus = GetSizeModifier(oTarget);
+        int nPCBonus = PRCGetSizeModifier(oPC);
+        int nTargetBonus = PRCGetSizeModifier(oTarget);
         if (GetLevelByClass(CLASS_TYPE_WARBLADE, oPC) >= 11)  nPCBonus += GetAbilityModifier(ABILITY_INTELLIGENCE, oPC);
         if (GetLevelByClass(CLASS_TYPE_WARBLADE, oTarget) >= 11)  nTargetBonus += GetAbilityModifier(ABILITY_INTELLIGENCE, oTarget);        
 
@@ -828,6 +831,30 @@ int DoOverrun(object oPC, object oTarget, int nGenerateAoO = TRUE, int nExtraBon
         }       
         
         return nSucceed;
+}
+
+int PRCGetSizeModifier(object oCreature)
+{
+    int nSize = PRCGetCreatureSize(oCreature);
+    
+    //Powerful Build bonus
+    if(GetHasFeat(FEAT_RACE_POWERFUL_BUILD, oCreature))
+        nSize++;
+    //Make sure it doesn't overflow
+    if(nSize > CREATURE_SIZE_COLOSSAL) nSize = CREATURE_SIZE_COLOSSAL;
+    int nModifier = 0;
+    
+    switch (nSize)
+    {
+    case CREATURE_SIZE_TINY: nModifier = -8;  break;
+    case CREATURE_SIZE_SMALL: nModifier = -4; break;
+    case CREATURE_SIZE_MEDIUM: nModifier = 0; break;
+    case CREATURE_SIZE_LARGE: nModifier = 4;  break;
+    case CREATURE_SIZE_HUGE: nModifier = 8;   break;
+    case CREATURE_SIZE_GARGANTUAN: nModifier = 12;   break;
+    case CREATURE_SIZE_COLOSSAL: nModifier = 16;   break;
+    }
+    return nModifier;
 }
 // Test main
 //void main(){}

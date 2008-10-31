@@ -177,10 +177,6 @@ void main()
         DeleteLocalInt(oPC, "nManeuver");
         DeleteLocalInt(oPC, "nManeuverLevelToBrowse");
         DeleteLocalInt(oPC, "ManeuverListChoiceOffset");
-
-        // Restart the convo to pick next maneuver if needed
-        // done via EvalPRCFFeats to avoid conflicts with new spellbooks
-        DelayCommand(1.0, EvalPRCFeats(oPC));
     }
     else if(nValue == DYNCONV_ABORTED)
     {

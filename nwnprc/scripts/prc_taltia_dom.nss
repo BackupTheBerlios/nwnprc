@@ -18,7 +18,7 @@
 //:: dragon version created 11/22/2007
 #include "prc_inc_spells"
 
-#include "NW_I0_SPELLS"
+
 #include "x2_inc_spellhook"
 
 void main()
@@ -45,7 +45,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     //Declare major variables
     object oTarget = GetSpellTargetObject();
     effect eDom = EffectCutsceneDominated();    // Allows multiple dominated creatures
-    eDom = GetScaledEffect(eDom, oTarget);
+    eDom = PRCGetScaledEffect(eDom, oTarget);
     effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DOMINATED);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
 
@@ -59,7 +59,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     int nDuration = 3 + nCasterLevel/2;
     nCasterLevel +=SPGetPenetr();
 
-    nDuration = GetScaledDuration(nDuration, oTarget);
+    nDuration = PRCGetScaledDuration(nDuration, oTarget);
     int nRacial = MyPRCGetRacialType(oTarget);
     //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_TOT_DOMINATE_DRAGON, FALSE));

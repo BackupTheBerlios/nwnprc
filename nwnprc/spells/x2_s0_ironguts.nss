@@ -26,7 +26,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
 
    //Stacking Spellpass, 2003-07-07, Georg
-    RemoveEffectsFromSpell(oTarget, GetSpellId());
+    PRCRemoveEffectsFromSpell(oTarget, GetSpellId());
 
     int nBonus = 4; //Saving throw bonus to be applied
     int nMetaMagic = PRCGetMetaMagicFeat();

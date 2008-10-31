@@ -965,3 +965,15 @@ void ApplyBreath(struct breath BreathUsed, location lTargetArea, int bLinger = F
     
      
 }
+
+void PRCPlayDragonBattleCry()
+{
+    if(d100() > 50)
+    {
+        PlayVoiceChat(VOICE_CHAT_BATTLECRY1);
+    }
+    else
+    {
+        PlayVoiceChat(VOICE_CHAT_BATTLECRY2);
+    }
+}

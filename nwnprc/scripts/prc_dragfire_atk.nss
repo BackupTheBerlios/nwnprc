@@ -11,7 +11,7 @@
 //:: Created On: Nov 23, 2007
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "prc_inc_combat"
 #include "prc_inc_sneak"
 
 void DoDragonfireSneak(object oPC, object oTarget, object oWeapon)

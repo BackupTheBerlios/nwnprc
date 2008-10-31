@@ -17,7 +17,7 @@ void main()
     effect eSave = EffectSavingThrowIncrease(SAVING_THROW_ALL, nCha);
     eSave = ExtraordinaryEffect(eSave);
 
-    RemoveEffectsFromSpell(oPC, GetSpellId());
+    PRCRemoveEffectsFromSpell(oPC, GetSpellId());
 
     ApplyEffectToObject(DURATION_TYPE_PERMANENT, eSave, oPC);
 }

@@ -49,7 +49,7 @@ void main()
     }
     object oTarget = PRCGetSpellTargetObject();
     // HUMANOID SPELL ONLY!!!!
-    if (AmIAHumanoid(oTarget))
+    if (PRCAmIAHumanoid(oTarget))
     {
         if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_NAILSKY))
         {

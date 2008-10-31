@@ -11,6 +11,7 @@
 //:://////////////////////////////////////////////
 
 #include "prc_inc_domain"
+#include "prc_inc_combat"
 
 void main()
 {

@@ -19,7 +19,7 @@ void main()
     //Declare major variables
     object oTarget = GetEnteringObject();
     effect eVis = EffectVisualEffect(VFX_IMP_DOOM);
-    effect eLink = CreateDoomEffectsLink();
+    effect eLink = EffectShaken();
 
     int nDC = (10 + GetLevelByClass(CLASS_TYPE_ORCUS, GetAreaOfEffectCreator()) + GetAbilityModifier(ABILITY_CONSTITUTION, GetAreaOfEffectCreator()));
     int nDur = GetLevelByClass(CLASS_TYPE_ORCUS, GetAreaOfEffectCreator());

@@ -25,7 +25,7 @@ void WalkHB(object oPC)
         {
             FloatingTextStringOnCreature("*Insufficient Power Points - " + GetPersistantLocalString(oPC, "PyroString") + " Walk Deactivated*", oPC);
             DeleteLocalInt(oPC, "PyroWalk");
-            RemoveEffectsFromSpell(oPC, SPELL_FIREWALK);
+            PRCRemoveEffectsFromSpell(oPC, SPELL_FIREWALK);
         }
     }
 }
@@ -42,7 +42,7 @@ void main()
     string sString = GetPersistantLocalString(oPC, "PyroString");
     if(GetHasSpellEffect(SPELL_FIREWALK, oPC))
     {
-        RemoveEffectsFromSpell(oPC, SPELL_FIREWALK);
+        PRCRemoveEffectsFromSpell(oPC, SPELL_FIREWALK);
         FloatingTextStringOnCreature("*" + sString + " Walk Deactivated*", oPC);
     }
     else

@@ -48,7 +48,7 @@ void main()
 	//Domination
 	
 	effect eDom1 = EffectDominated();
-	effect eDom = GetScaledEffect(eDom1, oTarget);
+	effect eDom = PRCGetScaledEffect(eDom1, oTarget);
 	effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DOMINATED);
 	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
 	
@@ -60,7 +60,7 @@ void main()
 	int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 	int nCasterLevel = CasterLvl;
 	int nDuration = 2 + nCasterLevel/3;
-	nDuration = GetScaledDuration(nDuration, oTarget);
+	nDuration = PRCGetScaledDuration(nDuration, oTarget);
 		
 	int nRacial = MyPRCGetRacialType(oTarget);
 	//Fire cast spell at event for the specified target

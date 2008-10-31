@@ -45,7 +45,7 @@ void main()
                 if(!PRCDoResistSpell(OBJECT_SELF, oTarget, GetTotalCastingLevel(OBJECT_SELF)+SPGetPenetr(OBJECT_SELF), fDelay))
                 {
 //Use bioware petrify command
-                    DoPetrification(PRCGetCasterLevel(), OBJECT_SELF, oTarget, PRCGetSpellId(), GetEpicSpellSaveDC(OBJECT_SELF, oTarget));
+                    PRCDoPetrification(PRCGetCasterLevel(), OBJECT_SELF, oTarget, PRCGetSpellId(), GetEpicSpellSaveDC(OBJECT_SELF, oTarget));
 /*
                     if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, GetEpicSpellSaveDC(OBJECT_SELF, oTarget),
                         SAVING_THROW_TYPE_SPELL, OBJECT_SELF, fDelay))

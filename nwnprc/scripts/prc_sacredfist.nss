@@ -1,5 +1,4 @@
-#include "prc_alterations"
-//#include "prc_inc_unarmed"
+#include "prc_inc_unarmed"
 
 void SacredAC(object oPC, object oSkin, int bSFAC , int iShield)
 {
@@ -17,7 +16,7 @@ void SacredSpeed(object oPC, object oSkin, int bSFSpeed , int iShield)
 
    if (GetBaseAC(oArmor) > 3 || iShield )
    {
-       RemoveEffectsFromSpell(oPC,SPELL_SACREDSPEED);
+       PRCRemoveEffectsFromSpell(oPC,SPELL_SACREDSPEED);
    }
    else 
    {
@@ -31,7 +30,7 @@ void main()
     object oPC = OBJECT_SELF;
     object oSkin = GetPCSkin(oPC);
     
-    RemoveEffectsFromSpell(oPC, SPELL_SACREDSPEED);
+    PRCRemoveEffectsFromSpell(oPC, SPELL_SACREDSPEED);
 
     int iClass = GetLevelByClass(CLASS_TYPE_SACREDFIST,oPC);
 
@@ -88,11 +87,11 @@ void main()
         SetCompositeBonus(oSkin, "SacFisAC", 0, ITEM_PROPERTY_AC_BONUS);
         
         if (GetHasSpellEffect(SPELL_SACREDSPEED, oPC))
-        RemoveSpellEffects(SPELL_SACREDSPEED, oPC, oPC);
+        PRCRemoveSpellEffects(SPELL_SACREDSPEED, oPC, oPC);
         if (GetHasSpellEffect(SPELL_SACREDFLAME, oPC))
-        RemoveSpellEffects(SPELL_SACREDFLAME, oPC, oPC);
+        PRCRemoveSpellEffects(SPELL_SACREDFLAME, oPC, oPC);
         if (GetHasSpellEffect(SPELL_INNERARMOR, oPC))
-        RemoveSpellEffects(SPELL_INNERARMOR, oPC, oPC);
+        PRCRemoveSpellEffects(SPELL_INNERARMOR, oPC, oPC);
         
         DeleteLocalInt(oSkin, "SacFisMv");
         

@@ -6,7 +6,7 @@
     Hooked NPC's into this via prc_npc_rested - 06.03.2004, Ornedan
 */
 
-#include "prc_alterations"
+#include "prc_inc_function"
 #include "psi_inc_psifunc"
 #include "prc_sp_func"
 #include "prc_inc_domain"

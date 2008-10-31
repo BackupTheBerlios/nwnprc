@@ -103,7 +103,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                         eDamage = PRCEffectDamage(oTarget, nDamage, EleDmg);
                         if(nDamage > 0)
                         {
-                            fDelay = GetSpellEffectDelay(GetLocation(oTarget), oTarget);
+                            fDelay = PRCGetSpellEffectDelay(GetLocation(oTarget), oTarget);
                             //Apply VFX impcat, damage effect and lightning effect
                             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT,eDamage,oTarget));
                             PRCBonusDamage(oTarget);

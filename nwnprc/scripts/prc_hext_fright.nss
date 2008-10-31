@@ -28,7 +28,7 @@ void main()
     eLink = EffectLinkEffects(eLink, eDur);
 
     effect eVisD = EffectVisualEffect(VFX_IMP_DOOM);
-    effect eLinkD = CreateDoomEffectsLink();
+    effect eLinkD = EffectShaken();
     int nLevel = GetLevelByClass(CLASS_TYPE_HEXTOR, OBJECT_SELF);
     float fRadius = FeetToMeters(IntToFloat(5*nLevel));
 

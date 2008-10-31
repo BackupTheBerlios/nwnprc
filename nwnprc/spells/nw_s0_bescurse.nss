@@ -11,6 +11,7 @@
     Flaming_Sword: Added touch attack roll
 */
 
+#include "prc_inc_sp_tch"
 #include "prc_sp_func"
 
 

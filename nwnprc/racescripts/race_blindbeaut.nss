@@ -27,10 +27,10 @@ void main()
      else     
      {
         // Removes effects
-        RemoveSpellEffects(SPELL_NYMPH_BLINDING_BEAUTY, oPC, oPC);
+        PRCRemoveSpellEffects(SPELL_NYMPH_BLINDING_BEAUTY, oPC, oPC);
         sMes = "*Blinding Beauty Deactivated*";
         //clear the old aura a second time to ensure it clears
-        RemoveSpellEffects(SPELL_NYMPH_BLINDING_BEAUTY, oPC, oPC);
+        PRCRemoveSpellEffects(SPELL_NYMPH_BLINDING_BEAUTY, oPC, oPC);
      }
 
      FloatingTextStringOnCreature(sMes, oPC, FALSE);

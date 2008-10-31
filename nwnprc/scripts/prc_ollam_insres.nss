@@ -20,7 +20,7 @@ void main()
         else
         {
             ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectSavingThrowIncrease(SAVING_THROW_FORT, 2), oTarget, 60.0);
-            DelayCommand(60.0, ApplyEffectToObject(DURATION_TYPE_TEMPORARY, CreateDoomEffectsLink(), oTarget, 60.0));
+            DelayCommand(60.0, ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectShaken(), oTarget, 60.0));
         }
         
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);

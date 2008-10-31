@@ -10,6 +10,7 @@
     Modified: Jul 1, 2006
 */
 
+#include "prc_inc_sp_tch"
 #include "prc_sp_func"
 #include "prc_inc_itmrstr"
 

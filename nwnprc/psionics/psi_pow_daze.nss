@@ -74,7 +74,7 @@ void main()
         if(manif.bExtend) fDuration *= 2;
 
         //Make sure the target is a humaniod
-        if(AmIAHumanoid(oTarget))
+        if(PRCAmIAHumanoid(oTarget))
         {
             // Hit Dice check
             if(GetHitDice(oTarget) <= nMaxHD)

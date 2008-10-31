@@ -16,7 +16,7 @@ void main()
     effect eAtk = EffectAttackIncrease(1);
     effect eLink = ExtraordinaryEffect(eAtk);
 
-    RemoveEffectsFromSpell(oPC, GetSpellId());
+    PRCRemoveEffectsFromSpell(oPC, GetSpellId());
 
     ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oPC);
 }

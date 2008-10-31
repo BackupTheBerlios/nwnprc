@@ -3,7 +3,8 @@
 //:: FileName  inv_eldtch_blast.nss
 //:://////////////////////////////////////////////
 
-#include "prc_inc_spells"
+#include "prc_inc_combat"
+#include "prc_inc_sp_tch"
 #include "inv_inc_invfunc"
 
 //internal function for delayed damage

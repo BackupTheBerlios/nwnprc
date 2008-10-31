@@ -16,7 +16,7 @@
 
 //:: modified by mr_bumpkin Dec 4, 2003
 #include "prc_inc_spells"
-#include "X0_I0_SPELLS"
+
 #include "inv_inc_invfunc"
 
 void main()

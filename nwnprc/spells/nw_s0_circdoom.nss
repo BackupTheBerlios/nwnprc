@@ -18,10 +18,7 @@
 //::Added code to maximize for Faith Healing and Blast Infidel
 //::Aaon Graywolf - Jan 7, 2003
 
-#include "prc_inc_spells"
-
-
-
+#include "prc_inc_function"
 
 void main()
 {

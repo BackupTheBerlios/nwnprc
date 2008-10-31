@@ -10,7 +10,7 @@ his or her face to begin to weep and feel great sorrow. Such a
 character is considered shaken for 1d6 rounds.
 */
 
-#include "prc_inc_spells"
+#include "prc_inc_sp_tch"
 
 void main()
 {

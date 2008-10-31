@@ -4,7 +4,7 @@
     Afflicted creatures save or suffer a large penalty to stats.
 */
 
-#include "prc_alterations"
+#include "prc_inc_combat"
 
 void main()
 {

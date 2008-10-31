@@ -14,7 +14,7 @@
 //:: Last Updated By:
 
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
-#include "prc_alterations"
+#include "spinc_bolt"
 #include "x2_inc_spellhook"
 
 void main()
@@ -38,7 +38,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 // End of Spell Cast Hook
 
    //SpawnScriptDebugger();
-    DoMissileStorm(1, 10, SPELL_ISAACS_LESSER_MISSILE_STORM);
+    PRCDoMissileStorm(1, 10, SPELL_ISAACS_LESSER_MISSILE_STORM);
 
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

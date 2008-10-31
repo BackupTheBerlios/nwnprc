@@ -32,8 +32,8 @@ void main()
 
 
     //new toggle code
-    RemoveSpellEffects(SPELL_LASHER_CRACK_FATE, oPC, oPC);
-    RemoveSpellEffects(SPELL_LASHER_CRACK_DOOM, oPC, oPC);
+    PRCRemoveSpellEffects(SPELL_LASHER_CRACK_FATE, oPC, oPC);
+    PRCRemoveSpellEffects(SPELL_LASHER_CRACK_DOOM, oPC, oPC);
 
     if(GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC)) != BASE_ITEM_WHIP)
     {
@@ -101,7 +101,7 @@ void main()
     else
     {
         // Removes effects, not too sure if I need this bit
-        RemoveSpellEffects(SPELL_LASHER_CRACK, oPC, oPC);
+        PRCRemoveSpellEffects(SPELL_LASHER_CRACK, oPC, oPC);
 
     }
     */

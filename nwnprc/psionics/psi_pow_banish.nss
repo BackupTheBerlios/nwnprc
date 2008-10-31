@@ -40,6 +40,14 @@
  */
 void DoPower(struct manifestation manif, object oMainTarget, int nDC, int nPen, int nBanishableHD, effect eVis);
 
+int PRCCanCreatureBeDestroyed(object oTarget)
+{
+    if (GetPlotFlag(oTarget) == FALSE && GetImmortal(oTarget) == FALSE)
+    {
+        return TRUE;
+    }
+    return FALSE;
+}
 
 void main()
 {
@@ -173,7 +181,7 @@ void DoPower(struct manifestation manif, object oMainTarget, int nDC, int nPen, 
                         //Apply the VFX and delay the destruction of the summoned monster so
                         //that the script and VFX can play.
                         ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetLocation(oTarget));
-                        if(CanCreatureBeDestroyed(oTarget) == TRUE)
+                        if(PRCCanCreatureBeDestroyed(oTarget) == TRUE)
                         {
                             nBanishableHD -= GetHitDice(oTarget);
                             //bugfix: Simply destroying the object won't fire it's OnDeath script.

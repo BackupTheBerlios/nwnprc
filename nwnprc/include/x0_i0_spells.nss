@@ -128,7 +128,7 @@ void DoSpikeGrowthEffect(object oTarget, int nPenetr);
 void DoCamoflage(object oTarget);
 
 // * Does a damage type grenade (direct or splash on miss)
-void DoGrenade(int nDirectDamage, int nSplashDamage, int vSmallHit, int vRingHit, int nDamageType, float fExplosionRadius , int nObjectFilter, int nRacialType=RACIAL_TYPE_ALL);
+void PRCDoGrenade(int nDirectDamage, int nSplashDamage, int vSmallHit, int vRingHit, int nDamageType, float fExplosionRadius , int nObjectFilter, int nRacialType=RACIAL_TYPE_ALL);
 
 // * This is a wrapper for how Petrify will work in Expansion Pack 1
 // * Scripts affected: flesh to stone, breath petrification, gaze petrification, touch petrification
@@ -144,7 +144,7 @@ void spellApplyMindBlank(object oTarget, int nSpellId, float fDelay=0.0);
 void spellsDispelAoE(object oTargetAoE, object oCaster, int nCasterLevel);
 
 //#include "prc_alterations"
-#include "NW_I0_SPELLS"
+
 //#include "x0_i0_match"
 #include "x2_inc_switches"
 #include "x2_inc_itemprop"
@@ -215,7 +215,7 @@ int MaximizeOrEmpower(int nDice, int nNumberOfDice, int nMeta, int nBonus = 0)
 }
 
 //::///////////////////////////////////////////////
-//:: DoGrenade
+//:: PRCDoGrenade
 //:: Copyright (c) 2001 Bioware Corp.
 //:://////////////////////////////////////////////
 /*
@@ -225,7 +225,7 @@ int MaximizeOrEmpower(int nDice, int nNumberOfDice, int nMeta, int nBonus = 0)
 //:: Created By:
 //:: Created On:
 //:://////////////////////////////////////////////
-void DoGrenade(int nDirectDamage, int nSplashDamage, int vSmallHit, int vRingHit, int nDamageType, float fExplosionRadius , int nObjectFilter, int nRacialType=RACIAL_TYPE_ALL)
+void PRCDoGrenade(int nDirectDamage, int nSplashDamage, int vSmallHit, int vRingHit, int nDamageType, float fExplosionRadius , int nObjectFilter, int nRacialType=RACIAL_TYPE_ALL)
 {
     //Declare major variables  ( fDist / (3.0f * log( fDist ) + 2.0f) )
     object oTarget = GetSpellTargetObject();
@@ -873,8 +873,8 @@ void DoMagicFang(int nPower, int nDamagePower,int nCasterLevel)
     }
 
     //Remove effects of anyother fang spells
-    RemoveSpellEffects(452, GetMaster(oTarget), oTarget);
-    RemoveSpellEffects(453, GetMaster(oTarget), oTarget);
+    PRCRemoveSpellEffects(452, GetMaster(oTarget), oTarget);
+    PRCRemoveSpellEffects(453, GetMaster(oTarget), oTarget);
 
     effect eVis = EffectVisualEffect(VFX_IMP_HOLY_AID);
     int nMetaMagic = PRCGetMetaMagicFeat();
@@ -1228,14 +1228,14 @@ void spellsGenericAreaOfEffect(
                     if (nRemoveEffectSpell == TRUE)
                     {
                         //Remove effects
-                        RemoveSpecificEffect(nRemoveEffect1, oTarget);
+                        PRCRemoveSpecificEffect(nRemoveEffect1, oTarget);
                         if(nRemoveEffect2 != 0)
                         {
-                            RemoveSpecificEffect(nRemoveEffect2, oTarget);
+                            PRCRemoveSpecificEffect(nRemoveEffect2, oTarget);
                         }
                         if(nRemoveEffect3 != 0)
                         {
-                            RemoveSpecificEffect(nRemoveEffect3, oTarget);
+                            PRCRemoveSpecificEffect(nRemoveEffect3, oTarget);
                         }
 
                     }

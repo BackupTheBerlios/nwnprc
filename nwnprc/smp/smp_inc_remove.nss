@@ -24,7 +24,7 @@ const int SUBTYPE_IGNORE = -1;
 // SMP_INC_REMOVE. Searches through a persons effects and removes those from a particular spell by a particular caster.
 // - Removes if after fDelay
 // - Returns TRUE if it removes any
-int SMP_RemoveSpellEffects(int nSpell_ID, object oCaster, object oTarget, float fDelay = 0.0);
+int SMP_PRCRemoveSpellEffects(int nSpell_ID, object oCaster, object oTarget, float fDelay = 0.0);
 // SMP_INC_REMOVE. Searches through a persons effects and removes all those of a specific type.
 // - Returns TRUE if it removes any effect of nEffecTypeID
 // * Use SUBTYPE_IGNORE to ignore nSubtype parameter.
@@ -118,7 +118,7 @@ int SMP_RemoveAnyAbilityBonuses(object oTarget, int nAbility, int nBonusPower = 
 // SMP_INC_REMOVE. Searchs through a persons effects and removes those from a particular spell by a particular caster.
 // - Removes if after fDelay
 // - Returns TRUE if it removes any
-int SMP_RemoveSpellEffects(int nSpell_ID, object oCaster, object oTarget, float fDelay = 0.0)
+int SMP_PRCRemoveSpellEffects(int nSpell_ID, object oCaster, object oTarget, float fDelay = 0.0)
 {
     //Declare major variables
     effect eCheck;
@@ -334,7 +334,7 @@ void SMP_RemoveAllSpellsFromCreator(int nSpellId, object oCreator)
     while(GetIsObjectValid(oCreature))
     {
         // Remove the effects of the spell.
-        SMP_RemoveSpellEffects(nSpellId, oCreator, oCreature);
+        SMP_PRCRemoveSpellEffects(nSpellId, oCreator, oCreature);
 
         // Next target
         nCnt++;
@@ -385,7 +385,7 @@ int SMP_RemoveSpellEffectsFromFactionCaster(int nSpell_ID, object oCaster, objec
     while(GetIsObjectValid(oFaction))
     {
         // Remove the spell
-        bReturn += SMP_RemoveSpellEffects(nSpell_ID, oCaster, oFaction, fDelay);
+        bReturn += SMP_PRCRemoveSpellEffects(nSpell_ID, oCaster, oFaction, fDelay);
 
         // Get next member
         oFaction = GetNextFactionMember(oTarget, bPCOnly);

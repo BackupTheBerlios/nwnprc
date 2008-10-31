@@ -44,7 +44,7 @@ void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotal
 #include "prc_feat_const"
 #include "prc_ipfeat_const"
 #include "inc_item_props"
-#include "nw_i0_spells"
+
 #include "pnp_shft_poly"
 #include "x2_inc_spellhook"
 #include "inc_prc_npc"
@@ -236,7 +236,7 @@ void CreateBottleOnObject(object oPC, string sTag)
 void RemoveDrunkenRageEffects(object oTarget = OBJECT_SELF)
 {
 
-    RemoveSpellEffects(2271, oTarget, oTarget);
+    PRCRemoveSpellEffects(2271, oTarget, oTarget);
 
     SetLocalInt(oTarget, "DRUNKEN_MASTER_IS_IN_DRUNKEN_RAGE", 0);
 }

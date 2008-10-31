@@ -59,7 +59,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
 
     effect eLink = EffectLinkEffects(eShield, eDur);
-//    RemoveEffectsFromSpell(oTarget, GetSpellId());
+//    PRCRemoveEffectsFromSpell(oTarget, GetSpellId());
     //Enter Metamagic conditions
     int nMetaMagic = PRCGetMetaMagicFeat();
     if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))

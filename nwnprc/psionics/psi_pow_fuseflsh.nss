@@ -35,6 +35,7 @@
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
 #include "prc_sp_func"
+#include "prc_inc_sp_tch"
 
 int DoPower(object oManifester, object oTarget, struct manifestation manif)
 {

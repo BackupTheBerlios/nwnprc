@@ -1,4 +1,4 @@
-#include "prc_alterations"
+#include "prc_inc_unarmed"
 
 void EnlightenedFistSpeed(object oPC, object oSkin, int nLevel)
 {
@@ -33,7 +33,7 @@ void main()
 
  	int nLevel = GetLevelByClass(CLASS_TYPE_ENLIGHTENEDFIST, oPC);
 
-	RemoveEffectsFromSpell(oPC, SPELL_SACREDSPEED);
+	PRCRemoveEffectsFromSpell(oPC, SPELL_SACREDSPEED);
 
 	EnlightenedFistSpeed(oPC, oSkin, nLevel);
 	if (nLevel >=9 ) EnlightenedFistSR(oPC, oSkin, nLevel + GetLevelByClass(CLASS_TYPE_MONK));

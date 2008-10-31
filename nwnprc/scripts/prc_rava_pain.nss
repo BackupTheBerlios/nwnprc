@@ -14,7 +14,7 @@
 //:: Created On: Feb/21/04
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "prc_inc_combat"
 
 void main()
 {

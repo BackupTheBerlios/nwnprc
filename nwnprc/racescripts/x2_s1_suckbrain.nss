@@ -79,7 +79,7 @@ void main()
     }
     else
     {
-        bSave = (MySavingThrow(SAVING_THROW_FORT,oTarget,10+(GetHitDice(OBJECT_SELF)/2)) != 0);
+        bSave = (PRCMySavingThrow(SAVING_THROW_FORT,oTarget,10+(GetHitDice(OBJECT_SELF)/2)) != 0);
     }
 
     // if we failed the save (or never got one)

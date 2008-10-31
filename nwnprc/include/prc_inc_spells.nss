@@ -328,6 +328,41 @@ object MyFirstObjectInShape(int nShape, float fSize, location lTarget, int bLine
 //GetNextObjectInShape wrapper for changing the AOE of the channeled spells (Spellsword Channel Spell)
 object MyNextObjectInShape(int nShape, float fSize, location lTarget, int bLineOfSight=FALSE, int nObjectFilter=OBJECT_TYPE_CREATURE, vector vOrigin=[0.0,0.0,0.0]);
 
+// * Searchs through a persons effects and removes those from a particular spell by a particular caster.
+// * PRC Version of a Bioware function to disable include loops
+void PRCRemoveSpellEffects(int nSpell_ID, object oCaster, object oTarget);
+
+// * Kovi. removes any effects from this type of spell
+// * i.e., used in Mage Armor to remove any previous
+// * mage armors
+void PRCRemoveEffectsFromSpell(object oTarget, int SpellID);
+
+// * Get Scaled Effect
+effect PRCGetScaledEffect(effect eStandard, object oTarget);
+
+// * Searchs through a persons effects and removes all those of a specific type.
+void PRCRemoveSpecificEffect(int nEffectTypeID, object oTarget);
+
+// * Returns true if Target is a humanoid
+int PRCAmIAHumanoid(object oTarget);
+
+// * Get Difficulty Duration
+int PRCGetScaledDuration(int nActualDuration, object oTarget);
+
+// * Will pass back a linked effect for all the protection from alignment spells.  The power represents the multiplier of strength.
+// * That is instead of +3 AC and +2 Saves a  power of 2 will yield +6 AC and +4 Saves.
+effect PRCCreateProtectionFromAlignmentLink(int nAlignment, int nPower = 1);
+
+// * Returns the time in seconds that the effect should be delayed before application.
+float PRCGetSpellEffectDelay(location SpellTargetLocation, object oTarget);
+
+// * This is a wrapper for how Petrify will work in Expansion Pack 1
+// * Scripts affected: flesh to stone, breath petrification, gaze petrification, touch petrification
+// * nPower : This is the Hit Dice of a Monster using Gaze, Breath or Touch OR it is the Caster Spell of
+// *   a spellcaster
+// * nFortSaveDC: pass in this number from the spell script
+void PRCDoPetrification(int nPower, object oSource, object oTarget, int nSpellID, int nFortSaveDC);
+
 // -----------------
 // END SPELLSWORD
 // -----------------
@@ -3036,3 +3071,358 @@ effect PRCEffectDamage(object oTarget, int nDamageAmount, int nDamageType=DAMAGE
 
     return EffectDamage(nDamageAmount, nDamageType, nDamagePower);
 }
+
+void PRCRemoveSpellEffects(int nSpell_ID, object oCaster, object oTarget)
+{
+    //Declare major variables
+    int bValid = FALSE;
+    effect eAOE;
+    if(GetHasSpellEffect(nSpell_ID, oTarget))
+    {
+        //Search through the valid effects on the target.
+        eAOE = GetFirstEffect(oTarget);
+        while (GetIsEffectValid(eAOE) && bValid == FALSE)
+        {
+            if (GetEffectCreator(eAOE) == oCaster)
+            {
+                //If the effect was created by the spell then remove it
+                if(GetEffectSpellId(eAOE) == nSpell_ID)
+                {
+                    RemoveEffect(oTarget, eAOE);
+                    bValid = TRUE;
+                }
+            }
+            //Get next effect on the target
+            eAOE = GetNextEffect(oTarget);
+        }
+    }
+}
+
+// * Kovi. removes any effects from this type of spell
+// * i.e., used in Mage Armor to remove any previous
+// * mage armors
+void PRCRemoveEffectsFromSpell(object oTarget, int SpellID)
+{
+  effect eLook = GetFirstEffect(oTarget);
+  while (GetIsEffectValid(eLook)) {
+    if (GetEffectSpellId(eLook) == SpellID)
+      RemoveEffect(oTarget, eLook);
+    eLook = GetNextEffect(oTarget);
+  }
+}
+
+effect PRCGetScaledEffect(effect eStandard, object oTarget)
+{
+    int nDiff = GetGameDifficulty();
+    effect eNew = eStandard;
+    object oMaster = GetMaster(oTarget);
+    if(GetIsPC(oTarget) || (GetIsObjectValid(oMaster) && GetIsPC(oMaster)))
+    {
+        if(GetEffectType(eStandard) == EFFECT_TYPE_FRIGHTENED && nDiff == GAME_DIFFICULTY_VERY_EASY)
+        {
+            eNew = EffectAttackDecrease(-2);
+            return eNew;
+        }
+        if(GetEffectType(eStandard) == EFFECT_TYPE_FRIGHTENED && nDiff == GAME_DIFFICULTY_EASY)
+        {
+            eNew = EffectAttackDecrease(-4);
+            return eNew;
+        }
+        if(nDiff == GAME_DIFFICULTY_VERY_EASY &&
+            (GetEffectType(eStandard) == EFFECT_TYPE_PARALYZE ||
+             GetEffectType(eStandard) == EFFECT_TYPE_STUNNED ||
+             GetEffectType(eStandard) == EFFECT_TYPE_CONFUSED))
+        {
+            eNew = EffectDazed();
+            return eNew;
+        }
+        else if(GetEffectType(eStandard) == EFFECT_TYPE_CHARMED || GetEffectType(eStandard) == EFFECT_TYPE_DOMINATED)
+        {
+            eNew = EffectDazed();
+            return eNew;
+        }
+    }
+    return eNew;
+}
+
+void PRCRemoveSpecificEffect(int nEffectTypeID, object oTarget)
+{
+    //Declare major variables
+    //Get the object that is exiting the AOE
+    int bValid = FALSE;
+    effect eAOE;
+    //Search through the valid effects on the target.
+    eAOE = GetFirstEffect(oTarget);
+    while (GetIsEffectValid(eAOE))
+    {
+        if (GetEffectType(eAOE) == nEffectTypeID)
+        {
+            //If the effect was created by the spell then remove it
+            bValid = TRUE;
+            RemoveEffect(oTarget, eAOE);
+        }
+        //Get next effect on the target
+        eAOE = GetNextEffect(oTarget);
+    }
+}
+
+int PRCAmIAHumanoid(object oTarget)
+{
+   int nRacial = MyPRCGetRacialType(oTarget);
+
+   if((nRacial == RACIAL_TYPE_DWARF) ||
+      (nRacial == RACIAL_TYPE_HALFELF) ||
+      (nRacial == RACIAL_TYPE_HALFORC) ||
+      (nRacial == RACIAL_TYPE_ELF) ||
+      (nRacial == RACIAL_TYPE_GNOME) ||
+      (nRacial == RACIAL_TYPE_HUMANOID_GOBLINOID) ||
+      (nRacial == RACIAL_TYPE_HALFLING) ||
+      (nRacial == RACIAL_TYPE_HUMAN) ||
+      (nRacial == RACIAL_TYPE_HUMANOID_MONSTROUS) ||
+      (nRacial == RACIAL_TYPE_HUMANOID_ORC) ||
+      (nRacial == RACIAL_TYPE_HUMANOID_REPTILIAN))
+   {
+    return TRUE;
+   }
+   return FALSE;
+}
+
+int PRCGetScaledDuration(int nActualDuration, object oTarget)
+{
+
+    int nDiff = GetGameDifficulty();
+    int nNew = nActualDuration;
+    if(GetIsPC(oTarget) && nActualDuration > 3)
+    {
+        if(nDiff == GAME_DIFFICULTY_VERY_EASY || nDiff == GAME_DIFFICULTY_EASY)
+        {
+            nNew = nActualDuration / 4;
+        }
+        else if(nDiff == GAME_DIFFICULTY_NORMAL)
+        {
+            nNew = nActualDuration / 2;
+        }
+        if(nNew == 0)
+        {
+            nNew = 1;
+        }
+    }
+    return nNew;
+}
+
+effect PRCCreateProtectionFromAlignmentLink(int nAlignment, int nPower = 1)
+{
+    int nAlignmentLC;
+    int nAlignmentGE;
+    effect eDur;
+    if(nAlignment == ALIGNMENT_LAWFUL)
+    {
+        nAlignmentLC = ALIGNMENT_LAWFUL;
+        nAlignmentGE = ALIGNMENT_ALL;
+        eDur = EffectVisualEffect(VFX_DUR_PROTECTION_EVIL_MINOR);
+    }
+    else if(nAlignment == ALIGNMENT_CHAOTIC)
+    {
+        nAlignmentLC = ALIGNMENT_CHAOTIC;
+        nAlignmentGE = ALIGNMENT_ALL;
+        eDur = EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MINOR);
+    }
+    else if(nAlignment == ALIGNMENT_GOOD)
+    {
+        nAlignmentLC = ALIGNMENT_ALL;
+        nAlignmentGE = ALIGNMENT_GOOD;
+        eDur = EffectVisualEffect(VFX_DUR_PROTECTION_EVIL_MINOR);
+    }
+    else if(nAlignment == ALIGNMENT_EVIL)
+    {
+        nAlignmentLC = ALIGNMENT_ALL;
+        nAlignmentGE = ALIGNMENT_EVIL;
+        eDur = EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MINOR);
+    }
+
+    int nFinal = nPower * 2;
+    effect eAC = EffectACIncrease(nFinal, AC_DEFLECTION_BONUS);
+    eAC = VersusAlignmentEffect(eAC, nAlignmentLC, nAlignmentGE);
+    effect eSave = EffectSavingThrowIncrease(SAVING_THROW_ALL, nFinal);
+    eSave = VersusAlignmentEffect(eSave,nAlignmentLC, nAlignmentGE);
+    effect eImmune = EffectImmunity(IMMUNITY_TYPE_MIND_SPELLS);
+    eImmune = VersusAlignmentEffect(eImmune,nAlignmentLC, nAlignmentGE);
+
+    effect eDur2 = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+    effect eLink = EffectLinkEffects(eImmune, eSave);
+    eLink = EffectLinkEffects(eLink, eAC);
+    eLink = EffectLinkEffects(eLink, eDur);
+    eLink = EffectLinkEffects(eLink, eDur2);
+    return eLink;
+}
+
+float PRCGetSpellEffectDelay(location SpellTargetLocation, object oTarget)
+{
+    float fDelay;
+    return fDelay = GetDistanceBetweenLocations(SpellTargetLocation, GetLocation(oTarget))/20;
+}
+
+// * returns true if the creature has flesh
+int PRCIsImmuneToPetrification(object oCreature)
+{
+    int nAppearance = GetAppearanceType(oCreature);
+    int bImmune = FALSE;
+    switch (nAppearance)
+    {
+        case APPEARANCE_TYPE_BASILISK:
+        case APPEARANCE_TYPE_COCKATRICE:
+        case APPEARANCE_TYPE_MEDUSA:
+        case APPEARANCE_TYPE_ALLIP:
+        case APPEARANCE_TYPE_ELEMENTAL_AIR:
+        case APPEARANCE_TYPE_ELEMENTAL_AIR_ELDER:
+        case APPEARANCE_TYPE_ELEMENTAL_EARTH:
+        case APPEARANCE_TYPE_ELEMENTAL_EARTH_ELDER:
+        case APPEARANCE_TYPE_ELEMENTAL_FIRE:
+        case APPEARANCE_TYPE_ELEMENTAL_FIRE_ELDER:
+        case APPEARANCE_TYPE_ELEMENTAL_WATER:
+        case APPEARANCE_TYPE_ELEMENTAL_WATER_ELDER:
+        case APPEARANCE_TYPE_GOLEM_STONE:
+        case APPEARANCE_TYPE_GOLEM_IRON:
+        case APPEARANCE_TYPE_GOLEM_CLAY:
+        case APPEARANCE_TYPE_GOLEM_BONE:
+        case APPEARANCE_TYPE_GORGON:
+        case APPEARANCE_TYPE_HEURODIS_LICH:
+        case APPEARANCE_TYPE_LANTERN_ARCHON:
+        case APPEARANCE_TYPE_SHADOW:
+        case APPEARANCE_TYPE_SHADOW_FIEND:
+        case APPEARANCE_TYPE_SHIELD_GUARDIAN:
+        case APPEARANCE_TYPE_SKELETAL_DEVOURER:
+        case APPEARANCE_TYPE_SKELETON_CHIEFTAIN:
+        case APPEARANCE_TYPE_SKELETON_COMMON:
+        case APPEARANCE_TYPE_SKELETON_MAGE:
+        case APPEARANCE_TYPE_SKELETON_PRIEST:
+        case APPEARANCE_TYPE_SKELETON_WARRIOR:
+        case APPEARANCE_TYPE_SKELETON_WARRIOR_1:
+        case APPEARANCE_TYPE_SPECTRE:
+        case APPEARANCE_TYPE_WILL_O_WISP:
+        case APPEARANCE_TYPE_WRAITH:
+        case APPEARANCE_TYPE_BAT_HORROR:
+        case 405: // Dracolich:
+        case 415: // Alhoon
+        case 418: // shadow dragon
+        case 420: // mithral golem
+        case 421: // admantium golem
+        case 430: // Demi Lich
+        case 469: // animated chest
+        case 474: // golems
+        case 475: // golems
+        bImmune = TRUE;
+    }
+
+    int nRacialType = MyPRCGetRacialType(oCreature);
+    switch(nRacialType)
+    {
+        case RACIAL_TYPE_ELEMENTAL:
+        case RACIAL_TYPE_CONSTRUCT:
+        case RACIAL_TYPE_OOZE:
+        case RACIAL_TYPE_UNDEAD:
+        bImmune = TRUE;
+    }
+    
+    // 01/08/07 Racial feat for petrification immunity
+    if(GetHasFeat(FEAT_IMMUNE_PETRIFICATION)) bImmune = TRUE;
+
+    // 03/07/2005 CraigW - Petrification immunity can also be granted as an item property.
+    if ( ResistSpell(OBJECT_SELF,oCreature) == 2 )
+    {
+        bImmune = TRUE;
+    }
+
+    // * GZ: Sept 2003 - Prevent people from petrifying DM, resulting in GUI even when
+    //                   effect is not successful.
+    if (!GetPlotFlag(oCreature) && GetIsDM(oCreature))
+    {
+       bImmune = FALSE;
+    }
+    return bImmune;
+}
+
+// *  This is a wrapper for how Petrify will work in Expansion Pack 1
+// * Scripts affected: flesh to stone, breath petrification, gaze petrification, touch petrification
+// * nPower : This is the Hit Dice of a Monster using Gaze, Breath or Touch OR it is the Caster Spell of
+// *   a spellcaster
+// * nFortSaveDC: pass in this number from the spell script
+void PRCDoPetrification(int nPower, object oSource, object oTarget, int nSpellID, int nFortSaveDC)
+{
+
+    if(!GetIsReactionTypeFriendly(oTarget))
+    {
+        // * exit if creature is immune to petrification
+        if (PRCIsImmuneToPetrification(oTarget) == TRUE)
+        {
+            return;
+        }
+        float fDifficulty = 0.0;
+        int bIsPC = GetIsPC(oTarget);
+        int bShowPopup = FALSE;
+
+        // * calculate Duration based on difficulty settings
+        int nGameDiff = GetGameDifficulty();
+        switch (nGameDiff)
+        {
+            case GAME_DIFFICULTY_VERY_EASY:
+            case GAME_DIFFICULTY_EASY:
+            case GAME_DIFFICULTY_NORMAL:
+                    fDifficulty = RoundsToSeconds(nPower); // One Round per hit-die or caster level
+                break;
+            case GAME_DIFFICULTY_CORE_RULES:
+            case GAME_DIFFICULTY_DIFFICULT:
+                bShowPopup = TRUE;
+            break;
+        }
+
+        int nSaveDC = nFortSaveDC;
+        effect ePetrify = EffectPetrify();
+
+        effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
+
+        effect eLink = EffectLinkEffects(eDur, ePetrify);
+
+            // Let target know the negative spell has been cast
+            SignalEvent(oTarget,
+                        EventSpellCastAt(OBJECT_SELF, nSpellID));
+                        //SpeakString(IntToString(nSpellID));
+
+            // Do a fortitude save check
+            if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nSaveDC))
+            {
+                // Save failed; apply paralyze effect and VFX impact
+
+                /// * The duration is permanent against NPCs but only temporary against PCs
+                if (bIsPC == TRUE)
+                {
+                    if (bShowPopup == TRUE)
+                    {
+                        // * under hardcore rules or higher, this is an instant death
+                        ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);
+                        //only pop up death panel if switch is not set
+                        if(!GetPRCSwitch(PRC_NO_PETRIFY_GUI))
+                        DelayCommand(2.75, PopUpDeathGUIPanel(oTarget, FALSE , TRUE, 40579));
+                        //run the PRC Ondeath code
+                        //no way to run the normal module ondeath code too
+                        //so a execute script has been added for builders to take advantage of
+                        DelayCommand(2.75, ExecuteScript("prc_ondeath", oTarget));
+                        DelayCommand(2.75, ExecuteScript("prc_pw_petrific", oTarget));
+                        // if in hardcore, treat the player as an NPC
+                        bIsPC = FALSE;
+                        //fDifficulty = TurnsToSeconds(nPower); // One turn per hit-die
+                    }
+                    else
+                        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDifficulty);
+                }
+                else
+                {
+                    ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);
+                }
+                // April 2003: Clearing actions to kick them out of conversation when petrified
+                AssignCommand(oTarget, ClearAllActions(TRUE));
+            }
+    }
+
+}
+

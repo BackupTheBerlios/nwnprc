@@ -9,7 +9,7 @@
 */
 
 #include "prc_sp_func"
-#include "x0_i0_spells"
+
 #include "inv_inc_invfunc"
 #include "inv_invokehook"
 
@@ -64,23 +64,23 @@ void main()
     //  Spell does not stack with itself, even if it is different immunity types
     if (GetHasSpellEffect(INVOKE_IGNORE_THE_PYRE_ACID,oTarget))
     {
-         RemoveSpellEffects(INVOKE_IGNORE_THE_PYRE_ACID, oCaster, oTarget);
+         PRCRemoveSpellEffects(INVOKE_IGNORE_THE_PYRE_ACID, oCaster, oTarget);
     }
     if (GetHasSpellEffect(INVOKE_IGNORE_THE_PYRE_COLD,oTarget))
     {
-         RemoveSpellEffects(INVOKE_IGNORE_THE_PYRE_COLD, oCaster, oTarget);
+         PRCRemoveSpellEffects(INVOKE_IGNORE_THE_PYRE_COLD, oCaster, oTarget);
     }
     if (GetHasSpellEffect(INVOKE_IGNORE_THE_PYRE_ELEC,oTarget))
     {
-         RemoveSpellEffects(INVOKE_IGNORE_THE_PYRE_ELEC, oCaster, oTarget);
+         PRCRemoveSpellEffects(INVOKE_IGNORE_THE_PYRE_ELEC, oCaster, oTarget);
     }
     if (GetHasSpellEffect(INVOKE_IGNORE_THE_PYRE_FIRE,oTarget))
     {
-         RemoveSpellEffects(INVOKE_IGNORE_THE_PYRE_FIRE, oCaster, oTarget);
+         PRCRemoveSpellEffects(INVOKE_IGNORE_THE_PYRE_FIRE, oCaster, oTarget);
     }
     if (GetHasSpellEffect(INVOKE_IGNORE_THE_PYRE_SONIC,oTarget))
     {
-         RemoveSpellEffects(INVOKE_IGNORE_THE_PYRE_SONIC, oCaster, oTarget);
+         PRCRemoveSpellEffects(INVOKE_IGNORE_THE_PYRE_SONIC, oCaster, oTarget);
     }
     
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eList, oTarget, fDuration,TRUE,-1,nCasterLevel);

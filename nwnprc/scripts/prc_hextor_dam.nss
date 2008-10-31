@@ -136,7 +136,7 @@ void main()
     effect eLink = EffectLinkEffects(eDam, eAtk);
     eLink = ExtraordinaryEffect(eLink);
 
-    RemoveEffectsFromSpell(oPC, GetSpellId());
+    PRCRemoveEffectsFromSpell(oPC, GetSpellId());
 
     ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oPC);
 }

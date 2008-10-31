@@ -17,7 +17,7 @@
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
 #include "prc_inc_spells"
 
-#include "X0_I0_SPELLS"
+
 #include "x2_inc_spellhook"
 
 void main()

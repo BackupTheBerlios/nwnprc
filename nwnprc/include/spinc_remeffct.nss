@@ -40,7 +40,7 @@ void SpellRemovalCheck(object oCaster, object oTarget)
 		//Ghoul Gauntlet
 		if(GetHasSpellEffect(SPELL_GHOUL_GAUNTLET, oTarget))
 		{
-			RemoveSpellEffects(SPELL_GHOUL_GAUNTLET, oCaster, oTarget);
+			PRCRemoveSpellEffects(SPELL_GHOUL_GAUNTLET, oCaster, oTarget);
 		}
 		
 		//Touch of Juiblex
@@ -51,13 +51,13 @@ void SpellRemovalCheck(object oCaster, object oTarget)
 			
 			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
 			
-			RemoveSpellEffects(SPELL_TOUCH_OF_JUIBLEX, oCaster, oTarget);
+			PRCRemoveSpellEffects(SPELL_TOUCH_OF_JUIBLEX, oCaster, oTarget);
 		}
 		
 		//Evil Eye
 		if(GetHasSpellEffect(SPELL_EVIL_EYE, oTarget))
 		{
-			RemoveSpellEffects(SPELL_EVIL_EYE, oCaster, oTarget);
+			PRCRemoveSpellEffects(SPELL_EVIL_EYE, oCaster, oTarget);
 		}
 	}
 
@@ -67,7 +67,7 @@ void SpellRemovalCheck(object oCaster, object oTarget)
 		//Ghoul Gauntlet
 		if(GetHasSpellEffect(SPELL_GHOUL_GAUNTLET, oTarget))
 		{
-			RemoveSpellEffects(SPELL_GHOUL_GAUNTLET, oCaster, oTarget);
+			PRCRemoveSpellEffects(SPELL_GHOUL_GAUNTLET, oCaster, oTarget);
 		}
 	}
 
@@ -77,13 +77,13 @@ void SpellRemovalCheck(object oCaster, object oTarget)
 		//Ghoul Gauntlet
 		if(GetHasSpellEffect(SPELL_GHOUL_GAUNTLET, oTarget))
 		{
-			RemoveSpellEffects(SPELL_GHOUL_GAUNTLET, oCaster, oTarget);
+			PRCRemoveSpellEffects(SPELL_GHOUL_GAUNTLET, oCaster, oTarget);
 		}
 
 		//Energy Ebb
 		if(GetHasSpellEffect(SPELL_ENERGY_EBB, oTarget))
 		{
-			RemoveSpellEffects(SPELL_ENERGY_EBB, oCaster, oTarget);
+			PRCRemoveSpellEffects(SPELL_ENERGY_EBB, oCaster, oTarget);
 		}
 		
 		//Touch of Juiblex
@@ -94,7 +94,7 @@ void SpellRemovalCheck(object oCaster, object oTarget)
 			
 			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
 			
-			RemoveSpellEffects(SPELL_TOUCH_OF_JUIBLEX, oCaster, oTarget);
+			PRCRemoveSpellEffects(SPELL_TOUCH_OF_JUIBLEX, oCaster, oTarget);
 		}
 
 	}
@@ -105,13 +105,13 @@ void SpellRemovalCheck(object oCaster, object oTarget)
 		//Ghoul Gauntlet
 		if(GetHasSpellEffect(SPELL_GHOUL_GAUNTLET, oTarget))
 		{
-			RemoveSpellEffects(SPELL_GHOUL_GAUNTLET, oCaster, oTarget);
+			PRCRemoveSpellEffects(SPELL_GHOUL_GAUNTLET, oCaster, oTarget);
 		}
 
 		//Energy Ebb
 		if(GetHasSpellEffect(SPELL_ENERGY_EBB, oTarget))
 		{
-			RemoveSpellEffects(SPELL_ENERGY_EBB, oCaster, oTarget);
+			PRCRemoveSpellEffects(SPELL_ENERGY_EBB, oCaster, oTarget);
 		}
 
 	}
@@ -122,13 +122,13 @@ void SpellRemovalCheck(object oCaster, object oTarget)
 		//Ghoul Gauntlet
 		if(GetHasSpellEffect(SPELL_GHOUL_GAUNTLET, oTarget))
 		{
-			RemoveSpellEffects(SPELL_GHOUL_GAUNTLET, oCaster, oTarget);
+			PRCRemoveSpellEffects(SPELL_GHOUL_GAUNTLET, oCaster, oTarget);
 		}
 
 		//Energy Ebb
 		if(GetHasSpellEffect(SPELL_ENERGY_EBB, oTarget))
 		{
-			RemoveSpellEffects(SPELL_ENERGY_EBB, oCaster, oTarget);
+			PRCRemoveSpellEffects(SPELL_ENERGY_EBB, oCaster, oTarget);
 		}
 		
 		//Touch of Juiblex
@@ -139,7 +139,7 @@ void SpellRemovalCheck(object oCaster, object oTarget)
 			
 			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
 			
-			RemoveSpellEffects(SPELL_TOUCH_OF_JUIBLEX, oCaster, oTarget);
+			PRCRemoveSpellEffects(SPELL_TOUCH_OF_JUIBLEX, oCaster, oTarget);
 		}
 
 	}
@@ -150,14 +150,14 @@ void SpellRemovalCheck(object oCaster, object oTarget)
 		//Ghoul Gauntlet
 		if(GetHasSpellEffect(SPELL_GHOUL_GAUNTLET, oTarget))
 		{
-			RemoveSpellEffects(SPELL_GHOUL_GAUNTLET, oCaster, oTarget);
+			PRCRemoveSpellEffects(SPELL_GHOUL_GAUNTLET, oCaster, oTarget);
 		}
 		
 		//Eternity of Torture
 		if(GetHasSpellEffect(SPELL_ETERNITY_OF_TORTURE, oTarget))
 		{
 			AssignCommand(oTarget, SetCommandable(TRUE, oTarget));
-			RemoveSpellEffects(SPELL_ETERNITY_OF_TORTURE, oCaster, oTarget);
+			PRCRemoveSpellEffects(SPELL_ETERNITY_OF_TORTURE, oCaster, oTarget);
 		}
 	}
 
@@ -167,14 +167,14 @@ void SpellRemovalCheck(object oCaster, object oTarget)
 		//Ghoul Gauntlet
 		if(GetHasSpellEffect(SPELL_GHOUL_GAUNTLET, oTarget))
 		{
-			RemoveSpellEffects(SPELL_GHOUL_GAUNTLET, oCaster, oTarget);
+			PRCRemoveSpellEffects(SPELL_GHOUL_GAUNTLET, oCaster, oTarget);
 		}
 		
 		//Eternity of Torture
 		if(GetHasSpellEffect(SPELL_ETERNITY_OF_TORTURE, oTarget))
 		{
 			AssignCommand(oTarget, SetCommandable(TRUE, oTarget));
-			RemoveSpellEffects(SPELL_ETERNITY_OF_TORTURE, oCaster, oTarget);
+			PRCRemoveSpellEffects(SPELL_ETERNITY_OF_TORTURE, oCaster, oTarget);
 		}
 	}
 
@@ -184,13 +184,13 @@ void SpellRemovalCheck(object oCaster, object oTarget)
 		//Ghoul Gauntlet
 		if(GetHasSpellEffect(SPELL_GHOUL_GAUNTLET, oTarget))
 		{
-			RemoveSpellEffects(SPELL_GHOUL_GAUNTLET, oCaster, oTarget);
+			PRCRemoveSpellEffects(SPELL_GHOUL_GAUNTLET, oCaster, oTarget);
 		}
 		//Eternity of Torture
 		if(GetHasSpellEffect(SPELL_ETERNITY_OF_TORTURE, oTarget))
 		{
 			AssignCommand(oTarget, SetCommandable(TRUE, oTarget));
-			RemoveSpellEffects(SPELL_ETERNITY_OF_TORTURE, oCaster, oTarget);
+			PRCRemoveSpellEffects(SPELL_ETERNITY_OF_TORTURE, oCaster, oTarget);
 		}
 	}
 

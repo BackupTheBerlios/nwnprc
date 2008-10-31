@@ -1,5 +1,4 @@
-#include "prc_alterations"
-#include "prc_inc_spells"
+#include "prc_inc_combat"
 
 void main()
 {

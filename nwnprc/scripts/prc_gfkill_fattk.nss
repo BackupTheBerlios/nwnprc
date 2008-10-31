@@ -19,7 +19,7 @@
 //and fails the save, the onlooker becomes shaken for 1 round per GFK class
 //level.
 
-#include "prc_alterations"
+#include "prc_inc_combat"
 
 void DoFrightfulAttack(object oPC, object oTarget);
 
@@ -100,7 +100,7 @@ void DoFrightfulAttack(object oPC, object oTarget) {
       if ( ! iTargetIF && ! iTargetIMA ) {
          if ( iTargetHD < iGFKCharacterLevel ) {
             //We use PerformAttack from prc_inc_combat to make this easier
-            //eShaken = CreateDoomEffectsLink();
+            //eShaken = EffectShaken();
             //eDeath = EffectDeath(TRUE,FALSE);
             int iSave = PRCMySavingThrow( SAVING_THROW_WILL, oTarget, 10 + iGFKClassLevel + iGFKCharModifier, SAVING_THROW_TYPE_FEAR);
             if ( iSave < 2 ) {
@@ -113,7 +113,7 @@ void DoFrightfulAttack(object oPC, object oTarget) {
                }
                else
                {
-                  eEffect = CreateDoomEffectsLink();
+                  eEffect = EffectShaken();
                }
                PerformAttack(oTarget, oPC, eEffect, IntToFloat(iGFKClassLevel));
             } else {
@@ -141,7 +141,7 @@ void DoFrightfulAttack(object oPC, object oTarget) {
       //int nDamage;
       effect eVis = EffectVisualEffect(VFX_IMP_FEAR_S);
       effect eFearE = EffectFrightened();
-      effect eShakenE = CreateDoomEffectsLink();
+      effect eShakenE = EffectShaken();
       effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_FEAR);
       effect eImpact = EffectVisualEffect(VFX_FNF_LOS_NORMAL_20);
       effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);

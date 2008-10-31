@@ -19,6 +19,25 @@
 // Notes to self
 // - While bladewind is active, lose Psych Strike normally, but store it and affect all based on that (or not)
 
+// * returns true if oCreature does not have a mind
+int PRCIsMindless(object oCreature)
+{
+    int nRacialType = MyPRCGetRacialType(oCreature);
+    int nMindless;
+    switch(nRacialType)
+    {
+        case RACIAL_TYPE_ELEMENTAL:
+        case RACIAL_TYPE_UNDEAD:
+        case RACIAL_TYPE_VERMIN:
+        case RACIAL_TYPE_CONSTRUCT:
+        case RACIAL_TYPE_OOZE:
+        nMindless = TRUE;
+    }
+    if(GetAbilityScore(oCreature, ABILITY_INTELLIGENCE) > 3)
+        nMindless = FALSE;
+
+    return nMindless;
+}
 
 void main()
 {
@@ -63,7 +82,7 @@ void main()
              nRacialType == RACIAL_TYPE_UNDEAD              ||
              (nRacialType == RACIAL_TYPE_CONSTRUCT && GetRacialType(oTarget) != RACIAL_TYPE_WARFORGED) ||
              // Mindless or
-             spellsIsMindless(oTarget)                      ||
+             PRCIsMindless(oTarget)                      ||
              // Immune to mind-affecting
              GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS)
              )

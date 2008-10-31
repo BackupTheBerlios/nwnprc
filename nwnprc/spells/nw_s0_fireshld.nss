@@ -64,7 +64,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     //  *GZ: No longer stack this spell
     if (GetHasSpellEffect(GetSpellId(),oTarget))
     {
-         RemoveSpellEffects(GetSpellId(), OBJECT_SELF, oTarget);
+         PRCRemoveSpellEffects(GetSpellId(), OBJECT_SELF, oTarget);
     }
 
     //Enter Metamagic conditions

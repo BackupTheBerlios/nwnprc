@@ -88,7 +88,7 @@ void main()
     WeakBreath = CreateBreath(OBJECT_SELF, FALSE, 40.0, -1, 10, nDamage, ABILITY_CONSTITUTION, nDCBoost, BREATH_WEAKENING);
     
     //Apply the breath
-    PlayDragonBattleCry();
+    PRCPlayDragonBattleCry();
     ApplyBreath(WeakBreath, GetSpellTargetLocation());
     
     //Apply the recharge lock

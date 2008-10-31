@@ -13,8 +13,7 @@ of the Drow Judicator prestige class.
 //:: Updated by Oni5115 9/23/2004 to use new combat engine
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
-#include "prc_inc_util"
+#include "prc_inc_combat"
 
 void main()
 {
@@ -61,7 +60,6 @@ effect eLink = EffectLinkEffects(eVis, eCon);
      string sSuccess = "";
      string sMiss = "";
      float fDistance = GetDistanceBetween(oPC, oTarget);
-     float fDelay = GetTimeToCloseDistance(fDistance, oPC, TRUE);
         
      // If they are not within 10 ft, they can't do a melee attack.
      if(!bIsRangedAttack &&  !GetIsInMeleeRange(oTarget, oPC) )
@@ -78,5 +76,5 @@ effect eLink = EffectLinkEffects(eVis, eCon);
            
      }        
      
-     DelayCommand(fDelay, PerformAttackRound(oTarget, oPC, eLink, 0.0, 0, 0, 0, FALSE, sSuccess, sMiss) );
+     PerformAttackRound(oTarget, oPC, eLink, 0.0, 0, 0, 0, FALSE, sSuccess, sMiss);
 }

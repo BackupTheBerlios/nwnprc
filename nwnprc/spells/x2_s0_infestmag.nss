@@ -54,7 +54,7 @@ void RunInfestImpact(object oTarget, object oCaster, int nSaveDC, int nMetaMagic
          else
          {
             DeleteLocalInt(oTarget,"XP2_L_SPELL_SAVE_DC_" + IntToString (SPELL_INFESTATION_OF_MAGGOTS));
-            GZRemoveSpellEffects(SPELL_INFESTATION_OF_MAGGOTS, oTarget);
+            GZPRCRemoveSpellEffects(SPELL_INFESTATION_OF_MAGGOTS, oTarget);
          }
     }
 }

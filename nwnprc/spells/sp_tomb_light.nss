@@ -52,7 +52,7 @@ Created:   7/7/06
 
 void TombLoop(object oPC, object oTarget);
 
-#include "prc_inc_spells"
+#include "prc_inc_sp_tch"
 
 void main()
 {

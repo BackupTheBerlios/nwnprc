@@ -2,7 +2,7 @@
     Dirgesinger's Song of Sorrow
 */
 
-#include "prc_alterations"
+#include "prc_inc_combat"
 
 void main()
 {

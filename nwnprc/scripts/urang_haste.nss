@@ -16,7 +16,7 @@
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
 #include "prc_inc_spells"
 
-#include "x0_i0_spells"
+
 
 #include "x2_inc_spellhook"
 
@@ -46,17 +46,17 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
 
     if (GetHasSpellEffect(SPELL_EXPEDITIOUS_RETREAT, oTarget) == TRUE)
     {
-        RemoveSpellEffects(SPELL_EXPEDITIOUS_RETREAT, OBJECT_SELF, oTarget);
+        PRCRemoveSpellEffects(SPELL_EXPEDITIOUS_RETREAT, OBJECT_SELF, oTarget);
     }
 
     if (GetHasSpellEffect(647, oTarget) == TRUE)
     {
-        RemoveSpellEffects(647, OBJECT_SELF, oTarget);
+        PRCRemoveSpellEffects(647, OBJECT_SELF, oTarget);
     }
 
     if (GetHasSpellEffect(SPELL_MASS_HASTE, oTarget) == TRUE)
     {
-        RemoveSpellEffects(SPELL_MASS_HASTE, OBJECT_SELF, oTarget);
+        PRCRemoveSpellEffects(SPELL_MASS_HASTE, OBJECT_SELF, oTarget);
     }
 
 

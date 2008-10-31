@@ -11,7 +11,7 @@
 //Added delay to EvalPRCFeats event to allow module setup to take priority
 //  Aaon Graywolf - Jan 6, 2004
 
-#include "prc_alterations"
+#include "prc_inc_function"
 #include "prc_inc_domain"
 
 void PrcFeats(object oPC)

@@ -66,7 +66,7 @@ if (!X2PreSpellCastCode()) return;
     object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
     while(GetIsObjectValid(oTarget))
     {
-        fDelay = GetSpellEffectDelay(lTarget, oTarget);
+        fDelay = PRCGetSpellEffectDelay(lTarget, oTarget);
         nDC = PRCGetSaveDC(oTarget, OBJECT_SELF);
         
         if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))

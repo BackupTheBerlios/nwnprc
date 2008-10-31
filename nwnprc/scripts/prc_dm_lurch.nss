@@ -11,7 +11,7 @@ effect eVFX = EffectVisualEffect(VFX_COM_SPECIAL_RED_ORANGE);
 
 if(GetAbilityScore(oTarget, ABILITY_INTELLIGENCE) < 3)
     {nHumanoid = -8;}
-if(!AmIAHumanoid(oTarget))
+if(!PRCAmIAHumanoid(oTarget))
     {nHumanoid = -4;}
 
 //PC Roll:     roll  +   Bluff Skill Points      + Lurch Bonus

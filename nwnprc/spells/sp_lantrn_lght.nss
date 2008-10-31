@@ -29,7 +29,7 @@ Created:   7/12/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_inc_spells"
+#include "prc_inc_sp_tch"
 #include "prc_sp_func"
 
 //Implements the spell impact, put code here

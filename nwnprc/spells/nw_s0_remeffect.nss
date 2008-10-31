@@ -21,12 +21,113 @@
     Flaming_Sword: Added Restoration spells, cleaned up
     added panacea, attack roll before SR check
 */
+const int SAVING_THROW_NONE = 4;
 
 #include "prc_sp_func"
+#include "prc_inc_sp_tch"
 
 int GetIsSupernaturalCurse(effect eEff)
 {
     return GetTag(GetEffectCreator(eEff)) == "q6e_ShaorisFellTemple";
+}
+
+// * generic area of effect constructor
+void PRCGenericAreaOfEffect(
+        object oCaster, location lTargetLoc,
+        int nShape, float fRadiusSize, int nSpellID,
+        effect eImpact, effect eLink, effect eVis,
+        int nDurationType=DURATION_TYPE_INSTANT, float fDuration = 0.0,
+        int nTargetType=SPELL_TARGET_ALLALLIES, int bHarmful = FALSE,
+        int nRemoveEffectSpell=FALSE, int nRemoveEffect1=0, int nRemoveEffect2=0, int nRemoveEffect3=0,
+        int bLineOfSight=FALSE, int nObjectFilter=OBJECT_TYPE_CREATURE,
+        int bPersistentObject=FALSE, int bResistCheck=FALSE, int nSavingThrowType=SAVING_THROW_NONE,
+        int nSavingThrowSubType=SAVING_THROW_TYPE_ALL
+        )
+{
+    //Apply Impact
+    if (GetEffectType(eImpact) != 0)
+    {
+        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, lTargetLoc);
+    }
+
+    object oTarget = OBJECT_INVALID;
+    float fDelay = 0.0;
+
+    int nPenetr = PRCGetCasterLevel(oCaster);
+
+
+    //Get the first target in the radius around the caster
+    if (bPersistentObject == TRUE)
+        oTarget = GetFirstInPersistentObject();
+    else
+        oTarget = GetFirstObjectInShape(nShape, fRadiusSize, lTargetLoc, bLineOfSight, nObjectFilter);
+
+    while(GetIsObjectValid(oTarget))
+    {
+        if (spellsIsTarget(oTarget, nTargetType, oCaster) == TRUE)
+        {
+            //Fire spell cast at event for target
+            SignalEvent(oTarget, EventSpellCastAt(oCaster, nSpellID, bHarmful));
+            int nResistSpellSuccess = FALSE;
+            // * actually perform the resist check
+            if (bResistCheck == TRUE)
+            {
+                nResistSpellSuccess = PRCDoResistSpell(oCaster, oTarget,nPenetr);
+            }
+          if(!nResistSpellSuccess)
+          {
+                int nDC = PRCGetSaveDC(oTarget, oCaster);
+                int nSavingThrowSuccess = FALSE;
+                // * actually roll saving throw if told to
+                if (nSavingThrowType != SAVING_THROW_NONE)
+                {
+                  nSavingThrowSuccess = PRCMySavingThrow(nSavingThrowType, oTarget, nDC, nSavingThrowSubType);
+                }
+                if (!nSavingThrowSuccess)
+                {
+                    fDelay = GetRandomDelay(0.4, 1.1);
+
+
+
+                    //Apply VFX impact
+                    if (GetEffectType(eVis) != 0)
+                    {
+                        DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+                    }
+
+                    // * Apply effects
+                   // if (GetEffectType(eLink) != 0)
+                   // * Had to remove this test because LINKED effects have no valid type.
+                    {
+
+                        DelayCommand(fDelay, ApplyEffectToObject(nDurationType, eLink, oTarget, fDuration));
+                    }
+
+                    // * If this is a removal spell then perform the appropriate removals
+                    if (nRemoveEffectSpell == TRUE)
+                    {
+                        //Remove effects
+                        PRCRemoveSpecificEffect(nRemoveEffect1, oTarget);
+                        if(nRemoveEffect2 != 0)
+                        {
+                            PRCRemoveSpecificEffect(nRemoveEffect2, oTarget);
+                        }
+                        if(nRemoveEffect3 != 0)
+                        {
+                            PRCRemoveSpecificEffect(nRemoveEffect3, oTarget);
+                        }
+
+                    }
+                }// saving throw
+            } // resist spell check
+        }
+        //Get the next target in the specified area around the caster
+        if (bPersistentObject == TRUE)
+            oTarget = GetNextInPersistentObject();
+        else
+            oTarget = GetNextObjectInShape(nShape, fRadiusSize, lTargetLoc, bLineOfSight, nObjectFilter);
+
+    }
 }
 
 //Implements the spell impact, put code here
@@ -51,7 +152,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     if(nSpellID == SPELL_REMOVE_BLINDNESS_AND_DEAFNESS)
     {   //Remove Blindness and Deafness aoe hack largely untouched
         effect eLink;
-        spellsGenericAreaOfEffect(OBJECT_SELF, GetSpellTargetLocation(), SHAPE_SPHERE, RADIUS_SIZE_MEDIUM,
+        PRCGenericAreaOfEffect(OBJECT_SELF, GetSpellTargetLocation(), SHAPE_SPHERE, RADIUS_SIZE_MEDIUM,
             SPELL_REMOVE_BLINDNESS_AND_DEAFNESS, EffectVisualEffect(VFX_FNF_LOS_HOLY_30), eLink, EffectVisualEffect(nVis),
             DURATION_TYPE_INSTANT, 0.0,
             SPELL_TARGET_ALLALLIES, FALSE, TRUE, EFFECT_TYPE_BLINDNESS, EFFECT_TYPE_DEAF);

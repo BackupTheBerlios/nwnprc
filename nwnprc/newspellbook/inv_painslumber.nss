@@ -34,7 +34,7 @@ void DoSleepCheck(object oTarget, int nSleepCheck, object oCaster)
     else
     {
         DeleteLocalInt(oTarget, "PainfulSleep");
-        RemoveSpellEffects(INVOKE_PAINFUL_SLUMBER_OF_AGES, oCaster, oTarget);
+        PRCRemoveSpellEffects(INVOKE_PAINFUL_SLUMBER_OF_AGES, oCaster, oTarget);
     }
 }
 

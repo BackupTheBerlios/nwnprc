@@ -72,7 +72,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         {
             // Check caster ability vs. target's AC
 
-            int nCasterModifier = GetCasterAbilityModifier(OBJECT_SELF);
+            int nCasterModifier = PRCGetCasterAbilityModifier(OBJECT_SELF);
             int nCasterRoll = d20(1)
                 + nCasterModifier
                 + CasterLvl + 10 + -1;

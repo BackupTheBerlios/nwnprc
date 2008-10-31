@@ -6,7 +6,7 @@
     Creates a stack of 99 +2 Arrows.
 */
 //:://////////////////////////////////////////////
-//:: Created By: James Tallet
+//:: Created By: Stratovarius
 //:: Created On: Apr 4, 2004
 //:://////////////////////////////////////////////
 

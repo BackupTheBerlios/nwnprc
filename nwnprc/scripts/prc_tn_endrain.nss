@@ -7,7 +7,7 @@
     Undead gain 2d4x5 HP for one hour.
 */
 //:://////////////////////////////////////////////
-//:: Created By: James Tallet
+//:: Created By: Stratovarius
 //:: Created On: Mar 4, 2004
 //:://////////////////////////////////////////////
 

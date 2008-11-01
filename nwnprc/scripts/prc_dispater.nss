@@ -59,7 +59,6 @@ void RemoveIronPower(object oPC, object oWeap)
     if (GetLocalInt(oWeap, "DispIronPowerD"))
     {
         SetCompositeDamageBonusT(oWeap, "DispIronPowerD", 0);
-        SetCompositeBonusT(oWeap, "DispIronPowerA", 0, ITEM_PROPERTY_ATTACK_BONUS);
         // Remove all temporary keen properties (sometimes they pile up, thus we'll go with 99)
         RemoveSpecificProperty(oWeap, ITEM_PROPERTY_KEEN,-1,-1, 99,"",-1,DURATION_TYPE_TEMPORARY);
     }
@@ -84,7 +83,7 @@ void IronPower(object oPC, object oWeap, int iBonusType)
     if (IsItemMetal(oWeap) == 2 && iBonus)
     {
         //Fix up bonuses
-        SetCompositeBonusT(oWeap, "DispIronPowerA", iBonus, ITEM_PROPERTY_ATTACK_BONUS);
+        SetCompositeAttackBonus(oWeap, "DispIronPowerA"+IntToString(iBonusType), iBonus, iBonusType);
         SetCompositeDamageBonusT(oWeap, "DispIronPowerD", iBonus);
 
         // Make the weapon keen

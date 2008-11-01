@@ -114,7 +114,7 @@ void DispelMonitor(object oManifester, object oTarget, int nSpellID, int nBeatsR
 {
     // Has the power ended since the last beat, or does the duration run out now
     if((--nBeatsRemaining == 0)                                         ||
-       GZGetDelayedSpellEffectsExpired(nSpellID, oTarget, oManifester)
+       PRCGetDelayedSpellEffectsExpired(nSpellID, oTarget, oManifester)
        )
     {
         if(DEBUG) DoDebug("psi_pow_expand: Power expired, clearing");

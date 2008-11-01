@@ -35,7 +35,7 @@
 void DieMaggot(int nSpellID, object oManifester, object oTarget)
 {
     // If the target hasn't been hit with restorative effects by now, kill it
-    if(!(GZGetDelayedSpellEffectsExpired(nSpellID, oTarget, oManifester) &&
+    if(!(PRCGetDelayedSpellEffectsExpired(nSpellID, oTarget, oManifester) &&
          GetLocalInt(oTarget, "WasRestored")
          )
        )

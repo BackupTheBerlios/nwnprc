@@ -15,12 +15,57 @@
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
 #include "prc_inc_spells"
 
+//::///////////////////////////////////////////////
+//:: PRCGetIsMagicStatBonus
+//:: Copyright (c) 2001 Bioware Corp.
+//:://////////////////////////////////////////////
+/*
+    Returns the modifier from the ability
+    score that matters for this caster
+*/
+//:://////////////////////////////////////////////
+//:: Created By:
+//:: Created On:
+//:://////////////////////////////////////////////
+
+int PRCGetIsMagicStatBonus(object oCaster)
+{
+    //Declare major variables
+    int nClass;
+    int nAbility;
+
+    if(nClass = GetLevelByClass(CLASS_TYPE_WIZARD, oCaster))
+    {
+        if(nClass > 0)
+        {
+            nAbility = ABILITY_INTELLIGENCE;
+        }
+    }
+    if(nClass = GetLevelByClass(CLASS_TYPE_BARD, oCaster) || GetLevelByClass(CLASS_TYPE_SORCERER, oCaster))
+    {
+        if(nClass > 0)
+        {
+            nAbility = ABILITY_CHARISMA;
+        }
+    }
+    else if(nClass = GetLevelByClass(CLASS_TYPE_CLERIC, oCaster) || GetLevelByClass(CLASS_TYPE_DRUID, oCaster)
+         || GetLevelByClass(CLASS_TYPE_PALADIN, oCaster) || GetLevelByClass(CLASS_TYPE_RANGER, oCaster))
+    {
+        if(nClass > 0)
+        {
+            nAbility = ABILITY_WISDOM;
+        }
+    }
+
+    return GetAbilityModifier(nAbility, oCaster);
+}
+
 
 //Creates the weapon that the creature will be using.
 void spellsCreateItemForSummoned(object oCaster, float fDuration)
 {
     //Declare major variables
-    int nStat = GetIsMagicStatBonus(oCaster) / 2;
+    int nStat = PRCGetIsMagicStatBonus(oCaster) / 2;
     // GZ: Just in case...
     if (nStat >20)
     {

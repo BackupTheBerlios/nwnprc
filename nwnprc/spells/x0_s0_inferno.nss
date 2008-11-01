@@ -119,7 +119,7 @@ void RunImpact(object oTarget, object oCaster, int nMetaMagic,int EleDmg)
     //--------------------------------------------------------------------------
     // Check if the spell has expired (check also removes effects)
     //--------------------------------------------------------------------------
-    if (GZGetDelayedSpellEffectsExpired(446,oTarget,oCaster))
+    if (PRCGetDelayedSpellEffectsExpired(446,oTarget,oCaster))
     {
         return;
     }

@@ -152,7 +152,7 @@ void main()
             
 
             // 2003-07-08, Georg: Rage Epic Feat Handling
-            CheckAndApplyEpicRageFeats(nCon);
+            PRCEpicRageFeats(nCon);
 
             // 2004-01-18 mr_bumpkin: Adds special bonuses to those barbarians who are restricted by the
             // +12 attribute bonus cap, to make up for them. :)

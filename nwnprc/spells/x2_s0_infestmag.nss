@@ -21,7 +21,7 @@
 
 void RunInfestImpact(object oTarget, object oCaster, int nSaveDC, int nMetaMagic)
 {
-    if (GZGetDelayedSpellEffectsExpired(SPELL_INFESTATION_OF_MAGGOTS,oTarget,oCaster)) return;
+    if (PRCGetDelayedSpellEffectsExpired(SPELL_INFESTATION_OF_MAGGOTS,oTarget,oCaster)) return;
 
     if (GetIsDead(oTarget) == FALSE)
     {

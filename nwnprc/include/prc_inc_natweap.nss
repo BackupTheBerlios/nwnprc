@@ -108,7 +108,7 @@ const string NATURAL_WEAPON_ATTACK_COUNT = "NATURAL_WEAPON_ATTACK_COUNT";
 
 #include "prc_alterations"
 #include "prc_inc_combat"
-#include "x2_i0_spells"
+
 
 void DoNaturalAttack(object oWeapon)
 {
@@ -672,7 +672,7 @@ void NaturalSecondaryWeaponTempCheck(object oManifester, object oTarget, int nSp
     int nBeatsRemaining, string sResRef)
 {
     if(!((nBeatsRemaining-- == 0)                                         || // Has the power ended since the last beat, or does the duration run out now
-         GZGetDelayedSpellEffectsExpired(nSpellID, oTarget, oManifester)  || // Has the power been dispelled
+         PRCGetDelayedSpellEffectsExpired(nSpellID, oTarget, oManifester)  || // Has the power been dispelled
          GetHasEffect(EFFECT_TYPE_POLYMORPH, oTarget)                        // Has the target been polymorphed
          )
        )
@@ -826,7 +826,7 @@ void NaturalPrimaryWeaponTempCheck(object oManifester, object oTarget, int nSpel
     int nBeatsRemaining, string sResRef)
 {
     if(!((nBeatsRemaining-- == 0)                                         || // Has the power ended since the last beat, or does the duration run out now
-         GZGetDelayedSpellEffectsExpired(nSpellID, oTarget, oManifester)  || // Has the power been dispelled
+         PRCGetDelayedSpellEffectsExpired(nSpellID, oTarget, oManifester)  || // Has the power been dispelled
          GetHasEffect(EFFECT_TYPE_POLYMORPH, oTarget)                        // Has the target been polymorphed
          )
        )

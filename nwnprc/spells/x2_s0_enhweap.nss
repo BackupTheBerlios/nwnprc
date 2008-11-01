@@ -30,6 +30,54 @@ void DeleteTheInts(object oTarget)
     DeleteLocalInt(oTarget, "X2_Wep_Dam_Type_DF");
     DeleteLocalInt(oTarget, "X2_Wep_Caster_Lvl_DF");
 }
+
+//------------------------------------------------------------------------------
+// AN, 2003
+// Returns TRUE if oItem is a slashing weapon
+//------------------------------------------------------------------------------
+int PRCGetSlashingWeapon(object oItem)
+{
+    //Declare major variables
+    int nItem = GetBaseItemType(oItem);
+
+    if((nItem == BASE_ITEM_BASTARDSWORD) ||
+      (nItem == BASE_ITEM_BATTLEAXE) ||
+      (nItem == BASE_ITEM_DOUBLEAXE) ||
+      (nItem == BASE_ITEM_GREATAXE) ||
+      (nItem == BASE_ITEM_GREATSWORD) ||
+      (nItem == BASE_ITEM_HALBERD) ||
+      (nItem == BASE_ITEM_HANDAXE) ||
+      (nItem == BASE_ITEM_KAMA) ||
+      (nItem == BASE_ITEM_KATANA) ||
+      (nItem == BASE_ITEM_KUKRI) ||
+      (nItem == BASE_ITEM_LONGSWORD)||
+      (nItem == BASE_ITEM_SCIMITAR)||
+      (nItem == BASE_ITEM_SCYTHE)||
+      (nItem == BASE_ITEM_SICKLE)||
+      (nItem == BASE_ITEM_TWOBLADEDSWORD) ||
+      (nItem == BASE_ITEM_DWARVENWARAXE) ||
+      (nItem == BASE_ITEM_THROWINGAXE) ||
+      (nItem == BASE_ITEM_WHIP)
+      || (nItem == 300) //CEP Trident
+      || (nItem == 303) //CEP Sai
+      || (nItem == 305) //CEP falchion
+      || (nItem == 309) //CEP assassin dager
+      || (nItem == 310) //CEP katar
+      || (nItem == 313) //CEP kukri2
+      || (nItem == 316) //CEP falchion
+      || (nItem == 319) //CEP sh_x1_mercuryls
+      || (nItem == 320) //CEP sh_x1_mercurygs
+      || (nItem == 321) //CEP sh_x1_doublesc
+      || (nItem == 322) //CEP goad
+      || (nItem == 323) //CEP windfirewheel
+      || (nItem == 324) //CEP maugdoublesword
+
+      )
+   {
+        return TRUE;
+   }
+   return FALSE;
+}
 /// Used simply to use up a bit less processor time on the delayed command to delete these 4 Ints.
 // motu99: seems to be not used any more
 
@@ -175,7 +223,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     {
         case SPELL_BLADE_THIRST:
         {
-            bCondition = bCondition && GetSlashingWeapon(oMyWeapon);
+            bCondition = bCondition && PRCGetSlashingWeapon(oMyWeapon);
             break;
         }
         case SPELL_BLACKSTAFF:
@@ -226,7 +274,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
         }
         case SPELL_KEEN_EDGE:
         {
-            bCondition = bCondition && GetSlashingWeapon(oMyWeapon);
+            bCondition = bCondition && PRCGetSlashingWeapon(oMyWeapon);
             fDuration = TurnsToSeconds(nDuration);
             break;
         }

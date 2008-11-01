@@ -33,7 +33,7 @@ Created:   29/4/06
 void DoGreaterCommandRecursion(object oCaster, object oTarget, int nSpellId, int nLastBeat, effect eLink, int nDC, int nCaster, int nCurrentBeat = 0)
 {
     // Check for expiration
-    if(nCurrentBeat <= nLastBeat && !GZGetDelayedSpellEffectsExpired(nSpellId, oTarget, oCaster))
+    if(nCurrentBeat <= nLastBeat && !PRCGetDelayedSpellEffectsExpired(nSpellId, oTarget, oCaster))
     {
         // On the first beat, just apply the Command effects
         if (nCurrentBeat == 0)

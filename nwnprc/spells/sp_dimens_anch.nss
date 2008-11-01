@@ -127,7 +127,7 @@ void DispelMonitor(object oCaster, object oTarget, int nSpellID, int nBeatsRemai
 {
     // Has the power ended since the last beat, or does the duration run out now
     if((--nBeatsRemaining == 0) ||
-       GZGetDelayedSpellEffectsExpired(nSpellID, oTarget, oCaster)
+       PRCGetDelayedSpellEffectsExpired(nSpellID, oTarget, oCaster)
        )
     {
         if(DEBUG) DoDebug("sp_dimens_anch: The anchoring effect has been removed");

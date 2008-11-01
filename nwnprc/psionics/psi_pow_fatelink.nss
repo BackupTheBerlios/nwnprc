@@ -199,8 +199,8 @@ void DispelMonitor(object oManifester, object oTarget1, object oTarget2, int nSp
 {
     // Has the power ended since the last beat, or does the duration run out now
     if((--nBeatsRemaining == 0)                                         ||
-       GZGetDelayedSpellEffectsExpired(nSpellID, oTarget1, oManifester) ||
-       GZGetDelayedSpellEffectsExpired(nSpellID, oTarget2, oManifester)
+       PRCGetDelayedSpellEffectsExpired(nSpellID, oTarget1, oManifester) ||
+       PRCGetDelayedSpellEffectsExpired(nSpellID, oTarget2, oManifester)
        )
     {
         if(DEBUG) DoDebug("psi_pow_fatelink: Clearing");

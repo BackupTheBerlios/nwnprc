@@ -197,7 +197,7 @@ void DispelMonitor(object oManifester, object oTarget, object oWeapon, int nSpel
 {
     int nRoundsRemain = GetLocalInt(oTarget, "PRC_Power_StrengthOfMyEnemy_Duration");
 
-    if(GZGetDelayedSpellEffectsExpired(nSpellID, oTarget, oManifester) || // Has the power expired somehow since last check
+    if(PRCGetDelayedSpellEffectsExpired(nSpellID, oTarget, oManifester) || // Has the power expired somehow since last check
        nRoundsRemain <= 0                                                 // Or is it running out of duration now
        )
     {

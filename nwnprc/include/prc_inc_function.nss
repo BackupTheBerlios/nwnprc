@@ -55,7 +55,7 @@ void DeletePRCLocalInts(object oSkin);
 // #include "NW_I0_GENERIC"
 //#include "x2_inc_itemprop"
 //#include "pnp_shft_poly"
-//#include "x2_i0_spells"
+//
 //#include "prc_inc_natweap"
 //#include "true_inc_trufunc"
 

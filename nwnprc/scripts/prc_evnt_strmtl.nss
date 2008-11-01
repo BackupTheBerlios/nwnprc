@@ -20,8 +20,90 @@ Created:   7/17/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
+//------------------------------------------------------------------------------
+// AN, 2003
+// Returns TRUE if oItem has any item property that classifies it as magical item
+//------------------------------------------------------------------------------
+int PRCGetIsMagicalItem(object oItem)
+{
+    //Declare major variables
+    int nProperty;
+
+    if((GetItemHasItemProperty(oItem, ITEM_PROPERTY_ABILITY_BONUS)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_AC_BONUS)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_AC_BONUS_VS_ALIGNMENT_GROUP)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_AC_BONUS_VS_DAMAGE_TYPE)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_AC_BONUS_VS_RACIAL_GROUP)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_AC_BONUS_VS_SPECIFIC_ALIGNMENT)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_ATTACK_BONUS)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_ATTACK_BONUS_VS_ALIGNMENT_GROUP)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_ATTACK_BONUS_VS_RACIAL_GROUP)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_ATTACK_BONUS_VS_SPECIFIC_ALIGNMENT)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_BASE_ITEM_WEIGHT_REDUCTION)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_BONUS_FEAT)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_CAST_SPELL)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_DAMAGE_BONUS)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_DAMAGE_BONUS_VS_SPECIFIC_ALIGNMENT)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_DAMAGE_REDUCTION)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_DAMAGE_RESISTANCE)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_DAMAGE_VULNERABILITY)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_DARKVISION)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_DECREASED_ABILITY_SCORE)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_DECREASED_AC)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_DECREASED_ATTACK_MODIFIER)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_DECREASED_DAMAGE)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_DECREASED_ENHANCEMENT_MODIFIER)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_DECREASED_SAVING_THROWS)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_DECREASED_SAVING_THROWS_SPECIFIC)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_DECREASED_SKILL_MODIFIER)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_ENHANCED_CONTAINER_REDUCED_WEIGHT)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_ENHANCEMENT_BONUS)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_ENHANCEMENT_BONUS_VS_ALIGNMENT_GROUP)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_ENHANCEMENT_BONUS_VS_RACIAL_GROUP)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_ENHANCEMENT_BONUS_VS_SPECIFIC_ALIGNEMENT)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_EXTRA_MELEE_DAMAGE_TYPE)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_EXTRA_RANGED_DAMAGE_TYPE)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_FREEDOM_OF_MOVEMENT)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_HASTE)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_HOLY_AVENGER)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_IMMUNITY_DAMAGE_TYPE)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_IMMUNITY_MISCELLANEOUS)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_IMMUNITY_SPECIFIC_SPELL)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_IMMUNITY_SPELL_SCHOOL)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_IMMUNITY_SPELLS_BY_LEVEL)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_IMPROVED_EVASION)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_KEEN)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_LIGHT)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_MASSIVE_CRITICALS)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_MIGHTY)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_MIND_BLANK)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_MONSTER_DAMAGE)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_NO_DAMAGE)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_ON_HIT_PROPERTIES)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_ON_MONSTER_HIT)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_POISON)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_REGENERATION)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_REGENERATION_VAMPIRIC)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_SAVING_THROW_BONUS)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_SAVING_THROW_BONUS_SPECIFIC)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_SKILL_BONUS)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_SPELL_RESISTANCE)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_THIEVES_TOOLS)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_TRAP)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_TRUE_SEEING)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_TURN_RESISTANCE)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_UNLIMITED_AMMUNITION)) ||
+      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_ONHITCASTSPELL))
+      )
+   {
+        return TRUE;
+   }
+   return FALSE;
+}
+
 #include "prc_inc_spells"
-#include "x2_i0_spells"
 
 void main()
 {
@@ -41,7 +123,7 @@ void main()
         }
 */
         //If non-magical weapon in right hand
-        if(GetIsObjectValid(oWeaponR) && !GetIsMagicalItem(oWeaponR))
+        if(GetIsObjectValid(oWeaponR) && !PRCGetIsMagicalItem(oWeaponR))
         {
                 DestroyObject(oWeaponR);
                 ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_DISPEL), oSpellTarget);
@@ -49,7 +131,7 @@ void main()
         }
         
         //if non-magical weapon in left hand
-        else if(GetIsObjectValid(oWeaponL) && !GetIsMagicalItem(oWeaponL))
+        else if(GetIsObjectValid(oWeaponL) && !PRCGetIsMagicalItem(oWeaponL))
         {
                 DestroyObject(oWeaponL);
                 ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_DISPEL), oSpellTarget);

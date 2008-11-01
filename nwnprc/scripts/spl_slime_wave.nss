@@ -67,7 +67,7 @@ void RunImpact(object oTarget, object oCaster)
     //--------------------------------------------------------------------------
     // Check if the spell has expired (check also removes effects)
     //--------------------------------------------------------------------------
-    if (GZGetDelayedSpellEffectsExpired(SPELL_SLIME_WAVE, oTarget, oCaster))
+    if (PRCGetDelayedSpellEffectsExpired(SPELL_SLIME_WAVE, oTarget, oCaster))
     {
         return;
     }

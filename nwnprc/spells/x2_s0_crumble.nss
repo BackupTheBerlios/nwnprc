@@ -20,7 +20,7 @@
 
 #include "prc_alterations"
 #include "x2_inc_spellhook"
-#include "X2_i0_spells"
+
 
 void DoCrumble (int nDam, object oCaster, object oTarget);
 

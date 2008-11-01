@@ -1,5 +1,5 @@
 #include "prc_inc_spells"
-#include "x2_i0_spells"
+
 
 //
 // This function runs the flensing effect for a round, then recursing itself one
@@ -12,7 +12,7 @@ void RunFlensing(object oCaster, object oTarget, int nSaveDC,
 {
     // If our timer spell effect has worn off (or been dispelled) then we are
     // done, just exit.
-    if (GZGetDelayedSpellEffectsExpired(nSpellID, oTarget, oCaster)) return;
+    if (PRCGetDelayedSpellEffectsExpired(nSpellID, oTarget, oCaster)) return;
 
     // If the target is dead then there is no point in going any further.
     if (GetIsDead(oTarget)) return;

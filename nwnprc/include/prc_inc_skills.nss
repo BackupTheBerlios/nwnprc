@@ -10,6 +10,10 @@
  */
 float GetHeight(location lPC, location lTarget);
 
+// * Returns true or false depending on whether the creature is flying
+// * or not
+int PRCIsFlying(object oCreature);
+
 #include "prc_inc_clsfunc"
 //#include "prc_inc_util"
 //#include "inc_utility"
@@ -107,7 +111,7 @@ int PerformJump(object oPC, location lLoc, int bDoKnockDown = TRUE)
      // Simulate "leap of the clouds", or RDD's having wings can "fly"
      if(GetLevelByClass(CLASS_TYPE_MONK, oPC) >= 7
         || GetLevelByClass(CLASS_TYPE_NINJA_SPY, oPC) >= 3
-        || spellsIsFlying(oPC))
+        || PRCIsFlying(oPC))
             iMaxJumpDistance *= 100;
 
      // skill 28 = jump
@@ -229,4 +233,66 @@ int DoClimb(object oPC, location lLoc, int bDoKnockDown = TRUE)
      }
 
      return bPassedClimbCheck;
+}
+
+// * Returns true or false depending on whether the creature is flying
+// * or not
+int PRCIsFlying(object oCreature)
+{
+    int nAppearance = GetAppearanceType(oCreature);
+    int bFlying = FALSE;
+    switch(nAppearance)
+    {
+        case APPEARANCE_TYPE_ALLIP:
+        case APPEARANCE_TYPE_BAT:
+        case APPEARANCE_TYPE_BAT_HORROR:
+        case APPEARANCE_TYPE_ELEMENTAL_AIR:
+        case APPEARANCE_TYPE_ELEMENTAL_AIR_ELDER:
+        case APPEARANCE_TYPE_FAERIE_DRAGON:
+        case APPEARANCE_TYPE_FALCON:
+        case APPEARANCE_TYPE_FAIRY:
+        case APPEARANCE_TYPE_HELMED_HORROR:
+        case APPEARANCE_TYPE_IMP:
+        case APPEARANCE_TYPE_LANTERN_ARCHON:
+        case APPEARANCE_TYPE_MEPHIT_AIR:
+        case APPEARANCE_TYPE_MEPHIT_DUST:
+        case APPEARANCE_TYPE_MEPHIT_EARTH:
+        case APPEARANCE_TYPE_MEPHIT_FIRE:
+        case APPEARANCE_TYPE_MEPHIT_ICE:
+        case APPEARANCE_TYPE_MEPHIT_MAGMA:
+        case APPEARANCE_TYPE_MEPHIT_OOZE:
+        case APPEARANCE_TYPE_MEPHIT_SALT:
+        case APPEARANCE_TYPE_MEPHIT_STEAM:
+        case APPEARANCE_TYPE_MEPHIT_WATER:
+        case APPEARANCE_TYPE_QUASIT:
+        case APPEARANCE_TYPE_RAVEN:
+        case APPEARANCE_TYPE_SHADOW:
+        case APPEARANCE_TYPE_SHADOW_FIEND:
+        case APPEARANCE_TYPE_SPECTRE:
+        case APPEARANCE_TYPE_WILL_O_WISP:
+        case APPEARANCE_TYPE_WRAITH:
+        case APPEARANCE_TYPE_WYRMLING_BLACK:
+        case APPEARANCE_TYPE_WYRMLING_BLUE:
+        case APPEARANCE_TYPE_WYRMLING_BRASS:
+        case APPEARANCE_TYPE_WYRMLING_BRONZE:
+        case APPEARANCE_TYPE_WYRMLING_COPPER:
+        case APPEARANCE_TYPE_WYRMLING_GOLD:
+        case APPEARANCE_TYPE_WYRMLING_GREEN:
+        case APPEARANCE_TYPE_WYRMLING_RED:
+        case APPEARANCE_TYPE_WYRMLING_SILVER:
+        case APPEARANCE_TYPE_WYRMLING_WHITE:
+        case APPEARANCE_TYPE_ELEMENTAL_WATER:
+        case APPEARANCE_TYPE_ELEMENTAL_WATER_ELDER:
+        case 401: //beholder
+        case 402: //beholder
+        case 403: //beholder
+        case 419: // harpy
+        case 430: // Demi Lich
+        case 472: // Hive mother
+        bFlying = TRUE;
+    }
+    if(!bFlying
+        && GetCreatureWingType(oCreature) != CREATURE_WING_TYPE_NONE)
+        bFlying = TRUE;
+    return bFlying;
 }

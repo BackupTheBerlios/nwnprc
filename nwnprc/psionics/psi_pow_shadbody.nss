@@ -44,7 +44,7 @@
 void GoInvis(struct manifestation manif, object oTarget)
 {
     // Check for effect expiration
-    if(!GZGetDelayedSpellEffectsExpired(manif.nSpellID, oTarget, manif.oManifester))
+    if(!PRCGetDelayedSpellEffectsExpired(manif.nSpellID, oTarget, manif.oManifester))
     {
         effect eInvis   = EffectInvisibility(INVISIBILITY_TYPE_NORMAL);
        	effect eConceal = EffectConcealment(50);

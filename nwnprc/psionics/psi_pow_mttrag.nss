@@ -98,7 +98,7 @@ void RunImpact(object oManifester, object oTarget, int nSpellID, int nLastBeat, 
 {
     // Check for expiration
     if(nCurrentBeat++ <= nLastBeat &&
-       !GZGetDelayedSpellEffectsExpired(nSpellID, oTarget, oManifester)
+       !PRCGetDelayedSpellEffectsExpired(nSpellID, oTarget, oManifester)
        )
     {
         // Determine damage

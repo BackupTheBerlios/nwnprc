@@ -64,7 +64,7 @@
 void RunImpact(object oTarget, location lTarget, object oManifester, int nSpellID, int nDC, int nRound = 0, int bGoingToDie = FALSE)
 {
     // Check if the power has been dispelled or the manifester has died in the meantime
-    if(GZGetDelayedSpellEffectsExpired(nSpellID, oTarget, oManifester))
+    if(PRCGetDelayedSpellEffectsExpired(nSpellID, oTarget, oManifester))
     {
         return;
     }

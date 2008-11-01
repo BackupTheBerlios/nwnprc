@@ -109,7 +109,7 @@ void main()
 void DispelMonitor(object oManifester, object oTarget, int nSpellID)
 {
     // Has the power been dispelled or cancelled since the last HB
-    if(GZGetDelayedSpellEffectsExpired(nSpellID, oTarget, oManifester)
+    if(PRCGetDelayedSpellEffectsExpired(nSpellID, oTarget, oManifester)
        )
     {
         if(DEBUG) DoDebug("psi_pow_immove: Power expired, clearing");

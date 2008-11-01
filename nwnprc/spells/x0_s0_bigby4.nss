@@ -29,7 +29,7 @@
 
 
 #include "x2_inc_spellhook"
-#include "x2_i0_spells"
+
 
 
 int nSpellID = 462;
@@ -39,7 +39,7 @@ void RunHandImpact(object oTarget, object oCaster,int CasterLvl )
     //--------------------------------------------------------------------------
     // Check if the spell has expired (check also removes effects)
     //--------------------------------------------------------------------------
-    if (GZGetDelayedSpellEffectsExpired(nSpellID,oTarget,oCaster))
+    if (PRCGetDelayedSpellEffectsExpired(nSpellID,oTarget,oCaster))
     {
         return;
     }

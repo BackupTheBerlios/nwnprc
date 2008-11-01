@@ -18,14 +18,63 @@
 //:: Last Updated By: Andrew Nobbs 06/06/03
 
 //:: modified by mr_bumpkin Dec 4, 2003 for prc stuff
+
 #include "prc_inc_spells"
-
-
-
-
-#include "x2_i0_spells"
-
 #include "x2_inc_spellhook"
+
+//::///////////////////////////////////////////////
+//:: PRCCreateBadTideEffectsLink
+//:: Copyright (c) 2001 Bioware Corp.
+//:://////////////////////////////////////////////
+/*
+    Creates the linked bad effects for Battletide.
+*/
+//:://////////////////////////////////////////////
+//:: Created By:
+//:: Created On:
+//:://////////////////////////////////////////////
+
+effect PRCCreateBadTideEffectsLink()
+{
+    //Declare major variables
+    effect eSaves = EffectSavingThrowDecrease(SAVING_THROW_ALL, 2);
+    effect eAttack = EffectAttackDecrease(2);
+    effect eDamage = EffectDamageDecrease(2);
+    effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
+    //Link the effects
+    effect eLink = EffectLinkEffects(eAttack, eDamage);
+    eLink = EffectLinkEffects(eLink, eSaves);
+    eLink = EffectLinkEffects(eLink, eDur);
+
+    return eLink;
+}
+
+//::///////////////////////////////////////////////
+//:: PRCCreateGoodTideEffectsLink
+//:: Copyright (c) 2001 Bioware Corp.
+//:://////////////////////////////////////////////
+/*
+    Creates the linked good effects for Battletide.
+*/
+//:://////////////////////////////////////////////
+//:: Created By:
+//:: Created On:
+//:://////////////////////////////////////////////
+
+effect PRCCreateGoodTideEffectsLink()
+{
+    //Declare major variables
+    effect eSaves = EffectSavingThrowIncrease(SAVING_THROW_ALL, 2);
+    effect eAttack = EffectAttackIncrease(2);
+    effect eDamage = EffectDamageIncrease(2);
+    effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+    //Link the effects
+    effect eLink = EffectLinkEffects(eAttack, eDamage);
+    eLink = EffectLinkEffects(eLink, eSaves);
+    eLink = EffectLinkEffects(eLink, eDur);
+
+    return eLink;
+}
 
 void main()
 {
@@ -34,8 +83,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
 ActionDoCommand(SetAllAoEInts(SPELL_BATTLETIDE,OBJECT_SELF, GetSpellSaveDC()));
 
     //Declare major variables
-    effect eLink = CreateBadTideEffectsLink();
-    effect eLink2 = CreateGoodTideEffectsLink();
+    effect eLink = PRCCreateBadTideEffectsLink();
+    effect eLink2 = PRCCreateGoodTideEffectsLink();
     effect eVis = EffectVisualEffect(VFX_IMP_DOOM);
     effect eVis2 = EffectVisualEffect(VFX_IMP_HOLY_AID);
     effect eFind;

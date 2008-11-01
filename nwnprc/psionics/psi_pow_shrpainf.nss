@@ -113,8 +113,8 @@ void DispelMonitor(object oManifester, object oTarget, int nSpellID, int nManife
     // Has the power ended since the last beat, or does the duration run out now
     if((--nBeatsRemaining == 0)                                            ||
        GetIsDead(oTarget)                                                  ||
-       GZGetDelayedSpellEffectsExpired(nSpellID, oTarget, oManifester)     ||
-       GZGetDelayedSpellEffectsExpired(nSpellID, oManifester, oManifester) ||
+       PRCGetDelayedSpellEffectsExpired(nSpellID, oTarget, oManifester)     ||
+       PRCGetDelayedSpellEffectsExpired(nSpellID, oManifester, oManifester) ||
        GetDistanceBetween(oManifester, oTarget) > FeetToMeters(25.0f + (5.0f * (nManifesterLevel / 2)))
        )
     {

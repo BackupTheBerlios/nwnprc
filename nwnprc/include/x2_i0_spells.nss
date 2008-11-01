@@ -61,7 +61,7 @@ void CheckAndApplyTerrifyingRage(int nRounds);
 void DoMindBlast(int nDC, int nDuration, float fRange);
 
 
-void GZPRCRemoveSpellEffects(int nID,object oTarget, int bMagicalEffectsOnly = TRUE);
+void PRCRemoveSpellEffects(int nID,object oTarget, int bMagicalEffectsOnly = TRUE);
 int GZGetDelayedSpellEffectsExpired(int nSpell_ID, object oTarget, object oCaster);
 
 //#include "x2_inc_itemprop"
@@ -669,7 +669,7 @@ int GetBestAOEBehavior(int nSpellID)
 // the spell can from only one caster anyway
 // By default, it will only cancel magical effects
 //--------------------------------------------------------------------------
-void GZPRCRemoveSpellEffects(int nID,object oTarget, int bMagicalEffectsOnly = TRUE)
+void PRCRemoveSpellEffects(int nID,object oTarget, int bMagicalEffectsOnly = TRUE)
 {
     effect eEff = GetFirstEffect(oTarget);
     while (GetIsEffectValid(eEff))
@@ -715,7 +715,7 @@ int GZGetDelayedSpellEffectsExpired(int nSpell_ID, object oTarget, object oCaste
     //--------------------------------------------------------------------------
     if( !GetIsObjectValid(oCaster))
     {
-        GZPRCRemoveSpellEffects(nSpell_ID, oTarget);
+        PRCRemoveSpellEffects(nSpell_ID, oTarget);
         DeleteLocalInt(oTarget,"XP2_L_SPELL_SAVE_DC_" + IntToString (nSpell_ID));
         return TRUE;
     }
@@ -723,7 +723,7 @@ int GZGetDelayedSpellEffectsExpired(int nSpell_ID, object oTarget, object oCaste
     if (GetIsDead(oCaster))
     {
         DeleteLocalInt(oTarget,"XP2_L_SPELL_SAVE_DC_" + IntToString (nSpell_ID));
-        GZPRCRemoveSpellEffects(nSpell_ID, oTarget);
+        PRCRemoveSpellEffects(nSpell_ID, oTarget);
         return TRUE;
     }
 

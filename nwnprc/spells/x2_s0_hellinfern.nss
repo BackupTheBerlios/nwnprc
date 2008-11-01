@@ -120,7 +120,7 @@ void RunImpact(object oTarget, object oCaster)
     //--------------------------------------------------------------------------
     // Check if the spell has expired (check also removes effects)
     //--------------------------------------------------------------------------
-    if (GZGetDelayedSpellEffectsExpired(762,oTarget,oCaster))
+    if (PRCGetDelayedSpellEffectsExpired(762,oTarget,oCaster))
     {
         return;
     }

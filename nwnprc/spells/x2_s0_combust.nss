@@ -25,7 +25,7 @@
 
 void RunCombustImpact(object oTarget, object oCaster, int nLevel, int nMetaMagic,int EleDmg)
 {
-    if (GZGetDelayedSpellEffectsExpired(SPELL_COMBUST,oTarget,oCaster)) return;
+    if (PRCGetDelayedSpellEffectsExpired(SPELL_COMBUST,oTarget,oCaster)) return;
 
     if (GetIsDead(oTarget) == FALSE)
     {

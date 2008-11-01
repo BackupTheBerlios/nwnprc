@@ -161,7 +161,7 @@ void EndOfFrenzyDamage(object oSelf)
 
 void TurnBasedDamage(object oTarget, object oCaster)
 {
-    if (GZGetDelayedSpellEffectsExpired(SPELL_FRENZY,oTarget,oCaster)) // 2700
+    if (PRCGetDelayedSpellEffectsExpired(SPELL_FRENZY,oTarget,oCaster)) // 2700
     {
         int nLevel = GetLevelByClass(CLASS_TYPE_FRE_BERSERKER);  // 210
 
@@ -197,7 +197,7 @@ void AttackNearestForDuration()
     object oTarget = GetNearestCreature(CREATURE_TYPE_IS_ALIVE, TRUE, OBJECT_SELF, 1, CREATURE_TYPE_PERCEPTION, PERCEPTION_SEEN, -1, -1);
 
     // stops force attacking when frenzy is over
-    if (GZGetDelayedSpellEffectsExpired(SPELL_FRENZY,oCaster,oCaster))
+    if (PRCGetDelayedSpellEffectsExpired(SPELL_FRENZY,oCaster,oCaster))
     {
         AssignCommand(oCaster, ClearAllActions(TRUE) );
         return;

@@ -174,7 +174,7 @@ void main()
 void WisCheck(object oManifester, object oTarget, int nSpellID, int nBeatsRemaining)
 {
     if((--nBeatsRemaining == 0)                                         || // Is the power expiring now
-       GZGetDelayedSpellEffectsExpired(nSpellID, oTarget, oManifester)  || // Or has it expired already
+       PRCGetDelayedSpellEffectsExpired(nSpellID, oTarget, oManifester)  || // Or has it expired already
        ((d20() + GetAbilityModifier(ABILITY_WISDOM, oTarget)) >= 15)       // Or does the creature succeed at it's Wis check
        )
     {

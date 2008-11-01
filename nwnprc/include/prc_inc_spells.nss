@@ -363,6 +363,9 @@ float PRCGetSpellEffectDelay(location SpellTargetLocation, object oTarget);
 // * nFortSaveDC: pass in this number from the spell script
 void PRCDoPetrification(int nPower, object oSource, object oTarget, int nSpellID, int nFortSaveDC);
 
+void GZPRCRemoveSpellEffects(int nID,object oTarget, int bMagicalEffectsOnly = TRUE);
+int PRCGetDelayedSpellEffectsExpired(int nSpell_ID, object oTarget, object oCaster);
+
 // -----------------
 // END SPELLSWORD
 // -----------------
@@ -3426,3 +3429,70 @@ void PRCDoPetrification(int nPower, object oSource, object oTarget, int nSpellID
 
 }
 
+//------------------------------------------------------------------------------
+// GZ: 2003-Oct-15
+// A different approach for timing these spells that has the positive side
+// effects of making the spell dispellable as well.
+// I am using the VFX applied by the spell to track the remaining duration
+// instead of adding the remaining runtime on the stack
+//
+// This function returns FALSE if a delayed Spell effect from nSpell_ID has
+// expired. See x2_s0_bigby4.nss for details
+//------------------------------------------------------------------------------
+int PRCGetDelayedSpellEffectsExpired(int nSpell_ID, object oTarget, object oCaster)
+{
+
+    if (!GetHasSpellEffect(nSpell_ID,oTarget) )
+    {
+        DeleteLocalInt(oTarget,"XP2_L_SPELL_SAVE_DC_" + IntToString (nSpell_ID));
+        return TRUE;
+    }
+
+    //--------------------------------------------------------------------------
+    // GZ: 2003-Oct-15
+    // If the caster is dead or no longer there, cancel the spell, as it is
+    // directed
+    //--------------------------------------------------------------------------
+    if( !GetIsObjectValid(oCaster))
+    {
+        GZPRCRemoveSpellEffects(nSpell_ID, oTarget);
+        DeleteLocalInt(oTarget,"XP2_L_SPELL_SAVE_DC_" + IntToString (nSpell_ID));
+        return TRUE;
+    }
+
+    if (GetIsDead(oCaster))
+    {
+        DeleteLocalInt(oTarget,"XP2_L_SPELL_SAVE_DC_" + IntToString (nSpell_ID));
+        GZPRCRemoveSpellEffects(nSpell_ID, oTarget);
+        return TRUE;
+    }
+
+    return FALSE;
+
+}
+
+//--------------------------------------------------------------------------
+// GZ: 2003-Oct-15
+// Removes all effects from nID without paying attention to the caster as
+// the spell can from only one caster anyway
+// By default, it will only cancel magical effects
+//--------------------------------------------------------------------------
+void GZPRCRemoveSpellEffects(int nID,object oTarget, int bMagicalEffectsOnly = TRUE)
+{
+    effect eEff = GetFirstEffect(oTarget);
+    while (GetIsEffectValid(eEff))
+    {
+        if (GetEffectSpellId(eEff) == nID)
+        {
+            if (GetEffectSubType(eEff) != SUBTYPE_MAGICAL && bMagicalEffectsOnly)
+            {
+                // ignore
+            }
+            else
+            {
+                RemoveEffect(oTarget,eEff);
+            }
+        }
+        eEff = GetNextEffect(oTarget);
+    }
+}

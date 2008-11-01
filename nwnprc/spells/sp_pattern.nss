@@ -27,7 +27,7 @@
 void DispelMonitor(object oCaster, object oTarget, int nSpellID, int nBeatsRemaining)
 {
     if((--nBeatsRemaining == 0)                                         ||
-       GZGetDelayedSpellEffectsExpired(nSpellID, oTarget, oCaster)
+       PRCGetDelayedSpellEffectsExpired(nSpellID, oTarget, oCaster)
        )
     {
         if(DEBUG) DoDebug("sp_pattern: Spell expired, clearing");

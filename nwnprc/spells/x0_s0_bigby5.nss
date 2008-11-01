@@ -40,7 +40,7 @@ void RunHandImpact(object oTarget, object oCaster)
     //--------------------------------------------------------------------------
     // Check if the spell has expired (check also removes effects)
     //--------------------------------------------------------------------------
-    if (GZGetDelayedSpellEffectsExpired(nSpellID,oTarget,oCaster))
+    if (PRCGetDelayedSpellEffectsExpired(nSpellID,oTarget,oCaster))
     {
         return;
     }

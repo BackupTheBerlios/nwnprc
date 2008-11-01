@@ -15,8 +15,8 @@ object GetSuitableTaget(int nSpellID);
 void MakeEpicSpellsKnownAIList();
 
 #include "inc_epicspells"
-#include "inc_epicspelldef"
-#include "inc_epicspellfnc"
+//#include "inc_epicspelldef"
+//#include "inc_epicspellfnc"
 #include "inc_utility"
 
 //returns True if it casts something

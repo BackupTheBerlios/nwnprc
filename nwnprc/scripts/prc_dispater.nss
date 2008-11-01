@@ -83,11 +83,8 @@ void IronPower(object oPC, object oWeap, int iBonusType)
 
     if (IsItemMetal(oWeap) == 2 && iBonus)
     {
-        int nEnhance = max(IPGetWeaponEnhancementBonus(oWeap), IPGetWeaponEnhancementBonus(oWeap, ITEM_PROPERTY_ATTACK_BONUS));
         //Fix up bonuses
-        SetCompositeBonusT(oWeap, "BaseAttack", nEnhance, ITEM_PROPERTY_ATTACK_BONUS);
         SetCompositeBonusT(oWeap, "DispIronPowerA", iBonus, ITEM_PROPERTY_ATTACK_BONUS);
-        SetCompositeDamageBonusT(oWeap, "DispIronPowerD", nEnhance);
         SetCompositeDamageBonusT(oWeap, "DispIronPowerD", iBonus);
 
         // Make the weapon keen

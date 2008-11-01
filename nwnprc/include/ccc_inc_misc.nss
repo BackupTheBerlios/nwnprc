@@ -264,23 +264,6 @@ void DoStripPC(object oPC)
     while(GetIsObjectValid(oItem))
     {
         SetPlotFlag(oItem,FALSE);
-        if(GetHasInventory(oItem))
-        {
-            object oItem2 = GetFirstItemInInventory(oItem);
-            while(GetIsObjectValid(oItem2))
-            {
-                object oItem3 = GetFirstItemInInventory(oItem2);
-                while(GetIsObjectValid(oItem3))
-                {
-                    SetPlotFlag(oItem3,FALSE);
-                    DestroyObject(oItem3);
-                    oItem3 = GetNextItemInInventory(oItem2);
-                }
-                SetPlotFlag(oItem2,FALSE);
-                DestroyObject(oItem2);
-                oItem2 = GetNextItemInInventory(oItem);
-            }
-        }
         DestroyObject(oItem);
         oItem = GetNextItemInInventory(oPC);
     }

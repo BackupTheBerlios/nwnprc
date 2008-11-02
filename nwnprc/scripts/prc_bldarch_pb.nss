@@ -16,7 +16,7 @@
 //:: Updated On: 2003-08-21
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-#include "X2_inc_switches"
+#include "prc_x2_switches"
 #include "prc_feat_const"
 #include "prc_class_const"
 

@@ -30,7 +30,7 @@ const int DRAGON_TYPE_BRASS                       = 9;
 const int DRAGON_TYPE_COPPER                      = 10;
 const int DRAGON_TYPE_INVALID                     = 11;
 
-#include "x2_inc_switches"
+#include "prc_x2_switches"
 #include "prc_alterations"
 
 // returns the type of dragon that the PC has a totem for. Checks for the presence of the

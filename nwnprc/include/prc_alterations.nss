@@ -150,7 +150,7 @@ int GetIsPolyMorphedOrShifted(object oCreature);
 //#include "inc_utility"
 //#include "prc_inc_spells"
 //#include "prcsp_engine"
-#include "x2_inc_switches"
+#include "prc_x2_switches"
 //#include "prc_feat_const"
 //#include "prc_class_const"
 //#include "prc_spell_const"

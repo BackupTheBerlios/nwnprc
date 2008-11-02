@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-//   x2_inc_switches::   Interface for switching subsystem functionality
+//   prc_x2_switches::   Interface for switching subsystem functionality
 //------------------------------------------------------------------------------
 /*
    This file provides a basic interface for switching different Hordes of
@@ -283,7 +283,7 @@ int GetUserDefinedItemEventNumber();
 
 //------------------------------------------------------------------------------
 // * Used to switch between different rule implementations or to subsystems for the game
-// * see x2_inc_switches for more detailed information on these constants
+// * see prc_x2_switches for more detailed information on these constants
 //------------------------------------------------------------------------------
 void SetModuleSwitch(string sModuleSwitchConstant,int bValue);
 
@@ -398,7 +398,7 @@ void SetWanderingMonster2DAFile(string s2DAName = "des_restsystem");
 
 //----------------------------------------------------------------------------
 // Interface to switch on / off specific  subsystems or behaviors
-// Check X2_INC_SWITCHES.NSS for details
+// Check prc_x2_switches.NSS for details
 //----------------------------------------------------------------------------
 void SetModuleSwitch(string sModuleSwitchConstant,int bValue)
 {
@@ -415,7 +415,7 @@ void SetModuleSwitch(string sModuleSwitchConstant,int bValue)
 
 //----------------------------------------------------------------------------
 // Return the value of a module switch set by SetModuleSwitch
-// See X2_INC_SWITCHES for a list of all module switches
+// See prc_x2_switches for a list of all module switches
 //----------------------------------------------------------------------------
 int GetModuleSwitchValue(string  sModuleSwitchConstant)
 {

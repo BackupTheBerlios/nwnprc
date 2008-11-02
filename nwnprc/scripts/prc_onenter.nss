@@ -1,6 +1,6 @@
 #include "prc_alterations"
 #include "inc_leto_prc"
-#include "x2_inc_switches"
+#include "prc_x2_switches"
 #include "prc_inc_teleport"
 #include "prc_inc_leadersh"
 #include "prc_inc_domain"

@@ -868,7 +868,7 @@ int X2CastOnItemWasAllowed(object oItem)
 //------------------------------------------------------------------------------
 int X2RunUserDefinedSpellScript()
 {
-    // See x2_inc_switches for details on this code
+    // See prc_x2_switches for details on this code
     string sScript =  GetModuleOverrideSpellscript();
     if (sScript != "")
     {

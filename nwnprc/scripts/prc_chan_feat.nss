@@ -1,4 +1,4 @@
-#include "x2_inc_switches"
+#include "prc_x2_switches"
 #include "x2_inc_spellhook"
 
 void main()

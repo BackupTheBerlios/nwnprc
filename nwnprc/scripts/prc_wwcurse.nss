@@ -11,7 +11,7 @@
 //:: Created On: May 15, 2004
 //:://////////////////////////////////////////////
 
-#include "x2_inc_switches"
+#include "prc_x2_switches"
 #include "prc_alterations"
 
 void main()

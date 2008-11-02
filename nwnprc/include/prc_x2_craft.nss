@@ -187,7 +187,7 @@ int GetAlternativeCasterLevel(object oPC, int nLevel);
 //////////////////////////////////////////////////
 
 //#include "x2_inc_itemprop"
-//#include "x2_inc_switches"
+//#include "prc_x2_switches"
 #include "prc_inc_newip"
 #include "prc_inc_spells"
 #include "inv_inc_invfunc"
@@ -1717,7 +1717,7 @@ int CIGetSpellWasUsedForItemCreation(object oSpellTarget)
     else
     {
         // ---------------------------------------------------------------------
-        // Check Item Creation Feats were disabled through x2_inc_switches
+        // Check Item Creation Feats were disabled through prc_x2_switches
         // ---------------------------------------------------------------------
         if (GetModuleSwitchValue(MODULE_SWITCH_DISABLE_ITEM_CREATION_FEATS) == TRUE)
         {

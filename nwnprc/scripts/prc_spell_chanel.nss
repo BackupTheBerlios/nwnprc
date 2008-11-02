@@ -1,6 +1,6 @@
 #include "prc_alterations"
 #include "prc_class_const"
-#include "x2_inc_switches"
+#include "prc_x2_switches"
 #include "x2_inc_spellhook"
 
 const int SPELL_SPELLSWORD_CHANNELSPELL = 1700;

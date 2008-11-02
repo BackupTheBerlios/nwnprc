@@ -30,7 +30,7 @@
 // #include "x0_i0_walkway" - in x0_i0_anims
 #include "x0_i0_treasure"
 
-#include "prc_x2_switches"
+#include "x2_inc_switches"
 
 void main()
 {
@@ -64,7 +64,7 @@ void main()
     //--------------------------------------------------------------------------
     // Enable stealth mode by setting a variable on the creature
     // Great for ambushes
-    // See prc_x2_switches for more information about this
+    // See x2_inc_switches for more information about this
     //--------------------------------------------------------------------------
     if (GetCreatureFlag(OBJECT_SELF, CREATURE_VAR_USE_SPAWN_STEALTH) == TRUE)
     {
@@ -77,7 +77,7 @@ void main()
     //--------------------------------------------------------------------------
     // Make creature enter search mode after spawning by setting a variable
     // Great for guards, etc
-    // See prc_x2_switches for more information about this
+    // See x2_inc_switches for more information about this
     //--------------------------------------------------------------------------
     if (GetCreatureFlag(OBJECT_SELF, CREATURE_VAR_USE_SPAWN_SEARCH) == TRUE)
     {
@@ -107,7 +107,7 @@ void main()
 
     //--------------------------------------------------------------------------
     // Enable immobile ambient animations by setting a variable
-    // See prc_x2_switches for more information about this
+    // See x2_inc_switches for more information about this
     //--------------------------------------------------------------------------
     if (GetCreatureFlag(OBJECT_SELF, CREATURE_VAR_USE_SPAWN_AMBIENT_IMMOBILE) == TRUE)
     {
@@ -121,7 +121,7 @@ void main()
 
     //--------------------------------------------------------------------------
     // Enable mobile ambient animations by setting a variable
-    // See prc_x2_switches for more information about this
+    // See x2_inc_switches for more information about this
     //--------------------------------------------------------------------------
     if (GetCreatureFlag(OBJECT_SELF, CREATURE_VAR_USE_SPAWN_AMBIENT) == TRUE)
     {

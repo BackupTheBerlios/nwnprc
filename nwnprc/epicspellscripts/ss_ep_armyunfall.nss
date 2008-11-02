@@ -8,6 +8,7 @@
 //:://////////////////////////////////////////////
 #include "prc_alterations"
 #include "inc_epicspells"
+#include "nw_i0_generic"
 
 void main()
 {

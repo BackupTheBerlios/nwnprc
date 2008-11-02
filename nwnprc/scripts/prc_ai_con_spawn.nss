@@ -1,4 +1,4 @@
-#include "prc_x2_switches"
+#include "x2_inc_switches"
 void main()
 {
     ExecuteScript("nw_ch_acani9", OBJECT_SELF);

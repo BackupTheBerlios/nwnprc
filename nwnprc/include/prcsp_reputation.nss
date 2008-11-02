@@ -1,4 +1,4 @@
-#include "prc_x2_switches"
+#include "x2_inc_switches"
 
 // * Generic reputation wrapper
 // * definition of constants:

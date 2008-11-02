@@ -133,15 +133,16 @@ int PRCGetUserSpecificSpellScriptFinished();
 //#include "prc_x2_itemprop" - Inherited from prc_x2_craft
 #include "prc_alterations"
 #include "prc_x2_craft"
-#include "x3_inc_horse"
+//#include "x3_inc_horse"
 #include "prc_inc_spells"
 //#include "prc_inc_combat"
-#include "inc_utility"
+//#include "inc_utility"
 #include "prc_inc_itmrstr"
-#include "inc_newspellbook"
-#include "prc_sp_func"
+//#include "inc_newspellbook"
+//#include "prc_sp_func"
 //#include "psi_inc_manifest"
 #include "prc_inc_combmove"
+#include "pnp_shft_main"
 
 int RedWizRestrictedSchool()
 {
@@ -274,7 +275,7 @@ int DuskbladeArcaneChanneling()
         if(!GetIsObjectValid(oItem)) oItem = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oPC);
         if(!GetIsObjectValid(oItem)) oItem = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oPC);
         if(GetIsObjectValid(oItem)
-            && IsTouchSpell(nSpell)
+            && (Get2DACache("spells", "Range", nSpell) == "T")
             && IPGetIsMeleeWeapon(oItem)
             && GetIsEnemy(PRCGetSpellTargetObject())
             && !GetLocalInt(oItem, "X2_L_NUMTRIGGERS"))
@@ -868,7 +869,7 @@ int X2CastOnItemWasAllowed(object oItem)
 //------------------------------------------------------------------------------
 int X2RunUserDefinedSpellScript()
 {
-    // See prc_x2_switches for details on this code
+    // See x2_inc_switches for details on this code
     string sScript =  GetModuleOverrideSpellscript();
     if (sScript != "")
     {
@@ -1172,7 +1173,7 @@ int X2PreSpellCastCode2()
    //---------------------------------------------------------------------------
    if (!GetLocalInt(GetModule(),"X3_NO_SHAPESHIFT_SPELL_CHECK"))
    { // do check for abort due to being mounted check
-       if (HorseGetIsMounted(oTarget)&&X3ShapeShiftSpell(oTarget))
+       if (PRCHorseGetIsMounted(oTarget)&&X3ShapeShiftSpell(oTarget))
        { // shape shifting not allowed while mounted
            if(GetIsPC(oTarget))
            {

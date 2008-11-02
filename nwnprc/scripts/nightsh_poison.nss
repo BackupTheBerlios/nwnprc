@@ -32,7 +32,7 @@
 //:: Updated On: 2003-08-21
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-#include "prc_x2_switches"
+#include "x2_inc_switches"
 #include "prc_ipfeat_const"
 #include "prc_class_const"
 

@@ -67,8 +67,6 @@ void ToggleMasteryOfShapes(object oCaster);
 
 void SetMasteryOfElements();
 
-string ChangedElementalType(int spell_id, object oCaster = OBJECT_SELF);
-
 //////////////////////////////////////////////////
 /*                  Includes                    */
 //////////////////////////////////////////////////
@@ -199,38 +197,6 @@ SetMasteryOfElements()
     SetLocalInt(OBJECT_SELF, MASTERY_OF_ELEMENTS_TAG, dmgType);
     SetLocalString(OBJECT_SELF, MASTERY_OF_ELEMENTS_NAME_TAG, sElem);
     SetFeatVisualEffects(PRCGetSpellTargetObject(), nEffect, msg);
-}
-
-//
-//  Determine if a spell type is elemental
-//
-int
-IsSpellTypeElemental(string type)
-{
-    return type == "Acid"
-        || type == "Cold"
-        || type == "Electricity"
-        || type == "Fire"
-        || type == "Sonic";
-}
-
-//
-//  This function converts elemental types as needed
-//
-string
-ChangedElementalType(int spell_id, object oCaster = OBJECT_SELF)
-{
-    // Lookup the spell type
-    string spellType = Get2DACache("spells", "ImmunityType", spell_id);//lookup_spell_type(spell_id);
-
-    // Check if an override is set
-    string sType = GetLocalString(oCaster, MASTERY_OF_ELEMENTS_NAME_TAG);
-
-    // If so, check if the spell qualifies for a change
-    if (sType == "" || !IsSpellTypeElemental(spellType))
-        sType = spellType;
-
-    return sType;
 }
 
 // Test main

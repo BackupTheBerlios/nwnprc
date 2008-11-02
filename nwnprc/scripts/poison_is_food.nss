@@ -24,7 +24,7 @@
 //:: Created On: 10.01.2005
 //:://////////////////////////////////////////////
 
-#include "prc_x2_switches"
+#include "x2_inc_switches"
 
 void main()
 {

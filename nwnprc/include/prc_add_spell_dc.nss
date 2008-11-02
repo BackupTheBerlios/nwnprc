@@ -9,10 +9,10 @@ int GetChangesToSaveDC(object oTarget, object oCaster = OBJECT_SELF, int nSpellI
 
 #include "prc_add_spl_pen"
 #include "prc_inc_spells"
-#include "prc_class_const"
-#include "prc_feat_const"
+//#include "prc_class_const"
+//#include "prc_feat_const"
 #include "lookup_2da_spell"
-#include "prcsp_archmaginc"
+//#include "prcsp_archmaginc"
 #include "prc_alterations"
 #include "prc_inc_racial"
 #include "inc_newspellbook"

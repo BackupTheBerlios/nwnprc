@@ -34,7 +34,7 @@ void DeletePRCLocalInts(object oSkin);
 // Generic includes
 //#include "prcsp_engine"
 //#include "inc_utility"
-//#include "prc_x2_switches"
+//#include "x2_inc_switches"
 //#include "prc_feat_const"
 //#include "prc_class_const"
 //#include "prc_spell_const"

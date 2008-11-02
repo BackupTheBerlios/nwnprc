@@ -24,7 +24,7 @@
 // I managed to fix all the other scripts though =)
 
 #include "prc_alterations"***
-               //#include "prc_x2_switches"
+               //#include "x2_inc_switches"
                //#include "prc_feat_const"
                //#include "prc_class_const"
                //#include "prc_spell_const"

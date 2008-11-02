@@ -37,6 +37,8 @@ int DuskbladeSpellPower(object oCaster);
 
 int DraconicMagicPower(object oCaster);
 
+string ChangedElementalType(int spell_id, object oCaster = OBJECT_SELF);
+
 // Use this function to get the adjustments to a spell or SLAs spell penetration
 // from the various class effects
 // Update this function if any new classes change spell pentration
@@ -47,14 +49,26 @@ int add_spl_pen(object oCaster = OBJECT_SELF);
 //////////////////////////////////////////////////
 
 #include "prc_inc_spells"
-#include "prc_alterations"
-#include "prcsp_archmaginc"
+//#include "prc_alterations"
+//#include "prcsp_archmaginc"
 #include "prc_inc_racial"
 
 
 //////////////////////////////////////////////////
 /*             Function definitions             */
 //////////////////////////////////////////////////
+
+//
+//  Determine if a spell type is elemental
+//
+int IsSpellTypeElemental(string type)
+{
+    return type == "Acid"
+        || type == "Cold"
+        || type == "Electricity"
+        || type == "Fire"
+        || type == "Sonic";
+}
 
 int GetHeartWarderPene(int spell_id, object oCaster = OBJECT_SELF) {
     // Guard Expensive Calculations
@@ -353,6 +367,24 @@ int add_spl_pen(object oCaster = OBJECT_SELF)
     nSP += DraconicMagicPower(oCaster);
 
     return nSP;
+}
+
+//
+//  This function converts elemental types as needed
+//
+string ChangedElementalType(int spell_id, object oCaster = OBJECT_SELF)
+{
+    // Lookup the spell type
+    string spellType = Get2DACache("spells", "ImmunityType", spell_id);//lookup_spell_type(spell_id);
+
+    // Check if an override is set
+    string sType = GetLocalString(oCaster, MASTERY_OF_ELEMENTS_NAME_TAG);
+
+    // If so, check if the spell qualifies for a change
+    if (sType == "" || !IsSpellTypeElemental(spellType))
+        sType = spellType;
+
+    return sType;
 }
 
 // Test main

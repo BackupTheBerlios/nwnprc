@@ -3,7 +3,7 @@
 //:: Created On: September 2, 2004
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-#include "prc_x2_switches"
+#include "x2_inc_switches"
 #include "nw_o0_itemmaker"
 #include "x2_inc_spellhook"
 

@@ -2,6 +2,7 @@
 //#include "nw_i0_generic"
 //#include "x0_inc_generic"
 #include "x2_inc_spellhook"
+#include "x0_inc_generic"
 
 //
 // Does the disintegrate logic.

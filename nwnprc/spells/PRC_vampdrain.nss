@@ -11,10 +11,24 @@
 //:: Created On: April 5, 2004
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-
-
-
 #include "x2_inc_spellhook"
+
+//------------------------------------------------------------------------------
+// GZ: gets rids of temporary hit points so that they will not stack
+//------------------------------------------------------------------------------
+void PRCRemoveTempHitPoints()
+{
+    effect eProtection;
+    int nCnt = 0;
+
+    eProtection = GetFirstEffect(OBJECT_SELF);
+    while (GetIsEffectValid(eProtection))
+    {
+      if(GetEffectType(eProtection) == EFFECT_TYPE_TEMPORARY_HITPOINTS)
+        RemoveEffect(OBJECT_SELF, eProtection);
+      eProtection = GetNextEffect(OBJECT_SELF);
+    }
+}
 
 void main()
 {
@@ -98,7 +112,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);
                     ApplyEffectToObject(DURATION_TYPE_INSTANT, eHurt, OBJECT_SELF);
                     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVisHeal, oTarget);
-                    RemoveTempHitPoints();
+                    PRCRemoveTempHitPoints();
                     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(1));
                 }
             //Check if the target is hostile, and not an undead or construct
@@ -123,7 +137,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                         ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
                         PRCBonusDamage(oTarget);
                         ApplyEffectToObject(DURATION_TYPE_INSTANT, eVisHeal, OBJECT_SELF);
-                        RemoveTempHitPoints();
+                        PRCRemoveTempHitPoints();
                         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, OBJECT_SELF, HoursToSeconds(1));
                     }
                 }

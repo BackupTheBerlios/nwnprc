@@ -480,7 +480,7 @@ void DazzlingIllusion()
     		//Cycle through the targets within the spell shape until an invalid object is captured.
     		while (GetIsObjectValid(oTarget))
     		{
-        		if (!GetIsFriend(oTarget, oCaster) && !GetHasEffect(EFFECT_TYPE_BLINDNESS, oTarget))
+        		if (!GetIsFriend(oTarget, oCaster) && !PRCGetHasEffect(EFFECT_TYPE_BLINDNESS, oTarget))
         		{
         	    		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0);
         		}

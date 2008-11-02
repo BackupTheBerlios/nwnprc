@@ -14,7 +14,7 @@ void main()
 
     DecrementRemainingFeatUses(OBJECT_SELF, FEAT_BARD_SONGS);
 
-    if (GetHasEffect(EFFECT_TYPE_SILENCE,OBJECT_SELF))
+    if (PRCGetHasEffect(EFFECT_TYPE_SILENCE,OBJECT_SELF))
     {
         FloatingTextStrRefOnCreature(85764,OBJECT_SELF); // not useable when silenced
         return;

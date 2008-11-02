@@ -11,6 +11,7 @@
 #include "prc_alterations"
 #include "inc_epicspells"
 #include "x2_inc_spellhook"
+#include "x0_i0_position"
 
 void main()
 {

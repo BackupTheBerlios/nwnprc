@@ -144,10 +144,10 @@ void DoNaturalAttack(object oWeapon)
 		return;
 /*		
 	//if not fighting, abort 
-	// motu99: GetIsFighting() not only checks. whether GetAttemptedAttackTarget() (relevant for melee attacks) returns a valid object
+	// motu99: PRCGetIsFighting() not only checks. whether GetAttemptedAttackTarget() (relevant for melee attacks) returns a valid object
 	// it also checks whether we have attempted to attack a valid target with a spell
 	// but spell attacks don't make sense for natural attacks (which are pure melee), so commented out
-	if(!GetIsFighting(oPC))
+	if(!PRCGetIsFighting(oPC))
 	{ 
  DoDebug(COLOR_WHITE + "DoNaturalAttack(): not fighting any more - aborting");
 		return;
@@ -235,7 +235,7 @@ void DoOffhandAttack(int nAttackMod)
 		return;
 /*
 	//if not fighting, abort 
-	if(!GetIsFighting(oPC))
+	if(!PRCGetIsFighting(oPC))
 	{
 		DoDebug(COLOR_WHITE + "DoOffhandAttack(): not fighting any more - aborting");
 		return;
@@ -300,7 +300,7 @@ void DoOffhandAttackRound(object oPC = OBJECT_SELF)
 		return;
 /*
 	//if not fighting, abort 
-	if(!GetIsFighting(oPC))
+	if(!PRCGetIsFighting(oPC))
 	{
 		DoDebug(COLOR_WHITE + "DoOffhandAttack(): not fighting any more - aborting");
 		return;
@@ -371,7 +371,7 @@ void DoOverflowOnhandAttack(int nAttackMod)
 		return;
 /*
 	//if not fighting, abort 
-	if(!GetIsFighting(oPC))
+	if(!PRCGetIsFighting(oPC))
 	{
 		DoDebug(COLOR_WHITE + "DoOverflowOnhandAttack(): not fighting any more - aborting");
 		return;
@@ -673,7 +673,7 @@ void NaturalSecondaryWeaponTempCheck(object oManifester, object oTarget, int nSp
 {
     if(!((nBeatsRemaining-- == 0)                                         || // Has the power ended since the last beat, or does the duration run out now
          PRCGetDelayedSpellEffectsExpired(nSpellID, oTarget, oManifester)  || // Has the power been dispelled
-         GetHasEffect(EFFECT_TYPE_POLYMORPH, oTarget)                        // Has the target been polymorphed
+         PRCGetHasEffect(EFFECT_TYPE_POLYMORPH, oTarget)                        // Has the target been polymorphed
          )
        )
     {
@@ -827,7 +827,7 @@ void NaturalPrimaryWeaponTempCheck(object oManifester, object oTarget, int nSpel
 {
     if(!((nBeatsRemaining-- == 0)                                         || // Has the power ended since the last beat, or does the duration run out now
          PRCGetDelayedSpellEffectsExpired(nSpellID, oTarget, oManifester)  || // Has the power been dispelled
-         GetHasEffect(EFFECT_TYPE_POLYMORPH, oTarget)                        // Has the target been polymorphed
+         PRCGetHasEffect(EFFECT_TYPE_POLYMORPH, oTarget)                        // Has the target been polymorphed
          )
        )
     {

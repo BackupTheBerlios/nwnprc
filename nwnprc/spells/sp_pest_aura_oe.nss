@@ -88,7 +88,7 @@ PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
      * this effect to be present on the carrier even if it has been
      * cured.
      */
-    if(!GetHasEffect(EFFECT_TYPE_DISEASE, oCarrier))
+    if(!PRCGetHasEffect(EFFECT_TYPE_DISEASE, oCarrier))
     {
         // It isn't, so do a paranoia cleanup of the carrier and delete self
         DeleteLocalInt(oCarrier, "SPELL_PESTILENCE_SAVED");
@@ -106,7 +106,7 @@ PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
     
     // Do not try to re-infect the carrier or a target that is already.
     // diseased. That'd just cause extra spam.
-    if(!(oTarget == oCarrier || GetHasEffect(EFFECT_TYPE_DISEASE, oTarget)))
+    if(!(oTarget == oCarrier || PRCGetHasEffect(EFFECT_TYPE_DISEASE, oTarget)))
     {
         //Make sure the target is a living one
         if(MyPRCGetRacialType(oTarget) != RACIAL_TYPE_CONSTRUCT && MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)

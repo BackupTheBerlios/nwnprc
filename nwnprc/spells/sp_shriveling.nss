@@ -91,7 +91,7 @@ int GetHasSoulRot(object oPC)
     effect eTest = GetFirstEffect(oPC);
     effect eDisease = EffectDisease(DISEASE_SOUL_ROT);
     
-    if (GetHasEffect(EFFECT_TYPE_DISEASE, oPC))
+    if (PRCGetHasEffect(EFFECT_TYPE_DISEASE, oPC))
     {
         while (GetIsEffectValid(eTest))
         {

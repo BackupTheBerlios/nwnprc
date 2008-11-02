@@ -49,7 +49,7 @@ void main()
         if (!GetIsObjectValid(oAttacker)) {
             // Don't do anything, invalid attacker
 
-        } else if (!GetIsFighting(OBJECT_SELF)) {
+        } else if (!PRCGetIsFighting(OBJECT_SELF)) {
             // We're not fighting anyone else, so
             // start fighting the attacker
             if(GetBehaviorState(NW_FLAG_BEHAVIOR_SPECIAL)) {

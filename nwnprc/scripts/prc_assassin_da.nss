@@ -32,8 +32,8 @@ void main()
     }
     // Assasain must not be seen
 /*    if (!( (GetStealthMode(oPC) == STEALTH_MODE_ACTIVATED)  || 
-           (GetHasEffect(EFFECT_TYPE_INVISIBILITY,oPC)) ||
-           (GetHasEffect(EFFECT_TYPE_SANCTUARY,oPC)) ) )
+           (PRCGetHasEffect(EFFECT_TYPE_INVISIBILITY,oPC)) ||
+           (PRCGetHasEffect(EFFECT_TYPE_SANCTUARY,oPC)) ) )
     {
         FloatingTextStringOnCreature("Your target is aware of you, you can not perform a death attack",OBJECT_SELF);
         return;

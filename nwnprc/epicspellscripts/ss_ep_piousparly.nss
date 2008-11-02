@@ -13,6 +13,7 @@
 #include "prc_alterations"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
+#include "x0_i0_position"
 
 void main()
 {

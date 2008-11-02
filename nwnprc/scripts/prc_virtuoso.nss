@@ -18,7 +18,7 @@
 void main()
 {
     object oPC = OBJECT_SELF;
-    if (GetHasEffect(EFFECT_TYPE_SILENCE,oPC))
+    if (PRCGetHasEffect(EFFECT_TYPE_SILENCE,oPC))
     {
         FloatingTextStrRefOnCreature(85764,oPC); // not useable when silenced
         return;

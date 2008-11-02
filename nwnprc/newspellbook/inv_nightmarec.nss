@@ -17,7 +17,7 @@ void main()
     while(GetIsObjectValid(oTarget))
     {
         if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE , GetAreaOfEffectCreator())
-            && GetHasEffect(EFFECT_TYPE_ENTANGLE, oTarget)
+            && PRCGetHasEffect(EFFECT_TYPE_ENTANGLE, oTarget)
             && oTarget != GetAreaOfEffectCreator()
             && GetCreatureFlag(oTarget, CREATURE_VAR_IS_INCORPOREAL) != TRUE)
         {

@@ -500,6 +500,13 @@ void ActionUseItemPropertyAtObject(object oItem, itemproperty ipIP, object oTarg
  */
 void ActionUseItemPropertyAtLocation(object oItem, itemproperty ipIP, location lTarget);
 
+// Checks the target for a specific EFFECT_TYPE constant value
+int PRCGetHasEffect(int nEffectType, object oTarget = OBJECT_SELF);
+
+//Does a check to determine if the NPC has an attempted
+//spell or attack target
+int PRCGetIsFighting(object oFighting);
+
 
 const int ERROR_CODE_5_ONCE_MORE = -1;
 const int ERROR_CODE_5_ONCE_MORE2 = -1;
@@ -1341,5 +1348,56 @@ void ActionUseItemPropertyAtLocation(object oItem, itemproperty ipIP, location l
 }
 
 
+//::///////////////////////////////////////////////
+//:: Get Has Effect
+//:: Copyright (c) 2001 Bioware Corp.
+//:://////////////////////////////////////////////
+/*
+    Checks to see if the target has a given
+    spell effect
+*/
+//:://////////////////////////////////////////////
+//:: Created By: Preston Watamaniuk
+//:: Created On: Oct 26, 2001
+//:://////////////////////////////////////////////
+int PRCGetHasEffect(int nEffectType, object oTarget = OBJECT_SELF)
+{
+    effect eCheck = GetFirstEffect(oTarget);
+    while(GetIsEffectValid(eCheck))
+    {
+        if(GetEffectType(eCheck) == nEffectType)
+        {
+             return TRUE;
+        }
+        eCheck = GetNextEffect(oTarget);
+    }
+    return FALSE;
+}
+// Test main
+//void main(){}
+
+//::///////////////////////////////////////////////
+//:: PRCGetIsFighting
+//:: Copyright (c) 2001 Bioware Corp.
+//:://////////////////////////////////////////////
+/*
+    Checks if the passed object has an Attempted
+    Attack or Spell Target
+*/
+//:://////////////////////////////////////////////
+//:: Created By: Preston Watamaniuk
+//:: Created On: March 13, 2002
+//:://////////////////////////////////////////////
+int PRCGetIsFighting(object oFighting)
+{
+    object oAttack = GetAttemptedAttackTarget();
+    object oSpellTarget = GetAttemptedSpellTarget();
+
+    if(GetIsObjectValid(oAttack) || GetIsObjectValid(oSpellTarget))
+    {
+        return TRUE;
+    }
+    return FALSE;
+}
 // Test main
 //void main() {}

@@ -10,11 +10,11 @@
 
 void CheckBlindness(object oTarget)
 {
-    if (GetIsDead(oTarget) || !GetIsFighting(oTarget) && GetHasEffect(EFFECT_TYPE_BLINDNESS, oTarget) )
+    if (GetIsDead(oTarget) || !PRCGetIsFighting(oTarget) && PRCGetHasEffect(EFFECT_TYPE_BLINDNESS, oTarget) )
     {
          PRCRemoveSpecificEffect(EFFECT_TYPE_BLINDNESS, oTarget);
     }
-    else if(GetHasEffect(EFFECT_TYPE_BLINDNESS, oTarget) )
+    else if(PRCGetHasEffect(EFFECT_TYPE_BLINDNESS, oTarget) )
     {
          DelayCommand(6.0, CheckBlindness(oTarget) );
     }

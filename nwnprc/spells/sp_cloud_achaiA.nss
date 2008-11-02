@@ -39,7 +39,7 @@ void main()
 		
 	// * July 2003: If has darkness then do not put it on it again
 	// Primogenitor: Yes, what about overlapping darkness effects by different casters?
-	//if (GetHasEffect(EFFECT_TYPE_DARKNESS, oTarget) == TRUE)
+	//if (PRCGetHasEffect(EFFECT_TYPE_DARKNESS, oTarget) == TRUE)
 	//{
 		//    return;
 		//}

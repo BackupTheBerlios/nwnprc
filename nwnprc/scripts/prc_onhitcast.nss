@@ -654,7 +654,7 @@ void SetRancorVar(object oPC)
     // Call again if the character is still in combat.
     // this allows the ability to keep running even if the
     // player does not score a rancor hit during the allotted time
-    if( GetIsFighting(oPC) )
+    if( PRCGetIsFighting(oPC) )
     {
         DelayCommand(6.0, SetRancorVar(oPC) );
     }
@@ -701,7 +701,7 @@ void SetImprovedRicochetVar(object oPC)
     // Call again if the character is still in combat.
     // this allows the ability to keep running even if the
     // player does not score a retort hit during the allotted time
-    if( GetIsFighting(oPC) )
+    if( PRCGetIsFighting(oPC) )
     {
         DelayCommand(6.0, SetImprovedRicochetVar(oPC));
     }

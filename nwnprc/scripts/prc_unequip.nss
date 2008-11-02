@@ -52,7 +52,7 @@ void main()
     DelayCommand(0.0f, PrcFeats(oPC));
 
     /* Does not seem to work, the effect is not listed yet when the unequip scripts get run
-    if(GetHasEffect(EFFECT_TYPE_POLYMORPH, oPC))
+    if(PRCGetHasEffect(EFFECT_TYPE_POLYMORPH, oPC))
     {
         DoDebug("prc_unequip: delayed call");
         DelayCommand(0.0f, PrcFeats(oPC));

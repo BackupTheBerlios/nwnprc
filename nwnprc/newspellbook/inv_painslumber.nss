@@ -43,7 +43,7 @@ void DoDamageCheck(object oTarget, int nSleepCheck)
     if(nSleepCheck != GetLocalInt(oTarget, "nSleepCheck"))
         return;
         
-    if(!GetHasEffect(EFFECT_TYPE_SLEEP, oTarget))
+    if(!PRCGetHasEffect(EFFECT_TYPE_SLEEP, oTarget))
     {
         if(DEBUG) DoDebug("inv_painslumber: Target awakened unnaturally");
         effect eSleepDam = EffectDamage(GetLocalInt(oTarget, "PainfulSleep"), DAMAGE_TYPE_MAGICAL);

@@ -25,7 +25,7 @@ void main()
         return;
    }
 
-    if (GetHasEffect(EFFECT_TYPE_SILENCE,OBJECT_SELF))
+    if (PRCGetHasEffect(EFFECT_TYPE_SILENCE,OBJECT_SELF))
     {
         FloatingTextStrRefOnCreature(85764,OBJECT_SELF); // not useable when silenced
         return;
@@ -379,7 +379,7 @@ void main()
         if(spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE, OBJECT_SELF))
         {
              // * GZ Oct 2003: If we are deaf, we do not have negative effects from curse song
-            if (!GetHasEffect(EFFECT_TYPE_SILENCE,oTarget) && !GetHasEffect(EFFECT_TYPE_DEAF,oTarget))
+            if (!PRCGetHasEffect(EFFECT_TYPE_SILENCE,oTarget) && !PRCGetHasEffect(EFFECT_TYPE_DEAF,oTarget))
             {
                 RemoveSongEffects(GetSpellId(),OBJECT_SELF,oTarget);
                 int nRace = MyPRCGetRacialType(oTarget);

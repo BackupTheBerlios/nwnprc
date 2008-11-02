@@ -268,7 +268,7 @@ int GetIsAOEFlanked(object oDefender, object oAttacker)
     int bReturnVal = TRUE;
 
     // if they are not in combat then they are automatically flanked (surprise round)
-    if(!GetIsFighting(oDefender) || !GetIsInCombat(oDefender) )
+    if(!PRCGetIsFighting(oDefender) || !GetIsInCombat(oDefender) )
     {
          // checks if they are attacking something other than the caster
          object oTarget = GetAttackTarget(oDefender);
@@ -285,10 +285,10 @@ int GetIsHelpless(object oDefender)
      // PnP describes a helpless defender as
      // A helpless foe - one who is bound, held, sleeping, paralyzed,
      // unconscious, or otherwise at your mercy - is an easy target.
-     if( GetHasEffect(EFFECT_TYPE_PARALYZE, oDefender) )               bIsHelpless = TRUE;
-     else if( GetHasEffect(EFFECT_TYPE_SLEEP, oDefender) )             bIsHelpless = TRUE;
-     else if( GetHasEffect(EFFECT_TYPE_PETRIFY, oDefender) )           bIsHelpless = TRUE;
-     else if( GetHasEffect(EFFECT_TYPE_CUTSCENE_PARALYZE, oDefender) ) bIsHelpless = TRUE;
+     if( PRCGetHasEffect(EFFECT_TYPE_PARALYZE, oDefender) )               bIsHelpless = TRUE;
+     else if( PRCGetHasEffect(EFFECT_TYPE_SLEEP, oDefender) )             bIsHelpless = TRUE;
+     else if( PRCGetHasEffect(EFFECT_TYPE_PETRIFY, oDefender) )           bIsHelpless = TRUE;
+     else if( PRCGetHasEffect(EFFECT_TYPE_CUTSCENE_PARALYZE, oDefender) ) bIsHelpless = TRUE;
 
      return bIsHelpless;
 }
@@ -296,15 +296,15 @@ int GetIsHelpless(object oDefender)
 int GetIsDeniedDexBonusToAC(object oDefender, object oAttacker, int nIgnoreUD = FALSE)
 {
      int bIsDeniedDex = FALSE;
-     int bDefenderHasTrueSight = GetHasEffect(EFFECT_TYPE_TRUESEEING, oAttacker);
-     int bDefenderCanSeeInvisble = GetHasEffect(EFFECT_TYPE_SEEINVISIBLE, oAttacker);
+     int bDefenderHasTrueSight = PRCGetHasEffect(EFFECT_TYPE_TRUESEEING, oAttacker);
+     int bDefenderCanSeeInvisble = PRCGetHasEffect(EFFECT_TYPE_SEEINVISIBLE, oAttacker);
      int bDefenderIsKnockedDown = GetHasFeatEffect(FEAT_KNOCKDOWN, oDefender) || GetHasFeatEffect(FEAT_IMPROVED_KNOCKDOWN, oDefender);
 
      // if the player is helpess, they are automatically denied dex bonus.
      if( GetIsHelpless(oDefender) ) return TRUE;
 
      // if the player is not fighting, then this is the "surprise round"
-     if( !GetIsFighting(oDefender) || !GetIsInCombat(oDefender) )
+     if( !PRCGetIsFighting(oDefender) || !GetIsInCombat(oDefender) )
      {
           bIsDeniedDex = TRUE;
      }
@@ -313,21 +313,21 @@ int GetIsDeniedDexBonusToAC(object oDefender, object oAttacker, int nIgnoreUD = 
      if( bDefenderIsKnockedDown ) bIsDeniedDex = TRUE;
 
      // if defender has spell effect on them causing them to be denied dex bonus to AC.
-     if( GetHasEffect(EFFECT_TYPE_BLINDNESS, oDefender) )          bIsDeniedDex = TRUE;
-     else if( GetHasEffect(EFFECT_TYPE_ENTANGLE, oDefender) )      bIsDeniedDex = TRUE;
-     else if( GetHasEffect(EFFECT_TYPE_FRIGHTENED, oDefender) )    bIsDeniedDex = TRUE;
-     else if( GetHasEffect(EFFECT_TYPE_STUNNED, oDefender) )       bIsDeniedDex = TRUE;
+     if( PRCGetHasEffect(EFFECT_TYPE_BLINDNESS, oDefender) )          bIsDeniedDex = TRUE;
+     else if( PRCGetHasEffect(EFFECT_TYPE_ENTANGLE, oDefender) )      bIsDeniedDex = TRUE;
+     else if( PRCGetHasEffect(EFFECT_TYPE_FRIGHTENED, oDefender) )    bIsDeniedDex = TRUE;
+     else if( PRCGetHasEffect(EFFECT_TYPE_STUNNED, oDefender) )       bIsDeniedDex = TRUE;
 
      // Note: This is wrong by PnP rules... but Bioware allows auto sneaks on Dazed targets.
      //       to keep in tune with the game engine I'll leave this active.
-     else if( GetHasEffect(EFFECT_TYPE_DAZED, oDefender) )         bIsDeniedDex = TRUE;
+     else if( PRCGetHasEffect(EFFECT_TYPE_DAZED, oDefender) )         bIsDeniedDex = TRUE;
 
      // if attacker is invisvisible/hiding/etc.
-     else if( GetHasEffect(EFFECT_TYPE_INVISIBILITY, oAttacker)  && !bDefenderHasTrueSight && !bDefenderCanSeeInvisble )
+     else if( PRCGetHasEffect(EFFECT_TYPE_INVISIBILITY, oAttacker)  && !bDefenderHasTrueSight && !bDefenderCanSeeInvisble )
      {
           bIsDeniedDex = TRUE;
      }
-     else if( GetHasEffect(EFFECT_TYPE_IMPROVEDINVISIBILITY, oAttacker)  && !bDefenderHasTrueSight && !bDefenderCanSeeInvisble )
+     else if( PRCGetHasEffect(EFFECT_TYPE_IMPROVEDINVISIBILITY, oAttacker)  && !bDefenderHasTrueSight && !bDefenderCanSeeInvisble )
      {
           bIsDeniedDex = TRUE;
      }
@@ -384,9 +384,9 @@ int GetIsConcealed(object oDefender, object oAttacker)
 {
      int bIsConcealed = FALSE;
 
-     int bAttackerHasTrueSight = GetHasEffect(EFFECT_TYPE_TRUESEEING, oAttacker);
-     int bAttackerCanSeeInvisble = GetHasEffect(EFFECT_TYPE_SEEINVISIBLE, oAttacker);
-     int bAttackerUltraVision = GetHasEffect(EFFECT_TYPE_ULTRAVISION, oAttacker);
+     int bAttackerHasTrueSight = PRCGetHasEffect(EFFECT_TYPE_TRUESEEING, oAttacker);
+     int bAttackerCanSeeInvisble = PRCGetHasEffect(EFFECT_TYPE_SEEINVISIBLE, oAttacker);
+     int bAttackerUltraVision = PRCGetHasEffect(EFFECT_TYPE_ULTRAVISION, oAttacker);
 
      if(GetHasFeat(FEAT_EPIC_SELF_CONCEALMENT_50, oDefender) )          bIsConcealed = 50;
      else if(GetHasFeat(FEAT_EPIC_SELF_CONCEALMENT_40, oDefender) )     bIsConcealed = 40;
@@ -396,22 +396,22 @@ int GetIsConcealed(object oDefender, object oAttacker)
 
      // darkness, invisible, imp invisible
      else if(GetStealthMode(oDefender) == STEALTH_MODE_ACTIVATED && !GetObjectSeen(oDefender, oAttacker) )  bIsConcealed = TRUE;
-     else if(GetHasEffect(EFFECT_TYPE_SANCTUARY, oDefender) && !bAttackerHasTrueSight )
+     else if(PRCGetHasEffect(EFFECT_TYPE_SANCTUARY, oDefender) && !bAttackerHasTrueSight )
      {
           // if they player is hidden you know enough to try attacking, give 50% miss chance
           // as that is the highest concealment normally allowed.
           // couldn't find any rules that governed this though.
           bIsConcealed = 50;
      }
-     else if(GetHasEffect(EFFECT_TYPE_INVISIBILITY, oDefender) && !bAttackerHasTrueSight && !bAttackerCanSeeInvisble )
+     else if(PRCGetHasEffect(EFFECT_TYPE_INVISIBILITY, oDefender) && !bAttackerHasTrueSight && !bAttackerCanSeeInvisble )
      {
           bIsConcealed = 50;
      }
-     else if(GetHasEffect(EFFECT_TYPE_IMPROVEDINVISIBILITY, oDefender) && !bAttackerHasTrueSight && !bAttackerCanSeeInvisble  )
+     else if(PRCGetHasEffect(EFFECT_TYPE_IMPROVEDINVISIBILITY, oDefender) && !bAttackerHasTrueSight && !bAttackerCanSeeInvisble  )
      {
           bIsConcealed = 50;
      }
-     else if(GetHasEffect(EFFECT_TYPE_DARKNESS, oDefender) && !bAttackerHasTrueSight && !bAttackerUltraVision)
+     else if(PRCGetHasEffect(EFFECT_TYPE_DARKNESS, oDefender) && !bAttackerHasTrueSight && !bAttackerUltraVision)
      {
           bIsConcealed = 50;
      }
@@ -419,7 +419,7 @@ int GetIsConcealed(object oDefender, object oAttacker)
      {
           bIsConcealed = 50;
      }
-     //else if(GetHasEffect(EFFECT_TYPE_ETHEREAL, oDefender) && !bAttackerHasTrueSight && !bAttackerCanSeeInvisble  )
+     //else if(PRCGetHasEffect(EFFECT_TYPE_ETHEREAL, oDefender) && !bAttackerHasTrueSight && !bAttackerCanSeeInvisble  )
      //{
      //     bIsConcealed = TRUE;
      //}
@@ -443,7 +443,7 @@ int GetIsConcealed(object oDefender, object oAttacker)
      }
 
      // this is the catch-all effect
-     else if(GetHasEffect(EFFECT_TYPE_CONCEALMENT, oDefender) && !bAttackerHasTrueSight)
+     else if(PRCGetHasEffect(EFFECT_TYPE_CONCEALMENT, oDefender) && !bAttackerHasTrueSight)
      {
           if(bIsConcealed == FALSE) bIsConcealed = TRUE;
      }

@@ -102,13 +102,13 @@ void main()
             // by DelayCommanding the spell the effect looses its SpellID information and stacks...
             DelayCommand(0.01f,DoSuckBrain(oTarget, nDamage));
             // if our target was poisoned or diseased, we inherit that
-            if (GetHasEffect( EFFECT_TYPE_POISON,oTarget))
+            if (PRCGetHasEffect( EFFECT_TYPE_POISON,oTarget))
             {
                 effect ePoison =  EffectPoison(POISON_PHASE_SPIDER_VENOM);
                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,ePoison,OBJECT_SELF);
             }
 
-            if (GetHasEffect( EFFECT_TYPE_DISEASE,oTarget))
+            if (PRCGetHasEffect( EFFECT_TYPE_DISEASE,oTarget))
             {
                 effect eDisease =  EffectDisease(DISEASE_SOLDIER_SHAKES);
                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,eDisease,OBJECT_SELF);

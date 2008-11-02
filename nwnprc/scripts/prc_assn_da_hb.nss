@@ -36,9 +36,9 @@ void main()
     // We must be counting down until we can apply the slay property
     // Assasain must not be seen
    /* if (!((GetStealthMode(oPC) == STEALTH_MODE_ACTIVATED) ||
-         (GetHasEffect(EFFECT_TYPE_INVISIBILITY,oPC)) ||
+         (PRCGetHasEffect(EFFECT_TYPE_INVISIBILITY,oPC)) ||
          !(GetIsInCombat(oPC)) ||
-         (GetHasEffect(EFFECT_TYPE_SANCTUARY,oPC))))*/
+         (PRCGetHasEffect(EFFECT_TYPE_SANCTUARY,oPC))))*/
     // Using the CanSeePlayer function on the target
     if (GetIsObjectValid(GetNearestCreature(CREATURE_TYPE_PLAYER_CHAR, PLAYER_CHAR_IS_PC, GetLocalObject(oPC, "PRC_DA_TARGET"), 1, CREATURE_TYPE_PERCEPTION, PERCEPTION_SEEN)))
     {

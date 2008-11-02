@@ -22,7 +22,7 @@
 
 #include "inc_dynconv"
 #include "prc_inc_leadersh"
-//#include "x0_inc_henai"
+#include "x0_inc_henai"
 //#include "x0_i0_henchman"
 
 //////////////////////////////////////////////////

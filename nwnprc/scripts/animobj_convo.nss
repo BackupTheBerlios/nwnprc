@@ -18,9 +18,9 @@
 //* GeorgZ - Put in a fix for henchmen talking even if they are petrified
 int AbleToTalk(object oSelf)
 {
-   if (GetHasEffect(EFFECT_TYPE_CONFUSED, oSelf) || GetHasEffect(EFFECT_TYPE_DOMINATED, oSelf) ||
-        GetHasEffect(EFFECT_TYPE_PETRIFY, oSelf) || GetHasEffect(EFFECT_TYPE_PARALYZE, oSelf)   ||
-        GetHasEffect(EFFECT_TYPE_STUNNED, oSelf) || GetHasEffect(EFFECT_TYPE_FRIGHTENED, oSelf)
+   if (PRCGetHasEffect(EFFECT_TYPE_CONFUSED, oSelf) || PRCGetHasEffect(EFFECT_TYPE_DOMINATED, oSelf) ||
+        PRCGetHasEffect(EFFECT_TYPE_PETRIFY, oSelf) || PRCGetHasEffect(EFFECT_TYPE_PARALYZE, oSelf)   ||
+        PRCGetHasEffect(EFFECT_TYPE_STUNNED, oSelf) || PRCGetHasEffect(EFFECT_TYPE_FRIGHTENED, oSelf)
     )
     {
         return FALSE;

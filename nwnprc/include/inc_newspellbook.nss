@@ -81,7 +81,7 @@ void NewSpellbookSpell(int nClass, int nMetamagic, int nSpellID);
 /*                  Includes                    */
 //////////////////////////////////////////////////
 
-#include "nw_i0_generic"
+
 #include "inc_utility"
 #include "prc_inc_spells"
 #include "inc_lookups"
@@ -788,7 +788,7 @@ void NewSpellbookSpell(int nClass, int nMetamagic, int nSpellID)
 
     // If the spell has a vocal component, silence and deafness can cause failure
     if(    FindSubString(GetStringLowerCase(Get2DACache("spells", "VS", nSpellID)),"v") != -1
-        && (GetHasEffect(EFFECT_TYPE_SILENCE, oPC) || (GetHasEffect(EFFECT_TYPE_DEAF, oPC) && Random(100) < 20)))
+        && (PRCGetHasEffect(EFFECT_TYPE_SILENCE, oPC) || (PRCGetHasEffect(EFFECT_TYPE_DEAF, oPC) && Random(100) < 20)))
 
     {
         int nFail = TRUE;

@@ -64,11 +64,11 @@ void main()
     if(GetPersistantLocalInt(oPC, "USING_AGONY"))
     {
         //"Willing" check
-        if(GetHasEffect(EFFECT_TYPE_DAZED, oTarget) 
-            || GetHasEffect(EFFECT_TYPE_DOMINATED, oTarget) 
-            || GetHasEffect(EFFECT_TYPE_PARALYZE, oTarget)
-            || GetHasEffect(EFFECT_TYPE_STUNNED, oTarget)
-            || GetHasEffect(EFFECT_TYPE_CHARMED, oTarget)
+        if(PRCGetHasEffect(EFFECT_TYPE_DAZED, oTarget) 
+            || PRCGetHasEffect(EFFECT_TYPE_DOMINATED, oTarget) 
+            || PRCGetHasEffect(EFFECT_TYPE_PARALYZE, oTarget)
+            || PRCGetHasEffect(EFFECT_TYPE_STUNNED, oTarget)
+            || PRCGetHasEffect(EFFECT_TYPE_CHARMED, oTarget)
             || GetIsFriend(oTarget, oPC))
         
         {

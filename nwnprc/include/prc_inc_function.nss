@@ -52,7 +52,7 @@ void DeletePRCLocalInts(object oSkin);
 //#include "prc_inc_clsfunc"
 //#include "prc_inc_racial"
 //#include "inc_abil_damage"
-// #include "NW_I0_GENERIC"
+// 
 //#include "x2_inc_itemprop"
 //#include "pnp_shft_poly"
 //
@@ -230,7 +230,7 @@ void EvalPRCFeats(object oPC)
         && !GetHasFeat(FEAT_PNP_SPELL_SCHOOL_NECROMANCY,    oPC)
         && !GetHasFeat(FEAT_PNP_SPELL_SCHOOL_TRANSMUTATION, oPC)
         && !GetIsPolyMorphedOrShifted(oPC)
-        //&& !GetHasEffect(EFFECT_TYPE_POLYMORPH, oPC) //so it doesnt pop up on polymorphing
+        //&& !PRCGetHasEffect(EFFECT_TYPE_POLYMORPH, oPC) //so it doesnt pop up on polymorphing
         //&& !GetLocalInt(oSkin, "nPCShifted") //so it doenst pop up on shifting
         )
     {

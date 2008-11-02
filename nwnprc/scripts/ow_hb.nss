@@ -93,7 +93,7 @@ void main()
                     {
                         if(GetAssociateState(NW_ASC_HAVE_MASTER))
                         {
-                            if(!GetIsFighting(OBJECT_SELF))
+                            if(!PRCGetIsFighting(OBJECT_SELF))
                             {
                                 if(!GetAssociateState(NW_ASC_MODE_STAND_GROUND))
                                 {
@@ -166,7 +166,7 @@ void main()
 
         }
         // * if I am dominated, ask for some help
-        if (GetHasEffect(EFFECT_TYPE_DOMINATED, OBJECT_SELF) == TRUE && GetIsEncounterCreature(OBJECT_SELF) == FALSE)
+        if (PRCGetHasEffect(EFFECT_TYPE_DOMINATED, OBJECT_SELF) == TRUE && GetIsEncounterCreature(OBJECT_SELF) == FALSE)
         {
             SendForHelp();
         }

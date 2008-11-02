@@ -38,7 +38,7 @@ void main()
         {
             DelayCommand(1.0, ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, PRCGetSpellTargetLocation()));
             oFiend = CreateObject(OBJECT_TYPE_CREATURE, "twinfiend_demon", PRCGetSpellTargetLocation());
-            oFiend2 = CreateObject(OBJECT_TYPE_CREATURE, "twinfiend_demon", GetStepLeftLocation(oFiend));
+            oFiend2 = CreateObject(OBJECT_TYPE_CREATURE, "twinfiend_demon", PRCGetSpellTargetLocation());
             SetMaxHenchmen(GetMaxHenchmen() + 2);
             AddHenchman(OBJECT_SELF, oFiend);
             AddHenchman(OBJECT_SELF, oFiend2);

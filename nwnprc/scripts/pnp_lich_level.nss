@@ -39,7 +39,7 @@ void main()
 
     // If they are polymorphed dont run this code
     // this should fix the HOTU sensi amulet bug
-    if (GetHasEffect(EFFECT_TYPE_POLYMORPH,oPC))
+    if (PRCGetHasEffect(EFFECT_TYPE_POLYMORPH,oPC))
         return;
 
 

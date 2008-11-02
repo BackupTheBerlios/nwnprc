@@ -3,6 +3,7 @@
 //:: prc_ondying
 //:://////////////////////////////////////////////
 #include "prc_alterations"
+#include "x0_i0_position"
 
 void main()
 {
@@ -13,7 +14,7 @@ void main()
     if(GetHasFeat(FEAT_SHADOWDISCOPOR, oDying) &&
        (GetIsAreaAboveGround(GetArea(oDying)) == AREA_UNDERGROUND ||
         GetIsNight()                                           ||
-        GetHasEffect(EFFECT_TYPE_DARKNESS, oDying)
+        PRCGetHasEffect(EFFECT_TYPE_DARKNESS, oDying)
        ))
     {
         int nRoll    = d20();

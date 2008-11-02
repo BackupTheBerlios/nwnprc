@@ -402,7 +402,6 @@ const int  TYPE_DIVINE   = -2;
 #include "inc_utility"
 //#include "prc_alterations"
 #include "x2_inc_itemprop"
-#include "prc_inc_sneak"
 //#include "prc_feat_const"
 //#include "prc_class_const"
 #include "lookup_2da_spell"
@@ -414,6 +413,7 @@ const int  TYPE_DIVINE   = -2;
 #include "inc_newspellbook"
 #include "inc_lookups"
 #include "prc_spellhook"
+#include "prc_inc_sneak"
 
 // ---------------
 // BEGIN FUNCTIONS

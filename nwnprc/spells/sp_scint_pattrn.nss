@@ -107,7 +107,7 @@ void main()
                                 // Make faction check to ignore allies
                                 if(!GetIsReactionTypeFriendly(oTarget) &&
                                 // Make sure they are not immune to spells
-                                !GetHasEffect(EFFECT_TYPE_SPELL_IMMUNITY, oTarget) &&
+                                !PRCGetHasEffect(EFFECT_TYPE_SPELL_IMMUNITY, oTarget) &&
                                 // Must be alive
                                 PRCGetIsAliveCreature(oTarget))
                                 {

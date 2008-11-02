@@ -107,7 +107,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, SupernaturalEffect(eDeath), oTarget));
                          }
                     }
-                    else if(!GetHasEffect(EFFECT_TYPE_DEAF, oTarget))
+                    else if(!PRCGetHasEffect(EFFECT_TYPE_DEAF, oTarget))
                     {
                         //Check the HD of the creature
                         nHD = GetHitDice(oTarget);

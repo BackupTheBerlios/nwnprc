@@ -79,7 +79,7 @@ void main()
                 // PvP check
                 if(!GetIsReactionTypeFriendly(oTarget, oPC) &&
                 // Make sure they are not immune to spells
-                !GetHasEffect(EFFECT_TYPE_SPELL_IMMUNITY, oTarget))
+                !PRCGetHasEffect(EFFECT_TYPE_SPELL_IMMUNITY, oTarget))
                 {
                         // Check HD
                         if(GetHitDice(oTarget) <= 8)
@@ -88,7 +88,7 @@ void main()
                                 PRCSignalSpellEvent(oTarget, TRUE, SPELL_PRISMATIC_SPHERE, oPC);
                                 
                                 // Check if they can see
-                                if(!GetHasEffect(EFFECT_TYPE_BLINDNESS, oTarget))
+                                if(!PRCGetHasEffect(EFFECT_TYPE_BLINDNESS, oTarget))
                                 {
                                         // Check spell resistance
                                         if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl))

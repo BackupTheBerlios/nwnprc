@@ -30,7 +30,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 
     int iAttackRoll;
     // Check for the disease component
-    if(!GetHasEffect(EFFECT_TYPE_DISEASE, oCaster))
+    if(!PRCGetHasEffect(EFFECT_TYPE_DISEASE, oCaster))
     {
         if(GetIsPC(oCaster))
         {

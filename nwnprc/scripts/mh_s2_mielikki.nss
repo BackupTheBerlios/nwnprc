@@ -69,7 +69,7 @@ void main()
                 FloatingTextStringOnCreature(str,OBJECT_SELF,TRUE);
             }*/
         }
-        else if(GetHasEffect(EFFECT_TYPE_POLYMORPH,oTarget) )
+        else if(PRCGetHasEffect(EFFECT_TYPE_POLYMORPH,oTarget) )
         {
             //on annule l'effet de polymorphie
             effect eVis = EffectVisualEffect(VFX_IMP_UNSUMMON);

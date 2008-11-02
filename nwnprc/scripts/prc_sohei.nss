@@ -9,6 +9,7 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
+#include "x0_i0_modes"
 
 void SoheiDamageResist(object oPC, object oSkin, int nLevel)
 {

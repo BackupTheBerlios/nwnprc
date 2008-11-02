@@ -87,7 +87,7 @@ void ApplyDragonfire(int nAmount, int nDuration, object oPC, object oCaster)
 
 void main()
 {
-    if (GetHasEffect(EFFECT_TYPE_SILENCE,OBJECT_SELF))
+    if (PRCGetHasEffect(EFFECT_TYPE_SILENCE,OBJECT_SELF))
     {
         FloatingTextStrRefOnCreature(85764,OBJECT_SELF); // not useable when silenced
         return;
@@ -477,7 +477,7 @@ void main()
     while(GetIsObjectValid(oTarget))
     {
              // * GZ Oct 2003: If we are silenced, we can not benefit from bard song
-             if (!GetHasEffect(EFFECT_TYPE_SILENCE,oTarget) && !GetHasEffect(EFFECT_TYPE_DEAF,oTarget))
+             if (!PRCGetHasEffect(EFFECT_TYPE_SILENCE,oTarget) && !PRCGetHasEffect(EFFECT_TYPE_DEAF,oTarget))
              {
                 RemoveSongEffects(GetSpellId(),OBJECT_SELF,oTarget);
                 nRace = MyPRCGetRacialType(oTarget);

@@ -96,7 +96,7 @@ void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, fl
     int bDispellable = TRUE, int nSpellID = -1, int nCasterLevel = -1, object oCaster = OBJECT_SELF);
 
 
-#include "NW_I0_GENERIC"
+
 #include "prc_feat_const"
 #include "lookup_2da_spell"
 #include "prcsp_spell_adjs"
@@ -198,7 +198,7 @@ void spellsDispelMagicMod(object oTarget, int nCasterLevel, effect eVis, effect 
     // creatures. Also creature can be scripted to be immune to dispel
     // magic as well.
     //--------------------------------------------------------------------------
-    if (GetHasEffect(EFFECT_TYPE_PETRIFY, oTarget) == TRUE
+    if (PRCGetHasEffect(EFFECT_TYPE_PETRIFY, oTarget) == TRUE
         || GetLocalInt(oTarget, "X1_L_IMMUNE_TO_DISPEL") == 10)
     {
         return;
@@ -1101,7 +1101,7 @@ void spellsDispelMagic(object oTarget, int nCasterLevel, effect eVis, effect eIm
     // creatures. Also creature can be scripted to be immune to dispel
     // magic as well.
     //--------------------------------------------------------------------------
-    if (GetHasEffect(EFFECT_TYPE_PETRIFY, oTarget) == TRUE || GetLocalInt(oTarget, "X1_L_IMMUNE_TO_DISPEL") == 10)
+    if (PRCGetHasEffect(EFFECT_TYPE_PETRIFY, oTarget) == TRUE || GetLocalInt(oTarget, "X1_L_IMMUNE_TO_DISPEL") == 10)
     {
         return;
     }

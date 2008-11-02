@@ -166,7 +166,7 @@ void main()
             if(GetHasFeat(FEAT_INTIMIDATING_RAGE, OBJECT_SELF) ) // 4312
             {
          // Finds nearest visible enemy within 30 ft.
-                 object oTarget = GetNearestSeenOrHeardEnemy();
+                 object oTarget = GetNearestCreature(CREATURE_TYPE_REPUTATION, REPUTATION_TYPE_ENEMY, OBJECT_SELF, 1, CREATURE_TYPE_PERCEPTION, PERCEPTION_SEEN);
                  float distance = GetDistanceBetween(OBJECT_SELF, oTarget);
 
                  if(distance < FeetToMeters(30.0) )

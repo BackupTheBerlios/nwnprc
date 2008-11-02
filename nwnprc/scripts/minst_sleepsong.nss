@@ -18,7 +18,7 @@ void main()
         return;
    }
 
-    if (GetHasEffect(EFFECT_TYPE_SILENCE,OBJECT_SELF))
+    if (PRCGetHasEffect(EFFECT_TYPE_SILENCE,OBJECT_SELF))
     {
         FloatingTextStrRefOnCreature(85764,OBJECT_SELF); // not useable when silenced
         return;
@@ -62,7 +62,7 @@ void main()
             && MyPRCGetRacialType(oTarget) != RACIAL_TYPE_CONSTRUCT
             && MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)  //constructs & undead are immune
         {
-            if (!GetHasEffect(EFFECT_TYPE_DEAF,oTarget)) // deaf targets can't hear the song.
+            if (!PRCGetHasEffect(EFFECT_TYPE_DEAF,oTarget)) // deaf targets can't hear the song.
             {
                 if (GetIsImmune(oTarget, IMMUNITY_TYPE_SLEEP) == FALSE && GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS) == FALSE)
                 {

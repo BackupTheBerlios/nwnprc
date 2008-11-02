@@ -1,5 +1,5 @@
 
-#include "nw_i0_generic"
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //  FUNCTION DECLARATIONS
@@ -79,11 +79,11 @@ float GetTimeToCloseDistance(float fMeters, object oPC, int bIsRunning = FALSE)
      if(bIsRunning) fSpeed *= 2.0;
 
      // other effects that can change movement speed
-     if( GetHasEffect(EFFECT_TYPE_HASTE, oPC) ) fSpeed *= 2.0;
-     if( GetHasEffect(EFFECT_TYPE_MOVEMENT_SPEED_INCREASE, oPC) ) fSpeed *= 2.0;
+     if( PRCGetHasEffect(EFFECT_TYPE_HASTE, oPC) ) fSpeed *= 2.0;
+     if( PRCGetHasEffect(EFFECT_TYPE_MOVEMENT_SPEED_INCREASE, oPC) ) fSpeed *= 2.0;
 
-     if( GetHasEffect(EFFECT_TYPE_SLOW,  oPC) ) fSpeed /= 2.0;
-     if( GetHasEffect(EFFECT_TYPE_MOVEMENT_SPEED_DECREASE,  oPC) ) fSpeed /= 2.0;
+     if( PRCGetHasEffect(EFFECT_TYPE_SLOW,  oPC) ) fSpeed /= 2.0;
+     if( PRCGetHasEffect(EFFECT_TYPE_MOVEMENT_SPEED_DECREASE,  oPC) ) fSpeed /= 2.0;
 
      if( GetHasFeat(FEAT_BARBARIAN_ENDURANCE, oPC) ) fSpeed *= 1.1; // 10% gain
      if( GetHasFeat(FEAT_MONK_ENDURANCE, oPC) )

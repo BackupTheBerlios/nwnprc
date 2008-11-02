@@ -142,7 +142,7 @@ void spellsDispelMagicMod(object oTarget, int nCasterLevel, struct PRCeffect eVi
     // creatures. Also creature can be scripted to be immune to dispel
     // magic as well.
     //--------------------------------------------------------------------------
-    if (GetHasEffect(EFFECT_TYPE_PETRIFY, oTarget) == TRUE 
+    if (PRCGetHasEffect(EFFECT_TYPE_PETRIFY, oTarget) == TRUE 
         || GetLocalInt(oTarget, "X1_L_IMMUNE_TO_DISPEL") == 10)
     {
         return;

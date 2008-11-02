@@ -533,7 +533,7 @@ void SetShift_02(object oPC, object oTarget)
     if (iRemainingCON > 0)
     {
         int iExtCONBon = FloatToInt(iRemainingCON/2.0);
-        effect eTemporaryHitpoints = EffectTemporaryHitpoints(iExtCONBon * GetCharacterLevel(oPC));
+        effect eTemporaryHitpoints = EffectTemporaryHitpoints(iExtCONBon * GetHitDice(oPC));
         ApplyEffectToObject(DURATION_TYPE_PERMANENT,SupernaturalEffect(eTemporaryHitpoints),oPC);
     }
 

@@ -76,7 +76,7 @@ void main()
 		nAlign = GetAlignmentGoodEvil(oTarget);
 		nDC = PRCGetSaveDC(oTarget, oPC);
 		
-		if(!GetHasEffect(EFFECT_TYPE_DEAF, oTarget))
+		if(!PRCGetHasEffect(EFFECT_TYPE_DEAF, oTarget))
 		{
 			
 			if (nAlign == ALIGNMENT_EVIL)

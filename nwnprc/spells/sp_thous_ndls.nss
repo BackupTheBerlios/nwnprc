@@ -84,7 +84,7 @@ void main()
 		
 		else
 		{
-			if(!GetHasEffect(EFFECT_TYPE_DAMAGE_REDUCTION, oTarget))
+			if(!PRCGetHasEffect(EFFECT_TYPE_DAMAGE_REDUCTION, oTarget))
 			{
 				effect eLink = EffectAttackDecrease(nPenalty, ATTACK_BONUS_MISC);
 				eLink = EffectLinkEffects(eLink, EffectSavingThrowDecrease(SAVING_THROW_ALL, nPenalty, SAVING_THROW_TYPE_ALL));

@@ -26,47 +26,47 @@ void main()
 */
     int iContinue = 0;
     object oCaster = OBJECT_SELF;
-    if ( GetHasEffect( EFFECT_TYPE_CHARMED, oCaster ) ) 
+    if ( PRCGetHasEffect( EFFECT_TYPE_CHARMED, oCaster ) ) 
     {
         iContinue++;
     }
-    if ( GetHasEffect( EFFECT_TYPE_CONFUSED, oCaster ) ) 
+    if ( PRCGetHasEffect( EFFECT_TYPE_CONFUSED, oCaster ) ) 
     {
         iContinue++;
     }
-    if ( GetHasEffect( EFFECT_TYPE_CUTSCENE_PARALYZE, oCaster ) ) 
+    if ( PRCGetHasEffect( EFFECT_TYPE_CUTSCENE_PARALYZE, oCaster ) ) 
     {
         iContinue++;
     }
-    if ( GetHasEffect( EFFECT_TYPE_CUTSCENEIMMOBILIZE, oCaster ) ) 
+    if ( PRCGetHasEffect( EFFECT_TYPE_CUTSCENEIMMOBILIZE, oCaster ) ) 
     {
         iContinue++;
     }
-    if ( GetHasEffect( EFFECT_TYPE_DAZED, oCaster ) ) 
+    if ( PRCGetHasEffect( EFFECT_TYPE_DAZED, oCaster ) ) 
     {
         iContinue++;
     }
-    if ( GetHasEffect( EFFECT_TYPE_DOMINATED, oCaster ) ) 
+    if ( PRCGetHasEffect( EFFECT_TYPE_DOMINATED, oCaster ) ) 
     {
         iContinue++;
     }
-    if ( GetHasEffect( EFFECT_TYPE_FRIGHTENED, oCaster ) ) 
+    if ( PRCGetHasEffect( EFFECT_TYPE_FRIGHTENED, oCaster ) ) 
     {
         iContinue++;
     }
-    if ( GetHasEffect( EFFECT_TYPE_PARALYZE, oCaster ) ) 
+    if ( PRCGetHasEffect( EFFECT_TYPE_PARALYZE, oCaster ) ) 
     {
         iContinue++;
     }
-    if ( GetHasEffect( EFFECT_TYPE_PETRIFY, oCaster ) ) 
+    if ( PRCGetHasEffect( EFFECT_TYPE_PETRIFY, oCaster ) ) 
     {
         iContinue++;
     }
-    if ( GetHasEffect( EFFECT_TYPE_SLEEP, oCaster ) ) 
+    if ( PRCGetHasEffect( EFFECT_TYPE_SLEEP, oCaster ) ) 
     {
         iContinue++;
     }
-    if ( GetHasEffect( EFFECT_TYPE_STUNNED, oCaster ) ) 
+    if ( PRCGetHasEffect( EFFECT_TYPE_STUNNED, oCaster ) ) 
     {
         iContinue++;
     }

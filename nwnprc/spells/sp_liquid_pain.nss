@@ -52,8 +52,8 @@ void main()
 		if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
 		{
 			//Check for pain
-			if(GetHasEffect(EFFECT_TYPE_DISEASE, oTarget) ||
-			   GetHasEffect(EFFECT_TYPE_POISON, oTarget) ||
+			if(PRCGetHasEffect(EFFECT_TYPE_DISEASE, oTarget) ||
+			   PRCGetHasEffect(EFFECT_TYPE_POISON, oTarget) ||
 			   GetHasSpellEffect(SPELL_ETERNITY_OF_TORTURE, oTarget) ||
 			   GetHasSpellEffect(SPELL_WRACK, oTarget) ||
 			   GetHasSpellEffect(SPELL_WAVE_OF_PAIN, oTarget) ||

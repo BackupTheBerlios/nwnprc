@@ -55,7 +55,7 @@ void DoFrightfulAttack(object oPC, object oTarget) {
    int iGFKClassLevel = GetLevelByClass(CLASS_TYPE_GHOST_FACED_KILLER, oPC);
 
    //What is the GFK character level?
-   int iGFKCharacterLevel = GetCharacterLevel(oPC);
+   int iGFKCharacterLevel = GetHitDice(oPC);
 
    //What is the Cha modifier?
    int iGFKCharModifier = GetAbilityModifier(ABILITY_CHARISMA, oPC);

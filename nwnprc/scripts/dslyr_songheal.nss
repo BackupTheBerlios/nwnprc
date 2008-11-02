@@ -52,13 +52,13 @@ void main()
         return;
   }
 
-  if (GetHasEffect(EFFECT_TYPE_SILENCE,OBJECT_SELF))
+  if (PRCGetHasEffect(EFFECT_TYPE_SILENCE,OBJECT_SELF))
   {
        FloatingTextStrRefOnCreature(85764,OBJECT_SELF); // not useable when silenced
        return;
   }
 
-  if (GetHasEffect(EFFECT_TYPE_DEAF,OBJECT_SELF) && d100(1) <= 20)
+  if (PRCGetHasEffect(EFFECT_TYPE_DEAF,OBJECT_SELF) && d100(1) <= 20)
   {
       FloatingTextStringOnCreature("Your deafness has caused you to fail.",OBJECT_SELF);
       DecrementRemainingFeatUses(OBJECT_SELF, FEAT_DRAGONSONG_STRENGTH);

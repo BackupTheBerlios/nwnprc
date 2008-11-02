@@ -24,33 +24,33 @@ void main()
     if(nRoll == 4)
     {
         MultisummonPreSummon(OBJECT_SELF, TRUE);
-        oStone = CreateObject(OBJECT_TYPE_ITEM, "summoningstone", PRCGetSpellTargetLocation());
-        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, PRCGetSpellTargetLocation(), TurnsToSeconds(nDuration));
-        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon2, GetStepLeftLocation(oStone), TurnsToSeconds(nDuration));
-        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon2, GetStepRightLocation(oStone), TurnsToSeconds(nDuration));
-        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon2, GetStepRightLocation(oStone), TurnsToSeconds(nDuration));
+        oStone = CreateObject(OBJECT_TYPE_ITEM, "summoningstone", GetSpellTargetLocation());
+        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), TurnsToSeconds(nDuration));
+        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon2, GetSpellTargetLocation(), TurnsToSeconds(nDuration));
+        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon2, GetSpellTargetLocation(), TurnsToSeconds(nDuration));
+        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon2, GetSpellTargetLocation(), TurnsToSeconds(nDuration));
         DestroyObject(oStone);
     }
     else if(nRoll == 3)
     {
         MultisummonPreSummon(OBJECT_SELF, TRUE);
-        oStone = CreateObject(OBJECT_TYPE_ITEM, "summoningstone", PRCGetSpellTargetLocation());
-        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, PRCGetSpellTargetLocation(), TurnsToSeconds(nDuration));
-        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon2, GetStepLeftLocation(oStone), TurnsToSeconds(nDuration));
-        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon2, GetStepRightLocation(oStone), TurnsToSeconds(nDuration));
+        oStone = CreateObject(OBJECT_TYPE_ITEM, "summoningstone", GetSpellTargetLocation());
+        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), TurnsToSeconds(nDuration));
+        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon2, GetSpellTargetLocation(), TurnsToSeconds(nDuration));
+        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon2, GetSpellTargetLocation(), TurnsToSeconds(nDuration));
         DestroyObject(oStone);
     }
     else if(nRoll == 2)
     {
         MultisummonPreSummon(OBJECT_SELF, TRUE);
-        oStone = CreateObject(OBJECT_TYPE_ITEM, "summoningstone", PRCGetSpellTargetLocation());
-        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, PRCGetSpellTargetLocation(), TurnsToSeconds(nDuration));
-        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon2, GetStepLeftLocation(oStone), TurnsToSeconds(nDuration));
+        oStone = CreateObject(OBJECT_TYPE_ITEM, "summoningstone", GetSpellTargetLocation());
+        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), TurnsToSeconds(nDuration));
+        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon2, GetSpellTargetLocation(), TurnsToSeconds(nDuration));
         DestroyObject(oStone);
     }    
     else if(nRoll == 1)
     {
         MultisummonPreSummon(OBJECT_SELF);
-        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, PRCGetSpellTargetLocation(), TurnsToSeconds(nDuration));
+        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), TurnsToSeconds(nDuration));
     }
 }

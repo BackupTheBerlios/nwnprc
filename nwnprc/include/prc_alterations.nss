@@ -177,7 +177,7 @@ int GetIsPolyMorphedOrShifted(object oCreature);
 //
 #include "prc_inc_racial"
 #include "inc_abil_damage"
-#include "NW_I0_GENERIC"
+
 //#include "prc_inc_combat"
 //#include "inc_lookups"
  //included via x2_i0_spells
@@ -872,8 +872,3 @@ void DeleteLocalManifestation(object oObject, string sName)
     DeleteLocalInt(oObject, sName + "_bWiden");
     DeleteLocalInt(oObject, sName + "_bQuicken");
 }
-
-
-// Test main
-//void main(){}
-

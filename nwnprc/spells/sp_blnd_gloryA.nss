@@ -40,7 +40,7 @@ void main()
 {
 	object oTarget = GetEnteringObject();
 	
-	if(!GetHasEffect(EFFECT_TYPE_DARKNESS, oTarget))
+	if(!PRCGetHasEffect(EFFECT_TYPE_DARKNESS, oTarget))
 	{
 		if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL)
 		{

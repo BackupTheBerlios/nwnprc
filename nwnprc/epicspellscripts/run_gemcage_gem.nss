@@ -8,6 +8,8 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
+#include "nw_i0_generic"
+
 void main()
 {
     object oItem = GetItemActivated();

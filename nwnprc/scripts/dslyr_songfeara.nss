@@ -55,7 +55,7 @@ void main()
     int nDuration = d6(2);
     if(GetIsEnemy(oTarget, GetAreaOfEffectCreator()))
     {
-        if (!GetHasEffect(EFFECT_TYPE_DEAF,oTarget)) // deaf targets can't hear the song.
+        if (!PRCGetHasEffect(EFFECT_TYPE_DEAF,oTarget)) // deaf targets can't hear the song.
         {
            //Fire cast spell at event for the specified target
            SignalEvent(oTarget, EventSpellCastAt(GetAreaOfEffectCreator(), SPELLABILITY_AURA_FEAR));

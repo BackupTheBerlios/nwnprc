@@ -58,7 +58,7 @@ void main()
     	while(GetIsObjectValid(oTarget))
     	{
              // Can't hear it if you're deaf
-             if (!GetHasEffect(EFFECT_TYPE_SILENCE,oTarget) && !GetHasEffect(EFFECT_TYPE_DEAF,oTarget))
+             if (!PRCGetHasEffect(EFFECT_TYPE_SILENCE,oTarget) && !PRCGetHasEffect(EFFECT_TYPE_DEAF,oTarget))
              {
                 if(oTarget == oInitiator)
                 {

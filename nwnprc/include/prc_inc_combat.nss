@@ -3292,7 +3292,7 @@ int GetDefenderAC(object oDefender, object oAttacker, int bIsTouchAttack = FALSE
 
     int bIsHelpless =  GetIsHelpless(oDefender);
     int bGetIsDeniedDexBonus = GetIsDeniedDexBonusToAC(oDefender, oAttacker);
-    int bIsStunned = GetHasEffect(EFFECT_TYPE_STUNNED, oDefender);
+    int bIsStunned = PRCGetHasEffect(EFFECT_TYPE_STUNNED, oDefender);
 
     // helpless enemies have an effective dexterity of 0 (for -5 ac)
     if(bIsHelpless)
@@ -3749,17 +3749,17 @@ int GetAttackModVersusDefender(object oDefender, object oAttacker, object oWeapo
 // DoDebug("GetAttackModVersusDefender: Defender flanked");
     }
     if (DEBUG) DoDebug("GetAttackModVersusDefender: End Section #1");
-    if  (   (   GetHasEffect(EFFECT_TYPE_INVISIBILITY, oAttacker)
-                || GetHasEffect(EFFECT_TYPE_IMPROVEDINVISIBILITY, oAttacker)
+    if  (   (   PRCGetHasEffect(EFFECT_TYPE_INVISIBILITY, oAttacker)
+                || PRCGetHasEffect(EFFECT_TYPE_IMPROVEDINVISIBILITY, oAttacker)
                 && !GetHasFeat(FEAT_BLIND_FIGHT, oDefender)
             )
-            || GetHasEffect(EFFECT_TYPE_BLINDNESS, oDefender)
+            || PRCGetHasEffect(EFFECT_TYPE_BLINDNESS, oDefender)
         )
         iAttackMod += 2;
 
     // +2 attack bonus if they are stunned or frightened
-    if( GetHasEffect(EFFECT_TYPE_STUNNED, oDefender)
-        || GetHasEffect(EFFECT_TYPE_FRIGHTENED, oDefender)  )
+    if( PRCGetHasEffect(EFFECT_TYPE_STUNNED, oDefender)
+        || PRCGetHasEffect(EFFECT_TYPE_FRIGHTENED, oDefender)  )
     {
         iAttackMod += 2;
 // DoDebug("GetAttackModVersusDefender: Defender frightened or stunned");
@@ -7313,8 +7313,8 @@ void AttackLoopLogic(object oDefender, object oAttacker,
         {
             // FrikaC: Ghost strike doesn't cancel ethereal / invisible
             if( !GetLocalInt(oAttacker, "prc_ghost_strike")
-                &&  (   GetHasEffect(EFFECT_TYPE_INVISIBILITY, oAttacker)
-                        || GetHasEffect(EFFECT_TYPE_SANCTUARY, oAttacker)
+                &&  (   PRCGetHasEffect(EFFECT_TYPE_INVISIBILITY, oAttacker)
+                        || PRCGetHasEffect(EFFECT_TYPE_SANCTUARY, oAttacker)
                     )
             )
             { // now remove sanctuary and invisibility effects from attacker

@@ -34,7 +34,7 @@ void PopulateListNewSpellBook(object oPC, int iClass, int nLevel, int nStart, in
 	SendMessageToPC(oPC, "*Tick* *New* *" + IntToString(i) + "* *" + IntToString(iClass) + "*");
 
 	int MaxValue = 0;
-	int nClass = PRCGetClassByPosition(iClass);
+	int nClass = GetClassByPosition(iClass);
 	if (GetLevelByClass(nClass, oPC) > 0)
 	{
 		string sFile = GetFileForClass(nClass);

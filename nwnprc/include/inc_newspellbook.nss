@@ -223,7 +223,7 @@ int GetSpellslotLevel(int nClass, object oPC)
     int i;
     for(i = 1; i <= 3; i++)
     {
-        int nTempClass = PRCGetClassByPosition(i, oPC);
+        int nTempClass = GetClassByPosition(i, oPC);
         //spellcasting prc
         int nArcSpellMod = StringToInt(Get2DACache("classes", "ArcSpellLvlMod", nTempClass));
         int nDivSpellMod = StringToInt(Get2DACache("classes", "DivSpellLvlMod", nTempClass));
@@ -658,7 +658,7 @@ void CheckNewSpellbooks(object oPC)
     int i;
     for(i = 1; i <= 3; i++)
     {
-        int nClass = PRCGetClassByPosition(i, oPC);
+        int nClass = GetClassByPosition(i, oPC);
         int nLevel = GetLevelByClass(nClass, oPC);
 
         if(DEBUG) DoDebug("CheckNewSpellbooks\n"

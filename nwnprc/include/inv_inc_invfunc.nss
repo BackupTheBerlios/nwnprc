@@ -223,10 +223,10 @@ int GetIsInvocationUser(object oCreature)
 
 int GetHighestInvokerLevel(object oCreature)
 {
-    return max(max(PRCGetClassByPosition(1, oCreature) != CLASS_TYPE_INVALID ? GetInvokerLevel(oCreature, PRCGetClassByPosition(1, oCreature)) : 0,
-                   PRCGetClassByPosition(2, oCreature) != CLASS_TYPE_INVALID ? GetInvokerLevel(oCreature, PRCGetClassByPosition(2, oCreature)) : 0
+    return max(max(GetClassByPosition(1, oCreature) != CLASS_TYPE_INVALID ? GetInvokerLevel(oCreature, GetClassByPosition(1, oCreature)) : 0,
+                   GetClassByPosition(2, oCreature) != CLASS_TYPE_INVALID ? GetInvokerLevel(oCreature, GetClassByPosition(2, oCreature)) : 0
                    ),
-               PRCGetClassByPosition(3, oCreature) != CLASS_TYPE_INVALID ? GetInvokerLevel(oCreature, PRCGetClassByPosition(3, oCreature)) : 0
+               GetClassByPosition(3, oCreature) != CLASS_TYPE_INVALID ? GetInvokerLevel(oCreature, GetClassByPosition(3, oCreature)) : 0
                );
 }
 
@@ -263,16 +263,16 @@ int GetFirstInvocationClass(object oCreature = OBJECT_SELF)
     int nInvocationPos = GetFirstInvocationClassPosition(oCreature);
     if (!nInvocationPos) return CLASS_TYPE_INVALID; // no invoking class
 
-    return PRCGetClassByPosition(nInvocationPos, oCreature);
+    return GetClassByPosition(nInvocationPos, oCreature);
 }
 
 int GetFirstInvocationClassPosition(object oCreature = OBJECT_SELF)
 {
-    if (GetIsInvocationClass(PRCGetClassByPosition(1, oCreature)))
+    if (GetIsInvocationClass(GetClassByPosition(1, oCreature)))
         return 1;
-    if (GetIsInvocationClass(PRCGetClassByPosition(2, oCreature)))
+    if (GetIsInvocationClass(GetClassByPosition(2, oCreature)))
         return 2;
-    if (GetIsInvocationClass(PRCGetClassByPosition(3, oCreature)))
+    if (GetIsInvocationClass(GetClassByPosition(3, oCreature)))
         return 3;
 
     return 0;

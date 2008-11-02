@@ -1039,10 +1039,10 @@ int CraftingFeats(object oPC = OBJECT_SELF)
 {
     int nCasterLvl     = max(GetCasterLvl(TYPE_ARCANE, oPC), GetCasterLvl(TYPE_DIVINE, oPC)),
         // Gets the maximum of the character's manifester level over all 3 class positions.
-        nManifesterLvl = max(max(PRCGetClassByPosition(1, oPC) != CLASS_TYPE_INVALID ? GetManifesterLevel(oPC, PRCGetClassByPosition(1, oPC)) : 0,
-                                 PRCGetClassByPosition(2, oPC) != CLASS_TYPE_INVALID ? GetManifesterLevel(oPC, PRCGetClassByPosition(2, oPC)) : 0
+        nManifesterLvl = max(max(GetClassByPosition(1, oPC) != CLASS_TYPE_INVALID ? GetManifesterLevel(oPC, GetClassByPosition(1, oPC)) : 0,
+                                 GetClassByPosition(2, oPC) != CLASS_TYPE_INVALID ? GetManifesterLevel(oPC, GetClassByPosition(2, oPC)) : 0
                                  ),
-                             PRCGetClassByPosition(3, oPC) != CLASS_TYPE_INVALID ? GetManifesterLevel(oPC, PRCGetClassByPosition(3, oPC)) : 0
+                             GetClassByPosition(3, oPC) != CLASS_TYPE_INVALID ? GetManifesterLevel(oPC, GetClassByPosition(3, oPC)) : 0
                              ),
         nInvokerLvl    = max(GetInvokerLevel(oPC, CLASS_TYPE_WARLOCK), GetInvokerLevel(oPC, CLASS_TYPE_DRAGONFIRE_ADEPT)),
         nCasterMax     = max(nCasterLvl, nInvokerLvl),

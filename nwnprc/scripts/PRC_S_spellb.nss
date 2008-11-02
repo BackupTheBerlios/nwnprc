@@ -250,14 +250,14 @@ void main()
 				int i;
 				for (i=1; i <= MAX_CLASSES; i++)
 				{
-					int nClass = PRCGetClassByPosition(i, oPC);
+					int nClass = GetClassByPosition(i, oPC);
 					if (nClass == CLASS_TYPE_INVALID)	break;
 
 					if(	GetIsNSBClass(nClass) && // must be a new spellbook class
 						GetSpellbookTypeForClass(nClass) == SPELLBOOK_TYPE_PREPARED) // must be a prepared caster
 					{
 						// must have levels in the prepared class and at least level 1 spell slots
-						int nClassLevel = PRCGetLevelByPosition(i, oPC);
+						int nClassLevel = GetLevelByPosition(i, oPC);
 						if (nClassLevel > 0
 							&& GetSlotCount(nClassLevel, 1, GetAbilityForClass(nClass, oPC), nClass))
 						{

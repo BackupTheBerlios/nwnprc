@@ -298,22 +298,6 @@ void PRCMakeTables()
     SQL+= ""+q+"CRModifier"+q+" varchar(255) DEFAULT '_');";
     PRC_SQLExecDirect(SQL); SQL = "";
 
-    SQL+= "CREATE TABLE "+q+"prc_cached2da_ireq"+q+" ( ";
-    SQL+= ""+q+"rowid"+q+" integer,";
-    SQL+= ""+q+"file"+q+" varchar(20),";
-    SQL+= ""+q+"LABEL"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"ReqType"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"ReqParam1"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"ReqParam2"+q+" varchar(255) DEFAULT '_'); ";
-    PRC_SQLExecDirect(SQL); SQL = "";
-
-    SQL+= "CREATE TABLE "+q+"prc_cached2da_item_to_ireq"+q+" ( ";
-    SQL+= ""+q+"rowid"+q+" integer,";
-    SQL+= ""+q+"LABEL"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"L_RESREF"+q+" varchar(20) DEFAULT '_', ";
-    SQL+= ""+q+"RECIPE_TAG"+q+" varchar(255) DEFAULT '_'); ";
-    PRC_SQLExecDirect(SQL); SQL = "";
-
     SQL = "CREATE TABLE "+q+"prc_cached2da"+q+" ("+q+"file"+q+" varchar(20) DEFAULT '_', "+q+"columnid"+q+" varchar(255) DEFAULT '_', "+q+"rowid"+q+" integer, "+q+"data"+q+" varchar(255) DEFAULT '_'); ";
     PRC_SQLExecDirect(SQL); SQL = "";
 
@@ -330,8 +314,6 @@ void PRCMakeTables()
     SQL+= "CREATE UNIQUE INDEX "+q+"soundsrowindex" +q+"  ON "+q+"prc_cached2da_soundset"       +q+" ("+q+"rowid"+q+"); ";
     //SQL+= "CREATE UNIQUE INDEX "+q+"datanameindex"  +q+" ON "+q+"prc_data"                      +q+" ("+q+"name"+q+"); ";
     SQL+= "CREATE UNIQUE INDEX "+q+"cachedindex"    +q+" ON "+q+"prc_cached2da"                 +q+" ("+q+"file"+q+", "+q+"columnid"+q+", "+q+"rowid"+q+"); ";
-    SQL = "CREATE        INDEX "+q+"ireqfileindex"  +q+" ON "+q+"prc_cached2da_ireq"            +q+" ("+q+"file"+q+"); ";
-    SQL+= "CREATE UNIQUE INDEX "+q+"refrindex"      +q+" ON "+q+"prc_cached2da_item_to_ireq"    +q+" ("+q+"L_RESREF"+q+", "+q+"rowid"+q+"); ";
     PRC_SQLExecDirect(SQL); SQL = "";
 
 }
@@ -340,80 +322,6 @@ void PRCMakeTables()
 void Cache_Done()
 {
     WriteTimestampedLogEntry("2da caching complete");
-}
-
-void Cache_Ireq(int nItem, int nRow = 0)
-{
-    string sFile = Get2DACache("item_to_ireq", "RECIPE_TAG", nItem);
-    if(nRow == 0 && GetPRCSwitch(PRC_USE_DATABASE))
-    {
-        string SQL = "SELECT rowid FROM prc_cached2da_ireq WHERE (file = '"+GetStringLowerCase(sFile)+"') ORDER BY rowid DESC LIMIT 1";
-        PRC_SQLExecDirect(SQL);
-        PRC_SQLFetch();
-        nRow = StringToInt(PRC_SQLGetData(1))+1;
-    }
-
-    if(sFile != ""
-        && sFile != "****"
-        && nRow < GetPRCSwitch(FILE_END_IREQ))
-    {
-        Get2DACache(sFile, "LABEL", nRow);
-        Get2DACache(sFile, "ReqType", nRow);
-        Get2DACache(sFile, "ReqParam1", nRow);
-        Get2DACache(sFile, "ReqParam2", nRow);
-        nRow++;
-        DelayCommand(0.1, Cache_Ireq(nItem, nRow));
-        if(nRow >= GetPRCSwitch(FILE_END_IREQ) && GetPRCSwitch(PRC_USE_DATABASE))
-        {
-            if(GetPRCSwitch(PRC_DB_SQLLITE))
-            {
-                string SQL = "COMMIT";
-                PRC_SQLExecDirect(SQL);
-                SQL = "BEGIN IMMEDIATE";
-                PRC_SQLExecDirect(SQL);
-            }
-        }
-    }
-    else
-    {
-        if(nItem >= GetPRCSwitch(FILE_END_ITEM_TO_IREQ))
-            Cache_Done();
-        else
-        {
-            DelayCommand(0.1, Cache_Ireq(nItem+1)); //need to delay to prevent TMI
-        }
-    }
-}
-
-void Cache_Item_To_Ireq(int nRow = 0)
-{
-    if(nRow == 0 && GetPRCSwitch(PRC_USE_DATABASE))
-    {
-        string SQL = "SELECT rowid FROM prc_cached2da_item_to_ireq ORDER BY rowid DESC LIMIT 1";
-        PRC_SQLExecDirect(SQL);
-        PRC_SQLFetch();
-        nRow = StringToInt(PRC_SQLGetData(1))+1;
-    }
-    if(nRow < GetPRCSwitch(FILE_END_ITEM_TO_IREQ))
-    {
-        Get2DACache("item_to_ireq", "Label", nRow);
-        Get2DACache("item_to_ireq", "L_RESREF", nRow);
-        Get2DACache("item_to_ireq", "RECIPE_TAG", nRow);
-        nRow++;
-        DelayCommand(0.01, Cache_Item_To_Ireq(nRow));
-    }
-    else
-        DelayCommand(0.1, Cache_Ireq(0));
-    if(nRow % 100 == 0 && GetPRCSwitch(PRC_USE_DATABASE))
-    {
-        if(GetPRCSwitch(PRC_DB_SQLLITE))
-        {
-            string SQL = "COMMIT";
-            PRC_SQLExecDirect(SQL);
-            SQL = "BEGIN IMMEDIATE";
-            PRC_SQLExecDirect(SQL);
-        }
-    }
 }
 
 void Cache_Class_Feat(int nClass, int nRow = 0)
@@ -451,7 +359,7 @@ void Cache_Class_Feat(int nClass, int nRow = 0)
     else
     {
         if(nClass == 254)
-            Cache_Item_To_Ireq();
+            Cache_Done();
         else
         {
             DelayCommand(0.1, Cache_Class_Feat(nClass+1)); //need to delay to prevent TMI

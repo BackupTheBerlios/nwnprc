@@ -153,7 +153,7 @@ void CastDomainSpell(object oPC, int nSlot, int nLevel)
 // Detection of Spontaneous Divine Casting with remaining slots
 
     int nCount=-1;
-    int nClass = PRCGetClassByPosition(1, oPC);
+    int nClass = GetClassByPosition(1, oPC);
 
     if (GetIsDivineClass(nClass, oPC) && (GetSpellbookTypeForClass(nClass)==SPELLBOOK_TYPE_SPONTANEOUS))
     {
@@ -162,7 +162,7 @@ void CastDomainSpell(object oPC, int nSlot, int nLevel)
 
     if (nCount<1)
     {
-        nClass = PRCGetClassByPosition(2, oPC);
+        nClass = GetClassByPosition(2, oPC);
         if (GetIsDivineClass(nClass, oPC) && (GetSpellbookTypeForClass(nClass)==SPELLBOOK_TYPE_SPONTANEOUS))
         {
             nCount=persistant_array_get_int(oPC, "NewSpellbookMem_" + IntToString(nClass), nLevel);
@@ -171,7 +171,7 @@ void CastDomainSpell(object oPC, int nSlot, int nLevel)
 
     if (nCount<1)
     {
-        nClass = PRCGetClassByPosition(3, oPC);
+        nClass = GetClassByPosition(3, oPC);
         if (GetIsDivineClass(nClass, oPC) && (GetSpellbookTypeForClass(nClass)==SPELLBOOK_TYPE_SPONTANEOUS))
         {
             nCount=persistant_array_get_int(oPC, "NewSpellbookMem_" + IntToString(nClass), nLevel);
@@ -200,7 +200,7 @@ void CastDomainSpell(object oPC, int nSlot, int nLevel)
     string sFile;
     string sSpellLevel;
 
-    nClass = PRCGetClassByPosition(1, oPC);
+    nClass = GetClassByPosition(1, oPC);
     if (GetIsDivineClass(nClass, oPC) && (GetSpellbookTypeForClass(nClass)==SPELLBOOK_TYPE_PREPARED))
     {
        sFile = GetFileForClass(nClass);
@@ -236,7 +236,7 @@ void CastDomainSpell(object oPC, int nSlot, int nLevel)
 
     if(nUses <1)
     {
-      nClass = PRCGetClassByPosition(2, oPC);
+      nClass = GetClassByPosition(2, oPC);
       if (GetIsDivineClass(nClass, oPC) && (GetSpellbookTypeForClass(nClass)==SPELLBOOK_TYPE_PREPARED))
       {
          sFile = GetFileForClass(nClass);
@@ -273,7 +273,7 @@ void CastDomainSpell(object oPC, int nSlot, int nLevel)
 
     if(nUses <1)
     {
-      nClass = PRCGetClassByPosition(3, oPC);
+      nClass = GetClassByPosition(3, oPC);
       if (GetIsDivineClass(nClass, oPC) && (GetSpellbookTypeForClass(nClass)==SPELLBOOK_TYPE_PREPARED))
       {
          sFile = GetFileForClass(nClass);

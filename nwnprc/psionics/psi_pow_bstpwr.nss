@@ -70,10 +70,10 @@ void main()
     if(manif.bCanManifest)
     {
         // Determine the target's manifester level
-        int nTargetManifesterLevel = max(max(PRCGetClassByPosition(1, oTarget) != CLASS_TYPE_INVALID ? GetManifesterLevel(oTarget, PRCGetClassByPosition(1, oTarget)) : 0,
-                                             PRCGetClassByPosition(2, oTarget) != CLASS_TYPE_INVALID ? GetManifesterLevel(oTarget, PRCGetClassByPosition(2, oTarget)) : 0
+        int nTargetManifesterLevel = max(max(GetClassByPosition(1, oTarget) != CLASS_TYPE_INVALID ? GetManifesterLevel(oTarget, GetClassByPosition(1, oTarget)) : 0,
+                                             GetClassByPosition(2, oTarget) != CLASS_TYPE_INVALID ? GetManifesterLevel(oTarget, GetClassByPosition(2, oTarget)) : 0
                                              ),
-                                         PRCGetClassByPosition(3, oTarget) != CLASS_TYPE_INVALID ? GetManifesterLevel(oTarget, PRCGetClassByPosition(3, oTarget)) : 0
+                                         GetClassByPosition(3, oTarget) != CLASS_TYPE_INVALID ? GetManifesterLevel(oTarget, GetClassByPosition(3, oTarget)) : 0
                                          );
         int nPPGiven = 2 + 2 * manif.nTimesAugOptUsed_1;
         // Can't give more than the target has manifester levels

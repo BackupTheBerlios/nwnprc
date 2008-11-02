@@ -603,10 +603,10 @@ int GetIsBladeMagicUser(object oCreature)
 
 int GetHighestInitiatorLevel(object oCreature)
 {
-    return max(max(PRCGetClassByPosition(1, oCreature) != CLASS_TYPE_INVALID ? GetInitiatorLevel(oCreature, PRCGetClassByPosition(1, oCreature)) : 0,
-                   PRCGetClassByPosition(2, oCreature) != CLASS_TYPE_INVALID ? GetInitiatorLevel(oCreature, PRCGetClassByPosition(2, oCreature)) : 0
+    return max(max(GetClassByPosition(1, oCreature) != CLASS_TYPE_INVALID ? GetInitiatorLevel(oCreature, GetClassByPosition(1, oCreature)) : 0,
+                   GetClassByPosition(2, oCreature) != CLASS_TYPE_INVALID ? GetInitiatorLevel(oCreature, GetClassByPosition(2, oCreature)) : 0
                    ),
-               PRCGetClassByPosition(3, oCreature) != CLASS_TYPE_INVALID ? GetInitiatorLevel(oCreature, PRCGetClassByPosition(3, oCreature)) : 0
+               GetClassByPosition(3, oCreature) != CLASS_TYPE_INVALID ? GetInitiatorLevel(oCreature, GetClassByPosition(3, oCreature)) : 0
                );
 }
 
@@ -682,16 +682,16 @@ int GetFirstBladeMagicClass(object oCreature = OBJECT_SELF)
     int nBladeMagicPos = GetFirstBladeMagicClassPosition(oCreature);
     if (!nBladeMagicPos) return CLASS_TYPE_INVALID; // no Blade Magic initiating class
 
-    return PRCGetClassByPosition(nBladeMagicPos, oCreature);
+    return GetClassByPosition(nBladeMagicPos, oCreature);
 }
 
 int GetFirstBladeMagicClassPosition(object oCreature = OBJECT_SELF)
 {
-    if (GetIsBladeMagicClass(PRCGetClassByPosition(1, oCreature)))
+    if (GetIsBladeMagicClass(GetClassByPosition(1, oCreature)))
         return 1;
-    if (GetIsBladeMagicClass(PRCGetClassByPosition(2, oCreature)))
+    if (GetIsBladeMagicClass(GetClassByPosition(2, oCreature)))
         return 2;
-    if (GetIsBladeMagicClass(PRCGetClassByPosition(3, oCreature)))
+    if (GetIsBladeMagicClass(GetClassByPosition(3, oCreature)))
         return 3;
 
     return 0;

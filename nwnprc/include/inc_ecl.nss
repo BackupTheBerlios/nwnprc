@@ -165,7 +165,7 @@ int GetXPReward(object oPC, object oTarget, int nCR = 0)
     int i;
     for(i=1;i<=3;i++)
     {
-        int nClassLevel = PRCGetLevelByPosition(i,oPC);
+        int nClassLevel = GetLevelByPosition(i,oPC);
         if(nClassLevel > nHighestClassLevel)
             nHighestClassLevel = nClassLevel;
     }
@@ -173,8 +173,8 @@ int GetXPReward(object oPC, object oTarget, int nCR = 0)
     int nRace = GetRacialType(oPC);
     for(i=1;i<=3;i++)
     {
-        int nClassLevel = PRCGetLevelByPosition(i,oPC);
-        int nClass = PRCGetClassByPosition(i, oPC);
+        int nClassLevel = GetLevelByPosition(i,oPC);
+        int nClass = GetClassByPosition(i, oPC);
         if(nClassLevel > nHighestClassLevel
             && Get2DACache("classes", "XPPenalty", nClass) != "1"
             && Get2DACache("racialtypes", "Favored", nClass) != IntToString(nClass)

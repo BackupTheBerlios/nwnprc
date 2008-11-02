@@ -341,10 +341,10 @@ int GetIsTruenamingUser(object oCreature)
 
 int GetHighestTrueSpeakerLevel(object oCreature)
 {
-    return max(max(PRCGetClassByPosition(1, oCreature) != CLASS_TYPE_INVALID ? GetTrueSpeakerLevel(oCreature, PRCGetClassByPosition(1, oCreature)) : 0,
-                   PRCGetClassByPosition(2, oCreature) != CLASS_TYPE_INVALID ? GetTrueSpeakerLevel(oCreature, PRCGetClassByPosition(2, oCreature)) : 0
+    return max(max(GetClassByPosition(1, oCreature) != CLASS_TYPE_INVALID ? GetTrueSpeakerLevel(oCreature, GetClassByPosition(1, oCreature)) : 0,
+                   GetClassByPosition(2, oCreature) != CLASS_TYPE_INVALID ? GetTrueSpeakerLevel(oCreature, GetClassByPosition(2, oCreature)) : 0
                    ),
-               PRCGetClassByPosition(3, oCreature) != CLASS_TYPE_INVALID ? GetTrueSpeakerLevel(oCreature, PRCGetClassByPosition(3, oCreature)) : 0
+               GetClassByPosition(3, oCreature) != CLASS_TYPE_INVALID ? GetTrueSpeakerLevel(oCreature, GetClassByPosition(3, oCreature)) : 0
                );
 }
 

@@ -544,9 +544,9 @@ void StoreCohort(object oCohort)
     StoreCampaignObject(COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_obj",    oCohort);
     SetCampaignString(  COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_name",   GetName(oCohort));
     SetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_race",   GetRacialType(oCohort));
-    SetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_class1", PRCGetClassByPosition(1, oCohort));
-    SetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_class2", PRCGetClassByPosition(2, oCohort));
-    SetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_class3", PRCGetClassByPosition(3, oCohort));
+    SetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_class1", GetClassByPosition(1, oCohort));
+    SetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_class2", GetClassByPosition(2, oCohort));
+    SetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_class3", GetClassByPosition(3, oCohort));
     SetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_order",  GetLawChaosValue(oCohort));
     SetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_moral",  GetGoodEvilValue(oCohort));
     SetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_ethran", GetHasFeat(FEAT_ETHRAN, oCohort));

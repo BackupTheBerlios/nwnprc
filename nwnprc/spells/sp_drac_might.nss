@@ -54,13 +54,8 @@ void main()
         int nCasterLvl = PRCGetCasterLevel(oPC);
         
         //Determine if we need to adjust nCasterLvl
-        int nClass1 = PRCGetClassByPosition(1, oPC);
-        int nClass2 = PRCGetClassByPosition(2, oPC);
-        int nClass3 = PRCGetClassByPosition(3, oPC);
         
-        if(nClass1 == CLASS_TYPE_SORCERER ||
-           nClass2 == CLASS_TYPE_SORCERER ||
-           nClass3 == CLASS_TYPE_SORCERER)
+        if(GetLevelByClass(CLASS_TYPE_SORCERER, oPC))
         {
                 //not sure whether we can have 40+ caster levels now...
                 nCasterLvl = min(nCasterLvl + 1, 40);

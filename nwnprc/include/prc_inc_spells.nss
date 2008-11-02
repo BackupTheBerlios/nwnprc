@@ -424,9 +424,9 @@ int GetArcanePRCLevels (object oCaster)
 {
    int nArcane;
    int nOozeMLevel  = GetLevelByClass(CLASS_TYPE_OOZEMASTER, oCaster);
-   int nFirstClass  = PRCGetClassByPosition(1, oCaster);
-   int nSecondClass = PRCGetClassByPosition(2, oCaster);
-   int nThirdClass  = PRCGetClassByPosition(3, oCaster);
+   int nFirstClass  = GetClassByPosition(1, oCaster);
+   int nSecondClass = GetClassByPosition(2, oCaster);
+   int nThirdClass  = GetClassByPosition(3, oCaster);
 
    nArcane += GetLevelByClass(CLASS_TYPE_ARCHMAGE,        oCaster)
            +  GetLevelByClass(CLASS_TYPE_ARCTRICK,        oCaster)
@@ -500,9 +500,9 @@ int GetDivinePRCLevels (object oCaster)
 {
    int nDivine;
    int nOozeMLevel = GetLevelByClass(CLASS_TYPE_OOZEMASTER, oCaster);
-   int nFirstClass = PRCGetClassByPosition(1, oCaster);
-   int nSecondClass = PRCGetClassByPosition(2, oCaster);
-   int nThirdClass = PRCGetClassByPosition(3, oCaster);
+   int nFirstClass = GetClassByPosition(1, oCaster);
+   int nSecondClass = GetClassByPosition(2, oCaster);
+   int nThirdClass = GetClassByPosition(3, oCaster);
 
    // This section accounts for full progression classes
    nDivine += GetLevelByClass(CLASS_TYPE_DIVESA,            oCaster)
@@ -605,11 +605,11 @@ int GetIsDivineClass (int nClass, object oCaster = OBJECT_SELF)
 
 int GetFirstArcaneClassPosition (object oCaster = OBJECT_SELF)
 {
-    if (GetIsArcaneClass(PRCGetClassByPosition(1, oCaster), oCaster))
+    if (GetIsArcaneClass(GetClassByPosition(1, oCaster), oCaster))
         return 1;
-    if (GetIsArcaneClass(PRCGetClassByPosition(2, oCaster), oCaster))
+    if (GetIsArcaneClass(GetClassByPosition(2, oCaster), oCaster))
         return 2;
-    if (GetIsArcaneClass(PRCGetClassByPosition(3, oCaster), oCaster))
+    if (GetIsArcaneClass(GetClassByPosition(3, oCaster), oCaster))
         return 3;
 
     return 0;
@@ -617,11 +617,11 @@ int GetFirstArcaneClassPosition (object oCaster = OBJECT_SELF)
 
 int GetFirstDivineClassPosition (object oCaster = OBJECT_SELF)
 {
-    if (GetIsDivineClass(PRCGetClassByPosition(1, oCaster), oCaster))
+    if (GetIsDivineClass(GetClassByPosition(1, oCaster), oCaster))
         return 1;
-    if (GetIsDivineClass(PRCGetClassByPosition(2, oCaster), oCaster))
+    if (GetIsDivineClass(GetClassByPosition(2, oCaster), oCaster))
         return 2;
-    if (GetIsDivineClass(PRCGetClassByPosition(3, oCaster), oCaster))
+    if (GetIsDivineClass(GetClassByPosition(3, oCaster), oCaster))
         return 3;
 
     return 0;
@@ -632,7 +632,7 @@ int GetFirstArcaneClass (object oCaster = OBJECT_SELF)
     int iArcanePos = GetFirstArcaneClassPosition(oCaster);
     if (!iArcanePos) return CLASS_TYPE_INVALID; // no arcane casting class
 
-    int nClass = PRCGetClassByPosition(iArcanePos, oCaster);
+    int nClass = GetClassByPosition(iArcanePos, oCaster);
     //raks cast as sorcs
     if(nClass == CLASS_TYPE_OUTSIDER
         && GetRacialType(oCaster) == RACIAL_TYPE_RAKSHASA
@@ -656,7 +656,7 @@ int GetFirstDivineClass (object oCaster = OBJECT_SELF)
     int iDivinePos = GetFirstDivineClassPosition(oCaster);
     if (!iDivinePos) return CLASS_TYPE_INVALID; // no Divine casting class
 
-    int nClass = PRCGetClassByPosition(iDivinePos, oCaster);
+    int nClass = GetClassByPosition(iDivinePos, oCaster);
     return nClass;
 }
 
@@ -713,9 +713,9 @@ int GetPrCAdjustedCasterLevelByType(int nClassType, object oCaster = OBJECT_SELF
     int nHighest, nFirst, i;
     int nClass1, nClass2, nClass3;
     int nClass1Lvl, nClass2Lvl, nClass3Lvl;
-    nClass1 = PRCGetClassByPosition(1, oCaster);
-    nClass2 = PRCGetClassByPosition(2, oCaster);
-    nClass3 = PRCGetClassByPosition(3, oCaster);
+    nClass1 = GetClassByPosition(1, oCaster);
+    nClass2 = GetClassByPosition(2, oCaster);
+    nClass3 = GetClassByPosition(3, oCaster);
     if(nClassType == TYPE_ARCANE && (nFirst = GetFirstArcaneClass(oCaster)))
     {
         if (GetIsArcaneClass(nClass1, oCaster)) nClass1Lvl = GetPrCAdjustedCasterLevel(nClass1, oCaster, bAdjustForPractisedSpellcaster);
@@ -757,12 +757,12 @@ int GetLevelByTypeArcane(object oCaster = OBJECT_SELF)
 {
     int iFirstArcane = GetFirstArcaneClass(oCaster);
     int iBest = 0;
-    int iClass1 = PRCGetClassByPosition(1, oCaster);
-    int iClass2 = PRCGetClassByPosition(2, oCaster);
-    int iClass3 = PRCGetClassByPosition(3, oCaster);
-    int iClass1Lev = PRCGetLevelByPosition(1, oCaster);
-    int iClass2Lev = PRCGetLevelByPosition(2, oCaster);
-    int iClass3Lev = PRCGetLevelByPosition(3, oCaster);
+    int iClass1 = GetClassByPosition(1, oCaster);
+    int iClass2 = GetClassByPosition(2, oCaster);
+    int iClass3 = GetClassByPosition(3, oCaster);
+    int iClass1Lev = GetLevelByPosition(1, oCaster);
+    int iClass2Lev = GetLevelByPosition(2, oCaster);
+    int iClass3Lev = GetLevelByPosition(3, oCaster);
 
     if (iClass1 == CLASS_TYPE_HEXBLADE) iClass1Lev = (iClass1Lev >= 4) ? (iClass1Lev / 2) : 0;
     if (iClass2 == CLASS_TYPE_HEXBLADE) iClass2Lev = (iClass2Lev >= 4) ? (iClass2Lev / 2) : 0;
@@ -791,12 +791,12 @@ int GetLevelByTypeDivine(object oCaster = OBJECT_SELF)
 {
     int iFirstDivine = GetFirstDivineClass(oCaster);
     int iBest = 0;
-    int iClass1 = PRCGetClassByPosition(1, oCaster);
-    int iClass2 = PRCGetClassByPosition(2, oCaster);
-    int iClass3 = PRCGetClassByPosition(3, oCaster);
-    int iClass1Lev = PRCGetLevelByPosition(1, oCaster);
-    int iClass2Lev = PRCGetLevelByPosition(2, oCaster);
-    int iClass3Lev = PRCGetLevelByPosition(3, oCaster);
+    int iClass1 = GetClassByPosition(1, oCaster);
+    int iClass2 = GetClassByPosition(2, oCaster);
+    int iClass3 = GetClassByPosition(3, oCaster);
+    int iClass1Lev = GetLevelByPosition(1, oCaster);
+    int iClass2Lev = GetLevelByPosition(2, oCaster);
+    int iClass3Lev = GetLevelByPosition(3, oCaster);
 
     if (iClass1 == CLASS_TYPE_PALADIN || iClass1 == CLASS_TYPE_RANGER) iClass1Lev = (iClass1Lev >= 4) ? (iClass1Lev / 2) : 0;
     if (iClass2 == CLASS_TYPE_PALADIN || iClass2 == CLASS_TYPE_RANGER) iClass2Lev = (iClass2Lev >= 4) ? (iClass2Lev / 2) : 0;
@@ -825,12 +825,12 @@ int GetLevelByTypeArcaneFeats(object oCaster = OBJECT_SELF, int iSpellID = -1)
 {
     int iFirstArcane = GetFirstArcaneClass(oCaster);
     int iBest = 0;
-    int iClass1 = PRCGetClassByPosition(1, oCaster);
-    int iClass2 = PRCGetClassByPosition(2, oCaster);
-    int iClass3 = PRCGetClassByPosition(3, oCaster);
-    int iClass1Lev = PRCGetLevelByPosition(1, oCaster);
-    int iClass2Lev = PRCGetLevelByPosition(2, oCaster);
-    int iClass3Lev = PRCGetLevelByPosition(3, oCaster);
+    int iClass1 = GetClassByPosition(1, oCaster);
+    int iClass2 = GetClassByPosition(2, oCaster);
+    int iClass3 = GetClassByPosition(3, oCaster);
+    int iClass1Lev = GetLevelByPosition(1, oCaster);
+    int iClass2Lev = GetLevelByPosition(2, oCaster);
+    int iClass3Lev = GetLevelByPosition(3, oCaster);
 
     if (iSpellID = -1) iSpellID = PRCGetSpellId(oCaster);
 
@@ -873,12 +873,12 @@ int GetLevelByTypeDivineFeats(object oCaster = OBJECT_SELF, int iSpellID = -1)
 {
     int iFirstDivine = GetFirstDivineClass(oCaster);
     int iBest = 0;
-    int iClass1 = PRCGetClassByPosition(1, oCaster);
-    int iClass2 = PRCGetClassByPosition(2, oCaster);
-    int iClass3 = PRCGetClassByPosition(3, oCaster);
-    int iClass1Lev = PRCGetLevelByPosition(1, oCaster);
-    int iClass2Lev = PRCGetLevelByPosition(2, oCaster);
-    int iClass3Lev = PRCGetLevelByPosition(3, oCaster);
+    int iClass1 = GetClassByPosition(1, oCaster);
+    int iClass2 = GetClassByPosition(2, oCaster);
+    int iClass3 = GetClassByPosition(3, oCaster);
+    int iClass1Lev = GetLevelByPosition(1, oCaster);
+    int iClass2Lev = GetLevelByPosition(2, oCaster);
+    int iClass3Lev = GetLevelByPosition(3, oCaster);
 
     if (iSpellID = -1) iSpellID = PRCGetSpellId(oCaster);
 
@@ -2788,7 +2788,7 @@ void PRCDecrementRemainingSpellUses(object oCreature, int nSpell)
     string sFile, sFeat;
     for(i = 1; i <= 3; i++)
     {
-        nClass = PRCGetClassByPosition(i, oCreature);
+        nClass = GetClassByPosition(i, oCreature);
         sFile = GetFileForClass(nClass);
         nSpellbookType = GetSpellbookTypeForClass(nClass);
         nSpellbookID = RealSpellToSpellbookID(nClass, nSpell);
@@ -2844,7 +2844,7 @@ int PRCGetHasSpell(int nRealSpellID, object oCreature = OBJECT_SELF)
     string sFile, sFeat;
     for(i = 1; i <= 3; i++)
     {
-        nClass = PRCGetClassByPosition(i, oCreature);
+        nClass = GetClassByPosition(i, oCreature);
         sFile = GetFileForClass(nClass);
         nSpellbookType = GetSpellbookTypeForClass(nClass);
         nSpellbookID = RealSpellToSpellbookID(nClass, nRealSpellID);
@@ -2956,7 +2956,7 @@ int PRCGetSpellLevel(object oCreature, int nSpell)
     int i;
     for(i=1;i<=3;i++)
     {
-        int nClass = PRCGetClassByPosition(i, oCreature);
+        int nClass = GetClassByPosition(i, oCreature);
         int nCharLevel = GetLevelByClass(nClass, oCreature);
         if (nCharLevel)
         {

@@ -201,7 +201,7 @@ void main()
         int i;
         for(i = 1; i <= 3; i++)
         {
-            int nClass = PRCGetClassByPosition(i, oPC);
+            int nClass = GetClassByPosition(i, oPC);
             if((GetSpellbookTypeForClass(nClass) == SPELLBOOK_TYPE_SPONTANEOUS)
                 && (GetIsArcaneClass(nClass, oPC) != CLASS_TYPE_INVALID))
                   bSpontCaster = TRUE;

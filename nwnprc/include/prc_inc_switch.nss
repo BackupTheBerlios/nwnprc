@@ -667,11 +667,6 @@ const string PRC_SPELLSLAB                           = "PRC_SPELLSLAB";
 const string PRC_SPELLSLAB_NOSCROLLS                 = "PRC_SPELLSLAB_NOSCROLLS";
 
 /**
- * Disables the sale of crafting recipes from the epic spell laboratory.
- */
-const string PRC_SPELLSLAB_NORECIPES                 = "PRC_SPELLSLAB_NORECIPES";
-
-/**
  * Makes reaching 0 in an ability score have the special effects it should have
  * according to PnP.
  *

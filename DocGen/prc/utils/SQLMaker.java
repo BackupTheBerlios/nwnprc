@@ -33,7 +33,7 @@ public final class SQLMaker{
 			mysql = true;
 			sqlite = false;
 		}
-		
+
 		// Create the output stream
 		File target = new File("out.sql");
 		// Clean up old version if necessary
@@ -45,8 +45,8 @@ public final class SQLMaker{
 
 		// Allocate output buffer of 1Mb
 		sql = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(target)), 0xFFFFF);
-		
-		
+
+
 		//setup the transaction
 		if(sqlite)
 			sql.append("BEGIN IMMEDIATE;\n");
@@ -67,14 +67,16 @@ public final class SQLMaker{
 					"DROP TABLE IF EXISTS "+q+"prc_cached2da_spells"+q+";\n"
 					);
 		//create a few tables
-    	sql.append("CREATE TABLE "+q+"prc_cached2da_ireq"+q+" ("	+
+    	sql.append(
+				   /*
+			       "CREATE TABLE "+q+"prc_cached2da_ireq"+q+" ("	+
     			   ""+q+"rowid"+q+"     integer DEFAULT -1, "        			+
     	           ""+q+"file"+q+"      varchar(20) DEFAULT '_', "					+
     	           ""+q+"LABEL"+q+"     varchar(255) DEFAULT '_', "					+
     	           ""+q+"ReqType"+q+"   varchar(255) DEFAULT '_', "  		        +
     	           ""+q+"ReqParam1"+q+" varchar(255) DEFAULT '_', "					+
     	           ""+q+"ReqParam2"+q+" varchar(255) DEFAULT '_');\n"				+
-
+					*/
     	           "CREATE TABLE "+q+"prc_cached2da_cls_feat"+q+" ("				+
     	           ""+q+"rowid"+q+" 			integer DEFAULT -1, "         +
     	           ""+q+"file"+q+" 				varchar(20) DEFAULT '_', "			+
@@ -103,14 +105,14 @@ public final class SQLMaker{
 		           "CREATE UNIQUE INDEX "+q+"portrrowindex"+q+"   ON "+q+"prc_cached2da_portraits"+q+" ("+q+"rowid"+q+");\n"     +
 		           "CREATE UNIQUE INDEX "+q+"soundsrowindex"+q+"  ON "+q+"prc_cached2da_soundset"+q+" ("+q+"rowid"+q+");\n"     +
 		           //"CREATE UNIQUE INDEX "+q+"datanameindex"+q+"   ON "+q+"prc_data"+q+" ("+q+"name"+q+");\n"                    +
-		           "CREATE UNIQUE INDEX "+q+"cachedindex"+q+"     ON "+q+"prc_cached2da"+q+" ("+q+"file"+q+", "+q+"columnid"+q+", "+q+"rowid"+q+");\n"+
-		           "CREATE        INDEX "+q+"ireqfileindex"+q+"   ON "+q+"prc_cached2da_ireq"+q+" ("+q+"file"+q+");\n"          +
-		           "CREATE UNIQUE INDEX "+q+"refrindex"+q+"       ON "+q+"prc_cached2da_item_to_ireq"+q+" ("+q+"L_RESREF"+q+", "+q+"rowid"+q+");\n"
+		           "CREATE UNIQUE INDEX "+q+"cachedindex"+q+"     ON "+q+"prc_cached2da"+q+" ("+q+"file"+q+", "+q+"columnid"+q+", "+q+"rowid"+q+");\n"
+		           //"CREATE        INDEX "+q+"ireqfileindex"+q+"   ON "+q+"prc_cached2da_ireq"+q+" ("+q+"file"+q+");\n"          +
+		           //"CREATE UNIQUE INDEX "+q+"refrindex"+q+"       ON "+q+"prc_cached2da_item_to_ireq"+q+" ("+q+"L_RESREF"+q+", "+q+"rowid"+q+");\n"
 		           );
 		//complete the transaction
 		if(sqlite)
 			sql.append("COMMIT;\n");
-		
+
 		sql.flush();
 		sql.close();
 	}
@@ -143,8 +145,9 @@ public final class SQLMaker{
             || filename.matches("appearance")
             || filename.matches("portraits")
             || filename.matches("classes")
-            || filename.matches("racialtypes")
-            || filename.matches("item_to_ireq")){
+            || filename.matches("racialtypes"))
+            //|| filename.matches("item_to_ireq"))
+            {
 
 			//output the table creation
 			addSQLForSingleTable(data, filename);
@@ -153,16 +156,18 @@ public final class SQLMaker{
 		else if(filename.matches("cls_feat_[^ ]*")){
 			addSQLForGroupedTable(data, filename, "cls_feat");
 		}
+		/*
 		else if(filename.matches("ireq_[^ ]*")){
 			addSQLForGroupedTable(data, filename, "ireq");
 		}
+		*/
 		//everything else goes in the same table
 		else{
 			addSQLForGeneralTable(data, filename);
 		}
 		//tell user finished that table
 		if(verbose) System.out.println("- Done");
-		
+
 //		 Force garbage collection
 		System.gc();
 	}

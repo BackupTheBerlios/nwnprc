@@ -135,6 +135,14 @@ void CheckConcentrationOnEffect(object oCaster, int SpellID, object oTarget, int
  */
 object GetObjectToApplyNewEffect(string sTag, object oPC, int nStripEffects = TRUE);
 
+/**
+ * Deletes a stored manifestation structure.
+ *
+ * @param oObject The object on which the structure is stored
+ * @param sName   The name under which the structure is stored
+ */
+void DeleteLocalManifestation(object oObject, string sName);
+
 int GetIsPolyMorphedOrShifted(object oCreature);
 
 // const int ERROR_CODE_5_FIX_YET_ANOTHER_TIME = 1;
@@ -836,6 +844,33 @@ int GetItemCreationFeatCount(object oPC)
             GetHasFeat(FEAT_CRAFT_SKULL_TALISMAN        , oPC) +
             GetHasFeat(FEAT_INSCRIBE_RUNE               , oPC) //+
             );
+}
+
+void DeleteLocalManifestation(object oObject, string sName)
+{
+    DeleteLocalObject(oObject, sName + "_oManifester");
+
+    DeleteLocalInt(oObject, sName + "_bCanManifest");
+    DeleteLocalInt(oObject, sName + "_nPPCost");
+    DeleteLocalInt(oObject, sName + "_nPsiFocUsesRemain");
+    DeleteLocalInt(oObject, sName + "_nManifesterLevel");
+    DeleteLocalInt(oObject, sName + "_nSpellID");
+
+    DeleteLocalInt(oObject, sName + "_nTimesAugOptUsed_1");
+    DeleteLocalInt(oObject, sName + "_nTimesAugOptUsed_2");
+    DeleteLocalInt(oObject, sName + "_nTimesAugOptUsed_3");
+    DeleteLocalInt(oObject, sName + "_nTimesAugOptUsed_4");
+    DeleteLocalInt(oObject, sName + "_nTimesAugOptUsed_5");
+    DeleteLocalInt(oObject, sName + "_nTimesGenericAugUsed");
+
+    DeleteLocalInt(oObject, sName + "_bChain");
+    DeleteLocalInt(oObject, sName + "_bEmpower");
+    DeleteLocalInt(oObject, sName + "_bExtend");
+    DeleteLocalInt(oObject, sName + "_bMaximize");
+    DeleteLocalInt(oObject, sName + "_bSplit");
+    DeleteLocalInt(oObject, sName + "_bTwin");
+    DeleteLocalInt(oObject, sName + "_bWiden");
+    DeleteLocalInt(oObject, sName + "_bQuicken");
 }
 
 

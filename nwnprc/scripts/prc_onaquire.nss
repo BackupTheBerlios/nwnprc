@@ -3,7 +3,7 @@
 //:: prc_onaquire
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-#include "psi_inc_manifest"
+//#include "psi_inc_manifest"
 
 void main()
 {
@@ -12,7 +12,7 @@ void main()
     object oItem     = GetModuleItemAcquired();
 
     // Do not run for some of the PRC special items
-    if(GetTag(oItem) == PRC_MANIFESTATION_TOKEN_NAME ||
+    if(GetTag(oItem) == "PRC_MANIFTOKEN" ||
        GetTag(oItem) == "HideToken"                  ||
        GetResRef(oItem) == "base_prc_skin"
        )

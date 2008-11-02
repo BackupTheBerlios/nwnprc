@@ -140,7 +140,7 @@ int PRCGetUserSpecificSpellScriptFinished();
 #include "prc_inc_itmrstr"
 #include "inc_newspellbook"
 #include "prc_sp_func"
-#include "psi_inc_manifest"
+//#include "psi_inc_manifest"
 #include "prc_inc_combmove"
 
 int RedWizRestrictedSchool()

@@ -5,7 +5,7 @@
 
 #include "prc_racial_const"
 #include "prc_alterations"
-#include "psi_inc_manifest"
+//#include "psi_inc_manifest"
 
 void main()
 {
@@ -27,7 +27,7 @@ void main()
        nBaseItem == BASE_ITEM_CSLASHWEAPON                         ||
        nBaseItem == BASE_ITEM_CSLSHPRCWEAP                         ||
        sResRef == "hidetoken"                                      ||
-       sResRef == GetStringLowerCase(PRC_MANIFESTATION_TOKEN_NAME)
+       sResRef == GetStringLowerCase("PRC_MANIFTOKEN")
        )
         return;
 

@@ -81,7 +81,8 @@ const int SPELLS_SPELLS_CONCENTRATION_TARGET    = 3044;
 const int SPELLS_SPELLS_HOLD_CHARGE_TOGGLE      = 3045;
 
 #include "prc_alterations"
-#include "psi_inc_manifest"
+#include "prc_inc_unarmed"
+//#include "psi_inc_manifest"
 //#include "spinc_common"
 //#include "prc_spell_const"
 //#include "prc_inc_combat"

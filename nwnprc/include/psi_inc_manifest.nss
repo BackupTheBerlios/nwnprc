@@ -159,14 +159,6 @@ void SetLocalManifestation(object oObject, string sName, struct manifestation ma
 struct manifestation GetLocalManifestation(object oObject, string sName);
 
 /**
- * Deletes a stored manifestation structure.
- *
- * @param oObject The object on which the structure is stored
- * @param sName   The name under which the structure is stored
- */
-void DeleteLocalManifestation(object oObject, string sName);
-
-/**
  * Sets the evaluation functions to ignore constraints on manifesting.
  * Call this just prior to EvaluateManifestation() in a power script.
  * That evaluation will then ignore lacking manifestation ability score,
@@ -1040,33 +1032,6 @@ struct manifestation GetLocalManifestation(object oObject, string sName)
     manif.bQuicken  = GetLocalInt(oObject, sName + "_bQuicken");
 
     return manif;
-}
-
-void DeleteLocalManifestation(object oObject, string sName)
-{
-    DeleteLocalObject(oObject, sName + "_oManifester");
-
-    DeleteLocalInt(oObject, sName + "_bCanManifest");
-    DeleteLocalInt(oObject, sName + "_nPPCost");
-    DeleteLocalInt(oObject, sName + "_nPsiFocUsesRemain");
-    DeleteLocalInt(oObject, sName + "_nManifesterLevel");
-    DeleteLocalInt(oObject, sName + "_nSpellID");
-
-    DeleteLocalInt(oObject, sName + "_nTimesAugOptUsed_1");
-    DeleteLocalInt(oObject, sName + "_nTimesAugOptUsed_2");
-    DeleteLocalInt(oObject, sName + "_nTimesAugOptUsed_3");
-    DeleteLocalInt(oObject, sName + "_nTimesAugOptUsed_4");
-    DeleteLocalInt(oObject, sName + "_nTimesAugOptUsed_5");
-    DeleteLocalInt(oObject, sName + "_nTimesGenericAugUsed");
-
-    DeleteLocalInt(oObject, sName + "_bChain");
-    DeleteLocalInt(oObject, sName + "_bEmpower");
-    DeleteLocalInt(oObject, sName + "_bExtend");
-    DeleteLocalInt(oObject, sName + "_bMaximize");
-    DeleteLocalInt(oObject, sName + "_bSplit");
-    DeleteLocalInt(oObject, sName + "_bTwin");
-    DeleteLocalInt(oObject, sName + "_bWiden");
-    DeleteLocalInt(oObject, sName + "_bQuicken");
 }
 
 void DebugIgnoreConstraints(object oManifester)

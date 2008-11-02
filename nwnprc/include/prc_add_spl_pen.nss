@@ -44,14 +44,18 @@ string ChangedElementalType(int spell_id, object oCaster = OBJECT_SELF);
 // Update this function if any new classes change spell pentration
 int add_spl_pen(object oCaster = OBJECT_SELF);
 
+int SPGetPenetr(object oCaster = OBJECT_SELF);
+
+int SPGetPenetrAOE(object oCaster = OBJECT_SELF, int nCasterLvl = 0);
+
 //////////////////////////////////////////////////
 /*                  Includes                    */
 //////////////////////////////////////////////////
 
-#include "prc_inc_spells"
+//#include "prc_inc_spells"
 //#include "prc_alterations"
 //#include "prcsp_archmaginc"
-#include "prc_inc_racial"
+//#include "prc_inc_racial"
 
 
 //////////////////////////////////////////////////
@@ -378,13 +382,66 @@ string ChangedElementalType(int spell_id, object oCaster = OBJECT_SELF)
     string spellType = Get2DACache("spells", "ImmunityType", spell_id);//lookup_spell_type(spell_id);
 
     // Check if an override is set
-    string sType = GetLocalString(oCaster, MASTERY_OF_ELEMENTS_NAME_TAG);
+    string sType = GetLocalString(oCaster, "archmage_mastery_elements_name");
 
     // If so, check if the spell qualifies for a change
     if (sType == "" || !IsSpellTypeElemental(spellType))
         sType = spellType;
 
     return sType;
+}
+
+//////////////////////////////////////////////////
+/*             Function definitions             */
+//////////////////////////////////////////////////
+
+//
+//  Get the Spell Penetration Bonuses
+//
+int SPGetPenetr(object oCaster = OBJECT_SELF)
+{
+    int nPenetr = 0;
+
+    // This is a deliberate optimization attempt.
+    // The first feat determines if the others even need
+    // to be referenced.
+    if (GetHasFeat(FEAT_SPELL_PENETRATION, oCaster)) {
+        nPenetr += 2;
+        if (GetHasFeat(FEAT_EPIC_SPELL_PENETRATION, oCaster))
+            nPenetr += 4;
+        else if (GetHasFeat(FEAT_GREATER_SPELL_PENETRATION, oCaster))
+            nPenetr += 2;
+    }
+
+    // Check for additional improvements
+    nPenetr += add_spl_pen(oCaster);
+
+    return nPenetr;
+}
+
+//
+//  Interface for specific AOE requirements
+//  TODO: Determine who or what removes the cached local var (bug?)
+//  TODO: Try and remove this function completely? It does 2 things the
+//  above function doesnt: Effective Caster Level and Cache
+//
+int SPGetPenetrAOE(object oCaster = OBJECT_SELF, int nCasterLvl = 0)
+{
+    // Check the cache
+    int nPenetr = GetLocalInt(OBJECT_SELF, "nPenetre");
+
+    // Compute the result
+    if (!nPenetr) {
+        nPenetr = (nCasterLvl) ? nCasterLvl : PRCGetCasterLevel(oCaster);
+
+        // Factor in Penetration Bonuses
+        nPenetr += SPGetPenetr(oCaster);
+
+        // Who removed this?
+        SetLocalInt(OBJECT_SELF,"nPenetre",nPenetr);
+    }
+
+    return nPenetr;
 }
 
 // Test main

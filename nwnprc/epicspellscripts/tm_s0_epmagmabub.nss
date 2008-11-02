@@ -31,13 +31,13 @@
                //#include "lookup_2da_spell"
                //#include "prcsp_reputation"
                //#include "prcsp_archmaginc"
-               //#include "prcsp_spell_adjs"
+               //
                //#include "prcsp_engine"
          //#include "inc_dispel"
             //#include "nw_i0_generic" *
             //#include "prc_feat_const"
             //#include "lookup_2da_spell"
-            //#include "prcsp_spell_adjs"
+            //
 #include "inc_epicspells"
 
 void main()

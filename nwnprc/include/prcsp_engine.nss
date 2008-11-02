@@ -14,11 +14,11 @@ int PRCDoResistSpell(object oCaster, object oTarget, int nEffCasterLvl=0, float 
 int CheckSpellfire(object oCaster, object oTarget, int bFriendly = FALSE);
 
 #include "prc_inc_racial"
-#include "prc_feat_const"
-#include "prc_class_const"
-#include "prcsp_reputation"
+//#include "prc_feat_const"
+//#include "prc_class_const"
+//#include "prcsp_reputation"
 #include "prcsp_archmaginc"
-#include "prcsp_spell_adjs"
+#include "prc_add_spell_dc"
 
 
 //

@@ -251,7 +251,7 @@ int CheckTrueSpeechSkill(object oTrueSpeaker);
 /*                  Includes                    */
 //////////////////////////////////////////////////
 
-#include "prc_utter_const"
+#include "true_utter_const"
 #include "prc_alterations"
 #include "true_inc_utter"
 #include "true_inc_truknwn"

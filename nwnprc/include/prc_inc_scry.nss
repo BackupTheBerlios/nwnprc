@@ -20,7 +20,7 @@
 
 #include "psi_inc_psifunc"
 #include "inc_utility"
-#include "prc_utter_const"
+#include "true_utter_const"
 
 ///////////////////////
 /* Public Constants  */

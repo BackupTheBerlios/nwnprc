@@ -20,7 +20,7 @@ including darkvision, beyond 5 feet. A creature within 5 feet has concealment
 ////////////////////////////////////////////////////////////////////
 
 #include "prc_inc_spells"
-#include "prc_utter_const"
+#include "true_utter_const"
 
 void main()
 {

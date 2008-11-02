@@ -95,13 +95,7 @@ float GetRandomDelay(float fMinimumTime = 0.4, float MaximumTime = 1.1);
 void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, float fDuration = 0.0f,
     int bDispellable = TRUE, int nSpellID = -1, int nCasterLevel = -1, object oCaster = OBJECT_SELF);
 
-
-
-#include "prc_feat_const"
 #include "lookup_2da_spell"
-#include "prcsp_spell_adjs"
-
-
 #include "spinc_remeffct"
 #include "inv_invoc_const"
 #include "prcsp_engine"

@@ -409,7 +409,7 @@ const int  TYPE_DIVINE   = -2;
 #include "prc_inc_newip"
 #include "spinc_necro_cyst"
 #include "inc_abil_damage"
-#include "prc_power_const"
+#include "psi_power_const"
 #include "inc_newspellbook"
 #include "inc_lookups"
 #include "prc_spellhook"
@@ -3010,7 +3010,7 @@ IsSpellDamageElemental(int nDamageType)
 int
 ChangedElementalDamage(object oCaster, int nDamageType){
     // Check if an override is set
-    int nNewType = GetLocalInt(oCaster, MASTERY_OF_ELEMENTS_TAG);
+    int nNewType = GetLocalInt(oCaster, "archmage_mastery_elements");
 
     // If so, check if the spell qualifies for a change
     if (!nNewType || !IsSpellDamageElemental(nDamageType))

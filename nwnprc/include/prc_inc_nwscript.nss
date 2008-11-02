@@ -37,7 +37,7 @@ int GetPRCIsSkillSuccessful(object oCreature, int nSkill, int nDifficulty, int n
 #include "prc_class_const"
 #include "prc_feat_const"
 #include "prc_misc_const"
-#include "prc_power_const"
+#include "psi_power_const"
 #include "prc_spell_const"
 
 // colours for log messages (there's not really a sensible place for this while inc_utility is so messy) maybe inc_debug?

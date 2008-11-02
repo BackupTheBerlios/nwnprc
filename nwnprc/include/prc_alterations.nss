@@ -171,9 +171,9 @@ int GetIsPolyMorphedOrShifted(object oCreature);
 
 // PRC Spell Engine Utility Functions
 //#include "lookup_2da_spell"
-#include "prcsp_reputation"
+//#include "prcsp_reputation"
 //#include "prcsp_archmaginc"
-//#include "prcsp_spell_adjs"
+//
 //
 #include "prc_inc_racial"
 #include "inc_abil_damage"

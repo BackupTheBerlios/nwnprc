@@ -21,7 +21,7 @@ void SpellRemovalCheck(object oCaster, object oTarget);
 /*                  Includes                    */
 //////////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "prc_inc_spells"
 
 
 //////////////////////////////////////////////////

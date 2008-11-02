@@ -14,9 +14,9 @@ force a rest, and reset the time.
 //:: Created By:    Demetrious
 //:: Created On:    February 27th, 2003.
 //:://////////////////////////////////////////////
-#include "prc_alterations"
+//#include "prc_alterations"
 #include "sbr_include"
-#include "nw_i0_plot"
+//#include "nw_i0_plot"
 
 void main()
 {

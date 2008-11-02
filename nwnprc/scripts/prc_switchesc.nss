@@ -395,15 +395,12 @@ void main()
             else if(nStage == STAGE_SHOPS)
             {
                 SetHeader("Select what type of item you wish to purchase.");
-                if(GetHasFeat(FEAT_CRAFT_ITEM, oPC)
-                    && !GetPRCSwitch(PRC_SPELLSLAB_NORECIPES))
-                    AddChoice("Crafting recipes", 1);
                 if(GetHasFeat(FEAT_BREW_POTION, oPC)
                     || GetHasFeat(FEAT_SCRIBE_SCROLL, oPC)
                     || GetHasFeat(FEAT_CRAFT_WAND, oPC))
-                    AddChoice("Magic item raw materials", 2);
+                    AddChoice("Magic item raw materials", 1);
                 if(!GetPRCSwitch(PRC_SPELLSLAB_NOSCROLLS))
-                    AddChoice("Spell scrolls", 3);
+                    AddChoice("Spell scrolls", 2);
                 if ((GetIsEpicCleric(oPC)
                         || GetIsEpicDruid(oPC)
                         || GetIsEpicSorcerer(oPC)
@@ -412,7 +409,7 @@ void main()
                         || GetIsEpicHealer(oPC))
                     && GetPRCSwitch(PRC_SPELLSLAB) != 3
                     )
-                    AddChoice("Epic spell books", 4);
+                    AddChoice("Epic spell books", 3);
                 AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
 
                 MarkStageSetUp(nStage, oPC);
@@ -906,18 +903,6 @@ void main()
                 nStage = STAGE_ENTRY;
             else if (nChoice == 1)
             {
-                //Crafting recipes
-                object oStore = GetObjectByTag("prc_recipe");
-                if(!GetIsObjectValid(oStore))
-                {
-                    location lLimbo = GetLocation(GetObjectByTag("HEARTOFCHAOS"));
-                    oStore = CreateObject(OBJECT_TYPE_STORE, "prc_recipe", lLimbo);
-                }
-                DelayCommand(1.0, OpenStore(oStore, oPC));
-                AllowExit(DYNCONV_EXIT_FORCE_EXIT);
-            }
-            else if (nChoice == 2)
-            {
                 //Magic item raw materials
                 object oStore = GetObjectByTag("prc_magiccraft");
                 if(!GetIsObjectValid(oStore))
@@ -928,7 +913,7 @@ void main()
                 DelayCommand(1.0, OpenStore(oStore, oPC));
                 AllowExit(DYNCONV_EXIT_FORCE_EXIT);
             }
-            else if (nChoice == 3)
+            else if (nChoice == 2)
             {
                 //Spell scrolls
                 object oStore = GetObjectByTag("prc_scrolls");
@@ -940,7 +925,7 @@ void main()
                 DelayCommand(1.0, OpenStore(oStore, oPC));
                 AllowExit(DYNCONV_EXIT_FORCE_EXIT);
             }
-            else if (nChoice == 4)
+            else if (nChoice == 3)
             {
                 //Epic spell books
                 object oStore = GetObjectByTag("prc_epicspells");

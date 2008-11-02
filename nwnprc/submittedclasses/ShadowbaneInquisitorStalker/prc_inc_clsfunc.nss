@@ -36,13 +36,10 @@ void ActionCastSpellOnSelf(int iSpell, int nMetaMagic = METAMAGIC_NONE);
 void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotalDC = 0, int nMetaMagic = METAMAGIC_NONE, int nClass = CLASS_TYPE_INVALID);
 
 // Include Files:
-#include "prc_alterations"
+//#include "prc_alterations"
 #include "prcsp_engine"
 #include "prc_inc_function"
-#include "x2_inc_itemprop"
-#include "prc_class_const"
-#include "prc_feat_const"
-#include "prc_ipfeat_const"
+#include "prc_x2_itemprop"
 #include "inc_item_props"
 
 #include "pnp_shft_poly"

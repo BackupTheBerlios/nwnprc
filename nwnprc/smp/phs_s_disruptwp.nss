@@ -47,7 +47,7 @@
 #include "PHS_INC_SPELLS"
 
 // These hold the all important weapon functions. Will seperate later and modify.
-#include "x2_inc_itemprop"
+#include "prc_x2_itemprop"
 
 void AddDisruptEffectToWeapon(object oTarget, float fDuration, int nCasterLevel)
 {

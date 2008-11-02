@@ -12,7 +12,7 @@
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "x2_inc_itemprop"
+#include "prc_x2_itemprop"
 #include "prc_inc_combat" // for GetFeatByWeaponType()
 #include "inc_dynconv"
 

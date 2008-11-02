@@ -12,7 +12,7 @@
 //:://////////////////////////////////////////////
 
 #include "prc_inc_natweap"
-#include "x2_inc_itemprop"
+#include "prc_x2_itemprop"
 
 
 //internal function to calculate the number of Draconic feats

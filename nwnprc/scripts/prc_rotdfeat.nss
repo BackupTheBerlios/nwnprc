@@ -17,7 +17,7 @@ void dragonwrought(object oSkin);
 
 #include "pnp_shft_poly"
 #include "prc_inc_natweap"
-#include "x2_inc_itemprop"
+#include "prc_x2_itemprop"
 
 //the feats common to all dragonwrought
 void dragonwrought(object oSkin)

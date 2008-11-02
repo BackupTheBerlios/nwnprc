@@ -866,7 +866,7 @@ int bUseMonkAttackMod;
 int bIsVorpalWeaponEquiped = FALSE;
 int iVorpalSaveDC = 0;
 
-// #include "x2_inc_itemprop"
+// #include "prc_x2_itemprop"
 #include "prc_inc_racial" // includes prc_feat_const, prc_class_const
 // #include "prc_inc_function"
 // #include "prc_inc_sneak"

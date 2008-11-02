@@ -370,7 +370,7 @@ void ForceApplyAllOnHitCastSpellsOnItemExcludingSubType(int iExcludeSubType, obj
 
 #include "inc_utility"
 //#include "prc_alterations"
-#include "x2_inc_itemprop"
+#include "prc_x2_itemprop"
 #include "prc_inc_sneak"
 //#include "prc_feat_const"
 //#include "prc_class_const"

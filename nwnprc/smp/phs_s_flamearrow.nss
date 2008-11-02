@@ -22,7 +22,7 @@
 //::////////////////////////////////////////////*/
 
 #include "PHS_INC_SPELLS"
-#include "x2_inc_itemprop"
+#include "prc_x2_itemprop"
 
 // Adds 1d6 damage to oItem, fire damage.
 void AddDamageToItem(object oItem, float fDuration);

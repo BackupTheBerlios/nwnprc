@@ -1,6 +1,6 @@
 //::///////////////////////////////////////////////
 //:: Item Property Functions
-//:: x2_inc_itemprop
+//:: prc_x2_itemprop
 //:: Copyright (c) 2003 Bioware Corp.
 //:://////////////////////////////////////////////
 /*
@@ -234,7 +234,7 @@ void IPRemoveMatchingItemProperties(object oItem, int nItemPropertyType, int nIt
                       // Put a warning into the logfile if someone tries to remove a permanent ip with a temporary one!
                       /*if (nItemPropertyDuration == DURATION_TYPE_TEMPORARY &&  GetItemPropertyDurationType(ip) == DURATION_TYPE_PERMANENT)
                       {
-                         WriteTimestampedLogEntry("x2_inc_itemprop:: IPRemoveMatchingItemProperties() - WARNING: Permanent item property removed by temporary on "+GetTag(oItem));
+                         WriteTimestampedLogEntry("prc_x2_itemprop:: IPRemoveMatchingItemProperties() - WARNING: Permanent item property removed by temporary on "+GetTag(oItem));
                       }
                       */
                       RemoveItemProperty(oItem, ip);
@@ -306,7 +306,7 @@ object IPGetIPWorkContainer(object oCaller = OBJECT_SELF)
         ApplyEffectToObject(DURATION_TYPE_PERMANENT,eInvis,oRet);
         if (oRet == OBJECT_INVALID)
         {
-            WriteTimestampedLogEntry("x2_inc_itemprop - critical: Missing container with tag " +X2_IP_WORK_CONTAINER_TAG + "!!");
+            WriteTimestampedLogEntry("prc_x2_itemprop - critical: Missing container with tag " +X2_IP_WORK_CONTAINER_TAG + "!!");
         }
     }
 

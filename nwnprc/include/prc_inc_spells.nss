@@ -401,7 +401,7 @@ const int  TYPE_DIVINE   = -2;
 
 #include "inc_utility"
 //#include "prc_alterations"
-#include "x2_inc_itemprop"
+#include "prc_x2_itemprop"
 //#include "prc_feat_const"
 //#include "prc_class_const"
 #include "lookup_2da_spell"

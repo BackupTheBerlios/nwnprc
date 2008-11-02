@@ -4,7 +4,7 @@ void DoTimestopUnEquip();
 void ApplyTSToObject(object oTarget);
 void RemoveTSFromObject(object oTarget);
 
-#include "x2_inc_itemprop"
+#include "prc_x2_itemprop"
 #include "prc_inc_switch"
 #include "inc_utility"
 

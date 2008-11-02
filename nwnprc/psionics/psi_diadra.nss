@@ -11,7 +11,7 @@
 
 #include "prc_alterations"
 #include "prc_ipfeat_const"
-#include "x2_inc_itemprop"
+#include "prc_x2_itemprop"
 
 //removes channeled wings after relogging or server restart
 void WingCorrection(object oPC, int nEvent)

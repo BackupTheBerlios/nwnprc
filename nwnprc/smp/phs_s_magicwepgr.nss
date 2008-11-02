@@ -34,7 +34,7 @@
 //::////////////////////////////////////////////*/
 
 #include "PHS_INC_SPELLS"
-#include "x2_inc_itemprop"
+#include "prc_x2_itemprop"
 
 void main()
 {

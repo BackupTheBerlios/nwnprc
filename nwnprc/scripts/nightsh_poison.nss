@@ -8,7 +8,7 @@
     to a melee weapon or stack of arrows
 
     The exact details of the poison are loaded from
-    a 2da defined in x2_inc_itemprop X2_IP_POSIONWEAPON_2DA
+    a 2da defined in prc_x2_itemprop X2_IP_POSIONWEAPON_2DA
     taken from the row that matches the last three letters
     of GetTag(GetSpellCastItem())
 

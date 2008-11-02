@@ -186,7 +186,7 @@ int GetAlternativeCasterLevel(object oPC, int nLevel);
 /* Include section                              */
 //////////////////////////////////////////////////
 
-//#include "x2_inc_itemprop"
+//#include "prc_x2_itemprop"
 //#include "prc_x2_switches"
 #include "prc_inc_newip"
 #include "prc_inc_spells"

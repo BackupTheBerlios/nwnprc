@@ -37,7 +37,7 @@ struct ipstruct GetIpStructFromString(string sIp);
 #include "inc_newspellbook"
 #include "prc_inc_spells"
 #include "prc_inc_listener"
-#include "x2_inc_craft"
+#include "prc_x2_craft"
 
 const int NUM_MAX_PROPERTIES            = 200;
 const int NUM_MAX_SUBTYPES              = 256;

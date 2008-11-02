@@ -15,7 +15,7 @@
 
 //Modified by WodahsEht -- Item Properties were being removed even if a new property wasn't applied.
 //#include "prc_alterations"
-//#include "x2_inc_craft"
+//#include "prc_x2_craft"
 #include "x2_inc_spellhook"
 
 void UnactiveModeCIMM(object oTarget)

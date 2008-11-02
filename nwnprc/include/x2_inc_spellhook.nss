@@ -130,9 +130,9 @@ int PRCRunUserSpecificSpellScript();
 string PRCGetUserSpecificSpellScript();
 int PRCGetUserSpecificSpellScriptFinished();
 
-//#include "x2_inc_itemprop" - Inherited from x2_inc_craft
+//#include "x2_inc_itemprop" - Inherited from prc_x2_craft
 #include "prc_alterations"
-#include "x2_inc_craft"
+#include "prc_x2_craft"
 #include "x3_inc_horse"
 #include "prc_inc_spells"
 //#include "prc_inc_combat"

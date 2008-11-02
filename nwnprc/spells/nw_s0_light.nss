@@ -19,7 +19,7 @@
 */
 
 #include "prc_sp_func"
-#include "x2_inc_craft"
+#include "prc_x2_craft"
 
 //Implements the spell impact, put code here
 //  if called in many places, return TRUE if

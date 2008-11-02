@@ -13,7 +13,7 @@
 
 #include "inc_dynconv"
 #include "inv_inc_invfunc"
-#include "x2_inc_craft"
+#include "prc_x2_craft"
 
 
 //////////////////////////////////////////////////

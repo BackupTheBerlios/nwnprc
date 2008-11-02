@@ -13,7 +13,7 @@
 //:: Created On: 20-10-2004
 //:://////////////////////////////////////////////
 
-#include "x2_inc_craft"
+#include "prc_x2_craft"
 #include "x2_inc_spellhook"
 #include "prc_inc_spells"
 #include "inc_utility"

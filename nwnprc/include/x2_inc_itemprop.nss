@@ -754,7 +754,7 @@ int IPGetIPConstCastSpellFromSpellID(int nSpellID)
 
     if (sTemp == "") // invalid nSpellID
     {
-        if (DEBUG) DoDebug("x2_inc_craft.nss::GetIPConstCastSpellFromSpellID called with invalid nSpellID" + IntToString(nSpellID));
+        if (DEBUG) DoDebug("prc_x2_craft.nss::GetIPConstCastSpellFromSpellID called with invalid nSpellID" + IntToString(nSpellID));
         return -1;
     }
 

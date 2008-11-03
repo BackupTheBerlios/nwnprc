@@ -12,7 +12,7 @@
 //:: Created On: May 25, 2001
 //:://////////////////////////////////////////////
 
-//#include "x2_inc_spellhook"
+//#include "prc_add_spell_dc"
 #include "prc_alterations"
 
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff

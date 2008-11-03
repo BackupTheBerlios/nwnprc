@@ -53,7 +53,7 @@ Created:   7/7/06
 void TombLoop(object oPC, object oTarget);
 
 #include "prc_inc_sp_tch"
-
+#include "prc_add_spell_dc"
 void main()
 {
 	if(!X2PreSpellCastCode()) return;

@@ -27,7 +27,7 @@
 
 #include "tob_inc_tobfunc"
 #include "tob_movehook"
-#include "prc_alterations"
+#include "prc_add_spell_dc"
 
 void main()
 {

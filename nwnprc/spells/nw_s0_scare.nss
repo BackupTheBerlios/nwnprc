@@ -50,7 +50,8 @@
  * Material Component: A bit of bone from an undead skeleton, zombie, ghoul, ghast, or mummy.
  */
 
-#include "prc_inc_spells"
+#include "prc_inc_spells"  
+#include "prc_add_spell_dc"
 
 
 

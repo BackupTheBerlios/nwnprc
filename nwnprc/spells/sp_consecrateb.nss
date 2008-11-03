@@ -11,7 +11,7 @@
 //:: Created On: Sept 16, 2008
 //:://////////////////////////////////////////////
 #include "prc_inc_spells"
-#include "x2_inc_spellhook"
+#include "prc_add_spell_dc"
 #include "prc_spell_const"
 
 void main()

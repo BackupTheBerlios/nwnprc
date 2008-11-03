@@ -18,7 +18,7 @@
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
 #include "prc_alterations"
 #include "x2_inc_toollib"
-#include "x2_inc_spellhook"
+#include "prc_add_spell_dc"
 #include "prc_inc_spells"
 
 const int SRROR_CODE_5_FIX = 1;

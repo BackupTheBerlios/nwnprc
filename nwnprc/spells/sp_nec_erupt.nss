@@ -40,6 +40,7 @@ cyst spell. On the round following the subject's death, the cyst exits the
 #include "prc_inc_spells" 
 #include "spinc_necro_cyst"
 #include "inc_utility"
+#include "prc_add_spell_dc"
 
 void main()
 {

@@ -1,6 +1,6 @@
 #include "prc_inc_spells"
 
-
+#include "prc_add_spell_dc"
 int BiowareHoldPerson (int nPenetr, int nCasterLvl, int nMeta, object oTarget, float fDelay);
 
 void main()

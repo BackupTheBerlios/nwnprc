@@ -44,9 +44,9 @@ On Enter script
 
 void DoPush(object oTarget, object oCaster);
 
-#include "prc_alterations"
-#include "prc_inc_spells"
 
+#include "prc_inc_spells"
+#include "prc_add_spell_dc"
 void main()
 {
         object oCaster = GetAreaOfEffectCreator();

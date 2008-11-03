@@ -1,7 +1,7 @@
-#include "x2_inc_spellhook"
+
 #include "spinc_burst"
 #include "prc_inc_spells"
-
+#include "prc_add_spell_dc"
 void main()
 {
 	// If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell

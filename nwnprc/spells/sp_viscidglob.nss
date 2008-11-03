@@ -1,5 +1,5 @@
 #include "prc_inc_sp_tch"
-
+#include "prc_add_spell_dc"
 void main()
 {
     // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell

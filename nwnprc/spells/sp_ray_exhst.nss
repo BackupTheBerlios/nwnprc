@@ -37,10 +37,9 @@ A drop of sweat.
 //:: Date  : 29.9.06
 //::////////////////////////////////////////////////
 
-#include "prc_alterations"
 #include "prc_inc_sp_tch"
 #include "prc_sp_func"
-
+#include "prc_add_spell_dc"
 int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 {
 	int nMetaMagic = PRCGetMetaMagicFeat();

@@ -15,7 +15,7 @@
 
 //:: modified by mr_bumpkin Dec 4, 2003 for prc stuff
 #include "spinc_bolt"
-#include "x2_inc_spellhook"
+#include "prc_add_spell_dc"
 void main()
 {
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

@@ -31,10 +31,6 @@
 
 #include "spinc_teleport"
 
-const int SPELLID_TELEPORT_SELF_ONLY = 2894;
-const int SPELLID_TELEPORT_PARTY     = 2895;
-
-
 void main()
 {
     // Set the spell school

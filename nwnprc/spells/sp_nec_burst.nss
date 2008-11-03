@@ -39,6 +39,7 @@ sometimes even half the lolling head).
 #include "prc_inc_spells" 
 #include "spinc_necro_cyst"
 #include "inc_utility"
+#include "prc_add_spell_dc"
 
 void main()
 {

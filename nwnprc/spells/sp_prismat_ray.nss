@@ -43,7 +43,7 @@ Created:   7/6/07
 void DoRay(object oTarget, int nSaveDC, int nRoll, int nCasterLvl, object oPC);
 
 #include "prc_inc_sp_tch"
-
+#include "prc_add_spell_dc"
 void main()
 {
        if(!X2PreSpellCastCode()) return;

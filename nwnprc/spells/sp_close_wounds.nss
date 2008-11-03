@@ -25,8 +25,8 @@ damage if it makes a Will saving throw).
 // Date:   5.10.06
 ///////////////////////////////////////////////////
 
-#include "prc_alterations"
 #include "prc_inc_spells"
+#include "prc_add_spell_dc"
 
 void main()
 {

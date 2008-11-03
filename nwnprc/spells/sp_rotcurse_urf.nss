@@ -26,10 +26,9 @@ Corruption Cost: 1d6 points of Strength damage.
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
 #include "prc_inc_spells"
 #include "inc_abil_damage"
-#include "prc_spell_const"
+#include "prc_add_spell_dc"
 
 //Pseudo-heartbeat function for abil damage
 void DoCurseDam (object oTarget, object oPC, int nMetaMagic)

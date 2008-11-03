@@ -40,7 +40,7 @@ Created:   5/11/06
 void HiImABomb(object oTarget, int nCounter, int nHP, int nCasterLvl);
 
 #include "prc_inc_spells"
-
+#include "prc_add_spell_dc"
 void main()
 {
     // Set the spellschool

@@ -19,7 +19,7 @@
 
 
 #include "prc_inc_sp_tch"
-
+#include "prc_add_spell_dc"
 
 #include "prc_sp_func"
 

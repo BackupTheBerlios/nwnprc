@@ -22,7 +22,7 @@
 
 #include "prc_sp_func"
 #include "x2_inc_toollib"
-
+#include "prc_add_spell_dc"
 void RunCombustImpact(object oTarget, object oCaster, int nLevel, int nMetaMagic,int EleDmg)
 {
     if (PRCGetDelayedSpellEffectsExpired(SPELL_COMBUST,oTarget,oCaster)) return;

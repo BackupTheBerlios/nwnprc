@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 // GZ, 2003-10-25; (c) 2003 Bioware Corp.
 //------------------------------------------------------------------------------
-#include "x2_inc_spellhook"
+#include "prc_x2_craft"
 void main()
 {
     object oTarget = PRCGetSpellTargetObject();

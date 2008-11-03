@@ -32,6 +32,7 @@ void ParaLoop(object oTarget, int nDC, object oPC);
 
 #include "prc_inc_spells"
 #include "prc_craft_inc"
+#include "prc_add_spell_dc"
 
 void main()
 {

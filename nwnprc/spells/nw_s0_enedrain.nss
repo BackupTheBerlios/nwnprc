@@ -20,6 +20,7 @@
 
 #include "prc_sp_func"
 #include "prc_inc_function"
+#include "prc_add_spell_dc"
 
 //Implements the spell impact, put code here
 //  if called in many places, return TRUE if

@@ -29,7 +29,7 @@ Corruption Cost: 1d6 points of Constitution damage
 //:://////////////////////////////////////////////
 
 #include "prc_inc_spells"
-
+#include "prc_add_spell_dc"
 void main()
 {
 	PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);

@@ -1,5 +1,5 @@
 #include "prc_inc_spells"
-
+#include "prc_add_spell_dc"
 void BioWareDrown(int nCasterLevel, object oCaster, object oTarget, float fDelay);
 
 void main()

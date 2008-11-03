@@ -27,9 +27,8 @@ Created:   5/14/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
 #include "prc_inc_spells"
-
+#include "prc_add_spell_dc"
 
 void DawnCheck(object oTarget, object oPC, int nRemove)
 {

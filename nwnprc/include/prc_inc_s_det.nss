@@ -14,6 +14,7 @@ If there are other detect spells, they can probably be put in here too.
 
 
 #include "prc_inc_spells"
+#include "prc_add_spell_dc"
 //#include "inc_draw"    Provided by inc_utility
 //#include "inc_utility" Provided by prc_alterations
 

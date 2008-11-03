@@ -20,7 +20,7 @@ NOTE: Official rules say +6, we can only go to +5
 
 #include "prc_alterations"
 
-#include "x2_inc_spellhook"
+#include "prc_add_spell_dc"
 
 void main()
 {

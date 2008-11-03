@@ -23,8 +23,8 @@ Created:   8/8/07
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_inc_spells"
-#include "x2_inc_spellhook"
+#include "prc_inc_combat"
+#include "prc_add_spell_dc"
 
 void main()
 {

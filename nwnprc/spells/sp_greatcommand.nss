@@ -29,6 +29,7 @@ Created:   29/4/06
 //:://////////////////////////////////////////////
 
 #include "prc_inc_spells"
+#include "prc_add_spell_dc"
 
 void DoGreaterCommandRecursion(object oCaster, object oTarget, int nSpellId, int nLastBeat, effect eLink, int nDC, int nCaster, int nCurrentBeat = 0)
 {

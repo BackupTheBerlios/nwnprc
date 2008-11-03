@@ -17,7 +17,8 @@
 //:: Updated By: Georg Z, On: Aug 21, 2003 - no longer affects placeables
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
-#include "prc_inc_spells"
+#include "prc_inc_spells"  
+#include "prc_add_spell_dc"
 
 
 

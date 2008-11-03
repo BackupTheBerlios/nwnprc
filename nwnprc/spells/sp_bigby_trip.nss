@@ -27,6 +27,7 @@ Material component: Three glass beads
 int EvalSizeBonus(object oSubject);
 
 #include "prc_inc_combat"
+#include "prc_add_spell_dc"
 
 void main()
 {

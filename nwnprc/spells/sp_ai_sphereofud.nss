@@ -1,7 +1,7 @@
 #include "prc_inc_sp_tch"
 //#include "nw_i0_generic"
 //#include "x0_inc_generic"
-#include "x2_inc_spellhook"
+#include "prc_add_spell_dc"
 #include "x0_inc_generic"
 
 //

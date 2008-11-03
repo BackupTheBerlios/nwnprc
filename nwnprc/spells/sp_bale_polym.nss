@@ -43,7 +43,7 @@ can revert to its natural form as a standard action.
 
 #include "prc_alterations"
 #include "prc_inc_spells"
-#include "x2_inc_spellhook"
+#include "prc_add_spell_dc"
 
 void main()
 {

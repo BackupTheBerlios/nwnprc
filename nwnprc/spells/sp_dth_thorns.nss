@@ -32,8 +32,8 @@ Created:
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
 #include "prc_inc_spells"
+#include "prc_add_spell_dc"
 
 void DamageLoop(object oTarget, int nCount)
 {

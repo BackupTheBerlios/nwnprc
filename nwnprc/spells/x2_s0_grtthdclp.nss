@@ -24,7 +24,7 @@
 
 
 
-#include "x2_inc_spellhook"
+#include "prc_add_spell_dc"
 
 void main()
 {

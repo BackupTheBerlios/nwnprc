@@ -37,7 +37,7 @@ Created:   6/22/06
 //:://////////////////////////////////////////////
 
 #include "prc_inc_spells"
-
+#include "prc_add_spell_dc"
 void main()
 {
 	if(!X2PreSpellCastCode()) return;

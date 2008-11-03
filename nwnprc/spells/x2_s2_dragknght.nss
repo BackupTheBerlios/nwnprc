@@ -20,7 +20,7 @@ const int COMPILER_BREAKS_ON_ME_OR_NOT_AGAIN = 0xffffffff;
 
 #include "x2_inc_toollib"
 
-#include "x2_inc_spellhook"
+#include "prc_add_spell_dc"
 #include "inc_utility"
 void main()
 {

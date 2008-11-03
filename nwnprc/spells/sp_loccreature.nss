@@ -13,7 +13,7 @@
 
 #include "inc_dynconv"
 #include "prc_alterations"
-#include "x2_inc_spellhook"
+#include "prc_add_spell_dc"
 
 void main()
 {

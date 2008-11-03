@@ -33,6 +33,7 @@ Created:   3/28/05
 //:://////////////////////////////////////////////
 
 #include "prc_inc_spells"
+#include "prc_add_spell_dc"
 
 void CrushLoop(object oTarget, object oPC, int bEndSpell, int nDC)
 {

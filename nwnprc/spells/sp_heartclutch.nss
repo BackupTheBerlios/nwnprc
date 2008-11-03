@@ -40,6 +40,7 @@ void ClutchLoop(object oTarget, int nDelay, object oPC);
 int GetHasSoulRot(object oPC);
 
 #include "prc_inc_spells"
+#include "prc_add_spell_dc"
 
 void main()
 {

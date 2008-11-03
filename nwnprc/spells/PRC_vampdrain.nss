@@ -11,7 +11,7 @@
 //:: Created On: April 5, 2004
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-#include "x2_inc_spellhook"
+#include "prc_add_spell_dc"
 
 //------------------------------------------------------------------------------
 // GZ: gets rids of temporary hit points so that they will not stack

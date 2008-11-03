@@ -13,7 +13,7 @@
 //:: Last Updated By: Georg 2003/07/31 - Added signal event and custom door flags
 //:: VFX Pass By: Preston W, On: June 22, 2001
 
-#include "prc_inc_spells"
+#include "prc_inc_spells"  
 
 
 

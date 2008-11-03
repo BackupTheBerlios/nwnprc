@@ -52,7 +52,7 @@
 */
 
 #include "prc_sp_func"
-
+#include "prc_add_spell_dc"
 void main()
 {
     object oCaster = OBJECT_SELF;

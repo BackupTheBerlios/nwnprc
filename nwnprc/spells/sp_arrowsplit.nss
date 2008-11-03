@@ -27,7 +27,7 @@ Created:   8/22/07
 //:://////////////////////////////////////////////
 
 #include "prc_inc_spells"
-#include "x2_inc_spellhook"
+#include "prc_add_spell_dc"
 #include "prc_craft_inc"
 
 void main()

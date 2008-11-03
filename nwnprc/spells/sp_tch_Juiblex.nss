@@ -29,7 +29,7 @@ Created:   2/19/06
 //:://////////////////////////////////////////////
 
 #include "prc_inc_sp_tch"
-
+#include "prc_add_spell_dc"
 void CountdownToSlime(object oTarget, int nCounter)
 {
     if(nCounter > 0)

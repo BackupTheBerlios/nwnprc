@@ -25,6 +25,7 @@ Created:
 //:://////////////////////////////////////////////
 
 #include "prc_inc_spells"
+#include "prc_add_spell_dc"
 
 void main()
 {

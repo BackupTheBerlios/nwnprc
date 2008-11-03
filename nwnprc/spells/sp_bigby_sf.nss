@@ -37,6 +37,7 @@ void DoPush(object oTarget, object oCreator, int nReverse = FALSE);
 int EvalSizeBonus(object oSubject);
 
 #include "prc_inc_combat"
+#include "prc_add_spell_dc"
 
 void main()
 {

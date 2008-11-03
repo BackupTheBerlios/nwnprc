@@ -34,7 +34,7 @@ Created:   7/14/06
 //:://////////////////////////////////////////////
 
 #include "prc_inc_spells"
-
+#include "prc_add_spell_dc"
 void main()
 {
 	object oTarget = GetEnteringObject();

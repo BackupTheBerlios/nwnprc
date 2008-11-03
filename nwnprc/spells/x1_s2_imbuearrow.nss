@@ -2,7 +2,7 @@
 //                                IMBUE ARROW                                 //
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
-//  Script ran when the Imbue Arrow feat is used.                             //
+//  Script run when the Imbue Arrow feat is used.                             //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 //Edited By   : Nailog                                                        //
@@ -10,7 +10,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "prc_inc_sp_tch"
-#include "x2_inc_spellhook"
+#include "prc_add_spell_dc"
 
 //*GZ: 2003-07-23. honor critical and weapon spec
 // Updated: 02/14/2008 CraigW - Added support for Epic Weapon Specialization.

@@ -16,7 +16,7 @@
 
 //:: modified by mr_bumpkin Dec 15, 2003 for PRC stuff
 #include "prc_alterations"
-#include "x2_inc_spellhook"
+#include "prc_add_spell_dc"
 
 
 

@@ -17,7 +17,7 @@
 /////////////////////////////////////////////////////////////////////////
 
 #include "prc_inc_spells"
-
+#include "prc_add_spell_dc"
 
 //* fires a storm of nCap missiles at targets in area
 void PRCDoMissileStorm(int nD6Dice, int nCap, int nSpell, int nMIRV = VFX_IMP_MIRV, int nVIS = VFX_IMP_MAGBLUE, int nDAMAGETYPE = DAMAGE_TYPE_MAGICAL, int nONEHIT = FALSE, int nReflexSave = FALSE);

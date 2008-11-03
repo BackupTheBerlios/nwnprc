@@ -29,7 +29,7 @@ Created:   3/26/05
 //:://////////////////////////////////////////////
 
 #include "prc_inc_spells"
-
+#include "prc_add_spell_dc"
 void FesterLoop(object oTarget, int nConc, int nHP)
 {
     if (nConc == FALSE)

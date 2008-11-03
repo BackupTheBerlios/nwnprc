@@ -1,5 +1,5 @@
 #include "prc_inc_spells"
-
+#include "prc_add_spell_dc"
 
 //
 // This function runs the flensing effect for a round, then recursing itself one

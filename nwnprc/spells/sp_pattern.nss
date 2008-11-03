@@ -23,7 +23,7 @@
 */
 
 #include "prc_sp_func"
-
+#include "prc_add_spell_dc"
 void DispelMonitor(object oCaster, object oTarget, int nSpellID, int nBeatsRemaining)
 {
     if((--nBeatsRemaining == 0)                                         ||

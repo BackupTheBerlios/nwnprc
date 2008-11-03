@@ -1,6 +1,6 @@
 #include "prc_alterations"
 #include "prc_feat_const"
-#include "x2_inc_spellhook"
+#include "prc_add_spell_dc"
 #include "prc_inc_spells"
 
 const int SPELL_UR_BLACKLIGHT = 2091;

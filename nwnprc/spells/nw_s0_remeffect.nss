@@ -25,6 +25,7 @@ const int SAVING_THROW_NONE = 4;
 
 #include "prc_sp_func"
 #include "prc_inc_sp_tch"
+#include "prc_add_spell_dc"
 
 int GetIsSupernaturalCurse(effect eEff)
 {

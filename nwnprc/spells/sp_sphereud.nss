@@ -1,6 +1,5 @@
 #include "prc_inc_spells"
-#include "inc_utility"
-
+#include "prc_add_spell_dc"
 void main()
 {
     if (!X2PreSpellCastCode()) return;

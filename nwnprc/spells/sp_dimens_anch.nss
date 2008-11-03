@@ -41,6 +41,7 @@
 #include "prc_inc_sp_tch"
 #include "prc_inc_teleport"
 #include "prc_sp_func"
+#include "prc_add_spell_dc"
 
 void DispelMonitor(object oCaster, object oTarget, int nSpellID, int nBeatsRemaining);
 

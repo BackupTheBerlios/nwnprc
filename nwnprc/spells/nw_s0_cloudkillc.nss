@@ -18,7 +18,7 @@
 //:: modified by mr_bumpkin Dec 4, 2003
 //:: modified by Ornedan Dec 22, 2004 to PnP rules
 #include "prc_inc_spells"
-
+#include "prc_add_spell_dc"
 
 
 

@@ -25,8 +25,8 @@
 //::Aaon Graywolf - Jan 7, 2004
 
 #include "prc_inc_function"
-
-
+#include "prc_inc_spells"
+#include "prc_add_spell_dc"
 
 
 void main()

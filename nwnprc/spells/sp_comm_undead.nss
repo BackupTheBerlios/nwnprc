@@ -46,8 +46,8 @@ Created:   02/21/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
 #include "prc_inc_spells"
+#include "prc_add_spell_dc"
 
 void main()
 {

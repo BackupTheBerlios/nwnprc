@@ -39,6 +39,7 @@ Created:   7/6/07
 
 #include "prc_inc_sp_tch"
 #include "x0_i0_position"
+#include "prc_add_spell_dc"
 
 void main()
 {

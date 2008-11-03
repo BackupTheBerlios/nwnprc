@@ -25,7 +25,7 @@ Created:   5/12/06
 //:://////////////////////////////////////////////
 
 #include "prc_inc_spells"
-
+#include "prc_add_spell_dc"
 void main()
 {
 	object oPC = OBJECT_SELF;

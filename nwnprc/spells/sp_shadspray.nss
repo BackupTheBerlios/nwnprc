@@ -1,5 +1,5 @@
 #include "prc_inc_spells"
-
+#include "prc_add_spell_dc"
 //School: Illusion
 //Area of Effect / Target: Small
 //Save: Fortitude negates

@@ -41,6 +41,7 @@
 #include "spinc_necro_cyst"
 #include "prc_inc_switch"
 #include "inc_utility"
+#include "prc_add_spell_dc"
 
 
 void main()

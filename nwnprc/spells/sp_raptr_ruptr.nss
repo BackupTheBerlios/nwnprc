@@ -45,7 +45,7 @@ touched.
 
 #include "prc_inc_sp_tch"
 #include "prc_sp_func"
-
+#include "prc_add_spell_dc"
 
 int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent, string sScript);
 void WoundLoop(object oTarget, int nDamage = 0);

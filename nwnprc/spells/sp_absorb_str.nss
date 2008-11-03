@@ -33,7 +33,7 @@ Created:   1/25/06
 #include "prc_alterations"
 #include "prc_inc_spells"
 #include "inc_abil_damage"
-#include "x2_inc_spellhook"
+#include "prc_add_spell_dc"
 
 void DiseaseCheck(object oTarget, object oPC)
 {

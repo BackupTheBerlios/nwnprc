@@ -24,7 +24,7 @@ caster level (maximum 25d6).
 
 #include "prc_inc_sp_tch"
 
-#include "x2_inc_spellhook"
+#include "prc_add_spell_dc"
 #include "prc_sp_func"
 
 //Implements the spell impact, put code here

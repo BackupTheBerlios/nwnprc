@@ -37,7 +37,7 @@ Created:   6/28/07
 void SummonElemental(object oTarget, object oPC);
 
 #include "prc_inc_spells"
-
+#include "prc_add_spell_dc"
 void main()
 {
         if(!X2PreSpellCastCode()) return;

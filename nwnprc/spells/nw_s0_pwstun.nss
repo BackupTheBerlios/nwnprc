@@ -20,7 +20,7 @@ bugfix by Kovi 2002.07.28
 */
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
-#include "prc_inc_spells"
+#include "prc_inc_spells" 
 
 
 

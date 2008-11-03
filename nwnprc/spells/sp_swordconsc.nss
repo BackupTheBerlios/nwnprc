@@ -28,7 +28,7 @@ Cleric of an evil deity     Caster Level
 */
 
 #include "prc_inc_spells"
-
+#include "prc_add_spell_dc"
 void main()
 {
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

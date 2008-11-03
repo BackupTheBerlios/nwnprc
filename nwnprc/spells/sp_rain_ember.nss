@@ -44,7 +44,7 @@ Created:   6/21/06
 void EmberLoop(int nCounter, int nCasterLvl, int nMetaMagic, object oPC, location lLoc);
 
 #include "prc_inc_spells"
-
+#include "prc_add_spell_dc"
 void main()
 {
 	if(!X2PreSpellCastCode()) return;

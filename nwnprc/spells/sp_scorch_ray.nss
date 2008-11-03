@@ -41,7 +41,7 @@ each other and fired simultaneously.
     <END NOTES TO SCRIPTER>
 */
 #include "prc_inc_sp_tch"
-
+#include "prc_add_spell_dc"
 void main()
 {
 	if (!X2PreSpellCastCode()) return;

@@ -18,7 +18,7 @@
 #include "prc_inc_spells"
 
 #include "prc_alterations"
-#include "x2_inc_spellhook"
+#include "prc_add_spell_dc"
 
 void DoQuake(object oCaster, int nCasterLvl, location lTarget)
 {

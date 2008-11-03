@@ -34,7 +34,7 @@ given above.
 Consecrate counters and dispels desecrate. 
 */
 #include "prc_inc_spells"
-#include "x2_inc_spellhook"
+#include "prc_add_spell_dc"
 #include "prc_alterations"
 
 void main()

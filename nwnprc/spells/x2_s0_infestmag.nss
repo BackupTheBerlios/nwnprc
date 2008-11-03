@@ -18,7 +18,7 @@
 */
 
 #include "prc_sp_func"
-
+#include "prc_add_spell_dc"
 void RunInfestImpact(object oTarget, object oCaster, int nSaveDC, int nMetaMagic)
 {
     if (PRCGetDelayedSpellEffectsExpired(SPELL_INFESTATION_OF_MAGGOTS,oTarget,oCaster)) return;

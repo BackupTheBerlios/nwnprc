@@ -39,7 +39,7 @@ Created:   6/6/06
 void BlindLoop(object oTarget, object oPC);
 
 #include "prc_inc_spells"
-
+#include "prc_add_spell_dc"
 void main()
 
 {

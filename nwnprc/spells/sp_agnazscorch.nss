@@ -1,6 +1,6 @@
 #include "prc_inc_spells"
 #include "spinc_bolt"
-#include "x2_inc_spellhook"
+#include "prc_add_spell_dc"
 
 void main()
 {

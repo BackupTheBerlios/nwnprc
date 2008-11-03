@@ -1,5 +1,5 @@
 #include "prc_inc_spells"
-
+#include "prc_add_spell_dc"
 void DarkBolt(object oTarget,int nMissiles, int nDC , int nMetaMagic)
 {
    if (GetIsDead(oTarget)) return;

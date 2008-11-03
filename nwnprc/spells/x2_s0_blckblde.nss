@@ -17,6 +17,7 @@
 #include "inc_utility"
 #include "prc_inc_spells"
 #include "prc_inc_sp_tch"
+#include "prc_add_spell_dc"
 
 void DoPnPAttack(object oSummon)
 {
@@ -170,8 +171,6 @@ void spellsCreateItemForSummoned()
         DoPnPAttack(oSummon);
     }
 }
-
-#include "x2_inc_spellhook"
 
 void main()
 {

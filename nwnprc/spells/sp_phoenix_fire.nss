@@ -43,10 +43,8 @@ return to life are the sacrifice cost for this spell.
 
 void Rebirth(object oPC);
 
-const int ERROR_CODE_5_FIX_AGAIN = 1;
-
-#include "prc_alterations"
 #include "prc_inc_spells"
+#include "prc_add_spell_dc"
 
 void main()
 {

@@ -11,7 +11,7 @@
 
 #include "prc_inc_spells"
 #include "prc_inc_teleport"
-
+#include "prc_add_spell_dc"
 /////////////////////////
 // Function Prototypes //
 /////////////////////////

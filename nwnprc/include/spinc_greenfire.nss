@@ -1,6 +1,6 @@
 
 #include "prc_inc_spells"
-
+#include "prc_add_spell_dc"
 //
 // Returns TRUE if the greenfire heartbeat has fired at least once.
 //

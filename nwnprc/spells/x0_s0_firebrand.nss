@@ -24,7 +24,7 @@
 #include "prc_inc_spells"
 
 
-#include "x2_inc_spellhook"
+#include "prc_add_spell_dc"
 
 void DoFirebrand(int CasterLvl,int nD6Dice, int nCap, int nSpell, 
      int nMIRV = VFX_IMP_MIRV, int nVIS = VFX_IMP_MAGBLUE, 

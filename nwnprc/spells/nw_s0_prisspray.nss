@@ -18,7 +18,8 @@
 int ApplyPrismaticEffect(int nEffect, object oTarget,int nDC,int CasterLvl);
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
-#include "prc_inc_spells"
+#include "prc_inc_spells"  
+#include "prc_add_spell_dc"
 //:: left its elemental damage alone, since it's already determined randomly.
 
 

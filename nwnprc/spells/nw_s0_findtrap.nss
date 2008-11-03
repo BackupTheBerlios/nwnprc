@@ -10,7 +10,7 @@
 //:: Created By: Preston Watamaniuk
 //:: Created On: Oct 29, 2001
 //:://////////////////////////////////////////////
-#include "prc_inc_spells"
+#include "prc_inc_spells"  
 
 
 void main()

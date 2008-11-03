@@ -43,8 +43,8 @@ Created:   3/25/06
 
 void AbilityScrewed (object oTarget);
 
-#include "prc_alterations"
 #include "prc_inc_spells"
+#include "prc_add_spell_dc"
 
 void main()
 {

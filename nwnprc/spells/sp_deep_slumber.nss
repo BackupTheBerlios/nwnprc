@@ -10,9 +10,8 @@ This spell functions like sleep, except that it affects 10 HD of creatures.
 
 **/
 
-#include "prc_alterations"
 #include "prc_inc_spells"
-#include "x2_inc_spellhook"
+#include "prc_add_spell_dc"
 
 void main()
 {

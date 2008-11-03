@@ -50,6 +50,7 @@ Created:   6/25/06
 
 #include "prc_inc_spells"
 #include "inc_dynconv"
+#include "prc_add_spell_dc"
 
 void GaspGaspCroak(object oTarget, int nCounter);
 

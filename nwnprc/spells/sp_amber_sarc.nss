@@ -48,7 +48,7 @@ void RemoveSarc(object oTarget, object oPC);
 void MakeImmune(object oTarget, float fDur);
 
 #include "prc_inc_sp_tch"
-#include "x2_inc_spellhook"
+#include "prc_add_spell_dc"
 
 void main()
 {

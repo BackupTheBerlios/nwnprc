@@ -137,6 +137,7 @@ int GetFirstInvocationClassPosition(object oCreature = OBJECT_SELF);
 #include "prc_alterations"
 #include "inv_inc_invknown"
 #include "inv_inc_invoke"
+#include "prc_add_spell_dc"
 
 //////////////////////////////////////////////////
 /*             Internal functions               */

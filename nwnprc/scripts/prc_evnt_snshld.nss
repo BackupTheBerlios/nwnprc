@@ -21,8 +21,8 @@ size is available for it to enter, it instead
 takes an extra 1d8 points of sonic damage.
 **/
 
-#include "prc_alterations"
 #include "prc_inc_spells"
+#include "prc_add_spell_dc"
 
 void DoPush(object oTarget, object oPC, int nReverse = FALSE);
 

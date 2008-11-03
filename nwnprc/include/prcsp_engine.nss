@@ -18,7 +18,8 @@ int CheckSpellfire(object oCaster, object oTarget, int bFriendly = FALSE);
 //#include "prc_class_const"
 //#include "prcsp_reputation"
 #include "prcsp_archmaginc"
-#include "prc_add_spell_dc"
+//#include "prc_add_spell_dc"
+#include "prc_add_spl_pen"
 
 
 //

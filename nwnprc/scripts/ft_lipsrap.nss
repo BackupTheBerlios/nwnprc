@@ -1,4 +1,5 @@
 #include "prc_alterations"
+#include "prc_add_spell_dc"
 
 void main()
 {

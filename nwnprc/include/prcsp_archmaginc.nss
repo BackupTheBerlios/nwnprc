@@ -71,7 +71,7 @@ void SetMasteryOfElements();
 /*                  Includes                    */
 //////////////////////////////////////////////////
 
-#include "lookup_2da_spell"
+//#include "lookup_2da_spell"
 #include "prcsp_reputation"
 //#include "prc_inc_spells"
 

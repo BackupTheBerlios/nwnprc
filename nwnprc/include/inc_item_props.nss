@@ -271,7 +271,7 @@ int GetIsMagicItem(object oItem);
 #include "inc_2dacache"
 #include "inc_persist_loca"
 #include "inc_prc_npc"
-#include "inc_utility"
+//#include "inc_utility"
 #include "prc_ipfeat_const"
 #include "inc_array"
 

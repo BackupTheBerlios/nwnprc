@@ -25,6 +25,9 @@
 //:: Created On: 20/05/06
 //:://////////////////////////////////////////////
 
+#include "inc_persist_loca"
+#include "prc_inc_switch"
+
 void DoDeadHB(object oPC, int nIsPC)
 {
     if(!GetPRCSwitch(PRC_PNP_DEATH_ENABLE))

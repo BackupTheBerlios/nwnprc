@@ -1,4 +1,5 @@
-#include "prc_alterations"
+#include "inc_prc_npc"
+#include "inc_eventhook"
 
 void main()
 {

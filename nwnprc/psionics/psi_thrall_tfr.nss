@@ -8,6 +8,7 @@
  * Use: Selected.
  */
 
+#include "inc_rand_equip"
 #include "prc_alterations"
 #include "nw_o2_coninclude"
 

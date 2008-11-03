@@ -33,7 +33,72 @@ object GetPCSkin(object oPC);
 //////////////////////////////////////////////////
 
 #include "inc_debug"
-#include "inc_utility"
+
+//////////////////////////////////////////////////
+/* private functions                            */
+//////////////////////////////////////////////////
+// to duplicate GetHasItem() and ForceEquip() from inc_utility
+
+void _ForceEquipSkin(object oPC, object oSkin, int nThCall = 0)
+{
+    // Make sure that the object we are attempting equipping is the latest one to be ForceEquipped into this slot
+    if(GetIsObjectValid(GetLocalObject(oPC, "ForceEquipToSlot_" + IntToString(INVENTORY_SLOT_CARMOUR)))
+        &&
+       GetLocalObject(oPC, "ForceEquipToSlot_" + IntToString(INVENTORY_SLOT_CARMOUR)) != oSkin
+       )
+        return;
+    // Fail on non-commandable NPCs after ~1min
+    if(!GetIsPC(oPC) && !GetCommandable(oPC) && nThCall > 60)
+    {
+        WriteTimestampedLogEntry("ForceEquip() failed on non-commandable NPC: " + DebugObject2Str(oPC) + " for item: " + DebugObject2Str(oSkin));
+        return;
+    }
+
+    float fDelay;
+
+    // Check if the equipping has already happened
+    if(GetItemInSlot(INVENTORY_SLOT_CARMOUR, oPC) != oSkin)
+    {
+        // Test and increment the control counter
+        if(nThCall++ == 0)
+        {
+            // First, try to do the equipping non-intrusively and give the target a reasonable amount of time to do it
+            AssignCommand(oPC, ActionEquipItem(oSkin, INVENTORY_SLOT_CARMOUR));
+            fDelay = 1.0f;
+
+            // Store the item to be equipped in a local variable to prevent contest between two different calls to ForceEquip
+            SetLocalObject(oPC, "ForceEquipToSlot_" + IntToString(INVENTORY_SLOT_CARMOUR), oSkin);
+        }
+        else
+        {
+            // Nuke the target's action queue. This should result in "immediate" equipping of the item
+            if(GetIsPC(oPC) || nThCall > 5) // Skip nuking NPC action queue at first, since that can cause problems. 5 = magic number here. May need adjustment
+            {
+                AssignCommand(oPC, ClearAllActions());
+                AssignCommand(oPC, ActionEquipItem(oSkin, INVENTORY_SLOT_CARMOUR));
+            }
+            // Use a lenghtening delay in order to attempt handling lag and possible other interference. From 0.1s to 1s
+            fDelay = (nThCall < 10 ? nThCall : 10) / 10.0f; // yes this is the same as min(nThCall, 10)
+        }
+
+        // Loop
+        DelayCommand(fDelay, _ForceEquipSkin(oPC, oSkin, nThCall));
+    }
+    // It has, so clean up
+    else
+        DeleteLocalObject(oPC, "ForceEquipToSlot_" + IntToString(INVENTORY_SLOT_CARMOUR));
+}
+
+int _GetHasSkin(object oPC)
+{
+    string sResRef = "base_prc_skin";
+    object oItem = GetFirstItemInInventory(oPC);
+
+    while(GetIsObjectValid(oItem) && GetResRef(oItem) != sResRef)
+        oItem = GetNextItemInInventory(oPC);
+
+    return GetResRef(oItem) == sResRef;
+}
 
 //////////////////////////////////////////////////
 /* Function defintions                          */
@@ -49,17 +114,17 @@ object GetPCSkin(object oPC)
         oSkin = GetLocalObject(oPC, "PRCSkinCache");
         if(!GetIsObjectValid(oSkin))
         {
-            if(GetHasItem(oPC, "base_prc_skin"))
+            if(_GetHasSkin(oPC))
             {
                 oSkin = GetItemPossessedBy(oPC, "base_prc_skin");
-                ForceEquip(oPC, oSkin, INVENTORY_SLOT_CARMOUR);
+                _ForceEquipSkin(oPC, oSkin, INVENTORY_SLOT_CARMOUR);
                 //AssignCommand(oPC, ActionEquipItem(oSkin, INVENTORY_SLOT_CARMOUR));
             }
 
             //Added GetHasItem check to prevent creation of extra skins on module entry
             else {
                 oSkin = CreateItemOnObject("base_prc_skin", oPC);
-                ForceEquip(oPC, oSkin, INVENTORY_SLOT_CARMOUR);
+                _ForceEquipSkin(oPC, oSkin, INVENTORY_SLOT_CARMOUR);
                 //AssignCommand(oPC, ActionEquipItem(oSkin, INVENTORY_SLOT_CARMOUR));
 
                 // The skin should not be droppable
@@ -73,3 +138,4 @@ object GetPCSkin(object oPC)
     }
     return oSkin;
 }
+

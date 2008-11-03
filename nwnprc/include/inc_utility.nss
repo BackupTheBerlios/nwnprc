@@ -524,7 +524,7 @@ const int ERROR_CODE_5_ONCE_MORE5 = -1;
 #include "inc_logmessage"
 #include "inc_threads"
 #include "inc_time"
-#include "inc_rand_equip"
+//#include "inc_rand_equip"
 
 // The following includes have dependencies on files linked via this file
 #include "inc_draw"       // includes inc_draw_text and inc_draw_tools

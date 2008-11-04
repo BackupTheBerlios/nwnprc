@@ -69,7 +69,8 @@ itemproperty ItemPropertyLimitUseBySneakAttackDice(int nDice);
 /* Includes                                     */
 //////////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "prc_x2_itemprop"
+//#include "prc_alterations"
 
 
 //////////////////////////////////////////////////

@@ -126,7 +126,7 @@ void DoDexCheck(object oCreature, int bFirstPart = TRUE);
 
 #include "inc_utility"
 #include "inc_dispel"
-#include "prc_inc_racial"
+//#include "prc_inc_racial"
 
 
 //////////////////////////////////////////////////

@@ -9,7 +9,7 @@
   their fighting style and trade it for different animations. Part of the ACP pack.
 */
 
-#include "prc_alterations"
+#include "inc_acp"
 
 void main()
 {

@@ -52,7 +52,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_CLOUD_OF_BEWILDERMENT,OBJECT_SELF, GetSpellS
                 if (!GetIsImmune(oTarget, IMMUNITY_TYPE_POISON))
                 {
                    nRounds = d6(1);
-                   fDelay = GetRandomDelay(0.75, 1.75);
+                   fDelay = PRCGetRandomDelay(0.75, 1.75);
                    //Apply the VFX impact and linked effects
                    DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
                    DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eStun, oTarget, RoundsToSeconds(nRounds),FALSE));

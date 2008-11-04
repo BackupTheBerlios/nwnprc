@@ -88,7 +88,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
                 if (nWillResult == 0)
                 {
 
-                    fDelay = GetRandomDelay(0.4, 1.1);
+                    fDelay = PRCGetRandomDelay(0.4, 1.1);
                     //Apply VFX impact and bonus effects
                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, TurnsToSeconds(nDuration),TRUE,-1,CasterLvl));

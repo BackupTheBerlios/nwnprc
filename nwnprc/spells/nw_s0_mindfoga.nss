@@ -32,7 +32,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     effect eLower = EffectSavingThrowDecrease(SAVING_THROW_WILL, 10);
     effect eLink = EffectLinkEffects(eVis, eLower);
     int bValid = FALSE;
-    float fDelay = GetRandomDelay(1.0, 2.2);
+    float fDelay = PRCGetRandomDelay(1.0, 2.2);
     int nPenetr = SPGetPenetrAOE(GetAreaOfEffectCreator());
 
     if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, GetAreaOfEffectCreator()))

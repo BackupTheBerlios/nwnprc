@@ -25,7 +25,7 @@ void main()
     {
         if(GetIsFriend(oTarget))
         {
-            fDelay = GetRandomDelay(0.0, 1.0);
+            fDelay = PRCGetRandomDelay(0.0, 1.0);
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_MASS_HASTE, FALSE));
             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(1),TRUE,-1));
             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));

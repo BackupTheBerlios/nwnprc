@@ -82,7 +82,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent, int bI
         }
 
         //random delay like mass heal so it looks cool :P (can be set to zero if behavior is not desired)
-        if(bMass) fDelay = GetRandomDelay();
+        if(bMass) fDelay = PRCGetRandomDelay();
 
         // Roll damage / heal points
         int iBlastFaith = BlastInfidelOrFaithHeal(oCaster, oTarget, nEnergyType, TRUE);

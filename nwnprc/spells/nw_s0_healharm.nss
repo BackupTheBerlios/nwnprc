@@ -16,6 +16,7 @@
 #include "prc_inc_sp_tch"
 #include "prc_inc_function"
 #include "prc_add_spell_dc"
+#include "inc_dispel"
 
 //Implements the spell impact, put code here
 //  if called in many places, return TRUE if
@@ -78,7 +79,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent, int bI
     float fDelay = 0.0;
     while(GetIsObjectValid(oTarget))
     {
-        if(bMass) fDelay = GetRandomDelay();
+        if(bMass) fDelay = PRCGetRandomDelay();
         iHeal = GetObjectType(oTarget) == OBJECT_TYPE_CREATURE &&
                 ((!bIsHeal && MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD) ||
                 (bIsHeal && MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD));

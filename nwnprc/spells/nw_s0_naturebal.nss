@@ -79,7 +79,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     //Cycle through the targets within the spell shape until an invalid object is captured.
     while(GetIsObjectValid(oTarget))
     {
-        fDelay = GetRandomDelay();
+        fDelay = PRCGetRandomDelay();
         //Check to see how the caster feels about the targeted object
         if(GetIsFriend(oTarget))
         {

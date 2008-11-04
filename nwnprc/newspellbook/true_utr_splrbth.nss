@@ -26,7 +26,7 @@
 
 #include "true_inc_trufunc"
 #include "true_utterhook"
-#include "prc_alterations"
+#include "inc_dispel"
 
 void main()
 {

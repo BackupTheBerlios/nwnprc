@@ -46,7 +46,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     {
         //Fire cast spell at event for the target
         SignalEvent(oTarget, EventSpellCastAt(aoeCreator, SPELL_CREEPING_DOOM));
-        fDelay = GetRandomDelay(1.0, 1.8);
+        fDelay = PRCGetRandomDelay(1.0, 1.8);
         //Spell resistance check
         if(!PRCDoResistSpell(aoeCreator, oTarget,nPenetr, fDelay))
         {

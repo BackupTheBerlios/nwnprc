@@ -47,7 +47,7 @@ void main()
         {
             if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oCreator))
             {
-                fDelay = GetRandomDelay(0.0, 2.0);
+                fDelay = PRCGetRandomDelay(0.0, 2.0);
                 if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_NONE, oCreator, fDelay))
                 {
                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eFall, oTarget, 4.0, FALSE));

@@ -11,7 +11,7 @@
 //:: Created On: Jan 10, 2002
 //:://////////////////////////////////////////////
 
-#include "prc_inc_spells"  
+#include "inc_dispel"  
 
 
 void main()

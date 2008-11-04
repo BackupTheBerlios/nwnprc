@@ -7,7 +7,7 @@ Make cls_spbk_*.2da
 Make cls_spcr_*.2da
 Add the spellbook feat (#1999) to cls_feat_*.2da at the appropriate level
 Add class to GetSpellbookTypeForClass() below
-Add class to GetAbilityForClass() below
+Add class to GetAbilityScoreForClass() below
 Add class to GetIsArcaneClass() or GetIsDivineClass() in prc_inc_spells as appropriate
 Add class to GetCasterLevelModifier() in prc_inc_spells if necessary
 Add class to MakeLookupLoopMaster() in inc_lookups
@@ -19,7 +19,7 @@ Make cls_spbk_*.2da
 Make cls_spkn_*.2da
 Make cls_spcr_*.2da
 Add class to GetSpellbookTypeForClass() below
-Add class to GetAbilityForClass() below
+Add class to GetAbilityScoreForClass() below
 Add class to GetIsArcaneClass() or GetIsDivineClass() in prc_inc_spells as appropriate
 Add class to GetCasterLevelModifier() in prc_inc_spells if necessary
 Add class to MakeLookupLoopMaster() in inc_lookups
@@ -47,7 +47,7 @@ const int SPELLBOOK_TYPE_INVALID     = 0;
 //////////////////////////////////////////////////
 
 int GetSpellbookTypeForClass(int nClass);
-int GetAbilityForClass(int nClass, object oPC);
+int GetAbilityScoreForClass(int nClass, object oPC);
 
 /**
  * Determines the given character's DC-modifying ability modifier for
@@ -138,7 +138,7 @@ int GetSpellbookTypeForClass(int nClass)
     return SPELLBOOK_TYPE_INVALID;
 }
 
-int GetAbilityForClass(int nClass, object oPC)
+int GetAbilityScoreForClass(int nClass, object oPC)
 {
     switch(nClass)
     {
@@ -184,7 +184,7 @@ int GetAbilityForClass(int nClass, object oPC)
             return GetAbilityScore(oPC, ABILITY_CHARISMA);
         }
     }
-    return ABILITY_CHARISMA;    //default for SLAs?
+    return GetAbilityScore(oPC, ABILITY_CHARISMA);    //default for SLAs?
 }
 
 int GetDCAbilityModForClass(int nClass, object oPC)
@@ -199,7 +199,7 @@ int GetDCAbilityModForClass(int nClass, object oPC)
 
         // Everyone else
         default:
-            return (GetAbilityForClass(nClass, oPC) - 10) / 2;
+            return (GetAbilityScoreForClass(nClass, oPC) - 10) / 2;
     }
 
     return 0;
@@ -307,7 +307,7 @@ int GetSpellKnownMaxCount(int nLevel, int nSpellLevel, int nClass, object oPC)
 {
     // If the character doesn't have any spell slots available on for this level, it can't know any spells of that level either
     /// @todo Check rules. There might be cases where this doesn't hold
-    if(!GetSlotCount(nLevel, nSpellLevel, GetAbilityForClass(nClass, oPC), nClass))
+    if(!GetSlotCount(nLevel, nSpellLevel, GetAbilityScoreForClass(nClass, oPC), nClass))
         return 0;
     int nKnown;
     string sFile;
@@ -567,7 +567,7 @@ void SetupSpells(object oPC, int nClass)
     string sArrayName = "NewSpellbookMem_" + sClass;
     object oSkin = GetPCSkin(oPC);
     int nLevel = GetSpellslotLevel(nClass, oPC);
-    int nAbility = GetAbilityForClass(nClass, oPC);
+    int nAbility = GetAbilityScoreForClass(nClass, oPC);
     int nSpellbookType = GetSpellbookTypeForClass(nClass);
 
     // For spontaneous spellbooks, set up an array that tells how many spells of each level they can cast

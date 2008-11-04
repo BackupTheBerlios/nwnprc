@@ -85,7 +85,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
         if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
         {
             nRacial = MyPRCGetRacialType(oTarget);
-            fDelay = GetRandomDelay();
+            fDelay = PRCGetRandomDelay();
             //Check that the target is humanoid or animal
             if  ((nRacial == RACIAL_TYPE_DWARF) ||
                 (nRacial == RACIAL_TYPE_ELF) ||

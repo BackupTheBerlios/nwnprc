@@ -68,7 +68,7 @@ void main()
     {
         if( spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, GetAreaOfEffectCreator()) )
         {
-            fDelay = GetRandomDelay(0.5, 2.0);
+            fDelay = PRCGetRandomDelay(0.5, 2.0);
             //Roll damage.
             nDamage = d8(10);
 

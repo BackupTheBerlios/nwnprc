@@ -77,7 +77,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
         {
            //Fire cast spell at event for the specified target
            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_CONFUSION));
-           fDelay = GetRandomDelay();
+           fDelay = PRCGetRandomDelay();
            //Make SR Check and faction check
            if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nPenetr , fDelay))
            {

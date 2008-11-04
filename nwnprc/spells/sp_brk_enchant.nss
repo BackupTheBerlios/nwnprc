@@ -32,8 +32,7 @@ it does frees the victim from the item’s effects.
 **/
 void DispelLoop(object oTarget, int nCasterLevel);
 
-#include "prc_alterations"
-#include "prc_inc_spells"
+#include "inc_dispel"
 
 void main()
 {

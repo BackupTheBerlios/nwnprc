@@ -44,7 +44,7 @@ void main()
             if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE,
                 OBJECT_SELF) && oTarget != OBJECT_SELF)
             {
-                fDelay = GetRandomDelay();
+                fDelay = PRCGetRandomDelay();
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_FEAR));
                 if(!PRCDoResistSpell(OBJECT_SELF, oTarget, GetTotalCastingLevel(OBJECT_SELF)+SPGetPenetr(OBJECT_SELF), fDelay))
                 { 

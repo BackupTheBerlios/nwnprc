@@ -218,6 +218,23 @@ int GetControlledCelestialTotalHD(object oPC = OBJECT_SELF);
  */
 void MultisummonPreSummon(object oPC = OBJECT_SELF, int bOverride = FALSE);
 
+/**
+ * Sets up all of the AoE's variables, but only if they aren't already set.
+ *
+ * This sets many things that would have been checked against GetAreaOfEffectCreator()
+ * as local ints making it so the AoE can now function entirely independantly of its caster.
+ * - The only problem is that this will never be called until the AoE does a heartbeat or
+ * something.
+ *
+ * @param SpellID       Spell ID to store on the AoE.
+ * @param oAoE          AoE object to store the variables on
+ * @param nBaseSaveDC   save DC to store on the AoE
+ * @param SpecDispel    Stored on the AoE (dunno what it's for)
+ * @param nCasterLevel  Caster level to store on the AoE. If default used, gets
+ *                      caster level from the AoE creator.
+ */
+void SetAllAoEInts(int SpellID, object oAoE, int nBaseSaveDC ,int SpecDispel = 0 , int nCasterLevel = 0);
+
 // -----------------
 // BEGIN SPELLSWORD
 // -----------------
@@ -315,7 +332,6 @@ float PRCGetSpellEffectDelay(location SpellTargetLocation, object oTarget);
 // * nFortSaveDC: pass in this number from the spell script
 void PRCDoPetrification(int nPower, object oSource, object oTarget, int nSpellID, int nFortSaveDC);
 
-void GZPRCRemoveSpellEffects(int nID,object oTarget, int bMagicalEffectsOnly = TRUE);
 int PRCGetDelayedSpellEffectsExpired(int nSpell_ID, object oTarget, object oCaster);
 
 // -----------------
@@ -357,6 +373,7 @@ const int  TYPE_DIVINE   = -2;
 #include "inc_lookups"
 #include "prc_spellhook"
 #include "prc_inc_sneak"
+#include "prcsp_engine"
 
 // ---------------
 // BEGIN FUNCTIONS
@@ -1429,6 +1446,28 @@ location PRCGetSpellTargetLocation(object oCaster = OBJECT_SELF)
 
 
 ////////////////Begin Spellsword//////////////////
+
+void SetAllAoEInts(int SpellID, object oAoE, int nBaseSaveDC ,int SpecDispel = 0 , int nCasterLevel = 0)
+{
+    if(GetLocalInt(oAoE, "X2_AoE_Is_Modified") != 1)
+    {
+
+       // I keep making calls to GetAreaOfEffectCreator()
+       // I'm not sure if it would be better to just set it one time as an object variable
+       // It would certainly be better in terms of number of operations, but I'm not sure
+       // if it's as accurate.
+       // It's a total of 7 calls, so I figure it doesn't matter that much.  Still, 1 would be better than 7.
+       // Also: the 7 calls only happen once per casting of the AoE.
+       if ( !nCasterLevel) nCasterLevel = PRCGetCasterLevel(GetAreaOfEffectCreator());
+
+       ActionDoCommand(SetLocalInt(oAoE, "X2_AoE_Caster_Level", nCasterLevel));
+       ActionDoCommand(SetLocalInt(oAoE, "X2_AoE_SpellID", SpellID));
+       ActionDoCommand(SetLocalInt(oAoE, "X2_AoE_Weave", GetHasFeat(FEAT_SHADOWWEAVE,GetAreaOfEffectCreator())));
+       if (SpecDispel) ActionDoCommand(SetLocalInt(oAoE, "X2_AoE_SpecDispel", SpecDispel));
+       ActionDoCommand(SetLocalInt(oAoE, "X2_AoE_Is_Modified", 1));
+    }
+
+}
 
 //GetNextObjectInShape wrapper for changing the AOE of the channeled spells
 object MyNextObjectInShape(int nShape,
@@ -2757,30 +2796,4 @@ int PRCGetDelayedSpellEffectsExpired(int nSpell_ID, object oTarget, object oCast
 
     return FALSE;
 
-}
-
-//--------------------------------------------------------------------------
-// GZ: 2003-Oct-15
-// Removes all effects from nID without paying attention to the caster as
-// the spell can from only one caster anyway
-// By default, it will only cancel magical effects
-//--------------------------------------------------------------------------
-void GZPRCRemoveSpellEffects(int nID,object oTarget, int bMagicalEffectsOnly = TRUE)
-{
-    effect eEff = GetFirstEffect(oTarget);
-    while (GetIsEffectValid(eEff))
-    {
-        if (GetEffectSpellId(eEff) == nID)
-        {
-            if (GetEffectSubType(eEff) != SUBTYPE_MAGICAL && bMagicalEffectsOnly)
-            {
-                // ignore
-            }
-            else
-            {
-                RemoveEffect(oTarget,eEff);
-            }
-        }
-        eEff = GetNextEffect(oTarget);
-    }
 }

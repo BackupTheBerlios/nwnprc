@@ -39,7 +39,7 @@ void main()
     //Declare the spell shape, size and the location.
     if( spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oCaster) )
     {
-        fDelay = GetRandomDelay(0.5, 2.0);
+        fDelay = PRCGetRandomDelay(0.5, 2.0);
         // Apply effects to the currently selected target.
 
         // * any undead should be healed, not just Friendlies

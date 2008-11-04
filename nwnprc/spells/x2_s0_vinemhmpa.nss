@@ -29,7 +29,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_VINE_MINE_HAMPER_MOVEMENT,OBJECT_SELF, GetSp
     effect eSlow = EffectMovementSpeedDecrease(50);
     effect eLink = EffectLinkEffects(eVis, eSlow);
     object oTarget = GetEnteringObject();
-    float fDelay = GetRandomDelay(1.0, 2.2);
+    float fDelay = PRCGetRandomDelay(1.0, 2.2);
     if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, GetAreaOfEffectCreator()))
     {
         if(!GetHasFeat(FEAT_WOODLAND_STRIDE, oTarget) &&(GetCreatureFlag(OBJECT_SELF, CREATURE_VAR_IS_INCORPOREAL) != TRUE) )

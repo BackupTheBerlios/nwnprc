@@ -21,8 +21,7 @@ effects of multiple spells, it takes damage for
 each one.
 **/
 
-#include "prc_alterations"
-#include "prc_inc_spells"
+#include "inc_dispel"
 #include "prc_add_spell_dc"
 
 void main()

@@ -36,7 +36,7 @@ void main()
         ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, PRCGetSpellTargetLocation());
         if(GetIsReactionTypeFriendly(oTarget) || GetFactionEqual(oTarget))
         {
-            fDelay = GetRandomDelay(0.4, 1.1);
+            fDelay = PRCGetRandomDelay(0.4, 1.1);
             //Fire spell cast at event for target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_BLESS, FALSE));
             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));

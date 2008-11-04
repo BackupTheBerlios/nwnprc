@@ -53,8 +53,8 @@ void main()
 	
 	int nClassType = PRCGetLastSpellCastClass();
 			
-	int nAbility = GetAbilityForClass(nClassType, oPC);
-	int nAttackBonus = (2 + nCasterLevel +  GetAbilityModifier(nAbility, oPC));
+	int nAbilityScore = GetAbilityScoreForClass(nClassType, oPC);
+	int nAttackBonus = (2 + nCasterLevel +  (nAbilityScore - 10)/2);
 	
 	int iAttackRoll = GetAttackRoll(oTarget, OBJECT_INVALID, OBJECT_INVALID, 0, nAttackBonus,0,nDisplayFeedback, 0.0, TOUCH_ATTACK_MELEE_SPELL);
 	

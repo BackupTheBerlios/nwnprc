@@ -65,7 +65,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_STONEHOLD,OBJECT_SELF, GetSpellSaveDC()));
                     if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (nDC) , SAVING_THROW_TYPE_MIND_SPELLS))
                     {
                        nRounds = PRCMaximizeOrEmpower(6, 1, nMetaMagic);
-                       fDelay = GetRandomDelay(0.75, 1.75);
+                       fDelay = PRCGetRandomDelay(0.75, 1.75);
                        DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHold, oTarget, RoundsToSeconds(nRounds),FALSE));
                     }
                     else

@@ -46,7 +46,7 @@ void main()
                 RADIUS_SIZE_COLOSSAL, GetLocation(OBJECT_SELF), TRUE);
             while(GetIsObjectValid(oTarget))
             {
-                fDelay = GetRandomDelay();
+                fDelay = PRCGetRandomDelay();
                 if (GetAlignmentLawChaos(oTarget) != ALIGNMENT_LAWFUL)
                 {
                     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF,

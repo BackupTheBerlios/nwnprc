@@ -98,7 +98,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
     {
         if(GetIsReactionTypeFriendly(oTarget) || GetFactionEqual(oTarget))
         {
-            fDelay = GetRandomDelay(0.4, 1.1);
+            fDelay = PRCGetRandomDelay(0.4, 1.1);
             //Fire spell cast at event for target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, 444, FALSE));
             GrantProtection(oTarget,CasterLvl);

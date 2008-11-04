@@ -7,17 +7,6 @@
 // GZ: Number of spells in GetSpellBreachProtections
 const int PRC_SPELLS_MAX_BREACH = 33;
 
-//:: This function is called from withing PRCApplyEffectToObject().  It's purpose is to
-//:: clean up the three arrays that hold the caster level and references to all
-//:: effects on the object having this effect applied to it.
-//:: It also returns the expected number of entries in the new arrays it will have set up.
-int ReorderEffects(int nCasterLevel, int nSpellID, object oTarget, object oCaster = OBJECT_SELF);
-
-//:: This function is called from withing ReorderEffects().  It's purpose is to verify
-//:: that the effect referred to by an entry in the 3 arrays is still in effect, returning
-//:: FALSE if it is not.
-int IsStillRealEffect(int nSpellID, object oCaster, object oTarget);
-
 //:: This is my remake of the spellsDispelMagic found in x0_i0_spells.   It's pretty much
 //:: identical to the old one except instead of calling the EffectDispelMagicBest() and
 //:: EffectDispelMagicAll() scripting functions it calls the ones I've specified in this
@@ -50,12 +39,6 @@ void SortAll3Arrays(object oTarget);
 //:: DispelMagicBest()
 void HandleInfestationOfMaggots(object oTarget);
 
-// This sets many things that would have been checked against GetAreaOfEffectCreator()
-// as local ints making it so the AoE can now function entirely independantly of its caster.
-// - The only problem is that this will never be called until the AoE does a heartbeat or
-// something.
-void SetAllAoEInts(int SpellID, object oAoE, int nBaseSaveDC,int SpecDispel = 0, int nCasterLevel = 0);
-
 // This is only meant to be called withing SetAllAoEInts()  I've heard terrible stories that
 // say if an object is destroyed, it's local variables may remain in place eating up memory
 // so I decided I'd better mop up after setting all of these.
@@ -86,97 +69,14 @@ void spellsDispelAoE(object oTargetAoE, object oCaster, int nCasterLevel);
 // * Specify bBreachSpells to add Mord's Disjunction to the dispel
 void spellsDispelMagic(object oTarget, int nCasterLevel, effect eVis, effect eImpac, int bAll = TRUE, int bBreachSpells = FALSE);
 
-// *  Returns the modifier from the ability    score that matters for this caster
-// *  Bad bioware function that only works on wizards, sorcs, and bards
-int PRCGetCasterAbilityModifier(object oCaster);
-
-float GetRandomDelay(float fMinimumTime = 0.4, float MaximumTime = 1.1);
-
-void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, float fDuration = 0.0f,
-    int bDispellable = TRUE, int nSpellID = -1, int nCasterLevel = -1, object oCaster = OBJECT_SELF);
-
+#include "prc_effect_inc"
 #include "lookup_2da_spell"
 #include "spinc_remeffct"
 #include "inv_invoc_const"
 #include "prcsp_engine"
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//:: Goes through the whole 3 stored lists of caster levels, spell id's, and casters,
-//:: deletes any that aren't real anymore (refer to an effect no longer present), then
-//:: builds a new list out of the ones that are still real/current (refer to effects that
-//:: are still present)
-
-//:: Thus, the list gets cleaned up every time it is added to.
-//:: It returns the number of effects in the 3 new arrays.
-
-int ReorderEffects(int nCasterLevel, int nSpellID, object oTarget, object oCaster = OBJECT_SELF)
-{
-   int nIndex = GetLocalInt(oTarget, "X2_Effects_Index_Number");
-   int nEffectCastLevel;
-   int nEffectSpellID;
-   object oEffectCaster;
-   int nWeave ;
-   int nRealIndex = 0;
-   int nPlace;
-
-   for(nPlace = 0; nPlace <= nIndex; nPlace++)
-   {
-     // SendMessageToPC(OBJECT_SELF, "reorder for loop is happening at least once.");
-      nEffectSpellID = GetLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nPlace));
-      oEffectCaster = GetLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nPlace));
-      nEffectCastLevel = GetLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nPlace));
-      nWeave =   GetLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nPlace));
-
-
-      DeleteLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nPlace));
-      DeleteLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nPlace));
-      DeleteLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nPlace));
-      DeleteLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nPlace));
-      if(IsStillRealEffect(nEffectSpellID, oEffectCaster, oTarget))
-      {
-          if(nEffectSpellID != nSpellID || oEffectCaster != oCaster)
-          // Take it out of the list if it's the spell now being cast, and by the same caster
-          // This way spells that don't self dispel when they're recast don't flood the list.
-          {
-             SetLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nRealIndex), nEffectSpellID);
-             SetLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nRealIndex), nEffectCastLevel);
-             SetLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nRealIndex),oEffectCaster );
-             SetLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nRealIndex),nWeave);
- //            SendMessageToPC(OBJECT_SELF, "Index is incrementing.");
-             nRealIndex++;
-          }// end of if is the same as the current spell and caster
-      }// end of if is valid effect statement
-   }// end of for statement
-   return nRealIndex; // This is the number of values currently in all 3 arrays -1.
-}// end of function
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//:: This tests to make sure the data in my array still refers to an actual effect
-//:: in case it has been dispelled or run out its duration since the data was put there.
-int IsStillRealEffect(int nSpellID, object oCaster, object oTarget)
-{
-   if(!GetHasSpellEffect(nSpellID, oTarget) || nSpellID == 0)
-   {
-      return FALSE;
-   }
-
-   effect eTestSubject = GetFirstEffect(oTarget);
-   while(GetIsEffectValid(eTestSubject))
-   {
-      if(GetEffectSpellId(eTestSubject) == nSpellID)
-      {
-         if(GetEffectCreator(eTestSubject) == oCaster)
-         {
- //           SendMessageToPC(OBJECT_SELF, "Considered a Valid effect");
-            return TRUE;
-         }// end of if originates from oCaster.
-      }// end if originates from nSpellID.
-      eTestSubject = GetNextEffect(oTarget);
-   }
-   return FALSE;
-}
 
 //:: Copy of the original function with 1 minor change: calls DispelMagicAll() and
 //:: DispelMagicBest() instead of EffectDispelMagicAll() and EffectDispelMagicBest()
@@ -199,7 +99,7 @@ void spellsDispelMagicMod(object oTarget, int nCasterLevel, effect eVis, effect 
     }
 
     effect eDispel;
-    float fDelay = GetRandomDelay(0.1, 0.3);
+    float fDelay = PRCGetRandomDelay(0.1, 0.3);
     int nId = PRCGetSpellId();
 
     //--------------------------------------------------------------------------
@@ -875,97 +775,6 @@ void HandleInfestationOfMaggots(object oTarget)
 //:: End of section to trap infestation of maggots.
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, float fDuration = 0.0f,
-    int bDispellable = TRUE, int nSpellID = -1, int nCasterLevel = -1, object oCaster = OBJECT_SELF)
-{
-    //if it was cast from the new spellbook, remove previous effects
-    if(GetLocalInt(OBJECT_SELF, "UsingActionCastSpell"))
-        GZPRCRemoveSpellEffects(nSpellID, oTarget);
-
-    // Extraordinary/Supernatural effects are not supposed to be dispellable.
-    if (GetEffectSubType(eEffect) == SUBTYPE_EXTRAORDINARY
-        || GetEffectSubType(eEffect) == SUBTYPE_SUPERNATURAL)
-    {
-        bDispellable = FALSE;
-    }
-        //if it was cast from the new spellbook, remove previous effects
-        if(GetLocalInt(OBJECT_SELF, "UsingActionCastSpell"))
-            GZPRCRemoveSpellEffects(nSpellID, oTarget);
-
-    // Instant duration effects can use BioWare code, the PRC code doesn't care about those
-    if (DURATION_TYPE_INSTANT == nDurationType)
-    {
-        ApplyEffectToObject(nDurationType, eEffect, oTarget, fDuration);
-    }
-    else
-    {
-//      SPApplyEffectToObject(nDurationType, eEffect, oTarget, fDuration);
-        // We need the extra arguments for the PRC code, get them if defaults were passed in.
-        if (-1 == nSpellID) nSpellID = PRCGetSpellId();
-        if (-1 == nCasterLevel) nCasterLevel = PRCGetCasterLevel(oCaster);
-
-        // Invoke the PRC apply function passing the extra data.
-       int nIndex = ReorderEffects(nCasterLevel, nSpellID, oTarget, oCaster);
-       // Add this new effect to the slot after the last effect already on the character.
-
-       //check if Master's Gift applies
-       if(GetHasFeat(FEAT_MASTERS_GIFT, oTarget) && GetIsArcaneClass(PRCGetLastSpellCastClass(), oCaster))
-       {
-           int bHostileSpell = StringToInt(Get2DACache("spells", "HostileSetting", GetSpellId()));
-           if(!bHostileSpell) fDuration = fDuration * 2;
-       }
-       //check if Fearsome Necromancy applies
-       if(GetHasFeat(FEAT_FEARSOME_NECROMANCY, oCaster) && GetSpellSchool(PRCGetSpellId()) == SPELL_SCHOOL_NECROMANCY && !GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS))
-       {
-       		effect eReturn = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
-		eReturn = EffectLinkEffects(eReturn, EffectAttackDecrease(2));
-		eReturn = EffectLinkEffects(eReturn, EffectSavingThrowDecrease(SAVING_THROW_ALL,2));
-    		eReturn = EffectLinkEffects(eReturn, EffectSkillDecrease(SKILL_ALL_SKILLS, 2));
-		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eReturn, oTarget, 6.0);
-       }       
-       ApplyEffectToObject(nDurationType, eEffect, oTarget, fDuration);
-       // may have code traverse the lists right here and not add the new effect
-       // if an identical one already appears in the list somewhere
-
-       SetLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nIndex), nSpellID);
-       SetLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nIndex), nCasterLevel);
-       SetLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nIndex), oCaster );
-       if (GetHasFeat(FEAT_SHADOWWEAVE, oCaster))
-         SetLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nIndex), GetHasFeat(FEAT_TENACIOUSMAGIC,oCaster));
-       else
-         SetLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nIndex), 0);
-
-       //nIndex++;
-       /// Set new index number to the character.
-       DeleteLocalInt(oTarget, "X2_Effects_Index_Number");
-       SetLocalInt(oTarget, "X2_Effects_Index_Number", nIndex);
-    }
-}
-
-// Sets up all of the AoE's int values, but only if they aren't already set.
-// When called in a function nMetamagic should be GetMetamagicFeat(), and nBaseSaveDC should be PRCGetSaveDC()
-void SetAllAoEInts(int SpellID, object oAoE, int nBaseSaveDC ,int SpecDispel = 0 , int nCasterLevel = 0)
-{
-    if(GetLocalInt(oAoE, "X2_AoE_Is_Modified") != 1)
-    {
-
-       // I keep making calls to GetAreaOfEffectCreator()
-       // I'm not sure if it would be better to just set it one time as an object variable
-       // It would certainly be better in terms of number of operations, but I'm not sure
-       // if it's as accurate.
-       // It's a total of 7 calls, so I figure it doesn't matter that much.  Still, 1 would be better than 7.
-       // Also: the 7 calls only happen once per casting of the AoE.
-       if ( !nCasterLevel) nCasterLevel = PRCGetCasterLevel(GetAreaOfEffectCreator());
-
-       ActionDoCommand(SetLocalInt(oAoE, "X2_AoE_Caster_Level", nCasterLevel));
-       ActionDoCommand(SetLocalInt(oAoE, "X2_AoE_SpellID", SpellID));
-       ActionDoCommand(SetLocalInt(oAoE, "X2_AoE_Weave", GetHasFeat(FEAT_SHADOWWEAVE,GetAreaOfEffectCreator())));
-       if (SpecDispel) ActionDoCommand(SetLocalInt(oAoE, "X2_AoE_SpecDispel", SpecDispel));
-       ActionDoCommand(SetLocalInt(oAoE, "X2_AoE_Is_Modified", 1));
-    }
-
-}
-
 // Just returns the stored value.
 int AoECasterLevel(object oAoE = OBJECT_SELF)
 {
@@ -1101,7 +910,7 @@ void spellsDispelMagic(object oTarget, int nCasterLevel, effect eVis, effect eIm
     }
 
     effect eDispel;
-    float fDelay = GetRandomDelay(0.1, 0.3);
+    float fDelay = PRCGetRandomDelay(0.1, 0.3);
     int nId = PRCGetSpellId();
 
     //--------------------------------------------------------------------------
@@ -1162,6 +971,7 @@ void spellsDispelAoE(object oTargetAoE, object oCaster, int nCasterLevel)
     object oCreator = GetAreaOfEffectCreator(oTargetAoE);
     int nChance;
     int nId   = PRCGetSpellId();
+    int nClassCaster = PRCGetLastSpellCastClass();
     if ( nId == SPELL_LESSER_DISPEL )
     {
         nChance = 25;
@@ -1180,7 +990,7 @@ void spellsDispelAoE(object oTargetAoE, object oCaster, int nCasterLevel)
     }
 
 
-    nChance += ((nCasterLevel + PRCGetCasterAbilityModifier(oCaster)) - (10  + PRCGetCasterAbilityModifier(oCreator))*2) ;
+    nChance += ((nCasterLevel + (GetAbilityScoreForClass(nClassCaster, oCaster)-10)/2) - (GetCasterLevel(oCreator))); // yes this is a sucky stupid hack
 
     //--------------------------------------------------------------------------
     // the AI does cheat here, because it can not react as well as a player to
@@ -1208,32 +1018,6 @@ void spellsDispelAoE(object oTargetAoE, object oCaster, int nCasterLevel)
         FloatingTextStrRefOnCreature(100930,oCaster); // "AoE not dispelled"
     }
 
-}
-
-//::///////////////////////////////////////////////
-//:: PRCGetCasterAbilityModifier
-//:: Copyright (c) 2001 Bioware Corp.
-//:://////////////////////////////////////////////
-/*
-    Returns the modifier from the ability
-    score that matters for this caster
-*/
-//:://////////////////////////////////////////////
-//:: Created By:
-//:: Created On:
-//:://////////////////////////////////////////////
-int PRCGetCasterAbilityModifier(object oCaster)
-{
-    int nClass = GetLevelByClass(CLASS_TYPE_WIZARD, oCaster);
-    int nAbility;
-    if (nClass > 0)
-    {
-        nAbility = ABILITY_INTELLIGENCE;
-    }
-    else
-        nAbility = ABILITY_CHARISMA;
-
-    return GetAbilityModifier(nAbility, oCaster);
 }
 
 // Test main

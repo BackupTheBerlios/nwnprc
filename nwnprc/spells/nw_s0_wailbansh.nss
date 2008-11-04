@@ -68,7 +68,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     {
         lTarget = GetLocation(oTarget);
         //Get the distance of the target from the center of the effect
-        fDelay = GetRandomDelay(3.0, 4.0);//
+        fDelay = PRCGetRandomDelay(3.0, 4.0);//
         fTargetDistance = GetDistanceBetweenLocations(GetSpellTargetLocation(), lTarget);
         //Check that the current target is valid and closer than 10.0m
         if(GetIsObjectValid(oTarget) && fTargetDistance <= 10.0)

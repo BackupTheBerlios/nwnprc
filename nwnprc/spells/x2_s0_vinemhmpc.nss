@@ -54,7 +54,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_VINE_MINE_HAMPER_MOVEMENT,OBJECT_SELF, GetSp
             if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, GetAreaOfEffectCreator()))
             {
                 SignalEvent(oTarget, EventSpellCastAt(GetAreaOfEffectCreator(), GetSpellId()));
-                fDelay = GetRandomDelay(0.0, 2.0);
+                fDelay = PRCGetRandomDelay(0.0, 2.0);
                 DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget,0.0f,FALSE));
             }
         }

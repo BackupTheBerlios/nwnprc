@@ -71,7 +71,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     {
         if(GetFactionEqual(oTarget) || GetIsReactionTypeFriendly(oTarget))
         {
-            fDelay = GetRandomDelay(0.4, 1.1);
+            fDelay = PRCGetRandomDelay(0.4, 1.1);
             //Signal the spell cast at event
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_AURA_OF_VITALITY, FALSE));
             //Apply effects and VFX to target

@@ -53,9 +53,9 @@ void main()
 	more stable than a normal humanoid. If you win, you trip the 
 	defender.
 	*/
-	int nAbility = GetAbilityForClass(nClassType, oPC);
+	int nAbilityScore = GetAbilityScoreForClass(nClassType, oPC);
 	
-	int nAttackBonus = (2 + nCasterLvl +  GetAbilityModifier(nAbility, oPC));
+	int nAttackBonus = (2 + nCasterLvl + (nAbilityScore - 10)/2 );
 	int nTripBonus = min(5,(nCasterLvl/3));
 	
 	int iAttackRoll = GetAttackRoll(oTarget, OBJECT_INVALID, OBJECT_INVALID, 0, nAttackBonus,0,nDisplayFeedback, 0.0, TOUCH_ATTACK_MELEE_SPELL);

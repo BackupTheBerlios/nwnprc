@@ -259,7 +259,7 @@ void main()
 						// must have levels in the prepared class and at least level 1 spell slots
 						int nClassLevel = GetLevelByPosition(i, oPC);
 						if (nClassLevel > 0
-							&& GetSlotCount(nClassLevel, 1, GetAbilityForClass(nClass, oPC), nClass))
+							&& GetSlotCount(nClassLevel, 1, GetAbilityScoreForClass(nClass, oPC), nClass))
 						{
 							string sClassName = GetStringByStrRef(StringToInt(Get2DACache("classes", "Name", nClass)));
 							AddChoice(sClassName, nClass, oPC);
@@ -282,7 +282,7 @@ void main()
 				if (nMaxSpellSlotLevel >= nMinSpellSlotLevel)
 				{
 					string sChoiceSpellLevel = "Spell slot level ";
-					int nAbilityScore = GetAbilityForClass(nClass, oPC);
+					int nAbilityScore = GetAbilityScoreForClass(nClass, oPC);
 
 					// List all spell slot levels available to the caster for this class
 					int nSpellSlotLevel;
@@ -312,7 +312,7 @@ void main()
 				int nSpellSlotLevel = GetLocalInt(oPC, CONV_SPELLB_LEVEL);
 				int nCasterLevel = GetCasterLevelByClass(nClass, oPC);
 
-				int nAbilityScore = GetAbilityForClass(nClass, oPC);
+				int nAbilityScore = GetAbilityScoreForClass(nClass, oPC);
 
 				// get the object on the hide of oPC where the persistant data are stored
 				object oToken = GetHideToken(oPC);

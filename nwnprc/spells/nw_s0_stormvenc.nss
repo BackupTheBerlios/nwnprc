@@ -56,7 +56,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(GetAreaOfEffectCreator(), SPELL_STORM_OF_VENGEANCE));
             //Make an SR Check
-            fDelay = GetRandomDelay(0.5, 2.0);
+            fDelay = PRCGetRandomDelay(0.5, 2.0);
             if(PRCDoResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr, fDelay) == 0)
             {
                 int nDC = PRCGetSaveDC(oTarget,GetAreaOfEffectCreator());

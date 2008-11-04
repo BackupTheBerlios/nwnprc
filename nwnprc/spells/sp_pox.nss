@@ -55,7 +55,7 @@ PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_POX));
             //Get a random delay
-            fDelay = GetRandomDelay(0.5, 1.0);
+            fDelay = PRCGetRandomDelay(0.5, 1.0);
 
             //Only living targets
             if(PRCGetIsAliveCreature(oTarget))

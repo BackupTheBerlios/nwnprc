@@ -10,6 +10,7 @@
 //:: Modified On: 7.4.2006
 //:://////////////////////////////////////////////
 
+#include "inc_dispel"
 #include "prc_inc_combat"
 
 void main()

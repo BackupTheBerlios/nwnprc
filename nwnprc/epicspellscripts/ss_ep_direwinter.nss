@@ -71,7 +71,7 @@ void main()
         {
             if (GetObjectType(oItem) == OBJECT_TYPE_PLACEABLE)
             {
-                float fDelay = GetRandomDelay();
+                float fDelay = PRCGetRandomDelay();
                 DelayCommand(fDelay,
                     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY,
                         eIce, oItem, fDuration, TRUE, -1, GetTotalCastingLevel(OBJECT_SELF)));

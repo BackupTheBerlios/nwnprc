@@ -40,7 +40,7 @@ void main()
     effect eLink    = EffectLinkEffects(EffectMovementSpeedDecrease(50),
                                         EffectVisualEffect(VFX_IMP_SLOW)
                                         );
-    float fDelay = GetRandomDelay(1.0, 2.2);
+    float fDelay = PRCGetRandomDelay(1.0, 2.2);
 
     if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oCreator))
     {

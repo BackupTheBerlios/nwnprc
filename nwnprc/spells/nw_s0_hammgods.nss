@@ -83,7 +83,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             //Make SR Check
             if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nPenetr))
             {
-                fDelay = GetRandomDelay(0.6, 1.3);
+                fDelay = PRCGetRandomDelay(0.6, 1.3);
                 //Roll damage
                 nDamage = d8(nDamageDice);
                 //Make metamagic checks

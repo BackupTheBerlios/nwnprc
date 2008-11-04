@@ -524,10 +524,8 @@ int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1)
                 nDC += StringToInt(Get2DACache("Spells", "Wiz_Sorc", nSpellID));
             else
             nDC += StringToInt(Get2DACache("Spells", "Innate", nSpellID));
-            if(nClass == CLASS_TYPE_FAVOURED_SOUL)
-                nDC += (GetAbilityModifier(ABILITY_WISDOM, oCaster));
-            else
-                nDC += ((GetAbilityForClass(nClass, oCaster)-10)/2);
+
+            nDC += GetDCAbilityModForClass(nClass, oCaster);
         }
 
         DoDebug("Forced Base-DC casting at DC " + IntToString(nDC));

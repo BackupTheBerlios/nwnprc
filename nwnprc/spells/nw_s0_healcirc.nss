@@ -80,7 +80,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, GetSpellTargetLocation());
     while (GetIsObjectValid(oTarget))
     {
-        fDelay = GetRandomDelay();
+        fDelay = PRCGetRandomDelay();
         //Check if racial type is undead
         if (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD )
         {

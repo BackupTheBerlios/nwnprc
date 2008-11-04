@@ -52,6 +52,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     //Declare major variables
     object oTarget = GetSpellTargetObject();
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
+    int nClassType = PRCGetLastSpellCastClass();
     int nDuration = CasterLvl;
     int nMetaMagic = PRCGetMetaMagicFeat();
     effect eVis = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DISABLED);
@@ -72,7 +73,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         {
             // Check caster ability vs. target's AC
 
-            int nCasterModifier = PRCGetCasterAbilityModifier(OBJECT_SELF);
+            int nCasterModifier = (GetAbilityScoreForClass(nClassType, OBJECT_SELF) -10)/2;
             int nCasterRoll = d20(1)
                 + nCasterModifier
                 + CasterLvl + 10 + -1;

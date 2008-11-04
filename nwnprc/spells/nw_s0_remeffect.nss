@@ -23,6 +23,7 @@
 */
 const int SAVING_THROW_NONE = 4;
 
+#include "inc_dispel"
 #include "prc_sp_func"
 #include "prc_inc_sp_tch"
 #include "prc_add_spell_dc"
@@ -86,7 +87,7 @@ void PRCGenericAreaOfEffect(
                 }
                 if (!nSavingThrowSuccess)
                 {
-                    fDelay = GetRandomDelay(0.4, 1.1);
+                    fDelay = PRCGetRandomDelay(0.4, 1.1);
 
 
 

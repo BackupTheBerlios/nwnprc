@@ -30,7 +30,7 @@ void DoUndeadToDeath(object oCreature,int CasterLvl)
 
     if (!PRCMySavingThrow(SAVING_THROW_WILL,oCreature,(PRCGetSaveDC(oCreature,OBJECT_SELF)),SAVING_THROW_TYPE_NONE,OBJECT_SELF))
     {
-       float fDelay = GetRandomDelay(0.2f,0.4f);
+       float fDelay = PRCGetRandomDelay(0.2f,0.4f);
        if (!PRCDoResistSpell(OBJECT_SELF, oCreature,CasterLvl, fDelay))
        {
             effect eDeath = PRCEffectDamage(oCreature, GetCurrentHitPoints(oCreature),DAMAGE_TYPE_DIVINE,DAMAGE_POWER_ENERGY);

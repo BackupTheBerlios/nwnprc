@@ -66,7 +66,7 @@ void main()
         {
             // Let the AI know
             SignalEvent(oTarget, EventSpellCastAt(oManifester, SPELL_KNOCK));
-            fDelay = GetRandomDelay(0.5, 2.5);
+            fDelay = PRCGetRandomDelay(0.5, 2.5);
 
             if(!GetPlotFlag(oTarget) && GetLocked(oTarget))
     	    {

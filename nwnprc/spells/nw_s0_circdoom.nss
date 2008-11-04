@@ -69,7 +69,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     oTarget =MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_MEDIUM, GetSpellTargetLocation());
     while (GetIsObjectValid(oTarget))
     {
-        fDelay = GetRandomDelay();
+        fDelay = PRCGetRandomDelay();
         //Roll damage
         nDamage = d8() + nCasterLevel;
         //Enter Metamagic conditions

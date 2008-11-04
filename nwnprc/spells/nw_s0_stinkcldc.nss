@@ -58,7 +58,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                 //Make a Fort Save
                 if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (nDC), SAVING_THROW_TYPE_POISON))
                 {
-                   fDelay = GetRandomDelay(0.75, 1.75);
+                   fDelay = PRCGetRandomDelay(0.75, 1.75);
                    //Apply the VFX impact and linked effects
                    if (GetIsImmune(oTarget, IMMUNITY_TYPE_POISON) == FALSE)
                    {

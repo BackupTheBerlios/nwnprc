@@ -36,7 +36,7 @@ void main()
                 //Fire cast spell at event for the specified target
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_HORRID_WILTING));
                 //Get the distance between the explosion and the target to calculate delay
-                fDelay = GetRandomDelay(1.5, 2.5);
+                fDelay = PRCGetRandomDelay(1.5, 2.5);
                 if(!PRCDoResistSpell(OBJECT_SELF, oTarget, GetTotalCastingLevel(OBJECT_SELF)+SPGetPenetr(OBJECT_SELF), fDelay))
                 {
                     if(MyPRCGetRacialType(oTarget) != RACIAL_TYPE_CONSTRUCT && MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)

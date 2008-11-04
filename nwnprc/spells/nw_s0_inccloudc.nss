@@ -61,7 +61,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     {
         if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, aoeCreator))
         {
-            fDelay = GetRandomDelay(0.5, 2.0);
+            fDelay = PRCGetRandomDelay(0.5, 2.0);
             //Make SR check, and appropriate saving throw(s).
             if(!PRCDoResistSpell(aoeCreator, oTarget,nPenetr, fDelay))
             {

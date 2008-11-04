@@ -45,7 +45,7 @@ void main()
     {
         if (!GetLevelByClass(CLASS_TYPE_HEXTOR, oTarget))
         {
-            fDelay = GetRandomDelay();
+            fDelay = PRCGetRandomDelay();
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_FEAR));
                 //Make a will save

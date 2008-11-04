@@ -58,7 +58,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     float fDelay;
     while(GetIsObjectValid(oTarget))
     {
-        fDelay = GetRandomDelay();
+        fDelay = PRCGetRandomDelay();
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
         nDamage = d100();

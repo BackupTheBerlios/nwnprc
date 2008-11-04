@@ -53,7 +53,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     {
         if(GetIsFriend(oTarget))
         {
-            fDelay = GetRandomDelay();
+            fDelay = PRCGetRandomDelay();
             eParal = GetFirstEffect(oTarget);
             while(GetIsEffectValid(eParal))
             {

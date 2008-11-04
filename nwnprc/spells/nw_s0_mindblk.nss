@@ -132,7 +132,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
     {
         if(spellsIsTarget(oTarget, SPELL_TARGET_ALLALLIES, OBJECT_SELF))
         {
-            PRCApplyMindBlank(oTarget, GetSpellId(), GetRandomDelay());
+            PRCApplyMindBlank(oTarget, GetSpellId(), PRCGetRandomDelay());
         }
         oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, PRCGetSpellTargetLocation());
     }

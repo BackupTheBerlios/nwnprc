@@ -123,6 +123,7 @@ void DeleteLocalInvocation(object oObject, string sName);
 //////////////////////////////////////////////////
 
 #include "inv_inc_invfunc" 
+#include "prc_spellf_inc"
 
 //////////////////////////////////////////////////
 /*             Internal functions               */

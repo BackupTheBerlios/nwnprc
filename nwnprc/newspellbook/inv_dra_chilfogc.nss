@@ -50,7 +50,7 @@ void main()
         if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, GetAreaOfEffectCreator()))
         {
             
-            fDelay = GetRandomDelay(0.4, 1.2);
+            fDelay = PRCGetRandomDelay(0.4, 1.2);
             //Fire cast spell at event for the affected target
             SignalEvent(oTarget, EventSpellCastAt(GetAreaOfEffectCreator(), INVOKE_CHILLING_FOG));
             //Spell resistance check

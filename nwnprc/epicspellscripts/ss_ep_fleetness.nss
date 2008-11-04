@@ -33,7 +33,7 @@ void main()
         float fDelay;
         if(GetIsReactionTypeFriendly(oTarget) || GetFactionEqual(oTarget))
         {
-            fDelay = GetRandomDelay(0.4, 1.1);
+            fDelay = PRCGetRandomDelay(0.4, 1.1);
             //Fire spell cast at event for target
             SignalEvent(oTarget, EventSpellCastAt
                 (OBJECT_SELF, SPELL_EXPEDITIOUS_RETREAT, FALSE));

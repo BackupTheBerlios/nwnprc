@@ -561,7 +561,7 @@ struct PRCeffect PRCEffectCutsceneImmobilize();
 // Apply eEffect at lLocation.
 void PRCApplyEffectAtLocation(int nDurationType, struct PRCeffect prceEffect, location lLocation, float fDuration=0.0f);
 
-#include "inc_dispel"
+//#include "inc_dispel"
 
 void PRCApplyEffectAtLocation(int nDurationType, struct PRCeffect prceEffect, location lLocation, float fDuration=0.0f)
 {

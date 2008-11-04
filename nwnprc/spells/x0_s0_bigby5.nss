@@ -87,6 +87,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nDuration = CasterLvl;
+    int nClassType = PRCGetLastSpellCastClass();
+    int nAbilityModifier = (GetAbilityScoreForClass(nClassType, OBJECT_SELF) -10)/2;
 
     int nMetaMagic = PRCGetMetaMagicFeat();
 
@@ -104,9 +106,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         //SR
         if(!PRCDoResistSpell(OBJECT_SELF, oTarget,CasterLvl+ SPGetPenetr()))
         {
-            int nCasterModifier = PRCGetCasterAbilityModifier(OBJECT_SELF);
             int nCasterRoll = d20(1)
-                + nCasterModifier
+                + nAbilityModifier
                 + CasterLvl + 12 + -1;
             int nTargetRoll = GetAC(oTarget);
 
@@ -123,7 +124,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 // * now must make a GRAPPLE check
                 // * hold target for duration of spell
 
-                nCasterRoll = d20(1) + nCasterModifier
+                nCasterRoll = d20(1) + nAbilityModifier
                     +CasterLvl + 12 + 4;
 
                 nTargetRoll = d20(1);

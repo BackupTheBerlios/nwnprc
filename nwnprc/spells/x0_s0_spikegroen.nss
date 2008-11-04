@@ -31,7 +31,7 @@
 
 void PRCDoSpikeGrowthEffect(object oTarget,int nPenetr)
 {
-    float fDelay = GetRandomDelay(1.0, 2.2);
+    float fDelay = PRCGetRandomDelay(1.0, 2.2);
     if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, GetAreaOfEffectCreator()))
     {
         //Fire cast spell at event for the target

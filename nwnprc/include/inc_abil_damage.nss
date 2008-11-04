@@ -123,11 +123,10 @@ void AbilityDamageMonitor();
 // Dex needs special handling due to the way CutsceneParalyze works (sets Dex to 3)
 void DoDexCheck(object oCreature, int bFirstPart = TRUE);
 
-
-#include "inc_utility"
-#include "inc_dispel"
-//#include "prc_inc_racial"
-
+#include "prc_inc_racial"
+#include "prc_effect_inc"
+#include "inc_item_props"
+//#include "inc_utility"
 
 //////////////////////////////////////////////////
 /* Function defintions                          */

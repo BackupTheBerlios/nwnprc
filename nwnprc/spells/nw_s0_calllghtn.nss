@@ -73,7 +73,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
            //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_CALL_LIGHTNING));
             //Get the distance between the explosion and the target to calculate delay
-            fDelay = GetRandomDelay(0.4, 1.75);
+            fDelay = PRCGetRandomDelay(0.4, 1.75);
             if (!PRCDoResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
             {
                 //Roll damage for each target

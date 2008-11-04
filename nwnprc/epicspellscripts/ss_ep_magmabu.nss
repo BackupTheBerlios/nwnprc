@@ -63,7 +63,7 @@ void main()
                 //Fire cast spell at event for the specified target
                 SignalEvent( oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_FIREBALL) );
                 // Set the delay for the explosion.
-                fDelay = GetRandomDelay( 0.5f, 2.0f );
+                fDelay = PRCGetRandomDelay( 0.5f, 2.0f );
                 if( !PRCDoResistSpell(OBJECT_SELF, oTarget, GetTotalCastingLevel(OBJECT_SELF)+SPGetPenetr(OBJECT_SELF), fDelay) )
                 {
                     nDamage = d8(20);

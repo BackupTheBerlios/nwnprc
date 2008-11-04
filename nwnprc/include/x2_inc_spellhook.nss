@@ -1694,7 +1694,7 @@ if(DEBUG) DoDebug("x2_inc_spellhook pre-X2CastOnItemWasAllowed "+IntToString(nCo
        && GetPRCSwitch(PRC_STAFF_CASTER_LEVEL))
     {
         int nDC = 10 + StringToInt(lookup_spell_innate(nSpellID));
-        nDC += (GetAbilityForClass(GetFirstArcaneClass(oCaster), oCaster)-10)/2;
+        nDC += (GetAbilityScoreForClass(GetFirstArcaneClass(oCaster), oCaster)-10)/2;
         SetLocalInt(oCaster, PRC_DC_BASE_OVERRIDE, nDC);
         DelayCommand(0.01, DeleteLocalInt(oCaster, PRC_DC_BASE_OVERRIDE));
     }

@@ -2,7 +2,7 @@
 //:: Epic Spell: Superb Dispelling
 //:: Author: Boneshank (Don Armstrong)
 
-#include "prc_alterations"
+#include "inc_dispel"
 #include "inc_epicspells"
 
 void main()

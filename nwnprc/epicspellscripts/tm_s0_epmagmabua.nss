@@ -42,7 +42,7 @@ void main()
         //Make SR check, and appropriate saving throw(s).
         if( !PRCDoResistSpell(oCaster, oTarget, GetTotalCastingLevel(oCaster)+SPGetPenetr(oCaster), fDelay) )
         {
-            fDelay = GetRandomDelay(0.5, 2.0);
+            fDelay = PRCGetRandomDelay(0.5, 2.0);
             //Roll damage.
             nDamage = d8(10);
 

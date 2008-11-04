@@ -201,7 +201,7 @@ void DoRandomMove(object oTarget)
     // Move the target
     int bCommandable            = GetCommandable(oTarget);
     location lTargetDestination = Location(oArea, vTarget, fFacing);
-    float fDelay                = GetRandomDelay();
+    float fDelay                = PRCGetRandomDelay();
 
     // Set commandable if it isn't already
 /*    if(!bCommandable)

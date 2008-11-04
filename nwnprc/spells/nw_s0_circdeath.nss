@@ -123,7 +123,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         {
             //Fire cast spell at event for the specified target
             SignalEvent(oLowest, EventSpellCastAt(OBJECT_SELF, SPELL_CIRCLE_OF_DEATH));
-            fDelay = GetRandomDelay();
+            fDelay = PRCGetRandomDelay();
             if(!PRCDoResistSpell(OBJECT_SELF, oLowest,CasterLvl, fDelay))
             {
                 int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);

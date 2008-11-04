@@ -32,7 +32,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     effect eSlow = EffectMovementSpeedDecrease(50);
     effect eLink = EffectLinkEffects(eVis, eSlow);
     object oTarget = GetEnteringObject();
-    float fDelay = GetRandomDelay(1.0, 2.2);
+    float fDelay = PRCGetRandomDelay(1.0, 2.2);
     
     int nPenetr = SPGetPenetrAOE(GetAreaOfEffectCreator());
 

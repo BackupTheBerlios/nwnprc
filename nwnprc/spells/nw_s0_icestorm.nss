@@ -70,7 +70,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     {
         if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
         {
-            fDelay = GetRandomDelay(0.75, 2.25);
+            fDelay = PRCGetRandomDelay(0.75, 2.25);
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_ICE_STORM));
             if (!PRCDoResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))

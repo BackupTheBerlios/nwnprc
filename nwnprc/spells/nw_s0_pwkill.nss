@@ -117,7 +117,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_DIVINATION);
                   }
                   else
                   {
-                        fDelay = GetRandomDelay(0.75, 2.0);
+                        fDelay = PRCGetRandomDelay(0.75, 2.0);
                         SetLocalInt(oWeakest, "NW_SPELL_PW_KILL_" + GetTag(OBJECT_SELF), TRUE);
                         //Fire cast spell at event for the specified target
                         SignalEvent(oWeakest, EventSpellCastAt(OBJECT_SELF, SPELL_POWER_WORD_KILL));

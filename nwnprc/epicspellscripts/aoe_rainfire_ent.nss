@@ -31,7 +31,7 @@ void main()
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_INCENDIARY_CLOUD) );
         if(!PRCDoResistSpell(oCaster, oTarget, GetTotalCastingLevel(oCaster)+SPGetPenetr(oCaster), fDelay))
         {
-            fDelay = GetRandomDelay(0.5, 2.0);
+            fDelay = PRCGetRandomDelay(0.5, 2.0);
             nDamage = d6(1);
             eDam = EffectDamage(nDamage, DAMAGE_TYPE_FIRE);
             if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_FIRE, oCaster, fDelay))

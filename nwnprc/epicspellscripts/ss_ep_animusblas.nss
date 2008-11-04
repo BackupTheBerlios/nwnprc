@@ -52,7 +52,7 @@ void main()
             {
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF,
                     PRCGetSpellId()));
-                fDelay = GetRandomDelay();
+                fDelay = PRCGetRandomDelay();
                 if(!PRCDoResistSpell(OBJECT_SELF, oTarget, GetTotalCastingLevel(OBJECT_SELF)+SPGetPenetr(OBJECT_SELF), fDelay))
                 {
                     nDam = d6(10);

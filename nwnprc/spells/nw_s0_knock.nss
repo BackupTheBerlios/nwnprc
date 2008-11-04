@@ -47,7 +47,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     while(GetIsObjectValid(oTarget))
     {
         SignalEvent(oTarget,EventSpellCastAt(OBJECT_SELF,GetSpellId()));
-        fDelay = GetRandomDelay(0.5, 2.5);
+        fDelay = PRCGetRandomDelay(0.5, 2.5);
         if(!GetPlotFlag(oTarget) && GetLocked(oTarget))
         {
             nResist =  GetDoorFlag(oTarget,DOOR_FLAG_RESIST_KNOCK);

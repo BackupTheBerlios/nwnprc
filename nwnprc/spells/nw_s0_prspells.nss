@@ -69,7 +69,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     {
         if(GetIsFriend(oTarget) && OBJECT_SELF != oTarget)
         {
-            fDelay = GetRandomDelay();
+            fDelay = PRCGetRandomDelay();
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_PROTECTION_FROM_SPELLS, FALSE));
             //Apply the VFX impact and effects

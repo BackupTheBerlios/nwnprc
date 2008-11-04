@@ -74,7 +74,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     oTarget = GetFirstInPersistentObject();
     while(GetIsObjectValid(oTarget))
     {
-        fDelay = GetRandomDelay();
+        fDelay = PRCGetRandomDelay();
         if(spellsIsTarget(oTarget,SPELL_TARGET_STANDARDHOSTILE , aoeCreator) )
         {
             //Fire cast spell at event for the specified target

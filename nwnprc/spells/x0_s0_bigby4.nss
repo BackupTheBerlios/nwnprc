@@ -34,7 +34,7 @@
 
 int nSpellID = 462;
 
-void RunHandImpact(object oTarget, object oCaster,int CasterLvl )
+void RunHandImpact(object oTarget, object oCaster,int CasterLvl, int nAbilityModifier )
 {
     //--------------------------------------------------------------------------
     // Check if the spell has expired (check also removes effects)
@@ -44,7 +44,7 @@ void RunHandImpact(object oTarget, object oCaster,int CasterLvl )
         return;
     }
 
-    int nCasterModifiers = PRCGetCasterAbilityModifier(oCaster)
+    int nCasterModifiers = nAbilityModifier
                + PRCGetCasterLevel(oCaster);
     int nCasterRoll = d20(1) + nCasterModifiers + 11 + -1;
     int nTargetRoll = GetAC(oTarget);
@@ -66,7 +66,7 @@ void RunHandImpact(object oTarget, object oCaster,int CasterLvl )
            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectStunned(), oTarget, RoundsToSeconds(1),TRUE,-1,CasterLvl);
        }
 
-      DelayCommand(6.0f,RunHandImpact(oTarget,oCaster,CasterLvl));
+      DelayCommand(6.0f,RunHandImpact(oTarget,oCaster,CasterLvl,nAbilityModifier));
 
    }
 }
@@ -92,6 +92,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     // End of Spell Cast Hook
 
     object oTarget = GetSpellTargetObject();
+    int nClassType = PRCGetLastSpellCastClass();
+    int nAbilityModifier = (GetAbilityScoreForClass(nClassType, OBJECT_SELF) -10)/2;
 
     //--------------------------------------------------------------------------
     // This spell no longer stacks. If there is one hand, that's enough
@@ -118,7 +120,6 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
         if(nResult  == 0)
         {
-            int nCasterModifier = PRCGetCasterAbilityModifier(OBJECT_SELF);
             effect eHand = EffectVisualEffect(VFX_DUR_BIGBYS_CLENCHED_FIST);
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHand, oTarget, RoundsToSeconds(nDuration),FALSE);
 
@@ -129,7 +130,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             //----------------------------------------------------------
             SetLocalInt(oTarget,"XP2_L_SPELL_SAVE_DC_" + IntToString (nSpellID), PRCGetSaveDC(oTarget, OBJECT_SELF));
             object oSelf = OBJECT_SELF;
-            RunHandImpact(oTarget,OBJECT_SELF,CasterLvl);
+            RunHandImpact(oTarget,OBJECT_SELF,CasterLvl, nAbilityModifier);
 
         }
     }

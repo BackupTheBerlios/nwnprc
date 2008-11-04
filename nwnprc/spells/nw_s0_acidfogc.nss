@@ -72,7 +72,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 		// This script does nothing if it has Mettle, bail
 			nDamage = 0;                 
             }
-            fDelay = GetRandomDelay(0.4, 1.2);
+            fDelay = PRCGetRandomDelay(0.4, 1.2);
             //Fire cast spell at event for the affected target
             SignalEvent(oTarget, EventSpellCastAt(GetAreaOfEffectCreator(), SPELL_ACID_FOG));
             //Spell resistance check

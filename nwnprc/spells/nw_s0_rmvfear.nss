@@ -65,7 +65,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
         //Only remove the fear effect from the people who are friends.
         if(GetIsFriend(oTarget))
         {
-            fDelay = GetRandomDelay();
+            fDelay = PRCGetRandomDelay();
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_REMOVE_FEAR, FALSE));
             eFear = GetFirstEffect(oTarget);

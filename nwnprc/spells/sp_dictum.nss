@@ -86,7 +86,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF)
                 && GetAlignmentLawChaos(oTarget) != ALIGNMENT_LAWFUL)
             {
-                fDelay = GetRandomDelay(0.5, 2.0);
+                fDelay = PRCGetRandomDelay(0.5, 2.0);
                 //Fire cast spell at event for the specified target
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_WORD_OF_FAITH));
                 //Make SR check

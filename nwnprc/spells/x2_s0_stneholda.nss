@@ -56,7 +56,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_STONEHOLD,OBJECT_SELF, GetSpellSaveDC()));
                 if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (nDC), SAVING_THROW_TYPE_MIND_SPELLS))
                 {
                    nRounds = PRCMaximizeOrEmpower(6, 1, nMetaMagic);
-                   fDelay = GetRandomDelay(0.45, 1.85);
+                   fDelay = PRCGetRandomDelay(0.45, 1.85);
                    //Apply the VFX impact and linked effects
                    DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nRounds),FALSE));
                 }

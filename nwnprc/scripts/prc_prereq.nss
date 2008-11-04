@@ -1028,7 +1028,7 @@ void main()
                 nLevel += GetDivinePRCLevels(oPC);
                 bFirstDivClassFound = TRUE;
             }
-            int nAbility = GetAbilityForClass(nClass, oPC);
+            int nAbility = GetAbilityScoreForClass(nClass, oPC);
 
             for(nSpellLevel = 0; nSpellLevel <= 9; nSpellLevel++)
             {
@@ -1051,7 +1051,7 @@ void main()
                 nLevel += GetArcanePRCLevels(oPC);
                 bFirstArcClassFound = TRUE;
             }
-            int nAbility = GetAbilityForClass(nClass, oPC);
+            int nAbility = GetAbilityScoreForClass(nClass, oPC);
 
             for(nSpellLevel = 0; nSpellLevel <= 9; nSpellLevel++)
             {
@@ -1074,7 +1074,7 @@ void main()
                 nLevel += GetPsionicPRCLevels(oPC);
                 bFirstPsiClassFound = TRUE;
             }
-            int nAbility = GetAbilityForClass(nClass, oPC);
+            int nAbility = GetAbilityScoreForClass(nClass, oPC);
             string sPsiFile = GetAMSKnownFileName(nClass);
             int nMaxLevel = StringToInt(Get2DACache(sPsiFile, "MaxPowerLevel", nLevel));
 

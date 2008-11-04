@@ -159,7 +159,7 @@ void DoFrightfulAttack(object oPC, object oTarget) {
       //Get first target in the spell cone
       oCurrentTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, GetSpellTargetLocation(), TRUE);
       while(GetIsObjectValid(oCurrentTarget)) {
-         fDelay = GetRandomDelay();
+         fDelay = PRCGetRandomDelay();
          //The victim (oTarget) the Ghost-Faced Killer (oPC), and allies of the Ghost-Faced Killer are unaffected.
          if((oCurrentTarget != oTarget) && (!GetIsFriend(oCurrentTarget, oPC)) && (oCurrentTarget != oPC)) {
             //Make a will save

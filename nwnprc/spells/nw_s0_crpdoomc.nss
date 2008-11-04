@@ -59,7 +59,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     {
          if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, GetAreaOfEffectCreator()))
         {
-            fDelay = GetRandomDelay(1.0, 2.2);
+            fDelay = PRCGetRandomDelay(1.0, 2.2);
             //------------------------------------------------------------------
             // According to the book, SR Does not count against creeping doom
             //------------------------------------------------------------------

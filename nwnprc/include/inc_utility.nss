@@ -507,6 +507,18 @@ int PRCGetHasEffect(int nEffectType, object oTarget = OBJECT_SELF);
 //spell or attack target
 int PRCGetIsFighting(object oFighting);
 
+/**
+ * Gets a random delay based on the parameters passed in.
+ *
+ * @author              Bioware (GetRandomDelay() from nw_i0_spells)
+ *
+ * @param fMinimumTime  lower limit for the random time
+ * @param fMaximumTime  upper limit for the random time
+ *
+ * @return              random float between the limits given
+ */
+float PRCGetRandomDelay(float fMinimumTime = 0.4, float fMaximumTime = 1.1);
+
 
 const int ERROR_CODE_5_ONCE_MORE = -1;
 const int ERROR_CODE_5_ONCE_MORE2 = -1;
@@ -1398,6 +1410,24 @@ int PRCGetIsFighting(object oFighting)
         return TRUE;
     }
     return FALSE;
+}
+
+float PRCGetRandomDelay(float fMinimumTime = 0.4, float fMaximumTime = 1.1)
+{
+    float fRandom = fMaximumTime - fMinimumTime;
+    if(fRandom < 0.0)
+    {
+        return 0.0;
+    }
+    else
+    {
+        int nRandom;
+        nRandom = FloatToInt(fRandom  * 10.0);
+        nRandom = Random(nRandom) + 1;
+        fRandom = IntToFloat(nRandom);
+        fRandom /= 10.0;
+        return fRandom + fMinimumTime;
+    }
 }
 // Test main
 //void main() {}

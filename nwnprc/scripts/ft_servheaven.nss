@@ -8,7 +8,7 @@
    Modified On: 2004-5-13
 */
 
-#include "prc_alterations"
+#include "prc_inc_skin"
 #include "prc_feat_const"
 
 void main(){

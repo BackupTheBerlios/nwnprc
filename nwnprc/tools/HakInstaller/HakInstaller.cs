@@ -1446,7 +1446,8 @@ namespace HakInstaller
 					Path.GetFileNameWithoutExtension(moduleFile) + ".prc.BackupMod");
                 // if a backup already exists, this means the module installer has been
                 // used before. We don't want to overwrite it, otherwise the original is lost
-				File.Copy(NWNInfo.GetFullFilePath(moduleFile), backupName, false);
+                if(!File.Exists(backupName))
+				    File.Copy(NWNInfo.GetFullFilePath(moduleFile), backupName, false);
 
 				// Recreate the module file with our changed files.
 				Progress(progress, true, "Saving {0}", moduleFile);

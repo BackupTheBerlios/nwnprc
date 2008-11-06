@@ -1,6 +1,6 @@
 #include "tob_inc_recovery"
 #include "tob_inc_moveknwn"
-#include "prc_inc_combat"
+#include "prc_inc_fork"
 
 void ApplySuperiorTWF(object oInitiator)
 {

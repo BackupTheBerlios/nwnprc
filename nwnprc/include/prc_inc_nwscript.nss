@@ -1,3 +1,13 @@
+/**
+ * @file
+ * PRC functions that are wrappers for functions defined in nwscript.nss
+ */
+const int PRC_SIZEMASK_NONE = 0;           // no changes taken into account, same as bio size with fixes for CEP
+const int PRC_SIZEMASK_NORMAL = 1;         // normal size changes
+const int PRC_SIZEMASK_NOABIL = 2;         // size changes that dont change ability scores
+const int PRC_SIZEMASK_SIMPLE = 4;         // 'simple' size changes that have simplified effects (expansion/compression)
+
+const int PRC_SIZEMASK_ALL = 7;            // PRC_SIZEMASK_NORMAL | PRC_SIZEMASK_NOABIL | PRC_SIZEMASK_SIMPLE
 
 //wrapper for biowares GetSpellId()
 //used for actioncastspell
@@ -32,6 +42,17 @@ itemproperty PRCItemPropertyBonusFeat(int nBonusFeatID);
 
 //Wrapper for GetIsSkillSuccessful(), allows forcing of a particular roll eg. taking 10
 int GetPRCIsSkillSuccessful(object oCreature, int nSkill, int nDifficulty, int nRollOverride = -1);
+
+/**
+ * Wrapper for GetCreatureSize().
+ *
+ * Get the size (CREATURE_SIZE_*) of oCreature, including any PRC size modification feats / spells
+ *
+ * @param oObject   Creature whose size to get
+ * @param nSizeMask Combination of PRC_SIZEMASK_* constants indicating which types of size changes to return
+ * @return          CREATURE_SIZE_* constant
+ */
+int PRCGetCreatureSize(object oObject = OBJECT_SELF, int nSizeMask = PRC_SIZEMASK_ALL);
 
 // const
 #include "prc_class_const"
@@ -284,4 +305,74 @@ int GetPRCIsSkillSuccessful(object oCreature, int nSkill, int nDifficulty, int n
             );
     }
     return (nRollOverride + nRanks >= nDifficulty);
+}
+
+int PRCGetCreatureSize(object oObject = OBJECT_SELF, int nSizeMask = PRC_SIZEMASK_ALL)
+{
+    int nSize = GetCreatureSize(oObject);
+    //CEP adds other sizes, take them into account too
+    if(nSize == 20)
+        nSize = CREATURE_SIZE_DIMINUTIVE;
+    else if(nSize == 21)
+        nSize = CREATURE_SIZE_FINE;
+    else if(nSize == 22)
+        nSize = CREATURE_SIZE_GARGANTUAN;
+    else if(nSize == 23)
+        nSize = CREATURE_SIZE_COLOSSAL;
+
+    if(nSizeMask & PRC_SIZEMASK_NORMAL)
+    {
+        if(GetHasFeat(FEAT_SIZE_DECREASE_6, oObject))
+            nSize += -6;
+        else if(GetHasFeat(FEAT_SIZE_DECREASE_5, oObject))
+            nSize += -5;
+        else if(GetHasFeat(FEAT_SIZE_DECREASE_4, oObject))
+            nSize += -4;
+        else if(GetHasFeat(FEAT_SIZE_DECREASE_3, oObject))
+            nSize += -3;
+        else if(GetHasFeat(FEAT_SIZE_DECREASE_2, oObject))
+            nSize += -2;
+        else if(GetHasFeat(FEAT_SIZE_DECREASE_1, oObject))
+            nSize += -1;
+
+        if(GetHasFeat(FEAT_SIZE_INCREASE_6, oObject))
+            nSize +=  6;
+        else if(GetHasFeat(FEAT_SIZE_INCREASE_5, oObject))
+            nSize +=  5;
+        else if(GetHasFeat(FEAT_SIZE_INCREASE_4, oObject))
+            nSize +=  4;
+        else if(GetHasFeat(FEAT_SIZE_INCREASE_3, oObject))
+            nSize +=  3;
+        else if(GetHasFeat(FEAT_SIZE_INCREASE_2, oObject))
+            nSize +=  2;
+        else if(GetHasFeat(FEAT_SIZE_INCREASE_1, oObject))
+            nSize +=  1;
+    }
+
+    if(nSizeMask & PRC_SIZEMASK_NOABIL
+        || ((nSizeMask & PRC_SIZEMASK_NORMAL) && GetPRCSwitch(PRC_DRAGON_DISCIPLE_SIZE_CHANGES)))
+    {
+        if(GetHasFeat(FEAT_DRACONIC_SIZE_INCREASE_2, oObject))
+            nSize +=  2;
+        else if(GetHasFeat(FEAT_DRACONIC_SIZE_INCREASE_1, oObject))
+            nSize +=  1;
+    }
+
+    if(nSizeMask & PRC_SIZEMASK_SIMPLE)
+    {
+        // Size changing powers
+        // Compression: Size decreased by one or two categories, depending on augmentation
+        if(GetLocalInt(oObject, "PRC_Power_Compression_SizeReduction"))
+            nSize -= GetLocalInt(oObject, "PRC_Power_Compression_SizeReduction");
+        // Expansion: Size increase by one or two categories, depending on augmentation
+        if(GetLocalInt(oObject, "PRC_Power_Expansion_SizeIncrease"))
+            nSize += GetLocalInt(oObject, "PRC_Power_Expansion_SizeIncrease");
+    }
+
+    if(nSize < CREATURE_SIZE_FINE)
+        nSize = CREATURE_SIZE_FINE;
+    if(nSize > CREATURE_SIZE_COLOSSAL)
+        nSize = CREATURE_SIZE_COLOSSAL;
+
+    return nSize;
 }

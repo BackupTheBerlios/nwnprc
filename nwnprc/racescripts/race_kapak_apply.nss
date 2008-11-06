@@ -2,8 +2,8 @@
    Male: 1d6/1d6 dex damage, DC 18
    Female: 2d6 heal, every 4 hours for each creature, can't use on self*/
 
-#include "prc_inc_combat"
-
+#include "prc_inc_fork"
+#include "prc_x2_itemprop"
 
 void main()
 {

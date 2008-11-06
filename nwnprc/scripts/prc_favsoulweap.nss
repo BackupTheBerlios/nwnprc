@@ -12,7 +12,9 @@
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_inc_combat"
+#include "prc_inc_fork"
+#include "inc_item_props"
+#include "prc_x2_itemprop"
 #include "inc_dynconv"
 
 //////////////////////////////////////////////////
@@ -139,9 +141,9 @@ void main()
             {
                 object oSkin = GetPCSkin(oPC);
                 int nWeapon = GetLocalInt(oPC, "FavouredSoulWeapon");
-        int nWeaponFocus = GetFeatByWeaponType(nWeapon, "Focus");
+        int nWeaponFocus = GetFeatOfWeaponType(nWeapon, FEAT_TYPE_FOCUS);
         int nWFIprop = FeatToIprop(nWeaponFocus);
-        int nWeaponSpec = GetFeatByWeaponType(nWeapon, "Specialization");
+        int nWeaponSpec = GetFeatOfWeaponType(nWeapon, FEAT_TYPE_SPECIALIZATION);
         int nWSIprop = FeatToIprop(nWeaponSpec);
 
         IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(nWFIprop), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);

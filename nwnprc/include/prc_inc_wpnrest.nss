@@ -11,7 +11,9 @@
 //:: Created On: Feb 2, 2008
 //:://////////////////////////////////////////////
 
-#include "prc_inc_combat"
+#include "prc_inc_fork"
+#include "inc_item_props"
+#include "prc_x2_itemprop"
 
 /**
  * All of the following functions use the following parameters:
@@ -617,7 +619,7 @@ void DoWeaponEquip(object oPC, object oItem, int nHand)
     //Two-hand damage bonus
     if(nWeaponSize == nSize + 1 || (nWeaponSize == nRealSize + 1 && GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC) == OBJECT_INVALID) && nRealSize > CREATURE_SIZE_SMALL)
     {
-        nTHFDmgBonus += GetWeaponEnhancement(oItem, oPC, oPC);
+        nTHFDmgBonus += IPGetWeaponEnhancementBonus(oItem, ITEM_PROPERTY_ENHANCEMENT_BONUS, FALSE);//include temp effects here
         if(DEBUG) DoDebug("Applying THF damage bonus");
         SetCompositeDamageBonusT(oItem, "THFBonus", nTHFDmgBonus);
     }

@@ -3,7 +3,7 @@
 //function prototypes
 //use this to get class/race adjusted racial type back to one of the bioware bases
 //includes shifter changed forms
-int MyPRCGetRacialType(object oTarget);
+int MyPRCGetRacialType(object oCreature);
 
 // DoRacialSLA() moved to prc_alterations as it is used by other spell-like scripts, not just race specific
 

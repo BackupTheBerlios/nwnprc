@@ -13,7 +13,6 @@
 //:://////////////////////////////////////////////
 
 #include "inc_dynconv"
-#include "prc_alterations"
 #include "prc_inc_wpnrest"
 
 //////////////////////////////////////////////////
@@ -145,7 +144,7 @@ void main()
             {
                 object oSkin = GetPCSkin(oPC);
                 int nWeapon = GetLocalInt(oPC, "WarDomainWeapon");
-                int nWeaponFocus = GetFeatByWeaponType(nWeapon, "Focus");
+                int nWeaponFocus = GetFeatOfWeaponType(nWeapon, FEAT_TYPE_FOCUS);
                 int nWFIprop = FeatToIprop(nWeaponFocus);
 
                 IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(nWFIprop), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);

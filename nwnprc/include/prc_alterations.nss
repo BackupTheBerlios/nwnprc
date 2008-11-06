@@ -53,29 +53,6 @@ void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotal
 // moved from prc_inc_racial
 void DoRacialSLA(int nSpellID, int nCasterlevel = 0, int nTotalDC = 0);
 
-const int PRC_SIZEMASK_NONE = 0;           // no changes taken into account, same as bio size with fixes for CEP
-/*  //commented out and replaced because it made my compiler choke - Flaming_Sword
-const int PRC_SIZEMASK_NORMAL = 1 << 0;    // normal size changes
-const int PRC_SIZEMASK_NOABIL = 1 << 1;    // size changes that dont change ability scores
-const int PRC_SIZEMASK_SIMPLE = 1 << 2;    // 'simple' size changes that have simplified effects (expansion/compression)
-const int PRC_SIZEMASK_ALL = PRC_SIZEMASK_NORMAL | PRC_SIZEMASK_NOABIL | PRC_SIZEMASK_SIMPLE;
-*/
-const int PRC_SIZEMASK_NORMAL = 1;         // normal size changes
-const int PRC_SIZEMASK_NOABIL = 2;         // size changes that dont change ability scores
-const int PRC_SIZEMASK_SIMPLE = 4;         // 'simple' size changes that have simplified effects (expansion/compression)
-
-const int PRC_SIZEMASK_ALL = 7;
-
-/**
- * A PRC wrapper for GetCreatureSize that takes size adjustment
- * feats into account.
- *
- * @param oObject Creature whose size to get
- * @param nSizeMask Combination of PRC_SIZEMASK_* constants indicating which types of size changes to return
- * @return        CREATURE_SIZE_* constant
- */
-int PRCGetCreatureSize(object oObject = OBJECT_SELF, int nSizeMask = PRC_SIZEMASK_ALL);
-
 
 //this is here rather than inc_utility because it uses creature size and screws compiling if its elsewhere
 /**
@@ -356,78 +333,6 @@ effect EffectShaken()
     eReturn = EffectLinkEffects(eReturn, EffectSavingThrowDecrease(SAVING_THROW_ALL,2));
     eReturn = EffectLinkEffects(eReturn, EffectSkillDecrease(SKILL_ALL_SKILLS, 2));
     return eReturn;
-}
-
-// Get the size (CREATURE_SIZE_*) of oCreature.
-//including any PRC size modification feats / spells
-int PRCGetCreatureSize(object oObject = OBJECT_SELF, int nSizeMask = PRC_SIZEMASK_ALL)
-{
-    int nSize = GetCreatureSize(oObject);
-    //CEP adds other sizes, take them into account too
-    if(nSize == 20)
-        nSize = CREATURE_SIZE_DIMINUTIVE;
-    else if(nSize == 21)
-        nSize = CREATURE_SIZE_FINE;
-    else if(nSize == 22)
-        nSize = CREATURE_SIZE_GARGANTUAN;
-    else if(nSize == 23)
-        nSize = CREATURE_SIZE_COLOSSAL;
-
-    if(nSizeMask & PRC_SIZEMASK_NORMAL)
-    {
-        if(GetHasFeat(FEAT_SIZE_DECREASE_6, oObject))
-            nSize += -6;
-        else if(GetHasFeat(FEAT_SIZE_DECREASE_5, oObject))
-            nSize += -5;
-        else if(GetHasFeat(FEAT_SIZE_DECREASE_4, oObject))
-            nSize += -4;
-        else if(GetHasFeat(FEAT_SIZE_DECREASE_3, oObject))
-            nSize += -3;
-        else if(GetHasFeat(FEAT_SIZE_DECREASE_2, oObject))
-            nSize += -2;
-        else if(GetHasFeat(FEAT_SIZE_DECREASE_1, oObject))
-            nSize += -1;
-
-        if(GetHasFeat(FEAT_SIZE_INCREASE_6, oObject))
-            nSize +=  6;
-        else if(GetHasFeat(FEAT_SIZE_INCREASE_5, oObject))
-            nSize +=  5;
-        else if(GetHasFeat(FEAT_SIZE_INCREASE_4, oObject))
-            nSize +=  4;
-        else if(GetHasFeat(FEAT_SIZE_INCREASE_3, oObject))
-            nSize +=  3;
-        else if(GetHasFeat(FEAT_SIZE_INCREASE_2, oObject))
-            nSize +=  2;
-        else if(GetHasFeat(FEAT_SIZE_INCREASE_1, oObject))
-            nSize +=  1;
-    }
-
-    if(nSizeMask & PRC_SIZEMASK_NOABIL
-        || ((nSizeMask & PRC_SIZEMASK_NORMAL) && GetPRCSwitch(PRC_DRAGON_DISCIPLE_SIZE_CHANGES)))
-    {
-        if(GetHasFeat(FEAT_DRACONIC_SIZE_INCREASE_2, oObject))
-            nSize +=  2;
-        else if(GetHasFeat(FEAT_DRACONIC_SIZE_INCREASE_1, oObject))
-            nSize +=  1;
-    }
-
-    if(nSizeMask & PRC_SIZEMASK_SIMPLE)
-    {
-        // Size changing powers
-        // Compression: Size decreased by one or two categories, depending on augmentation
-        if(GetLocalInt(oObject, "PRC_Power_Compression_SizeReduction"))
-            nSize -= GetLocalInt(oObject, "PRC_Power_Compression_SizeReduction");
-        // Expansion: Size increase by one or two categories, depending on augmentation
-        if(GetLocalInt(oObject, "PRC_Power_Expansion_SizeIncrease"))
-            nSize += GetLocalInt(oObject, "PRC_Power_Expansion_SizeIncrease");
-    }
-
-    if(nSize < CREATURE_SIZE_FINE)
-        nSize = CREATURE_SIZE_FINE;
-    if(nSize > CREATURE_SIZE_COLOSSAL)
-        nSize = CREATURE_SIZE_COLOSSAL;
-
-    return nSize;
 }
 
 

@@ -1444,7 +1444,9 @@ namespace HakInstaller
                 // changed to not use the same extension as the toolset
 				string backupName = Path.Combine(NWNInfo.GetPathForFile(moduleFile), 
 					Path.GetFileNameWithoutExtension(moduleFile) + ".prc.BackupMod");
-				File.Copy(NWNInfo.GetFullFilePath(moduleFile), backupName, true);
+                // if a backup already exists, this means the module installer has been
+                // used before. We don't want to overwrite it, otherwise the original is lost
+				File.Copy(NWNInfo.GetFullFilePath(moduleFile), backupName, false);
 
 				// Recreate the module file with our changed files.
 				Progress(progress, true, "Saving {0}", moduleFile);

@@ -21,7 +21,13 @@
 17 dark-Elf         RACE    169             ****      
 18 Half_aquatic-Elf RACE    182             ****      
 19 Half-drow        RACE    183             ****      
-20 feyri            RACE    201             ****      
-21 Base_Attack      BAB     5               ****      
-22 ScriptVar        VAR     PRC_AllowBlades 0         
-23 Perform          SKILL   11              3         
+20 feyri            RACE    201             ****            
+21 DarksunElf       RACE    34              ****      
+22 DarksunHalfelf   RACE    35              ****      
+23 Kagonesti        RACE    44              ****      
+24 Sylvanesti       RACE    45              ****       
+25 FrstlrdElf       RACE    107             ****     
+26 SnowElf          RACE    165             ****     
+27 Base_Attack      BAB     5               ****      
+28 ScriptVar        VAR     PRC_AllowBlades 0         
+29 Perform          SKILL   11              3         

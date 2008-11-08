@@ -14,7 +14,13 @@
 10 Wild_Elf         RACE    167            ****      
 11 Wood_Elf         RACE    168            ****      
 12 Half_Drow        RACE    183            ****      
-13 Feyri            RACE    201            ****      
-14 Base_Attack      BAB     6              ****      
-15 ScriptVar        VAR     X1_AllowArcher 0         
-16 ScriptVar        VAR     PRC_ArcSpell1  0         
+13 Feyri            RACE    201            ****            
+14 DarksunElf       RACE    34             ****      
+15 DarksunHalfelf   RACE    35             ****      
+16 Kagonesti        RACE    44             ****      
+17 Sylvanesti       RACE    45             ****       
+18 FrstlrdElf       RACE    107            ****     
+19 SnowElf          RACE    165            ****     
+20 Base_Attack      BAB     6              ****      
+21 ScriptVar        VAR     X1_AllowArcher 0         
+22 ScriptVar        VAR     PRC_ArcSpell1  0         

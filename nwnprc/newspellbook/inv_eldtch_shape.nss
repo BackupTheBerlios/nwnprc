@@ -496,7 +496,7 @@ void main()
     {
         ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, EffectBeam(nBeamVFX, oPC, BODY_NODE_HAND, FALSE), lTargetArea, 1.0f);
     }
-	else if(nEssence == INVOKE_ELDRITCH_LINE)
+	else if(nEssence != INVOKE_ELDRITCH_LINE)
     {
         ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eDoom, lTargetArea, 1.0f);
     }

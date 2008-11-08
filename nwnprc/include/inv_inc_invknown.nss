@@ -161,7 +161,7 @@ void _InvocationRecurseRemoveArray(object oCreature, string sArrayName, string s
         {
             // Check if the itemproperty is a bonus feat that has been marked for removal
             if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_BONUS_FEAT                                            &&
-               GetLocalInt(oCreature, "PRC_MoveFeatRemovalMarker_" + IntToString(GetItemPropertySubType(ipTest)))
+               GetLocalInt(oCreature, "PRC_InvocFeatRemovalMarker_" + IntToString(GetItemPropertySubType(ipTest)))
                )
             {
                 if(DEBUG) DoDebug("_InvocationRecurseRemoveArray(): Removing bonus feat itemproperty:\n" + DebugIProp2Str(ipTest));
@@ -176,7 +176,7 @@ void _InvocationRecurseRemoveArray(object oCreature, string sArrayName, string s
     else
     {
         // Set the marker
-        string sName = "PRC_MoveFeatRemovalMarker_" + Get2DACache(sInvocFile, "IPFeatID",
+        string sName = "PRC_InvocFeatRemovalMarker_" + Get2DACache(sInvocFile, "IPFeatID",
                                                                    GetPowerfileIndexFromSpellID(persistant_array_get_int(oCreature, sArrayName, nCurIndex))
                                                                    );
         if(DEBUG) DoDebug("_InvocationRecurseRemoveArray(): Recursing through array, marker set:\n" + sName);
@@ -323,6 +323,7 @@ void RemoveInvocationsKnownOnLevel(object oCreature, int nLevel)
     if(persistant_array_exists(oCreature, _INVOCATION_LIST_NAME_BASE + IntToString(INVOCATION_LIST_DRAGONFIRE_ADEPT) + sPostFix))
         // If one does exist, clear it
         _RemoveInvocationArray(oCreature, INVOCATION_LIST_DRAGONFIRE_ADEPT, nLevel);
+
     if(persistant_array_exists(oCreature, _INVOCATION_LIST_NAME_BASE + IntToString(INVOCATION_LIST_WARLOCK) + sPostFix))
         _RemoveInvocationArray(oCreature, INVOCATION_LIST_WARLOCK, nLevel);
 

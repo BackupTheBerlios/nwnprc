@@ -1,10 +1,26 @@
 2DA V2.0
 
   LABEL            ReqType ReqParam1       ReqParam2 
-0 Point_Blank_Shot FEAT    27              ****      
-1 DrowH            RACE    164             ****      
-2 DrowF            RACE    163             ****      
-3 Elf              RACE    1               ****      
-4 MoveSilent       SKILL   8               7         
-5 ScriptVar        VAR     PRC_AllowNights 0         
-6 ScriptVar        VAR     PRC_ArcSpell1   0         
+0  Point_Blank_Shot FEAT    27              ****      
+1  DrowH            RACE    164             ****      
+2  DrowF            RACE    163             ****      
+3  Elf              RACE    1               ****     
+4  Half-Elf         RACE    4               ****      
+5  Aquatic-Elf      RACE    161             ****      
+6  Avariel          RACE    162             ****      
+7  Sun-Elf          RACE    166             ****      
+8  wild-Elf         RACE    167             ****      
+9  wood-Elf         RACE    168             ****      
+10 dark-Elf         RACE    169             ****      
+11 Half_aquatic-Elf RACE    182             ****      
+12 Half-drow        RACE    183             ****      
+13 feyri            RACE    201             ****      
+14 DarksunElf       RACE    34              ****      
+15 DarksunHalfelf   RACE    35              ****      
+16 Kagonesti        RACE    44              ****      
+17 Sylvanesti       RACE    45              ****       
+18 FrstlrdElf       RACE    107             ****     
+19 SnowElf          RACE    165             ****      
+20 MoveSilent       SKILL   8                 7         
+21 ScriptVar        VAR     PRC_AllowNights   0         
+22 ScriptVar        VAR     PRC_ArcSpell1     0         

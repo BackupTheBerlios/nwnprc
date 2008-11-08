@@ -10,7 +10,7 @@
 // Last Updated: 03/15/2004, Nron Ksr
 /////////////////////////////////////////////////
 #include "prc_alterations"
-#include "x2_inc_spellhook"
+//#include "x2_inc_spellhook"
 #include "inc_epicspells"
 
 void main()

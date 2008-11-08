@@ -8,7 +8,7 @@
 
 
 #include "prc_alterations"
-#include "x2_inc_spellhook"
+//#include "x2_inc_spellhook"
 #include "inc_epicspells"
 
 void main()

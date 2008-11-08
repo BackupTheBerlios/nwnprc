@@ -86,12 +86,6 @@ void DazzlingIllusion();
 int X2UseMagicDeviceCheck();
 
 
-// This function holds all functions that are supposed to run before the actual
-// spellscript gets run. If this functions returns FALSE, the spell is aborted
-// and the spellscript will not run
-int X2PreSpellCastCode();
-
-
 // check if the spell is prohibited from being cast on items
 // returns FALSE if the spell was cast on an item but is prevented
 // from being cast there by its corresponding entry in des_crft_spells
@@ -131,7 +125,7 @@ string PRCGetUserSpecificSpellScript();
 int PRCGetUserSpecificSpellScriptFinished();
 
 //#include "prc_x2_itemprop" - Inherited from prc_x2_craft
-#include "prc_alterations"
+//#include "prc_alterations"
 #include "prc_x2_craft"
 //#include "x3_inc_horse"
 #include "prc_inc_spells"

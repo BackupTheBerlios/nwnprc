@@ -17,7 +17,7 @@
 #include "prc_alterations"
 #include "inc_epicspells"
 #include "inc_dispel"
-#include "x2_inc_spellhook"
+//#include "x2_inc_spellhook"
 
 void RunHeel(object oTarget, int nDuration);
 

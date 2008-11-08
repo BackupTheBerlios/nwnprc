@@ -32,7 +32,7 @@ cause any harm to the objects or creatures thus outlined.
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
 #include "prc_inc_spells"
 
-#include "x2_inc_spellhook"
+//#include "x2_inc_spellhook"
 
 void main()
 {

@@ -11,7 +11,7 @@
 
 #include "prc_alterations"
 #include "inc_epicspells"
-#include "x2_inc_spellhook"
+//#include "x2_inc_spellhook"
 #include "prc_getbest_inc"
 
 void RunWorm(object oTarget, int nRoundsRemaining);

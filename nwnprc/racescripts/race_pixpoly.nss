@@ -11,7 +11,7 @@
 
 #include "prc_alterations"
 #include "prc_inc_spells"
-#include "x2_inc_spellhook"
+//#include "x2_inc_spellhook"
 #include "pnp_shft_poly"
 
 

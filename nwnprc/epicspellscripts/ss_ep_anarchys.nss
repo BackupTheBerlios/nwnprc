@@ -10,8 +10,8 @@
 //:://////////////////////////////////////////////
 #include "prc_alterations"
 #include "inc_epicspells"
-#include "prc_add_spell_dc"
-#include "x2_inc_spellhook"
+//#include "prc_add_spell_dc"
+//#include "x2_inc_spellhook"
 
 void main()
 {

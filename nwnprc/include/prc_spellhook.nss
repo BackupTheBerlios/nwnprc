@@ -6,6 +6,11 @@
  */
  
  
+// This function holds all functions that are supposed to run before the actual
+// spellscript gets run. If this functions returns FALSE, the spell is aborted
+// and the spellscript will not run
+int X2PreSpellCastCode();
+ 
 // this will execute the prespellcastcode, whose full functionality is incoded in X2PreSpellCastCode2(),
 // as a script, to save loading time for spells scripts and reduce memory usage of NWN
 // the prespellcode takes up roughly 250 kByte compiled code, meaning that every spell script that

@@ -220,7 +220,8 @@ void SetEpicSeedKnown(int nEpicSeed, object oPC, int nState = TRUE);
 #include "inc_epicspelldef"
 #include "inc_epicspellfnc"
 #include "inc_utility"
-#include "x2_inc_spellhook"
+#include "prc_add_spell_dc"
+//#include "x2_inc_spellhook"
 
 
 /******************************************************************************

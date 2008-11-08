@@ -10,7 +10,7 @@
 
 #include "prc_alterations"
 #include "inc_epicspells"
-#include "x2_inc_spellhook"
+//#include "x2_inc_spellhook"
 
 int VFX_PER_RAIN_OF_FIRE = 100;
 

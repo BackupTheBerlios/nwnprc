@@ -8,7 +8,7 @@
 //:: Last Updated On: March 13, 2004
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-#include "x2_inc_spellhook"
+//#include "x2_inc_spellhook"
 #include "inc_epicspells"
 
 void main()

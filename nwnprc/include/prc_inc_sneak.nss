@@ -56,6 +56,8 @@ int GetDragonfireDamageType(object oPC);
 //::  Includes
 //:://////////////////////////////////////////////
 
+#include "prc_class_const"
+#include "prc_feat_const"
 #include "inc_utility"
 
 //:://////////////////////////////////////////////

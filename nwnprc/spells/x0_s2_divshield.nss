@@ -35,9 +35,9 @@ void main()
 
         int nCharismaBonus = GetAbilityModifier(ABILITY_CHARISMA);
      
-      if (GetHasFeat(FEAT_EPIC_DIVINE_SHIELD, OBJECT_SELF)) nCharismaBonus+= nCharismaBonus;
+      if (GetHasFeat(FEAT_EPIC_DIVINE_SHIELD, OBJECT_SELF)) nCharismaBonus += nCharismaBonus;
 
-        effect eAC = EffectACIncrease(nCharismaBonus);
+        effect eAC = EffectACIncrease(nCharismaBonus, AC_SHIELD_ENCHANTMENT_BONUS);
         effect eLink = EffectLinkEffects(eAC, eDur);
         eLink = SupernaturalEffect(eLink);
 

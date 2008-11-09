@@ -2,7 +2,6 @@ int PRCDoRangedTouchAttack(object oTarget, int nDisplayFeedback = TRUE, object o
 int PRCDoMeleeTouchAttack(object oTarget, int nDisplayFeedback = TRUE, object oCaster = OBJECT_SELF);
 
 #include "prc_inc_sneak"
-#include "inc_utility"
 #include "prc_inc_combat"
 
 int PRCDoRangedTouchAttack(object oTarget, int nDisplayFeedback = TRUE, object oCaster = OBJECT_SELF, int nAttackBonus = 0)

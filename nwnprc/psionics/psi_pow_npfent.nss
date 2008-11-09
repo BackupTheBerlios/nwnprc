@@ -209,7 +209,7 @@ void StoreObjects(object oCreature, int bRemove = TRUE)
 
 void main()
 {   //testing code
-    object oEnter = GetFirstPC();   //GetEnteringObject();
+    object oEnter = GetEnteringObject();
     if(GetObjectType(oEnter) == OBJECT_TYPE_CREATURE && !GetPlotFlag(oEnter) && !GetIsDM(oEnter) && !GetPersistantLocalInt(oEnter, "NullPsionicsField"))
     {
         if(DEBUG) DoDebug("psi_pow_npfent: Creatured entered Null Psionics Field: " + DebugObject2Str(oEnter));

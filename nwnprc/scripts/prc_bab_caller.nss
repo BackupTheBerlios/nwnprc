@@ -12,7 +12,7 @@ prc_bab_caller is occasionally called from other sources (such as casting tenser
 */
 
 #include "prc_alterations"
-#include "prc_inc_natweap"
+#include "prc_inc_combat"
 
 void main()
 {

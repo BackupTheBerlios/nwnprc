@@ -1,5 +1,5 @@
 #include "prc_inc_stunfist"
-#include "prc_inc_unarmed"
+#include "prc_inc_combat"
 
 void AddHooks(object oItem)
 {

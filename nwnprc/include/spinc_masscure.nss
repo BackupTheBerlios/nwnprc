@@ -1,4 +1,8 @@
-/////////////////////////////////////////////////////////////////////////////////
+/*
+ * not actually used anywhere
+ */
+
+/* /////////////////////////////////////////////////////////////////////////////////
 //
 // DoMassCure - Does a mass cure spell effect on the spell's location.
 //      nDice - the number of d8 to roll for healing.
@@ -168,4 +172,4 @@ int biowareSpellsCure(int nCasterLvl,object oTarget, int nDamage, int nMaxExtraD
 }
 
 // Test main
-//void main(){}
+//void main(){} */

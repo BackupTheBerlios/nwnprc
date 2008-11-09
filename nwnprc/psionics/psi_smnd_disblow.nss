@@ -12,7 +12,7 @@
 //:: Modified On: 17.2.2006
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "prc_inc_combat"
 #include "psi_inc_psifunc"
 
 void main()

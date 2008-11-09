@@ -1,3 +1,6 @@
+/*
+ * not actually used
+ */
 /////////////////////////////////////////////////////////////////////////////////
 //
 // DoMassBuff - Casts a mass buff spell on the specified target location, buffing

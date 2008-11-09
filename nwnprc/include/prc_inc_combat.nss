@@ -200,7 +200,7 @@ int GetMonkAttacks(int iBAB, int iHD);
 // calculates the number of unarmed attacks for an unarmed class (usually monk) with iMonkLevel unarmed levels
 // maximum: 5 attacks; iMonkLevels should include levels from all "unarmed" PrC classes, such as brawler etc.
 // use GetUBABLevel to calculate the total number of "unarmed" class levels
-int GetPnPMonkAttacks(int iMonklevel);
+int GetPnPMonkAttacks(int iMonkLevel);
 
 
 //:://////////////////////////////////////////////
@@ -398,7 +398,7 @@ int GetIsPhysicalCombatAction(int iAction);
 // checks whether the anticipated target (oDefender) selected by prc combat must be changed
 // due to actions taken by the aurora engine (or the player character)
 // returns the most suitable target for the next prc attack
-object CheckForChangeOfTarget(object oAttacker, object oDefender, int bIsRangedAttack = FALSE);
+object CheckForChangeOfTarget(object oAttacker, object oDefender, int bAllowSwitchOfTarget = FALSE);
 
 // returns name of the ITEM_PROPERTY_* constant
 // removed as unused
@@ -1105,7 +1105,7 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
         case BASE_ITEM_CPIERCWEAPON:
         case BASE_ITEM_CSLASHWEAPON:
         case BASE_ITEM_CSLSHPRCWEAP:
-        case BASE_ITEM_INVALID:
+        case BASE_ITEM_INVALID: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_UNARMED_STRIKE;
             sFeat.Specialization =  FEAT_WEAPON_SPECIALIZATION_UNARMED_STRIKE;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_UNARMED;
@@ -1115,8 +1115,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_UNARMED;
             sFeat.WeaponOfChoice = -1;
             break;
-
-        case BASE_ITEM_BASTARDSWORD:
+        }
+        case BASE_ITEM_BASTARDSWORD: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_BASTARD_SWORD;
             sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_BASTARD_SWORD;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_BASTARDSWORD;
@@ -1126,8 +1126,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_BASTARDSWORD;
             sFeat.WeaponOfChoice = FEAT_WEAPON_OF_CHOICE_BASTARDSWORD;
             break;
-
-        case BASE_ITEM_BATTLEAXE:
+        }
+        case BASE_ITEM_BATTLEAXE: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_BATTLE_AXE;
             sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_BATTLE_AXE;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_BATTLEAXE;
@@ -1137,8 +1137,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_BATTLEAXE;
             sFeat.WeaponOfChoice = FEAT_WEAPON_OF_CHOICE_BATTLEAXE;
             break;
-
-        case BASE_ITEM_CLUB:
+        }
+        case BASE_ITEM_CLUB: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_CLUB;
             sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_CLUB;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_CLUB;
@@ -1148,8 +1148,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_CLUB;
             sFeat.WeaponOfChoice = FEAT_WEAPON_OF_CHOICE_CLUB;
             break;
-
-        case BASE_ITEM_DAGGER:
+        }
+        case BASE_ITEM_DAGGER: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_DAGGER;
             sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_DAGGER;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_DAGGER;
@@ -1159,8 +1159,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_DAGGER;
             sFeat.WeaponOfChoice = FEAT_WEAPON_OF_CHOICE_DAGGER;
             break;
-
-        case BASE_ITEM_DART:
+        }
+        case BASE_ITEM_DART: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_DART;
             sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_DART;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_DART;
@@ -1170,8 +1170,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_DART;
             sFeat.WeaponOfChoice = -1;
             break;
-
-        case BASE_ITEM_DIREMACE:
+        }
+        case BASE_ITEM_DIREMACE: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_DIRE_MACE;
             sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_DIRE_MACE;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_DIREMACE;
@@ -1181,8 +1181,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_DIREMACE;
             sFeat.WeaponOfChoice = FEAT_WEAPON_OF_CHOICE_DIREMACE;
             break;
-
-        case BASE_ITEM_DOUBLEAXE:
+        }
+        case BASE_ITEM_DOUBLEAXE: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_DOUBLE_AXE;
             sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_DOUBLE_AXE;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_DOUBLEAXE;
@@ -1192,8 +1192,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_DOUBLEAXE;
             sFeat.WeaponOfChoice = FEAT_WEAPON_OF_CHOICE_DOUBLEAXE;
             break;
-
-        case BASE_ITEM_DWARVENWARAXE:
+        }
+        case BASE_ITEM_DWARVENWARAXE: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_DWAXE;
             sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_DWAXE;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_DWAXE;
@@ -1203,8 +1203,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_DWAXE;
             sFeat.WeaponOfChoice = FEAT_WEAPON_OF_CHOICE_DWAXE;
             break;
-
-        case BASE_ITEM_GREATAXE:
+        }
+        case BASE_ITEM_GREATAXE: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_GREAT_AXE;
             sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_GREAT_AXE;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_GREATAXE;
@@ -1214,8 +1214,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_GREATAXE;
             sFeat.WeaponOfChoice = FEAT_WEAPON_OF_CHOICE_GREATAXE;
             break;
-
-        case BASE_ITEM_GREATSWORD:
+        }
+        case BASE_ITEM_GREATSWORD: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_GREAT_SWORD;
             sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_GREAT_SWORD;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_GREATSWORD;
@@ -1225,8 +1225,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_GREATSWORD;
             sFeat.WeaponOfChoice = FEAT_WEAPON_OF_CHOICE_GREATSWORD;
             break;
-
-        case BASE_ITEM_HALBERD:
+        }
+        case BASE_ITEM_HALBERD: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_HALBERD;
             sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_HALBERD;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_HALBERD;
@@ -1236,8 +1236,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_HALBERD;
             sFeat.WeaponOfChoice = FEAT_WEAPON_OF_CHOICE_HALBERD;
             break;
-
-        case BASE_ITEM_HANDAXE:
+        }
+        case BASE_ITEM_HANDAXE: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_HAND_AXE;
             sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_HAND_AXE;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_HANDAXE;
@@ -1247,8 +1247,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_HANDAXE;
             sFeat.WeaponOfChoice = FEAT_WEAPON_OF_CHOICE_HANDAXE;
             break;
-
-        case BASE_ITEM_HEAVYCROSSBOW:
+        }
+        case BASE_ITEM_HEAVYCROSSBOW: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_HEAVY_CROSSBOW;
             sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_HEAVY_CROSSBOW;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_HEAVYCROSSBOW;
@@ -1258,8 +1258,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_HEAVYCROSSBOW;
             sFeat.WeaponOfChoice = -1;
             break;
-
-        case BASE_ITEM_HEAVYFLAIL:
+        }
+        case BASE_ITEM_HEAVYFLAIL: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_HEAVY_FLAIL;
             sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_HEAVY_FLAIL;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_HEAVYFLAIL;
@@ -1269,8 +1269,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_HEAVYFLAIL;
             sFeat.WeaponOfChoice = FEAT_WEAPON_OF_CHOICE_HEAVYFLAIL;
             break;
-
-        case BASE_ITEM_KAMA:
+        }
+        case BASE_ITEM_KAMA: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_KAMA;
             sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_KAMA;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_KAMA;
@@ -1280,8 +1280,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_KAMA;
             sFeat.WeaponOfChoice = FEAT_WEAPON_OF_CHOICE_KAMA;
             break;
-
-        case BASE_ITEM_KATANA:
+        }
+        case BASE_ITEM_KATANA: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_KATANA;
             sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_KATANA;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_KATANA;
@@ -1291,8 +1291,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_KATANA;
             sFeat.WeaponOfChoice = FEAT_WEAPON_OF_CHOICE_KATANA;
             break;
-
-        case BASE_ITEM_KUKRI:
+        }
+        case BASE_ITEM_KUKRI: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_KUKRI;
             sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_KUKRI;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_KUKRI;
@@ -1302,8 +1302,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_KUKRI;
             sFeat.WeaponOfChoice = FEAT_WEAPON_OF_CHOICE_KUKRI;
             break;
-
-        case BASE_ITEM_LIGHTCROSSBOW:
+        }
+        case BASE_ITEM_LIGHTCROSSBOW: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_LIGHT_CROSSBOW;
             sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_LIGHT_CROSSBOW;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_LIGHTCROSSBOW;
@@ -1313,8 +1313,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_LIGHTCROSSBOW;
             sFeat.WeaponOfChoice = -1;
             break;
-
-        case BASE_ITEM_LIGHTFLAIL:
+        }
+        case BASE_ITEM_LIGHTFLAIL: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_LIGHT_FLAIL;
             sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_LIGHT_FLAIL;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_LIGHTFLAIL;
@@ -1324,8 +1324,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_LIGHTFLAIL;
             sFeat.WeaponOfChoice = FEAT_WEAPON_OF_CHOICE_LIGHTFLAIL;
             break;
-
-        case BASE_ITEM_LIGHTHAMMER:
+        }
+        case BASE_ITEM_LIGHTHAMMER: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_LIGHT_HAMMER;
             sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_LIGHT_HAMMER;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_LIGHTHAMMER;
@@ -1335,8 +1335,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_LIGHTHAMMER;
             sFeat.WeaponOfChoice = FEAT_WEAPON_OF_CHOICE_LIGHTHAMMER;
             break;
-
-        case BASE_ITEM_LIGHTMACE:
+        }
+        case BASE_ITEM_LIGHTMACE: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_LIGHT_MACE;
             sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_LIGHT_MACE;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_LIGHTMACE;
@@ -1346,8 +1346,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_LIGHTMACE;
             sFeat.WeaponOfChoice = FEAT_WEAPON_OF_CHOICE_LIGHTMACE;
             break;
-
-        case BASE_ITEM_LONGBOW:
+        }
+        case BASE_ITEM_LONGBOW: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_LONGBOW;
             sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_LONGBOW;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_LONGBOW;
@@ -1357,8 +1357,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_LONGBOW;
             sFeat.WeaponOfChoice = -1;
             break;
-
-        case BASE_ITEM_LONGSWORD:
+        }
+        case BASE_ITEM_LONGSWORD: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_LONG_SWORD;
             sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_LONG_SWORD;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_LONGSWORD;
@@ -1368,8 +1368,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_LONGSWORD;
             sFeat.WeaponOfChoice = FEAT_WEAPON_OF_CHOICE_LONGSWORD;
             break;
-
-        case BASE_ITEM_MORNINGSTAR:
+        }
+        case BASE_ITEM_MORNINGSTAR: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_MORNING_STAR;
             sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_MORNING_STAR;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_MORNINGSTAR;
@@ -1379,8 +1379,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_MORNINGSTAR;
             sFeat.WeaponOfChoice = FEAT_WEAPON_OF_CHOICE_MORNINGSTAR;
             break;
-
-        case BASE_ITEM_QUARTERSTAFF:
+        }
+        case BASE_ITEM_QUARTERSTAFF: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_STAFF;
             sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_STAFF;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_QUARTERSTAFF;
@@ -1390,8 +1390,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_QUARTERSTAFF;
             sFeat.WeaponOfChoice = FEAT_WEAPON_OF_CHOICE_QUARTERSTAFF;
             break;
-
-        case BASE_ITEM_RAPIER:
+        }
+        case BASE_ITEM_RAPIER: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_RAPIER;
             sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_RAPIER;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_RAPIER;
@@ -1401,8 +1401,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_RAPIER;
             sFeat.WeaponOfChoice = FEAT_WEAPON_OF_CHOICE_RAPIER;
             break;
-
-        case BASE_ITEM_SCIMITAR:
+        }
+        case BASE_ITEM_SCIMITAR: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_SCIMITAR;
             sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_SCIMITAR;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_SCIMITAR;
@@ -1412,8 +1412,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_SCIMITAR;
             sFeat.WeaponOfChoice = FEAT_WEAPON_OF_CHOICE_SCIMITAR;
             break;
-
-        case BASE_ITEM_SCYTHE:
+        }
+        case BASE_ITEM_SCYTHE: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_SCYTHE;
             sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_SCYTHE;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_SCYTHE;
@@ -1423,8 +1423,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_SCYTHE;
             sFeat.WeaponOfChoice = FEAT_WEAPON_OF_CHOICE_SCYTHE;
             break;
-
-        case BASE_ITEM_SHORTBOW:
+        }
+        case BASE_ITEM_SHORTBOW: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_SHORTBOW;
             sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_SHORTBOW;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_SHORTBOW;
@@ -1434,8 +1434,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_SHORTBOW;
             sFeat.WeaponOfChoice = -1;
             break;
-
-        case BASE_ITEM_SHORTSPEAR:
+        }
+        case BASE_ITEM_SHORTSPEAR: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_SPEAR;
             sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_SPEAR;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_SHORTSPEAR;
@@ -1445,8 +1445,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_SHORTSPEAR;
             sFeat.WeaponOfChoice = FEAT_WEAPON_OF_CHOICE_SHORTSPEAR;
             break;
-
-        case BASE_ITEM_SHORTSWORD:
+        }
+        case BASE_ITEM_SHORTSWORD: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_SHORT_SWORD;
             sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_SHORT_SWORD;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_SHORTSWORD;
@@ -1456,8 +1456,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_SHORTSWORD;
             sFeat.WeaponOfChoice = FEAT_WEAPON_OF_CHOICE_SHORTSWORD;
             break;
-
-        case BASE_ITEM_SHURIKEN:
+        }
+        case BASE_ITEM_SHURIKEN: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_SHURIKEN;
             sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_SHURIKEN;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_SHURIKEN;
@@ -1467,8 +1467,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_SHURIKEN;
             sFeat.WeaponOfChoice = -1;
             break;
-
-        case BASE_ITEM_SICKLE:
+        }
+        case BASE_ITEM_SICKLE: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_SICKLE;
             sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_SICKLE;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_SICKLE;
@@ -1478,8 +1478,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_SICKLE;
             sFeat.WeaponOfChoice = FEAT_WEAPON_OF_CHOICE_SICKLE;
             break;
-
-        case BASE_ITEM_SLING:
+        }
+        case BASE_ITEM_SLING: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_SLING;
             sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_SLING;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_SLING;
@@ -1489,8 +1489,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_SLING;
             sFeat.WeaponOfChoice = -1;
             break;
-
-        case BASE_ITEM_THROWINGAXE:
+        }
+        case BASE_ITEM_THROWINGAXE: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_THROWING_AXE;
             sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_THROWING_AXE;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_THROWINGAXE;
@@ -1500,8 +1500,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_THROWINGAXE;
             sFeat.WeaponOfChoice = -1;
             break;
-
-        case BASE_ITEM_TWOBLADEDSWORD:
+        }
+        case BASE_ITEM_TWOBLADEDSWORD: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_TWO_BLADED_SWORD;
             sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_TWO_BLADED_SWORD;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_TWOBLADEDSWORD;
@@ -1511,8 +1511,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_TWOBLADEDSWORD;
             sFeat.WeaponOfChoice = FEAT_WEAPON_OF_CHOICE_TWOBLADEDSWORD;
             break;
-
-        case BASE_ITEM_WARHAMMER:
+        }
+        case BASE_ITEM_WARHAMMER: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_WAR_HAMMER;
             sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_WAR_HAMMER;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_WARHAMMER;
@@ -1522,8 +1522,8 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_WARHAMMER;
             sFeat.WeaponOfChoice = FEAT_WEAPON_OF_CHOICE_WARHAMMER;
             break;
-
-        case BASE_ITEM_WHIP:
+        }
+        case BASE_ITEM_WHIP: {
             sFeat.Focus = FEAT_WEAPON_FOCUS_WHIP;
             sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_WHIP;
             sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_WHIP;
@@ -1533,6 +1533,7 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_WHIP;
             sFeat.WeaponOfChoice = FEAT_WEAPON_OF_CHOICE_WHIP;
             break;
+        }
     }
     return sFeat;
 }
@@ -2387,7 +2388,7 @@ int GetMagicalAttackBonus(object oAttacker)
                     iMagicBonus += 2;
                     break;
 
-                case SPELL_DIVINE_FAVOR:
+                case SPELL_DIVINE_FAVOR: {
                     iMagicBonus++; // at least one point increase
 
 // motu99: normally divine favor can only be cast on self, but what with runes?
@@ -2402,7 +2403,7 @@ int GetMagicalAttackBonus(object oAttacker)
 
                     iMagicBonus += iBonus;
                     break;
-
+                }
                 case SPELL_DIVINE_POWER:
                     iBonus = GetFighterBAB(GetHitDice(oAttacker)) - GetBaseAttackBonus(oAttacker);
                     iMagicBonus += iBonus;
@@ -2419,7 +2420,7 @@ int GetMagicalAttackBonus(object oAttacker)
                     // break;
 
                 // SPELL_DIVINE_WRATH
-                case SPELLABILITY_DC_DIVINE_WRATH: // motu99: didn't check this piece of code
+                case SPELLABILITY_DC_DIVINE_WRATH: {// motu99: didn't check this piece of code
                     iBonus = GetLevelByClass(CLASS_TYPE_DIVINECHAMPION, oAttacker);
                     iBonus /= 5;
                     iBonus -= 1;
@@ -2429,8 +2430,8 @@ int GetMagicalAttackBonus(object oAttacker)
                     iBonus += 3;
                     iMagicBonus += iBonus;
                     break;
-
-                case SPELL_TENSERS_TRANSFORMATION:
+                }
+                case SPELL_TENSERS_TRANSFORMATION: {
                     // find out caster level (should be stored in local int on oAttacker)
                     iBonus = GetLocalInt(oAttacker, "CasterLvl_TensersTrans");
 
@@ -2448,9 +2449,9 @@ int GetMagicalAttackBonus(object oAttacker)
                     iBonus /= 2;
                     iMagicBonus += iBonus;
                     break;
-
+                }
                 // Bard's Song
-                case SPELL_BARD_SONG:
+                case SPELL_BARD_SONG: {
                     oCaster = GetEffectCreator(eEffect);
                     if(!GetIsObjectValid(oCaster)) // if we cannot find the caster, we assume the attacker was the caster
                         oCaster = oAttacker;
@@ -2463,6 +2464,7 @@ int GetMagicalAttackBonus(object oAttacker)
                             iMagicBonus++;
                     }
                     break;
+                }
             }
         }
 
@@ -2524,7 +2526,7 @@ int GetMagicalAttackBonus(object oAttacker)
                     break;
 
                 // Bard's Curse Song
-                case SPELL_BARD_CURSE_SONG:
+                case SPELL_BARD_CURSE_SONG: {
                     oCaster = GetEffectCreator(eEffect);
                     if(!GetIsObjectValid(oCaster)) // if we cannot find the caster, we assume the attacker was the caster
                         oCaster = oAttacker;
@@ -2538,7 +2540,7 @@ int GetMagicalAttackBonus(object oAttacker)
                                 iMagicBonus--;
                     }
                     break;
-
+                }
                 // Power Shot
                 case SPELL_PA_POWERSHOT:
                     iMagicBonus -= 5;

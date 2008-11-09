@@ -77,14 +77,14 @@ int GetIsPRCCreatureWeapon(object oTest);
  */
 float DamageAvg(int iDamage);
 
-#include "prc_alterations"
+//#include "prc_alterations"
 //#include "pnp_shft_poly"
 //#include "prc_feat_const"
 //#include "prc_ipfeat_const"
 //#include "prc_class_const"
 //#include "prc_racial_const"
 //#include "prc_spell_const"
-#include "inc_utility"
+//#include "inc_utility"
 #include "prc_inc_natweap"
 
 //////////////////////////////////////////////////

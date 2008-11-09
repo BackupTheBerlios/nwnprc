@@ -16,7 +16,7 @@
 //:: Modified On: 23.03.2005
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "prc_inc_combat"
 #include "prc_feat_const"
 #include "psi_inc_psifunc"
 

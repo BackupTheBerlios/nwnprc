@@ -321,13 +321,10 @@ string Get2DACache(string s2DA, string sColumn, int nRow, string s = "")
             || s2DA == "soundsets"
             || s2DA == "appearance"
             || s2DA == "classes"
-            || s2DA == "racialtypes"
-            || s2DA == "item_to_ireq")
+            || s2DA == "racialtypes")
             SQL = "SELECT "+q+""+sDBColumn+""+q+" FROM "+q+"prc_cached2da_"+s2DA+""+q+" WHERE ( "+q+"rowid"+q+" = "+IntToString(nRow)+" )";
         else if(TestStringAgainstPattern("cls_feat_**", s2DA))
             SQL = "SELECT "+q+""+sDBColumn+""+q+" FROM "+q+"prc_cached2da_cls_feat"+q+" WHERE ( "+q+"rowid"+q+" = "+IntToString(nRow)+" ) AND ( "+q+"file"+q+" = '"+s2DA+"' )";
-        else if(TestStringAgainstPattern("ireq_**", s2DA))
-            SQL = "SELECT "+q+""+sDBColumn+""+q+" FROM "+q+"prc_cached2da_ireq"+q+" WHERE ( "+q+"rowid"+q+" = "+IntToString(nRow)+" ) AND ( "+q+"file"+q+" = '"+s2DA+"' )";
         else
             SQL = "SELECT "+q+"data"+q+" FROM "+q+"prc_cached2da"+q+" WHERE ( "+q+"file"+q+" = '"+s2DA+"' ) AND ( "+q+"columnid"+q+" = '"+sDBColumn+"' ) AND ( "+q+"rowid"+q+" = "+IntToString(nRow)+" )";
 
@@ -389,8 +386,7 @@ string Get2DACache(string s2DA, string sColumn, int nRow, string s = "")
             || s2DA == "appearance"
             || s2DA == "portraits"
             || s2DA == "classes"
-            || s2DA == "racialtypes"
-            || s2DA == "item_to_ireq")
+            || s2DA == "racialtypes")
         {
             //check that 2da row exisits
             SQL = "SELECT "+q+"rowid"+q+" FROM "+q+"prc_cached2da_"+s2DA+""+q+" WHERE "+q+"rowid"+q+"="+IntToString(nRow);
@@ -422,23 +418,6 @@ string Get2DACache(string s2DA, string sColumn, int nRow, string s = "")
             else
             {
                 SQL = "INSERT INTO "+q+"prc_cached2da_cls_feat"+q+" ("+q+"rowid"+q+", "+q+""+sDBColumn+""+q+", "+q+"file"+q+") VALUES ("+IntToString(nRow)+" , '"+s+"', '"+s2DA+"')";
-            }
-        }
-        else if(TestStringAgainstPattern("ireq_**", s2DA))
-        {
-            //check that 2da row exisits
-            SQL = "SELECT "+q+"rowid"+q+" FROM "+q+"prc_cached2da_ireq"+q+" WHERE ("+q+"rowid"+q+"="+IntToString(nRow)+") AND ("+q+"file"+q+"='"+s2DA+"')";
-            PRC_SQLExecDirect(SQL);
-            //if the row exists, then update it
-            //otherwise insert a new row
-            if(PRC_SQLFetch() == PRC_SQL_SUCCESS
-                && PRC_SQLGetData(1) != "")
-            {
-                SQL = "UPDATE "+q+"prc_cached2da_ireq"+q+" SET  "+q+""+sDBColumn+""+q+" = '"+s+"'WHERE ("+q+"rowid"+q+" = "+IntToString(nRow)+") AND ("+q+"file"+q+"='"+s2DA+"')";
-            }
-            else
-            {
-                SQL = "INSERT INTO "+q+"prc_cached2da_ireq"+q+" ("+q+"rowid"+q+", "+q+""+sDBColumn+""+q+", "+q+"file"+q+") VALUES ("+IntToString(nRow)+" , '"+s+"', '"+s2DA+"')";
             }
         }
         else

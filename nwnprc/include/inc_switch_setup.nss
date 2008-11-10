@@ -1176,7 +1176,6 @@ void SetDefaultFileEnds()
     SetPRCSwitch("PRC_FILE_END_itempropdef", 199);
     SetPRCSwitch("PRC_FILE_END_itemprops", 199);
     SetPRCSwitch("PRC_FILE_END_itemvalue", 59);
-    SetPRCSwitch("PRC_FILE_END_item_to_ireq", 790);
     SetPRCSwitch("PRC_FILE_END_itmwizammo", 54);
     SetPRCSwitch("PRC_FILE_END_itmwizarmor", 72);
     SetPRCSwitch("PRC_FILE_END_itmwizhelmet", 71);
@@ -1668,8 +1667,6 @@ void SetDefaultFileEnds()
     SetPRCSwitch(FILE_END_TAILS,           PRCGetFileEnd("tailmodel"));
     SetPRCSwitch(FILE_END_PACKAGE,         PRCGetFileEnd("packages"));
     SetPRCSwitch(FILE_END_RACE_FEAT,       30);
-    SetPRCSwitch(FILE_END_IREQ,            50);
-    SetPRCSwitch(FILE_END_ITEM_TO_IREQ,    PRCGetFileEnd("item_to_ireq"));
     SetPRCSwitch(FILE_END_BASEITEMS,       PRCGetFileEnd("baseitems"));
 }
 

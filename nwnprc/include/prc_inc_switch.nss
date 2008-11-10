@@ -1176,14 +1176,6 @@ const string FILE_END_PACKAGE                        = "FILE_END_PACKAGE";
  * This will be set automatically to a default unless FILE_END_MANUAL is turned on */
 const string FILE_END_RACE_FEAT                      = "FILE_END_RACE_FEAT";
 
-/** Defines the line after which none of the race_feat_*.2da have entries.
- * This will be set automatically to a default unless FILE_END_MANUAL is turned on */
-const string FILE_END_IREQ                           = "FILE_END_IREQ";
-
-/** Defines the line after which none of the race_feat_*.2da have entries.
- * This will be set automatically to a default unless FILE_END_MANUAL is turned on */
-const string FILE_END_ITEM_TO_IREQ                   = "FILE_END_ITEM_TO_IREQ";
-
 /** Last line of baseitems.2da
  * This will be set automatically to a default unless FILE_END_MANUAL is turned on */
 const string FILE_END_BASEITEMS                          = "FILE_END_BASEITEMS";

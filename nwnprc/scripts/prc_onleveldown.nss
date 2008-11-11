@@ -18,6 +18,7 @@
 #include "prc_inc_function"
 #include "psi_inc_psifunc"
 #include "true_inc_truknwn"
+#include "inv_inc_invfunc"
 
 
 void PrcFeats(object oPC)
@@ -58,6 +59,22 @@ void main()
         int i = nOldLevel;
         for(; i > GetHitDice(oPC); i--)
             RemoveUtterancesKnownOnLevel(oPC, i);
+    }
+
+    // Same for Invokers
+    if(GetIsInvocationUser(oPC))
+    {
+        int i = nOldLevel;
+        for(; i > GetHitDice(oPC); i--)
+            RemoveInvocationsKnownOnLevel(oPC, i);
+    }
+
+    // And ToB
+    if(GetIsBladeMagicUser(oPC))
+    {
+        int i = nOldLevel;
+        for(; i > GetHitDice(oPC); i--)
+            RemoveManeuversKnownOnLevel(oPC, i);
     }
 
     // Check to see which special prc requirements (i.e. those that can't be done)

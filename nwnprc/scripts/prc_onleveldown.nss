@@ -19,6 +19,8 @@
 #include "psi_inc_psifunc"
 #include "true_inc_truknwn"
 #include "inv_inc_invfunc"
+#include "tob_inc_tobfunc"
+#include "tob_inc_moveknwn"
 
 
 void PrcFeats(object oPC)

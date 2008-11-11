@@ -49,7 +49,7 @@ void main()
         TRUE, TOUCH_ATTACK_MELEE, FALSE, PRC_COMBATMODE_ALLOW_TARGETSWITCH|PRC_COMBATMODE_ABORT_WHEN_OUT_OF_RANGE));
 
     //Fire cast spell at event for the specified target
-    DelayCommand(2.0, SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, INVOKE_ELDRITCH_BLAST)));
+    DelayCommand(2.0, SignalEvent(GetSpellTargetObject(), EventSpellCastAt(OBJECT_SELF, INVOKE_ELDRITCH_BLAST)));
 
     if(LOCAL_DEBUG) DelayCommand(0.01f, DoDebug("Finished inv_eldrtch_glv")); // Wrap in delaycommand so that the game clock gets to update for the purposes of WriteTimestampedLogEntry
 }

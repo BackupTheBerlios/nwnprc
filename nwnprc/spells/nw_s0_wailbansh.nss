@@ -87,7 +87,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                         DeathlessFrenzyCheck(oTarget);
                         
                         //Apply the delay VFX impact and death effect
-                        DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+                        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
                         effect eDeath = EffectDeath();
                         DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget)); // no delay
                     }

@@ -131,7 +131,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                 if(!PRCMySavingThrow(SAVING_THROW_FORT, oLowest, nDC, SAVING_THROW_TYPE_DEATH, OBJECT_SELF, fDelay))
                 {
                     DeathlessFrenzyCheck(oTarget); 
-                    DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oLowest));
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oLowest);
                     //DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oLowest));
                 }
             }

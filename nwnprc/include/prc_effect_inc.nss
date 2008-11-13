@@ -167,13 +167,17 @@ void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, fl
            if(!bHostileSpell) fDuration = fDuration * 2;
        }
        //check if Fearsome Necromancy applies
-       if(GetHasFeat(FEAT_FEARSOME_NECROMANCY, oCaster) && GetSpellSchool(PRCGetSpellId()) == SPELL_SCHOOL_NECROMANCY && !GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS))
+       if(GetHasFeat(FEAT_FEARSOME_NECROMANCY, oCaster) && 
+          GetSpellSchool(PRCGetSpellId()) == SPELL_SCHOOL_NECROMANCY && 
+          !GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS) &&
+          GetLastSpellHarmful() &&
+          oTarget != oCaster)
        {
        		effect eReturn = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
-            eReturn = EffectLinkEffects(eReturn, EffectAttackDecrease(2));
-            eReturn = EffectLinkEffects(eReturn, EffectSavingThrowDecrease(SAVING_THROW_ALL,2));
+            	eReturn = EffectLinkEffects(eReturn, EffectAttackDecrease(2));
+            	eReturn = EffectLinkEffects(eReturn, EffectSavingThrowDecrease(SAVING_THROW_ALL,2));
     		eReturn = EffectLinkEffects(eReturn, EffectSkillDecrease(SKILL_ALL_SKILLS, 2));
-            ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eReturn, oTarget, 6.0);
+            	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eReturn, oTarget, 6.0);
        }       
        ApplyEffectToObject(nDurationType, eEffect, oTarget, fDuration);
        // may have code traverse the lists right here and not add the new effect

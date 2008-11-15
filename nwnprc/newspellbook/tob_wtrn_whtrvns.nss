@@ -43,7 +43,7 @@ void main()
     if(move.bCanManeuver)
     {
     	effect eNone;
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(4), 0, "White Raven Strike Hit", "White Raven Strike Miss");
+	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(4), 0, "White Raven Strike Hit", "White Raven Strike Miss"));
 	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
     	{
 		AssignCommand(oTarget, ClearAllActions(TRUE));

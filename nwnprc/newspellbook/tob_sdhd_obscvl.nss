@@ -51,7 +51,7 @@ void main()
     	int nDamageType = DAMAGE_TYPE_MAGICAL;
     	
 	effect eNone;
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, nDamage, nDamageType, "Obscuring Shadow Veil Hit", "Obscuring Shadow Veil Miss");
+	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, nDamage, nDamageType, "Obscuring Shadow Veil Hit", "Obscuring Shadow Veil Miss"));
 	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
     	{
     		// Saving Throw

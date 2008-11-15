@@ -77,7 +77,7 @@ void main()
     {
     	effect eNone;
     	
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Deathmark Hit", "Deathmark Miss");
+	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Deathmark Hit", "Deathmark Miss"));
 	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
     	{
     		location lTarget = GetLocation(oTarget);

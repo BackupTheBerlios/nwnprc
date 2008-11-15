@@ -46,6 +46,6 @@ void main()
         
         if(move.bCanManeuver)
         {
-                PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 100, GetWeaponDamageType(oWeap), "Strike of Perfect Clarity Hit", "Strike of Perfect Clarity Miss");
+                DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 100, GetWeaponDamageType(oWeap), "Strike of Perfect Clarity Hit", "Strike of Perfect Clarity Miss"));
         }
 }                

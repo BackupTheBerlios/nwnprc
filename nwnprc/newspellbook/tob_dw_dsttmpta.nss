@@ -38,7 +38,7 @@ void main()
     {
 	// Slap upside the head, only one AoO per round.
 	effect eNone;
-	PerformAttack(oTarget, GetAreaOfEffectCreator(), eNone, 0.0, 0, 0, 0, "Desert Tempest Hit", "Desert Tempest Miss");
+	DelayCommand(0.0, PerformAttack(oTarget, GetAreaOfEffectCreator(), eNone, 0.0, 0, 0, 0, "Desert Tempest Hit", "Desert Tempest Miss"));
 	SetLocalInt(oTarget, "DesertTempest", TRUE);
 	DelayCommand(6.0, DeleteLocalInt(oTarget, "DesertTempest"));
     }

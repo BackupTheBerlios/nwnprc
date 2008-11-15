@@ -47,7 +47,7 @@ void main()
     {
     	// Normal attack
     	effect eNone;
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Shadow Blade Technique Hit", "Shadow Blade Technique Miss");
+	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Shadow Blade Technique Hit", "Shadow Blade Technique Miss"));
 	// Shadow double blade
 	if (GetAttackRoll(oTarget, oInitiator, GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator)))
 	{

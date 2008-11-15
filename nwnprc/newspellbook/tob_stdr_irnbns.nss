@@ -45,7 +45,7 @@ void main()
         if(move.bCanManeuver)
         {
                 effect eNone;
-                PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Iron Bones Hit", "Iron Bones Miss");
+                DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Iron Bones Hit", "Iron Bones Miss"));
                 if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
                 {
                         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectDamageReduction(10, DAMAGE_POWER_PLUS_FIVE, 0), oInitiator, RoundsToSeconds(1));

@@ -47,7 +47,7 @@ void main()
                 effect eNone;
                 SetLocalInt(oInitiator, "MoveIgnoreDR", TRUE);
                 object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
-                PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(6), GetWeaponDamageType(oWeap), "Elder Mountain Strike Hit", "Elder Mountain Strike Miss");
+                DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(6), GetWeaponDamageType(oWeap), "Elder Mountain Strike Hit", "Elder Mountain Strike Miss"));
                 // Cleanup
                 DelayCommand(3.0, DeleteLocalInt(oInitiator, "MoveIgnoreDR"));
         }

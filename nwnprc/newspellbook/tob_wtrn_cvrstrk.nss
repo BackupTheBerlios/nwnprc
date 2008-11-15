@@ -45,7 +45,7 @@ void main()
     if(move.bCanManeuver)
     {
     	effect eNone;
-	PerformAttackRound(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, FALSE, "Covering Strike Hit", "Covering Strike Miss");
+	DelayCommand(0.0, PerformAttackRound(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, FALSE, "Covering Strike Hit", "Covering Strike Miss"));
 	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
     	{
 		effect eLink = ExtraordinaryEffect(EffectVisualEffect(VFX_IMP_FAERIE_FIRE));

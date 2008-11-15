@@ -54,7 +54,7 @@ void main()
         {
                 effect eNone;
                 
-                PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Enervating Shadow Strike Hit", "Enervating Shadow Strike Miss");
+                DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Enervating Shadow Strike Hit", "Enervating Shadow Strike Miss"));
                 
                 if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
                 {

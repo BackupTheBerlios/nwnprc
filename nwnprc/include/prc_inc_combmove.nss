@@ -348,7 +348,7 @@ int DoCharge(object oPC, object oTarget, int nDoAttack = TRUE, int nGenerateAoO 
                                 nDamageType = GetWeaponDamageType(oWeap);
                         }
                         if (nPounce) // Uses instant attack in order to make sure they all go off in the alloted period of time.
-                        	PerformAttackRound(oPC, oTarget, eNone, 0.0, nAttack, nDamage, nDamageType, FALSE, "Charge Hit", "Charge Miss", FALSE, FALSE, TRUE);
+                        	DelayCommand(0.0, PerformAttackRound(oPC, oTarget, eNone, 0.0, nAttack, nDamage, nDamageType, FALSE, "Charge Hit", "Charge Miss", FALSE, FALSE, TRUE));
                         	
                         //Gorebrute shifter option
                         else if(GetLocalInt(oPC, "ShifterGore"))
@@ -361,7 +361,7 @@ int DoCharge(object oPC, object oTarget, int nDoAttack = TRUE, int nGenerateAoO 
                                 nSize = CREATURE_SIZE_COLOSSAL;
                             sResRef += GetAffixForSize(nSize);
                             object oHorns = CreateItemOnObject(sResRef, oPC);
-                            PerformAttack(oPC, oTarget, eNone, 0.0, nAttack, nDamage + (GetHitDice(oPC) / 4), DAMAGE_TYPE_PIERCING, "Horns Hit", "Horns Miss", FALSE, oHorns);
+                            DelayCommand(0.0, PerformAttack(oPC, oTarget, eNone, 0.0, nAttack, nDamage + (GetHitDice(oPC) / 4), DAMAGE_TYPE_PIERCING, "Horns Hit", "Horns Miss", FALSE, oHorns));
                             //Gorebrute Elite Knockdown
                             if(GetLocalInt(oTarget, "PRCCombat_StruckByAttack") && GetHasFeat(FEAT_GOREBRUTE_ELITE))
                             {
@@ -380,11 +380,11 @@ int DoCharge(object oPC, object oTarget, int nDoAttack = TRUE, int nGenerateAoO 
                         {
                             object oWeaponL = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oPC);
                             object oWeaponR = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oPC);
-                            PerformAttack(oPC, oTarget, eNone, 0.0, nAttack, nDamage, DAMAGE_TYPE_SLASHING, "Claw Hit", "Claw Miss", FALSE, oWeaponR, oWeaponL);
-                            PerformAttack(oPC, oTarget, eNone, 0.0, nAttack, nDamage, DAMAGE_TYPE_SLASHING, "Claw Hit", "Claw Miss", FALSE, oWeaponR, oWeaponL, 1);
+                            DelayCommand(0.0, PerformAttack(oPC, oTarget, eNone, 0.0, nAttack, nDamage, DAMAGE_TYPE_SLASHING, "Claw Hit", "Claw Miss", FALSE, oWeaponR, oWeaponL));
+                            DelayCommand(0.0, PerformAttack(oPC, oTarget, eNone, 0.0, nAttack, nDamage, DAMAGE_TYPE_SLASHING, "Claw Hit", "Claw Miss", FALSE, oWeaponR, oWeaponL, 1));
                         }
                         else
-                        	PerformAttack(oPC, oTarget, eNone, 0.0, nAttack, nDamage, nDamageType, "Charge Hit", "Charge Miss");
+                        	DelayCommand(0.0, PerformAttack(oPC, oTarget, eNone, 0.0, nAttack, nDamage, nDamageType, "Charge Hit", "Charge Miss"));
                         // Local int set when Perform Attack hits
                         nSucceed = GetLocalInt(oTarget, "PRCCombat_StruckByAttack");
                 }
@@ -430,7 +430,7 @@ int DoBullRush(object oPC, object oTarget, int nExtraBonus, int nGenerateAoO = T
                        GetIsEnemy(oAreaTarget, oPC)) // Only enemies are going to take AoOs
                     {
                         // Perform the Attack
-                        PerformAttack(oPC, oAreaTarget, eNone, 0.0, 0, 0, 0, "Attack of Opportunity Hit", "Attack of Opportunity Miss");
+                        DelayCommand(0.0, PerformAttack(oPC, oAreaTarget, eNone, 0.0, 0, 0, 0, "Attack of Opportunity Hit", "Attack of Opportunity Miss"));
                     }
                 
                 //Select the next target within the spell shape.
@@ -484,7 +484,7 @@ int DoTrip(object oPC, object oTarget, int nExtraBonus, int nGenerateAoO = TRUE,
         {
                 // Perform the Attack
                 effect eNone;
-                PerformAttack(oPC, oTarget, eNone, 0.0, 0, 0, 0, "Attack of Opportunity Hit", "Attack of Opportunity Miss");     
+                DelayCommand(0.0, PerformAttack(oPC, oTarget, eNone, 0.0, 0, 0, 0, "Attack of Opportunity Hit", "Attack of Opportunity Miss"));     
         }
         int nPCCheck = nPCStat + nPCBonus + nExtraBonus + d20();
         int nTargetCheck = nTargetStat + nTargetBonus + d20();
@@ -616,7 +616,7 @@ int DoGrapple(object oPC, object oTarget, int nExtraBonus, int nGenerateAoO = TR
         if (nGenerateAoO)
         {
                 // Perform the Attack
-                PerformAttack(oPC, oTarget, eNone, 0.0, 0, 0, 0, "Attack of Opportunity Hit", "Attack of Opportunity Miss");     
+                DelayCommand(0.0, PerformAttack(oPC, oTarget, eNone, 0.0, 0, 0, 0, "Attack of Opportunity Hit", "Attack of Opportunity Miss"));     
         
                 if (GetLocalInt(oPC, "PRCCombat_StruckByAttack"))
                 {
@@ -702,12 +702,12 @@ void DoGrappleOptions(object oPC, object oTarget, int nExtraBonus, int nSwitch =
                         {
                                 int nDam = 0;
                                 if (PRCGetCreatureSize(oTarget) > PRCGetCreatureSize(oPC)) nDam = 4;
-                                PerformAttack(oPC, oTarget, eNone, 0.0, 0, nDam, 0, "Wolverine Stance Hit", "Wolverine Stance Miss");    
+                                DelayCommand(0.0, PerformAttack(oPC, oTarget, eNone, 0.0, 0, nDam, 0, "Wolverine Stance Hit", "Wolverine Stance Miss"));    
                         }
                         else
                         {
                                 // Attack with a -4 penalty
-                                PerformAttack(oPC, oTarget, eNone, 0.0, -4, 0, 0, "Grapple Attack Hit", "Grapple Attack Miss");  
+                                DelayCommand(0.0, PerformAttack(oPC, oTarget, eNone, 0.0, -4, 0, 0, "Grapple Attack Hit", "Grapple Attack Miss"));  
                         }
                 }
                 else
@@ -720,7 +720,7 @@ void DoGrappleOptions(object oPC, object oTarget, int nExtraBonus, int nSwitch =
                 {
                         // Attack with a -4 penalty
                         object oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget);
-                        PerformAttack(oPC, oTarget, eNone, 0.0, -4, 0, 0, "Grapple Attack Hit", "Grapple Attack Miss", FALSE, oWeapon);  
+                        DelayCommand(0.0, PerformAttack(oPC, oTarget, eNone, 0.0, -4, 0, 0, "Grapple Attack Hit", "Grapple Attack Miss", FALSE, oWeapon));  
                 }
                 else
                         FloatingTextStringOnCreature("You have failed your Grapple Attempt",oPC, FALSE);        
@@ -790,7 +790,7 @@ int DoOverrun(object oPC, object oTarget, int nGenerateAoO = TRUE, int nExtraBon
         {
                 // Perform the Attack
                 effect eNone;
-                PerformAttack(oPC, oTarget, eNone, 0.0, 0, 0, 0, "Attack of Opportunity Hit", "Attack of Opportunity Miss");     
+                DelayCommand(0.0, PerformAttack(oPC, oTarget, eNone, 0.0, 0, 0, 0, "Attack of Opportunity Hit", "Attack of Opportunity Miss"));     
         }
         int nPCCheck = nPCStat + nPCBonus + nExtraBonus + d20();
         int nTargetCheck = nTargetStat + nTargetBonus + d20();

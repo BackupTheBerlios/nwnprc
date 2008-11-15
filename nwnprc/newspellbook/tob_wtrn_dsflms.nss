@@ -44,7 +44,7 @@ void main()
     if(move.bCanManeuver)
     {
     	effect eNone;
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Douse the Flames Hit", "Douse the Flames Miss");
+	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Douse the Flames Hit", "Douse the Flames Miss"));
 	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
     	{
 		effect eLink = ExtraordinaryEffect(EffectVisualEffect(VFX_IMP_FAERIE_FIRE));

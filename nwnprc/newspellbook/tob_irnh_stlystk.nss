@@ -45,7 +45,7 @@ void main()
     if(move.bCanManeuver)
     {
     	effect eNone;
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, 4, 0, 0, "Steely Strike Hit", "Steely Strike Miss");
+	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 4, 0, 0, "Steely Strike Hit", "Steely Strike Miss"));
         effect eLink =                          EffectACDecrease(4);
                eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_ROOTED_TO_SPOT));
 	       eLink = ExtraordinaryEffect(eLink);

@@ -46,7 +46,7 @@ void main()
     {
     	effect eNone = EffectVisualEffect(PSI_IMP_CONCUSSION_BLAST);
     	object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(2), GetWeaponDamageType(oWeap), "Entangling Blade Hit", "Entangling Blade Miss");
+	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(2), GetWeaponDamageType(oWeap), "Entangling Blade Hit", "Entangling Blade Miss"));
 	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
     	{
 		effect eLink = ExtraordinaryEffect(EffectMovementSpeedDecrease(66));

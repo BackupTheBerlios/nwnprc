@@ -60,7 +60,7 @@ void main()
         else
         {
 		// Foes attacks as normal     
-		PerformAttack(oInitiator, oTarget, eNone, 0.0, 0, 0, 0, "Hit", "Miss");
+		DelayCommand(0.0, PerformAttack(oInitiator, oTarget, eNone, 0.0, 0, 0, 0, "Hit", "Miss"));
         }
         
         DelayCommand(6.0, RestoreBaseAttackBonus(oTarget));

@@ -45,6 +45,6 @@ void main()
         {
                 AssignCommand(oTarget, ClearAllActions(TRUE));
                 
-                PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Ghost Blade Hit", "Ghost Blade Miss");
+                DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Ghost Blade Hit", "Ghost Blade Miss"));
         }
 }

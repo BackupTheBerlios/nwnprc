@@ -45,7 +45,7 @@ void main()
         if(move.bCanManeuver)
         {
                 object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
-                PerformAttack(oTarget, oInitiator, eVis, 0.0, 0, d6(4), GetWeaponDamageType(oWeap), "Crushing Vise Hit", "Crushing Vise  Miss");
+                DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eVis, 0.0, 0, d6(4), GetWeaponDamageType(oWeap), "Crushing Vise Hit", "Crushing Vise  Miss"));
                 
                 if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
                 {

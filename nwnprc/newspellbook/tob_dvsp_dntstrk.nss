@@ -46,7 +46,7 @@ void main()
     if(move.bCanManeuver)
     {
     	effect eNone = EffectVisualEffect(PSI_IMP_CONCUSSION_BLAST);
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Daunting Strike Hit", "Daunting Strike Miss");
+	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Daunting Strike Hit", "Daunting Strike Miss"));
 	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
     	{
     		// Saving Throw

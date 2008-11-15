@@ -50,7 +50,7 @@ void main()
         if(move.bCanManeuver)
         {
                 effect eNone;
-                PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(4), 0, "Iron Bones Hit", "Iron Bones Miss");
+                DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(4), 0, "Iron Bones Hit", "Iron Bones Miss"));
                 
                 if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
                 {

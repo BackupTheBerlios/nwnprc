@@ -45,7 +45,7 @@ void main()
     if(move.bCanManeuver)
     {
     	effect eNone;
-	PerformAttackRound(oTarget, oInitiator, eNone, 0.0, 0, d6(6), 0, FALSE, "White Raven Hammer Hit", "White Raven Hammer Miss");
+	DelayCommand(0.0, PerformAttackRound(oTarget, oInitiator, eNone, 0.0, 0, d6(6), 0, FALSE, "White Raven Hammer Hit", "White Raven Hammer Miss"));
 	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
     	{
 		effect eLink = ExtraordinaryEffect(EffectVisualEffect(VFX_IMP_FAERIE_FIRE));

@@ -45,6 +45,6 @@ void main()
 
     if(move.bCanManeuver)
     {
-	PerformAttackRound(oTarget, oInitiator, EffectVisualEffect(VFX_IMP_DOMINATE_S), 0.0, 0, 0, 0, FALSE, "Emerald Razor Hit", "Emerald Razor Miss", FALSE, TRUE);
+	DelayCommand(0.0, PerformAttackRound(oTarget, oInitiator, EffectVisualEffect(VFX_IMP_DOMINATE_S), 0.0, 0, 0, 0, FALSE, "Emerald Razor Hit", "Emerald Razor Miss", FALSE, TRUE));
     }
 }

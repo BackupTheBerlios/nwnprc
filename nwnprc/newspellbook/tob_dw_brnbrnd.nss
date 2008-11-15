@@ -48,7 +48,7 @@ void main()
 	// Extra attack during the round
 	SetLocalInt(oInitiator, "DWBurningBrand", TRUE);
 	effect eNone;
-	PerformAttackRound(oTarget, oInitiator, eNone, 0.0, -2, 0, 0, FALSE, "Burning Brand Hit", "Burning Brand Miss");
+	DelayCommand(0.0, PerformAttackRound(oTarget, oInitiator, eNone, 0.0, -2, 0, 0, FALSE, "Burning Brand Hit", "Burning Brand Miss"));
 	DelayCommand(6.0, DeleteLocalInt(oInitiator, "DWBurningBrand"));
     }
 }

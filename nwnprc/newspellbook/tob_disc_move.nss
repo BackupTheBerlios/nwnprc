@@ -44,7 +44,7 @@ void main()
     {
     	// This section is for a strike, change for a boost or counter
     	effect eNone;
-	PerformAttack(oTarget, oInitiator, eNone);
+	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone));
 	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
     	{
         	// Apply effects in here

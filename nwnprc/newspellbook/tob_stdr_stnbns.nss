@@ -40,17 +40,13 @@ void main()
     object oInitiator    = OBJECT_SELF;
     object oTarget       = PRCGetSpellTargetObject();
     struct maneuver move = EvaluateManeuver(oInitiator, oTarget);
-    if(DEBUG) DoDebug("Evaluted Maneuver: Stone Bones");
 
     if(move.bCanManeuver)
     {
-    	if(DEBUG) DoDebug("Can Maneuver: Stone Bones");
     	effect eNone;
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Stone Bones Hit", "Stone Bones Miss");
-	if(DEBUG) DoDebug("Attack Completed: Stone Bones");
+	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Stone Bones Hit", "Stone Bones Miss"));
 	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
     	{
-    		if(DEBUG) DoDebug("Struck By Attack: Stone Bones");
         	effect eLink =                          EffectDamageReduction(5, DAMAGE_POWER_PLUS_FIVE);
         	       eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_ROOTED_TO_SPOT));
 		       eLink = ExtraordinaryEffect(eLink);

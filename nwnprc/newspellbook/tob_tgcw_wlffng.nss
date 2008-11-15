@@ -51,8 +51,8 @@ void main()
     	{
     		// Perform two attacks, overriding either weapon just to make sure
     		int nBonus = TOBSituationalAttackBonuses(oInitiator, DISCIPLINE_TIGER_CLAW);
-    		PerformAttack(oTarget, oInitiator, eNone, 0.0, -2 + nBonus, 0, 0, "Wolf Fang Strike Hit", "Wolf Fang Strike Miss", FALSE, oItem);
-    		PerformAttack(oTarget, oInitiator, eNone, 0.0, -2 + nBonus, 0, 0, "Wolf Fang Strike Hit", "Wolf Fang Strike Miss", FALSE, oItem2);
+    		DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, -2 + nBonus, 0, 0, "Wolf Fang Strike Hit", "Wolf Fang Strike Miss", FALSE, oItem));
+    		DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, -2 + nBonus, 0, 0, "Wolf Fang Strike Hit", "Wolf Fang Strike Miss", FALSE, oItem2));
         }
         else
         	FloatingTextStringOnCreature("You must have two melee weapons equipped to use this maneuver", oInitiator, FALSE);

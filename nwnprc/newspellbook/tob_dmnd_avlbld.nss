@@ -61,7 +61,7 @@ void Owieowieowowow(object oInitiator, object oTarget, int nHit, int nPenalty)
         if(nHit == 1)
         {
         	effect eNone;
-                PerformAttack(oTarget, oInitiator, eNone, 0.0, nPenalty, 0, 0, "Avalanche of Blades Hit", "Avalanche of Blades Miss");
+                DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, nPenalty, 0, 0, "Avalanche of Blades Hit", "Avalanche of Blades Miss"));
                 
                 if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack")) nHit = 1;
                 

@@ -48,7 +48,7 @@ void main()
     	effect eNone;
     	object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
     	// First attack, the monster's AoO
-	PerformAttack(oInitiator, oTarget, eNone, 0.0, 0, 0, 0, "Feigned Opening Hit", "Feigned Opening Miss");
+	DelayCommand(0.0, PerformAttack(oInitiator, oTarget, eNone, 0.0, 0, 0, 0, "Feigned Opening Hit", "Feigned Opening Miss"));
        
         if (GetLocalInt(oInitiator, "PRCCombat_StruckByAttack"))
     	{
@@ -68,8 +68,7 @@ void main()
         	        // Perform the Attack
  			effect eVis = EffectVisualEffect(VFX_IMP_STUN);
  			oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oAreaTarget);
-			PerformAttack(oTarget, oAreaTarget, eVis, 0.0, 0, 0, GetWeaponDamageType(oWeap), "Feigned Opening Hit", "Feigned Opening Miss");
-			if(DEBUG) DoDebug("tob_stsn_fgnopn: Feigned Opening Loop Running");
+			DelayCommand(0.0, PerformAttack(oTarget, oAreaTarget, eVis, 0.0, 0, 0, GetWeaponDamageType(oWeap), "Feigned Opening Hit", "Feigned Opening Miss"));
         	    }
 	
         	    //Select the next target within the spell shape.
@@ -78,7 +77,7 @@ void main()
     	}
     	else
     	{
-    		PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Feigned Opening Hit", "Feigned Opening Miss");
+    		DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Feigned Opening Hit", "Feigned Opening Miss"));
     	}
     }
 }

@@ -45,7 +45,7 @@ void main()
     {
     	effect eNone = EffectVisualEffect(PSI_IMP_CONCUSSION_BLAST);
     	object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(4), GetWeaponDamageType(oWeap), "Bone Crusher Hit", "Bone Crusher Miss");
+	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(4), GetWeaponDamageType(oWeap), "Bone Crusher Hit", "Bone Crusher Miss"));
 	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
     	{
     		// Saving Throw

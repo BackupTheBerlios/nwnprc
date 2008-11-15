@@ -43,7 +43,7 @@ void main()
         if(move.bCanManeuver)
         {
         	int nBonus = TOBSituationalAttackBonuses(oInitiator, DISCIPLINE_TIGER_CLAW);
-                PerformAttack(oTarget, oInitiator, eNone, 0.0, nBonus, 0, 0, "Hamstring Attack Hit", "Hamstring Attack Miss");
+                DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, nBonus, 0, 0, "Hamstring Attack Hit", "Hamstring Attack Miss"));
                 
                 if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
                 {

@@ -46,15 +46,15 @@ void main()
         if(move.bCanManeuver)
         {
                 //Normal attacks
-                PerformAttackRound(oTarget, oInitiator, eNone);
+                DelayCommand(0.0, PerformAttackRound(oTarget, oInitiator, eNone));
                 
-                PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Dancing Mongoose Hit", "Dancing Mongoose Miss");
+                DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Dancing Mongoose Hit", "Dancing Mongoose Miss"));
                 
                 object oOffHand = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oInitiator);
                 
                 if(IPGetIsMeleeWeapon(oOffHand))
                 {
-                        PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Dancing Mongoose Hit", "Dancing Mongoose Miss", FALSE, OBJECT_INVALID, oOffHand, TRUE);
+                        DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Dancing Mongoose Hit", "Dancing Mongoose Miss", FALSE, OBJECT_INVALID, oOffHand, TRUE));
                 }
         }
 }

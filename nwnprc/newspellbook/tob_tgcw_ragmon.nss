@@ -46,14 +46,14 @@ void main()
         {
                 if(IPGetIsMeleeWeapon(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator)))
                 {
-                        PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Raging Mongoose Hit", "Raging Mongoose Miss");
-                        PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Raging Mongoose Hit", "Raging Mongoose Miss");
+                        DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Raging Mongoose Hit", "Raging Mongoose Miss"));
+                        DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Raging Mongoose Hit", "Raging Mongoose Miss"));
                 }
                 
                 if(IPGetIsMeleeWeapon(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oInitiator)))
                 {
-                        PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Raging Mongoose Hit", "Raging Mongoose Miss",FALSE, OBJECT_INVALID,OBJECT_INVALID, 1);
-                        PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Raging Mongoose Hit", "Raging Mongoose Miss",FALSE, OBJECT_INVALID,OBJECT_INVALID, 1);                        
+                        DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Raging Mongoose Hit", "Raging Mongoose Miss",FALSE, OBJECT_INVALID,OBJECT_INVALID, 1));
+                        DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Raging Mongoose Hit", "Raging Mongoose Miss",FALSE, OBJECT_INVALID,OBJECT_INVALID, 1));                        
                 }
         }
 }

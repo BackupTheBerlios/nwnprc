@@ -44,7 +44,7 @@ void main()
     	effect eNone = EffectVisualEffect(PSI_IMP_CONCUSSION_BLAST);
     	SetLocalInt(oInitiator, "MoveIgnoreDR", TRUE);
     	object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(2), GetWeaponDamageType(oWeap), "Mountain Hammer Hit", "Mountain Hammer Miss");
+	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(2), GetWeaponDamageType(oWeap), "Mountain Hammer Hit", "Mountain Hammer Miss"));
 	// Cleanup
 	DelayCommand(3.0, DeleteLocalInt(oInitiator, "MoveIgnoreDR"));
     }

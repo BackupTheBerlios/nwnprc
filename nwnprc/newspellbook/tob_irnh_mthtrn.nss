@@ -52,7 +52,7 @@ void main()
             	// No hitting yourself or your friends, and they need to be within hitting range.
                 if(oTarget != oInitiator && GetIsEnemy(oTarget, oInitiator) && GetIsInMeleeRange(oTarget, oInitiator))
                 {
-			PerformAttack(oTarget, oInitiator, eNone, 0.0, 2, 0, 0, "Mithril Tornado Hit", "Mithril Tornado Miss");
+			DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 2, 0, 0, "Mithril Tornado Hit", "Mithril Tornado Miss"));
                 }// end if - Target validity check
 
                 // Get next target

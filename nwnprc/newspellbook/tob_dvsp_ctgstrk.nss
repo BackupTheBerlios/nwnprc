@@ -50,7 +50,7 @@ void main()
     	if (GetAlignmentGoodEvil(oInitiator) != GetAlignmentGoodEvil(oTarget) || 
 	    GetAlignmentLawChaos(oInitiator) != GetAlignmentLawChaos(oTarget))
     	{
-		PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(8), 0, "Castigating Strike Hit", "Castigating Strike Miss");
+		DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(8), 0, "Castigating Strike Hit", "Castigating Strike Miss"));
 		if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
     		{
     			// Saving Throw for the primary target
@@ -94,6 +94,6 @@ void main()
         	}
         }
         else 	// No alignment different
-        	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Castigating Strike Hit", "Castigating Strike Miss");
+        	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Hit", "Miss"));
     }
 }

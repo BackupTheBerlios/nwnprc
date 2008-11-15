@@ -42,6 +42,6 @@ void main()
     if (GetAttackTarget(oTarget) != oInitiator)
     {
     	effect eNone;
-    	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Defensive Rebuke Hit", "Defensive Rebuke Miss");
+    	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Defensive Rebuke Hit", "Defensive Rebuke Miss"));
     }
 }

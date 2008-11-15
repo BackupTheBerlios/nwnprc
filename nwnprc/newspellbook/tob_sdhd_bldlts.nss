@@ -43,7 +43,7 @@ void main()
         {
                 effect eNone;
                 
-                PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Bloodletting Strike Hit", "Bloodletting Strike Miss");
+                DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Bloodletting Strike Hit", "Bloodletting Strike Miss"));
                 
                 if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
                 {

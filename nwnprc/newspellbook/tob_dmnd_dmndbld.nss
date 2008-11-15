@@ -53,7 +53,7 @@ void main()
                 nAB = 0;
         	SetLocalInt(oTarget, "NightmareBlade", 4);
         }
-        PerformAttack(oTarget, oInitiator, eNone, 0.0, nAB, 0, 0, "Diamond Nightmare Blade Hit", "Diamond Nightmare Blade Miss");
+        DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, nAB, 0, 0, "Diamond Nightmare Blade Hit", "Diamond Nightmare Blade Miss"));
         DelayCommand(1.0, DeleteLocalInt(oTarget, "NightmareBlade"));
     }
 }

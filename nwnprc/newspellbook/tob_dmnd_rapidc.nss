@@ -31,7 +31,7 @@ void main()
         if(move.bCanManeuver)
         {
                 //it's basically a free attack as an immediate action
-                PerformAttack(oTarget, oInitiator, eNone);
+                DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone));
         }
 }
                 

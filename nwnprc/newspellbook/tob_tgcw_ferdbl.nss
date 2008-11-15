@@ -59,7 +59,7 @@ void main()
                 {
                         int nHP = GetCurrentHitPoints(oTarget);
                         int nBonus = TOBSituationalAttackBonuses(oInitiator, DISCIPLINE_TIGER_CLAW);
-                        PerformAttack(oTarget, oInitiator, eNone, 0.0, nBonus, 0, 0, "Feral Death Blow Hit", "Feral Death Blow Miss");
+                        DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, nBonus, 0, 0, "Feral Death Blow Hit", "Feral Death Blow Miss"));
                         
                         if(GetCurrentHitPoints(oTarget) < nHP)
                         {
@@ -79,7 +79,7 @@ void main()
                         }
                 }
                 
-                else PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Hit", "Miss");
+                else DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Hit", "Miss"));
         }
 }
                                      

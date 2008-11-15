@@ -45,7 +45,7 @@ void main()
     if(move.bCanManeuver)
     {
     	effect eNone;
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Swarming Assault Hit", "Swarming Assault Miss");
+	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Swarming Assault Hit", "Swarming Assault Miss"));
 	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
     	{
 		location lTarget = GetLocation(oTarget);
@@ -57,7 +57,7 @@ void main()
         	    if(GetIsFriend(oAreaTarget, oInitiator) && GetIsInMeleeRange(oTarget, oAreaTarget))
         	    {
         	    	// The free attack
-			PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Swarming Assault Hit", "Swarming Assault Miss");
+			DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Swarming Assault Hit", "Swarming Assault Miss"));
         	    }
 	
         	    //Select the next target within the spell shape.

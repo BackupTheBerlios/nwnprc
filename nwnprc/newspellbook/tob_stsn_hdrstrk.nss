@@ -45,7 +45,7 @@ void main()
     {
     	effect eNone;
     	
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Hydra Slaying Strike Hit", "Hydra Slaying Strike Miss");
+	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Hydra Slaying Strike Hit", "Hydra Slaying Strike Miss"));
 	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
     	{
 		SetBaseAttackBonus(1, oTarget);

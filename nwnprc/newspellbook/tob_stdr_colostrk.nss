@@ -48,7 +48,7 @@ void main()
         {
                 effect eNone;
                 object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
-                PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(6), GetWeaponDamageType(oWeap), "Colossus Strike Hit", "Colossus Strike Miss");
+                DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(6), GetWeaponDamageType(oWeap), "Colossus Strike Hit", "Colossus Strike Miss"));
                 
                 if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
                 {

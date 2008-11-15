@@ -47,7 +47,7 @@ void main()
         if(move.bCanManeuver)
         {
         	effect eNone;
-                PerformAttackRound(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, FALSE, "Scything Blade Hit", "Scything Blade Miss");
+                DelayCommand(0.0, PerformAttackRound(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, FALSE, "Scything Blade Hit", "Scything Blade Miss"));
                 if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
                 {
                         location lLoc = GetLocation(oInitiator);
@@ -57,7 +57,7 @@ void main()
                         {
                                 if(!GetIsReactionTypeFriendly(oTarget2) && oTarget2 != oInitiator)
                                 {
-                                        PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Scything Blade Hit", "Scything Blade Miss");
+                                        DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Scything Blade Hit", "Scything Blade Miss"));
                                         break;
                                 }
                                 

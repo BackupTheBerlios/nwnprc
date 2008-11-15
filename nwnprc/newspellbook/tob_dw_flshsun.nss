@@ -46,7 +46,7 @@ void main()
     {
 	// Extra attack during the round
 	effect eNone;
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, -2, 0, 0, "Flashing Sun Hit", "Flashing Sun Miss");
-	PerformAttackRound(oTarget, oInitiator, eNone, 0.0, -2, 0, 0, FALSE, "Flashing Sun Hit", "Flashing Sun Miss");
+	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, -2, 0, 0, "Flashing Sun Hit", "Flashing Sun Miss"));
+	DelayCommand(0.0, PerformAttackRound(oTarget, oInitiator, eNone, 0.0, -2, 0, 0, FALSE, "Flashing Sun Hit", "Flashing Sun Miss"));
     }
 }

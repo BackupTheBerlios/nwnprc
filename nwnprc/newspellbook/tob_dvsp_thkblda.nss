@@ -37,7 +37,7 @@ void main()
     {
 	// Slap upside the head, only one AoO per round.
 	effect eNone;
-	PerformAttack(oTarget, GetAreaOfEffectCreator(), eNone, 0.0, 0, 0, 0, "Thicket of Blades Hit", "Thicket of Blades Miss");
+	DelayCommand(0.0, PerformAttack(oTarget, GetAreaOfEffectCreator(), eNone, 0.0, 0, 0, 0, "Thicket of Blades Hit", "Thicket of Blades Miss"));
 	SetLocalInt(GetAreaOfEffectCreator(), "ThicketOfBladesDelay", TRUE);
 	DelayCommand(6.0, DeleteLocalInt(GetAreaOfEffectCreator(), "ThicketOfBladesDelay"));
     }

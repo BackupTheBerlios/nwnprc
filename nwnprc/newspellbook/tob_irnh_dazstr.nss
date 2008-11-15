@@ -46,7 +46,7 @@ void main()
         if(move.bCanManeuver)
         {
         	effect eNone;
-                PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Dazing Strike Hit", "Dazing Strike Miss");
+                DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Dazing Strike Hit", "Dazing Strike Miss"));
                 
                 if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
                 {

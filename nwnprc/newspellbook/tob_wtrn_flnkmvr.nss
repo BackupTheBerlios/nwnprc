@@ -47,7 +47,7 @@ void main()
     if(move.bCanManeuver)
     {
     	effect eNone;
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Flanking Maneuver Hit", "Flanking Maneuver Miss");
+	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Flanking Maneuver Hit", "Flanking Maneuver Miss"));
 	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack") && GetIsFlanked(oTarget, oInitiator))
     	{
 		location lTarget = GetLocation(oTarget);
@@ -59,7 +59,7 @@ void main()
         	    if(GetIsFriend(oAreaTarget, oInitiator) && GetIsFlanked(oTarget, oAreaTarget))
         	    {
         	    	// The free attack
-			PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Flanking Maneuver Hit", "Flanking Maneuver Miss");
+			DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Flanking Maneuver Hit", "Flanking Maneuver Miss"));
         	    }
 	
         	    //Select the next target within the spell shape.

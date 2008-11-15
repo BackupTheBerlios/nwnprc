@@ -47,7 +47,7 @@ void main()
     if(move.bCanManeuver)
     {
     	effect eNone = EffectVisualEffect(VFX_IMP_FLAME_M);
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(2), DAMAGE_TYPE_FIRE, "Lingering Inferno Hit", "Lingering Inferno Miss");
+	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(2), DAMAGE_TYPE_FIRE, "Lingering Inferno Hit", "Lingering Inferno Miss"));
 	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
     	{
     		// Making sure we reroll damage each time.

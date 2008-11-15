@@ -45,6 +45,6 @@ void main()
     if(move.bCanManeuver)
     {
     	effect eNone;
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, 2, 0, 0, "Lightning Recovery Hit", "Lightning Recovery Miss");
+	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 2, 0, 0, "Lightning Recovery Hit", "Lightning Recovery Miss"));
     }
 }

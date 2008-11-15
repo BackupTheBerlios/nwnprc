@@ -44,7 +44,7 @@ void main()
     if(move.bCanManeuver)
     {
     	effect eNone = EffectVisualEffect(VFX_IMP_BLINDDEAD_DN_CYAN);
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Mind Strike Hit", "Mind Strike Miss");
+	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Mind Strike Hit", "Mind Strike Miss"));
 	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
     	{
     		// Saving Throw

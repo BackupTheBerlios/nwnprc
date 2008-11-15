@@ -46,7 +46,7 @@ void main()
     	effect eNone;
     	object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
     	int nBonus = TOBSituationalAttackBonuses(oInitiator, DISCIPLINE_TIGER_CLAW);
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, 4 + nBonus, d6(2), GetWeaponDamageType(oWeap), "Rabid Wolf Strike Hit", "Rabid Wolf Strike Miss");
+	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 4 + nBonus, d6(2), GetWeaponDamageType(oWeap), "Rabid Wolf Strike Hit", "Rabid Wolf Strike Miss"));
         effect eLink =                          EffectACDecrease(4);
                eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_ROOTED_TO_SPOT));
 	       eLink = ExtraordinaryEffect(eLink);

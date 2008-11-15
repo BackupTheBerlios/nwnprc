@@ -76,7 +76,7 @@ void main()
                         
                         int nAB = GetAbilityModifier(ABILITY_DEXTERITY, oTarget);
                         int nBonus = TOBSituationalAttackBonuses(oInitiator, DISCIPLINE_TIGER_CLAW);
-                        PerformAttack(oTarget, oInitiator, eNone, 0.0, nAB + nBonus, d6(10), GetWeaponDamageType(oWeap), "Swooping Dragon Strike Hit", "Swooping Dragon Strike Miss");
+                        DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, nAB + nBonus, d6(10), GetWeaponDamageType(oWeap), "Swooping Dragon Strike Hit", "Swooping Dragon Strike Miss"));
                         
                         if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
                         {
@@ -91,7 +91,7 @@ void main()
                 else
                 {
                         FloatingTextStringOnCreature("Jump check failed.", oInitiator);
-                        PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Swooping Dragon Strike Hit", "Swooping Dragon Strike Miss");
+                        DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Swooping Dragon Strike Hit", "Swooping Dragon Strike Miss"));
                 }
         }
 }

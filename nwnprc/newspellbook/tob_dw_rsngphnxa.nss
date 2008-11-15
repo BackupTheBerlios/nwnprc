@@ -37,6 +37,6 @@ void main()
     if(GetHasSpellEffect(MOVE_DW_RISING_PHOENIX, oInitiator))
     {
     	effect eNone;
-	PerformAttackRound(oTarget, oInitiator, eNone, 0.0, 0, d6(3), DAMAGE_TYPE_FIRE, TRUE, "Rising Phoenix Hit", "Rising Phoenix Miss");
+	DelayCommand(0.0, PerformAttackRound(oTarget, oInitiator, eNone, 0.0, 0, d6(3), DAMAGE_TYPE_FIRE, TRUE, "Rising Phoenix Hit", "Rising Phoenix Miss"));
     }
 }

@@ -68,7 +68,7 @@ void main()
                                         DelayCommand(1.0, DeleteLocalInt(oTarget, "LightningThrowSave"));                                        
                                 }
                                                       
-                                PerformAttack(oTarget, oInitiator, eVis, 0.0, 100, d6(12), 0, "Lightning Throw Hit", "Lightning Throw Miss");
+                                DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eVis, 0.0, 100, d6(12), 0, "Lightning Throw Hit", "Lightning Throw Miss"));
                         }
                         oTarget = MyNextObjectInShape(SHAPE_SPELLCYLINDER, fLength, lTarget, TRUE, OBJECT_TYPE_CREATURE, vOrigin);
                 }

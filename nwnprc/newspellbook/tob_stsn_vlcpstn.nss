@@ -46,7 +46,7 @@ void main()
     if(move.bCanManeuver)
     {
     	effect eNone;
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Clever Positioning Hit", "Clever Positioning Miss");
+	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Clever Positioning Hit", "Clever Positioning Miss"));
        
         if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack") && PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, 12 + GetAbilityModifier(ABILITY_DEXTERITY, oInitiator),SAVING_THROW_TYPE_NONE))
     	{

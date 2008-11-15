@@ -44,7 +44,7 @@ void main()
     if(move.bCanManeuver)
     {
 	effect eNone;
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Leading the Attack Hit", "Leading the Attack Miss");
+	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Leading the Attack Hit", "Leading the Attack Miss"));
 	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
     	{
 		effect eLink = ExtraordinaryEffect(EffectVisualEffect(PSI_IMP_CONCUSSION_BLAST));

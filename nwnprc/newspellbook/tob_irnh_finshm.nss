@@ -69,6 +69,6 @@ void main()
                 }
                 
 		effect eNone;
-                PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(nBonus), GetWeaponDamageType(oWeap), "Finishing Move Hit", "Finishing Move Miss");
+                DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(nBonus), GetWeaponDamageType(oWeap), "Finishing Move Hit", "Finishing Move Miss"));
         }
 }

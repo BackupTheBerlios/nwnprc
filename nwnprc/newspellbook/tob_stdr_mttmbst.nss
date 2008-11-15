@@ -39,7 +39,7 @@ void main()
         
         if(move.bCanManeuver)
         {
-                PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Mountain Tombstone Strike Hit", "Mountain Tombstone Strike Miss");
+                DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Mountain Tombstone Strike Hit", "Mountain Tombstone Strike Miss"));
                 if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
                 {
                         ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, d6(2), DURATION_TYPE_PERMANENT);    

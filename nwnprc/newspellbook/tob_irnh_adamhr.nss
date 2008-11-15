@@ -54,10 +54,10 @@ void main()
                         if(oTarget != oInitiator && GetIsEnemy(oTarget, oInitiator) && GetIsInMeleeRange(oTarget, oInitiator))
                         {
                                 //Attack
-                                PerformAttack(oTarget, oInitiator, eNone, 0.0, 4, 0, 0,"Adamantine Hurricane Hit", "Adamantine Hurricane Miss");
+                                DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 4, 0, 0,"Adamantine Hurricane Hit", "Adamantine Hurricane Miss"));
                                 
                                 //Do it again :D
-                                 PerformAttack(oTarget, oInitiator, eNone, 0.0, 4, 0, 0,"Adamantine Hurricane Hit", "Adamantine Hurricane Miss");
+                                 DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 4, 0, 0,"Adamantine Hurricane Hit", "Adamantine Hurricane Miss"));
                                 
                         }// end if - Target validity check
                         

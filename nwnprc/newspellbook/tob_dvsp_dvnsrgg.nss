@@ -60,7 +60,7 @@ void main()
     		// Con damage
 		ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nBoost, DURATION_TYPE_PERMANENT);  
     	}
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, nBonus, d8(nDam), GetWeaponDamageType(oWeap), "Divine Surge, Greater Hit", "Divine Surge, Greater Miss");  
+	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, nBonus, d8(nDam), GetWeaponDamageType(oWeap), "Divine Surge, Greater Hit", "Divine Surge, Greater Miss"));  
 	AssignCommand(oInitiator, ClearAllActions(TRUE));
     }
 }

@@ -49,7 +49,7 @@ void main()
     {
     	effect eNone;
     	object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Strength Draining Strike Hit", "Strength Draining Strike Miss");
+	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Strength Draining Strike Hit", "Strength Draining Strike Miss"));
        
         if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
     	{

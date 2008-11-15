@@ -48,7 +48,7 @@ void main()
     {
     	effect eNone;
     	
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(4), 0, "Strike of the Broken Shield Hit", "Strike of the Broken Shield Miss");
+	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(4), 0, "Strike of the Broken Shield Hit", "Strike of the Broken Shield Miss"));
 	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
     	{
     		// Saving Throw

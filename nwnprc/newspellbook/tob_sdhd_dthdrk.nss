@@ -40,7 +40,7 @@ void main()
         
         if(move.bCanManeuver)
         {
-                PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Death in the Dark Hit", "Death in the Dark Miss");
+                DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Death in the Dark Hit", "Death in the Dark Miss"));
                 if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
                 {
                         int nDam = d6(15);

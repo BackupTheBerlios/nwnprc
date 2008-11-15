@@ -48,7 +48,7 @@ void main()
     {
     	effect eNone;
     	object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Exorcism of Steel Hit", "Exorcism of Steel Miss");
+	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Exorcism of Steel Hit", "Exorcism of Steel Miss"));
        
         if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
     	{

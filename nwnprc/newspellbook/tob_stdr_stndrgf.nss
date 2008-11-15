@@ -47,6 +47,6 @@ void main()
 	if (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_CONSTRUCT || GetObjectType(oTarget) == OBJECT_TYPE_DOOR || GetObjectType(oTarget) == OBJECT_TYPE_PLACEABLE)
 		nDam = d6(4);
     	object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, nDam, GetWeaponDamageType(oWeap), "Stone Dragon's Fury Hit", "Stone Dragon's Fury Miss");
+	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, nDam, GetWeaponDamageType(oWeap), "Stone Dragon's Fury Hit", "Stone Dragon's Fury Miss"));
     }
 }

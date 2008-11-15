@@ -57,6 +57,6 @@ void main()
     		AssignCommand(oTarget, ClearAllActions(TRUE));
     	}
     	
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, nAB, nDamage, nDamageType, "Sapphire Nightmare Blade Hit", "Sapphire Nightmare Blade Miss");
+	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, nAB, nDamage, nDamageType, "Sapphire Nightmare Blade Hit", "Sapphire Nightmare Blade Miss"));
     }
 }

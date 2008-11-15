@@ -48,6 +48,6 @@ void main()
     	effect eNone;
     	object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
     	int nBonus = TOBSituationalAttackBonuses(oInitiator, DISCIPLINE_TIGER_CLAW);
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, nBonus, nDamage, GetWeaponDamageType(oWeap), "Claw at the Moon Hit", "Claw at the Moon Miss");
+	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, nBonus, nDamage, GetWeaponDamageType(oWeap), "Claw at the Moon Hit", "Claw at the Moon Miss"));
     }
 }

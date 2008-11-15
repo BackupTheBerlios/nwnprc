@@ -45,7 +45,7 @@ void main()
     {
     	effect eNone = EffectVisualEffect(PSI_IMP_CONCUSSION_BLAST);
     	int nBonus = TOBSituationalAttackBonuses(oInitiator, DISCIPLINE_TIGER_CLAW);
-	PerformAttack(oTarget, oInitiator, eNone, 0.0, nBonus, 0, 0, "Flesh Ripper Hit", "Flesh Ripper Miss");
+	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, nBonus, 0, 0, "Flesh Ripper Hit", "Flesh Ripper Miss"));
 	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
     	{
     		// Saving Throw

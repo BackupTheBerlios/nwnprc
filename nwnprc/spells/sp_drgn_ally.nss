@@ -51,7 +51,7 @@ void main()
     int nAbove = GetIsAreaAboveGround(oArea);
     int nInside = GetIsAreaInterior(oArea);
     int nNatural = GetIsAreaNatural(oArea);
-    float fDur = TurnsToSeconds(nCasterLevel);
+    float fDur = (60.0 * nCasterLevel);
     int nXP = GetXP(oPC);
 
     if(nAbove == AREA_ABOVEGROUND && nInside == FALSE)

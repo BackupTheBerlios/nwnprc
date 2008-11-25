@@ -79,7 +79,7 @@ void main()
         int nCasterLvl = PRCGetCasterLevel(oPC);
         effect eAoE = EffectAreaOfEffect(VFX_PER_PRISMATIC_WALL);
         int nMetaMagic = PRCGetMetaMagicFeat();
-        float fDur = TurnsToSeconds(10 * nCasterLvl);
+        float fDur = (600.0 * nCasterLvl);
         
         if(nMetaMagic == METAMAGIC_EXTEND) fDur += fDur;
         

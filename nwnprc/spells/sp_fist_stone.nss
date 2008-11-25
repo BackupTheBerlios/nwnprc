@@ -55,7 +55,7 @@ void main()
         
         object oPC = OBJECT_SELF;
         effect eBuff = EffectAbilityIncrease(ABILITY_STRENGTH, 6);
-        float fDur = TurnsToSeconds(1);
+        float fDur = 60.0f;
         
         if(PRCGetMetaMagicFeat() == METAMAGIC_EXTEND) fDur += fDur;
         

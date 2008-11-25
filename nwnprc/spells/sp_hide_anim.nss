@@ -43,7 +43,7 @@ void main()
         object oPC = OBJECT_SELF;
         object oTarget = PRCGetSpellTargetObject();
         int nCasterLvl = PRCGetCasterLevel(oPC);
-        float fDur = TurnsToSeconds(nCasterLvl) * 10;
+        float fDur = (nCasterLvl * 600.0);
         
         effect eInvis = VersusRacialTypeEffect(EffectInvisibility(INVISIBILITY_TYPE_NORMAL), RACIAL_TYPE_ANIMAL);
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eInvis, oTarget, fDur);

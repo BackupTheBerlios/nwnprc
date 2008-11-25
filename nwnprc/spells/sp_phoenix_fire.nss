@@ -58,7 +58,7 @@ void main()
     int nCasterLvl = PRCGetCasterLevel(oPC);
     int nMetaMagic = PRCGetMetaMagicFeat();
     int nDam;
-    float fDur = TurnsToSeconds(10);
+    float fDur = 600.0f;
         
     //Immolate VFX on caster - VFX_IMP_HOLY_AID for casting VFX
     effect eFire = EffectVisualEffect(VFX_FNF_FIREBALL);

@@ -52,7 +52,7 @@ void main()
         object oTarget = GetSpellTargetObject();
         int nType = MyPRCGetRacialType(oTarget);
         int nCasterLvl = PRCGetCasterLevel(oPC);
-        float fDur = TurnsToSeconds(nCasterLvl);
+        float fDur = (60.0 * nCasterLvl);
         int nMetaMagic = PRCGetMetaMagicFeat();
         
         if(nMetaMagic == METAMAGIC_EXTEND)

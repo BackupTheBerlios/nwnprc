@@ -46,7 +46,7 @@ void main()
         effect eAoE = EffectAreaOfEffect(VFX_MOB_RING_OF_BLADES);
         int nCasterLvl = PRCGetCasterLevel(oPC);
         int nMetaMagic = PRCGetMetaMagicFeat();
-        float fDur = TurnsToSeconds(nCasterLvl);
+        float fDur = (60.0 * nCasterLvl);
         
         if(nMetaMagic == METAMAGIC_EXTEND) fDur += fDur;
         

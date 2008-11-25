@@ -61,7 +61,7 @@ void main()
                 nCasterLvl = min(nCasterLvl + 1, 40);
         }
         
-        float fDur = TurnsToSeconds(nCasterLvl);
+        float fDur = (60.0 * nCasterLvl);
         int nMetaMagic = PRCGetMetaMagicFeat();
         
         if(nMetaMagic == METAMAGIC_EXTEND)

@@ -141,10 +141,7 @@
 137 FEAT_EPIC_SUPERIOR_INITIATIVE                  753       1    -1             0      
 138 FEAT_EPIC_BLINDING_SPEED                       491       0    -1             1      
 139 PERFECT_TWO_WEAPON_FIGHTING                    4320      1    11             0      
-140 WeapProfSim                                    46        0    -1             0      
-141 WeapProfEx                                     44        0    -1             0      
-142 WeapProfMar                                    45        0    -1             0      
-143 DefArrow                                       8         0    -1             0      
-144 TwoWeap                                        41        0    -1             0      
-145 Ambidex                                        1         0    -1             0      
-146 Two-Weapon_Rend                                3113      1    -1             0      
+140 DefArrow                                       8         0    -1             0      
+141 TwoWeap                                        41        0    -1             0      
+142 Ambidex                                        1         0    -1             0      
+143 Two-Weapon_Rend                                3113      1    -1             0      

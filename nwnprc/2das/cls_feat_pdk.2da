@@ -8,10 +8,7 @@
 4  FEAT_PDK_STAND           4279      3    5              1      
 5  FEAT_PDK_INSPIRE_1       4280      3    2              1      
 6  FEAT_PDK_INSPIRE_2       4281      3    4              1      
-7  WeapProfSim              46        0    -1             0      
-8  WeapProfEx               44        0    -1             0      
-9  WeapProfMar              45        0    -1             0      
-10 FEAT_EPIC_BLINDING_SPEED 491       0    -1             1      
-11 DefArrow                 8         0    -1             0      
-12 TwoWeap                  41        0    -1             0      
-13 Ambidex                  1         0    -1             0      
+7  FEAT_EPIC_BLINDING_SPEED 491       0    -1             1      
+8  DefArrow                 8         0    -1             0      
+9  TwoWeap                  41        0    -1             0      
+10 Ambidex                  1         0    -1             0      

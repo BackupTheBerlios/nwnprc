@@ -190,10 +190,7 @@
 186 FEAT_CRAFT_ROD                      2927      1    -1             1      
 187 FEAT_CRAFT_STAFF                    2928      1    -1             1      
 188 FEAT_FORGE_RING                     2929      1    -1             1      
-189 WeapProfSim                         46        0    -1             0      
-190 WeapProfEx                          44        0    -1             0      
-191 WeapProfMar                         45        0    -1             0      
-192 FEAT_EPIC_BLINDING_SPEED            491       0    -1             1      
-193 DefArrow                            8         0    -1             0      
-194 TwoWeap                             41        0    -1             0      
-195 Ambidex                             1         0    -1             0      
+189 FEAT_EPIC_BLINDING_SPEED            491       0    -1             1      
+190 DefArrow                            8         0    -1             0      
+191 TwoWeap                             41        0    -1             0      
+192 Ambidex                             1         0    -1             0      

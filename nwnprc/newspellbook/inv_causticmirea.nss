@@ -13,7 +13,7 @@ void main()
     int nPenetr = SPGetPenetrAOE(GetAreaOfEffectCreator(), nCasterLvl);
 
     effect eSlow = EffectMovementSpeedDecrease(33);
-    if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, GetAreaOfEffectCreator()))
+    if ((spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, GetAreaOfEffectCreator())) && oTarget != GetAreaOfEffectCreator())
     {
          if(GetCreatureFlag(oTarget, CREATURE_VAR_IS_INCORPOREAL) != TRUE)
         {

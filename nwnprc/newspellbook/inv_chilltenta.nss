@@ -46,7 +46,8 @@ ActionDoCommand(SetAllAoEInts(INVOKE_CHILLING_TENTACLES,OBJECT_SELF, GetSpellSav
     int nCasterLevel = GetInvokerLevel(GetAreaOfEffectCreator(), CLASS_TYPE_WARLOCK);
     int nPenetr = SPGetPenetrAOE(GetAreaOfEffectCreator(), nCasterLevel);
     if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE , GetAreaOfEffectCreator())
-        && GetCreatureFlag(oTarget, CREATURE_VAR_IS_INCORPOREAL) != TRUE)
+        && GetCreatureFlag(oTarget, CREATURE_VAR_IS_INCORPOREAL) != TRUE
+        && oTarget != GetAreaOfEffectCreator())
     {
         //Fire cast spell at event for the target
         SignalEvent(oTarget, EventSpellCastAt(GetAreaOfEffectCreator(),

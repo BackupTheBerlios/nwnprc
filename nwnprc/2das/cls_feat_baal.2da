@@ -14,10 +14,9 @@
 10 FEAT_BLACKGUARD_SNEAK_ATTACK_1D6 460       3    2              0      
 11 FEAT_BLACKGUARD_SNEAK_ATTACK_2D6 461       3    5              0      
 12 FEAT_BLACKGUARD_SNEAK_ATTACK_3D6 462       3    8              0      
-13 WeapProfEx                       44        0    -1             0      
-14 FEAT_EPIC_BLINDING_SPEED         491       0    -1             1      
-15 DefArrow                         8         0    -1             0      
-16 TwoWeap                          41        0    -1             0      
-17 Ambidex                          1         0    -1             0      
-18 FEAT_LINGERING_DAMAGE            3099      0    -1             0      
-19 FEAT_DRAGONFIRE_STRIKE           3949      0    2              1      
+13 FEAT_EPIC_BLINDING_SPEED         491       0    -1             1      
+14 DefArrow                         8         0    -1             0      
+15 TwoWeap                          41        0    -1             0      
+16 Ambidex                          1         0    -1             0      
+17 FEAT_LINGERING_DAMAGE            3099      0    -1             0      
+18 FEAT_DRAGONFIRE_STRIKE           3949      0    2              1      

@@ -56,10 +56,8 @@
 52 Shou_Unarmed                   4418      3    1              0      
 53 Shou_Martial_Flurry            4419      3    3              1      
 54 WeapProfCreature               289       3    1              0      
-55 WeapProfSim                    46        0    -1             0      
-56 WeapProfEx                     44        0    -1             0      
-57 FEAT_EPIC_BLINDING_SPEED       491       0    -1             1      
-58 TwoWeap                        41        0    -1             0      
-59 Ambidex                        1         0    -1             0      
-60 FEAT_FIST_OF_IRON              3145      0    -1             1      
-61 WeaponSpecialization_Mindblade 3617      2    -1             0      
+55 FEAT_EPIC_BLINDING_SPEED       491       0    -1             1      
+56 TwoWeap                        41        0    -1             0      
+57 Ambidex                        1         0    -1             0      
+58 FEAT_FIST_OF_IRON              3145      0    -1             1      
+59 WeaponSpecialization_Mindblade 3617      2    -1             0      

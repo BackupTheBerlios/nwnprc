@@ -139,9 +139,7 @@
 135 FEAT_FREE_KI                              2751      3    20             0      
 136 FEAT_FREE_KI                              2752      3    30             0      
 137 FEAT_EPIC_RED_AVENGER                     2753      3    11             0      
-138 WeapProfEx                                44        0    -1             0      
-139 WeapProfMar                               45        0    -1             0      
-140 DefArrow                                  8         0    -1             0      
-141 TwoWeap                                   41        0    -1             0      
-142 Ambidex                                   1         0    -1             0      
-143 FEAT_FIST_OF_IRON                         3145      0    -1             1      
+138 DefArrow                                  8         0    -1             0      
+139 TwoWeap                                   41        0    -1             0      
+140 Ambidex                                   1         0    -1             0      
+141 FEAT_FIST_OF_IRON                         3145      0    -1             1      

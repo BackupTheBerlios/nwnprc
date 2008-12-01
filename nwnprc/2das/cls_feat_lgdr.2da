@@ -212,8 +212,7 @@
 208 ImpCrit_Mindblade                              3614      1    -1             0      
 209 Epic_WeaponSpecialization_Mindblade            3619      1    -1             0      
 210 ****                                           ****      **** ****           ****   
-211 WeapProfEx                                     44        0    -1             0      
-212 FEAT_EPIC_BLINDING_SPEED                       491       0    -1             1      
-213 DefArrow                                       8         0    -1             0      
-214 TwoWeap                                        41        0    -1             0      
-215 Ambidex                                        1         0    -1             0      
+211 FEAT_EPIC_BLINDING_SPEED                       491       0    -1             1      
+212 DefArrow                                       8         0    -1             0      
+213 TwoWeap                                        41        0    -1             0      
+214 Ambidex                                        1         0    -1             0      

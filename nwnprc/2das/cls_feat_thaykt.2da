@@ -116,7 +116,4 @@
 112 ThayKnight_Zulkir_Defend       2643      3    2              0      
 113 ThayKnight_Zulkir_Champ        2644      3    5              0      
 114 ThayKnight_Final_Stand         2645      3    4              1      
-115 WeapProfSim                    46        0    -1             0      
-116 WeapProfEx                     44        0    -1             0      
-117 WeapProfMar                    45        0    -1             0      
-118 FEAT_EPIC_BLINDING_SPEED       491       0    -1             1      
+115 FEAT_EPIC_BLINDING_SPEED       491       0    -1             1      

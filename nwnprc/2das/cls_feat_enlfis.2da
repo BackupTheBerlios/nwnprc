@@ -162,11 +162,8 @@
 158 FEAT_EPIC_IMPROVED_SPELL_RESISTANCE_8     706       1    -1             0      
 159 FEAT_EPIC_IMPROVED_SPELL_RESISTANCE_9     707       1    -1             0      
 160 FEAT_EPIC_IMPROVED_SPELL_RESISTANCE_10    708       1    -1             0      
-161 WeapProfSim                               46        0    -1             0      
-162 WeapProfEx                                44        0    -1             0      
-163 WeapProfMar                               45        0    -1             0      
-164 DefArrow                                  8         0    -1             0      
-165 TwoWeap                                   41        0    -1             0      
-166 Ambidex                                   1         0    -1             0      
-167 Quicken                                   29        0    -1             0      
-168 FEAT_FIST_OF_IRON                         3145      0    -1             1      
+161 DefArrow                                  8         0    -1             0      
+162 TwoWeap                                   41        0    -1             0      
+163 Ambidex                                   1         0    -1             0      
+164 Quicken                                   29        0    -1             0      
+165 FEAT_FIST_OF_IRON                         3145      0    -1             1      

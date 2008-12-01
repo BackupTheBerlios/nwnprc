@@ -178,8 +178,5 @@
 174 FEAT_EPIC_WEAPON_FOCUS_WHIP                    997       1    -1             0      
 175 FEAT_EPIC_BLINDING_SPEED                       491       1    -1             1      
 176 TwoWeap                                        41        0    -1             0      
-177 WeapProfEx                                     44        0    -1             0      
-178 WeapProfSim                                    46        0    -1             0      
-179 WeapProfMar                                    45        0    -1             0      
-180 FEAT_EPIC_SUPERIOR_INITIATIVE                  753       1    -1             0      
-181 FEAT_EPIC_SUPERIOR_WEAPON_FOCUS                1071      3    13             0      
+177 FEAT_EPIC_SUPERIOR_INITIATIVE                  753       1    -1             0      
+178 FEAT_EPIC_SUPERIOR_WEAPON_FOCUS                1071      3    13             0      

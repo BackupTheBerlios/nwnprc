@@ -10,10 +10,7 @@
 6  FEAT_ADST_BLUR             3536      3    5              1      
 7  FEAT_FALSE_KEENNESS        3535      3    7              1      
 8  FEAT_MISLEAD               3537      3    9              1      
-9  WeapProfSim                46        0    -1             0      
-10 WeapProfEx                 44        0    -1             0      
-11 WeapProfMar                45        0    -1             0      
-12 FEAT_EPIC_BLINDING_SPEED   491       0    -1             1      
-13 DefArrow                   8         0    -1             0      
-14 TwoWeap                    41        0    -1             0      
-15 Ambidex                    1         0    -1             0      
+9  FEAT_EPIC_BLINDING_SPEED   491       0    -1             1      
+10 DefArrow                   8         0    -1             0      
+11 TwoWeap                    41        0    -1             0      
+12 Ambidex                    1         0    -1             0      

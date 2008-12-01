@@ -16,8 +16,7 @@
 12 FEAT_GREATER_IRON_HEWS   2339      3    6              1      
 13 FEAT_IRON_SKIN           2340      3    7              1      
 14 FEAT_IRON_BODY           2341      3    10             1      
-15 WeapProfEx               44        0    -1             0      
-16 FEAT_EPIC_BLINDING_SPEED 491       0    -1             1      
-17 DefArrow                 8         0    -1             0      
-18 TwoWeap                  41        0    -1             0      
-19 Ambidex                  1         0    -1             0      
+15 FEAT_EPIC_BLINDING_SPEED 491       0    -1             1      
+16 DefArrow                 8         0    -1             0      
+17 TwoWeap                  41        0    -1             0      
+18 Ambidex                  1         0    -1             0      

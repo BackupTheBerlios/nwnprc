@@ -112,7 +112,4 @@
 108 FEAT_MANYSHOT                  3306      1    -1             1      
 109 FEAT_IMP_MANYSHOT              3350      1    -1             1      
 110 Pinpoint_Accuracy              3351      1    -1             1      
-111 WeapProfSim                    46        0    -1             0      
-112 WeapProfEx                     44        0    -1             0      
-113 WeapProfMar                    45        0    -1             0      
-114 FEAT_EPIC_BLINDING_SPEED       491       0    -1             1      
+111 FEAT_EPIC_BLINDING_SPEED       491       0    -1             1      

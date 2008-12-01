@@ -29,10 +29,7 @@
 25 Death_Attack             4325      3    10             1      
 26 DR                       4323      3    2              0      
 27 SR                       4324      3    4              0      
-28 WeapProfSim              46        0    -1             0      
-29 WeapProfEx               44        0    -1             0      
-30 WeapProfMar              45        0    -1             0      
-31 FEAT_EPIC_BLINDING_SPEED 491       0    -1             1      
-32 DefArrow                 8         0    -1             0      
-33 TwoWeap                  41        0    -1             0      
-34 Ambidex                  1         0    -1             0      
+28 FEAT_EPIC_BLINDING_SPEED 491       0    -1             1      
+29 DefArrow                 8         0    -1             0      
+30 TwoWeap                  41        0    -1             0      
+31 Ambidex                  1         0    -1             0      

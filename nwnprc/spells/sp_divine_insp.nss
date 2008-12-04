@@ -36,17 +36,18 @@ void main()
 {
 	object oPC = OBJECT_SELF;
 	object oTarget = GetSpellTargetObject();
-	object oSkin = GetPCSkin(oPC);
 	int nMetaMagic = PRCGetMetaMagicFeat();
-	itemproperty iBonus = ItemPropertyAttackBonusVsAlign(IP_CONST_ALIGNMENTGROUP_EVIL, 3);
+    effect eAttack = EffectAttackIncrease(3);
+    // vs eeeevil
+    eAttack = VersusAlignmentEffect(eAttack, ALIGNMENT_ALL, ALIGNMENT_EVIL);
 	float fDur = RoundsToSeconds(d4(1));
 	
 	if(nMetaMagic == METAMAGIC_EXTEND)
 	{
-		fDur += fDur;
+		fDur *= 2;
 	}
 	
-	IPSafeAddItemProperty(oSkin, iBonus, fDur, X2_IP_ADDPROP_POLICY_IGNORE_EXISTING, FALSE, FALSE);
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAttack, oTarget, fDur);
 	
 	DoCorruptionCost(oPC, ABILITY_STRENGTH, d2(), 0);
 	

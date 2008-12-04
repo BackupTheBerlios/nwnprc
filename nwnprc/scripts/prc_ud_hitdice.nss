@@ -33,6 +33,10 @@ void main()
         //Remove any items with a CON Bonus
         object oEquipped = GetItemLastEquipped();
         
+        // don't want this affecting the skin
+        if (oEquipped == oSkin)
+            oEquipped = OBJECT_INVALID;
+        
         itemproperty ipTest = GetFirstItemProperty(oEquipped);
         
         while(GetIsItemPropertyValid(ipTest))

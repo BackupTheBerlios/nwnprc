@@ -24,7 +24,8 @@ Created:   7/17/06
 // AN, 2003
 // Returns TRUE if oItem has any item property that classifies it as magical item
 //------------------------------------------------------------------------------
-int PRCGetIsMagicalItem(object oItem)
+// fluffyamoeba - minor optimisation to remove itemprops that will never be on a melee weapon from the check
+int PRCGetIsMagicalMeleeWeapon(object oItem)
 {
     //Declare major variables
     int nProperty;
@@ -64,7 +65,6 @@ int PRCGetIsMagicalItem(object oItem)
       (GetItemHasItemProperty(oItem, ITEM_PROPERTY_ENHANCEMENT_BONUS_VS_RACIAL_GROUP)) ||
       (GetItemHasItemProperty(oItem, ITEM_PROPERTY_ENHANCEMENT_BONUS_VS_SPECIFIC_ALIGNEMENT)) ||
       (GetItemHasItemProperty(oItem, ITEM_PROPERTY_EXTRA_MELEE_DAMAGE_TYPE)) ||
-      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_EXTRA_RANGED_DAMAGE_TYPE)) ||
       (GetItemHasItemProperty(oItem, ITEM_PROPERTY_FREEDOM_OF_MOVEMENT)) ||
       (GetItemHasItemProperty(oItem, ITEM_PROPERTY_HASTE)) ||
       (GetItemHasItemProperty(oItem, ITEM_PROPERTY_HOLY_AVENGER)) ||
@@ -90,11 +90,8 @@ int PRCGetIsMagicalItem(object oItem)
       (GetItemHasItemProperty(oItem, ITEM_PROPERTY_SAVING_THROW_BONUS_SPECIFIC)) ||
       (GetItemHasItemProperty(oItem, ITEM_PROPERTY_SKILL_BONUS)) ||
       (GetItemHasItemProperty(oItem, ITEM_PROPERTY_SPELL_RESISTANCE)) ||
-      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_THIEVES_TOOLS)) ||
-      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_TRAP)) ||
       (GetItemHasItemProperty(oItem, ITEM_PROPERTY_TRUE_SEEING)) ||
       (GetItemHasItemProperty(oItem, ITEM_PROPERTY_TURN_RESISTANCE)) ||
-      (GetItemHasItemProperty(oItem, ITEM_PROPERTY_UNLIMITED_AMMUNITION)) ||
       (GetItemHasItemProperty(oItem, ITEM_PROPERTY_ONHITCASTSPELL))
       )
    {
@@ -123,7 +120,7 @@ void main()
         }
 */
         //If non-magical weapon in right hand
-        if(GetIsObjectValid(oWeaponR) && !PRCGetIsMagicalItem(oWeaponR))
+        if(GetIsObjectValid(oWeaponR) && IPGetIsMeleeWeapon(oWeaponR) && !PRCGetIsMagicalMeleeWeapon(oWeaponR))
         {
                 DestroyObject(oWeaponR);
                 ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_DISPEL), oSpellTarget);
@@ -131,7 +128,7 @@ void main()
         }
         
         //if non-magical weapon in left hand
-        else if(GetIsObjectValid(oWeaponL) && !PRCGetIsMagicalItem(oWeaponL))
+        else if(GetIsObjectValid(oWeaponL) && IPGetIsMeleeWeapon(oWeaponL) && !PRCGetIsMagicalMeleeWeapon(oWeaponL))
         {
                 DestroyObject(oWeaponL);
                 ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_DISPEL), oSpellTarget);

@@ -79,7 +79,7 @@ void main()
         AddEventScript(oTarget, EVENT_ONHIT, "prc_evnt_strmtl", TRUE, FALSE);
         
         //impervious to non-magical weapons for the duration
-        effect eReduce = EffectDamageReduction(0, DAMAGE_POWER_PLUS_ONE, 0);
+        effect eReduce = EffectDamageReduction(100, DAMAGE_POWER_PLUS_ONE, 0);
         eReduce = EffectLinkEffects(eReduce, EffectDamageImmunityIncrease(DAMAGE_TYPE_BLUDGEONING, 50));
         eReduce = EffectLinkEffects(eReduce, EffectDamageImmunityIncrease(DAMAGE_TYPE_SLASHING, 50));
         eReduce = EffectLinkEffects(eReduce, EffectDamageImmunityIncrease(DAMAGE_TYPE_PIERCING, 50));

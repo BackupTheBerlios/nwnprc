@@ -44,7 +44,7 @@ void main()
         PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);        
         object oPC = OBJECT_SELF;
         object oPotion = GetSpellTargetObject();
-        int nSpell = GetSpellId();
+        int nSpell = PRCGetSpellId();
         int nCasterLvl = PRCGetCasterLevel(oPC);
         int nDC = GetSpellSaveDC();
         string sDamageType;
@@ -120,8 +120,8 @@ void main()
                 SetLocalInt(oGrenade, "PRC_EnergizedPotionSave", SAVING_THROW_TYPE_SONIC);
                 sDamageType = "Sonic";
         }
-        
-        SetLocalInt(oGrenade, "PRC_GrenadeLevel", min(3, nLevel));
+        nLevel = min(3, nLevel);
+        SetLocalInt(oGrenade, "PRC_GrenadeLevel", nLevel);
         SetLocalInt(oGrenade, "PRC_EnPotSaveDC", nDC);
         
         string sStrength;
@@ -132,10 +132,11 @@ void main()
                 case 0: break;
                 
                 case 1: sStrength = "Weak";
-                
+                        break;
                 case 2: sStrength = "Moderate";
-                
+                        break;
                 case 3: sStrength = "Strong";
+                        break;
         }
         
         SetName(oGrenade, sStrength + " " + "Energized" + " " + sDamageType + " " + "Potion");   

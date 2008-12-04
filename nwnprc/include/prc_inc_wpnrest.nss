@@ -503,6 +503,8 @@ void DoWeaponFeatUnequip(object oPC, object oItem, int nHand)
 	    SetCompositeAttackBonus(oPC, "LightbladeEpicWF" + IntToString(nHand), 0, nHand);
 	    SetCompositeDamageBonusT(oItem, "LightbladeWS", 0);
 	    SetCompositeDamageBonusT(oItem, "LightbladeEpicWS", 0);
+        if(GetHasFeat(FEAT_IMPROVED_CRITICAL_SHORT_SWORD, oPC) || GetHasFeat(FEAT_IMPROVED_CRITICAL_RAPIER, oPC))
+            RemoveSpecificProperty(oItem, ITEM_PROPERTY_KEEN, -1, -1, 1, "", -1, DURATION_TYPE_TEMPORARY);
 	}
 	else if(GetBaseItemType(oItem) == BASE_ITEM_ELF_THINBLADE)
 	{
@@ -510,6 +512,8 @@ void DoWeaponFeatUnequip(object oPC, object oItem, int nHand)
 	    SetCompositeAttackBonus(oPC, "ThinbladeEpicWF" + IntToString(nHand), 0, nHand);
 	    SetCompositeDamageBonusT(oItem, "ThinbladeWS", 0);
 	    SetCompositeDamageBonusT(oItem, "ThinbladeEpicWS", 0);
+        if(GetHasFeat(FEAT_IMPROVED_CRITICAL_LONG_SWORD, oPC) || GetHasFeat(FEAT_IMPROVED_CRITICAL_RAPIER, oPC))
+            RemoveSpecificProperty(oItem, ITEM_PROPERTY_KEEN, -1, -1, 1, "", -1, DURATION_TYPE_TEMPORARY);
 	}
 	else if(GetBaseItemType(oItem) == BASE_ITEM_ELF_COURTBLADE)
 	{
@@ -517,8 +521,9 @@ void DoWeaponFeatUnequip(object oPC, object oItem, int nHand)
 	    SetCompositeAttackBonus(oPC, "CourtbladeEpicWF" + IntToString(nHand), 0, nHand);
 	    SetCompositeDamageBonusT(oItem, "CourtbladeWS", 0);
 	    SetCompositeDamageBonusT(oItem, "CourtbladeEpicWS", 0);
+        if(GetHasFeat(FEAT_IMPROVED_CRITICAL_GREAT_SWORD, oPC))
+            RemoveSpecificProperty(oItem, ITEM_PROPERTY_KEEN, -1, -1, 1, "", -1, DURATION_TYPE_TEMPORARY);
 	}
-	RemoveSpecificProperty(oItem, ITEM_PROPERTY_KEEN, -1, -1, 1, "", -1, DURATION_TYPE_TEMPORARY);
 	
 	//Weapon Aptitude for ToB
 	if(GetBaseItemType(oItem) == GetLocalInt(oPC, "AptitudeWpnType"))
@@ -597,6 +602,9 @@ void DoWeaponEquip(object oPC, object oItem, int nHand)
     if(GetHasFeat(FEAT_RACE_POWERFUL_BUILD, oPC))
         nSize++;
         
+    if(DEBUG) DoDebug("prc_restwpnsize - Weapon size: " + IntToString(GetWeaponSize(oItem)));
+    if(DEBUG) DoDebug("prc_restwpnsize - Character Size: " + IntToString(nSize));
+    
     //check to make sure it's not too large, or that you're not trying to TWF with 2-handers
     if((nWeaponSize > 1 + nSize && nHand == ATTACK_BONUS_ONHAND)
        || ((nWeaponSize > nSize || GetWeaponSize(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC)) > nSize) && nHand == ATTACK_BONUS_OFFHAND)

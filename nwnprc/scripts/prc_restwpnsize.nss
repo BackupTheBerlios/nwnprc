@@ -40,26 +40,10 @@ void main()
         AddEventScript(oPC, EVENT_ONPLAYEREQUIPITEM,   "prc_restwpnsize", TRUE, FALSE);
         AddEventScript(oPC, EVENT_ONPLAYERUNEQUIPITEM, "prc_restwpnsize", TRUE, FALSE);
     }
-    
-    //initialize variables
-    int nRealSize = PRCGetCreatureSize(oPC);  //size for Finesse/TWF
-    int nSize = nRealSize;                    //size for equipment restrictions
-    int nDexMod = GetAbilityModifier(ABILITY_DEXTERITY, oPC);
-    int nStrMod = GetAbilityModifier(ABILITY_STRENGTH, oPC);
-    int nElfFinesse = nDexMod - nStrMod;
-    int nTHFDmgBonus = nStrMod / 2;
-      
-    //Powerful Build bonus
-    if(GetHasFeat(FEAT_RACE_POWERFUL_BUILD, oPC))
-        nSize++;
-
-	
     else if(nEvent == EVENT_ONPLAYEREQUIPITEM)
     {
         oItem = GetItemLastEquipped();
         if(DEBUG) DoDebug("prc_restwpnsize - OnEquip");
-        if(DEBUG) DoDebug("prc_restwpnsize - Weapon size: " + IntToString(GetWeaponSize(oItem)));
-        if(DEBUG) DoDebug("prc_restwpnsize - Character Size: " + IntToString(nSize));
         
         if(oItem == GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC))
         {
@@ -74,7 +58,18 @@ void main()
     
     else if(nEvent == EVENT_ONPLAYERUNEQUIPITEM)
     {
+        //initialize variables
+        int nRealSize = PRCGetCreatureSize(oPC);  //size for Finesse/TWF
+        int nSize = nRealSize;                    //size for equipment restrictions
+        int nDexMod = GetAbilityModifier(ABILITY_DEXTERITY, oPC);
+        int nStrMod = GetAbilityModifier(ABILITY_STRENGTH, oPC);
+        int nElfFinesse = nDexMod - nStrMod;
+        int nTHFDmgBonus = nStrMod / 2;
         oItem = GetItemLastUnequipped();
+        //Powerful Build bonus
+        if(GetHasFeat(FEAT_RACE_POWERFUL_BUILD, oPC))
+            nSize++;
+        
         if(DEBUG) DoDebug("prc_restwpnsize - OnUnEquip");
         
         // remove any TWF penalties

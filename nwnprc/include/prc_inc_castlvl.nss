@@ -521,7 +521,7 @@ int GetArcanePRCLevels(object oCaster)
            +  (GetLevelByClass(CLASS_TYPE_SPELLSWORD,         oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT_A, oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_DISCIPLE_OF_ASMODEUS, oCaster) + 1) / 2
-
+           +  (GetLevelByClass(CLASS_TYPE_TALON_OF_TIAMAT, oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_JUDICATOR, oCaster) + 1) / 3;
 
 

@@ -15,16 +15,15 @@
 
 void main()
 {
-    object oPC = GetSpellTargetObject();
     object oTarget = GetEnteringObject();
     object oNymph = GetAreaOfEffectCreator();
     
     int nDC = 13 + GetAbilityModifier(ABILITY_CHARISMA, oNymph);
     
-    if(!GetIsReactionTypeFriendly(oTarget))
+    if(!GetIsReactionTypeFriendly(oTarget, oNymph))
     {
         //Fire cast spell at event for the specified target
-        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_NYMPH_BLINDING_BEAUTY));
+        SignalEvent(oTarget, EventSpellCastAt(oNymph, SPELL_NYMPH_BLINDING_BEAUTY));
         //Make Fort Save to negate effect
         if (!/*Fort Save*/ PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NONE))
         {

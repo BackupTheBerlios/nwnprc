@@ -1,25 +1,22 @@
 2DA V2.0
 
    LABEL        ReqType ReqParam1      ReqParam2 
-0  WIZARD       CLASSOR 10             ****      
-1  SORC         CLASSOR 9              ****      
-2  CLERIC       CLASSOR 2              ****      
-3  ScriptVar    VAR     PRC_AllowBaeln 0         
-4  Concentrate  SKILL   1              5         
-5  Elf          RACE    1              ****      
-6  Aquatic-Elf  RACE    161            ****      
-7  Avariel      RACE    162            ****      
-8  Drow_female  RACE    163            ****      
-9  Drow_male    RACE    164            ****      
-10 Sun-Elf      RACE    166            ****      
-11 wild-Elf     RACE    167            ****      
-12 wood-Elf     RACE    168            ****      
-13 dark-Elf     RACE    169            ****      
-14 DarksunElf   RACE    34             ****      
-15 Kagonesti    RACE    44             ****      
-16 Sylvanesti   RACE    45             ****      
-17 FrstlrdElf   RACE    107            ****     
-18 SnowElf      RACE    165            ****     
-19 NoLichLevels VAR     PRC_NoLich     0         
-20 Spellcraft   SKILL   16             14        
-21 ScriptVar    VAR     PRC_AllSpell6  0         
+0  ScriptVar    VAR     PRC_AllowBaeln 0         
+1  Concentrate  SKILL   1              5         
+2  Elf          RACE    1              ****      
+3  Aquatic-Elf  RACE    161            ****      
+4  Avariel      RACE    162            ****      
+5  Drow_female  RACE    163            ****      
+6  Drow_male    RACE    164            ****      
+7  Sun-Elf      RACE    166            ****      
+8  wild-Elf     RACE    167            ****      
+9  wood-Elf     RACE    168            ****      
+10 dark-Elf     RACE    169            ****      
+11 DarksunElf   RACE    34             ****      
+12 Kagonesti    RACE    44             ****      
+13 Sylvanesti   RACE    45             ****      
+14 FrstlrdElf   RACE    107            ****      
+15 SnowElf      RACE    165            ****      
+16 NoLichLevels VAR     PRC_NoLich     0         
+17 Spellcraft   SKILL   16             14        
+18 ScriptVar    VAR     PRC_AllSpell6  0         

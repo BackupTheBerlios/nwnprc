@@ -268,6 +268,7 @@ const int DOMAIN_DRAGON        = 60;
 
 const int TRAP_BASE_TYPE_PRGT       = 100;
 const int TRAP_BASE_TYPE_TELECIRCLE = 101;
+const int TRAP_BASE_TYPE_SYMBOL     = 102;
 
 //:://////////////////////////////////////////////
 //:: Breath Const

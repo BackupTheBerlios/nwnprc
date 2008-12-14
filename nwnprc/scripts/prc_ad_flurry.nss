@@ -1,7 +1,7 @@
 #include "prc_inc_clsfunc"
 
 void CleanCopy(object oImage)
-{     
+{
      SetLootable(oImage, FALSE);
      object oItem = GetFirstItemInInventory(oImage);
      while(GetIsObjectValid(oItem))
@@ -55,7 +55,7 @@ void RemoveExtraImages()
 void main2()
 {
 
-object oTarget = GetSpellTargetObject();
+object oTarget = PRCGetSpellTargetObject();
 
 int iLevel = GetLevelByClass(CLASS_TYPE_ARCANE_DUELIST, OBJECT_SELF);
 int iAdd = iLevel/3;
@@ -109,7 +109,7 @@ void main()
    // First we'll see if this target is in the flurry list.
    int i;
    string sName1 = "FLURRY_TARGET_";
-   object oTarget = GetSpellTargetObject();
+   object oTarget = PRCGetSpellTargetObject();
 
    for (i = 0 ; i < 10 ; i++)
    {
@@ -128,7 +128,7 @@ void main()
       FloatingTextStringOnCreature("You may not target yourself.", OBJECT_SELF, FALSE);
       return;
    }
-   
+
    if (!GetIsReactionTypeHostile(oTarget))
    {
       IncrementRemainingFeatUses(OBJECT_SELF, 3534); // Flurry of Swords

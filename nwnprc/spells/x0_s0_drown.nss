@@ -47,7 +47,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
 
 
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nCasterLevel = PRCGetCasterLevel(OBJECT_SELF);
     int nDam = GetCurrentHitPoints(oTarget);
     //Set visual effect

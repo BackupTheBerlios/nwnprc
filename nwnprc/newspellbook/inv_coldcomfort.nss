@@ -19,15 +19,15 @@
 
 void main()
 {
-    
+
     if (!PreInvocationCastCode())
     {
     // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
         return;
     }
-    
+
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int CasterLvl = GetInvokerLevel(OBJECT_SELF, GetInvokingClass());
     effect eAOE = EffectAreaOfEffect(INVOKE_AOE_COLD_COMFORT);
     int nAmount = 20;

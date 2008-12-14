@@ -26,7 +26,7 @@ void main()
 
     // GZ: Since paladin levels stack when turning, blackguard levels should stack as well
     // GZ: but not with the paladin levels (thus else if).
-    if(nTNLevel > 0)    
+    if(nTNLevel > 0)
     {
         nClassLevel += (nTNLevel);
         nTurnLevel  += (nTNLevel);
@@ -46,25 +46,25 @@ void main()
         nClassLevel += (nHospLevel -2);
         nTurnLevel  += (nHospLevel - 2);
     }
-    if ( nAlign == ALIGNMENT_GOOD) 
+    if ( nAlign == ALIGNMENT_GOOD)
     {
       nClassLevel += nSolLevel;
       nTurnLevel  += nSolLevel;
     }
- 
-    object oTarget = GetSpellTargetObject();
+
+    object oTarget = PRCGetSpellTargetObject();
     int nDC = 10 + GetAbilityModifier(ABILITY_CHARISMA) + nTurnLevel/2;
-    
+
     if (!FortitudeSave(oTarget,nDC))
     {
         effect eVis = EffectVisualEffect(VFX_IMP_HARM);
         effect eDmg = EffectDamage(d8(nClassLevel/2),DAMAGE_TYPE_DIVINE,DAMAGE_POWER_ENERGY);
         effect eLink =EffectLinkEffects(eVis,eDmg);
         ApplyEffectToObject(DURATION_TYPE_INSTANT,eLink,oTarget);
-    
+
     }
-    DecrementRemainingFeatUses(OBJECT_SELF, FEAT_TURN_UNDEAD);  
-   
-   
+    DecrementRemainingFeatUses(OBJECT_SELF, FEAT_TURN_UNDEAD);
+
+
 }
 

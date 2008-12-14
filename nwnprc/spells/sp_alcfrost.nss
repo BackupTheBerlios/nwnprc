@@ -5,9 +5,9 @@
 /*
 Alchemist’s Frost: A thin liquid that grows extremely cold when exposed to air, alchemist’s frost
 functions like alchemists fire except that it deals 1d8 points of cold damage on a direct hit (and
-1 point of cold damage on a splash), rather than fire damage. It deals no additional damage after 
+1 point of cold damage on a splash), rather than fire damage. It deals no additional damage after
 the initial damage.
-*/   
+*/
 
 #include "prc_inc_sp_tch"
 
@@ -25,7 +25,7 @@ the initial damage.
 void PRCDoGrenade(int nDirectDamage, int nSplashDamage, int vSmallHit, int vRingHit, int nDamageType, float fExplosionRadius , int nObjectFilter, int nRacialType=RACIAL_TYPE_ALL)
 {
     //Declare major variables  ( fDist / (3.0f * log( fDist ) + 2.0f) )
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nDamage = 0;
     int nMetaMagic = PRCGetMetaMagicFeat();
@@ -159,41 +159,41 @@ void PRCDoGrenade(int nDirectDamage, int nSplashDamage, int vSmallHit, int vRing
 }
 
 void AddFrostEffectToWeapon(object oTarget, float fDuration)
-{        
+{
         // If the spell is cast again, any previous itemproperties matching are removed.
         IPSafeAddItemProperty(oTarget, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_COLD, IP_CONST_DAMAGEBONUS_1d8), fDuration, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
         IPSafeAddItemProperty(oTarget, ItemPropertyVisualEffect(ITEM_VISUAL_COLD), fDuration,X2_IP_ADDPROP_POLICY_REPLACE_EXISTING,FALSE,TRUE);
-        
+
         return;
 }
 
 void main()
 
 {
-        effect eVis = EffectVisualEffect(VFX_IMP_PULSE_COLD);        
-        effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);        
-        object oTarget = GetSpellTargetObject();                           
-        object oMyWeapon;                                                  
-        int nTarget = GetObjectType(oTarget);                              
-        int nDuration = 4;                                                 
-        int nCasterLvl = 1;                                                
-        
-        if(nTarget == OBJECT_TYPE_ITEM)                                    
-        {                                                                          
-                oMyWeapon = oTarget;                                               
-                int nItem = IPGetIsMeleeWeapon(oMyWeapon);                         
-                if(nItem == TRUE)                
-                {                        
-                        if(GetIsObjectValid(oMyWeapon))                       
-                        {                                                                          
-                                SignalEvent(OBJECT_SELF, EventSpellCastAt(OBJECT_SELF, GetSpellId(), FALSE));          
-                                                                                                                                             
-                                if (nDuration > 0)                                                                                           
-                                {                                                                            
+        effect eVis = EffectVisualEffect(VFX_IMP_PULSE_COLD);
+        effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+        object oTarget = PRCGetSpellTargetObject();
+        object oMyWeapon;
+        int nTarget = GetObjectType(oTarget);
+        int nDuration = 4;
+        int nCasterLvl = 1;
+
+        if(nTarget == OBJECT_TYPE_ITEM)
+        {
+                oMyWeapon = oTarget;
+                int nItem = IPGetIsMeleeWeapon(oMyWeapon);
+                if(nItem == TRUE)
+                {
+                        if(GetIsObjectValid(oMyWeapon))
+                        {
+                                SignalEvent(OBJECT_SELF, EventSpellCastAt(OBJECT_SELF, GetSpellId(), FALSE));
+
+                                if (nDuration > 0)
+                                {
                                         // haaaack: store caster level on item for the on hit spell to work properly
-                                        
-                                        SetLocalInt(oMyWeapon,"X2_SPELL_CLEVEL_FLAMING_WEAPON",nCasterLvl);                                        
-                                        ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, GetItemPossessor(oMyWeapon));         
+
+                                        SetLocalInt(oMyWeapon,"X2_SPELL_CLEVEL_FLAMING_WEAPON",nCasterLvl);
+                                        ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, GetItemPossessor(oMyWeapon));
                                         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, GetItemPossessor(oMyWeapon), RoundsToSeconds(nDuration));
                                         AddFrostEffectToWeapon(oMyWeapon, RoundsToSeconds(nDuration));
                                 }
@@ -201,15 +201,15 @@ void main()
                         }
                 }
                 else
-                
-                {                              
+
+                {
                         FloatingTextStrRefOnCreature(100944,OBJECT_SELF);
                 }
-                
+
         }
-        else if(nTarget == OBJECT_TYPE_CREATURE || OBJECT_TYPE_DOOR || OBJECT_TYPE_PLACEABLE)        
-        {                                                                                    
+        else if(nTarget == OBJECT_TYPE_CREATURE || OBJECT_TYPE_DOOR || OBJECT_TYPE_PLACEABLE)
+        {
                 PRCDoGrenade(d8(1),1, VFX_IMP_FROST_S, VFX_IMP_FROST_L, DAMAGE_TYPE_COLD ,RADIUS_SIZE_HUGE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
         }
 
-} 
+}

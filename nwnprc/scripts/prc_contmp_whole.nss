@@ -1,7 +1,7 @@
 /*
    ----------------
    Divine Wholeness, Contemplative class ability
-   
+
    prc_contmp_whole
    ----------------
 */
@@ -11,7 +11,7 @@
 void main()
 {
     object oPC = OBJECT_SELF;
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nContemp = GetLevelByClass(CLASS_TYPE_CONTEMPLATIVE, oPC);
     int nHP = nContemp * 4;
     effect eHeal = EffectHeal(nHP);

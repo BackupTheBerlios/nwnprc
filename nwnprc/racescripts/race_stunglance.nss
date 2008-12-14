@@ -15,7 +15,7 @@
 void main()
 {
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = GetSpellTargetObject();        //not using prc version here
     effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
     effect eDaze = EffectStunned();
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
@@ -25,10 +25,10 @@ void main()
 
     effect eVis = EffectVisualEffect(VFX_IMP_STUN);
     int nDuration = d4(2);
-    
+
     if(GetDistanceBetween(OBJECT_SELF, oTarget) > FeetToMeters(30.0))
         return;
-    
+
     if(!GetIsReactionTypeFriendly(oTarget))
     {
         //Fire cast spell at event for the specified target

@@ -11,12 +11,12 @@
 
 
  #include "prc_inc_spells"
- 
+
 void main()
 {
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     effect eVis = EffectVisualEffect(VFX_DUR_SPELLTURNING);
- 
+
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 
 }

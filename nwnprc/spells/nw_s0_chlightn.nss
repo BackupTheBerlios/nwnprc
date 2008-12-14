@@ -27,7 +27,7 @@ bugfix by Kovi 2002.07.28
 
 
 //:: modified by mr_bumpkin Dec 4, 2003
-#include "prc_inc_spells"  
+#include "prc_inc_spells"
 #include "prc_add_spell_dc"
 
 
@@ -63,7 +63,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     {
         nCasterLevel = 20;
     }
-    
+
     int nDamage = d6(nCasterLevel);
     int nDamStrike;
     int nNumAffected = 0;
@@ -72,7 +72,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     effect eLightning = EffectBeam(VFX_BEAM_LIGHTNING, OBJECT_SELF, BODY_NODE_HAND);;
     effect eVis  = EffectVisualEffect(VFX_IMP_LIGHTNING_S);
     effect eDamage;
-    object oFirstTarget = GetSpellTargetObject();
+    object oFirstTarget = PRCGetSpellTargetObject();
     object oHolder;
     object oTarget;
     location lSpellLocation;
@@ -87,9 +87,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         nDamage = nDamage + (nDamage/2); //Damage/is +50%
     }
     nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
-    
+
     CasterLvl +=SPGetPenetr();
-    
+
     int EleDmg = ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_ELECTRICAL);
 
     //Damage the initial target
@@ -199,6 +199,6 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         //Get the next target in the shape.
         oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetLocation(oFirstTarget), TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
       }
-      
-     
+
+
  }

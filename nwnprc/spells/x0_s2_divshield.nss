@@ -27,14 +27,14 @@ void main()
    if(GetHasFeatEffect(414) == FALSE)
    {
         //Declare major variables
-        object oTarget = GetSpellTargetObject();
+        object oTarget = PRCGetSpellTargetObject();
         int nLevel = GetCasterLevel(OBJECT_SELF);
 
         effect eVis = EffectVisualEffect(VFX_IMP_SUPER_HEROISM);
         effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
 
         int nCharismaBonus = GetAbilityModifier(ABILITY_CHARISMA);
-     
+
       if (GetHasFeat(FEAT_EPIC_DIVINE_SHIELD, OBJECT_SELF)) nCharismaBonus += nCharismaBonus;
 
         effect eAC = EffectACIncrease(nCharismaBonus, AC_SHIELD_ENCHANTMENT_BONUS);

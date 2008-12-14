@@ -57,7 +57,7 @@ void main()
 // End of Spell Cast Hook
 
     object oManifester = OBJECT_SELF;
-    object oTarget     = GetSpellTargetObject();
+    object oTarget     = PRCGetSpellTargetObject();
     struct manifestation manif =
         EvaluateManifestation(oManifester, oTarget,
                               PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,

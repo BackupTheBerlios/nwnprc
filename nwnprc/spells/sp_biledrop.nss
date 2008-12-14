@@ -22,9 +22,9 @@ takes a -4 penalty on the save.*/
 
 void main()
 {
-        object oTarget = GetSpellTargetObject();
+        object oTarget = PRCGetSpellTargetObject();
         location lTarget = GetSpellTargetLocation();
-        int nTouch; 
+        int nTouch;
         int nDam;
         effect eAtt = EffectAttackDecrease(2);
         effect eDam = EffectDamageDecrease(2);
@@ -33,54 +33,54 @@ void main()
         effect eSick = EffectLinkEffects(eAtt, eDam);
         eSick = EffectLinkEffects(eSick, eSkill);
         eSick = EffectLinkEffects(eSick, eSave);
-        
+
         if (GetIsObjectValid(oTarget) == TRUE)
         {
                 nTouch = PRCDoRangedTouchAttack(oTarget);
         }
-        
+
         else
         {
                 nTouch = -1; // * this means that target was the ground, so the user
                 // * intended to splash
         }
-        
+
         //direct hit
         if (nTouch >= 1)
         {
                 //Roll damage
                 nDam = d6(1);
-                
+
                 if(nTouch == 2)
                 {
                         nDam *= 2;
                 }
-                
+
                 //Set damage effect
                 effect eDam = EffectDamage(nDam, DAMAGE_TYPE_ACID);
-                
+
                 ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
-                
+
                 //Apply second round
                 DelayCommand(RoundsToSeconds(1), ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
-                
+
                 if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, 17, SAVING_THROW_TYPE_ACID))
                 {
                         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSick, oTarget, RoundsToSeconds(1));
-                }          
+                }
         }
-        
-        //Splash VFX              
+
+        //Splash VFX
         ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_DISEASE_S), lTarget);
-        
+
         object oSplashTarget = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(10.0), lTarget, TRUE, OBJECT_TYPE_CREATURE);
-        
-        //Cycle through the targets within the spell shape until an invalid object is captured.                
+
+        //Cycle through the targets within the spell shape until an invalid object is captured.
         while (GetIsObjectValid(oSplashTarget))
         {
                 if(oSplashTarget != oTarget)
-                {      
+                {
                         if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, 13, SAVING_THROW_TYPE_ACID))
                         {
                                 ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSick, oSplashTarget, RoundsToSeconds(1));
@@ -88,4 +88,4 @@ void main()
                 }
                 oSplashTarget = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(10.0), lTarget, TRUE, OBJECT_TYPE_CREATURE);
         }
-}       
+}

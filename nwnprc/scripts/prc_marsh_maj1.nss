@@ -9,7 +9,7 @@ void main()
      if(!GetHasSpellEffect(GetSpellId()))
      {
         //Declare major variables including Area of Effect Object
-        object oTarget = GetSpellTargetObject();
+        object oTarget = PRCGetSpellTargetObject();
 
         ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectAreaOfEffect(156), oTarget);
         sMes = "*Major Aura Activated*";

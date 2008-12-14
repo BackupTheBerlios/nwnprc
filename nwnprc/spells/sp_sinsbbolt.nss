@@ -11,7 +11,7 @@ void main()
     effect eBolt = EffectBeam(VFX_BEAM_BLACK, OBJECT_SELF, BODY_NODE_HAND);
     effect eVis  = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);
 
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     location lTarget = GetLocation(oTarget);
     object oNextTarget, oTarget2;
     float fDelay;

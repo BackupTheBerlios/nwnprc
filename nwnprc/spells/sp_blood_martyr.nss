@@ -12,11 +12,11 @@ Targets: 1 willing creature
 Duration: Instantaneous
 Saving Throw: None
 Spell Resistance: No
- 
+
 You may transfer your own hitpoints to a target creature within range. You must transfer at least 20 points.
-Transferred hitpoints are damage to you. The creature takes your transferred hitpoints as if recieving a 
+Transferred hitpoints are damage to you. The creature takes your transferred hitpoints as if recieving a
 cure wounds spell and cannot gain more than hit points than its maximum allows; any excess hitpoints are lost.
-This spell transfers only actual hitpoints, not temporary hit points. 
+This spell transfers only actual hitpoints, not temporary hit points.
 
 Author:    Stratovarius
 Created:   26/2/06
@@ -29,22 +29,21 @@ Created:   26/2/06
 
 void main()
 {
-	PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
-	
-	// Run the spellhook. 
-	if (!X2PreSpellCastCode()) return;
-	
-	//Define vars
-	object oPC = OBJECT_SELF;
-	object oTarget = GetSpellTargetObject();
-		
-	if (GetIsFriend(oTarget, oPC)) // Only works on allies
-	{
-		SetLocalObject(oPC, "BloodMartyrTarget", oTarget);
-		StartDynamicConversation("sp_cnv_bldmartyr", oPC, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, oPC);
-	}
+    PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
 
-	PRCSetSchool();
+    // Run the spellhook.
+    if (!X2PreSpellCastCode()) return;
+
+    //Define vars
+    object oPC = OBJECT_SELF;
+    object oTarget = PRCGetSpellTargetObject();
+
+    if (GetIsFriend(oTarget, oPC)) // Only works on allies
+    {
+        SetLocalObject(oPC, "BloodMartyrTarget", oTarget);
+        StartDynamicConversation("sp_cnv_bldmartyr", oPC, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, oPC);
+    }
+
+    PRCSetSchool();
 }
-				
-				
+

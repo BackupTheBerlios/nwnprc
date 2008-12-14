@@ -37,7 +37,7 @@
 void main()
 {
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     effect eVis = EffectVisualEffect(VFX_IMP_POLYMORPH);
     effect ePoly;
     int nMetaMagic = PRCGetMetaMagicFeat();
@@ -50,7 +50,7 @@ void main()
                 return;
         } // abort
     } // check to see if abort due to being mounted
-    
+
     //Enter Metamagic conditions
     if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
     {
@@ -61,10 +61,10 @@ void main()
     //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELLABILITY_WILD_SHAPE, FALSE));
 
-	//this command will make shore that polymorph plays nice with the shifter
-	ShifterCheck(OBJECT_SELF);
-	
-	ClearAllActions(); // prevents an exploit
+    //this command will make shore that polymorph plays nice with the shifter
+    ShifterCheck(OBJECT_SELF);
+
+    ClearAllActions(); // prevents an exploit
 
     //Apply the VFX impact and effects
     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);

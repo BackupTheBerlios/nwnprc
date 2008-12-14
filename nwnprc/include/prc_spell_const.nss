@@ -1,4 +1,4 @@
-const int FOOBAR = -1; // Comment or uncomment whenever the compiler croaks on an error code 5.
+//const int FOOBAR = -1; // Comment or uncomment whenever the compiler croaks on an error code 5.
 
 //spell
 const int SPELL_MAJOR_MAGIC_MISSILE         = 2247;

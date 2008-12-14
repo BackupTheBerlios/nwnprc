@@ -39,7 +39,7 @@ void main()
         int meta = GetLocalInt(focus, "spell_like_meta");
 
         /* Cast it */
-        ActionCastSpellAtObject(spell_id, GetSpellTargetObject(), meta, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
+        ActionCastSpellAtObject(spell_id, PRCGetSpellTargetObject(), meta, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
     }
 }
 

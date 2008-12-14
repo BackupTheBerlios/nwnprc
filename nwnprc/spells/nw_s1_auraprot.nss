@@ -29,7 +29,7 @@ void main()
     //Declare major variables including Area of Effect Object
     effect eAOE = EffectAreaOfEffect(AOE_MOB_PROTECTION);
 
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nDuration = GetCasterLevel(OBJECT_SELF) / 2;
     int nMetaMagic = PRCGetMetaMagicFeat();
     //Make sure duration does no equal 0

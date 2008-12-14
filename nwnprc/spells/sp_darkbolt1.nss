@@ -3,7 +3,7 @@
 void DarkBolt(object oTarget,int nMissiles, int nDC , int nMetaMagic)
 {
    if (GetIsDead(oTarget)) return;
-   
+
    nMissiles--;
    effect eMissile = EffectVisualEffect(VFX_BEAM_EVIL);
    effect eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
@@ -11,14 +11,14 @@ void DarkBolt(object oTarget,int nMissiles, int nDC , int nMetaMagic)
    effect eVis2 = EffectVisualEffect(VFX_IMP_DAZED_S);
    //effect eBolt = EffectBeam(VFX_BEAM_EVIL, OBJECT_SELF, BODY_NODE_HAND);
     effect eBolt = EffectVisualEffect(VFX_IMP_MIRV);
-    
+
    float fDist = GetDistanceBetween(OBJECT_SELF, oTarget);
    float fDelay = fDist/(3.0 * log(fDist) + 2.0);
    float fDelay2, fTime;
-  
+
    //Make SR Check
    if (!PRCDoResistSpell(OBJECT_SELF, oTarget))
-   {      
+   {
       //Roll damage
       int nDam = d8(2);
       //Enter Metamagic conditions
@@ -36,11 +36,11 @@ void DarkBolt(object oTarget,int nMissiles, int nDC , int nMetaMagic)
        fTime += fDelay2;
 
       SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBolt, oTarget, 1.0,FALSE);
-      
+
        //Set damage effect
        effect eDam = PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_MAGICAL);
        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBolt, oTarget, 1.0,FALSE);
-        
+
        if(MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)
        {
            DelayCommand(fTime, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
@@ -81,13 +81,13 @@ void main()
 {
     // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
     if (!X2PreSpellCastCode()) return;
-    
+
     PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nCasterLvl = PRCGetCasterLevel();
     int nMetaMagic = PRCGetMetaMagicFeat();
         int nPenetr = nCasterLvl + SPGetPenetr();
-        
+
     int nMissiles = nCasterLvl/2;
     float fDist = GetDistanceBetween(OBJECT_SELF, oTarget);
     float fDelay = fDist/(3.0 * log(fDist) + 2.0);
@@ -110,7 +110,7 @@ void main()
         //Make SR Check
         if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nPenetr))
         {
-           
+
                 //Roll damage
                 int nDam = d8(2);
                 //Enter Metamagic conditions
@@ -130,7 +130,7 @@ void main()
                //Set damage effect
                 effect eDam = PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_MAGICAL);
                 SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBolt, oTarget, 1.0,FALSE);
-                
+
                 if(MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)
                 {
                    DelayCommand(fTime, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
@@ -165,5 +165,5 @@ void main()
            DelayCommand(6.2,DarkBolt( oTarget,nMissiles,nDC,nMetaMagic));
 
         PRCSetSchool();
-    
+
 }

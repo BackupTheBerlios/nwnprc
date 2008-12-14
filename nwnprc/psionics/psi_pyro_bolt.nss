@@ -13,7 +13,7 @@
 void main()
 {
     object oPC = OBJECT_SELF;
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nDamageType = GetPersistantLocalInt(oPC, "PyroDamageType");
     int nLevel = (GetLevelByClass(CLASS_TYPE_PYROKINETICIST, oPC));
     int iAttackRoll = 0;

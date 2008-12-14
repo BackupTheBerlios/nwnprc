@@ -32,7 +32,7 @@ void main()
 
 
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     effect eVis = EffectVisualEffect(VFX_IMP_CHARM);
     effect eCharm = EffectDominated();  //EffectDominated is limited to 1 creature at a time
     eCharm = PRCGetScaledEffect(eCharm, oTarget);

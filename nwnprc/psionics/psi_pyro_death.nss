@@ -19,7 +19,7 @@ void main()
         SendMessageToPC(oPC, "You must be psionically focused to use this feat");
         return;
     }
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nDamageType = GetPersistantLocalInt(oPC, "PyroDamageType");
     int nImpactVFX = GetPersistantLocalInt(oPC, "PyroImpactVFX");
     int nImpactBigVFX = GetPersistantLocalInt(oPC, "PyroImpactBigVFX");

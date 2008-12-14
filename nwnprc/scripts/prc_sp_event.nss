@@ -14,14 +14,14 @@
 void main()
 {
     object oPC = OBJECT_SELF;
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nID = GetSpellId();
     int nEvent = GetRunningEvent();
 
     if (nEvent == EVENT_ITEM_ONHIT) {
         int nCharges = GetLocalInt(oPC, PRC_SPELL_CHARGE_COUNT);
         int nSpellID = GetLocalInt(oPC, PRC_SPELL_CHARGE_SPELLID);
-	
+
         if(nCharges > 0)
         {
             SetLocalInt(oPC, "AttackHasHit", 1); // maybe do crit in 1/20 chance?
@@ -30,9 +30,9 @@ void main()
             RunImpactScript(oPC, nSpellID, PRC_SPELL_EVENT_ATTACK);
             DeleteLocalInt(oPC, "AttackHasHit");
             DeleteLocalInt(oPC, "NoSpellSneak");
-            DeleteLocalInt(oPC, PRC_CASTERLEVEL_OVERRIDE);   
+            DeleteLocalInt(oPC, PRC_CASTERLEVEL_OVERRIDE);
         }
-    } 
+    }
     else if(nID == SPELLS_SPELLS_TOUCH_ATTACK || nID == SPELLS_SPELLS_RANGED_ATTACK)
     {
         int nCharges = GetLocalInt(oPC, PRC_SPELL_CHARGE_COUNT);
@@ -48,7 +48,7 @@ void main()
                 SendMessageToPC(oPC, "This is not a ranged spell");  //sanity check
             else
                 RunSpellScript(oPC, nSpellID, PRC_SPELL_EVENT_ATTACK);
-            DelayCommand(1.0, DeleteLocalInt(oPC, PRC_CASTERLEVEL_OVERRIDE));   
+            DelayCommand(1.0, DeleteLocalInt(oPC, PRC_CASTERLEVEL_OVERRIDE));
         }
         else
             SendMessageToPC(oPC, "You have no charges remaining");

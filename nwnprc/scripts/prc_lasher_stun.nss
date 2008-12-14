@@ -20,7 +20,7 @@ void main()
         SetLocalInt(oPC, "LASHER_STUN_USED", TRUE);
         DelayCommand(6.0f, DeleteLocalInt(oPC, "LASHER_STUN_USED"));
 
-        object oTarget = GetSpellTargetObject();
+        object oTarget = PRCGetSpellTargetObject();
         object oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
         int nDC = 10 + (GetLevelByClass(CLASS_TYPE_LASHER)) + GetAbilityModifier(ABILITY_STRENGTH, oPC);
         int nSpellId = GetSpellId();

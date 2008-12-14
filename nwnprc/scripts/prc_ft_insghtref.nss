@@ -16,7 +16,7 @@
 
 void main()
 {
-    object oPC = GetSpellTargetObject();
+    object oPC = PRCGetSpellTargetObject();
     int nInt = GetAbilityModifier(ABILITY_INTELLIGENCE, oPC);
     int nDex = GetAbilityModifier(ABILITY_DEXTERITY, oPC);
     int nMod = nInt - nDex;

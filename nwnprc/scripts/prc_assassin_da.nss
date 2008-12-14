@@ -18,7 +18,7 @@
 void main()
 {
     object oPC = OBJECT_SELF;
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
 
     // Gotta be a living critter
     int nType = MyPRCGetRacialType(oTarget);
@@ -31,7 +31,7 @@ void main()
         return;
     }
     // Assasain must not be seen
-/*    if (!( (GetStealthMode(oPC) == STEALTH_MODE_ACTIVATED)  || 
+/*    if (!( (GetStealthMode(oPC) == STEALTH_MODE_ACTIVATED)  ||
            (PRCGetHasEffect(EFFECT_TYPE_INVISIBILITY,oPC)) ||
            (PRCGetHasEffect(EFFECT_TYPE_SANCTUARY,oPC)) ) )
     {
@@ -44,7 +44,7 @@ void main()
     {
         SendMessageToPC(oPC,"You are still studying your target. Wait "+IntToString(FloatToInt(fApplyDATime))+ " second(s) before you can perform the death attack");
         return;
-    }   
+    }
 
     // Set a variable that tells us we are in the middle of a DA
     // Must study the target for three rounds
@@ -54,7 +54,7 @@ void main()
     SetLocalInt(oPC,"PRC_ASSN_TARGET_RACE",nType);
     //Save the target
     SetLocalObject(oPC, "PRC_DA_TARGET", oTarget);
-    
+
     // Kick off a function to count down till they get the DA
     SendMessageToPC(oPC,"You begin to study your target");
     DelayCommand(6.0,ExecuteScript("prc_assn_da_hb",oPC));

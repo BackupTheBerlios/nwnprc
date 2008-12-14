@@ -29,7 +29,7 @@ void main()
 
     //Declare major variables
     int nSpell = GetSpellId();
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     effect eVis = EffectVisualEffect(VFX_IMP_POLYMORPH);
     int CasterLvl = GetInvokerLevel(OBJECT_SELF, GetInvokingClass());
     int nDuration = CasterLvl;
@@ -59,10 +59,10 @@ void main()
               return;
         } // abort
     } // check to see if abort due to being mounted
-	//this command will make shore that polymorph plays nice with the shifter
-	ShifterCheck(oTarget);
-	
-	AssignCommand(oTarget, ClearAllActions()); // prevents an exploit
+    //this command will make shore that polymorph plays nice with the shifter
+    ShifterCheck(oTarget);
+
+    AssignCommand(oTarget, ClearAllActions()); // prevents an exploit
 
     //Apply the VFX impact and effects
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);

@@ -3,7 +3,7 @@
 void main()
 {
     object oPC = OBJECT_SELF;
-    object oTarget  = GetSpellTargetObject();
+    object oTarget  = PRCGetSpellTargetObject();
 
     effect eAttackBonus = EffectAttackIncrease(2);
     effect eACPenalty = EffectACDecrease(4);

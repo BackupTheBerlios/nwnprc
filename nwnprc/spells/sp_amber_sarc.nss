@@ -17,7 +17,7 @@ You infuse an amber sphere with magical power and
 hurl it toward the target.  If you succeed on a
 ranged touch attack, the amber strikes the target
 and envelops it in coruscating energy that hardens
-immediately, trapping the target within a 
+immediately, trapping the target within a
 translucent, immobile amber shell.  The target is
 perfectly preserved and held in stasis, unharmed
 yet unable to take any actions.  Within the amber
@@ -28,13 +28,13 @@ The amber sarcophagus has hardness 5 and 10hp per
 caster level(maximum 200hp). If it is reduced to
 0 hp, it shatters and crumbles to worhless amber
 dust, at which point the target is released from
-stasis (although it is flat footed until next 
+stasis (although it is flat footed until next
 turn).  Left alone, the amber sarcophagus traps
-the target for the duration of the spell, then 
-disappears before releasing the target from 
+the target for the duration of the spell, then
+disappears before releasing the target from
 captive stasis.
 
-Material Component: An amber sphere worth at 
+Material Component: An amber sphere worth at
 least 500 gp.
 
 Author:    Tenjac
@@ -53,43 +53,43 @@ void MakeImmune(object oTarget, float fDur);
 void main()
 {
         if(!X2PreSpellCastCode()) return;
-        
+
         PRCSetSchool(SPELL_SCHOOL_EVOCATION);
-                        
+
         object oPC = OBJECT_SELF;
-        object oTarget = GetSpellTargetObject();
+        object oTarget = PRCGetSpellTargetObject();
         int nCasterLvl = PRCGetCasterLevel(oPC);
         int nMetaMagic = PRCGetMetaMagicFeat();
         float fDur = HoursToSeconds(24 * nCasterLvl);
-                
+
         if(nMetaMagic == METAMAGIC_EXTEND)
         {
                 fDur += fDur;
         }
-                
+
         PRCSignalSpellEvent(oTarget,TRUE, SPELL_AMBER_SARCOPHAGUS, oPC);
-        
+
         //Make touch attack
         int nTouch = PRCDoRangedTouchAttack(oTarget);
-                
+
         if(nTouch)
         {
-                //Sphere projectile VFX         
-                
+                //Sphere projectile VFX
+
                 if(!PRCDoResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
                 {
                         //Get starting HP
                         int nNormHP = GetCurrentHitPoints(oTarget);
-                        
+
                         //Apply effects
                         effect eSarc = EffectLinkEffects(EffectTemporaryHitpoints(10 * min(20, nCasterLvl)), EffectCutsceneParalyze());
                                eSarc = EffectLinkEffects(eSarc, EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MAJOR));
-                                                        
+
                         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSarc, oTarget, fDur, TRUE, PRCGetSpellId(), nCasterLvl);
-                                                
+
                         //Make immune to pretty much everything
-                        MakeImmune(oTarget, fDur);                      
-                        
+                        MakeImmune(oTarget, fDur);
+
                         SarcMonitor(oPC, oTarget, nNormHP);
                 }
         }
@@ -99,23 +99,23 @@ void main()
 void SarcMonitor(object oPC, object oTarget, int nNormHP)
 {
         int nHP = GetCurrentHitPoints(oTarget);
-        
+
         if(nHP <= nNormHP)
         {
-                RemoveSarc(oTarget, oPC);                                               
+                RemoveSarc(oTarget, oPC);
         }
-                
+
         else
         {
                 DelayCommand(3.0f, SarcMonitor(oPC, oTarget, nNormHP));
-                
+
         }
 }
 
 void RemoveSarc(object oTarget, object oPC)
 {
         effect eTest = GetFirstEffect(oTarget);
-        
+
         while(GetIsEffectValid(eTest))
         {
                 if(GetEffectSpellId(eTest) == SPELL_AMBER_SARCOPHAGUS)
@@ -147,6 +147,6 @@ void MakeImmune(object oTarget, float fDur)
                eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_SNEAK_ATTACK));
                eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_TRAP));
                eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_MIND_SPELLS));
-               
+
                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur);
 }

@@ -33,33 +33,32 @@ Material Component: A bit of animal fur, feathers,
 
 void main()
 {
-	if(!X2PreSpellCastCode()) return;
-	
-	PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
-	
-	object oPC = OBJECT_SELF;
-	object oTarget = GetSpellTargetObject();
-	int nCasterLvl = PRCGetCasterLevel(oPC);
-	int nMetaMagic = PRCGetMetaMagicFeat();
-	float fDur = (60.0f * nCasterLvl);
-	
-	PRCSignalSpellEvent(oTarget,FALSE, SPELL_ANIMALISTIC_POWER, oPC);
-	
-	//Build effect
-	effect eBuff = EffectLinkEffects(EffectAbilityIncrease(ABILITY_STRENGTH, 2), EffectAbilityIncrease(ABILITY_DEXTERITY, 2));
-	       eBuff = EffectLinkEffects(eBuff, EffectAbilityIncrease(ABILITY_CONSTITUTION, 2));
-	       eBuff = EffectLinkEffects(eBuff, EffectVisualEffect(VFX_DUR_SANCTUARY));
-	       
-	if(nMetaMagic == METAMAGIC_EXTEND)
-	{
-		fDur += fDur;
-	}
-	
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBuff, oTarget, fDur, TRUE, SPELL_ANIMALISTIC_POWER, nCasterLvl);
-	
-	PRCSetSchool();
+    if(!X2PreSpellCastCode()) return;
+
+    PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+
+    object oPC = OBJECT_SELF;
+    object oTarget = PRCGetSpellTargetObject();
+    int nCasterLvl = PRCGetCasterLevel(oPC);
+    int nMetaMagic = PRCGetMetaMagicFeat();
+    float fDur = (60.0f * nCasterLvl);
+
+    PRCSignalSpellEvent(oTarget,FALSE, SPELL_ANIMALISTIC_POWER, oPC);
+
+    //Build effect
+    effect eBuff = EffectLinkEffects(EffectAbilityIncrease(ABILITY_STRENGTH, 2), EffectAbilityIncrease(ABILITY_DEXTERITY, 2));
+           eBuff = EffectLinkEffects(eBuff, EffectAbilityIncrease(ABILITY_CONSTITUTION, 2));
+           eBuff = EffectLinkEffects(eBuff, EffectVisualEffect(VFX_DUR_SANCTUARY));
+
+    if(nMetaMagic == METAMAGIC_EXTEND)
+    {
+        fDur += fDur;
+    }
+
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBuff, oTarget, fDur, TRUE, SPELL_ANIMALISTIC_POWER, nCasterLvl);
+
+    PRCSetSchool();
 }
-	
-	
-	
-	
+
+
+

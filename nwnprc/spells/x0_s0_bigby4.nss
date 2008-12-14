@@ -91,7 +91,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     }
     // End of Spell Cast Hook
 
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nClassType = PRCGetLastSpellCastClass();
     int nAbilityModifier = (GetAbilityScoreForClass(nClassType, OBJECT_SELF) -10)/2;
 

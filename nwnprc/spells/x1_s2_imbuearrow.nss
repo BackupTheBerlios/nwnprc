@@ -148,7 +148,7 @@ void main()
     {
          nCasterLvl = 10;
     }
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     // * GZ: Add arrow damage if targeted on creature...
     if (GetIsObjectValid(oTarget ))
     {

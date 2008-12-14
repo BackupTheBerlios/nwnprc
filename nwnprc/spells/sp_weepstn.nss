@@ -14,9 +14,9 @@ character is considered shaken for 1d6 rounds.
 
 void main()
 {
-        object oTarget = GetSpellTargetObject();
+        object oTarget = PRCGetSpellTargetObject();
         int nTouch = PRCDoRangedTouchAttack(oTarget);
-                
+
         if(nTouch)
         {
                 int nRounds = d6(1);

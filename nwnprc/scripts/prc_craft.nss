@@ -594,7 +594,7 @@ void CraftingHB(object oPC, object oItem, itemproperty ip, int nCost, int nXP, s
 
 void main()
 {
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     object oPC = OBJECT_SELF;//GetPCSpeaker();
     int nValue = GetLocalInt(oPC, DYNCONV_VARIABLE);
     if(GetLocalInt(oPC, "PRC_CRAFT_TERMINATED"))

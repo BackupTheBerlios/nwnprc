@@ -23,7 +23,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
 
     //Declare major variables
     effect eVis = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nDrain = d4(2);
     effect eDrain = EffectNegativeLevel(nDrain);
     eDrain = SupernaturalEffect(eDrain);

@@ -12,11 +12,12 @@
 //:://////////////////////////////////////////////
 #include "prc_feat_const"
 #include "prc_spell_const"
+#include "prc_inc_nwscript"
 
 void main()
 {
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     effect eVisual = EffectVisualEffect(VFX_IMP_AC_BONUS);
     //This feat is meant for allies.
     if(oTarget == OBJECT_SELF)

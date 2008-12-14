@@ -3,13 +3,13 @@
 
 void main()
 {
-    object oCreature = GetSpellTargetObject();
+    object oCreature = PRCGetSpellTargetObject();
     object oRighthand = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oCreature);
     object oLefthand = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oCreature);
     object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oCreature);
     int iExtraAttacks = 0;
     int iBrawlerAttacks = GetLocalInt(oCreature, "BrawlerAttacks");
-    
+
     // Calculate the number of extra attacks
     if (GetHasFeat(FEAT_BRAWLER_EXTRAATT_1, oCreature))
     {
@@ -41,25 +41,25 @@ void main()
         }
         else FloatingTextStringOnCreature("*Extra unarmed attack not enabled: Weapon equipped*", oCreature, FALSE);
     }
-    
+
     // No change, skip doing anything
     if(iExtraAttacks == iBrawlerAttacks) return;
-    
-    
+
+
     // Remove the old effects
     if (GetHasSpellEffect(SPELL_BRAWLER_EXTRA_ATT, oCreature))
     {
         PRCRemoveSpellEffects(SPELL_BRAWLER_EXTRA_ATT, oCreature, oCreature);
     }
-    
+
     if (!iExtraAttacks)
         DeleteLocalInt(oCreature, "BrawlerAttacks");
     else
     {
         SetLocalInt(oCreature, "BrawlerAttacks", iExtraAttacks);
-    
+
         effect eExtraAttacks = SupernaturalEffect(EffectModifyAttacks(iExtraAttacks));
-    
+
         ApplyEffectToObject(DURATION_TYPE_PERMANENT, eExtraAttacks, oCreature);
     }
 }

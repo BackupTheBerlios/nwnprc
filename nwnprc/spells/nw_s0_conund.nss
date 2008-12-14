@@ -16,7 +16,7 @@
 
 
 //:: modified by mr_bumpkin Dec 4, 2003
-#include "prc_inc_spells"  
+#include "prc_inc_spells"
 #include "prc_add_spell_dc"
 
 
@@ -45,7 +45,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
 
 
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     effect eControl = EffectDominated();
     effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DOMINATED);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
@@ -63,7 +63,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         nDuration = CasterLvl * 2;
     }
     int nPenetr = CasterLvl + SPGetPenetr();
-    
+
     if (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD && GetHitDice(oTarget) <= nHD)
     {
         if(!GetIsReactionTypeFriendly(oTarget))

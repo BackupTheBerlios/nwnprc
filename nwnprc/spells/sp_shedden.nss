@@ -22,21 +22,21 @@ increases the price as follows: 200 gp for +2, 500 gp for +3,
 
 void main()
 {
-        object oTarget = GetSpellTargetObject();
+        object oTarget = PRCGetSpellTargetObject();
         int nSpell = GetSpellId();
         int nBonus;
-        
+
         if(nSpell == SPELL_SHEDDEN) nBonus = 1;
-        
+
         else if (nSpell == SPELL_SHEDDEN2) nBonus = 2;
-        
+
         else if (nSpell == SPELL_SHEDDEN3) nBonus = 3;
-        
+
         else if (nSpell == SPELL_SHEDDEN4) nBonus = 4;
-        
+
         else if (nSpell == SPELL_SHEDDEN5) nBonus = 5;
-        
+
         else return;
-        
+
         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectACIncrease(nBonus, AC_NATURAL_BONUS), oTarget, TurnsToSeconds(2));
 }

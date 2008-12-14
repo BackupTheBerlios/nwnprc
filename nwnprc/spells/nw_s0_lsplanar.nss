@@ -14,7 +14,7 @@
 //:: VFX Pass By: Preston W, On: June 20, 2001
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
-#include "prc_inc_spells"  
+#include "prc_inc_spells"
 #include "prc_add_spell_dc"
 
 void main()
@@ -51,7 +51,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     eLink = EffectLinkEffects(eLink, eDur2);
     eLink = EffectLinkEffects(eLink, eDur3);
 
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nRacial = MyPRCGetRacialType(oTarget);
     if(nDuration == 0)
     {

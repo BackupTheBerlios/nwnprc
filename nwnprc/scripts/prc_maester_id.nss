@@ -1,6 +1,6 @@
 //::///////////////////////////////////////////////
 //:: Identification
-//:: 
+//::
 /*
     Roll a spellcraft check to attempt to ID an item.
 */
@@ -16,7 +16,7 @@ int LoreItem(object item)
 {
     int id=0;
     if (!GetIdentified(item))
-    {   
+    {
         id=1;
         SetIdentified(item,TRUE);
     }
@@ -66,15 +66,15 @@ int LoreItem(object item)
 
 void main()
 {
-    object oItem = GetSpellTargetObject();
-    
+    object oItem = PRCGetSpellTargetObject();
+
     if (!GetLocalInt(oItem, "MaesterID"))
     {
         effect eVis;
-        
+
         int nDC = LoreItem(oItem);
         int nSkill = GetIsSkillSuccessful(OBJECT_SELF, SKILL_SPELLCRAFT, nDC);
-    
+
         if (nSkill)
         {
              eVis = EffectVisualEffect(VFX_IMP_MAGICAL_VISION);
@@ -84,7 +84,7 @@ void main()
         {
              eVis = EffectVisualEffect(VFX_IMP_BLIND_DEAF_M);
         }
-        
+
         SetLocalInt(oItem, "MaesterID", TRUE);
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);
     }

@@ -44,7 +44,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
 
 
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     effect eVis = EffectVisualEffect(VFX_IMP_CHARM);
     effect eCharm = EffectCharmed();
     eCharm = PRCGetScaledEffect(eCharm, oTarget);
@@ -56,10 +56,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     eLink = EffectLinkEffects(eLink, eDur);
 
     int nMetaMagic = PRCGetMetaMagicFeat();
-    
+
     //int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int CasterLvl = GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT_A, OBJECT_SELF) + GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT_D, OBJECT_SELF);
-    
+
     int nDuration = 2 + CasterLvl/3;
     int nPenetr = CasterLvl + SPGetPenetr();
     nDuration = PRCGetScaledDuration(nDuration, oTarget);

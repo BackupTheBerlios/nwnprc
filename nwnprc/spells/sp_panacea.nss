@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////
 //
 // Panacea - Heals 1d8+1/lvl (max 1d8+20) hp, cures the following
-// conditions: blinded, confused, dazed, deafened, diseased, 
+// conditions: blinded, confused, dazed, deafened, diseased,
 // frightened, paralyzed, poisoned, sleep, and stunned.
 //
 /////////////////////////////////////////////////////////////////////
@@ -16,21 +16,21 @@ void main()
     PRCSetSchool(SPELL_SCHOOL_CONJURATION);
 
     // Get the target and raise the spell cast event.
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     // Compute the damage to add to the dice roll.
     int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nAdd = nCasterLvl;
     if (nAdd > 20) nAdd = 20;
     int nPenetr = nCasterLvl + SPGetPenetr();
-    
+
     // If the target is not undead then heal it and remove all harmfull effects.  If
     // the target is undead then check for SR.
     if (RACIAL_TYPE_UNDEAD != MyPRCGetRacialType(oTarget))
-    {   
+    {
         PRCSignalSpellEvent(oTarget, FALSE);
-        
+
         // Look for detrimental effects and remove them.  Removes the following effects:
-        // blinded, confused, dazed, deafened, diseased, frightened, paralyzed, 
+        // blinded, confused, dazed, deafened, diseased, frightened, paralyzed,
         // poisoned, sleep, and stunned.
         effect eEffect = GetFirstEffect(oTarget);
         while (GetIsEffectValid(eEffect))
@@ -43,23 +43,23 @@ void main()
                 PrintString("****EFFECT_TYPE_INVALIDEFFECT returned but GetIsValidEffect() returns TRUE");
                 break;
             }
-            
+
             // catch all of the detrimental effects and remove them.
-            if (EFFECT_TYPE_BLINDNESS == nEffectType || 
+            if (EFFECT_TYPE_BLINDNESS == nEffectType ||
                 EFFECT_TYPE_CONFUSED == nEffectType ||
-                EFFECT_TYPE_DAZED == nEffectType || 
+                EFFECT_TYPE_DAZED == nEffectType ||
                 EFFECT_TYPE_DEAF == nEffectType ||
-                EFFECT_TYPE_DISEASE == nEffectType || 
+                EFFECT_TYPE_DISEASE == nEffectType ||
                 EFFECT_TYPE_FRIGHTENED == nEffectType ||
-                EFFECT_TYPE_PARALYZE == nEffectType || 
+                EFFECT_TYPE_PARALYZE == nEffectType ||
                 EFFECT_TYPE_POISON == nEffectType ||
-                EFFECT_TYPE_SLEEP == nEffectType || 
+                EFFECT_TYPE_SLEEP == nEffectType ||
                 EFFECT_TYPE_STUNNED == nEffectType)
                 RemoveEffect(oTarget, eEffect);
-            
+
             eEffect = GetNextEffect(oTarget);
         }
-                
+
         // Roll the healing 'damage'.
         int nHeal = PRCGetMetaMagicDamage(DAMAGE_TYPE_POSITIVE, 1, 8, 0, nAdd);
         if (GetLevelByClass(CLASS_TYPE_HEALER, OBJECT_SELF))
@@ -72,7 +72,7 @@ void main()
     else if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
     {
         PRCSignalSpellEvent(oTarget);
-        
+
         if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nPenetr))
         {
             int nTouch = PRCDoMeleeTouchAttack(oTarget);;
@@ -81,15 +81,15 @@ void main()
                 // Roll the damage (allowing for a critical) and let the target make a will save to
                 // halve the damage.
                 int nDamage = PRCGetMetaMagicDamage(DAMAGE_TYPE_POSITIVE, 1 == nTouch ? 1 : 2, 8, 0, nAdd);
-                if (PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget,OBJECT_SELF))) 
+                if (PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget,OBJECT_SELF)))
                 {
-                	nDamage /= 2;
-                    	if (GetHasMettle(oTarget, SAVING_THROW_WILL)) // Ignores partial effects
-                    	{
-                		nDamage = 0;
-                    	} 
+                    nDamage /= 2;
+                        if (GetHasMettle(oTarget, SAVING_THROW_WILL)) // Ignores partial effects
+                        {
+                        nDamage = 0;
+                        }
                 }
-                
+
                 // Apply damage and VFX.
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDamage, DAMAGE_TYPE_POSITIVE), oTarget);
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_SUNSTRIKE), oTarget);

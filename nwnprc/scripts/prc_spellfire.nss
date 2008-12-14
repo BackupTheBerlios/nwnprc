@@ -29,7 +29,7 @@ void main()
         return;
     }
     int nSpellID = GetSpellId();
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     switch (nSpellID)
     {
         case SPELL_SPELLFIRE_ATTACK: SpellfireAttack(oPC, oTarget, TRUE); break;

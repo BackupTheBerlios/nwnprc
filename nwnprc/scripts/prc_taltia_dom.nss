@@ -43,7 +43,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
 // End of Spell Cast Hook
 
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     effect eDom = EffectCutsceneDominated();    // Allows multiple dominated creatures
     eDom = PRCGetScaledEffect(eDom, oTarget);
     effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DOMINATED);
@@ -63,11 +63,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     int nRacial = MyPRCGetRacialType(oTarget);
     //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_TOT_DOMINATE_DRAGON, FALSE));
-    
+
     //only works on dragons
     if (MyPRCGetRacialType(oTarget)!= RACIAL_TYPE_DRAGON)
       return;
-    
+
     //Make sure the target is a monster
     if(!GetIsReactionTypeFriendly(oTarget))
     {
@@ -77,7 +77,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
                //Make a Will Save
                if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_MIND_SPELLS))
                {
-                    
+
                     // Extra domination immunity check - using EffectCutsceneDominated(), which normally bypasses
                     if(!GetIsImmune(oTarget, IMMUNITY_TYPE_DOMINATE) && !GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS))
                     {

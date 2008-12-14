@@ -3,10 +3,10 @@
 //:: psi_fell_shot
 //:://////////////////////////////////////////////
 /*
-	Expends psionic focus to resolve the first
-	attack of the round as a touch attack.
+    Expends psionic focus to resolve the first
+    attack of the round as a touch attack.
 
-	Can only be used while wielding a ranged weapon.
+    Can only be used while wielding a ranged weapon.
 */
 //:://////////////////////////////////////////////
 //:: Created By: Ornedan
@@ -19,7 +19,7 @@
 void main()
 {
     object oPC = OBJECT_SELF;
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     effect eDummy;
 
     if(!UsePsionicFocus(oPC)){

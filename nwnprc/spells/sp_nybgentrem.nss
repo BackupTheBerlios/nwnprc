@@ -4,10 +4,10 @@ void main()
 {
     // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
     if (!X2PreSpellCastCode()) return;
-    
+
     PRCSetSchool(SPELL_SCHOOL_ENCHANTMENT);
-    
-    object oTarget = GetSpellTargetObject();
+
+    object oTarget = PRCGetSpellTargetObject();
     if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
     {
         // Fire cast spell at event for the specified target
@@ -24,9 +24,9 @@ void main()
             // Target is dazed for 1 round.
             effect eDazed = EffectDazed();
             eDazed = EffectLinkEffects(eDazed, EffectVisualEffect(VFX_IMP_DAZED_S));
-            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDazed, oTarget, 
+            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDazed, oTarget,
                 RoundsToSeconds(1),TRUE,-1,nCasterLvl);
-            
+
             // Target's saves, attack rolls, and skill checks are reduced by 2 for the
             // spell's duration.
             effect eDebuff = EffectSavingThrowDecrease(SAVING_THROW_ALL, 2);
@@ -35,10 +35,10 @@ void main()
             eDebuff = EffectLinkEffects(eDebuff, EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE));
             eDebuff = EffectLinkEffects(eDebuff, EffectVisualEffect(VFX_DUR_PROTECTION_EVIL_MINOR));
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDebuff, oTarget, fDuration,TRUE,-1,nCasterLvl);
-            SPApplyEffectToObject(DURATION_TYPE_INSTANT, 
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT,
                 EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE), oTarget);
         }
     }
-    
+
     PRCSetSchool();
 }

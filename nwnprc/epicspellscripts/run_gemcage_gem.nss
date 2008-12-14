@@ -16,7 +16,7 @@ void main()
     object oCre;
     string sName = GetLocalString(oItem, "sNameOfCreature");
     string sRef = GetLocalString(oItem, "sCagedCreature");
-    if (GetSpellTargetObject() == OBJECT_SELF)
+    if (PRCGetSpellTargetObject() == OBJECT_SELF)
     {
         FloatingTextStringOnCreature("Inside this gem, " + sName +
             " is safely caged.", OBJECT_SELF);

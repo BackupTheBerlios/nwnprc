@@ -13,7 +13,7 @@
 //:://////////////////////////////////////////////
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
-#include "prc_inc_spells"  
+#include "prc_inc_spells"
 
 
 
@@ -38,7 +38,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
 // End of Spell Cast Hook
 
 
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     effect eVis = EffectVisualEffect(VFX_DUR_ETHEREAL_VISAGE);
     effect eDam = EffectDamageReduction(20, DAMAGE_POWER_PLUS_THREE);
     effect eSpell = EffectSpellLevelAbsorption(2);

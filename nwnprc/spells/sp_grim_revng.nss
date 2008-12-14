@@ -38,7 +38,7 @@ Created:   5/20/06
 void main()
 {
     object oPC = OBJECT_SELF;
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nCasterLvl = PRCGetCasterLevel(oPC);
     int nMetaMagic = PRCGetMetaMagicFeat();
     int nDC = PRCGetSaveDC(oTarget, oPC);
@@ -123,17 +123,17 @@ void main()
                 {
                     SendMessageToPC(oPC, "Your target has no hands!");
                 }
-                
+
                 //Spasm the target
                 AssignCommand(oTarget, PlayAnimation(ANIMATION_LOOPING_SPASM, 1.0, 2.0));
 
                 //Create copy of target, set all body parts null
                 object oHand = CopyObject(oTarget, GetLocation(oTarget), OBJECT_INVALID);
-                
+
                 //Make invisible for a short time
                 ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_CUTSCENE_INVISIBILITY), oHand, 2.1);
-                        
-                //Make it just a floating hand        
+
+                //Make it just a floating hand
                 SetCreatureBodyPart(CREATURE_PART_RIGHT_FOOT, nModelNumber, oHand);
                 SetCreatureBodyPart(CREATURE_PART_LEFT_FOOT, nModelNumber, oHand);
                 SetCreatureBodyPart(CREATURE_PART_RIGHT_SHIN, nModelNumber, oHand);

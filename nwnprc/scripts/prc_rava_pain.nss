@@ -30,7 +30,7 @@ void main()
     string sSuccess = "*Pain Touch Hit*";
     string sMiss = "*Pain Touch Miss*";
 
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
 
     if (GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, OBJECT_SELF)))
         iDam = armedDamage;

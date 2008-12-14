@@ -14,7 +14,7 @@
 //:: VFX Pass By: Preston W, On: June 20, 2001
 
 //:: modified by mr_bumpkin Dec 4, 2003
-#include "prc_inc_spells"  
+#include "prc_inc_spells"
 #include "prc_add_spell_dc"
 
 
@@ -43,7 +43,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
 
 
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     effect eDom = EffectCutsceneDominated();    // Allows multiple dominated creatures
     eDom = PRCGetScaledEffect(eDom, oTarget);
     effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DOMINATED);

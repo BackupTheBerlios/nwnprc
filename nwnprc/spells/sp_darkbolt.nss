@@ -4,13 +4,13 @@ void main()
 {
     // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
     if (!X2PreSpellCastCode()) return;
-    
+
     PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nCasterLvl = PRCGetCasterLevel();
     int nMetaMagic = PRCGetMetaMagicFeat();
         int nPenetr = nCasterLvl + SPGetPenetr();
-        
+
     int nMissiles = nCasterLvl/2;
     float fDist = GetDistanceBetween(OBJECT_SELF, oTarget);
     float fDelay = fDist/(3.0 * log(fDist) + 2.0);
@@ -56,7 +56,7 @@ void main()
                 effect eDam = PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_MAGICAL);
 
               SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBolt, oTarget, 1.0,FALSE);
-              
+
                 if(MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)
                 {
                    DelayCommand(fTime, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
@@ -92,5 +92,5 @@ void main()
 
 
         PRCSetSchool();
-    
+
 }

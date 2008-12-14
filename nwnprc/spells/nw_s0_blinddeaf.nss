@@ -39,7 +39,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
 
 
     //Declare major varibles
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nMetaMagic = PRCGetMetaMagicFeat();
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
@@ -52,7 +52,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     effect eLink = EffectLinkEffects(eBlind, eDeaf);
     eLink = EffectLinkEffects(eLink, eDur);
     int nPenetr = CasterLvl + SPGetPenetr();
-            
+
     if(!GetIsReactionTypeFriendly(oTarget))
     {
         //Fire cast spell at event

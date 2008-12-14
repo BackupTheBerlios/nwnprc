@@ -50,7 +50,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
 
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nClassType = PRCGetLastSpellCastClass();
     int nDuration = CasterLvl;
@@ -86,7 +86,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 SendMessageToPC(OBJECT_SELF, nCasterRoll >= nTargetRoll ?
                     "Bigby's Grasping Hand hit" : "Bigby's Grasping Hand missed");
             }
-            
+
             // * grapple HIT succesful,
             if (nCasterRoll >= nTargetRoll)
             {
@@ -96,11 +96,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 nCasterRoll = d20(1) + nCasterModifier
                     + CasterLvl
                     + 10 + 4;
-    
+
                 int nAttackerGrappleMod = nCasterModifier
                     + CasterLvl
                     + 10 + 4;
-                int nGrapple = DoGrappleCheck(OBJECT_INVALID, oTarget,  
+                int nGrapple = DoGrappleCheck(OBJECT_INVALID, oTarget,
                     nAttackerGrappleMod, 0,
                     GetStringByStrRef(2685), "");
                 if (nGrapple)

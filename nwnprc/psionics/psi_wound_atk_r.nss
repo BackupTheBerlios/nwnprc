@@ -24,7 +24,7 @@
 void main()
 {
     object oPC = OBJECT_SELF;
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     effect eCon = EffectAbilityDecrease(ABILITY_CONSTITUTION, 1);
 
     if(!UsePsionicFocus(oPC)){

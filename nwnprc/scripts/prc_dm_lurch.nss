@@ -3,7 +3,7 @@
 void main()
 {
 object oPC = OBJECT_SELF;
-object oTarget = GetSpellTargetObject();
+object oTarget = PRCGetSpellTargetObject();
 int nDexMod = GetAbilityModifier(ABILITY_DEXTERITY, oTarget);
 int nHumanoid = 0;
 effect eACDec = EffectACDecrease(nDexMod);

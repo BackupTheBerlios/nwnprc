@@ -8,7 +8,7 @@ Level: Clr 7, Demonic 7, Sor/Wiz 7
 Components: V, S
 Casting Time: 1 action
 Range: Personal
-Target: Caster 
+Target: Caster
 Duration: 10 minutes/ level
 
 The caster develops the senses of a powerful fiend.
@@ -29,26 +29,25 @@ Created:   5/17/06
 void main()
 {
     object oPC = OBJECT_SELF;
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nCasterLvl = PRCGetCasterLevel(oPC);
     int nMetaMagic = PRCGetMetaMagicFeat();
     float fDur = (600.0f * nCasterLvl);
-    
+
     //Spellhook
     if(!X2PreSpellCastCode()) return;
-    
+
     PRCSetSchool(SPELL_SCHOOL_DIVINATION);
-    
+
     itemproperty nDarkvis = PRCItemPropertyBonusFeat(FEAT_DARKVISION);
     effect eTrueSee = EffectTrueSeeing();
     itemproperty nDetGood = PRCItemPropertyBonusFeat(FEAT_DETECT_GOOD_AT_WILL);
-    
+
     IPSafeAddItemProperty(oPC, nDarkvis, fDur);
     IPSafeAddItemProperty(oPC, nDetGood, fDur);
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eTrueSee, oPC, fDur);
-    
+
     SPEvilShift(oPC);
     PRCSetSchool();
 }
-    
-    
+

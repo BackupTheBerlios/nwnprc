@@ -1,6 +1,6 @@
 //::///////////////////////////////////////////////
 //:: Swordsage Sense Magic.
-//:: 
+//::
 /*
     Identify target item.
 */
@@ -13,12 +13,12 @@
 
 void main()
 {
-    	object oItem = GetSpellTargetObject();
-    	
-    	// Only works on these item types
-    	if (IPGetIsMeleeWeapon(oItem) || GetBaseItemType(oItem) == BASE_ITEM_ARMOR || GetWeaponRanged(oItem))
-    	{
-    		SetIdentified(oItem, TRUE);
-    	}
+        object oItem = PRCGetSpellTargetObject();
+
+        // Only works on these item types
+        if (IPGetIsMeleeWeapon(oItem) || GetBaseItemType(oItem) == BASE_ITEM_ARMOR || GetWeaponRanged(oItem))
+        {
+            SetIdentified(oItem, TRUE);
+        }
 }
 

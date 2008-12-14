@@ -31,7 +31,7 @@ void main()
     eLink = EffectLinkEffects(eLink, eDur2);
     eLink = EffectLinkEffects(eLink, eDur3);
 
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nRacial = MyPRCGetRacialType(oTarget);
     //Check for metamagic extend
     if (nMetaMagic & METAMAGIC_EXTEND)

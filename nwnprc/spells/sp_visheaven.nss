@@ -18,7 +18,7 @@ Saving Throw: Will Negates
 Spell Resistance: Yes
 
 The target creature is dazed for one round.
-*/  
+*/
 
 #include "prc_inc_spells"
 #include "prc_add_spell_dc"
@@ -45,7 +45,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
 
 
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
     effect eDaze = EffectDazed();
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
@@ -61,7 +61,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     {
         nDuration = 2;
     }
-    
+
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nPenetr = CasterLvl + SPGetPenetr();
 

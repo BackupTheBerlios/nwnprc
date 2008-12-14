@@ -3,7 +3,7 @@
 
 void main()
 {
-    object oPC = GetSpellTargetObject();
+    object oPC = PRCGetSpellTargetObject();
 
     PRCRemoveEffectsFromSpell(oPC, GetSpellId());
 

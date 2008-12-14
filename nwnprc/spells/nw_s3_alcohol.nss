@@ -20,7 +20,7 @@
 
 void main()
 {
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nDrunkenMaster = GetLevelByClass(CLASS_TYPE_DRUNKEN_MASTER, oTarget);
 
     switch(nDrunkenMaster)

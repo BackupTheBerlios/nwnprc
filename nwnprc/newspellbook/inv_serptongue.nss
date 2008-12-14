@@ -15,15 +15,15 @@ void main()
 
     //Declare major variables
     int CasterLvl = GetInvokerLevel(OBJECT_SELF, GetInvokingClass());
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     effect eVis = EffectVisualEffect(VFX_IMP_MAGBLUE );
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
     effect eSave = EffectSavingThrowIncrease(SAVING_THROW_ALL, 5, SAVING_THROW_TYPE_POISON);
     effect eLink = EffectLinkEffects(eSave, eDur);
-    
+
     //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, INVOKE_SERPENTS_TONGUE, FALSE));
-    
+
     //Apply the VFX impact and effect
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(24),TRUE,-1,CasterLvl);
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);

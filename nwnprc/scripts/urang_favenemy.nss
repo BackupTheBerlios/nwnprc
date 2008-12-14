@@ -35,7 +35,7 @@ int BonusAtk(int iDmg)
 
 void FavEn(int iFeat,int iBonus ,int nLevel, int iDmgType, int iFEAC, int iFERE, int nRacial, int iBiowareFeat)
 {
-  object oPC = GetSpellTargetObject();
+  object oPC = PRCGetSpellTargetObject();
   if (!GetHasFeat(iFeat, oPC)) return ;
 
   if (GetHasFeat(iBiowareFeat)) return;  // make sure to punish people who take favored enemy twice with
@@ -50,9 +50,9 @@ void FavEn(int iFeat,int iBonus ,int nLevel, int iDmgType, int iFEAC, int iFERE,
   {
       iBaneDmgType = DAMAGE_TYPE_PIERCING;
   }
-   
+
   effect eLink;
-  
+
   eLink = VersusRacialTypeEffect(EffectDamageIncrease(iBonus,iDmgType) ,nRacial);
   eLink = EffectLinkEffects(eLink,VersusRacialTypeEffect(EffectSkillIncrease(nLevel,SKILL_BLUFF),nRacial));
   eLink = EffectLinkEffects(eLink,VersusRacialTypeEffect(EffectSkillIncrease(nLevel,SKILL_LISTEN),nRacial));
@@ -64,22 +64,22 @@ void FavEn(int iFeat,int iBonus ,int nLevel, int iDmgType, int iFEAC, int iFERE,
     eLink = EffectLinkEffects(eLink,VersusRacialTypeEffect( EffectDamageIncrease(DAMAGE_BONUS_2d6,iBaneDmgType) ,nRacial));
   }
  ApplyEffectToObject(DURATION_TYPE_PERMANENT,SupernaturalEffect(eLink),oPC);
- 
+
 }
 
 void main()
 {
-    object oPC = GetSpellTargetObject();
-    PRCRemoveEffectsFromSpell(oPC,GetSpellId());   
+    object oPC = PRCGetSpellTargetObject();
+    PRCRemoveEffectsFromSpell(oPC,GetSpellId());
     int nLevel = (GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER,oPC)+3)/5;
     int iIFE= GetHasFeat(FEAT_IMPROVED_FAVORED_ENEMY, oPC) ? 3: 0;
-    
+
     int iDmgType = GetWeaponDamageType(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC));
     if ( iDmgType == -1) iDmgType = DAMAGE_TYPE_BLUDGEONING;
 
     int iFEAC = GetHasFeat(FEAT_UR_DODGE_FE,oPC);
     int iFERE = GetHasFeat(FEAT_UR_RESIST_FE,oPC);
-    
+
     int iSpell;
     if (GetHasFeat(FEAT_FAVORED_POWER_ATTACK,oPC))
     {
@@ -95,9 +95,9 @@ void main()
         iSpell =  GetHasSpellEffect(SPELL_POWER_ATTACK10,oPC) ? 10: iSpell;
     //  iSpell =  GetHasSpellEffect(SPELL_SUPREME_POWER_ATTACK,oPC) ? 20: iSpell;
     }
-        
+
     int iBonus = BonusAtk(nLevel+iIFE+iSpell);
-    
+
     FavEn(FEAT_UR_FE_DWARF,iBonus,nLevel,iDmgType,iFEAC,iFERE,RACIAL_TYPE_DWARF, FEAT_FAVORED_ENEMY_DWARF);
     FavEn(FEAT_UR_FE_ELF,iBonus,nLevel,iDmgType,iFEAC,iFERE,RACIAL_TYPE_ELF, FEAT_FAVORED_ENEMY_ELF);
     FavEn(FEAT_UR_FE_GNOME,iBonus,nLevel,iDmgType,iFEAC,iFERE,RACIAL_TYPE_GNOME, FEAT_FAVORED_ENEMY_GNOME);
@@ -123,6 +123,6 @@ void main()
     FavEn(FEAT_UR_FE_UNDEAD,iBonus,nLevel,iDmgType,iFEAC,iFERE,RACIAL_TYPE_UNDEAD, FEAT_FAVORED_ENEMY_UNDEAD);
     FavEn(FEAT_UR_FE_VERMIN,iBonus,nLevel,iDmgType,iFEAC,iFERE,RACIAL_TYPE_VERMIN, FEAT_FAVORED_ENEMY_VERMIN);
 
- 
+
 
 }

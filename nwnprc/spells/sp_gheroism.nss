@@ -9,14 +9,14 @@ void main()
     PRCSetSchool(SPELL_SCHOOL_ENCHANTMENT);
 
     // Get the target and raise the spell cast event.
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     PRCSignalSpellEvent(oTarget, FALSE);
 
     if(GetHasSpellEffect(SPELL_HEROISM, oTarget))
     {
             PRCRemoveSpellEffects(SPELL_HEROISM,OBJECT_SELF,OBJECT_SELF);
     }
-    
+
     // Determine the spell's duration, taking metamagic feats into account.
     int nCasterlvl = PRCGetCasterLevel();
     float fDuration = PRCGetMetaMagicDuration(TenMinutesToSeconds(nCasterlvl));

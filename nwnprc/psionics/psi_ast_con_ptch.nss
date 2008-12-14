@@ -18,30 +18,30 @@
 
 
 void DoPoison(object oTarget, object oCaster, int nDC, int nDam){
-	//Declare major variables
-	//effect eDamage = EffectAbilityDecrease(ABILITY_CONSTITUTION, nDam);
-	//effect eLink = EffectLinkEffects(EffectVisualEffect(VFX_IMP_POISON_S), eDamage);
+    //Declare major variables
+    //effect eDamage = EffectAbilityDecrease(ABILITY_CONSTITUTION, nDam);
+    //effect eLink = EffectLinkEffects(EffectVisualEffect(VFX_IMP_POISON_S), eDamage);
 
-	// First check for poison immunity, if not, make a fort save versus spells.
-	if(!GetIsImmune(oTarget, IMMUNITY_TYPE_POISON) &&
-	   !PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_POISON, oCaster))
-	{
-		//Apply the poison effect and VFX impact
-		ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_POISON_S), oTarget);
-		ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDam, DURATION_TYPE_PERMANENT, TRUE);
-	}
+    // First check for poison immunity, if not, make a fort save versus spells.
+    if(!GetIsImmune(oTarget, IMMUNITY_TYPE_POISON) &&
+       !PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_POISON, oCaster))
+    {
+        //Apply the poison effect and VFX impact
+        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_POISON_S), oTarget);
+        ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDam, DURATION_TYPE_PERMANENT, TRUE);
+    }
 }
 
 
 void main()
 {
-	object oCaster = OBJECT_SELF;
-	object oTarget = GetSpellTargetObject();
-	int nDC = 10 + GetHitDice(oCaster) / 2 + GetAbilityModifier(ABILITY_CHARISMA, oCaster);
+    object oCaster = OBJECT_SELF;
+    object oTarget = PRCGetSpellTargetObject();
+    int nDC = 10 + GetHitDice(oCaster) / 2 + GetAbilityModifier(ABILITY_CHARISMA, oCaster);
 
-	// Primary damage
-	DoPoison(oTarget, oCaster, nDC, 1);
+    // Primary damage
+    DoPoison(oTarget, oCaster, nDC, 1);
 
-	// Secondary damage
-	DelayCommand(MinutesToSeconds(1), DoPoison(oTarget, oCaster, nDC, d2(1)));
+    // Secondary damage
+    DelayCommand(MinutesToSeconds(1), DoPoison(oTarget, oCaster, nDC, d2(1)));
 }

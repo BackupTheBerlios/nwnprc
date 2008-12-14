@@ -1,6 +1,6 @@
 //::///////////////////////////////////////////////
 //:: Appraise Magic Value
-//:: 
+//::
 /*
     Roll an appraise check to determine the value of an item
 */
@@ -8,6 +8,8 @@
 //:: Created By: Stratovarius
 //:: Created On: April 26, 2008
 //:://////////////////////////////////////////////
+
+#include "prc_inc_nwscript"
 
 int AppraiseItem(object item)
 {
@@ -56,11 +58,11 @@ int AppraiseItem(object item)
 
 void main()
 {
-    	object oItem = GetSpellTargetObject();    
-    	effect eVis;        
-    	int nDC = AppraiseItem(oItem);
-    	int nSkill = GetIsSkillSuccessful(OBJECT_SELF, SKILL_APPRAISE, nDC + 10);
-    
+        object oItem = PRCGetSpellTargetObject();
+        effect eVis;
+        int nDC = AppraiseItem(oItem);
+        int nSkill = GetIsSkillSuccessful(OBJECT_SELF, SKILL_APPRAISE, nDC + 10);
+
         if (nSkill && GetIdentified(oItem))
         {
              eVis = EffectVisualEffect(VFX_IMP_MAGICAL_VISION);
@@ -70,6 +72,6 @@ void main()
         {
              eVis = EffectVisualEffect(VFX_IMP_BLIND_DEAF_M);
         }
-        
+
         ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);
 }

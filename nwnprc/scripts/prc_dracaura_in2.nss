@@ -16,7 +16,7 @@
 
 void main()
 {
-    object oPC = GetSpellTargetObject();
+    object oPC = PRCGetSpellTargetObject();
     object oTarget = GetEnteringObject();
     object PCShaman = GetAreaOfEffectCreator();
 
@@ -31,27 +31,27 @@ void main()
     if         (GetHasFeat(FEAT_DRACONIC_AURA_LEVEL_9, PCShaman))  { nShamanBonus = 9; }
         else if(GetHasFeat(FEAT_DRACONIC_AURA_LEVEL_8, PCShaman))  { nShamanBonus = 8; }
         else if(GetHasFeat(FEAT_DRACONIC_AURA_LEVEL_7, PCShaman))  { nShamanBonus = 7; }
-	else if(GetHasFeat(FEAT_DRACONIC_AURA_LEVEL_6, PCShaman))  { nShamanBonus = 6; }
-	else if(GetHasFeat(FEAT_DRACONIC_AURA_LEVEL_5, PCShaman))  { nShamanBonus = 5; }
+    else if(GetHasFeat(FEAT_DRACONIC_AURA_LEVEL_6, PCShaman))  { nShamanBonus = 6; }
+    else if(GetHasFeat(FEAT_DRACONIC_AURA_LEVEL_5, PCShaman))  { nShamanBonus = 5; }
         else if(GetHasFeat(FEAT_DRACONIC_AURA_LEVEL_4, PCShaman))  { nShamanBonus = 4; }
         else if(GetHasFeat(FEAT_DRACONIC_AURA_LEVEL_3, PCShaman))  { nShamanBonus = 3; }
-	else if(GetHasFeat(FEAT_DRACONIC_AURA_LEVEL_2, PCShaman))  { nShamanBonus = 2; }
-	else if(GetHasFeat(FEAT_DRACONIC_AURA_LEVEL_1, PCShaman))  { nShamanBonus = 1; }
-    
+    else if(GetHasFeat(FEAT_DRACONIC_AURA_LEVEL_2, PCShaman))  { nShamanBonus = 2; }
+    else if(GetHasFeat(FEAT_DRACONIC_AURA_LEVEL_1, PCShaman))  { nShamanBonus = 1; }
+
     if         (GetHasFeat(FEAT_MARSHAL_DRACONIC_AURA_LEVEL_8, PCShaman))  { nMarshalBonus = 8; }
         else if(GetHasFeat(FEAT_MARSHAL_DRACONIC_AURA_LEVEL_7, PCShaman))  { nMarshalBonus = 7; }
-	else if(GetHasFeat(FEAT_MARSHAL_DRACONIC_AURA_LEVEL_6, PCShaman))  { nMarshalBonus = 6; }
-	else if(GetHasFeat(FEAT_MARSHAL_DRACONIC_AURA_LEVEL_5, PCShaman))  { nMarshalBonus = 5; }
+    else if(GetHasFeat(FEAT_MARSHAL_DRACONIC_AURA_LEVEL_6, PCShaman))  { nMarshalBonus = 6; }
+    else if(GetHasFeat(FEAT_MARSHAL_DRACONIC_AURA_LEVEL_5, PCShaman))  { nMarshalBonus = 5; }
         else if(GetHasFeat(FEAT_MARSHAL_DRACONIC_AURA_LEVEL_4, PCShaman))  { nMarshalBonus = 4; }
         else if(GetHasFeat(FEAT_MARSHAL_DRACONIC_AURA_LEVEL_3, PCShaman))  { nMarshalBonus = 3; }
-	else if(GetHasFeat(FEAT_MARSHAL_DRACONIC_AURA_LEVEL_2, PCShaman))  { nMarshalBonus = 2; }
-	else if(GetHasFeat(FEAT_MARSHAL_DRACONIC_AURA_LEVEL_1, PCShaman))  { nMarshalBonus = 1; }	
-	
+    else if(GetHasFeat(FEAT_MARSHAL_DRACONIC_AURA_LEVEL_2, PCShaman))  { nMarshalBonus = 2; }
+    else if(GetHasFeat(FEAT_MARSHAL_DRACONIC_AURA_LEVEL_1, PCShaman))  { nMarshalBonus = 1; }
+
     if         (GetHasFeat(FEAT_BONUS_DRACONIC_AURA_LEVEL_4, PCShaman))  { nExtraBonus = 4; }
         else if(GetHasFeat(FEAT_BONUS_DRACONIC_AURA_LEVEL_3, PCShaman))  { nExtraBonus = 3; }
-	else if(GetHasFeat(FEAT_BONUS_DRACONIC_AURA_LEVEL_2, PCShaman))  { nExtraBonus = 2; }
-	else if(GetHasFeat(FEAT_BONUS_DRACONIC_AURA_LEVEL_1, PCShaman))  { nExtraBonus = 1; }
-	
+    else if(GetHasFeat(FEAT_BONUS_DRACONIC_AURA_LEVEL_2, PCShaman))  { nExtraBonus = 2; }
+    else if(GetHasFeat(FEAT_BONUS_DRACONIC_AURA_LEVEL_1, PCShaman))  { nExtraBonus = 1; }
+
     int nExtraAuraBonus = max(nExtraBonus, nMarshalBonus);
     nAuraBonus = max(nExtraAuraBonus, nShamanBonus);
 
@@ -97,9 +97,9 @@ void main()
                  {
                  effect eDipInc = ExtraordinaryEffect( EffectSkillIncrease(SKILL_PERSUADE, nAuraBonus) );
                  effect eBlfInc = ExtraordinaryEffect( EffectSkillIncrease(SKILL_BLUFF, nAuraBonus) );
-	         effect eIntInc = ExtraordinaryEffect( EffectSkillIncrease(SKILL_INTIMIDATE, nAuraBonus) );
-	         effect eLink   = ExtraordinaryEffect( EffectLinkEffects(eDipInc, eBlfInc) );
-	         eLink   = ExtraordinaryEffect( EffectLinkEffects(eLink, eIntInc) );
+             effect eIntInc = ExtraordinaryEffect( EffectSkillIncrease(SKILL_INTIMIDATE, nAuraBonus) );
+             effect eLink   = ExtraordinaryEffect( EffectLinkEffects(eDipInc, eBlfInc) );
+             eLink   = ExtraordinaryEffect( EffectLinkEffects(eLink, eIntInc) );
                  ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);
                  SetLocalInt(PCShaman,"SecondDraconicAura",1);
                  }
@@ -114,7 +114,7 @@ void main()
               else
                  {
                  effect eListen = ExtraordinaryEffect( EffectSkillIncrease(SKILL_LISTEN, nAuraBonus) );
-	         effect eSpot   = ExtraordinaryEffect( EffectSkillIncrease(SKILL_SPOT, nAuraBonus) );
+             effect eSpot   = ExtraordinaryEffect( EffectSkillIncrease(SKILL_SPOT, nAuraBonus) );
                  effect eLink   = ExtraordinaryEffect( EffectLinkEffects(eListen, eSpot) );
                  ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);
                  SetLocalInt(PCShaman,"SecondDraconicAura",1);
@@ -129,7 +129,7 @@ void main()
                  }
               else
                  {
-	         nDamageType = GetDragonDamageType(PCShaman);
+             nDamageType = GetDragonDamageType(PCShaman);
                  effect eDmgShld  = ExtraordinaryEffect( EffectDamageShield(2 * nShamanBonus, 0, nDamageType) );
                  ApplyEffectToObject(DURATION_TYPE_PERMANENT, eDmgShld, oTarget);
                  SetLocalInt(PCShaman,"SecondDraconicAura",1);
@@ -145,7 +145,7 @@ void main()
               else
                  {
                  nAuraBonus *= 5;
-	         nDamageType = GetDragonDamageType(PCShaman);
+             nDamageType = GetDragonDamageType(PCShaman);
 
                  effect eResist   = ExtraordinaryEffect( EffectDamageResistance(nDamageType, nShamanBonus) );
                  ApplyEffectToObject(DURATION_TYPE_PERMANENT, eResist, oTarget);
@@ -166,7 +166,7 @@ void main()
                  SetLocalInt(PCShaman,"SecondDraconicAura",1);
                  }
               }
-            
+
             //Insight
             if(GetHasSpellEffect(SPELL_SECOND_AURA_INSIGHT, PCShaman))
               {
@@ -177,13 +177,13 @@ void main()
               else
                  {
                  effect eLore        = ExtraordinaryEffect( EffectSkillIncrease(SKILL_LORE, nAuraBonus) );
-	         effect eSpellcraft  = ExtraordinaryEffect( EffectSkillIncrease(SKILL_SPELLCRAFT, nAuraBonus) );
+             effect eSpellcraft  = ExtraordinaryEffect( EffectSkillIncrease(SKILL_SPELLCRAFT, nAuraBonus) );
                  effect eLink        = ExtraordinaryEffect( EffectLinkEffects(eLore, eSpellcraft) );
                  ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);
                  SetLocalInt(PCShaman,"SecondDraconicAura",1);
                  }
               }
-            
+
             //Resolve
             if(GetHasSpellEffect(SPELL_SECOND_AURA_RESOLVE, PCShaman))
               {
@@ -194,13 +194,13 @@ void main()
               else
                  {
                  effect eConc  = ExtraordinaryEffect( EffectSkillIncrease(SKILL_CONCENTRATION, nAuraBonus) );
-	         effect eFear  = ExtraordinaryEffect( EffectSavingThrowIncrease(SAVING_THROW_WILL, nAuraBonus, SAVING_THROW_TYPE_FEAR) );
+             effect eFear  = ExtraordinaryEffect( EffectSavingThrowIncrease(SAVING_THROW_WILL, nAuraBonus, SAVING_THROW_TYPE_FEAR) );
                  effect eLink  = ExtraordinaryEffect( EffectLinkEffects(eConc, eFear) );
                  ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);
                  SetLocalInt(PCShaman,"SecondDraconicAura",1);
                  }
               }
-            
+
             //Stamina
             if(GetHasSpellEffect(SPELL_SECOND_AURA_STAMINA, PCShaman))
               {
@@ -211,11 +211,11 @@ void main()
               else
                  {
                  effect eFort = ExtraordinaryEffect( EffectSavingThrowIncrease(SAVING_THROW_FORT, nAuraBonus) );
-	         ApplyEffectToObject(DURATION_TYPE_PERMANENT, eFort, oTarget);
+             ApplyEffectToObject(DURATION_TYPE_PERMANENT, eFort, oTarget);
                  SetLocalInt(PCShaman,"SecondDraconicAura",1);
                  }
               }
-            
+
             //Swiftness
             if(GetHasSpellEffect(SPELL_SECOND_AURA_SWIFTNESS, PCShaman))
               {
@@ -226,14 +226,14 @@ void main()
               else
                  {
                  effect eJump   = ExtraordinaryEffect( EffectSkillIncrease(SKILL_JUMP, nAuraBonus) );
-	         effect eSpeed  = ExtraordinaryEffect( EffectMovementSpeedIncrease(nAuraBonus * 5) );
+             effect eSpeed  = ExtraordinaryEffect( EffectMovementSpeedIncrease(nAuraBonus * 5) );
                  effect eLink   = ExtraordinaryEffect( EffectLinkEffects(eJump, eSpeed) );
                  ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);
                  SetLocalInt(PCShaman,"SecondDraconicAura",1);
                  }
               }
-            
-            
+
+
             //Resist Acid
             if(GetHasSpellEffect(SPELL_SECOND_AURA_RESISTACID, PCShaman))
               {
@@ -244,7 +244,7 @@ void main()
               else
                  {
                  nExtraAuraBonus *= 5;
-	         int nDamageType = DAMAGE_TYPE_ACID;
+             int nDamageType = DAMAGE_TYPE_ACID;
 
                  effect eResist   = ExtraordinaryEffect( EffectDamageResistance(nDamageType, nExtraAuraBonus) );
                  ApplyEffectToObject(DURATION_TYPE_PERMANENT, eResist, oTarget);
@@ -261,7 +261,7 @@ void main()
               else
                  {
                  nExtraAuraBonus *= 5;
-	         int nDamageType = DAMAGE_TYPE_COLD;
+             int nDamageType = DAMAGE_TYPE_COLD;
 
                  effect eResist   = ExtraordinaryEffect( EffectDamageResistance(nDamageType, nExtraAuraBonus) );
                  ApplyEffectToObject(DURATION_TYPE_PERMANENT, eResist, oTarget);
@@ -278,7 +278,7 @@ void main()
               else
                  {
                  nExtraAuraBonus *= 5;
-	         int nDamageType = DAMAGE_TYPE_ELECTRICAL;
+             int nDamageType = DAMAGE_TYPE_ELECTRICAL;
 
                  effect eResist   = ExtraordinaryEffect( EffectDamageResistance(nDamageType, nExtraAuraBonus) );
                  ApplyEffectToObject(DURATION_TYPE_PERMANENT, eResist, oTarget);
@@ -295,13 +295,13 @@ void main()
               else
                  {
                  nExtraAuraBonus *= 5;
-	         int nDamageType = DAMAGE_TYPE_FIRE;
+             int nDamageType = DAMAGE_TYPE_FIRE;
 
                  effect eResist   = ExtraordinaryEffect( EffectDamageResistance(nDamageType, nExtraAuraBonus) );
                  ApplyEffectToObject(DURATION_TYPE_PERMANENT, eResist, oTarget);
                  SetLocalInt(PCShaman,"SecondDraconicAura",1);
                  }
-              }        
+              }
             //Magic Power
             if(GetHasSpellEffect(SPELL_SECOND_AURA_MAGICPOWER, PCShaman)
               && (nExtraAuraBonus > GetLocalInt(oTarget,"MagicPowerAura")))
@@ -315,8 +315,8 @@ void main()
                  SetLocalInt(oTarget,"MagicPowerAura",nExtraAuraBonus);
                  SetLocalInt(PCShaman,"SecondDraconicAura",1);
                  }
-              }         
-              
+              }
+
             //Energy
             if(GetHasSpellEffect(SPELL_SECOND_AURA_ENERGY, PCShaman))
               {
@@ -326,22 +326,22 @@ void main()
                  }
               else
                  {
-	         nDamageType = GetDragonDamageType(PCShaman);
-	         switch(nDamageType)
-	             {
-	         	case DAMAGE_TYPE_ACID:
-	         	    if(nExtraAuraBonus > GetLocalInt(oTarget,"AcidEnergyAura"))
-	         	        SetLocalInt(oTarget,"AcidEnergyAura",nExtraAuraBonus); break;
-	         	case DAMAGE_TYPE_COLD:
-	         	    if(nExtraAuraBonus > GetLocalInt(oTarget,"ColdEnergyAura"))
-	         	        SetLocalInt(oTarget,"ColdEnergyAura",nExtraAuraBonus); break;
-	         	case DAMAGE_TYPE_ELECTRICAL:
-	         	    if(nExtraAuraBonus > GetLocalInt(oTarget,"ElecEnergyAura"))
-	         	        SetLocalInt(oTarget,"ElecEnergyAura",nExtraAuraBonus); break;
-	         	case DAMAGE_TYPE_FIRE:
-	         	    if(nExtraAuraBonus > GetLocalInt(oTarget,"FireEnergyAura"))
-	         	        SetLocalInt(oTarget,"FireEnergyAura",nExtraAuraBonus); break;
-	             }
+             nDamageType = GetDragonDamageType(PCShaman);
+             switch(nDamageType)
+                 {
+                case DAMAGE_TYPE_ACID:
+                    if(nExtraAuraBonus > GetLocalInt(oTarget,"AcidEnergyAura"))
+                        SetLocalInt(oTarget,"AcidEnergyAura",nExtraAuraBonus); break;
+                case DAMAGE_TYPE_COLD:
+                    if(nExtraAuraBonus > GetLocalInt(oTarget,"ColdEnergyAura"))
+                        SetLocalInt(oTarget,"ColdEnergyAura",nExtraAuraBonus); break;
+                case DAMAGE_TYPE_ELECTRICAL:
+                    if(nExtraAuraBonus > GetLocalInt(oTarget,"ElecEnergyAura"))
+                        SetLocalInt(oTarget,"ElecEnergyAura",nExtraAuraBonus); break;
+                case DAMAGE_TYPE_FIRE:
+                    if(nExtraAuraBonus > GetLocalInt(oTarget,"FireEnergyAura"))
+                        SetLocalInt(oTarget,"FireEnergyAura",nExtraAuraBonus); break;
+                 }
                  SetLocalInt(PCShaman,"SecondDraconicAura",1);
                  }
               }
@@ -355,8 +355,8 @@ void main()
                  }
               else
                  {
-	         SetLocalInt(oTarget,"AcidEnergyAura",nExtraAuraBonus);
-	         SetLocalInt(PCShaman,"SecondDraconicAura",1);
+             SetLocalInt(oTarget,"AcidEnergyAura",nExtraAuraBonus);
+             SetLocalInt(PCShaman,"SecondDraconicAura",1);
                  }
               }
             //Energy - Cold
@@ -369,8 +369,8 @@ void main()
                  }
               else
                  {
-	         SetLocalInt(oTarget,"ColdEnergyAura",nExtraAuraBonus);
-	         SetLocalInt(PCShaman,"SecondDraconicAura",1);
+             SetLocalInt(oTarget,"ColdEnergyAura",nExtraAuraBonus);
+             SetLocalInt(PCShaman,"SecondDraconicAura",1);
                  }
               }
             //Energy - Electric
@@ -383,8 +383,8 @@ void main()
                  }
               else
                  {
-	         SetLocalInt(oTarget,"ElecEnergyAura",nExtraAuraBonus);
-	         SetLocalInt(PCShaman,"SecondDraconicAura",1);
+             SetLocalInt(oTarget,"ElecEnergyAura",nExtraAuraBonus);
+             SetLocalInt(PCShaman,"SecondDraconicAura",1);
                  }
               }
             //Energy - Fire
@@ -397,8 +397,8 @@ void main()
                  }
               else
                  {
-	         SetLocalInt(oTarget,"FireEnergyAura",nExtraAuraBonus);
-	         SetLocalInt(PCShaman,"SecondDraconicAura",1);
+             SetLocalInt(oTarget,"FireEnergyAura",nExtraAuraBonus);
+             SetLocalInt(PCShaman,"SecondDraconicAura",1);
                  }
               }
     }

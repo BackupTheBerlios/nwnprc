@@ -26,51 +26,51 @@ void main()
 */
     int iContinue = 0;
     object oCaster = OBJECT_SELF;
-    if ( PRCGetHasEffect( EFFECT_TYPE_CHARMED, oCaster ) ) 
+    if ( PRCGetHasEffect( EFFECT_TYPE_CHARMED, oCaster ) )
     {
         iContinue++;
     }
-    if ( PRCGetHasEffect( EFFECT_TYPE_CONFUSED, oCaster ) ) 
+    if ( PRCGetHasEffect( EFFECT_TYPE_CONFUSED, oCaster ) )
     {
         iContinue++;
     }
-    if ( PRCGetHasEffect( EFFECT_TYPE_CUTSCENE_PARALYZE, oCaster ) ) 
+    if ( PRCGetHasEffect( EFFECT_TYPE_CUTSCENE_PARALYZE, oCaster ) )
     {
         iContinue++;
     }
-    if ( PRCGetHasEffect( EFFECT_TYPE_CUTSCENEIMMOBILIZE, oCaster ) ) 
+    if ( PRCGetHasEffect( EFFECT_TYPE_CUTSCENEIMMOBILIZE, oCaster ) )
     {
         iContinue++;
     }
-    if ( PRCGetHasEffect( EFFECT_TYPE_DAZED, oCaster ) ) 
+    if ( PRCGetHasEffect( EFFECT_TYPE_DAZED, oCaster ) )
     {
         iContinue++;
     }
-    if ( PRCGetHasEffect( EFFECT_TYPE_DOMINATED, oCaster ) ) 
+    if ( PRCGetHasEffect( EFFECT_TYPE_DOMINATED, oCaster ) )
     {
         iContinue++;
     }
-    if ( PRCGetHasEffect( EFFECT_TYPE_FRIGHTENED, oCaster ) ) 
+    if ( PRCGetHasEffect( EFFECT_TYPE_FRIGHTENED, oCaster ) )
     {
         iContinue++;
     }
-    if ( PRCGetHasEffect( EFFECT_TYPE_PARALYZE, oCaster ) ) 
+    if ( PRCGetHasEffect( EFFECT_TYPE_PARALYZE, oCaster ) )
     {
         iContinue++;
     }
-    if ( PRCGetHasEffect( EFFECT_TYPE_PETRIFY, oCaster ) ) 
+    if ( PRCGetHasEffect( EFFECT_TYPE_PETRIFY, oCaster ) )
     {
         iContinue++;
     }
-    if ( PRCGetHasEffect( EFFECT_TYPE_SLEEP, oCaster ) ) 
+    if ( PRCGetHasEffect( EFFECT_TYPE_SLEEP, oCaster ) )
     {
         iContinue++;
     }
-    if ( PRCGetHasEffect( EFFECT_TYPE_STUNNED, oCaster ) ) 
+    if ( PRCGetHasEffect( EFFECT_TYPE_STUNNED, oCaster ) )
     {
         iContinue++;
     }
-    if ( iContinue > 0 ) 
+    if ( iContinue > 0 )
     {
         IncrementRemainingFeatUses(oCaster, FEAT_GFKILL_GHOST_STEP);
         return;
@@ -80,40 +80,40 @@ void main()
         IncrementRemainingFeatUses(OBJECT_SELF, FEAT_GHOST_STEP);
         SendMessageToPC(OBJECT_SELF, "Your ki powers will not function while encumbered or wearing armor");
         return;
-    }   
+    }
     if (!X2PreSpellCastCode())
     {
         // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
         return;
     }
     Ninja_DecrementKi(OBJECT_SELF, FEAT_GHOST_STEP);
-    
+
     // End of Spell Cast Hook
-    
-    
+
+
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
-    
+    object oTarget = PRCGetSpellTargetObject();
+
     //effect eVis = EffectVisualEffect(VFX_DUR_INVISIBILITY);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
 
     // a major hack here, if we're a level 10 or higher ninja, Ghost Step also makes you ethereal
     // probably should be a replacing feat so other classes can use it
-    
+
     effect eLink;
-    
+
 
     effect eInvis = EffectInvisibility(INVISIBILITY_TYPE_NORMAL);
     eLink = EffectLinkEffects(eInvis, eDur);
 
     //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_GHOST_STEP, FALSE));
-    
+
     float nDuration = RoundsToSeconds(1);
-    
+
     //Apply the VFX impact and effects
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, nDuration,TRUE,-1, 1);
-    
+
     DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
     // Getting rid of the local integer storing the spellschool name
 }

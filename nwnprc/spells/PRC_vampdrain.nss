@@ -51,7 +51,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     // End of Spell Cast Hook
 
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nMetaMagic = PRCGetMetaMagicFeat();
 
     int nCasterLevel = PRCGetCasterLevel(OBJECT_SELF);
@@ -98,7 +98,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     effect eVisHeal = EffectVisualEffect(VFX_IMP_HEALING_M);
     effect eImpact = EffectVisualEffect(VFX_FNF_LOS_EVIL_10);
     float fDelay;
-    
+
     nCasterLevel +=SPGetPenetr();
 
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, GetSpellTargetLocation());
@@ -128,10 +128,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                     {
                         nDamage = nDamage/2;
 
-                    	if (GetHasMettle(oTarget, SAVING_THROW_WILL)) // Ignores partial effects
-                    	{
-                		nDamage = 0;
-                    	}                          
+                        if (GetHasMettle(oTarget, SAVING_THROW_WILL)) // Ignores partial effects
+                        {
+                        nDamage = 0;
+                        }
                     }
                         ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
                         ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);

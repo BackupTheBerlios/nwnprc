@@ -24,9 +24,9 @@ void DoSleepCheck(object oTarget, int nSleepCheck, object oCaster)
 {
     if(nSleepCheck != GetLocalInt(oTarget, "nSleepCheck"))
         return;
-        
+
     int nDC = GetInvocationSaveDC(oTarget, oCaster);
-        
+
     if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (nDC), SAVING_THROW_TYPE_MIND_SPELLS))
     {
         DelayCommand(HoursToSeconds(24), DoSleepCheck(oTarget, nSleepCheck, oCaster));
@@ -42,7 +42,7 @@ void DoDamageCheck(object oTarget, int nSleepCheck)
 {
     if(nSleepCheck != GetLocalInt(oTarget, "nSleepCheck"))
         return;
-        
+
     if(!PRCGetHasEffect(EFFECT_TYPE_SLEEP, oTarget))
     {
         if(DEBUG) DoDebug("inv_painslumber: Target awakened unnaturally");
@@ -59,7 +59,7 @@ void main()
     if (!PreInvocationCastCode()) return;
 
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     effect eImpact = EffectVisualEffect(VFX_FNF_LOS_NORMAL_20);
     effect eSleep =  EffectSleep();
     effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
@@ -78,7 +78,7 @@ void main()
 
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, PRCGetSpellTargetLocation());
     string sSpellLocal = "BIOWARE_SPELL_LOCAL_SLEEP_" + ObjectToString(OBJECT_SELF);
-    
+
     //Get the first target in the spell area
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, INVOKE_PAINFUL_SLUMBER_OF_AGES));
     //Make SR check
@@ -107,5 +107,5 @@ void main()
             }
         }
     }
-    
+
 }

@@ -4,7 +4,7 @@
 void main()
 {
     //decrements and stuff is automatic
-    
-    DoSmite(OBJECT_SELF, GetSpellTargetObject(), SMITE_TYPE_UNDEAD);
+
+    DoSmite(OBJECT_SELF, PRCGetSpellTargetObject(), SMITE_TYPE_UNDEAD);
 }
 

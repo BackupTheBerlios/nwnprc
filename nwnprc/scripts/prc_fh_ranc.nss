@@ -28,7 +28,7 @@ int GetRancorDamage(int iNumDice)
 
 void main()
 {
-     object oTarget = GetSpellTargetObject();
+     object oTarget = PRCGetSpellTargetObject();
 
      object oPC = OBJECT_SELF;
      object oWeapR = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);

@@ -38,7 +38,7 @@ void main()
     PRCSetSchool(SPELL_SCHOOL_EVOCATION);
 
     object oPC = OBJECT_SELF;
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nCasterLvl = PRCGetCasterLevel(oPC);
     int nMetaMagic = PRCGetMetaMagicFeat();
     int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);

@@ -7,7 +7,7 @@ void RemoveDragonWard(object oTarget, int CurrentDragonWard)
 {
     if(GetPersistantLocalInt(oTarget, "nTimesDragonWarded") != CurrentDragonWard)
         return;
-        
+
     DeleteLocalInt(oTarget, "DragonWard");
 }
 
@@ -18,7 +18,7 @@ void main()
     // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
         return;
     }
-    
+
     //Declare major variables
     object oCaster = OBJECT_SELF;
     effect eImm1 = EffectImmunity(IMMUNITY_TYPE_FEAR);
@@ -28,10 +28,10 @@ void main()
     effect eLink = EffectLinkEffects(eImm1, eVis);
     eLink = EffectLinkEffects(eLink, eDur);
 
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nTimesDragonWarded = GetPersistantLocalInt(oTarget, "nTimesDragonWarded");
     int CasterLvl = GetInvokerLevel(oCaster, GetInvokingClass());
-    
+
     nTimesDragonWarded++;
     if(nTimesDragonWarded > 9) nTimesDragonWarded = 0;
     SetPersistantLocalInt(oTarget, "nTimesDragonWarded", nTimesDragonWarded);

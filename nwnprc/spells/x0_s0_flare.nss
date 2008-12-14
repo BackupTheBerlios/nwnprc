@@ -23,7 +23,7 @@ void main()
 {
 
    if (GetHasFeat(FEAT_SHADOWWEAVE,OBJECT_SELF)) return;
-   
+
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 /*
@@ -43,7 +43,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 // End of Spell Cast Hook
 
    //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nCasterLevel = CasterLvl + SPGetPenetr();
 
@@ -59,7 +59,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
 
         //Make SR Check
-        if ((!PRCDoResistSpell(OBJECT_SELF, oTarget,nCasterLevel)) 
+        if ((!PRCDoResistSpell(OBJECT_SELF, oTarget,nCasterLevel))
             &&  (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (PRCGetSaveDC(oTarget,OBJECT_SELF))) == FALSE) )
         {
             //Set damage effect

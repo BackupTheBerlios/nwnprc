@@ -33,7 +33,7 @@ void main()
         DeleteLocalInt(OBJECT_SELF, "SwarmDmgType");
         return;
     }
-    
+
     if (!PreInvocationCastCode())
     {
     // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
@@ -42,7 +42,7 @@ void main()
 
     //Declare major variables
     int nSpell = GetSpellId();
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     effect eVis = EffectVisualEffect(VFX_IMP_POLYMORPH);
     int CasterLvl = GetInvokerLevel(OBJECT_SELF, GetInvokingClass());
     int nChaMod = GetAbilityModifier(ABILITY_CHARISMA, OBJECT_SELF);
@@ -60,7 +60,7 @@ void main()
     eLink = EffectLinkEffects(eLink, eWeaponImm3);
     eLink = EffectLinkEffects(eLink, eAOE);
     eLink = EffectLinkEffects(eLink, eArmor);
-    
+
     //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, INVOKE_DARK_DISCORPORATION, FALSE));
 
@@ -68,7 +68,7 @@ void main()
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(24),TRUE,-1,CasterLvl);
     SetLocalInt(OBJECT_SELF, "DarkDiscorporation", TRUE);
-    
+
     object oNoAtk = CreateItemOnObject("prc_eldrtch_glv", OBJECT_SELF);
     SetDroppableFlag(oNoAtk, FALSE);
     SetItemCursedFlag(oNoAtk, TRUE);
@@ -76,6 +76,6 @@ void main()
     SetLocalInt(OBJECT_SELF, "IgnoreSwarmDmg", TRUE);
     SetLocalInt(OBJECT_SELF, "SwarmDmgType", INVOKE_DARK_DISCORPORATION);
     ExecuteScript("inv_discorpnoatk", OBJECT_SELF);
-    
+
 }
 

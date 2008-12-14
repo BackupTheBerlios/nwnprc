@@ -18,7 +18,7 @@ void main()
         FloatingTextStringOnCreature("*Nimbus Is Not Active!*", oPC);
         return;
     }
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nDamageType = GetPersistantLocalInt(oPC, "PyroDamageType");
     int nLevel = (GetLevelByClass(CLASS_TYPE_PYROKINETICIST, oPC));
     int nDice = (nLevel >= 8) ? 4 : 2;

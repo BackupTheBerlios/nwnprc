@@ -16,7 +16,7 @@
 //:: VFX Pass By: Preston W, On: June 25, 2001
 
 //:: modified by mr_bumpkin  Dec 4, 2003
-#include "prc_inc_spells"  
+#include "prc_inc_spells"
 #include "prc_add_spell_dc"
 
 
@@ -45,7 +45,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
 
     //Declare major variables
     int nCasterLevel = PRCGetCasterLevel(OBJECT_SELF);
-    
+
     int nToAffect = nCasterLevel;
 
     object oTarget;
@@ -55,13 +55,13 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     effect eVis = EffectVisualEffect(VFX_IMP_DEATH);
     effect eWail = EffectVisualEffect(VFX_FNF_WAIL_O_BANSHEES);
     int nCnt = 1;
-    
+
     nCasterLevel +=SPGetPenetr();
-    
+
     //Apply the FNF VFX impact
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eWail, GetSpellTargetLocation());
     //Get the closet target from the spell target location
-    oTarget = GetSpellTargetObject(); // direct target
+    oTarget = PRCGetSpellTargetObject(); // direct target
     if (!GetIsObjectValid(oTarget))
       oTarget = GetNearestObjectToLocation(OBJECT_TYPE_CREATURE, GetSpellTargetLocation(), nCnt);
     while (nCnt < nToAffect)
@@ -85,7 +85,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                     if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (nDC), SAVING_THROW_TYPE_DEATH)) //, OBJECT_SELF, 3.0))
                     {
                         DeathlessFrenzyCheck(oTarget);
-                        
+
                         //Apply the delay VFX impact and death effect
                         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
                         effect eDeath = EffectDeath();
@@ -104,7 +104,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         //Get the next closest target in the spell target location.
         oTarget = GetNearestObjectToLocation(OBJECT_TYPE_CREATURE, GetSpellTargetLocation(), nCnt);
     }
-    
+
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 // Getting rid of the integer used to hold the spells spell school

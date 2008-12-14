@@ -6,9 +6,9 @@ void main()
 {
     // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
     if (!X2PreSpellCastCode()) return;
-    
+
     PRCSetSchool(SPELL_SCHOOL_CONJURATION);
-    
+
     // Get the spell target location as opposed to the spell target.
     location lTarget = GetSpellTargetLocation();
 
@@ -17,9 +17,9 @@ void main()
 
     // Apply a fancy effect for such a high level spell.
     //ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_SOUND_BURST), lTarget);
-    
+
     float fDelay;
-    
+
     // Declare the spell shape, size and the location.  Capture the first target object in the shape.
     // Cycle through the targets within the spell shape until an invalid object is captured.
     int nTargets = 0;
@@ -27,14 +27,14 @@ void main()
     while (GetIsObjectValid(oTarget))
     {
         fDelay = PRCGetSpellEffectDelay(lTarget, oTarget);
-        
+
         // Run the Bioware drown code.
         object oCaster = OBJECT_SELF;
         BioWareDrown (nCasterLvl, oCaster, oTarget, fDelay);
-        
+
         oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
     }
-    
+
     PRCSetSchool();
 }
 
@@ -44,7 +44,7 @@ void main()
 void BioWareDrown(int nCasterLevel, object oCaster, object oTarget, float fDelay)
 {
     //Declare major variables
-//    object oTarget = GetSpellTargetObject();
+//    object oTarget = PRCGetSpellTargetObject();
 //    int nCasterLevel = GetCasterLevel(OBJECT_SELF);
     int nDam = GetCurrentHitPoints(oTarget);
     //Set visual effect
@@ -64,7 +64,7 @@ void BioWareDrown(int nCasterLevel, object oCaster, object oTarget, float fDelay
                 &&(MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)
                 &&(MyPRCGetRacialType(oTarget) != RACIAL_TYPE_ELEMENTAL))
             {
-                //Make a fortitude save 
+                //Make a fortitude save
                 if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, PRCGetSaveDC(oTarget, oCaster)))
                 {
                     nDam = FloatToInt(nDam * 0.9);

@@ -22,7 +22,7 @@ void main()
     }
     if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_TRANVIT))
     {
-        object oTarget = GetSpellTargetObject();
+        object oTarget = PRCGetSpellTargetObject();
 
         object oSkin = GetPCSkin(oTarget);
         SetPersistantLocalInt(oTarget, "EpicSpell_TransVital", TRUE);

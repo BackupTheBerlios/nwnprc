@@ -28,7 +28,7 @@
 void main()
 {
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nHD = GetHitDice(OBJECT_SELF);
     effect eVis = EffectVisualEffect(VFX_IMP_ACID_L);
     effect eVis2 = EffectVisualEffect(VFX_IMP_ACID_S);

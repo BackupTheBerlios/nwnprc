@@ -10,7 +10,7 @@
 void main()
 {
     object oPC = OBJECT_SELF;
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     object oItem1 = GetItemInSlot(INVENTORY_SLOT_LEFTHAND);
     object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND);
     int iMod = 0;

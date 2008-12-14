@@ -15,9 +15,9 @@
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
 // modified by fluffyamoeba to make scare and cause fear
 
-/** 
+/**
  * Cause Fear
- * 
+ *
  * Necromancy [Fear, Mind-Affecting]
  * Level: Brd 1, Clr 1, Death 1, Sor/Wiz 1
  * Components: V, S
@@ -27,11 +27,11 @@
  * Duration: 1d4 rounds or 1 round; see text
  * Saving Throw: Will partial
  * Spell Resistance: Yes
- * 
- * The affected creature becomes frightened. If the subject succeeds on a Will save, it is shaken for 1 round. 
+ *
+ * The affected creature becomes frightened. If the subject succeeds on a Will save, it is shaken for 1 round.
  * Creatures with 6 or more Hit Dice are immune to this effect.
  *
- * Cause fear counters and dispels remove fear. 
+ * Cause fear counters and dispels remove fear.
  *
  *
  * Scare
@@ -50,7 +50,7 @@
  * Material Component: A bit of bone from an undead skeleton, zombie, ghoul, ghast, or mummy.
  */
 
-#include "prc_inc_spells"  
+#include "prc_inc_spells"
 #include "prc_add_spell_dc"
 
 
@@ -79,10 +79,10 @@ void main()
 
 // End of Spell Cast Hook
 
-    
+
 
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nMetaMagic = PRCGetMetaMagicFeat();
     int nDuration = d4();
@@ -108,13 +108,13 @@ void main()
             }
          }
      }
-     
+
      if (nSpellID == SPELL_SCARE)
      {
          PRCSetSchool();
          return;
      }
-     
+
      // how many creatures (we've done one already)
      int nCreatures = (CasterLvl/3)-1;
      if (nCreatures >= 1)
@@ -123,7 +123,7 @@ void main()
          int nCount;
          while (GetIsObjectValid(oNextTarget) && nCount < nCreatures)
          {
-             if ((GetHitDice(oNextTarget) < 6) && (oNextTarget != oTarget) && spellsIsTarget(oNextTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF) 
+             if ((GetHitDice(oNextTarget) < 6) && (oNextTarget != oTarget) && spellsIsTarget(oNextTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF)
                  && oNextTarget != OBJECT_SELF && PRCGetIsAliveCreature(oNextTarget))
              {
                  //Fire cast spell at event for the specified target
@@ -147,10 +147,10 @@ void ApplyScare(object oTarget, int nDuration)
     effect eScare = EffectFrightened();
     effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_FEAR);
     effect eLink = EffectLinkEffects(eMind, eScare);
-    
+
     effect eShaken = EffectShaken();
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-    
+
     //Make Will save versus fear
     if(!/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (PRCGetSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_FEAR))
     {

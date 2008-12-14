@@ -8,7 +8,7 @@ void main()
     PRCSetSchool(SPELL_SCHOOL_ABJURATION);
 
     // Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
 
     // Signal the spell cast at event
     PRCSignalSpellEvent(oTarget, FALSE);

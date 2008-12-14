@@ -46,7 +46,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     effect eHP = EffectTemporaryHitpoints(nBonus);
 
     effect eVis = EffectVisualEffect(VFX_IMP_HOLY_AID);
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
 
     effect eLink = EffectLinkEffects(eAttack, eSave);
     eLink = EffectLinkEffects(eLink, eDur);

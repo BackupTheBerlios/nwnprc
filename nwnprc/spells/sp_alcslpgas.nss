@@ -19,20 +19,20 @@ void SleepSave(object oTarget)
 {
         if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, 15, SAVING_THROW_TYPE_POISON))
         {
-                int nTurns = d4(1);                
+                int nTurns = d4(1);
                 SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectSleep(), oTarget, TurnsToSeconds(nTurns));
         }
 }
 
 void main()
-{        
-        object oTarget = GetSpellTargetObject();                                             
+{
+        object oTarget = PRCGetSpellTargetObject();
         int nTarget = GetObjectType(oTarget);
         int nTouch = PRCDoRangedTouchAttack(oTarget);
-        
+
         if(nTouch)
         {
-                if(nTarget == OBJECT_TYPE_CREATURE)         
+                if(nTarget == OBJECT_TYPE_CREATURE)
                 {
                         if(!GetIsImmune(oTarget, IMMUNITY_TYPE_POISON))
                         {
@@ -43,5 +43,5 @@ void main()
                                 }
                         }
                 }
-        }       
-} 
+        }
+}

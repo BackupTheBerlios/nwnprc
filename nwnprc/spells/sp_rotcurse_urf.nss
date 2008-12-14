@@ -14,13 +14,13 @@ Saving Throw: Fortitude negates
 Spell Resistance: Yes
 
 The subject's flesh and bones begin to rot. The subject
-takes 1d6 points of Constitution damage immediately, 
-and a further 1d6 points of Constitution damage 
-every hour until the subject dies or the curse is 
+takes 1d6 points of Constitution damage immediately,
+and a further 1d6 points of Constitution damage
+every hour until the subject dies or the curse is
 removed with a wish, miracle, or remove curse spell.
 
 Corruption Cost: 1d6 points of Strength damage.
-    
+
 @author Written By: Tenjac
 */
 //:://////////////////////////////////////////////
@@ -41,14 +41,14 @@ void DoCurseDam (object oTarget, object oPC, int nMetaMagic)
         }
         //Check if spell was Empowered
         if (nMetaMagic == METAMAGIC_EMPOWER)
-        {       
+        {
                 nDam += (nDam / 2);
         }
-        
+
         //Ability damage
         ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDam, DURATION_TYPE_PERMANENT, FALSE, 0.0f, FALSE, SPELL_ROTTING_CURSE_OF_URFESTRA, -1, oPC);
         ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_DISEASE_S), oTarget);
-        
+
         //Delay 1 hour, then hit the poor bastard again.
         DelayCommand(3600.0f, DoCurseDam(oTarget, oPC, nMetaMagic));
 }
@@ -58,37 +58,37 @@ void main()
 {
         // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
         if (!X2PreSpellCastCode()) return;
-        
+
         PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
-        
+
         //define vars
         object oPC = OBJECT_SELF;
-        object oTarget = GetSpellTargetObject();
+        object oTarget = PRCGetSpellTargetObject();
         int nCasterLvl = PRCGetCasterLevel();
         int nMetaMagic = PRCGetMetaMagicFeat();
         int nPenetr = nCasterLvl + SPGetPenetr();
-        
+
         PRCSignalSpellEvent(oTarget, TRUE, SPELL_ROTTING_CURSE_OF_URFESTRA, oPC);
-                        
+
         //Spell Resistance
         if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nPenetr))
         {
                 if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, PRCGetSaveDC(oTarget,oPC)))
                 {
-                        DoCurseDam(oTarget, oPC, nMetaMagic);                           
+                        DoCurseDam(oTarget, oPC, nMetaMagic);
                 }
         }
-        
+
         //Corrupt spell cost
         int nCorrupt = d6(1);
-                
-        DoCorruptionCost(oPC, ABILITY_STRENGTH, nCorrupt, 0);   
-        
+
+        DoCorruptionCost(oPC, ABILITY_STRENGTH, nCorrupt, 0);
+
         //Corrupt spells get mandatory 10 pt evil adjustment, regardless of switch
         AdjustAlignment(oPC, ALIGNMENT_EVIL, 10);
-        
+
         //Alignment shift if switch set
         SPEvilShift(oPC);
-                
+
         PRCSetSchool();
-}           
+}

@@ -16,7 +16,7 @@
 
 
 //:: modified by mr_bumpkin Dec 4, 2003
-#include "prc_inc_spells"  
+#include "prc_inc_spells"
 #include "prc_add_spell_dc"
 
 
@@ -50,7 +50,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     effect eLink = EffectLinkEffects(eImm1, eVis);
     eLink = EffectLinkEffects(eLink, eDur);
 
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     effect eDam = PRCEffectDamage(oTarget, 1, DAMAGE_TYPE_NEGATIVE);
     effect eSearch = GetFirstEffect(oTarget);
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);

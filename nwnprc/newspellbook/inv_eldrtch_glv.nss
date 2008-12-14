@@ -2,7 +2,7 @@
 //:: Eldritch Glaive Invocation
 //:: inv_eldrtch_glv
 //::///////////////////////////////////////////////
-/** @file 
+/** @file
     Handles the creation of the Eldritch Glaive for
      the invocation.
 
@@ -25,7 +25,7 @@ void main()
     object oPC = OBJECT_SELF;
     object oGlaive = CreateItemOnObject("prc_eldrtch_glv", oPC);
     int nAtkBns = GetHasFeat(FEAT_ELDRITCH_SCULPTOR) ? 2 : 0;
-    nAtkBns += GetAttackBonus(GetSpellTargetObject(), oPC, OBJECT_INVALID, FALSE, TOUCH_ATTACK_MELEE_SPELL);
+    nAtkBns += GetAttackBonus(PRCGetSpellTargetObject(), oPC, OBJECT_INVALID, FALSE, TOUCH_ATTACK_MELEE_SPELL);
 
     // Construct the bonuses
     itemproperty ipAddon = ItemPropertyOnHitCastSpell(IP_CONST_CASTSPELL_ELDRITCH_GLAIVE_ONHIT, (GetInvokerLevel(oPC, CLASS_TYPE_WARLOCK) + 1) / 2);
@@ -39,17 +39,17 @@ void main()
     // Make even more sure the glaive cannot be dropped
     SetDroppableFlag(oGlaive, FALSE);
     SetItemCursedFlag(oGlaive, TRUE);
-    
+
     //Set up to delete after duration ends
     DelayCommand(6.0, DestroyObject(oGlaive));
-    
+
     //Schedule the attack
-    DelayCommand(1.0, PerformAttackRound(GetSpellTargetObject(), oPC, EffectVisualEffect(VFX_IMP_MAGBLUE), 
-        0.0, nAtkBns, 0, DAMAGE_TYPE_SLASHING, FALSE, "*Eldritch Glaive Hit*", "*Eldritch Glaive Miss*", 
+    DelayCommand(1.0, PerformAttackRound(PRCGetSpellTargetObject(), oPC, EffectVisualEffect(VFX_IMP_MAGBLUE),
+        0.0, nAtkBns, 0, DAMAGE_TYPE_SLASHING, FALSE, "*Eldritch Glaive Hit*", "*Eldritch Glaive Miss*",
         TRUE, TOUCH_ATTACK_MELEE, FALSE, PRC_COMBATMODE_ALLOW_TARGETSWITCH|PRC_COMBATMODE_ABORT_WHEN_OUT_OF_RANGE));
 
     //Fire cast spell at event for the specified target
-    DelayCommand(2.0, SignalEvent(GetSpellTargetObject(), EventSpellCastAt(OBJECT_SELF, INVOKE_ELDRITCH_BLAST)));
+    DelayCommand(2.0, SignalEvent(PRCGetSpellTargetObject(), EventSpellCastAt(OBJECT_SELF, INVOKE_ELDRITCH_BLAST)));
 
     if(LOCAL_DEBUG) DelayCommand(0.01f, DoDebug("Finished inv_eldrtch_glv")); // Wrap in delaycommand so that the game clock gets to update for the purposes of WriteTimestampedLogEntry
 }

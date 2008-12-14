@@ -4,10 +4,10 @@
 ///////////////////////////////////////////////////////////////////
 
 /*
-Acidic Fire: The alchemical concoction combines alchemical fire with a strong acid. 
+Acidic Fire: The alchemical concoction combines alchemical fire with a strong acid.
 A direct hit with acidic fire deals 1d4 points of acid damage and 1d8 points of fire damage.
-Every creature within 5 feet of the point where the acidic fire hits takes 1 point of acid 
-damage and 1 point of fire damage from the splash. 
+Every creature within 5 feet of the point where the acidic fire hits takes 1 point of acid
+damage and 1 point of fire damage from the splash.
 
 Taken from x0_s3_alchem
 */
@@ -30,7 +30,7 @@ Taken from x0_s3_alchem
 void PRCDoGrenade(int nDirectDamage, int nSplashDamage, int vSmallHit, int vRingHit, int nDamageType, float fExplosionRadius , int nObjectFilter, int nRacialType=RACIAL_TYPE_ALL)
 {
     //Declare major variables  ( fDist / (3.0f * log( fDist ) + 2.0f) )
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nDamage = 0;
     int nMetaMagic = PRCGetMetaMagicFeat();
@@ -176,7 +176,7 @@ void main()
 {
     effect eVis = EffectVisualEffect(VFX_IMP_PULSE_FIRE);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     object oMyWeapon;
     int nTarget = GetObjectType(oTarget);
     int nDuration = 4;

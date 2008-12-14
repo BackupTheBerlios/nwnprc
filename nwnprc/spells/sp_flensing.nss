@@ -42,9 +42,9 @@ void RunFlensing(object oCaster, object oTarget, int nSaveDC,
     effect eDamage;
     if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nSaveDC, SAVING_THROW_TYPE_SPELL))
     {
-	if (GetHasMettle(oTarget, SAVING_THROW_FORT))
-	// This script does nothing if it has Mettle, bail
-		return;    	
+    if (GetHasMettle(oTarget, SAVING_THROW_FORT))
+    // This script does nothing if it has Mettle, bail
+        return;
         eDamage = PRCEffectDamage(oTarget, nDamage / 2);
     }
     else
@@ -80,7 +80,7 @@ void main()
 
     PRCSetSchool(SPELL_SCHOOL_EVOCATION);
 
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
     {
         // Get the target and raise the spell cast event.

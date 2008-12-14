@@ -123,57 +123,81 @@ object PRCGetSpellTargetObject(object oCaster = OBJECT_SELF)
     object oBWTarget = GetSpellTargetObject();
     int nSpellID     = PRCGetSpellId(oCaster);
 
-    int bTouch = GetStringUpperCase(Get2DACache("spells", "Range", nSpellID)) == "T";
-    // Reddopsi power causes spells and powers to rebound onto the caster.
-    if(GetLocalInt(oBWTarget, "PRC_Power_Reddopsi_Active")                 &&  // Reddopsi is active on the target
-        !GetLocalInt(oCaster, "PRC_Power_Reddopsi_Active")                  &&  // And not on the manifester
-        !(nSpellID == SPELL_LESSER_DISPEL             ||                        // And the spell/power is not a dispelling one
-        nSpellID == SPELL_DISPEL_MAGIC              ||
-        nSpellID == SPELL_GREATER_DISPELLING        ||
-        nSpellID == SPELL_MORDENKAINENS_DISJUNCTION ||
-        nSpellID == POWER_DISPELPSIONICS
-        )                                                                 &&
-        !bTouch     // And the spell/power is not touch range
-        )
-        return oCaster;
-
-    if(GetLocalInt(oBWTarget, "PRC_SPELL_TURNING") &&
-        !(nSpellID == SPELL_LESSER_DISPEL             ||                        // And the spell/power is not a dispelling one
-                 nSpellID == SPELL_DISPEL_MAGIC              ||
-                 nSpellID == SPELL_GREATER_DISPELLING        ||
-                 nSpellID == SPELL_MORDENKAINENS_DISJUNCTION ||
-                 nSpellID == POWER_DISPELPSIONICS) &&
-        !bTouch
-        )
+    //checking whether spells/powers should rebound on caster - assumes only creatures can have spell turning/reddopsi
+    if(GetObjectType(oBWTarget) == OBJECT_TYPE_CREATURE && oCaster != oBWTarget)    //if target == caster then we're casting on ourselves or already ran through this code in the same script
     {
-        int nSpellLevel = StringToInt(Get2DACache("spells", "Innate", nSpellID));//lookup_spell_innate(nSpellID));
-        object oTarget = oBWTarget;
-        int nLevels = GetLocalInt(oTarget, "PRC_SPELL_TURNING_LEVELS");
-        int bCasterTurning = GetLocalInt(oCaster, "PRC_SPELL_TURNING");
-        int nCasterLevels = GetLocalInt(oCaster, "PRC_SPELL_TURNING_LEVELS");
-        if(!bCasterTurning)
+        //we only check spells and powers here
+        if(nSpellID < 4200 && nSpellID > 16029)    //not newspellbook spell or psionic power
         {
-            if(nSpellLevel > nLevels)
+            //does not apply to spellscripts triggered by feats
+            if(Get2DACache("spells", "FeatID", nSpellID) != "")
+                return oBWTarget;
+
+            //either a feat, or a spell, check to make doubly sure, in the case of monster abilities
+            if(
+                (Get2DACache("spells", "Wiz_Sorc", nSpellID) == "") &&
+                (Get2DACache("spells", "Cleric", nSpellID) == "") &&
+                (Get2DACache("spells", "Bard", nSpellID) == "") &&
+                (Get2DACache("spells", "Druid", nSpellID) == "") &&
+                (Get2DACache("spells", "Paladin", nSpellID) == "") &&
+                (Get2DACache("spells", "Ranger", nSpellID) == "")
+                )
+            return oBWTarget;             //we shouldn't be checking feats or other spellbooks
+        }
+
+        int bTouch = GetStringUpperCase(Get2DACache("spells", "Range", nSpellID)) == "T";
+        // Reddopsi power causes spells and powers to rebound onto the caster.
+        if(GetLocalInt(oBWTarget, "PRC_Power_Reddopsi_Active")                 &&  // Reddopsi is active on the target
+            !GetLocalInt(oCaster, "PRC_Power_Reddopsi_Active")                  &&  // And not on the manifester
+            !(nSpellID == SPELL_LESSER_DISPEL             ||                        // And the spell/power is not a dispelling one
+            nSpellID == SPELL_DISPEL_MAGIC              ||
+            nSpellID == SPELL_GREATER_DISPELLING        ||
+            nSpellID == SPELL_MORDENKAINENS_DISJUNCTION ||
+            nSpellID == POWER_DISPELPSIONICS
+            )                                                                 &&
+            !bTouch     // And the spell/power is not touch range
+            )
+            return oCaster;
+
+        if(GetLocalInt(oBWTarget, "PRC_SPELL_TURNING") &&
+            !(nSpellID == SPELL_LESSER_DISPEL             ||                        // And the spell/power is not a dispelling one
+                     nSpellID == SPELL_DISPEL_MAGIC              ||
+                     nSpellID == SPELL_GREATER_DISPELLING        ||
+                     nSpellID == SPELL_MORDENKAINENS_DISJUNCTION ||
+                     nSpellID == POWER_DISPELPSIONICS) &&
+            !bTouch
+            )
+        {
+            int nSpellLevel = StringToInt(Get2DACache("spells", "Innate", nSpellID));//lookup_spell_innate(nSpellID));
+            object oTarget = oBWTarget;
+            int nLevels = GetLocalInt(oTarget, "PRC_SPELL_TURNING_LEVELS");
+            int bCasterTurning = GetLocalInt(oCaster, "PRC_SPELL_TURNING");
+            int nCasterLevels = GetLocalInt(oCaster, "PRC_SPELL_TURNING_LEVELS");
+            if(!bCasterTurning)
             {
-                if((Random(nSpellLevel) + 1) <= nLevels)
+                if(nSpellLevel > nLevels)
+                {
+                    if((Random(nSpellLevel) + 1) <= nLevels)
+                        oTarget = oCaster;
+                }
+                else
                     oTarget = oCaster;
             }
             else
-                oTarget = oCaster;
+            {
+                if((Random(nCasterLevels + nLevels) + 1) <= nLevels)
+                    oTarget = oCaster;
+                nCasterLevels -= nSpellLevel;
+                if(nCasterLevels < 0) nCasterLevels = 0;
+                SetLocalInt(oCaster, "PRC_SPELL_TURNING_LEVELS", nCasterLevels);
+            }
+            nLevels -= nSpellLevel;
+            if(nLevels < 0) nLevels = 0;
+            SetLocalInt(oBWTarget, "PRC_SPELL_TURNING_LEVELS", nLevels);
+            return oTarget;
         }
-        else
-        {
-            if((Random(nCasterLevels + nLevels) + 1) <= nLevels)
-                oTarget = oCaster;
-            nCasterLevels -= nSpellLevel;
-            if(nCasterLevels < 0) nCasterLevels = 0;
-            SetLocalInt(oCaster, "PRC_SPELL_TURNING_LEVELS", nCasterLevels);
-        }
-        nLevels -= nSpellLevel;
-        if(nLevels < 0) nLevels = 0;
-        SetLocalInt(oBWTarget, "PRC_SPELL_TURNING_LEVELS", nLevels);
-        return oTarget;
     }
+
 
     // The rune/gem/skull always targets the one who activates it.
     object oItem     = PRCGetSpellCastItem(oCaster);

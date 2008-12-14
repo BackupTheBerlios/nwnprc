@@ -1,6 +1,6 @@
 //::///////////////////////////////////////////////////
 //:: X0_S1_PETRGAZE
-//:: Petrification gaze monster ability. 
+//:: Petrification gaze monster ability.
 //:: Fortitude save (DC 15) or be turned to stone permanently.
 //:: This will be changed to a temporary effect.
 //:: Copyright (c) 2002 Floodgate Entertainment
@@ -15,7 +15,7 @@
 
 void main()
 {
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nHitDice = GetHitDice(OBJECT_SELF);
 
 

@@ -18,7 +18,7 @@
 //:: Last Updated By: Preston Watamaniuk, On: May 8, 2001
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
-#include "prc_inc_spells"  
+#include "prc_inc_spells"
 
 
 
@@ -46,8 +46,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
 
     //Declare major variables  ( fDist / (3.0f * log( fDist ) + 2.0f) )
-    object oTarget = GetSpellTargetObject();
-    
+    object oTarget = PRCGetSpellTargetObject();
+
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
 
@@ -62,9 +62,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     float fDist = GetDistanceBetween(OBJECT_SELF, oTarget);
     float fDelay = fDist/(3.0 * log(fDist) + 2.0);
     float fDelay2, fTime;
-    
+
     CasterLvl +=SPGetPenetr();
-    
+
     if(!GetIsReactionTypeFriendly(oTarget))
     {
         //Fire cast spell at event for the specified target
@@ -91,14 +91,14 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 {
                       nDam = nDam + nDam/2; //Damage/Healing is +50%
                 }
-                
+
                 // apply bonus damage to first missle.
-                if(nCnt == 1) 
+                if(nCnt == 1)
                 {
-                	nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
-                	PRCBonusDamage(oTarget);
+                    nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
+                    PRCBonusDamage(oTarget);
                 }
-                
+
                 fTime = fDelay;
                 fDelay2 += 0.1;
                 fTime += fDelay2;
@@ -107,7 +107,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 effect eDam = PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_MAGICAL);
                 //Apply the MIRV and damage effect
                 DelayCommand(fTime, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
-                
+
                 DelayCommand(fTime, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget,0.0f,FALSE));
                 DelayCommand(fDelay2, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eMissile, oTarget));
              }
@@ -120,7 +120,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             }
          }
      }
-     
+
 
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

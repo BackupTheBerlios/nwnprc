@@ -12,9 +12,8 @@
 
 #include "prc_alterations"
 void main(){
-    object oTarget = GetSpellTargetObject();
-    
+    object oTarget = PRCGetSpellTargetObject();
+
     if(!GetHasSpellEffect(GetSpellId(), oTarget))
         ApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(EffectMovementSpeedIncrease(25)), oTarget);
 }
-    

@@ -17,7 +17,7 @@
 // this could also be put into in prc_inc_switches
 const string PRC_SAVEDC_OVERRIDE = "PRC_SAVEDC_OVERRIDE";
 
-/** 
+/**
  * A lookup for caster level progression for divine and arcane base classes
  * @return an int that can be used in caster level calculations note: these use int division
  */
@@ -39,11 +39,11 @@ int GetPrCAdjustedClassLevel(int nClass, object oCaster = OBJECT_SELF);
 int GetPrCAdjustedCasterLevel(int nClassType, object oCaster = OBJECT_SELF, int bAdjustForPractisedSpellcaster = TRUE);
 
 /**
- * finds the highest arcane or divine caster level, adjusting the base caster level of the class by any 
+ * finds the highest arcane or divine caster level, adjusting the base caster level of the class by any
  * spellcasting PrCs plus Practised Spellcasting feats if appropriate
  * @param nClassType TYPE_DIVINE or TYPE_ARCANE
  * @param bAdjustForPractisedSpellcaster add practiced spellcaster feat to caster level. TRUE by default
- * @return the highest arcane/divine caster level adjusted by any PrC levels and practised spellcaster feats as appropriate 
+ * @return the highest arcane/divine caster level adjusted by any PrC levels and practised spellcaster feats as appropriate
  */
 int GetPrCAdjustedCasterLevelByType(int nClassType, object oCaster = OBJECT_SELF, int bAdjustForPractisedSpellcaster = TRUE);
 
@@ -896,19 +896,19 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
         nDC -= 2;
     // Scorpion's Resolve gives a +4 bonus on mind affecting saves
     if(nSaveType == SAVING_THROW_TYPE_MIND_SPELLS && GetHasFeat(FEAT_SCORPIONS_RESOLVE, oSaveVersus))
-        nDC -= 4; 
+        nDC -= 4;
     // Jergal's Pact gives a +2 bonus on negative energy saves
     if(nSaveType == SAVING_THROW_TYPE_NEGATIVE && GetHasFeat(FEAT_JERGALS_PACT, oSaveVersus))
-        nDC -= 2;  
+        nDC -= 2;
     // Bloodline of Fire gives a +4 bonus on fire saves
     if(nSaveType == SAVING_THROW_TYPE_FIRE && GetHasFeat(FEAT_BLOODLINE_OF_FIRE, oSaveVersus))
-        nDC -= 4;  
+        nDC -= 4;
     // Plague Resistant gives a +4 bonus on disease saves
     if(nSaveType == SAVING_THROW_TYPE_DISEASE && GetHasFeat(FEAT_PLAGUE_RESISTANT, oSaveVersus))
-        nDC -= 4;    
+        nDC -= 4;
     // Piercing Sight gives a +4 bonus on illusion saves
     if(GetSpellSchool(nSpell) == SPELL_SCHOOL_ILLUSION && GetHasFeat(FEAT_PIERCING_SIGHT, oSaveVersus))
-        nDC -= 4;          
+        nDC -= 4;
 
     //racial pack code
     //this works by lowering the DC rather than adding to the save
@@ -928,7 +928,7 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
         nDC -= 3;
     else if(nSaveType == SAVING_THROW_TYPE_ACID && GetHasFeat(FEAT_HARD_EARTH, oTarget))
         nDC -= 1 + (GetHitDice(oTarget) / 5);
-        
+
     //Psionic race save boosts - +2 vs fire for Halfgiant, +1 vs all spells for Xeph
     if(nSaveType == SAVING_THROW_TYPE_FIRE && GetHasFeat(FEAT_ACCLIMATED_FIRE, oTarget))
         nDC -= 2;
@@ -938,7 +938,7 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
     // Necrotic Cyst penalty on Necromancy spells
     if(GetPersistantLocalInt(oTarget, NECROTIC_CYST_MARKER) && (GetSpellSchool(nSpell) == SPELL_SCHOOL_NECROMANCY))
         nDC += 2;
-        
+
     // Apostate - 1/2 HD bonus to resist divine spells
     if(GetHasFeat(FEAT_APOSTATE, oTarget))
     {
@@ -949,8 +949,8 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
                     int nBonus = GetHitDice(oSaveVersus) / 2;
                     nDC -= nBonus;
             }
-    }                    
-    
+    }
+
     // This Maneuver allows people to use a skill check instead of a save on a Will save
     if (nSavingThrow == SAVING_THROW_WILL && GetLocalInt(oTarget, "MomentOfPerfectMind"))
     {
@@ -1075,17 +1075,17 @@ int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveTy
         nDC -= nSaveBoost;
         DeleteLocalInt(oTarget, "IronMind_MindOverBody");
      }
-     
+
        //check if Unsettling Enchantment applies
        if(GetHasFeat(FEAT_UNSETTLING_ENCHANTMENT, oSaveVersus) && GetSpellSchool(PRCGetSpellId()) == SPELL_SCHOOL_ENCHANTMENT && !GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS))
        {
                 effect eLink = EffectLinkEffects(EffectACDecrease(2), EffectAttackDecrease(2));
                 ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0);
-       }  
-       
+       }
+
     // Bloodline of Fire gives a +4 bonus on fire saves
     if(nSaveType == SAVING_THROW_TYPE_FIRE && GetHasFeat(FEAT_BLOODLINE_OF_FIRE, oSaveVersus))
-        nDC -= 4;        
+        nDC -= 4;
 
     // Racial ability adjustments
     if(nSaveType == SAVING_THROW_TYPE_FIRE && GetHasFeat(FEAT_HARD_FIRE, oTarget))
@@ -1122,7 +1122,7 @@ int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveTy
             DeleteLocalInt(oTarget, "Insightful Divination");
             nDC -= nBonus;
     }
-    
+
     // Apostate - 1/2 HD bonus to resist divine spells
         if(GetHasFeat(FEAT_APOSTATE, oTarget))
         {
@@ -1133,7 +1133,7 @@ int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveTy
                         int nBonus = GetHitDice(oSaveVersus) / 2;
                         nDC -= nBonus;
                 }
-    }         
+    }
 
     // This ability removes evasion from the target
     if (GetLocalInt(oTarget, "TrueConfoundingResistance"))
@@ -1194,7 +1194,7 @@ int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveTy
                     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectKnockdown(), oTarget, 6.0);
             }
     }
-    
+
     return nDamage;
 }
 
@@ -1313,7 +1313,7 @@ int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)
             // motu99: shouldn't we add this to the sorc levels? Not sure, so left it the way it was
             if(!iTemp && GetRacialType(oCaster) == RACIAL_TYPE_RAKSHASA)
                 iTemp = GetLevelByClass(CLASS_TYPE_OUTSIDER, oCaster);
-                
+
             //Drider include aberration HD as sorc
             // fox: handled same way as rak, if rak needs changing this does too
             if(!iTemp && GetRacialType(oCaster) == RACIAL_TYPE_DRIDER)
@@ -1374,9 +1374,9 @@ int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)
 
         case CLASS_TYPE_HEALER:
             return GetCasterLvlDivineFull(CLASS_TYPE_HEALER, oCaster);
-            
+
         case CLASS_TYPE_SHAMAN:
-            return GetCasterLvlDivineFull(CLASS_TYPE_SHAMAN, oCaster);            
+            return GetCasterLvlDivineFull(CLASS_TYPE_SHAMAN, oCaster);
 
         case CLASS_TYPE_SLAYER_OF_DOMIEL:
             return GetCasterLvlDivineFull(CLASS_TYPE_SLAYER_OF_DOMIEL, oCaster);
@@ -1436,7 +1436,7 @@ location PRCGetSpellTargetLocation(object oCaster = OBJECT_SELF)
 
     // The rune/gem/skull always targets the one who activates it.
     object oItem     = PRCGetSpellCastItem(oCaster);
-    if(GetIsObjectValid(oItem) && (GetResRef(oItem) == "prc_rune_1" || 
+    if(GetIsObjectValid(oItem) && (GetResRef(oItem) == "prc_rune_1" ||
        GetResRef(oItem) == "prc_skulltalis" || GetTag(oItem) == "prc_attunegem"))
         return GetLocation(GetItemPossessor(oItem));
 
@@ -1603,7 +1603,7 @@ int PRCGetMetaMagicFeat(object oCaster = OBJECT_SELF)
     if (nClass == CLASS_TYPE_SUEL_ARCHANAMACH && GetLevelByClass(CLASS_TYPE_SUEL_ARCHANAMACH) >= 3)
     {
         // Check that they cast on themselves
-        // if (oCaster == GetSpellTargetObject())
+        // if (oCaster == PRCGetSpellTargetObject())
         if (oCaster == PRCGetSpellTargetObject(oCaster))
         {
             // Add extend to the metamagic feat using bitwise math
@@ -1855,7 +1855,7 @@ int ChannelChecker(string sSpell, object oTarget)
 void StoreSpellVariables(string sString,int nDuration)
 {
     object oCaster = OBJECT_SELF;
-    object oTarget = PRCGetSpellTargetObject(oCaster);
+    object oTarget = GetSpellTargetObject();     //using prc version could cause problems
 
     if(GetLocalInt(oCaster,"spellswd_aoe") == 1)
     {
@@ -1994,16 +1994,16 @@ int PRCGetIsAliveCreature(object oTarget)
         // non-creatures aren't alive
         if (GetObjectType(oTarget) != OBJECT_TYPE_CREATURE)
             return FALSE; // night of the living waypoints :p
-        
+
         int nType = MyPRCGetRacialType(oTarget);
-        
+
         //Non-living races
         if(nType == RACIAL_TYPE_UNDEAD ||
            nType == RACIAL_TYPE_CONSTRUCT) bAlive = FALSE;
-           
+
         //If they're dead :P
         if(GetIsDead(oTarget)) bAlive = FALSE;
-        
+
         //return
         return bAlive;
 }
@@ -2376,18 +2376,18 @@ effect PRCEffectDamage(object oTarget, int nDamageAmount, int nDamageType=DAMAGE
             nDamageAmount += (GetLevelByClass(CLASS_TYPE_WARMAGE, OBJECT_SELF) / 4) + 1;
         }
     }
-    
+
     // Piercing Evocation
     if (GetHasFeat(FEAT_PIERCING_EVOCATION, OBJECT_SELF) && GetSpellSchool(PRCGetSpellId()) == SPELL_SCHOOL_EVOCATION)
     {
         // Elemental damage only
-        if (nDamageType == DAMAGE_TYPE_FIRE || nDamageType == DAMAGE_TYPE_ACID || nDamageType == DAMAGE_TYPE_COLD || 
+        if (nDamageType == DAMAGE_TYPE_FIRE || nDamageType == DAMAGE_TYPE_ACID || nDamageType == DAMAGE_TYPE_COLD ||
             nDamageType == DAMAGE_TYPE_ELECTRICAL || nDamageType == DAMAGE_TYPE_SONIC)
         {
                 // Damage magical, max 10 to magical
-                if (nDamageAmount > 10) 
+                if (nDamageAmount > 10)
                 {
-                        nDamageAmount -= 10;            
+                        nDamageAmount -= 10;
                         ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(10), oTarget);
                 }
                 else
@@ -2397,7 +2397,7 @@ effect PRCEffectDamage(object oTarget, int nDamageAmount, int nDamageType=DAMAGE
                         return eEffect; // Null return
                 }
         }
-    }    
+    }
 
     return EffectDamage(nDamageAmount, nDamageType, nDamagePower);
 }
@@ -2653,7 +2653,7 @@ int PRCIsImmuneToPetrification(object oCreature)
         case RACIAL_TYPE_UNDEAD:
         bImmune = TRUE;
     }
-    
+
     // 01/08/07 Racial feat for petrification immunity
     if(GetHasFeat(FEAT_IMMUNE_PETRIFICATION)) bImmune = TRUE;
 

@@ -39,7 +39,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
 
 
     //Declare major varibles
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
 
     int nDuration = GetLevelByClass(CLASS_TYPE_SHADOWLORD,OBJECT_SELF);
 

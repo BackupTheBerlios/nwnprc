@@ -16,7 +16,7 @@
 //:://////////////////////////////////////////////
 
 //:: modified by mr_bumpkin  Dec 4, 2003
-#include "prc_inc_spells"  
+#include "prc_inc_spells"
 
 
 
@@ -43,7 +43,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
 
 
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nDuration = CasterLvl;
     int nMetaMagic = PRCGetMetaMagicFeat();

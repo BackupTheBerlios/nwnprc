@@ -3,5 +3,5 @@
 
 void main()
 {
-   AddIniDmg(GetSpellTargetObject()) ;
+   AddIniDmg(PRCGetSpellTargetObject()) ;
 }

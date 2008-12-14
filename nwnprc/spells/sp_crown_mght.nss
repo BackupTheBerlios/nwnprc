@@ -17,12 +17,12 @@ grants the spell's recipient a +2 enhancement bonus
 to Strength.
 
 As an immediate action, the creature wearing a crown
-of might can discharge its magic to gain a +8 
+of might can discharge its magic to gain a +8
 enhancement bonus to Strength for 1 round.  The spell
 ends after the wearer uses the crown in this manner.
 
-The crown occupies space on the body as a headband, 
-hat, or helm. If the crown is removed, the spell 
+The crown occupies space on the body as a headband,
+hat, or helm. If the crown is removed, the spell
 immediately ends.
 
 Focus: A copper hoop 6 inches in diameter.
@@ -38,38 +38,37 @@ Focus: A copper hoop 6 inches in diameter.
 void main()
 {
         if(!X2PreSpellCastCode()) return;
-        
+
         PRCSetSchool(SPELL_SCHOOL_TRANSMUTATION);
-        
+
         object oPC = OBJECT_SELF;
-        object oTarget = GetSpellTargetObject();
+        object oTarget = PRCGetSpellTargetObject();
         int nCasterLevel = PRCGetCasterLevel(oPC);
         object oCrown = CreateItemOnObject("prc_crown_might", oTarget, 1);
         float fDur = HoursToSeconds(nCasterLevel);
         int nMetaMagic = PRCGetMetaMagicFeat();
-        
+
         PRCSignalSpellEvent(oTarget,FALSE, SPELL_CROWN_OF_MIGHT, oPC);
-        
+
         if(nMetaMagic == METAMAGIC_EXTEND)
         {
                 fDur += fDur;
         }
-        
+
         itemproperty iBonus = ItemPropertyAbilityBonus(ABILITY_STRENGTH, 2);
-        
+
         IPSafeAddItemProperty(oCrown, iBonus, fDur);
-                
+
         //ClearActions
         ClearAllActions(TRUE);
-        
+
         //Force equip
         ForceEquip(oTarget, oCrown, INVENTORY_SLOT_HEAD);
-        
+
         //Schedule Destruction
         DelayCommand(fDur, DestroyObject(oCrown));
-        
+
         PRCSetSchool();
 }
-        
-        
-        
+
+

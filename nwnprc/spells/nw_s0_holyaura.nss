@@ -35,7 +35,7 @@
 void PRCDoAura(int nAlign, int nVis1, int nVis2, int nDamageType)
 {
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nDuration = PRCGetCasterLevel(OBJECT_SELF);
 
     effect eVis = EffectVisualEffect(nVis1);
@@ -101,7 +101,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
     //--------------------------------------------------------------------------
     // GZ: Make sure this aura is only active once
     //--------------------------------------------------------------------------
-    PRCRemoveSpellEffects(GetSpellId(),OBJECT_SELF,GetSpellTargetObject());
+    PRCRemoveSpellEffects(GetSpellId(),OBJECT_SELF,PRCGetSpellTargetObject());
 
 
     PRCDoAura(ALIGNMENT_EVIL, VFX_DUR_PROTECTION_GOOD_MAJOR, VFX_DUR_PROTECTION_GOOD_MAJOR, DAMAGE_TYPE_DIVINE);

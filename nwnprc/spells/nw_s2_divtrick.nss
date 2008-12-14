@@ -17,11 +17,11 @@
 
 void main()
 {
-    object oTarget = GetSpellTargetObject();
-    
+    object oTarget = PRCGetSpellTargetObject();
+
     // Used by the uses per day check code for bonus domains
-    if (!DecrementDomainUses(DOMAIN_TRICKERY, oTarget)) return;    
-    
+    if (!DecrementDomainUses(DOMAIN_TRICKERY, oTarget)) return;
+
     int nDuration = 5 + GetAbilityModifier(ABILITY_CHARISMA);
     int nLevel = GetLevelByClass(CLASS_TYPE_CLERIC);
     nLevel = 1 + nLevel/2;
@@ -35,7 +35,7 @@ void main()
     effect eHide = EffectSkillIncrease(SKILL_HIDE, nLevel);
     effect ePers = EffectSkillIncrease(SKILL_PERSUADE, nLevel);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-    
+
     //Link Effects
     effect eLink = EffectLinkEffects(eSearch, eDisable);
     eLink = EffectLinkEffects(eLink, eMove);

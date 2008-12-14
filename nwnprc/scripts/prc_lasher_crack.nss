@@ -21,7 +21,7 @@
 
 void main()
 {
-    object oPC = GetSpellTargetObject();
+    object oPC = PRCGetSpellTargetObject();
     //string sMessage = "";
 
     int iClassLevel = GetLevelByClass(CLASS_TYPE_LASHER, oPC);

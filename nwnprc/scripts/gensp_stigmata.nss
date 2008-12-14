@@ -28,7 +28,7 @@ void main()
     // Build main variables
     object oPC = OBJECT_SELF;
     object oSkin = GetPCSkin(oPC);
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nSpell = PRCGetSpellId();
     int nStigmataDamage;
 

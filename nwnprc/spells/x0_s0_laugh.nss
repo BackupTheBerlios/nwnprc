@@ -59,7 +59,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
 
 
     //Declare major variables  ( fDist / (3.0f * log( fDist ) + 2.0f) )
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nCasterLvl = CasterLvl;
     int nDamage = 0;
@@ -89,11 +89,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     {
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_TASHAS_HIDEOUS_LAUGHTER));
- 
+
         if (PRCIsMindless(oTarget) == FALSE)   {
             if ( !GetIsImmune(oTarget,IMMUNITY_TYPE_MIND_SPELLS ))   {
 
-        if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nCasterLvl) 
+        if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nCasterLvl)
             && !/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, ((PRCGetSaveDC(oTarget,OBJECT_SELF))-nModifier), SAVING_THROW_TYPE_MIND_SPELLS))
         {
             effect eDur = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DISABLED);

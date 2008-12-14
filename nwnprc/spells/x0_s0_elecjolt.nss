@@ -39,7 +39,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 // End of Spell Cast Hook
 
    //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nCasterLevel = PRCGetCasterLevel(OBJECT_SELF);
 
 
@@ -57,7 +57,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
              {
                  //Apply the VFX impact and damage effect
                  SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-            
+
                  // perform attack roll for ray and deal proper damage
                  int nDamage =  PRCMaximizeOrEmpower(3, 1, PRCGetMetaMagicFeat());
                  int iAttackRoll = PRCDoRangedTouchAttack(oTarget);;

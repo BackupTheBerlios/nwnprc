@@ -20,7 +20,7 @@ void main()
     PRCSetUserSpecificSpellScript("archmage_fire");
 
     /* Save the designed victi..erm..target */
-    SetLocalObject(OBJECT_SELF, "arcane_fire_target", GetSpellTargetObject());
+    SetLocalObject(OBJECT_SELF, "arcane_fire_target", PRCGetSpellTargetObject());
 
     FloatingTextStringOnCreature("Arcane Fire actived, now cast any spell(target does not matter).", OBJECT_SELF, FALSE);
 

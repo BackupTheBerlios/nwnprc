@@ -4,7 +4,7 @@
 void main()
 {
 
-   object oTarget = GetSpellTargetObject();
+   object oTarget = PRCGetSpellTargetObject();
 
    object oSkin = GetPCSkin(oTarget);
 

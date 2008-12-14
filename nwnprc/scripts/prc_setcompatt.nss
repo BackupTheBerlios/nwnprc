@@ -5,7 +5,7 @@
 void main()
 {
     object oCastingObject = OBJECT_SELF;
-    object oPC = GetSpellTargetObject();
+    object oPC = PRCGetSpellTargetObject();
 
     string sBonus = GetLocalString(oCastingObject, "SET_COMPOSITE_STRING");
 

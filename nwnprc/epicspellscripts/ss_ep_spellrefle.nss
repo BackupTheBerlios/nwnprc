@@ -22,7 +22,7 @@ void main()
     }
     if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_EP_SP_R))
     {
-        object oTarget = GetSpellTargetObject();
+        object oTarget = PRCGetSpellTargetObject();
         //object oSkin;
         int nDuration = GetTotalCastingLevel(OBJECT_SELF);
         effect eVis = EffectVisualEffect(VFX_FNF_PWSTUN);

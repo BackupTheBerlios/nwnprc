@@ -29,7 +29,7 @@ void main()
         SendMessageToPC(oPC, "You do not have enough daily uses of Virtuoso Performance to use this ability.");
         return;
     }
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nDuration = 10;
     //Check to see if the caster has Lasting Impression and increase duration.
     if(GetHasFeat(870)) nDuration *= 10;

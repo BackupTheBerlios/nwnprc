@@ -18,7 +18,7 @@
 void main()
 {
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     effect eVis = EffectVisualEffect(VFX_IMP_POLYMORPH);
     effect ePoly;
 
@@ -54,7 +54,7 @@ void main()
               return;
         } // abort
     } // check to see if abort due to being mounted
-    
+
     //this command will make shore that polymorph plays nice with the shifter
     ShifterCheck(OBJECT_SELF);
 

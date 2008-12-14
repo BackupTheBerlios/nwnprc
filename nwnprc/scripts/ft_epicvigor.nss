@@ -11,7 +11,7 @@ void main()
         return;
    }
 
-   object oTarget = GetSpellTargetObject();
+   object oTarget = PRCGetSpellTargetObject();
 
    if (GetHasSpellEffect(GetSpellId(),oTarget)) return;
 

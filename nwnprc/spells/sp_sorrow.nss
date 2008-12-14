@@ -30,7 +30,7 @@ Created:   05/02/06
 void main()
 {
     object oPC = OBJECT_SELF;
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nCasterLvl = PRCGetCasterLevel(oPC);
     int nDC = PRCGetSaveDC(oTarget, oPC);
     float fDur = RoundsToSeconds(nCasterLvl);

@@ -11,6 +11,7 @@
 //:: Created On: Mar 4, 2004
 //::////////////////////////////////////////////////////////////
 
+#include "prc_inc_nwscript"
 
 void main()
 {
@@ -18,7 +19,7 @@ void main()
     //Declare major variables
     int nDC;
     object oCaster = OBJECT_SELF;
-    object oTrap = GetSpellTargetObject();
+    object oTrap = PRCGetSpellTargetObject();
     int nType = GetObjectType(oTrap);
     if (OBJECT_TYPE_DOOR == nType || OBJECT_TYPE_PLACEABLE == nType || OBJECT_TYPE_TRIGGER == nType)
     {

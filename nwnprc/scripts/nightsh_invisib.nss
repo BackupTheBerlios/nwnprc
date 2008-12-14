@@ -38,7 +38,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
 
 
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
 
     //effect eVis = EffectVisualEffect(VFX_DUR_INVISIBILITY);
     effect eInvis = EffectInvisibility(INVISIBILITY_TYPE_NORMAL);

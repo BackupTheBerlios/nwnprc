@@ -20,7 +20,7 @@ bugfix by Kovi 2002.07.28
 */
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
-#include "prc_inc_spells" 
+#include "prc_inc_spells"
 
 
 
@@ -49,7 +49,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_DIVINATION);
 
     //Declare major variables
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nHP =  GetCurrentHitPoints(oTarget);
     effect eStun = EffectStunned();
     effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DISABLED);

@@ -3,13 +3,13 @@
 
 //
 // This function runs the burning blood effect for a round, then recursing itself one
-// round later to do the effect again.  It relies on a dummy visual effect to act 
+// round later to do the effect again.  It relies on a dummy visual effect to act
 // as the spell's timer, expiring itself when the effect expires.
 //
 void RunSpell(object oCaster, object oTarget, int nMetaMagic, int nSpellID,
      float fDuration,int nCasterLvl )
 {
-     // If our timer spell effect has worn off (or been dispelled) then we are 
+     // If our timer spell effect has worn off (or been dispelled) then we are
      // done, just exit.
     if (PRCGetDelayedSpellEffectsExpired(nSpellID, oTarget, oCaster)) return;
 
@@ -19,7 +19,7 @@ void RunSpell(object oCaster, object oTarget, int nMetaMagic, int nSpellID,
      if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, PRCGetSaveDC(oTarget,oCaster), SAVING_THROW_TYPE_SPELL))
      {
           // Give feedback that a save was made.
-          SPApplyEffectToObject(DURATION_TYPE_INSTANT, 
+          SPApplyEffectToObject(DURATION_TYPE_INSTANT,
                EffectVisualEffect(VFX_IMP_FORTITUDE_SAVING_THROW_USE), oTarget);
      }
      else
@@ -30,17 +30,17 @@ void RunSpell(object oCaster, object oTarget, int nMetaMagic, int nSpellID,
           eDamage = EffectLinkEffects(eDamage, EffectVisualEffect(VFX_IMP_FLAME_S));
           SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
           PRCBonusDamage(oTarget);
-          
+
           nDamage = PRCGetMetaMagicDamage(DAMAGE_TYPE_ACID, 1, 8, 0, 0, nMetaMagic);
           nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
           eDamage = PRCEffectDamage(oTarget, nDamage, DAMAGE_TYPE_ACID);
           eDamage = EffectLinkEffects(eDamage, EffectVisualEffect(VFX_IMP_ACID_S));
           SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
-          
+
           eDamage = EffectSlow();
           SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDamage, oTarget, RoundsToSeconds(1),FALSE);
      }
-     
+
      // Decrement our duration counter by a round and if we still have time left keep
      // going.
      fDuration -= RoundsToSeconds(1);
@@ -56,12 +56,12 @@ void main()
 
      PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
 
-     object oTarget = GetSpellTargetObject();
+     object oTarget = PRCGetSpellTargetObject();
      if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
      {
           int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
              int nPenetr = nCasterLvl+SPGetPenetr();
-     
+
           // Get the target and raise the spell cast event.
           PRCSignalSpellEvent(oTarget);
 
@@ -72,9 +72,9 @@ void main()
 
                // Apply a persistent vfx to the target.
                // RunSpell uses our persistant vfx to determine it's duration.
-               SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, 
+               SPApplyEffectToObject(DURATION_TYPE_TEMPORARY,
                     EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE), oTarget, fDuration,FALSE);
-               
+
                // Stick OBJECT_SELF into a local because it's a function under the hood,
                // and we need a real object reference.
                object oCaster = OBJECT_SELF;

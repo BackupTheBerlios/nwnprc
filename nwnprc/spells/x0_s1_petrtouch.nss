@@ -12,9 +12,9 @@
 
 void main()
 {
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nHitDice = GetHitDice(oTarget);
-    
+
     PRCDoPetrification(nHitDice, OBJECT_SELF, oTarget, GetSpellId(), 15);
 }
 

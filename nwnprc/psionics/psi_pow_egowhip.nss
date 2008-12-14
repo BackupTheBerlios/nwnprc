@@ -54,7 +54,7 @@ void main()
 // End of Spell Cast Hook
 
     object oManifester = OBJECT_SELF;
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     struct manifestation manif =
         EvaluateManifestation(oManifester, oTarget,
                               PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
@@ -100,14 +100,14 @@ void main()
                         nDamage = max(nDamage / 2, 1); // Minimum 1 damage
                     }
                     else if (GetHasMettle(oTarget, SAVING_THROW_WILL))
-        	    {
-        		ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_WILL_SAVING_THROW_USE), oTarget);
-        	    }
+                {
+                ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_WILL_SAVING_THROW_USE), oTarget);
+                }
                     // Failed save, daze
                     else
                     {
                         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDaze, oTarget, RoundsToSeconds(1), FALSE);
-		    }
+            }
                     //Apply the VFX impact
                     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eRay, oTarget, 1.7 ,FALSE);
                     DelayCommand(0.5, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));

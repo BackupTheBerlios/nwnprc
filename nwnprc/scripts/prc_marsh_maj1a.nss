@@ -3,7 +3,7 @@
 
 void main()
 {
-    object oPC = GetSpellTargetObject();
+    object oPC = PRCGetSpellTargetObject();
     object oTarget = GetEnteringObject();
     object PCMarshal = GetAreaOfEffectCreator();
     object WeapMar = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget);

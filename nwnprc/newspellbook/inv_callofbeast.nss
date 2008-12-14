@@ -16,15 +16,15 @@
 
 void main()
 {
-    
+
     if (!PreInvocationCastCode())
     {
     // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
         return;
     }
-    
+
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     effect eVis = EffectVisualEffect(VFX_IMP_CHARM);
     effect eCharm = EffectCharmed();
     eCharm = PRCGetScaledEffect(eCharm, oTarget);

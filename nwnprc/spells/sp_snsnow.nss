@@ -4,11 +4,11 @@ void main()
 {
     // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
     if (!X2PreSpellCastCode()) return;
-    
+
     PRCSetSchool(SPELL_SCHOOL_EVOCATION);
 
-    object oTarget = GetSpellTargetObject();
-    
+    object oTarget = PRCGetSpellTargetObject();
+
     // Determine damage dice.
     int nCasterLvl = PRCGetCasterLevel();
     int nDice = nCasterLvl;
@@ -30,18 +30,18 @@ void main()
             if (nTouchAttack > 0)
             {
                 // Roll the damage of (1d6+1) / level, doing double damage on a crit.
-                int nDamage = PRCGetMetaMagicDamage(nDamageType, 
+                int nDamage = PRCGetMetaMagicDamage(nDamageType,
                     1 == nTouchAttack ? nDice : (nDice * 2), 6, 1);
 
-                // Apply the damage and the damage visible effect to the target.                
-                SPApplyEffectToObject(DURATION_TYPE_INSTANT, 
+                // Apply the damage and the damage visible effect to the target.
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT,
                     PRCEffectDamage(oTarget, nDamage, nDamageType), oTarget);
                     PRCBonusDamage(oTarget);
-                SPApplyEffectToObject(DURATION_TYPE_INSTANT, 
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT,
                     EffectVisualEffect(VFX_IMP_FROST_S), oTarget);
             }
         }
     }
-    
+
     PRCSetSchool();
 }

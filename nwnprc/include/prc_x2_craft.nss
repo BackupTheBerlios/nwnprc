@@ -565,7 +565,7 @@ int CICraftCheckBrewPotion(object oSpellTarget, object oCaster, int nID = 0)
 
     if(nID == 0) nID = PRCGetSpellId();
 
-    object oSpellTarget = GetSpellTargetObject();
+    object oSpellTarget = PRCGetSpellTargetObject();
     object oCaster      = OBJECT_SELF;
     int    nLevel       = CIGetSpellInnateLevel(nID,TRUE);
     if(GetPRCSwitch(PRC_BREW_POTION_CASTER_LEVEL))

@@ -41,61 +41,114 @@ Created:   7/12/06
 //  Variables passed may be changed if necessary
 int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 {
-	
-	int nMetaMagic = PRCGetMetaMagicFeat();
-	int nSaveDC = PRCGetSaveDC(oTarget, oCaster);
-	int nPenetr = nCasterLevel + SPGetPenetr();
-	float fMaxDuration = RoundsToSeconds(nCasterLevel); //modify if necessary
-	
-	//INSERT SPELL CODE HERE
-	int iAttackRoll = 0;    //placeholder
-	
-	iAttackRoll = PRCDoMeleeTouchAttack(oTarget);
-	if (iAttackRoll > 0)
-	{		
-		//Touch attack code goes here
-		int nDam = d6(1);
-		
-		if(nMetaMagic == METAMAGIC_MAXIMIZE)
-		{
-			nDam = 6;
-		}
-		
-		if(nMetaMagic == METAMAGIC_EMPOWER)
-		{
-			nDam += (nDam/2);
-		}
-		
-		SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_MAGICAL), oTarget);
-	}
-	return iAttackRoll;    //return TRUE if spell charges should be decremented
+        
+        int nMetaMagic = PRCGetMetaMagicFeat();
+        int nSaveDC = PRCGetSaveDC(oTarget, oCaster);
+        int nPenetr = nCasterLevel + SPGetPenetr();
+        float fMaxDuration = RoundsToSeconds(nCasterLevel); //modify if necessary
+        
+        //INSERT SPELL CODE HERE
+        int iAttackRoll = 0;    //placeholder
+        
+        iAttackRoll = PRCDoMeleeTouchAttack(oTarget);
+        if (iAttackRoll > 0)
+        {               
+                //Touch attack code goes here
+                int nDam = d6(1);
+                
+                if(nMetaMagic == METAMAGIC_MAXIMIZE)
+                {
+                        nDam = 6;
+                }
+                
+                if(nMetaMagic == METAMAGIC_EMPOWER)
+                {
+                        nDam += (nDam/2);
+                }
+                
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_MAGICAL), oTarget);
+        }
+        return iAttackRoll;    //return TRUE if spell charges should be decremented
+}
+
+void DoSpell2(object oCaster, object oTarget, int nCasterLevel, int nEvent, int nRays)
+{
+        int nMetaMagic = PRCGetMetaMagicFeat();
+        int nSaveDC = PRCGetSaveDC(oTarget, oCaster);
+        int nPenetr = nCasterLevel + SPGetPenetr();
+        float fMaxDuration = RoundsToSeconds(nCasterLevel); //modify if necessary
+        location lLoc = GetLocation(oTarget);
+        object oTarget2;
+        
+        //INSERT SPELL CODE HERE
+        int iAttackRoll = 0;    //placeholder
+        
+        iAttackRoll = PRCDoMeleeTouchAttack(oTarget);
+        if (iAttackRoll > 0)
+        {               
+                //Touch attack code goes here
+                int nDam = d6(1);
+                
+                if(nMetaMagic == METAMAGIC_MAXIMIZE)
+                {
+                        nDam = 6;
+                }
+                
+                if(nMetaMagic == METAMAGIC_EMPOWER)
+                {
+                        nDam += (nDam/2);
+                }
+                
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_MAGICAL), oTarget);
+        }
+        
+        oTarget2 = MyFirstObjectInShape(SHAPE_SPHERE, 10.0, lLoc, FALSE, OBJECT_TYPE_CREATURE);
+        
+        while(GetIsObjectValid(oTarget2) && (nRays > 0))
+        {
+                nRays--;
+                iAttackRoll = PRCDoMeleeTouchAttack(oTarget);
+                if (iAttackRoll > 0)
+                {               
+                        //Touch attack code goes here
+                        int nDam = d6(1);
+                        
+                        if(nMetaMagic == METAMAGIC_MAXIMIZE) nDam = 6;
+                        
+                        if(nMetaMagic == METAMAGIC_EMPOWER)  nDam += (nDam/2);
+                        
+                        SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget2, nDam, DAMAGE_TYPE_MAGICAL), oTarget2);
+                }
+                oTarget2 = MyNextObjectInShape(SHAPE_SPHERE, 10.0, lLoc, FALSE, OBJECT_TYPE_CREATURE); 
+        }
 }
 
 void main()
 {
-	object oCaster = OBJECT_SELF;
-	int nCasterLevel = PRCGetCasterLevel(oCaster);
-	PRCSetSchool(GetSpellSchool(PRCGetSpellId()));
-	if (!X2PreSpellCastCode()) return;
-	object oTarget = PRCGetSpellTargetObject();
-	int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
-	if(!nEvent) //normal cast
-	{
-		if(GetLocalInt(oCaster, PRC_SPELL_HOLD) && oCaster == oTarget)
-		{   //holding the charge, casting spell on self
-		SetLocalSpellVariables(oCaster, (nCasterLevel/2));   //change 1 to number of charges
-		return;
-		}
-		
-		DoSpell(oCaster, oTarget, nCasterLevel, nEvent);
-	}
-	else
-	{
-		if(nEvent & PRC_SPELL_EVENT_ATTACK)
-		{
-			if(DoSpell(oCaster, oTarget, nCasterLevel, nEvent))
-			DecrementSpellCharges(oCaster);
-		}
-	}
-	PRCSetSchool();
+        object oCaster = OBJECT_SELF;
+        int nCasterLevel = PRCGetCasterLevel(oCaster);
+        PRCSetSchool(GetSpellSchool(PRCGetSpellId()));
+        if (!X2PreSpellCastCode()) return;
+        object oTarget = PRCGetSpellTargetObject();
+        int nRays = (nCasterLevel/2);
+        int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
+        if(!nEvent) //normal cast
+        {
+                if(GetLocalInt(oCaster, PRC_SPELL_HOLD) && oCaster == oTarget)
+                {   //holding the charge, casting spell on self
+                SetLocalSpellVariables(oCaster, nRays);   //change 1 to number of charges
+                return;
+                }
+                
+                DoSpell2(oCaster, oTarget, nCasterLevel, nEvent, nRays);
+        }
+        else
+        {
+                if(nEvent & PRC_SPELL_EVENT_ATTACK)
+                {
+                        if(DoSpell(oCaster, oTarget, nCasterLevel, nEvent))
+                        DecrementSpellCharges(oCaster);
+                }
+        }
+        PRCSetSchool();
 }

@@ -865,7 +865,8 @@ int CheckPrereq(object oPC, int nLine, int bEpic, string sFile, struct itemvars 
     int bBreak = FALSE;
     int nLevel;
     int j = 0;
-    int nCasterLevel = max(max(GetLevelByTypeArcane(oPC), GetLevelByTypeDivine(oPC)), GetLevelByClass(CLASS_TYPE_ARTIFICER, oPC) + 2);
+    //replace the arti level check later when PrCs are added
+    int nCasterLevel = max(max(max(GetLevelByTypeArcane(oPC), GetLevelByTypeDivine(oPC)), GetLevelByClass(CLASS_TYPE_ARTIFICER, oPC) + 2), GetInvokerLevel(oPC, CLASS_TYPE_WARLOCK));
     int nManifesterLevel = GetManifesterLevel(oPC);
     int nTemp, nLength, nPosition;
     int bArtificer = (GetLevelByClass(CLASS_TYPE_ARTIFICER, oPC) > 0);

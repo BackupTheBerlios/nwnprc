@@ -287,10 +287,6 @@ struct breath CreateBreath(object oDragon, int bLine, float fRange, int nDamageT
 	if(GetLocalInt(oDragon, "ExhaleImmunity"))
 	   BreathUsed.bExhaleImmune = TRUE;
 	   
-        //breaths without recharge times can't use metabreath
-        if(BreathUsed.nRoundsUntilRecharge == 0)
-           return BreathUsed;
-           
         //breath effect checks
         
         //Cloud only works with 1 other effect applied
@@ -323,6 +319,10 @@ struct breath CreateBreath(object oDragon, int bLine, float fRange, int nDamageT
         {
            BreathUsed.nLingering = 1;
         }
+
+        //breaths without recharge times can't use metabreath
+        if(BreathUsed.nRoundsUntilRecharge == 0)
+           return BreathUsed;
 	
 	/* metabreath calculation*/
 	

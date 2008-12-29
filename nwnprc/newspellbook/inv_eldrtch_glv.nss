@@ -30,7 +30,7 @@ void main()
     // Construct the bonuses
     itemproperty ipAddon = ItemPropertyOnHitCastSpell(IP_CONST_CASTSPELL_ELDRITCH_GLAIVE_ONHIT, (GetInvokerLevel(oPC, CLASS_TYPE_WARLOCK) + 1) / 2);
     //ipAddon = ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, (GetInvokerLevel(oPC, CLASS_TYPE_WARLOCK) + 1) / 2);
-    IPSafeAddItemProperty(oGlaive, ipAddon, 99999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+    IPSafeAddItemProperty(oGlaive, ipAddon, 0.0f, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
 
     // Force equip
     ClearAllActions();

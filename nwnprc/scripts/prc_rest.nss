@@ -11,6 +11,7 @@
 #include "prc_sp_func"
 #include "prc_inc_domain"
 #include "true_inc_trufunc"
+#include "inv_inc_invfunc"
 #include "inc_epicspells"
 #include "prc_inc_scry"
 #include "prc_inc_dragsham"
@@ -61,6 +62,9 @@ void RestFinished(object oPC)
     ExecuteScript("tob_evnt_recover", oPC);
     BonusDomainRest(oPC);
     ClearLawLocalVars(oPC);
+    ClearInvocationLocalVars(oPC);
+    //clear Dragonfriend/Dragonthrall flag so effect properly reapplies
+    DeleteLocalInt(GetPCSkin(oPC), "DragonThrall");
 
     // To heal up enslaved creatures...
     object oSlave = GetLocalObject(oPC, "EnslavedCreature");

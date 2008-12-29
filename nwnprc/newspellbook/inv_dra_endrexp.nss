@@ -12,9 +12,12 @@ void main()
     object oTarget = PRCGetSpellTargetObject();
     int bValid = FALSE;
     int nBPIndex = 0;
+    int nBPTIndex = 0;
     
     effect eVis = EffectVisualEffect(VFX_IMP_ELEMENTAL_PROTECTION);
     
+    //Add to array on target of breaths they're protected from
+
     if(!array_exists(oTarget, "BreathProtected"))
          array_create(oTarget, "BreathProtected");
     
@@ -29,6 +32,24 @@ void main()
         else
               nBPIndex++;
     }
-        
+
+    //add to array on caster of targets protected by their spell for resting cleanup
+
+    if(!array_exists(oCaster, "BreathProtectTargets"))
+         array_create(oCaster, "BreathProtectTargets");
+    
+    while(!bValid)
+    {
+    	//find the first empty spot and add it
+    	if(array_get_object(oCaster, "BreathProtectTargets", nBPTIndex) == OBJECT_INVALID)
+    	{
+              array_set_object(oCaster, "BreathProtectTargets", nBPTIndex, oTarget);
+              if(DEBUG) DoDebug("Storing target: " + GetName(array_get_object(oCaster, "BreathProtectTargets", nBPTIndex)));
+              bValid = TRUE;
+        }
+        else
+              nBPTIndex++;
+    }
+
     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 }

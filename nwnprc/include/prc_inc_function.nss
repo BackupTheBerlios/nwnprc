@@ -364,6 +364,8 @@ void DeletePRCLocalInts(object oSkin)
 
     DeleteNamedComposites(oSkin, "PRC_CBon");
 
+    if (DEBUG) DoDebug("Clearing class flags");
+
     // Elemental Savants
     DeleteLocalInt(oSkin,"ElemSavantResist");
     DeleteLocalInt(oSkin,"ElemSavantPerfection");
@@ -505,15 +507,14 @@ void DeletePRCLocalInts(object oSkin)
         DeleteLocalInt(oPC, "PRC_LawOfResistance" + IntToString(UtterID));
 
     //clear Dragonfriend/Dragonthrall flag so effect properly reapplies
-    if (GetHasFeat(FEAT_DRAGONFRIEND, oPC)
-       || GetHasFeat(FEAT_DRAGONTHRALL, oPC)) DeleteLocalInt(oSkin, "DragonThrall");
+    DeleteLocalInt(oSkin, "DragonThrall");
 
     //Invocations
-    if(GetLocalInt(oPC, "ChillingFogLock")) //Chilling Fog lock
-        DeleteLocalInt(oPC, "ChillingFogLock");
-    if(array_exists(oPC, "BreathProtected")) //Endure Exposure wearing off
-        array_delete(oPC, "BreathProtected");
+    DeleteLocalInt(oPC, "ChillingFogLock");
+    //Endure Exposure wearing off
+    array_delete(oPC, "BreathProtected");
     DeleteLocalInt(oPC, "DragonWard");
+
 
     // future PRCs Go below here
 }

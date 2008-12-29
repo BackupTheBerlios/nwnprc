@@ -336,5 +336,65 @@ int GetInvocationSaveDC(object oTarget, object oCaster, int nSpellID = -1)
     return nDC;
 }
 
+void ClearInvocationLocalVars(object oPC)
+{
+
+    //Invocations
+    if (DEBUG) DoDebug("Clearing invocation flags");
+    DeleteLocalInt(oPC, "ChillingFogLock");
+    //Endure Exposure wearing off
+    array_delete(oPC, "BreathProtected");
+    DeleteLocalInt(oPC, "DragonWard");
+
+    //cleaning targets of Endure exposure cast by resting caster
+    if (array_exists(oPC, "BreathProtectTargets"))
+    {
+        if(DEBUG) DoDebug("Checking for casts of Endure Exposure");
+        int nBPTIndex = 0;
+        int bCasterDone = FALSE;
+        int bTargetDone = FALSE;
+        object oBreathTarget;
+        while(!bCasterDone)
+        {
+                oBreathTarget = array_get_object(oPC, "BreathProtectTargets", nBPTIndex);
+                if(DEBUG) DoDebug("Possible target: " + GetName(oBreathTarget) + " - " + ObjectToString(oBreathTarget));
+		if(oBreathTarget != OBJECT_INVALID)
+	    	{
+                      //replace caster with target... always immune to own breath, so good way to erase caster from array without deleting whole array
+		      int nBPIndex = 0;			      
+
+                      while(!bTargetDone)
+                      {
+			      if(DEBUG) DoDebug("Checking " + GetName(oBreathTarget));
+			      //if it matches, remove and end
+			      if(array_get_object(oBreathTarget, "BreathProtected", nBPIndex) == oPC)
+			      {
+				        array_set_object(oBreathTarget, "BreathProtected", nBPIndex, oBreathTarget);
+                                        bTargetDone = TRUE;
+                                        if(DEBUG) DoDebug("Found caster, clearing.");
+			      }
+			      //if it is not end of array, keep going
+			      else if(array_get_object(oBreathTarget, "BreathProtected", nBPTIndex) != OBJECT_INVALID)
+			      {
+				       nBPIndex++;
+			      }  
+                              else
+                                       bTargetDone = TRUE;
+
+                      }
+
+		      nBPTIndex++;
+                      bTargetDone = FALSE;
+
+		}
+		else
+                {
+		      array_delete(oPC, "BreathProtectTargets");
+                      bCasterDone = TRUE;
+                }
+     	}
+    }
+}
+
 // Test main
 //void main(){}

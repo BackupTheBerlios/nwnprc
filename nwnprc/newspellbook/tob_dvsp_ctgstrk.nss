@@ -30,27 +30,13 @@
 #include "tob_movehook"
 #include "prc_alterations"
 
-void main()
+void TOBAttack(object oTarget, object oInitiator)
 {
-    if (!PreManeuverCastCode())
-    {
-    // If code within the PreManeuverCastCode (i.e. UMD) reports FALSE, do not run this spell
-        return;
-    }
-
-// End of Spell Cast Hook
-
-    object oInitiator    = OBJECT_SELF;
-    object oTarget       = PRCGetSpellTargetObject();
-    struct maneuver move = EvaluateManeuver(oInitiator, oTarget);
-
-    if(move.bCanManeuver)
-    {
     	effect eNone;
     	if (GetAlignmentGoodEvil(oInitiator) != GetAlignmentGoodEvil(oTarget) || 
 	    GetAlignmentLawChaos(oInitiator) != GetAlignmentLawChaos(oTarget))
     	{
-		DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(8), 0, "Castigating Strike Hit", "Castigating Strike Miss"));
+		PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(8), 0, "Castigating Strike Hit", "Castigating Strike Miss");
 		if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
     		{
     			// Saving Throw for the primary target
@@ -94,6 +80,25 @@ void main()
         	}
         }
         else 	// No alignment different
-        	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Hit", "Miss"));
+        	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Hit", "Miss");
+}
+
+void main()
+{
+    if (!PreManeuverCastCode())
+    {
+    // If code within the PreManeuverCastCode (i.e. UMD) reports FALSE, do not run this spell
+        return;
+    }
+
+// End of Spell Cast Hook
+
+    object oInitiator    = OBJECT_SELF;
+    object oTarget       = PRCGetSpellTargetObject();
+    struct maneuver move = EvaluateManeuver(oInitiator, oTarget);
+
+    if(move.bCanManeuver)
+    {
+    	DelayCommand(0.0, TOBAttack(oTarget, oInitiator));
     }
 }

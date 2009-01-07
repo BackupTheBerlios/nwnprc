@@ -28,6 +28,19 @@
 #include "tob_movehook"
 #include "prc_alterations"
 
+void TOBAttack(object oTarget, object oInitiator)
+{
+	effect eNone;
+	PerformAttackRound(oTarget, oInitiator, eNone, 0.0, 0, d6(6), 0, FALSE, "White Raven Hammer Hit", "White Raven Hammer Miss");
+	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
+    	{
+		effect eLink = ExtraordinaryEffect(EffectVisualEffect(VFX_IMP_FAERIE_FIRE));
+		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink, oTarget);
+		eLink = ExtraordinaryEffect(EffectStunned());
+		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0);
+        }
+}
+
 void main()
 {
     if (!PreManeuverCastCode())
@@ -44,14 +57,6 @@ void main()
 
     if(move.bCanManeuver)
     {
-    	effect eNone;
-	DelayCommand(0.0, PerformAttackRound(oTarget, oInitiator, eNone, 0.0, 0, d6(6), 0, FALSE, "White Raven Hammer Hit", "White Raven Hammer Miss"));
-	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
-    	{
-		effect eLink = ExtraordinaryEffect(EffectVisualEffect(VFX_IMP_FAERIE_FIRE));
-		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink, oTarget);
-		eLink = ExtraordinaryEffect(EffectStunned());
-		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0);
-        }
+	DelayCommand(0.0, TOBAttack(oTarget, oInitiator));
     }
 }

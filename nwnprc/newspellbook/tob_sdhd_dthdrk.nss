@@ -19,28 +19,15 @@ If her save succeeds, she takes an extra 5d6 points of damage. This maneuver fun
 opponents who are vulnerable to critical hits.
 
 */
+
 #include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
 
-void main()
+void TOBAttack(object oTarget, object oInitiator)
 {
-        if (!PreManeuverCastCode())
-        {
-                // If code within the PreManeuverCastCode (i.e. UMD) reports FALSE, do not run this spell
-                return;
-        }
-        
-        // End of Spell Cast Hook
-        
-        object oInitiator    = OBJECT_SELF;
-        object oTarget       = PRCGetSpellTargetObject();
-        struct maneuver move = EvaluateManeuver(oInitiator, oTarget);
-        effect eNone;
-        
-        if(move.bCanManeuver)
-        {
-                DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Death in the Dark Hit", "Death in the Dark Miss"));
+		effect eNone;
+		PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Death in the Dark Hit", "Death in the Dark Miss");
                 if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
                 {
                         int nDam = d6(15);
@@ -56,5 +43,24 @@ void main()
                                 }
                         }
                 }
+}
+
+void main()
+{
+        if (!PreManeuverCastCode())
+        {
+                // If code within the PreManeuverCastCode (i.e. UMD) reports FALSE, do not run this spell
+                return;
+        }
+        
+        // End of Spell Cast Hook
+        
+        object oInitiator    = OBJECT_SELF;
+        object oTarget       = PRCGetSpellTargetObject();
+        struct maneuver move = EvaluateManeuver(oInitiator, oTarget);
+                
+        if(move.bCanManeuver)
+        {
+                DelayCommand(0.0, TOBAttack(oTarget, oInitiator));
         }
 }

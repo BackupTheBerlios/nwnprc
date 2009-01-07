@@ -29,6 +29,21 @@ Str modifier) or be dazed for 1 round.
 #include "tob_movehook"
 #include "prc_alterations"
 
+void TOBAttack(object oTarget, object oInitiator)
+{
+        	effect eNone;
+                PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Dazing Strike Hit", "Dazing Strike Miss");
+                
+                if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
+                {
+                        // Saving Throw
+                        if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (15 + GetAbilityModifier(ABILITY_STRENGTH, oInitiator))))
+                        {
+                                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectDazed(), oTarget, RoundsToSeconds(1));
+                        }
+                }
+}
+
 void main()
 {
         if (!PreManeuverCastCode())
@@ -45,16 +60,6 @@ void main()
         
         if(move.bCanManeuver)
         {
-        	effect eNone;
-                DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Dazing Strike Hit", "Dazing Strike Miss"));
-                
-                if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
-                {
-                        // Saving Throw
-                        if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (15 + GetAbilityModifier(ABILITY_STRENGTH, oInitiator))))
-                        {
-                                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectDazed(), oTarget, RoundsToSeconds(1));
-                        }
-                }
+        	DelayCommand(0.0, TOBAttack(oTarget, oInitiator));
         }
 }                

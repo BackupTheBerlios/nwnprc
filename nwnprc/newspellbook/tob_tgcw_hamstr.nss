@@ -25,25 +25,11 @@ Dexterity damage and the speed penalty.
 #include "tob_movehook"
 #include "prc_alterations"
 
-void main()
+void TOBAttack(object oTarget, object oInitiator)
 {
-        if (!PreManeuverCastCode())
-        {
-                // If code within the PreManeuverCastCode (i.e. UMD) reports FALSE, do not run this spell
-                return;
-        }
-        
-        // End of Spell Cast Hook
-        
-        object oInitiator    = OBJECT_SELF;
-        object oTarget       = PRCGetSpellTargetObject();
-        struct maneuver move = EvaluateManeuver(oInitiator, oTarget);
-        effect eNone;
-        
-        if(move.bCanManeuver)
-        {
+        	effect eNone;
         	int nBonus = TOBSituationalAttackBonuses(oInitiator, DISCIPLINE_TIGER_CLAW);
-                DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, nBonus, 0, 0, "Hamstring Attack Hit", "Hamstring Attack Miss"));
+                PerformAttack(oTarget, oInitiator, eNone, 0.0, nBonus, 0, 0, "Hamstring Attack Hit", "Hamstring Attack Miss");
                 
                 if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
                 {
@@ -60,5 +46,24 @@ void main()
                         ApplyAbilityDamage(oInitiator, ABILITY_CONSTITUTION, nDexDam, DURATION_TYPE_PERMANENT);
                         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSlow, oTarget, TurnsToSeconds(1));
                 }
+}
+
+void main()
+{
+        if (!PreManeuverCastCode())
+        {
+                // If code within the PreManeuverCastCode (i.e. UMD) reports FALSE, do not run this spell
+                return;
+        }
+        
+        // End of Spell Cast Hook
+        
+        object oInitiator    = OBJECT_SELF;
+        object oTarget       = PRCGetSpellTargetObject();
+        struct maneuver move = EvaluateManeuver(oInitiator, oTarget);
+                
+        if(move.bCanManeuver)
+        {
+        	DelayCommand(0.0, TOBAttack(oTarget, oInitiator));
         }
 }

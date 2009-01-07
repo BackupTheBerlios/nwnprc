@@ -30,6 +30,23 @@
 #include "tob_movehook"
 #include "prc_alterations"
 
+void TOBAttack(object oTarget, object oInitiator)
+{
+    	effect eNone;
+    	object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
+	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Exorcism of Steel Hit", "Exorcism of Steel Miss");
+       
+        if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
+    	{
+    		int nDC = 13 + GetAbilityModifier(ABILITY_STRENGTH, oInitiator);
+    		int nDamage = 4;
+		if (PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_NONE))
+			nDamage = 2;
+		effect eDam = EffectDamageDecrease(nDamage, DAMAGE_TYPE_BASE_WEAPON);
+		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(eDam), oTarget, 60.0);
+    	}
+}
+
 void main()
 {
     if (!PreManeuverCastCode())
@@ -46,18 +63,6 @@ void main()
 
     if(move.bCanManeuver)
     {
-    	effect eNone;
-    	object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
-	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Exorcism of Steel Hit", "Exorcism of Steel Miss"));
-       
-        if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
-    	{
-    		int nDC = 13 + GetAbilityModifier(ABILITY_STRENGTH, oInitiator);
-    		int nDamage = 4;
-		if (PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_NONE))
-			nDamage = 2;
-		effect eDam = EffectDamageDecrease(nDamage, DAMAGE_TYPE_BASE_WEAPON);
-		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(eDam), oTarget, 60.0);
-    	}
+    	DelayCommand(0.0, TOBAttack(oTarget, oInitiator));
     }
 }

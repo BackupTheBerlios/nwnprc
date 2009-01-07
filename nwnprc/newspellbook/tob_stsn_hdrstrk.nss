@@ -27,6 +27,18 @@
 #include "tob_movehook"
 #include "prc_alterations"
 
+void TOBAttack(object oTarget, object oInitiator)
+{
+    	effect eNone;
+    	
+	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Hydra Slaying Strike Hit", "Hydra Slaying Strike Miss");
+	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
+    	{
+		SetBaseAttackBonus(1, oTarget);
+		DelayCommand(6.0, RestoreBaseAttackBonus(oTarget));		
+        }
+}
+
 void main()
 {
     if (!PreManeuverCastCode())
@@ -43,13 +55,6 @@ void main()
 
     if(move.bCanManeuver)
     {
-    	effect eNone;
-    	
-	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Hydra Slaying Strike Hit", "Hydra Slaying Strike Miss"));
-	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
-    	{
-		SetBaseAttackBonus(1, oTarget);
-		DelayCommand(6.0, RestoreBaseAttackBonus(oTarget));		
-        }
+    	DelayCommand(0.0, TOBAttack(oTarget, oInitiator));
     }
 }

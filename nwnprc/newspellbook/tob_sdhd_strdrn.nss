@@ -31,6 +31,23 @@
 #include "tob_movehook"
 #include "prc_alterations"
 
+void TOBAttack(object oTarget, object oInitiator)
+{
+    	effect eNone;
+    	object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
+	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Strength Draining Strike Hit", "Strength Draining Strike Miss");
+       
+        if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
+    	{
+    		int nDC = 13 + GetAbilityModifier(ABILITY_WISDOM, oInitiator);
+    		int nDamage = 4;
+		if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NONE))
+			nDamage = 2;
+		ApplyAbilityDamage(oTarget, ABILITY_STRENGTH,     nDamage, DURATION_TYPE_PERMANENT);    
+		ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY), oTarget);
+    	}
+}
+
 void main()
 {
     if (!PreManeuverCastCode())
@@ -47,18 +64,6 @@ void main()
 
     if(move.bCanManeuver)
     {
-    	effect eNone;
-    	object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
-	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Strength Draining Strike Hit", "Strength Draining Strike Miss"));
-       
-        if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
-    	{
-    		int nDC = 13 + GetAbilityModifier(ABILITY_WISDOM, oInitiator);
-    		int nDamage = 4;
-		if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NONE))
-			nDamage = 2;
-		ApplyAbilityDamage(oTarget, ABILITY_STRENGTH,     nDamage, DURATION_TYPE_PERMANENT);    
-		ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY), oTarget);
-    	}
+    	DelayCommand(0.0, TOBAttack(oTarget, oInitiator));
     }
 }

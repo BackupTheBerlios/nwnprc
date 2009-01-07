@@ -33,6 +33,22 @@ damage.
 #include "tob_movehook"
 #include "prc_alterations"
 
+void TOBAttack(object oTarget, object oInitiator)
+{
+                effect eNone;
+                PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(4), 0, "Iron Bones Hit", "Iron Bones Miss");
+                
+                if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
+                {
+                        //Save
+                        int nDC = 16 + GetAbilityModifier(ABILITY_STRENGTH, oInitiator);
+                        if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NONE, oInitiator, 1.0))
+                        {
+                                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectDazed(), oTarget, RoundsToSeconds(1));
+                        }
+                }
+}
+
 void main()
 {
         if (!PreManeuverCastCode())
@@ -49,18 +65,7 @@ void main()
         
         if(move.bCanManeuver)
         {
-                effect eNone;
-                DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(4), 0, "Iron Bones Hit", "Iron Bones Miss"));
-                
-                if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
-                {
-                        //Save
-                        int nDC = 16 + GetAbilityModifier(ABILITY_STRENGTH, oInitiator);
-                        if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NONE, oInitiator, 1.0))
-                        {
-                                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectDazed(), oTarget, RoundsToSeconds(1));
-                        }
-                }
+        	DelayCommand(0.0, TOBAttack(oTarget, oInitiator));
         }
 }
                                 

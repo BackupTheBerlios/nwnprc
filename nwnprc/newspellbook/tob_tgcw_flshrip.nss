@@ -27,6 +27,23 @@
 #include "tob_movehook"
 #include "prc_alterations"
 
+void TOBAttack(object oTarget, object oInitiator)
+{
+    	effect eNone = EffectVisualEffect(PSI_IMP_CONCUSSION_BLAST);
+    	int nBonus = TOBSituationalAttackBonuses(oInitiator, DISCIPLINE_TIGER_CLAW);
+	PerformAttack(oTarget, oInitiator, eNone, 0.0, nBonus, 0, 0, "Flesh Ripper Hit", "Flesh Ripper Miss");
+	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
+    	{
+    		// Saving Throw
+    		if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (13 + GetAbilityModifier(ABILITY_STRENGTH, oInitiator))))
+    		{
+			effect eLink = EffectLinkEffects(EffectAttackDecrease(4), EffectACDecrease(4));
+			eLink = ExtraordinaryEffect(eLink);
+			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0);
+		}
+        }
+}
+
 void main()
 {
     if (!PreManeuverCastCode())
@@ -43,18 +60,6 @@ void main()
 
     if(move.bCanManeuver)
     {
-    	effect eNone = EffectVisualEffect(PSI_IMP_CONCUSSION_BLAST);
-    	int nBonus = TOBSituationalAttackBonuses(oInitiator, DISCIPLINE_TIGER_CLAW);
-	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, nBonus, 0, 0, "Flesh Ripper Hit", "Flesh Ripper Miss"));
-	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
-    	{
-    		// Saving Throw
-    		if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (13 + GetAbilityModifier(ABILITY_STRENGTH, oInitiator))))
-    		{
-			effect eLink = EffectLinkEffects(EffectAttackDecrease(4), EffectACDecrease(4));
-			eLink = ExtraordinaryEffect(eLink);
-			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0);
-		}
-        }
+    	DelayCommand(0.0, TOBAttack(oTarget, oInitiator));
     }
 }

@@ -27,6 +27,19 @@
 #include "tob_movehook"
 #include "prc_alterations"
 
+void TOBAttack(object oTarget, object oInitiator)
+{
+    	effect eNone;
+    	object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
+	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(1), GetWeaponDamageType(oWeap), "Stone Vise Hit", "Stone Vise Miss");
+       
+        if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack") && PRCMySavingThrow(SAVING_THROW_FORT, oTarget, 12 + GetAbilityModifier(ABILITY_STRENGTH, oInitiator),SAVING_THROW_TYPE_NONE))
+    	{
+    		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(EffectCutsceneParalyze()), oTarget, 6.0);
+    		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_DIMENSIONLOCK), oTarget);
+    	}
+}
+
 void main()
 {
     if (!PreManeuverCastCode())
@@ -43,14 +56,6 @@ void main()
 
     if(move.bCanManeuver)
     {
-    	effect eNone;
-    	object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
-	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(1), GetWeaponDamageType(oWeap), "Stone Vise Hit", "Stone Vise Miss"));
-       
-        if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack") && PRCMySavingThrow(SAVING_THROW_FORT, oTarget, 12 + GetAbilityModifier(ABILITY_STRENGTH, oInitiator),SAVING_THROW_TYPE_NONE))
-    	{
-    		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(EffectCutsceneParalyze()), oTarget, 6.0);
-    		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_DIMENSIONLOCK), oTarget);
-    	}
+    	DelayCommand(0.0, TOBAttack(oTarget, oInitiator));
     }
 }

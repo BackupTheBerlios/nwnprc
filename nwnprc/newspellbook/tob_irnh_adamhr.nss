@@ -57,7 +57,7 @@ void main()
                                 DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 4, 0, 0,"Adamantine Hurricane Hit", "Adamantine Hurricane Miss"));
                                 
                                 //Do it again :D
-                                 DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 4, 0, 0,"Adamantine Hurricane Hit", "Adamantine Hurricane Miss"));
+                                DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 4, 0, 0,"Adamantine Hurricane Hit", "Adamantine Hurricane Miss"));
                                 
                         }// end if - Target validity check
                         

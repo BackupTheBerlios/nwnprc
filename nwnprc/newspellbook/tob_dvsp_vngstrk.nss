@@ -26,6 +26,18 @@
 #include "tob_movehook"
 #include "prc_alterations"
 
+void TOBAttack(object oTarget, object oInitiator)
+{
+    	effect eNone;
+	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Vanguard Strike Hit", "Vanguard Strike Miss");
+	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
+    	{
+		effect eLink = EffectLinkEffects(EffectACDecrease(4), EffectVisualEffect(VFX_IMP_SOUND_SYMBOL_WEAKNESS));
+		       eLink = ExtraordinaryEffect(eLink);
+		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0);
+        }
+}
+
 void main()
 {
     if (!PreManeuverCastCode())
@@ -42,13 +54,6 @@ void main()
 
     if(move.bCanManeuver)
     {
-    	effect eNone;
-	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Vanguard Strike Hit", "Vanguard Strike Miss"));
-	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
-    	{
-		effect eLink = EffectLinkEffects(EffectACDecrease(4), EffectVisualEffect(VFX_IMP_SOUND_SYMBOL_WEAKNESS));
-		       eLink = ExtraordinaryEffect(eLink);
-		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0);
-        }
+    	DelayCommand(0.0, TOBAttack(oTarget, oInitiator));
     }
 }

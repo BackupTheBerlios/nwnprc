@@ -30,6 +30,22 @@
 #include "tob_movehook"
 #include "prc_alterations"
 
+void TOBAttack(object oTarget, object oInitiator)
+{
+    	effect eNone = EffectVisualEffect(VFX_IMP_FLAME_M);
+	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(2), DAMAGE_TYPE_FIRE, "Lingering Inferno Hit", "Lingering Inferno Miss");
+	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
+    	{
+    		// Making sure we reroll damage each time.
+		effect eDam = EffectLinkEffects(EffectDamage(d6(2), DAMAGE_TYPE_FIRE), eNone);
+		DelayCommand(6.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+		eDam = EffectLinkEffects(EffectDamage(d6(2), DAMAGE_TYPE_FIRE), eNone);
+		DelayCommand(12.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+		eDam = EffectLinkEffects(EffectDamage(d6(2), DAMAGE_TYPE_FIRE), eNone);
+		DelayCommand(18.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+        }
+}
+
 void main()
 {
     if (!PreManeuverCastCode())
@@ -46,17 +62,6 @@ void main()
 
     if(move.bCanManeuver)
     {
-    	effect eNone = EffectVisualEffect(VFX_IMP_FLAME_M);
-	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(2), DAMAGE_TYPE_FIRE, "Lingering Inferno Hit", "Lingering Inferno Miss"));
-	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
-    	{
-    		// Making sure we reroll damage each time.
-		effect eDam = EffectLinkEffects(EffectDamage(d6(2), DAMAGE_TYPE_FIRE), eNone);
-		DelayCommand(6.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
-		eDam = EffectLinkEffects(EffectDamage(d6(2), DAMAGE_TYPE_FIRE), eNone);
-		DelayCommand(12.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
-		eDam = EffectLinkEffects(EffectDamage(d6(2), DAMAGE_TYPE_FIRE), eNone);
-		DelayCommand(18.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
-        }
+    	DelayCommand(0.0, TOBAttack(oTarget, oInitiator));
     }
 }

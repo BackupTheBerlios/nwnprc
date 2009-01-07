@@ -44,26 +44,11 @@ This maneuver is a supernatural ability.
 #include "tob_movehook"
 #include "prc_alterations"
 
-void main()
+void TOBAttack(object oTarget, object oInitiator)
 {
-        if (!PreManeuverCastCode())
-        {
-                // If code within the PreManeuverCastCode (i.e. UMD) reports FALSE, do not run this spell
-                return;
-        }
-        
-        // End of Spell Cast Hook
-        
-        object oInitiator    = OBJECT_SELF;
-        object oTarget       = PRCGetSpellTargetObject();
-        struct maneuver move = EvaluateManeuver(oInitiator, oTarget);
-        
-        
-        if(move.bCanManeuver)
-        {
-                object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
+		object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
                 effect eNone = EffectVisualEffect(VFX_FNF_GAS_EXPLOSION_GREASE);
-                DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(15), GetWeaponDamageType(oWeap), "Five-Shadow Creeping Ice Enervation Strike Hit", "Five-Shadow Creeping Ice Enervation Strike Miss"));
+                PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(15), GetWeaponDamageType(oWeap), "Five-Shadow Creeping Ice Enervation Strike Hit", "Five-Shadow Creeping Ice Enervation Strike Miss");
                 
                 if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
                 {
@@ -112,10 +97,30 @@ void main()
                                 {
                                          ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, d6(1), DURATION_TYPE_TEMPORARY, FALSE, -1.0);
                                          ApplyAbilityDamage(oTarget, ABILITY_DEXTERITY, d6(1), DURATION_TYPE_TEMPORARY, FALSE, -1.0);
-                                 }
+                                }
                          }
                  }
-         }
+}
+
+void main()
+{
+        if (!PreManeuverCastCode())
+        {
+                // If code within the PreManeuverCastCode (i.e. UMD) reports FALSE, do not run this spell
+                return;
+        }
+        
+        // End of Spell Cast Hook
+        
+        object oInitiator    = OBJECT_SELF;
+        object oTarget       = PRCGetSpellTargetObject();
+        struct maneuver move = EvaluateManeuver(oInitiator, oTarget);
+        
+        
+        if(move.bCanManeuver)
+        {
+        	DelayCommand(0.0, TOBAttack(oTarget, oInitiator));
+        }
  }
                                         
                                      

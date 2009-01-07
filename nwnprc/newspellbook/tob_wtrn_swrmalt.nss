@@ -28,6 +28,30 @@
 #include "tob_movehook"
 #include "prc_alterations"
 
+void TOBAttack(object oTarget, object oInitiator)
+{
+    	effect eNone;
+	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Swarming Assault Hit", "Swarming Assault Miss");
+	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
+    	{
+		location lTarget = GetLocation(oTarget);
+		// Loop the allies
+        	object oAreaTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+        	while(GetIsObjectValid(oAreaTarget))
+        	{
+        	    // Get Allies, make sure range
+        	    if(GetIsFriend(oAreaTarget, oInitiator) && GetIsInMeleeRange(oTarget, oAreaTarget))
+        	    {
+        	    	// The free attack
+			PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Swarming Assault Hit", "Swarming Assault Miss");
+        	    }
+	
+        	    //Select the next target within the spell shape.
+        	    oAreaTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+        	}
+        }
+}
+
 void main()
 {
     if (!PreManeuverCastCode())
@@ -44,25 +68,6 @@ void main()
 
     if(move.bCanManeuver)
     {
-    	effect eNone;
-	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Swarming Assault Hit", "Swarming Assault Miss"));
-	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
-    	{
-		location lTarget = GetLocation(oTarget);
-		// Loop the allies
-        	object oAreaTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lTarget, TRUE, OBJECT_TYPE_CREATURE);
-        	while(GetIsObjectValid(oAreaTarget))
-        	{
-        	    // Get Allies, make sure range
-        	    if(GetIsFriend(oAreaTarget, oInitiator) && GetIsInMeleeRange(oTarget, oAreaTarget))
-        	    {
-        	    	// The free attack
-			DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Swarming Assault Hit", "Swarming Assault Miss"));
-        	    }
-	
-        	    //Select the next target within the spell shape.
-        	    oAreaTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lTarget, TRUE, OBJECT_TYPE_CREATURE);
-        	}
-        }
+	DelayCommand(0.0, TOBAttack(oTarget, oInitiator));
     }
 }

@@ -22,6 +22,16 @@ damage in addition to your normal damage.
 #include "tob_movehook"
 #include "prc_alterations"
 
+void TOBAttack(object oTarget, object oInitiator)
+{
+                effect eNone;
+                PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Mountain Tombstone Strike Hit", "Mountain Tombstone Strike Miss");
+                if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
+                {
+                        ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, d6(2), DURATION_TYPE_PERMANENT);    
+                }
+}
+
 void main()
 {
         if (!PreManeuverCastCode())
@@ -35,14 +45,9 @@ void main()
         object oInitiator    = OBJECT_SELF;
         object oTarget       = PRCGetSpellTargetObject();
         struct maneuver move = EvaluateManeuver(oInitiator, oTarget);
-        effect eNone;
-        
+               
         if(move.bCanManeuver)
         {
-                DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Mountain Tombstone Strike Hit", "Mountain Tombstone Strike Miss"));
-                if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
-                {
-                        ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, d6(2), DURATION_TYPE_PERMANENT);    
-                }
+        	DelayCommand(0.0, TOBAttack(oTarget, oInitiator));
         }
 }

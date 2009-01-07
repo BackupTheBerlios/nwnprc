@@ -45,17 +45,20 @@ void main()
         
         if(move.bCanManeuver)
         {
-                //Normal attacks
-                DelayCommand(0.0, PerformAttackRound(oTarget, oInitiator, eNone));
-                
-                DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Dancing Mongoose Hit", "Dancing Mongoose Miss"));
-                
-                object oOffHand = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oInitiator);
-                
-                if(IPGetIsMeleeWeapon(oOffHand))
-                {
-                        DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Dancing Mongoose Hit", "Dancing Mongoose Miss", FALSE, OBJECT_INVALID, oOffHand, TRUE));
-                }
+    		object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
+    		object oItem2 = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oInitiator);
+    		effect eNone;
+    		
+		if (IPGetIsMeleeWeapon(oItem) && IPGetIsMeleeWeapon(oItem2))
+    		{
+    			// Perform two attacks, overriding either weapon just to make sure
+    			int nBonus = TOBSituationalAttackBonuses(oInitiator, DISCIPLINE_TIGER_CLAW);
+    			DelayCommand(0.0, PerformAttackRound(oTarget, oInitiator, eNone, 0.0, nBonus, 0, 0, FALSE, "Wolf Fang Strike Hit", "Wolf Fang Strike Miss"));
+    			DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, nBonus, 0, 0, "Wolf Fang Strike Hit", "Wolf Fang Strike Miss", FALSE, oItem));
+    			DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, nBonus, 0, 0, "Wolf Fang Strike Hit", "Wolf Fang Strike Miss", FALSE, oItem2));
+        	}
+        	else
+        		FloatingTextStringOnCreature("You must have two melee weapons equipped to use this maneuver", oInitiator, FALSE);
         }
 }
                         

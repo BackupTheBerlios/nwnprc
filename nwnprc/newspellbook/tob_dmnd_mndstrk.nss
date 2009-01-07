@@ -27,6 +27,20 @@
 #include "tob_movehook"
 #include "prc_alterations"
 
+void TOBAttack(object oTarget, object oInitiator)
+{
+    	effect eNone = EffectVisualEffect(VFX_IMP_BLINDDEAD_DN_CYAN);
+	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Mind Strike Hit", "Mind Strike Miss");
+	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
+    	{
+    		// Saving Throw
+    		if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (14 + GetAbilityModifier(ABILITY_STRENGTH, oInitiator))))
+    		{
+			ApplyAbilityDamage(oTarget, ABILITY_WISDOM, d4(), DURATION_TYPE_PERMANENT);    
+		}
+        }
+}
+
 void main()
 {
     if (!PreManeuverCastCode())
@@ -43,15 +57,6 @@ void main()
 
     if(move.bCanManeuver)
     {
-    	effect eNone = EffectVisualEffect(VFX_IMP_BLINDDEAD_DN_CYAN);
-	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Mind Strike Hit", "Mind Strike Miss"));
-	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
-    	{
-    		// Saving Throw
-    		if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (14 + GetAbilityModifier(ABILITY_STRENGTH, oInitiator))))
-    		{
-			ApplyAbilityDamage(oTarget, ABILITY_WISDOM, d4(), DURATION_TYPE_PERMANENT);    
-		}
-        }
+    	DelayCommand(0.0, TOBAttack(oTarget, oInitiator));
     }
 }

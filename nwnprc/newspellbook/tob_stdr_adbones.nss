@@ -33,6 +33,18 @@ you gain damage reduction 20/+5 for one round.
 #include "tob_movehook"
 #include "prc_alterations"
 
+void TOBAttack(object oTarget, object oInitiator)
+{
+                effect eNone;
+                PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, DAMAGE_TYPE_SLASHING, "Adamantine Bones Hit", "Adamantine Bones Miss");
+                
+                if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
+                {
+                        effect eResist = EffectDamageReduction(20, DAMAGE_POWER_PLUS_FIVE, 0);
+                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eResist, oInitiator, 6.0);
+                }
+}
+
 void main()
 {
         if (!PreManeuverCastCode())
@@ -49,13 +61,6 @@ void main()
                 
         if(move.bCanManeuver)
         {
-                effect eNone;
-                DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, DAMAGE_TYPE_SLASHING, "Adamantine Bones Hit", "Adamantine Bones Miss"));
-                
-                if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
-                {
-                        effect eResist = EffectDamageReduction(20, DAMAGE_POWER_PLUS_FIVE, 0);
-                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eResist, oInitiator, 6.0);
-                }
+        	DelayCommand(0.0, TOBAttack(oTarget, oInitiator));
         }
 }

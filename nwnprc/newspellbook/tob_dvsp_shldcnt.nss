@@ -26,6 +26,16 @@
 #include "tob_movehook"
 #include "prc_alterations"
 
+void TOBAttack(object oTarget, object oInitiator)
+{
+    	effect eNone = EffectVisualEffect(PSI_IMP_CONCUSSION_BLAST);
+	PerformAttack(oTarget, oInitiator, eNone, 0.0, -2, 0, 0, "Shield Counter Hit", "Shield Counter Miss");
+        if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
+        {
+		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(EffectAttackDecrease(20)), oTarget, 3.0);
+        }
+}
+
 void main()
 {
     if (!PreManeuverCastCode())
@@ -42,11 +52,6 @@ void main()
 
     if(move.bCanManeuver)
     {
-    	effect eNone = EffectVisualEffect(PSI_IMP_CONCUSSION_BLAST);
-	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, -2, 0, 0, "Shield Counter Hit", "Shield Counter Miss"));
-        if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
-        {
-		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(EffectAttackDecrease(20)), oTarget, 3.0);
-        }	
+    	DelayCommand(0.0, TOBAttack(oTarget, oInitiator));
     }
 }

@@ -27,6 +27,19 @@ of damage. Your attack also drops the  target's speed to 0 feet (for all movemen
 #include "tob_movehook"
 #include "prc_alterations"
 
+void TOBAttack(object oTarget, object oInitiator)
+{
+                effect eVis;
+                object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
+                PerformAttack(oTarget, oInitiator, eVis, 0.0, 0, d6(4), GetWeaponDamageType(oWeap), "Crushing Vise Hit", "Crushing Vise  Miss");
+                
+                if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
+                {
+                        effect eImmob = EffectEntangle();
+                        eImmob = ExtraordinaryEffect(eImmob);
+                }
+}
+
 void main()
 {
         if (!PreManeuverCastCode())
@@ -40,18 +53,10 @@ void main()
         object oInitiator    = OBJECT_SELF;
         object oTarget       = PRCGetSpellTargetObject();
         struct maneuver move = EvaluateManeuver(oInitiator, oTarget);
-        effect eVis;
-        
+                
         if(move.bCanManeuver)
         {
-                object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
-                DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eVis, 0.0, 0, d6(4), GetWeaponDamageType(oWeap), "Crushing Vise Hit", "Crushing Vise  Miss"));
-                
-                if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
-                {
-                        effect eImmob = EffectEntangle();
-                        eImmob = ExtraordinaryEffect(eImmob);
-                }
+        	DelayCommand(0.0, TOBAttack(oTarget, oInitiator));
         }
 }
                         

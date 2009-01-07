@@ -30,6 +30,23 @@
 #include "tob_movehook"
 #include "prc_alterations"
 
+void TOBAttack(object oTarget, object oInitiator, struct maneuver move)
+{
+    	effect eNone;
+	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Revitalizing Strike Hit", "Revitalizing Strike Miss");
+	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
+    	{
+    		if (GetAlignmentGoodEvil(oInitiator) != GetAlignmentGoodEvil(oTarget) || 
+    		    GetAlignmentLawChaos(oInitiator) != GetAlignmentLawChaos(oTarget))
+    		{
+    			int nHeal = d6(3) + min(move.nInitiatorLevel, 10);
+    			object oHeal = GetCrusaderHealTarget(oTarget, 10.0);
+			SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(nHeal), oHeal);
+			SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_HEALING_L_LAW), oHeal);
+        	}
+        }
+}
+
 void main()
 {
     if (!PreManeuverCastCode())
@@ -46,18 +63,6 @@ void main()
 
     if(move.bCanManeuver)
     {
-    	effect eNone;
-	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Revitalizing Strike Hit", "Revitalizing Strike Miss"));
-	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
-    	{
-    		if (GetAlignmentGoodEvil(oInitiator) != GetAlignmentGoodEvil(oTarget) || 
-    		    GetAlignmentLawChaos(oInitiator) != GetAlignmentLawChaos(oTarget))
-    		{
-    			int nHeal = d6(3) + min(move.nInitiatorLevel, 10);
-    			object oHeal = GetCrusaderHealTarget(oTarget, 10.0);
-			SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(nHeal), oHeal);
-			SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_HEALING_L_LAW), oHeal);
-        	}
-        }
+    	DelayCommand(0.0, TOBAttack(oTarget, oInitiator, move));
     }
 }

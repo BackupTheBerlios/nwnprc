@@ -27,6 +27,26 @@
 #include "tob_movehook"
 #include "prc_alterations"
 
+void TOBAttack(object oTarget, object oInitiator)
+{
+    	effect eNone;
+    	object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
+	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0,"Disarming Strike Hit", "Disarming Strike Miss");
+       
+        if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack") && GetIsCreatureDisarmable(oTarget))
+    	{
+    		int nAttack = GetAttackBonus(oTarget, oInitiator, oWeap) + d20();
+    		int nTargAttack = GetAttackBonus(oInitiator, oTarget, GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget)) + d20();
+    		
+    		if (nAttack >= nTargAttack)
+    		{
+    			// Drop the weapon
+    			AssignCommand(oTarget, ClearAllActions(TRUE));
+        		AssignCommand(oTarget, ActionPutDownItem(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget)));
+    		}
+    	}
+}
+
 void main()
 {
     if (!PreManeuverCastCode())
@@ -43,21 +63,7 @@ void main()
 
     if(move.bCanManeuver)
     {
-    	effect eNone;
-    	object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
-	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0,"Disarming Strike Hit", "Disarming Strike Miss"));
-       
-        if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack") && GetIsCreatureDisarmable(oTarget))
-    	{
-    		int nAttack = GetAttackBonus(oTarget, oInitiator, oWeap) + d20();
-    		int nTargAttack = GetAttackBonus(oInitiator, oTarget, GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget)) + d20();
-    		
-    		if (nAttack >= nTargAttack)
-    		{
-    			// Drop the weapon
-    			AssignCommand(oTarget, ClearAllActions(TRUE));
-        		AssignCommand(oTarget, ActionPutDownItem(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget)));
-    		}
-    	}
+    	DelayCommand(0.0, TOBAttack(oTarget, oInitiator));
+
     }
 }

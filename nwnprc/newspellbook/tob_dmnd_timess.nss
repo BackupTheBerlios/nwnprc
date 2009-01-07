@@ -48,6 +48,6 @@ void main()
         {
                 //Double DelayCommand(0.0, PerformAttackRound
                 DelayCommand(0.0, PerformAttackRound(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, FALSE, "Time Stands Still Hit", "Time Stands Still Miss", FALSE, FALSE, TRUE));                
-                DelayCommand(1.0, DelayCommand(0.0, PerformAttackRound(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, FALSE, "Time Stands Still Hit", "Time Stands Still Miss", FALSE, FALSE, TRUE)));
+                DelayCommand(1.0, PerformAttackRound(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, FALSE, "Time Stands Still Hit", "Time Stands Still Miss", FALSE, FALSE, TRUE));
         }
 }

@@ -52,7 +52,7 @@ void main()
         {
                 int nHit = 1;
         	int nPenalty = 0;
-                Owieowieowowow(oInitiator, oTarget, nHit, nPenalty);
+                DelayCommand(0.0, Owieowieowowow(oInitiator, oTarget, nHit, nPenalty));
         }
 }
 
@@ -61,7 +61,7 @@ void Owieowieowowow(object oInitiator, object oTarget, int nHit, int nPenalty)
         if(nHit == 1)
         {
         	effect eNone;
-                DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, nPenalty, 0, 0, "Avalanche of Blades Hit", "Avalanche of Blades Miss"));
+                PerformAttack(oTarget, oInitiator, eNone, 0.0, nPenalty, 0, 0, "Avalanche of Blades Hit", "Avalanche of Blades Miss");
                 
                 if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack")) nHit = 1;
                 
@@ -73,6 +73,6 @@ void Owieowieowowow(object oInitiator, object oTarget, int nHit, int nPenalty)
                 nPenalty -= 4;
                 
                 //Again! Again!
-                Owieowieowowow(oInitiator, oTarget, nHit, nPenalty);
+                DelayCommand(0.0, Owieowieowowow(oInitiator, oTarget, nHit, nPenalty));
         }
 }          

@@ -29,6 +29,26 @@
 #include "tob_movehook"
 #include "prc_alterations"
 
+void TOBAttack(object oTarget, object oInitiator)
+{
+	int nDamage = d6();
+    	int nDamageType = DAMAGE_TYPE_MAGICAL;
+    	
+    	effect eNone;
+	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, nDamage, nDamageType, "Clinging Shadow Strike Hit", "Clinging Shadow Strike Miss");
+	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
+    	{
+    		// Saving Throw
+    		if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (11 + GetAbilityModifier(ABILITY_WISDOM, oInitiator))))
+    		{
+			effect eLink = SupernaturalEffect(EffectVisualEffect(VFX_IMP_HEAD_EVIL));
+			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink, oTarget);
+			eLink = SupernaturalEffect(EffectMissChance(20));
+			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0);
+		}
+        }
+}
+
 void main()
 {
     if (!PreManeuverCastCode())
@@ -45,21 +65,6 @@ void main()
 
     if(move.bCanManeuver)
     {
-    	int nDamage = d6();
-    	int nDamageType = DAMAGE_TYPE_MAGICAL;
-    	
-    	effect eNone;
-	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, nDamage, nDamageType, "Clinging Shadow Strike Hit", "Clinging Shadow Strike Miss"));
-	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
-    	{
-    		// Saving Throw
-    		if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (11 + GetAbilityModifier(ABILITY_WISDOM, oInitiator))))
-    		{
-			effect eLink = SupernaturalEffect(EffectVisualEffect(VFX_IMP_HEAD_EVIL));
-			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink, oTarget);
-			eLink = SupernaturalEffect(EffectMissChance(20));
-			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0);
-		}
-        }
+    	DelayCommand(0.0, TOBAttack(oTarget, oInitiator));
     }
 }

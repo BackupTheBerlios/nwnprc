@@ -30,6 +30,30 @@
 #include "tob_movehook"
 #include "prc_alterations"
 
+void TOBAttack(object oTarget, object oInitiator)
+{
+    	effect eNone;
+	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Flanking Maneuver Hit", "Flanking Maneuver Miss");
+	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack") && GetIsFlanked(oTarget, oInitiator))
+    	{
+		location lTarget = GetLocation(oTarget);
+		// Use the function to get the closest creature as a target
+        	object oAreaTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+        	while(GetIsObjectValid(oAreaTarget))
+        	{
+        	    // Get Allies, make sure flanking
+        	    if(GetIsFriend(oAreaTarget, oInitiator) && GetIsFlanked(oTarget, oAreaTarget))
+        	    {
+        	    	// The free attack
+			PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Flanking Maneuver Hit", "Flanking Maneuver Miss");
+        	    }
+	
+        	    //Select the next target within the spell shape.
+        	    oAreaTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+        	}
+        }
+}
+
 void main()
 {
     if (!PreManeuverCastCode())
@@ -46,25 +70,6 @@ void main()
 
     if(move.bCanManeuver)
     {
-    	effect eNone;
-	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Flanking Maneuver Hit", "Flanking Maneuver Miss"));
-	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack") && GetIsFlanked(oTarget, oInitiator))
-    	{
-		location lTarget = GetLocation(oTarget);
-		// Use the function to get the closest creature as a target
-        	object oAreaTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lTarget, TRUE, OBJECT_TYPE_CREATURE);
-        	while(GetIsObjectValid(oAreaTarget))
-        	{
-        	    // Get Allies, make sure flanking
-        	    if(GetIsFriend(oAreaTarget, oInitiator) && GetIsFlanked(oTarget, oAreaTarget))
-        	    {
-        	    	// The free attack
-			DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Flanking Maneuver Hit", "Flanking Maneuver Miss"));
-        	    }
-	
-        	    //Select the next target within the spell shape.
-        	    oAreaTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lTarget, TRUE, OBJECT_TYPE_CREATURE);
-        	}
-        }
+    	DelayCommand(0.0, TOBAttack(oTarget, oInitiator));
     }
 }

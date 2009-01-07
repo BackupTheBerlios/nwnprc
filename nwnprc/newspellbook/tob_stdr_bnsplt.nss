@@ -27,6 +27,16 @@
 #include "tob_movehook"
 #include "prc_alterations"
 
+void TOBAttack(object oTarget, object oInitiator)
+{
+    	effect eNone = EffectVisualEffect(PSI_IMP_CONCUSSION_BLAST);
+	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Bone Splitting Strike Hit", "Bone Splitting Strike Miss");
+	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
+    	{
+		ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, 2, DURATION_TYPE_PERMANENT);    
+        }
+}
+
 void main()
 {
     if (!PreManeuverCastCode())
@@ -43,11 +53,6 @@ void main()
 
     if(move.bCanManeuver)
     {
-    	effect eNone = EffectVisualEffect(PSI_IMP_CONCUSSION_BLAST);
-	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Bone Splitting Strike Hit", "Bone Splitting Strike Miss"));
-	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
-    	{
-		ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, 2, DURATION_TYPE_PERMANENT);    
-        }
+    	DelayCommand(0.0, TOBAttack(oTarget, oInitiator));
     }
 }

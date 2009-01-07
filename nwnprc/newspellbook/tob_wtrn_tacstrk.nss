@@ -28,25 +28,11 @@
 #include "tob_movehook"
 #include "prc_alterations"
 
-void main()
+void TOBAttack(object oTarget, object oInitiator)
 {
-    if (!PreManeuverCastCode())
-    {
-    // If code within the PreManeuverCastCode (i.e. UMD) reports FALSE, do not run this spell
-        return;
-    }
-
-// End of Spell Cast Hook
-
-    object oInitiator    = OBJECT_SELF;
-    object oTarget       = PRCGetSpellTargetObject();
-    struct maneuver move = EvaluateManeuver(oInitiator, oTarget);
-
-    if(move.bCanManeuver)
-    {
     	effect eNone;
 	object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
-	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(2), GetWeaponDamageType(oWeap), "Tactical Strike Hit", "Tactical Strike Miss"));
+	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(2), GetWeaponDamageType(oWeap), "Tactical Strike Hit", "Tactical Strike Miss");
        
         if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
     	{
@@ -67,5 +53,24 @@ void main()
 		    oAreaTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
         	}// end while - Target loop
     	}
+}
+
+void main()
+{
+    if (!PreManeuverCastCode())
+    {
+    // If code within the PreManeuverCastCode (i.e. UMD) reports FALSE, do not run this spell
+        return;
+    }
+
+// End of Spell Cast Hook
+
+    object oInitiator    = OBJECT_SELF;
+    object oTarget       = PRCGetSpellTargetObject();
+    struct maneuver move = EvaluateManeuver(oInitiator, oTarget);
+
+    if(move.bCanManeuver)
+    {
+	DelayCommand(0.0, TOBAttack(oTarget, oInitiator));
     }
 }

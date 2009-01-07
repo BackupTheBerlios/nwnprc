@@ -30,6 +30,21 @@
 #include "tob_movehook"
 #include "prc_alterations"
 
+void TOBAttack(object oTarget, object oInitiator)
+{
+    	effect eNone;
+    	
+	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(4), 0, "Strike of the Broken Shield Hit", "Strike of the Broken Shield Miss");
+	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
+    	{
+    		// Saving Throw
+    		if (!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, (14 + GetAbilityModifier(ABILITY_STRENGTH, oInitiator))))
+    		{
+			AssignCommand(oTarget, ClearAllActions(TRUE));
+		}
+        }
+}
+
 void main()
 {
     if (!PreManeuverCastCode())
@@ -46,16 +61,6 @@ void main()
 
     if(move.bCanManeuver)
     {
-    	effect eNone;
-    	
-	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(4), 0, "Strike of the Broken Shield Hit", "Strike of the Broken Shield Miss"));
-	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
-    	{
-    		// Saving Throw
-    		if (!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, (14 + GetAbilityModifier(ABILITY_STRENGTH, oInitiator))))
-    		{
-			AssignCommand(oTarget, ClearAllActions(TRUE));
-		}
-        }
+    	DelayCommand(0.0, TOBAttack(oTarget, oInitiator));
     }
 }

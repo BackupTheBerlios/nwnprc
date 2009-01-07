@@ -18,7 +18,7 @@ You leap upon your opponent, rending and tearing with your weapons in an attempt
 with a brutally overwhelming assault. You grab onto your foe as you slash and hack at his
 neck, face, and other vulnerable areas.
 
-To use this maneuver, you muste be adjacent to your intended target. As part of this maneuver
+To use this maneuver, you must be adjacent to your intended target. As part of this maneuver
 make a Jump check with a DC equal to your opponent's AC. If the check succeeds, you can then
 make a single melee attack afainst your foe, also as part of this maneuver. The target is 
 considered flat-footed against this attack. If your attack deals damage, your target must 
@@ -35,31 +35,13 @@ expended.
 #include "tob_movehook"
 #include "prc_alterations"
 
-void main()
+void TOBAttack(object oTarget, object oInitiator)
 {
-        if (!PreManeuverCastCode())
-        {
-                // If code within the PreManeuverCastCode (i.e. UMD) reports FALSE, do not run this spell
-                return;
-        }
-        
-        // End of Spell Cast Hook
-        
-        object oInitiator    = OBJECT_SELF;
-        object oTarget       = PRCGetSpellTargetObject();
-        struct maneuver move = EvaluateManeuver(oInitiator, oTarget);
-        AssignCommand(oTarget, ClearAllActions(TRUE));
-        int nArmor           = GetAC(oTarget);
-        effect eNone = EffectVisualEffect(VFX_COM_BLOOD_CRT_RED);
-        object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
-        
-        if(move.bCanManeuver)
-        {
-                if(GetIsSkillSuccessful(oInitiator, SKILL_JUMP, nArmor))
-                {
+                        effect eNone = EffectVisualEffect(VFX_COM_BLOOD_CRT_RED);
+        		object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
                         int nHP = GetCurrentHitPoints(oTarget);
                         int nBonus = TOBSituationalAttackBonuses(oInitiator, DISCIPLINE_TIGER_CLAW);
-                        DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, nBonus, 0, 0, "Feral Death Blow Hit", "Feral Death Blow Miss"));
+                        PerformAttack(oTarget, oInitiator, eNone, 0.0, nBonus, 0, 0, "Feral Death Blow Hit", "Feral Death Blow Miss");
                         
                         if(GetCurrentHitPoints(oTarget) < nHP)
                         {
@@ -77,9 +59,34 @@ void main()
                                         ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oTarget);
                                 }
                         }
+}
+
+void main()
+{
+        if (!PreManeuverCastCode())
+        {
+                // If code within the PreManeuverCastCode (i.e. UMD) reports FALSE, do not run this spell
+                return;
+        }
+        
+        // End of Spell Cast Hook
+        
+        object oInitiator    = OBJECT_SELF;
+        object oTarget       = PRCGetSpellTargetObject();
+        struct maneuver move = EvaluateManeuver(oInitiator, oTarget);
+        AssignCommand(oTarget, ClearAllActions(TRUE));
+        int nArmor           = GetAC(oTarget);
+        effect eNone;
+        
+        if(move.bCanManeuver)
+        {
+                if(GetIsSkillSuccessful(oInitiator, SKILL_JUMP, nArmor))
+                {
+			DelayCommand(0.0, TOBAttack(oTarget, oInitiator));
                 }
                 
-                else DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Hit", "Miss"));
+                else 
+                	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Hit", "Miss"));
         }
 }
                                      

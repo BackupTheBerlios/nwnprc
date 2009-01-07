@@ -28,6 +28,18 @@
 #include "tob_movehook"
 #include "prc_alterations"
 
+void TOBAttack(object oTarget, object oInitiator)
+{
+    	effect eNone = EffectVisualEffect(PSI_IMP_CONCUSSION_BLAST);
+    	object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
+	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(2), GetWeaponDamageType(oWeap), "Entangling Blade Hit", "Entangling Blade Miss");
+	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
+    	{
+		effect eLink = ExtraordinaryEffect(EffectMovementSpeedDecrease(66));
+		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0);
+        }
+}
+
 void main()
 {
     if (!PreManeuverCastCode())
@@ -44,13 +56,6 @@ void main()
 
     if(move.bCanManeuver)
     {
-    	effect eNone = EffectVisualEffect(PSI_IMP_CONCUSSION_BLAST);
-    	object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oInitiator);
-	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, d6(2), GetWeaponDamageType(oWeap), "Entangling Blade Hit", "Entangling Blade Miss"));
-	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
-    	{
-		effect eLink = ExtraordinaryEffect(EffectMovementSpeedDecrease(66));
-		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0);
-        }	
+    	DelayCommand(0.0, TOBAttack(oTarget, oInitiator));
     }
 }

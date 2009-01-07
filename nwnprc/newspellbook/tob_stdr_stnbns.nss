@@ -27,6 +27,19 @@
 #include "tob_movehook"
 #include "prc_alterations"
 
+void TOBAttack(object oTarget, object oInitiator)
+{
+    	effect eNone;
+	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Stone Bones Hit", "Stone Bones Miss");
+	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
+    	{
+        	effect eLink =                          EffectDamageReduction(5, DAMAGE_POWER_PLUS_FIVE);
+        	       eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_ROOTED_TO_SPOT));
+		       eLink = ExtraordinaryEffect(eLink);
+        	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oInitiator, 6.0);
+        }
+}
+
 void main()
 {
     if (!PreManeuverCastCode())
@@ -43,14 +56,6 @@ void main()
 
     if(move.bCanManeuver)
     {
-    	effect eNone;
-	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Stone Bones Hit", "Stone Bones Miss"));
-	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
-    	{
-        	effect eLink =                          EffectDamageReduction(5, DAMAGE_POWER_PLUS_FIVE);
-        	       eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_ROOTED_TO_SPOT));
-		       eLink = ExtraordinaryEffect(eLink);
-        	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oInitiator, 6.0);
-        }
+    	DelayCommand(0.0, TOBAttack(oTarget, oInitiator));
     }
 }

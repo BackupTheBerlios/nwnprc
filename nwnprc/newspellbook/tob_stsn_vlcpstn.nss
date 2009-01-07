@@ -29,6 +29,18 @@
 #include "prc_alterations"
 #include "spinc_trans"
 
+void TOBAttack(object oTarget, object oInitiator)
+{
+    	effect eNone;
+	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Clever Positioning Hit", "Clever Positioning Miss");
+       
+        if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack") && PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, 12 + GetAbilityModifier(ABILITY_DEXTERITY, oInitiator),SAVING_THROW_TYPE_NONE))
+    	{
+    		DoTransposition(TRUE, FALSE);
+    		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_WIND), oTarget);
+    	}
+}
+
 void main()
 {
     if (!PreManeuverCastCode())
@@ -45,13 +57,6 @@ void main()
 
     if(move.bCanManeuver)
     {
-    	effect eNone;
-	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Clever Positioning Hit", "Clever Positioning Miss"));
-       
-        if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack") && PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, 12 + GetAbilityModifier(ABILITY_DEXTERITY, oInitiator),SAVING_THROW_TYPE_NONE))
-    	{
-    		DoTransposition(TRUE, FALSE);
-    		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_WIND), oTarget);
-    	}
+	DelayCommand(0.0, TOBAttack(oTarget, oInitiator));
     }
 }

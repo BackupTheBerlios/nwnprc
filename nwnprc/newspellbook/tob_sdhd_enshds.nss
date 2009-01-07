@@ -32,9 +32,29 @@ saving throw.
 This maneuver is a supernatural ability.
 
 */
+
 #include "tob_inc_move"
 #include "tob_movehook"
 #include "prc_alterations"
+
+void TOBAttack(object oTarget, object oInitiator)
+{
+		effect eNone;
+                
+                PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Enervating Shadow Strike Hit", "Enervating Shadow Strike Miss");
+                
+                if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
+                {
+                        if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (18 + GetAbilityModifier(ABILITY_WISDOM, oInitiator))))
+                        {
+                                int nLevels = d4();
+                                
+                                SPApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectNegativeLevel(nLevels), oTarget);
+                                SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(5 * nLevels), oInitiator);
+                        }
+                }
+
+}
 
 void main()
 {
@@ -52,20 +72,7 @@ void main()
         
         if(move.bCanManeuver)
         {
-                effect eNone;
-                
-                DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Enervating Shadow Strike Hit", "Enervating Shadow Strike Miss"));
-                
-                if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
-                {
-                        if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (18 + GetAbilityModifier(ABILITY_WISDOM, oInitiator))))
-                        {
-                                int nLevels = d4();
-                                
-                                SPApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectNegativeLevel(nLevels), oTarget);
-                                SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(5 * nLevels), oInitiator);
-                        }
-                }
+                DelayCommand(0.0, TOBAttack(oTarget, oInitiator));
         }
 }
                         

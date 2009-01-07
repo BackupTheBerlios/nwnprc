@@ -24,6 +24,22 @@ to 2 points, although the foe still takes full normal melee damage.
 #include "tob_movehook"
 #include "prc_alterations"
 
+void TOBAttack(object oTarget, object oInitiator)
+{
+                effect eNone;
+                
+                PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Bloodletting Strike Hit", "Bloodletting Strike Miss");
+                
+                if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
+                {
+                        int nDam = 4;
+                        
+                        if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (15 + GetAbilityModifier(ABILITY_WISDOM, oInitiator)))) nDam = 2;
+                        
+                        ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDam, DURATION_TYPE_TEMPORARY, TRUE, -1.0);
+                }
+}
+
 void main()
 {
         if (!PreManeuverCastCode())
@@ -41,18 +57,7 @@ void main()
         
         if(move.bCanManeuver)
         {
-                effect eNone;
-                
-                DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Bloodletting Strike Hit", "Bloodletting Strike Miss"));
-                
-                if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
-                {
-                        int nDam = 4;
-                        
-                        if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (15 + GetAbilityModifier(ABILITY_WISDOM, oInitiator)))) nDam = 2;
-                        
-                        ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDam, DURATION_TYPE_TEMPORARY, TRUE, -1.0);
-                }
+                DelayCommand(0.0, TOBAttack(oTarget, oInitiator));
         }
 }
 

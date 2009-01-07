@@ -29,6 +29,28 @@ how many successful attacks you make in this round.
 #include "tob_movehook"
 #include "prc_alterations"
 
+void TOBAttack(object oTarget, object oInitiator)
+{
+        	effect eNone;
+                PerformAttackRound(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, FALSE, "Scything Blade Hit", "Scything Blade Miss");
+                if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
+                {
+                        location lLoc = GetLocation(oInitiator);
+                        object oTarget2 = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(15.0), lLoc, TRUE, OBJECT_TYPE_CREATURE);
+                        
+                        while(GetIsObjectValid(oTarget2))
+                        {
+                                if(!GetIsReactionTypeFriendly(oTarget2) && oTarget2 != oInitiator)
+                                {
+                                        PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Scything Blade Hit", "Scything Blade Miss");
+                                        break;
+                                }
+                                
+                                else oTarget2 = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(15.0), lLoc, TRUE, OBJECT_TYPE_CREATURE);
+                        }
+                }
+}
+
 void main()
 {
         if (!PreManeuverCastCode())
@@ -46,24 +68,7 @@ void main()
         
         if(move.bCanManeuver)
         {
-        	effect eNone;
-                DelayCommand(0.0, PerformAttackRound(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, FALSE, "Scything Blade Hit", "Scything Blade Miss"));
-                if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
-                {
-                        location lLoc = GetLocation(oInitiator);
-                        object oTarget2 = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(15.0), lLoc, TRUE, OBJECT_TYPE_CREATURE);
-                        
-                        while(GetIsObjectValid(oTarget2))
-                        {
-                                if(!GetIsReactionTypeFriendly(oTarget2) && oTarget2 != oInitiator)
-                                {
-                                        DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Scything Blade Hit", "Scything Blade Miss"));
-                                        break;
-                                }
-                                
-                                else oTarget2 = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(15.0), lLoc, TRUE, OBJECT_TYPE_CREATURE);
-                        }
-                }
+        	DelayCommand(0.0, TOBAttack(oTarget, oInitiator));
         }
 }
                                 

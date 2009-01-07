@@ -59,25 +59,11 @@ float DoDeathmarkArea(object oTarget)
 	return fDist;
 }
 
-void main()
+void TOBAttack(object oTarget, object oInitiator)
 {
-    if (!PreManeuverCastCode())
-    {
-    // If code within the PreManeuverCastCode (i.e. UMD) reports FALSE, do not run this spell
-        return;
-    }
-
-// End of Spell Cast Hook
-
-    object oInitiator    = OBJECT_SELF;
-    object oTarget       = PRCGetSpellTargetObject();
-    struct maneuver move = EvaluateManeuver(oInitiator, oTarget);
-
-    if(move.bCanManeuver)
-    {
     	effect eNone;
     	
-	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Deathmark Hit", "Deathmark Miss"));
+	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Deathmark Hit", "Deathmark Miss");
 	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
     	{
     		location lTarget = GetLocation(oTarget);
@@ -103,5 +89,24 @@ void main()
         		oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, FeetToMeters(fDist), GetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
     		}
         }
+}
+
+void main()
+{
+    if (!PreManeuverCastCode())
+    {
+    // If code within the PreManeuverCastCode (i.e. UMD) reports FALSE, do not run this spell
+        return;
+    }
+
+// End of Spell Cast Hook
+
+    object oInitiator    = OBJECT_SELF;
+    object oTarget       = PRCGetSpellTargetObject();
+    struct maneuver move = EvaluateManeuver(oInitiator, oTarget);
+
+    if(move.bCanManeuver)
+    {
+    	DelayCommand(0.0, TOBAttack(oTarget, oInitiator));
     }
 }

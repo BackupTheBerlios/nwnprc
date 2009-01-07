@@ -25,6 +25,23 @@ or be unable to take any actions for 1 round.
 #include "tob_movehook"
 #include "prc_alterations"
 
+void TOBAttack(object oTarget, object oInitiator)
+{
+        	effect eNone;
+                PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Disrupting Blow Hit", "Disrupting Blow Miss");
+                
+                if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
+                {
+                        int nDC = 15 + GetAbilityModifier(ABILITY_STRENGTH, oInitiator);
+                        
+                        // Saving Throw
+                        if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC))
+                        {
+                                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectDazed(), oTarget, RoundsToSeconds(1));
+                        }
+                }
+}
+
 void main()
 {
         if (!PreManeuverCastCode())
@@ -40,19 +57,7 @@ void main()
         
         if(move.bCanManeuver)
         {
-        	effect eNone;
-                DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Disrupting Blow Hit", "Disrupting Blow Miss"));
-                
-                if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
-                {
-                        int nDC = 15 + GetAbilityModifier(ABILITY_STRENGTH, oInitiator);
-                        
-                        // Saving Throw
-                        if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC))
-                        {
-                                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectDazed(), oTarget, RoundsToSeconds(1));
-                        }
-                }
+        	DelayCommand(0.0, TOBAttack(oTarget, oInitiator));
         }
 }
                                 

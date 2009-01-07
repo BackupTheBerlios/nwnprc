@@ -27,6 +27,19 @@
 #include "tob_movehook"
 #include "prc_alterations"
 
+void TOBAttack(object oTarget, object oInitiator)
+{
+	effect eNone;
+	PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Leading the Attack Hit", "Leading the Attack Miss");
+	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
+    	{
+		effect eLink = ExtraordinaryEffect(EffectVisualEffect(PSI_IMP_CONCUSSION_BLAST));
+		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink, oTarget);
+		eLink = ExtraordinaryEffect(EffectACDecrease(4));
+		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0);
+        }
+}
+
 void main()
 {
     if (!PreManeuverCastCode())
@@ -43,14 +56,6 @@ void main()
 
     if(move.bCanManeuver)
     {
-	effect eNone;
-	DelayCommand(0.0, PerformAttack(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, "Leading the Attack Hit", "Leading the Attack Miss"));
-	if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
-    	{
-		effect eLink = ExtraordinaryEffect(EffectVisualEffect(PSI_IMP_CONCUSSION_BLAST));
-		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink, oTarget);
-		eLink = ExtraordinaryEffect(EffectACDecrease(4));
-		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0);
-        }
+	DelayCommand(0.0, TOBAttack(oTarget, oInitiator));
     }
 }

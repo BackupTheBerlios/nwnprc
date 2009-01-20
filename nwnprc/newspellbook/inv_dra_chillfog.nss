@@ -20,6 +20,8 @@
 #include "inv_inc_invfunc"
 #include "inv_invokehook"
 
+void DispelMonitor(object oAoE);
+
 void main()
 {
     if (!PreInvocationCastCode())
@@ -52,5 +54,32 @@ void main()
     
     SetLocalInt(OBJECT_SELF, "ChillingFogLock", TRUE);
     DelayCommand(TurnsToSeconds(nDuration), DeleteLocalInt(OBJECT_SELF, "ChillingFogLock"));
+    
+        // Get an object reference to the newly created AoE
+        object oAoE = GetFirstObjectInShape(SHAPE_SPHERE, 1.0f, lTarget, FALSE, OBJECT_TYPE_AREA_OF_EFFECT);
+        while(GetIsObjectValid(oAoE))
+        {
+            // Test if we found the correct AoE
+            if(GetTag(oAoE) == Get2DACache("vfx_persistent", "LABEL", INVOKE_AOE_CHILLFOG))
+            {
+                break;
+            }
+            // Didn't find, get next
+            oAoE = GetNextObjectInShape(SHAPE_SPHERE, 1.0f, lTarget, FALSE, OBJECT_TYPE_AREA_OF_EFFECT);
+        }    
+    
+    DispelMonitor(oAoE);
+}
 
+void DispelMonitor(object oAoE)
+{
+    // Has the power ended since the last beat, or does the duration run out now
+    if(GetIsObjectValid(oAoE))
+    {
+        if(DEBUG) DoDebug("inv_dra_chillfog: The lock effect has been removed");
+    	DeleteLocalInt(OBJECT_SELF, "ChillingFogLock");
+
+    }
+    else
+       DelayCommand(6.0f, DispelMonitor(oAoE));
 }

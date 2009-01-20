@@ -4,6 +4,8 @@
 #include "inv_inc_invfunc"
 #include "inv_invokehook"
 
+void DispelMonitor(object oCaster, object oTarget, int nSpellID);
+
 void main()
 {
     object oCaster = OBJECT_SELF;
@@ -52,4 +54,19 @@ void main()
     }
 
     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+    DispelMonitor(oCaster, oTarget, PRCGetSpellId());
+}
+
+void DispelMonitor(object oCaster, object oTarget, int nSpellID)
+{
+    // Has the power ended since the last beat, or does the duration run out now
+    if(PRCGetDelayedSpellEffectsExpired(nSpellID, oTarget, oCaster))
+    {
+        if(DEBUG) DoDebug("inv_dra_endexp: The protection effect has been removed");
+        array_delete(oCaster, "BreathProtected");
+    	DeleteLocalInt(oCaster, "DragonWard");
+
+    }
+    else
+       DelayCommand(6.0f, DispelMonitor(oCaster, oTarget, nSpellID));
 }

@@ -24,6 +24,9 @@ void PrcFeats(object oPC)
     if(DEBUG) DoDebug("prc_rest: Evaluating PC feats for " + DebugObject2Str(oPC));
 
     SetLocalInt(oPC,"ONREST",1);
+    object oSkin = GetPCSkin(oPC);
+    ScrubPCSkin(oPC, oSkin);
+    DeletePRCLocalInts(oSkin);    
     DeletePRCLocalIntsT(oPC);
     EvalPRCFeats(oPC);
     if (GetLevelByClass(CLASS_TYPE_WEREWOLF, oPC) > 0)

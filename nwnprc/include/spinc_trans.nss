@@ -65,7 +65,9 @@ void Transpose(object o1, object o2)
 
     // Swap the creatures.
     AssignCommand(o2, JumpToLocation(loc1));
+    DelayCommand(0.1, AssignCommand(o2, ClearAllActions(TRUE)));
     AssignCommand(o1, JumpToLocation(loc2));
+    DelayCommand(0.1, AssignCommand(o1, ClearAllActions(TRUE)));
 
     DelayCommand(0.1, TransposeVFX(o1, o2));
 }

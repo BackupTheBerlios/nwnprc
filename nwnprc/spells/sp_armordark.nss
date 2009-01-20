@@ -47,6 +47,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
        eLinks=EffectLinkEffects(eLinks,eTurn);
     }
 
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLinks, oTarget, fDuration,TRUE,-1,nCasterLevel);
     return TRUE;    //return TRUE if spell charges should be decremented
 }
 

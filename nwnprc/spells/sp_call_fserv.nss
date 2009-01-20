@@ -72,8 +72,27 @@ void main()
                  //Set new max henchmen high
                  SetMaxHenchmen(150);
                  
+                 // max number is 2HD worth of celestials per caster level
+                 int nMaxHD = PRCGetCasterLevel(oPC) * 2;
+                 // check for existing amoebas ^H^H^H^H^H^H^H lanton archons
+                 int nFluffBalls = 0;
+                 object oFluffBall = GetFirstFactionMember(oPC, FALSE);
+                 while (GetIsObjectValid(oFluffBall))
+                 {
+                     if (GetTag(oFluffBall) == "Archon")
+                         nFluffBalls++;// it's an archon
+                     oFluffBall = GetNextFactionMember(oPC, FALSE);
+                 }
+                 // modify count variable if too high
+                 if (nFluffBalls + nCounter > nMaxHD)
+                     nCounter = nMaxHD - nFluffBalls;
+                 else if (nFluffBalls + nCounter == nMaxHD) // none to summon, then exit with helpful message
+                 {
+                     FloatingTextStringOnCreature("You already have "+IntToString(nFluffBalls + nCounter)+"HD out of "+IntToString(nMaxHD)+"HD lantern archons.", oPC);
+                     return;
+                 }
+                 FloatingTextStringOnCreature("Currently have "+IntToString(nFluffBalls + nCounter)+"HD out of "+IntToString(nMaxHD)+"HD lantern archons.", oPC);
                  SummonLoop(nCounter, lLoc, oPC);
-                 
                  //Restore original max henchmen                 
                  SetMaxHenchmen(nMax);
          }
@@ -84,17 +103,15 @@ void main()
 
 void SummonLoop(int nCounter, location lLoc, object oPC)
 {
-        while(nCounter > 0)
-        {
-                //Create appropriate Ghoul henchman
-                object oArchon = CreateObject(OBJECT_TYPE_CREATURE, "nw_s_clantern", lLoc, TRUE, "Archon" + IntToString(nCounter)); 
-                
-                //Make henchman
-                AddHenchman(oPC, oArchon);
-                
-                nCounter--;
-                SummonLoop(nCounter, lLoc, oPC);
-        }
+    int i;
+    for(i = 0; i < nCounter; i++)
+    {
+        //Create appropriate Ghoul henchman
+        object oArchon = CreateObject(OBJECT_TYPE_CREATURE, "nw_s_clantern", lLoc, TRUE, "Archon"); 
+        
+        //Make henchman
+        AddHenchman(oPC, oArchon);
+    }
 }
         
         

@@ -54,36 +54,31 @@ void main()
     // Times up, apply the slay to their primary weapon
     if (fApplyDATime <= 0.0)
     {
-        object oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
+        object oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
                         
-        switch (GetBaseItemType(oWeapon))
-        {       
-                // FROM THE PNP rules (DM guide, must be a melee weapon)
-                case BASE_ITEM_SHORTBOW:
-                case BASE_ITEM_LONGBOW:
-                case BASE_ITEM_LIGHTCROSSBOW:
-                case BASE_ITEM_HEAVYCROSSBOW:
-                case BASE_ITEM_SLING:
-                {
-                        if(GetLevelByClass(CLASS_TYPE_JUSTICEWW, oPC) < 10)
-                        {
-                                SendMessageToPC(oPC,"You do not have a proper melee weapon for the death attack");
-                                return;
-                                break;
-                        }
-                }
-                
-                // Unarmed grab the glove, if no glove no luck
-                case BASE_ITEM_INVALID:
-                oWeapon=GetItemInSlot(INVENTORY_SLOT_ARMS);
-                break;
-        }
+        if (GetBaseItemType(oWeapon) == BASE_ITEM_SHORTBOW ||
+            GetBaseItemType(oWeapon) == BASE_ITEM_LONGBOW ||
+            GetBaseItemType(oWeapon) == BASE_ITEM_LIGHTCROSSBOW ||
+            GetBaseItemType(oWeapon) == BASE_ITEM_HEAVYCROSSBOW ||
+            GetBaseItemType(oWeapon) == BASE_ITEM_SLING)
+	{
+		if(GetLevelByClass(CLASS_TYPE_JUSTICEWW, oPC) < 10)
+		{
+			SendMessageToPC(oPC,"You cannot use a ranged death attack.");
+			return;
+		}
+	}            
         
+        if (GetBaseItemType(oWeapon) == BASE_ITEM_INVALID)        
+	{
+                oWeapon = GetItemInSlot(INVENTORY_SLOT_ARMS);
+	}
+       
         // if we got something add the on hit slay racial type property to it
         // for 3 rounds
-        if (GetIsObjectValid(oWeapon))
+        if (GetIsObjectValid(oWeapon) || GetWeaponRanged(oWeapon))
         {
-            int nSaveDC = 10 + GetLevelByClass(CLASS_TYPE_BFZ,oPC) + GetLevelByClass(CLASS_TYPE_ASSASSIN,oPC) + GetLevelByClass(CLASS_TYPE_SHADOWLORD,oPC) + GetAbilityModifier(ABILITY_INTELLIGENCE,oPC)+ GetLevelByClass(CLASS_TYPE_JUSTICEWW,oPC);
+            int nSaveDC = 10 + GetLevelByClass(CLASS_TYPE_BFZ, oPC) + GetLevelByClass(CLASS_TYPE_ASSASSIN, oPC) + GetLevelByClass(CLASS_TYPE_SHADOWLORD, oPC) + GetAbilityModifier(ABILITY_INTELLIGENCE, oPC) + GetLevelByClass(CLASS_TYPE_JUSTICEWW, oPC);
             // Saves are capped at 70
             if (nSaveDC > 70)
                 nSaveDC = 70;
@@ -95,7 +90,7 @@ void main()
         }
         else
         {
-            FloatingTextStringOnCreature("You do not have a proper melee weapon for the death attack",OBJECT_SELF);
+            FloatingTextStringOnCreature("You do not have a proper melee weapon for the death attack", oPC);
             return;
         }
     }
@@ -103,7 +98,7 @@ void main()
     {
         SendMessageToPC(oPC,"Your are still studying your target wait "+IntToString(FloatToInt(fApplyDATime))+ " seconds before you can perform the death attack");
         // Run more heartbeats
-        DelayCommand(6.0,ExecuteScript("prc_assn_da_hb",oPC));
+        DelayCommand(6.0,ExecuteScript("prc_assn_da_hb", oPC));
     }
     return;
 }

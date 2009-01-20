@@ -19038,6 +19038,17 @@ Use: Selected</entry>
 Prerequisites: Ruby Knight Vindicator 5.
 Specifics: You gain a bonus to Hide equal to the Armour Check Penalty of the armour that you wear.
 Use: Automatic</entry>
+<entry id="49963" lang="en" sex="m">Fog Cloud</entry>
+<entry id="49964" lang="en" sex="m">School: Conjuration
+Caster Level:  Drd 2, Sor/Wiz 2
+Components: V, S, M
+Range: Medium (100 ft. + 10 ft./level)
+Effect: Fog spreads in 20-ft. radius, 20 ft. high
+Duration: 10 min/level
+Saving Throw: No
+Spell Resistance: No
+
+A bank of fog billows out from the point you designate. The fog obscures all sight, including darkvision, beyond 5 feet. A creature within 5 feet has concealment (attacks have a 20% miss chance). Creatures farther away have total concealment (50%).</entry>
   <entry id="49999" lang="en" sex="m">**** 50,000 - 50,500 reserved for Race Pack Feats ****</entry>
   <entry id="50000" lang="en" sex="m">Light Sensitivity</entry>
   <entry id="50001" lang="en" sex="m">Type of Feat: Racial

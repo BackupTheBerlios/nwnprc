@@ -204,12 +204,14 @@ void ScryMain(object oPC, object oTarget)
     	if (PRCDoResistSpell(oPC, oTarget, nCasterLevel)) 
     	{
     		FloatingTextStringOnCreature(GetName(oTarget) + " made Spell Resistance check vs Scrying", oPC, FALSE);
+    		DoScryEnd(oPC, oCopy);
     		return;
     	}
     	// Save
     	if (PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS)) 
     	{
     		FloatingTextStringOnCreature(GetName(oTarget) + " saved vs Scrying", oPC, FALSE);
+    		DoScryEnd(oPC, oCopy);
     		return;
     	}
     }

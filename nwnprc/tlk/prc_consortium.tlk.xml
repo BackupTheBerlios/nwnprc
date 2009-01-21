@@ -19038,8 +19038,8 @@ Use: Selected</entry>
 Prerequisites: Ruby Knight Vindicator 5.
 Specifics: You gain a bonus to Hide equal to the Armour Check Penalty of the armour that you wear.
 Use: Automatic</entry>
-<entry id="49963" lang="en" sex="m">Fog Cloud</entry>
-<entry id="49964" lang="en" sex="m">School: Conjuration
+  <entry id="49963" lang="en" sex="m">Fog Cloud</entry>
+  <entry id="49964" lang="en" sex="m">School: Conjuration
 Caster Level:  Drd 2, Sor/Wiz 2
 Components: V, S, M
 Range: Medium (100 ft. + 10 ft./level)
@@ -46027,7 +46027,7 @@ Use: Selected.</entry>
   <entry id="65742" lang="en" sex="m">Justice of Weald and Woe Extended Cat's Grace</entry>
   <entry id="65743" lang="en" sex="m">Justice of Weald and Woe Silent Cat's Grace</entry>
   <entry id="65744" lang="en" sex="m">Justice of Weald and Woe Still Cat's Grace</entry>
-  <entry id="65745" lang="en" sex="m">Justice of Weald and Woe Acidic Fire</entry>
+  <entry id="65745" lang="en" sex="m">Justice of Weald and Woe Fog Cloud</entry>
   <entry id="65746" lang="en" sex="m">Justice of Weald and Woe Snare</entry>
   <entry id="65747" lang="en" sex="m">Justice of Weald and Woe Silent Snare</entry>
   <entry id="65748" lang="en" sex="m">Justice of Weald and Woe Still Snare</entry>

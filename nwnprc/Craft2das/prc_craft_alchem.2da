@@ -1,41 +1,41 @@
 2DA V2.0
 
-   Label              Name     Description IsGrenade CraftDC GoldCost Appearance      
-0  AcidFlask          16847430 16847434    1         15      10       iit_x1_gren_006 
-1  AcidicFire         16847294 16847435    1         25      15       iit_x1_gren_006 
-2  Agony              16829324 16847436    0         25      100      iit_thnmisc_019 
-3  AlchemicalSleepGas 16847296 16847437    1         25      15       iit_x1_gren_004 
-4  AlchemistsFire     16847431 16847438    1         22      10       iit_x1_gren_001 
-5  AlchemistsFrost    16847295 16847439    1         22      10       iit_x1_gren_003 
-6  AkchemistsSpark    16847297 16847440    1         22      13       iit_x1_gren_003 
-7  Antitoxin          16847320 16847441    0         25      50       iit_thnmisc_037 
-8  Baccaran           16829325 16847442    0         20      5        iit_thnmisc_019 
-9  BileDroppings      16847314 16847443    1         15      25       iit_x1_gren_006 
-10 BlendCream         16847298 16847444    0         20      25       iit_thnmisc_027 
-11 Brittlebone        16847299 16847445    0         20      15       iit_thnmisc_005 
-12 CracklePowder      16847300 16847446    1         20      15       iit_x1_gren_004 
-13 Devilweed          16829326 16847447    0         20      3        iit_thnmisc_031 
-14 EmbalmingFire      16847301 16847448    0         20      10       iit_thnmisc_005 
-15 FareyeOil          16847302 16847449    0         20      13       iit_thnmisc_030 
-16 FesteringBomb      16847303 16847450    1         22      25       iit_x1_gren_004 
-17 FlashPellet        16847304 16847451    1         25      25       iit_smlmisc_044 
-18 HealersBalm        16847305 16847452    0         20      5        iit_thnmisc_037 
-19 KeenearPowder      16847306 16847453    0         20      10       iit_thnmisc_025 
-20 LockslipGrease     16847307 16847454    0         20      25       iit_thnmisc_030 
-21 Luhix              16829327 16847455    0         30      1000     iit_thnmisc_024 
-22 MushroomPowder     16829328 16847456    0         25      50       iit_thnmisc_026 
-23 NaturesDraught     16847308 16847457    0         25      25       iit_thnmisc_035 
-24 Nerv               16847309 16847458    0         25      13       iit_thnmisc_005 
-25 Sannish            16829329 16847459    0         20      8        iit_thnmisc_019 
-26 ScreamingFlask     16847310 16847460    0         25      20       iit_thnmisc_023 
-27 Shedden            16847314 16847461    0         20      75       iit_thnmisc_027 
-28 Shedden+2          16847315 16847462    0         24      200      iit_thnmisc_027 
-29 Shedden+3          16847316 16847463    0         28      500      iit_thnmisc_027 
-30 Shedden+4          16847317 16847464    0         32      1000     iit_thnmisc_027 
-31 Shedden+5          16847318 16847465    0         36      2000     iit_thnmisc_027 
-32 Softfoot           16847311 16847466    0         20      25       iit_thnmisc_023 
-33 TanglefootBag      16847432 16847467    1         25      30       iit_x1_gren_002 
-34 TerranBrandy       16829330 16847468    0         30      250      iit_thnmisc_016 
-35 Thunderstone       16847433 16847469    1         25      20       iit_x1_gren_005 
-36 Vodare             16829331 16847470    0         15      20       iit_thnmisc_026 
-37 WeepingStone       16847312 16847471    1         25      50       iit_x1_gren_005 
+   Label              Name     Description IsGrenade CraftDC GoldCost Appearance      IprpSpells 
+0  AcidFlask          16847430 16847434    1         15      10       iit_x1_gren_006 341        
+1  AcidicFire         16847294 16847435    1         25      15       iit_x1_gren_006 1390       
+2  Agony              16829324 16847436    0         25      100      iit_thnmisc_019 1243       
+3  AlchemicalSleepGas 16847296 16847437    1         25      15       iit_x1_gren_004 1392       
+4  AlchemistsFire     16847431 16847438    1         22      10       iit_x1_gren_001 336        
+5  AlchemistsFrost    16847295 16847439    1         22      10       iit_x1_gren_003 1391       
+6  AkchemistsSpark    16847297 16847440    1         22      13       iit_x1_gren_003 1393       
+7  Antitoxin          16847320 16847441    0         25      50       iit_thnmisc_037 1415       
+8  Baccaran           16829325 16847442    0         20      5        iit_thnmisc_019 1244       
+9  BileDroppings      16847314 16847443    1         15      25       iit_x1_gren_006 1409       
+10 BlendCream         16847298 16847444    0         20      25       iit_thnmisc_027 1394       
+11 Brittlebone        16847299 16847445    0         20      15       iit_thnmisc_005 1395       
+12 CracklePowder      16847300 16847446    1         20      15       iit_x1_gren_004 1396       
+13 Devilweed          16829326 16847447    0         20      3        iit_thnmisc_031 1245       
+14 EmbalmingFire      16847301 16847448    0         20      10       iit_thnmisc_005 1397       
+15 FareyeOil          16847302 16847449    0         20      13       iit_thnmisc_030 1398       
+16 FesteringBomb      16847303 16847450    1         22      25       iit_x1_gren_004 1399       
+17 FlashPellet        16847304 16847451    1         25      25       iit_smlmisc_044 1400       
+18 HealersBalm        16847305 16847452    0         20      5        iit_thnmisc_037 1401       
+19 KeenearPowder      16847306 16847453    0         20      10       iit_thnmisc_025 1402       
+20 LockslipGrease     16847307 16847454    0         20      25       iit_thnmisc_030 1403       
+21 Luhix              16829327 16847455    0         30      1000     iit_thnmisc_024 1246       
+22 MushroomPowder     16829328 16847456    0         25      50       iit_thnmisc_026 1247       
+23 NaturesDraught     16847308 16847457    0         25      25       iit_thnmisc_035 1404       
+24 Nerv               16847309 16847458    0         25      13       iit_thnmisc_005 1405       
+25 Sannish            16829329 16847459    0         20      8        iit_thnmisc_019 1248       
+26 ScreamingFlask     16847310 16847460    0         25      20       iit_thnmisc_023 1406       
+27 Shedden            16847314 16847461    0         20      75       iit_thnmisc_027 1410       
+28 Shedden+2          16847315 16847462    0         24      200      iit_thnmisc_027 1411       
+29 Shedden+3          16847316 16847463    0         28      500      iit_thnmisc_027 1412       
+30 Shedden+4          16847317 16847464    0         32      1000     iit_thnmisc_027 1413       
+31 Shedden+5          16847318 16847465    0         36      2000     iit_thnmisc_027 1414       
+32 Softfoot           16847311 16847466    0         20      25       iit_thnmisc_023 1407       
+33 TanglefootBag      16847432 16847467    1         25      30       iit_x1_gren_002 337        
+34 TerranBrandy       16829330 16847468    0         30      250      iit_thnmisc_016 1249       
+35 Thunderstone       16847433 16847469    1         25      20       iit_x1_gren_005 340        
+36 Vodare             16829331 16847470    0         15      20       iit_thnmisc_026 1250       
+37 WeepingStone       16847312 16847471    1         25      50       iit_x1_gren_005 1408       

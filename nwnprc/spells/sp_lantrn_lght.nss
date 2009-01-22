@@ -103,7 +103,7 @@ void DoSpell2(object oCaster, object oTarget, int nCasterLevel, int nEvent, int 
         }
         
         oTarget2 = MyFirstObjectInShape(SHAPE_SPHERE, 10.0, lLoc, FALSE, OBJECT_TYPE_CREATURE);
-        
+        if(DEBUG) DoDebug("sp_lantrn_lght: nRays: " + IntToString(nRays));
         while(GetIsObjectValid(oTarget2) && (nRays > 0))
         {
                 nRays--;
@@ -136,11 +136,12 @@ void main()
         {
                 if(GetLocalInt(oCaster, PRC_SPELL_HOLD) && oCaster == oTarget)
                 {   //holding the charge, casting spell on self
-                SetLocalSpellVariables(oCaster, nRays);   //change 1 to number of charges
-                return;
+                	SetLocalSpellVariables(oCaster, nRays);   //change 1 to number of charges
+                	return;
                 }
                 
                 DoSpell2(oCaster, oTarget, nCasterLevel, nEvent, nRays);
+                if(DEBUG) DoDebug("sp_lantrn_lght: DoSpell2 Fired.");
         }
         else
         {
@@ -148,6 +149,8 @@ void main()
                 {
                         if(DoSpell(oCaster, oTarget, nCasterLevel, nEvent))
                         DecrementSpellCharges(oCaster);
+                        
+                        if(DEBUG) DoDebug("sp_lantrn_lght: DoSpell Fired.");
                 }
         }
         PRCSetSchool();

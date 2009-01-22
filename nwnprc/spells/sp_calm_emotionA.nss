@@ -27,11 +27,20 @@ or do anything destructive.
 // Date:   8.10.06
 //////////////////////////////////////////////////////
 
-#include "prc_inc_spells"
+#include "prc_sp_func"
 #include "prc_add_spell_dc"
+
+int GetIsSupernaturalCurse(effect eEff)
+{
+    object oCreator = GetEffectCreator(eEff);
+    if(GetTag(oCreator) == "q6e_ShaorisFellTemple")
+        return TRUE;
+    return FALSE;
+}
 
 void main()
 {
+	ActionDoCommand(SetAllAoEInts(SPELL_CALM_EMOTIONS, OBJECT_SELF, GetSpellSaveDC()));
 	object oPC = GetAreaOfEffectCreator();
 	object oTarget = GetEnteringObject();
 	int nDC = PRCGetSaveDC(oTarget, oPC);	
@@ -39,15 +48,21 @@ void main()
 	//SR
 	if(!PRCDoResistSpell(oPC, oTarget, PRCGetCasterLevel(oPC) + SPGetPenetr()))
 	{
-		//Saving Throw
-		if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
+		//Saving Throw and no targeting self
+		if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_SPELL) && oTarget != oPC)
 		{
 			effect eVis = EffectVisualEffect(VFX_IMP_DAZED_S);
-			effect eDur = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DISABLED);
-			
 			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oTarget, RoundsToSeconds(PRCGetCasterLevel(oPC)));
-			SPApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectDazed(), oTarget);
+			PRCRemoveEffectsFromSpell(oTarget, 307); // Barbarian Rage
+			PRCRemoveEffectsFromSpell(oTarget, SPELL_BARD_SONG); // Bard Song
+			
+    			effect eEffect = GetFirstEffect(oTarget);
+			while(GetIsEffectValid(eEffect))
+			{       //Effect removal - see prc_sp_func for list of effects removed
+			        if(CheckRemoveEffects(SPELL_CALM_EMOTIONS, GetEffectType(eEffect)) && !GetIsSupernaturalCurse(eEffect) && (GetEffectSubType(eEffect) != SUBTYPE_EXTRAORDINARY))
+			            RemoveEffect(oTarget, eEffect);
+			        eEffect = GetNextEffect(oTarget);
+			}
 		}
 	}
 }

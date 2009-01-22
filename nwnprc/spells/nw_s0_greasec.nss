@@ -39,6 +39,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, GetAreaOfEffectCreator()))
             {
                 int nDC = PRCGetSaveDC(oTarget,GetAreaOfEffectCreator());
+                if(DEBUG) DoDebug("nw_s0_greasec running, SpellId: " + IntToString(PRCGetSpellId()));
 
                 fDelay = PRCGetRandomDelay(0.0, 2.0);
                 if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, (nDC), SAVING_THROW_TYPE_NONE, OBJECT_SELF, fDelay))

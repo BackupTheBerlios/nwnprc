@@ -63,15 +63,31 @@ void DoBolt(int nCasterLevel, int nDieSize, int nBonusDam, int nDice, int nBoltE
     
     // run away! Vector maths coming up...
     // VFX length
-    float fAngle             = GetRelativeAngleBetweenLocations(lCaster, lTarget);
-    float fVFXLength         = GetVFXLength(lCaster, fLength, fAngle);
-    float fDuration          = 3.0f;
+    //float fAngle             = GetRelativeAngleBetweenLocations(lCaster, lTarget);
+    //float fVFXLength         = GetVFXLength(lCaster, fLength, fAngle);
+    //float fDuration          = 3.0f;
     
 
-    BeamLineFromCenter(DURATION_TYPE_TEMPORARY, nBoltEffect, lCaster, fVFXLength, fAngle, fDuration, "prc_invisobj", 0.0f, "z", 0.0f, 0.0f,
+    /*BeamLineFromCenter(DURATION_TYPE_TEMPORARY, nBoltEffect, lCaster, fVFXLength, fAngle, fDuration, "prc_invisobj", 0.0f, "z", 0.0f, 0.0f,
                       -1, -1, 0.0f, 1.0f, // no secondary VFX
                       fDuration);
-                      
+    */
+        // Do VFX. This is moderately heavy, so it isn't duplicated by Twin Power
+        float fAngle             = GetRelativeAngleBetweenLocations(lCaster, lTarget);
+        float fSpiralStartRadius = FeetToMeters(1.0f);
+        float fRadius            = FeetToMeters(5.0f);
+        float fDuration          = 4.5f;
+        float fVFXLength         = GetVFXLength(lCaster, fLength, GetRelativeAngleBetweenLocations(lCaster, lTarget));
+        // A tube of beams, radius 5ft, starting 1m from manifester and running for the length of the line
+        BeamGengon(DURATION_TYPE_TEMPORARY, nBoltEffect, lCaster, fRadius, fRadius,
+                   1.0f, fVFXLength, // Start 1m from the manifester, end at LOS end
+                   8, // 8 sides
+                   fDuration, "prc_invisobj",
+                   0.0f, // Drawn instantly
+                   0.0f, 0.0f, 45.0f, "y", fAngle, 0.0f,
+                   -1, -1, 0.0f, 1.0f, // No secondary VFX
+                   fDuration
+                   );    
     // spell damage effects
     // Loop over targets in the spell shape
     object oTarget = MyFirstObjectInShape(SHAPE_SPELLCYLINDER, fLength, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE, vOrigin);

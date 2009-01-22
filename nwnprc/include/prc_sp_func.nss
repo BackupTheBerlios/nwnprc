@@ -279,6 +279,12 @@ int CheckRemoveEffects(int nSpellID, int nEffectType)
             return (nEffectType == EFFECT_TYPE_CURSE);
             break;
         }
+        case SPELL_CALM_EMOTIONS:
+        {
+            return (nEffectType == EFFECT_TYPE_FRIGHTENED ||
+            	    nEffectType == EFFECT_TYPE_CONFUSED);
+            break;
+        }        
         case SPELLABILITY_REMOVE_DISEASE:
         case SPELL_REMOVE_DISEASE:
         {

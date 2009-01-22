@@ -30,6 +30,7 @@ or do anything destructive.
 
 void main()
 {
+	ActionDoCommand(SetAllAoEInts(SPELL_CALM_EMOTIONS, OBJECT_SELF, GetSpellSaveDC()));
 	object oTarget = GetExitingObject();
 	effect eAOE;
 	if(GetHasSpellEffect(SPELL_CALM_EMOTIONS, oTarget))

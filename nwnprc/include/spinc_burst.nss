@@ -83,7 +83,7 @@ void DoBurst (int nCasterLvl, int nDieSize, int nBonusDam, int nDice, int nBurst
 
                               // Roll damage for each target
                               nDam = PRCGetMetaMagicDamage(nDamageType, nDice, nDieSize, nBonusDam);
-                              nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
+                              //nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
 
                               // Adjust damage for reflex save / evasion / imp evasion
                               nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, nSaveDC, nSaveType);
@@ -97,7 +97,7 @@ void DoBurst (int nCasterLvl, int nDieSize, int nBonusDam, int nDice, int nBurst
 
                               // Calculate base and bonus damage.
                               nDam = PRCGetMetaMagicDamage(nDamageType, nDice, nDieSize, 0);
-                              nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
+                              //nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
                               nDam2 = nDice * nBonusDam;
 
                               // Adjust damage for reflex save / evasion / imp evasion.  We need to

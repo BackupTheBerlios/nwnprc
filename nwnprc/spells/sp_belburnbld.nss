@@ -32,7 +32,7 @@ void RunSpell(object oCaster, object oTarget, int nMetaMagic, int nSpellID,
           PRCBonusDamage(oTarget);
 
           nDamage = PRCGetMetaMagicDamage(DAMAGE_TYPE_ACID, 1, 8, 0, 0, nMetaMagic);
-          nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
+          //nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
           eDamage = PRCEffectDamage(oTarget, nDamage, DAMAGE_TYPE_ACID);
           eDamage = EffectLinkEffects(eDamage, EffectVisualEffect(VFX_IMP_ACID_S));
           SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);

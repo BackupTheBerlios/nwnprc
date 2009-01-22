@@ -41,7 +41,7 @@ void PRCDoSpikeGrowthEffect(object oTarget,int nPenetr)
         {
             int nMetaMagic = PRCGetMetaMagicFeat();
             int nDam = PRCMaximizeOrEmpower(4, 1, nMetaMagic);
-            nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
+            //nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
 
             effect eDam = EffectDamage(nDam, DAMAGE_TYPE_PIERCING);
             effect eVis = EffectVisualEffect(VFX_IMP_ACID_S);

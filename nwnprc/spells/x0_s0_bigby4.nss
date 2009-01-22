@@ -53,7 +53,7 @@ void RunHandImpact(object oTarget, object oCaster,int CasterLvl, int nAbilityMod
        int nDC = GetLocalInt(oTarget,"XP2_L_SPELL_SAVE_DC_" + IntToString (nSpellID));
 
        int nDam  = PRCMaximizeOrEmpower(8, 1, PRCGetMetaMagicFeat(), 11);
-       nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
+       //nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
        effect eDam = PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_BLUDGEONING);
        effect eVis = EffectVisualEffect(VFX_IMP_ACID_L);
 

@@ -50,7 +50,7 @@ void main()
                     if(nCnt == 1)
                     {
                          nDamage += SpellSneakAttackDamage(OBJECT_SELF, oTarget);
-                         nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
+                         //nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
                          PRCBonusDamage(oTarget);
                     }
                     

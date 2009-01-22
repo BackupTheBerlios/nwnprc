@@ -61,7 +61,7 @@ void main()
                 //Roll damage.
                 nDamage = d6(2 + nCasterLvl);
                 
-                nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
+                //nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
                 
                 int nDC = GetInvocationSaveDC(oTarget,GetAreaOfEffectCreator(),INVOKE_WALL_OF_PERILOUS_FLAME);
 

@@ -30,7 +30,7 @@ void DoOrb(effect eVis, effect eFailSave, int nSaveType, int nDamageType, int nS
                      
                      //Roll damage for each target
                      int nDamage = PRCGetMetaMagicDamage(nDamageType, nDice, 6);
-                     nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
+                     //nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
                      
                      // Apply the damage and the damage visible effect to the target.
                      SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDamage, nDamageType), oTarget);

@@ -46,7 +46,7 @@ void RunHandImpact(object oTarget, object oCaster)
     }
 
     int nDam = PRCMaximizeOrEmpower(6,2,PRCGetMetaMagicFeat(), 12);
-    nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
+    //nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
     effect eDam = PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_BLUDGEONING);
     effect eVis = EffectVisualEffect(VFX_IMP_ACID_L);
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);

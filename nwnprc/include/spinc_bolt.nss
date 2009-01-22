@@ -328,7 +328,7 @@ void PRCDoMissileStorm(int nD6Dice, int nCap, int nSpell, int nMIRV = VFX_IMP_MI
 
                         if(i == 1)
                         {
-                            nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
+                            //nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
                             DelayCommand(fDelay, PRCBonusDamage(oTarget));
                         }
 

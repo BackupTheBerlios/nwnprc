@@ -105,7 +105,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
                                         nDamage = FloatToInt( IntToFloat(nDamage) * 1.5 );
                                     }
 
-                                    nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
+                                    //nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
 
                                     //Set damage effect
                                     eDam = PRCEffectDamage(oTarget, nDamage, DAMAGE_TYPE_MAGICAL);

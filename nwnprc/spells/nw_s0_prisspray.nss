@@ -139,7 +139,7 @@ int ApplyPrismaticEffect(int nEffect, object oTarget,int nDC,int CasterLvl)
     {
         case 1://fire
             nDamage = 20;
-            nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
+            //nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
             nVis = VFX_IMP_FLAME_S;
             nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, nDC,SAVING_THROW_TYPE_FIRE);
             ePrism = PRCEffectDamage(oTarget, nDamage, DAMAGE_TYPE_FIRE);
@@ -147,7 +147,7 @@ int ApplyPrismaticEffect(int nEffect, object oTarget,int nDC,int CasterLvl)
         break;
         case 2: //Acid
             nDamage = 40;
-            nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
+            //nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
             nVis = VFX_IMP_ACID_L;
             nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, (nDC),SAVING_THROW_TYPE_ACID);
             ePrism = PRCEffectDamage(oTarget, nDamage, DAMAGE_TYPE_ACID);
@@ -155,7 +155,7 @@ int ApplyPrismaticEffect(int nEffect, object oTarget,int nDC,int CasterLvl)
         break;
         case 3: //Electricity
             nDamage = 80;
-            nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
+            //nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
             nVis = VFX_IMP_LIGHTNING_S;
             nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, (nDC),SAVING_THROW_TYPE_ELECTRICITY);
             ePrism = PRCEffectDamage(oTarget, nDamage, DAMAGE_TYPE_ELECTRICAL);

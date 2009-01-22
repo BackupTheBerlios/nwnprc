@@ -84,7 +84,7 @@ void main()
                                                  
                                                  else if ((nMetaMagic & METAMAGIC_EMPOWER)) nDam +=(nDam/2);
                                                  
-                                                 nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
+                                                 //nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
                                                  //Change damage according to Reflex, Evasion and Improved Evasion
                                                  nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, nDC, SAVING_THROW_TYPE_FIRE, GetAreaOfEffectCreator());
                                                  //Set up the damage effect

@@ -102,7 +102,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 {
                     nDamage = PRCMaximizeOrEmpower(6, 6, nMetaMagic);
                }
-               nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
+               //nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
                 int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                     
                 // * if a vampire then destroy it

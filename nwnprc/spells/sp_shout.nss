@@ -97,7 +97,7 @@ void main()
                     {
                          nDamage += (nDamage/2);
                     }
-                    nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
+                    //nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
                     if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget,
                                         PRCGetSaveDC(oTarget, oCaster, nSpellID),
                                         SAVING_THROW_TYPE_SONIC))

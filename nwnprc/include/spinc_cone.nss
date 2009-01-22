@@ -66,7 +66,7 @@ void DoCone (int nDieSize, int nBonusDam, int nDieCap, int nConeEffect /* unused
                        int nSaveDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                     // Roll damage for each target
                     int nDamage = PRCGetMetaMagicDamage(nDamageType, nCasterLvl, nDieSize, nBonusDam);
-                    nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
+                    //nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
 
                     // Adjust damage according to Reflex Save, Evasion or Improved Evasion
                     nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, nSaveDC, nSaveType);

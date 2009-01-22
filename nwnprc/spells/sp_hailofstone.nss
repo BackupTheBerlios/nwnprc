@@ -47,7 +47,7 @@ void main()
                          int nDamage = PRCGetMetaMagicDamage(DAMAGE_TYPE_BLUDGEONING, 
                               1 == nTouchAttack ? nDice : (nDice * 2), 4);
                          
-                         nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
+                         //nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
 
                          // Apply the damage and the damage visible effect to the target.                
                          SPApplyEffectToObject(DURATION_TYPE_INSTANT, 

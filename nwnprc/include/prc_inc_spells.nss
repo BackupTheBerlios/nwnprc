@@ -2376,6 +2376,9 @@ effect PRCEffectDamage(object oTarget, int nDamageAmount, int nDamageType=DAMAGE
             nDamageAmount += (GetLevelByClass(CLASS_TYPE_WARMAGE, OBJECT_SELF) / 4) + 1;
         }
     }
+    
+    // Thrall of Grazzt damage
+    nDamageAmount += SpellBetrayalDamage(oTarget, OBJECT_SELF);
 
     // Piercing Evocation
     if (GetHasFeat(FEAT_PIERCING_EVOCATION, OBJECT_SELF) && GetSpellSchool(PRCGetSpellId()) == SPELL_SCHOOL_EVOCATION)

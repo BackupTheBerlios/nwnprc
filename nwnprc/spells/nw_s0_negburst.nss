@@ -111,7 +111,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
 		            	nDamage = 0;
                     }  
             }
-            nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
+            //nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
             //Get the distance between the explosion and the target to calculate delay
             fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget))/20;
 

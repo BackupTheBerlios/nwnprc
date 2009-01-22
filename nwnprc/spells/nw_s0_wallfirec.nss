@@ -74,7 +74,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                      nDamage = nDamage + (nDamage/2); //Damage/Healing is +50%
                 }
                 
-                nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
+                //nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
                 
                 int nDC = PRCGetSaveDC(oTarget,GetAreaOfEffectCreator());
 

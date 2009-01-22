@@ -43,7 +43,7 @@ void main()
         {
             //Roll damage.
             nDamage = d6(2 + nCasterLvl);
-            nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
+            //nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
             nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, (GetInvocationSaveDC(oTarget,GetAreaOfEffectCreator(),INVOKE_WALL_OF_PERILOUS_FLAME)), SAVING_THROW_TYPE_FIRE);
             if(nDamage > 0)
             {

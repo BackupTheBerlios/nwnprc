@@ -67,7 +67,7 @@ int ApplyTouchAttackDamage(object oCaster, object oTarget, int iAttackRoll, int 
     if(iAttackRoll == 2)  iDamage *= 2;
     if(!GetPRCSwitch(PRC_SPELL_SNEAK_DISABLE))
         iDamage += SpellSneakAttackDamage(oCaster, oTarget);
-    iDamage += ApplySpellBetrayalStrikeDamage(oTarget, oCaster);
+    //iDamage += ApplySpellBetrayalStrikeDamage(oTarget, oCaster);
     if(iAttackRoll > 0)
     {
         if(iDamageType2 == -1)

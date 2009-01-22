@@ -89,7 +89,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
             nDamage += nDamage / 2;//Damage/Healing is +50%
         }
     }
-    nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
+    //nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
     int nDuration = 10 + nCasterLevel;
     if (nDuration < 1)
     {

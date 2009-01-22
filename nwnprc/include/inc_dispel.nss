@@ -280,7 +280,7 @@ void DispelMagicBestMod(object oTarget, int nCasterLevel)
                                     {
                                         //Roll damage for each target
                                         nDamage = d6(4);
-                                        nDamage += ApplySpellBetrayalStrikeDamage(oVictim, oTarget, FALSE);
+                                        //nDamage += ApplySpellBetrayalStrikeDamage(oVictim, oTarget, FALSE);
                                         nDC = 16 + GetAbilityModifier(ABILITY_CHARISMA, oTarget);
                                         
                                         //save

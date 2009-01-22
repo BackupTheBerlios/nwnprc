@@ -95,7 +95,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 // apply bonus damage to first missle.
                 if(nCnt == 1)
                 {
-                    nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
+                    //nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
                     PRCBonusDamage(oTarget);
                 }
 

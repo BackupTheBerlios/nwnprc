@@ -192,7 +192,7 @@ void DoFirebrand(int CasterLvl,int nD6Dice, int nCap, int nSpell, int nMIRV = VF
                         {
                               nDam = nDam + nDam/2; //Damage/Healing is +50%
                         }
-                        if(i == 1) nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
+                        if(i == 1) //nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
                         fTime = fDelay;
                         fDelay2 += 0.1;
                         fTime += fDelay2;

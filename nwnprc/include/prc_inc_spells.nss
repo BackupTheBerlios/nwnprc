@@ -1465,6 +1465,7 @@ void SetAllAoEInts(int SpellID, object oAoE, int nBaseSaveDC ,int SpecDispel = 0
        ActionDoCommand(SetLocalInt(oAoE, "X2_AoE_Weave", GetHasFeat(FEAT_SHADOWWEAVE,GetAreaOfEffectCreator())));
        if (SpecDispel) ActionDoCommand(SetLocalInt(oAoE, "X2_AoE_SpecDispel", SpecDispel));
        ActionDoCommand(SetLocalInt(oAoE, "X2_AoE_Is_Modified", 1));
+       ActionDoCommand(SetLocalInt(oAoE, "X2_AoE_BaseSaveDC", nBaseSaveDC));
     }
 
 }

@@ -491,8 +491,19 @@ int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1)
     object oItem = GetSpellCastItem();
     if(nSpellID == -1)
         nSpellID = PRCGetSpellId();
-    //10+spelllevel+stat(cha default)
-    int nDC = GetSpellSaveDC();
+    int nDC;
+    // at this point, if it's still -1 then this is running on an AoE
+    if (nSpellID == -1)
+    {
+        // get the needed values off the AoE
+        nSpellID = GetLocalInt(OBJECT_SELF, "X2_AoE_SpellID");
+        nDC = GetLocalInt(OBJECT_SELF, "X2_AoE_BaseSaveDC");
+    }
+    else // not persistent AoE script
+    {
+        //10+spelllevel+stat(cha default)
+        nDC = GetSpellSaveDC();
+    }
     // For when you want to assign the caster DC
     //this does not take feat/race/class into account, it is an absolute override
     if (GetLocalInt(oCaster, PRC_DC_TOTAL_OVERRIDE) != 0)

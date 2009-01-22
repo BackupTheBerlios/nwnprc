@@ -165,7 +165,7 @@ void SpellfireDamage(object oCaster, object oTarget, int nRoll, int nDamage, int
     if(bMaelstrom)
     {
         //nDamage += ApplySpellBetrayalStrikeDamage(oTarget, oCaster);
-        ApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(nDamage / 2, DAMAGE_TYPE_MAGICAL), oTarget);
+        ApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDamage / 2, DAMAGE_TYPE_MAGICAL), oTarget);
         ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDamage - (nDamage / 2), DAMAGE_TYPE_FIRE), oTarget);
     }
     else

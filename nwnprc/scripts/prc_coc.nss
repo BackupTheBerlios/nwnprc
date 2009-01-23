@@ -10,7 +10,8 @@
 */
 
 //compiler would completely crap itself unless this include was here
-#include "prc_alterations"
+//#include "prc_alterations"
+#include "prc_craft_inc"
 
 //adds onhit: unique power, copied from swashbuckler code
 void CritSTR(object oPC, int iEquip)
@@ -39,6 +40,20 @@ void CritSTR(object oPC, int iEquip)
     }
 }
 
+void SuperiorDefense(object oPC, int nLevel)
+{
+	object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oPC);
+	object oSkin = GetPCSkin(oPC);
+	int nPen = GetItemArmourCheckPenalty(oArmor);
+	int nDex = GetAbilityModifier(ABILITY_DEXTERITY, oPC);
+	// Dexterity Armour check penalty reduced by 1 per 3 levels.
+	int nRed = 0;
+	if (nPen >= (nLevel / 3)) nRed = nLevel / 3;
+	else nRed = nPen;
+	
+	if (nRed > 0) SetCompositeBonus(oSkin, "SuperiorDefense", nRed, ITEM_PROPERTY_AC_BONUS);
+}
+
 void main()
 {
     object oPC = OBJECT_SELF;
@@ -61,6 +76,10 @@ void main()
         else
             PRCRemoveEffectsFromSpell(oPC, SPELL_COC_DAMAGE);
         CritSTR(oPC, iEquip);
+    }
+    if(nLevel >= 3)
+    {
+    	SuperiorDefense(oPC, nLevel);
     }
 }
 

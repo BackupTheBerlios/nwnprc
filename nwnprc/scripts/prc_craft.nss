@@ -566,10 +566,12 @@ void CraftingHB(object oPC, object oItem, itemproperty ip, int nCost, int nXP, s
     {
         FloatingTextStringOnCreature("Crafting: Concentration lost!", oPC);
         DeleteLocalInt(oPC, PRC_CRAFT_HB);
+        RemoveEventScript(oPC, EVENT_VIRTUAL_ONDAMAGED, "prc_od_conc");
         return;
     }
     if(nRounds == 0 || GetPCPublicCDKey(oPC) == "") //default to zero time if single player
     {
+        RemoveEventScript(oPC, EVENT_VIRTUAL_ONDAMAGED, "prc_od_conc");
         if(GetLevelByClass(CLASS_TYPE_ARTIFICER, oPC))
         {
             if(!ArtificerPrereqCheck(oPC, sFile, nLine, nCost))

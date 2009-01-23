@@ -324,7 +324,7 @@ int GetPRCIsSkillSuccessful(object oCreature, int nSkill, int nDifficulty, int n
         SendMessageToPC(oCreature,
             PRC_TEXT_LIGHT_BLUE + GetName(oCreature) + PRC_TEXT_DARK_BLUE + " : " +
             GetStringByStrRef(StringToInt(Get2DACache("skills", "Name", nSkill))) + " : *" +
-            ((nRollOverride >= nDifficulty) ? GetStringByStrRef(5352) : ((nDifficulty > nRanks + 20) ? GetStringByStrRef(8101) : GetStringByStrRef(5353))) + "* : " +
+            (((nRollOverride  + nRanks) >= nDifficulty) ? GetStringByStrRef(5352) : ((nDifficulty > nRanks + 20) ? GetStringByStrRef(8101) : GetStringByStrRef(5353))) + "* : " +
             "(" + IntToString(nRollOverride) + " + " + IntToString(nRanks) + " = " + IntToString(nRollOverride + nRanks) + " vs. DC: " + IntToString(nDifficulty) + ")"
             );
     }

@@ -123,7 +123,7 @@ string DebugEffect2String(effect eEffect);
 
 void DoDebug(string sString, object oAdditionalRecipient = OBJECT_INVALID)
 {
-    SendMessageToPC(GetLocalObject(GetModule(), "PRC_Debug_FirstPC"), "<c´jŸ>" + sString + "</c>");
+    SendMessageToPC(GetFirstPC(), "<c´jŸ>" + sString + "</c>");
     if(oAdditionalRecipient != OBJECT_INVALID)
         SendMessageToPC(oAdditionalRecipient, "<c´jŸ>" + sString + "</c>");
     WriteTimestampedLogEntry(sString);

@@ -2118,19 +2118,6 @@ const string PRC_USE_BIOWARE_DATABASE                = "PRC_USE_BIOWARE_DATABASE
 const string PRC_2DA_CACHE_IN_CREATURE                = "PRC_2DA_CACHE_IN_CREATURE";
 
 /**
- * 2da caching code will get/set directly in the bioware db
- * Off by default, gets are quite quick, sets much slower
- */
-const string PRC_2DA_CACHE_IN_BIOWAREDB               = "PRC_2DA_CACHE_IN_BIOWAREDB";
-
-/**
- * 2da caching code will get/set directly in a NWNX db
- * Must have PRC_USE_DATABASE turned on and a database setup
- * Must have a PRC_DB_* variable on to set what type of database to use
- */
-const string PRC_2DA_CACHE_IN_NWNXDB                  = "PRC_2DA_CACHE_IN_NWNXDB";
-
-/**
  * Set this if you are using NWNX and any sort of database.
  */
 const string PRC_USE_DATABASE                        = "PRC_USE_DATABASE";

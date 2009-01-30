@@ -240,7 +240,7 @@ int GetSwitchAdjustedDC(int nCR, int nTargets, object oTrueSpeaker)
 	int nBonus = GetPRCSwitch(PRC_TRUENAME_LEVEL_BONUS);
 	int nConst = GetPRCSwitch(PRC_TRUENAME_DC_CONSTANT);
 	// nMulti is stored as an int, divide by 100 to get the float
-	if(nMulti) nDC = 15 + ((nMulti/100) * nCR) + (2 * nTargets);
+	if(nMulti) nDC = FloatToInt(15 + ((IntToFloat(nMulti)/100) * nCR) + (2 * nTargets));
 	if(nBonus) nDC -= nClass/nBonus;
 	// Remove the existing constant and add the new one
 	if(nConst) nDC = (nDC - 15) + nConst;

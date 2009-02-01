@@ -62,9 +62,10 @@ void main()
     float fDuration = 60.0f * nCasterLevel;
     if(nMetaMagic & METAMAGIC_EXTEND) fDuration *= 2;
 
+    ApplyAbilityDamage(oTarget, ABILITY_DEXTERITY, 6, DURATION_TYPE_TEMPORARY, FALSE, fDuration, TRUE, nSpellID, nCasterLevel);
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, nSpellID, nCasterLevel);
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-    ApplyAbilityDamage(oTarget, ABILITY_DEXTERITY, 6, DURATION_TYPE_TEMPORARY, FALSE, fDuration, TRUE, nSpellID, nCasterLevel);
+    
 
 
 

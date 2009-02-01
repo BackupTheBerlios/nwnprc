@@ -613,7 +613,10 @@ int GetBreakConcentrationCheck(object oConcentrator)
     // add to on damage event
     AddEventScript(oConcentrator, EVENT_VIRTUAL_ONDAMAGED, "prc_od_conc", FALSE, FALSE);
     if(GetLocalInt(oConcentrator, "CONC_BROKEN")) // won't be set first time around regardless
+    {
+        DeleteLocalInt(oConcentrator, "CONC_BROKEN"); // reset for next spell
         return TRUE;
+    }
     return FALSE;
 }
 

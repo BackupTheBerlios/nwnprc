@@ -502,8 +502,7 @@ int _RestrictedDiscipline(object oInitiator, int nDiscipline)
      	for(i = 1; i < 6; i++)
      	{
      		// Cycle through the local ints
-     		sString += IntToString(i);
-     		if (nDiscipline == GetPersistantLocalInt(oInitiator, sString)) return TRUE;
+     		if (nDiscipline == GetPersistantLocalInt(oInitiator, (sString + IntToString(i)))) return TRUE;
 	}
 	
 	// Down here, every check is failed

@@ -14033,7 +14033,7 @@
 14029 ThickSkin                                                 ****            1        1      1        1     0           
 14030 Vigor                                                     ****            1        1      1        1     0           
 14031 Empathy                                                   ****            1        1      1        1     0           
-14032 Far_Hand                                                  ****            1        1      1        1     0           
+14032 Far_Hand                                                  ****            1        1      1        1     1           
 14033 Matter_Agitation                                          ****            1        1      1        1     0           
 14034 Skate                                                     ****            1        1      1        1     0           
 14035 Telempathic_Projection                                    ****            1        1      1        1     0           
@@ -14236,7 +14236,7 @@
 14232 Disintegrate                                              ****            1        1      1        6     0           
 14233 Crystallize                                               ****            1        1      1        6     0           
 14234 FuseFlesh                                                 ****            1        1      1        6     0           
-14235 Retrieve                                                  ****            1        1      1        6     0           
+14235 Retrieve                                                  ****            1        1      1        6     1           
 14236 TemporalAcceleration                                      ****            1        1      1        6     0           
 14237 Banishment                                                ****            1        1      1        6     0           
 14238 GreatPrecognitionMain                                     ****            1        1      1        6     0           
@@ -14394,7 +14394,7 @@
 14390 Synesthete                                                ****            1        1      1        1     0           
 14391 ThickSkin                                                 ****            1        1      1        1     0           
 14392 Vigor                                                     ****            1        1      1        1     0           
-14393 Far_Hand                                                  ****            1        1      1        1     0           
+14393 Far_Hand                                                  ****            1        1      1        1     1           
 14394 Matter_Agitation                                          ****            1        1      1        1     0           
 14395 Skate                                                     ****            1        1      1        1     0           
 14396 Telempathic_Projection                                    ****            1        1      1        1     0           
@@ -14596,7 +14596,7 @@
 14592 Disintegrate                                              ****            1        1      1        6     0           
 14593 Crystallize                                               ****            1        1      1        6     0           
 14594 FuseFlesh                                                 ****            1        1      1        6     0           
-14595 Retrieve                                                  ****            1        1      1        6     0           
+14595 Retrieve                                                  ****            1        1      1        6     1           
 14596 TemporalAcceleration                                      ****            1        1      1        6     0           
 14597 Banishment                                                ****            1        1      1        6     0           
 14598 GreatPrecognition                                         ****            1        1      1        6     0           
@@ -14754,7 +14754,7 @@
 14750 Synesthete                                                ****            1        1      1        1     0           
 14751 **Level_1_Wilder**                                        ****            1        1      1        ****  0           
 14752 Vigor                                                     ****            1        1      1        1     0           
-14753 Far_Hand                                                  ****            1        1      1        1     0           
+14753 Far_Hand                                                  ****            1        1      1        1     1           
 14754 Matter_Agitation                                          ****            1        1      1        1     0           
 14755 Skate                                                     ****            1        1      1        1     0           
 14756 Telempathic_Projection                                    ****            1        1      1        1     0           
@@ -14955,7 +14955,7 @@
 14951 BreathBlackDragon                                         ****            1        1      1        6     0           
 14952 Disintegrate                                              ****            1        1      1        6     0           
 14953 FuseFlesh                                                 ****            1        1      1        6     0           
-14954 Retrieve                                                  ****            1        1      1        6     0           
+14954 Retrieve                                                  ****            1        1      1        6     1           
 14955 TemporalAcceleration                                      ****            1        1      1        6     0           
 14956 RemoteViewTrap                                            ****            1        1      1        6     0           
 14957 Cloud_Mind_Mass                                           ****            1        1      1        6     0           
@@ -15355,7 +15355,7 @@
 15351 CallWeaponry                                              ****            1        1      1        1     0           
 15352 Compression                                               ****            1        1      1        1     1           
 15353 Expansion                                                 ****            1        1      1        1     0           
-15354 ControlObject                                             ****            1        1      1        1     0           
+15354 ControlObject                                             ****            1        1      1        1     1           
 15355 MetaphysicalClaw                                          ****            1        1      1        1     0           
 15356 MetaphysicalWeapon                                        ****            1        1      1        1     0           
 15357 Prevenom                                                  ****            1        1      1        1     0           
@@ -15478,7 +15478,7 @@
 15474 PrecognitionDamage                                        ****            1        1      1        1     0           
 15475 PrecognitionSaves                                         ****            1        1      1        1     0           
 15476 PrecognitionSkills                                        ****            1        1      1        1     0           
-15477 ControlObject                                             ****            1        1      1        1     0           
+15477 ControlObject                                             ****            1        1      1        1     1           
 15478 **Level_1_Psion**                                         ****            1        1      1        ****  0           
 15479 **Level_1_Psion**                                         ****            1        1      1        ****  0           
 15480 **Level_1_Psion**                                         ****            1        1      1        ****  0           

@@ -154,15 +154,6 @@ int TOBGetHasDisciplineFocus(object oInitiator, int nDiscipline);
 int GetBladeMagicPRCLevels(object oInitiator);
 
 /**
- * Determines whether a given class is a blade magic class or not. A blade magic
- * class is defined as one that gives base initiating.
- *
- * @param nClass CLASS_TYPE_* of the class to test
- * @return       TRUE if the class is a blade magic class, FALSE otherwise
- */
-int GetIsBladeMagicClass(int nClass);
-
-/**
  * Determines which of the character's classes is their first blade magic initiating
  * class, if any. This is the one which gains initiator level raise benefits from
  * prestige classes.
@@ -380,12 +371,12 @@ int _CheckPrereqsByDiscipline(object oPC, int nDiscipline, int nCount, int nClas
      while (nCheckTo2 >= nCheck2 && bUse2)      
      {
         // If the PC has a prereq feat, mark it down
-        if(GetHasFeat(nCheck, oPC)) 
+        if(GetHasFeat(nCheck2, oPC)) 
         {
         	if (nType == MANEUVER_TYPE_MANEUVER)
        			nPrereqCount += 1;
         	// If stances are being looked for, special check
-        	else if ((nType == MANEUVER_TYPE_STANCE && Get2DACache("feat", "Constant", nCheck) == "MANEUVER_STANCE"))
+        	else if ((nType == MANEUVER_TYPE_STANCE && Get2DACache("feat", "Constant", nCheck2) == "MANEUVER_STANCE"))
         	      	nPrereqCount += 1;
         }
         // If the number of prereq feats is at least equal to requirement, return true.
@@ -397,12 +388,12 @@ int _CheckPrereqsByDiscipline(object oPC, int nDiscipline, int nCount, int nClas
      while (nCheckTo3 >= nCheck3 && bUse3)      
      {
         // If the PC has a prereq feat, mark it down
-        if(GetHasFeat(nCheck, oPC)) 
+        if(GetHasFeat(nCheck3, oPC)) 
         {
         	if (nType == MANEUVER_TYPE_MANEUVER)
        			nPrereqCount += 1;
         	// If stances are being looked for, special check
-        	else if ((nType == MANEUVER_TYPE_STANCE && Get2DACache("feat", "Constant", nCheck) == "MANEUVER_STANCE"))
+        	else if ((nType == MANEUVER_TYPE_STANCE && Get2DACache("feat", "Constant", nCheck3) == "MANEUVER_STANCE"))
         	      	nPrereqCount += 1;
         }
         // If the number of prereq feats is at least equal to requirement, return true.

@@ -748,7 +748,7 @@ int CheckManeuverPrereqs(int nClass, int nFeat, object oPC)
     // This does NOT use these slots properly
     // FEAT1 is the DISCIPLINE that is required
     // FEAT2 is the NUMBER of Maneuvers from the Discipline required
-    int nDiscipline = StringToInt(Get2DAString("feat", "PREREQFEAT1", nFeat));
+    int nDiscipline = StringToInt(Get2DACache("feat", "PREREQFEAT1", nFeat));
     //int nDiscipline = GetDisciplineByManeuver(nFeat, nClass, 1);
     // Prestige classes can only access certain disciplines
     if (!_RestrictedDiscipline(oPC, nDiscipline)) return FALSE;

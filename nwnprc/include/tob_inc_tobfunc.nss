@@ -350,6 +350,21 @@ int _CheckPrereqsByDiscipline(object oPC, int nDiscipline, int nCount, int nClas
      else if (nDiscipline == DISCIPLINE_WHITE_RAVEN  && nClass == CLASS_TYPE_CRUSADER)     { nCheck = 23652; nCheckTo = 23671; }
      else if (nDiscipline == DISCIPLINE_WHITE_RAVEN  && nClass == CLASS_TYPE_WARBLADE)     { nCheck2 = 23903; nCheckTo2 = 23922; bUse2 = TRUE; }  
      
+     /*if (DEBUG) // Massive Data Dump
+     {
+     	DoDebug("_CheckPrereqsByDiscipline(): Name - " + GetName(oPC));
+     	DoDebug("_CheckPrereqsByDiscipline(): Discipline - " + IntToString(nDiscipline));
+     	DoDebug("_CheckPrereqsByDiscipline(): Count - " + IntToString(nCount));
+     	DoDebug("_CheckPrereqsByDiscipline(): Class - " + IntToString(nClass));
+     	DoDebug("_CheckPrereqsByDiscipline(): Type - " + IntToString(nType));
+     	DoDebug("_CheckPrereqsByDiscipline(): Check - " + IntToString(nCheck));
+     	DoDebug("_CheckPrereqsByDiscipline(): CheckTo - " + IntToString(nCheckTo));
+     	DoDebug("_CheckPrereqsByDiscipline(): Check2 - " + IntToString(nCheck2));
+     	DoDebug("_CheckPrereqsByDiscipline(): CheckTo2 - " + IntToString(nCheckTo2));
+     	DoDebug("_CheckPrereqsByDiscipline(): Check3 - " + IntToString(nCheck3));
+     	DoDebug("_CheckPrereqsByDiscipline(): CheckTo3 - " + IntToString(nCheckTo3));
+     }*/
+     
      // While it hasn't reached the end of the check, keep going
      while (nCheckTo >= nCheck) 
      {
@@ -357,13 +372,23 @@ int _CheckPrereqsByDiscipline(object oPC, int nDiscipline, int nCount, int nClas
         if(GetHasFeat(nCheck, oPC)) 
         {
         	if (nType == MANEUVER_TYPE_MANEUVER)
+        	{
        			nPrereqCount += 1;
+       			//if (DEBUG) DoDebug("_CheckPrereqsByDiscipline(): nPrereqCount - " + IntToString(nPrereqCount));
+       		}
         	// If stances are being looked for, special check
         	else if ((nType == MANEUVER_TYPE_STANCE && Get2DACache("feat", "Constant", nCheck) == "MANEUVER_STANCE"))
+        	{
         	      	nPrereqCount += 1;
+        	      	//if (DEBUG) DoDebug("_CheckPrereqsByDiscipline(): nPrereqCount - " + IntToString(nPrereqCount));
+        	}
         }
         // If the number of prereq feats is at least equal to requirement, return true.
-        if (nPrereqCount >= nCount) return TRUE;        
+        if (nPrereqCount >= nCount) 
+        {
+        	//if (DEBUG) DoDebug("_CheckPrereqsByDiscipline(): Returning TRUE");
+        	return TRUE;        
+        }
         
         nCheck += 1;
      }
@@ -374,13 +399,23 @@ int _CheckPrereqsByDiscipline(object oPC, int nDiscipline, int nCount, int nClas
         if(GetHasFeat(nCheck2, oPC)) 
         {
         	if (nType == MANEUVER_TYPE_MANEUVER)
+        	{
        			nPrereqCount += 1;
+       			//if (DEBUG) DoDebug("_CheckPrereqsByDiscipline(): nPrereqCount - " + IntToString(nPrereqCount));
+       		}
         	// If stances are being looked for, special check
         	else if ((nType == MANEUVER_TYPE_STANCE && Get2DACache("feat", "Constant", nCheck2) == "MANEUVER_STANCE"))
+        	{
         	      	nPrereqCount += 1;
+        	      //	if (DEBUG) DoDebug("_CheckPrereqsByDiscipline(): nPrereqCount - " + IntToString(nPrereqCount));
+        	}
         }
         // If the number of prereq feats is at least equal to requirement, return true.
-        if (nPrereqCount >= nCount) return TRUE;        
+        if (nPrereqCount >= nCount) 
+        {
+        	//if (DEBUG) DoDebug("_CheckPrereqsByDiscipline(): Returning TRUE");
+        	return TRUE;        
+        }        
         
         nCheck2 += 1;
      }
@@ -391,13 +426,23 @@ int _CheckPrereqsByDiscipline(object oPC, int nDiscipline, int nCount, int nClas
         if(GetHasFeat(nCheck3, oPC)) 
         {
         	if (nType == MANEUVER_TYPE_MANEUVER)
+        	{
        			nPrereqCount += 1;
+       			//if (DEBUG) DoDebug("_CheckPrereqsByDiscipline(): nPrereqCount - " + IntToString(nPrereqCount));
+       		}
         	// If stances are being looked for, special check
         	else if ((nType == MANEUVER_TYPE_STANCE && Get2DACache("feat", "Constant", nCheck3) == "MANEUVER_STANCE"))
+        	{
         	      	nPrereqCount += 1;
+        	      	//if (DEBUG) DoDebug("_CheckPrereqsByDiscipline(): nPrereqCount - " + IntToString(nPrereqCount));
+        	}
         }
         // If the number of prereq feats is at least equal to requirement, return true.
-        if (nPrereqCount >= nCount) return TRUE;        
+        if (nPrereqCount >= nCount) 
+        {
+        	//if (DEBUG) DoDebug("_CheckPrereqsByDiscipline(): Returning TRUE");
+        	return TRUE;        
+        }       
         
         nCheck3 += 1;
      }     
@@ -691,16 +736,28 @@ int CheckManeuverPrereqs(int nClass, int nFeat, object oPC)
 {
     // Having the power already automatically disqualifies one from taking it again
     if(GetHasFeat(nFeat, oPC))
-    return FALSE;
+    	return FALSE;
+    	
+    // Checking to see what the name of the feat is, and the row number
+    if (DEBUG)
+    {
+    	DoDebug("CheckManeuverPrereqs: nFeat: " + IntToString(nFeat));
+    	string sFeatName = GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", nFeat)));
+    	DoDebug("CheckManeuverPrereqs: sFeatName: " + sFeatName);
+    }
     // This does NOT use these slots properly
     // FEAT1 is the DISCIPLINE that is required
     // FEAT2 is the NUMBER of Maneuvers from the Discipline required
-    int nDiscipline = StringToInt(Get2DACache("feat", "PREREQFEAT1", nFeat));
+    int nDiscipline = StringToInt(Get2DAString("feat", "PREREQFEAT1", nFeat));
+    //int nDiscipline = GetDisciplineByManeuver(nFeat, nClass, 1);
+    // Prestige classes can only access certain disciplines
     if (!_RestrictedDiscipline(oPC, nDiscipline)) return FALSE;
-    int nCount      = StringToInt(Get2DACache("feat", "PREREQFEAT2", nFeat));
-    // if it returns false, exit, otherwise they can take the maneuver
-    if (!_CheckPrereqsByDiscipline(oPC, nDiscipline, nCount, nClass)) return FALSE;
-
+    int nCount = StringToInt(Get2DACache("feat", "PREREQFEAT2", nFeat));
+    if (nCount > 0) // If this maneuver has a prereq, check for it
+    {
+    	// if it returns false, exit, otherwise they can take the maneuver
+    	if (!_CheckPrereqsByDiscipline(oPC, nDiscipline, nCount, nClass)) return FALSE;
+    }
 
     // if you've reached this far then return TRUE
     return TRUE;

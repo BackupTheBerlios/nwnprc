@@ -307,7 +307,10 @@ void PopulateList(object oPC, int MaxValue, int bSort, string sTable, object oIt
         int bValid = TRUE;
         string sTemp = "";
         if(sTable == "iprp_spells")
+        {
             i = SkipLineSpells(i);
+            MaxValue = 540;
+        }
         else if(sTable == "itempropdef")
         {
             i = SkipLineItemprops(i);
@@ -782,7 +785,7 @@ void main()
                                     bAllow = FALSE;
                         }
                         if(bAllow)
-                            if(StringToInt(Get2DACache("prc_craft_gen_it", "Type", GetBaseItemType(oTarget))) == PRC_CRAFT_ITEM_TYPE_CASTSPELL)
+                            if(sFile != "" && StringToInt(Get2DACache("prc_craft_gen_it", "Type", GetBaseItemType(oTarget))) == PRC_CRAFT_ITEM_TYPE_CASTSPELL)
                                 bAllow = FALSE;
                         if(bAllow)
                         {
@@ -810,7 +813,9 @@ void main()
                             else
                             {
                                 PopulateList(oPC, PRCGetFileEnd(sFile), FALSE, sFile);
-                                //don't copy the item if we're using bioware crafting (it gets copied later)
+                            }
+                            if(GetPRCSwitch(PRC_CRAFTING_ARBITRARY) || sFile != "")
+                            {
                                 string sMaterial = GetStringLeft(GetTag(oTarget), 3);
                                 object oChest = GetCraftChest();
                                 string sTag = sMaterial + GetUniqueID() + PRC_CRAFT_UID_SUFFIX;
@@ -1365,6 +1370,7 @@ void main()
 
                             //do something different if we fail? retry?
                             AllowExit(DYNCONV_EXIT_FORCE_EXIT);
+                            break;
                             /*
                             //hardcoding of above for spells
                             sSubtype = "IPRP_SPELLS";

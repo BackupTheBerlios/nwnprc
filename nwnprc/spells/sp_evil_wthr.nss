@@ -64,10 +64,12 @@ void main()
                 effect eBuff = EffectAttackIncrease(1);
                        eBuff = EffectLinkEffects(eBuff, EffectDamageIncrease(1));
                        eBuff = EffectLinkEffects(eBuff, EffectSavingThrowIncrease(SAVING_THROW_ALL, 1));
+                       eBuff = EffectLinkEffects(eBuff, EffectVisualEffect(VFX_DUR_SPELLTURNING_R));
                        eBuff = SupernaturalEffect(eBuff);
                 effect eDebuff = EffectAttackDecrease(1);
                        eDebuff = EffectLinkEffects(eDebuff, EffectDamageDecrease(1));
                        eDebuff = EffectLinkEffects(eDebuff, EffectSavingThrowDecrease(SAVING_THROW_ALL, 1));
+                       eDebuff = EffectLinkEffects(eDebuff, EffectVisualEffect(VFX_DUR_SPELLTURNING_R));
                        eDebuff = SupernaturalEffect(eDebuff);
                 
                 //GetFirst
@@ -127,27 +129,30 @@ void RainOfBlood(object oObject, effect eBuff, effect eDebuff, float fDuration)
 {
         if (GetIsObjectValid(oObject))
         {
-                //Send message to PCs
-                if(GetIsPC(oObject))
-                {
-                        FloatingTextStringOnCreature("Blood pours from the sky.", oObject, FALSE);
-                }
-                
-                int nType = MyPRCGetRacialType(oObject);
-                
-                if (nType == RACIAL_TYPE_UNDEAD)
-                {
-                        //Apply bonus
-                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBuff, oObject, fDuration);
-                }
-                
-                else
-                //Apply penalty if alive
-                {
-                        if(nType != RACIAL_TYPE_CONSTRUCT && nType != RACIAL_TYPE_ELEMENTAL)
-                        {
-                                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDebuff, oObject, fDuration);                                       
-                        }
+                if (GetObjectType(oObject) == OBJECT_TYPE_CREATURE)
+                {  
+                	//Send message to PCs
+                	if(GetIsPC(oObject))
+                	{
+                	        FloatingTextStringOnCreature("Blood pours from the sky.", oObject, FALSE);
+                	}
+                	
+                	int nType = MyPRCGetRacialType(oObject);
+                	
+                	if (nType == RACIAL_TYPE_UNDEAD)
+                	{
+                	        //Apply bonus
+                	        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBuff, oObject, fDuration);
+                	}
+                	
+                	else
+                	//Apply penalty if alive
+                	{
+                	        if(nType != RACIAL_TYPE_CONSTRUCT && nType != RACIAL_TYPE_ELEMENTAL)
+                	        {
+                	                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDebuff, oObject, fDuration);                                       
+                	        }
+                	}
                 }
                 oObject = GetNextObjectInArea();
                 DelayCommand(0.01f, RainOfBlood(oObject, eBuff, eDebuff, fDuration));
@@ -163,12 +168,14 @@ void VioletRain(object oObject)
                 {
                         FloatingTextStringOnCreature("Drops of deep violet rain fall, severing the connection to the divine of those in the area.", oObject, FALSE);
                 }
-                
-                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_BRIGHT_LIGHT_INDIGO_PULSE_SLOW), oObject, HoursToSeconds(24));
+                if (GetObjectType(oObject) == OBJECT_TYPE_CREATURE)
+                {                
+                	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_BRIGHT_LIGHT_INDIGO_PULSE_SLOW), oObject, HoursToSeconds(24));
+                }
                 
                 oObject = GetNextObjectInArea();
                 
-                DelayCommand(0.1f, VioletRain(oObject));
+                DelayCommand(0.01f, VioletRain(oObject));
         }
 }                
 
@@ -180,12 +187,14 @@ void RainOfFrogsOrFish(object oObject)
                 {
                         FloatingTextStringOnCreature("Frogs and fish rain from the sky, pummeling all in the area.", oObject, FALSE);
                 }
-                
-                //Asign local obj to check Area
-                SetLocalObject(oObject,"PRC_RAIN_FROGS_FISH_AREA", GetArea(oObject));
-                
-                //Cast spell on target
-                AssignCommand(oObject, ActionCastSpellAtObject(SPELL_EVIL_WEATHER_RAIN_OF_FISH, oObject, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+                if (GetObjectType(oObject) == OBJECT_TYPE_CREATURE)
+                {
+                	//Asign local obj to check Area
+                	SetLocalObject(oObject,"PRC_RAIN_FROGS_FISH_AREA", GetArea(oObject));
+                	
+                	//Cast spell on target
+                	AssignCommand(oObject, ActionCastSpellAtObject(SPELL_EVIL_WEATHER_RAIN_OF_FISH, oObject, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+                }
                 
                 oObject = GetNextObjectInArea();
                 RainOfFrogsOrFish(oObject);

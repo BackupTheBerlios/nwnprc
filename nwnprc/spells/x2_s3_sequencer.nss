@@ -53,6 +53,7 @@ void main()
         if(nMode == 700) //Fired via OnHit:CastUniqueSpell
         {
             ClearAllActions();
+            DoDebug("Mode 700");
         }
         for (i = 1; i <= iMax; i++)
         {
@@ -60,16 +61,17 @@ void main()
             int nLevel = GetLocalInt(oItem, "X2_L_SPELLTRIGGER_L" + IntToString(i));
             int nMeta  = GetLocalInt(oItem, "X2_L_SPELLTRIGGER_M" + IntToString(i));
             int nDC    = GetLocalInt(oItem, "X2_L_SPELLTRIGGER_D" + IntToString(i));
-DoDebug("nMode = "+IntToString(nMode));
-DoDebug("nLevel = "+IntToString(nLevel));
-DoDebug("nMeta = "+IntToString(nMeta));
-DoDebug("nDC = "+IntToString(nDC));
+		DoDebug("nMode = "+IntToString(nMode));
+		DoDebug("nLevel = "+IntToString(nLevel));
+		DoDebug("nMeta = "+IntToString(nMeta));
+		DoDebug("nDC = "+IntToString(nDC));
             if (nSpellId>0)
             {
                 bSuccess = TRUE;
                 nSpellId --; // I added +1 to the spellID when the sequencer was created, so I have to remove it here
                 //modified to use the PRCs casterlevel override to cheatcast at the right level                
-                ActionCastSpell(nSpellId, nLevel,0, nDC, nMeta);  
+                ActionCastSpell(nSpellId, nLevel,0, nDC, nMeta);
+                DoDebug("Channel Spell Cast");
             }
         }
         if (!bSuccess)
@@ -79,6 +81,7 @@ DoDebug("nDC = "+IntToString(nDC));
         if(nMode == 700 //Fired via OnHit:CastUniqueSpell
             && GetLocalInt(oItem, "DuskbladeChannelDischarge")!=2)//and not a discharging duskblade
         {
+            DoDebug("Mode 700, Not a Duskblade Discharge");
             ActionAttack(GetAttackTarget());
             //clear the settings
             for (i = 1; i <= iMax; i++)
@@ -93,6 +96,7 @@ DoDebug("nDC = "+IntToString(nDC));
         else if(nMode == 700 //Fired via OnHit:CastUniqueSpell
             && GetLocalInt(oItem, "DuskbladeChannelDischarge")==2)//and is a discharging duskblade
         {
+            DoDebug("Mode 700, Duskblade Discharge");
             ActionAttack(GetAttackTarget());
             //clear the settings
             for (i = 1; i <= iMax; i++)

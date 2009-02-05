@@ -65,7 +65,7 @@ void BonusDomainRest(object oPC);
 //#include "prc_inc_clsfunc"
 #include "prc_alterations"
 #include "prc_getbest_inc"
-#include "prc_misc_const"
+#include "inc_dynconv"
 
 int GetBonusDomain(object oPC, int nSlot)
 {
@@ -143,7 +143,14 @@ void CastDomainSpell(object oPC, int nSlot, int nLevel)
         // set it so they can't cast again from that level
         SetLocalInt(oPC, "DomainCastSpell" + IntToString(nLevel), TRUE);
         DecrementRemainingSpellUses(oPC, nBurnSpell);
-        ActionCastSpell(nSpell);
+        // Special check for subradial spells
+        if (StringToInt(Get2DACache("spells", "SubRadSpell1", nSpell)) > 0)
+        {
+        	SetLocalInt(oPC, "DomainOrigSpell", nSpell);
+        	StartDynamicConversation("prc_domain_conv", oPC, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, oPC);
+        }
+        else
+        	ActionCastSpell(nSpell);
         return;
     }
 

@@ -1691,7 +1691,7 @@ if(DEBUG) DoDebug("x2_inc_spellhook pre-X2CastOnItemWasAllowed "+IntToString(nCo
     //casting from staffs uses caster DC calculations
     if(nContinue
        && GetIsObjectValid(oSpellCastItem)
-       && GetBaseItemType(oSpellCastItem) == BASE_ITEM_MAGICSTAFF
+       && (GetBaseItemType(oSpellCastItem) == BASE_ITEM_MAGICSTAFF || GetBaseItemType(oSpellCastItem) == BASE_ITEM_CRAFTED_STAFF)
        && GetPRCSwitch(PRC_STAFF_CASTER_LEVEL))
     {
         int nDC = 10 + StringToInt(lookup_spell_innate(nSpellID));

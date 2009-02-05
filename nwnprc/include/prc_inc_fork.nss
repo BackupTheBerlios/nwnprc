@@ -691,7 +691,7 @@ int GetWeaponSize(object oWeapon)
         case BASE_ITEM_CBLUDGWEAPON:
         case BASE_ITEM_CSLSHPRCWEAP:
         case BASE_ITEM_DWARVENWARAXE:
-        case 201:  //crafted magic staff
+        case BASE_ITEM_CRAFTED_STAFF:  //crafted magic staff
         case BASE_ITEM_ELF_THINBLADE:
         {
             bReturn = 3;

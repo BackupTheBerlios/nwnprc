@@ -633,7 +633,7 @@ int IPGetIsMeleeWeapon(object oItem)
       (nItem == BASE_ITEM_ELF_LIGHTBLADE) || // PRC weapons
       (nItem == BASE_ITEM_ELF_THINBLADE) ||
       (nItem == BASE_ITEM_ELF_COURTBLADE)
-      || (nItem == 201) //crafted staffs - BASE_ITEM_CRAFTED_STAFF
+      || (nItem == BASE_ITEM_CRAFTED_STAFF) //crafted staffs - BASE_ITEM_CRAFTED_STAFF
       || (nItem == 300) //CEP Trident
       || (nItem == 303) //CEP Sai
       || (nItem == 304) //CEP nunchaku

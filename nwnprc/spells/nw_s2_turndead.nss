@@ -28,6 +28,7 @@ Drow Judicator
 
 #include "prc_inc_domain"
 #include "prc_inc_turning"
+#include "prc_inc_clsfunc"
 
 /*
 //gets the number of class levels that count for turning
@@ -170,6 +171,7 @@ void main()
                 ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVFX, GetLocation(oCreated));
                 ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oCreated);
                 ApplyEffectToObject(DURATION_TYPE_INSTANT, eVFXCom, oCreated);
+                CorpseCrafter(OBJECT_SELF, oCreated);
             }  
             //cant be commanded, clean it up
             else

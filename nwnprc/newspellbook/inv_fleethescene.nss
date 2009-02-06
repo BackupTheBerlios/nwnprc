@@ -99,7 +99,7 @@ void CleanCopy(object oImage)
     TakeGoldFromCreature(GetGold(oImage), oImage, TRUE);
 }
 
-void CreateDecoy()
+void CreateDecoy(location lLocation)
 {
     int iImages = 1;
     int nDuration = 1;
@@ -115,7 +115,7 @@ void CreateDecoy()
            eNoSpell = SupernaturalEffect(eNoSpell);
     
     // make, then clean up, first image and copy it, not the PC for subsequent images
-    object oImage = CopyObject(OBJECT_SELF, GetLocation(OBJECT_SELF), OBJECT_INVALID, sImage);
+    object oImage = CopyObject(OBJECT_SELF, lLocation, OBJECT_INVALID, sImage);
     CleanCopy(oImage);
     
     // images will have only 1 HP
@@ -144,6 +144,7 @@ void main()
 
     /* Main spellscript */
     object oCaster   = OBJECT_SELF;
+    location lLocation = GetSpellTargetLocation();
     int nCasterLvl   = GetInvokerLevel(oCaster, GetInvokingClass());
     int nSpellID     = PRCGetSpellId();
     int bUseDirDist  = nSpellID == INVOKE_FLEE_THE_SCENE_DIRDIST;
@@ -151,9 +152,9 @@ void main()
 
     DimensionDoor(oCaster, nCasterLvl, nSpellID, "", DIMENSIONDOOR_SELF, bUseDirDist);
     if(!bUseDirDist)
-        CreateDecoy();
+        CreateDecoy(lLocation);
     else
-    DelayCommand(10.0, CreateDecoy());
+    DelayCommand(10.0, CreateDecoy(lLocation));
     
     DelayCommand(10.1, DeleteLocalInt(oCaster, "FleeTheScene"));
 

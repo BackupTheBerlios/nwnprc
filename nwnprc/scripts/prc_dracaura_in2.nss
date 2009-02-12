@@ -81,7 +81,7 @@ void main()
                  }
               else
                  {
-                 effect eFastHeal = ExtraordinaryEffect( EffectRegenerate(nShamanBonus, TurnsToSeconds(1)) );
+                 effect eFastHeal = ExtraordinaryEffect( EffectRegenerate(nShamanBonus, 6.0) );
                  ApplyEffectToObject(DURATION_TYPE_PERMANENT, eFastHeal, oTarget);
                  SetLocalInt(PCShaman,"SecondDraconicAura",1);
                  }

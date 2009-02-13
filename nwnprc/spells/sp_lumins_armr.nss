@@ -105,7 +105,7 @@ void main()
                         return;
                 }
 
-                effect eArmor = EffectACIncrease(nArmor, AC_DEFLECTION_BONUS, AC_VS_DAMAGE_TYPE_ALL);
+                effect eArmor = EffectACIncrease(nArmor, AC_ARMOUR_ENCHANTMENT_BONUS, AC_VS_DAMAGE_TYPE_ALL);
                        eArmor = EffectLinkEffects(eArmor, ePenalty);
                        eArmor = EffectLinkEffects(eArmor, eLight);
 

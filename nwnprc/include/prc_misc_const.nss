@@ -37,6 +37,8 @@ const int AOE_MOB_MOUNTAIN_AVALANCHE            = 167;
 const int VFX_MOB_DAYLIGHT                      = 109;
 const int VFX_MOB_CLOUDY_CONJURATION            = 99;
 const int AOE_PER_CRACKLEPOWDER                 = 98;
+const int AOE_MOB_LUMINOUS_ARMOR                = 97;
+const int VFX_PER_GREEN_FOG                     = 96;
 
 // Psionic Area of Effects
 const int AOE_PER_PSIGREASE                     = 131;

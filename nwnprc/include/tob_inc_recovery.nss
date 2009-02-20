@@ -426,7 +426,7 @@ void ClearReadiedManeuvers(object oPC, int nList)
     {
         // Clear them all
         DeleteLocalInt(oPC, "ManeuverReadied" + IntToString(nList) + IntToString(i));
-        }
+    }
 }
 
 void GrantWithheldManeuver(object oPC, int nList, int nMoveId = -1)
@@ -496,7 +496,7 @@ int GetIsManeuverGranted(object oPC, int nMoveId)
             if(DEBUG) DoDebug("tob_inc_recovery: GetIsManeuverGranted: " + IntToString(nMoveId));
             return TRUE;
         }
-        }
+    }
 
     return FALSE;
 }

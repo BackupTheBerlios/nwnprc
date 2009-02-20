@@ -195,3 +195,71 @@ int PRCDoResistSpell(object oCaster, object oTarget, int nEffCasterLvl=0, float 
 
     return nResist;
 }
+
+//Returns the maximum number of spellfire levels oPC can store
+int SpellfireMax(object oPC)
+{
+    //can't absorb spells without feat
+    if(!GetHasFeat(FEAT_SPELLFIRE_WIELDER, oPC)) return 0;
+
+    int nCON = GetAbilityScore(oPC, ABILITY_CONSTITUTION);
+    int nStorage = ((GetLevelByClass(CLASS_TYPE_SPELLFIRE, oPC) + 1) / 2) + 1;
+    if(nStorage > 5) nStorage = 5;
+    return nCON * nStorage;
+}
+
+//Increases the number of stored spellfire levels on a creature
+void AddSpellfireLevels(object oPC, int nLevels)
+{
+    int nMax = SpellfireMax(oPC);
+    int nStored = GetPersistantLocalInt(oPC, "SpellfireLevelStored");
+    nStored += nLevels;
+    if(nStored > nMax) nStored = nMax;  //capped
+    SetPersistantLocalInt(oPC, "SpellfireLevelStored", nStored);
+}
+
+//Checks if spell target can absorb spells by being a spellfire wielder
+int CheckSpellfire(object oCaster, object oTarget, int bFriendly = FALSE)
+{
+    //can't absorb spells without feat
+    if(!GetHasFeat(FEAT_SPELLFIRE_WIELDER, oTarget)) return 0;
+
+    //Can't absorb own spells/powers if switch is set
+    if(GetPRCSwitch(PRC_SPELLFIRE_DISALLOW_CHARGE_SELF) && oTarget == oCaster) return 0;
+
+    //abilities rely on access to weave
+    if(GetHasFeat(FEAT_SHADOWWEAVE, oTarget)) return 0;
+
+    int nSpellID = PRCGetSpellId();
+    if(!bFriendly && GetLocalInt(oCaster, "IsAOE_" + IntToString(nSpellID)))
+        return 0; //can't absorb hostile AOE spells
+
+    int nSpellfireLevel = GetPersistantLocalInt(oTarget, "SpellfireLevelStored");
+    if(DEBUG) DoDebug("CheckSpellfire: " + IntToString(nSpellfireLevel) + " levels stored", oTarget);
+
+    int nMax = SpellfireMax(oTarget);
+
+    if(DEBUG) DoDebug("CheckSpellfire: Maximum " + IntToString(nMax), oTarget);
+
+    //can't absorb any more spells, sanity check
+    if(nSpellfireLevel >= nMax) return 0;
+
+    //increasing stored levels
+    int nSpellLevel = GetLocalInt(oCaster, "PRC_CurrentManifest_PowerLevel");   //replicates GetPowerLevel(oCaster);
+    if(!nSpellLevel)    //not a power                       //avoids compiler problems
+    {                                                       //with includes
+        string sInnate = Get2DACache("spells", "Innate", nSpellID);//lookup_spell_innate(nSpellID);
+        if(sInnate == "") return 0; //no innate level, unlike cantrips
+        nSpellLevel = StringToInt(sInnate);
+    }
+    /*
+    string sInnate = Get2DACache("spells", "Innate", nSpellID);
+    if(sInnate == "") return 0; //no innate level, unlike cantrips
+    int nSpellLevel = StringToInt(sInnate);
+    */
+
+    AddSpellfireLevels(oTarget, nSpellLevel);
+
+    //absorbed
+    return 1;
+}

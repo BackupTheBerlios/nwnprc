@@ -7,7 +7,7 @@ const string MES_NOT_ENOUGH_GOLD        = "does not have the required gold";
 const string MES_NOT_ENOUGH_XP          = "does not have the required experience";
 const string MES_NOT_ENOUGH_SKILL       = "does not have the required skill";
 const string MES_NOT_HAVE_REQ_FEATS     = "does not have the required knowledge";
-const string MES_CANNOT_RESEARCH_HERE   = "is not allowed to pursue magical research here.";
+const string MES_CANNOT_RESEARCH_HERE   = "does not have the Epic Spellcasting feat or does not have enough levels in the appropriate classes.";
 const string MES_RESEARCH_SUCCESS       = "has successfully researched an Epic spell! Congratulations! ";
 const string MES_RESEARCH_FAILURE       = "has not found success in their research...";
 //seeds

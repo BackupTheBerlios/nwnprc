@@ -1,6 +1,6 @@
 // Added compatibility for PRC base classes
 #include "inc_debug"
-#include "prc_class_const""
+#include "prc_class_const"
 
 void main()
 {

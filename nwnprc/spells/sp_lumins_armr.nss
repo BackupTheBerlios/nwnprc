@@ -81,8 +81,9 @@ void main()
                 //VFX
                 ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_SUPER_HEROISM), oTarget);
 
-                //Light as a daylight spell
+                //Light as a daylight spell, AoE for attack penalty
                 effect eLight = EffectLinkEffects(EffectVisualEffect(VFX_DUR_LIGHT_WHITE_20), EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
+                eLight = EffectLinkEffects(eLight, EffectAreaOfEffect(AOE_MOB_LUMINOUS_ARMOR));
 
                 //-4 penalty to enemy attacks
                 effect ePenalty = EffectACIncrease(4, AC_DODGE_BONUS, AC_VS_DAMAGE_TYPE_ALL);

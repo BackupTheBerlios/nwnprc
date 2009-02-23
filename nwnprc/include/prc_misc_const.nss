@@ -39,6 +39,10 @@ const int VFX_MOB_CLOUDY_CONJURATION            = 99;
 const int AOE_PER_CRACKLEPOWDER                 = 98;
 const int AOE_MOB_LUMINOUS_ARMOR                = 97;
 const int VFX_PER_GREEN_FOG                     = 96;
+const int VFX_PER_RAIN_OF_BLOOD                 = 95;
+const int VFX_PER_RAIN_OF_FROGS                 = 94;
+const int VFX_PER_VIOLET_RAIN                   = 93;
+
 
 // Psionic Area of Effects
 const int AOE_PER_PSIGREASE                     = 131;

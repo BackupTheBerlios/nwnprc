@@ -175,9 +175,8 @@ void EnergyCurrentHB(struct manifestation manif, struct energy_adjustments enAdj
     // Check expiration
     if(!GetLocalInt(manif.oManifester, "PRC_Power_EnergyCurrent_ConcentrationBroken")                   && // The manifester's concentration hasn't been broken due to damage
        nBeatsRemaining-- > 0                                                                            && // The power's duration hasn't run out yet
-       !PRCGetDelayedSpellEffectsExpired(manif.nSpellID, manif.oManifester, manif.oManifester)           && // Not dispelled
-       !GetBreakConcentrationCheck(manif.oManifester)                                                   && // The manifester isn't doing anything that breaks their concentration
-       GetDistanceBetweenLocations(lManifesterOld, GetLocation(manif.oManifester)) <= FeetToMeters(5.0f)   // And the manifester hasn't moved too far to break concentration
+       !PRCGetDelayedSpellEffectsExpired(manif.nSpellID, manif.oManifester, manif.oManifester)          && // Not dispelled
+       !GetBreakConcentrationCheck(manif.oManifester)                                                      // The manifester isn't doing anything that breaks their concentration
        )
     {
         location lManifester = GetLocation(manif.oManifester);

@@ -96,10 +96,9 @@ void main()
 void DoDrain(struct manifestation manif, location lManifesterOld, object oTarget)
 {
     // Check expiration
-    if(!PRCGetDelayedSpellEffectsExpired(manif.nSpellID, oTarget, manif.oManifester)                     && // No dispel or duration expiration
+    if(!PRCGetDelayedSpellEffectsExpired(manif.nSpellID, oTarget, manif.oManifester)                    && // No dispel or duration expiration
        GetCurrentPowerPoints(oTarget) != 0                                                              && // The target hasn't run out of PP yet
-       !GetBreakConcentrationCheck(manif.oManifester)                                                   && // The manifester's concentration hasn't been broken
-       GetDistanceBetweenLocations(lManifesterOld, GetLocation(manif.oManifester)) <= FeetToMeters(5.0f)   // And the manifester hasn't moved too far to break concentration
+       !GetBreakConcentrationCheck(manif.oManifester)                                                      // The manifester's concentration hasn't been broken
        )
     {
         // Determine amount of PP drained

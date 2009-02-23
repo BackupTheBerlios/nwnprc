@@ -54,49 +54,61 @@ void main()
         //Rain of Blood  -1 to attack, damage, saves and checks living, +1 undead
         if (nSpell == SPELL_EVIL_WEATHER_RAIN_OF_BLOOD)
         {
+                FloatingTextStringOnCreature("Thick drops of blood pour from the sky.", oPC, TRUE);
+                
+                //Fog  
+                int nOrigSunFog = GetFogColor(FOG_TYPE_SUN,oArea);
+                int nOrigMoonFog = GetFogColor(FOG_TYPE_MOON,oArea);
+                int nOrigDayFogAmt = GetFogAmount(FOG_TYPE_SUN, oArea);
+                int nOrigMoonFogAmt = GetFogAmount(FOG_TYPE_MOON, oArea);
+                SetFogColor(FOG_TYPE_ALL, FOG_COLOR_RED, oArea);
+                SetFogAmount(FOG_TYPE_ALL,1,oArea);
+                
+                //Schedule reset
+                DelayCommand(fDuration, SetFogColor(FOG_TYPE_SUN, nOrigSunFog, oArea));
+                DelayCommand(fDuration, SetFogColor(FOG_TYPE_MOON, nOrigMoonFog, oArea));
+                DelayCommand(fDuration, SetFogAmount(FOG_TYPE_SUN, nOrigDayFogAmt, oArea));
+                DelayCommand(fDuration, SetFogAmount(FOG_TYPE_MOON, nOrigMoonFogAmt, oArea));
+                
                 //Change to rain
                 SetWeather(oArea, WEATHER_RAIN);                
                 DelayCommand(fDuration, SetWeather(oArea, nWeather));
                 
-                //Spell VFX
-                
-                //Define effects
-                effect eBuff = EffectAttackIncrease(1);
-                       eBuff = EffectLinkEffects(eBuff, EffectDamageIncrease(1));
-                       eBuff = EffectLinkEffects(eBuff, EffectSavingThrowIncrease(SAVING_THROW_ALL, 1));
-                       eBuff = EffectLinkEffects(eBuff, EffectVisualEffect(VFX_DUR_SPELLTURNING_R));
-                       eBuff = SupernaturalEffect(eBuff);
-                effect eDebuff = EffectAttackDecrease(1);
-                       eDebuff = EffectLinkEffects(eDebuff, EffectDamageDecrease(1));
-                       eDebuff = EffectLinkEffects(eDebuff, EffectSavingThrowDecrease(SAVING_THROW_ALL, 1));
-                       eDebuff = EffectLinkEffects(eDebuff, EffectVisualEffect(VFX_DUR_SPELLTURNING_R));
-                       eDebuff = SupernaturalEffect(eDebuff);
-                
-                //GetFirst
-                object oObject = GetFirstObjectInArea(oArea);
-                
-                //Loop
-                RainOfBlood(oObject, eBuff, eDebuff, fDuration);
+                ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, EffectAreaOfEffect(VFX_PER_RAIN_OF_BLOOD), GetLocation(oPC), fDuration);
         }
         
         //Violet Rain   No divine spells/abilities for 24 hours
         if (nSpell == SPELL_EVIL_WEATHER_VIOLET_RAIN)
         {
+                //Notification
+                FloatingTextStringOnCreature("Drops of deep violet rain fall, severing the connection to the divine of those in the area.", oPC, TRUE);
+                
+                //Fog  
+                int nOrigSunFog = GetFogColor(FOG_TYPE_SUN,oArea);
+                int nOrigMoonFog = GetFogColor(FOG_TYPE_MOON,oArea);
+                int nOrigDayFogAmt = GetFogAmount(FOG_TYPE_SUN, oArea);
+                int nOrigMoonFogAmt = GetFogAmount(FOG_TYPE_MOON, oArea);
+                SetFogColor(FOG_TYPE_ALL, 800080, oArea);
+                SetFogAmount(FOG_TYPE_ALL,1,oArea);
+                
+                //Schedule reset
+                DelayCommand(fDuration, SetFogColor(FOG_TYPE_SUN, nOrigSunFog, oArea));
+                DelayCommand(fDuration, SetFogColor(FOG_TYPE_MOON, nOrigMoonFog, oArea));
+                DelayCommand(fDuration, SetFogAmount(FOG_TYPE_SUN, nOrigDayFogAmt, oArea));
+                DelayCommand(fDuration, SetFogAmount(FOG_TYPE_MOON, nOrigMoonFogAmt, oArea));
+                
                 //Change to rain
                 SetWeather(oArea, WEATHER_RAIN);                                
-                DelayCommand(fDuration, SetWeather(oArea, nWeather));
+                DelayCommand(fDuration, SetWeather(oArea, nWeather));    
                 
-                //GetFirst
-                object oObject = GetFirstObjectInArea(oArea);
-                                
-                VioletRain(oObject);               
+                ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, EffectAreaOfEffect(VFX_PER_VIOLET_RAIN), GetLocation(oPC), fDuration);
         }       
                 
         //Green Fog
         if (nSpell == SPELL_EVIL_WEATHER_GREEN_FOG)
         {
                 //Duration
-                float fDur = IntToFloat(d6(600));
+                float fDuration = IntToFloat(d6(600));
                 
                 //Fog                
                 int nOrigSunFog = GetFogColor(FOG_TYPE_SUN,oArea);
@@ -107,14 +119,14 @@ void main()
                 SetFogAmount(FOG_TYPE_ALL,1,oArea);
                               
                 //Schedule reset
-                DelayCommand(fDur, SetFogColor(FOG_TYPE_SUN, nOrigSunFog, oArea));
-                DelayCommand(fDur, SetFogColor(FOG_TYPE_MOON, nOrigMoonFog, oArea));
-                DelayCommand(fDur, SetFogAmount(FOG_TYPE_SUN, nOrigDayFogAmt, oArea));
-                DelayCommand(fDur, SetFogAmount(FOG_TYPE_MOON, nOrigMoonFogAmt, oArea));
+                DelayCommand(fDuration, SetFogColor(FOG_TYPE_SUN, nOrigSunFog, oArea));
+                DelayCommand(fDuration, SetFogColor(FOG_TYPE_MOON, nOrigMoonFog, oArea));
+                DelayCommand(fDuration, SetFogAmount(FOG_TYPE_SUN, nOrigDayFogAmt, oArea));
+                DelayCommand(fDuration, SetFogAmount(FOG_TYPE_MOON, nOrigMoonFogAmt, oArea));
                 
                 //AoE
                 effect eFog = EffectAreaOfEffect(VFX_PER_GREEN_FOG);
-                ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eFog, GetLocation(oPC), fDur);
+                ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eFog, GetLocation(oPC), fDuration);
         }
         
         //Rain of Frogs or Fish
@@ -124,97 +136,15 @@ void main()
                 SetWeather(oArea, WEATHER_RAIN);                
                 DelayCommand(fDuration, SetWeather(oArea, nWeather));
                 
-                //GetFirst
-                object oObject = GetFirstObjectInArea(oArea);
-                
-                RainOfFrogsOrFish(oObject);               
+                ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, EffectAreaOfEffect(VFX_PER_RAIN_OF_FROGS), GetLocation(oPC), fDuration);
         }
         
-        SPEvilShift(oPC);
-        
+        SPEvilShift(oPC);        
         //Corrupt spells get mandatory 10 pt evil adjustment, regardless of switch
         AdjustAlignment(oPC, ALIGNMENT_EVIL, 10);
         
         //Corruption cost
-        int nCost = d6(3);
-        
-        DoCorruptionCost(oPC, ABILITY_CONSTITUTION, nCost, 0);
-        
+        int nCost = d6(3);        
+        DoCorruptionCost(oPC, ABILITY_CONSTITUTION, nCost, 0);      
         PRCSetSchool();
 }
-
-void RainOfBlood(object oObject, effect eBuff, effect eDebuff, float fDuration)
-{
-        if (GetIsObjectValid(oObject))
-        {
-                if (GetObjectType(oObject) == OBJECT_TYPE_CREATURE)
-                {  
-                        //Send message to PCs
-                        if(GetIsPC(oObject))
-                        {
-                                FloatingTextStringOnCreature("Blood pours from the sky.", oObject, FALSE);
-                        }
-                        
-                        int nType = MyPRCGetRacialType(oObject);
-                        
-                        if (nType == RACIAL_TYPE_UNDEAD)
-                        {
-                                //Apply bonus
-                                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBuff, oObject, fDuration);
-                        }
-                        
-                        else
-                        //Apply penalty if alive
-                        {
-                                if(nType != RACIAL_TYPE_CONSTRUCT && nType != RACIAL_TYPE_ELEMENTAL)
-                                {
-                                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDebuff, oObject, fDuration);                                       
-                                }
-                        }
-                }
-                oObject = GetNextObjectInArea();
-                DelayCommand(0.01f, RainOfBlood(oObject, eBuff, eDebuff, fDuration));
-        }        
-}        
-
-void VioletRain(object oObject)
-{
-        if(GetIsObjectValid(oObject))
-        {
-                //Send message to PCs
-                if(GetIsPC(oObject))
-                {
-                        FloatingTextStringOnCreature("Drops of deep violet rain fall, severing the connection to the divine of those in the area.", oObject, FALSE);
-                }
-                if (GetObjectType(oObject) == OBJECT_TYPE_CREATURE)
-                {                
-                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_BRIGHT_LIGHT_INDIGO_PULSE_SLOW), oObject, HoursToSeconds(24));
-                }
-                
-                oObject = GetNextObjectInArea();
-                
-                DelayCommand(0.01f, VioletRain(oObject));
-        }
-}                
-
-void RainOfFrogsOrFish(object oObject)
-{
-        if(GetIsObjectValid(oObject))
-        {
-                if(GetIsPC(oObject))
-                {
-                        FloatingTextStringOnCreature("Frogs and fish rain from the sky, pummeling all in the area.", oObject, FALSE);
-                }
-                if (GetObjectType(oObject) == OBJECT_TYPE_CREATURE)
-                {
-                        //Asign local obj to check Area
-                        SetLocalObject(oObject,"PRC_RAIN_FROGS_FISH_AREA", GetArea(oObject));
-                        
-                        //Cast spell on target
-                        AssignCommand(oObject, ActionCastSpellAtObject(SPELL_EVIL_WEATHER_RAIN_OF_FISH, oObject, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
-                }
-                
-                oObject = GetNextObjectInArea();
-                RainOfFrogsOrFish(oObject);
-        }
-}     

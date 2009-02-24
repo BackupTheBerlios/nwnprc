@@ -56,7 +56,7 @@ int MyPRCGetRacialType(object oCreature)
     // Race pack racial type feats
     if(GetHasFeat(FEAT_OUTSIDER, oCreature))
         return RACIAL_TYPE_OUTSIDER;
-    if(GetHasFeat(FEAT_UNDEAD, oCreature))
+    if(GetHasFeat(FEAT_UNDEAD_HD, oCreature))
         return RACIAL_TYPE_UNDEAD;
     if(GetHasFeat(FEAT_ELEMENTAL, oCreature))
         return RACIAL_TYPE_ELEMENTAL;

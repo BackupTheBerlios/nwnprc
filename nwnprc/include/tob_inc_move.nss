@@ -479,7 +479,7 @@ struct maneuver EvaluateManeuver(object oInitiator, object oTarget)
         FloatingTextStringOnCreature(GetName(oInitiator) + " is recovering Warblade maneuvers.", oInitiator, FALSE);
     }
     // Is the maneuver granted, and is the class a Crusader
-    if (GetIsManeuverGranted(oInitiator, move.nMoveId) && nClass == CLASS_TYPE_CRUSADER)
+    if (!GetIsManeuverGranted(oInitiator, move.nMoveId) && nClass == CLASS_TYPE_CRUSADER)
     {
         if(DEBUG) DoDebug("tob_inc_move: GetIsManeuverGranted");
         move.bCanManeuver = FALSE;

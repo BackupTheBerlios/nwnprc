@@ -244,6 +244,7 @@ int GetMaxReadiedCount(object oPC, int nList)
     int nMaxReadied = StringToInt(Get2DACache(sPsiFile, "ManeuversReadied", nLevel-1));
     // Add in the custom modifier
     nMaxReadied += GetReadiedManeuversModifier(oPC, nList);
+    if (nList == MANEUVER_LIST_SWORDSAGE && GetHasFeat(FEAT_EXTRA_GRANTED_MANEUVER, oPC)) nMaxReadied += 1;
     if(DEBUG) DoDebug("tob_inc_recovery: MaxManeuvers Readied: " +IntToString(nMaxReadied));
 
     return nMaxReadied;
@@ -343,9 +344,9 @@ void RecoverExpendedManeuvers(object oPC, int nList)
     int i = 1;
     // 25 is the max possible for any class (Swordsage)
         for(i = 0; i < 25; i++)
-    {
-        // Clear them all
-        DeleteLocalInt(oPC, "ManeuverExpended" + IntToString(nList) + IntToString(i));
+    	{
+        	// Clear them all
+        	DeleteLocalInt(oPC, "ManeuverExpended" + IntToString(nList) + IntToString(i));
         }
         // Do Grant/Withheld Maneuvers whenever this is called on a Crusader
         if (nList == MANEUVER_LIST_CRUSADER)
@@ -370,7 +371,7 @@ void RecoverManeuver(object oPC, int nList, int nMoveId)
             DeleteLocalInt(oPC, "ManeuverExpended" + IntToString(nList) + IntToString(i));
             if(DEBUG) DoDebug("tob_inc_recovery: Recovering Maneuver: " + IntToString(nMoveId));
         }
-        }
+    }
 }
 
 int GetIsWarbladeRecoveryRound(object oPC)
@@ -391,6 +392,7 @@ void GrantManeuvers(object oPC, int nList)
     // 2das start at Row 0
     int nGranted = StringToInt(Get2DACache(sPsiFile, "ManeuversGranted", nLevel-1));
     int nMaxReadied = StringToInt(Get2DACache(sPsiFile, "ManeuversReadied", nLevel-1));
+    if (GetHasFeat(FEAT_EXTRA_GRANTED_MANEUVER, oPC)) nGranted += 1;
     // is the max possible for a Crusader
         for(i = 1; i < nMaxReadied; i++)
     {

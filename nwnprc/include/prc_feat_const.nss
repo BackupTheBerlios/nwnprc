@@ -2850,7 +2850,7 @@ const int FEAT_FOCUSED_LEXICON_VERMIN                   = 2154;
 
 const int FEAT_EXTRA_GRANTED_MANEUVER                   = 4096;
 const int FEAT_EXTRA_READIED_MANEUVER                   = 4097;
-const int FEAT_ADAPTIVE_STYLE                           = 4098;
+const int FEAT_ADAPTIVE_STYLE                           = 24075;
 const int FEAT_BLADE_MEDITATION                         = 4099;
 const int FEAT_DESERT_FIRE                              = 4178;
 const int FEAT_DESERT_WIND_DODGE                        = 4179;

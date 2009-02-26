@@ -55,7 +55,7 @@ void main()
     }
 
     //calculate DC for essence effects
-    int nBlastLvl = min((GetLevelByClass(CLASS_TYPE_WARLOCK, oPC) + 1) / 2, 9);
+    int nBlastLvl = min((GetLevelByClass(CLASS_TYPE_WARLOCK, oPC) + GetInvocationPRCLevels(oPC) + 1) / 2, 9);
     if(DEBUG) DoDebug("inv_eldtch_shape: Calculating DC");
     nBlastLvl = max(nShapeLevel, max(max(GetLocalInt(oPC, "EssenceLevel"), GetLocalInt(oPC, "EssenceLevel2")), nBlastLvl));
     int nDC = 10 + nBlastLvl + GetAbilityModifier(ABILITY_CHARISMA);
@@ -72,12 +72,15 @@ void main()
     effect eDoom = EffectVisualEffect(VFX_IMP_PULSE_NEGATIVE);
 
     int iAttackRoll = 1;    //placeholder
-    if(GetLevelByClass(CLASS_TYPE_WARLOCK, oPC) < 13)
-        nDmgDice = (GetLevelByClass(CLASS_TYPE_WARLOCK, oPC) + 1) / 2;
-    else if(GetLevelByClass(CLASS_TYPE_WARLOCK, oPC) < 20)
-        nDmgDice = (GetLevelByClass(CLASS_TYPE_WARLOCK, oPC) + 7) / 3;
+    int nInvLevel;
+    nInvLevel = (GetLevelByClass(CLASS_TYPE_WARLOCK, oPC) + GetInvocationPRCLevels(oPC));
+
+    if(nInvLevel < 13)
+        nDmgDice = (nInvLevel + 1) / 2;
+    else if(nInvLevel < 20)
+        nDmgDice = (nInvLevel + 7) / 3;
     else
-        nDmgDice = 9 + (GetLevelByClass(CLASS_TYPE_WARLOCK, oPC) - 20) / 2;
+        nDmgDice = 9 + (nInvLevel - 20) / 2;
 
     //check for the epic feats
     if(GetHasFeat(FEAT_EPIC_ELDRITCH_BLAST_I))

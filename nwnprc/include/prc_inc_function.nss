@@ -334,6 +334,28 @@ void EvalPRCFeats(object oPC)
     // Gathers all the calls to SetBaseAttackBonus() to one place
     // Must be after all evaluationscripts that need said function.
     ExecuteScript("prc_bab_caller", oPC);
+    
+    // Classes an invoker can take
+    if(GetLevelByClass(CLASS_TYPE_MAESTER,              oPC) ||
+       GetLevelByClass(CLASS_TYPE_ACOLYTE,              oPC) ||
+       GetLevelByClass(CLASS_TYPE_ENLIGHTENEDFIST,      oPC) ||
+       GetLevelByClass(CLASS_TYPE_DISCIPLE_OF_ASMODEUS, oPC))
+       {       
+           //Set arcane or invocation bonus caster levels   
+           
+           //Arcane caster first class position, take arcane
+           if(GetFirstArcaneClassPosition(oPC) == 1)
+               SetLocalInt(oPC, "INV_Caster", 1);
+           //Invoker first class position. take invoker
+           else if(GetClassByPosition(1, oPC) == CLASS_TYPE_WARLOCK || GetClassByPosition(1, oPC) == CLASS_TYPE_DRAGONFIRE_ADEPT)
+               SetLocalInt(oPC, "INV_Caster", 2); 
+           //Non arcane first class position, invoker second.  Take invoker
+           else if(GetFirstArcaneClassPosition(oPC) ==0 && (GetClassByPosition(2, oPC) == CLASS_TYPE_WARLOCK || GetClassByPosition(2, oPC) == CLASS_TYPE_DRAGONFIRE_ADEPT))
+               SetLocalInt(oPC, "INV_Caster", 2); 
+           //last cas would be Non-invoker first class position, arcane second position. take arcane.
+           else
+               SetLocalInt(oPC, "INV_Caster", 1);
+       }
 }
 
 void DeletePRCLocalInts(object oSkin)

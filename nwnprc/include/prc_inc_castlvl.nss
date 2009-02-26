@@ -507,22 +507,27 @@ int GetArcanePRCLevels(object oCaster)
            +  GetLevelByClass(CLASS_TYPE_RED_WIZARD,      oCaster)
            +  GetLevelByClass(CLASS_TYPE_DIABOLIST,       oCaster)
            +  GetLevelByClass(CLASS_TYPE_CEREBREMANCER,   oCaster)
-           +  GetLevelByClass(CLASS_TYPE_MAESTER,         oCaster)
-           +  GetLevelByClass(CLASS_TYPE_ENLIGHTENEDFIST, oCaster)
            +  GetLevelByClass(CLASS_TYPE_VIRTUOSO,        oCaster)
            +  GetLevelByClass(CLASS_TYPE_WAR_WIZARD_OF_CORMYR, oCaster)
            +  GetLevelByClass(CLASS_TYPE_DRAGONHEART_MAGE, oCaster)
 
-           +  (GetLevelByClass(CLASS_TYPE_ACOLYTE,            oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_BLADESINGER,        oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER,   oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_PALEMASTER,         oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_HATHRAN,            oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_SPELLSWORD,         oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT_A, oCaster) + 1) / 2
-           +  (GetLevelByClass(CLASS_TYPE_DISCIPLE_OF_ASMODEUS, oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_TALON_OF_TIAMAT, oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_JUDICATOR, oCaster) + 1) / 3;
+           
+    //The following changes are to prevent a mage/invoker from gaining bonus caster levels in both base classes.
+    
+    if(GetLocalInt(oCaster, "INV_Caster") == 1 || 
+            (!GetLevelByClass(CLASS_TYPE_WARLOCK, oCaster) && !GetLevelByClass(CLASS_TYPE_DRAGONFIRE_ADEPT, oCaster)))
+        nArcane += (GetLevelByClass(CLASS_TYPE_ACOLYTE,              oCaster) + 1) / 2
+                +  (GetLevelByClass(CLASS_TYPE_DISCIPLE_OF_ASMODEUS, oCaster) + 1) / 2
+                +   GetLevelByClass(CLASS_TYPE_ENLIGHTENEDFIST,      oCaster)
+                +   GetLevelByClass(CLASS_TYPE_MAESTER,              oCaster);
 
 
     /* oozemaster levels count towards arcane caster level if:

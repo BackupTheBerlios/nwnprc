@@ -12,13 +12,14 @@
 
 #include "prc_alterations"
 #include "prc_inc_breath"
+#include "inv_inc_invfunc"
 
 void main()
 {
 	object oPC = OBJECT_SELF;
 	int nClass = GetLevelByClass(CLASS_TYPE_DRAGONFIRE_ADEPT, oPC);
 	//PrC arcane spellcasting levels grant damage dice and DC
-	nClass += GetArcanePRCLevels(oPC);
+	nClass += GetInvocationPRCLevels(oPC);
 	int nDice = (nClass + 1) / 2;
 	int nSaveDCBonus = nClass / 2;
 	float fRange = nClass < 10 ? 15.0 : 30.0;

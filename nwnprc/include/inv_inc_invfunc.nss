@@ -107,7 +107,7 @@ string GetInvocationName(int nSpellId);
  * @param oCreature Creature to calculate added invoker levels for
  * @return          The number of invoker levels gained
  */
-int GetInvocationPRCLevels(object oCreature);
+int GetInvocationPRCLevels(object oCaster);
 
 /**
  * Determines which of the character's classes is their first invocation casting
@@ -158,7 +158,8 @@ int GetInvokerLevel(object oInvoker, int nSpecificClass = CLASS_TYPE_INVALID, in
     int nLevel;
     int nTotalHD = GetHitDice(oInvoker);
     int nAdjust = GetLocalInt(oInvoker, PRC_CASTERLEVEL_ADJUSTMENT);
-
+    
+    nLevel = GetLevelByClass(GetFirstInvocationClass(oInvoker), oInvoker);
     // If this is set, return the user's HD
     if (nUseHD) return GetHitDice(oInvoker);
 
@@ -248,13 +249,16 @@ string GetInvocationName(int nSpellId)
         return GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", nSpellId)));
 }
 
-int GetInvocationPRCLevels(object oCreature)
+int GetInvocationPRCLevels(object oCaster)
 {
     int nLevel = 0;
     
-    //arcane spellcasting levels boost invocations
-    nLevel += GetArcanePRCLevels(oCreature);
-
+    //_some_ arcane spellcasting levels boost invocations
+    if (GetLocalInt(oCaster, "INV_Caster") == 2)
+    	nLevel += (GetLevelByClass(CLASS_TYPE_ACOLYTE,              oCaster) + 1) / 2
+    	       +  (GetLevelByClass(CLASS_TYPE_DISCIPLE_OF_ASMODEUS, oCaster) + 1) / 2
+    	       +   GetLevelByClass(CLASS_TYPE_ENLIGHTENEDFIST,      oCaster)
+    	       +   GetLevelByClass(CLASS_TYPE_MAESTER,              oCaster);
 
     return nLevel;
 }

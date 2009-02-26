@@ -481,7 +481,12 @@ void Maester(object oPC)
     // At least two crafting feats
     if (GetItemCreationFeatCount(oPC) >= 2 && nSkill)
     {
-        SetLocalInt(oPC, "PRC_PrereqMaester", 0);
+        //check for arcane caster levels
+        int iArcane;
+        iArcane = GetLocalInt(oPC, "PRC_ArcSpell3");
+        if(iArcane == 0 ||
+                GetInvokerLevel(oPC) >= 5)
+            SetLocalInt(oPC, "PRC_PrereqMaester", 0);
     }
 }
 
@@ -971,6 +976,26 @@ void TomeOfBattle(object oPC = OBJECT_SELF)
     }     
 }
 
+void AOTS(object oPC)
+{
+    SetLocalInt(oPC, "PRC_PrereqAOTS", 1);
+    int iArcane;
+    iArcane = GetLocalInt(oPC, "PRC_ArcSpell3");
+    if (iArcane == 0 ||
+            GetInvokerLevel(oPC) >= 5)
+	SetLocalInt(oPC, "PRC_PrereqAOTS", 0);
+}
+
+void EnlF(object oPC)
+{
+     SetLocalInt(oPC, "PRC_PrereqEnlF", 1);
+     int iArcane;
+     iArcane = GetLocalInt(oPC, "PRC_ArcSpell2");
+     if (iArcane == 0 ||
+              GetInvokerLevel(oPC) >= 3)
+	  SetLocalInt(oPC, "PRC_PrereqEnlF", 0);
+}
+
 void main()
 {
      //Declare Major Variables
@@ -1133,6 +1158,8 @@ void main()
      SkirmishRequirement(oPC);
      SpecialAttackRequirement(oPC);
      TomeOfBattle(oPC);
+     AOTS(oPC);
+     EnlF(oPC);
      // Truly massive debug message flood if activated.
      /*
 

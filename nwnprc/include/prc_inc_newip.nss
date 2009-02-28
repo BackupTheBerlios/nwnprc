@@ -140,7 +140,7 @@ itemproperty ItemPropertyCastSpellCasterLevel(int nSpell, int nLevel)
     nSpell = IPGetIPConstCastSpellFromSpellID(nSpell);
 
     itemproperty ipReturn;
-    string sResRef = "prc_ip85_"+IntToString(nSpell);
+    string sResRef = "prc_ip94_"+IntToString(nSpell);
     object oChest = GetObjectByTag("HEARTOFCHAOS");//use the crafting chest
     object oItem = CreateItemOnObject(sResRef, oChest);
     DestroyObject(oItem);

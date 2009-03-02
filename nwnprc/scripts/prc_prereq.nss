@@ -925,10 +925,10 @@ void Suel(object oPC)
 void TomeOfBattle(object oPC = OBJECT_SELF)
 {
     int nClass = GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL, oPC);
-    SetLocalInt(oPC, "PRC_PrereqDeepSt", 1);
-
+    
     if (nClass > 0)
     {
+    	SetLocalInt(oPC, "PRC_PrereqDeepSt", 1);
         // Needs two Stone Dragon maneuvers
         int nMove = _CheckPrereqsByDiscipline(oPC, DISCIPLINE_STONE_DRAGON, 2, GetFirstBladeMagicClass(oPC));
         // Needs one Stone Dragon Stance
@@ -941,10 +941,10 @@ void TomeOfBattle(object oPC = OBJECT_SELF)
     }
     
     nClass = GetLevelByClass(CLASS_TYPE_BLOODCLAW_MASTER, oPC);
-    SetLocalInt(oPC, "PRC_PrereqBloodclaw", 1);
-
+    
     if (nClass > 0)
     {
+    	SetLocalInt(oPC, "PRC_PrereqBloodclaw", 1);
         // Needs three Tiger Claw maneuvers
         int nMove = _CheckPrereqsByDiscipline(oPC, DISCIPLINE_TIGER_CLAW, 3, GetFirstBladeMagicClass(oPC));
 
@@ -955,10 +955,10 @@ void TomeOfBattle(object oPC = OBJECT_SELF)
     }
     
     nClass = GetLevelByClass(CLASS_TYPE_RUBY_VINDICATOR, oPC);
-    SetLocalInt(oPC, "PRC_PrereqRubyKnight", 1);
-
+    
     if (nClass > 0)
     {
+    	SetLocalInt(oPC, "PRC_PrereqRubyKnight", 1);
         // Needs one Devoted Spirit maneuver
         int nMove = _CheckPrereqsByDiscipline(oPC, DISCIPLINE_DEVOTED_SPIRIT, 1, GetFirstBladeMagicClass(oPC));
         // Needs one Devoted Spirit stance

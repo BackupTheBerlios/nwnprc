@@ -387,7 +387,7 @@ int _CheckPrereqsByDiscipline(object oPC, int nDiscipline, int nCount, int nClas
         if (nPrereqCount >= nCount) 
         {
         	//if (DEBUG) DoDebug("_CheckPrereqsByDiscipline(): Returning TRUE");
-        	return TRUE;        
+        	return nPrereqCount;        
         }
         
         nCheck += 1;
@@ -414,7 +414,7 @@ int _CheckPrereqsByDiscipline(object oPC, int nDiscipline, int nCount, int nClas
         if (nPrereqCount >= nCount) 
         {
         	//if (DEBUG) DoDebug("_CheckPrereqsByDiscipline(): Returning TRUE");
-        	return TRUE;        
+        	return nPrereqCount;        
         }        
         
         nCheck2 += 1;
@@ -441,14 +441,14 @@ int _CheckPrereqsByDiscipline(object oPC, int nDiscipline, int nCount, int nClas
         if (nPrereqCount >= nCount) 
         {
         	//if (DEBUG) DoDebug("_CheckPrereqsByDiscipline(): Returning TRUE");
-        	return TRUE;        
+        	return nPrereqCount;        
         }       
         
         nCheck3 += 1;
      }     
      
      // Gotten this far and you haven't met the prereqs
-     return FALSE;
+     return -1;
 }
 
 void _RecursiveStanceCheck(object oPC, object oTestWP, int nMoveId, float fFeet = 10.0)

@@ -926,7 +926,7 @@ void TomeOfBattle(object oPC = OBJECT_SELF)
 {
     int nClass = GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL, oPC);
     
-    if (nClass > 0)
+    if (nClass >= 0)
     {
     	SetLocalInt(oPC, "PRC_PrereqDeepSt", 1);
         // Needs two Stone Dragon maneuvers
@@ -942,7 +942,7 @@ void TomeOfBattle(object oPC = OBJECT_SELF)
     
     nClass = GetLevelByClass(CLASS_TYPE_BLOODCLAW_MASTER, oPC);
     
-    if (nClass > 0)
+    if (nClass >= 0)
     {
     	SetLocalInt(oPC, "PRC_PrereqBloodclaw", 1);
         // Needs three Tiger Claw maneuvers
@@ -956,7 +956,7 @@ void TomeOfBattle(object oPC = OBJECT_SELF)
     
     nClass = GetLevelByClass(CLASS_TYPE_RUBY_VINDICATOR, oPC);
     
-    if (nClass > 0)
+    if (nClass >= 0)
     {
     	SetLocalInt(oPC, "PRC_PrereqRubyKnight", 1);
         // Needs one Devoted Spirit maneuver

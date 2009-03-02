@@ -30,15 +30,18 @@ void main()
     		object oProneTarget = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(60.0), GetLocation(oInitiator));
     		while(GetIsObjectValid(oProneTarget))
     		{
-       	                // Save check
-			if (!PRCMySavingThrow(SAVING_THROW_WILL, oProneTarget, (10 + GetHitDice(oInitiator)/2 + GetAbilityModifier(ABILITY_STRENGTH, oInitiator))) &&
-			    GetIsEnemy(oProneTarget, oInitiator))
-			{
-				ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(EffectKnockdown()), oProneTarget, 6.0);
-				ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(d6(12)), oProneTarget);
+    			// Enemy check
+       	                if (GetIsEnemy(oProneTarget, oInitiator)) 
+       	                {
+       	                	// Save check
+				if (!PRCMySavingThrow(SAVING_THROW_WILL, oProneTarget, (10 + GetHitDice(oInitiator)/2 + GetAbilityModifier(ABILITY_STRENGTH, oInitiator))))
+				{
+					ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(EffectKnockdown()), oProneTarget, 6.0);
+					ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(d6(12)), oProneTarget);
+       	            		}
+       	            		else //Succeed
+       	            			ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(d6(6)), oProneTarget);
        	            	}
-       	            	else //Succeed
-       	            		ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(d6(6)), oProneTarget);
 
         	oProneTarget = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(60.0), GetLocation(oInitiator));
     		}    		

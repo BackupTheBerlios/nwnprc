@@ -41,6 +41,8 @@ Created:   7/6/07
 
 void main()
 {
+        ActionDoCommand(SetAllAoEInts(SPELL_PRISMATIC_SPHERE,OBJECT_SELF, GetSpellSaveDC()));
+        
         object oTarget = GetExitingObject();
         
         //Passing out of the sphere

@@ -51,6 +51,8 @@ Created:   7/6/07
 #include "prc_add_spell_dc"
 void main()
 {
+        ActionDoCommand(SetAllAoEInts(SPELL_PRISMATIC_SPHERE,OBJECT_SELF, GetSpellSaveDC()));
+        
         object oPC = GetAreaOfEffectCreator();
         object oTarget = GetEnteringObject();
         int nDC = PRCGetSaveDC(oTarget, oPC);

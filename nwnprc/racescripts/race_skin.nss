@@ -578,7 +578,7 @@ void main()
     //damage immunity 50% Piercing
     if(GetHasFeat(FEAT_PARTIAL_PIERCE_IMMUNE))
     {
-        itemproperty ipIP = ItemPropertyDamageVulnerability(DAMAGE_TYPE_PIERCING, IP_CONST_DAMAGEVULNERABILITY_50_PERCENT);
+        itemproperty ipIP = ItemPropertyDamageImmunity(DAMAGE_TYPE_PIERCING, IP_CONST_DAMAGEIMMUNITY_50_PERCENT);
         IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
     }
 

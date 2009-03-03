@@ -77,7 +77,7 @@ void main()
         int nDam;
         int nPenetr =  nCasterLvl + SPGetPenetr();
         
-        if(!GetIsReactionTypeFriendly(oTarget, oPC))
+        if(!GetIsReactionTypeFriendly(oTarget, oPC) && (oTarget != oPC))
         {
                 //Red
                 if(!PRCDoResistSpell(oPC, oTarget,nPenetr))

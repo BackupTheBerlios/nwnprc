@@ -30,6 +30,6 @@ void main()
     object oTarget = GetEnteringObject();
 
     // Cleaned up on exit
-    if (!GetIsSkillSuccessful(oTarget, SKILL_BALANCE, 10)) 
+    if (!GetIsSkillSuccessful(oTarget, SKILL_BALANCE, 10) && GetIsEnemy(oTarget, GetAreaOfEffectCreator()))
     	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(EffectKnockdown()), oTarget, 6.0);
 }

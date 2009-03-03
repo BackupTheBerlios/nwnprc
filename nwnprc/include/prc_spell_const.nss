@@ -748,6 +748,7 @@ const int SPELL_SURE_STRIKE                         = 1840;
 const int SPELL_TRUE_RESURRECTION                   = 1855;
 const int SPELL_CALM_EMOTIONS                       = 1852;
 const int SPELL_FROGS_AND_FISH                      = 2646;
+const int SPELL_REPULSION                           = 1853;
 
 const int SPELL_SARCOPHAGUS_OF_STONE                = 3662;
 const int SPELL_ARROW_OF_BONE                       = 3663;

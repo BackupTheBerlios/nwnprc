@@ -39,6 +39,8 @@ Created:   7/6/07
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
+#include "prc_inc_spells"
+
 void main()
 {
         ActionDoCommand(SetAllAoEInts(SPELL_PRISMATIC_SPHERE,OBJECT_SELF, GetSpellSaveDC()));

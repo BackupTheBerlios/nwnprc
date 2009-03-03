@@ -49,6 +49,8 @@ void DoPush(object oTarget, object oCaster);
 #include "prc_add_spell_dc"
 void main()
 {
+        ActionDoCommand(SetAllAoEInts(SPELL_REPULSION,OBJECT_SELF, GetSpellSaveDC()));
+        
         object oCaster = GetAreaOfEffectCreator();
         object oTarget = GetEnteringObject();
         int nDC = PRCGetSaveDC(oTarget, oCaster);

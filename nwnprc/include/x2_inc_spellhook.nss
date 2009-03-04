@@ -468,21 +468,21 @@ void DazzlingIllusion()
         
         if (iSchool == SPELL_SCHOOL_ILLUSION)
         {
-        	effect eLink = EffectLinkEffects(EffectAttackDecrease(1), EffectSkillDecrease(SKILL_SEARCH, 1));
-		       eLink = EffectLinkEffects(eLink, EffectSkillDecrease(SKILL_SPOT, 1));
-        	       eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_IMP_PWBLIND));
-     		object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), GetLocation(oCaster), TRUE, OBJECT_TYPE_CREATURE);
-    		//Cycle through the targets within the spell shape until an invalid object is captured.
-    		while (GetIsObjectValid(oTarget))
-    		{
-        		if (!GetIsFriend(oTarget, oCaster) && !PRCGetHasEffect(EFFECT_TYPE_BLINDNESS, oTarget))
-        		{
-        	    		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0);
-        		}
-       			//Select the next target within the spell shape.
-       			oTarget = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), GetLocation(oCaster), TRUE, OBJECT_TYPE_CREATURE);
-    		}       
-    	}
+                effect eLink = EffectLinkEffects(EffectAttackDecrease(1), EffectSkillDecrease(SKILL_SEARCH, 1));
+                       eLink = EffectLinkEffects(eLink, EffectSkillDecrease(SKILL_SPOT, 1));
+                       eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_IMP_PWBLIND));
+                object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), GetLocation(oCaster), TRUE, OBJECT_TYPE_CREATURE);
+                //Cycle through the targets within the spell shape until an invalid object is captured.
+                while (GetIsObjectValid(oTarget))
+                {
+                        if (!GetIsFriend(oTarget, oCaster) && !PRCGetHasEffect(EFFECT_TYPE_BLINDNESS, oTarget))
+                        {
+                                ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0);
+                        }
+                        //Select the next target within the spell shape.
+                        oTarget = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), GetLocation(oCaster), TRUE, OBJECT_TYPE_CREATURE);
+                }       
+        }
         
     }
 }
@@ -500,26 +500,26 @@ void EnergyAbjuration()
 
         if (iSchool == SPELL_SCHOOL_ABJURATION)
         {     
-		int nAmount = (1 + PRCGetSpellLevel(oCaster, nSpell)) * 5;
+                int nAmount = (1 + PRCGetSpellLevel(oCaster, nSpell)) * 5;
 
-		effect eCold = EffectDamageResistance(DAMAGE_TYPE_COLD, nAmount, nAmount);
-		effect eFire = EffectDamageResistance(DAMAGE_TYPE_FIRE, nAmount, nAmount);
-		effect eAcid = EffectDamageResistance(DAMAGE_TYPE_ACID, nAmount, nAmount);
-		effect eSonic = EffectDamageResistance(DAMAGE_TYPE_SONIC, nAmount, nAmount);
-		effect eElec = EffectDamageResistance(DAMAGE_TYPE_ELECTRICAL, nAmount, nAmount);
-		effect eDur = EffectVisualEffect(VFX_DUR_PROTECTION_ELEMENTS);
-		effect eVis = EffectVisualEffect(VFX_IMP_ELEMENTAL_PROTECTION);
-		effect eDur2 = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+                effect eCold = EffectDamageResistance(DAMAGE_TYPE_COLD, nAmount, nAmount);
+                effect eFire = EffectDamageResistance(DAMAGE_TYPE_FIRE, nAmount, nAmount);
+                effect eAcid = EffectDamageResistance(DAMAGE_TYPE_ACID, nAmount, nAmount);
+                effect eSonic = EffectDamageResistance(DAMAGE_TYPE_SONIC, nAmount, nAmount);
+                effect eElec = EffectDamageResistance(DAMAGE_TYPE_ELECTRICAL, nAmount, nAmount);
+                effect eDur = EffectVisualEffect(VFX_DUR_PROTECTION_ELEMENTS);
+                effect eVis = EffectVisualEffect(VFX_IMP_ELEMENTAL_PROTECTION);
+                effect eDur2 = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
 
-		//Link Effects
-		effect eLink = EffectLinkEffects(eCold, eFire);
-		eLink = EffectLinkEffects(eLink, eAcid);
-		eLink = EffectLinkEffects(eLink, eSonic);
-		eLink = EffectLinkEffects(eLink, eElec);
-		eLink = EffectLinkEffects(eLink, eDur);
-		eLink = EffectLinkEffects(eLink, eDur2);
-		
-		ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oCaster);
+                //Link Effects
+                effect eLink = EffectLinkEffects(eCold, eFire);
+                eLink = EffectLinkEffects(eLink, eAcid);
+                eLink = EffectLinkEffects(eLink, eSonic);
+                eLink = EffectLinkEffects(eLink, eElec);
+                eLink = EffectLinkEffects(eLink, eDur);
+                eLink = EffectLinkEffects(eLink, eDur2);
+                
+                ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oCaster);
         }        
     }
 }
@@ -537,9 +537,9 @@ void InsightfulDivination()
 
         if (iSchool == SPELL_SCHOOL_DIVINATION)
         {     
-		int nAmount = 1 + PRCGetSpellLevel(oCaster, nSpell);
+                int nAmount = 1 + PRCGetSpellLevel(oCaster, nSpell);
 
-		SetLocalInt(oCaster, "InsightfulDivination", nAmount);
+                SetLocalInt(oCaster, "InsightfulDivination", nAmount);
         }        
     }
 }
@@ -557,7 +557,7 @@ void TougheningTransmutation()
 
         if (iSchool == SPELL_SCHOOL_TRANSMUTATION)
         {     
-		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectDamageReduction(5, DAMAGE_POWER_PLUS_ONE), oCaster, 6.0);
+                ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectDamageReduction(5, DAMAGE_POWER_PLUS_ONE), oCaster, 6.0);
         }        
     }
 }
@@ -575,7 +575,7 @@ void CloudyConjuration()
 
         if (iSchool == SPELL_SCHOOL_CONJURATION)
         {     
-		ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, EffectAreaOfEffect(VFX_MOB_CLOUDY_CONJURATION), PRCGetSpellTargetLocation(), 6.0);
+                ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, EffectAreaOfEffect(VFX_MOB_CLOUDY_CONJURATION), PRCGetSpellTargetLocation(), 6.0);
         }        
     }
 }
@@ -826,13 +826,13 @@ int Scrying()
 
 int GrappleConc()
 {
-	object oPC = OBJECT_SELF;
-	if (GetGrapple(oPC))
-	{
-	        string nSpellLevel = lookup_spell_level(PRCGetSpellId());
-	        return GetIsSkillSuccessful(oPC, SKILL_CONCENTRATION, (20 + StringToInt(nSpellLevel)));
-	}
-	return TRUE;
+        object oPC = OBJECT_SELF;
+        if (GetGrapple(oPC))
+        {
+                string nSpellLevel = lookup_spell_level(PRCGetSpellId());
+                return GetIsSkillSuccessful(oPC, SKILL_CONCENTRATION, (20 + StringToInt(nSpellLevel)));
+        }
+        return TRUE;
 }
 
 int X2UseMagicDeviceCheck()
@@ -1304,57 +1304,67 @@ int X2PreSpellCastCode2()
             FloatingTextStringOnCreature("You do not have any free hands.", oCaster, FALSE);
         }
     }
-
-
+    
     //Corrupt or Sanctified spell
     if(nContinue)
     {
-        int nClass = PRCGetLastSpellCastClass();
-        int nBookType = GetSpellbookTypeForClass(nClass);
+       //Check for each Corrupt and Sanctified spell
 
-        // check if the caster is a spontaneous caster
-        if(nBookType == SPELLBOOK_TYPE_SPONTANEOUS)
-        {
-
-            //Check for each Corrupt and Sanctified spell
-            if(nSpellID == SPELL_ABSORB_STRENGTH           ||
-               nSpellID == SPELL_APOCALYPSE_FROM_THE_SKY   ||
-               nSpellID == SPELL_CLAWS_OF_THE_BEBILITH     ||
-               nSpellID == SPELL_DEATH_BY_THORNS           ||
-               nSpellID == SPELL_EVIL_WEATHER              ||
-               nSpellID == SPELL_FANGS_OF_THE_VAMPIRE_KING ||
-               nSpellID == SPELL_LAHMS_FINGER_DARTS        ||
-               nSpellID == SPELL_POWER_LEECH               ||
-               nSpellID == SPELL_RAPTURE_OF_RUPTURE        ||
-               nSpellID == SPELL_RED_FESTER                ||
-               nSpellID == SPELL_ROTTING_CURSE_OF_URFESTRA ||
-               nSpellID == SPELL_SEETHING_EYEBANE          ||
-               nSpellID == SPELL_TOUCH_OF_JUIBLEX          ||
-               nSpellID == SPELL_AYAILLAS_RADIANT_BURST    ||
-               nSpellID == SPELL_BRILLIANT_EMANATION       ||
-               nSpellID == SPELL_DIVINE_INSPIRATION        ||
-               nSpellID == SPELL_DIAMOND_SPRAY             ||
-               nSpellID == SPELL_DRAGON_CLOUD              ||
-               nSpellID == SPELL_EXALTED_FURY              ||
-               nSpellID == SPELL_HAMMER_OF_RIGHTEOUSNESS   ||
-               nSpellID == SPELL_PHIERANS_RESOLVE          ||
-               nSpellID == SPELL_PHOENIX_FIRE              ||
-               nSpellID == SPELL_RAIN_OF_EMBERS            ||
-               nSpellID == SPELL_SICKEN_EVIL               ||
-               nSpellID == SPELL_STORM_OF_SHARDS           ||
-               nSpellID == SPELL_SUNMANTLE                 ||
-               nSpellID == SPELL_TWILIGHT_LUCK
-               )
-            {
-                nContinue = FALSE;
-                SendMessageToPC(oCaster, "Spontaneous casters cannot cast this spell!");
-            }
-        }
-
-        //Check for alignment restrictions
-        if(GetAlignmentGoodEvil(oCaster) == ALIGNMENT_EVIL)
-        {
-               if(nSpellID == SPELL_AYAILLAS_RADIANT_BURST ||
+      if(nSpellID == SPELL_ABSORB_STRENGTH           ||
+      nSpellID == SPELL_APOCALYPSE_FROM_THE_SKY   ||
+      nSpellID == SPELL_CLAWS_OF_THE_BEBILITH     ||
+      nSpellID == SPELL_DEATH_BY_THORNS           ||
+      nSpellID == SPELL_EVIL_WEATHER              ||
+      nSpellID == SPELL_FANGS_OF_THE_VAMPIRE_KING ||
+      nSpellID == SPELL_LAHMS_FINGER_DARTS        ||
+      nSpellID == SPELL_POWER_LEECH               ||
+      nSpellID == SPELL_RAPTURE_OF_RUPTURE        ||
+      nSpellID == SPELL_RED_FESTER                ||
+      nSpellID == SPELL_ROTTING_CURSE_OF_URFESTRA ||
+      nSpellID == SPELL_SEETHING_EYEBANE          ||
+      nSpellID == SPELL_TOUCH_OF_JUIBLEX          ||
+      nSpellID == SPELL_AYAILLAS_RADIANT_BURST    ||
+      nSpellID == SPELL_BRILLIANT_EMANATION       ||
+      nSpellID == SPELL_DIVINE_INSPIRATION        ||
+      nSpellID == SPELL_DIAMOND_SPRAY             ||
+      nSpellID == SPELL_DRAGON_CLOUD              ||
+      nSpellID == SPELL_EXALTED_FURY              ||
+      nSpellID == SPELL_HAMMER_OF_RIGHTEOUSNESS   ||
+      nSpellID == SPELL_PHIERANS_RESOLVE          ||
+      nSpellID == SPELL_PHOENIX_FIRE              ||
+      nSpellID == SPELL_RAIN_OF_EMBERS            ||
+      nSpellID == SPELL_SICKEN_EVIL               ||
+      nSpellID == SPELL_STORM_OF_SHARDS           ||
+      nSpellID == SPELL_SUNMANTLE                 ||
+      nSpellID == SPELL_TWILIGHT_LUCK
+      )
+      {             
+              int nClass = PRCGetLastSpellCastClass();
+              int nBookType = GetSpellbookTypeForClass(nClass);
+              
+              // check if the caster is a spontaneous caster
+              if(nBookType == SPELLBOOK_TYPE_SPONTANEOUS)
+              {
+                      nContinue = FALSE;
+                      SendMessageToPC(oCaster, "Spontaneous casters cannot cast this spell!");
+              }
+              
+              //check for immunity to ability damage - sorry undead buddies
+              if(GetIsImmune(oCaster, IMMUNITY_TYPE_ABILITY_DECREASE))
+              {
+                      if(nSpellID != SPELL_TWILIGHT_LUCK &&
+                         nSpellID != SPELL_DIAMOND_SPRAY)
+                      {
+                              nContinue = FALSE;
+                              SendMessageToPC(oCaster, "You must be able to take ability damage to cast this spell!");
+                      }
+              }
+      }
+      
+      //Check for alignment restrictions
+      if(GetAlignmentGoodEvil(oCaster) == ALIGNMENT_EVIL)
+      {
+              if(nSpellID == SPELL_AYAILLAS_RADIANT_BURST ||
                nSpellID == SPELL_BRILLIANT_EMANATION       ||
                nSpellID == SPELL_DIVINE_INSPIRATION        ||
                nSpellID == SPELL_DIAMOND_SPRAY             ||
@@ -1644,11 +1654,11 @@ if(DEBUG) DoDebug("x2_inc_spellhook pre-X2CastOnItemWasAllowed "+IntToString(nCo
                 DelayCommand(3.0, DeleteLocalInt(oComp, "HealerCompanionSpell"));
                 if (nHealCount < 1 ) 
                 {
-                	// Makes it only harmless spells, to stop abuse of things like Word of Faith.
-                	if (Get2DACache("spells", "Range", nSpellID) == "P" || !GetLastSpellHarmful() || oTarget == oCaster) // Either of these is legal
-                	{
-                		ActionCastSpell(nSpellID, PRCGetCasterLevel(), 0, PRCGetSaveDC(oComp, oComp, nSpellID), PRCGetMetaMagicFeat(), CLASS_TYPE_INVALID, FALSE, TRUE, oComp);
-                	}
+                        // Makes it only harmless spells, to stop abuse of things like Word of Faith.
+                        if (Get2DACache("spells", "Range", nSpellID) == "P" || !GetLastSpellHarmful() || oTarget == oCaster) // Either of these is legal
+                        {
+                                ActionCastSpell(nSpellID, PRCGetCasterLevel(), 0, PRCGetSaveDC(oComp, oComp, nSpellID), PRCGetMetaMagicFeat(), CLASS_TYPE_INVALID, FALSE, TRUE, oComp);
+                        }
                 }
         }
     }

@@ -74,8 +74,15 @@ void main()
             
             if(nStage == STAGE_POISON)
             {
-                                        
-            }            
+                    if(DEBUG) DoDebug("prc_crft_poison: Building poison selection");
+                    SetHeader("Which poison would you like to create?");
+                    
+                    //Read 2da and setup choices
+                    
+                    
+                    MarkStageSetUp(nStage, oPC);
+                    SetDefaultTokens();
+            }
             
             else if (nStage == STAGE_CONFIRM)
             {
@@ -133,16 +140,7 @@ void main()
             
             else if(nStage == STAGE_POISON)
             {
-                    int nIP;
-                    int nDC = Get2daCache(                                                    
-                    nSkill = SKILL_CRAFT_POISON;             
                     
-                    //Use alchemy skill if it is 5 or more higher than craft(poisonmaking). DC is increased by 4.
-                    if((nAlchem - nPoison) >4)
-                    {
-                            nSkill = SKILL_CRAFT_ALCHEMY;
-                            nDC += 4;
-                    }
                                         
             }
             
@@ -155,14 +153,30 @@ void main()
                     
                     else if(nChoice == CHOICE_CONFIRM_CRAFT)
                     {
+                            int n2daLine = nChoice--;
+                            if(n2daLine < 0) SendMessageToPC(oPC, "Invalid prc_crft_poison.2da line");
+                            int nDC = StringToInt(Get2daCache("prc_crft_poison", "CraftDC", n2daLine));
+                            int nCost = StringToInt(Get2daCache("prc_crft_poison", "GoldCost", n2daLine));
+                            int nPoison = StringToInt(Get2daCache("prc_crft_poison", "Poison2daLine", n2daLine));
+                            int nName = StringToInt(Get2daCache("prc_crft_poison", "Name", n2daLine));
+                            int nDesc = StringToInt(Get2daCache("prc_crft_poison", "Description", n2daLine));
+                            int nType = StringToInt(Get2daCache("prc_crft_poison", "PoisonType", n2daLine));
+                            nSkill = SKILL_CRAFT_POISON;             
+                            
+                            //Use alchemy skill if it is 5 or more higher than craft(poisonmaking). DC is increased by 4.
+                            if((nAlchem - nPoison) >4)
+                            {
+                                    nSkill = SKILL_CRAFT_ALCHEMY;
+                                    nDC += 4;
+                            }
+                            
                             int nRank = GetSkillRank(nSkill, oPC);                        
-                            TakeGoldFromCreature(GetLocalInt(oPC, "PRC_CRAFT_COST"), oPC, TRUE);
-                            if(GetIsSkillSuccessful(oPC, GetLocalInt(oPC,"PRC_CRAFT_SKILLUSED"), GetLocalInt(oPC, "PRC_CRAFT_DC"))) CreateItemOnObject(GetLocalString(oPC, "PRC_CRAFT_RESREF"), oPC, 1);
+                            TakeGoldFromCreature(nCost, oPC, TRUE);
+                            if(GetIsSkillSuccessful(oPC, nSkill), GetLocalInt(oPC, "PRC_CRAFT_DC"))) CreateItemOnObject(GetLocalString(oPC, "PRC_CRAFT_RESREF"), oPC, 1);
                             AllowExit(DYNCONV_EXIT_FORCE_EXIT);
                     }                
             }            
             // Store the stage value. If it has been changed, this clears out the choices
             SetStage(nStage, oPC);
     }
-}
-        
+}       

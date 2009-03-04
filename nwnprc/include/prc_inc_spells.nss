@@ -2193,7 +2193,7 @@ int PRCGetHasSpell(int nRealSpellID, object oCreature = OBJECT_SELF)
                     if(DEBUG) DoDebug("PRCGetHasSpell: NewSpellbookMem_" + IntToString(nClass) + "[" + IntToString(j) + "] = " + IntToString(nCount));
                     if(nCount > 0)
                     {
-                        nUses += 1;
+                        nUses += nCount;
                     }
                 }
                 else  if(nSpellbookType == SPELLBOOK_TYPE_SPONTANEOUS)
@@ -2203,7 +2203,7 @@ int PRCGetHasSpell(int nRealSpellID, object oCreature = OBJECT_SELF)
                     if(DEBUG) DoDebug("PRCGetHasSpell: NewSpellbookMem_" + IntToString(nClass) + "[" + IntToString(j) + "] = " + IntToString(nCount));
                     if(nCount > 0)
                     {
-                        nUses += 1;
+                        nUses += nCount;
                     }
                 }
             }

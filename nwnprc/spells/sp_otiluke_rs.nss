@@ -29,6 +29,7 @@ Created:   7/6/07
 //:://////////////////////////////////////////////
 
 #include "prc_inc_spells"
+#include "prc_add_spell_dc"
 
 void main()
 {
@@ -45,23 +46,31 @@ void main()
         int nMetaMagic = PRCGetMetaMagicFeat();
         if (nMetaMagic == METAMAGIC_EXTEND) fDur += fDur;
         
-        //Set local to signify the target
-        SetLocalInt(oTarget, "PRC_OTILUKES_RS_TARGET", 1);
+        //Make SR check
+	if (!PRCDoResistSpell(OBJECT_SELF, oTarget,nCasterLvl))
+	{
+		//Make Forttude save
+		if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (PRCGetSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_NONE))
+        	{
+        		//Set local to signify the target
+        		SetLocalInt(oTarget, "PRC_OTILUKES_RS_TARGET", 1);
         
-        //Paralyze the target 
-        effect eLink = EffectCutsceneParalyze();
-               eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_RESILIENT_SPHERE));
+        		//Paralyze the target 
+        		effect eLink = EffectCutsceneParalyze();
+        		       eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_RESILIENT_SPHERE));
         
         
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAoE, oTarget, fDur, TRUE, SPELL_OTILUKES_RESILIENT_SPHERE, nCasterLvl);
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur, TRUE, SPELL_OTILUKES_RESILIENT_SPHERE, nCasterLvl);
+        		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAoE, oTarget, fDur, TRUE, SPELL_OTILUKES_RESILIENT_SPHERE, nCasterLvl);
+        		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur, TRUE, SPELL_OTILUKES_RESILIENT_SPHERE, nCasterLvl);
         
-        //Check for plot flag, if it's there, mark it as existing plot so we don't
-        //have poeple using ORS to remove it and kill plot chars.
-        if(GetPlotFlag(oTarget))
-        {
-                SetLocalInt(oTarget, "PRC_OTILUKES_RS_ALREADYPLOT", 1);
+        		//Check for plot flag, if it's there, mark it as existing plot so we don't
+        		//have poeple using ORS to remove it and kill plot chars.
+        		if(GetPlotFlag(oTarget))
+        		{
+        		        SetLocalInt(oTarget, "PRC_OTILUKES_RS_ALREADYPLOT", 1);
+        		}
+        
+        		else SetPlotFlag(oTarget, TRUE);
+        	}
         }
-        
-        else SetPlotFlag(oTarget, TRUE);
 }

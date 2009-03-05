@@ -22,6 +22,7 @@
 
 const int    DISCIPLINE_DESERT_WIND    = 1;
 const int    DISCIPLINE_DEVOTED_SPIRIT = 2;
+
 const int    DISCIPLINE_DIAMOND_MIND   = 3;
 const int    DISCIPLINE_IRON_HEART     = 4;
 const int    DISCIPLINE_SETTING_SUN    = 5;
@@ -708,6 +709,7 @@ int GetBladeMagicPRCLevels(object oInitiator)
 	nLevel += GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL, oInitiator);
 	nLevel += GetLevelByClass(CLASS_TYPE_BLOODCLAW_MASTER, oInitiator);
 	nLevel += GetLevelByClass(CLASS_TYPE_RUBY_VINDICATOR, oInitiator);
+	nLevel += GetLevelByClass(CLASS_TYPE_JADE_PHOENIX_MAGE, oInitiator);
 	
     	return nLevel;
 }
@@ -969,7 +971,19 @@ void ClearStances(object oInitiator, int nDontClearMove)
            PRCRemoveEffectsFromSpell(oInitiator, MOVE_TC_WOLF_PACK_TACTICS);	
 	if (GetHasSpellEffect(MOVE_WR_SWARM_TACTICS, oInitiator) && nDontClearMove != MOVE_WR_SWARM_TACTICS)  
                 PRCRemoveEffectsFromSpell(oInitiator, MOVE_WR_SWARM_TACTICS);
-                
+	if (GetHasSpellEffect(MOVE_MYSTIC_PHOENIX, oInitiator) && nDontClearMove != MOVE_MYSTIC_PHOENIX)
+	{
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_MYSTIC_PHOENIX);	
+           DeleteLocalInt(oInitiator, "ToB_JPM_MystP");
+           if(DEBUG) DoDebug("Mystic Phoenix bonus levels removed");
+        }
+	if (GetHasSpellEffect(MOVE_FIREBIRD_STANCE, oInitiator) && nDontClearMove != MOVE_FIREBIRD_STANCE)
+	{
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_FIREBIRD_STANCE);	
+           DeleteLocalInt(oInitiator, "ToB_JPM_FireB");
+           if(DEBUG) DoDebug("Firebird bonus levels removed");
+        }
+        
         if(DEBUG) DoDebug("tob_inc_tobfunc: ClearStances Part #4");
 }
 
@@ -1046,17 +1060,27 @@ void InitiatorMovementCheck(object oPC, int nMoveId, float fFeet = 10.0)
 
 int GetIsStance(int nMoveId)
 {
+	
         if(DEBUG) DoDebug("GetIsStance running");
         int nClass = GetInitiatingClass(OBJECT_SELF);
         string sManeuverFile = GetAMSDefinitionFileName(nClass);
         int i, nManeuverLevel;
         string sMoveID;
+        if(DEBUG) DoDebug("maneuverfile: " + sManeuverFile);
+        
+        // Prestiege class stances
+        // Deepstone Sentinel
+        if(nMoveId == MOVE_MOUNTAIN_FORTRESS) return TRUE; 
+        // Jade Phoenix Mage
+        if(nMoveId == MOVE_MYSTIC_PHOENIX) return TRUE;
+        if(nMoveId == MOVE_FIREBIRD_STANCE) return TRUE;
+        
         for(i = 0; i < GetPRCSwitch(FILE_END_CLASS_POWER) ; i++)
         {
             // If looking for stances, skip maneuvers, else reverse
-            if(StringToInt(Get2DACache(sManeuverFile, "Stance", i)) == 0){
+            /*if(StringToInt(Get2DACache(sManeuverFile, "Stance", i)) == 0){
                 continue;
-            } 
+            } */  // Not using this stopped the TMI
             sMoveID = Get2DACache(sManeuverFile, "RealSpellID", i);
             if(StringToInt(sMoveID) == nMoveId) return TRUE;
         }

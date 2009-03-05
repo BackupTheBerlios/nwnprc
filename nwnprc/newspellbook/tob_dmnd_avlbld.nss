@@ -52,7 +52,7 @@ void main()
         {
                 int nHit = 1;
         	int nPenalty = 0;
-                DelayCommand(0.0, Owieowieowowow(oInitiator, oTarget, nHit, nPenalty));
+                DelayCommand(0.1, Owieowieowowow(oInitiator, oTarget, nHit, nPenalty));
         }
 }
 
@@ -73,6 +73,6 @@ void Owieowieowowow(object oInitiator, object oTarget, int nHit, int nPenalty)
                 nPenalty -= 4;
                 
                 //Again! Again!
-                DelayCommand(0.0, Owieowieowowow(oInitiator, oTarget, nHit, nPenalty));
+                DelayCommand(0.1, Owieowieowowow(oInitiator, oTarget, nHit, nPenalty));
         }
 }          

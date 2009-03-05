@@ -27,6 +27,14 @@ void main()
     	object oInitiator    = OBJECT_SELF;
     	object oTarget       = PRCGetSpellTargetObject();
 
+		if(!GetLocalInt(oInitiator, "DPST_Awaken_Stone_Dragon"))
+		{
+			FloatingTextStringOnCreature("Awaken the Stone Dragon not ready.", oInitiator, FALSE);
+			return;
+		}
+		// Mark ability used this encounter
+		SetLocalInt(oInitiator, "DPST_Awaken_Stone_Dragon", FALSE);
+
     		object oProneTarget = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(60.0), GetLocation(oInitiator));
     		while(GetIsObjectValid(oProneTarget))
     		{

@@ -977,7 +977,20 @@ void ClearStances(object oInitiator, int nDontClearMove)
            DeleteLocalInt(oInitiator, "ToB_JPM_MystP");
            if(DEBUG) DoDebug("Mystic Phoenix bonus levels removed");
         }
+	if (GetHasSpellEffect(MOVE_MYSTIC_PHOENIX_AUG, oInitiator) && nDontClearMove != MOVE_MYSTIC_PHOENIX_AUG)
+	{
+	   PRCRemoveEffectsFromSpell(oInitiator, MOVE_MYSTIC_PHOENIX);	
+	   DeleteLocalInt(oInitiator, "ToB_JPM_MystP");
+	   if(DEBUG) DoDebug("Mystic Phoenix bonus levels removed");
+	}
 	if (GetHasSpellEffect(MOVE_FIREBIRD_STANCE, oInitiator) && nDontClearMove != MOVE_FIREBIRD_STANCE)
+	{
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_FIREBIRD_STANCE);	
+           DeleteLocalInt(oInitiator, "ToB_JPM_FireB");
+           if(DEBUG) DoDebug("Firebird bonus levels removed");
+        }
+
+	if (GetHasSpellEffect(MOVE_FIREBIRD_STANCE_AUG, oInitiator) && nDontClearMove != MOVE_FIREBIRD_STANCE_AUG)
 	{
            PRCRemoveEffectsFromSpell(oInitiator, MOVE_FIREBIRD_STANCE);	
            DeleteLocalInt(oInitiator, "ToB_JPM_FireB");
@@ -1073,7 +1086,9 @@ int GetIsStance(int nMoveId)
         if(nMoveId == MOVE_MOUNTAIN_FORTRESS) return TRUE; 
         // Jade Phoenix Mage
         if(nMoveId == MOVE_MYSTIC_PHOENIX) return TRUE;
+        if(nMoveId == MOVE_MYSTIC_PHOENIX_AUG) return TRUE;
         if(nMoveId == MOVE_FIREBIRD_STANCE) return TRUE;
+        if(nMoveId == MOVE_FIREBIRD_STANCE_AUG) return TRUE;
         
         for(i = 0; i < GetPRCSwitch(FILE_END_CLASS_POWER) ; i++)
         {

@@ -259,11 +259,15 @@ const int MOVE_MOUNTAIN_FORTRESS   = 2066;
 const int MOVE_BLOODCLAW_SHIFT     = 2100;
 
 // Jade Phoenix
-const int SPELL_JPM_SPELL_SELECT_CONVO             = 19287;
-const int SPELL_JPM_SPELL_SELECT_QUICK1            = 19288;
-const int SPELL_JPM_SPELL_SELECT_QUICK2            = 19289;
-const int SPELL_JPM_SPELL_SELECT_QUICK3            = 19290;
-const int SPELL_JPM_SPELL_SELECT_QUICK4            = 19291;
+const int JPM_SPELL_SELECT_CONVO           	   = 19287;
+const int JPM_SPELL_SELECT_QUICK1                  = 19288;
+const int JPM_SPELL_SELECT_QUICK2                  = 19289;
+const int JPM_SPELL_SELECT_QUICK3                  = 19290;
+const int JPM_SPELL_SELECT_QUICK4             	   = 19291;
+const int JPM_SPELL_FIREBIRD_AUGMENTED 		   = 19302;
+const int JPM_SPELL_ARCANE_WRATH		   = 19292;
+const int JPM_SPELL_RITE_WAKING_SELF 		   = 19294;
+const int FEAT_JPM_EMERALD_IMMOLATION 		   = 24083;
 
 const int MOVE_MYSTIC_PHOENIX      = 19297;
 const int MOVE_MYSTIC_PHOENIX_AUG  = 19298;

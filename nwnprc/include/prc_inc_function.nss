@@ -186,7 +186,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL, oPC) > 0)  ExecuteScript("tob_deepstone", oPC);
     if(GetLevelByClass(CLASS_TYPE_CRUSADER, oPC) > 0)            ExecuteScript("tob_crusader", oPC);
     if(GetLevelByClass(CLASS_TYPE_WARBLADE, oPC) > 0)            ExecuteScript("tob_warblade", oPC);
-    if(GetLevelByClass(CLASS_TYPE_JADE_PHOENIX_MAGE, oPC) > 0)   ExecuteScript("tob_jadepm", oPC);
+    if(GetLevelByClass(CLASS_TYPE_JADE_PHOENIX_MAGE, oPC) > 0)   ExecuteScript("tob_jadephoenix", oPC);
     if(GetLevelByClass(CLASS_TYPE_WARLOCK, oPC) > 0)             ExecuteScript("inv_warlock", oPC);
     if(GetLevelByClass(CLASS_TYPE_BLOODCLAW_MASTER, oPC) > 0)    ExecuteScript("tob_bloodclaw", oPC);
     

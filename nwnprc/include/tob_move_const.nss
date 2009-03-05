@@ -255,6 +255,17 @@ const int AOE_PER_MOUNTAIN_FORTRESS             = 149;
 const int SPELL_AVENGING_STRIKE = -1;
 
 // Class Specific Constants
-const int MOVE_MOUNTAIN_FORTRESS = 2066;
-const int TOB_JPM_ARCANE_WRATH   = -1;
-const int MOVE_BLOODCLAW_SHIFT   = 2100;
+const int MOVE_MOUNTAIN_FORTRESS   = 2066;
+const int MOVE_BLOODCLAW_SHIFT     = 2100;
+
+// Jade Phoenix
+const int SPELL_JPM_SPELL_SELECT_CONVO             = 19287;
+const int SPELL_JPM_SPELL_SELECT_QUICK1            = 19288;
+const int SPELL_JPM_SPELL_SELECT_QUICK2            = 19289;
+const int SPELL_JPM_SPELL_SELECT_QUICK3            = 19290;
+const int SPELL_JPM_SPELL_SELECT_QUICK4            = 19291;
+
+const int MOVE_MYSTIC_PHOENIX      = 19297;
+const int MOVE_MYSTIC_PHOENIX_AUG  = 19298;
+const int MOVE_FIREBIRD_STANCE     = 19301;
+const int MOVE_FIREBIRD_STANCE_AUG = 19302;

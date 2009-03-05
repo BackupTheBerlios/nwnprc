@@ -50224,4 +50224,26 @@ Secondary Damage: 2d6 Str</entry>
   <entry id="70318" lang="en" sex="m">Wyvern Poison: Injury DC 17
 Initial Damage:   2d6 Con
 Secondary Damage: 2d6 Con</entry>
+  <entry id="70319" lang="en" sex="m">Practised Spellcaster (Paladin)</entry>
+  <entry id="70320" lang="en" sex="m">Practised Spellcaster (Ranger)</entry>
+  <entry id="70321" lang="en" sex="m">Practised Spellcaster (Assassin)</entry>
+  <entry id="70322" lang="en" sex="m">Practised Spellcaster (Blackguard)</entry>
+  <entry id="70323" lang="en" sex="m">Practised Spellcaster (Ocular Adept)</entry>
+  <entry id="70324" lang="en" sex="m">Practised Spellcaster (Hexblade)</entry>
+  <entry id="70325" lang="en" sex="m">Practised Spellcaster (Duskblade)</entry>
+  <entry id="70326" lang="en" sex="m">Practised Spellcaster (Healer)</entry>
+  <entry id="70327" lang="en" sex="m">Practised Spellcaster (Knight of the Chalice)</entry>
+  <entry id="70328" lang="en" sex="m">Practised Spellcaster (Vigilant)</entry>
+  <entry id="70329" lang="en" sex="m">Practised Spellcaster (Vassal of Bahamut)</entry>
+  <entry id="70330" lang="en" sex="m">Practised Spellcaster (Anti-Paladin)</entry>
+  <entry id="70331" lang="en" sex="m">Practised Spellcaster (Soldier of Light)</entry>
+  <entry id="70332" lang="en" sex="m">Practised Spellcaster (Telflammar Shadowlord)</entry>
+  <entry id="70333" lang="en" sex="m">Practised Spellcaster (Justice of Weald and Woe)</entry>
+  <entry id="70334" lang="en" sex="m">Practised Spellcaster (Knight of the Middle Circle)</entry>
+  <entry id="70335" lang="en" sex="m">Practised Spellcaster (Shaman)</entry>
+  <entry id="70336" lang="en" sex="m">Practised Spellcaster (Slayer of Domiel)</entry>
+  <entry id="70337" lang="en" sex="m">Practised Spellcaster (Suel Archanamach)</entry>
+  <entry id="70338" lang="en" sex="m">Practised Spellcaster (Favoured Soul)</entry>
+  <entry id="70339" lang="en" sex="m">Practised Spellcaster (Sohei)</entry>
+  <entry id="70340" lang="en" sex="m">Practised Spellcaster (Warmage)</entry>
 </tlk>

@@ -710,6 +710,72 @@ int PractisedSpellcasting(object oCaster, int iCastingClass, int iCastingLevels)
     if (iCastingClass == CLASS_TYPE_DRUID
         && GetHasFeat(FEAT_PRACTISED_SPELLCASTER_DRUID, oCaster))
         return iAdjustment;
+    if (iCastingClass == CLASS_TYPE_PALADIN
+        && GetHasFeat(FEAT_PRACTISED_SPELLCASTER_PALADIN, oCaster))
+        return iAdjustment;
+    if (iCastingClass == CLASS_TYPE_RANGER
+        && GetHasFeat(FEAT_PRACTISED_SPELLCASTER_RANGER, oCaster))
+        return iAdjustment;
+    if (iCastingClass == CLASS_TYPE_ASSASSIN
+        && GetHasFeat(FEAT_PRACTISED_SPELLCASTER_ASSASSIN, oCaster))
+        return iAdjustment;
+    if (iCastingClass == CLASS_TYPE_BLACKGUARD
+        && GetHasFeat(FEAT_PRACTISED_SPELLCASTER_BLACKGUARD, oCaster))
+        return iAdjustment;
+    if (iCastingClass == CLASS_TYPE_OCULAR
+        && GetHasFeat(FEAT_PRACTISED_SPELLCASTER_OCULAR, oCaster))
+        return iAdjustment;
+    if (iCastingClass == CLASS_TYPE_HEXBLADE
+        && GetHasFeat(FEAT_PRACTISED_SPELLCASTER_HEXBLADE, oCaster))
+        return iAdjustment;
+    if (iCastingClass == CLASS_TYPE_DUSKBLADE
+        && GetHasFeat(FEAT_PRACTISED_SPELLCASTER_DUSKBLADE, oCaster))
+        return iAdjustment;
+    if (iCastingClass == CLASS_TYPE_HEALER
+        && GetHasFeat(FEAT_PRACTISED_SPELLCASTER_HEALER, oCaster))
+        return iAdjustment;
+    if (iCastingClass == CLASS_TYPE_KNIGHT_CHALICE
+        && GetHasFeat(FEAT_PRACTISED_SPELLCASTER_KNIGHT_CHALICE, oCaster))
+        return iAdjustment;
+    if (iCastingClass == CLASS_TYPE_VIGILANT
+        && GetHasFeat(FEAT_PRACTISED_SPELLCASTER_VIGILANT, oCaster))
+        return iAdjustment;
+    if (iCastingClass == CLASS_TYPE_VASSAL
+        && GetHasFeat(FEAT_PRACTISED_SPELLCASTER_VASSAL, oCaster))
+        return iAdjustment;
+    if (iCastingClass == CLASS_TYPE_ANTI_PALADIN
+        && GetHasFeat(FEAT_PRACTISED_SPELLCASTER_ANTI_PALADIN, oCaster))
+        return iAdjustment;
+    if (iCastingClass == CLASS_TYPE_SOLDIER_OF_LIGHT
+        && GetHasFeat(FEAT_PRACTISED_SPELLCASTER_SOLDIER_OF_LIGHT, oCaster))
+        return iAdjustment;
+    if (iCastingClass == CLASS_TYPE_SHADOWLORD
+        && GetHasFeat(FEAT_PRACTISED_SPELLCASTER_SHADOWLORD, oCaster))
+        return iAdjustment;
+    if (iCastingClass == CLASS_TYPE_JUSTICEWW
+        && GetHasFeat(FEAT_PRACTISED_SPELLCASTER_JUSTICEWW, oCaster))
+        return iAdjustment;
+    if (iCastingClass == CLASS_TYPE_KNIGHT_MIDDLECIRCLE
+        && GetHasFeat(FEAT_PRACTISED_SPELLCASTER_KNIGHT_MIDDLECIRCLE, oCaster))
+        return iAdjustment;
+    if (iCastingClass == CLASS_TYPE_SHAMAN
+        && GetHasFeat(FEAT_PRACTISED_SPELLCASTER_SHAMAN, oCaster))
+        return iAdjustment;
+    if (iCastingClass == CLASS_TYPE_SLAYER_OF_DOMIEL
+        && GetHasFeat(FEAT_PRACTISED_SPELLCASTER_SLAYER_OF_DOMIEL, oCaster))
+        return iAdjustment;
+    if (iCastingClass == CLASS_TYPE_SUEL_ARCHANAMACH
+        && GetHasFeat(FEAT_PRACTISED_SPELLCASTER_SUEL_ARCHANAMACH, oCaster))
+        return iAdjustment;
+    if (iCastingClass == CLASS_TYPE_FAVOURED_SOUL
+        && GetHasFeat(FEAT_PRACTISED_SPELLCASTER_FAVOURED_SOUL, oCaster))
+        return iAdjustment;
+    if (iCastingClass == CLASS_TYPE_SOHEI
+        && GetHasFeat(FEAT_PRACTISED_SPELLCASTER_SOHEI, oCaster))
+        return iAdjustment;
+    if (iCastingClass == CLASS_TYPE_WARMAGE
+        && GetHasFeat(FEAT_PRACTISED_SPELLCASTER_WARMAGE, oCaster))
+        return iAdjustment;
 
     return 0;
 }

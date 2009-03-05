@@ -394,7 +394,7 @@ void GrantManeuvers(object oPC, int nList)
     int nMaxReadied = StringToInt(Get2DACache(sPsiFile, "ManeuversReadied", nLevel-1));
     if (GetHasFeat(FEAT_EXTRA_GRANTED_MANEUVER, oPC)) nGranted += 1;
     // is the max possible for a Crusader
-        for(i = 1; i < nMaxReadied; i++)
+        for(i = 1; i <= nMaxReadied; i++)
     {
         // If the value is readied, mark it and store it
         int nMoveId = GetLocalInt(oPC, "ManeuverReadied" + IntToString(nList) + IntToString(i));

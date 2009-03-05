@@ -374,7 +374,7 @@ void _UseManeuverAux(object oInitiator, object oMoveToken, int nSpellId,
 
         // Set the maneuver's level
         SetLocalInt(oInitiator, PRC_MANEUVER_LEVEL, StringToInt(lookup_spell_innate(nSpellId)));
-
+        
         if(nLevelOverride != 0)
             AssignCommand(oInitiator, ActionDoCommand(SetLocalInt(oInitiator, PRC_CASTERLEVEL_OVERRIDE, nLevelOverride)));
         if(GetIsObjectValid(oTarget))
@@ -436,7 +436,6 @@ void _StanceSpecificChecks(object oInitiator, int nMoveId)
 struct maneuver EvaluateManeuver(object oInitiator, object oTarget)
 {
     /* Get some data */
-    int bIgnoreConstraints = (DEBUG) ? GetLocalInt(oInitiator, TOB_DEBUG_IGNORE_CONSTRAINTS) : FALSE;
     // initiator-related stuff
     int nInitiatorLevel  = GetInitiatorLevel(oInitiator);
     int nManeuverLevel   = GetManeuverLevel(oInitiator);

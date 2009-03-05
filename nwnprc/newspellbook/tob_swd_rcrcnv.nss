@@ -19,9 +19,9 @@
 /* Constant defintions                          */
 //////////////////////////////////////////////////
 
-const int STAGE_SELECT_MANEUVER        = 1;
-const int STAGE_CONFIRM_SELECTION      = 2;
-const int STAGE_ALL_MANEUVERS_SELECTED = 3;
+const int STAGE_SELECT_MANEUVER        = 0;
+const int STAGE_CONFIRM_SELECTION      = 1;
+const int STAGE_ALL_MANEUVERS_SELECTED = 2;
 
 const int CHOICE_BACK_TO_LSELECT    = -1;
 
@@ -68,7 +68,10 @@ void main()
 
     // Check which of the conversation scripts called the scripts
     if(nValue == 0) // All of them set the DynConv_Var to non-zero value, so something is wrong -> abort
+    {
+    	if(DEBUG) DoDebug("tob_swd_rcrcnv: Aborting due to error.");
         return;
+    }
 
     if(nValue == DYNCONV_SETUP_STAGE)
     {
@@ -77,7 +80,7 @@ void main()
         // This stops list duplication when scrolling
         if(!GetIsStageSetUp(nStage, oPC))
         {
-            if(DEBUG) DoDebug("tob_swd_rcrcnv: Stage was not set up already");
+            if(DEBUG) DoDebug("tob_swd_rcrcnv: Stage was not set up already. nStage: " + IntToString(nStage));
             // Maneuver selection stage
             if(nStage == STAGE_SELECT_MANEUVER)
             {
@@ -94,10 +97,11 @@ void main()
 			// If it is not 0, it is a MoveId
 			if (nMoveId != 0)
 			{
-				AddChoice(GetManeuverName(nMoveId), i);
+				AddChoice(GetManeuverName(nMoveId), i, oPC);
 				if(DEBUG) DoDebug("tob_swd_rcrcnv: Expended Maneuvers: " + GetManeuverName(nMoveId));
 			}
                 }
+                AddChoice("Exit Conversation", -1, oPC);
 
                 MarkStageSetUp(STAGE_SELECT_MANEUVER, oPC);
             }
@@ -158,6 +162,11 @@ void main()
                 SetLocalInt(oPC, "nManeuver", nChoice);
                 nStage = STAGE_CONFIRM_SELECTION;
 	        MarkStageNotSetUp(STAGE_SELECT_MANEUVER, oPC);
+	        
+	        if (nChoice == -1)
+	        {
+	        	AllowExit(DYNCONV_EXIT_FORCE_EXIT); 
+	        }
         }
         else if(nStage == STAGE_CONFIRM_SELECTION)
         {

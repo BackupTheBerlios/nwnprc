@@ -2082,6 +2082,14 @@ int GetControlledCelestialTotalHD(object oPC = OBJECT_SELF)
 int UseNewSpellBook(object oCreature)
 {
     int nFirstArcane = GetFirstArcaneClass(oCreature);
+    
+    switch (nFirstArcane)
+    {
+    	case CLASS_TYPE_DUSKBLADE:
+    	case CLASS_TYPE_HEXBLADE:
+    	case CLASS_TYPE_WARMAGE:
+    		return TRUE;
+    }
     //check they have bard/sorc in first arcane slot
     if(nFirstArcane != CLASS_TYPE_BARD && nFirstArcane != CLASS_TYPE_SORCERER)
         return FALSE;

@@ -382,6 +382,14 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
             +  DomainPower(oCaster, iSpellId)
             +  DeathKnell(oCaster)
             +  DraconicPower(oCaster);
+            
+        // Get stance level bonus for Jade Phoenix Mage    
+        if(GetLevelByClass(CLASS_TYPE_JADE_PHOENIX_MAGE, oCaster))
+        {
+        	if (_GetChangedElementalType(iSpellId, oCaster) == "Fire" && GetLocalInt(oCaster, "ToB_JPM_FireB"))
+        		iReturnLevel += 3;
+        	iReturnLevel += GetLocalInt(oCaster, "ToB_JPM_MystP");	
+        }
 
         iReturnLevel += PractisedSpellcasting(oCaster, iCastingClass, iReturnLevel); //gotta be the last one
     }
@@ -510,6 +518,7 @@ int GetArcanePRCLevels(object oCaster)
            +  GetLevelByClass(CLASS_TYPE_VIRTUOSO,        oCaster)
            +  GetLevelByClass(CLASS_TYPE_WAR_WIZARD_OF_CORMYR, oCaster)
            +  GetLevelByClass(CLASS_TYPE_DRAGONHEART_MAGE, oCaster)
+           +  GetLevelByClass(CLASS_TYPE_JADE_PHOENIX_MAGE, oCaster)
 
            +  (GetLevelByClass(CLASS_TYPE_BLADESINGER,        oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER,   oCaster) + 1) / 2

@@ -933,7 +933,8 @@ void TomeOfBattle(object oPC = OBJECT_SELF)
         int nMove = _CheckPrereqsByDiscipline(oPC, DISCIPLINE_STONE_DRAGON, 2, GetFirstBladeMagicClass(oPC));
         // Needs one Stone Dragon Stance
         int nStance = _CheckPrereqsByDiscipline(oPC, DISCIPLINE_STONE_DRAGON, 1, GetFirstBladeMagicClass(oPC), MANEUVER_TYPE_STANCE);
-
+	if(DEBUG) DoDebug("Moves" + IntToString(nMove));
+	if(DEBUG) DoDebug("Stances" + IntToString(nStance));
         if (nMove >=2 && nStance >= 1)
         {
             SetLocalInt(oPC, "PRC_PrereqDeepSt", 0);
@@ -972,6 +973,37 @@ void TomeOfBattle(object oPC = OBJECT_SELF)
         if (nMove >= 1 && nStance >= 1 && (nDomains == 2 || nCleric == 0))
         {
             SetLocalInt(oPC, "PRC_PrereqRubyKnight", 0);
+        }
+    }   
+
+    nClass = GetLevelByClass(CLASS_TYPE_JADE_PHOENIX_MAGE, oPC);
+    
+    if (nClass >= 0)
+    {
+        // Jade Phoenix Mage
+        SetLocalInt(oPC, "PRC_PrereqJPM", 1);
+        // Skip the rest of not an arcane caster
+        if (GetLocalInt(oPC, "PRC_ArcSpell2") == 0)
+        {
+        	int nUser;
+        	int nMove = 0;
+        	int nStance = 0;
+		int nType;
+		// Only need first blade magic class.  Can't take a second and Jade Phoenix and meet requirements. 
+
+		nUser = GetFirstBladeMagicClass(oPC);
+
+		// If inv_inc_moveknwn can be included here, GetManeuverCount() can be used in place of GetPersistantLocalInt()
+		// the following is pulled from the function
+
+		nType = MANEUVER_TYPE_MANEUVER;
+		nMove += GetPersistantLocalInt(oPC, "PRC_ManeuverList_" + IntToString(nUser) + IntToString(nType) + "_TotalKnown");
+
+		nType = MANEUVER_TYPE_STANCE;
+		nStance += GetPersistantLocalInt(oPC, "PRC_ManeuverList_" + IntToString(nUser) + IntToString(nType) + "_TotalKnown");
+
+		if (nMove >= 2 && nStance >= 1)
+		    SetLocalInt(oPC, "PRC_PrereqJPM", 0);
         }
     }   
     

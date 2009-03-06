@@ -334,6 +334,7 @@ void PRCDoPetrification(int nPower, object oSource, object oTarget, int nSpellID
 
 int PRCGetDelayedSpellEffectsExpired(int nSpell_ID, object oTarget, object oCaster);
 
+int PRCGetSpellUsesLeft(int nRealSpellID, object oCreature = OBJECT_SELF);
 // -----------------
 // END SPELLSWORD
 // -----------------
@@ -2217,7 +2218,7 @@ int PRCGetHasSpell(int nRealSpellID, object oCreature = OBJECT_SELF)
                         nUses += nCount;
                     }
                 }
-                else  if(nSpellbookType == SPELLBOOK_TYPE_SPONTANEOUS)
+                else if(nSpellbookType == SPELLBOOK_TYPE_SPONTANEOUS)
                 {
                     nSpellLevel = StringToInt(Get2DACache(sFile, "Level", j));
                     nCount = persistant_array_get_int(oCreature, "NewSpellbookMem_" + IntToString(nClass), nSpellLevel);
@@ -2821,4 +2822,54 @@ int PRCGetDelayedSpellEffectsExpired(int nSpell_ID, object oTarget, object oCast
 
     return FALSE;
 
+}
+
+// Much similar to PRCGetHasSpell, but used for JPM to get spells left not counting metamagic
+int PRCGetSpellUsesLeft(int nRealSpellID, object oCreature = OBJECT_SELF)
+{
+    if(!PRCGetIsRealSpellKnown(nRealSpellID, oCreature))
+        return 0;
+    int nUses = GetHasSpell(nRealSpellID, oCreature);
+
+    int nClass, nSpellbookID, nCount, i, j;
+    int nSpellbookType, nSpellLevel;
+    string sFile, sFeat;
+    for(i = 1; i <= 3; i++)
+    {
+        nClass = GetClassByPosition(i, oCreature);
+        sFile = GetFileForClass(nClass);
+        nSpellbookType = GetSpellbookTypeForClass(nClass);
+        nSpellbookID = RealSpellToSpellbookID(nClass, nRealSpellID);
+        if (nSpellbookID != -1)
+        {   //non-spellbook classes should return -1
+                sFeat = Get2DACache(sFile, "ReqFeat", j);
+                if(sFeat != "")
+                {
+                    if(!GetHasFeat(StringToInt(sFeat), oCreature))
+                        continue;
+                }
+                if(nSpellbookType == SPELLBOOK_TYPE_PREPARED)
+                {
+                    nCount = persistant_array_get_int(oCreature, "NewSpellbookMem_" + IntToString(nClass), j);
+                    if(DEBUG) DoDebug("PRCGetHasSpell(Prepared Caster): NewSpellbookMem_" + IntToString(nClass) + "[" + IntToString(j) + "] = " + IntToString(nCount));
+                    if(nCount > 0)
+                    {
+                        nUses += nCount;
+                    }
+                }
+                else if(nSpellbookType == SPELLBOOK_TYPE_SPONTANEOUS)
+                {
+                    nSpellLevel = StringToInt(Get2DACache(sFile, "Level", j));
+                    nCount = persistant_array_get_int(oCreature, "NewSpellbookMem_" + IntToString(nClass), nSpellLevel);
+                    if(DEBUG) DoDebug("PRCGetHasSpell(Spontaneous Caster): NewSpellbookMem_" + IntToString(nClass) + "[" + IntToString(j) + "] = " + IntToString(nCount));
+                    if(nCount > 0)
+                    {
+                        nUses += nCount;
+                    }
+                }
+        }
+    }
+
+    if(DEBUG) DoDebug("PRCGetHasSpell: RealSpellID = " + IntToString(nRealSpellID) + ", Uses = " + IntToString(nUses));
+    return nUses;
 }

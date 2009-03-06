@@ -35,21 +35,24 @@ void main()
 	PRCSetSchool(SPELL_SCHOOL_CONJURATION);
 	
 	object oPC = OBJECT_SELF;
-	object oArea = GetArea(oPC);
-	object oTarget = GetFirstObjectInArea(oArea);
+	object oArea = GetArea(oPC);	
 	int nCounter = PRCGetCasterLevel(oPC);
-	
+        float fVar = IntToFloat(nCounter/2);
+        fVar += 25.0;
+        float fSize = FeetToMeters(fVar);
+        location lLoc = GetLocation(oPC);
+        object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, fSize, lLoc, FALSE, OBJECT_TYPE_CREATURE);
+        
 	while(nCounter > 0 && GetIsObjectValid(oTarget))
 	{
 		if(GetIsFriend(oTarget, oPC) && !GetPlotFlag(oTarget))
 		{
-			DelayCommand(1.0f, AssignCommand(oTarget, JumpToObject(oPC)));
+                        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_AC_BONUS), oTarget);
+                        DelayCommand(0.2f, AssignCommand(oTarget, ClearAllActions(TRUE)));
+			DelayCommand(0.3f, AssignCommand(oTarget, JumpToObject(oPC)));
 			nCounter--;
 		}
-		oTarget = GetNextObjectInArea(oArea);
+                oTarget = MyNextObjectInShape(SHAPE_SPHERE, fSize, lLoc, FALSE, OBJECT_TYPE_CREATURE);
 	}
 	PRCSetSchool();
 }
-	
-	
-	

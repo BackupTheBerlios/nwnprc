@@ -19049,7 +19049,95 @@ Saving Throw: No
 Spell Resistance: No
 
 A bank of fog billows out from the point you designate. The fog obscures all sight, including darkvision, beyond 5 feet. A creature within 5 feet has concealment (attacks have a 20% miss chance). Creatures farther away have total concealment (50%).</entry>
-  <entry id="49965" lang="en" sex="m">**** 49,965 - 49,990 reserved for Jade Phoenix Mage until I figure out how much I really need ****</entry>
+  <entry id="49965" lang="en" sex="m">Jade Phoenix Mage</entry>
+  <entry id="49966" lang="en" sex="m">Jade Phoenix Mages</entry>
+  <entry id="49967" lang="en" sex="m">jade phoenix mage</entry>
+  <entry id="49968" lang="en" sex="m">(PRESTIGE CLASS)
+Long ago, a fellowship of swordsages known as the Masters of the Jade Phoenix took up the study of arcane magic in search of a new martial discipline.  They discovered that the mental austerity and economy of action each swordsage had cultivated in his martial studies opened up the door to a powerful and unique form of arcane mastery.  Properly applied, the stances and maneuvers of a martial discipline provided the mage with exceptional power and control in his arcane spellcasting - and by channeling the arcane energy of his spells into his martial maneuvers, he achieved supernatural perfection in his chosen disciplines.
+
+- Hit Die: d6
+- Proficiencies: A Jade Phoenix Mage gains no additional proficiencies.
+- Skill Points: 2 + Int Modifier
+
+REQUIREMENTS:
+
+Alignment: Any nonevil.
+Skills: Concentration 9 ranks, Lore 2 ranks.
+Maneuvers: Must know at least two martial maneuvers, including one strike.
+Spells: Ability to cast 2nd-level arcane spells.
+
+ABILITIES:
+
+Level
+1: Arcane Wrath - Expend spell use to get damage boost and +4 attack bonus to next attack.
+   Rite of Waking - Gain +2 bonus to lore checks, also +2 bonus to saving throws vs. death and fear.
+2: Mystic Phoenix stance - Gain +1 caster level bonus and optional expend spell for damage resistance vs. evil.
+3:
+4: Empowering strike - Empower next spell cast upon sucessful melee strike.
+5: 
+6: Firebird stance - Gain +3 caster levels when casting any fire spell, also gain resistance 10/fire.  Optional expend spell for temporary damage aura.
+   Jade Phoenix Master - Can perform Rite of Waking on another.
+7:
+8: Quickening strike - Quickcast spell after successful melee strike.
+9: 
+10:  Emerald Immolation - You explode dealing 20d6 damage.
+
+Level  Maneuvers Known   Maneuvers Readied   Stances Known
+1      1                 0                   0              
+2      0                 0                   0              
+3      1                 1                   0              
+4      0                 0                   0              
+5      1                 0                   1              
+6      0                 1                   0              
+7      1                 0                   0              
+8      0                 0                   0              
+9      1                 1                   0              
+10     0                 0                   0              
+
+
+</entry>
+  <entry id="49969" lang="en" sex="m">Arcane Wrath</entry>
+  <entry id="49970" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Jade Phoenix level 1.
+Specifics: By losing any prepared spell,  you gain a +4 bonus on a single attack or martial strike, as well as an extra 1d10 points of damage per spell level expended.  Both bonuses must be applied on an attack made before your next turn.
+Use: Selected</entry>
+  <entry id="49971" lang="en" sex="m">Rite of Waking</entry>
+  <entry id="49972" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Jade Phoeix level 1.
+Specifics: You gain a +2 bonus to lore checks, as well as a +2 bonus on saving throws against death effects and fear effects.
+Use: Selected</entry>
+  <entry id="49973" lang="en" sex="m">Mystic Phoenix Stance</entry>
+  <entry id="49974" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Jade Phoenix level 2
+Specifics: While you use this ability, your caster level when you cast arcane spells increases by 1, and you gain a +2 dodge bonus to AC.  If you expend an arcane spell, you gain damage reduction versus all but evil 2x the level of the spell expended (maximum damage reduction 10/evil for fifth level spell).
+Use: Selected</entry>
+  <entry id="49975" lang="en" sex="m">Empowering Strike</entry>
+  <entry id="49976" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Jade Phoenix level 4
+Specifics: The next time you successfully attack an enemy, an arcane spell that you cast before the end of your next tuen is empowered.  You do not need to know Empower Spell to be able to use this feat.  You can use this ability once per encounter.
+Use: Selected</entry>
+  <entry id="49977" lang="en" sex="m">Firebird Stance</entry>
+  <entry id="49978" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Jade Phoenix level 6.
+Specifics: You gain fire resistance 10 and your caster level when you cast any fire spell increases by 3.  If you expend an arcane spell, you gain an aura that deals 1d6 points of damage to any creature within 10 feet (Reflex half, DC 14 + key spellcasting ability modifier).  Half of the damage is fire and the other half is magical.  The aura lasts for one turn.
+Use: Selected</entry>
+  <entry id="49979" lang="en" sex="m">Jade Phoenix Master</entry>
+  <entry id="49981" lang="en" sex="m">Quickening Strike</entry>
+  <entry id="49983" lang="en" sex="m">Emerald Immolation</entry>
+  <entry id="49984" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Jade Phoenix level 10
+Specifics: You explode in a searing blast of green fire that deals 20d6 of damage in a 20-foot radius (Reflex half, DC 19 + key spellcasting ability modifier).  Half of the damage is fire, the other half is magical.  Extraplanar creatures that fail their saves must succeed on a Will save (DC 19 + key spellcasting ability modifier) or be killed.
+Use: Selected</entry>  
+  <entry id="49985" lang="en" sex="m">Jade Phoenix Mage Quickslots</entry>
+  <entry id="49986" lang="en" sex="m">Select and assign spells for use with Jade Phoenix Mage class abilities.</entry>  
+  <entry id="49987" lang="en" sex="m">Spell Quickslot Conversation</entry>
+  <entry id="49988" lang="en" sex="m">Spell Quickslot 1</entry>  
+  <entry id="49989" lang="en" sex="m">Spell Quickslot 2</entry>  
+  <entry id="49990" lang="en" sex="m">Spell Quickslot 3</entry>  
+  <entry id="49991" lang="en" sex="m">Spell Quickslot 4</entry>  
+  <entry id="49992" lang="en" sex="m">Rite of Waking (Other)</entry>
+  <entry id="49993" lang="en" sex="m">Mystic Phoenix Stance (Augmented)</entry>
+  <entry id="49994" lang="en" sex="m">Firebird Stance (Augmented)</entry>
   <entry id="49999" lang="en" sex="m">**** 50,000 - 50,500 reserved for Race Pack Feats ****</entry>
   <entry id="50000" lang="en" sex="m">Light Sensitivity</entry>
   <entry id="50001" lang="en" sex="m">Type of Feat: Racial

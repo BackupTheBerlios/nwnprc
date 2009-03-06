@@ -710,6 +710,7 @@ int GetBladeMagicPRCLevels(object oInitiator)
 	nLevel += GetLevelByClass(CLASS_TYPE_BLOODCLAW_MASTER, oInitiator);
 	nLevel += GetLevelByClass(CLASS_TYPE_RUBY_VINDICATOR, oInitiator);
 	nLevel += GetLevelByClass(CLASS_TYPE_JADE_PHOENIX_MAGE, oInitiator);
+	nLevel += GetLevelByClass(CLASS_TYPE_MASTER_OF_NINE, oInitiator);
 	
     	return nLevel;
 }

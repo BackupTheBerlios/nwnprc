@@ -50246,4 +50246,59 @@ Secondary Damage: 2d6 Con</entry>
   <entry id="70338" lang="en" sex="m">Practised Spellcaster (Favoured Soul)</entry>
   <entry id="70339" lang="en" sex="m">Practised Spellcaster (Sohei)</entry>
   <entry id="70340" lang="en" sex="m">Practised Spellcaster (Warmage)</entry>
+  <entry id="70341" lang="en" sex="m">Master of Nine</entry>
+  <entry id="70342" lang="en" sex="m">Masters of Nine</entry>
+  <entry id="70343" lang="en" sex="m">master of nine</entry>
+  <entry id="70344" lang="en" sex="m">(PRESTIGE CLASS)
+Some savants of the Nine Disciplines believe that none of the paths are complete, true disciplines in and of themselves. They believe that the nine disciplines are more appropriately termed the Nine Steps, each a single portion of a whole, true Way. These few masters strive to learn the secrets of each path, and in doing some become the masters of nine, using a martial style that combines all of the techniques of the Temple of Nine Swords. Such martial sages are fluid and unpredictable martial artists, capable of switching between styles and techniques to suit each situation.
+
+- Hit Die: d8
+- Proficiencies: A Master of Nine gains no additional proficiencies.
+- Skill Points: 6 + Int Modifier
+
+REQUIREMENTS:
+
+Skills: 10 ranks in 4 skills from Tumble, Intimidate, Concentration, Balance, Sense Motive, Hide, Jump, and Persuade.
+Feats: Adaptive Style, Dodge, Blind-Fight, Improved Initiative, Improved Unarmed Strike.
+Maneuvers: Must know at least one maneuver from six disciplines.
+
+ABILITIES:
+
+Level
+1: 
+2: Dual Stance - Two stances at once
+3: Perfect Form - Higher DC on all strikes
+4: Counter Stance - Change stances while using a counter
+5: Mastery of Nine - Attack and Damage bonus
+
+Maneuvers
+
+The Master of Nine may select maneuvers from any discipline. He adds his full class level to his initiator level. He gains new maneuvers known and readied at the indicated levels.
+
+Level  Maneuvers Known   Maneuvers Readied   Stances Known
+1      2                 1                   0              
+2      1                 1                   1              
+3      2                 1                   0              
+4      1                 1                   1              
+5      2                 1                   0              </entry>
+  <entry id="70345" lang="en" sex="m">Dual Stance</entry>
+  <entry id="70346" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Master of Nine 2.
+Specifics: You may use a second stance for a limited time each day of 2 rounds per class level. The timer will not start until you activate your second stance.
+Use: Selected</entry>
+  <entry id="70347" lang="en" sex="m">Perfect Form</entry>
+  <entry id="70348" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Master of Nine 3.
+Specifics: The save DC of all of your maneuvers is increased by 1.
+Use: Automatic</entry>
+  <entry id="70349" lang="en" sex="m">Counter Stance</entry>
+  <entry id="70350" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Master of Nine 4.
+Specifics: Whenever you initiate a counter, you may change your stance as a free action.
+Use: Automatic</entry>
+  <entry id="70351" lang="en" sex="m">Master of Nine</entry>
+  <entry id="70352" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Master of Nine 5.
+Specifics: You gain a +2 bonus on all maneuvers, and a damage bonus on all maneuvers equal to the number of disciplines from which you know maneuvers.
+Use: Automatic</entry>  
 </tlk>

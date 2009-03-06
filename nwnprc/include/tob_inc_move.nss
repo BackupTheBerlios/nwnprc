@@ -423,6 +423,15 @@ void _StanceSpecificChecks(object oInitiator, int nMoveId)
     {
         nStanceToKeep = GetHasActiveStance(oInitiator);
     }
+    // Master of Nine can keep two stances active for 2 rounds per class level.
+    if (GetLevelByClass(CLASS_TYPE_MASTER_OF_NINE, oInitiator) >= 3 && GetLocalInt(oInitiator, "MoNDualStance"))
+    {
+    	nStanceToKeep = GetHasActiveStance(oInitiator);
+    	float fDelay = 12.0 * GetLevelByClass(CLASS_TYPE_MASTER_OF_NINE, oInitiator);
+    	// Clean up the stance when the timer runs out
+    	DelayCommand(fDelay, ClearStances(oInitiator, -1));
+    	DeleteLocalInt(oInitiator, "MoNDualStance");
+    }
 
     if(DEBUG) DoDebug("tob_inc_move: ClearStances");
     // Can only have one stance active, except for a level 20+ Warblade
@@ -491,6 +500,13 @@ struct maneuver EvaluateManeuver(object oInitiator, object oTarget)
     // If you're this far in, you always succeed, there are very few checks.
     // Deletes any active stances, and allows a Warblade 20 to have his two stances active.
     if (GetIsStance(move.nMoveId)) _StanceSpecificChecks(oInitiator, move.nMoveId);
+    // Allows the Master of Nine to Counter Stance.
+    if (Get2DACache("feat", "Constant", GetClassFeatFromPower(move.nMoveId, nClass)) == "MANEUVER_COUNTER" &&
+        GetLevelByClass(CLASS_TYPE_MASTER_OF_NINE, oInitiator) >= 4)
+    {
+    	SetLocalInt(oInitiator, "MoNCounterStance", TRUE);
+    	DelayCommand(6.0, DeleteLocalInt(oInitiator, "MoNCounterStance"));
+    }
     if(DEBUG) DoDebug("tob_inc_move: _StanceSpecificChecks");
     // Expend the Maneuver until recovered
     if (!GetIsStance(move.nMoveId)) ExpendManeuver(move.oInitiator, nClass, move.nMoveId);
@@ -548,7 +564,14 @@ void UseManeuver(int nManeuver, int nClass, int nLevelOverride = 0)
     {
         nMoveDur = 0;
         DeleteLocalInt(oInitiator, "RKVDivineImpetus");
-    }     
+    }  
+    else if((Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "MANEUVER_STANCE") && // The maneuver is a stance
+       GetLocalInt(oInitiator, "MoNCounterStance")                                                          // Has used a counter already this round
+       )
+    {
+        nMoveDur = 0;
+        DeleteLocalInt(oInitiator, "MoNCounterStance");
+    }    
     else if((Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "SWIFT_ACTION" || // Normally swift action maneuvers check
         Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "MANEUVER_BOOST" ||
         Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "MANEUVER_COUNTER" ||

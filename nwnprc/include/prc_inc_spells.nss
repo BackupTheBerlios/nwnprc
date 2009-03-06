@@ -886,6 +886,19 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
             int nBonus = GetLocalInt(oTarget, "PRC_TOB_DIAMOND_DEFENSE");
             nDC -= nBonus;
     }
+    
+    // Master of Nine
+    if (GetLevelByClass(CLASS_TYPE_MASTER_OF_NINE, oSaveVersus) >= 3)
+    {
+    	int nLastClass = GetLastSpellCastClass();
+    	if (nLastClass == CLASS_TYPE_WARBLADE ||
+    		nLastClass == CLASS_TYPE_SWORDSAGE ||
+    		nLastClass == CLASS_TYPE_CRUSADER)
+    	{
+    		// Increases maneuver DCs by 1
+    		nDC += 1;
+    	}
+    }
 
     // This is done here because it is possible to tell the saving throw type here
     // Tyranny Domain increases the DC of mind spells by +2.

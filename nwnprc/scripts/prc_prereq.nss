@@ -473,10 +473,10 @@ void Maester(object oPC)
 
     int nSkill = FALSE;
 
-    // No Int bonus to skills, just want the base ranks (and yes I know this allows items at the moment)
-    if ((GetSkillRank(SKILL_CRAFT_ARMOR, oPC) - GetAbilityModifier(ABILITY_INTELLIGENCE, oPC)) >= 8) nSkill = TRUE;
-    if ((GetSkillRank(SKILL_CRAFT_TRAP, oPC) - GetAbilityModifier(ABILITY_INTELLIGENCE, oPC)) >= 8) nSkill = TRUE;
-    if ((GetSkillRank(SKILL_CRAFT_WEAPON, oPC) - GetAbilityModifier(ABILITY_INTELLIGENCE, oPC)) >= 8) nSkill = TRUE;
+    // Base Ranks Only
+    if (GetSkillRank(SKILL_CRAFT_ARMOR, oPC, TRUE) >= 8) nSkill = TRUE;
+    if (GetSkillRank(SKILL_CRAFT_TRAP, oPC, TRUE) >= 8) nSkill = TRUE;
+    if (GetSkillRank(SKILL_CRAFT_WEAPON, oPC, TRUE) >= 8) nSkill = TRUE;
 
     // At least two crafting feats
     if (GetItemCreationFeatCount(oPC) >= 2 && nSkill)
@@ -972,6 +972,35 @@ void TomeOfBattle(object oPC = OBJECT_SELF)
         if (nMove >= 1 && nStance >= 1 && (nDomains == 2 || nCleric == 0))
         {
             SetLocalInt(oPC, "PRC_PrereqRubyKnight", 0);
+        }
+    }   
+    
+    nClass = GetLevelByClass(CLASS_TYPE_MASTER_OF_NINE, oPC);
+    
+    if (nClass >= 0)
+    {
+    	SetLocalInt(oPC, "PRC_PrereqMoNine", 1);
+        // Needs 6 maneuvers, so check the persistent locals
+        int i, nCount, nSkills;
+        for(i = 1; i <= 9; i++)
+        {
+               	// Loop over all disciplines, and total up how many he knows
+		nCount += GetPersistantLocalInt(oPC, "MasterOfNine" + IntToString(i));
+        }	    	
+	    	
+	// Base ranks only
+	if (GetSkillRank(SKILL_TUMBLE, oPC, TRUE) >= 10) nSkills += 1;
+	if (GetSkillRank(SKILL_INTIMIDATE, oPC, TRUE) >= 10) nSkills += 1;
+	if (GetSkillRank(SKILL_CONCENTRATION, oPC, TRUE) >= 10) nSkills += 1;
+	if (GetSkillRank(SKILL_BALANCE, oPC, TRUE) >= 10) nSkills += 1;
+	if (GetSkillRank(SKILL_SENSE_MOTIVE, oPC, TRUE) >= 10) nSkills += 1;
+	if (GetSkillRank(SKILL_HIDE, oPC, TRUE) >= 10) nSkills += 1;
+	if (GetSkillRank(SKILL_JUMP, oPC, TRUE) >= 10) nSkills += 1;
+	if (GetSkillRank(SKILL_PERSUADE, oPC, TRUE) >= 10) nSkills += 1;
+                       
+        if (nCount >= 6 && nSkills >= 4)
+        {
+            SetLocalInt(oPC, "PRC_PrereqMoNine", 0);
         }
     }     
 }

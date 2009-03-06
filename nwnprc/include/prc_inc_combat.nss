@@ -3172,11 +3172,11 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iOffha
         iAttackBonus = GetAttackBonus(oDefender, oAttacker, oWeapon, iOffhand, iTouchAttackType);
     }
     int iDiceRoll = d20();
-    if (DEBUG) DoDebug("Starting DSPerfectOrder");
+    //if (DEBUG) DoDebug("Starting DSPerfectOrder");
     // All rolls = 11 for this guy
     if (GetLocalInt(oAttacker, "DSPerfectOrder"))
         iDiceRoll = 11;
-    if (DEBUG) DoDebug("Ending DSPerfectOrder");
+    //if (DEBUG) DoDebug("Ending DSPerfectOrder");
     //string sDebugFeedback = "";
     //if (DEBUG) DoDebug("GetAttackRoll: Line #1");
     //int bDebug = GetPRCSwitch(PRC_COMBAT_DEBUG);
@@ -3190,21 +3190,34 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iOffha
     if (GetLevelByClass(CLASS_TYPE_WARBLADE, oAttacker) >= 15)  iAttackBonus += GetAbilityModifier(ABILITY_INTELLIGENCE, oAttacker);
     // Divine Fury ability
     if (GetLocalInt(oAttacker, "RKVDivineFury")) iAttackBonus += 4;
+    
+    // Master of Nine
+    if (GetLevelByClass(CLASS_TYPE_MASTER_OF_NINE, oAttacker) >= 3)
+    {
+    	int nLastClass = GetLastSpellCastClass();
+    	if (nLastClass == CLASS_TYPE_WARBLADE ||
+    	    nLastClass == CLASS_TYPE_SWORDSAGE ||
+    	    nLastClass == CLASS_TYPE_CRUSADER)
+    	{
+    		// Increases maneuver attacks by 2
+    		iAttackBonus += 2;
+    	}
+    }    
 
     //if (DEBUG) DoDebug("GetAttackRoll: Line #5");
     //if(bDebug) sDebugFeedback += " - APR penalty ("  + IntToString(iMod * -1) + ")";
-    if (DEBUG) DoDebug("Starting GetAttackModVersusDefender");
+    //if (DEBUG) DoDebug("Starting GetAttackModVersusDefender");
     int iDefenderMod = GetAttackModVersusDefender(oDefender, oAttacker, oWeapon, iTouchAttackType);
     iAttackBonus += iDefenderMod;
 
     //if(bDebug) sDebugFeedback += " + Atk vs Def Adj ("  + IntToString(iDefenderMod) + ")";
 
-    if (DEBUG) DoDebug("Starting GetDefenderAC");
+    //if (DEBUG) DoDebug("Starting GetDefenderAC");
     int iEnemyAC = GetDefenderAC(oDefender, oAttacker, iTouchAttackType);
 
     //if (bDebug) sDebugFeedback += " *versus* AC ("  + IntToString(iEnemyAC) + ")";
     //if (bDebug) sDebugFeedback = COLOR_WHITE + "Attack Roll = " + IntToString(iAttackBonus + iDiceRoll) + ": " + sDebugFeedback;
-    if (DEBUG) DoDebug("GetAttackRoll: End Section #1");
+    //if (DEBUG) DoDebug("GetAttackRoll: End Section #1");
     int iWeaponType = GetBaseItemType(oWeapon);
     int iCritThreat = GetWeaponCriticalRange(oAttacker, oWeapon);
 
@@ -3237,7 +3250,7 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iOffha
         sFeedback += PRC_TEXT_ORANGE + " attacks ";
 
     sFeedback +=  GetName(oDefender) + ": ";
-    if (DEBUG) DoDebug("GetAttackRoll: End Section #2");
+    //if (DEBUG) DoDebug("GetAttackRoll: End Section #2");
     int iReturn = 0;
     // roll concealment check
     int iConcealment = GetIsConcealed(oDefender, oAttacker);
@@ -3259,7 +3272,7 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iOffha
             iReturn = 0;
         }
     }
-    if (DEBUG) DoDebug("GetAttackRoll: End Section #3");
+   // if (DEBUG) DoDebug("GetAttackRoll: End Section #3");
     if (!bEnemyIsConcealed)
     {
         // Autmatically dodge the first attack of each round
@@ -3290,12 +3303,12 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iOffha
             else
                         {
                                 iCritThreatRoll = d20();
-                                if (DEBUG) DoDebug("Starting BoneCrusher");
+                               // if (DEBUG) DoDebug("Starting BoneCrusher");
                                 if (GetLocalInt(oDefender, "BoneCrusher")) iCritThreatRoll += 10;
                                 if (GetLevelByClass(CLASS_TYPE_WARBLADE, oAttacker) >= 3) iCritThreatRoll += GetAbilityModifier(ABILITY_INTELLIGENCE, oAttacker);
-                                if (DEBUG) DoDebug("Ending BoneCrusher");
+                               // if (DEBUG) DoDebug("Ending BoneCrusher");
                         }
-            if (DEBUG) DoDebug("GetAttackRoll: End Section #4");
+           // if (DEBUG) DoDebug("GetAttackRoll: End Section #4");
 
             if(!GetIsImmune(oDefender, IMMUNITY_TYPE_CRITICAL_HIT) )
             {
@@ -3321,7 +3334,7 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iOffha
             sFeedback += "*miss*: (" + IntToString(iDiceRoll) + " + " + IntToString(iAttackBonus) + " = " + IntToString(iDiceRoll + iAttackBonus) + ")";
             iReturn = 0;
         }
-        if (DEBUG) DoDebug("GetAttackRoll: End Section #5");
+        //if (DEBUG) DoDebug("GetAttackRoll: End Section #5");
     }
     //arrow VFX
     //this is done with crossbows and other ranged weapons
@@ -3341,7 +3354,7 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iOffha
         SendMessageToPC(oAttacker, sFeedback); // DelayCommand(fDelay, SendMessageToPC(oAttacker, sFeedback));
         //if (bDebug) SendMessageToPC(oAttacker, sDebugFeedback);
     }
-    if (DEBUG) DoDebug("GetAttackRoll: End Section #6");
+   // if (DEBUG) DoDebug("GetAttackRoll: End Section #6");
     return iReturn;
 }
 
@@ -5090,6 +5103,18 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
             {
                 iWeaponDamage += GetAbilityModifier(ABILITY_INTELLIGENCE, oAttacker);
             }
+	    if (GetLevelByClass(CLASS_TYPE_MASTER_OF_NINE, oAttacker) >= 3)
+	    {
+                // Check the persistent locals
+                int i, nCount;
+                for(i = 1; i <= 9; i++)
+                {
+                	// Loop over all disciplines, and total up how many he knows
+			nCount += GetPersistantLocalInt(oAttacker, "MasterOfNine" + IntToString(i));
+                }	    	
+	    	
+	    	iWeaponDamage += nCount;
+	    }
             // This is for the Lightning Throw Maneuver.
             if (GetLocalInt(oAttacker, "LightningThrowSave")) iWeaponDamage /= 2;
             if (DEBUG) DoDebug("Ending LightningThrowSave");

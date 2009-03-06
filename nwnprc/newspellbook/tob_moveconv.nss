@@ -51,23 +51,31 @@ const int DEBUG_LIST = FALSE;
 /* Function defintions                          */
 //////////////////////////////////////////////////
 
-void PrintList(object oPC)
+void PrintList(object oInitiator)
 {
     string tp = "Printing list:\n";
-    string s = GetLocalString(oPC, "PRC_MoveConvo_List_Head");
+    string s = GetLocalString(oInitiator, "PRC_MoveConvo_List_Head");
     if(s == ""){
         tp += "Empty\n";
     }
     else{
         tp += s + "\n";
-        s = GetLocalString(oPC, "PRC_MoveConvo_List_Next_" + s);
+        s = GetLocalString(oInitiator, "PRC_MoveConvo_List_Next_" + s);
         while(s != ""){
             tp += "=> " + s + "\n";
-            s = GetLocalString(oPC, "PRC_MoveConvo_List_Next_" + s);
+            s = GetLocalString(oInitiator, "PRC_MoveConvo_List_Next_" + s);
         }
     }
 
     DoDebug(tp);
+}
+
+void AddMasterOfNineDiscipline(object oInitiator, int nMove)
+{
+	int nClass = GetLocalInt(oInitiator, "nClass");
+	// Using feats
+	int nDiscipline = GetDisciplineByManeuver(nMove, nClass, 1);
+	SetPersistantLocalInt(oInitiator, "MasterOfNine" + IntToString(nDiscipline), TRUE);
 }
 
 /**
@@ -75,31 +83,31 @@ void PrintList(object oPC)
  * as it is built.
  * Assumption: Maneuver names are unique.
  *
- * @param oPC     The storage object aka whomever is gaining maneuvers in this conversation
+ * @param oInitiator     The storage object aka whomever is gaining maneuvers in this conversation
  * @param sChoice The choice string
  * @param nChoice The choice value
  */
-void AddToTempList(object oPC, string sChoice, int nChoice)
+void AddToTempList(object oInitiator, string sChoice, int nChoice)
 {
     if(DEBUG_LIST) DoDebug("\nAdding to temp list: '" + sChoice + "' - " + IntToString(nChoice));
-    if(DEBUG_LIST) PrintList(oPC);
+    if(DEBUG_LIST) PrintList(oInitiator);
     // If there is nothing yet
-    if(!GetLocalInt(oPC, "PRC_MoveConvo_ListInited"))
+    if(!GetLocalInt(oInitiator, "PRC_MoveConvo_ListInited"))
     {
-        SetLocalString(oPC, "PRC_MoveConvo_List_Head", sChoice);
-        SetLocalInt(oPC, "PRC_MoveConvo_List_" + sChoice, nChoice);
+        SetLocalString(oInitiator, "PRC_MoveConvo_List_Head", sChoice);
+        SetLocalInt(oInitiator, "PRC_MoveConvo_List_" + sChoice, nChoice);
 
-        SetLocalInt(oPC, "PRC_MoveConvo_ListInited", TRUE);
+        SetLocalInt(oInitiator, "PRC_MoveConvo_ListInited", TRUE);
     }
     else
     {
         // Find the location to instert into
-        string sPrev = "", sNext = GetLocalString(oPC, "PRC_MoveConvo_List_Head");
+        string sPrev = "", sNext = GetLocalString(oInitiator, "PRC_MoveConvo_List_Head");
         while(sNext != "" && StringCompare(sChoice, sNext) >= 0)
         {
             if(DEBUG_LIST) DoDebug("Comparison between '" + sChoice + "' and '" + sNext + "' = " + IntToString(StringCompare(sChoice, sNext)));
             sPrev = sNext;
-            sNext = GetLocalString(oPC, "PRC_MoveConvo_List_Next_" + sNext);
+            sNext = GetLocalString(oInitiator, "PRC_MoveConvo_List_Next_" + sNext);
         }
 
         /* Insert the new entry */
@@ -107,16 +115,16 @@ void AddToTempList(object oPC, string sChoice, int nChoice)
         if(sPrev == "")
         {
             if(DEBUG_LIST) DoDebug("New head");
-            SetLocalString(oPC, "PRC_MoveConvo_List_Head", sChoice);
+            SetLocalString(oInitiator, "PRC_MoveConvo_List_Head", sChoice);
         }
         else
         {
             if(DEBUG_LIST) DoDebug("Inserting into position between '" + sPrev + "' and '" + sNext + "'");
-            SetLocalString(oPC, "PRC_MoveConvo_List_Next_" + sPrev, sChoice);
+            SetLocalString(oInitiator, "PRC_MoveConvo_List_Next_" + sPrev, sChoice);
         }
 
-        SetLocalString(oPC, "PRC_MoveConvo_List_Next_" + sChoice, sNext);
-        SetLocalInt(oPC, "PRC_MoveConvo_List_" + sChoice, nChoice);
+        SetLocalString(oInitiator, "PRC_MoveConvo_List_Next_" + sChoice, sNext);
+        SetLocalInt(oInitiator, "PRC_MoveConvo_List_" + sChoice, nChoice);
     }
 }
 
@@ -124,14 +132,14 @@ void AddToTempList(object oPC, string sChoice, int nChoice)
  * Reads the linked list built with AddToTempList() to AddChoice() and
  * deletes it.
  *
- * @param oPC A PC gaining maneuvers at the moment
+ * @param oInitiator A PC gaining maneuvers at the moment
  */
-void TransferTempList(object oPC)
+void TransferTempList(object oInitiator)
 {
-    string sChoice = GetLocalString(oPC, "PRC_MoveConvo_List_Head");
-    int    nChoice = GetLocalInt   (oPC, "PRC_MoveConvo_List_" + sChoice);
+    string sChoice = GetLocalString(oInitiator, "PRC_MoveConvo_List_Head");
+    int    nChoice = GetLocalInt   (oInitiator, "PRC_MoveConvo_List_" + sChoice);
 
-    DeleteLocalString(oPC, "PRC_MoveConvo_List_Head");
+    DeleteLocalString(oInitiator, "PRC_MoveConvo_List_Head");
     string sPrev;
 
     if(DEBUG_LIST) DoDebug("Head is: '" + sChoice + "' - " + IntToString(nChoice));
@@ -139,30 +147,30 @@ void TransferTempList(object oPC)
     while(sChoice != "")
     {
         // Add the choice
-        AddChoice(sChoice, nChoice, oPC);
+        AddChoice(sChoice, nChoice, oInitiator);
 
         // Get next
-        sChoice = GetLocalString(oPC, "PRC_MoveConvo_List_Next_" + (sPrev = sChoice));
-        nChoice = GetLocalInt   (oPC, "PRC_MoveConvo_List_" + sChoice);
+        sChoice = GetLocalString(oInitiator, "PRC_MoveConvo_List_Next_" + (sPrev = sChoice));
+        nChoice = GetLocalInt   (oInitiator, "PRC_MoveConvo_List_" + sChoice);
 
         if(DEBUG_LIST) DoDebug("Next is: '" + sChoice + "' - " + IntToString(nChoice) + "; previous = '" + sPrev + "'");
 
         // Delete the already handled data
-        DeleteLocalString(oPC, "PRC_MoveConvo_List_Next_" + sPrev);
-        DeleteLocalInt   (oPC, "PRC_MoveConvo_List_" + sPrev);
+        DeleteLocalString(oInitiator, "PRC_MoveConvo_List_Next_" + sPrev);
+        DeleteLocalInt   (oInitiator, "PRC_MoveConvo_List_" + sPrev);
     }
 
-    DeleteLocalInt(oPC, "PRC_MoveConvo_ListInited");
+    DeleteLocalInt(oInitiator, "PRC_MoveConvo_ListInited");
 }
 
 
 void main()
 {
-    object oPC = GetPCSpeaker();
-    int nValue = GetLocalInt(oPC, DYNCONV_VARIABLE);
-    int nStage = GetStage(oPC);
+    object oInitiator = GetPCSpeaker();
+    int nValue = GetLocalInt(oInitiator, DYNCONV_VARIABLE);
+    int nStage = GetStage(oInitiator);
 
-    int nClass = GetLocalInt(oPC, "nClass");
+    int nClass = GetLocalInt(oInitiator, "nClass");
     string sPsiFile = GetAMSKnownFileName(nClass);
     string sManeuverFile = GetAMSDefinitionFileName(nClass);
 
@@ -175,7 +183,7 @@ void main()
         if(DEBUG) DoDebug("tob_moveconv: Running setup stage for stage " + IntToString(nStage));
         // Check if this stage is marked as already set up
         // This stops list duplication when scrolling
-        if(!GetIsStageSetUp(nStage, oPC))
+        if(!GetIsStageSetUp(nStage, oInitiator))
         {
             if(DEBUG) DoDebug("tob_moveconv: Stage was not set up already");
             // Level selection stage
@@ -185,10 +193,10 @@ void main()
                 SetHeader(GetStringByStrRef(STRREF_MOVESTANCE_HEADER));
 
                 // Determine whether they're missing maneuvers or stances
-                int nMaxMove = GetMaxManeuverCount(oPC, nClass, MANEUVER_TYPE_MANEUVER);
-                int nMaxStance = GetMaxManeuverCount(oPC, nClass, MANEUVER_TYPE_STANCE);
-                int nCountMove = GetManeuverCount(oPC, nClass, MANEUVER_TYPE_MANEUVER);
-                int nCountStance = GetManeuverCount(oPC, nClass, MANEUVER_TYPE_STANCE);
+                int nMaxMove = GetMaxManeuverCount(oInitiator, nClass, MANEUVER_TYPE_MANEUVER);
+                int nMaxStance = GetMaxManeuverCount(oInitiator, nClass, MANEUVER_TYPE_STANCE);
+                int nCountMove = GetManeuverCount(oInitiator, nClass, MANEUVER_TYPE_MANEUVER);
+                int nCountStance = GetManeuverCount(oInitiator, nClass, MANEUVER_TYPE_STANCE);
 
                 // Set the tokens
                 // If the max they should have is greater than the amount they do have, add the choice.
@@ -210,7 +218,7 @@ void main()
                 // Determine maximum maneuver level
                 // Initiators get new maneuvers at the same levels as wizards
                 // See ToB p39, table 3-1
-                int nMaxLevel = (GetInitiatorLevel(oPC, nClass) + 1)/2;
+                int nMaxLevel = (GetInitiatorLevel(oInitiator, nClass) + 1)/2;
 
                 // Set the tokens
                 int i;
@@ -230,24 +238,24 @@ void main()
             {
                 if(DEBUG) DoDebug("tob_moveconv: Building maneuver selection");
 		string sMoveStance;
-                int nMoveStance = GetLocalInt(oPC, "nStanceOrManeuver");
+                int nMoveStance = GetLocalInt(oInitiator, "nStanceOrManeuver");
                 if      (nMoveStance == MANEUVER_TYPE_MANEUVER) sMoveStance = "ManeuverKnown";
                 else if (nMoveStance == MANEUVER_TYPE_STANCE)   sMoveStance = "StancesKnown";                
                 
-                int nCurrentManeuvers = GetManeuverCount(oPC, nClass, nMoveStance);
-                int nMaxManeuvers = GetMaxManeuverCount(oPC, nClass, nMoveStance);
+                int nCurrentManeuvers = GetManeuverCount(oInitiator, nClass, nMoveStance);
+                int nMaxManeuvers = GetMaxManeuverCount(oInitiator, nClass, nMoveStance);
                 string sToken = GetStringByStrRef(STRREF_MOVELIST_HEADER1) + " " + //"Select a maneuver to gain.\n You can select "
                                 IntToString(nMaxManeuvers-nCurrentManeuvers) + " " +
                                 GetStringByStrRef(STRREF_MOVELIST_HEADER2);        //" more maneuvers"
                 SetHeader(sToken);
 
                 // Set the first choice to be return to level selection stage
-                AddChoice(GetStringByStrRef(STRREF_BACK_TO_LSELECT), CHOICE_BACK_TO_LSELECT, oPC);
+                AddChoice(GetStringByStrRef(STRREF_BACK_TO_LSELECT), CHOICE_BACK_TO_LSELECT, oInitiator);
 
                 // Determine maximum maneuver level
-                int nInitiatorLevel = GetInitiatorLevel(oPC, nClass);
+                int nInitiatorLevel = GetInitiatorLevel(oInitiator, nClass);
                 
-                int nManeuverLevelToBrowse = GetLocalInt(oPC, "nManeuverLevelToBrowse");
+                int nManeuverLevelToBrowse = GetLocalInt(oInitiator, "nManeuverLevelToBrowse");
                 int i, nManeuverLevel;
                 string sFeatID;
                 for(i = 0; i < GetPRCSwitch(FILE_END_CLASS_POWER) ; i++)
@@ -274,31 +282,31 @@ void main()
                     }
                     sFeatID = Get2DACache(sManeuverFile, "FeatID", i);
                     if(sFeatID != ""                                           // Non-blank row
-                     && !GetHasFeat(StringToInt(sFeatID), oPC)                 // PC does not already possess the maneuver
+                     && !GetHasFeat(StringToInt(sFeatID), oInitiator)                 // PC does not already possess the maneuver
                      && (!StringToInt(Get2DACache(sManeuverFile, "HasPrereqs", i))// Maneuver has no prerequisites
-                      || CheckManeuverPrereqs(nClass, StringToInt(sFeatID), oPC)          // Or the PC possess the prerequisites
+                      || CheckManeuverPrereqs(nClass, StringToInt(sFeatID), oInitiator)          // Or the PC possess the prerequisites
                          )
                        )
                     {
-                        if(SORT) AddToTempList(oPC, GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", StringToInt(sFeatID)))), i);
-                        else     AddChoice(GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", StringToInt(sFeatID)))), i, oPC);
+                        if(SORT) AddToTempList(oInitiator, GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", StringToInt(sFeatID)))), i);
+                        else     AddChoice(GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", StringToInt(sFeatID)))), i, oInitiator);
                     }
                 }
 
-                if(SORT) TransferTempList(oPC);
+                if(SORT) TransferTempList(oInitiator);
 
                 /* Hack - In the maneuver selection stage, on returning from
                  * confirmation dialog where the answer was "No", restore the
                  * offset to be the same as on entering the confirmation dialog.
                  */
-                if(GetLocalInt(oPC, "ManeuverListChoiceOffset"))
+                if(GetLocalInt(oInitiator, "ManeuverListChoiceOffset"))
                 {
                     if(DEBUG) DoDebug("tob_moveconv: Running offset restoration hack");
-                    SetLocalInt(oPC, DYNCONV_CHOICEOFFSET, GetLocalInt(oPC, "ManeuverListChoiceOffset") - 1);
-                    DeleteLocalInt(oPC, "ManeuverListChoiceOffset");
+                    SetLocalInt(oInitiator, DYNCONV_CHOICEOFFSET, GetLocalInt(oInitiator, "ManeuverListChoiceOffset") - 1);
+                    DeleteLocalInt(oInitiator, "ManeuverListChoiceOffset");
                 }
 
-                MarkStageSetUp(STAGE_SELECT_MANEUVER, oPC);
+                MarkStageSetUp(STAGE_SELECT_MANEUVER, oInitiator);
             }
             // Selection confirmation stage
             else if(nStage == STAGE_CONFIRM_SELECTION)
@@ -306,15 +314,15 @@ void main()
                 if(DEBUG) DoDebug("tob_moveconv: Building selection confirmation");
                 // Build the confirmantion query
                 string sToken = GetStringByStrRef(STRREF_SELECTED_HEADER1) + "\n \n"; // "You have selected:"
-                int nManeuver = GetLocalInt(oPC, "nManeuver");
+                int nManeuver = GetLocalInt(oInitiator, "nManeuver");
                 int nFeatID = StringToInt(Get2DACache(sManeuverFile, "FeatID", nManeuver));
                 sToken += GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", nFeatID)))+"\n";
                 sToken += GetStringByStrRef(StringToInt(Get2DACache("feat", "DESCRIPTION", nFeatID)))+"\n \n";
                 sToken += GetStringByStrRef(STRREF_SELECTED_HEADER2); // "Is this correct?"
                 SetHeader(sToken);
 
-                AddChoice(GetStringByStrRef(STRREF_YES), TRUE, oPC); // "Yes"
-                AddChoice(GetStringByStrRef(STRREF_NO), FALSE, oPC); // "No"
+                AddChoice(GetStringByStrRef(STRREF_YES), TRUE, oInitiator); // "Yes"
+                AddChoice(GetStringByStrRef(STRREF_NO), FALSE, oInitiator); // "No"
             }
             // Conversation finished stage
             else if(nStage == STAGE_ALL_MANEUVERS_SELECTED)
@@ -323,7 +331,7 @@ void main()
                 SetHeader(GetStringByStrRef(STRREF_END_HEADER));
                 // Set the convo quit text to "Finish"
                 SetCustomToken(DYNCONV_TOKEN_EXIT, GetStringByStrRef(STRREF_END_CONVO_SELECT));
-                AllowExit(DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, FALSE, oPC);
+                AllowExit(DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, FALSE, oInitiator);
             }
         }
 
@@ -334,16 +342,16 @@ void main()
     {
         if(DEBUG) DoDebug("tob_moveconv: Running exit handler");
         // End of conversation cleanup
-        DeleteLocalInt(oPC, "nClass");
-        DeleteLocalInt(oPC, "nManeuver");
-        DeleteLocalInt(oPC, "nStanceOrManeuver");
-        DeleteLocalInt(oPC, "nManeuverLevelToBrowse");
-        DeleteLocalInt(oPC, "ManeuverListChoiceOffset");
+        DeleteLocalInt(oInitiator, "nClass");
+        DeleteLocalInt(oInitiator, "nManeuver");
+        DeleteLocalInt(oInitiator, "nStanceOrManeuver");
+        DeleteLocalInt(oInitiator, "nManeuverLevelToBrowse");
+        DeleteLocalInt(oInitiator, "ManeuverListChoiceOffset");
 
         // Restart the convo to pick next maneuver if needed
         // done via EvalPRCFFeats to avoid convlicts with new spellbooks
-        //ExecuteScript("psi_maneuvergain", oPC);
-        DelayCommand(1.0, EvalPRCFeats(oPC));
+        //ExecuteScript("psi_maneuvergain", oInitiator);
+        DelayCommand(1.0, EvalPRCFeats(oInitiator));
     }
     else if(nValue == DYNCONV_ABORTED)
     {
@@ -355,18 +363,18 @@ void main()
     // Handle PC response
     else
     {
-        int nChoice = GetChoice(oPC);
-        if(DEBUG) DoDebug("tob_moveconv: Handling PC response, stage = " + IntToString(nStage) + "; nChoice = " + IntToString(nChoice) + "; choice text = '" + GetChoiceText(oPC) +  "'");
+        int nChoice = GetChoice(oInitiator);
+        if(DEBUG) DoDebug("tob_moveconv: Handling PC response, stage = " + IntToString(nStage) + "; nChoice = " + IntToString(nChoice) + "; choice text = '" + GetChoiceText(oInitiator) +  "'");
         if(nStage == STAGE_SELECT_STANCE_MOVE)
         {
             if(DEBUG) DoDebug("tob_moveconv: Stance or Maneuver selected");
-            SetLocalInt(oPC, "nStanceOrManeuver", nChoice);
+            SetLocalInt(oInitiator, "nStanceOrManeuver", nChoice);
             nStage = STAGE_SELECT_LEVEL;
         }        
         else if(nStage == STAGE_SELECT_LEVEL)
         {
             if(DEBUG) DoDebug("tob_moveconv: Level selected");
-            SetLocalInt(oPC, "nManeuverLevelToBrowse", nChoice);
+            SetLocalInt(oInitiator, "nManeuverLevelToBrowse", nChoice);
             nStage = STAGE_SELECT_MANEUVER;
         }
         else if(nStage == STAGE_SELECT_MANEUVER)
@@ -375,40 +383,42 @@ void main()
             {
                 if(DEBUG) DoDebug("tob_moveconv: Returning to level selection");
                 nStage = STAGE_SELECT_STANCE_MOVE;
-                DeleteLocalInt(oPC, "nManeuverLevelToBrowse");
+                DeleteLocalInt(oInitiator, "nManeuverLevelToBrowse");
             }
             else
             {
                 if(DEBUG) DoDebug("tob_moveconv: Entering maneuver confirmation");
-                SetLocalInt(oPC, "nManeuver", nChoice);
+                SetLocalInt(oInitiator, "nManeuver", nChoice);
                 // Store offset so that if the user decides not to take the maneuver,
                 // we can return to the same page in the maneuver list instead of resetting to the beginning
                 // Store the value +1 in order to be able to differentiate between offset 0 and undefined
-                SetLocalInt(oPC, "ManeuverListChoiceOffset", GetLocalInt(oPC, DYNCONV_CHOICEOFFSET) + 1);
+                SetLocalInt(oInitiator, "ManeuverListChoiceOffset", GetLocalInt(oInitiator, DYNCONV_CHOICEOFFSET) + 1);
                 nStage = STAGE_CONFIRM_SELECTION;
             }
-            MarkStageNotSetUp(STAGE_SELECT_MANEUVER, oPC);
+            MarkStageNotSetUp(STAGE_SELECT_MANEUVER, oInitiator);
         }
         else if(nStage == STAGE_CONFIRM_SELECTION)
         {
             if(DEBUG) DoDebug("tob_moveconv: Handling maneuver confirmation");
-            int nMoveStance = GetLocalInt(oPC, "nStanceOrManeuver");
+            int nMoveStance = GetLocalInt(oInitiator, "nStanceOrManeuver");
             if(nChoice == TRUE)
             {
                 if(DEBUG) DoDebug("tob_moveconv: Adding maneuver");
-                int nManeuver = GetLocalInt(oPC, "nManeuver");
+                int nManeuver = GetLocalInt(oInitiator, "nManeuver");
                 
-                AddManeuverKnown(oPC, nClass, nManeuver, nMoveStance, TRUE, GetHitDice(oPC));
+                // This triggers regardless of PC being Master of Nine
+                AddMasterOfNineDiscipline(oInitiator, nManeuver);
+                AddManeuverKnown(oInitiator, nClass, nManeuver, nMoveStance, TRUE, GetHitDice(oInitiator));
 
                 // Delete the stored offset
-                DeleteLocalInt(oPC, "ManeuverListChoiceOffset");
+                DeleteLocalInt(oInitiator, "ManeuverListChoiceOffset");
             }
 
             // Determine whether they're missing maneuvers or stances
-            int nMaxMove = GetMaxManeuverCount(oPC, nClass, MANEUVER_TYPE_MANEUVER);
-            int nMaxStance = GetMaxManeuverCount(oPC, nClass, MANEUVER_TYPE_STANCE);
-            int nCountMove = GetManeuverCount(oPC, nClass, MANEUVER_TYPE_MANEUVER);
-            int nCountStance = GetManeuverCount(oPC, nClass, MANEUVER_TYPE_STANCE);
+            int nMaxMove = GetMaxManeuverCount(oInitiator, nClass, MANEUVER_TYPE_MANEUVER);
+            int nMaxStance = GetMaxManeuverCount(oInitiator, nClass, MANEUVER_TYPE_STANCE);
+            int nCountMove = GetManeuverCount(oInitiator, nClass, MANEUVER_TYPE_MANEUVER);
+            int nCountStance = GetManeuverCount(oInitiator, nClass, MANEUVER_TYPE_STANCE);
             if(DEBUG) DoDebug("tob_moveconv: nCountMove: " + IntToString(nCountMove));
             if(DEBUG) DoDebug("tob_moveconv: nMaxMove: " + IntToString(nMaxMove));
             if(DEBUG) DoDebug("tob_moveconv: nCountStance: " + IntToString(nCountStance));
@@ -423,7 +433,7 @@ void main()
      		{
      			// Cycle through the local ints
      			sString += IntToString(i);
-     			DeletePersistantLocalInt(oPC, sString);
+     			DeletePersistantLocalInt(oInitiator, sString);
 		}                
             }
             else
@@ -433,6 +443,6 @@ void main()
         if(DEBUG) DoDebug("tob_moveconv: New stage: " + IntToString(nStage));
 
         // Store the stage value. If it has been changed, this clears out the choices
-        SetStage(nStage, oPC);
+        SetStage(nStage, oInitiator);
     }
 }

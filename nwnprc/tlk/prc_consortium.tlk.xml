@@ -41863,6 +41863,111 @@ Note: For game purposes this is treated as a 60' Dimension Door ability that onl
 Use: Selected.</entry>
   <entry id="57532" lang="en" sex="m">Treewalk - Selected</entry>
   <entry id="57533" lang="en" sex="m">Treewalk - Direction and Distance</entry>
+  <entry id="57534" lang="en" sex="m">Eternal Blade</entry>
+  <entry id="57535" lang="en" sex="m">Eternal Blades</entry>
+  <entry id="57536" lang="en" sex="m">eternal blade</entry>
+  <entry id="57537" lang="en" sex="m">(PRESTIGE CLASS)
+An eternal blade is an elf who learns a variety of exotic fighting maneuvers with the aid and advice of the spirit of a mighty, ancient elf warrior.  The eternal blades once swore to defend the elves against the forces of evil, but in ages past, the blades turned against each other, causing a schism that echoes to the present day.  Some eternal blades embrace the responsibilities that come with this class's training.  Others seek to use their talents to further their own ends.
+
+- Hit Die: d10
+- Proficiencies: An eternal blade gains no additional proficiencies.
+- Skill Points: 4 + Int Modifier
+
+REQUIREMENTS:
+
+Race: Any Elf
+Base Attack Bonus: +10
+Feats: Weapon Focus (any)
+Martial Maneuvers: Any two Devoted Spirit or Diamond Mind maneuvers.
+
+ABILITIES:
+
+Level
+1: Blade Guide - 
+   Eternal Training 1/Day - 
+2: Guided Strike - 
+3: Armored Uncanny Dodge - 
+   Eternal Training 2/Day
+4: Eternal Knowledge - 
+5: Eternal Training 3/Day
+6: Defensive Insight - 
+7: Eternal Training 4/Day
+8: Tactical Insight - .
+9: Eternal Training 5/Day
+10:  Island in Time - 
+
+Level  Maneuvers Known   Maneuvers Readied   Stances Known
+1      1                 0                   0              
+2      0                 0                   0              
+3      1                 1                   0              
+4      0                 0                   0              
+5      1                 0                   1              
+6      0                 1                   0              
+7      1                 0                   0              
+8      0                 0                   0              
+9      1                 1                   0              
+10     0                 0                   0              
+</entry>
+  <entry id="57538" lang="en" sex="m">Blade Guide</entry>
+  <entry id="57539" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Eternal Blade level 1.
+Specifics: You gain a blade guide, the spirit of an ancient member of the eternal blades, that provides you with advice, tactical assistance, and training.  If your blade guide is destroyed, it reappears in 1d6 rounds.
+Use: Automatic</entry>
+  <entry id="57540" lang="en" sex="m">Eternal Training (Ex)</entry>
+  <entry id="57541" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Eternal Blade level 1.
+Specifics: Your blade guide offers you intensive mental training based on its years of combat experience in mortal life.  Once per day, you can draw upon this training to aid you in a single battle.  You can choose one of two benefits.  Each of these benefits lasts for one encounter.
+You gain an insight bonus equal to your Intelligence bonus (if any) on attack and damage rolls against creatures of a single type.
+Alternatively, you can gain the use of one maneuver from the Diamond Mind or Devoted Spirit discipline.  You must meet its prerequisites.  A maneuver gained with eternal training can be recovered with your normal recovery method during the encounter, but knowledge of the maneuver fades after the encounter ends.
+Use: Selected</entry>
+  <entry id="57542" lang="en" sex="m">Guided Strike (Ex)</entry>
+  <entry id="57543" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Eternal Blade level 2
+Specifics: Your blade guide assesses your enemies, seeking out weak points in their armor and offfering you advice on where and how to strike.  Your guide grants you advice that can render even the most daunting foe impotent.
+For the rest of your turn, you automatically overcome your opponent's damage reduction, if any.
+You can use this ability only while you have access to your blade guide.
+Use: Selected</entry>
+  <entry id="57544" lang="en" sex="m">Armored Uncanny Dodge (Ex)</entry>
+  <entry id="57545" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Eternal Blade level 3
+Specifics: So long as your blade guide is active, you gain the benefit od uncanny dodge starting at 3rd level.  If you already have uncanny dodge, you instead gain improved uncanny dodge.  If you lose your blade guide, you lose this ability until your guide returns.
+Use: Automatic</entry>
+  <entry id="57546" lang="en" sex="m">Eternal Knowledge (Ex)</entry>
+  <entry id="57547" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Eternal Blade level 4
+Specifics: Your blade guide is an expert in a variety of areas.  In addition to the tactical and strategic guidance it offers, it also grants you access to great stores of lore.  Your blade guide can make lore checks with a bonus equal to your eternal blade level + your Int modifier.
+Use: Automatic</entry>
+  <entry id="57548" lang="en" sex="m">Defensive Insight (Ex)</entry>
+  <entry id="57549" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Eternal Blade level 6
+Specifics: Your blade guide's advice and insights grant you an intellectual edge in combat, but there is a fine line between knowing how to do something and executing it in combat.
+As a swift action, you can size up an opponent and use your tactical knowledge against him.  You gain a dodge bonus equal to your Intelligence bonus (if any) against a single foe of your choice until the beginning of your next turn.  You can use this ability only while you have access to your blade guide.
+Use: Selected</entry>
+  <entry id="57550" lang="en" sex="m">Tactical Insight (Ex)</entry>
+  <entry id="57551" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Eternal Blade level 8
+Specifics: Although you may be young by the elve's reckoning, your blade guide lends you the experience and wisdom of one who has fought battles across countless fields.
+For the rest of your turn, any opponent you hit with a melee attack takes a penalty to AC equal to your Intelligence bonus (if any) for 1 round.
+If you lose access to your blade guide, you lose this ability until it returns.
+Use: Selected</entry>
+  <entry id="57552" lang="en" sex="m">Island in Time (ex)</entry>
+  <entry id="57553" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisites: Eternal Blade level 10
+Specifics: You throw yourself into a fight under your blade guide's careful direction. You meld with it, allowing it to control your actions while you draw upon it's vast combat experience.
+Once per encounter, you can take a turn as an immediate action.
+Use: Selected</entry>
+  <entry id="57554" lang="en" sex="m">Eternal Blade Maneuver Quickselects</entry>
+  <entry id="57555" lang="en" sex="m">Maneuver Quickselect Conversation</entry>
+  <entry id="57556" lang="en" sex="m">Maneuver Quickselect 1</entry>
+  <entry id="57557" lang="en" sex="m">Maneuver Quickselect 2</entry>
+  <entry id="57558" lang="en" sex="m">Maneuver Quickselect 3</entry>
+  <entry id="57559" lang="en" sex="m">Maneuver Quickselect 4</entry>
+  <entry id="57560" lang="en" sex="m">Eternal Blade Racial Type Quickselects</entry>
+  <entry id="57561" lang="en" sex="m">Racial Type Quickselect Conversation</entry>
+  <entry id="57562" lang="en" sex="m">Racial Type Quickselect 1</entry>
+  <entry id="57563" lang="en" sex="m">Racial Type Quickselect 2</entry>
+  <entry id="57564" lang="en" sex="m">Racial Type Quickselect 3</entry>
+  <entry id="57565" lang="en" sex="m">Racial Type Quickselect 4</entry>
   <entry id="60000" lang="en" sex="m">####START_OF_TOB_SPELLBOOK_RESERVE</entry>
   <entry id="60001" lang="en" sex="m">Aura Of Chaos</entry>
   <entry id="60002" lang="en" sex="m">Aura Of Perfect Order</entry>

@@ -188,3 +188,4 @@ const int CLASS_TYPE_JUSTICEWW               = 157;
 const int CLASS_TYPE_BLOODCLAW_MASTER        = 193;
 const int CLASS_TYPE_RUBY_VINDICATOR         = 194;
 const int CLASS_TYPE_MASTER_OF_NINE          = 195;
+const int CLASS_TYPE_ETERNAL_BLADE           = 196;

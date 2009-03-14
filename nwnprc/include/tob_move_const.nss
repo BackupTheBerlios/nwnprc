@@ -9,7 +9,7 @@
     SD_ Denotes Stone Dragon
     TC_ Denotes Tiger Claw
     WR_ Denotes White Raven
-*/ 
+*/
 
 // Level 1 Maneuvers
 const int MOVE_DW_BLISTERING_FLOURISH 	= 17301;
@@ -253,23 +253,44 @@ const int AOE_PER_MOUNTAIN_FORTRESS             = 149;
 
 // Misc Constants
 const int SPELL_AVENGING_STRIKE = -1;
+const int FEAT_MARTIAL_STUDY_1 = 24112;
+const int FEAT_MARTIAL_STUDY_2 = 24113;
+const int FEAT_MARTIAL_STUDY_3 = 24114;
+const int FEAT_MARTIAL_STANCE_1 = 24115;
+const int FEAT_MARTIAL_STANCE_2 = 24116;
+const int FEAT_MARTIAL_STANCE_3 = 24117;
+const int FEAT_MARTIAL_STANCE_4 = 24118;
+const int FEAT_MARTIAL_STANCE_5 = 24119;
+const int FEAT_MARTIAL_STANCE_6 = 24120;
+const int FEAT_MARTIAL_STANCE_7 = 24121;
+const int FEAT_MARTIAL_STANCE_8 = 24122;
+const int FEAT_MARTIAL_STANCE_9 = 24123;
+const int FEAT_MARTIAL_STANCE_10 = 24124;
 
 // Class Specific Constants
-const int MOVE_MOUNTAIN_FORTRESS   = 2066;
-const int MOVE_BLOODCLAW_SHIFT     = 2100;
+const int MOVE_MOUNTAIN_FORTRESS   	= 2066;
+const int MOVE_BLOODCLAW_SHIFT     	= 2100;
 
 // Jade Phoenix
-const int JPM_SPELL_SELECT_CONVO           	   = 19287;
-const int JPM_SPELL_SELECT_QUICK1                  = 19288;
-const int JPM_SPELL_SELECT_QUICK2                  = 19289;
-const int JPM_SPELL_SELECT_QUICK3                  = 19290;
-const int JPM_SPELL_SELECT_QUICK4             	   = 19291;
-const int JPM_SPELL_FIREBIRD_AUGMENTED 		   = 19302;
-const int JPM_SPELL_ARCANE_WRATH		   = 19292;
-const int JPM_SPELL_RITE_WAKING_SELF 		   = 19294;
-const int FEAT_JPM_EMERALD_IMMOLATION 		   = 24083;
+const int JPM_SPELL_SELECT_CONVO        = 19287;
+const int JPM_SPELL_SELECT_QUICK1       = 19288;
+const int JPM_SPELL_SELECT_QUICK2       = 19289;
+const int JPM_SPELL_SELECT_QUICK3       = 19290;
+const int JPM_SPELL_SELECT_QUICK4       = 19291;
+const int JPM_SPELL_FIREBIRD_AUGMENTED 	= 19302;
+const int JPM_SPELL_ARCANE_WRATH	= 19292;
+const int JPM_SPELL_RITE_WAKING_SELF 	= 19294;
+const int FEAT_JPM_EMERALD_IMMOLATION 	= 24083;
 
-const int MOVE_MYSTIC_PHOENIX      = 19297;
-const int MOVE_MYSTIC_PHOENIX_AUG  = 19298;
-const int MOVE_FIREBIRD_STANCE     = 19301;
-const int MOVE_FIREBIRD_STANCE_AUG = 19302;
+const int MOVE_MYSTIC_PHOENIX      	= 19297;
+const int MOVE_MYSTIC_PHOENIX_AUG  	= 19298;
+const int MOVE_FIREBIRD_STANCE     	= 19301;
+const int MOVE_FIREBIRD_STANCE_AUG 	= 19302;
+
+// Eternal Blade
+const int FEAT_ETBL_ETERNAL_TRAINING 	= 24128;
+const int ETBL_MANEUVER_SELECT_CONVO    = 19308;
+const int ETBL_MANEUVER_SELECT_QUICK1   = 19309;
+const int ETBL_MANEUVER_SELECT_QUICK2   = 19310;
+const int ETBL_MANEUVER_SELECT_QUICK3   = 19311;
+const int ETBL_MANEUVER_SELECT_QUICK4   = 19312;

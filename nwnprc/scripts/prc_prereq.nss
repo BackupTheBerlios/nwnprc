@@ -245,7 +245,9 @@ void SOL(object oPC)
      }
 }
 
-void ManAtArms(object oPC)
+
+//taken out of master at arms because i wanted to use the code in Eternal Blade prereq too
+int WeaponFocusCount(object oPC)
 {
     int iWF;
 
@@ -268,6 +270,35 @@ void ManAtArms(object oPC)
     if(GetStringLeft(GetTag(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC)), 14) == "prc_sk_mblade_" ||
        GetStringLeft(GetTag(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC)), 14) == "prc_sk_mblade_")
         iWF--;
+
+	return iWF;
+}
+
+void ManAtArms(object oPC)
+{
+    /*
+    int iWF;
+
+    // Calculate the total number of Weapon Focus feats the character has
+    iWF = GetHasFeat(FEAT_WEAPON_FOCUS_BASTARD_SWORD,oPC)   +GetHasFeat(FEAT_WEAPON_FOCUS_BATTLE_AXE,oPC)  +GetHasFeat(FEAT_WEAPON_FOCUS_CLUB,oPC)+
+          GetHasFeat(FEAT_WEAPON_FOCUS_DAGGER,oPC)          +GetHasFeat(FEAT_WEAPON_FOCUS_DART,oPC)        +GetHasFeat(FEAT_WEAPON_FOCUS_DIRE_MACE,oPC)+
+          GetHasFeat(FEAT_WEAPON_FOCUS_DOUBLE_AXE,oPC)      +GetHasFeat(FEAT_WEAPON_FOCUS_DWAXE,oPC)       +GetHasFeat(FEAT_WEAPON_FOCUS_GREAT_AXE,oPC)+
+          GetHasFeat(FEAT_WEAPON_FOCUS_GREAT_SWORD,oPC)     +GetHasFeat(FEAT_WEAPON_FOCUS_HALBERD,oPC)     +GetHasFeat(FEAT_WEAPON_FOCUS_HAND_AXE,oPC)+
+          GetHasFeat(FEAT_WEAPON_FOCUS_HEAVY_CROSSBOW,oPC)  +GetHasFeat(FEAT_WEAPON_FOCUS_HEAVY_FLAIL,oPC) +GetHasFeat(FEAT_WEAPON_FOCUS_KAMA,oPC)+
+          GetHasFeat(FEAT_WEAPON_FOCUS_TWO_BLADED_SWORD,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_LONG_SWORD,oPC)  +GetHasFeat(FEAT_WEAPON_FOCUS_RAPIER,oPC)+
+          GetHasFeat(FEAT_WEAPON_FOCUS_KATANA,oPC)          +GetHasFeat(FEAT_WEAPON_FOCUS_KUKRI,oPC)       +GetHasFeat(FEAT_WEAPON_FOCUS_LIGHT_CROSSBOW,oPC)+
+          GetHasFeat(FEAT_WEAPON_FOCUS_LIGHT_FLAIL,oPC)     +GetHasFeat(FEAT_WEAPON_FOCUS_LIGHT_HAMMER,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_LIGHT_MACE,oPC)+
+          GetHasFeat(FEAT_WEAPON_FOCUS_LONGBOW,oPC)         +GetHasFeat(FEAT_WEAPON_FOCUS_MORNING_STAR,oPC)+GetHasFeat(FEAT_WEAPON_FOCUS_SCIMITAR,oPC)+
+          GetHasFeat(FEAT_WEAPON_FOCUS_SCYTHE,oPC)          +GetHasFeat(FEAT_WEAPON_FOCUS_SHORT_SWORD,oPC) +GetHasFeat(FEAT_WEAPON_FOCUS_SHORTBOW,oPC)+
+          GetHasFeat(FEAT_WEAPON_FOCUS_SHURIKEN,oPC)        +GetHasFeat(FEAT_WEAPON_FOCUS_SICKLE,oPC)      +GetHasFeat(FEAT_WEAPON_FOCUS_SLING,oPC)+
+          GetHasFeat(FEAT_WEAPON_FOCUS_SPEAR,oPC)           +GetHasFeat(FEAT_WEAPON_FOCUS_STAFF,oPC)       +GetHasFeat(FEAT_WEAPON_FOCUS_THROWING_AXE,oPC)+
+          GetHasFeat(FEAT_WEAPON_FOCUS_WAR_HAMMER,oPC)      +GetHasFeat(FEAT_WEAPON_FOCUS_MINDBLADE, oPC)  +GetHasFeat(FEAT_WEAPON_FOCUS_WHIP,oPC); //why was whip commented out?
+
+    // If they are a soulknife, their WF Mindblade might be counting twice due to how it is implemented, so account for it if necessary
+    if(GetStringLeft(GetTag(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC)), 14) == "prc_sk_mblade_" ||
+       GetStringLeft(GetTag(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC)), 14) == "prc_sk_mblade_")
+        iWF--;*/
+    int iWF = WeaponFocusCount(oPC);
 
     SetLocalInt(oPC, "PRC_PrereqMAA", 1);
 
@@ -925,7 +956,7 @@ void Suel(object oPC)
 void TomeOfBattle(object oPC = OBJECT_SELF)
 {
     int nClass = GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL, oPC);
-    
+
     if (nClass >= 0)
     {
     	SetLocalInt(oPC, "PRC_PrereqDeepSt", 1);
@@ -933,16 +964,14 @@ void TomeOfBattle(object oPC = OBJECT_SELF)
         int nMove = _CheckPrereqsByDiscipline(oPC, DISCIPLINE_STONE_DRAGON, 2, GetFirstBladeMagicClass(oPC));
         // Needs one Stone Dragon Stance
         int nStance = _CheckPrereqsByDiscipline(oPC, DISCIPLINE_STONE_DRAGON, 1, GetFirstBladeMagicClass(oPC), MANEUVER_TYPE_STANCE);
-	if(DEBUG) DoDebug("Moves" + IntToString(nMove));
-	if(DEBUG) DoDebug("Stances" + IntToString(nStance));
         if (nMove >=2 && nStance >= 1)
         {
             SetLocalInt(oPC, "PRC_PrereqDeepSt", 0);
         }
     }
-    
+
     nClass = GetLevelByClass(CLASS_TYPE_BLOODCLAW_MASTER, oPC);
-    
+
     if (nClass >= 0)
     {
     	SetLocalInt(oPC, "PRC_PrereqBloodclaw", 1);
@@ -954,9 +983,9 @@ void TomeOfBattle(object oPC = OBJECT_SELF)
             SetLocalInt(oPC, "PRC_PrereqBloodclaw", 0);
         }
     }
-    
+
     nClass = GetLevelByClass(CLASS_TYPE_RUBY_VINDICATOR, oPC);
-    
+
     if (nClass >= 0)
     {
     	SetLocalInt(oPC, "PRC_PrereqRubyKnight", 1);
@@ -964,20 +993,20 @@ void TomeOfBattle(object oPC = OBJECT_SELF)
         int nMove = _CheckPrereqsByDiscipline(oPC, DISCIPLINE_DEVOTED_SPIRIT, 1, GetFirstBladeMagicClass(oPC));
         // Needs one Devoted Spirit stance
         int nStance = _CheckPrereqsByDiscipline(oPC, DISCIPLINE_DEVOTED_SPIRIT, 1, GetFirstBladeMagicClass(oPC), MANEUVER_TYPE_STANCE);
-        
+
         // If it's a cleric, needs to have Death, Law and Magic as domains.
         int nDomains = GetHasFeat(FEAT_DEATH_DOMAIN_POWER,oPC) +
                        GetHasFeat(FEAT_MAGIC_DOMAIN_POWER,oPC);
         int nCleric  = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
-                       
+
         if (nMove >= 1 && nStance >= 1 && (nDomains == 2 || nCleric == 0))
         {
             SetLocalInt(oPC, "PRC_PrereqRubyKnight", 0);
         }
-    }   
+    }
 
     nClass = GetLevelByClass(CLASS_TYPE_JADE_PHOENIX_MAGE, oPC);
-    
+
     if (nClass >= 0)
     {
         // Jade Phoenix Mage
@@ -989,7 +1018,7 @@ void TomeOfBattle(object oPC = OBJECT_SELF)
         	int nMove = 0;
         	int nStance = 0;
 		int nType;
-		// Only need first blade magic class.  Can't take a second and Jade Phoenix and meet requirements. 
+		// Only need first blade magic class.  Can't take a second and Jade Phoenix and meet requirements.
 
 		nUser = GetFirstBladeMagicClass(oPC);
 
@@ -1005,10 +1034,10 @@ void TomeOfBattle(object oPC = OBJECT_SELF)
 		if (nMove >= 2 && nStance >= 1)
 		    SetLocalInt(oPC, "PRC_PrereqJPM", 0);
         }
-    }   
-    
+    }
+
     nClass = GetLevelByClass(CLASS_TYPE_MASTER_OF_NINE, oPC);
-    
+
     if (nClass >= 0)
     {
     	SetLocalInt(oPC, "PRC_PrereqMoNine", 1);
@@ -1018,8 +1047,8 @@ void TomeOfBattle(object oPC = OBJECT_SELF)
         {
                	// Loop over all disciplines, and total up how many he knows
 		nCount += GetPersistantLocalInt(oPC, "MasterOfNine" + IntToString(i));
-        }	    	
-	    	
+        }
+
 	// Base ranks only
 	if (GetSkillRank(SKILL_TUMBLE, oPC, TRUE) >= 10) nSkills += 1;
 	if (GetSkillRank(SKILL_INTIMIDATE, oPC, TRUE) >= 10) nSkills += 1;
@@ -1029,19 +1058,40 @@ void TomeOfBattle(object oPC = OBJECT_SELF)
 	if (GetSkillRank(SKILL_HIDE, oPC, TRUE) >= 10) nSkills += 1;
 	if (GetSkillRank(SKILL_JUMP, oPC, TRUE) >= 10) nSkills += 1;
 	if (GetSkillRank(SKILL_PERSUADE, oPC, TRUE) >= 10) nSkills += 1;
-                       
+
         if (nCount >= 6 && nSkills >= 4)
         {
             SetLocalInt(oPC, "PRC_PrereqMoNine", 0);
         }
-    }     
+    }
+
+    nClass = GetLevelByClass(CLASS_TYPE_ETERNAL_BLADE, oPC);
+
+    if (nClass >= 0)
+    {
+	SetLocalInt(oPC, "PRC_PrereqETBL", 1);
+
+	int iWF = WeaponFocusCount(oPC);
+
+        int nDS = _CheckPrereqsByDiscipline(oPC, DISCIPLINE_DEVOTED_SPIRIT, 2, GetFirstBladeMagicClass(oPC));
+	    nDS = (nDS == -1) ? _CheckPrereqsByDiscipline(oPC, DISCIPLINE_DEVOTED_SPIRIT, 1, GetFirstBladeMagicClass(oPC)) : nDS;
+
+        int nDM = _CheckPrereqsByDiscipline(oPC, DISCIPLINE_DIAMOND_MIND, 2, GetFirstBladeMagicClass(oPC));
+	    nDM = (nDM == -1) ? _CheckPrereqsByDiscipline(oPC, DISCIPLINE_DIAMOND_MIND, 1, GetFirstBladeMagicClass(oPC)) : nDM;
+
+	int nTotal = 0;
+	if(nDS >= 1) nTotal += nDS;
+	if(nDM >= 1) nTotal += nDM;
+
+	if (nTotal >= 2 && iWF >= 1)
+	    SetLocalInt(oPC, "PRC_PrereqETBL", 0);
+    }
 }
 
 void AOTS(object oPC)
 {
     SetLocalInt(oPC, "PRC_PrereqAOTS", 1);
-    int iArcane;
-    iArcane = GetLocalInt(oPC, "PRC_ArcSpell3");
+    int iArcane = GetLocalInt(oPC, "PRC_ArcSpell3");
     if (iArcane == 0 ||
             GetInvokerLevel(oPC) >= 5)
 	SetLocalInt(oPC, "PRC_PrereqAOTS", 0);
@@ -1050,8 +1100,7 @@ void AOTS(object oPC)
 void EnlF(object oPC)
 {
      SetLocalInt(oPC, "PRC_PrereqEnlF", 1);
-     int iArcane;
-     iArcane = GetLocalInt(oPC, "PRC_ArcSpell2");
+     int iArcane = GetLocalInt(oPC, "PRC_ArcSpell2");
      if (iArcane == 0 ||
               GetInvokerLevel(oPC) >= 3)
 	  SetLocalInt(oPC, "PRC_PrereqEnlF", 0);

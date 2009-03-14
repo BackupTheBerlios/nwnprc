@@ -52,7 +52,7 @@ void DeletePRCLocalInts(object oSkin);
 //#include "prc_inc_clsfunc"
 //#include "prc_inc_racial"
 //#include "inc_abil_damage"
-// 
+//
 //#include "prc_x2_itemprop"
 //#include "pnp_shft_poly"
 //
@@ -189,7 +189,8 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_JADE_PHOENIX_MAGE, oPC) > 0)   ExecuteScript("tob_jadephoenix", oPC);
     if(GetLevelByClass(CLASS_TYPE_WARLOCK, oPC) > 0)             ExecuteScript("inv_warlock", oPC);
     if(GetLevelByClass(CLASS_TYPE_BLOODCLAW_MASTER, oPC) > 0)    ExecuteScript("tob_bloodclaw", oPC);
-    
+    if(GetLevelByClass(CLASS_TYPE_ETERNAL_BLADE, oPC) > 0)       ExecuteScript("tob_eternalblade", oPC);
+
     // Bonus Domain check
     // If there is a bonus domain, it will always be in the first slot, so just check that.
     // It also runs things that clerics with those domains need
@@ -203,7 +204,7 @@ void EvalPRCFeats(object oPC)
     // Feats
     //these are here so if templates add them the if check runs after the template was applied
     ExecuteScript("prc_feats", oPC);
-    
+
     if(GetLevelByClass(CLASS_TYPE_ARCANE_ARCHER, oPC) >= 2
         && !GetHasFeat(FEAT_PRESTIGE_IMBUE_ARROW, oPC)
         && GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS))
@@ -322,7 +323,7 @@ void EvalPRCFeats(object oPC)
        GetLevelByClass(CLASS_TYPE_DRAGONFIRE_ADEPT, oPC) ||
        GetLevelByClass(CLASS_TYPE_WARLOCK, oPC) ||
        // Racial casters
-       (GetLevelByClass(CLASS_TYPE_OUTSIDER, oPC) && GetRacialType(oPC) == RACIAL_TYPE_RAKSHASA) 
+       (GetLevelByClass(CLASS_TYPE_OUTSIDER, oPC) && GetRacialType(oPC) == RACIAL_TYPE_RAKSHASA)
         )
         DelayCommand(1.0, ExecuteScript("prc_amagsys_gain", oPC));
 
@@ -334,24 +335,24 @@ void EvalPRCFeats(object oPC)
     // Gathers all the calls to SetBaseAttackBonus() to one place
     // Must be after all evaluationscripts that need said function.
     ExecuteScript("prc_bab_caller", oPC);
-    
+
     // Classes an invoker can take
     if(GetLevelByClass(CLASS_TYPE_MAESTER,              oPC) ||
        GetLevelByClass(CLASS_TYPE_ACOLYTE,              oPC) ||
        GetLevelByClass(CLASS_TYPE_ENLIGHTENEDFIST,      oPC) ||
        GetLevelByClass(CLASS_TYPE_DISCIPLE_OF_ASMODEUS, oPC))
-       {       
-           //Set arcane or invocation bonus caster levels   
-           
+       {
+           //Set arcane or invocation bonus caster levels
+
            //Arcane caster first class position, take arcane
            if(GetFirstArcaneClassPosition(oPC) == 1)
                SetLocalInt(oPC, "INV_Caster", 1);
            //Invoker first class position. take invoker
            else if(GetClassByPosition(1, oPC) == CLASS_TYPE_WARLOCK || GetClassByPosition(1, oPC) == CLASS_TYPE_DRAGONFIRE_ADEPT)
-               SetLocalInt(oPC, "INV_Caster", 2); 
+               SetLocalInt(oPC, "INV_Caster", 2);
            //Non arcane first class position, invoker second.  Take invoker
            else if(GetFirstArcaneClassPosition(oPC) ==0 && (GetClassByPosition(2, oPC) == CLASS_TYPE_WARLOCK || GetClassByPosition(2, oPC) == CLASS_TYPE_DRAGONFIRE_ADEPT))
-               SetLocalInt(oPC, "INV_Caster", 2); 
+               SetLocalInt(oPC, "INV_Caster", 2);
            //last cas would be Non-invoker first class position, arcane second position. take arcane.
            else
                SetLocalInt(oPC, "INV_Caster", 1);
@@ -517,10 +518,10 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oPC, "ScoutFreeMove");
     DeleteLocalInt(oPC, "ScoutFastMove");
     DeleteLocalInt(oPC, "ScoutBlindsight");
-    
+
     // Enlightened Fist
     DeleteLocalInt(oPC, "EnlightenedFistSR");
-    
+
     //Truenamer
     int UtterID;
     for(UtterID = 3526; UtterID <= 3639; UtterID++) // All utterances
@@ -536,7 +537,6 @@ void DeletePRCLocalInts(object oSkin)
     //Endure Exposure wearing off
     array_delete(oPC, "BreathProtected");
     DeleteLocalInt(oPC, "DragonWard");
-
 
     // future PRCs Go below here
 }
@@ -643,7 +643,7 @@ int GetShiftingFeats(object oPC)
             GetHasFeat(FEAT_SHIFTER_FEROCITY, oPC) +
             GetHasFeat(FEAT_SHIFTER_INSTINCTS, oPC) +
             GetHasFeat(FEAT_SHIFTER_SAVAGERY, oPC);
-            
+
      return nNumFeats;
 }
 
@@ -826,7 +826,7 @@ void FeatShadowblade(object oPC)
 {
         int nUses = (GetLevelByClass(CLASS_TYPE_SHADOWBLADE, oPC));
         FeatUsePerDay(oPC, FEAT_UNSEEN_WEAPON_ACTIVATE, -1, nUses);
-}        
+}
 
 void FeatRacial(object oPC)
 {
@@ -840,14 +840,14 @@ void FeatRacial(object oPC)
             FeatUsePerDay(oPC, FEAT_SHIFTER_SHIFTING, -1, nBonusShiftUses);
         }
     }
-    
+
     //Add daily Uses of Fiendish Resilience for epic warlock
     if(GetHasFeat(FEAT_EPIC_FIENDISH_RESILIENCE_I))
     {
         int nFeatAmt = 0;
         int bDone = FALSE;
         while(!bDone)
-        {   if(nFeatAmt >= 9) 
+        {   if(nFeatAmt >= 9)
                 bDone = TRUE;
             else if(GetHasFeat(FEAT_EPIC_FIENDISH_RESILIENCE_II + nFeatAmt))
             {
@@ -858,7 +858,7 @@ void FeatRacial(object oPC)
                 bDone = TRUE;
         }
     }
-    
+
     if(GetRacialType(oPC) == RACIAL_TYPE_FORESTLORD_ELF)
     {
         int nUses = GetHitDice(oPC) / 5 + 1;

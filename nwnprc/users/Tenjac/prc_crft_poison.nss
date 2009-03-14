@@ -140,7 +140,7 @@ void main()
             
             else if(nStage == STAGE_POISON)
             {
-                    
+                    //Create choice list                    
                                         
             }
             
@@ -157,7 +157,7 @@ void main()
                             if(n2daLine < 0) SendMessageToPC(oPC, "Invalid prc_crft_poison.2da line");
                             int nDC = StringToInt(Get2daCache("prc_crft_poison", "CraftDC", n2daLine));
                             int nCost = StringToInt(Get2daCache("prc_crft_poison", "GoldCost", n2daLine));
-                            int nPoison = StringToInt(Get2daCache("prc_crft_poison", "Poison2daLine", n2daLine));
+                            string sPoison = Get2daCache("prc_crft_poison", "Poison2daLine", n2daLine);
                             int nName = StringToInt(Get2daCache("prc_crft_poison", "Name", n2daLine));
                             int nDesc = StringToInt(Get2daCache("prc_crft_poison", "Description", n2daLine));
                             int nType = StringToInt(Get2daCache("prc_crft_poison", "PoisonType", n2daLine));
@@ -168,11 +168,51 @@ void main()
                             {
                                     nSkill = SKILL_CRAFT_ALCHEMY;
                                     nDC += 4;
+                                    SendMessageToPC(oPC, "Using craft(alchemy) instead of craft(poison). New DC is "+ IntToString(nDC) + ".");                                    
+                            }                            
+                                                  
+                            TakeGoldFromCreature(nCost, oPC, TRUE);
+                            if(GetIsSkillSuccessful(oPC, nSkill), nDC))
+                            {
+                                    SendMessageToPc(oPC, "Item successfully created.");
+                                    object oTarget = CreateItemOnObject("prc_it_poison", oPC, 1, "prc_it_pois" + sPoison);
+                                    SetName(oTarget, GetStringByStrRef(nName));
+                                    SetDescription(oTarget, GetStringByStrRef(nDesc));
+                                    
+                                    //Set item prop depending on type
+                                    
+                                    //Contact
+                                    if(nType == 0)
+                                    {
+                                    
+                                    }
+                                    
+                                    //Ingested
+                                    else if(nType == 1)
+                                    {
+                                            
+                                    }
+                                    
+                                    //Inhaled
+                                    else if(nType == 2)
+                                    {
+                                            
+                                    }
+                                    
+                                    //Injury
+                                    else if(nType == 3)
+                                    {
+                                            
+                                    }
+                                    
+                                    else
+                                    {
+                                            SendMessageToPC(oPC, "Invalid poison type. Aborting."
+                                            GiveGoldToCreature(oPC, nCost);
+                                            return;
+                                    }                                   
                             }
                             
-                            int nRank = GetSkillRank(nSkill, oPC);                        
-                            TakeGoldFromCreature(nCost, oPC, TRUE);
-                            if(GetIsSkillSuccessful(oPC, nSkill), GetLocalInt(oPC, "PRC_CRAFT_DC"))) CreateItemOnObject(GetLocalString(oPC, "PRC_CRAFT_RESREF"), oPC, 1);
                             AllowExit(DYNCONV_EXIT_FORCE_EXIT);
                     }                
             }            

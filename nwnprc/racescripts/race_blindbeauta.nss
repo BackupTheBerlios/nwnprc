@@ -3,7 +3,7 @@
 //:: race_blindbeauta.nss
 //::///////////////////////////////////////////////
 /*
-    Handles creatures entering the Aura AoE for 
+    Handles creatures entering the Aura AoE for
     Blinding Beauty
 */
 //:://////////////////////////////////////////////
@@ -17,11 +17,14 @@ void main()
 {
     object oTarget = GetEnteringObject();
     object oNymph = GetAreaOfEffectCreator();
-    
+
     int nDC = 13 + GetAbilityModifier(ABILITY_CHARISMA, oNymph);
-    
+
     if(!GetIsReactionTypeFriendly(oTarget, oNymph))
     {
+        //don't blind self :P
+        if(oTarget == oNymph)
+            return;
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(oNymph, SPELL_NYMPH_BLINDING_BEAUTY));
         //Make Fort Save to negate effect
@@ -32,6 +35,6 @@ void main()
                  ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
                  ApplyEffectToObject(DURATION_TYPE_PERMANENT, eBlind, oTarget);
         }
-                 
+
     }
 }

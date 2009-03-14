@@ -992,12 +992,12 @@ int CasterFeats(object oPC = OBJECT_SELF)
     {
             FloatingTextStringOnCreature("Craft Skull Talisman requires caster level 6", oPC, FALSE);
             return FALSE;
-    } 
+    }
     if (nArcCaster < 3 && GetHasFeat(FEAT_CORMANTHYRAN_MOON_MAGIC, oPC) && nDivCaster < 3)
     {
             FloatingTextStringOnCreature("Cormanthyran Moon Magic requires 3rd level spells", oPC, FALSE);
             return FALSE;
-    }     
+    }
     if(GetHasFeat(FEAT_EPIC_SPELLCASTING, oPC) && !GetIsEpicSpellcaster(oPC))
     {
         FloatingTextStringOnCreature("Epic Spellcasting requires level 9 Arcane or Divine spells", oPC, FALSE);
@@ -1722,7 +1722,7 @@ int Shaman(object oPC = OBJECT_SELF)
                    +     (GetHasFeat(FEAT_BLIND_FIGHT, oPC))
                    +     (GetHasFeat(FEAT_DEFLECT_ARROWS, oPC));
 
-          if (nIS != (nClass/4))
+          if (nIS < min(5, (nClass/4)))
           {
                FloatingTextStringOnCreature("You do not have the correct amount of bonus feats. Please reselect your feats.", oPC, FALSE);
                return FALSE;
@@ -1742,7 +1742,7 @@ int RacialFeats(object oPC = OBJECT_SELF)
         FloatingTextStringOnCreature("You must be Kalashtar.", oPC, FALSE);
         return FALSE;
     }
-    
+
      if (GetHasFeat(FEAT_BLOODLINE_OF_FIRE, oPC) &&
         !(GetRacialType(oPC) == RACIAL_TYPE_HUMAN ||
           GetRacialType(oPC) == RACIAL_TYPE_TIEFLING   ||
@@ -1756,22 +1756,22 @@ int RacialFeats(object oPC = OBJECT_SELF)
      {
           FloatingTextStringOnCreature("You must be a Human to take this feat. Please reselect your feats.", oPC, FALSE);
                return FALSE;
-     }   
+     }
      if (GetHasFeat(FEAT_HEAVY_LITHODERMS, oPC) && GetRacialType(oPC) != RACIAL_TYPE_GOLIATH)
      {
           FloatingTextStringOnCreature("You must be a Goliath to take this feat. Please reselect your feats.", oPC, FALSE);
                return FALSE;
-     }  
+     }
      if (GetHasFeat(FEAT_MORADINS_SMILE, oPC) && MyPRCGetRacialType(oPC) != RACIAL_TYPE_DWARF)
      {
           FloatingTextStringOnCreature("You must be a Dwarf to take this feat. Please reselect your feats.", oPC, FALSE);
                return FALSE;
-     } 
+     }
      if (GetHasFeat(FEAT_MENACING_DEMEANOUR, oPC) && MyPRCGetRacialType(oPC) != RACIAL_TYPE_HUMANOID_ORC && MyPRCGetRacialType(oPC) != RACIAL_TYPE_HALFORC)
      {
           FloatingTextStringOnCreature("You must be an Orc to take this feat. Please reselect your feats.", oPC, FALSE);
                return FALSE;
-     }       
+     }
 
     int nNumFeats;
     nNumFeats +=   GetHasFeat(FEAT_DREAMSIGHT_ELITE, oPC) +

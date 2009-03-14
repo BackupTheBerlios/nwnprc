@@ -1690,7 +1690,7 @@ int GetIsInMeleeRange(object oDefender, object oAttacker, int bSizeAdjustment = 
         fDistance -= RANGE_5_FEET_IN_METERS;
     if (GetLocalInt(oAttacker, "IHDancingBladeForm"))
         fDistance -= RANGE_5_FEET_IN_METERS;
-    
+
     //Shadowblade Far Shadow
     if(GetLocalInt(oAttacker, "PRC_SB_FARSHAD")) fDistance -= FeetToMeters(10.0);
 
@@ -2009,7 +2009,7 @@ int GetItemPropAlignment(int iGoodEvil,int iLawChaos)
 // motu99: functions used for debugging
 // might move these to "inc_utility" or delete
 // there are better functions (using 2da lookups) in inc_utility
-// 
+//
 // string GetIPDamageBonusConstantName(int iDamageType)
 // {
     // switch(iDamageType)
@@ -2269,22 +2269,22 @@ int GetItemPropAlignment(int iGoodEvil,int iLawChaos)
 // string DebugStringEffect(effect eEffect)
 // {
     // string sString = "";
-// 
+//
     // int nType = GetEffectType(eEffect);
     // sString += "Effect; Type = " + IntToString(nType) + " (" + GetEffectTypeName(nType) + ")";
-// 
+//
     // int nSpell = GetEffectSpellId(eEffect);
     // sString += ", SpellID: " + IntToString(nSpell);
-// 
+//
     // int nSubType = GetEffectSubType(eEffect);
     // sString += ", Subtype: " + IntToString(nSubType);
-// 
+//
     // int nDurationType = GetEffectDurationType(eEffect);
     // sString += ", Duration: " + IntToString(nDurationType);
-// 
+//
     // object oCreator = GetEffectCreator(eEffect);
     // sString += ", Creator: " + GetName(oCreator);
-// 
+//
     // return sString;
 // }
 
@@ -2415,7 +2415,7 @@ int GetMagicalAttackBonus(object oAttacker)
                     // iBonus = GetLevelByTypeDivine(oAttacker); // GetLevelByClass(CLASS_TYPE_CLERIC, oAttacker);  // motu99: changed to divine caster levels
                     // iBonus /= 5;
                     // iBonus++;
-// 
+//
                     // iMagicBonus += iBonus;
                     // break;
 
@@ -3190,7 +3190,7 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iOffha
     if (GetLevelByClass(CLASS_TYPE_WARBLADE, oAttacker) >= 15)  iAttackBonus += GetAbilityModifier(ABILITY_INTELLIGENCE, oAttacker);
     // Divine Fury ability
     if (GetLocalInt(oAttacker, "RKVDivineFury")) iAttackBonus += 4;
-    
+
     // Master of Nine
     if (GetLevelByClass(CLASS_TYPE_MASTER_OF_NINE, oAttacker) >= 3)
     {
@@ -3202,7 +3202,7 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iOffha
     		// Increases maneuver attacks by 2
     		iAttackBonus += 2;
     	}
-    }    
+    }
 
     //if (DEBUG) DoDebug("GetAttackRoll: Line #5");
     //if(bDebug) sDebugFeedback += " - APR penalty ("  + IntToString(iMod * -1) + ")";
@@ -5097,7 +5097,7 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
             {
                 iWeaponDamage += d10();
                 DeleteLocalInt(oAttacker, "RKVDivineFury");
-            }            
+            }
             // Warblade Battle Cunning: Int To Damage on Flatfoots.
             if (GetLevelByClass(CLASS_TYPE_WARBLADE, oAttacker) >= 7 && (GetIsFlanked(oDefender, oAttacker) || GetIsDeniedDexBonusToAC(oDefender, oAttacker)))
             {
@@ -5111,9 +5111,18 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
                 {
                 	// Loop over all disciplines, and total up how many he knows
 			nCount += GetPersistantLocalInt(oAttacker, "MasterOfNine" + IntToString(i));
-                }	    	
-	    	
+                }
+
 	    	iWeaponDamage += nCount;
+	    }
+	    // Bypass damage reduction if set
+	    // Done by increasing total damage done to bypass existing DR taking immunity into account
+	    if(GetLocalInt(oAttacker, "MoveIgnoreDR"))
+	    {
+	    	struct DamageReducers drReduced = GetTotalReduction(oAttacker, oDefender, oWeapon);
+		int nRedDR = drReduced.nStaticReductions * 100 / (100 - drReduced.nPercentReductions);
+		iWeaponDamage += nRedDR;
+	    	if(DEBUG) DoDebug("Damage increased by " + IntToString(nRedDR) + " to ignore DR");
 	    }
             // This is for the Lightning Throw Maneuver.
             if (GetLocalInt(oAttacker, "LightningThrowSave")) iWeaponDamage /= 2;
@@ -6260,7 +6269,7 @@ struct DamageReducers GetTotalReduction(object oPC, object oTarget, object oWeap
                                 if((nSubType & nDamageType) == nSubType)
                                 {
                                    int nResist = 5 * GetItemPropertyCostTableValue(ipLoop);
-
+					if(DEBUG) DoDebug("Damage type match. Damage resistance: " + IntToString(nResist));
                                    if(nResist > nBestDamageResistance) nBestDamageResistance = nResist;
                                 }
                             }
@@ -6995,7 +7004,14 @@ void AttackLoopLogic(object oDefender, object oAttacker,
                     // motu99: don't know why this is handled so, but it says so in the description of PerformAttack(), so we do it
                     if (!bFirstAttack)
                         iDamage = GetDamageByConstant(iDamage, FALSE);
-
+		    //  Bypass damage reduction for effect damage if set
+		    if(GetLocalInt(oAttacker, "MoveIgnoreDR"))
+		    {
+			struct DamageReducers drReduced = GetTotalReduction(oAttacker, oDefender, oWeapon);
+			int nRedDR = drReduced.nStaticReductions * 100 / (100 - drReduced.nPercentReductions);
+			iDamage += nRedDR;
+		    	if(DEBUG) DoDebug("Damage increased by " + IntToString(nRedDR) + " to ignore DR with effects");
+		    }
                     if(DEBUG) DoDebug("AttackLoopLogic: found special effect (iDamageModifier = "+IntToString(iDamage)+") - now applying damage");
 
                     // apply the special effect damage

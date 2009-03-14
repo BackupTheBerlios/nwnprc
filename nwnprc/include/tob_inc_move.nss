@@ -66,7 +66,7 @@ struct maneuver{
  *                      the maneuver was successfully initiated and some other
  *                      commonly used data, like the PC's initiator level for this maneuver.
  */
-struct maneuver EvaluateManeuver(object oInitiator, object oTarget);
+struct maneuver EvaluateManeuver(object oInitiator, object oTarget, int bTOBAbility = FALSE);
 
 /**
  * Causes OBJECT_SELF to use the given maneuver.
@@ -374,7 +374,7 @@ void _UseManeuverAux(object oInitiator, object oMoveToken, int nSpellId,
 
         // Set the maneuver's level
         SetLocalInt(oInitiator, PRC_MANEUVER_LEVEL, StringToInt(lookup_spell_innate(nSpellId)));
-        
+
         if(nLevelOverride != 0)
             AssignCommand(oInitiator, ActionDoCommand(SetLocalInt(oInitiator, PRC_CASTERLEVEL_OVERRIDE, nLevelOverride)));
         if(GetIsObjectValid(oTarget))
@@ -442,7 +442,7 @@ void _StanceSpecificChecks(object oInitiator, int nMoveId)
 /*             Function definitions             */
 //////////////////////////////////////////////////
 
-struct maneuver EvaluateManeuver(object oInitiator, object oTarget)
+struct maneuver EvaluateManeuver(object oInitiator, object oTarget, int bTOBAbility = FALSE)
 {
     /* Get some data */
     // initiator-related stuff
@@ -466,14 +466,14 @@ struct maneuver EvaluateManeuver(object oInitiator, object oTarget)
     }
     // If the maneuver is not readied, fail.
     // Stances don't need to be readied
-    if (!GetIsManeuverReadied(move.oInitiator, nClass, move.nMoveId) && !GetIsStance(move.nMoveId))
+    if (!GetIsManeuverReadied(move.oInitiator, nClass, move.nMoveId) && !GetIsStance(move.nMoveId) && bTOBAbility == FALSE)
     {
         if(DEBUG) DoDebug("tob_inc_move: GetIsManeuverReadied");
         move.bCanManeuver = FALSE;
         FloatingTextStringOnCreature(GetManeuverName(move.nMoveId) + " is not readied.", oInitiator, FALSE);
     }
     // If the maneuver is expended, fail.
-    if (GetIsManeuverExpended(move.oInitiator, nClass, move.nMoveId))
+    if (GetIsManeuverExpended(move.oInitiator, nClass, move.nMoveId) && bTOBAbility == FALSE)
     {
         if(DEBUG) DoDebug("tob_inc_move: GetIsManeuverExpended");
         move.bCanManeuver = FALSE;
@@ -487,7 +487,7 @@ struct maneuver EvaluateManeuver(object oInitiator, object oTarget)
         FloatingTextStringOnCreature(GetName(oInitiator) + " is recovering Warblade maneuvers.", oInitiator, FALSE);
     }
     // Is the maneuver granted, and is the class a Crusader
-    if (!GetIsManeuverGranted(oInitiator, move.nMoveId) && nClass == CLASS_TYPE_CRUSADER)
+    if (!GetIsManeuverGranted(oInitiator, move.nMoveId) && nClass == CLASS_TYPE_CRUSADER && bTOBAbility == FALSE)
     {
         if(DEBUG) DoDebug("tob_inc_move: GetIsManeuverGranted");
         move.bCanManeuver = FALSE;
@@ -495,7 +495,7 @@ struct maneuver EvaluateManeuver(object oInitiator, object oTarget)
     }
     if(DEBUG) DoDebug("move.bCanManeuver: " + IntToString(move.bCanManeuver));
     // Skip doing anything if something has prevented a successful maneuver already by this point
-    if(move.bCanManeuver)
+    if(move.bCanManeuver && bTOBAbility == FALSE) // set up identification later
     {
     // If you're this far in, you always succeed, there are very few checks.
     // Deletes any active stances, and allows a Warblade 20 to have his two stances active.
@@ -564,14 +564,14 @@ void UseManeuver(int nManeuver, int nClass, int nLevelOverride = 0)
     {
         nMoveDur = 0;
         DeleteLocalInt(oInitiator, "RKVDivineImpetus");
-    }  
+    }
     else if((Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "MANEUVER_STANCE") && // The maneuver is a stance
        GetLocalInt(oInitiator, "MoNCounterStance")                                                          // Has used a counter already this round
        )
     {
         nMoveDur = 0;
         DeleteLocalInt(oInitiator, "MoNCounterStance");
-    }    
+    }
     else if((Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "SWIFT_ACTION" || // Normally swift action maneuvers check
         Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "MANEUVER_BOOST" ||
         Get2DACache("feat", "Constant", GetClassFeatFromPower(nManeuver, nClass)) == "MANEUVER_COUNTER" ||
@@ -580,7 +580,7 @@ void UseManeuver(int nManeuver, int nClass, int nLevelOverride = 0)
        )
     {
         nMoveDur = 0;
-    }    
+    }
 
     if(DEBUG) DoDebug("UseManeuver(): initiator is " + DebugObject2Str(oInitiator) + "\n"
                     + "nManeuver = " + IntToString(nManeuver) + "\n"

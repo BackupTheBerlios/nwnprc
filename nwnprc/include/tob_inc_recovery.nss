@@ -206,6 +206,14 @@ void DoCrusaderGranting(object oPC, int nTrip);
  */
 int ExpendRandomManeuver(object oPC, int nList, int nDiscipline = -1);
 
+/**
+ * Clears all local ints marking maneuvers as expended
+ *
+ * @param oPC       Character to clear
+ * @param nPRC      Specific PRC to revocer, else all.
+ */
+void RecoverPrCAbilities(object oPC);
+
 //////////////////////////////////////////////////
 /*                  Includes                    */
 //////////////////////////////////////////////////
@@ -441,14 +449,14 @@ void GrantWithheldManeuver(object oPC, int nList, int nMoveId = -1)
     int nReadied = StringToInt(Get2DACache(sPsiFile, "ManeuversReadied", nLevel-1));
     if(DEBUG) DoDebug("tob_inc_recovery: Maneuvers Granted: " + IntToString(nGranted));
     if(DEBUG) DoDebug("tob_inc_recovery: Maneuvers Readied: " + IntToString(nReadied));
-    
+
     // If someone input a maneuver
     if (nMoveId > 0)
     {
     	// No point in granting an expended maneuver
     	if (GetIsManeuverExpended(oPC, nList, nMoveId))
     		RecoverManeuver(oPC, nList, nMoveId);
-    		
+
     	// 3 is always the number withheld
     	for(i = nGranted; i < nReadied; i++)
     	{
@@ -463,7 +471,7 @@ void GrantWithheldManeuver(object oPC, int nList, int nMoveId = -1)
     	        SetLocalInt(oPC, "ManeuverGranted" + IntToString(i), nMoveId);
     	        break;
     	    }
-    	}    		
+    	}
     }
     else
     {
@@ -587,8 +595,37 @@ int ExpendRandomManeuver(object oPC, int nList, int nDiscipline = -1)
             			}
             		}
         	}
-    	}	
+    	}
 
 	// If we're here, failed.
 	return FALSE;
+}
+
+void RecoverPrCAbilities(object oPC)
+{
+	int i;
+        for(i = 2; i <= 3; i++) // PrC abilities: check last two slots
+        {
+        	int nClass = GetClassByPosition(i, oPC);
+        	if(DEBUG) DoDebug("RecoverPrCAbilities" + IntToString(nClass));
+		switch(nClass)
+		{
+			case CLASS_TYPE_INVALID:
+        			if(DEBUG) DoDebug("RecoverPrCAbilities: no class to recover");
+				break;
+			case CLASS_TYPE_JADE_PHOENIX_MAGE:
+				DeleteLocalInt(oPC, "JPM_Empowering_Strike_Expended");
+				DeleteLocalInt(oPC, "JPM_Quickening_Strike_Expended");
+				break;
+			case CLASS_TYPE_DEEPSTONE_SENTINEL:
+				DeleteLocalInt(oPC, "DPST_Awaken_Stone_Dragon_Expended");
+				break;
+			case CLASS_TYPE_ETERNAL_BLADE:
+				DeleteLocalInt(oPC, "ETBL_Eternal_Training_Expended");
+				DeleteLocalInt(oPC, "ETBL_Island_In_Time_Expended");
+				// Remove bonus to racial type from eternal training
+				PRCRemoveEffectsFromSpell(oPC, ETBL_RACIAL_TYPE);
+				break;
+		}
+	}
 }

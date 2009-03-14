@@ -6,7 +6,7 @@ void main()
     	int nEvent = GetRunningEvent();
     	if(DEBUG) DoDebug("prc_jpm_empstr running, event: " + IntToString(nEvent));
 	object oPC = OBJECT_SELF;
-	object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC); 
+	object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
 	if (GetWeaponRanged(oItem))
 	{
 		FloatingTextStringOnCreature("You must use a melee weapon for this ability", oPC, FALSE);
@@ -15,17 +15,17 @@ void main()
 	// We aren't being called from any event, perform setup
     	if(nEvent == FALSE)
     	{
-		if(!GetLocalInt(oPC, "JPM_Empowering_Strike_Ready"))
+		if(GetLocalInt(oPC, "JPM_Empowering_Strike_Expended"))
 		{
-			FloatingTextStringOnCreature("Empowering Strike not ready.", oPC, FALSE);
+			FloatingTextStringOnCreature("*Empowering Strike Already Expended*", oPC, FALSE);
 			return;
 		}
-		
+
         	if(DEBUG) DoDebug("prc_jpm_empstr: SuddenMetaEmpower: " + IntToString(GetLocalInt(oPC, "SuddenMetaEmpower")));
 
-		SetLocalInt(oPC, "JPM_Empowering_Strike_Ready", FALSE);
+		SetLocalInt(oPC, "JPM_Empowering_Strike_Expended", TRUE);
 		FloatingTextStringOnCreature("* Empowering Strike Expended *", oPC, FALSE);
-		
+
 		// The OnHit
 		IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 6.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
 		AddEventScript(oItem, EVENT_ITEM_ONHIT, "tob_jpm_empstr", TRUE, FALSE);

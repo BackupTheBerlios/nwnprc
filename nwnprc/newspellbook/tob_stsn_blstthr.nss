@@ -66,7 +66,7 @@ void main()
                 	}// end if - Target validity check
 
                 	// Get next target
-                	oAreaTarget = MyFirstObjectInShape(SHAPE_SPELLCYLINDER, FeetToMeters(7.5), lTarget, TRUE, OBJECT_TYPE_CREATURE, vOrigin);
+                	oAreaTarget = MyNextObjectInShape(SHAPE_SPELLCYLINDER, FeetToMeters(7.5), lTarget, TRUE, OBJECT_TYPE_CREATURE, vOrigin);
             	}// end while - Target loop			
 		
 		// Knock em down

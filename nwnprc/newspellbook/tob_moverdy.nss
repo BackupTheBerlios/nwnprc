@@ -48,10 +48,10 @@ const int STRREF_MANEUVER           = 16829731; // "Maneuvers"
 
 int _GetLoopEnd(int nClass)
 {
-	if (nClass == CLASS_TYPE_CRUSADER) return 73; 
+	if (nClass == CLASS_TYPE_CRUSADER) return 73;
 	else if (nClass == CLASS_TYPE_SWORDSAGE) return 141;
 	else if (nClass == CLASS_TYPE_WARBLADE) return 110;
-	
+
 	return -1;
 }
 
@@ -67,7 +67,7 @@ void main()
 
     int nClass = GetLocalInt(oPC, "nClass");
     string sPsiFile = GetAMSKnownFileName(nClass);
-    string sManeuverFile = GetAMSDefinitionFileName(nClass);    
+    string sManeuverFile = GetAMSDefinitionFileName(nClass);
 
     // Check which of the conversation scripts called the scripts
     if(nValue == 0) // All of them set the DynConv_Var to non-zero value, so something is wrong -> abort
@@ -81,7 +81,7 @@ void main()
         if(!GetIsStageSetUp(nStage, oPC))
         {
             if(DEBUG) DoDebug("tob_moverdy: Stage was not set up already");
-            // Level selection stage            
+            // Level selection stage
             if(nStage == STAGE_SELECT_LEVEL)
             {
                 if(DEBUG) DoDebug("tob_moverdy: Building level selection");
@@ -90,7 +90,7 @@ void main()
                 // Determine maximum maneuver level
                 // Initiators get new maneuvers at the same levels as wizards
                 // See ToB p39, table 3-1
-                int nMaxLevel = (GetInitiatorLevel(oPC, nClass) + 1)/2;
+                int nMaxLevel = min(9, (GetInitiatorLevel(oPC, nClass) + 1)/2);
 
                 // Set the tokens
                 int i;
@@ -111,19 +111,21 @@ void main()
                 if(DEBUG) DoDebug("tob_moverdy: Building maneuver selection");
                 int nBrowseLevel = GetLocalInt(oPC, "nManeuverLevelToBrowse");
 	        int nMaxReady   = GetMaxReadiedCount(oPC, nClass);
-            	int nCountReady = GetReadiedCount(oPC, nClass);   
+            	int nCountReady = GetReadiedCount(oPC, nClass);
             	int nMoveId;
                 string sToken = "Select a Maneuver to ready. \n" + "You can select ";
                 sToken += IntToString(nMaxReady-nCountReady) + " more maneuvers to ready.";
                 SetHeader(sToken);
-                
+
+                // Set the first choice to be return to level selection stage
+                AddChoice(GetStringByStrRef(STRREF_BACK_TO_LSELECT), CHOICE_BACK_TO_LSELECT, oPC);
                 // Start at the beginning of the level and scroll through to the end
                 int i;
 		for(i = 0; i < _GetLoopEnd(nClass); i++)
 		{	// Checks to see if its the appropriate level
 			int nMoveId = StringToInt(Get2DACache(sManeuverFile, "RealSpellID", i));
-			if (GetHasManeuver(nMoveId, oPC) && 
-			    nBrowseLevel == StringToInt(Get2DACache(sManeuverFile, "Level", i)) && 
+			if (GetHasManeuver(nMoveId, oPC) &&
+			    nBrowseLevel == StringToInt(Get2DACache(sManeuverFile, "Level", i)) &&
 			    1 != StringToInt(Get2DACache(sManeuverFile, "Stance", i)))
 			{
 				if (!GetIsManeuverReadied(oPC, nClass, nMoveId))
@@ -134,8 +136,6 @@ void main()
                 }
                 if(DEBUG) DoDebug("tob_moverdy: GetEndLoop: " + IntToString(_GetLoopEnd(nClass)));
 
-                // Set the first choice to be return to level selection stage
-                AddChoice(GetStringByStrRef(STRREF_BACK_TO_LSELECT), CHOICE_BACK_TO_LSELECT, oPC);
 
                 MarkStageSetUp(STAGE_SELECT_MANEUVER, oPC);
             }

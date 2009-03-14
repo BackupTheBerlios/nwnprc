@@ -53,7 +53,7 @@ void main()
 	{
 		int nSkill = GetLocalInt(oInitiator, "TripDifference")/5;
 		// Another five feet of distance for every 5 you succeed the check by
-		float fDist = 10.0 + (2 * 5.0);
+		float fDist = 10.0 + (nSkill * 5.0);
 
 		// Find the target to be tossed into		
 		int nStop = FALSE;

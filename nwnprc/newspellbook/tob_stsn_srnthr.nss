@@ -52,7 +52,7 @@ void main()
 	{
 		int nSkill = GetLocalInt(oInitiator, "TripDifference")/5;
 		// Another five feet of distance for every 5 you succeed the check by
-		float fDist = 20.0 + (2 * 5.0);
+		float fDist = 20.0 + (nSkill * 5.0);
 		_DoBullRushKnockBack(oTarget, oInitiator, fDist);
 		// Knock em down
 		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(EffectKnockdown()), oTarget, 6.0);

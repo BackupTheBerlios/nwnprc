@@ -1,0 +1,20 @@
+2DA V2.0
+
+   LABEL        ReqType ReqParam1      ReqParam2 
+0  AttackBonus  BAB     10             ****      
+1  ScriptVar    VAR     PRC_AllowETBL  0         
+2  Elf          RACE    1              ****      
+3  Aquatic-Elf  RACE    161            ****      
+4  Avariel      RACE    162            ****      
+5  Drow_female  RACE    163            ****      
+6  Drow_male    RACE    164            ****      
+7  Sun-Elf      RACE    166            ****      
+8  wild-Elf     RACE    167            ****      
+9  wood-Elf     RACE    168            ****      
+10 dark-Elf     RACE    169            ****      
+11 DarksunElf   RACE    34             ****      
+12 Kagonesti    RACE    44             ****      
+13 Sylvanesti   RACE    45             ****      
+14 FrstlrdElf   RACE    107            ****      
+15 SnowElf      RACE    165            ****      
+16 ScriptVar    VAR     PRC_PrereqETBL 0      

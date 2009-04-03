@@ -121,6 +121,7 @@ string GetDisciplineName(int nDiscipline);
  * @param nMoveId    maneuver to check
  * @param nClass     Class to check with (no class has all maneuvers)
  # @param nSpellFeat Whether nMoveId is a feat or a spell id
+ * @param bConv      see if used in maneuver gain conversation
  *
  * @return           DISCIPLINE_*
  */
@@ -265,7 +266,7 @@ effect EffectDazzle();
 void DoDesertWindBoost(object oPC);
 
 /**
- * Determines which PC in the area is weakest, and 
+ * Determines which PC in the area is weakest, and
  * returns that PC.
  *
  * @param oPC      The PC
@@ -339,18 +340,18 @@ int _CheckPrereqsByDiscipline(object oPC, int nDiscipline, int nCount, int nClas
      else if (nDiscipline == DISCIPLINE_IRON_HEART)     { nCheck = 23835; nCheckTo = 23855; }
      else if (nDiscipline == DISCIPLINE_SETTING_SUN)    { nCheck = 23721; nCheckTo = 23740; }
      else if (nDiscipline == DISCIPLINE_SHADOW_HAND)    { nCheck = 23741; nCheckTo = 23765; }
-     
+
      // These disciplines require looping over two or three areas in feat.2da
      else if (nDiscipline == DISCIPLINE_DIAMOND_MIND && nClass == CLASS_TYPE_SWORDSAGE)    { nCheck = 23699; nCheckTo = 23720; }
      else if (nDiscipline == DISCIPLINE_DIAMOND_MIND && nClass == CLASS_TYPE_WARBLADE)     { nCheck2 = 23813; nCheckTo2 = 23834; bUse2 = TRUE; }
      else if (nDiscipline == DISCIPLINE_STONE_DRAGON && nClass == CLASS_TYPE_CRUSADER)     { nCheck = 23628; nCheckTo = 23651; }
-     else if (nDiscipline == DISCIPLINE_STONE_DRAGON && nClass == CLASS_TYPE_SWORDSAGE)    { nCheck2 = 23766; nCheckTo2 = 23789; bUse2 = TRUE; }     
-     else if (nDiscipline == DISCIPLINE_STONE_DRAGON && nClass == CLASS_TYPE_WARBLADE)     { nCheck3 = 23856; nCheckTo3 = 23879; bUse3 = TRUE; }     
+     else if (nDiscipline == DISCIPLINE_STONE_DRAGON && nClass == CLASS_TYPE_SWORDSAGE)    { nCheck2 = 23766; nCheckTo2 = 23789; bUse2 = TRUE; }
+     else if (nDiscipline == DISCIPLINE_STONE_DRAGON && nClass == CLASS_TYPE_WARBLADE)     { nCheck3 = 23856; nCheckTo3 = 23879; bUse3 = TRUE; }
      else if (nDiscipline == DISCIPLINE_TIGER_CLAW   && nClass == CLASS_TYPE_SWORDSAGE)    { nCheck = 23790; nCheckTo = 23812; }
-     else if (nDiscipline == DISCIPLINE_TIGER_CLAW   && nClass == CLASS_TYPE_WARBLADE)     { nCheck2 = 23880; nCheckTo2 = 23902; bUse2 = TRUE; }     
+     else if (nDiscipline == DISCIPLINE_TIGER_CLAW   && nClass == CLASS_TYPE_WARBLADE)     { nCheck2 = 23880; nCheckTo2 = 23902; bUse2 = TRUE; }
      else if (nDiscipline == DISCIPLINE_WHITE_RAVEN  && nClass == CLASS_TYPE_CRUSADER)     { nCheck = 23652; nCheckTo = 23671; }
-     else if (nDiscipline == DISCIPLINE_WHITE_RAVEN  && nClass == CLASS_TYPE_WARBLADE)     { nCheck2 = 23903; nCheckTo2 = 23922; bUse2 = TRUE; }  
-     
+     else if (nDiscipline == DISCIPLINE_WHITE_RAVEN  && nClass == CLASS_TYPE_WARBLADE)     { nCheck2 = 23903; nCheckTo2 = 23922; bUse2 = TRUE; }
+
      /*if (DEBUG) // Massive Data Dump
      {
      	DoDebug("_CheckPrereqsByDiscipline(): Name - " + GetName(oPC));
@@ -365,12 +366,12 @@ int _CheckPrereqsByDiscipline(object oPC, int nDiscipline, int nCount, int nClas
      	DoDebug("_CheckPrereqsByDiscipline(): Check3 - " + IntToString(nCheck3));
      	DoDebug("_CheckPrereqsByDiscipline(): CheckTo3 - " + IntToString(nCheckTo3));
      }*/
-     
+
      // While it hasn't reached the end of the check, keep going
-     while (nCheckTo >= nCheck) 
+     while (nCheckTo >= nCheck)
      {
         // If the PC has a prereq feat, mark it down
-        if(GetHasFeat(nCheck, oPC)) 
+        if(GetHasFeat(nCheck, oPC))
         {
         	if (nType == MANEUVER_TYPE_MANEUVER)
         	{
@@ -385,19 +386,19 @@ int _CheckPrereqsByDiscipline(object oPC, int nDiscipline, int nCount, int nClas
         	}
         }
         // If the number of prereq feats is at least equal to requirement, return true.
-        if (nPrereqCount >= nCount) 
+        if (nPrereqCount >= nCount)
         {
         	//if (DEBUG) DoDebug("_CheckPrereqsByDiscipline(): Returning TRUE");
-        	return nPrereqCount;        
+        	return nPrereqCount;
         }
-        
+
         nCheck += 1;
      }
      // Diamond Mind, Stone Dragon, Tiger Claw. White Raven 2nd class check
-     while (nCheckTo2 >= nCheck2 && bUse2)      
+     while (nCheckTo2 >= nCheck2 && bUse2)
      {
         // If the PC has a prereq feat, mark it down
-        if(GetHasFeat(nCheck2, oPC)) 
+        if(GetHasFeat(nCheck2, oPC))
         {
         	if (nType == MANEUVER_TYPE_MANEUVER)
         	{
@@ -412,19 +413,19 @@ int _CheckPrereqsByDiscipline(object oPC, int nDiscipline, int nCount, int nClas
         	}
         }
         // If the number of prereq feats is at least equal to requirement, return true.
-        if (nPrereqCount >= nCount) 
+        if (nPrereqCount >= nCount)
         {
         	//if (DEBUG) DoDebug("_CheckPrereqsByDiscipline(): Returning TRUE");
-        	return nPrereqCount;        
-        }        
-        
+        	return nPrereqCount;
+        }
+
         nCheck2 += 1;
      }
      // Stone Dragon 3rd class check
-     while (nCheckTo3 >= nCheck3 && bUse3)      
+     while (nCheckTo3 >= nCheck3 && bUse3)
      {
         // If the PC has a prereq feat, mark it down
-        if(GetHasFeat(nCheck3, oPC)) 
+        if(GetHasFeat(nCheck3, oPC))
         {
         	if (nType == MANEUVER_TYPE_MANEUVER)
         	{
@@ -439,15 +440,15 @@ int _CheckPrereqsByDiscipline(object oPC, int nDiscipline, int nCount, int nClas
         	}
         }
         // If the number of prereq feats is at least equal to requirement, return true.
-        if (nPrereqCount >= nCount) 
+        if (nPrereqCount >= nCount)
         {
         	//if (DEBUG) DoDebug("_CheckPrereqsByDiscipline(): Returning TRUE");
-        	return nPrereqCount;        
-        }       
-        
+        	return nPrereqCount;
+        }
+
         nCheck3 += 1;
-     }     
-     
+     }
+
      // Gotten this far and you haven't met the prereqs
      return -1;
 }
@@ -464,14 +465,14 @@ void _RecursiveStanceCheck(object oPC, object oTestWP, int nMoveId, float fFeet 
     if(DEBUG) DoDebug("_RecursiveStanceCheck: fDist: " + FloatToString(fDist));
     if(DEBUG) DoDebug("_RecursiveStanceCheck: fCheck: " + FloatToString(fCheck));
     if(DEBUG) DoDebug("_RecursiveStanceCheck: nMoveId: " + IntToString(nMoveId));
-    
+
 
     // Moved the distance
     if (fDist >= fCheck)
     {
     	if(DEBUG) DoDebug("_RecursiveStanceCheck: fDist > fCheck");
         // Stances that clean up
-        if (nMoveId == MOVE_SD_STONEFOOT_STANCE) 
+        if (nMoveId == MOVE_SD_STONEFOOT_STANCE)
         {
                 PRCRemoveEffectsFromSpell(oPC, nMoveId);
                 if(DEBUG) DoDebug("_RecursiveStanceCheck: Moved too far, cancelling stances.");
@@ -479,54 +480,54 @@ void _RecursiveStanceCheck(object oPC, object oTestWP, int nMoveId, float fFeet 
                 DestroyObject(oTestWP);
         }
         // Stances that clean up
-        else if (nMoveId == MOVE_MOUNTAIN_FORTRESS) 
+        else if (nMoveId == MOVE_MOUNTAIN_FORTRESS)
         {
                 PRCRemoveEffectsFromSpell(oPC, nMoveId);
                 if(DEBUG) DoDebug("_RecursiveStanceCheck: Moved too far, cancelling stances.");
                 // Clean up the test WP as well
                 DestroyObject(oTestWP);
-        }        
+        }
         // Stances that clean up
-        else if (nMoveId == MOVE_SD_ROOT_MOUNTAIN) 
+        else if (nMoveId == MOVE_SD_ROOT_MOUNTAIN)
         {
                 PRCRemoveEffectsFromSpell(oPC, nMoveId);
                 if(DEBUG) DoDebug("_RecursiveStanceCheck: Moved too far, cancelling stances.");
                 // Clean up the test WP as well
                 DestroyObject(oTestWP);
-        }        
+        }
         else if (nMoveId == MOVE_SH_CHILD_SHADOW)
         {
                 ApplyEffectToObject(DURATION_TYPE_TEMPORARY, SupernaturalEffect(EffectConcealment(20)), oPC, 6.0);
                 if(DEBUG) DoDebug("_RecursiveStanceCheck: Applying bonuses.");
-                // Clean up the test WP 
+                // Clean up the test WP
                 DestroyObject(oTestWP);
                 // Create waypoint for the movement for next round
-                CreateObject(OBJECT_TYPE_WAYPOINT, "nw_waypoint001", GetLocation(oPC), FALSE, sWPTag);          
+                CreateObject(OBJECT_TYPE_WAYPOINT, "nw_waypoint001", GetLocation(oPC), FALSE, sWPTag);
         }
         else if (nMoveId == MOVE_IH_ABSOLUTE_STEEL)
         {
                 ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(EffectACIncrease(2)), oPC, 6.0);
                 if(DEBUG) DoDebug("_RecursiveStanceCheck: Applying bonuses.");
-                // Clean up the test WP 
+                // Clean up the test WP
                 DestroyObject(oTestWP);
                 // Create waypoint for the movement for next round
-                CreateObject(OBJECT_TYPE_WAYPOINT, "nw_waypoint001", GetLocation(oPC), FALSE, sWPTag);          
+                CreateObject(OBJECT_TYPE_WAYPOINT, "nw_waypoint001", GetLocation(oPC), FALSE, sWPTag);
         }
-        
+
         else if (nMoveId == MOVE_SD_GIANTS_STANCE)
         {
                 DeleteLocalInt(oPC, "DWGiantsStance");
                 DeleteLocalInt(oPC, "PRC_Power_Expansion_SizeIncrease");
                 PRCRemoveEffectsFromSpell(oPC, nMoveId);
-                DestroyObject(oTestWP);        
+                DestroyObject(oTestWP);
         }
-        
+
         else if (nMoveId == MOVE_IH_DANCING_BLADE_FORM)
         {
                 DeleteLocalInt(oPC, "DWDancingBladeForm");
                 DestroyObject(oTestWP);
         }
-        
+
     }
     // If they still have the spell, keep going
     if (GetHasSpellEffect(nMoveId, oPC))
@@ -534,7 +535,7 @@ void _RecursiveStanceCheck(object oPC, object oTestWP, int nMoveId, float fFeet 
         DelayCommand(6.0, _RecursiveStanceCheck(oPC, oTestWP, nMoveId));
         if(DEBUG) DoDebug("_RecursiveStanceCheck: DelayCommand(6.0, _RecursiveStanceCheck(oPC, oTestWP, nMoveId)).");
     }
-    
+
     if(DEBUG) DoDebug("_RecursiveStanceCheck: Exiting");
 }
 
@@ -542,7 +543,7 @@ int _RestrictedDiscipline(object oInitiator, int nDiscipline)
 {
 	// There's no restrictions
 	if (GetPersistantLocalInt(oInitiator, "RestrictedDiscipline1") == 0) return TRUE;
-	
+
 	string sString = "RestrictedDiscipline";
 	int i;
      	for(i = 1; i < 6; i++)
@@ -550,7 +551,7 @@ int _RestrictedDiscipline(object oInitiator, int nDiscipline)
      		// Cycle through the local ints
      		if (nDiscipline == GetPersistantLocalInt(oInitiator, (sString + IntToString(i)))) return TRUE;
 	}
-	
+
 	// Down here, every check is failed
 	return FALSE;
 }
@@ -585,7 +586,7 @@ int GetInitiatorLevel(object oInitiator, int nSpecificClass = CLASS_TYPE_INVALID
                 // Initiator level is class level + 1/2 levels in all other classes
                 // See ToB p39
                 // Max level is therefor the level plus 1/2 of remaining levels
-                // Prestige classes are stuck in here 
+                // Prestige classes are stuck in here
                 nClassLevel += GetBladeMagicPRCLevels(oInitiator);
                 nLevel = nClassLevel + ((nTotalHD - nClassLevel)/2);
             }
@@ -650,7 +651,7 @@ int GetIsBladeMagicClass(int nClass)
 {
     return (nClass==CLASS_TYPE_CRUSADER          ||
             nClass==CLASS_TYPE_SWORDSAGE         ||
-            nClass==CLASS_TYPE_WARBLADE 
+            nClass==CLASS_TYPE_WARBLADE
             );
 }
 
@@ -685,16 +686,16 @@ int GetDisciplineByManeuver(int nMoveId, int nClass, int nSpellFeat = -1)
      // Get the class-specific base
      string sFile = Get2DACache("classes", "FeatsTable", nClass);
      sFile = "cls_move" + GetStringRight(sFile, GetStringLength(sFile) - 8);
-     
      string sSearch = "SpellID";
      if (nSpellFeat != -1) sSearch = "FeatID";
-     
+
      int i, nManeuver;
-     for(i = 0; i < GetPRCSwitch(FILE_END_CLASS_POWER) ; i++)
+     for(i = 0; i <= GetPRCSwitch(FILE_END_CLASS_POWER) ; i++)
      {
          nManeuver = StringToInt(Get2DACache(sFile, sSearch, i));
          if(nManeuver == nMoveId)
          {
+     	 	if(DEBUG) DoDebug("Discipline: " + Get2DACache(sFile, "Discipline", i));
              return StringToInt(Get2DACache(sFile, "Discipline", i));
          }
      }
@@ -705,14 +706,15 @@ int GetDisciplineByManeuver(int nMoveId, int nClass, int nSpellFeat = -1)
 int GetBladeMagicPRCLevels(object oInitiator)
 {
     	int nLevel = 0;
-	
+
 	nLevel += GetLevelByClass(CLASS_TYPE_DEEPSTONE_SENTINEL, oInitiator);
 	nLevel += GetLevelByClass(CLASS_TYPE_BLOODCLAW_MASTER, oInitiator);
 	nLevel += GetLevelByClass(CLASS_TYPE_RUBY_VINDICATOR, oInitiator);
 	nLevel += GetLevelByClass(CLASS_TYPE_JADE_PHOENIX_MAGE, oInitiator);
 	nLevel += GetLevelByClass(CLASS_TYPE_MASTER_OF_NINE, oInitiator);
 	nLevel += GetLevelByClass(CLASS_TYPE_ETERNAL_BLADE, oInitiator);
-	
+	nLevel += GetLevelByClass(CLASS_TYPE_SHADOW_SUN_NINJA, oInitiator);
+
     	return nLevel;
 }
 
@@ -741,7 +743,7 @@ int CheckManeuverPrereqs(int nClass, int nFeat, object oPC)
     // Having the power already automatically disqualifies one from taking it again
     if(GetHasFeat(nFeat, oPC))
     	return FALSE;
-    	
+
     // Checking to see what the name of the feat is, and the row number
     if (DEBUG)
     {
@@ -802,9 +804,9 @@ int GetIsManeuverSupernatural(int nMoveId)
         else if (nMoveId == MOVE_SH_OBSCURING_SHADOW_VEIL) return TRUE;
         else if (nMoveId == MOVE_SH_SHADOW_BLADE_TECH) return TRUE;
         else if (nMoveId == MOVE_SH_SHADOW_GARROTTE   ) return TRUE;
-	else if (nMoveId == MOVE_SH_SHADOW_NOOSE) return TRUE;	
-	else if (nMoveId == MOVE_SH_STRENGTH_DRAINING) return TRUE;	
-        
+	else if (nMoveId == MOVE_SH_SHADOW_NOOSE) return TRUE;
+	else if (nMoveId == MOVE_SH_STRENGTH_DRAINING) return TRUE;
+
         // If nothing returns TRUE, fail
         return FALSE;
 }
@@ -853,10 +855,17 @@ int GetHasActiveStance(object oInitiator)
 	else if (GetHasSpellEffect(MOVE_DM_STANCE_ALACRITY, oInitiator)) return MOVE_DM_STANCE_ALACRITY;
 	else if (GetHasSpellEffect(MOVE_IH_SUPREME_BLADE_PARRY, oInitiator)) return MOVE_IH_SUPREME_BLADE_PARRY;
 	else if (GetHasSpellEffect(MOVE_SS_GHOSTLY_DEFENSE, oInitiator)) return MOVE_SS_GHOSTLY_DEFENSE;
-        else if (GetHasSpellEffect(MOVE_SH_BALANCE_SKY, oInitiator)) return MOVE_SH_BALANCE_SKY;  
+        else if (GetHasSpellEffect(MOVE_SH_BALANCE_SKY, oInitiator)) return MOVE_SH_BALANCE_SKY;
 	else if (GetHasSpellEffect(MOVE_SD_STRENGTH_STONE, oInitiator)) return MOVE_SD_STRENGTH_STONE;
 	else if (GetHasSpellEffect(MOVE_TC_WOLF_PACK_TACTICS, oInitiator)) return MOVE_TC_WOLF_PACK_TACTICS;
 	else if (GetHasSpellEffect(MOVE_WR_SWARM_TACTICS, oInitiator)) return MOVE_WR_SWARM_TACTICS;
+	// Jade Phoneix Mage
+	else if (GetHasSpellEffect(MOVE_MYSTIC_PHOENIX, oInitiator)) return MOVE_MYSTIC_PHOENIX;
+	else if (GetHasSpellEffect(MOVE_MYSTIC_PHOENIX_AUG, oInitiator)) return MOVE_MYSTIC_PHOENIX_AUG;
+	else if (GetHasSpellEffect(MOVE_FIREBIRD_STANCE, oInitiator)) return MOVE_FIREBIRD_STANCE;
+	else if (GetHasSpellEffect(MOVE_FIREBIRD_STANCE_AUG, oInitiator)) return MOVE_FIREBIRD_STANCE_AUG;
+	// Shadow Sun Ninja
+	else if (GetHasSpellEffect(MOVE_CHILD_SL_STANCE, oInitiator)) return MOVE_CHILD_SL_STANCE;
 
         // If nothing returns TRUE, fail
         return FALSE;
@@ -867,139 +876,137 @@ void ClearStances(object oInitiator, int nDontClearMove)
         // Clears spell effects, will not clear DontClearMove
         // This is used to allow Warblades to have two stances.
 	if (GetHasSpellEffect(MOVE_DW_FLAMES_BLESSING, oInitiator) && nDontClearMove != MOVE_DW_FLAMES_BLESSING)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DW_FLAMES_BLESSING);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DW_FLAMES_BLESSING);
 	if (GetHasSpellEffect(MOVE_DS_IRON_GUARDS_GLARE, oInitiator) && nDontClearMove != MOVE_DS_IRON_GUARDS_GLARE)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DS_IRON_GUARDS_GLARE);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DS_IRON_GUARDS_GLARE);
 	if (GetHasSpellEffect(MOVE_DS_MARTIAL_SPIRIT, oInitiator) && nDontClearMove != MOVE_DS_MARTIAL_SPIRIT)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DS_MARTIAL_SPIRIT);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DS_MARTIAL_SPIRIT);
 	if (GetHasSpellEffect(MOVE_DM_STANCE_OF_CLARITY, oInitiator) && nDontClearMove != MOVE_DM_STANCE_OF_CLARITY)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DM_STANCE_OF_CLARITY);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DM_STANCE_OF_CLARITY);
 	if (GetHasSpellEffect(MOVE_IH_PUNISHING_STANCE, oInitiator) && nDontClearMove != MOVE_IH_PUNISHING_STANCE)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_IH_PUNISHING_STANCE);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_IH_PUNISHING_STANCE);
 	if (GetHasSpellEffect(MOVE_SS_STEP_WIND, oInitiator) && nDontClearMove != MOVE_SS_STEP_WIND)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SS_STEP_WIND);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SS_STEP_WIND);
 	if (GetHasSpellEffect(MOVE_SH_CHILD_SHADOW, oInitiator) && nDontClearMove != MOVE_SH_CHILD_SHADOW)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SH_CHILD_SHADOW);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SH_CHILD_SHADOW);
 	if (GetHasSpellEffect(MOVE_SH_ISLAND_BLADES, oInitiator) && nDontClearMove != MOVE_SH_ISLAND_BLADES)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SH_ISLAND_BLADES);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SH_ISLAND_BLADES);
 	if (GetHasSpellEffect(MOVE_SD_STONEFOOT_STANCE, oInitiator) && nDontClearMove != MOVE_SD_STONEFOOT_STANCE)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SD_STONEFOOT_STANCE);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SD_STONEFOOT_STANCE);
 	if (GetHasSpellEffect(MOVE_TC_BLOOD_WATER, oInitiator) && nDontClearMove != MOVE_TC_BLOOD_WATER)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_TC_BLOOD_WATER);	
-           
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_TC_BLOOD_WATER);
+
            if(DEBUG) DoDebug("tob_inc_tobfunc: ClearStances Part #1");
-           
+
 	if (GetHasSpellEffect(MOVE_TC_HUNTERS_SENSE, oInitiator) && nDontClearMove != MOVE_TC_HUNTERS_SENSE)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_TC_HUNTERS_SENSE);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_TC_HUNTERS_SENSE);
 	if (GetHasSpellEffect(MOVE_WR_BOLSTERING_VOICE, oInitiator) && nDontClearMove != MOVE_WR_BOLSTERING_VOICE)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_WR_BOLSTERING_VOICE);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_WR_BOLSTERING_VOICE);
 	if (GetHasSpellEffect(MOVE_WR_LEADING_CHARGE, oInitiator) && nDontClearMove != MOVE_WR_LEADING_CHARGE)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_WR_LEADING_CHARGE);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_WR_LEADING_CHARGE);
 	if (GetHasSpellEffect(MOVE_DW_HOLOCAUST_CLOAK, oInitiator) && nDontClearMove != MOVE_DW_HOLOCAUST_CLOAK)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DW_HOLOCAUST_CLOAK);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DW_HOLOCAUST_CLOAK);
         if (GetHasSpellEffect(MOVE_DS_THICKET_BLADES, oInitiator) && nDontClearMove != MOVE_DS_THICKET_BLADES)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DS_THICKET_BLADES);        
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DS_THICKET_BLADES);
 	if (GetHasSpellEffect(MOVE_DM_PEARL_BLACK_DOUBT, oInitiator) && nDontClearMove != MOVE_DM_PEARL_BLACK_DOUBT)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DM_PEARL_BLACK_DOUBT);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DM_PEARL_BLACK_DOUBT);
 	if (GetHasSpellEffect(MOVE_IH_ABSOLUTE_STEEL, oInitiator) && nDontClearMove != MOVE_IH_ABSOLUTE_STEEL)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_IH_ABSOLUTE_STEEL);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_IH_ABSOLUTE_STEEL);
 	if (GetHasSpellEffect(MOVE_SS_GIANT_KILLING_STYLE, oInitiator) && nDontClearMove != MOVE_SS_GIANT_KILLING_STYLE)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SS_GIANT_KILLING_STYLE);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SS_GIANT_KILLING_STYLE);
 	if (GetHasSpellEffect(MOVE_SH_ASSASSINS_STANCE, oInitiator) && nDontClearMove != MOVE_SH_ASSASSINS_STANCE)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SH_ASSASSINS_STANCE);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SH_ASSASSINS_STANCE);
 	if (GetHasSpellEffect(MOVE_SH_DANCE_SPIDER, oInitiator) && nDontClearMove != MOVE_SH_DANCE_SPIDER)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SH_DANCE_SPIDER);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SH_DANCE_SPIDER);
 	if (GetHasSpellEffect(MOVE_SD_CRUSHING_WEIGHT, oInitiator) && nDontClearMove != MOVE_SD_CRUSHING_WEIGHT)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SD_CRUSHING_WEIGHT);	
-           
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SD_CRUSHING_WEIGHT);
+
            if(DEBUG) DoDebug("tob_inc_tobfunc: ClearStances Part #2");
-       	
+
 	if (GetHasSpellEffect(MOVE_SD_ROOT_MOUNTAIN, oInitiator) && nDontClearMove != MOVE_SD_ROOT_MOUNTAIN)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SD_ROOT_MOUNTAIN);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SD_ROOT_MOUNTAIN);
 	if (GetHasSpellEffect(MOVE_TC_LEAPING_DRAGON, oInitiator) && nDontClearMove != MOVE_TC_LEAPING_DRAGON)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_TC_LEAPING_DRAGON);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_TC_LEAPING_DRAGON);
 	if (GetHasSpellEffect(MOVE_TC_WOLVERINE_STANCE, oInitiator) && nDontClearMove != MOVE_TC_WOLVERINE_STANCE)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_TC_WOLVERINE_STANCE);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_TC_WOLVERINE_STANCE);
 	if (GetHasSpellEffect(MOVE_WR_TACTICS_WOLF, oInitiator) && nDontClearMove != MOVE_WR_TACTICS_WOLF)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_WR_TACTICS_WOLF);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_WR_TACTICS_WOLF);
 	if (GetHasSpellEffect(MOVE_DM_HEARING_AIR, oInitiator) && nDontClearMove != MOVE_DM_HEARING_AIR)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DM_HEARING_AIR);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DM_HEARING_AIR);
 	if (GetHasSpellEffect(MOVE_IH_DANCING_BLADE_FORM, oInitiator) && nDontClearMove != MOVE_IH_DANCING_BLADE_FORM)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_IH_DANCING_BLADE_FORM);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_IH_DANCING_BLADE_FORM);
 	if (GetHasSpellEffect(MOVE_SS_SHIFTING_DEFENSE, oInitiator) && nDontClearMove != MOVE_SS_SHIFTING_DEFENSE)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SS_SHIFTING_DEFENSE);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SS_SHIFTING_DEFENSE);
         if (GetHasSpellEffect(MOVE_SH_STEP_DANCING_MOTH, oInitiator) && nDontClearMove != MOVE_SH_STEP_DANCING_MOTH)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SH_STEP_DANCING_MOTH);        
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SH_STEP_DANCING_MOTH);
 	if (GetHasSpellEffect(MOVE_SD_GIANTS_STANCE, oInitiator) && nDontClearMove != MOVE_SD_GIANTS_STANCE)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SD_GIANTS_STANCE);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SD_GIANTS_STANCE);
 	if (GetHasSpellEffect(MOVE_WR_PRESS_ADVANTAGE, oInitiator) && nDontClearMove != MOVE_WR_PRESS_ADVANTAGE)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_WR_PRESS_ADVANTAGE);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_WR_PRESS_ADVANTAGE);
 	if (GetHasSpellEffect(MOVE_DW_FIERY_ASSAULT, oInitiator) && nDontClearMove != MOVE_DW_FIERY_ASSAULT)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DW_FIERY_ASSAULT);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DW_FIERY_ASSAULT);
 	if (GetHasSpellEffect(MOVE_DS_AURA_CHAOS, oInitiator) && nDontClearMove != MOVE_DS_AURA_CHAOS)
     	{
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DS_AURA_CHAOS);	
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DS_AURA_CHAOS);
            DeleteLocalInt(oInitiator, "DSChaos");
     	}
 	if (GetHasSpellEffect(MOVE_DS_PERFECT_ORDER, oInitiator) && nDontClearMove != MOVE_DS_PERFECT_ORDER)
 	{
            PRCRemoveEffectsFromSpell(oInitiator, MOVE_DS_PERFECT_ORDER);
-           DeleteLocalInt(oInitiator, "DSPerfectOrder");	
+           DeleteLocalInt(oInitiator, "DSPerfectOrder");
     	}
-    	
-    	if(DEBUG) DoDebug("tob_inc_tobfunc: ClearStances Part #3");
-    	
-	if (GetHasSpellEffect(MOVE_DS_AURA_TRIUMPH, oInitiator) && nDontClearMove != MOVE_DS_AURA_TRIUMPH)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DS_AURA_TRIUMPH);	
-	if (GetHasSpellEffect(MOVE_DS_AURA_TYRANNY, oInitiator) && nDontClearMove != MOVE_DS_AURA_TYRANNY)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DS_AURA_TYRANNY);	
-	if (GetHasSpellEffect(MOVE_TC_PREY_ON_THE_WEAK, oInitiator) && nDontClearMove != MOVE_TC_PREY_ON_THE_WEAK)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_TC_PREY_ON_THE_WEAK);	
-	if (GetHasSpellEffect(MOVE_DW_RISING_PHOENIX, oInitiator) && nDontClearMove != MOVE_DW_RISING_PHOENIX)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DW_RISING_PHOENIX);	
-	if (GetHasSpellEffect(MOVE_DS_IMMORTAL_FORTITUDE, oInitiator) && nDontClearMove != MOVE_DS_IMMORTAL_FORTITUDE)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DS_IMMORTAL_FORTITUDE);	
-	if (GetHasSpellEffect(MOVE_DM_STANCE_ALACRITY, oInitiator) && nDontClearMove != MOVE_DM_STANCE_ALACRITY)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DM_STANCE_ALACRITY);	
-	if (GetHasSpellEffect(MOVE_IH_SUPREME_BLADE_PARRY, oInitiator) && nDontClearMove != MOVE_IH_SUPREME_BLADE_PARRY)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_IH_SUPREME_BLADE_PARRY);	
-	if (GetHasSpellEffect(MOVE_SS_GHOSTLY_DEFENSE, oInitiator) && nDontClearMove != MOVE_SS_GHOSTLY_DEFENSE)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SS_GHOSTLY_DEFENSE);	
-        if (GetHasSpellEffect(MOVE_SH_BALANCE_SKY, oInitiator) && nDontClearMove != MOVE_SH_BALANCE_SKY)  
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SH_BALANCE_SKY);        
-	if (GetHasSpellEffect(MOVE_SD_STRENGTH_STONE, oInitiator) && nDontClearMove != MOVE_SD_STRENGTH_STONE)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SD_STRENGTH_STONE);	
-	if (GetHasSpellEffect(MOVE_TC_WOLF_PACK_TACTICS, oInitiator) && nDontClearMove != MOVE_TC_WOLF_PACK_TACTICS)
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_TC_WOLF_PACK_TACTICS);	
-	if (GetHasSpellEffect(MOVE_WR_SWARM_TACTICS, oInitiator) && nDontClearMove != MOVE_WR_SWARM_TACTICS)  
-                PRCRemoveEffectsFromSpell(oInitiator, MOVE_WR_SWARM_TACTICS);
-	if (GetHasSpellEffect(MOVE_MYSTIC_PHOENIX, oInitiator) && nDontClearMove != MOVE_MYSTIC_PHOENIX)
-	{
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_MYSTIC_PHOENIX);	
-           DeleteLocalInt(oInitiator, "ToB_JPM_MystP");
-           if(DEBUG) DoDebug("Mystic Phoenix bonus levels removed");
-        }
-	if (GetHasSpellEffect(MOVE_MYSTIC_PHOENIX_AUG, oInitiator) && nDontClearMove != MOVE_MYSTIC_PHOENIX_AUG)
-	{
-	   PRCRemoveEffectsFromSpell(oInitiator, MOVE_MYSTIC_PHOENIX);	
-	   DeleteLocalInt(oInitiator, "ToB_JPM_MystP");
-	   if(DEBUG) DoDebug("Mystic Phoenix bonus levels removed");
-	}
-	if (GetHasSpellEffect(MOVE_FIREBIRD_STANCE, oInitiator) && nDontClearMove != MOVE_FIREBIRD_STANCE)
-	{
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_FIREBIRD_STANCE);	
-           DeleteLocalInt(oInitiator, "ToB_JPM_FireB");
-           if(DEBUG) DoDebug("Firebird bonus levels removed");
-        }
 
-	if (GetHasSpellEffect(MOVE_FIREBIRD_STANCE_AUG, oInitiator) && nDontClearMove != MOVE_FIREBIRD_STANCE_AUG)
-	{
-           PRCRemoveEffectsFromSpell(oInitiator, MOVE_FIREBIRD_STANCE);	
-           DeleteLocalInt(oInitiator, "ToB_JPM_FireB");
-           if(DEBUG) DoDebug("Firebird bonus levels removed");
-        }
-        
+    	if(DEBUG) DoDebug("tob_inc_tobfunc: ClearStances Part #3");
+
+	if (GetHasSpellEffect(MOVE_DS_AURA_TRIUMPH, oInitiator) && nDontClearMove != MOVE_DS_AURA_TRIUMPH)
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DS_AURA_TRIUMPH);
+	if (GetHasSpellEffect(MOVE_DS_AURA_TYRANNY, oInitiator) && nDontClearMove != MOVE_DS_AURA_TYRANNY)
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DS_AURA_TYRANNY);
+	if (GetHasSpellEffect(MOVE_TC_PREY_ON_THE_WEAK, oInitiator) && nDontClearMove != MOVE_TC_PREY_ON_THE_WEAK)
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_TC_PREY_ON_THE_WEAK);
+	if (GetHasSpellEffect(MOVE_DW_RISING_PHOENIX, oInitiator) && nDontClearMove != MOVE_DW_RISING_PHOENIX)
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DW_RISING_PHOENIX);
+	if (GetHasSpellEffect(MOVE_DS_IMMORTAL_FORTITUDE, oInitiator) && nDontClearMove != MOVE_DS_IMMORTAL_FORTITUDE)
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DS_IMMORTAL_FORTITUDE);
+	if (GetHasSpellEffect(MOVE_DM_STANCE_ALACRITY, oInitiator) && nDontClearMove != MOVE_DM_STANCE_ALACRITY)
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_DM_STANCE_ALACRITY);
+	if (GetHasSpellEffect(MOVE_IH_SUPREME_BLADE_PARRY, oInitiator) && nDontClearMove != MOVE_IH_SUPREME_BLADE_PARRY)
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_IH_SUPREME_BLADE_PARRY);
+	if (GetHasSpellEffect(MOVE_SS_GHOSTLY_DEFENSE, oInitiator) && nDontClearMove != MOVE_SS_GHOSTLY_DEFENSE)
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SS_GHOSTLY_DEFENSE);
+        if (GetHasSpellEffect(MOVE_SH_BALANCE_SKY, oInitiator) && nDontClearMove != MOVE_SH_BALANCE_SKY)
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SH_BALANCE_SKY);
+	if (GetHasSpellEffect(MOVE_SD_STRENGTH_STONE, oInitiator) && nDontClearMove != MOVE_SD_STRENGTH_STONE)
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_SD_STRENGTH_STONE);
+	if (GetHasSpellEffect(MOVE_TC_WOLF_PACK_TACTICS, oInitiator) && nDontClearMove != MOVE_TC_WOLF_PACK_TACTICS)
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_TC_WOLF_PACK_TACTICS);
+	if (GetHasSpellEffect(MOVE_WR_SWARM_TACTICS, oInitiator) && nDontClearMove != MOVE_WR_SWARM_TACTICS)
+                PRCRemoveEffectsFromSpell(oInitiator, MOVE_WR_SWARM_TACTICS);
+
         if(DEBUG) DoDebug("tob_inc_tobfunc: ClearStances Part #4");
+
+	if (GetHasSpellEffect(MOVE_MYSTIC_PHOENIX, oInitiator) && nDontClearMove != MOVE_MYSTIC_PHOENIX){
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_MYSTIC_PHOENIX);
+           DeleteLocalInt(oInitiator, "ToB_JPM_MystP");
+           if(DEBUG) DoDebug("Mystic Phoenix bonus levels removed");}
+	if (GetHasSpellEffect(MOVE_MYSTIC_PHOENIX_AUG, oInitiator) && nDontClearMove != MOVE_MYSTIC_PHOENIX_AUG){
+		   PRCRemoveEffectsFromSpell(oInitiator, MOVE_MYSTIC_PHOENIX);
+		   DeleteLocalInt(oInitiator, "ToB_JPM_MystP");
+		   if(DEBUG) DoDebug("Mystic Phoenix bonus levels removed");}
+	if (GetHasSpellEffect(MOVE_FIREBIRD_STANCE, oInitiator) && nDontClearMove != MOVE_FIREBIRD_STANCE){
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_FIREBIRD_STANCE);
+           DeleteLocalInt(oInitiator, "ToB_JPM_FireB");
+           if(DEBUG) DoDebug("Firebird bonus levels removed");}
+	if (GetHasSpellEffect(MOVE_FIREBIRD_STANCE_AUG, oInitiator) && nDontClearMove != MOVE_FIREBIRD_STANCE_AUG){
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_FIREBIRD_STANCE);
+           DeleteLocalInt(oInitiator, "ToB_JPM_FireB");
+           if(DEBUG) DoDebug("Firebird bonus levels removed");}
+	if (GetHasSpellEffect(MOVE_CHILD_SL_STANCE, oInitiator) && nDontClearMove != MOVE_CHILD_SL_STANCE){
+           PRCRemoveEffectsFromSpell(oInitiator, MOVE_CHILD_SL_STANCE);
+           DeleteLocalInt(oInitiator, "SSN_CHILDSL_SETP");
+           RemoveEventScript(oInitiator, EVENT_ONHEARTBEAT, "tob_ssn_childsl", TRUE, FALSE);}
+
+        if(DEBUG) DoDebug("tob_inc_tobfunc: ClearStances Part #5 (PrC Stances)");
 }
 
 void MarkStanceActive(object oInitiator, int nStance)
@@ -1016,7 +1023,7 @@ effect VersusSizeEffect(object oInitiator, effect eEffect, int nSize)
         int nPCSize = PRCGetCreatureSize(oInitiator);
         effect eLink;
         // Creatures larger than PC
-        if (nSize == 1) 
+        if (nSize == 1)
         {
                 eLink = VersusRacialTypeEffect(eEffect, RACIAL_TYPE_ABERRATION);
                 eLink = EffectLinkEffects(eLink, VersusRacialTypeEffect(eEffect, RACIAL_TYPE_CONSTRUCT));
@@ -1040,20 +1047,20 @@ effect VersusSizeEffect(object oInitiator, effect eEffect, int nSize)
                         eLink = EffectLinkEffects(eLink, VersusRacialTypeEffect(eEffect, RACIAL_TYPE_MAGICAL_BEAST));
                         eLink = EffectLinkEffects(eLink, VersusRacialTypeEffect(eEffect, RACIAL_TYPE_OOZE));
                         eLink = EffectLinkEffects(eLink, VersusRacialTypeEffect(eEffect, RACIAL_TYPE_SHAPECHANGER));
-                        eLink = EffectLinkEffects(eLink, VersusRacialTypeEffect(eEffect, RACIAL_TYPE_UNDEAD));          
+                        eLink = EffectLinkEffects(eLink, VersusRacialTypeEffect(eEffect, RACIAL_TYPE_UNDEAD));
                 }
         }// Smaller
-        if (nSize == 0) 
+        if (nSize == 0)
         {
                 eLink = VersusRacialTypeEffect(eEffect, RACIAL_TYPE_FEY);
                 eLink = EffectLinkEffects(eLink, VersusRacialTypeEffect(eEffect, RACIAL_TYPE_VERMIN));
                 if (nPCSize == CREATURE_SIZE_MEDIUM)
                 {
                         eLink = EffectLinkEffects(eLink, VersusRacialTypeEffect(eEffect, RACIAL_TYPE_GNOME));
-                        eLink = EffectLinkEffects(eLink, VersusRacialTypeEffect(eEffect, RACIAL_TYPE_HALFLING));        
+                        eLink = EffectLinkEffects(eLink, VersusRacialTypeEffect(eEffect, RACIAL_TYPE_HALFLING));
                 }
-        }       
-        
+        }
+
         return eLink;
 }
 
@@ -1075,23 +1082,26 @@ void InitiatorMovementCheck(object oPC, int nMoveId, float fFeet = 10.0)
 
 int GetIsStance(int nMoveId)
 {
-	
+
         if(DEBUG) DoDebug("GetIsStance running");
         int nClass = GetInitiatingClass(OBJECT_SELF);
         string sManeuverFile = GetAMSDefinitionFileName(nClass);
         int i, nManeuverLevel;
         string sMoveID;
         if(DEBUG) DoDebug("maneuverfile: " + sManeuverFile);
-        
+
         // Prestiege class stances
         // Deepstone Sentinel
-        if(nMoveId == MOVE_MOUNTAIN_FORTRESS) return TRUE; 
+        if(nMoveId == MOVE_MOUNTAIN_FORTRESS) return TRUE;
         // Jade Phoenix Mage
         if(nMoveId == MOVE_MYSTIC_PHOENIX) return TRUE;
         if(nMoveId == MOVE_MYSTIC_PHOENIX_AUG) return TRUE;
         if(nMoveId == MOVE_FIREBIRD_STANCE) return TRUE;
         if(nMoveId == MOVE_FIREBIRD_STANCE_AUG) return TRUE;
-        
+        if(nMoveId == MOVE_FIREBIRD_STANCE_AUG) return TRUE;
+        // Shadow Sun Ninja
+        if(nMoveId == MOVE_CHILD_SL_STANCE) return TRUE;
+
         for(i = 0; i < GetPRCSwitch(FILE_END_CLASS_POWER) ; i++)
         {
             // If looking for stances, skip maneuvers, else reverse
@@ -1099,9 +1109,12 @@ int GetIsStance(int nMoveId)
                 continue;
             } */  // Not using this stopped the TMI
             sMoveID = Get2DACache(sManeuverFile, "RealSpellID", i);
-            if(StringToInt(sMoveID) == nMoveId) return TRUE;
+            if(StringToInt(sMoveID) == nMoveId)
+            {
+                if(Get2DACache(sManeuverFile, "Stance", i) == "0") return TRUE;
+            }
         }
-        
+
         return FALSE;
 }
 
@@ -1111,7 +1124,7 @@ effect EffectDazzle()
                eLink = EffectLinkEffects(eLink, EffectSkillDecrease(SKILL_SPOT, 1));
                eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_IMP_PWBLIND));
 
-        if(DEBUG) DoDebug("EffectDazzle running");             
+        if(DEBUG) DoDebug("EffectDazzle running");
         return eLink;
 }
 
@@ -1175,7 +1188,7 @@ int GetHasInsightfulStrike(object oInitiator)
         else if (GetHasFeat(FEAT_SS_DF_IS_SH, oInitiator) && nDiscToCheck == DISCIPLINE_SHADOW_HAND)  return TRUE;
         else if (GetHasFeat(FEAT_SS_DF_IS_SD, oInitiator) && nDiscToCheck == DISCIPLINE_STONE_DRAGON) return TRUE;
         else if (GetHasFeat(FEAT_SS_DF_IS_TC, oInitiator) && nDiscToCheck == DISCIPLINE_TIGER_CLAW)   return TRUE;
-        
+
         return FALSE;
 }
 
@@ -1189,7 +1202,7 @@ int GetHasDefensiveStance(object oInitiator, int nDiscipline)
         else if (GetHasFeat(FEAT_SS_DF_DS_SH, oInitiator) && nDiscipline == DISCIPLINE_SHADOW_HAND)  return TRUE;
         else if (GetHasFeat(FEAT_SS_DF_DS_SD, oInitiator) && nDiscipline == DISCIPLINE_STONE_DRAGON) return TRUE;
         else if (GetHasFeat(FEAT_SS_DF_DS_TC, oInitiator) && nDiscipline == DISCIPLINE_TIGER_CLAW)   return TRUE;
-        
+
         return FALSE;
 }
 
@@ -1199,24 +1212,24 @@ int TOBGetHasDiscipline(object oInitiator, int nDiscipline)
 	int nCru = GetLevelByClass(CLASS_TYPE_CRUSADER, oInitiator);
 	int nSwd = GetLevelByClass(CLASS_TYPE_SWORDSAGE, oInitiator);
 	int nWar = GetLevelByClass(CLASS_TYPE_WARBLADE, oInitiator);
-	
-	if (nCru > 0 && (nDiscipline == DISCIPLINE_DEVOTED_SPIRIT || 
-	                 nDiscipline == DISCIPLINE_STONE_DRAGON || 
-	                 nDiscipline == DISCIPLINE_WHITE_RAVEN)) return TRUE;
-	if (nSwd > 0 && (nDiscipline == DISCIPLINE_DIAMOND_MIND || 
-	                 nDiscipline == DISCIPLINE_IRON_HEART || 
-	                 nDiscipline == DISCIPLINE_STONE_DRAGON || 
-	                 nDiscipline == DISCIPLINE_TIGER_CLAW || 
-	                 nDiscipline == DISCIPLINE_WHITE_RAVEN)) return TRUE;
-	if (nWar > 0 && (nDiscipline == DISCIPLINE_DESERT_WIND || 
-	                 nDiscipline == DISCIPLINE_DIAMOND_MIND || 
-	                 nDiscipline == DISCIPLINE_SETTING_SUN || 
-	                 nDiscipline == DISCIPLINE_SHADOW_HAND || 
-	                 nDiscipline == DISCIPLINE_STONE_DRAGON || 
-	                 nDiscipline == DISCIPLINE_TIGER_CLAW)) return TRUE;	                 
 
-	// If none of those trigger.	                 
-	return FALSE;	                 
+	if (nCru > 0 && (nDiscipline == DISCIPLINE_DEVOTED_SPIRIT ||
+	                 nDiscipline == DISCIPLINE_STONE_DRAGON ||
+	                 nDiscipline == DISCIPLINE_WHITE_RAVEN)) return TRUE;
+	if (nSwd > 0 && (nDiscipline == DISCIPLINE_DIAMOND_MIND ||
+	                 nDiscipline == DISCIPLINE_IRON_HEART ||
+	                 nDiscipline == DISCIPLINE_STONE_DRAGON ||
+	                 nDiscipline == DISCIPLINE_TIGER_CLAW ||
+	                 nDiscipline == DISCIPLINE_WHITE_RAVEN)) return TRUE;
+	if (nWar > 0 && (nDiscipline == DISCIPLINE_DESERT_WIND ||
+	                 nDiscipline == DISCIPLINE_DIAMOND_MIND ||
+	                 nDiscipline == DISCIPLINE_SETTING_SUN ||
+	                 nDiscipline == DISCIPLINE_SHADOW_HAND ||
+	                 nDiscipline == DISCIPLINE_STONE_DRAGON ||
+	                 nDiscipline == DISCIPLINE_TIGER_CLAW)) return TRUE;
+
+	// If none of those trigger.
+	return FALSE;
 }
 
 int TOBGetHasDisciplineFocus(object oInitiator, int nDiscipline)
@@ -1234,17 +1247,17 @@ int TOBGetHasDisciplineFocus(object oInitiator, int nDiscipline)
         else if (GetHasFeat(FEAT_SS_DF_IS_SS, oInitiator) && nDiscipline == DISCIPLINE_SETTING_SUN)  return TRUE;
         else if (GetHasFeat(FEAT_SS_DF_IS_SH, oInitiator) && nDiscipline == DISCIPLINE_SHADOW_HAND)  return TRUE;
         else if (GetHasFeat(FEAT_SS_DF_IS_SD, oInitiator) && nDiscipline == DISCIPLINE_STONE_DRAGON) return TRUE;
-        else if (GetHasFeat(FEAT_SS_DF_IS_TC, oInitiator) && nDiscipline == DISCIPLINE_TIGER_CLAW)   return TRUE;        
+        else if (GetHasFeat(FEAT_SS_DF_IS_TC, oInitiator) && nDiscipline == DISCIPLINE_TIGER_CLAW)   return TRUE;
         // Set three of the Discipline Focus feats
         if      (GetHasFeat(FEAT_SS_DF_WF_DW, oInitiator) && nDiscipline == DISCIPLINE_DESERT_WIND)  return TRUE;
         else if (GetHasFeat(FEAT_SS_DF_WF_DM, oInitiator) && nDiscipline == DISCIPLINE_DIAMOND_MIND) return TRUE;
         else if (GetHasFeat(FEAT_SS_DF_WF_SS, oInitiator) && nDiscipline == DISCIPLINE_SETTING_SUN)  return TRUE;
         else if (GetHasFeat(FEAT_SS_DF_WF_SH, oInitiator) && nDiscipline == DISCIPLINE_SHADOW_HAND)  return TRUE;
         else if (GetHasFeat(FEAT_SS_DF_WF_SD, oInitiator) && nDiscipline == DISCIPLINE_STONE_DRAGON) return TRUE;
-        else if (GetHasFeat(FEAT_SS_DF_WF_TC, oInitiator) && nDiscipline == DISCIPLINE_TIGER_CLAW)   return TRUE;        
+        else if (GetHasFeat(FEAT_SS_DF_WF_TC, oInitiator) && nDiscipline == DISCIPLINE_TIGER_CLAW)   return TRUE;
 
-	// If none of those trigger.	                 
-	return FALSE;	
+	// If none of those trigger.
+	return FALSE;
 }
 
 int GetIsDisciplineWeapon(object oWeapon, int nDiscipline)
@@ -1252,67 +1265,67 @@ int GetIsDisciplineWeapon(object oWeapon, int nDiscipline)
 	if (nDiscipline == DISCIPLINE_DESERT_WIND)
 	{
 		if (GetBaseItemType(oWeapon) == BASE_ITEM_SCIMITAR || GetBaseItemType(oWeapon) == BASE_ITEM_LIGHTMACE ||
-		    GetBaseItemType(oWeapon) == BASE_ITEM_SHORTSPEAR) 
+		    GetBaseItemType(oWeapon) == BASE_ITEM_SHORTSPEAR)
 		    	return TRUE;
 	}
 	else if (nDiscipline == DISCIPLINE_DEVOTED_SPIRIT)
 	{
 		if (GetBaseItemType(oWeapon) == BASE_ITEM_LONGSWORD || GetBaseItemType(oWeapon) == BASE_ITEM_HEAVYFLAIL ||
-		    GetBaseItemType(oWeapon) == BASE_ITEM_LIGHTFLAIL) 
-		    	return TRUE;	
-	}	
+		    GetBaseItemType(oWeapon) == BASE_ITEM_LIGHTFLAIL)
+		    	return TRUE;
+	}
 	else if (nDiscipline == DISCIPLINE_DIAMOND_MIND)
 	{
 		if (GetBaseItemType(oWeapon) == BASE_ITEM_BASTARDSWORD || GetBaseItemType(oWeapon) == BASE_ITEM_KATANA ||
-		    GetBaseItemType(oWeapon) == BASE_ITEM_SHORTSPEAR || GetBaseItemType(oWeapon) == BASE_ITEM_RAPIER) 
-		    	return TRUE;	
+		    GetBaseItemType(oWeapon) == BASE_ITEM_SHORTSPEAR || GetBaseItemType(oWeapon) == BASE_ITEM_RAPIER)
+		    	return TRUE;
 	}
 	else if (nDiscipline == DISCIPLINE_IRON_HEART)
 	{
 		if (GetBaseItemType(oWeapon) == BASE_ITEM_BASTARDSWORD || GetBaseItemType(oWeapon) == BASE_ITEM_KATANA ||
 		    GetBaseItemType(oWeapon) == BASE_ITEM_LONGSWORD || GetBaseItemType(oWeapon) == BASE_ITEM_TWOBLADEDSWORD ||
-		    GetBaseItemType(oWeapon) == BASE_ITEM_DWARVENWARAXE) 
-		    	return TRUE;	
+		    GetBaseItemType(oWeapon) == BASE_ITEM_DWARVENWARAXE)
+		    	return TRUE;
 	}
 	else if (nDiscipline == DISCIPLINE_SETTING_SUN)
 	{
 		// Invalid is empty handed / Unarmed strike
 		if (GetBaseItemType(oWeapon) == BASE_ITEM_QUARTERSTAFF || GetBaseItemType(oWeapon) == BASE_ITEM_INVALID ||
-		    GetBaseItemType(oWeapon) == BASE_ITEM_SHORTSWORD) 
-		    	return TRUE;	
+		    GetBaseItemType(oWeapon) == BASE_ITEM_SHORTSWORD)
+		    	return TRUE;
 	}
 	else if (nDiscipline == DISCIPLINE_SHADOW_HAND)
 	{
 		// Invalid is empty handed / Unarmed strike
 		if (GetBaseItemType(oWeapon) == BASE_ITEM_DAGGER || GetBaseItemType(oWeapon) == BASE_ITEM_INVALID ||
-		    GetBaseItemType(oWeapon) == BASE_ITEM_SHORTSWORD) 
+		    GetBaseItemType(oWeapon) == BASE_ITEM_SHORTSWORD)
 		    	return TRUE;
 	}
 	else if (nDiscipline == DISCIPLINE_STONE_DRAGON)
 	{
 		// Invalid is empty handed / Unarmed strike
 		if (GetBaseItemType(oWeapon) == BASE_ITEM_GREATAXE || GetBaseItemType(oWeapon) == BASE_ITEM_INVALID ||
-		    GetBaseItemType(oWeapon) == BASE_ITEM_GREATSWORD || GetBaseItemType(oWeapon) == BASE_ITEM_WARHAMMER) 
-		    	return TRUE;	
+		    GetBaseItemType(oWeapon) == BASE_ITEM_GREATSWORD || GetBaseItemType(oWeapon) == BASE_ITEM_WARHAMMER)
+		    	return TRUE;
 	}
 	else if (nDiscipline == DISCIPLINE_TIGER_CLAW)
 	{
 		// Invalid is empty handed / Unarmed strike
 		if (GetBaseItemType(oWeapon) == BASE_ITEM_KUKRI || GetBaseItemType(oWeapon) == BASE_ITEM_KAMA ||
-		    GetBaseItemType(oWeapon) == BASE_ITEM_HANDAXE || GetBaseItemType(oWeapon) == BASE_ITEM_GREATAXE || 
-		    GetBaseItemType(oWeapon) == BASE_ITEM_INVALID) 
-		    	return TRUE;	
+		    GetBaseItemType(oWeapon) == BASE_ITEM_HANDAXE || GetBaseItemType(oWeapon) == BASE_ITEM_GREATAXE ||
+		    GetBaseItemType(oWeapon) == BASE_ITEM_INVALID)
+		    	return TRUE;
 	}
 	else if (nDiscipline == DISCIPLINE_WHITE_RAVEN)
 	{
 		if (GetBaseItemType(oWeapon) == BASE_ITEM_BATTLEAXE || GetBaseItemType(oWeapon) == BASE_ITEM_LONGSWORD ||
 		    GetBaseItemType(oWeapon) == BASE_ITEM_HALBERD || GetBaseItemType(oWeapon) == BASE_ITEM_WARHAMMER ||
-		    GetBaseItemType(oWeapon) == BASE_ITEM_GREATSWORD) 
-		    	return TRUE;	
-	}	
+		    GetBaseItemType(oWeapon) == BASE_ITEM_GREATSWORD)
+		    	return TRUE;
+	}
 
-	// If none of those trigger.	                 
-	return FALSE;	                 
+	// If none of those trigger.
+	return FALSE;
 }
 
 int TOBSituationalAttackBonuses(object oInitiator, int nDiscipline, int nClass = CLASS_TYPE_INVALID)

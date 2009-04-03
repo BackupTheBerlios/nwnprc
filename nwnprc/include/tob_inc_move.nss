@@ -499,7 +499,9 @@ struct maneuver EvaluateManeuver(object oInitiator, object oTarget, int bTOBAbil
     {
     // If you're this far in, you always succeed, there are very few checks.
     // Deletes any active stances, and allows a Warblade 20 to have his two stances active.
+    /* GC - TMI is being caused from GetIsStance being run on the swordsage. Let's not run it twice.*/
     if (GetIsStance(move.nMoveId)) _StanceSpecificChecks(oInitiator, move.nMoveId);
+    else ExpendManeuver(move.oInitiator, nClass, move.nMoveId);
     // Allows the Master of Nine to Counter Stance.
     if (Get2DACache("feat", "Constant", GetClassFeatFromPower(move.nMoveId, nClass)) == "MANEUVER_COUNTER" &&
         GetLevelByClass(CLASS_TYPE_MASTER_OF_NINE, oInitiator) >= 4)
@@ -509,7 +511,7 @@ struct maneuver EvaluateManeuver(object oInitiator, object oTarget, int bTOBAbil
     }
     if(DEBUG) DoDebug("tob_inc_move: _StanceSpecificChecks");
     // Expend the Maneuver until recovered
-    if (!GetIsStance(move.nMoveId)) ExpendManeuver(move.oInitiator, nClass, move.nMoveId);
+    //if (!GetIsStance(move.nMoveId)) ExpendManeuver(move.oInitiator, nClass, move.nMoveId);
     if(DEBUG) DoDebug("tob_inc_move: ExpendManeuver");
     // Do Martial Lore data
     IdentifyManeuver(move.oInitiator, move.nMoveId);

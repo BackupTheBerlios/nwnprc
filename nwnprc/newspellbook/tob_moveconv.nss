@@ -70,12 +70,43 @@ void PrintList(object oInitiator)
     DoDebug(tp);
 }
 
+int GetDisciplineFromConv(int nMove, int nClass)
+{
+	string sFile = Get2DACache("classes", "FeatsTable", nClass);
+	sFile = "cls_move" + GetStringRight(sFile, GetStringLength(sFile) - 8);
+
+	return StringToInt(Get2DACache(sFile, "Discipline", nMove));
+}
+
+
 void AddMasterOfNineDiscipline(object oInitiator, int nMove)
 {
 	int nClass = GetLocalInt(oInitiator, "nClass");
 	// Using feats
-	int nDiscipline = GetDisciplineByManeuver(nMove, nClass, 1);
+	//int nDiscipline = GetDisciplineByManeuver(nMove, nClass, 1);
+	int nDiscipline = GetDisciplineFromConv(nMove, nClass);
+	if(DEBUG) DoDebug("nDiscipline: " + IntToString(nDiscipline));
 	SetPersistantLocalInt(oInitiator, "MasterOfNine" + IntToString(nDiscipline), TRUE);
+}
+
+void AddShadowSunNinjaPrereq(object oInitiator, int nMove)
+{
+	if(GetLocalInt(oInitiator, "nSSNLevel") != 2) {DeleteLocalInt(oInitiator, "nSSNLevel"); return;}
+	int nClass = GetLocalInt(oInitiator, "nClass");
+	int nAmt = GetPersistantLocalInt(oInitiator, "ShadowSunNinjaLv2Req");
+	if(DEBUG) DoDebug("nAmt: " + IntToString(nAmt));
+	// Using feats
+	//int nDiscipline = GetDisciplineByManeuver(nMove, nClass, 1);
+	int nDiscipline = GetDisciplineFromConv(nMove, nClass);
+	if(DEBUG) DoDebug("nDiscipline: " + IntToString(nDiscipline));
+	if(nDiscipline == DISCIPLINE_SETTING_SUN || nDiscipline ==  DISCIPLINE_SHADOW_HAND)
+	{
+		nAmt++;
+		SetPersistantLocalInt(oInitiator, "ShadowSunNinjaLv2Req", nAmt);
+	}
+	if(DEBUG) DoDebug("nAmt: " + IntToString(nAmt));
+	if(DEBUG) DoDebug("Integet value: " + IntToString(GetPersistantLocalInt(oInitiator, "ShadowSunNinjaLv2Req")));
+	DeleteLocalInt(oInitiator, "nSSNLevel");
 }
 
 /**
@@ -209,7 +240,7 @@ void main()
                 SetDefaultTokens();
                 // Set the convo quit text to "Abort"
                 SetCustomToken(DYNCONV_TOKEN_EXIT, GetStringByStrRef(DYNCONV_STRREF_ABORT_CONVO));
-            }            
+            }
             if(nStage == STAGE_SELECT_LEVEL)
             {
                 if(DEBUG) DoDebug("tob_moveconv: Building level selection");
@@ -240,8 +271,8 @@ void main()
 		string sMoveStance;
                 int nMoveStance = GetLocalInt(oInitiator, "nStanceOrManeuver");
                 if      (nMoveStance == MANEUVER_TYPE_MANEUVER) sMoveStance = "ManeuverKnown";
-                else if (nMoveStance == MANEUVER_TYPE_STANCE)   sMoveStance = "StancesKnown";                
-                
+                else if (nMoveStance == MANEUVER_TYPE_STANCE)   sMoveStance = "StancesKnown";
+
                 int nCurrentManeuvers = GetManeuverCount(oInitiator, nClass, nMoveStance);
                 int nMaxManeuvers = GetMaxManeuverCount(oInitiator, nClass, nMoveStance);
                 string sToken = GetStringByStrRef(STRREF_MOVELIST_HEADER1) + " " + //"Select a maneuver to gain.\n You can select "
@@ -254,7 +285,7 @@ void main()
 
                 // Determine maximum maneuver level
                 int nInitiatorLevel = GetInitiatorLevel(oInitiator, nClass);
-                
+
                 int nManeuverLevelToBrowse = GetLocalInt(oInitiator, "nManeuverLevelToBrowse");
                 int i, nManeuverLevel;
                 string sFeatID;
@@ -271,7 +302,7 @@ void main()
                     }  // Skip stances when looking for maneuvers
                     else if(nMoveStance == MANEUVER_TYPE_MANEUVER && StringToInt(Get2DACache(sManeuverFile, "Stance", i)) == 1){
                         continue;
-                    }                      
+                    }
                     /* Due to the way the maneuver list 2das are structured, we know that once
                      * the level of a read maneuver is greater than the maximum manifestable
                      * it'll never be lower again. Therefore, we can skip reading the
@@ -370,11 +401,12 @@ void main()
             if(DEBUG) DoDebug("tob_moveconv: Stance or Maneuver selected");
             SetLocalInt(oInitiator, "nStanceOrManeuver", nChoice);
             nStage = STAGE_SELECT_LEVEL;
-        }        
+        }
         else if(nStage == STAGE_SELECT_LEVEL)
         {
             if(DEBUG) DoDebug("tob_moveconv: Level selected");
             SetLocalInt(oInitiator, "nManeuverLevelToBrowse", nChoice);
+            SetLocalInt(oInitiator, "nSSNLevel", nChoice);
             nStage = STAGE_SELECT_MANEUVER;
         }
         else if(nStage == STAGE_SELECT_MANEUVER)
@@ -405,9 +437,12 @@ void main()
             {
                 if(DEBUG) DoDebug("tob_moveconv: Adding maneuver");
                 int nManeuver = GetLocalInt(oInitiator, "nManeuver");
-                
+
                 // This triggers regardless of PC being Master of Nine
                 AddMasterOfNineDiscipline(oInitiator, nManeuver);
+                // Same with Shadow Sun Ninja
+                AddShadowSunNinjaPrereq(oInitiator, nManeuver);
+
                 AddManeuverKnown(oInitiator, nClass, nManeuver, nMoveStance, TRUE, GetHitDice(oInitiator));
 
                 // Delete the stored offset
@@ -434,7 +469,7 @@ void main()
      			// Cycle through the local ints
      			sString += IntToString(i);
      			DeletePersistantLocalInt(oInitiator, sString);
-		}                
+		}
             }
             else
                 nStage = STAGE_SELECT_STANCE_MOVE;

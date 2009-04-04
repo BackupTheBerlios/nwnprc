@@ -2,32 +2,13 @@
 #include "tob_inc_recovery"
 #include "prc_craft_inc"
 
-/*void ArmouredStealth(object oInitiator)
-{
-	object oHide = GetPCSkin(oInitiator);
-	int nHide = GetItemArmourCheckPenalty(GetItemInSlot(INVENTORY_SLOT_CHEST, oInitiator));
-	SetCompositeBonus(oHide, "ArmouredStealth", nHide, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE);
-}*/
-
 void main()
 {
     int nEvent = GetRunningEvent();
     if(DEBUG) DoDebug("tob_jadephoenix running, event: " + IntToString(nEvent));
 
-    // Get the PC. This is event-dependent
     object oInitiator = OBJECT_SELF;
-    /*switch(nEvent)
-    {
-        case EVENT_ITEM_ONHIT:          oInitiator = OBJECT_SELF;               break;
-        case EVENT_ONPLAYEREQUIPITEM:   oInitiator = GetItemLastEquippedBy();   break;
-        case EVENT_ONPLAYERUNEQUIPITEM: oInitiator = GetItemLastUnequippedBy(); break;
-        case EVENT_ONHEARTBEAT:         oInitiator = OBJECT_SELF;               break;
-
-        default:
-            oInitiator = OBJECT_SELF;
-    }
-
-    object oItem;*/
+    
     int nClass = GetLevelByClass(CLASS_TYPE_JADE_PHOENIX_MAGE, oInitiator);
     int nMoveTotal = GetKnownManeuversModifier(oInitiator, nClass, MANEUVER_TYPE_MANEUVER);
     int nStncTotal = GetKnownManeuversModifier(oInitiator, nClass, MANEUVER_TYPE_STANCE);

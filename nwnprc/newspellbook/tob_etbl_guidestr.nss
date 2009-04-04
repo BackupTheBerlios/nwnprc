@@ -27,30 +27,32 @@
 
 void main()
 {
-        if (!PreManeuverCastCode())
-        {
-                // If code within the PreManeuverCastCode (i.e. UMD) reports FALSE, do not run this spell
-                return;
-        }
-        // End of Spell Cast Hook
+    if (!PreManeuverCastCode())
+    {
+            // If code within the PreManeuverCastCode (i.e. UMD) reports FALSE, do not run this spell
+            return;
+    }
+    // End of Spell Cast Hook
 
-        object oInitiator    = OBJECT_SELF;
-        object oTarget       = PRCGetSpellTargetObject();
+    object oInitiator    = OBJECT_SELF;
+    object oTarget       = PRCGetSpellTargetObject();
+    
+    if(!TakeSwiftAction(oInitiator)) return;
+    // Blade guide check
+    if(GetLocalInt(oInitiator, "ETBL_BladeGuideDead"))
+    {
+        FloatingTextStringOnCreature("*Cannot use ability without blade guide*", oInitiator, FALSE);
+        return;
+    }
+    if(!TakeSwiftAction(oInitiator)) return;
+    struct maneuver move = EvaluateManeuver(oInitiator, oTarget, TRUE);
+    effect eNone;
 
-	// Blade guide check
-	if(GetLocalInt(oInitiator, "ETBL_BladeGuideDead"))
-	{
-		FloatingTextStringOnCreature("*Cannot use ability without blade guide*", oInitiator, FALSE);
-		return;
-	}
-        struct maneuver move = EvaluateManeuver(oInitiator, oTarget, TRUE);
-        effect eNone;
-
-        if(move.bCanManeuver)
-        {
-		SetLocalInt(oInitiator, "MoveIgnoreDR", TRUE);
-                DelayCommand(0.0, PerformAttackRound(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, FALSE, "", "", FALSE, FALSE, TRUE));
-		// Cleanup
-		DelayCommand(3.0, DeleteLocalInt(oInitiator, "MoveIgnoreDR"));
-        }
+    if(move.bCanManeuver)
+    {
+    SetLocalInt(oInitiator, "MoveIgnoreDR", TRUE);
+            DelayCommand(0.0, PerformAttackRound(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, FALSE, "", "", FALSE, FALSE, TRUE));
+    // Cleanup
+    DelayCommand(3.0, DeleteLocalInt(oInitiator, "MoveIgnoreDR"));
+    }
 }

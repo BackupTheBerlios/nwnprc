@@ -27,35 +27,35 @@
 
 void main()
 {
-        if (!PreManeuverCastCode())
-        {
-                // If code within the PreManeuverCastCode (i.e. UMD) reports FALSE, do not run this spell
-                return;
-        }
-        // End of Spell Cast Hook
+    if (!PreManeuverCastCode())
+    {
+            // If code within the PreManeuverCastCode (i.e. UMD) reports FALSE, do not run this spell
+            return;
+    }
+    // End of Spell Cast Hook
 
-        object oInitiator    = OBJECT_SELF;
-        object oTarget       = PRCGetSpellTargetObject();
+    object oInitiator    = OBJECT_SELF;
+    object oTarget       = PRCGetSpellTargetObject();
 
-	// Blade guide check
-	if(GetLocalInt(oInitiator, "ETBL_BladeGuideDead"))
-	{
-		FloatingTextStringOnCreature("*Cannot use ability without blade guide*", oInitiator, FALSE);
-		return;
-	}
-	// Unlimited uses
-	int nInt = GetAbilityModifier(ABILITY_INTELLIGENCE, oInitiator);
+    // Blade guide check
+    if(GetLocalInt(oInitiator, "ETBL_BladeGuideDead"))
+    {
+        FloatingTextStringOnCreature("*Cannot use ability without blade guide*", oInitiator, FALSE);
+        return;
+    }
+    if(!TakeSwiftAction(oInitiator)) return;
+    
+    int nInt = GetAbilityModifier(ABILITY_INTELLIGENCE, oInitiator);
 
-	if(nInt <= 0) return;
+    if(nInt <= 0) return;
 
-        struct maneuver move = EvaluateManeuver(oInitiator, oTarget, TRUE);
+    struct maneuver move = EvaluateManeuver(oInitiator, oTarget, TRUE);
 
-        if(move.bCanManeuver)
-        {
-		effect eLink = EffectAttackDecrease(nInt);
-		       eLink = ExtraordinaryEffect(eLink);
+    if(move.bCanManeuver)
+    {
+    effect eLink = EffectAttackDecrease(nInt);
+           eLink = ExtraordinaryEffect(eLink);
 
-	        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0);
-		// Unlimited uses
-        }
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0);
+    }
 }

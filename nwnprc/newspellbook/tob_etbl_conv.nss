@@ -20,7 +20,6 @@
 /* Constant defintions                          */
 //////////////////////////////////////////////////
 
-//const int STAGE_SELECT_STANCE_MOVE     = 0;
 const int STAGE_SELECT_LEVEL           = 0;
 const int STAGE_SELECT_MANEUVER        = 1;
 const int STAGE_SELECT_SLOT            = 2;

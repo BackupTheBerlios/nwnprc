@@ -22,37 +22,38 @@
 
 void main()
 {
-        if (!PreManeuverCastCode())
-        {
-                // If code within the PreManeuverCastCode (i.e. UMD) reports FALSE, do not run this spell
-                return;
-        }
-        // End of Spell Cast Hook
+    if (!PreManeuverCastCode())
+    {
+            // If code within the PreManeuverCastCode (i.e. UMD) reports FALSE, do not run this spell
+            return;
+    }
+    // End of Spell Cast Hook
 
-        object oInitiator    = OBJECT_SELF;
-        object oTarget       = PRCGetSpellTargetObject();
+    object oInitiator    = OBJECT_SELF;
+    object oTarget       = PRCGetSpellTargetObject();
+    
+    if(!TakeSwiftAction(oInitiator)) return;
+    // Blade guide check
+    if(GetLocalInt(oInitiator, "ETBL_BladeGuideDead"))
+    {
+        FloatingTextStringOnCreature("*Cannot use ability without blade guide*", oInitiator, FALSE);
+        return;
+    }
+    // Expended already?
+    if(GetLocalInt(oInitiator, "ETBL_Island_In_Time_Expended"))
+    {
+        FloatingTextStringOnCreature("*Tactical Insight expended already*", oInitiator, FALSE);
+        return;
+    }
 
-	// Blade guide check
-	if(GetLocalInt(oInitiator, "ETBL_BladeGuideDead"))
-	{
-		FloatingTextStringOnCreature("*Cannot use ability without blade guide*", oInitiator, FALSE);
-		return;
-	}
-	// Expended already?
-	if(GetLocalInt(oInitiator, "ETBL_Island_In_Time_Expended"))
-	{
-		FloatingTextStringOnCreature("*Tactical Insight expended already*", oInitiator, FALSE);
-		return;
-	}
+    struct maneuver move = EvaluateManeuver(oInitiator, oTarget, TRUE);
+    effect eNone;
 
-        struct maneuver move = EvaluateManeuver(oInitiator, oTarget, TRUE);
-        effect eNone;
+    if(move.bCanManeuver)
+    {
+        DelayCommand(0.0, PerformAttackRound(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, FALSE, "Island in Time Hit", "Island in Time Miss", FALSE, FALSE, FALSE));
 
-        if(move.bCanManeuver)
-        {
-                DelayCommand(0.0, PerformAttackRound(oTarget, oInitiator, eNone, 0.0, 0, 0, 0, FALSE, "Island in Time Hit", "Island in Time Miss", FALSE, FALSE, FALSE));
-
-		// Expend ability
-		SetLocalInt(oInitiator, "ETBL_Island_In_Time_Expended", TRUE);
-        }
+        // Expend ability
+        SetLocalInt(oInitiator, "ETBL_Island_In_Time_Expended", TRUE);
+    }
 }

@@ -26,36 +26,36 @@
 
 void main()
 {
-        if (!PreManeuverCastCode())
-        {
-                // If code within the PreManeuverCastCode (i.e. UMD) reports FALSE, do not run this spell
-                return;
-        }
-        // End of Spell Cast Hook
+    if (!PreManeuverCastCode())
+    {
+        // If code within the PreManeuverCastCode (i.e. UMD) reports FALSE, do not run this spell
+        return;
+    }
+    // End of Spell Cast Hook
 
-        object oInitiator    = OBJECT_SELF;
-        object oTarget       = PRCGetSpellTargetObject();
+    object oInitiator    = OBJECT_SELF;
+    object oTarget       = PRCGetSpellTargetObject();
+    
+    if(!TakeSwiftAction(oInitiator)) return;
+    
+    // Blade guide check
+    if(GetLocalInt(oInitiator, "ETBL_BladeGuideDead"))
+    {
+        FloatingTextStringOnCreature("*Cannot use ability without blade guide*", oInitiator, FALSE);
+        return;
+    }
 
-	// Blade guide check
-	if(GetLocalInt(oInitiator, "ETBL_BladeGuideDead"))
-	{
-		FloatingTextStringOnCreature("*Cannot use ability without blade guide*", oInitiator, FALSE);
-		return;
-	}
+    struct maneuver move = EvaluateManeuver(oInitiator, oTarget, TRUE);
+    effect eNone;
 
-	// unlimited uses per day
+    if(move.bCanManeuver)
+    {
+        effect eAC;
+        int nInt = GetAbilityModifier(ABILITY_INTELLIGENCE, oInitiator);
+        if(nInt >= 1) eAC = EffectACDecrease(nInt);
+            PerformAttackRound(oTarget, oInitiator, eAC, 6.0, 0, 0, 0, FALSE, "", "", FALSE, FALSE, TRUE);
 
-        struct maneuver move = EvaluateManeuver(oInitiator, oTarget, TRUE);
-        effect eNone;
-
-        if(move.bCanManeuver)
-        {
-        	effect eAC;
-        	int nInt = GetAbilityModifier(ABILITY_INTELLIGENCE, oInitiator);
-        	if(nInt >= 1) eAC = EffectACDecrease(nInt);
-                PerformAttackRound(oTarget, oInitiator, eAC, 6.0, 0, 0, 0, FALSE, "", "", FALSE, FALSE, TRUE);
-
-		// Expend ability
-		SetLocalInt(oInitiator, "ETBL_Tactical_Insight_Expended", TRUE);
-        }
+    // Expend ability
+    SetLocalInt(oInitiator, "ETBL_Tactical_Insight_Expended", TRUE);
+    }
 }

@@ -62,7 +62,7 @@ int ExpendStunfistUses(object oPC, int nUses)
 		DecrementRemainingFeatUses(oPC, FEAT_STUNNING_FIST);
 		ConvertStunFistUses(oPC);
 	}
-	
+
 	return TRUE;
 }
 
@@ -116,7 +116,7 @@ int GetExtraRemainingStunfistUses(object oPC)
 	}
 
 	SetExtraRemainingStunfistUses(oPC, nUses);
-	
+
 	return nUses;
 }
 
@@ -145,9 +145,10 @@ int GetNormalStunfistUsesPerDay(object oPC)
 int GetExtraStunfistUsesPerDay(object oPC)
 {
 	int nUses = 0;
-	
+
 	// classes/effects which give extra stunning fist uses/day should be added here
 	nUses += GetLevelByClass(CLASS_TYPE_ENLIGHTENEDFIST, oPC);
+	nUses += GetLevelByClass(CLASS_TYPE_SHADOW_SUN_NINJA, oPC);
 
 	return nUses;
 }
@@ -165,7 +166,7 @@ void SetNormalRemainingStunfistUses(object oPC, int nUses)
 	{
 		DecrementRemainingFeatUses(oPC, FEAT_STUNNING_FIST);
 	}
-	
+
 	while (nUses--)
 	{
 		IncrementRemainingFeatUses(oPC, FEAT_STUNNING_FIST);
@@ -179,7 +180,7 @@ void SetExtraRemainingStunfistUses(object oPC, int nUses)
 	{
 		DecrementRemainingFeatUses(oPC, FEAT_PRC_EXTRA_STUNNING);
 	}
-	
+
 	while (nUses--)
 	{
 		IncrementRemainingFeatUses(oPC, FEAT_PRC_EXTRA_STUNNING);

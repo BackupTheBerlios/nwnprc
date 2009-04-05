@@ -189,3 +189,5 @@ const int CLASS_TYPE_BLOODCLAW_MASTER        = 193;
 const int CLASS_TYPE_RUBY_VINDICATOR         = 194;
 const int CLASS_TYPE_MASTER_OF_NINE          = 195;
 const int CLASS_TYPE_ETERNAL_BLADE           = 196;
+const int CLASS_TYPE_SHADOW_SUN_NINJA        = 197;
+const int CLASS_TYPE_BINDER                  = 96;

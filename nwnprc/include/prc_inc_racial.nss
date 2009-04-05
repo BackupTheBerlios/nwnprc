@@ -14,6 +14,9 @@ int MyPRCGetRacialType(object oCreature);
 
 int MyPRCGetRacialType(object oCreature)
 {
+    // Shadow Sun Ninja - Ballance of Light and Dark
+    if(GetLocalInt(oCreature, "SSN_BALANCE_LD"))
+        return RACIAL_TYPE_UNDEAD;
     // Class-based racial type changes
     if (GetLevelByClass(CLASS_TYPE_LICH,oCreature) >= 4)
         return RACIAL_TYPE_UNDEAD;

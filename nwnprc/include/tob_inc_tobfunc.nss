@@ -1001,7 +1001,7 @@ void ClearStances(object oInitiator, int nDontClearMove)
            PRCRemoveEffectsFromSpell(oInitiator, MOVE_FIREBIRD_STANCE);
            DeleteLocalInt(oInitiator, "ToB_JPM_FireB");
            if(DEBUG) DoDebug("Firebird bonus levels removed");}
-	if (GetHasSpellEffect(MOVE_CHILD_SL_STANCE, oInitiator) && nDontClearMove != MOVE_CHILD_SL_STANCE){
+	if (GetLocalInt(oInitiator, "SSN_CHILDSL_SETP") && nDontClearMove != MOVE_CHILD_SL_STANCE){
            PRCRemoveEffectsFromSpell(oInitiator, MOVE_CHILD_SL_STANCE);
            DeleteLocalInt(oInitiator, "SSN_CHILDSL_SETP");
            RemoveEventScript(oInitiator, EVENT_ONHEARTBEAT, "tob_ssn_childsl", TRUE, FALSE);}
@@ -1104,14 +1104,10 @@ int GetIsStance(int nMoveId)
 
         for(i = 0; i < GetPRCSwitch(FILE_END_CLASS_POWER) ; i++)
         {
-            // If looking for stances, skip maneuvers, else reverse
-            /*if(StringToInt(Get2DACache(sManeuverFile, "Stance", i)) == 0){
-                continue;
-            } */  // Not using this stopped the TMI
             sMoveID = Get2DACache(sManeuverFile, "RealSpellID", i);
             if(StringToInt(sMoveID) == nMoveId)
             {
-                if(Get2DACache(sManeuverFile, "Stance", i) == "0") return TRUE;
+                if(StringToInt(Get2DACache(sManeuverFile, "Stance", i)) == 1) return TRUE;
             }
         }
 

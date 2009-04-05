@@ -1765,6 +1765,7 @@ int GetUBABLevel(object oPC)
     iMonkLevel += GetLevelByClass(CLASS_TYPE_SACREDFIST, oPC);
     iMonkLevel += GetLevelByClass(CLASS_TYPE_HENSHIN_MYSTIC, oPC);
     iMonkLevel += GetLevelByClass(CLASS_TYPE_ENLIGHTENEDFIST, oPC);
+    iMonkLevel += GetLevelByClass(CLASS_TYPE_SHADOW_SUN_NINJA, oPC);
     return iMonkLevel;
 }
 
@@ -3204,6 +3205,20 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iOffha
     	}
     }
 
+    // Shadow Sun Ninja
+    if (GetLocalInt(oAttacker, "SSN_DARKWL"))
+    {
+    	effect eSSN = GetFirstEffect(oDefender);
+        while(GetIsEffectValid(eSSN))
+        {
+        	if(GetEffectType(eSSN) == EFFECT_TYPE_BLINDNESS)
+        	{
+				iAttackBonus += 4;
+				break;
+        	}
+        	eSSN = GetNextEffect(oDefender);
+        }
+    }
     //if (DEBUG) DoDebug("GetAttackRoll: Line #5");
     //if(bDebug) sDebugFeedback += " - APR penalty ("  + IntToString(iMod * -1) + ")";
     //if (DEBUG) DoDebug("Starting GetAttackModVersusDefender");
@@ -5124,6 +5139,20 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
 		iWeaponDamage += nRedDR;
 	    	if(DEBUG) DoDebug("Damage increased by " + IntToString(nRedDR) + " to ignore DR");
 	    }
+	    // Shadow Sun Ninja
+		if (GetLocalInt(oAttacker, "SSN_DARKWL"))
+		{
+			effect eSSN = GetFirstEffect(oDefender);
+			while(GetIsEffectValid(eSSN))
+			{
+				if(GetEffectType(eSSN) == EFFECT_TYPE_BLINDNESS)
+				{
+					iWeaponDamage += 4;
+					break;
+				}
+				eSSN = GetNextEffect(oDefender);
+			}
+		}
             // This is for the Lightning Throw Maneuver.
             if (GetLocalInt(oAttacker, "LightningThrowSave")) iWeaponDamage /= 2;
             if (DEBUG) DoDebug("Ending LightningThrowSave");

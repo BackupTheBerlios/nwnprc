@@ -190,6 +190,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_WARLOCK, oPC) > 0)             ExecuteScript("inv_warlock", oPC);
     if(GetLevelByClass(CLASS_TYPE_BLOODCLAW_MASTER, oPC) > 0)    ExecuteScript("tob_bloodclaw", oPC);
     if(GetLevelByClass(CLASS_TYPE_ETERNAL_BLADE, oPC) > 0)       ExecuteScript("tob_eternalblade", oPC);
+    if(GetLevelByClass(CLASS_TYPE_SHADOW_SUN_NINJA, oPC) > 0)    ExecuteScript("tob_shadowsun", oPC);
 
     // Bonus Domain check
     // If there is a bonus domain, it will always be in the first slot, so just check that.
@@ -564,6 +565,8 @@ void ScrubPCSkin(object oPC, object oSkin)
             if ((st < 400 || st > 570)
                 && st != 398
                 && (st < 1000 || st > 15999)
+                //&& (st < 1000 || st > 13999)
+                //&& (st < 14501 || st > 15999)
                 && (st < 16300 || st > 17700)
                 && (st < 231 || st > 249)
                 && ((st == FEAT_POWER_ATTACK_QUICKS_RADIAL) ? // Remove the PRC Power Attack radial if the character no longer has Power Attack
@@ -828,6 +831,14 @@ void FeatShadowblade(object oPC)
         FeatUsePerDay(oPC, FEAT_UNSEEN_WEAPON_ACTIVATE, -1, nUses);
 }
 
+void VestigeMeta(object oPC)
+{
+    /*int nUses;
+    int nLevel = GetLevelByClass(CLASS_TYPE_ANIMA_MAGE, oPC);
+    nUses = (nLevel >= 9) ? 3 : (nLevel >= 7) ? 2 : 1;
+    FeatUsePerDay(oPC, FEAT_VESTIGE_METAMAGIC, -1, nUses);*/
+}
+
 void FeatRacial(object oPC)
 {
     //Shifter bonus shifting uses
@@ -931,4 +942,5 @@ void FeatSpecialUsePerDay(object oPC)
     BardSong(oPC);
     FeatVirtuoso(oPC);
     ResetExtraStunfistUses(oPC);
+    VestigeMeta(oPC);
 }

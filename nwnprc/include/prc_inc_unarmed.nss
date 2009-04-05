@@ -183,6 +183,7 @@ int FindUnarmedDamage(object oCreature)
     int iEnlightenedFist = GetLevelByClass(CLASS_TYPE_ENLIGHTENEDFIST, oCreature);
     int iHenshin = GetLevelByClass(CLASS_TYPE_HENSHIN_MYSTIC, oCreature);
     int iZuoken = GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN, oCreature);
+    int iShadowSunNinja = GetLevelByClass(CLASS_TYPE_SHADOW_SUN_NINJA, oCreature);
     int iMonkDamage = 1;
     int iShouDamage = 1;
     int iBrawlerDamage = 1;
@@ -192,7 +193,7 @@ int FindUnarmedDamage(object oCreature)
     // if the creature is shifted, use model size
     // otherwise, we want to stick to what the feats say they "should" be.
     // No making pixies with Dragon Appearance for "huge" fist damage.
-    if( GetIsPolyMorphedOrShifted(oCreature) 
+    if( GetIsPolyMorphedOrShifted(oCreature)
         || GetPRCSwitch(PRC_APPEARANCE_SIZE))
     {
          iSize = PRCGetCreatureSize(oCreature) - CREATURE_SIZE_MEDIUM + 5; // medium is size 5 for us
@@ -201,9 +202,9 @@ int FindUnarmedDamage(object oCreature)
     {
         // Determine creature size by feats.
         iSize = 5;  // medium is size 5 for us
-        if (GetHasFeat(FEAT_TINY,  oCreature)) iSize = 3; 
-        if (GetHasFeat(FEAT_SMALL, oCreature)) iSize = 4; 
-        if (GetHasFeat(FEAT_LARGE, oCreature)) iSize = 6; 
+        if (GetHasFeat(FEAT_TINY,  oCreature)) iSize = 3;
+        if (GetHasFeat(FEAT_SMALL, oCreature)) iSize = 4;
+        if (GetHasFeat(FEAT_LARGE, oCreature)) iSize = 6;
         if (GetHasFeat(FEAT_HUGE,  oCreature)) iSize = 7;
         // include size changes
         iSize += PRCGetCreatureSize(oCreature) - PRCGetCreatureSize(oCreature, PRC_SIZEMASK_NONE);
@@ -217,7 +218,7 @@ int FindUnarmedDamage(object oCreature)
 
     // several classes add their levels to the monk class,
     // or use monk progression if the character has no monk levels
-    iMonk += iSacredFist + iHenshin + iEnlightenedFist + iShou + iZuoken;
+    iMonk += iSacredFist + iHenshin + iEnlightenedFist + iShou + iZuoken + iShadowSunNinja;
 
     // In 3.0e, Monk progression stops after level 16:
     if (iMonk > 16 && !GetPRCSwitch(PRC_3_5e_FIST_DAMAGE) ) iMonk = 16;
@@ -294,7 +295,7 @@ void UnarmedFeats(object oCreature)
 {
     // If we are polymorphed/shifted, do not mess with the creature weapon.
     if (GetIsPolyMorphedOrShifted(oCreature)) return;
-    
+
     object oSkin = GetPCSkin(oCreature);
 
     if (!GetHasFeat(FEAT_WEAPON_PROFICIENCY_CREATURE, oCreature))
@@ -323,7 +324,7 @@ void UnarmedFeats(object oCreature)
 
         if (GetHasFeat(FEAT_EPIC_DEVASTATING_CRITICAL_UNARMED, oCreature) && !GetHasFeat(FEAT_EPIC_DEVASTATING_CRITICAL_CREATURE, oCreature))
             AddItemProperty(DURATION_TYPE_PERMANENT,PRCItemPropertyBonusFeat(IP_CONST_FEAT_DEVCRITICAL_CREATURE),oSkin);
-    }    
+    }
 }
 
 // Creates/strips a creature weapon and applies bonuses.  Large chunks stolen from SoulTaker.
@@ -331,7 +332,7 @@ void UnarmedFists(object oCreature)
 {
     // If we are polymorphed/shifted, do not mess with the creature weapon.
     if (GetIsPolyMorphedOrShifted(oCreature)) return;
-    
+
     RemoveUnarmedAttackEffects(oCreature);
 
     object oRighthand = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oCreature);
@@ -346,7 +347,7 @@ void UnarmedFists(object oCreature)
     // only applies when not using natural weapons
     if(!GetIsUsingPrimaryNaturalWeapons(oCreature))
     {
-    
+
         int iRace = GetRacialType(oCreature);
         int iMonk = GetLevelByClass(CLASS_TYPE_MONK, oCreature);
         int iShou = GetLevelByClass(CLASS_TYPE_SHOU, oCreature);
@@ -355,21 +356,22 @@ void UnarmedFists(object oCreature)
         int iIoDM = GetLevelByClass(CLASS_TYPE_INITIATE_DRACONIC, oCreature);
         int iBrawler = GetLevelByClass(CLASS_TYPE_BRAWLER, oCreature);
         int iZuoken = GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN, oCreature);
-    
+    	int iShadowSunNinja = GetLevelByClass(CLASS_TYPE_SHADOW_SUN_NINJA, oCreature);
+
         // Sacred Fists who break their code get no benefits.
         if (GetHasFeat(FEAT_SF_CODE,oCreature)) iSacFist = 0;
-    
+
         // The monk adds all these classes.
-        int iMonkEq = iMonk + iShou + iSacFist + iHenshin + iZuoken;
-    
+        int iMonkEq = iMonk + iShou + iSacFist + iHenshin + iZuoken + iShadowSunNinja;
+
         // Determine the type of damage the character should do.
         string sWeapType;
         if (GetHasFeat(FEAT_CLAWDRAGON, oCreature))
             sWeapType = "PRC_UNARMED_S";
         else
             sWeapType = "PRC_UNARMED_B";
-    
-    
+
+
         // Equip the creature weapon.
         if (!GetIsObjectValid(oWeapL) || GetTag(oWeapL) != sWeapType)
         {
@@ -386,7 +388,7 @@ void UnarmedFists(object oCreature)
                 AssignCommand(oCreature,ActionEquipItem(oWeapL, INVENTORY_SLOT_CWEAPON_L));
             }
         }
-    
+
         int iKi = (iMonkEq > 9)  ? 1 : 0;
             iKi = (iMonkEq > 12) ? 2 : iKi;
             iKi = (iMonkEq > 15) ? 3 : iKi;
@@ -489,7 +491,7 @@ void UnarmedFists(object oCreature)
     SetLocalInt(oCreature, "UsingCreature", TRUE);
     ExecuteScript("prc_intuiatk", oCreature);
     DelayCommand(1.0f, DeleteLocalInt(oCreature, "UsingCreature"));
-    ApplyUnarmedAttackEffects(oCreature);            
+    ApplyUnarmedAttackEffects(oCreature);
 
     // Add the appropriate damage to the fist.
     int iMonsterDamage = FindUnarmedDamage(oCreature);
@@ -497,11 +499,11 @@ void UnarmedFists(object oCreature)
 
     // Add OnHitCast: Unique if necessary
     if(GetHasFeat(FEAT_REND, oCreature))
-        IPSafeAddItemProperty(oWeapL, 
+        IPSafeAddItemProperty(oWeapL,
             ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1));
 
     // Friendly message to remind players that certain things won't appear correct.
-    if (GetLocalInt(oCreature, "UnarmedSubSystemMessage") != TRUE 
+    if (GetLocalInt(oCreature, "UnarmedSubSystemMessage") != TRUE
         && GetHasSpellEffect(SPELL_UNARMED_ATTACK_PEN, oCreature))
     {
         SetLocalInt(oCreature, "UnarmedSubSystemMessage", TRUE);

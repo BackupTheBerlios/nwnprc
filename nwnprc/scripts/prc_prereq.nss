@@ -1086,6 +1086,31 @@ void TomeOfBattle(object oPC = OBJECT_SELF)
 	if (nTotal >= 2 && iWF >= 1)
 	    SetLocalInt(oPC, "PRC_PrereqETBL", 0);
     }
+
+    nClass = GetLevelByClass(CLASS_TYPE_SHADOW_SUN_NINJA, oPC);
+
+    if (nClass >= 0)
+    {
+	SetLocalInt(oPC, "PRC_PrereqSSN", 1);
+
+	int nSS, nSH;
+	int nLv2 = 0;
+	nLv2 += GetPersistantLocalInt(oPC, "ShadowSunNinjaLv2Req");
+	if(DEBUG) DoDebug("nLv2: " + IntToString(nLv2));
+	nSS = _CheckPrereqsByDiscipline(oPC, DISCIPLINE_SETTING_SUN, 2, GetFirstBladeMagicClass(oPC));
+	nSS = (nSS == -1) ? _CheckPrereqsByDiscipline(oPC, DISCIPLINE_SETTING_SUN, 1, GetFirstBladeMagicClass(oPC)) : nSS;
+	if(DEBUG) DoDebug("nSS: " + IntToString(nSS));
+
+	nSH = _CheckPrereqsByDiscipline(oPC, DISCIPLINE_SHADOW_HAND, 2, GetFirstBladeMagicClass(oPC));
+	nSH = (nSH == -1) ? _CheckPrereqsByDiscipline(oPC, DISCIPLINE_SHADOW_HAND, 1, GetFirstBladeMagicClass(oPC)) : nSH;
+	if(DEBUG) DoDebug("nSH: " + IntToString(nSH));
+
+	// We have at least one 2nd level Shadow Hand or Setting Sun maneuver
+	// And at least one of each Shadow Hand and Setting Sun maneuvers
+	if((nSS >= 1) && (nSH >= 1) && (nSS | nSH >= 2) && (nLv2 > 0))
+		SetLocalInt(oPC, "PRC_PrereqSSN", 0);
+    }
+
 }
 
 void AOTS(object oPC)

@@ -89,9 +89,12 @@ void main()
 
                                 if(nTouch = 2)
                                 {
+                                        //Apply damage                                        
+                                        nDam += nDam;
+                                        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+                                        
                                         //Wounding
                                         effect eWound = EffectHitPointChangeWhenDying(1.0f);
-
                                         SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eWound, oTarget);
                                 }
                         }
@@ -100,8 +103,3 @@ void main()
         SPEvilShift(oPC);
         PRCSetSchool();
 }
-
-
-
-
-

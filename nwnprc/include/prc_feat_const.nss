@@ -1,6 +1,8 @@
 // The error code 5 prevention entry. Comment out or uncomment as necessary
 //const int COMPILER_BREAKS_ON_ME_OR_NOT = 0xffffffff;
 
+// PRC Options Conversation
+const int FEAT_OPTIONS_CONVERSATION = 2285;
 
 //missing bioware ones
 const int FEAT_EPIC_PLANAR_TURNING = 854;

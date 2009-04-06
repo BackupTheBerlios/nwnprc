@@ -241,8 +241,8 @@ void EvalPRCFeats(object oPC)
 
     // Switch convo feat
     //Now everyone gets it at level 1, but just to be on the safe side
-    if(!GetHasFeat(2285, oPC))
-        IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(229), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING);
+    if(!GetHasFeat(FEAT_OPTIONS_CONVERSATION, oPC))
+        IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(229), 0.0f, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
 
     // Size changes
     int nLastSize = GetLocalInt(oPC, "PRCLastSize") + CREATURE_SIZE_FINE - 1;

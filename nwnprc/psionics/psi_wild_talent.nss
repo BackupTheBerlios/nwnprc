@@ -20,5 +20,5 @@ void main()
 
     if(GetHasFeat(FEAT_WILD_TALENT, oPC) && !GetHasFeat(FEAT_PSIONIC_FOCUS, oPC))
         IPSafeAddItemProperty(GetPCSkin(oPC), ItemPropertyBonusFeat(IP_CONST_FEAT_PSIONIC_FOCUS),
-                              0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+                              0.0f, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
 }

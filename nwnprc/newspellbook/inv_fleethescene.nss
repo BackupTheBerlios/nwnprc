@@ -144,7 +144,7 @@ void main()
 
     /* Main spellscript */
     object oCaster   = OBJECT_SELF;
-    location lLocation = GetSpellTargetLocation();
+    location lLocation = GetLocation(oCaster);
     int nCasterLvl   = GetInvokerLevel(oCaster, GetInvokingClass());
     int nSpellID     = PRCGetSpellId();
     int bUseDirDist  = nSpellID == INVOKE_FLEE_THE_SCENE_DIRDIST;

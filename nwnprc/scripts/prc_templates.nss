@@ -62,6 +62,6 @@ void main()
         if(DEBUG) DoDebug("Re-running prc_feat");
 
         //run the main PRC feat system so we trigger any other feats weve borrowed
-        ExecuteScript("prc_feat", oPC);
+        ExecuteScript("prc_feats", oPC);
     }
 }

@@ -25,6 +25,7 @@ Created:
 
 
 #include "prc_inc_spells"
+#include "shd_inc_shdfunc"
 
 void main()
 {

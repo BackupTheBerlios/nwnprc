@@ -25,13 +25,35 @@ Created:
 
 
 #include "prc_inc_spells"
+#include "shd_inc_shdfunc"
 
 void main()
 {
         if(!X2PreSpellCastCode()) return;
-        PRCSetSchool();
+        PRCSetSchool(SPELL_SCHOOL_ILLUSION);
+        
+        object oPC = OBJECT_SELF;
+        object oTarget = PRCGetSpellTargetObject();
+        int nLevel = PRCGetMysteryUserLevel(oPC);        
+        int nMastery = PRCGetSCMastery(GetSpellId())      
         
         
+        GetLocation(oTarget);
+        
+        
+        
+        //metashadow block - metashadow reach not listed here as it is much less frequent
+        if(GetLocalInt(oPC, "PRC_METASHADOW_MAX"))
+        {
+                DeleteLocalInt(oPC, "PRC_METASHADOW_MAX");
+                nDam = nmax;
+        }
+        
+        if(GetLocalInt(oPC, "PRC_METASHADOW_EMP"))
+        {
+                DeleteLocalInt(oPC, "PRC_METASHADOW_EMP");
+                nDam += (nDam / 2);
+        }          
         
         PRCSetSchool();
 }

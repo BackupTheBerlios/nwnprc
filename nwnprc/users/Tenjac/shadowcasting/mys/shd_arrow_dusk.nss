@@ -20,8 +20,8 @@ Created:   4/21/09
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-
 #include "prc_inc_spells"
+#include "shd_inc_shdfunc"
 
 void main()
 {
@@ -32,6 +32,19 @@ void main()
         object oTarget = PRCGetSpellTargetObject();
         int nTouch = PRCDoRangedTouchAttack(oTarget);
         int nDam = d4(2);
+        
+        //metashadow block
+        if(GetLocalInt(oPC, "PRC_METASHADOW_MAX"))
+        {
+                DeleteLocalInt(oPC, "PRC_METASHADOW_MAX");
+                nDam = 8;
+        }
+        
+        if(GetLocalInt(oPC, "PRC_METASHADOW_EMP"))
+        {
+                DeleteLocalInt(oPC, "PRC_METASHADOW_EMP");
+                nDam += (nDam / 2);
+        }        
         
         //Beam VFX.  Ornedan is my hero.
         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectBeam(VFX_BEAM_BLACK, oCaster, BODY_NODE_HAND, !nTouch), oTarget, 1.0f); 

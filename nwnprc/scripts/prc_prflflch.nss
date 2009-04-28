@@ -57,17 +57,19 @@ void main()
                 
                 while(GetIsObjectValid(oTarget))
                 {
-                        if(PRCGetIsAliveCreature(oTarget) && (!GetIsReactionTypeFriendly(oTarget)))
+                        if(oTarget != oPC)
                         {
-                                nDam = d6(1);
-                                
-                                //Damage
-                                SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_DIVINE), oTarget);
-                                
-                                //Heal
-                                SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(nDam), oTarget);                                
-                        }
-                        
+                                if(PRCGetIsAliveCreature(oTarget) && (!GetIsReactionTypeFriendly(oTarget)))
+                                {
+                                        nDam = d6(1);
+                                        
+                                        //Damage
+                                        SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_DIVINE), oTarget);
+                                        
+                                        //Heal
+                                        SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(nDam), oPC);                                
+                                }
+                        }                        
                         oTarget = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), lLoc, FALSE, OBJECT_TYPE_CREATURE);
                 }
         }

@@ -51,7 +51,7 @@ void main()
 
 	// find the target of the spell
 	object oTarget = PRCGetSpellTargetObject(oSpellOrigin);
-DoDebug("x2_s3_flamingd: caster level = "+IntToString(PRCGetCasterLevel(oSpellOrigin)));
+	if (DEBUG) DoDebug("x2_s3_flamingd: caster level = "+IntToString(PRCGetCasterLevel(oSpellOrigin)));
 	// only do anything, if we have a valid weapon, and a valid living target
 	if (GetIsObjectValid(oWeapon) && GetIsObjectValid(oTarget)&& !GetIsDead(oTarget))
 	{

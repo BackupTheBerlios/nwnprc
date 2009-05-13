@@ -678,7 +678,7 @@ void DoImprovedRicochet(object oPC, object oTarget)
     //Cycle through the targets within the spell shape until you run out of targets.
     while (GetIsObjectValid(oAreaTarget) && nTargetsLeft > 0)
     {
-        if (spellsIsTarget(oAreaTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF) && oAreaTarget != OBJECT_SELF && oAreaTarget != oTarget)
+        if (spellsIsTarget(oAreaTarget, SPELL_TARGET_SELECTIVEHOSTILE, OBJECT_SELF) && oAreaTarget != OBJECT_SELF && oAreaTarget != oTarget)
         {
             PerformAttack(oAreaTarget, oPC, eVis, 0.0, -2, 0, 0, "*Improved Ricochet Hit*", "*Improved Ricochet Missed*");
              // Use up a target slot only if we actually did something to it

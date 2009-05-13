@@ -54,10 +54,11 @@ const int THREAD_STATE_SLEEPING = 2;
 
 // Internal constants. Nothing to see here. <.<  >.>
 
-const string PREFIX          = "prc_thread_";
-const string SUFFIX_SCRIPT   = "_script";
-const string SUFFIX_INTERVAL = "_interval";
-const string CUR_THREAD      = "current_thread";
+const string PREFIX           = "prc_thread_";
+const string SUFFIX_SCRIPT    = "_script";
+const string SUFFIX_INTERVAL  = "_interval";
+const string SUFFIX_ITERATION = "_iteration";
+const string CUR_THREAD       = "current_thread";
 
 
 //////////////////////////////////////////////////
@@ -197,7 +198,7 @@ int ChangeExecutionInterval(string sName, float fNewInterval, object oRunningOn 
  * @param oRunningOn   object that stores the variables, and the one that will
  *                     be passed to ExecuteScript
  */
-void RunThread(string sName, object oRunningOn);
+void RunThread(string sName, object oRunningOn, int iIteration);
 
 
 //////////////////////////////////////////////////
@@ -217,8 +218,10 @@ int SpawnNewThread(string sName, string sScript, float fExecutionInterval = 6.0f
         return FALSE;
 
     // Make sure there is no thread by this name already running
-    if(GetLocalInt(oToRunOn, PREFIX + sName))
-        return FALSE;
+    //    if(GetLocalInt(oToRunOn, PREFIX + sName))
+    //    return FALSE;
+    // use iterations in place of the above to make it more reliable in case of a PC thread timing out while not logged in
+    int iIteration = GetLocalInt(oToRunOn, PREFIX + sName + SUFFIX_ITERATION);
 
     // Set the thread variables
     SetLocalInt(oToRunOn,    PREFIX + sName, THREAD_STATE_RUNNING);
@@ -226,7 +229,7 @@ int SpawnNewThread(string sName, string sScript, float fExecutionInterval = 6.0f
     SetLocalFloat(oToRunOn,  PREFIX + sName + SUFFIX_INTERVAL, fExecutionInterval);
 
     // Start thread execution
-    DelayCommand(fExecutionInterval, RunThread(sName, oToRunOn));
+    DelayCommand(fExecutionInterval, RunThread(sName, oToRunOn, iIteration));
 
     // All done successfully
     return TRUE;
@@ -299,6 +302,11 @@ void TerminateThread(string sName, object oRunningOn = OBJECT_INVALID){
     DeleteLocalInt(oRunningOn,    PREFIX + sName);
     DeleteLocalString(oRunningOn, PREFIX + sName + SUFFIX_SCRIPT);
     DeleteLocalFloat(oRunningOn,  PREFIX + sName + SUFFIX_INTERVAL);
+
+    // Increase the iteration so that any lingering runthread fail to fire if the thread is restarted
+    int iExpectedIteration = GetLocalInt(oRunningOn, PREFIX + sName + SUFFIX_ITERATION);
+    iExpectedIteration++;
+    SetLocalInt(oRunningOn, PREFIX + sName + SUFFIX_ITERATION, iExpectedIteration);
 }
 
 
@@ -356,7 +364,16 @@ int ChangeExecutionInterval(string sName, float fNewInterval, object oRunningOn 
 }
 
 
-void RunThread(string sName, object oRunningOn){
+void RunThread(string sName, object oRunningOn, int iIteration){
+    // Abort if we're on the wrong iteration, this allows us to
+    // be liberal about spawning threads in case they've timed
+    // out while a PC was logged out
+    int iExpectedIteration = GetLocalInt(oRunningOn, PREFIX + sName + SUFFIX_ITERATION);
+    if(iIteration != iExpectedIteration)
+        return;
+    iExpectedIteration++;
+    SetLocalInt(oRunningOn, PREFIX + sName + SUFFIX_ITERATION, iExpectedIteration);
+
     // Abort if the object we're running on has ceased to exist
     // or if the thread has been terminated
     int nThreadState = GetThreadState(sName, oRunningOn);
@@ -374,8 +391,9 @@ void RunThread(string sName, object oRunningOn){
     }
 
     // Schedule next execution, unless we've been terminated
-    if(GetThreadState(sName, oRunningOn) != THREAD_STATE_DEAD)
-        DelayCommand(GetLocalFloat(oRunningOn, PREFIX + sName + SUFFIX_INTERVAL), RunThread(sName, oRunningOn));
+    if(GetThreadState(sName, oRunningOn) != THREAD_STATE_DEAD){
+        DelayCommand(GetLocalFloat(oRunningOn, PREFIX + sName + SUFFIX_INTERVAL), RunThread(sName, oRunningOn, iExpectedIteration));
+    }
 
     // Clean up the module variables
     DeleteLocalString(GetModule(), PREFIX + CUR_THREAD);

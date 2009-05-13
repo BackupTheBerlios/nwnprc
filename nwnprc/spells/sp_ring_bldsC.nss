@@ -44,7 +44,7 @@ void main()
         if(nCasterLvl > 10) nCasterLvl = 10;
         int nDam = d6(1) + nCasterLvl;
         
-        if(!GetIsReactionTypeFriendly(oTarget, oPC))
+        if(!GetIsReactionTypeFriendly(oTarget, oPC) && oTarget != oPC)
         {
                 ApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, DAMAGE_TYPE_SLASHING, nDam), oTarget);
         }

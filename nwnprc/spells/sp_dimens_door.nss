@@ -47,11 +47,12 @@ void main()
     object oCaster   = OBJECT_SELF;
     int nCasterLvl   = PRCGetCasterLevel();
     int nSpellID     = PRCGetSpellId();
-    int bSelfOrParty = ((nSpellID == SPELLID_TELEPORT_PARTY) || (nSpellID == SPELLID_TELEPORT_PARTY_DIRDIST)) ?
-                        DIMENSIONDOOR_PARTY :
-                        DIMENSIONDOOR_SELF;
-    int bUseDirDist  = (nSpellID == SPELLID_TELEPORT_SELF_ONLY_DIRDIST) ||
-                       (nSpellID == SPELLID_TELEPORT_PARTY_DIRDIST);
+    int bSelfOrParty = ( (nSpellID == SPELL_DIMENSION_DOOR_PARTY) ||
+                         (nSpellID == SPELL_DIMENSION_DOOR_DIRDIST_PARTY) )
+                       ? DIMENSIONDOOR_PARTY
+                       : DIMENSIONDOOR_SELF;
+    int bUseDirDist  = (nSpellID == SPELL_DIMENSION_DOOR_DIRDIST_SELF) ||
+                       (nSpellID == SPELL_DIMENSION_DOOR_DIRDIST_PARTY);
 
     DimensionDoor(oCaster, nCasterLvl, nSpellID, "", bSelfOrParty, bUseDirDist);
 

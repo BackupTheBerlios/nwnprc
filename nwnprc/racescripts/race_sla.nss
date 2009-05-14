@@ -278,25 +278,25 @@ void main()
         case SPELL_NYMPH_DIMDOOR_SELF: // nymph dimension door
         {
             nCasterLvl = 7;
-            DoRacialSLA(SPELLID_TELEPORT_SELF_ONLY, nCasterLvl);
+            DoRacialSLA(SPELL_DIMENSION_DOOR_SELF, nCasterLvl);
             break;
         }
         case SPELL_NYMPH_DIMDOOR_PARTY:
         {
             nCasterLvl = 7;
-            DoRacialSLA(SPELLID_TELEPORT_PARTY, nCasterLvl);
+            DoRacialSLA(SPELL_DIMENSION_DOOR_PARTY, nCasterLvl);
             break;
         }
         case SPELL_NYMPH_DIMDOOR_DIST_SELF:
         {
             nCasterLvl = 7;
-            DoRacialSLA(SPELLID_TELEPORT_SELF_ONLY_DIRDIST, nCasterLvl);
+            DoRacialSLA(SPELL_DIMENSION_DOOR_DIRDIST_SELF, nCasterLvl);
             break;
         }
         case SPELL_NYMPH_DIMDOOR_DIST_PARTY:
         {
             nCasterLvl = 7;
-            DoRacialSLA(SPELLID_TELEPORT_PARTY_DIRDIST, nCasterLvl);
+            DoRacialSLA(SPELL_DIMENSION_DOOR_DIRDIST_PARTY, nCasterLvl);
             break;
         }
     }

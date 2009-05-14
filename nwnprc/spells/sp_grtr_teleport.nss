@@ -43,7 +43,7 @@ void main()
     int nCasterLvl = PRCGetCasterLevel();
     int nSpellID   = PRCGetSpellId();
 
-    Teleport(oCaster, nCasterLvl, nSpellID == SPELLID_TELEPORT_PARTY, TRUE, "");
+    Teleport(oCaster, nCasterLvl, nSpellID == SPELL_GREATER_TELEPORT_PARTY, TRUE, "");
 
     PRCSetSchool();
 }

@@ -29,7 +29,7 @@ void main()
     
     if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
     {
-    	DoDebug("prc_rava_cut: PRCCombat_StruckByAttack is True");
+    	if (DEBUG) DoDebug("prc_rava_cut: PRCCombat_StruckByAttack is True");
     	ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, d4(1), DURATION_TYPE_PERMANENT, TRUE);
     }
    

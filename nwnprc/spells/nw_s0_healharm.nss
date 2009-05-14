@@ -152,31 +152,31 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent, int bI
 
 void main()
 {
-DoDebug("nw_s0_healharm running "+IntToString(GetIsPC(OBJECT_SELF)));
+    if (DEBUG) DoDebug("nw_s0_healharm running "+IntToString(GetIsPC(OBJECT_SELF)));
     object oCaster = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oCaster);
     int nSpellID = PRCGetSpellId();
     int bIsHeal = IsHeal(nSpellID);  //whether it is a heal or harm spell
     PRCSetSchool(GetSpellSchool(nSpellID));
     if (!X2PreSpellCastCode()) return;
-DoDebug("nw_s0_healharm running "+IntToString(GetIsPC(OBJECT_SELF)));
+    if (DEBUG) DoDebug("nw_s0_healharm running "+IntToString(GetIsPC(OBJECT_SELF)));
     object oTarget = PRCGetSpellTargetObject();
     int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
     if(!nEvent) //normal cast
     {
-DoDebug("nw_s0_healharm running normal casting");
+        if (DEBUG )DoDebug("nw_s0_healharm running normal casting");
         if(IsTouchSpell(nSpellID) && GetLocalInt(oCaster, PRC_SPELL_HOLD) && oCaster == oTarget)
         {   //holding the charge, casting spell on self
             SetLocalSpellVariables(oCaster, 1);   //change 1 to number of charges
-DoDebug("nw_s0_healharm running returning");
+            if (DEBUG) DoDebug("nw_s0_healharm running returning");
             return;
         }
-DoDebug("nw_s0_healharm running DoSpell");
+        if (DEBUG) DoDebug("nw_s0_healharm running DoSpell");
         DoSpell(oCaster, oTarget, nCasterLevel, nEvent, bIsHeal);
     }
     else
     {
-DoDebug("nw_s0_healharm running else casting");
+        if (DEBUG) DoDebug("nw_s0_healharm running else casting");
         if(nEvent & PRC_SPELL_EVENT_ATTACK)
         {
             if(DoSpell(oCaster, oTarget, nCasterLevel, nEvent, bIsHeal))

@@ -465,10 +465,10 @@ void AddCohortToPlayerByObject(object oCohort, object oPC, int bDoSetup = TRUE)
 
     //DEBUG
     //various tests
-    DoDebug("Cohort Name="+GetName(oCohort));
-    DoDebug("Cohort HD="+IntToString(GetHitDice(oCohort)));
-    DoDebug("Cohort XP="+IntToString(GetXP(oCohort)));
-    DoDebug("Cohort GetIsPC="+IntToString(GetIsPC(oCohort)));
+    if (DEBUG) DoDebug("Cohort Name="+GetName(oCohort));
+    if (DEBUG) DoDebug("Cohort HD="+IntToString(GetHitDice(oCohort)));
+    if (DEBUG) DoDebug("Cohort XP="+IntToString(GetXP(oCohort)));
+    if (DEBUG) DoDebug("Cohort GetIsPC="+IntToString(GetIsPC(oCohort)));
 }
 
 void RemoveCohortFromPlayer(object oCohort, object oPC)

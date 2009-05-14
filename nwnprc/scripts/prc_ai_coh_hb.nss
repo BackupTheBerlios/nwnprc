@@ -88,10 +88,10 @@ void main()
             //custom
             //resummon it but dont decrease XP as much
             int nCohortID = GetLocalInt(oCohort, "CohortID");
-DoDebug("Test A");
+            if (DEBUG) DoDebug("Test A");
             object oNewCohort = AddCohortToPlayer(nCohortID, oPC);
             
-DoDebug("Test B");
+            if (DEBUG) DoDebug("Test B");
             //copy its equipment & inventory
             object oTest = GetFirstItemInInventory(oCohort);
             while(GetIsObjectValid(oTest))
@@ -102,7 +102,7 @@ DoDebug("Test B");
                 DestroyObject(oTest, 0.01);
                 oTest = GetNextItemInInventory(oCohort);
             }
-DoDebug("Test C");
+            if (DEBUG) DoDebug("Test C");
             int nSlot;
             for(nSlot = 0;nSlot<14;nSlot++)
             {
@@ -111,12 +111,12 @@ DoDebug("Test C");
                 AssignCommand(oNewCohort, ActionEquipItem(oTest2, nSlot));
                 DestroyObject(oTest, 0.01);
             }
-DoDebug("Test D");            
+            if (DEBUG) DoDebug("Test D");            
             //destroy old cohort
             SetIsDestroyable(TRUE, FALSE, FALSE);
-DoDebug("Test E");
+            if (DEBUG) DoDebug("Test E");
             DestroyObject(OBJECT_SELF, 0.1);
-DoDebug("Test F");
+            if (DEBUG) DoDebug("Test F");
         }
     }/*
     

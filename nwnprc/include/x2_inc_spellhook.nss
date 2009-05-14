@@ -949,7 +949,7 @@ int X2GetSpellCastOnSequencerItem(object oItem)
     {
         return FALSE;
     }
-DoDebug("X2GetSpellCastOnSequencerItem() before cast from item check");
+    if (DEBUG) DoDebug("X2GetSpellCastOnSequencerItem() before cast from item check");
     if (GetIsObjectValid(GetSpellCastItem())) // spell cast from item?
     {
         // we allow scrolls
@@ -961,7 +961,7 @@ DoDebug("X2GetSpellCastOnSequencerItem() before cast from item check");
         }
     }
 
-DoDebug("X2GetSpellCastOnSequencerItem() before hostile");
+    if (DEBUG) DoDebug("X2GetSpellCastOnSequencerItem() before hostile");
     // Check if the spell is marked as hostile in spells.2da
     int nHostile = StringToInt(Get2DACache("spells","HostileSetting",PRCGetSpellId()));
     //spellswords and AAs can store hostile spells
@@ -981,14 +981,14 @@ DoDebug("X2GetSpellCastOnSequencerItem() before hostile");
         nHostile = FALSE;
         bIsSSorAA = TRUE;
     }
-DoDebug("X2GetSpellCastOnSequencerItem() after bIsSSorAA stuff");
+    if (DEBUG) DoDebug("X2GetSpellCastOnSequencerItem() after bIsSSorAA stuff");
 
     if(nHostile)
     {
         FloatingTextStrRefOnCreature(83885,OBJECT_SELF);
         return TRUE; // no hostile spells on sequencers, sorry ya munchkins :)
     }
-DoDebug("X2GetSpellCastOnSequencerItem() before nNumberOfTriggers");
+    if (DEBUG) DoDebug("X2GetSpellCastOnSequencerItem() before nNumberOfTriggers");
 
     int nNumberOfTriggers = GetLocalInt(oItem, "X2_L_NUMTRIGGERS");
     // is there still space left on the sequencer?

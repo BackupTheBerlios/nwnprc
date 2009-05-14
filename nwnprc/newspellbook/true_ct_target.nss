@@ -66,7 +66,7 @@ void main()
     // The stage is used to determine the active conversation node.
     // 0 is the entry node.
     int nStage = GetStage(oPC);
-    DoDebug("Dynaconvo Var: " + IntToString(nValue));
+    if (DEBUG) DoDebug("Dynaconvo Var: " + IntToString(nValue));
 
     // Check which of the conversation scripts called the scripts
     if(nValue == 0) // All of them set the DynConv_Var to non-zero value, so something is wrong -> abort

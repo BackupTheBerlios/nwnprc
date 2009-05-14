@@ -29,7 +29,7 @@ void main()
         if(!GetIsObjectValid(oListeningTo))
             DestroyListener(oListener);
 
-        DoDebug("Listener distance to listened: " + FloatToString(GetDistanceBetween(oListener, oListeningTo))
+        if (DEBUG) DoDebug("Listener distance to listened: " + FloatToString(GetDistanceBetween(oListener, oListeningTo))
                 + ". In the same area: " + (GetArea(oListener) == GetArea(oListeningTo) ? "TRUE":"FALSE"));
     }
     // An area. Just make sure the listener stays there

@@ -923,7 +923,7 @@ object IPGetTargetedOrEquippedArmor(int bAllowShields = FALSE)
 // ----------------------------------------------------------------------------
 int IPGetItemSequencerProperty(object oItem, object oPC = OBJECT_SELF)
 {
-DoDebug("IPGetItemSequencerProperty() before itemprop loop");
+    if(DEBUG) DoDebug("IPGetItemSequencerProperty() before itemprop loop");
     int nCnt;
     if (GetItemHasItemProperty(oItem, ITEM_PROPERTY_CAST_SPELL))
     {
@@ -982,7 +982,7 @@ DoDebug("IPGetItemSequencerProperty() before itemprop loop");
             SetPersistantLocalInt(oPC, "spellswordchannelcharges", nUses);
         }
     }
-DoDebug("IPGetItemSequencerProperty() returning");
+    if(DEBUG) DoDebug("IPGetItemSequencerProperty() returning");
     return nCnt;
 }
 

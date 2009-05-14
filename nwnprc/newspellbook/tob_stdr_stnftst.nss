@@ -55,5 +55,5 @@ void main()
        	ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);
     }
     
-    if (GetHasSpellEffect(MOVE_SD_STONEFOOT_STANCE, oInitiator)) DoDebug("tob_stdr_stnftst: GetHasSpellEffect: TRUE");
+    if (DEBUG && GetHasSpellEffect(MOVE_SD_STONEFOOT_STANCE, oInitiator)) DoDebug("tob_stdr_stnftst: GetHasSpellEffect: TRUE");
 }

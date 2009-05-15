@@ -38,6 +38,8 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     {
             SetPersistantLocalInt(OBJECT_SELF, "FINGERS_LEFT_HAND", 6);
             SetPersistantLocalInt(OBJECT_SELF, "FINGERS_RIGHT_HAND", 6);
+            DeletePersistantLocalInt(oPC, "LEFT_HAND_USELESS");
+            DeletePersistantLocalInt(oPC, "RIGHT_HAND_USELESS");
     }
 
     return TRUE;    //return TRUE if spell charges should be decremented

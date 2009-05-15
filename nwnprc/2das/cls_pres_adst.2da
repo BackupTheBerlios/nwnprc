@@ -7,7 +7,9 @@
 3  WeapProfMar FEATOR  45               ****      
 4  ProfRapier  FEATOR  7924             ****      
 5  ProfSSwrd   FEATOR  7901             ****      
-6  Dodge       FEAT    10               ****      
-7  Mobility    FEAT    26               ****      
-8  ScriptVar   VAR     PRC_ArcSpell1    0         
-9  ScriptVar   VAR     PRC_AllowArcDuel 0         
+6  ElfProf     FEATOR  256              ****      
+7  RogueProf   FEATOR  50               ****      
+8  Dodge       FEAT    10               ****      
+9  Mobility    FEAT    26               ****      
+10 ScriptVar   VAR     PRC_ArcSpell1    0         
+11 ScriptVar   VAR     PRC_AllowArcDuel 0         

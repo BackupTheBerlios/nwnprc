@@ -2118,19 +2118,6 @@ const string PRC_USE_BIOWARE_DATABASE                = "PRC_USE_BIOWARE_DATABASE
 const string PRC_2DA_CACHE_IN_CREATURE                = "PRC_2DA_CACHE_IN_CREATURE";
 
 /**
- * 2da caching code will get/set directly in the bioware db
- * Off by default, gets are quite quick, sets much slower
- */
-const string PRC_2DA_CACHE_IN_BIOWAREDB               = "PRC_2DA_CACHE_IN_BIOWAREDB";
-
-/**
- * 2da caching code will get/set directly in a NWNX db
- * Must have PRC_USE_DATABASE turned on and a database setup
- * Must have a PRC_DB_* variable on to set what type of database to use
- */
-const string PRC_2DA_CACHE_IN_NWNXDB                  = "PRC_2DA_CACHE_IN_NWNXDB";
-
-/**
  * Set this if you are using NWNX and any sort of database.
  */
 const string PRC_USE_DATABASE                        = "PRC_USE_DATABASE";
@@ -2139,14 +2126,14 @@ const string PRC_USE_DATABASE                        = "PRC_USE_DATABASE";
  * Set this if you are using SQLite (the built-in database in NWNX-ODBC2).
  * This will use transactions and SQLite specific syntax.
  */
-const string PRC_DB_SQLLITE                          = "PRC_DB_SQLLITE";
+const string PRC_DB_SQLITE                          = "PRC_DB_SQLITE";
 
 /**
  * This is the interval of each transaction. By default it is 600 seconds.
  * Shorter will mean slower, but less data lost in the event of a server crash.
  * Longer is visa versa.
  */
-const string PRC_DB_SQLLITE_INTERVAL                 = "PRC_DB_SQLLITE_INTERVAL";
+const string PRC_DB_SQLITE_INTERVAL                 = "PRC_DB_SQLITE_INTERVAL";
 
 /**
  * Set this if you are using MySQL.
@@ -2617,6 +2604,7 @@ int GetPRCSwitch(string sSwitch);
  */
 void SetPRCSwitch(string sSwitch, int nState);
 
+const string PRC_FILE_END_TOKEN = "prc_fe_tkn";
 
 //////////////////////////
 // Function definitions //
@@ -2632,8 +2620,13 @@ void SetPRCSwitch(string sSwitch, int nState)
     SetLocalInt(GetModule(), sSwitch, nState);
 }
 
+/**
+ * Gets the file end for the given 2da.
+ *
+ * @param sTable    The 2da to get the file end for
+ * @return          The file end value of the 2da.
+ */
 int PRCGetFileEnd(string sTable)
 {
-    sTable = GetStringLowerCase(sTable);
-    return GetPRCSwitch("PRC_FILE_END_" + sTable);
+    return GetLocalInt(GetObjectByTag(PRC_FILE_END_TOKEN), "PRC_FILE_END_" + GetStringLowerCase(sTable));
 }

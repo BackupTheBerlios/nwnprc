@@ -8,6 +8,7 @@
 #include "inc_letocommands"
 #include "inc_dynconv"
 #include "prc_ccc_const"
+#include "inc_sql"
 
 // checks if it's a multiplayer game and that letoscript is set up correctly
 // returns 0 for pass and 1 for fail

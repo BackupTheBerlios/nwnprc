@@ -6,6 +6,9 @@
 /** @file
  *  Creation and setting up of 2da caching databases
  *  Functions moved from inc_2dacache
+ *  Removed SQL caching using the module, removed
+ *  ability to use bioDB or nwnDB as cache (this is
+ *  slow for single gets).
  *
  * @author Primogenitor
  *  moved by fluffyamoeba 2008-4-23
@@ -22,303 +25,6 @@
 /* Function defintions                          */
 //////////////////////////////////////////////////
 
-void PRCMakeTables()
-{
-    string SQL;
-    if(GetPRCSwitch(PRC_DB_SQLLITE))
-        SQL += "PRAGMA page_size=4096; ";
-
-    string q = PRC_SQLGetTick();
-
-    PRC_SQLExecDirect(SQL); SQL = "";
-    SQL+= "CREATE TABLE ";
-    SQL+= ""+q+"prc_cached2da_feat"+q+" ( ";
-    SQL+= ""+q+"rowid"+q+" integer,";
-    SQL+= ""+q+"LABEL"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"FEAT"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"DESCRIPTION"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"ICON"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"MINATTACKBONUS"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"MINSTR"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"MINDEX"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"MININT"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"MINWIS"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"MINCON"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"MINCHA"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"MINSPELLLVL"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"PREREQFEAT1"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"PREREQFEAT2"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"GAINMULTIPLE"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"EFFECTSSTACK"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"ALLCLASSESCANUSE"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"CATEGORY"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"MAXCR"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"SPELLID"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"SUCCESSOR"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"CRValue"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"USESPERDAY"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"MASTERFEAT"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"TARGETSELF"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"OrReqFeat0"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"OrReqFeat1"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"OrReqFeat2"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"OrReqFeat3"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"OrReqFeat4"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"REQSKILL"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"ReqSkillMinRanks"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"REQSKILL2"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"ReqSkillMinRanks2"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"Constant"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"TOOLSCATEGORIES"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"HostileFeat"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"MinLevel"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"MinLevelClass"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"MaxLevel"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"MinFortSave"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"PreReqEpic"+q+" varchar(255) DEFAULT '_',";
-    SQL+= ""+q+"ReqAction"+q+" varchar(255) DEFAULT '_'); ";
-    PRC_SQLExecDirect(SQL); SQL = "";
-
-    SQL+= "CREATE TABLE ";
-    SQL+= ""+q+"prc_cached2da_soundset"+q+" ( ";
-    SQL+= ""+q+"rowid"+q+" integer,";
-    SQL+= ""+q+"LABEL"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"RESREF"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"STRREF"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"GENDER"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"TYPE"+q+" varchar(255) ); ";
-    PRC_SQLExecDirect(SQL); SQL = "";
-
-    SQL+= "CREATE TABLE ";
-    SQL+= ""+q+"prc_cached2da_portraits"+q+" ( ";
-    SQL+= ""+q+"rowid"+q+" integer,";
-    SQL+= ""+q+"BaseResRef"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"Sex"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"Race"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"InanimateType"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"Plot"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"LowGore"+q+" varchar(255) DEFAULT '_'); ";
-    PRC_SQLExecDirect(SQL); SQL = "";
-
-    SQL+= "CREATE TABLE ";
-    SQL+= ""+q+"prc_cached2da_appearance"+q+" ( ";
-    SQL+= ""+q+"rowid"+q+" integer,";
-    SQL+= ""+q+"LABEL"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"STRING_REF"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"NAME"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"RACE"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"ENVMAP"+q+"  varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"BLOODCOLR"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"MODELTYPE"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"WEAPONSCALE"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"WING_TAIL_SCALE"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"HELMET_SCALE_M"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"HELMET_SCALE_F"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"MOVERATE"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"WALKDIST"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"RUNDIST"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"PERSPACE"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"CREPERSPACE"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"HEIGHT"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"HITDIST"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"PREFATCKDIST"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"TARGETHEIGHT"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"ABORTONPARRY"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"RACIALTYPE"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"HASLEGS"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"HASARMS"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"PORTRAIT"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"SIZECATEGORY"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"PERCEPTIONDIST"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"FOOTSTEPTYPE"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"SOUNDAPPTYPE"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"HEADTRACK"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"HEAD_ARC_H"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"HEAD_ARC_V"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"HEAD_NAME"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"BODY_BAG"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"TARGETABLE"+q+"  varchar(255) DEFAULT '_'";
-    SQL+= "); ";
-    PRC_SQLExecDirect(SQL); SQL = "";
-
-    SQL+= "CREATE TABLE ";
-    SQL+= ""+q+"prc_cached2da_spells"+q+" ( ";
-    SQL+= ""+q+"rowid"+q+" integer,";
-    SQL+= ""+q+"Label"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"Name"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"IconResRef"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"School"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"Range"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"VS"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"MetaMagic"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"TargetType"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"ImpactScript"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"Bard"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"Cleric"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"Druid"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"Paladin"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"Ranger"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"Wiz_Sorc"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"Innate"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"ConjTime"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"ConjAnim"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"ConjHeadVisual"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"ConjHandVisual"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"ConjGrndVisual"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"ConjSoundVFX"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"ConjSoundMale"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"ConjSoundFemale"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"CastAnim"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"CastTime"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"CastHeadVisual"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"CastHandVisual"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"CastGrndVisual"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"CastSound"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"Proj"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"ProjModel"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"ProjType"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"ProjSpwnPoint"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"ProjSound"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"ProjOrientation"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"ImmunityType"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"ItemImmunity"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"SubRadSpell1"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"SubRadSpell2"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"SubRadSpell3"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"SubRadSpell4"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"SubRadSpell5"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"Category"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"Master"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"UserType"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"SpellDesc"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"UseConcentration"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"SpontaneouslyCast"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"AltMessage"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"HostileSetting"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"FeatID"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"Counter1"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"Counter2"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"HasProjectile"+q+" varchar(255) DEFAULT '_'); ";
-    PRC_SQLExecDirect(SQL); SQL = "";
-
-    SQL+= "CREATE TABLE "+q+"prc_cached2da_cls_feat"+q+" ( ";
-    SQL+= ""+q+"rowid"+q+" integer,";
-    SQL+= ""+q+"file"+q+" varchar(20),";
-    SQL+= ""+q+"class"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"FeatLabel"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"FeatIndex"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"List"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"GrantedOnLevel"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"OnMenu"+q+" varchar(255) DEFAULT '_'); ";
-    PRC_SQLExecDirect(SQL); SQL = "";
-
-    SQL+= "CREATE TABLE "+q+"prc_cached2da_classes"+q+" ( ";
-    SQL+= ""+q+"rowid"+q+" integer,";
-    SQL+= ""+q+"Label"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"Name"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"Plural"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"Lower"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"Description"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"Icon"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"HitDie"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"AttackBonusTable"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"FeatsTable"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"SavingThrowTable"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"SkillsTable"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"BonusFeatsTable"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"SkillPointBase"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"SpellGainTable"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"SpellKnownTable"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"PlayerClass"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"SpellCaster"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"Str"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"Dex"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"Con"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"Wis"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"Int"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"Cha"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"PrimaryAbil"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"AlignRestrict"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"AlignRstrctType"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"InvertRestrict"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"Constant"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"EffCRLvl01"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"EffCRLvl02"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"EffCRLvl03"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"EffCRLvl04"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"EffCRLvl05"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"EffCRLvl06"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"EffCRLvl07"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"EffCRLvl08"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"EffCRLvl09"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"EffCRLvl10"+q+"varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"EffCRLvl11"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"EffCRLvl12"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"EffCRLvl13"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"EffCRLvl14"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"EffCRLvl15"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"EffCRLvl16"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"EffCRLvl17"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"EffCRLvl18"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"EffCRLvl19"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"EffCRLvl20"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"PreReqTable"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"MaxLevel"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"XPPenalty"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"ArcSpellLvlMod"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"DivSpellLvlMod"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"EpicLevel"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"Package"+q+" varchar(255) DEFAULT '_'); ";
-    PRC_SQLExecDirect(SQL); SQL = "";
-
-    SQL = "CREATE TABLE "+q+"prc_cached2da_racialtypes"+q+" ( ";
-    SQL+= ""+q+"rowid"+q+" integer,";
-    SQL+= ""+q+"Label"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"Abrev"+q+"  varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"Name"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"ConverName"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"ConverNameLower"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"NamePlural"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"Description"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"Appearance"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"StrAdjust"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"DexAdjust"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"IntAdjust"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"ChaAdjust"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"WisAdjust"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"ConAdjust"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"Endurance"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"Favored"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"FeatsTable"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"Biography"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"PlayerRace"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"Constant"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"AGE"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"ToolsetDefaultClass"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"CRModifier"+q+" varchar(255) DEFAULT '_');";
-    PRC_SQLExecDirect(SQL); SQL = "";
-
-    SQL = "CREATE TABLE "+q+"prc_cached2da"+q+" ("+q+"file"+q+" varchar(20) DEFAULT '_', "+q+"columnid"+q+" varchar(255) DEFAULT '_', "+q+"rowid"+q+" integer, "+q+"data"+q+" varchar(255) DEFAULT '_'); ";
-    PRC_SQLExecDirect(SQL); SQL = "";
-
-    //non2dacaching table
-    //SQL = "CREATE TABLE "+q+"prc_data"+q+" ("+q+"name"+q+" varchar(255) DEFAULT '_', "+q+"value"+q+" varchar(255) DEFAULT '_')";
-    //PRC_SQLExecDirect(SQL); SQL = "";
-
-    //indexs
-    SQL+= "CREATE UNIQUE INDEX "+q+"spellsrowindex" +q+"  ON "+q+"prc_cached2da_spells"         +q+" ("+q+"rowid"+q+"); ";
-    SQL = "CREATE UNIQUE INDEX "+q+"featrowindex"   +q+"  ON "+q+"prc_cached2da_feat"           +q+" ("+q+"rowid"+q+"); ";
-    SQL+= "CREATE        INDEX "+q+"clsfeatindex"   +q+" ON "+q+"prc_cached2da_cls_feat"        +q+" ("+q+"file"+q+", "+q+"FeatIndex"+q+"); ";
-    SQL+= "CREATE UNIQUE INDEX "+q+"appearrowindex" +q+"  ON "+q+"prc_cached2da_appearance"     +q+" ("+q+"rowid"+q+"); ";
-    SQL+= "CREATE UNIQUE INDEX "+q+"portrrowindex"  +q+"  ON "+q+"prc_cached2da_portraits"      +q+" ("+q+"rowid"+q+"); ";
-    SQL+= "CREATE UNIQUE INDEX "+q+"soundsrowindex" +q+"  ON "+q+"prc_cached2da_soundset"       +q+" ("+q+"rowid"+q+"); ";
-    //SQL+= "CREATE UNIQUE INDEX "+q+"datanameindex"  +q+" ON "+q+"prc_data"                      +q+" ("+q+"name"+q+"); ";
-    SQL+= "CREATE UNIQUE INDEX "+q+"cachedindex"    +q+" ON "+q+"prc_cached2da"                 +q+" ("+q+"file"+q+", "+q+"columnid"+q+", "+q+"rowid"+q+"); ";
-    PRC_SQLExecDirect(SQL); SQL = "";
-
-}
-
-
 void Cache_Done()
 {
     WriteTimestampedLogEntry("2da caching complete");
@@ -327,13 +33,6 @@ void Cache_Done()
 void Cache_Class_Feat(int nClass, int nRow = 0)
 {
     string sFile = Get2DACache("classes", "FeatsTable", nClass);
-    if(nRow == 0 && GetPRCSwitch(PRC_USE_DATABASE))
-    {
-        string SQL = "SELECT rowid FROM prc_cached2da_cls_feat WHERE (file = '"+GetStringLowerCase(sFile)+"') ORDER BY rowid DESC LIMIT 1";
-        PRC_SQLExecDirect(SQL);
-        PRC_SQLFetch();
-        nRow = StringToInt(PRC_SQLGetData(1))+1;
-    }
     if(sFile != ""
         && sFile != "****"
         && nRow < GetPRCSwitch(FILE_END_CLASS_FEAT))
@@ -345,16 +44,6 @@ void Cache_Class_Feat(int nClass, int nRow = 0)
         Get2DACache(sFile, "OnMenu", nRow);
         nRow++;
         DelayCommand(0.1, Cache_Class_Feat(nClass, nRow));
-        if(nRow >= GetPRCSwitch(FILE_END_CLASS_FEAT) && GetPRCSwitch(PRC_USE_DATABASE))
-        {
-            if(GetPRCSwitch(PRC_DB_SQLLITE))
-            {
-                string SQL = "COMMIT";
-                PRC_SQLExecDirect(SQL);
-                SQL = "BEGIN IMMEDIATE";
-                PRC_SQLExecDirect(SQL);
-            }
-        }
     }
     else
     {
@@ -369,13 +58,6 @@ void Cache_Class_Feat(int nClass, int nRow = 0)
 
 void Cache_Classes(int nRow = 0)
 {
-    if(nRow == 0 && GetPRCSwitch(PRC_USE_DATABASE))
-    {
-        string SQL = "SELECT rowid FROM prc_cached2da_classes ORDER BY rowid DESC LIMIT 1";
-        PRC_SQLExecDirect(SQL);
-        PRC_SQLFetch();
-        nRow = StringToInt(PRC_SQLGetData(1))+1;
-    }
     if(nRow < GetPRCSwitch(FILE_END_CLASSES))
     {
         Get2DACache("classes", "Label", nRow);
@@ -437,27 +119,10 @@ void Cache_Classes(int nRow = 0)
     }
     else
         DelayCommand(1.0, Cache_Class_Feat(0));
-    if(nRow % 100 == 0 && GetPRCSwitch(PRC_USE_DATABASE))
-    {
-        if(GetPRCSwitch(PRC_DB_SQLLITE))
-        {
-            string SQL = "COMMIT";
-            PRC_SQLExecDirect(SQL);
-            SQL = "BEGIN IMMEDIATE";
-            PRC_SQLExecDirect(SQL);
-        }
-    }
 }
 
 void Cache_RacialTypes(int nRow = 0)
 {
-    if(nRow == 0 && GetPRCSwitch(PRC_USE_DATABASE))
-    {
-        string SQL = "SELECT rowid FROM prc_cached2da_racialtypes ORDER BY rowid DESC LIMIT 1";
-        PRC_SQLExecDirect(SQL);
-        PRC_SQLFetch();
-        nRow = StringToInt(PRC_SQLGetData(1))+1;
-    }
     if(nRow < GetPRCSwitch(FILE_END_RACIALTYPES))
     {
         Get2DACache("racialtypes", "Label", nRow);
@@ -489,28 +154,11 @@ void Cache_RacialTypes(int nRow = 0)
     }
     else
         DelayCommand(1.0, Cache_Classes(0));
-    if(nRow % 100 == 0 && GetPRCSwitch(PRC_USE_DATABASE))
-    {
-        if(GetPRCSwitch(PRC_DB_SQLLITE))
-        {
-            string SQL = "COMMIT";
-            PRC_SQLExecDirect(SQL);
-            SQL = "BEGIN IMMEDIATE";
-            PRC_SQLExecDirect(SQL);
-        }
-    }
 }
 
 
 void Cache_Feat(int nRow = 0)
 {
-    if(nRow == 0 && GetPRCSwitch(PRC_USE_DATABASE))
-    {
-        string SQL = "SELECT rowid FROM prc_cached2da_feat ORDER BY rowid DESC LIMIT 1";
-        PRC_SQLExecDirect(SQL);
-        PRC_SQLFetch();
-        nRow = StringToInt(PRC_SQLGetData(1))+1;
-    }
     if(nRow < GetPRCSwitch(FILE_END_FEAT))
     {
         Get2DACache("feat", "LABEL", nRow);
@@ -560,27 +208,10 @@ void Cache_Feat(int nRow = 0)
     }
     else
         DelayCommand(1.0, Cache_RacialTypes());
-    if(nRow % 100 == 0 && GetPRCSwitch(PRC_USE_DATABASE))
-    {
-        if(GetPRCSwitch(PRC_DB_SQLLITE))
-        {
-            string SQL = "COMMIT";
-            PRC_SQLExecDirect(SQL);
-            SQL = "BEGIN IMMEDIATE";
-            PRC_SQLExecDirect(SQL);
-        }
-    }
 }
 
 void Cache_Spells(int nRow = 0)
 {
-    if(nRow == 0 && GetPRCSwitch(PRC_USE_DATABASE))
-    {
-        string SQL = "SELECT rowid FROM prc_cached2da_spells ORDER BY rowid DESC LIMIT 1";
-        PRC_SQLExecDirect(SQL);
-        PRC_SQLFetch();
-        nRow = StringToInt(PRC_SQLGetData(1))+1;
-    }
     if(nRow < GetPRCSwitch(FILE_END_SPELLS))
     {
         Get2DACache("spells", "Label", nRow);
@@ -643,27 +274,10 @@ void Cache_Spells(int nRow = 0)
     }
     else
         DelayCommand(0.1, Cache_Feat());
-    if(nRow % 100 == 0 && GetPRCSwitch(PRC_USE_DATABASE))
-    {
-        if(GetPRCSwitch(PRC_DB_SQLLITE))
-        {
-            string SQL = "COMMIT";
-            PRC_SQLExecDirect(SQL);
-            SQL = "BEGIN IMMEDIATE";
-            PRC_SQLExecDirect(SQL);
-        }
-    }
 }
 
 void Cache_Portraits(int nRow = 0)
 {
-    if(nRow == 0 && GetPRCSwitch(PRC_USE_DATABASE))
-    {
-        string SQL = "SELECT rowid FROM prc_cached2da_portraits ORDER BY rowid DESC LIMIT 1";
-        PRC_SQLExecDirect(SQL);
-        PRC_SQLFetch();
-        nRow = StringToInt(PRC_SQLGetData(1))+1;
-    }
     if(nRow < GetPRCSwitch(FILE_END_PORTRAITS))
     {
         Get2DACache("portraits", "BaseResRef", nRow);
@@ -677,27 +291,10 @@ void Cache_Portraits(int nRow = 0)
     }
     else
         DelayCommand(1.0, Cache_Spells());
-    if(nRow % 100 == 0 && GetPRCSwitch(PRC_USE_DATABASE))
-    {
-        if(GetPRCSwitch(PRC_DB_SQLLITE))
-        {
-            string SQL = "COMMIT";
-            PRC_SQLExecDirect(SQL);
-            SQL = "BEGIN IMMEDIATE";
-            PRC_SQLExecDirect(SQL);
-        }
-    }
 }
 
 void Cache_Soundset(int nRow = 0)
 {
-    if(nRow == 0 && GetPRCSwitch(PRC_USE_DATABASE))
-    {
-        string SQL = "SELECT rowid FROM prc_cached2da_soundset ORDER BY rowid DESC LIMIT 1";
-        PRC_SQLExecDirect(SQL);
-        PRC_SQLFetch();
-        nRow = StringToInt(PRC_SQLGetData(1))+1;
-    }
     if(nRow < GetPRCSwitch(FILE_END_SOUNDSET))
     {
         Get2DACache("soundset", "LABEL", nRow);
@@ -710,27 +307,10 @@ void Cache_Soundset(int nRow = 0)
     }
     else
         DelayCommand(1.0, Cache_Portraits());
-    if(nRow % 100 == 0 && GetPRCSwitch(PRC_USE_DATABASE))
-    {
-        if(GetPRCSwitch(PRC_DB_SQLLITE))
-        {
-            string SQL = "COMMIT";
-            PRC_SQLExecDirect(SQL);
-            SQL = "BEGIN IMMEDIATE";
-            PRC_SQLExecDirect(SQL);
-        }
-    }
 }
 
 void Cache_Appearance(int nRow = 0)
 {
-    if(nRow == 0 && GetPRCSwitch(PRC_USE_DATABASE))
-    {
-        string SQL = "SELECT rowid FROM prc_cached2da_appearance ORDER BY rowid DESC LIMIT 1";
-        PRC_SQLExecDirect(SQL);
-        PRC_SQLFetch();
-        nRow = StringToInt(PRC_SQLGetData(1))+1;
-    }
     if(nRow < GetPRCSwitch(FILE_END_APPEARANCE))
     {
         Get2DACache("appearance", "LABEL", nRow);
@@ -773,16 +353,6 @@ void Cache_Appearance(int nRow = 0)
     }
     else
         DelayCommand(1.0, Cache_Soundset());
-    if(nRow % 100 == 0 && GetPRCSwitch(PRC_USE_DATABASE))
-    {
-        if(GetPRCSwitch(PRC_DB_SQLLITE))
-        {
-            string SQL = "COMMIT";
-            PRC_SQLExecDirect(SQL);
-            SQL = "BEGIN IMMEDIATE";
-            PRC_SQLExecDirect(SQL);
-        }
-    }
 }
 
 void Cache_2da_data()

@@ -802,6 +802,8 @@ const int FEAT_VILE_MARTIAL_DART          = 3398;
 const int FEAT_VILE_MARTIAL_SICKLE        = 3399;
 const int FEAT_VILE_MARTIAL_DWAXE         = 3452;
 const int FEAT_VILE_MARTIAL_MINDBLADE     = 3624;
+const int FEAT_VILE_MARTIAL_WHIP          = 3598;
+const int FEAT_VILE_MARTIAL_TRIDENT       = 3599;
 
 // Weapon Focus (Ray)
 const int FEAT_WEAPON_FOCUS_RAY           = 4819;
@@ -1169,7 +1171,7 @@ const int FEAT_PRESTIGE_SHIFTER_EGWSHAPE_1   = 2906;
 const int FEAT_PRESTIGE_SHIFTER_GWSHAPE_1    = 2900;
 const int SHIFTER_BLACK_LIST                  = 2918;
 
-//heartwarder
+//sanctify martial strike
 const int FEAT_SANCTIFY_MARTIAL_CLUB        = 3194;
 const int FEAT_SANCTIFY_MARTIAL_DAGGER      = 3195;
 const int FEAT_SANCTIFY_MARTIAL_MACE        = 3196;
@@ -1207,6 +1209,8 @@ const int FEAT_SANCTIFY_MARTIAL_DART        = 3227;
 const int FEAT_SANCTIFY_MARTIAL_DWAXE       = 3170;
 const int FEAT_SANCTIFY_MARTIAL_SICKLE      = 3169;
 const int FEAT_SANCTIFY_MARTIAL_MINDBLADE   = 3623;
+const int FEAT_SANCTIFY_MARTIAL_WHIP        = 3596;
+const int FEAT_SANCTIFY_MARTIAL_TRIDENT     = 3597;
 
 //heartwarder
 const int FEAT_CHARISMA_INC1     = 3230;

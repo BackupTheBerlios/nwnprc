@@ -900,6 +900,7 @@ int GetDamageTypeByWeaponType(int iWeaponType)
         case BASE_ITEM_CPIERCWEAPON:    return DAMAGE_TYPE_PIERCING;
         case BASE_ITEM_BOLT:            return DAMAGE_TYPE_PIERCING;
         case BASE_ITEM_ARROW:           return DAMAGE_TYPE_PIERCING;
+        case BASE_ITEM_TRIDENT:         return DAMAGE_TYPE_PIERCING;
 
         case BASE_ITEM_INVALID:         return DAMAGE_TYPE_BLUDGEONING;
         case BASE_ITEM_CLUB:            return DAMAGE_TYPE_BLUDGEONING;
@@ -1499,6 +1500,17 @@ struct WeaponFeat GetAllFeatsOfWeaponType(int iWeaponType)
             sFeat.OverwhelmingCritical = FEAT_EPIC_OVERWHELMING_CRITICAL_THROWINGAXE;
             sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_THROWINGAXE;
             sFeat.WeaponOfChoice = -1;
+            break;
+        }
+        case BASE_ITEM_TRIDENT: {
+            sFeat.Focus = FEAT_WEAPON_FOCUS_TRIDENT;
+            sFeat.Specialization = FEAT_WEAPON_SPECIALIZATION_TRIDENT;
+            sFeat.EpicFocus = FEAT_EPIC_WEAPON_FOCUS_TRIDENT;
+            sFeat.EpicSpecialization = FEAT_EPIC_WEAPON_SPECIALIZATION_TRIDENT;
+            sFeat.ImprovedCritical = FEAT_IMPROVED_CRITICAL_TRIDENT;
+            sFeat.OverwhelmingCritical = FEAT_EPIC_OVERWHELMING_CRITICAL_TRIDENT;
+            sFeat.DevastatingCritical = FEAT_EPIC_DEVASTATING_CRITICAL_TRIDENT;
+            sFeat.WeaponOfChoice = FEAT_WEAPON_OF_CHOICE_TRIDENT;
             break;
         }
         case BASE_ITEM_TWOBLADEDSWORD: {

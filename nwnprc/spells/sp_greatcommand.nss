@@ -33,31 +33,38 @@ Created:   29/4/06
 
 void DoGreaterCommandRecursion(object oCaster, object oTarget, int nSpellId, int nLastBeat, effect eLink, int nDC, int nCaster, int nCurrentBeat = 0)
 {
+    if(DEBUG) DoDebug("DoGreaterCommandRecursion: SpellId: " + IntToString(nSpellId));
     // Check for expiration
-    if(nCurrentBeat <= nLastBeat && !PRCGetDelayedSpellEffectsExpired(nSpellId, oTarget, oCaster))
+    if(nCurrentBeat <= nLastBeat/* && !PRCGetDelayedSpellEffectsExpired(nSpellId, oTarget, oCaster)*/)
     {
+    	if(DEBUG) DoDebug("nCurrentBeat <= nLastBeat");
         // On the first beat, just apply the Command effects
         if (nCurrentBeat == 0)
         {
+            if(DEBUG) DoDebug("nCurrentBeat == 0");
             // The duration is only one because this gets called every six seconds and reapplied if they fail the save)
             DoCommandSpell(oCaster, oTarget, nSpellId, 1, nCaster);
         }
         else // They get a new saving throw to beat the spell
         {
+            if(DEBUG) DoDebug("Else");
             // Do the saving throw
             if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
             {
+                if(DEBUG) DoDebug("Save Again");
                 // Apply the effects
                 DoCommandSpell(oCaster, oTarget, nSpellId, 1, nCaster);
                 SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0, TRUE,-1,nCaster);
             }
             else // The spell fizzles, and this will shutdown on the next beat
             {
+                if(DEBUG) DoDebug("Remove Spell");
                 PRCRemoveEffectsFromSpell(oTarget, nSpellId);
             }
         }
         // Schedule next impact
         DelayCommand(6.0f, DoGreaterCommandRecursion(oCaster, oTarget, nSpellId, nLastBeat, eLink, nDC, nCaster, (nCurrentBeat + 1)));
+        if(DEBUG) DoDebug("Looping Back");
     }
 }
 
@@ -100,9 +107,9 @@ void main()
                 int nDC = PRCGetSaveDC(oTarget, oCaster);
                 if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
                 {
-                    DoGreaterCommandRecursion(oCaster, oTarget, nSpellId, nDuration, eLink, nDC, nCaster);
                     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0, TRUE,-1,nCaster);
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+                    DoGreaterCommandRecursion(oCaster, oTarget, nSpellId, nDuration, eLink, nDC, nCaster);
                 }
             }
         }

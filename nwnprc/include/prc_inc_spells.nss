@@ -1917,6 +1917,8 @@ int GetHasMettle(object oTarget, int nSavingThrow)
 
 void DoCommandSpell(object oCaster, object oTarget, int nSpellId, int nDuration, int nCaster)
 {
+    
+    if(DEBUG) DoDebug("DoCommandSpell: SpellId: " + IntToString(nSpellId));
     if(DEBUG) DoDebug("Command Spell: Begin");
     if (nSpellId == SPELL_COMMAND_APPROACH || nSpellId == SPELL_GREATER_COMMAND_APPROACH ||
         nSpellId == SPELL_DOA_COMMAND_APPROACH || nSpellId == SPELL_DOA_GREATER_COMMAND_APPROACH)

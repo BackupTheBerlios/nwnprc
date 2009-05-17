@@ -1,6 +1,6 @@
 // Dread Necromancer passive abilities.
 
-#include "prc_inc_function"
+#include "prc_inc_template"
 
 void DNDamageResist(object oPC, object oSkin, int nLevel)
 {
@@ -26,4 +26,5 @@ void main()
         int nClass = GetLevelByClass(CLASS_TYPE_DREAD_NECROMANCER, oPC);
         
         if(nClass >= 2) DNDamageResist(oPC, oSkin, nClass);
+        if(nClass >= 20) ApplyTemplateToObject(TEMPLATE_LICH, oPC);
 }

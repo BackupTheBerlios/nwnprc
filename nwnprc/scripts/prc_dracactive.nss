@@ -145,12 +145,14 @@ int DecrementSpellLevel(int nLevel, object oPC = OBJECT_SELF)
 	int nHexSpells =  persistant_array_get_int(oPC, "NewSpellbookMem_" + IntToString(CLASS_TYPE_HEXBLADE), nLevel);
 	int nDuskSpells = persistant_array_get_int(oPC, "NewSpellbookMem_" + IntToString(CLASS_TYPE_DUSKBLADE), nLevel);
 	int nWarSpells =  persistant_array_get_int(oPC, "NewSpellbookMem_" + IntToString(CLASS_TYPE_WARMAGE), nLevel);
+	int nDrNcSpells = persistant_array_get_int(oPC, "NewSpellbookMem_" + IntToString(CLASS_TYPE_DREAD_NECROMANCER), nLevel);
 	int nClassToUse = CLASS_TYPE_INVALID;
 	
 	//grab a class, classes more closely related to dragons or having more spells are prioritized 
 	if(nSuelSpells > 0) nClassToUse = CLASS_TYPE_SUEL_ARCHANAMACH;
 	if(nHexSpells > 0) nClassToUse = CLASS_TYPE_HEXBLADE;
 	if(nDuskSpells > 0) nClassToUse = CLASS_TYPE_DUSKBLADE;
+	if(nDrNcSpells > 0) nClassToUse = CLASS_TYPE_DREAD_NECROMANCER;
 	if(nWarSpells > 0) nClassToUse = CLASS_TYPE_WARMAGE;
 	if(nBardSpells > 0) nClassToUse = CLASS_TYPE_BARD;
 	if(nSorcSpells > 0) nClassToUse = CLASS_TYPE_SORCERER;
@@ -164,12 +166,13 @@ int DecrementSpellLevel(int nLevel, object oPC = OBJECT_SELF)
 	
 	switch(nClassToUse)
 	{
-		case CLASS_TYPE_SORCERER:         nCount = nSorcSpells; break;
-		case CLASS_TYPE_BARD:             nCount = nBardSpells; break;
-		case CLASS_TYPE_WARMAGE:          nCount = nWarSpells; break;
-		case CLASS_TYPE_DUSKBLADE:        nCount = nDuskSpells; break;
-		case CLASS_TYPE_HEXBLADE:         nCount = nHexSpells; break;
-		case CLASS_TYPE_SUEL_ARCHANAMACH: nCount = nSuelSpells; break;
+		case CLASS_TYPE_SORCERER:          nCount = nSorcSpells; break;
+		case CLASS_TYPE_BARD:              nCount = nBardSpells; break;
+		case CLASS_TYPE_WARMAGE:           nCount = nWarSpells; break;
+		case CLASS_TYPE_DREAD_NECROMANCER: nCount = nDrNcSpells; break;
+		case CLASS_TYPE_DUSKBLADE:         nCount = nDuskSpells; break;
+		case CLASS_TYPE_HEXBLADE:          nCount = nHexSpells; break;
+		case CLASS_TYPE_SUEL_ARCHANAMACH:  nCount = nSuelSpells; break;
 		default:                     return FALSE; break;
 	}
 	

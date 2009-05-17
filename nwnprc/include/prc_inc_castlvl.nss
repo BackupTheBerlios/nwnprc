@@ -457,6 +457,7 @@ int GetIsArcaneClass(int nClass, object oCaster = OBJECT_SELF)
             nClass==CLASS_TYPE_HEXBLADE ||
             nClass==CLASS_TYPE_DUSKBLADE ||
             nClass==CLASS_TYPE_WARMAGE ||
+            nClass==CLASS_TYPE_DREAD_NECROMANCER ||
             (nClass==CLASS_TYPE_OUTSIDER
                 && GetRacialType(oCaster)==RACIAL_TYPE_RAKSHASA
                 && !GetLevelByClass(CLASS_TYPE_SORCERER)) ||
@@ -785,6 +786,9 @@ int PractisedSpellcasting(object oCaster, int iCastingClass, int iCastingLevels)
     if (iCastingClass == CLASS_TYPE_WARMAGE
         && GetHasFeat(FEAT_PRACTISED_SPELLCASTER_WARMAGE, oCaster))
         return iAdjustment;
+    if (iCastingClass == CLASS_TYPE_DREAD_NECROMANCER
+        && GetHasFeat(FEAT_PRACTISED_SPELLCASTER_DREAD_NECROMANCER, oCaster))
+        return iAdjustment;        
 
     return 0;
 }

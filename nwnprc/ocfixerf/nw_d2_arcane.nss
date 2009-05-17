@@ -28,6 +28,7 @@ int StartingConditional()
        GetLevelByClass(CLASS_TYPE_SHUGENJA,oCaster) > 0 ||
        GetLevelByClass(CLASS_TYPE_DRAGONFIRE_ADEPT,oCaster) > 0 ||
        GetLevelByClass(CLASS_TYPE_WARMAGE,oCaster) > 0 ||
+       GetLevelByClass(CLASS_TYPE_DREAD_NECROMANCER,oCaster) > 0 ||
        GetLevelByClass(CLASS_TYPE_DUSKBLADE,oCaster) > 0 ||
        GetLevelByClass(CLASS_TYPE_PSYWAR,oCaster) > 0 ||
        GetLevelByClass(CLASS_TYPE_PSION,oCaster) > 0 ||

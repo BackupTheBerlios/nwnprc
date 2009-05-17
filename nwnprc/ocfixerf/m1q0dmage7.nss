@@ -22,6 +22,7 @@ if(DEBUG) DoDebug("m1q0dmage7 running");
        GetLevelByClass(CLASS_TYPE_SHUGENJA,oPC) > 0 ||
        GetLevelByClass(CLASS_TYPE_DRAGONFIRE_ADEPT,oPC) > 0 ||
        GetLevelByClass(CLASS_TYPE_WARMAGE,oPC) > 0 ||
+       GetLevelByClass(CLASS_TYPE_DREAD_NECROMANCER,oPC) > 0 ||
        GetLevelByClass(CLASS_TYPE_WILDER,oPC) > 0 ||
        GetLevelByClass(CLASS_TYPE_WIZARD,oPC) > 0 )
     {

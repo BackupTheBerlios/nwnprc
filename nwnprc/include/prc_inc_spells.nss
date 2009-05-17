@@ -1391,6 +1391,9 @@ int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)
 
         case CLASS_TYPE_WARMAGE:
             return GetCasterLvlArcaneFull(CLASS_TYPE_WARMAGE, oCaster);
+            
+        case CLASS_TYPE_DREAD_NECROMANCER:
+            return GetCasterLvlArcaneFull(CLASS_TYPE_DREAD_NECROMANCER, oCaster);            
 
         case CLASS_TYPE_FAVOURED_SOUL:
             return GetCasterLvlDivineFull(CLASS_TYPE_FAVOURED_SOUL, oCaster);
@@ -2116,6 +2119,7 @@ int UseNewSpellBook(object oCreature)
     	case CLASS_TYPE_DUSKBLADE:
     	case CLASS_TYPE_HEXBLADE:
     	case CLASS_TYPE_WARMAGE:
+    	case CLASS_TYPE_DREAD_NECROMANCER:
     		return TRUE;
     }
     //check they have bard/sorc in first arcane slot
@@ -2299,7 +2303,8 @@ int PRCGetIsRealSpellKnownByClass(int nRealSpellID, int nClass, object oPC = OBJ
     // there are exceptions and these need hardcoding:
     // warmage knows all the spells in their spellbook, but are spontaneous
 
-    if ((GetSpellbookTypeForClass(nClass) == SPELLBOOK_TYPE_PREPARED) || nClass == CLASS_TYPE_WARMAGE)
+    if ((GetSpellbookTypeForClass(nClass) == SPELLBOOK_TYPE_PREPARED) || nClass == CLASS_TYPE_WARMAGE
+         || nClass == CLASS_TYPE_DREAD_NECROMANCER)
         return TRUE;
 
     // spontaneous casters have all their known spells as hide feats

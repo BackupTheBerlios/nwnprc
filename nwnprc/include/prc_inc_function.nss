@@ -314,6 +314,7 @@ void EvalPRCFeats(object oPC)
        GetLevelByClass(CLASS_TYPE_HEXBLADE,         oPC) ||
        GetLevelByClass(CLASS_TYPE_DUSKBLADE,        oPC) ||
        GetLevelByClass(CLASS_TYPE_WARMAGE,          oPC) ||
+       GetLevelByClass(CLASS_TYPE_DREAD_NECROMANCER,oPC) ||
        GetLevelByClass(CLASS_TYPE_JUSTICEWW,        oPC) ||
        // Truenaming
        GetLevelByClass(CLASS_TYPE_TRUENAMER,        oPC) ||

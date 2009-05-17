@@ -107,6 +107,9 @@ FUNCTION DECLARATIONS
 // Returns the combined caster level of oPC.
 int GetTotalCastingLevel(object oPC);
 
+// returns TRUE if oPC is an Epic level Dread Necromancer
+int GetIsEpicDreadNecromancer(object oPC);
+
 // returns TRUE if oPC is an Epic level warmage
 int GetIsEpicWarmage(object oPC);
 
@@ -228,6 +231,14 @@ void SetEpicSeedKnown(int nEpicSeed, object oPC, int nState = TRUE);
 FUNCTION BODIES
 ******************************************************************************/
 
+int GetIsEpicDreadNecromancer(object oPC)
+{
+    if (GetPrCAdjustedCasterLevel(CLASS_TYPE_DREAD_NECROMANCER, oPC) >= 18 && GetHitDice(oPC) >= 21 &&
+        GetAbilityScore(oPC, ABILITY_CHARISMA) >= 19)
+            return TRUE;
+        return FALSE;
+}
+
 int GetIsEpicWarmage(object oPC)
 {
     if (GetPrCAdjustedCasterLevel(CLASS_TYPE_WARMAGE, oPC) >= 18 && GetHitDice(oPC) >= 21 &&
@@ -294,7 +305,7 @@ int GetIsEpicShaman(object oPC)
 
 int GetIsEpicSpellcaster(object oPC)
 {
-    if (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC) ||
+    if (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC) || GetIsEpicDreadNecromancer(oPC) ||
         GetIsEpicSorcerer(oPC) || GetIsEpicWizard(oPC) ||
         GetIsEpicWarmage(oPC) || GetIsEpicHealer(oPC) || GetIsEpicFavSoul(oPC) || GetIsEpicShaman(oPC))
         return TRUE;
@@ -320,7 +331,7 @@ int GetEpicSpellSlotLimit(object oPC)
     // Variant rule implementation.
     if (GetPRCSwitch(PRC_EPIC_PRIMARY_ABILITY_MODIFIER_RULE) == TRUE)
     {
-        if (GetIsEpicSorcerer(oPC) || GetIsEpicFavSoul(oPC) || GetIsEpicWarmage(oPC))
+        if (GetIsEpicSorcerer(oPC) || GetIsEpicFavSoul(oPC) || GetIsEpicWarmage(oPC) || GetIsEpicDreadNecromancer(oPC))
         {
             nLimit -= GetAbilityModifier(ABILITY_INTELLIGENCE, oPC);
             nLimit += GetAbilityModifier(ABILITY_CHARISMA, oPC);
@@ -416,7 +427,7 @@ int GetSpellcraftSkill(object oPC)
     // Variant rule implementation.
     if (GetPRCSwitch(PRC_EPIC_PRIMARY_ABILITY_MODIFIER_RULE) == TRUE)
     {
-        if (GetIsEpicSorcerer(oPC) || GetIsEpicFavSoul(oPC) || GetIsEpicWarmage(oPC))
+        if (GetIsEpicSorcerer(oPC) || GetIsEpicFavSoul(oPC) || GetIsEpicWarmage(oPC) || GetIsEpicDreadNecromancer(oPC))
         {
             nSkill -= GetAbilityModifier(ABILITY_INTELLIGENCE, oPC);
             nSkill += GetAbilityModifier(ABILITY_CHARISMA, oPC);
@@ -759,6 +770,7 @@ int GetEpicSpellSaveDC(object oCaster = OBJECT_SELF, object oTarget = OBJECT_INV
     int iDiv = GetPrCAdjustedCasterLevelByType(TYPE_DIVINE,   oCaster); // ie. wisdom determines DC
     int iWiz = GetPrCAdjustedCasterLevel(CLASS_TYPE_WIZARD,   oCaster); // int determines DC
     int iWMa = GetPrCAdjustedCasterLevel(CLASS_TYPE_WARMAGE, oCaster); // cha determines DC
+    int iDNc = GetPrCAdjustedCasterLevel(CLASS_TYPE_DREAD_NECROMANCER, oCaster); // cha determines DC
     int iSor = GetPrCAdjustedCasterLevel(CLASS_TYPE_SORCERER, oCaster); // cha determines DC
     int iBest = 0;
     int iAbility;
@@ -768,6 +780,7 @@ int GetEpicSpellSaveDC(object oCaster = OBJECT_SELF, object oTarget = OBJECT_INV
     if (iDiv > iBest) { iAbility = ABILITY_WISDOM;       iBest = iDiv; }
     if (iWiz > iBest) { iAbility = ABILITY_INTELLIGENCE; iBest = iWiz; }
     if (iWMa > iBest) { iAbility = ABILITY_CHARISMA;     iBest = iWMa; }
+    if (iDNc > iBest) { iAbility = ABILITY_CHARISMA;     iBest = iDNc; }
     if (iSor > iBest) { iAbility = ABILITY_CHARISMA;     iBest = iSor; }
 
     int nDC;

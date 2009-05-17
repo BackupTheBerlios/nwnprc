@@ -807,6 +807,7 @@ const int SPELL_SNARE                               = 3711;
 const int SPELL_SPELLSLAYER_ARROW                   = 3712;
 
 const int SPELL_DAYLIGHT                            = 2971;
+const int SPELL_HIDE_FROM_UNDEAD                    = 3432;
 
 const int SPELL_BRILLIANT_ENERGY_ARROW              = 3394;
 const int SPELL_HIDE_FROM_ANIMALS                   = 3395;

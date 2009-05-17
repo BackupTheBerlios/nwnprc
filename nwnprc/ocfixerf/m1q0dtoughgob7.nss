@@ -17,17 +17,18 @@ void main()
     if(GetLevelByClass(CLASS_TYPE_CLERIC,oPC) > 0 ||
        GetLevelByClass(CLASS_TYPE_FAVOURED_SOUL,oPC) > 0 ||
        GetLevelByClass(CLASS_TYPE_TRUENAMER,oPC) > 0 ||
-       GetLevelByClass(CLASS_TYPE_SHUGENJA,oPC) > 0 ||
        GetLevelByClass(CLASS_TYPE_DRAGONFIRE_ADEPT,oPC) > 0 ||
        GetLevelByClass(CLASS_TYPE_WARLOCK,oPC) > 0 ||
        GetLevelByClass(CLASS_TYPE_SHAMAN,oPC) > 0 ||
-       GetLevelByClass(CLASS_TYPE_WARMAGE,oPC) > 0 ||
+       GetLevelByClass(CLASS_TYPE_DREAD_NECROMANCER,oPC) > 0 ||
        GetLevelByClass(CLASS_TYPE_HEALER,oPC) > 0 ||
        GetLevelByClass(CLASS_TYPE_DRUID,oPC) > 0 )
     {
         sItemTemplate = "NW_IT_MGLOVE004"; //Gloves of concentration
     }
     else if(GetLevelByClass(CLASS_TYPE_SORCERER,oPC) > 0 ||
+    	    GetLevelByClass(CLASS_TYPE_WARMAGE,oPC) > 0 ||
+    	    GetLevelByClass(CLASS_TYPE_SHUGENJA,oPC) > 0 ||
             GetLevelByClass(CLASS_TYPE_WIZARD,oPC) > 0 )
     {
         sItemTemplate = "m1q0wmgwn"; //Wand of Fire

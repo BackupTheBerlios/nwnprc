@@ -571,7 +571,9 @@ void ScrubPCSkin(object oPC, object oSkin)
                 //&& (st < 14501 || st > 15999)
                 && (st < 16300 || st > 17700)
                 && (st < 231 || st > 249)
-                && ((st == FEAT_POWER_ATTACK_QUICKS_RADIAL) ? // Remove the PRC Power Attack radial if the character no longer has Power Attack
+                && ( (st == IP_CONST_FEAT_PRC_POWER_ATTACK_QUICKS_RADIAL || 
+                      st == IP_CONST_FEAT_POWER_ATTACK_SINGLE_RADIAL || 
+                      st == IP_CONST_FEAT_POWER_ATTACK_FIVES_RADIAL) ? // Remove the PRC Power Attack radials if the character no longer has Power Attack
                      !GetHasFeat(FEAT_POWER_ATTACK, oPC) :
                      TRUE // If the feat is not relevant to this clause, always pass
                     )

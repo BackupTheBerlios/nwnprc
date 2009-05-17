@@ -1497,6 +1497,18 @@ void SPMakeAttack(object oTarget, object oImage)
 
 void CorpseCrafter(object oPC, object oSummon)
 {
+    // Hijacking this function because it's already in the right places
+    if (GetLevelByClass(CLASS_TYPE_DREAD_NECROMANCER, oPC) >= 8)
+    {
+        int nHD = GetHitDice(oSummon);
+        effect eHP = EffectTemporaryHitpoints(nHD * 2);
+        effect eStr = EffectAbilityIncrease(ABILITY_STRENGTH, 4);
+        effect eDex = EffectAbilityIncrease(ABILITY_DEXTERITY, 4);
+        eHP = SupernaturalEffect(eHP);
+        eStr = SupernaturalEffect(EffectLinkEffects(eStr, eDex));
+        ApplyEffectToObject(DURATION_TYPE_PERMANENT, eHP, oSummon);
+        ApplyEffectToObject(DURATION_TYPE_PERMANENT, eStr, oSummon);
+    }
     if (GetHasFeat(FEAT_CORPSECRAFTER, oPC))
     {
         int nHD = GetHitDice(oSummon);

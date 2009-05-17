@@ -57,6 +57,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nDuration = CasterLvl;
     int nHD = CasterLvl * 2;
+        if (GetLevelByClass(CLASS_TYPE_DREAD_NECROMANCER, OBJECT_SELF) >= 8)
+        {
+        	nHD = CasterLvl * (2 + GetAbilityModifier(ABILITY_CHARISMA, OBJECT_SELF));
+        }    
     //Make meta magic
     if ((nMetaMagic & METAMAGIC_EXTEND))
     {

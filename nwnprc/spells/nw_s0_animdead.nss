@@ -79,6 +79,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     if(GetPRCSwitch(PRC_PNP_ANIMATE_DEAD))
     {
         int nMaxHD = nCasterLevel*4;
+        if (GetLevelByClass(CLASS_TYPE_DREAD_NECROMANCER, OBJECT_SELF) >= 8)
+        {
+        	nMaxHD = nCasterLevel * (4 + GetAbilityModifier(ABILITY_CHARISMA, OBJECT_SELF));
+        }
         int nTotalHD = GetControlledUndeadTotalHD();
         if((nTotalHD+nHD)<=nMaxHD)
         {        

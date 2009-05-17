@@ -1,0 +1,17 @@
+//::///////////////////////////////////////////////
+//:: DNecro - Fear Aura
+//:: prc_dnc_fearaura.nss
+//:://////////////////////////////////////////////
+//:: Fear Aura
+//:://////////////////////////////////////////////
+//:: Created By: Stratovarius
+//:: Created On: May 16, 2009
+//:://////////////////////////////////////////////
+
+#include "prc_alterations"
+
+void main()
+{
+	effect eAOE = EffectAreaOfEffect(AOE_MOB_DN_FEAR_AURA);
+     	ApplyEffectToObject(DURATION_TYPE_PERMANENT, eAOE, OBJECT_SELF);
+}

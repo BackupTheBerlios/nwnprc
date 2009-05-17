@@ -908,6 +908,18 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
     // +2 bonus on saves against mind affecting, done here
     if(nSaveType == SAVING_THROW_TYPE_MIND_SPELLS && GetLevelByClass(CLASS_TYPE_FIST_DAL_QUOR, oTarget) >= 2)
         nDC -= 2;
+    // +4 bonus on saves against negative energy, done here
+    if(nSaveType == SAVING_THROW_TYPE_NEGATIVE && GetLevelByClass(CLASS_TYPE_DREAD_NECROMANCER, oTarget) >= 9)
+        nDC -= 4;
+    // +2 bonus on saves against poison and disease energy, done here
+    if((nSaveType == SAVING_THROW_TYPE_DISEASE || nSaveType == SAVING_THROW_TYPE_POISON)
+        && GetLevelByClass(CLASS_TYPE_DREAD_NECROMANCER, oTarget) >= 4)
+        nDC -= 2; 
+    // +2 bonus on saves against poison and disease energy, done here
+    // The doubling is correct, the bonus incresae at this level
+    if((nSaveType == SAVING_THROW_TYPE_DISEASE || nSaveType == SAVING_THROW_TYPE_POISON)
+        && GetLevelByClass(CLASS_TYPE_DREAD_NECROMANCER, oTarget) >= 14)
+        nDC -= 2;         
     // Scorpion's Resolve gives a +4 bonus on mind affecting saves
     if(nSaveType == SAVING_THROW_TYPE_MIND_SPELLS && GetHasFeat(FEAT_SCORPIONS_RESOLVE, oSaveVersus))
         nDC -= 4;

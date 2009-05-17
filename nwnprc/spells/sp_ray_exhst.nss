@@ -55,7 +55,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 	PRCSignalSpellEvent(oTarget, TRUE);
 	
 	//INSERT SPELL CODE HERE
-	int iAttackRoll = PRCDoMeleeTouchAttack(oTarget);
+	int iAttackRoll = PRCDoRangedTouchAttack(oTarget);
 	
 	//Beam
 	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectBeam(VFX_BEAM_BLACK, oCaster, BODY_NODE_HAND, !iAttackRoll), oTarget, 1.0f); 

@@ -2939,3 +2939,6 @@ const int FEAT_EPIC_ARTIFICER               = 4072;
 
 //Justice of Weald and Woe
 const int FEAT_LUCKY_SHOT                   = 24021;
+
+// Dread Necromancer
+const int FEAT_DN_ENERVATING_TOUCH          = 24153;

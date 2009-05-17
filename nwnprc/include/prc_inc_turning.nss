@@ -123,7 +123,12 @@ int GetIsTurnNotRebuke(object oTarget, int nTurnType)
     // Slime domain rebukes or commands oozes
     else if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_OOZE && nTurnType == SPELL_TURN_OOZE)
     {
-    return FALSE;
+    	return FALSE;
+    } 
+    // Dread Necro always rebukes or commands
+    else if(PRCGetLastSpellCastClass() == CLASS_TYPE_DREAD_NECROMANCER && nTurnType == SPELL_TURN_UNDEAD)
+    {
+    	return FALSE;
     }    
     // Plant domain rebukes or commands plants
     /*else if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_PLANT && nTurnType == SPELL_TURN_PLANT)
@@ -684,6 +689,7 @@ int GetTurningClassLevel(int bUndeadOnly = FALSE)
     if(!bUndeadOnly)
     {
         nLevel += GetLevelByClass(CLASS_TYPE_JUDICATOR);
+        nLevel += GetLevelByClass(CLASS_TYPE_DREAD_NECROMANCER);
         nLevel += GetLevelByClass(CLASS_TYPE_BLIGHTLORD);
         if(GetLevelByClass(CLASS_TYPE_ANTI_PALADIN)-3>0)
             nLevel += GetLevelByClass(CLASS_TYPE_ANTI_PALADIN)-3;

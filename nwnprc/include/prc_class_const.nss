@@ -191,3 +191,4 @@ const int CLASS_TYPE_MASTER_OF_NINE          = 195;
 const int CLASS_TYPE_ETERNAL_BLADE           = 196;
 const int CLASS_TYPE_SHADOW_SUN_NINJA        = 197;
 const int CLASS_TYPE_BINDER                  = 96;
+const int CLASS_TYPE_DREAD_NECROMANCER       = 187;

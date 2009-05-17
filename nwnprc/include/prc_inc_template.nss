@@ -84,8 +84,12 @@ int ApplyTemplateToObject(int nTemplate, object oPC = OBJECT_SELF, int bApply = 
     //mark the PC as possessing the template
     SetPersistantLocalInt(oPC, "template_"+IntToString(nTemplate), TRUE);
     //adjust the LA marker accordingly
-    SetPersistantLocalInt(oPC, "template_LA", 
-        GetPersistantLocalInt(oPC, "template_LA")+StringToInt(Get2DACache("templates", "LA", nTemplate)));
+    if (!(GetLevelByClass(CLASS_TYPE_DREAD_NECROMANCER, oPC) >= 20 && nTemplate == TEMPLATE_LICH))
+    {
+    	if(DEBUG) DoDebug("ApplyTemplateToObject(): Adding Template LA");
+    	SetPersistantLocalInt(oPC, "template_LA", 
+        	GetPersistantLocalInt(oPC, "template_LA")+StringToInt(Get2DACache("templates", "LA", nTemplate)));
+    }
     //add the template to the array
     if(!persistant_array_exists(oPC, "templates"))
         persistant_array_create(oPC, "templates");

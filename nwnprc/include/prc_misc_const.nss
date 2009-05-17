@@ -85,6 +85,9 @@ const int AOE_PER_WALLBREATH                    = 152;
 //Racial AOEs
 const int AOE_PER_NYMPH_BLINDING                = 225;
 
+// DNecro Area of Effects
+const int AOE_MOB_DN_FEAR_AURA                  = 254;
+
 
 //:://////////////////////////////////////////////
 //:: Disease Const

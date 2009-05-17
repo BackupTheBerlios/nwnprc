@@ -2895,6 +2895,7 @@ const int FEAT_EPIC_WEAPON_SPECIALIZATION_APTITUDE      = 2126;
 const int FEAT_IMPROVED_CRITICAL_APTITUDE               = 2127;
 const int FEAT_SANCTIFY_MARTIAL_APTITUDE                = 2128;
 const int FEAT_VILE_MARTIAL_APTITUDE                    = 2129;
+const int FEAT_WEAPON_APTITUDE                          = 3538;
 
 const int FEAT_SS_DF_IS_DW                  = 2201;
 const int FEAT_SS_DF_IS_DM                  = 2202;

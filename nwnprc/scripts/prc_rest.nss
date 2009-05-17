@@ -158,7 +158,7 @@ void RestFinished(object oPC)
     DeleteLocalInt(oPC, "BattleFortitude");
     DeleteLocalInt(oPC, "ArmouredStealth");
         
-    if(GetHasFeat(FEAT_WEAPON_FOCUS_APTITUDE, oPC) || GetHasFeat(FEAT_IMPROVED_CRITICAL_APTITUDE, oPC))
+    if(GetHasFeat(FEAT_WEAPON_APTITUDE, oPC) || GetHasFeat(FEAT_IMPROVED_CRITICAL_APTITUDE, oPC))
         StartDynamicConversation("tob_aptitudeconv", oPC, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, oPC);
         
     //reapply weapon feat simulations

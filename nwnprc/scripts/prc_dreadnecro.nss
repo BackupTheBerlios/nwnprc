@@ -18,6 +18,34 @@ void DNDamageResist(object oPC, object oSkin, int nLevel)
     SetLocalInt(oSkin, "DNDamageResist", TRUE);
 }
 
+// Armour Spell Fail reduction
+void ReducedASF(object oCreature)
+{
+	object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oCreature);
+	object oShield = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oCreature);
+	object oSkin = GetPCSkin(oCreature);
+	int nAC = GetBaseAC(oArmor);
+	int nClass = GetLevelByClass(CLASS_TYPE_DREAD_NECROMANCER, oCreature);
+	int iBonus = GetLocalInt(oSkin, "DreadNecroArmour");
+	int nASF = -1;
+	itemproperty ip;
+	
+	// First thing is to remove old ASF (in case armor is changed.)
+	if (iBonus != -1)
+		RemoveSpecificProperty(oSkin, ITEM_PROPERTY_ARCANE_SPELL_FAILURE, -1, iBonus, 1, "DreadNecroArmour");
+	
+	// As long as they meet the requirements, just give em max ASF reduction
+	// I know it could cause problems if they have increased ASF, but thats unlikely
+	else if (3 >= nAC)
+		nASF = IP_CONST_ARCANE_SPELL_FAILURE_MINUS_25_PERCENT;			
+
+	// Apply the ASF to the skin.
+	ip = ItemPropertyArcaneSpellFailure(nASF); 
+	
+	AddItemProperty(DURATION_TYPE_PERMANENT, ip, oSkin);
+	SetLocalInt(oSkin, "DreadNecroArmour", nASF);
+}  
+
 void main()
 {
         //Declare main variables.
@@ -25,6 +53,7 @@ void main()
         object oSkin = GetPCSkin(oPC);
         int nClass = GetLevelByClass(CLASS_TYPE_DREAD_NECROMANCER, oPC);
         
+        if (GetIsPC(oPC)) ReducedASF(oPC);
         if(nClass >= 2) DNDamageResist(oPC, oSkin, nClass);
         if(nClass >= 20) ApplyTemplateToObject(TEMPLATE_LICH, oPC);
 }

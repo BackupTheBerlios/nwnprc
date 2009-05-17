@@ -807,7 +807,16 @@ const int SPELL_SNARE                               = 3711;
 const int SPELL_SPELLSLAYER_ARROW                   = 3712;
 
 const int SPELL_DAYLIGHT                            = 2971;
+
+// Spells added for the Dread Necro
 const int SPELL_HIDE_FROM_UNDEAD                    = 3432;
+const int SPELL_CRUSHING_DESPAIR                    = 3433;
+const int SPELL_HALT_UNDEAD                         = 3434;
+const int SPELL_EYEBITE                             = 3435;
+const int SPELL_SONG_OF_DISCORD                     = 3436;
+const int SPELL_FIRE_IN_THE_BLOOD                   = 3437;
+const int SPELL_VILE_DEATH                          = 3438;
+const int SPELL_PLAGUE_OF_UNDEAD                    = 3439;
 
 const int SPELL_BRILLIANT_ENERGY_ARROW              = 3394;
 const int SPELL_HIDE_FROM_ANIMALS                   = 3395;

@@ -44,6 +44,11 @@ void main()
         object oTarget = PRCGetSpellTargetObject();
         int nCasterLvl = PRCGetCasterLevel(oPC);
         float fDur = (nCasterLvl * 600.0);
+        int nMetaMagic = PRCGetMetaMagicFeat();
+	if (nMetaMagic == METAMAGIC_EXTEND)
+	{
+		fDur = (fDur * 2);
+	}        
         
         effect eInvis = VersusRacialTypeEffect(EffectInvisibility(INVISIBILITY_TYPE_NORMAL), RACIAL_TYPE_UNDEAD);
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eInvis, oTarget, fDur);

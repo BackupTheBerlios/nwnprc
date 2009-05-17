@@ -114,7 +114,7 @@ void main()
         //&& nRace != RACIAL_TYPE_ELEMENTAL
         //&& nRace != RACIAL_TYPE_OUTSIDER
         //&& nRace != RACIAL_TYPE_SHAPECHANGER
-        //&& nRace != RACIAL_TYPE_UNDEAD
+        && nRace != RACIAL_TYPE_UNDEAD // Vile Death spell allows undead
         //&& nRace != RACIAL_TYPE_OOZE
         )
         SetExecutedScriptReturnValue(X2_EXECUTE_SCRIPT_END);

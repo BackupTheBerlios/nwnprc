@@ -914,10 +914,15 @@ void FeatSpecialUsePerDay(object oPC)
     FeatUsePerDay(oPC, FEAT_WWOC_WIDEN_SPELL, ABILITY_CHARISMA, GetLevelByClass(CLASS_TYPE_WAR_WIZARD_OF_CORMYR, oPC));
     FeatUsePerDay(oPC, FEAT_COC_WRATH, ABILITY_CHARISMA, 3);
     FeatUsePerDay(oPC, FEAT_FIST_DAL_QUOR_STUNNING_STRIKE, -1, GetLevelByClass(CLASS_TYPE_FIST_DAL_QUOR, oPC));
-    FeatUsePerDay(oPC, FEAT_DN_ENERVATING_TOUCH, -1, GetLevelByClass(CLASS_TYPE_DREAD_NECROMANCER, oPC));
     HexCurse(oPC);
     FeatRacial(oPC);
     FeatShadowblade(oPC);
+    
+    int nDread = GetLevelByClass(CLASS_TYPE_DREAD_NECROMANCER, oPC);
+    if (nDread >= 17)
+    	FeatUsePerDay(oPC, FEAT_DN_ENERVATING_TOUCH, -1, nDread);
+    else
+    	FeatUsePerDay(oPC, FEAT_DN_ENERVATING_TOUCH, -1, nDread/2);
 
     if(GetPersistantLocalInt(oPC, "PRC_SLA_Uses_1"))
         FeatUsePerDay(oPC, FEAT_SPELL_LIKE_ABILITY_1, -1, GetPersistantLocalInt(oPC, "PRC_SLA_Uses_1"));

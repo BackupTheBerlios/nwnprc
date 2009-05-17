@@ -124,7 +124,7 @@ string Get2DACache(string s2DA, string sColumn, int nRow)
         if(DEBUG_GET2DACACHE) DoDebug("Get2DACache: Missing from cache: " + s2DA + "|" + sColumn + "|" + IntToString(nRow));
     }
     //if(DEBUG_GET2DACACHE) PrintString("Get2DACache: Returned value is '" + s + "'");
-    return s;
+    return s == "****" ? "" : s;
 }
 
 string GetBiowareDBName()

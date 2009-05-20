@@ -78,6 +78,7 @@ string Get2DACache(string s2DA, string sColumn, int nRow)
             {
                 if(DEBUG_GET2DACACHE) DoDebug("Get2DACache: Container full: " + DebugObject2Str(oContainer));
                 oContainer = OBJECT_INVALID;
+                ++nContainer; // new container is 1 higher than last one
             }
         }
         // We need to create a container

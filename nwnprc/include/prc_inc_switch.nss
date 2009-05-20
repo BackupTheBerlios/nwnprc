@@ -2110,14 +2110,6 @@ const string PRC_XP_GIVE_XP_TO_NON_PC_FACTIONS       = "PRC_XP_GIVE_XP_TO_NON_PC
 const string PRC_USE_BIOWARE_DATABASE                = "PRC_USE_BIOWARE_DATABASE";
 
 /**
- * 2da caching code uses local variables on a token on a creatures inventory
- * This does not stop the creature being created or stored since the new spellbooks
- * and psionics need it. It mearly stops the 2das being cached on the creature as well
- * NOTE: a value of 0 is on by default, any other value is off
- */
-const string PRC_2DA_CACHE_IN_CREATURE                = "PRC_2DA_CACHE_IN_CREATURE";
-
-/**
  * Set this if you are using NWNX and any sort of database.
  */
 const string PRC_USE_DATABASE                        = "PRC_USE_DATABASE";
@@ -2628,5 +2620,6 @@ void SetPRCSwitch(string sSwitch, int nState)
  */
 int PRCGetFileEnd(string sTable)
 {
-    return GetLocalInt(GetObjectByTag(PRC_FILE_END_TOKEN), "PRC_FILE_END_" + GetStringLowerCase(sTable));
+    sTable = GetStringLowerCase(sTable);
+    return GetPRCSwitch("PRC_FILE_END_" + sTable);
 }

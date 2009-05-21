@@ -9,6 +9,7 @@ int StartingConditional()
 		     GetLevelByClass(CLASS_TYPE_CRUSADER, GetPCSpeaker()) == 0 &&
 		     GetLevelByClass(CLASS_TYPE_SHUGENJA, GetPCSpeaker()) == 0 &&
 		     GetLevelByClass(CLASS_TYPE_FAVOURED_SOUL, GetPCSpeaker()) == 0 &&
+		     		     GetLevelByClass(CLASS_TYPE_MYSTIC, GetPCSpeaker()) == 0 &&
                      GetLevelByClass(CLASS_TYPE_DRUID, GetPCSpeaker()) == 0;
     return bCondition;
 }

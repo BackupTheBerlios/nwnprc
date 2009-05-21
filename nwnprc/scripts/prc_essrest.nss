@@ -7,7 +7,7 @@ void RestMeUp(object oPC)
     FloatingTextStringOnCreature("*You feel refreshed*", oPC, FALSE);
     ForceRest(oPC);
     if (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC) ||
-        GetIsEpicSorcerer(oPC) || GetIsEpicWizard(oPC) ||
+        GetIsEpicSorcerer(oPC) || GetIsEpicWizard(oPC) || GetIsEpicMystic(oPC) ||
         GetIsEpicFavSoul(oPC) || GetIsEpicHealer(oPC))
     {
         ReplenishSlots(oPC);

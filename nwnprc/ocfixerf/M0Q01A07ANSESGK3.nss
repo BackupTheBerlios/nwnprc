@@ -12,6 +12,7 @@ int StartingConditional()
 		     GetLevelByClass(CLASS_TYPE_SHUGENJA, GetPCSpeaker()) > 0 ||
 		     GetLevelByClass(CLASS_TYPE_HEALER, GetPCSpeaker()) > 0 ||
 		     GetLevelByClass(CLASS_TYPE_FAVOURED_SOUL, GetPCSpeaker()) > 0 ||
+		     		     GetLevelByClass(CLASS_TYPE_MYSTIC, GetPCSpeaker()) > 0 ||
                      GetLevelByClass(CLASS_TYPE_PALADIN, GetPCSpeaker()) > 0;
     return bCondition;
 }

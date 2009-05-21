@@ -71,6 +71,7 @@ void main()
                     GetIsEpicFavSoul(OBJECT_SELF) ||
                     GetIsEpicHealer(OBJECT_SELF) ||
                     GetIsEpicWarmage(OBJECT_SELF) ||
+                    GetIsEpicMystic(OBJECT_SELF) ||
                     GetIsEpicDreadNecromancer(OBJECT_SELF) ||
                     GetIsEpicShaman(OBJECT_SELF))) nAllowed = TRUE;
     // Give the seed if the player is able to comprehend it, doesn't already

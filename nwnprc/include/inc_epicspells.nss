@@ -263,6 +263,14 @@ int GetIsEpicFavSoul(object oPC)
     return FALSE;
 }
 
+int GetIsEpicMystic(object oPC)
+{
+    if (GetPrCAdjustedCasterLevel(CLASS_TYPE_MYSTIC, oPC) >= 18 && GetHitDice(oPC) >= 21 &&
+        GetAbilityScore(oPC, ABILITY_WISDOM) >= 19)
+            return TRUE;
+    return FALSE;
+}
+
 int GetIsEpicCleric(object oPC)
 {
     if (GetPrCAdjustedCasterLevel(CLASS_TYPE_CLERIC, oPC) >= 17 && GetHitDice(oPC) >= 21 &&
@@ -306,7 +314,7 @@ int GetIsEpicShaman(object oPC)
 int GetIsEpicSpellcaster(object oPC)
 {
     if (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC) || GetIsEpicDreadNecromancer(oPC) ||
-        GetIsEpicSorcerer(oPC) || GetIsEpicWizard(oPC) ||
+        GetIsEpicSorcerer(oPC) || GetIsEpicWizard(oPC) || GetIsEpicMystic(oPC) ||
         GetIsEpicWarmage(oPC) || GetIsEpicHealer(oPC) || GetIsEpicFavSoul(oPC) || GetIsEpicShaman(oPC))
         return TRUE;
     return FALSE;
@@ -336,7 +344,7 @@ int GetEpicSpellSlotLimit(object oPC)
             nLimit -= GetAbilityModifier(ABILITY_INTELLIGENCE, oPC);
             nLimit += GetAbilityModifier(ABILITY_CHARISMA, oPC);
         }
-        else if (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC) || GetIsEpicHealer(oPC) || GetIsEpicShaman(oPC))
+        else if (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC) || GetIsEpicHealer(oPC) || GetIsEpicMystic(oPC) || GetIsEpicShaman(oPC))
         {
             nLimit -= GetAbilityModifier(ABILITY_INTELLIGENCE, oPC);
             nLimit += GetAbilityModifier(ABILITY_WISDOM, oPC);
@@ -432,7 +440,7 @@ int GetSpellcraftSkill(object oPC)
             nSkill -= GetAbilityModifier(ABILITY_INTELLIGENCE, oPC);
             nSkill += GetAbilityModifier(ABILITY_CHARISMA, oPC);
         }
-        else if (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC) || GetIsEpicHealer(oPC) || GetIsEpicShaman(oPC))
+        else if (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC) || GetIsEpicHealer(oPC) || GetIsEpicMystic(oPC) || GetIsEpicShaman(oPC))
         {
             nSkill -= GetAbilityModifier(ABILITY_INTELLIGENCE, oPC);
             nSkill += GetAbilityModifier(ABILITY_WISDOM, oPC);

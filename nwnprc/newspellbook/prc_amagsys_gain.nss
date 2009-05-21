@@ -79,6 +79,8 @@ void main()
         return;
     if(CheckMissingSpells(oPC, CLASS_TYPE_FAVOURED_SOUL, 0, 9))
         return;
+    if(CheckMissingSpells(oPC, CLASS_TYPE_MYSTIC, 0, 9))
+        return;        
     if(CheckMissingSpells(oPC, CLASS_TYPE_WARMAGE, 0, 9))
         return;
     if(CheckMissingSpells(oPC, CLASS_TYPE_DREAD_NECROMANCER, 1, 9))

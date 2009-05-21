@@ -124,6 +124,7 @@ int GetSpellbookTypeForClass(int nClass)
         case CLASS_TYPE_BARD:
         case CLASS_TYPE_SUEL_ARCHANAMACH:
         case CLASS_TYPE_FAVOURED_SOUL:
+        case CLASS_TYPE_MYSTIC:
         case CLASS_TYPE_HEXBLADE:
         case CLASS_TYPE_DUSKBLADE:
         case CLASS_TYPE_WARMAGE:
@@ -162,6 +163,7 @@ int GetAbilityScoreForClass(int nClass, object oPC)
         case CLASS_TYPE_SLAYER_OF_DOMIEL:
         case CLASS_TYPE_HEALER:
         case CLASS_TYPE_SHAMAN:
+        case CLASS_TYPE_MYSTIC:
         case CLASS_TYPE_JUSTICEWW:
             return GetAbilityScore(oPC, ABILITY_WISDOM);
         case CLASS_TYPE_WIZARD:

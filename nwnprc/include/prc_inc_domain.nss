@@ -113,7 +113,8 @@ void AddBonusDomain(object oPC, int nDomain)
 void CastDomainSpell(object oPC, int nSlot, int nLevel)
 {
     if (DEBUG) FloatingTextStringOnCreature("CastDomainSpell has fired", oPC, FALSE);
-    if (GetLocalInt(oPC, "DomainCastSpell" + IntToString(nLevel))) //Already cast a spell of this level?
+    // Mystics are not limited to how many domain spells they can cast in a day.
+    if (GetLocalInt(oPC, "DomainCastSpell" + IntToString(nLevel)) && PRCGetLastSpellCastClass() != CLASS_TYPE_MYSTIC) //Already cast a spell of this level?
     {
         FloatingTextStringOnCreature("You have already cast your domain spell for level " + IntToString(nLevel), oPC, FALSE);
         return;

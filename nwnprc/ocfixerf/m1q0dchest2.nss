@@ -22,6 +22,7 @@ if(DEBUG) DoDebug("m1q0dchest2 running");
         if(GetLevelByClass(CLASS_TYPE_CLERIC,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_FIGHTER,oPC) > 0 ||
 	   GetLevelByClass(CLASS_TYPE_FAVOURED_SOUL,oPC) > 0 ||
+	   	   GetLevelByClass(CLASS_TYPE_MYSTIC,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_WARBLADE,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_SWORDSAGE,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_CRUSADER,oPC) > 0 ||

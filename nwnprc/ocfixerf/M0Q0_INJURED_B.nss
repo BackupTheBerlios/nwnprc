@@ -20,6 +20,7 @@ void main()
            GetLevelByClass(CLASS_TYPE_CRUSADER,GetLastSpellCaster()) > 0 ||
            GetLevelByClass(CLASS_TYPE_SHAMAN,GetLastSpellCaster()) > 0 ||
 	   GetLevelByClass(CLASS_TYPE_FAVOURED_SOUL,GetLastSpellCaster()) > 0 ||
+	   GetLevelByClass(CLASS_TYPE_MYSTIC,GetLastSpellCaster()) > 0 ||
  	   GetLevelByClass(CLASS_TYPE_DRUID,GetLastSpellCaster()) > 0)
         {
             SetLocalInt(GetModule(),"NW_G_M0Q01_PRIEST_TEST",2);

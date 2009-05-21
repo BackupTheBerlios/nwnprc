@@ -306,7 +306,8 @@ int GetPnPUnlearnMaxSpellLevel(int nClass, int nCasterLevel)
 	
 	if(	nClass == CLASS_TYPE_SORCERER
 		|| nClass == CLASS_TYPE_SUEL_ARCHANAMACH
-		|| nClass == CLASS_TYPE_FAVOURED_SOUL)
+		|| nClass == CLASS_TYPE_FAVOURED_SOUL
+		|| nClass == CLASS_TYPE_MYSTIC)
 	{
 		// casterlevel must be at least four and an even nur
 		if (nCasterLevel >= 4 && ((nCasterLevel & 0x1) == 0))

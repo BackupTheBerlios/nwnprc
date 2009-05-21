@@ -1400,6 +1400,9 @@ int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)
 
         case CLASS_TYPE_SOHEI:
             return GetCasterLvlDivineSemi(CLASS_TYPE_SOHEI, oCaster);
+            
+        case CLASS_TYPE_MYSTIC:
+            return GetCasterLvlDivineFull(CLASS_TYPE_MYSTIC, oCaster);            
 
         case CLASS_TYPE_HEALER:
             return GetCasterLvlDivineFull(CLASS_TYPE_HEALER, oCaster);

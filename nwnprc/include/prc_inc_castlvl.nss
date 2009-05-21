@@ -485,6 +485,7 @@ int GetIsDivineClass(int nClass, object oCaster = OBJECT_SELF)
             nClass==CLASS_TYPE_VIGILANT ||
             nClass==CLASS_TYPE_FAVOURED_SOUL ||
             nClass==CLASS_TYPE_SOHEI ||
+            nClass==CLASS_TYPE_MYSTIC ||
             nClass==CLASS_TYPE_HEALER ||
             nClass==CLASS_TYPE_SHAMAN ||
             nClass==CLASS_TYPE_SLAYER_OF_DOMIEL ||
@@ -783,6 +784,9 @@ int PractisedSpellcasting(object oCaster, int iCastingClass, int iCastingLevels)
     if (iCastingClass == CLASS_TYPE_SOHEI
         && GetHasFeat(FEAT_PRACTISED_SPELLCASTER_SOHEI, oCaster))
         return iAdjustment;
+    if (iCastingClass == CLASS_TYPE_MYSTIC
+        && GetHasFeat(FEAT_PRACTISED_SPELLCASTER_MYSTIC, oCaster))
+        return iAdjustment;        
     if (iCastingClass == CLASS_TYPE_WARMAGE
         && GetHasFeat(FEAT_PRACTISED_SPELLCASTER_WARMAGE, oCaster))
         return iAdjustment;

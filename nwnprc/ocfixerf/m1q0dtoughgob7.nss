@@ -16,6 +16,7 @@ void main()
     }
     if(GetLevelByClass(CLASS_TYPE_CLERIC,oPC) > 0 ||
        GetLevelByClass(CLASS_TYPE_FAVOURED_SOUL,oPC) > 0 ||
+              GetLevelByClass(CLASS_TYPE_MYSTIC,oPC) > 0 ||
        GetLevelByClass(CLASS_TYPE_TRUENAMER,oPC) > 0 ||
        GetLevelByClass(CLASS_TYPE_DRAGONFIRE_ADEPT,oPC) > 0 ||
        GetLevelByClass(CLASS_TYPE_WARLOCK,oPC) > 0 ||

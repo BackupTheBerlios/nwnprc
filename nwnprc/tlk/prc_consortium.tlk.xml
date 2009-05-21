@@ -52372,7 +52372,7 @@ Use: Automatic</entry>
 Prerequisites: Master of Nine 5.
 Specifics: You gain a +2 bonus on all maneuvers, and a damage bonus on all maneuvers equal to the number of disciplines from which you know maneuvers.
 Use: Automatic</entry>
-  <entry id="70353" lang="en" sex="m">Practised Spellcaster (Warmage)</entry>
+  <entry id="70353" lang="en" sex="m">Practised Spellcaster (Dread Necromancer)</entry>
   <entry id="70354" lang="en" sex="m">Hide From Undead</entry>
   <entry id="70355" lang="en" sex="m">Hide from Undead
 Abjuration
@@ -52602,4 +52602,67 @@ Use: Selected.</entry>
 Prerequisite: Dread Necromancer 20.
 Specifics: When a dread necromancer attains 20th level, she undergoes a hideous transformation and becomes a lich. This does not increase her level adjustment.
 Use: Automatic.</entry>
+  <entry id="70394" lang="en" sex="m">Mystic</entry>
+  <entry id="70395" lang="en" sex="m">Mystics</entry>
+  <entry id="70396" lang="en" sex="m">mystic</entry>
+  <entry id="70397" lang="en" sex="m">(BASE CLASS)
+Mystics are spellcasters who have learned how to channel divine energy without worshipping and deity. The process of harnessing this magic is one of inner awareness and self-discovery - a private faith that leads to great magical power. 
+- Hit Die: d8
+- Proficiencies: A Mystic gains proficiencies.with Simple Weapons, Light Armour, Medium Armour, and Shields.
+- Skill Points: 2 + Int Modifier
+
+ABILITIES:
+
+Level
+1: Bonus Domain
+2: 
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10:
+11:
+12:
+13:
+14:
+15:
+16:
+17:
+18:
+19:
+20:
+
+SPELLCASTING
+
+To cast a spell, the Mystic must have a Wisdom score of 10 + the spell level. The DC of a Mystic's spell is 10 + Spell Level + Wisdom Modifier. A Mystic's caster level is equal to his class level. He is a spontaneous caster.
+
+Spells per day:
+Level: 0 1 2 3 4 5 6 7 8 9
+
+1:     5 3 - - - - - - - -
+2:     6 4 - - - - - - - -
+3:     6 5 - - - - - - - -
+4:     6 6 3 - - - - - - -
+5:     6 6 4 - - - - - - -
+6:     6 6 5 3 - - - - - -
+7:     6 6 6 4 - - - - - -
+8:     6 6 6 5 3 - - - - -
+9:     6 6 6 6 4 - - - - -
+10:    6 6 6 6 5 3 - - - -
+11:    6 6 6 6 6 4 - - - -
+12:    6 6 6 6 6 5 3 - - -
+13:    6 6 6 6 6 6 4 - - -
+14:    6 6 6 6 6 6 5 3 - -
+15:    6 6 6 6 6 6 6 4 - -
+16:    6 6 6 6 6 6 6 5 3 -
+17:    6 6 6 6 6 6 6 6 4 -
+18:    6 6 6 6 6 6 6 6 5 3
+19:    6 6 6 6 6 6 6 6 6 4
+20:    6 6 6 6 6 6 6 6 6 6</entry>
+<entry id="70398" lang="en" sex="m">Practised Spellcaster (Mystic)</entry>
+<entry id="70500" lang="en" sex="m">####START_OF_NEW_SPELLBOOK_RESERVE</entry>
+<entry id="75000" lang="en" sex="m">####END_OF_NEW_SPELLBOOK_RESERVE</entry>
 </tlk>

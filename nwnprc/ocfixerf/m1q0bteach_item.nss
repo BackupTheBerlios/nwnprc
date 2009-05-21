@@ -45,6 +45,7 @@ if(DEBUG) DoDebug("m1q0bteach_item running");
         }
         else if(GetLevelByClass(CLASS_TYPE_CLERIC,oPC) > 0 ||
 		GetLevelByClass(CLASS_TYPE_FAVOURED_SOUL,oPC) > 0 ||
+				GetLevelByClass(CLASS_TYPE_MYSTIC,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_FIGHTER,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_MARSHAL,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_DUSKBLADE,oPC) > 0 ||

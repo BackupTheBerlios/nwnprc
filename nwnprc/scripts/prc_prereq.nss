@@ -547,6 +547,12 @@ void CombatMedic(object oPC)
         SetLocalInt(oPC, "PRC_PrereqCbtMed", 0);
         return;
     }
+    
+    if (GetLevelByClass(CLASS_TYPE_MYSTIC) && PRCGetHasSpell(SPELL_CURE_LIGHT_WOUNDS, oPC))
+    {
+        SetLocalInt(oPC, "PRC_PrereqCbtMed", 0);
+        return;
+    }    
 
     if (GetLevelByClass(CLASS_TYPE_PALADIN))
     {

@@ -69,7 +69,7 @@ void main()
             else if (WHO_CAN_RESEARCH == "FAVSOUL" && GetIsEpicFavSoul(oPC)) nAllowed = TRUE;
             else if (WHO_CAN_RESEARCH == "DIVINE" &&
                 (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC) || 
-                GetIsEpicHealer(oPC) || GetIsEpicFavSoul(oPC) ||
+                GetIsEpicHealer(oPC) || GetIsEpicFavSoul(oPC) || GetIsEpicMystic(oPC) ||
                 GetIsEpicShaman(oPC))) nAllowed = TRUE;
             else if (WHO_CAN_RESEARCH == "ARCANE" && (GetIsEpicSorcerer(oPC) ||
                 GetIsEpicWizard(oPC) || GetIsEpicWarmage(oPC) || GetIsEpicDreadNecromancer(oPC))) nAllowed = TRUE;

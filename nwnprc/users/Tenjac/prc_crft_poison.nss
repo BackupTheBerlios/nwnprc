@@ -14,12 +14,6 @@ const int STAGE_ENTRY                           =0;
 const int STAGE_POISON                          =1;
 const int STAGE_CONFIRM                         =2;
 
-//Choice constants
-const int CHOICE_ABORT_CRAFT                    =10;
-const int CHOICE_CONFIRM_CRAFT                  =11;
-const int CHOICE_BACK                           =12;
-
-
 //////////////////////////////////////////////////
 /* Aid functions                                */
 //////////////////////////////////////////////////

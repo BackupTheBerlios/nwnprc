@@ -193,3 +193,4 @@ const int CLASS_TYPE_SHADOW_SUN_NINJA        = 197;
 const int CLASS_TYPE_BINDER                  = 96;
 const int CLASS_TYPE_DREAD_NECROMANCER       = 187;
 const int CLASS_TYPE_MYSTIC                  = 188;
+const int CLASS_TYPE_NOBLE                   = 189;

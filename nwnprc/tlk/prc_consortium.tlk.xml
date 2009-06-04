@@ -53563,6 +53563,59 @@ Level: 0 1 2 3 4 5 6 7 8 9
 19:    6 6 6 6 6 6 6 6 6 4
 20:    6 6 6 6 6 6 6 6 6 6</entry>
   <entry id="70398" lang="en" sex="m">Practised Spellcaster (Mystic)</entry>
+    <entry id="70399" lang="en" sex="m">Noble</entry>
+    <entry id="70400" lang="en" sex="m">Nobles</entry>
+    <entry id="70401" lang="en" sex="m">noble</entry>
+    <entry id="70402" lang="en" sex="m">(BASE CLASS)
+  Nobles are illustrious because of their rank, title, or birth. Nobles have the ability to use their background, education, natural carm, and skills in social maneuvering to their advantage in their day-to-day lives. An elven princess, the lord of Palanthas, a dwarven thane are all examples. While the motivations and goals of such characters vary widely, each is capable of masking his true intentions behind the veil of etiquette, and of using his charm and wit to gain what he desires.
+  
+  - Hit Die: d8
+  - Proficiencies: A Noble gains proficiencies.with Simple Weapons, Martial Weapons, Shields, and Light Armour.
+  - Skill Points: 4 + Int Modifier
+  
+  ABILITIES:
+  
+  Level
+  1: Favor +1
+  2: Inspire Confidence 1/day
+  3: Favor +2
+  4: Coordinate +1
+  5: Inspire Confidence 2/day
+  6: 
+  7: Favor +3
+  8: Coordinate +2
+  9: Inspire Confidence 3/day
+  10: 
+  11: Inspire Greatness
+  12: Favor +4
+  13: Coordinate +3, Inspire Confidence 4/day
+  14: Inspire Greatness
+  15: 
+  16: Favor +5
+  17: Inspire Confidence 5/day, Inspire Greatness
+  18: Coordinate +4
+  19: 
+  20: Coordinate +5, Inspire Greatness</entry>
+    <entry id="70403" lang="en" sex="m">Coordinate</entry>
+    <entry id="70404" lang="en" sex="m">Type of Feat: Class Specific
+  Prerequisite: Noble 4.
+  Specifics: The character can aid another character, granting him a bonus equal to 2 + the coordinate bonus on his attacks and skills for 1 round.
+Use: Selected.</entry>
+    <entry id="70403" lang="en" sex="m">Favor</entry>
+    <entry id="70404" lang="en" sex="m">Type of Feat: Class Specific
+  Prerequisite: Noble 1.
+  Specifics: The Noble can summon a weapon with a bonus equal to his class level divided by 4. If there is a DM in the game, this will instead PM the Dungeon Master with a favour roll for him to adjudicate.
+Use: Selected.</entry>
+    <entry id="70403" lang="en" sex="m">Inspire Confidence</entry>
+    <entry id="70404" lang="en" sex="m">Type of Feat: Class Specific
+  Prerequisite: Noble 2.
+  Specifics: +2 saves vs. fear and charm and +1 to attack and damage for allies for 5 rounds.
+Use: Selected.</entry>
+    <entry id="70403" lang="en" sex="m">Inspire Greatness</entry>
+    <entry id="70404" lang="en" sex="m">Type of Feat: Class Specific
+  Prerequisite: Noble 11.
+  Specifics: +2d6 temp hp, +2 saves and +2 to attack for allies for 5 rounds.
+Use: Selected.</entry>
   <entry id="70500" lang="en" sex="m">####START_OF_NEW_SPELLBOOK_RESERVE</entry>
   <entry id="70501" lang="en" sex="m">Warmage Silent Lesser Acid Orb</entry>
   <entry id="70502" lang="en" sex="m">Warmage Still Lesser Acid Orb</entry>

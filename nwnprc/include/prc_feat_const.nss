@@ -2945,3 +2945,7 @@ const int FEAT_LUCKY_SHOT                   = 24021;
 
 // Dread Necromancer
 const int FEAT_DN_ENERVATING_TOUCH          = 24153;
+
+// Noble
+const int FEAT_NOBLE_GREATNESS              = 24163;
+const int FEAT_NOBLE_CONFIDENCE             = 24164;

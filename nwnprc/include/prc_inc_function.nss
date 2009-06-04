@@ -836,6 +836,25 @@ void FeatShadowblade(object oPC)
         FeatUsePerDay(oPC, FEAT_UNSEEN_WEAPON_ACTIVATE, -1, nUses);
 }
 
+void FeatNoble(object oPC)
+{
+	int nBonus = 0;
+	if (GetLevelByClass(CLASS_TYPE_NOBLE, oPC) >= 17) nBonus = 5;
+	else if (GetLevelByClass(CLASS_TYPE_NOBLE, oPC) >= 13) nBonus = 4;
+	else if (GetLevelByClass(CLASS_TYPE_NOBLE, oPC) >= 9) nBonus = 3;
+	else if (GetLevelByClass(CLASS_TYPE_NOBLE, oPC) >= 5) nBonus = 2;
+	else if (GetLevelByClass(CLASS_TYPE_NOBLE, oPC) >= 2) nBonus = 1;
+	
+        FeatUsePerDay(oPC, FEAT_NOBLE_CONFIDENCE, -1, nBonus);
+        
+	if (GetLevelByClass(CLASS_TYPE_NOBLE, oPC) >= 20) nBonus = 4;
+	else if (GetLevelByClass(CLASS_TYPE_NOBLE, oPC) >= 17) nBonus = 3;
+	else if (GetLevelByClass(CLASS_TYPE_NOBLE, oPC) >= 14) nBonus = 2;
+	else if (GetLevelByClass(CLASS_TYPE_NOBLE, oPC) >= 11) nBonus = 1;
+	
+	FeatUsePerDay(oPC, FEAT_NOBLE_GREATNESS, -1, nBonus);
+}
+
 void VestigeMeta(object oPC)
 {
     /*int nUses;
@@ -895,6 +914,7 @@ void FeatSpecialUsePerDay(object oPC)
     FeatUsePerDay(oPC, FEAT_HEALING_KICKER_2, ABILITY_WISDOM, GetLevelByClass(CLASS_TYPE_COMBAT_MEDIC, oPC));
     FeatUsePerDay(oPC, FEAT_HEALING_KICKER_3, ABILITY_WISDOM, GetLevelByClass(CLASS_TYPE_COMBAT_MEDIC, oPC));
     FeatNinja(oPC);
+    FeatNoble(oPC);
     FeatContender(oPC);
     FeatUsePerDay(oPC, FEAT_LASHER_STUNNING_SNAP, -1, GetLevelByClass(CLASS_TYPE_LASHER, oPC));
     FeatUsePerDay(oPC, FEAT_AD_FALSE_KEENNESS, -1, GetLevelByClass(CLASS_TYPE_ARCANE_DUELIST, oPC));

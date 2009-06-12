@@ -47,7 +47,6 @@ int main(int argc, char *argv[])
 		{
 			add_slash = 1;
 		}
-		printf("    //%s\n", argv[1]);
 	}
     if(argc == 1 || argv[1] == NULL)
     {

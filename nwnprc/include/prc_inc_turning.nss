@@ -75,6 +75,11 @@ int CheckTargetName(object oTarget, string sName);
 //FALSE == Rebuke
 int GetIsTurnNotRebuke(object oTarget, int nTurnType)
 {
+    // Dread Necro always rebukes or commands
+    if(PRCGetLastSpellCastClass() == CLASS_TYPE_DREAD_NECROMANCER && nTurnType == SPELL_TURN_UNDEAD)
+    {
+    	return FALSE;
+    }    
     if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD && nTurnType == SPELL_TURN_UNDEAD)
     {
         // Evil clerics rebuke undead, otherwise turn
@@ -85,6 +90,7 @@ int GetIsTurnNotRebuke(object oTarget, int nTurnType)
     
     return TRUE;
     }
+   
     else if (GetHasFeat(FEAT_EPIC_PLANAR_TURNING) && nTurnType == SPELL_TURN_UNDEAD && MyPRCGetRacialType(oTarget) == RACIAL_TYPE_OUTSIDER)
     {
         // Evil clerics turn non-evil outsiders, and rebuke evil outsiders
@@ -125,11 +131,6 @@ int GetIsTurnNotRebuke(object oTarget, int nTurnType)
     {
     	return FALSE;
     } 
-    // Dread Necro always rebukes or commands
-    else if(PRCGetLastSpellCastClass() == CLASS_TYPE_DREAD_NECROMANCER && nTurnType == SPELL_TURN_UNDEAD)
-    {
-    	return FALSE;
-    }    
     // Plant domain rebukes or commands plants
     /*else if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_PLANT && nTurnType == SPELL_TURN_PLANT)
     {

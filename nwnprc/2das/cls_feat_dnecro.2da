@@ -9,6 +9,7 @@
 5    SpellFocusNec                                           171       0    -1             0      
 6    SpellFocusTra                                           172       0    -1             0      
 7    SpellFocusAbj                                           35        0    -1             0      
+14  TurnUndead                                     294       3    1              1      
 8    FEAT_CRAFT_WONDROUS_ITEM                                2925      3    19             0      
 9    FEAT_IMMUNITY_SNEAKATTACK                               3591      3    10             0      
 10   FEAT_IMMUNITY_CRITICAL                                  3585      3    17             0      

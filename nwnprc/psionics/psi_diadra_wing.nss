@@ -31,7 +31,7 @@ void ChannelWings(object oPC, float fDuration)
     if(GetCreatureWingType(oPC) != CREATURE_WING_TYPE_NONE) 
         return;   
     //otherwise grant wings
-    SetCreatureWingType(CREATURE_WING_TYPE_DRAGON, oPC);
+    SetCreatureWingType(PRC_WING_TYPE_DRAGON_SILVER, oPC);
     int nWingCounter = GetPersistantLocalInt(oPC, "ChannelingWings");
     if(nWingCounter > 9) nWingCounter = 0;
     SetPersistantLocalInt(oPC, "ChannelingWings", nWingCounter + 1);

@@ -20,14 +20,11 @@ void main()
 
     if(GetCurrentThread() == "")
     {
-        if(GetThreadState("RapidMetabolism", oCreature) == THREAD_STATE_DEAD)
-        {
-            float fInterval = TurnsToSeconds(1);
-            if(GetPRCSwitch(PRC_PNP_RAPID_METABOLISM))
-                fInterval = HoursToSeconds(24);
-            if(!SpawnNewThread("RapidMetabolism", "prc_rapid_metab", fInterval, oCreature))
-                WriteTimestampedLogEntry("Failed to spawn thread for Rapid Metabolism on " + GetName(oCreature));
-        }
+        float fInterval = TurnsToSeconds(1);
+        if(GetPRCSwitch(PRC_PNP_RAPID_METABOLISM))
+            fInterval = HoursToSeconds(24);
+        if(!SpawnNewThread("RapidMetabolism", "prc_rapid_metab", fInterval, oCreature))
+            WriteTimestampedLogEntry("Failed to spawn thread for Rapid Metabolism on " + GetName(oCreature));
     }
     else
     {

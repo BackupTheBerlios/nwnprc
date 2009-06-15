@@ -287,7 +287,7 @@ void main()
         SpawnNewThread("PRC_Duplicate_IPBFeat_Mon", "prc_debug_hfeatm", 30.0f, oPC);
     }
 
-    if(GetHasFeat(FEAT_SPELLFIRE_WIELDER, oPC) && GetThreadState("PRC_Spellfire", oPC) == THREAD_STATE_DEAD)
+    if(GetHasFeat(FEAT_SPELLFIRE_WIELDER, oPC))
         SpawnNewThread("PRC_Spellfire", "prc_spellfire_hb", 6.0f, oPC);
 
     //if the player logged off while being registered as a cohort

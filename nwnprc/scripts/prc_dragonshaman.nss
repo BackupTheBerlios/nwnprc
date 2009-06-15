@@ -94,25 +94,22 @@ void main()
 	}
 	
 	//For the wings
-	int nWingType = CREATURE_WING_TYPE_DRAGON;
-        if(GetPRCSwitch(MARKER_PRC_COMPANION))
-        {
-            nWingType = GetHasFeat(FEAT_DRAGONSHAMAN_BLACK, OBJECT_SELF)     ? PRC_COMP_WING_TYPE_DRAGON_BLACK :
-                        GetHasFeat(FEAT_DRAGONSHAMAN_BLUE, OBJECT_SELF)      ? PRC_COMP_WING_TYPE_DRAGON_BLUE :
-                        GetHasFeat(FEAT_DRAGONSHAMAN_BRASS, OBJECT_SELF)     ? PRC_COMP_WING_TYPE_DRAGON_BRASS :
-                        GetHasFeat(FEAT_DRAGONSHAMAN_BRONZE, OBJECT_SELF)    ? PRC_COMP_WING_TYPE_DRAGON_BRONZE :
-                        GetHasFeat(FEAT_DRAGONSHAMAN_COPPER, OBJECT_SELF)    ? PRC_COMP_WING_TYPE_DRAGON_COPPER :
-                        GetHasFeat(FEAT_DRAGONSHAMAN_GOLD, OBJECT_SELF)      ? PRC_COMP_WING_TYPE_DRAGON_GOLD :
-                        GetHasFeat(FEAT_DRAGONSHAMAN_GREEN, OBJECT_SELF)     ? PRC_COMP_WING_TYPE_DRAGON_GREEN :
-                        GetHasFeat(FEAT_DRAGONSHAMAN_SILVER, OBJECT_SELF)    ? PRC_COMP_WING_TYPE_DRAGON_SILVER :
-                        GetHasFeat(FEAT_DRAGONSHAMAN_WHITE, OBJECT_SELF)     ? PRC_COMP_WING_TYPE_DRAGON_WHITE :
-                        GetHasFeat(FEAT_DRAGONSHAMAN_RED, OBJECT_SELF)       ? CREATURE_WING_TYPE_DRAGON :
-                        CREATURE_WING_TYPE_NONE;
-         }
-         if(GetHasFeat(FEAT_DRAGONSHAMAN_WINGS, OBJECT_SELF) && GetPersistantLocalInt(OBJECT_SELF, "DragShamanWingsApplied"))
+	int nWingType = GetHasFeat(FEAT_DRAGONSHAMAN_BLACK, OBJECT_SELF)     ? PRC_WING_TYPE_DRAGON_BLACK:
+                  GetHasFeat(FEAT_DRAGONSHAMAN_BLUE, OBJECT_SELF)      ? PRC_WING_TYPE_DRAGON_BLUE :
+                  GetHasFeat(FEAT_DRAGONSHAMAN_BRASS, OBJECT_SELF)     ? PRC_WING_TYPE_DRAGON_BRASS :
+                  GetHasFeat(FEAT_DRAGONSHAMAN_BRONZE, OBJECT_SELF)    ? PRC_WING_TYPE_DRAGON_BRONZE :
+                  GetHasFeat(FEAT_DRAGONSHAMAN_COPPER, OBJECT_SELF)    ? PRC_WING_TYPE_DRAGON_COPPER :
+                  GetHasFeat(FEAT_DRAGONSHAMAN_GOLD, OBJECT_SELF)      ? PRC_WING_TYPE_DRAGON_GOLD :
+                  GetHasFeat(FEAT_DRAGONSHAMAN_GREEN, OBJECT_SELF)     ? PRC_WING_TYPE_DRAGON_GREEN :
+                  GetHasFeat(FEAT_DRAGONSHAMAN_SILVER, OBJECT_SELF)    ? PRC_WING_TYPE_DRAGON_SILVER :
+                  GetHasFeat(FEAT_DRAGONSHAMAN_WHITE, OBJECT_SELF)     ? PRC_WING_TYPE_DRAGON_WHITE :
+                  GetHasFeat(FEAT_DRAGONSHAMAN_RED, OBJECT_SELF)       ? PRC_WING_TYPE_DRAGON_RED :
+                  CREATURE_WING_TYPE_DRAGON;
+
+         if(GetHasFeat(FEAT_DRAGONSHAMAN_WINGS, OBJECT_SELF) && GetPersistantLocalInt(OBJECT_SELF, "DragShamanWingsApplied") == 0)
          {
              SetCompositeBonus(oArmor, "WingBonus", 10, ITEM_PROPERTY_SKILL_BONUS, SKILL_JUMP);
-             DoWings(OBJECT_SELF, nWingType);
+             SetCreatureWingType(nWingType, OBJECT_SELF);
              SetPersistantLocalInt(OBJECT_SELF, "DragShamanWingsApplied", TRUE);
          }
 }

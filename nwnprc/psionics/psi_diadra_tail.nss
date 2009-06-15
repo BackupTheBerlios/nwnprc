@@ -33,7 +33,7 @@ void ChannelTail(object oPC, float fDuration)
     if(GetCreatureTailType(oPC) != CREATURE_TAIL_TYPE_NONE) 
         return;   
     //otherwise grant tail
-    SetCreatureTailType(CREATURE_TAIL_TYPE_LIZARD, oPC);
+    SetCreatureTailType(PRC_TAIL_TYPE_DRAGON_SILVER, oPC);
     int nTailCounter = GetPersistantLocalInt(oPC, "ChannelingTail");
     if(nTailCounter > 9) nTailCounter = 0;
     SetPersistantLocalInt(oPC, "ChannelingTail", nTailCounter + 1);

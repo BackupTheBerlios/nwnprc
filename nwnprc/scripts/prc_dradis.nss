@@ -159,46 +159,69 @@ void main()
     int sCale1 = GetHasFeat(FAST_HEALING_1,oPC);
     int sCale2 = GetHasFeat(FAST_HEALING_2,oPC);
      
-    int nWingType = CREATURE_WING_TYPE_DRAGON;
-    int nTailType = CREATURE_TAIL_TYPE_LIZARD;
-    if(GetPRCSwitch(MARKER_PRC_COMPANION))
-    {
-        nWingType = GetHasFeat(FEAT_BLACK_DRAGON, oPC)     ? PRC_COMP_WING_TYPE_DRAGON_BLACK :
-                    GetHasFeat(FEAT_BLUE_DRAGON, oPC)      ? PRC_COMP_WING_TYPE_DRAGON_BLUE :
-                    GetHasFeat(FEAT_BRASS_DRAGON, oPC)     ? PRC_COMP_WING_TYPE_DRAGON_BRASS :
-                    GetHasFeat(FEAT_BRONZE_DRAGON, oPC)    ? PRC_COMP_WING_TYPE_DRAGON_BRONZE :
-                    GetHasFeat(FEAT_COPPER_DRAGON, oPC)    ? PRC_COMP_WING_TYPE_DRAGON_COPPER :
-                    GetHasFeat(FEAT_GOLD_DRAGON, oPC)      ? PRC_COMP_WING_TYPE_DRAGON_GOLD :
-                    GetHasFeat(FEAT_GREEN_DRAGON, oPC)     ? PRC_COMP_WING_TYPE_DRAGON_GREEN :
-                    GetHasFeat(FEAT_SILVER_DRAGON, oPC)    ? PRC_COMP_WING_TYPE_DRAGON_SILVER :
-                    GetHasFeat(FEAT_WHITE_DRAGON, oPC)     ? PRC_COMP_WING_TYPE_DRAGON_WHITE :
-                    GetHasFeat(FEAT_RED_DRAGON, oPC)       ? CREATURE_WING_TYPE_DRAGON :
-                    GetHasFeat(FEAT_SHADOW_DRAGON, oPC)    ? PRC_COMP_WING_TYPE_DRAGON_SHADOW :
-                    //GetHasFeat(FEAT_PRISMATIC_DRAGON, oPC) ? PRC_COMP_WING_TYPE_DRAGON_PRISMATIC :
-                    CREATURE_WING_TYPE_NONE;
-        //dragon disciple lichs get draco-lich wings at lich 4
-        if(GetLevelByClass(CLASS_TYPE_LICH, oPC) >= 4) 
-            nWingType = PRC_COMP_WING_TYPE_DRAGON_DRACOLICH;
-            
-                
-        nTailType = GetHasFeat(FEAT_BLACK_DRAGON, oPC)     ? PRC_COMP_TAIL_TYPE_LIZARD_BLACK :
-                    GetHasFeat(FEAT_BLUE_DRAGON, oPC)      ? PRC_COMP_TAIL_TYPE_LIZARD_BLUE :
-                    GetHasFeat(FEAT_BRASS_DRAGON, oPC)     ? PRC_COMP_TAIL_TYPE_LIZARD_BRASS :
-                    GetHasFeat(FEAT_BRONZE_DRAGON, oPC)    ? PRC_COMP_TAIL_TYPE_LIZARD_BRONZE :
-                    GetHasFeat(FEAT_COPPER_DRAGON, oPC)    ? PRC_COMP_TAIL_TYPE_LIZARD_COPPER :
-                    GetHasFeat(FEAT_GOLD_DRAGON, oPC)      ? PRC_COMP_TAIL_TYPE_LIZARD_GOLD :
-                    GetHasFeat(FEAT_GREEN_DRAGON, oPC)     ? CREATURE_TAIL_TYPE_LIZARD :
-                    GetHasFeat(FEAT_SILVER_DRAGON, oPC)    ? PRC_COMP_TAIL_TYPE_LIZARD_SILVER :
-                    GetHasFeat(FEAT_WHITE_DRAGON, oPC)     ? PRC_COMP_TAIL_TYPE_LIZARD_WHITE :
-                    GetHasFeat(FEAT_RED_DRAGON, oPC)       ? PRC_COMP_TAIL_TYPE_LIZARD_RED :
-                    GetHasFeat(FEAT_SHADOW_DRAGON, oPC)    ? PRC_COMP_TAIL_TYPE_LIZARD_SHADOW : 
-                    //GetHasFeat(FEAT_PRISMATIC_DRAGON, oPC) ? PRC_COMP_TAIL_TYPE_LIZARD_PRISMATIC :
-                    CREATURE_TAIL_TYPE_NONE;
-        //dragon disciple lichs get bony tail at lich 4
-        if(GetLevelByClass(CLASS_TYPE_LICH, oPC) >= 4) 
-            nTailType = CREATURE_TAIL_TYPE_BONE;
-    }                
-    
+    int nWingType = GetHasFeat(FEAT_BLACK_DRAGON, oPC)      ? PRC_WING_TYPE_DRAGON_BLACK :
+                    GetHasFeat(FEAT_BLUE_DRAGON, oPC)       ? PRC_WING_TYPE_DRAGON_BLUE :
+                    GetHasFeat(FEAT_AMETHYST_DRAGON, oPC)   ? PRC_WING_TYPE_DRAGON_BLUE :
+                    GetHasFeat(FEAT_SAPPHIRE_DRAGON, oPC)   ? PRC_WING_TYPE_DRAGON_BLUE :
+                    GetHasFeat(FEAT_TOPAZ_DRAGON, oPC)      ? PRC_WING_TYPE_DRAGON_BLUE :
+                    GetHasFeat(FEAT_BRASS_DRAGON, oPC)      ? PRC_WING_TYPE_DRAGON_BRASS :
+                    GetHasFeat(FEAT_BRONZE_DRAGON, oPC)     ? PRC_WING_TYPE_DRAGON_BRONZE :
+                    GetHasFeat(FEAT_COPPER_DRAGON, oPC)     ? PRC_WING_TYPE_DRAGON_COPPER :
+                    GetHasFeat(FEAT_GOLD_DRAGON, oPC)       ? PRC_WING_TYPE_DRAGON_GOLD :
+                    GetHasFeat(FEAT_GREEN_DRAGON, oPC)      ? PRC_WING_TYPE_DRAGON_GREEN :
+                    GetHasFeat(FEAT_EMERALD_DRAGON, oPC)    ? PRC_WING_TYPE_DRAGON_GREEN :
+                    GetHasFeat(FEAT_SILVER_DRAGON, oPC)     ? PRC_WING_TYPE_DRAGON_SILVER :
+                    GetHasFeat(FEAT_CRYSTAL_DRAGON, oPC)    ? PRC_WING_TYPE_DRAGON_SILVER :
+                    GetHasFeat(FEAT_WHITE_DRAGON, oPC)      ? PRC_WING_TYPE_DRAGON_WHITE :
+                    GetHasFeat(FEAT_RED_DRAGON, oPC)        ? PRC_WING_TYPE_DRAGON_RED :
+                    GetHasFeat(FEAT_BATTLE_DRAGON, oPC)     ? PRC_WING_TYPE_DRAGON_COPPER2 :
+                    GetHasFeat(FEAT_CHAOS_DRAGON, oPC)      ? PRC_WING_TYPE_DRAGON_COPPER2 :
+                    GetHasFeat(FEAT_FANG_DRAGON, oPC)       ? PRC_WING_TYPE_DRAGON_COPPER2 :
+                    GetHasFeat(FEAT_HOWLING_DRAGON, oPC)    ? PRC_WING_TYPE_DRAGON_COPPER2 :
+                    GetHasFeat(FEAT_BROWN_DRAGON, oPC)      ? PRC_WING_TYPE_DRAGON_BRONZE2 :
+                    GetHasFeat(FEAT_DEEP_DRAGON, oPC)       ? PRC_WING_TYPE_DRAGON_BRONZE2 :
+                    GetHasFeat(FEAT_RUST_DRAGON, oPC)       ? PRC_WING_TYPE_DRAGON_BRONZE2 :
+                    GetHasFeat(FEAT_ETHEREAL_DRAGON, oPC)   ? PRC_WING_TYPE_DRAGON_WHITE2 :
+                    GetHasFeat(FEAT_OCEANUS_DRAGON, oPC)    ? PRC_WING_TYPE_DRAGON_BLUE2 :
+                    GetHasFeat(FEAT_SONG_DRAGON, oPC)       ? PRC_WING_TYPE_DRAGON_BLUE2 :
+                    GetHasFeat(FEAT_PYROCLASTIC_DRAGON, oPC) ? PRC_WING_TYPE_DRAGON_RED2 :
+                    GetHasFeat(FEAT_RADIANT_DRAGON, oPC)    ? PRC_WING_TYPE_DRAGON_GOLD2 :
+                    GetHasFeat(FEAT_SHADOW_DRAGON, oPC)     ? PRC_WING_TYPE_DRAGON_BLACK2 :
+                    GetHasFeat(FEAT_STYX_DRAGON, oPC)       ? PRC_WING_TYPE_DRAGON_GREEN2 :
+                    GetHasFeat(FEAT_TARTIAN_DRAGON, oPC)    ? PRC_WING_TYPE_DRAGON_SILVER2 :
+                    PRC_WING_TYPE_DRAGON_RED;
+
+
+    int nTailType = GetHasFeat(FEAT_BLACK_DRAGON, oPC)     ? PRC_TAIL_TYPE_DRAGON_BLACK :
+                    GetHasFeat(FEAT_SHADOW_DRAGON, oPC)    ? PRC_TAIL_TYPE_DRAGON_BLACK :
+                    GetHasFeat(FEAT_BLUE_DRAGON, oPC)      ? PRC_TAIL_TYPE_DRAGON_BLUE :
+                    GetHasFeat(FEAT_AMETHYST_DRAGON, oPC)  ? PRC_TAIL_TYPE_DRAGON_BLUE :
+                    GetHasFeat(FEAT_SAPPHIRE_DRAGON, oPC)  ? PRC_TAIL_TYPE_DRAGON_BLUE :
+                    GetHasFeat(FEAT_TOPAZ_DRAGON, oPC)     ? PRC_TAIL_TYPE_DRAGON_BLUE :
+                    GetHasFeat(FEAT_OCEANUS_DRAGON, oPC)   ? PRC_TAIL_TYPE_DRAGON_BLUE :
+                    GetHasFeat(FEAT_SONG_DRAGON, oPC)      ? PRC_TAIL_TYPE_DRAGON_BLUE :
+                    GetHasFeat(FEAT_BRASS_DRAGON, oPC)     ? PRC_TAIL_TYPE_DRAGON_BRASS :
+                    GetHasFeat(FEAT_BRONZE_DRAGON, oPC)    ? PRC_TAIL_TYPE_DRAGON_BRONZE :
+                    GetHasFeat(FEAT_BROWN_DRAGON, oPC)     ? PRC_TAIL_TYPE_DRAGON_BRONZE :
+                    GetHasFeat(FEAT_DEEP_DRAGON, oPC)      ? PRC_TAIL_TYPE_DRAGON_BRONZE :
+                    GetHasFeat(FEAT_RUST_DRAGON, oPC)      ? PRC_TAIL_TYPE_DRAGON_BRONZE :
+                    GetHasFeat(FEAT_COPPER_DRAGON, oPC)    ? PRC_TAIL_TYPE_DRAGON_COPPER :
+                    GetHasFeat(FEAT_BATTLE_DRAGON, oPC)    ? PRC_TAIL_TYPE_DRAGON_COPPER :
+                    GetHasFeat(FEAT_CHAOS_DRAGON, oPC)     ? PRC_TAIL_TYPE_DRAGON_COPPER :
+                    GetHasFeat(FEAT_FANG_DRAGON, oPC)      ? PRC_TAIL_TYPE_DRAGON_COPPER :
+                    GetHasFeat(FEAT_HOWLING_DRAGON, oPC)   ? PRC_TAIL_TYPE_DRAGON_COPPER :
+                    GetHasFeat(FEAT_GOLD_DRAGON, oPC)      ? PRC_TAIL_TYPE_DRAGON_GOLD :
+                    GetHasFeat(FEAT_RADIANT_DRAGON, oPC)   ? PRC_TAIL_TYPE_DRAGON_GOLD :
+                    GetHasFeat(FEAT_GREEN_DRAGON, oPC)     ? PRC_TAIL_TYPE_DRAGON_GREEN :
+                    GetHasFeat(FEAT_EMERALD_DRAGON, oPC)   ? PRC_TAIL_TYPE_DRAGON_GREEN :
+                    GetHasFeat(FEAT_STYX_DRAGON, oPC)      ? PRC_TAIL_TYPE_DRAGON_GREEN :
+                    GetHasFeat(FEAT_SILVER_DRAGON, oPC)    ? PRC_TAIL_TYPE_DRAGON_SILVER :
+                    GetHasFeat(FEAT_CRYSTAL_DRAGON, oPC)   ? PRC_TAIL_TYPE_DRAGON_SILVER :
+                    GetHasFeat(FEAT_TARTIAN_DRAGON, oPC)   ? PRC_TAIL_TYPE_DRAGON_SILVER :
+                    GetHasFeat(FEAT_WHITE_DRAGON, oPC)     ? PRC_TAIL_TYPE_DRAGON_WHITE :
+                    GetHasFeat(FEAT_ETHEREAL_DRAGON, oPC)  ? PRC_TAIL_TYPE_DRAGON_WHITE :
+                    PRC_TAIL_TYPE_DRAGON_RED;
+
     int nLevel = GetLevelByClass(CLASS_TYPE_DRAGON_DISCIPLE,oPC);
     
     //natural weapons
@@ -235,7 +258,6 @@ void main()
         }
     }
     
-
     int thickScale = -1;
     if(GetHasFeat(DRACONIC_ARMOR_AUG_2,oPC))
         thickScale = 2;
@@ -254,15 +276,20 @@ void main()
     if (bResisEle>0) SmallResist(oPC,oSkin,bResisEle,sResis);
     if (bResisEle>0) LargeResist(oPC,oSkin,bResisEle,lResis);
     if (nLevel>17) SpellResis(oPC,oSkin,nLevel);
-    if (nLevel>17 && GetPersistantLocalInt(oPC, "DragonDiscipleTailApplied"))
+    if (nLevel>16 && GetPersistantLocalInt(oPC, "DragonDiscipleTailApplied") == 0)
     {
-        SetPersistantLocalInt(oPC, "DragonDiscipleTailApplied", TRUE);
-        DoTail(oPC, nTailType);
+        SetPersistantLocalInt(oPC, "DragonDiscipleTailApplied", 1);
+        SetCreatureTailType(nTailType, oPC);
     }
-    if (nLevel>9 && GetPersistantLocalInt(oPC, "DragonDiscipleWingsApplied"))
+      //if (nLevel>8) DelayCommand(1.0f, SetCreatureWingType(nWingType, oPC));
+    if (nLevel>8 && GetPersistantLocalInt(oPC, "DragonDiscipleWingsApplied") == 0)
     {
-        SetPersistantLocalInt(oPC, "DragonDiscipleWingsApplied", TRUE);
-        DoWings(oPC, nWingType);
+        SetPersistantLocalInt(oPC, "DragonDiscipleWingsApplied", 1);
+        SetCreatureWingType(nWingType, oPC);
     }
+    
     if (nLevel>19) SeeTrue(oPC,oSkin,nLevel);
+    //dragon disciple lichs get (almost) draco-lich wings and bony tail at lich 4 ;)
+    if(nLevel>8 && GetLevelByClass(CLASS_TYPE_LICH, oPC) >= 4) SetCreatureWingType(PRC_WING_TYPE_DRAGON_BRONZE2, oPC);
+    if(nLevel>16 && GetLevelByClass(CLASS_TYPE_LICH, oPC) >= 4) SetCreatureTailType(CREATURE_TAIL_TYPE_BONE, oPC);
 }

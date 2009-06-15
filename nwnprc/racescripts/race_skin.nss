@@ -943,11 +943,22 @@ void main()
     }
     
     //Draconian on-death effects
-    if(nRace == RACIAL_TYPE_BOZAK || nRace == RACIAL_TYPE_BAAZ || nRace == RACIAL_TYPE_KAPAK)
+    if(nRace == RACIAL_TYPE_BOZAK)
     {
-    	SetCreatureWingType(CREATURE_WING_TYPE_DRAGON, oPC);
+    	SetCreatureWingType(PRC_WING_TYPE_DRAGON_BRONZE, oPC);
         ExecuteScript("race_deaththroes", oPC);
     }
+    if(nRace == RACIAL_TYPE_BAAZ)
+    {
+    	SetCreatureWingType(PRC_WING_TYPE_DRAGON_BRASS, oPC);
+        ExecuteScript("race_deaththroes", oPC);
+    }
+    if(nRace == RACIAL_TYPE_KAPAK)
+    {
+    	SetCreatureWingType(PRC_WING_TYPE_DRAGON_COPPER, oPC);
+        ExecuteScript("race_deaththroes", oPC);
+    }
+
     
     //Enforce female Nymphs
     if(nRace == RACIAL_TYPE_NYMPH && GetGender(oPC) != GENDER_FEMALE)

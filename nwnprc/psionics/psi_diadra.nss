@@ -16,7 +16,7 @@
 //removes channeled wings after relogging or server restart
 void WingCorrection(object oPC, int nEvent)
 {
-    if(GetCreatureWingType(oPC) != CREATURE_WING_TYPE_DRAGON) 
+    if(GetCreatureWingType(oPC) != PRC_WING_TYPE_DRAGON_SILVER) 
         return;
     int nChanneled = GetPersistantLocalInt(oPC, "ChannelingWings");
     if(nChanneled)
@@ -30,7 +30,7 @@ void WingCorrection(object oPC, int nEvent)
 //removes channeled tails after relogging or server restart
 void TailCorrection(object oPC, int nEvent)
 {
-    if(GetCreatureWingType(oPC) != CREATURE_TAIL_TYPE_LIZARD) 
+    if(GetCreatureWingType(oPC) != PRC_TAIL_TYPE_DRAGON_SILVER) 
         return;
     int nChanneled = GetPersistantLocalInt(oPC, "ChannelingTail");
     if(nChanneled)

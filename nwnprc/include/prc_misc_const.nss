@@ -305,3 +305,44 @@ const int BASE_ITEM_ELF_COURTBLADE  = 204;
 // ONHIT Spells
 const int IP_CONST_ONHIT_CASTSPELL_DRAGONFIRE = 203;
 const int IP_CONST_ONHIT_KAPAK_POISON         = 204;
+
+
+//:://////////////////////////////////////////////
+//:: Wing Const
+//:://////////////////////////////////////////////
+
+int PRC_WING_TYPE_DRAGON_BRASS    = 59;
+int PRC_WING_TYPE_DRAGON_BRONZE   = 60;
+int PRC_WING_TYPE_DRAGON_COPPER   = 61;
+int PRC_WING_TYPE_DRAGON_SILVER   = 62;
+int PRC_WING_TYPE_DRAGON_GOLD     = 63;
+int PRC_WING_TYPE_DRAGON_WHITE    = 64;
+int PRC_WING_TYPE_DRAGON_BLACK    = 65;
+int PRC_WING_TYPE_DRAGON_GREEN    = 66;
+int PRC_WING_TYPE_DRAGON_BLUE     = 67;
+int PRC_WING_TYPE_DRAGON_RED      = 68;
+int PRC_WING_TYPE_DRAGON_BRASS2   = 69;
+int PRC_WING_TYPE_DRAGON_BRONZE2  = 70;
+int PRC_WING_TYPE_DRAGON_COPPER2  = 71;
+int PRC_WING_TYPE_DRAGON_SILVER2  = 72;
+int PRC_WING_TYPE_DRAGON_GOLD2    = 73;
+int PRC_WING_TYPE_DRAGON_WHITE2   = 74;
+int PRC_WING_TYPE_DRAGON_BLACK2   = 75;
+int PRC_WING_TYPE_DRAGON_GREEN2   = 76;
+int PRC_WING_TYPE_DRAGON_BLUE2    = 77;
+int PRC_WING_TYPE_DRAGON_RED2     = 78;
+
+//:://////////////////////////////////////////////
+//:: Tail Const
+//:://////////////////////////////////////////////
+
+int PRC_TAIL_TYPE_DRAGON_BRASS    = 4;
+int PRC_TAIL_TYPE_DRAGON_BRONZE   = 5;
+int PRC_TAIL_TYPE_DRAGON_COPPER   = 6;
+int PRC_TAIL_TYPE_DRAGON_SILVER   = 7;
+int PRC_TAIL_TYPE_DRAGON_GOLD     = 8;
+int PRC_TAIL_TYPE_DRAGON_BLACK    = 9;
+int PRC_TAIL_TYPE_DRAGON_BLUE     = 10;
+int PRC_TAIL_TYPE_DRAGON_GREEN    = 11;
+int PRC_TAIL_TYPE_DRAGON_RED      = 12;
+int PRC_TAIL_TYPE_DRAGON_WHITE    = 13;

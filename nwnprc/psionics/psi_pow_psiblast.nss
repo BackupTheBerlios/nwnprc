@@ -76,7 +76,7 @@ void main()
         vector vOrigin = GetPosition(oManifester);
         vector vTarget = GetPositionFromLocation(lTarget);
         float fAngle   = acos((vTarget.x - vOrigin.x) / GetDistanceBetweenLocations(GetLocation(oManifester), lTarget));        
-        DrawLinesInACone(manif.nManifesterLevel, fWidth, lTarget, fAngle, DURATION_TYPE_INSTANT, VFX_IMP_BLINDDEAD_DN_BLUE, 0.0f, 20, 1.5f);        
+        DrawLinesInACone(manif.nManifesterLevel, fWidth, lTarget, fAngle, DURATION_TYPE_INSTANT, -1, 0.0f, 20, 1.5f);        
 
         // Handle Twin Power
         int nRepeats = manif.bTwin ? 2 : 1;

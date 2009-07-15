@@ -9,51 +9,35 @@ int GetIsBlessingHourValid()
     return TRUE;
 }
 
-void CheckBlessingOfDawn(object oPC)
+void CheckBlessingOfDawn(object oPC, object oSkin)
 {
     object oArea = GetArea(oPC);
     int bValidHour = GetIsBlessingHourValid();
     if(!bValidHour || GetIsAreaInterior(oArea))
     {
         //SendMessageToPC(GetFirstPC(),"Blessing of Dawn Removed");
-        DelayCommand(15.0,CheckBlessingOfDawn(oPC));
+        DelayCommand(15.0,CheckBlessingOfDawn(oPC, oSkin));
         return;
     }
     float fInterval = INTERVAL_BLESSING_OF_DAWN;
-    object oHide = GetItemInSlot(INVENTORY_SLOT_CARMOUR, oPC);
-    if(!GetIsObjectValid(oHide)){return;}
-    AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyBonusSavingThrow
-        (IP_CONST_SAVEBASETYPE_WILL,2),oHide,fInterval);
-    //SendMessageToPC(GetFirstPC(),"Blessing of Dawn Applied");
-    DelayCommand(fInterval,CheckBlessingOfDawn(oPC));
+    SetCompositeBonus(oSkin, "MLWillSave", 2, ITEM_PROPERTY_SAVING_THROW_BONUS_SPECIFIC, IP_CONST_SAVEBASETYPE_WILL);
+    DelayCommand(fInterval,CheckBlessingOfDawn(oPC, oSkin));
 }
 
 void main()
 {
     object oPC = OBJECT_SELF;
-    object oHide = GetItemInSlot(INVENTORY_SLOT_CARMOUR, oPC);
-    if(!GetIsObjectValid(oHide))
-    {
-        oHide = CreateItemOnObject("prc_hide",oPC);
-        AssignCommand(oPC, ActionEquipItem(oHide,INVENTORY_SLOT_CARMOUR));
-    }
-    itemproperty ip = GetFirstItemProperty(oHide);
-    while(GetIsItemPropertyValid(ip))
-    {
-        RemoveItemProperty(oHide,ip);
-        ip = GetNextItemProperty(oHide);
-    }
-    int nMorninglordLevel = GetLevelByClass(CLASS_TYPE_MORNINGLORD,oPC);
-    AddItemProperty(2,ItemPropertySkillBonus(SKILL_CRAFT_ARMOR,nMorninglordLevel),oHide);
-    AddItemProperty(2,ItemPropertySkillBonus(SKILL_CRAFT_TRAP,nMorninglordLevel),oHide);
-    AddItemProperty(2,ItemPropertySkillBonus(SKILL_CRAFT_WEAPON,nMorninglordLevel),oHide);
-    AddItemProperty(2,ItemPropertySkillBonus(SKILL_PERFORM,nMorninglordLevel),oHide);
-    //new craft skills
-    AddItemProperty(2,ItemPropertySkillBonus(SKILL_CRAFT_GENERAL,nMorninglordLevel),oHide);
-    AddItemProperty(2,ItemPropertySkillBonus(SKILL_CRAFT_ALCHEMY,nMorninglordLevel),oHide);
-    AddItemProperty(2,ItemPropertySkillBonus(SKILL_CRAFT_POISON,nMorninglordLevel),oHide);
-    if(nMorninglordLevel>=6)
-    {
-        CheckBlessingOfDawn(oPC);
-    }
+    object oSkin = GetPCSkin(oPC);
+    
+    int nMorninglordLevel = GetLevelByClass(CLASS_TYPE_MORNINGLORD, oPC);
+    SetCompositeBonus(oSkin, "SkillMLCA", nMorninglordLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_CRAFT_ARMOR);
+    SetCompositeBonus(oSkin, "SkillMLCT", nMorninglordLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_CRAFT_TRAP);
+    SetCompositeBonus(oSkin, "SkillMLPer", nMorninglordLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_PERFORM);
+    SetCompositeBonus(oSkin, "SkillMLCW", nMorninglordLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_CRAFT_WEAPON);
+    SetCompositeBonus(oSkin, "SkillMLCG", nMorninglordLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_CRAFT_GENERAL);
+    SetCompositeBonus(oSkin, "SkillMLCA", nMorninglordLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_CRAFT_ALCHEMY);
+    SetCompositeBonus(oSkin, "SkillMLPoi", nMorninglordLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_CRAFT_POISON);
+    
+    if (nMorninglordLevel >= 6)
+        CheckBlessingOfDawn(oPC, oSkin);
 }

@@ -56,6 +56,7 @@
 52  BonusDomainRUNE                                  2045      2    -1             0      
 53  BonusDomainSPELLS                                2046      2    -1             0      
 54  BonusDomainSCALEYKIND                            2047      2    -1             0      
+55  FEAT_EXALTED_COMPANION                           4199      1    -1             0      
 55  DefArrow                                         8         1    -1             0      
 56  Dodge                                            10        1    -1             0      
 57  StunFist                                         39        1    -1             0      

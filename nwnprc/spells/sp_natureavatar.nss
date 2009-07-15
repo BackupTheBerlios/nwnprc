@@ -20,7 +20,7 @@
 //  Variables passed may be changed if necessary
 int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 {
-    if(GetAssociate(ASSOCIATE_TYPE_ANIMALCOMPANION) == oTarget)
+    if(GetAssociate(ASSOCIATE_TYPE_ANIMALCOMPANION) == oTarget || (GetObjectByTag("hen_winterwolf") == oTarget && GetMaster(oTarget) == oCaster) || (GetObjectByTag("prc_shamn_cat") == oTarget && GetMaster(oTarget) == oCaster))
     {
         PRCSignalSpellEvent(oTarget, FALSE);
         effect eff = EffectAttackIncrease(10);

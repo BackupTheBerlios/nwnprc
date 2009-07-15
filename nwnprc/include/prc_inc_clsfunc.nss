@@ -1646,7 +1646,16 @@ void DoArchmageHeirophantSLA(object oPC, object oTarget, location lTarget, int n
 {
     int nSLAFeatID = -1; //feat  ID of the SLA in use
     int nSLASpellID = -1;//spell ID of the SLA in use NOT THE SPELL BEING CAST
-
+    //get the SLAFeatID
+    int SLA_ID;
+    switch(SLA_ID)
+    {
+    case 1: nSLAFeatID = 2825; break;
+    case 2: nSLAFeatID = 2826; break;
+    case 3: nSLAFeatID = 2827; break;
+    case 4: nSLAFeatID = 2828; break;
+    case 5: nSLAFeatID = 2829; break;
+    }
     //get the spellID of the spell your trying to cast
     //+1 offset for unassigned
     int nSpellID    = GetPersistantLocalInt(oPC, "PRC_SLA_SpellID_"+IntToString(nSLAID))-1;
@@ -1664,14 +1673,30 @@ void DoArchmageHeirophantSLA(object oPC, object oTarget, location lTarget, int n
     {
         //stored, recast it
         int nSpellClass = GetPersistantLocalInt(oPC, "PRC_SLA_Class_"+IntToString(nSLAID));
-        int nSpellLevel = GetCasterLvl(nSpellClass);
+        int nSpellCastLevel = GetCasterLvl(nSpellClass);
         int nMetamagic  = GetPersistantLocalInt(oPC, "PRC_SLA_Meta_"+IntToString(nSLAID));
+        int nSpellLevel;
+            if(nSpellClass == CLASS_TYPE_BARD)
+                nSpellLevel = StringToInt(Get2DACache("Spells", "Bard", nSpellID));
+            else if(nSpellClass == CLASS_TYPE_CLERIC)
+                nSpellLevel = StringToInt(Get2DACache("Spells", "Cleric", nSpellID));
+            else if(nSpellClass == CLASS_TYPE_DRUID)
+                nSpellLevel = StringToInt(Get2DACache("Spells", "Druid", nSpellID));
+            else if(nSpellClass == CLASS_TYPE_RANGER)
+                nSpellLevel = StringToInt(Get2DACache("Spells", "Ranger", nSpellID));
+            else if(nSpellClass == CLASS_TYPE_PALADIN)
+                nSpellLevel = StringToInt(Get2DACache("Spells", "Paladin", nSpellID));
+            else if(nSpellClass == CLASS_TYPE_WIZARD
+                || nSpellClass == CLASS_TYPE_SORCERER)
+                nSpellLevel = StringToInt(Get2DACache("Spells", "Wiz_Sorc", nSpellID));
+            else
+            nSpellLevel = StringToInt(Get2DACache("Spells", "Innate", nSpellID));
 
+        int nBaseDC         = 10 + nSpellLevel + GetDCAbilityModForClass(nSpellClass, oPC);
         //since this is targetted using a generic feat,
         //make sure were within range and target is valid for this spell
-
         //get current distance
-        string sRange = Get2DACache("spells", "Range", nSpellID);
+        /*string sRange = Get2DACache("spells", "Range", nSpellID);
         float fDist;
         if(GetIsObjectValid(oTarget))
              fDist = GetDistanceToObject(oTarget);
@@ -1691,8 +1716,7 @@ void DoArchmageHeirophantSLA(object oPC, object oTarget, location lTarget, int n
             IncrementRemainingFeatUses(oPC, nSLAFeatID);
             //end the script
             return;
-        }
-
+        }*/
         //check object type
         int nTargetType = HexToInt(Get2DACache("spells", "TargetType", nSpellID));
         /*
@@ -1720,7 +1744,7 @@ void DoArchmageHeirophantSLA(object oPC, object oTarget, location lTarget, int n
             }
         }
         //test targetting others
-        if(GetIsObjectValid(oTarget))
+        else if(GetIsObjectValid(oTarget))
         {
             switch(GetObjectType(oTarget))
             {
@@ -1746,7 +1770,7 @@ void DoArchmageHeirophantSLA(object oPC, object oTarget, location lTarget, int n
                     }
                     break;
                 case OBJECT_TYPE_PLACEABLE:
-                    if(!nDoor)
+                    if(!nPlaceable)
                     {
                         nTargetValid = FALSE;
                         FloatingTextStringOnCreature("You cannot target placeables", oPC);
@@ -1755,16 +1779,14 @@ void DoArchmageHeirophantSLA(object oPC, object oTarget, location lTarget, int n
             }
         }
         //test if can target a location
-        if(GetIsObjectValid(GetAreaFromLocation(lTarget)))
+        else if(GetIsObjectValid(GetAreaFromLocation(lTarget)))
         {
             if(!nLocation)
             {
                 nTargetValid = FALSE;
                 FloatingTextStringOnCreature("You cannot target locations", oPC);
             }
-
         }
-
         //target was not valid, abort
         if(!nTargetValid)
         {
@@ -1772,16 +1794,14 @@ void DoArchmageHeirophantSLA(object oPC, object oTarget, location lTarget, int n
             IncrementRemainingFeatUses(oPC, nSLAFeatID);
             //end the script
             return;
-
         }
-
         //actually cast it at this point
         //note that these are instant-spells, so we have to add the animation part too
-        if(GetIsObjectValid(GetAreaFromLocation(lTarget)))
-            ActionCastFakeSpellAtLocation(nSpellID, lTarget);
-        else
+        if(GetIsObjectValid(oTarget))
             ActionCastFakeSpellAtObject(nSpellID, oTarget);
-        ActionDoCommand(ActionCastSpell(nSpellID, nSpellLevel, 0, -1, nMetamagic));
+        else
+            ActionCastFakeSpellAtLocation(nSpellID, lTarget);
+        ActionDoCommand(ActionCastSpell(nSpellID, nSpellCastLevel, nBaseDC, 0, nMetamagic));
     }
 }
 

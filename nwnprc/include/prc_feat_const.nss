@@ -2949,3 +2949,21 @@ const int FEAT_DN_ENERVATING_TOUCH          = 24153;
 // Noble
 const int FEAT_NOBLE_GREATNESS              = 24163;
 const int FEAT_NOBLE_CONFIDENCE             = 24164;
+
+//Morninglord feats
+const int FEAT_GREATER_TURNING_1            = 24165;
+const int FEAT_GREATER_TURNING_2            = 24166;
+const int FEAT_GREATER_TURNING_3            = 24167;
+const int FEAT_GREATER_TURNING_4            = 24168;
+const int FEAT_GREATER_TURNING_5            = 24169;
+const int FEAT_GREATER_TURNING_6            = 24170;
+const int FEAT_GREATER_TURNING_7            = 24171;
+const int FEAT_ML_MAXIMIZE_TURNING          = 24172;
+const int FEAT_BANE_OF_THE_RESTLESS         = 24173;
+const int FEAT_CREATIVE_FIRE                = 24174;
+const int FEAT_SEARING_RAY                  = 24175;
+const int FEAT_BLESSING_OF_DAWN             = 24176;
+const int FEAT_REJUVENATION_OF_MORN         = 24177;
+const int FEAT_ML_AURA_OF_RADIANCE          = 24178;
+const int FEAT_EPIC_MORNINGLORD             = 24179;
+const int FEAT_ML_DAYLIGHT                  = 24180;

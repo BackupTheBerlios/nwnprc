@@ -768,7 +768,22 @@ int ClassSLAStore()
         SetPersistantLocalInt(OBJECT_SELF, "PRC_SLA_SpellID_"+IntToString(nSLAID), nSpellID+1);
         SetPersistantLocalInt(OBJECT_SELF, "PRC_SLA_Class_"+IntToString(nSLAID), PRCGetLastSpellCastClass());
         SetPersistantLocalInt(OBJECT_SELF, "PRC_SLA_Meta_"+IntToString(nSLAID), nMetamagic);
-        int nSpellLevel = StringToInt(Get2DACache("spells", "Innate", nSpellID));
+        int nSpellLevel, nSpellClass;
+            if(nSpellClass == CLASS_TYPE_BARD)
+                nSpellLevel = StringToInt(Get2DACache("Spells", "Bard", nSpellID));
+            else if(nSpellClass == CLASS_TYPE_CLERIC)
+                nSpellLevel = StringToInt(Get2DACache("Spells", "Cleric", nSpellID));
+            else if(nSpellClass == CLASS_TYPE_DRUID)
+                nSpellLevel = StringToInt(Get2DACache("Spells", "Druid", nSpellID));
+            else if(nSpellClass == CLASS_TYPE_RANGER)
+                nSpellLevel = StringToInt(Get2DACache("Spells", "Ranger", nSpellID));
+            else if(nSpellClass == CLASS_TYPE_PALADIN)
+                nSpellLevel = StringToInt(Get2DACache("Spells", "Paladin", nSpellID));
+            else if(nSpellClass == CLASS_TYPE_WIZARD
+                || nSpellClass == CLASS_TYPE_SORCERER)
+                nSpellLevel = StringToInt(Get2DACache("Spells", "Wiz_Sorc", nSpellID));
+            else
+            nSpellLevel = StringToInt(Get2DACache("Spells", "Innate", nSpellID));
         switch(nMetamagic)
         {
             case METAMAGIC_QUICKEN:     nSpellLevel += 4; break;

@@ -71,7 +71,7 @@
 
 #include "prc_inc_clsfunc"
 
-const int SLA_ID = 5;
+int SLA_ID = 5;
 
 void main()
 {

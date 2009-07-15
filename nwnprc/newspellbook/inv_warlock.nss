@@ -55,7 +55,13 @@ void main()
 	    
 	if(nClass > 2)
 	   ApplyEffectToObject(DURATION_TYPE_PERMANENT, ExtraordinaryEffect(eReduction), oPC);
-	   
+
+  if(GetHasFeat(FEAT_WARLOCK_SHADOWMASTER, oPC))
+  {
+      itemproperty ipFeat = PRCItemPropertyBonusFeat(IP_CONST_FEAT_SHADOWMASTER_SHADES);
+      IPSafeAddItemProperty(oSkin, ipFeat, 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+  }
+
 	if(GetHasFeat(FEAT_PARAGON_VISIONARY, oPC))
 	{
 	    effect eTS1 = EffectUltravision();

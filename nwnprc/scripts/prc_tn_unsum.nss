@@ -27,7 +27,8 @@ object oMaster = GetMaster(oTarget);
             sRes == "prc_sum_wight" || sRes == "prc_sum_zlord" || sRes == "prc_tn_fthug" || sRes == "prc_hath_rash" ||
             sRes == "prc_hath_rash2" || sRes == "prc_hath_rash3" || sRes == "prc_hath_rash4" || sRes == "prc_hath_rash5" ||
             sRes == "prc_hath_rash6" || sRes == "prc_hath_rash7" || sRes == "prc_hath_rash8" || sRes == "prc_hath_rash9" ||
-            sRes == "prc_hath_rash10" || sRes == "prc_sum_unicorn" || sRes == "prc_sum_lammasu" || sRes == "prc_sum_andro")
+            sRes == "prc_hath_rash10" || sRes == "prc_sum_unicorn" || sRes == "prc_sum_lammasu" || sRes == "prc_sum_andro" ||
+            sRes == "prc_shamn_cat")
         {
 		DestroyObject(oTarget);
         }

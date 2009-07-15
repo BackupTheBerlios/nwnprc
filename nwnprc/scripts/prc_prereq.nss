@@ -1134,6 +1134,22 @@ void EnlF(object oPC)
 	  SetLocalInt(oPC, "PRC_PrereqEnlF", 0);
 }
 
+void Morninglord(object oPC)
+{
+    if(GetLevelByClass(CLASS_TYPE_CLERIC, oPC))
+    {
+        SetLocalInt(oPC, "PRC_PrereqMornLord", 1);
+        if(GetHasFeat(FEAT_GOOD_DOMAIN_POWER, oPC) +
+           GetHasFeat(FEAT_PROTECTION_DOMAIN_POWER, oPC) +
+           GetHasFeat(FEAT_STRENGTH_DOMAIN_POWER, oPC) +
+           GetHasFeat(FEAT_SUN_DOMAIN_POWER, oPC) +
+           GetHasFeat(FEAT_DOMAIN_POWER_NOBILITY, oPC) +
+           GetHasFeat(FEAT_DOMAIN_POWER_RENEWAL, oPC) +
+           GetHasFeat(FEAT_DOMAIN_POWER_CHARM, oPC) >= 2)
+              SetLocalInt(oPC, "PRC_PrereqMornLord", 0);
+    }
+}
+
 void main()
 {
      //Declare Major Variables
@@ -1298,6 +1314,7 @@ void main()
      TomeOfBattle(oPC);
      AOTS(oPC);
      EnlF(oPC);
+     Morninglord(oPC);
      // Truly massive debug message flood if activated.
      /*
 

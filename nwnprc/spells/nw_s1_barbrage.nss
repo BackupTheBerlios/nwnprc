@@ -148,6 +148,21 @@ void main()
             		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oComp, RoundsToSeconds(nCon));
             		ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oComp) ;
             	}
+
+            	object oWolf = GetObjectByTag("hen_winterwolf");
+            	if (GetIsInMeleeRange(oWolf, OBJECT_SELF) && GetMaster(oWolf) == OBJECT_SELF)
+            	{
+            		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oWolf, RoundsToSeconds(nCon));
+            		ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oWolf) ;
+            	}
+
+            	object oCat = GetObjectByTag("prc_shamn_cat");
+            	if (GetIsInMeleeRange(oCat, OBJECT_SELF) && GetMaster(oCat) == OBJECT_SELF)
+            	{
+            		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oCat, RoundsToSeconds(nCon));
+            		ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oCat) ;
+            	}
+
             }
             
 

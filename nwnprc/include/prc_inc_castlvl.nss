@@ -610,6 +610,7 @@ int GetDivinePRCLevels(object oCaster)
            +  GetLevelByClass(CLASS_TYPE_RUBY_VINDICATOR,   oCaster)
            +  GetLevelByClass(CLASS_TYPE_RUNECASTER,        oCaster)
            +  GetLevelByClass(CLASS_TYPE_SWIFT_WING,        oCaster)
+           +  GetLevelByClass(CLASS_TYPE_MORNINGLORD,       oCaster)
            
            +  (GetLevelByClass(CLASS_TYPE_OLLAM,                 oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_BRIMSTONE_SPEAKER,     oCaster) + 1) / 2

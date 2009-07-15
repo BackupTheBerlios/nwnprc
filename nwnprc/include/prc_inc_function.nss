@@ -192,6 +192,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_ETERNAL_BLADE, oPC) > 0)       ExecuteScript("tob_eternalblade", oPC);
     if(GetLevelByClass(CLASS_TYPE_SHADOW_SUN_NINJA, oPC) > 0)    ExecuteScript("tob_shadowsun", oPC);
     if(GetLevelByClass(CLASS_TYPE_DREAD_NECROMANCER, oPC) > 0)   ExecuteScript("prc_dreadnecro", oPC);
+    if(GetLevelByClass(CLASS_TYPE_MORNINGLORD,oPC) > 0)          ExecuteScript("prc_morninglord", oPC);
 
     // Bonus Domain check
     // If there is a bonus domain, it will always be in the first slot, so just check that.
@@ -572,6 +573,7 @@ void ScrubPCSkin(object oPC, object oSkin)
                 //&& (st < 14501 || st > 15999)
                 && (st < 16300 || st > 17700)
                 && (st < 231 || st > 249)
+                && (st < 141 || st > 151) //141 - shadowmaster shades, 142-151 bonus domains casting feats
                 && ( (st == IP_CONST_FEAT_PRC_POWER_ATTACK_QUICKS_RADIAL || 
                       st == IP_CONST_FEAT_POWER_ATTACK_SINGLE_RADIAL || 
                       st == IP_CONST_FEAT_POWER_ATTACK_FIVES_RADIAL) ? // Remove the PRC Power Attack radials if the character no longer has Power Attack

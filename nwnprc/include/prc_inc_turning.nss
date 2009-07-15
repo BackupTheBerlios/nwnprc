@@ -678,6 +678,7 @@ int GetTurningClassLevel(int bUndeadOnly = FALSE)
     nLevel += GetLevelByClass(CLASS_TYPE_TRUENECRO);
     nLevel += GetLevelByClass(CLASS_TYPE_SOLDIER_OF_LIGHT);
     nLevel += GetLevelByClass(CLASS_TYPE_MASTER_OF_SHROUDS);
+    nLevel += GetLevelByClass(CLASS_TYPE_MORNINGLORD);
 
     //offset classes
     if(GetLevelByClass(CLASS_TYPE_PALADIN)-2>0)

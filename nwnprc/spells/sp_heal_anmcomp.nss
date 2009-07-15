@@ -35,11 +35,25 @@ void main()
         
         //Can only have one animal companion, so default is correct
         object oComp = GetAssociate(ASSOCIATE_TYPE_ANIMALCOMPANION);
-                
-        //If it is your animal companion
-        if(oTarget == oComp)
+        int nCasterLevel = PRCGetCasterLevel(oPC);
+        int nHealVFX  = VFX_IMP_HEALING_X;
+        int nHeal = 10 * nCasterLevel;
+        int nCap = 150;
+        string nSwitch = PRC_BIOWARE_HEAL;
+
+        if(nHeal > nCap && !GetPRCSwitch(nSwitch)) nHeal = nCap;
+
+        //check if it is your animal companion
+        if((oTarget != oComp && oTarget != GetObjectByTag("hen_winterwolf") && oTarget != GetObjectByTag("prc_shamn_cat")) || GetMaster(oComp) != oPC)
         {
-                AssignCommand(oPC, ActionCastSpellAtObject(SPELL_HEAL, oComp, METAMAGIC_NONE, TRUE, PRCGetCasterLevel(oPC)));
+                FloatingTextStringOnCreature("** You may only cast this on your animal companion. **", oPC, FALSE);
+                return;
         }
+
+        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_HEAL, FALSE));
+        float fDelay = 0.0;
+        DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(nHeal), oTarget));
+        DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(nHealVFX), oTarget));
+
         PRCSetSchool();
 }

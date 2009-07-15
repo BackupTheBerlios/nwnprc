@@ -91,9 +91,10 @@ void main()
     int nBonusTurningMaxHD;
     //apply maximize turning
     //+100% if good
-    if(GetHasFeat(FEAT_MAXIMIZE_TURNING) 
-        && GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_GOOD)
+    if((GetHasFeat(FEAT_MAXIMIZE_TURNING) 
+        && GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_GOOD) || GetLocalInt(OBJECT_SELF,"vMaximizeNextTurn"))
         nBonusTurningTotalHD += nTurningTotalHD;
+        
     //apply empowered turning
     //+50%
     //only if maximize doesnt apply
@@ -115,6 +116,8 @@ void main()
     nTurningMaxHD   += nBonusTurningMaxHD;       
     
     FloatingTextStringOnCreature("You are turning "+IntToString(nTurningTotalHD)+"HD of creatures whose HD is equal or less than "+IntToString(nTurningMaxHD), OBJECT_SELF, FALSE);
+    DeleteLocalInt(OBJECT_SELF,"vMaximizeNextTurn");
+    DecrementRemainingFeatUses(OBJECT_SELF,FEAT_ML_MAXIMIZE_TURNING);
     effect eImpactVis = EffectVisualEffect(VFX_FNF_LOS_HOLY_30);
     // Evil clerics rebuke, not turn, and have a different VFX
     if (GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_EVIL) eImpactVis = EffectVisualEffect(VFX_FNF_LOS_EVIL_30);

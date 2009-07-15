@@ -560,6 +560,93 @@ Prerequisite: Epic Ancestral Daisho IX
 Specifics: This increases the maximum total value of the samurai's ancestral weapons to 8,000,000 gp.
 
 Use: Automatic.</entry>
+<entry id="12408" lang="en" sex="m">Morninglord of Lathander</entry>
+  <entry id="12409" lang="en" sex="m">Morninglords of Lathander</entry>
+  <entry id="12410" lang="en" sex="m">morninglord of Lathander</entry>
+  <entry id="12411" lang="en" sex="m">(PRESTIGE CLASS)
+Morninglords are, in many ways, the epitome of the class cleric archetype--they are kind healers and advisors, stalwart protectors, and implacable foes of the undead.  Because morninglords believe it is their duty to bring Lathander's light to all the dark places of the world, they often travel the bredth of Faerûn, preaching the glories of their god to any who will listen and smiting his foes when they appear.
+
+- Hit Die: d8.
+- Proficiencies: A Morninglord of Lathander does not gain any additional weapon or armor proficiencies.
+- Skill Points: 2 + Int Modifier.
+
+REQUIREMENTS:
+
+Alignment:  Any good.
+Skills:  Craft Weapon 4 ranks, Craft Armor 4 ranks, Lore 8 ranks, Persuade 7 ranks.
+Feats: Extra Turning.
+Spellcasting: Able to cast 3rd level divine spells.
+Special:  Must worship Lathander. (Clerics must have two of Good, Nobility, Protection, Renewal, Sun or Strength domains)
+
+ABILITIES:
+
+Level
+1: Bane of the Restless - the character's Morninglord of Lathander levels stack with her cleric and paladin levels for the purposes of turning undead.
+   Lathander's Light:  Whenever the character casts a spell with the light descriptor, its area is doubled.
+2: Creative Fire - the character gains a bonus equal to his morninglord level to all craft and perform checks.
+3: Daylight - the character may cast a Daylight spell once per day at her caster level.
+4: Searing Ray - the character may cast a searing ray spell once per day at her caster level.
+5: Greater Turning - the character may perform a greater turning, which is like a normal turning except that the undead creatures that would be turned are destroyed instead, once per day plus one for every 4 additional morninglord levels.
+6: Blessing of Dawn - +2 to Will Saves for 1 minute.  Only works when the sun is visible to the morninglord.
+7: Maximize Turning - Once per day, the morninglord may automatically achieve the maximum possible result on a turning damage roll.
+8: Rejuvenation of the Morn - If the character prays faithfully, undisturbed for one hour (game time, not real time), he receives the benefits of the following spells on himself: Remove Disease, Lesser Restoration, Neutralize Poison, and Cure Serious Wounds.
+10: Aura of Radiance - The character gains Darkvision and a +2 dodge bonus to Armor Class against attacks from undead creatures.
+
+BONUS SPELLS
+
+Upon gaining a level in Morninglord of Lathander, the character gains new spells per day as if he had also gained a level in his highest divine caster class. He does not learn any new spells through his abilities.</entry>
+  <entry id="12412" lang="en" sex="m">Greater Turning</entry>
+  <entry id="12413" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Morninglord of Lathander
+Specifics: You can perform a greater turning against undead in place of a regular turning. The greater turning is like a normal turning except that the undead creatures that would be turned are destroyed instead.  The morninglord gains the use of this feat once per day at 5th level, and every four levels thereafter, extending into epic levels.</entry>
+  <entry id="12414" lang="en" sex="m">Maximize Turning</entry>
+  <entry id="12415" lang="en" sex="m">Type of Feat: Class
+Prerequisite:  Morninglord of Lathander
+Specifics: Once per day, the Morninglord of Lathander may automatically achieve the maximum possible result on a Turn Undead damage roll.</entry>
+  <entry id="12416" lang="en" sex="m">Bane of the Restless</entry>
+  <entry id="12417" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Morninglord of Lathander level 1.
+Specifics: the character's Morninglord of Lathander levels stack with her levels in any other class that grants the ability to turn undead for the purposes of turning attempts.
+Use: Automatic.</entry>
+  <entry id="12418" lang="en" sex="m">Creative Fire</entry>
+  <entry id="12419" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Morninglord of Lathander level 2.
+Specifics: Morninglords are creative, expressive people, much like their god.  At second level, the character gains a bonus equal to her Morninglord of Lathander level on all craft and perform checks.
+Use:  Automatic.</entry>
+  <entry id="12420" lang="en" sex="m">Searing Ray</entry>
+  <entry id="12421" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Morninglord of Lathander level 4.
+Specifics: At 4th level, a Morninglord of Lathander may use Searing Light once per day (caster level equals Morninglord of Lathander's divine caster level).  If this ability is used against undead, the damage increases as if the Empower Spell feat had been applied.
+Use: Selected.</entry>
+  <entry id="12422" lang="en" sex="m">Blessing of Dawn</entry>
+  <entry id="12423" lang="en" sex="m">Type of Feat: Class.
+Prerequisite: Morninglord of Lathander level 6.
+Specifics: The sight of the morning sun is an inspirational vision for all morninglords.  Beginning at 6th level, a Morninglord of Lathander gains a +2 morale bonus on Will saves from sunrise until noon.  This ability is only in effect while she can see the sun; the effect is surpressed any time she is deprived the sight of it during this period.</entry>
+  <entry id="12424" lang="en" sex="m">Rejuvenation of Morn</entry>
+  <entry id="12425" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Morninglord of Lathander level 8.
+Specifics: Dawn is a powerful symbol of birth and renewal.  Once per day, the morninglord of at least 8th level may spend one interrupted hour before dawn praying to Lathander.  As soon as the sun rises after the prayer ritual, she gains the benefit of a Neutralize Poison, Cure Disease, and Restoration for herself and her entire party.  All party members are also healed 1d6 + morninglord level in hitpoints.
+Use: Selected.  The character must not move or cast spells during the prayer, which must occur one hour before dawn.</entry>
+  <entry id="12426" lang="en" sex="m">Aura of Radiance</entry>
+  <entry id="12427" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Morninglord of Lathander level 10.
+Specifics: When the Morninglord of Lathander reaches 10th level, the light of Lathander shines perpetually upon her.  No matter how dark it is, the Morninglord sees as though the conditions were identical to outdoors at sunrise.  This ability functions like darkvision, except that the morninglord also sees in color.  The morninglord also gains a +2 dodge bonus to Armor Class against attacks from undead creatures.</entry>
+  <entry id="12428" lang="en" sex="m">Epic Morninglord of Lathander</entry>
+  <entry id="12429" lang="en" sex="m">Lathander guides the Epic Morninglord on her life journey.  She has ascended through the ranks of holy warriors to become a symbol of Lathander's might.
+
+Hit Die: d8.
+Skill Points at Each Additional Level: 2 + Int Modifier.
+Bonus Feats: The Epic Morninglord of Lathander gains a bonus feat every three levels.
+Special: 
+ The Epic Morninglord of Lathander continues to gain an additional Greater Turning abiilty every four levels after level 9.
+
+Epic Morninglord of Lathander Bonus Feats List:
+Automatic Quicken Spell, Automatic Silent Spell, Automatic Still Spell, Bonus Domain Power, Epic Spell Focus, Epic Spell Penetration, Great Charisma, Great Wisdom, Improved Combat Casting, Planar Turning.</entry>
+  <entry id="12430" lang="en" sex="m">Daylight</entry>
+  <entry id="12431" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Morninglord of Lathander level 3.
+Specifics: At 2nd level, a Morninglord of Lathander may use Daylight once per day (caster level equals Morninglord of Lathander's divine caster level).
+Use: Selected.</entry>
   <entry id="16390" lang="en" sex="m">
 </entry>
   <entry id="16396" lang="en" sex="m">
@@ -53601,18 +53688,18 @@ Level: 0 1 2 3 4 5 6 7 8 9
   Prerequisite: Noble 4.
   Specifics: The character can aid another character, granting him a bonus equal to 2 + the coordinate bonus on his attacks and skills for 1 round.
 Use: Selected.</entry>
-    <entry id="70403" lang="en" sex="m">Favor</entry>
-    <entry id="70404" lang="en" sex="m">Type of Feat: Class Specific
+    <entry id="70405" lang="en" sex="m">Favor</entry>
+    <entry id="70406" lang="en" sex="m">Type of Feat: Class Specific
   Prerequisite: Noble 1.
   Specifics: The Noble can summon a weapon with a bonus equal to his class level divided by 4. If there is a DM in the game, this will instead PM the Dungeon Master with a favour roll for him to adjudicate.
 Use: Selected.</entry>
-    <entry id="70403" lang="en" sex="m">Inspire Confidence</entry>
-    <entry id="70404" lang="en" sex="m">Type of Feat: Class Specific
+    <entry id="70407" lang="en" sex="m">Inspire Confidence</entry>
+    <entry id="70408" lang="en" sex="m">Type of Feat: Class Specific
   Prerequisite: Noble 2.
   Specifics: +2 saves vs. fear and charm and +1 to attack and damage for allies for 5 rounds.
 Use: Selected.</entry>
-    <entry id="70403" lang="en" sex="m">Inspire Greatness</entry>
-    <entry id="70404" lang="en" sex="m">Type of Feat: Class Specific
+    <entry id="70409" lang="en" sex="m">Inspire Greatness</entry>
+    <entry id="70410" lang="en" sex="m">Type of Feat: Class Specific
   Prerequisite: Noble 11.
   Specifics: +2d6 temp hp, +2 saves and +2 to attack for allies for 5 rounds.
 Use: Selected.</entry>

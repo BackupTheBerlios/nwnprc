@@ -34,7 +34,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     int nDuration = 24;
     int nMetaMagic = PRCGetMetaMagicFeat();
 
-    if(GetAssociate(ASSOCIATE_TYPE_ANIMALCOMPANION) == oTarget)
+    if(GetAssociate(ASSOCIATE_TYPE_ANIMALCOMPANION) == oTarget || (GetObjectByTag("hen_winterwolf") == oTarget && GetMaster(oTarget) == oCaster) || (GetObjectByTag("prc_shamn_cat") == oTarget && GetMaster(oTarget) == oCaster))
     {
         if(!GetHasSpellEffect(SPELL_AWAKEN))
         {

@@ -96,6 +96,9 @@ void AnimalCompanion()
  
     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyMonsterDamage(Dmg),oCreR);
     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAttackBonus(Enh),oCreR);  
+    //winter wolf properties
+    AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageVulnerability(IP_CONST_DAMAGETYPE_FIRE,IP_CONST_DAMAGEVULNERABILITY_50_PERCENT),oCreR);
+    AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageImmunity(IP_CONST_DAMAGETYPE_COLD,IP_CONST_DAMAGEIMMUNITY_100_PERCENT),oCreR);
     
     int iMax;
     int coneAbi = nClass/5;
@@ -118,31 +121,38 @@ void AnimalCompanion()
     SetAssociateState(NW_ASC_DISTANCE_4_METERS, FALSE);
     SetAssociateState(NW_ASC_DISTANCE_6_METERS, FALSE);
 
+    AddHenchman(OBJECT_SELF,oAni);
+
     //Exalted Companion
+    string oWolf = "hen_winterwolf";
     if (GetHasFeat(FEAT_EXALTED_COMPANION) && GetAlignmentGoodEvil(oPC) == ALIGNMENT_GOOD)
     {
-        object oComp = GetAssociate(ASSOCIATE_TYPE_ANIMALCOMPANION);
+        object oComp = GetObjectByTag(oWolf);
+        //Get the companion's skin
+        object oCompSkin = GetPCSkin(oComp);
+        if (oPC == GetMaster(oComp))
+        {
         int nHD = GetHitDice(oComp);
         int nResist;
         effect eDR;
         if (nHD >= 12)
         {
-                eDR = EffectDamageReduction(10, DAMAGE_POWER_PLUS_THREE);
-                nResist = 20;
+            eDR = EffectDamageReduction(10, DAMAGE_POWER_PLUS_THREE);
+            nResist = 20;
         }
         else if (12 > nHD && nHD >= 8)
         {
-                eDR = EffectDamageReduction(5, DAMAGE_POWER_PLUS_TWO);
-                nResist = 20;
+            eDR = EffectDamageReduction(5, DAMAGE_POWER_PLUS_TWO);
+            nResist = 20;
         }
         else if (8 > nHD && nHD >= 4)
         {
-                eDR = EffectDamageReduction(5, DAMAGE_POWER_PLUS_ONE);
-                nResist = 20;
+            eDR = EffectDamageReduction(5, DAMAGE_POWER_PLUS_ONE);
+            nResist = 20;
         }
         else if (4 > nHD)
         {
-                nResist = 5;
+            nResist = 5;
         }
 
         effect eAcid = EffectDamageResistance(DAMAGE_TYPE_ACID, nResist);
@@ -155,15 +165,20 @@ void AnimalCompanion()
         eLink = EffectLinkEffects(eLink, eVis);
         eLink = SupernaturalEffect(eLink);
         ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oComp);
+        itemproperty ipIP = PRCItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_CELESTIAL_SMITE_EVIL);
+        IPSafeAddItemProperty(oCompSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+        }
     }
 
     //Talontar Blightlord's Illmaster
     if (GetLevelByClass(CLASS_TYPE_BLIGHTLORD, OBJECT_SELF) >= 2)
     {
         //Get the companion
-        object oComp = GetAssociate(ASSOCIATE_TYPE_ANIMALCOMPANION);
+        object oComp = GetObjectByTag(oWolf);
         //Get the companion's skin
         object oCompSkin = GetPCSkin(oComp);
+        if (oPC == GetMaster(oComp))
+        {
         //Give the companion Str +4, Con +2, Wis -2, and Cha -2
         effect eStr = EffectAbilityIncrease(ABILITY_STRENGTH, 4);
         effect eCon = EffectAbilityIncrease(ABILITY_CONSTITUTION, 2);
@@ -222,10 +237,8 @@ void AnimalCompanion()
         {
             AdjustAlignment(oComp, ALIGNMENT_EVIL, 80);
         }
+        }
     }
-
-
-    AddHenchman(OBJECT_SELF,oAni);
 }
 
 

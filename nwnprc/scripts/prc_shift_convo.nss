@@ -29,16 +29,21 @@ const int STAGE_SETTINGS                = 4;
 const int STAGE_SELECTQUICKSHIFTTYPE    = 5;
 const int STAGE_SELECTQUICKSHIFTSHAPE   = 6;
 const int STAGE_COULDNTSHIFT            = 7;
-
+const int STAGE_CHANGESHAPE_FILTER      = 8;
 
 const int CHOICE_CHANGESHAPE            = 1;
 const int CHOICE_CHANGESHAPE_EPIC       = 2;
 const int CHOICE_LISTQUICKSHIFTS        = 3;
 const int CHOICE_DELETESHAPE            = 6;
 const int CHOICE_SETTINGS               = 7;
+const int CHOICE_CHANGESHAPE_FILTER     = 8;
+const int CHOICE_CHANGESHAPE_FILTER_ALL = -2;
+const int CHOICE_NORMAL_SHAPE_ORDER     = -3;
+const int CHOICE_REVERSE_SHAPE_ORDER    = -4;
 
 const int CHOICE_DRUIDWS                = 1;
 const int CHOICE_STORE_TRUEAPPEARANCE   = 2;
+const int CHOICE_UPDATE_RACIAL_TYPES    = 3;
 
 const int CHOICE_NORMAL                 = 1;
 const int CHOICE_EPIC                   = 2;
@@ -46,23 +51,32 @@ const int CHOICE_EPIC                   = 2;
 const int CHOICE_BACK_TO_MAIN           = -1;
 const int STRREF_BACK_TO_MAIN           = 16824794; // "Back to main menu"
 
-const string EPICVAR        = "PRC_ShiftConvo_Epic";
-const string QSMODIFYVAR    = "PRC_ShiftConvo_QSToModify";
+const string EPICVAR                 = "PRC_ShiftConvo_Epic";
+const string QSMODIFYVAR             = "PRC_ShiftConvo_QSToModify";
+const string SHAPEFILTERVALUEVAR     = "PRC_ShiftConvo_Shape_Filter_Value";
+const string SHAPEFILTERNEXTSTAGEVAR = "PRC_ShiftConvo_Shape_Filter_Next_Stage";
+const string SHAPEREVERSEORDERVAR    = "PRC_ShiftConvo_Shape_Reverse_Orde";
 
 //////////////////////////////////////////////////
 /* Aid functions                                */
 //////////////////////////////////////////////////
 
-void GenerateShapeList(object oPC)
+void AddShape(object oPC, string sShapeFilter, int nShape)
 {
-    int i, nArraySize = GetNumberOfStoredTemplates(oPC, SHIFTER_TYPE_SHIFTER);
-
-    for(i = 0; i < nArraySize; i++)
-        AddChoice(GetStoredTemplateName(oPC, SHIFTER_TYPE_SHIFTER, i), i, oPC);
+    if(sShapeFilter == "" || FindSubString(sShapeFilter, "_" + IntToString(GetStoredTemplateRacialType(oPC, SHIFTER_TYPE_SHIFTER, nShape)) + "_") != -1)
+        AddChoice(GetStoredTemplateName(oPC, SHIFTER_TYPE_SHIFTER, nShape), nShape, oPC);
 }
 
-
-
+void GenerateShapeList(object oPC, string sShapeFilter, int nReverseShapeOrder)
+{
+    int i, nArraySize = GetNumberOfStoredTemplates(oPC, SHIFTER_TYPE_SHIFTER);
+    if(nReverseShapeOrder)
+        for(i = nArraySize-1; i >= 0; i--)
+            AddShape(oPC, sShapeFilter, i);
+    else
+        for(i = 0; i < nArraySize; i++)
+            AddShape(oPC, sShapeFilter, i);
+}
 
 //////////////////////////////////////////////////
 /* Main function                                */
@@ -112,6 +126,26 @@ void main()
                 MarkStageSetUp(nStage, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
                 SetDefaultTokens();          // Set the next, previous, exit and wait tokens to default values
             }
+            else if(nStage == STAGE_CHANGESHAPE_FILTER)
+            {
+                SetHeader(GetStringByStrRef(57422+0x01000000)); //"Select the racial type of the shape you want to become"
+
+                AddChoiceStrRef(STRREF_BACK_TO_MAIN, CHOICE_BACK_TO_MAIN, oPC);
+
+                AddChoiceStrRef(57400+0x01000000, CHOICE_CHANGESHAPE_FILTER_ALL, oPC); //"All"
+                
+                string sRacialType;
+                int i = 0;
+                while((sRacialType = Get2DACache("shifter_races", "Type", i)) != "")
+                {
+                    string sRacialTypeName = GetStringByStrRef(StringToInt(Get2DACache("shifter_races", "Name", i)));
+                    AddChoice(sRacialTypeName, i, oPC);
+                    i++;
+                }
+
+                MarkStageSetUp(nStage, oPC);
+                SetDefaultTokens();
+            }
             else if(nStage == STAGE_CHANGESHAPE)
             {
                 SetHeaderStrRef(GetLocalInt(oPC, EPICVAR) ?
@@ -122,7 +156,12 @@ void main()
                 // The list may be long, so list the back choice first
                 AddChoiceStrRef(STRREF_BACK_TO_MAIN, CHOICE_BACK_TO_MAIN, oPC);
 
-                GenerateShapeList(oPC);
+                if(GetLocalInt(oPC, SHAPEREVERSEORDERVAR))
+                    AddChoiceStrRef(57425+0x01000000, CHOICE_NORMAL_SHAPE_ORDER, oPC); //"Show oldest shapes first"
+                else
+                    AddChoiceStrRef(57426+0x01000000, CHOICE_REVERSE_SHAPE_ORDER, oPC); //"Show newest shapes first"
+
+                GenerateShapeList(oPC, GetLocalString(oPC, SHAPEFILTERVALUEVAR), GetLocalInt(oPC, SHAPEREVERSEORDERVAR));
 
                 MarkStageSetUp(nStage, oPC);
             }
@@ -168,7 +207,12 @@ void main()
                 // The list may be long, so list the back choice first
                 AddChoiceStrRef(STRREF_BACK_TO_MAIN, CHOICE_BACK_TO_MAIN, oPC);
 
-                GenerateShapeList(oPC);
+                if(GetLocalInt(oPC, SHAPEREVERSEORDERVAR))
+                    AddChoiceStrRef(57425+0x01000000, CHOICE_NORMAL_SHAPE_ORDER, oPC); //"Show oldest shapes first"
+                else
+                    AddChoiceStrRef(57426+0x01000000, CHOICE_REVERSE_SHAPE_ORDER, oPC); //"Show newest shapes first"
+
+                GenerateShapeList(oPC, GetLocalString(oPC, SHAPEFILTERVALUEVAR), GetLocalInt(oPC, SHAPEREVERSEORDERVAR));
 
                 MarkStageSetUp(nStage, oPC);
             }
@@ -179,7 +223,12 @@ void main()
                 // The list may be long, so list the back choice first
                 AddChoiceStrRef(STRREF_BACK_TO_MAIN, CHOICE_BACK_TO_MAIN, oPC);
 
-                GenerateShapeList(oPC);
+                if(GetLocalInt(oPC, SHAPEREVERSEORDERVAR))
+                    AddChoiceStrRef(57425+0x01000000, CHOICE_NORMAL_SHAPE_ORDER, oPC); //"Show oldest shapes first"
+                else
+                    AddChoiceStrRef(57426+0x01000000, CHOICE_REVERSE_SHAPE_ORDER, oPC); //"Show newest shapes first"
+
+                GenerateShapeList(oPC, GetLocalString(oPC, SHAPEFILTERVALUEVAR), GetLocalInt(oPC, SHAPEREVERSEORDERVAR));
 
                 MarkStageSetUp(nStage, oPC);
             }
@@ -194,7 +243,7 @@ void main()
                            ),
                           CHOICE_DRUIDWS, oPC);
                 AddChoiceStrRef(16828385, CHOICE_STORE_TRUEAPPEARANCE, oPC); // "Store your current appearance as your true appearance (will not work if polymorphed or shifted)."
-
+                AddChoiceStrRef(57423+0x01000000, CHOICE_UPDATE_RACIAL_TYPES, oPC); //"Update racial type information"
                 AddChoiceStrRef(STRREF_BACK_TO_MAIN, CHOICE_BACK_TO_MAIN, oPC);
 
                 MarkStageSetUp(nStage, oPC);
@@ -210,6 +259,9 @@ void main()
         // Add any locals set through this conversation
         DeleteLocalInt(oPC, EPICVAR);
         DeleteLocalInt(oPC, QSMODIFYVAR);
+        DeleteLocalString(oPC, SHAPEFILTERVALUEVAR);
+        DeleteLocalInt(oPC, SHAPEFILTERNEXTSTAGEVAR);
+        //Don't DeleteLocalInt(oPC, SHAPEREVERSEORDERVAR);
     }
     // Abort conversation cleanup.
     // NOTE: This section is only run when the conversation is aborted
@@ -220,6 +272,9 @@ void main()
         // Add any locals set through this conversation
         DeleteLocalInt(oPC, EPICVAR);
         DeleteLocalInt(oPC, QSMODIFYVAR);
+        DeleteLocalString(oPC, SHAPEFILTERVALUEVAR);
+        DeleteLocalInt(oPC, SHAPEFILTERNEXTSTAGEVAR);
+        //Don't DeleteLocalInt(oPC, SHAPEREVERSEORDERVAR);
     }
     // Handle PC responses
     else
@@ -235,14 +290,16 @@ void main()
                 case CHOICE_CHANGESHAPE_EPIC:
                     SetLocalInt(oPC, EPICVAR, TRUE);
                 case CHOICE_CHANGESHAPE:
-                    nStage = STAGE_CHANGESHAPE;
-                    break;
+                    nStage = STAGE_CHANGESHAPE_FILTER;
+                    SetLocalInt(oPC, SHAPEFILTERNEXTSTAGEVAR, STAGE_CHANGESHAPE);
+                    break;                    
 
                 case CHOICE_LISTQUICKSHIFTS:
                     nStage = STAGE_LISTQUICKSHIFTS;
                     break;
                 case CHOICE_DELETESHAPE:
-                    nStage = STAGE_DELETESHAPE;
+                    nStage = STAGE_CHANGESHAPE_FILTER;
+                    SetLocalInt(oPC, SHAPEFILTERNEXTSTAGEVAR, STAGE_DELETESHAPE);
                     break;
                 case CHOICE_SETTINGS:
                     nStage = STAGE_SETTINGS;
@@ -252,12 +309,31 @@ void main()
                     DoDebug("prc_shift_convo: ERROR: Unknown choice value at STAGE_ENTRY: " + IntToString(nChoice));
             }
         }
+        else if(nStage == STAGE_CHANGESHAPE_FILTER)
+        {
+            if(nChoice == CHOICE_BACK_TO_MAIN)
+                nStage = STAGE_ENTRY;
+            else
+            {
+                if(nChoice == CHOICE_CHANGESHAPE_FILTER_ALL)
+                    SetLocalString(oPC, SHAPEFILTERVALUEVAR, "");
+                else
+                {
+                    string sRacialType = Get2DACache("shifter_races", "Type", nChoice);
+                    SetLocalString(oPC, SHAPEFILTERVALUEVAR, "_" + sRacialType + "_");
+                }
+                nStage = GetLocalInt(oPC, SHAPEFILTERNEXTSTAGEVAR);
+            }            
+        }
         else if(nStage == STAGE_CHANGESHAPE)
         {
             // Return to main menu?
             if(nChoice == CHOICE_BACK_TO_MAIN)
                 nStage = STAGE_ENTRY;
-            // Something chosen to be shifted into
+            else if(nChoice == CHOICE_NORMAL_SHAPE_ORDER)
+                SetLocalInt(oPC, SHAPEREVERSEORDERVAR, 0);
+            else if (nChoice == CHOICE_REVERSE_SHAPE_ORDER)
+                SetLocalInt(oPC, SHAPEREVERSEORDERVAR, 1);
             else
             {
                 // Make sure the character has uses left for shifting
@@ -343,7 +419,10 @@ void main()
                 if(GetLevelByClass(CLASS_TYPE_PNP_SHIFTER, oPC) > 10)
                     nStage = STAGE_SELECTQUICKSHIFTTYPE;
                 else
-                    nStage = STAGE_SELECTQUICKSHIFTSHAPE;
+                {
+                    nStage = STAGE_CHANGESHAPE_FILTER;
+                    SetLocalInt(oPC, SHAPEFILTERNEXTSTAGEVAR, STAGE_SELECTQUICKSHIFTSHAPE);
+                }
             }
         }
         else if(nStage == STAGE_SELECTQUICKSHIFTTYPE)
@@ -352,14 +431,18 @@ void main()
             if(nChoice == CHOICE_EPIC)
                 SetLocalInt(oPC, EPICVAR, TRUE);
 
-            nStage = STAGE_SELECTQUICKSHIFTSHAPE;
+            nStage = STAGE_CHANGESHAPE_FILTER;
+            SetLocalInt(oPC, SHAPEFILTERNEXTSTAGEVAR, STAGE_SELECTQUICKSHIFTSHAPE);
         }
         else if(nStage == STAGE_SELECTQUICKSHIFTSHAPE)
         {
             // Return to main menu?
             if(nChoice == CHOICE_BACK_TO_MAIN)
                 nStage = STAGE_ENTRY;
-            // Something chosen to be stored
+            else if(nChoice == CHOICE_NORMAL_SHAPE_ORDER)
+                SetLocalInt(oPC, SHAPEREVERSEORDERVAR, 0);
+            else if (nChoice == CHOICE_REVERSE_SHAPE_ORDER)
+                SetLocalInt(oPC, SHAPEREVERSEORDERVAR, 1);
             else
             {
                 // Store the chosen template into the quickslot, choice is the template's index in the main list
@@ -384,15 +467,17 @@ void main()
         }
         else if(nStage == STAGE_DELETESHAPE)
         {
-            // Something was chosen for deletion?
-            if(nChoice != CHOICE_BACK_TO_MAIN)
+            if(nChoice == CHOICE_BACK_TO_MAIN)
+                nStage = STAGE_ENTRY;
+            else if(nChoice == CHOICE_NORMAL_SHAPE_ORDER)
+                SetLocalInt(oPC, SHAPEREVERSEORDERVAR, 0);
+            else if (nChoice == CHOICE_REVERSE_SHAPE_ORDER)
+                SetLocalInt(oPC, SHAPEREVERSEORDERVAR, 1);
+            else
             {
-                // Choice is index into the template list
                 DeleteStoredTemplate(oPC, SHIFTER_TYPE_SHIFTER, nChoice);
+                nStage = STAGE_ENTRY;
             }
-
-            // Return to main menu in any case
-            nStage = STAGE_ENTRY;
         }
         else if(nStage == STAGE_SETTINGS)
         {
@@ -409,6 +494,11 @@ void main()
             {
                 // Probably should give feedback about whether this was successfull or not. Though the warning in the selection text could be enough
                 StoreCurrentAppearanceAsTrueAppearance(oPC, TRUE);
+                nStage = STAGE_ENTRY;
+            }
+            else if (nChoice == CHOICE_UPDATE_RACIAL_TYPES)
+            {
+                UpdateStoredTemplateRacialTypes(oPC, SHIFTER_TYPE_SHIFTER);
                 nStage = STAGE_ENTRY;
             }
         }

@@ -193,6 +193,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_SHADOW_SUN_NINJA, oPC) > 0)    ExecuteScript("tob_shadowsun", oPC);
     if(GetLevelByClass(CLASS_TYPE_DREAD_NECROMANCER, oPC) > 0)   ExecuteScript("prc_dreadnecro", oPC);
     if(GetLevelByClass(CLASS_TYPE_MORNINGLORD,oPC) > 0)          ExecuteScript("prc_morninglord", oPC);
+    if(GetLevelByClass(CLASS_TYPE_VIGILANT, oPC) > 8)            ExecuteScript("prc_vigilant", oPC);
 
     // Bonus Domain check
     // If there is a bonus domain, it will always be in the first slot, so just check that.

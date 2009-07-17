@@ -4159,7 +4159,7 @@ Use: Automatic.</entry>
   <entry id="45898" lang="en" sex="m">&lt;CUSTOM0&gt; sings the Requiem of the Resonant Blade.</entry>
   <entry id="45899" lang="en" sex="m">&lt;CUSTOM0&gt; sings Blinari's Reverberant Defense.</entry>
   <entry id="45900" lang="en" sex="m">(PRESTIGE CLASS)
-A Shifter has no form they call their own. Instead, they cloth themselves in whatever shape is most expedient at the time. While others base their identities largely on their external forms, the Shifter actually comes closer to their true self through all of their transformations. Of necessity, their sense of self is based not on their outward form, but on their soul, which is truly the only constant about them. It is the inner strength of that soul that enables them to take on any shape and remain themselves within.
+A Shifter has no form they call their own. Instead, they clothe themselves in whatever shape is most expedient at the time. While others base their identities largely on their external forms, the Shifter actually comes closer to their true self through all of their transformations. Of necessity, their sense of self is based not on their outward form, but on their soul, which is truly the only constant about them. It is the inner strength of that soul that enables them to take on any shape and remain themselves within.
 
 (This version was created more closely to PnP guidelines. All available forms can be shifted into via verbal commands. The list of available creatures is here: http://www.nwnlexicon.com/compiled/other.resource.html Essentially, everything.)
 Special thanks to Brian Greinke for his additions:
@@ -9929,7 +9929,7 @@ With this you can:
 Specifics: Allows you to cast spells in shapes that can normally not cast spells.
 Use: Automatic.</entry>
   <entry id="47154" lang="en" sex="m">(PRESTIGE CLASS)
-A Shifter has no form they call their own. Instead, they cloth themselves in whatever shape is most expedient at the time. While others base their identities largely on their external forms, the Shifter actually comes closer to their true self through all of their transformations. Of necessity, their sense of self is based not on their outward form, but on their soul, which is truly the only constant about them. It is the inner strength of that soul that enables them to take on any shape and remain themselves within.
+A Shifter has no form they call their own. Instead, they clothe themselves in whatever shape is most expedient at the time. While others base their identities largely on their external forms, the Shifter actually comes closer to their true self through all of their transformations. Of necessity, their sense of self is based not on their outward form, but on their soul, which is truly the only constant about them. It is the inner strength of that soul that enables them to take on any shape and remain themselves within.
 
 (This PrC was created to bring the shifter closer to PnP rules.)
 
@@ -41812,6 +41812,31 @@ You cause various bits of trash and junk in an area - rotting garbage, old cloth
 3rd Level Spell
 
 You polymorph yourself into the form of a fiendish large monstrous spider.  You can remain in this form for 1 hour per invoker level.</entry>
+
+  <entry id="57400" lang="en" sex="m">All</entry>
+  <entry id="57401" lang="en" sex="m">Animal, Beast, Magical Beast</entry>
+  <entry id="57402" lang="en" sex="m">Aberration, Ooze, Vermin</entry>
+  <entry id="57403" lang="en" sex="m">Elemental, Outsider</entry>
+  <entry id="57404" lang="en" sex="m">Humanoid</entry>
+  <entry id="57419" lang="en" sex="m">####END_OF_SHIFTER_PNP_RESERVE_1</entry>
+
+  <entry id="57420" lang="en" sex="m">Required Shifter Level: </entry>
+  <entry id="57421" lang="en" sex="m">Required Character Level: </entry>
+  <entry id="57422" lang="en" sex="m">Select the racial type of the shape you want to become</entry>
+  <entry id="57423" lang="en" sex="m">Update known shape information</entry>
+  <entry id="57424" lang="en" sex="m">Harmlessly Invisible</entry>
+  <entry id="57425" lang="en" sex="m">Show oldest shapes first</entry>
+  <entry id="57426" lang="en" sex="m">Show newest shapes first</entry>
+  <entry id="57427" lang="en" sex="m">bonus/penalty: </entry>
+  <entry id="57428" lang="en" sex="m">AB bonus/penalty from extra Strength: </entry>
+  <entry id="57429" lang="en" sex="m">Damage bonus/penalty from extra Strength: </entry>
+  <entry id="57430" lang="en" sex="m">AC bonus/penalty from extra Dexterity: </entry>
+  <entry id="57431" lang="en" sex="m">Temporary HP from extra Constitution: </entry>
+  <entry id="57432" lang="en" sex="m">Right creature weapon: </entry>
+  <entry id="57433" lang="en" sex="m">Left creature weapon: </entry>
+  <entry id="57434" lang="en" sex="m">Special attack creature weapon: </entry>
+  <entry id="57435" lang="en" sex="m">Natural AC bonus: </entry>
+  <entry id="57499" lang="en" sex="m">####END_OF_SHIFTER_PNP_RESERVE_2</entry>
   <entry id="57500" lang="en" sex="m">Viletooth Lizardfolk</entry>
   <entry id="57501" lang="en" sex="m">viletooth lizardfolk</entry>
   <entry id="57502" lang="en" sex="m">Many lizardfolk forge alliances with black dragons due to their races' similar habitats.  Over time this led to a mingling of bloodlines, sometimes resulting in entire tribes, and other times a single viletooth being born to a tribe of normal lizardfolk.  Physically they are much thinner than their more typical brethren, sometimes even scrawny.  They have patches of black on their body, up to and including their entire body being covered in ebony scales.  They have large eyes and frequently grow short, curved horns similar to those of their draconic ancestor.

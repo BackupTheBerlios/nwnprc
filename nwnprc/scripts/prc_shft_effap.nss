@@ -50,6 +50,7 @@ void main()
         int nExtraSTR   = GetLocalInt(oShifter, "PRC_Shifter_ExtraSTR");
         int nDamageType = GetLocalInt(oShifter, "PRC_Shifter_DamageType");
 
+        string sDamageType = _prc_inc_damage_type_string(nDamageType);
         if(DEBUG) DoDebug("prc_sft_effap: Applying extra Strength bonus / penalty\n"
                         + "nExtraSTR = " + IntToString(nExtraSTR) + "\n"
                         + "nDamageType = " + IntToString(nDamageType)
@@ -89,12 +90,16 @@ void main()
             // Generate bonus effects
             eTotalEffect = EffectLinkEffects(eTotalEffect, EffectAttackIncrease(nExtraSTR, ATTACK_BONUS_MISC));
             eTotalEffect = EffectLinkEffects(eTotalEffect, EffectDamageIncrease(nDamageBonus, nDamageType));
+            SendMessageToPC(oShifter, "=== " + GetStringByStrRef(57428+0x01000000) + " +" + IntToString(nExtraSTR)); //Attack increase from STR increase
+            SendMessageToPC(oShifter, "=== " + GetStringByStrRef(57429+0x01000000) + " +" + IntToString(nExtraSTR)); //Damage increase from STR increase
         }
         else
         {
             // Generate penalty effects
             eTotalEffect = EffectLinkEffects(eTotalEffect, EffectAttackDecrease(-nExtraSTR, ATTACK_BONUS_MISC));
             eTotalEffect = EffectLinkEffects(eTotalEffect, EffectDamageDecrease(-nExtraSTR, nDamageType));
+            SendMessageToPC(oShifter, "=== " + GetStringByStrRef(57428+0x01000000) + " " + IntToString(nExtraSTR)); //Attack decrease from STR increase
+            SendMessageToPC(oShifter, "=== " + GetStringByStrRef(57429+0x01000000) + " " + IntToString(nExtraSTR)); //Damage decrease from STR increase
         }
 
         // Clean up local vars
@@ -113,28 +118,18 @@ void main()
 
         // Generate effect
         if(nExtraDEX > 0)
+        {
             eTotalEffect = EffectLinkEffects(eTotalEffect, EffectACIncrease(nExtraDEX));
+            SendMessageToPC(oShifter, "=== " + GetStringByStrRef(57430+0x01000000) + " +" + IntToString(nExtraDEX)); //AC increase from DEX increase
+        }
         else
+        {
             eTotalEffect = EffectLinkEffects(eTotalEffect, EffectACDecrease(-nExtraDEX));
+            SendMessageToPC(oShifter, "=== " + GetStringByStrRef(57430+0x01000000) + " " + IntToString(nExtraDEX)); //AC decrease from DEX increase
+        }
 
         // Clean up local var
         DeleteLocalInt(oShifter, "PRC_Shifter_ExtraDEX");
-    }
-
-    // Extra CON bonus gets turned into temporary HP
-    if(GetLocalInt(oShifter, "PRC_Shifter_ExtraCON"))
-    {
-        int nExtraCON = GetLocalInt(oShifter, "PRC_Shifter_ExtraCON");
-
-        if(DEBUG) DoDebug("prc_sft_effap: Applying extra Constitution bonus\n"
-                        + "nExtraCON = " + IntToString(nExtraCON)
-                          );
-
-        // Generate effect
-        eTotalEffect = EffectLinkEffects(eTotalEffect, EffectTemporaryHitpoints(nExtraCON * GetHitDice(oShifter)));
-
-        // Clean up local var
-        DeleteLocalInt(oShifter, "PRC_Shifter_ExtraCON");
     }
 
     // Natural AC
@@ -148,6 +143,7 @@ void main()
 
         // Generate effect
         eTotalEffect = EffectLinkEffects(eTotalEffect, EffectACIncrease(nNaturalAC, AC_NATURAL_BONUS));
+        SendMessageToPC(oShifter, "=== " + GetStringByStrRef(57435+0x01000000) + " " + IntToString(nNaturalAC)); //Natural AC of form
 
         // Clean up local var
         DeleteLocalInt(oShifter, "PRC_Shifter_NaturalAC");
@@ -158,11 +154,42 @@ void main()
     {
         if(DEBUG) DoDebug("prc_sft_effap: Applying harmlessness invisibility");
 
+        SendMessageToPC(oShifter, "=== " + GetStringByStrRef(57424+0x01000000)); //"Harmlessly Invisible"
+
         // Generate effect
         eTotalEffect = EffectLinkEffects(eTotalEffect, EffectInvisibility(INVISIBILITY_TYPE_NORMAL));
 
         // Clean up local var
         DeleteLocalInt(oShifter, "PRC_Shifter_HarmlessInvisible");
+    }
+
+    // Supernaturalise and apply the total effect
+    ApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(eTotalEffect), oShifter);
+
+    // Queue deletion of the applicator object
+    DestroyObject(oApplier, 6.0f);
+    
+    //Apply temporary HP separately from other effects--linking it with other effects
+    //causes those other effects to be removed when the temporary HP is used up.
+    
+    eTotalEffect = EffectVisualEffect(VFX_DUR_CESSATE_NEUTRAL); // Initialise to an unobtrusive VFX
+
+    // Extra CON bonus gets turned into temporary HP
+    if(GetLocalInt(oShifter, "PRC_Shifter_ExtraCON"))
+    {
+        int nExtraCON = GetLocalInt(oShifter, "PRC_Shifter_ExtraCON");
+
+        if(DEBUG) DoDebug("prc_sft_effap: Applying extra Constitution bonus\n"
+                        + "nExtraCON = " + IntToString(nExtraCON)
+                          );
+
+        // Generate effect
+        int tempHP = nExtraCON * GetHitDice(oShifter);
+        eTotalEffect = EffectLinkEffects(eTotalEffect, EffectTemporaryHitpoints(tempHP));
+        SendMessageToPC(oShifter, "=== " + GetStringByStrRef(57431+0x01000000) + " " + IntToString(tempHP)); //Temporary HP from CON increase
+
+        // Clean up local var
+        DeleteLocalInt(oShifter, "PRC_Shifter_ExtraCON");
     }
 
     // Supernaturalise and apply the total effect

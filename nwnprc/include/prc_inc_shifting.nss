@@ -45,11 +45,14 @@ const float SHIFTER_MUTEX_UNSET_DELAY = 3.0f;
 
 const string SHIFTER_RESREFS_ARRAY    = "PRC_ShiftingResRefs_";
 const string SHIFTER_NAMES_ARRAY      = "PRC_ShiftingNames_";
+const string SHIFTER_RACIALTYPE_ARRAY = "PRC_RacialType_";
 const string SHIFTER_TRUEAPPEARANCE   = "PRC_ShiftingTrueAppearance";
 const string SHIFTER_ISSHIFTED_MARKER = "nPCShifted"; //"PRC_IsShifted"; // @todo Refactor across all scripts
 const string SHIFTER_SHIFT_MUTEX      = "PRC_Shifting_InProcess";
 const string SHIFTER_RESTRICT_SPELLS  = "PRC_Shifting_RestrictSpells";
 const string SHIFTER_OVERRIDE_RACE    = "PRC_ShiftingOverride_Race";
+const string SHIFTER_ORIGINALHP       = "PRC_Shifter_OriginalHP";
+const string SHIFTER_ORIGINALMAXHP    = "PRC_Shifter_OriginalMaxHP";
 
 const string SHIFTING_TEMPLATE_WP_TAG = "PRC_SHIFTING_TEMPLATE_SPAWN";
 const string SHIFTING_SLAITEM_RESREF  = "epicshifterpower";
@@ -530,6 +533,287 @@ int _prc_inc_shifting_GetIsCreatureHarmless(object oTemplate)
     return GetChallengeRating(oTemplate) < 1.0;
 }
 
+string _prc_inc_lookup_cost_table_entry(int iCostTable, int iCostTableValue)
+{
+    string sCostTableName = Get2DACache("iprp_costtable", "Name", iCostTable);
+    string sCostTableEntry = Get2DACache(sCostTableName, "Name", iCostTableValue);
+    return GetStringByStrRef(StringToInt(sCostTableEntry));
+}
+
+string _prc_inc_damage_type_string(int iDamageType)
+{
+    return GetStringByStrRef(StringToInt(Get2DACache("iprp_damagetype", "Name", iDamageType)));
+}
+
+string _prc_inc_immunity_type_string(int iImmunityType)
+{
+    return GetStringByStrRef(StringToInt(Get2DACache("iprp_immunity", "Name", iImmunityType)));
+}
+
+string _prc_inc_ability_type_string(int iAbilityType)
+{
+    return GetStringByStrRef(StringToInt(Get2DACache("iprp_abilities", "Name", iAbilityType)));
+}
+
+string _prc_inc_skill_type_string(int iSkillType)
+{
+    return GetStringByStrRef(StringToInt(Get2DACache("skills", "Name", iSkillType)));
+}
+
+string _prc_inc_effect_string(int iEffectType)
+{
+    return GetStringByStrRef(StringToInt(Get2DACache("effecticons", "StrRef", iEffectType)));
+}
+
+string _prc_inc_ac_type_string(int iACType)
+{
+    return GetStringByStrRef(StringToInt(Get2DACache("iprp_acmodtype", "Name", iACType)));
+}
+
+string _prc_inc_bonus_feat_type_string(int iBonusFeatType)
+{
+    return GetStringByStrRef(StringToInt(Get2DACache("iprp_feats", "Name", iBonusFeatType)));
+}
+
+string _prc_inc_on_monster_hit_type_string(int iOnMonsterHitType)
+{
+    return GetStringByStrRef(StringToInt(Get2DACache("iprp_monsterhit", "Name", iOnMonsterHitType)));
+}
+
+string _prc_inc_on_hit_spell_type_string(int iOnHitSpellType)
+{
+    return GetStringByStrRef(StringToInt(Get2DACache("iprp_onhitspell", "Name", iOnHitSpellType)));
+}
+
+string _prc_inc_saving_throw_type_string(int iSavingThrowType)
+{
+    return GetStringByStrRef(StringToInt(Get2DACache("iprp_savingthrow", "Name", iSavingThrowType)));
+}
+
+string _prc_inc_saving_throw_element_type_string(int iSavingThrowType)
+{
+    return GetStringByStrRef(StringToInt(Get2DACache("iprp_saveelement", "Name", iSavingThrowType)));
+}
+
+int _prc_inc_shifter_level_requirement(object oTemplate)
+{
+    int nRacialType = MyPRCGetRacialType(oTemplate);
+    int nSize = PRCGetCreatureSize(oTemplate);
+    int nLevelRequired = 0;
+
+    // Size tests
+    if(nSize >= CREATURE_SIZE_HUGE)
+        nLevelRequired = max(nLevelRequired, 7);
+    if(nSize == CREATURE_SIZE_LARGE)
+        nLevelRequired = max(nLevelRequired, 3);
+    if(nSize == CREATURE_SIZE_MEDIUM)
+        nLevelRequired = max(nLevelRequired, 1);
+    if(nSize == CREATURE_SIZE_SMALL)
+        nLevelRequired = max(nLevelRequired, 1);
+    if(nSize <= CREATURE_SIZE_TINY)
+        nLevelRequired = max(nLevelRequired, 3);
+
+    // Type tests
+    if(nRacialType == RACIAL_TYPE_OUTSIDER)
+        nLevelRequired = max(nLevelRequired, 9);
+    if(nRacialType == RACIAL_TYPE_ELEMENTAL)
+        nLevelRequired = max(nLevelRequired, 9);
+    if(nRacialType == RACIAL_TYPE_CONSTRUCT)
+        nLevelRequired = max(nLevelRequired, 8);
+    if(nRacialType == RACIAL_TYPE_UNDEAD)
+        nLevelRequired = max(nLevelRequired, 8);
+    if(nRacialType == RACIAL_TYPE_DRAGON)
+        nLevelRequired = max(nLevelRequired, 7);
+    if(nRacialType == RACIAL_TYPE_ABERRATION)
+        nLevelRequired = max(nLevelRequired, 6);
+    if(nRacialType == RACIAL_TYPE_OOZE)
+        nLevelRequired = max(nLevelRequired, 6);
+    if(nRacialType == RACIAL_TYPE_MAGICAL_BEAST)
+        nLevelRequired = max(nLevelRequired, 5);
+    if(nRacialType == RACIAL_TYPE_GIANT)
+        nLevelRequired = max(nLevelRequired, 4);
+    if(nRacialType == RACIAL_TYPE_VERMIN)
+        nLevelRequired = max(nLevelRequired, 4);
+    if(nRacialType == RACIAL_TYPE_BEAST)
+        nLevelRequired = max(nLevelRequired, 3);
+    if(nRacialType == RACIAL_TYPE_ANIMAL)
+        nLevelRequired = max(nLevelRequired, 2);
+    if(nRacialType == RACIAL_TYPE_HUMANOID_MONSTROUS)
+        nLevelRequired = max(nLevelRequired, 2);
+    if(nRacialType == RACIAL_TYPE_DWARF              ||
+       nRacialType == RACIAL_TYPE_ELF                ||
+       nRacialType == RACIAL_TYPE_GNOME              ||
+       nRacialType == RACIAL_TYPE_HUMAN              ||
+       nRacialType == RACIAL_TYPE_HALFORC            ||
+       nRacialType == RACIAL_TYPE_HALFELF            ||
+       nRacialType == RACIAL_TYPE_HALFLING           ||
+       nRacialType == RACIAL_TYPE_HUMANOID_ORC       ||
+       nRacialType == RACIAL_TYPE_HUMANOID_REPTILIAN
+       )
+        nLevelRequired = max(nLevelRequired, 1);
+        
+    return nLevelRequired;
+}
+
+string _prc_inc_iprop_string(itemproperty iprop)
+{
+    int iType = GetItemPropertyType(iprop);
+    int iSubtype = GetItemPropertySubType(iprop);
+    int iDurationType = GetItemPropertyDurationType(iprop);
+    int iParam1 = GetItemPropertyParam1(iprop);
+    int iParam1Value = GetItemPropertyParam1Value(iprop);
+    int iCostTable = GetItemPropertyCostTable(iprop);
+    int iCostTableValue = GetItemPropertyCostTableValue(iprop);
+    string sType = IntToString(iType);
+    string sSubtype = IntToString(iSubtype);
+    string sDurationType = IntToString(iDurationType);
+    string sParam1 = IntToString(iParam1);
+    string sParam1Value = IntToString(iParam1Value);
+    string sCostTable = IntToString(iCostTable);
+    string sCostTableValue = IntToString(iCostTableValue);
+    string sResult = 
+        "Typ: " + sType + "; " 
+        + "SubTyp: " + sSubtype + "; "
+        + "Dur: " + sDurationType + "; "
+        + "Parm: " + sParam1 + "; "
+        + "ParmVal: " + sParam1Value + "; "
+        + "CTab: " + sCostTable + "; "
+        + "CVal: " + sCostTableValue;
+    string sTypeName = GetStringByStrRef(StringToInt(Get2DACache("itempropdef", "Name", iType)));
+    switch (iType)
+    {
+        //TODO: these are all the possible cases
+        //DONE case ITEM_PROPERTY_ABILITY_BONUS:
+        // case ITEM_PROPERTY_AC_BONUS:
+        // case ITEM_PROPERTY_AC_BONUS_VS_ALIGNMENT_GROUP:
+        // case ITEM_PROPERTY_AC_BONUS_VS_DAMAGE_TYPE:
+        // case ITEM_PROPERTY_AC_BONUS_VS_RACIAL_GROUP:
+        // case ITEM_PROPERTY_AC_BONUS_VS_SPECIFIC_ALIGNMENT:
+        //DONE case ITEM_PROPERTY_ENHANCEMENT_BONUS:
+        // case ITEM_PROPERTY_ENHANCEMENT_BONUS_VS_ALIGNMENT_GROUP:
+        // case ITEM_PROPERTY_ENHANCEMENT_BONUS_VS_RACIAL_GROUP:
+        // case ITEM_PROPERTY_ENHANCEMENT_BONUS_VS_SPECIFIC_ALIGNEMENT: 
+        // case ITEM_PROPERTY_DECREASED_ENHANCEMENT_MODIFIER
+        // case ITEM_PROPERTY_BASE_ITEM_WEIGHT_REDUCTION
+        //DONE case ITEM_PROPERTY_BONUS_FEAT:
+        // case ITEM_PROPERTY_BONUS_SPELL_SLOT_OF_LEVEL_N:
+        // case ITEM_PROPERTY_CAST_SPELL:
+        //DONE case ITEM_PROPERTY_DAMAGE_BONUS:
+        // case ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP:
+        // case ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP:
+        // case ITEM_PROPERTY_DAMAGE_BONUS_VS_SPECIFIC_ALIGNMENT:
+        //DONE case ITEM_PROPERTY_IMMUNITY_DAMAGE_TYPE:
+        // case ITEM_PROPERTY_DECREASED_DAMAGE:
+        //DONE case ITEM_PROPERTY_DAMAGE_REDUCTION:
+        //DONE case ITEM_PROPERTY_DAMAGE_RESISTANCE:
+        //DONE case ITEM_PROPERTY_DAMAGE_VULNERABILITY:
+        //DONE case ITEM_PROPERTY_DARKVISION:
+        // case ITEM_PROPERTY_DECREASED_ABILITY_SCORE:
+        // case ITEM_PROPERTY_DECREASED_AC:
+        // case ITEM_PROPERTY_DECREASED_SKILL_MODIFIER:
+        // case ITEM_PROPERTY_ENHANCED_CONTAINER_REDUCED_WEIGHT:
+        // case ITEM_PROPERTY_EXTRA_MELEE_DAMAGE_TYPE:
+        // case ITEM_PROPERTY_EXTRA_RANGED_DAMAGE_TYPE:
+        //DONE case ITEM_PROPERTY_HASTE:
+        // case ITEM_PROPERTY_HOLY_AVENGER:
+        //DONE case ITEM_PROPERTY_IMMUNITY_MISCELLANEOUS:
+        // case ITEM_PROPERTY_IMPROVED_EVASION:
+        //DONE case ITEM_PROPERTY_SPELL_RESISTANCE:
+        //DONE case ITEM_PROPERTY_SAVING_THROW_BONUS:
+        //DONE case ITEM_PROPERTY_SAVING_THROW_BONUS_SPECIFIC:
+        //DONE case ITEM_PROPERTY_KEEN:
+        //DONE case ITEM_PROPERTY_LIGHT:
+        // case ITEM_PROPERTY_MIGHTY:
+        // case ITEM_PROPERTY_MIND_BLANK:
+        // case ITEM_PROPERTY_NO_DAMAGE:
+        // case ITEM_PROPERTY_ON_HIT_PROPERTIES:
+        //DONE case ITEM_PROPERTY_DECREASED_SAVING_THROWS:
+        //DONE case ITEM_PROPERTY_DECREASED_SAVING_THROWS_SPECIFIC:
+        //DONE case ITEM_PROPERTY_REGENERATION:
+        //DONE case ITEM_PROPERTY_SKILL_BONUS:
+        //DONE case ITEM_PROPERTY_IMMUNITY_SPECIFIC_SPELL:
+        // case ITEM_PROPERTY_IMMUNITY_SPELL_SCHOOL:
+        // case ITEM_PROPERTY_THIEVES_TOOLS:
+        //DONE case ITEM_PROPERTY_ATTACK_BONUS:
+        // case ITEM_PROPERTY_ATTACK_BONUS_VS_ALIGNMENT_GROUP:
+        // case ITEM_PROPERTY_ATTACK_BONUS_VS_RACIAL_GROUP:
+        // case ITEM_PROPERTY_ATTACK_BONUS_VS_SPECIFIC_ALIGNMENT:
+        // case ITEM_PROPERTY_DECREASED_ATTACK_MODIFIER:
+        // case ITEM_PROPERTY_UNLIMITED_AMMUNITION:
+        // case ITEM_PROPERTY_USE_LIMITATION_ALIGNMENT_GROUP:
+        // case ITEM_PROPERTY_USE_LIMITATION_CLASS:
+        // case ITEM_PROPERTY_USE_LIMITATION_RACIAL_TYPE:
+        // case ITEM_PROPERTY_USE_LIMITATION_SPECIFIC_ALIGNMENT:
+        // case ITEM_PROPERTY_USE_LIMITATION_TILESET:
+        // case ITEM_PROPERTY_REGENERATION_VAMPIRIC:
+        // case ITEM_PROPERTY_TRAP:
+        //DONE case ITEM_PROPERTY_TRUE_SEEING:
+        //DONE case ITEM_PROPERTY_ON_MONSTER_HIT:
+        //DONE case ITEM_PROPERTY_TURN_RESISTANCE:
+        // case ITEM_PROPERTY_MASSIVE_CRITICALS:
+        // case ITEM_PROPERTY_FREEDOM_OF_MOVEMENT:
+        //DONE case ITEM_PROPERTY_MONSTER_DAMAGE:
+        //DONE case ITEM_PROPERTY_IMMUNITY_SPELLS_BY_LEVEL:
+        // case ITEM_PROPERTY_SPECIAL_WALK:
+        // case ITEM_PROPERTY_HEALERS_KIT:
+        // case ITEM_PROPERTY_WEIGHT_INCREASE:
+        //DONE case ITEM_PROPERTY_ONHITCASTSPELL:
+        // case ITEM_PROPERTY_VISUALEFFECT:
+        // case ITEM_PROPERTY_ARCANE_SPELL_FAILURE:
+
+        //Property name only
+        case ITEM_PROPERTY_DARKVISION:
+        case ITEM_PROPERTY_HASTE:
+        case ITEM_PROPERTY_KEEN:
+        case ITEM_PROPERTY_TRUE_SEEING:
+            return sTypeName;
+
+        //Interpret cost table information
+        case ITEM_PROPERTY_ENHANCEMENT_BONUS:
+        case ITEM_PROPERTY_IMMUNITY_SPECIFIC_SPELL:
+        case ITEM_PROPERTY_IMMUNITY_SPELLS_BY_LEVEL:
+        case ITEM_PROPERTY_LIGHT:
+        case ITEM_PROPERTY_MONSTER_DAMAGE:
+        case ITEM_PROPERTY_REGENERATION:
+        case ITEM_PROPERTY_SPELL_RESISTANCE:
+        case ITEM_PROPERTY_TURN_RESISTANCE:
+            return sTypeName + ": " + _prc_inc_lookup_cost_table_entry(iCostTable, iCostTableValue);
+        
+        //Interpret cost table information; interpret subtype as damage type
+        case ITEM_PROPERTY_ATTACK_BONUS:
+        case ITEM_PROPERTY_DAMAGE_BONUS:
+        case ITEM_PROPERTY_DAMAGE_RESISTANCE:
+        case ITEM_PROPERTY_DAMAGE_VULNERABILITY:
+        case ITEM_PROPERTY_IMMUNITY_DAMAGE_TYPE:
+            return sTypeName + ": " + _prc_inc_damage_type_string(iSubtype) + " " + _prc_inc_lookup_cost_table_entry(iCostTable, iCostTableValue);
+
+        //Special handling
+        case ITEM_PROPERTY_ABILITY_BONUS:
+            return sTypeName + ": " + _prc_inc_ability_type_string(iSubtype) + " " + _prc_inc_lookup_cost_table_entry(iCostTable, iCostTableValue);
+        case ITEM_PROPERTY_BONUS_FEAT:
+            return sTypeName + ": " + _prc_inc_bonus_feat_type_string(iSubtype);
+        case ITEM_PROPERTY_DAMAGE_REDUCTION:
+            return sTypeName + ": " + _prc_inc_lookup_cost_table_entry(iCostTable, iCostTableValue) + " / " + IntToString(StringToInt(sSubtype)+1);
+        case ITEM_PROPERTY_IMMUNITY_MISCELLANEOUS:
+            return sTypeName + ": " + _prc_inc_immunity_type_string(iSubtype);
+        case ITEM_PROPERTY_ONHITCASTSPELL:
+            return sTypeName + ": " + _prc_inc_on_hit_spell_type_string(iSubtype) + " " + _prc_inc_lookup_cost_table_entry(iCostTable, iCostTableValue);
+        case ITEM_PROPERTY_ON_MONSTER_HIT:
+            return sTypeName + ": " + _prc_inc_on_monster_hit_type_string(iSubtype); 
+        case ITEM_PROPERTY_SKILL_BONUS:
+            return sTypeName + ": " + _prc_inc_skill_type_string(iSubtype) + " " + _prc_inc_lookup_cost_table_entry(iCostTable, iCostTableValue);
+
+        case ITEM_PROPERTY_DECREASED_SAVING_THROWS_SPECIFIC: //TODO: Annis Hag
+        case ITEM_PROPERTY_SAVING_THROW_BONUS_SPECIFIC: //TODO: Annis Hag; dracolich
+            return sTypeName + ": " + _prc_inc_saving_throw_type_string(iSubtype) + " " + _prc_inc_lookup_cost_table_entry(iCostTable, iCostTableValue) + " (" + sResult + ")";
+
+        case ITEM_PROPERTY_DECREASED_SAVING_THROWS:
+        case ITEM_PROPERTY_SAVING_THROW_BONUS: //TODO: Fey'ri
+            return sTypeName + ": " + _prc_inc_saving_throw_element_type_string(iSubtype) + " " + _prc_inc_lookup_cost_table_entry(iCostTable, iCostTableValue) + " (" + sResult + ")";
+    }
+    return sTypeName + " (" + sResult + ")";
+}
+
 /** Internal function.
  * @todo Finish function & comments
  */
@@ -542,6 +826,17 @@ void _prc_inc_shifting_CopyAllItemProperties(object oFrom, object oTo)
         if(GetItemPropertyDurationType(iProp) == DURATION_TYPE_PERMANENT)
             AddItemProperty(GetItemPropertyDurationType(iProp), iProp, oTo);
         iProp = GetNextItemProperty(oFrom);
+    }
+}
+void _prc_inc_shifting_PrintAllItemProperties(string sPrefix, object oShifter, object oItem)
+{
+    itemproperty iProp = GetFirstItemProperty(oItem);
+
+    while(GetIsItemPropertyValid(iProp))
+    {
+        if(GetItemPropertyDurationType(iProp) == DURATION_TYPE_PERMANENT)
+            SendMessageToPC(oShifter, sPrefix + _prc_inc_iprop_string(iProp));
+        iProp = GetNextItemProperty(oItem);
     }
 }
 
@@ -601,7 +896,7 @@ void _prc_inc_shifting_CreateShifterActiveAbilitiesItem(object oTemplate, object
  * @param oTemplate    The target creature of an ongoing shift
  * @param oShifterHide The shifter's hide object
  */
-void _prc_inc_shifting_CopyFeats(object oTemplate, object oShifterHide)
+void _prc_inc_shifting_CopyFeats(object oShifter, object oTemplate, object oShifterHide)
 {
     string sFeat;
     int i = 0;
@@ -611,11 +906,15 @@ void _prc_inc_shifting_CopyFeats(object oTemplate, object oShifterHide)
     {
         // See if the template creature has the given feat
         if(GetHasFeat(StringToInt(sFeat), oTemplate))
+        {
             // Add an itemproperty granting that feat to the shifter's hide
             AddItemProperty(DURATION_TYPE_PERMANENT,
                             ItemPropertyBonusFeat(StringToInt(Get2DACache("shifter_feats", "IPFeat", i))),
                             oShifterHide
                             );
+            string sFeatName = GetStringByStrRef(StringToInt(Get2DACache("feat", "Feat", StringToInt(sFeat))));
+            SendMessageToPC(oShifter, "=== " + sFeatName);
+        }
 
         // Increment loop counter
         i += 1;
@@ -721,6 +1020,21 @@ void _prc_inc_shifting_ShiftIntoTemplateAux(object oShifter, int nShifterType, o
                     + "oTemplate = " + DebugObject2Str(oTemplate) + "\n"
                     + "bGainSpellLikeAbilities = " + DebugBool2String(bGainSpellLikeAbilities) + "\n"
                       );
+    
+    SendMessageToPC(oShifter, "==================================================");
+    
+    string sFormName = GetName(oTemplate);
+    SendMessageToPC(oShifter, "=== " + sFormName);
+    SendMessageToPC(oShifter, "=== " + GetResRef(oTemplate));
+    SendMessageToPC(oShifter, "=== " + GetStringByStrRef((StringToInt(Get2DACache("racialtypes", "Name", MyPRCGetRacialType(oTemplate))))));
+    //TODO: figure out how to print the base speed of the form
+    //TODO: use EffectMovementSpeedIncrease() and EffectMovementSpeedDecrease() to adjust speed to match that of new form?
+
+    int nRequiredShifterLevel = _prc_inc_shifter_level_requirement(oTemplate);
+    SendMessageToPC(oShifter, "=== " + GetStringByStrRef(57420+0x01000000) + IntToString(nRequiredShifterLevel)); //"Required Shifter Level: "
+
+    int nRequiredCharacterLevel = GetPRCSwitch(PNP_SHFT_USECR) ? FloatToInt(GetChallengeRating(oTemplate)) : GetHitDice(oTemplate);
+    SendMessageToPC(oShifter, "=== " + GetStringByStrRef(57421+0x01000000) + IntToString(nRequiredCharacterLevel)); //"Required Character Level: "
 
     // Make sure the template creature is still valid
     if(!GetIsObjectValid(oTemplate) || GetObjectType(oTemplate) != OBJECT_TYPE_CREATURE)
@@ -749,6 +1063,7 @@ void _prc_inc_shifting_ShiftIntoTemplateAux(object oShifter, int nShifterType, o
         object oShifterCWpR = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oShifter);
         object oShifterCWpL = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oShifter);
         object oShifterCWpB = GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oShifter);
+        object oShifterPropertyHolder = OBJECT_INVALID;
 
         // Get the template's creature items
         object oTemplateHide = GetItemInSlot(INVENTORY_SLOT_CARMOUR,   oTemplate);
@@ -756,21 +1071,6 @@ void _prc_inc_shifting_ShiftIntoTemplateAux(object oShifter, int nShifterType, o
         object oTemplateCWpL = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oTemplate);
         object oTemplateCWpB = GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oTemplate);
 
-        //Hide isn't modified for Change Shape - Special Qualities don't transfer
-        if(nShifterType != SHIFTER_TYPE_CHANGESHAPE &&
-           nShifterType != SHIFTER_TYPE_HUMANOIDSHAPE)
-        {
-            // Handle hide
-            // Nuke old props and composite bonus tracking - they will be re-evaluated later
-            ScrubPCSkin(oShifter, oShifterHide);
-            DeletePRCLocalInts(oShifterHide);
-            // Copy all itemproperties from the source's hide. No need to check for validity of oTemplateHide - it not
-            // existing works the same as it existing, but having no iprops.
-            _prc_inc_shifting_CopyAllItemProperties(oTemplateHide, oShifterHide);
-    
-            // This may be necessary. Unknown if relevant BioBugs are still present - 20060630, Ornedan
-            /*DelayCommand(0.05, */AssignCommand(oShifter, ActionEquipItem(oShifterHide, INVENTORY_SLOT_CARMOUR))/*)*/;
-        }
         //Changlings don't get the natural attacks
         if(nShifterType != SHIFTER_TYPE_DISGUISE_SELF)
         {
@@ -781,24 +1081,68 @@ void _prc_inc_shifting_ShiftIntoTemplateAux(object oShifter, int nShifterType, o
             if(GetIsObjectValid(oShifterCWpB)) MyDestroyObject(oShifterCWpB);
     
             // Copy the template's weapons and assign equipping
+            
+            //Properties applied to the hide are lost after sleep,
+            //after level-up, etc.
+            //To avoid that happening, try to find a creature weapon 
+            //to apply them to instead.
+            //The creature weapons don't need to be scrubbed, etc.,
+            //because they are destroyed and replaced
+            //each time the Shifter shifts to another form.
             if(GetIsObjectValid(oTemplateCWpR))
             {
                 oShifterCWpR = CopyItem(oTemplateCWpR, oShifter, TRUE);
+                oShifterPropertyHolder = oShifterCWpR;
                 SetIdentified(oShifterCWpR, TRUE);
+                string sPrefix = GetStringByStrRef(57432+0x01000000); //"Right Creature Weapon:"
+                SendMessageToPC(oShifter, "=== " + sPrefix);
+                _prc_inc_shifting_PrintAllItemProperties("===    ", oShifter, oShifterCWpR);
                 AssignCommand(oShifter, ActionEquipItem(oShifterCWpR, INVENTORY_SLOT_CWEAPON_R));
             }
             if(GetIsObjectValid(oTemplateCWpL))
             {
                 oShifterCWpL = CopyItem(oTemplateCWpL, oShifter, TRUE);
+                oShifterPropertyHolder = oShifterCWpL;
                 SetIdentified(oShifterCWpL, TRUE);
+                string sPrefix = GetStringByStrRef(57433+0x01000000); //"Left Creature Weapon:"
+                SendMessageToPC(oShifter, "=== " + sPrefix);
+                _prc_inc_shifting_PrintAllItemProperties("===    ", oShifter, oShifterCWpL);
                 AssignCommand(oShifter, ActionEquipItem(oShifterCWpL, INVENTORY_SLOT_CWEAPON_L));
             }
             if(GetIsObjectValid(oTemplateCWpB))
             {
                 oShifterCWpB = CopyItem(oTemplateCWpB, oShifter, TRUE);
+                oShifterPropertyHolder = oShifterCWpB;
                 SetIdentified(oShifterCWpB, TRUE);
+                string sPrefix = GetStringByStrRef(57434+0x01000000); //"Special Attack Creature Weapon:"
+                SendMessageToPC(oShifter, "=== " + sPrefix);
+                _prc_inc_shifting_PrintAllItemProperties("===    ", oShifter, oShifterCWpB);
                 AssignCommand(oShifter, ActionEquipItem(oShifterCWpB, INVENTORY_SLOT_CWEAPON_B));
             }
+            if (oShifterPropertyHolder == OBJECT_INVALID)
+            {
+                //Make a dummy creature weapon that doesn't do anything except hold properties--it is never used
+                oShifterPropertyHolder = CreateItemOnObject("pnp_shft_cweap", oShifter); //create a shifter blank creature weapon
+                SetIdentified(oShifterPropertyHolder, TRUE);
+                AssignCommand(oShifter, ActionEquipItem(oShifterPropertyHolder, INVENTORY_SLOT_CWEAPON_B));
+            }
+        }
+        //Hide isn't modified for Change Shape - Special Qualities don't transfer
+        if(nShifterType != SHIFTER_TYPE_CHANGESHAPE &&
+           nShifterType != SHIFTER_TYPE_HUMANOIDSHAPE)
+        {
+            // Handle hide
+            // Nuke old props and composite bonus tracking - they will be re-evaluated later
+            ScrubPCSkin(oShifter, oShifterHide);
+            DeletePRCLocalInts(oShifterHide);
+
+            // Copy all itemproperties from the source's hide. No need to check for validity of oTemplateHide - it not
+            // existing works the same as it existing, but having no iprops.
+            _prc_inc_shifting_CopyAllItemProperties(oTemplateHide, oShifterPropertyHolder);
+            _prc_inc_shifting_PrintAllItemProperties("=== ", oShifter, oTemplateHide);
+
+            // This may be necessary. Unknown if relevant BioBugs are still present - 20060630, Ornedan
+            /*DelayCommand(0.05, */AssignCommand(oShifter, ActionEquipItem(oShifterHide, INVENTORY_SLOT_CARMOUR))/*)*/;
         }
 
         // Ability score adjustments - doesn't apply to Change Shape
@@ -808,9 +1152,13 @@ void _prc_inc_shifting_ShiftIntoTemplateAux(object oShifter, int nShifterType, o
            nShifterType != SHIFTER_TYPE_DISGUISE_SELF)
         {
             // Get the base delta
-            int nDeltaSTR = GetAbilityScore(oTemplate, ABILITY_STRENGTH,     TRUE) - GetAbilityScore(oShifter, ABILITY_STRENGTH,     TRUE);
-            int nDeltaDEX = GetAbilityScore(oTemplate, ABILITY_DEXTERITY,    TRUE) - GetAbilityScore(oShifter, ABILITY_DEXTERITY,    TRUE);
-            int nDeltaCON = GetAbilityScore(oTemplate, ABILITY_CONSTITUTION, TRUE) - GetAbilityScore(oShifter, ABILITY_CONSTITUTION, TRUE);
+            int nCreatureSTR = GetAbilityScore(oTemplate, ABILITY_STRENGTH,     TRUE);
+            int nCreatureDEX = GetAbilityScore(oTemplate, ABILITY_DEXTERITY,    TRUE);
+            int nCreatureCON = GetAbilityScore(oTemplate, ABILITY_CONSTITUTION, TRUE);
+            
+            int nDeltaSTR = nCreatureSTR - GetAbilityScore(oShifter, ABILITY_STRENGTH,     TRUE);
+            int nDeltaDEX = nCreatureDEX - GetAbilityScore(oShifter, ABILITY_DEXTERITY,    TRUE);
+            int nDeltaCON = nCreatureCON - GetAbilityScore(oShifter, ABILITY_CONSTITUTION, TRUE);
             int nNewDEX   = GetAbilityScore(oShifter, ABILITY_DEXTERITY, TRUE) + nDeltaDEX; // For calculating AC bonuses in case of dex bonus overflow
             int nExtraSTR = 0, nExtraDEX = 0, nExtraCON = 0;
     
@@ -822,20 +1170,57 @@ void _prc_inc_shifting_ShiftIntoTemplateAux(object oShifter, int nShifterType, o
             else if(nDeltaDEX < -10) { nExtraDEX = nDeltaDEX + 10; nDeltaDEX = -10; }
             if     (nDeltaCON > 12)  { nExtraCON = nDeltaCON - 12; nDeltaCON =  12; }
             else if(nDeltaCON < -10) { nExtraCON = nDeltaCON + 10; nDeltaCON = -10; }
+            
+            string sExtra, sBonusOrPenalty = GetStringByStrRef(57427+0x01000000);
+            sExtra = " (" + sBonusOrPenalty + (nDeltaSTR>=0?"+":"") + IntToString(nDeltaSTR) + ")";
+            SendMessageToPC(oShifter, "=== " + sFormName + " " + _prc_inc_ability_type_string(0) + " " + IntToString(nCreatureSTR) + sExtra);
+            sExtra = " (" + sBonusOrPenalty + (nDeltaDEX>=0?"+":"") + IntToString(nDeltaDEX) + ")";
+            SendMessageToPC(oShifter, "=== " + sFormName + " " + _prc_inc_ability_type_string(1) + " " + IntToString(nCreatureDEX) + sExtra);
+            sExtra = " (" + sBonusOrPenalty + (nDeltaCON>=0?"+":"") + IntToString(nDeltaCON) + ")";
+            SendMessageToPC(oShifter, "=== " + sFormName + " " + _prc_inc_ability_type_string(2) + " " + IntToString(nCreatureCON) + sExtra);
     
             // Set the ability score adjustments as composite bonuses
             if(nDeltaSTR > 0)
-                SetCompositeBonus(oShifterHide, "Shifting_AbilityAdjustmentSTRBonus", nDeltaSTR, ITEM_PROPERTY_ABILITY_BONUS, IP_CONST_ABILITY_STR);
+                SetCompositeBonus(oShifterPropertyHolder, "Shifting_AbilityAdjustmentSTRBonus", nDeltaSTR, ITEM_PROPERTY_ABILITY_BONUS, IP_CONST_ABILITY_STR);
             else if(nDeltaSTR < 0)
-                SetCompositeBonus(oShifterHide, "Shifting_AbilityAdjustmentSTRPenalty", -nDeltaSTR, ITEM_PROPERTY_DECREASED_ABILITY_SCORE, IP_CONST_ABILITY_STR);
+                SetCompositeBonus(oShifterPropertyHolder, "Shifting_AbilityAdjustmentSTRPenalty", -nDeltaSTR, ITEM_PROPERTY_DECREASED_ABILITY_SCORE, IP_CONST_ABILITY_STR);
             if(nDeltaDEX > 0)
-                SetCompositeBonus(oShifterHide, "Shifting_AbilityAdjustmentDEXBonus", nDeltaDEX, ITEM_PROPERTY_ABILITY_BONUS, IP_CONST_ABILITY_DEX);
+                SetCompositeBonus(oShifterPropertyHolder, "Shifting_AbilityAdjustmentDEXBonus", nDeltaDEX, ITEM_PROPERTY_ABILITY_BONUS, IP_CONST_ABILITY_DEX);
             else if(nDeltaDEX < 0)
-                SetCompositeBonus(oShifterHide, "Shifting_AbilityAdjustmentDEXPenalty", -nDeltaDEX, ITEM_PROPERTY_DECREASED_ABILITY_SCORE, IP_CONST_ABILITY_DEX);
+                SetCompositeBonus(oShifterPropertyHolder, "Shifting_AbilityAdjustmentDEXPenalty", -nDeltaDEX, ITEM_PROPERTY_DECREASED_ABILITY_SCORE, IP_CONST_ABILITY_DEX);
             if(nDeltaCON > 0)
-                SetCompositeBonus(oShifterHide, "Shifting_AbilityAdjustmentCONBonus", nDeltaCON, ITEM_PROPERTY_ABILITY_BONUS, IP_CONST_ABILITY_CON);
+                SetCompositeBonus(oShifterPropertyHolder, "Shifting_AbilityAdjustmentCONBonus", nDeltaCON, ITEM_PROPERTY_ABILITY_BONUS, IP_CONST_ABILITY_CON);
             else if(nDeltaCON < 0)
-                SetCompositeBonus(oShifterHide, "Shifting_AbilityAdjustmentCONPenalty", -nDeltaCON, ITEM_PROPERTY_DECREASED_ABILITY_SCORE, IP_CONST_ABILITY_CON);
+                SetCompositeBonus(oShifterPropertyHolder, "Shifting_AbilityAdjustmentCONPenalty", -nDeltaCON, ITEM_PROPERTY_DECREASED_ABILITY_SCORE, IP_CONST_ABILITY_CON);
+        
+            int nHealHP = GetHitDice(oShifter) + nCreatureCON;
+            if(!GetPRCSwitch(PRC_PNP_REST_HEALING))
+            {
+                //Wildshape is supposed to heal the same amount as a night's sleep, which by default NWN rules
+                //is full healing. That would be overpowered, so we'll use only double the PnP healing amount here.
+                nHealHP *= 2;
+            }
+            int nAdjustHP = (
+                nShifterType != SHIFTER_TYPE_CHANGESHAPE
+                && nShifterType != SHIFTER_TYPE_HUMANOIDSHAPE 
+                && nShifterType != SHIFTER_TYPE_ALTER_SELF 
+                && nShifterType != SHIFTER_TYPE_DISGUISE_SELF
+                );
+            if(nAdjustHP)
+            {
+                if(GetLocalInt(oShifter, SHIFTER_ORIGINALMAXHP))
+                {
+                    int nOriginalHP = GetLocalInt(oShifter, SHIFTER_ORIGINALHP);
+                    int nOriginalMaxHP = GetLocalInt(oShifter, SHIFTER_ORIGINALMAXHP);
+                    //Preserve HP loss we had before shifting, but first heal by the amount that wildshaping is supposed to
+                    //(one hitpoint per hit die plus one hitpoint per point of CON)
+                    int nDamageAmount = nOriginalMaxHP-nOriginalHP-nHealHP;
+                    if(nDamageAmount > 0)
+                        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDamageAmount), oShifter);
+                }
+                else
+                    ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(nHealHP), oShifter);
+            }
     
             // Extra Strength - Attack and damage bonus / penalty
             // Convert to stat bonus and see if it's non-zero
@@ -930,7 +1315,9 @@ void _prc_inc_shifting_ShiftIntoTemplateAux(object oShifter, int nShifterType, o
             if((nExtraCON /= 2) > 0)
             {
                 bNeedSpellCast = TRUE;
-                SetLocalInt(oShifter, "PRC_Shifter_ExtraCON", nExtraCON);
+                SetLocalInt(oShifter, "PRC_Shifter_ExtraCON", nExtraCON); 
+                    //TODO: change this calculation to match with new healing implementation
+                    //(I believe the current calculations can give full healing, etc.)
             }
         }
 
@@ -954,7 +1341,7 @@ void _prc_inc_shifting_ShiftIntoTemplateAux(object oShifter, int nShifterType, o
 
         // Feats - read from shifter_feats.2da, check if template has it and copy over if it does
         // Delayed, since this takes way too long
-        //DelayCommand(0.0f, _prc_inc_shifting_CopyFeats(oTemplate, oShifterHide)); @todo Re-enable once it is known whether this is the cause of the lag.
+        DelayCommand(0.0f, _prc_inc_shifting_CopyFeats(oShifter, oTemplate, oShifterPropertyHolder)); //@todo Re-enable once it is known whether this is the cause of the lag.
 
         // Casting restrictions if our - inaccurate - check indicates the template can't cast spells
         if(!_prc_inc_shifting_GetCanFormCast(oTemplate))
@@ -972,7 +1359,6 @@ void _prc_inc_shifting_ShiftIntoTemplateAux(object oShifter, int nShifterType, o
             bNeedSpellCast = TRUE;
             SetLocalInt(oShifter, "PRC_Shifter_HarmlessInvisible", TRUE);
         }
-
 
         // If requested, generate an item for using SLAs
         if(bGainSpellLikeAbilities)
@@ -1000,13 +1386,6 @@ void _prc_inc_shifting_ShiftIntoTemplateAux(object oShifter, int nShifterType, o
             && nShifterType != SHIFTER_TYPE_DISGUISE_SELF) 
            || GetHasFeat(FEAT_RACIAL_EMULATION))
             SetLocalInt(oShifter, SHIFTER_OVERRIDE_RACE, MyPRCGetRacialType(oTemplate) + 1);
-
-        // Heal as if rested - this is a side-effect of polymorphing - doesn't apply to Change Shape
-        if(nShifterType != SHIFTER_TYPE_CHANGESHAPE 
-           && nShifterType != SHIFTER_TYPE_HUMANOIDSHAPE 
-           && nShifterType != SHIFTER_TYPE_ALTER_SELF 
-           && nShifterType != SHIFTER_TYPE_DISGUISE_SELF)
-            ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(GetHitDice(oShifter) * d4()), oShifter);
 
         // Some VFX
         ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_POLYMORPH), oShifter);
@@ -1154,6 +1533,25 @@ void _prc_inc_shifting_UnShiftAux(object oShifter, int nShifterType, object oTem
     object oShifterCWpL = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oShifter);
     object oShifterCWpB = GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oShifter);
 
+    int nAdjustHP = GetIsObjectValid(oTemplate) && (
+        nShifterType != SHIFTER_TYPE_CHANGESHAPE
+        && nShifterType != SHIFTER_TYPE_HUMANOIDSHAPE 
+        && nShifterType != SHIFTER_TYPE_ALTER_SELF 
+        && nShifterType != SHIFTER_TYPE_DISGUISE_SELF
+        );
+    if(nAdjustHP)
+    {
+        int nOriginalHP = GetCurrentHitPoints(oShifter);
+        int nOriginalMaxHP = GetMaxHitPoints(oShifter);
+        SetLocalInt(oShifter, SHIFTER_ORIGINALHP, nOriginalHP);
+        SetLocalInt(oShifter, SHIFTER_ORIGINALMAXHP, nOriginalMaxHP);
+
+        //Before unshifting, fully heal the shifter. After shifting, some of the added hitpoints will be taken away again.
+        //This is to prevent the Shifter from dying when shifting from one high CON form to another high CON form
+        //due to the temporary loss of CON caused by shifting into the low-CON true form in between.
+        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(nOriginalMaxHP), oShifter);
+    }
+
     // Clear the hide. We'll have to run EvalPRCFeats() later on
     ScrubPCSkin(oShifter, oShifterHide);
     DeletePRCLocalInts(oShifterHide);
@@ -1234,8 +1632,10 @@ void _prc_inc_shifting_UnShiftAux(object oShifter, int nShifterType, object oTem
 
     // Queue reshifting to happen if needed. Let a short while pass so any fallout from the unshift gets handled
     if(GetIsObjectValid(oTemplate))
+    {
         DelayCommand(1.0f, _prc_inc_shifting_ShiftIntoTemplateAux(oShifter, nShifterType, oTemplate, bGainSpellLikeAbilities));
-    // Since there is no reshifting, we can unset the mutex now
+        // Since there is no reshifting, we can unset the mutex now
+    }
     else
         SetLocalInt(oShifter, SHIFTER_SHIFT_MUTEX, FALSE);
 }
@@ -1269,6 +1669,25 @@ void _prc_inc_shifting_UnShiftAux_SeekPolyEnd(object oShifter, object oSkin, int
         _prc_inc_shifting_UnShiftAux(oShifter, SHIFTER_TYPE_NONE, OBJECT_INVALID, FALSE);
 }
 
+object _prc_inc_load_template_from_resref(string sResRef)
+{
+    /* Create the template to shift into */
+    // Get the waypoint in Limbo where shifting template creatures are spawned
+    object oSpawnWP = GetWaypointByTag(SHIFTING_TEMPLATE_WP_TAG);
+    // Paranoia check - the WP should be built into the area data of Limbo
+    if(!GetIsObjectValid(oSpawnWP))
+    {
+        if(DEBUG) DoDebug("prc_inc_shifting: ShiftIntoResRef(): ERROR: Template spawn waypoint does not exist.");
+        // Create the WP
+        oSpawnWP = CreateObject(OBJECT_TYPE_WAYPOINT, "nw_waypoint001", GetLocation(GetObjectByTag("HEARTOFCHAOS")), FALSE, SHIFTING_TEMPLATE_WP_TAG);
+    }
+
+    // Get the WP's location
+    location lSpawn  = GetLocation(oSpawnWP);
+
+    // And spawn an instance of the given template there
+    return CreateObject(OBJECT_TYPE_CREATURE, sResRef, lSpawn);
+}
 
 //////////////////////////////////////////////////
 /*             Function definitions             */
@@ -1307,7 +1726,7 @@ int StoreCurrentAppearanceAsTrueAppearance(object oShifter, int bCarefull = TRUE
 
 int RestoreTrueAppearance(object oShifter)
 {
-    // Check fo the the "true appearance stored" marker. Abort if it's not present
+    // Check for the "true appearance stored" marker. Abort if it's not present
     if(!GetPersistantLocalInt(oShifter, SHIFTER_TRUEAPPEARANCE))
         return FALSE;
 
@@ -1347,18 +1766,22 @@ void StoreShiftingTemplate(object oShifter, int nShifterType, object oTarget)
     if(!(GetIsObjectValid(oShifter) && GetIsObjectValid(oTarget) && GetResRef(oTarget) != ""))
         return;
 
-    string sResRefsArray = SHIFTER_RESREFS_ARRAY + IntToString(nShifterType);
-    string sNamesArray   = SHIFTER_NAMES_ARRAY   + IntToString(nShifterType);
+    string sResRefsArray    = SHIFTER_RESREFS_ARRAY + IntToString(nShifterType);
+    string sNamesArray      = SHIFTER_NAMES_ARRAY   + IntToString(nShifterType);
+    string sRacialTypeArray = SHIFTER_RACIALTYPE_ARRAY  + IntToString(nShifterType);
 
     // Determine array existence
     if(!persistant_array_exists(oShifter, sResRefsArray))
         persistant_array_create(oShifter, sResRefsArray);
     if(!persistant_array_exists(oShifter, sNamesArray))
         persistant_array_create(oShifter, sNamesArray);
+    if(!persistant_array_exists(oShifter, sRacialTypeArray))
+        persistant_array_create(oShifter, sRacialTypeArray);
 
     // Get the storeable data
     string sResRef = GetResRef(oTarget);
-    string sName   = GetName(oTarget);
+    string sName = GetName(oTarget);
+    string sRacialType = IntToString(MyPRCGetRacialType(oTarget));
     int nArraySize = persistant_array_get_size(oShifter, sResRefsArray);
 
     // Check for the template already being present
@@ -1367,6 +1790,7 @@ void StoreShiftingTemplate(object oShifter, int nShifterType, object oTarget)
 
     persistant_array_set_string(oShifter, sResRefsArray, nArraySize, sResRef);
     persistant_array_set_string(oShifter, sNamesArray, nArraySize, sName);
+    persistant_array_set_string(oShifter, sRacialTypeArray, nArraySize, sRacialType);
 }
 
 int GetNumberOfStoredTemplates(object oShifter, int nShifterType)
@@ -1387,16 +1811,66 @@ string GetStoredTemplateName(object oShifter, int nShifterType, int nIndex)
     return persistant_array_get_string(oShifter, SHIFTER_NAMES_ARRAY + IntToString(nShifterType), nIndex);
 }
 
+int GetStoredTemplateRacialType(object oShifter, int nShifterType, int nIndex)
+{
+    string sRacialTypeArray = SHIFTER_RACIALTYPE_ARRAY  + IntToString(nShifterType);
+    string sRacialType = persistant_array_get_string(oShifter, sRacialTypeArray, nIndex);
+    if(sRacialType == "")
+        return -1;
+    else
+        return StringToInt(sRacialType);
+}
+
+void _UpdateStoredTemplateRacialTypes(object oShifter, int nShifterType, int nStart, int nLimit)
+{
+    string sRacialTypeArray  = SHIFTER_RACIALTYPE_ARRAY + IntToString(nShifterType);
+    int i;
+    for(i = nStart; i < nLimit; i++)
+    {
+        string sRacialType = persistant_array_get_string(oShifter, sRacialTypeArray, i);
+        if(sRacialType == "")
+        {
+            object oTarget = _prc_inc_load_template_from_resref(GetStoredTemplate(oShifter, nShifterType, i));
+            if(GetIsObjectValid(oTarget))
+            {
+                sRacialType = IntToString(MyPRCGetRacialType(oTarget));
+                MyDestroyObject(oTarget);
+                persistant_array_set_string(oShifter, sRacialTypeArray, i, sRacialType);
+            }
+        }
+    }
+}
+
+void UpdateStoredTemplateRacialTypes(object oShifter, int nShifterType)
+{
+    string sRacialTypeArray  = SHIFTER_RACIALTYPE_ARRAY + IntToString(nShifterType);
+    if(!persistant_array_exists(oShifter, sRacialTypeArray))
+        persistant_array_create(oShifter, sRacialTypeArray);
+
+    int nArraySize = GetNumberOfStoredTemplates(oShifter, nShifterType);
+    int nChunkSize = 50;
+    int i = 0;
+    int j = 0;
+    while(i < nArraySize)
+    {
+        DelayCommand(1.0f * j, _UpdateStoredTemplateRacialTypes(oShifter, nShifterType, i, min(i+nChunkSize, nArraySize)));
+        i+=nChunkSize;
+        j++;
+    }
+}
+
 void DeleteStoredTemplate(object oShifter, int nShifterType, int nIndex)
 {
     string sResRefsArray = SHIFTER_RESREFS_ARRAY + IntToString(nShifterType);
     string sNamesArray   = SHIFTER_NAMES_ARRAY   + IntToString(nShifterType);
+    string sRacialTypeArray  = SHIFTER_RACIALTYPE_ARRAY  + IntToString(nShifterType);
 
     // Determine array existence
     if(!persistant_array_exists(oShifter, sResRefsArray))
         return;
     if(!persistant_array_exists(oShifter, sNamesArray))
         return;
+    int nRacialTypeArrayExists = persistant_array_exists(oShifter, sRacialTypeArray);
 
     // Move array entries
     int i, nArraySize = persistant_array_get_size(oShifter, sResRefsArray);
@@ -1408,11 +1882,17 @@ void DeleteStoredTemplate(object oShifter, int nShifterType, int nIndex)
         persistant_array_set_string(oShifter, sNamesArray, i,
                                     persistant_array_get_string(oShifter, sNamesArray, i + 1)
                                     );
+        if(nRacialTypeArrayExists)
+            persistant_array_set_string(oShifter, sRacialTypeArray, i,
+                                        persistant_array_get_string(oShifter, sResRefsArray, i + 1)
+                                        );
     }
 
     // Shrink the arrays
     persistant_array_shrink(oShifter, sResRefsArray, nArraySize - 1);
     persistant_array_shrink(oShifter, sNamesArray,   nArraySize - 1);
+    if(nRacialTypeArrayExists)
+        persistant_array_shrink(oShifter, sRacialTypeArray, nArraySize - 1);
 }
 
 
@@ -1529,9 +2009,7 @@ int GetCanShiftIntoCreature(object oShifter, int nShifterType, object oTemplate)
             if(nShifterType == SHIFTER_TYPE_SHIFTER)
             {
                 int nShifterLevel  = GetLevelByClass(CLASS_TYPE_PNP_SHIFTER, oShifter);
-                int nLevelRequired = 0;
 
-                int nSize       = PRCGetCreatureSize(oTemplate);
                 int nRacialType = MyPRCGetRacialType(oTemplate);
 
                 // Fey and shapechangers are forbidden targets for PnP Shifter
@@ -1542,58 +2020,8 @@ int GetCanShiftIntoCreature(object oShifter, int nShifterType, object oTemplate)
                 }
                 else
                 {
-                    // Size tests
-                    if(nSize >= CREATURE_SIZE_HUGE)
-                        nLevelRequired = max(nLevelRequired, 7);
-                    if(nSize == CREATURE_SIZE_LARGE)
-                        nLevelRequired = max(nLevelRequired, 3);
-                    if(nSize == CREATURE_SIZE_MEDIUM)
-                        nLevelRequired = max(nLevelRequired, 1);
-                    if(nSize == CREATURE_SIZE_SMALL)
-                        nLevelRequired = max(nLevelRequired, 1);
-                    if(nSize <= CREATURE_SIZE_TINY)
-                        nLevelRequired = max(nLevelRequired, 3);
-
-                    // Type tests
-                    if(nRacialType == RACIAL_TYPE_OUTSIDER)
-                        nLevelRequired = max(nLevelRequired, 9);
-                    if(nRacialType == RACIAL_TYPE_ELEMENTAL)
-                        nLevelRequired = max(nLevelRequired, 9);
-                    if(nRacialType == RACIAL_TYPE_CONSTRUCT)
-                        nLevelRequired = max(nLevelRequired, 8);
-                    if(nRacialType == RACIAL_TYPE_UNDEAD)
-                        nLevelRequired = max(nLevelRequired, 8);
-                    if(nRacialType == RACIAL_TYPE_DRAGON)
-                        nLevelRequired = max(nLevelRequired, 7);
-                    if(nRacialType == RACIAL_TYPE_ABERRATION)
-                        nLevelRequired = max(nLevelRequired, 6);
-                    if(nRacialType == RACIAL_TYPE_OOZE)
-                        nLevelRequired = max(nLevelRequired, 6);
-                    if(nRacialType == RACIAL_TYPE_MAGICAL_BEAST)
-                        nLevelRequired = max(nLevelRequired, 5);
-                    if(nRacialType == RACIAL_TYPE_GIANT)
-                        nLevelRequired = max(nLevelRequired, 4);
-                    if(nRacialType == RACIAL_TYPE_VERMIN)
-                        nLevelRequired = max(nLevelRequired, 4);
-                    if(nRacialType == RACIAL_TYPE_BEAST)
-                        nLevelRequired = max(nLevelRequired, 3);
-                    if(nRacialType == RACIAL_TYPE_ANIMAL)
-                        nLevelRequired = max(nLevelRequired, 2);
-                    if(nRacialType == RACIAL_TYPE_HUMANOID_MONSTROUS)
-                        nLevelRequired = max(nLevelRequired, 2);
-                    if(nRacialType == RACIAL_TYPE_DWARF              ||
-                       nRacialType == RACIAL_TYPE_ELF                ||
-                       nRacialType == RACIAL_TYPE_GNOME              ||
-                       nRacialType == RACIAL_TYPE_HUMAN              ||
-                       nRacialType == RACIAL_TYPE_HALFORC            ||
-                       nRacialType == RACIAL_TYPE_HALFELF            ||
-                       nRacialType == RACIAL_TYPE_HALFLING           ||
-                       nRacialType == RACIAL_TYPE_HUMANOID_ORC       ||
-                       nRacialType == RACIAL_TYPE_HUMANOID_REPTILIAN
-                       )
-                        nLevelRequired = max(nLevelRequired, 1);
-
                     // Test level required
+                    int nLevelRequired = _prc_inc_shifter_level_requirement(oTemplate);
                     if(nLevelRequired > nShifterLevel)
                     {
                         bReturn = FALSE;
@@ -1731,21 +2159,7 @@ int ShiftIntoResRef(object oShifter, int nShifterType, string sResRef, int bGain
         return FALSE;
 
     /* Create the template to shift into */
-    // Get the waypoint in Limbo where shifting template creatures are spawned
-    object oSpawnWP = GetWaypointByTag(SHIFTING_TEMPLATE_WP_TAG);
-    // Paranoia check - the WP should be built into the area data of Limbo
-    if(!GetIsObjectValid(oSpawnWP))
-    {
-        if(DEBUG) DoDebug("prc_inc_shifting: ShiftIntoResRef(): ERROR: Template spawn waypoint does not exist.");
-        // Create the WP
-        oSpawnWP = CreateObject(OBJECT_TYPE_WAYPOINT, "nw_waypoint001", GetLocation(GetObjectByTag("HEARTOFCHAOS")), FALSE, SHIFTING_TEMPLATE_WP_TAG);
-    }
-
-    // Get the WP's location
-    location lSpawn  = GetLocation(oSpawnWP);
-
-    // And spawn an instance of the given template there
-    object oTemplate = CreateObject(OBJECT_TYPE_CREATURE, sResRef, lSpawn);
+    object oTemplate = _prc_inc_load_template_from_resref(sResRef);
 
     // Make sure the template creature was successfully created. We have nothing to do if it wasn't
     if(!GetIsObjectValid(oTemplate))
@@ -1760,6 +2174,7 @@ int ShiftIntoResRef(object oShifter, int nShifterType, string sResRef, int bGain
         {
             // It can - activate mutex
             SetLocalInt(oShifter, SHIFTER_SHIFT_MUTEX, TRUE);
+            SetLocalInt(oShifter, SHIFTER_ORIGINALMAXHP, 0);
 
             // Unshift if already shifted and then proceed with shifting into the template
             // Also, give other stuff 100ms to execute in between
@@ -1807,6 +2222,7 @@ int UnShift(object oShifter, int bRemovePoly = TRUE, int bIgnoreShiftingMutex = 
 
     // The unshifting should always proceed succesfully from this point on, so set the mutex
     SetLocalInt(oShifter, SHIFTER_SHIFT_MUTEX, TRUE);
+    SetLocalInt(oShifter, SHIFTER_ORIGINALMAXHP, 0);
 
     // If we had a polymorph effect present, start the removal monitor
     if(bHadPoly)

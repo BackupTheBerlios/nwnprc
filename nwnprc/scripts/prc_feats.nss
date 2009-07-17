@@ -27,7 +27,6 @@ void main()
     if(GetHasFeat(FEAT_VILE_WILL_DEFORM, oPC) ||
        GetHasFeat(FEAT_VILE_DEFORM_GAUNT, oPC)||
        GetHasFeat(FEAT_VILE_DEFORM_OBESE, oPC)  )                ExecuteScript("prc_vilefeats", oPC);
-    if (GetHasFeat(FEAT_VIGIL_ARMOR, oPC))                       ExecuteScript("ft_vigil_armor", oPC);
     if(GetHasFeat(FEAT_BOWMASTERY, oPC)  ||
        GetHasFeat(FEAT_XBOWMASTERY, oPC) ||
        GetHasFeat(FEAT_SHURIKENMASTERY, oPC))                    ExecuteScript("prc_weapmas", oPC);

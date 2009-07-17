@@ -389,6 +389,19 @@ string GetDomainName(int nDomain)
 
 void CheckBonusDomains(object oPC)
 {
+
+    int nSlot = 1;
+    int nBonusDomain = GetBonusDomain(oPC, nSlot);
+    while (5 >= nSlot)
+    {
+        int nDomainFeat = GetDomainFeat(nBonusDomain);
+        if(!GetHasFeat(nDomainFeat, oPC)) SetPersistantLocalInt(oPC, "PRCBonusDomain" + IntToString(nSlot), 0);
+        //SendMessageToPC(oPC, "PRCBonusDomain"+IntToString(nSlot)" = "+IntToString(nBonusDomain));
+        //SendMessageToPC(oPC, "PRCBonusDomain"+IntToString(nSlot)" feat = "+IntToString(GetDomainFeat(nDomainFeat)));
+        nSlot += 1;
+        nBonusDomain = GetBonusDomain(oPC, nSlot);
+    }
+
     if (GetHasFeat(FEAT_BONUS_DOMAIN_AIR,           oPC)) AddBonusDomain(oPC, DOMAIN_AIR);
     if (GetHasFeat(FEAT_BONUS_DOMAIN_ANIMAL,        oPC)) AddBonusDomain(oPC, DOMAIN_ANIMAL);
     if (GetHasFeat(FEAT_BONUS_DOMAIN_DEATH,         oPC)) AddBonusDomain(oPC, DOMAIN_DEATH);

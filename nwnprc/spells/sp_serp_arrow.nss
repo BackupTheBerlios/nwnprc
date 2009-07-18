@@ -54,6 +54,7 @@ void main()
         if(nType == BASE_ITEM_DART) sSerp = "prc_serpdart";
         
         object oSerp = CreateItemOnObject(sSerp, oPC, nCreate);
+        if(DEBUG) DoDebug("Creating item " + sSerp);
         
         //Item Prop already on item, so just add event script
         

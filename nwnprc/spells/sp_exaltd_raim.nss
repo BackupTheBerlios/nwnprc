@@ -44,182 +44,183 @@ Created:   6/28/06
 
 int GetERSpellResistance(int nCasterLvl)
 {
-	int nSRBonus = min(nCasterLvl, 20);
-	int nIPConst;
-	
-	switch(nSRBonus)
-	{
-		case 0:
-		{
-			break;
-		}
-		
-		case 1:
-		{
-			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_6;
-			break;
-		}
-		
-		case 2: 
-		{
-			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_7;
-			break;
-		}
-		
-		case 3: 
-		{
-			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_8;
-			break;
-		}
-		
-		case 4:
-		{
-			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_9;
-			break;
-		}
-		
-		
-		case 5:
-		{
-			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_10;
-			break;
-		}
-		
-		case 6:
-		{
-			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_11;
-			break;
-		}
-				
-		case 7:
-		{
-			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_12;
-			break;
-		}
-		
-		case 8:
-		{ 
-			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_13;
-			break;
-		}
-		
-		case 9:
-		{
-			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_14;
-			break;
-		}
-				
-		case 10:
-		{
-			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_15;
-			break;
-		}
-		
-		case 11:
-		{
-			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_16;
-			break;
-		}
-		
-		case 12:
-		{
-			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_17;
-			break;
-		}
-				
-		case 13:
-		{
-			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_18;
-			break;
-		}
-				
-		case 14:
-		{
-			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_19;
-			break;
-		}
-		
-		case 15:
-		{
-			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_20;
-			break;
-		}
-		
-		case 16:
-		{
-			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_21;
-			break;
-		}
-		
-		case 17:
-		{
-			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_22;
-			break;
-		}
-		
-		case 18:
-		{
-			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_23;
-			break;
-		}
-		
-		case 19:
-		{
-			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_24;
-			break;
-		}
-		
-		case 20: 
-		{
-			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_25;
-			break;
-		}
-	}
-	
-	return nIPConst;
-}	
+        int nSRBonus = min(nCasterLvl, 20);        
+        int nIPConst;
+        
+        switch(nSRBonus)
+        {
+                case 0:
+                {
+                        break;
+                }
+                
+                case 1:
+                {
+                        nIPConst = IP_CONST_SPELLRESISTANCEBONUS_6;
+                        break;
+                }
+                
+                case 2: 
+                {
+                        nIPConst = IP_CONST_SPELLRESISTANCEBONUS_7;
+                        break;
+                }
+                
+                case 3: 
+                {
+                        nIPConst = IP_CONST_SPELLRESISTANCEBONUS_8;
+                        break;
+                }
+                
+                case 4:
+                {
+                        nIPConst = IP_CONST_SPELLRESISTANCEBONUS_9;
+                        break;
+                }
+                
+                
+                case 5:
+                {
+                        nIPConst = IP_CONST_SPELLRESISTANCEBONUS_10;
+                        break;
+                }
+                
+                case 6:
+                {
+                        nIPConst = IP_CONST_SPELLRESISTANCEBONUS_11;
+                        break;
+                }
+                                
+                case 7:
+                {
+                        nIPConst = IP_CONST_SPELLRESISTANCEBONUS_12;
+                        break;
+                }
+                
+                case 8:
+                { 
+                        nIPConst = IP_CONST_SPELLRESISTANCEBONUS_13;
+                        break;
+                }
+                
+                case 9:
+                {
+                        nIPConst = IP_CONST_SPELLRESISTANCEBONUS_14;
+                        break;
+                }
+                                
+                case 10:
+                {
+                        nIPConst = IP_CONST_SPELLRESISTANCEBONUS_15;
+                        break;
+                }
+                
+                case 11:
+                {
+                        nIPConst = IP_CONST_SPELLRESISTANCEBONUS_16;
+                        break;
+                }
+                
+                case 12:
+                {
+                        nIPConst = IP_CONST_SPELLRESISTANCEBONUS_17;
+                        break;
+                }
+                                
+                case 13:
+                {
+                        nIPConst = IP_CONST_SPELLRESISTANCEBONUS_18;
+                        break;
+                }
+                                
+                case 14:
+                {
+                        nIPConst = IP_CONST_SPELLRESISTANCEBONUS_19;
+                        break;
+                }
+                
+                case 15:
+                {
+                        nIPConst = IP_CONST_SPELLRESISTANCEBONUS_20;
+                        break;
+                }
+                
+                case 16:
+                {
+                        nIPConst = IP_CONST_SPELLRESISTANCEBONUS_21;
+                        break;
+                }
+                
+                case 17:
+                {
+                        nIPConst = IP_CONST_SPELLRESISTANCEBONUS_22;
+                        break;
+                }
+                
+                case 18:
+                {
+                        nIPConst = IP_CONST_SPELLRESISTANCEBONUS_23;
+                        break;
+                }
+                
+                case 19:
+                {
+                        nIPConst = IP_CONST_SPELLRESISTANCEBONUS_24;
+                        break;
+                }
+                
+                case 20: 
+                {
+                        nIPConst = IP_CONST_SPELLRESISTANCEBONUS_25;
+                        break;
+                }
+        }
+        
+        return nIPConst;
+}       
 
 void main()
 {
-	object oPC = OBJECT_SELF;
-	object oMyArmor = IPGetTargetedOrEquippedArmor(TRUE);
-	int nCasterLvl = PRCGetCasterLevel(oPC);
-	int nSR = GetERSpellResistance(nCasterLvl);
-	float fDur = (60.0f * nCasterLvl);
-	int nMetaMagic = PRCGetMetaMagicFeat();
-	
-	if(nMetaMagic == METAMAGIC_EXTEND)
-	{
-		fDur += fDur;
-	}
-	
-	effect eArmor = EffectACIncrease(nCasterLvl / 5, AC_DODGE_BONUS, AC_VS_DAMAGE_TYPE_ALL);
-	itemproperty ipArmor = ItemPropertyACBonus(nCasterLvl / 5);
-	itemproperty ipDR    = ItemPropertyDamageResistance(IP_CONST_DAMAGETYPE_PHYSICAL, IP_CONST_DAMAGERESIST_10);
-	itemproperty ipSR    = ItemPropertyBonusSpellResistance(nSR);
-	
-	//check to make sure it has no AC
-	int nAC = GetBaseAC(oMyArmor);
-	
-	//object is valid but has no AC value (clothes, robes, etc).
-	if((GetIsObjectValid(oMyArmor)) && (nAC < 1))
-	{
-		ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_SUPER_HEROISM), oPC);
-		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eArmor, oMyArmor, fDur);
-		IPSafeAddItemProperty(oMyArmor, ipSR, fDur);
-		SetLocalInt(oMyArmor, "PRC_Has_Exalted_Raiment", 1);
-		DelayCommand(fDur, DeleteLocalInt(oMyArmor, "PRC_Has_Exalted_Raiment"));
-	}
-	
-	//Sanctified spells get mandatory 10 pt good adjustment, regardless of switch
-	AdjustAlignment(oPC, ALIGNMENT_GOOD, 10);
-	
-	SPGoodShift(oPC);
-	
-	DoCorruptionCost(oPC, ABILITY_STRENGTH, d4(1), 0);
-	PRCSetSchool();
+        object oPC = OBJECT_SELF;
+        object oMyArmor = IPGetTargetedOrEquippedArmor(TRUE);
+        int nCasterLvl = PRCGetCasterLevel(oPC);
+        int nSR = GetERSpellResistance(nCasterLvl);
+        float fDur = (60.0f * nCasterLvl);
+        int nMetaMagic = PRCGetMetaMagicFeat();
+        
+        if(nMetaMagic == METAMAGIC_EXTEND)
+        {
+                fDur += fDur;
+        }
+        
+        effect eArmor = EffectACIncrease(nCasterLvl / 5, AC_DODGE_BONUS, AC_VS_DAMAGE_TYPE_ALL);
+        itemproperty ipArmor = ItemPropertyACBonus(nCasterLvl / 5);
+        itemproperty ipDR    = ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_2, IP_CONST_DAMAGESOAK_10_HP);
+        itemproperty ipSR    = ItemPropertyBonusSpellResistance(nSR);
+        
+        //check to make sure it has no AC
+        int nAC = GetBaseAC(oMyArmor);
+        
+        //object is valid but has no AC value (clothes, robes, etc).
+        if((GetIsObjectValid(oMyArmor)) && (nAC < 1))
+        {
+                ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_SUPER_HEROISM), oPC);
+                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eArmor, oMyArmor, fDur);
+                IPSafeAddItemProperty(oMyArmor, ipSR, fDur);
+                SetLocalInt(oMyArmor, "PRC_Has_Exalted_Raiment", 1);
+                DelayCommand(fDur, DeleteLocalInt(oMyArmor, "PRC_Has_Exalted_Raiment"));
+        }
+        else SendMessageToPC(oPC, "Invalid item: Base AC > 0");
+        
+        //Sanctified spells get mandatory 10 pt good adjustment, regardless of switch
+        AdjustAlignment(oPC, ALIGNMENT_GOOD, 10);
+        
+        SPGoodShift(oPC);
+        
+        DoCorruptionCost(oPC, ABILITY_STRENGTH, d4(1), 0);
+        PRCSetSchool();
 }
-		
-		
-	
-	
+                
+                
+        
+        

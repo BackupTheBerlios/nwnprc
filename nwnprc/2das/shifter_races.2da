@@ -1,13 +1,13 @@
 2DA V2.0                                                                                                                                                                                                                                                                                                                                   
                                                                                                                                                                                                                                                                                                                                            
            Label                            Name          Type
-0          Animal_Beast_MagicalBeast        16834616      8_9_19
-1          Aberration_Ooze_Vermin           16834617      7_25_29
+0          Animal_Beast_MagicalBeast        16834617      8_9_19
+1          Aberration_Ooze_Vermin           16834618      7_25_29
 2          Construct                        528           10
 3          Dragon                           529           11
-4          Elemental_Outsider               16834618      16_20
+4          Elemental_Outsider               16834619      16_20
 5          Giant                            541           18
-6          Humanoid                         16834619      0_1_2_3_4_5_6_12_13_14_15
+6          Humanoid                         16834620      0_1_2_3_4_5_6_12_13_14_15
 8          Undead                           547           24
 9          Aberration                       525           7
 10         Animal                           526           8

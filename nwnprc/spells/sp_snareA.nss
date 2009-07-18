@@ -43,10 +43,14 @@ void main()
         object oCreator = GetAreaOfEffectCreator();
         effect eLink = EffectLinkEffects(EffectEntangle(), EffectVisualEffect(VFX_DUR_ENTANGLE));
         
-        SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);
-        DestroyObject(OBJECT_SELF);
         
-        StrengthCheck(oTarget, oCreator);
+        if(oTarget != oCreator)
+        {
+        	SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);
+        	DestroyObject(OBJECT_SELF);
+        	
+        	StrengthCheck(oTarget, oCreator);
+        }
 }
 
 void StrengthCheck(object oTarget, object oCreator)

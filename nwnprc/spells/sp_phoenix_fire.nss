@@ -48,103 +48,117 @@ void Rebirth(object oPC);
 
 void main()
 {
-    if(!X2PreSpellCastCode()) return;
-    
-    PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
-    
-    //Define vars
-    object oPC = OBJECT_SELF;
-    location lLoc = GetLocation(oPC);   
-    int nCasterLvl = PRCGetCasterLevel(oPC);
-    int nMetaMagic = PRCGetMetaMagicFeat();
-    int nDam;
-    float fDur = 600.0f;
+        if(!X2PreSpellCastCode()) return;
         
-    //Immolate VFX on caster - VFX_IMP_HOLY_AID for casting VFX
-    effect eFire = EffectVisualEffect(VFX_FNF_FIREBALL);
-    effect eDivine = EffectVisualEffect(VFX_FNF_STRIKE_HOLY);
+        PRCSetSchool(SPELL_SCHOOL_NECROMANCY);
         
-    DelayCommand(0.3f, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eFire, oPC));
-    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDivine, oPC);
-                            
-    //Ash/smoke VFX at player's location
-    object oDust = CreateObject(OBJECT_TYPE_PLACEABLE,"plc_dustplume", lLoc, FALSE);
-    object oFire = CreateObject(OBJECT_TYPE_PLACEABLE,"plc_weathmark", lLoc, FALSE);
-            
-    //"Kill" player
-    effect eLink = EffectLinkEffects(EffectCutsceneParalyze(), EffectCutsceneGhost());
-    eLink = EffectLinkEffects(EffectVisualEffect(VFX_DUR_CUTSCENE_INVISIBILITY), eLink);    
-    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, fDur);
-    
-    SetPlotFlag(oPC, TRUE);
-    DelayCommand(fDur, SetPlotFlag(oPC, FALSE));
-    DelayCommand(fDur, ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(GetMaxHitPoints(oPC)), oPC));    
-            
-    //Get first object in shape
-    object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lLoc, TRUE, OBJECT_TYPE_CREATURE);
-    
-    //While object valid
-    while(GetIsObjectValid(oTarget))
-    {
-        if (!PRCDoResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
+        //Define vars
+        object oPC = OBJECT_SELF;
+        location lLoc = GetLocation(oPC);   
+        int nCasterLvl = PRCGetCasterLevel(oPC);
+        int nMetaMagic = PRCGetMetaMagicFeat();
+        int nDam;
+        float fDur = TurnsToSeconds(10);
+        
+        //Immolate VFX on caster - VFX_IMP_HOLY_AID for casting VFX
+        effect eFire = EffectVisualEffect(VFX_FNF_FIREBALL);
+        effect eDivine = EffectVisualEffect(VFX_FNF_STRIKE_HOLY);
+        
+        DelayCommand(0.3f, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eFire, oPC));
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDivine, oPC);
+        
+        //Ash/smoke VFX at player's location
+        object oDust = CreateObject(OBJECT_TYPE_PLACEABLE,"plc_dustplume", lLoc, FALSE);
+        object oFire = CreateObject(OBJECT_TYPE_PLACEABLE,"plc_weathmark", lLoc, FALSE);
+        
+        //"Kill" player
+        effect eLink = EffectLinkEffects(EffectCutsceneParalyze(), EffectCutsceneGhost());
+        eLink = EffectLinkEffects(EffectVisualEffect(VFX_DUR_CUTSCENE_INVISIBILITY), eLink);    
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, fDur);
+        
+        SetPlotFlag(oPC, TRUE);
+        DelayCommand(fDur, SetPlotFlag(oPC, FALSE));
+        DelayCommand(fDur, ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(GetMaxHitPoints(oPC)), oPC));    
+        
+        //Get first object in shape
+        object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lLoc, TRUE, OBJECT_TYPE_CREATURE);
+        
+        //While object valid
+        while(GetIsObjectValid(oTarget))
         {
-            int nDC = PRCGetSaveDC(oTarget, oPC);
-            
-            //If alignment evil
-            if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL)
-            {
-                //Damage = 2d6/level
-                nDam = d6(min(40, (2 * nCasterLvl)));
-                
-                if(nMetaMagic == METAMAGIC_MAXIMIZE)
-                {                       
-                        nDam = 6 * (min(40, (2 * nCasterLvl)));
-                }
-                                        
-                //Reflex save for 1/2 damage
-                if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_GOOD))
+                if (!PRCDoResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
                 {
-                    nDam = nDam/2;
+                        int nDC = PRCGetSaveDC(oTarget, oPC);
+                        
+                        //If alignment evil
+                        if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL)
+                        {
+                                //Damage = 2d6/level
+                                nDam = d6(min(40, (2 * nCasterLvl)));
+                                
+                                if(nMetaMagic == METAMAGIC_MAXIMIZE)
+                                {                       
+                                        nDam = 6 * (min(40, (2 * nCasterLvl)));
+                                }
+                                
+                                if(nMetaMagic == METAMAGIC_EMPOWER)
+                                {
+                                        nDam += (nDam/2);
+                                }
+                                
+                                //Reflex save for 1/2 damage
+                                if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_GOOD))
+                                {
+                                        nDam = nDam/2;
+                                }
+                                
+                                //Half divine, half fire
+                                int nDiv = nDam/2;
+                                nDam = nDam - nDiv;
+                                
+                                //Apply damage
+                                SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDiv, DAMAGE_TYPE_DIVINE), oTarget);
+                                SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_FIRE), oTarget);            
+                        }
+                        
+                        //If alignment neutral
+                        else if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_NEUTRAL)
+                        {
+                                //Half damage for neutrality, Damage = 1d6
+                                nDam = d6(min(20,nCasterLvl));
+                                
+                                if(nMetaMagic == METAMAGIC_MAXIMIZE)
+                                {                       
+                                        nDam = 6 * (min(20,nCasterLvl));
+                                }
+                                
+                                if(nMetaMagic == METAMAGIC_EMPOWER)
+                                {
+                                        nDam += (nDam/2);
+                                }
+                                
+                                //Reflex for further 1/2
+                                if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_GOOD))
+                                {
+                                        nDam = nDam/2;
+                                }
+                                
+                                //Half divine, half fire
+                                int nDiv = nDam/2;
+                                nDam = nDam - nDiv;
+                                
+                                //Apply damage
+                                SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDiv, DAMAGE_TYPE_DIVINE), oTarget);
+                                SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_FIRE), oTarget);            
+                        }
                 }
-            }
-            //If alignment neutral
-            if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_NEUTRAL)
-            {
-                //Half damage for neutrality, Damage = 1d6
-                nDam = d6(min(20,nCasterLvl));
-                
-                if(nMetaMagic == METAMAGIC_MAXIMIZE)
-                {                       
-                        nDam = 6 * (min(20,nCasterLvl));
-                }
-                
-                //Reflex for further 1/2
-                if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_GOOD))
-                {
-                    nDam = nDam/2;
-                }               
-            }
-            
-            if(nMetaMagic == METAMAGIC_EMPOWER)
-            {
-                    nDam += (nDam/2);
-            }
-            
-            //Half divine, half fire
-            int nDiv = nDam/2;
-            nDam = nDam - nDiv;
-            
-            //Apply damage
-            SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDiv, DAMAGE_TYPE_DIVINE), oTarget);
-            SPApplyEffectToObject(DURATION_TYPE_INSTANT, PRCEffectDamage(oTarget, nDam, DAMAGE_TYPE_FIRE), oTarget);            
+                //Get next object in shape
+                object oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lLoc, TRUE, OBJECT_TYPE_CREATURE);                
         }
-        //Get next object in shape
-        object oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lLoc, TRUE, OBJECT_TYPE_CREATURE);
-    }
-    
-    //Sanctified spells get mandatory 10 pt good adjustment, regardless of switch
-    AdjustAlignment(oPC, ALIGNMENT_GOOD, 10);
-    
-    PRCSetSchool();
-    SPGoodShift(oPC);
+        
+        //Sanctified spells get mandatory 10 pt good adjustment, regardless of switch
+        AdjustAlignment(oPC, ALIGNMENT_GOOD, 10);
+        
+        PRCSetSchool();
+        SPGoodShift(oPC);
 }

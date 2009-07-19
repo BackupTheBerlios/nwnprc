@@ -22,7 +22,7 @@ void main()
         }
         
         //Make snake and make it friendly too
-        object oSnake = CreateObject(OBJECT_TYPE_CREATURE, "spitcobra002", GetLocation(oTarget), TRUE);
+        object oSnake = CreateObject(OBJECT_TYPE_CREATURE, "prc_viper", GetLocation(oTarget), TRUE);
         
         int nMax = GetMaxHenchmen();
         SetMaxHenchmen(99);

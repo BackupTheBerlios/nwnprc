@@ -12,6 +12,6 @@
 8  Good_Domain       FEATOR  317                ****      
 9  Nobility_Domain   FEATOR  4055               ****      
 10 Renewal_Domain    FEATOR  4060               ****      
-11 Spellcasting      SPELL   3                  ****      
+11 ScriptVar         VAR     PRC_DivSpell3      0         
 12 ScriptVar         VAR     PRC_PrereqMornLord 0         
 13 ScriptVar         VAR     X1_AllowML         0         

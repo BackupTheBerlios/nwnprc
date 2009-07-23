@@ -111,7 +111,7 @@ void PopulateList(object oPC, int nLevel)
 {
 	if (!UseNewSpellBook(oPC))
 	{
-		DelayCommand(0.10, PopulateListBioSpellBook(oPC, 9000, nLevel, 0, 250, 1));
+		DelayCommand(0.10, PopulateListBioSpellBook(oPC, 9000, nLevel, 0, 25, 1));
 	}
 	else
 	{

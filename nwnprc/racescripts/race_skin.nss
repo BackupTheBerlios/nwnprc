@@ -945,18 +945,25 @@ void main()
     //Draconian on-death effects
     if(nRace == RACIAL_TYPE_BOZAK)
     {
-    	SetCreatureWingType(PRC_WING_TYPE_DRAGON_BRONZE, oPC);
-        ExecuteScript("race_deaththroes", oPC);
+    	ExecuteScript("race_deaththroes", oPC);
+    	if(GetCreatureWingType(oPC) != CREATURE_WING_TYPE_NONE)
+        return;
+    	else SetCreatureWingType(PRC_WING_TYPE_DRAGON_BRONZE, oPC);
+        
     }
     if(nRace == RACIAL_TYPE_BAAZ)
     {
-    	SetCreatureWingType(PRC_WING_TYPE_DRAGON_BRASS, oPC);
-        ExecuteScript("race_deaththroes", oPC);
+    	ExecuteScript("race_deaththroes", oPC);
+    	if(GetCreatureWingType(oPC) != CREATURE_WING_TYPE_NONE)
+        return;
+    	else SetCreatureWingType(PRC_WING_TYPE_DRAGON_BRASS, oPC);
     }
     if(nRace == RACIAL_TYPE_KAPAK)
     {
-    	SetCreatureWingType(PRC_WING_TYPE_DRAGON_COPPER, oPC);
-        ExecuteScript("race_deaththroes", oPC);
+    	ExecuteScript("race_deaththroes", oPC);
+    	if(GetCreatureWingType(oPC) != CREATURE_WING_TYPE_NONE)
+        return;
+    	else SetCreatureWingType(PRC_WING_TYPE_DRAGON_COPPER, oPC);
     }
 
     

@@ -1,13 +1,14 @@
 2DA V2.0
 
-   LABEL     ReqType ReqParam1     ReqParam2 
-0  Lore      SKILL   7             8         
-1  ScriptVar VAR     PRC_ArcSpell0 0         
-2  BardOr    CLASSOR 1             ****      
-3  SorcOr    CLASSOR 9             ****      
-4  Hexblade  CLASSOR 61            ****      
-5  Duskblade CLASSOR 62            ****      
-6  Suel      CLASSOR 224           ****      
-7  Assassin  CLASSOR 30            ****      
-8  Shdwlord  CLASSOR 120           ****      
-9  ScriptVar VAR     X1_AllowDrDis 0         
+   LABEL      ReqType ReqParam1     ReqParam2 
+0  Lore       SKILL   7             8         
+1  BardOr     CLASSOR 1             ****      
+2  SorcOr     CLASSOR 9             ****      
+3  Hexblade   CLASSOR 61            ****      
+4  Duskblade  CLASSOR 62            ****      
+5  DreadNecro CLASSOR 187           ****      
+6  Suel       CLASSOR 224           ****      
+7  Warmage    CLASSOR 237           ****      
+8  ScriptVar  VAROR   PRC_ArcSpell0 0         
+9  ScriptVar  VAROR   PRC_ArcSpell1 0         
+10 ScriptVar  VAR     X1_AllowDrDis 0         

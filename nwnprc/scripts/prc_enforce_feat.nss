@@ -1967,6 +1967,53 @@ int WarlockFeats(object oPC)
     return TRUE;
 }
 
+int FavoredOfMilil(object oPC = OBJECT_SELF)
+{
+         if (GetLevelByClass(CLASS_TYPE_FAVORED_MILIL, oPC) > 0)
+         {
+         int nClass = GetLevelByClass(CLASS_TYPE_FAVORED_MILIL, oPC);
+
+         int nSongs =    (GetHasFeat(FEAT_FOM_DIVINE_SONG_BLESS, oPC))
+                   +     (GetHasFeat(FEAT_FOM_DIVINE_SONG_CONVICTION, oPC))
+                   +     (GetHasFeat(FEAT_FOM_DIVINE_SONG_CURELIGHT, oPC))
+                   +     (GetHasFeat(FEAT_FOM_DIVINE_SONG_REMOVEFEAR, oPC))
+                   +     (GetHasFeat(FEAT_FOM_DIVINE_SONG_SANCTUARY, oPC))
+                   +     (GetHasFeat(FEAT_FOM_DIVINE_SONG_SHIELDFAITH, oPC))
+                   +     (GetHasFeat(FEAT_FOM_DIVINE_SONG_AID, oPC))
+                   +     (GetHasFeat(FEAT_FOM_DIVINE_SONG_BULLSTRENGTH, oPC))
+                   +     (GetHasFeat(FEAT_FOM_DIVINE_SONG_CUREMODERATE, oPC))
+                   +     (GetHasFeat(FEAT_FOM_DIVINE_SONG_EAGLESPLENDOR, oPC))
+                   +     (GetHasFeat(FEAT_FOM_DIVINE_SONG_ENDURANCE, oPC))
+                   +     (GetHasFeat(FEAT_FOM_DIVINE_SONG_FOXCUNNING, oPC))
+                   +     (GetHasFeat(FEAT_FOM_DIVINE_SONG_LESSRESTORE, oPC))
+                   +     (GetHasFeat(FEAT_FOM_DIVINE_SONG_OWLWISDOM, oPC))
+                   +     (GetHasFeat(FEAT_FOM_DIVINE_SONG_CLAIRVOYANCE, oPC))
+                   +     (GetHasFeat(FEAT_FOM_DIVINE_SONG_CLARITY, oPC))
+                   +     (GetHasFeat(FEAT_FOM_DIVINE_SONG_CURESERIOUS, oPC))
+                   +     (GetHasFeat(FEAT_FOM_DIVINE_SONG_NEGATIVEPROT, oPC))
+                   +     (GetHasFeat(FEAT_FOM_DIVINE_SONG_PRAYER, oPC))
+                   +     (GetHasFeat(FEAT_FOM_DIVINE_SONG_PROTELEMENTS, oPC))
+                   +     (GetHasFeat(FEAT_FOM_DIVINE_SONG_REMOVECURSE, oPC))
+                   +     (GetHasFeat(FEAT_FOM_DIVINE_SONG_CURECRITICAL, oPC))
+                   +     (GetHasFeat(FEAT_FOM_DIVINE_SONG_DEATHWARD, oPC))
+                   +     (GetHasFeat(FEAT_FOM_DIVINE_SONG_FREEDOMMOVEMENT, oPC))
+                   +     (GetHasFeat(FEAT_FOM_DIVINE_SONG_PANACEA, oPC))
+                   +     (GetHasFeat(FEAT_FOM_DIVINE_SONG_RESTORATION, oPC))
+                   +     (GetHasFeat(FEAT_FOM_DIVINE_SONG_STONESKIN, oPC))
+                   +     (GetHasFeat(FEAT_FOM_DIVINE_SONG_TRUESEEING, oPC))
+                   +     (GetHasFeat(FEAT_FOM_DIVINE_SONG_MONSTREGEN, oPC))
+                   +     (GetHasFeat(FEAT_FOM_DIVINE_SONG_RAISEDEAD, oPC))
+                   +     (GetHasFeat(FEAT_FOM_DIVINE_SONG_SPELLRESISTANCE, oPC));
+
+          if (nSongs > ((nClass+1)/2))
+          {
+               FloatingTextStringOnCreature("You do not have the correct amount of Divine Songs. Please reselect your feats.", oPC, FALSE);
+               return FALSE;
+          }
+     }
+     return TRUE;
+}
+
 void main()
 {
         //Declare Major Variables
@@ -2004,6 +2051,7 @@ void main()
          || !RacialFeats(oPC)
          || !WarlockFeats(oPC)
          || !SkillRequirements(oPC)
+         || !FavoredOfMilil(oPC)
        )
     {
        int nHD = GetHitDice(oPC);

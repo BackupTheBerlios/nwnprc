@@ -1144,9 +1144,21 @@ void Morninglord(object oPC)
            GetHasFeat(FEAT_STRENGTH_DOMAIN_POWER, oPC) +
            GetHasFeat(FEAT_SUN_DOMAIN_POWER, oPC) +
            GetHasFeat(FEAT_DOMAIN_POWER_NOBILITY, oPC) +
-           GetHasFeat(FEAT_DOMAIN_POWER_RENEWAL, oPC) +
-           GetHasFeat(FEAT_DOMAIN_POWER_CHARM, oPC) >= 2)
+           GetHasFeat(FEAT_DOMAIN_POWER_RENEWAL, oPC) >= 2)
               SetLocalInt(oPC, "PRC_PrereqMornLord", 0);
+    }
+}
+
+void FaveredOfMilil(object oPC)
+{
+    if(GetLevelByClass(CLASS_TYPE_CLERIC, oPC))
+    {
+        SetLocalInt(oPC, "PRC_PrereqFoM", 1);
+        if(GetHasFeat(FEAT_GOOD_DOMAIN_POWER, oPC) +
+           GetHasFeat(FEAT_DOMAIN_POWER_NOBILITY, oPC) +
+           GetHasFeat(FEAT_DOMAIN_POWER_CHARM, oPC) +
+           GetHasFeat(FEAT_KNOWLEDGE_DOMAIN_POWER,oPC) >= 2)
+              SetLocalInt(oPC, "PRC_PrereqFoM", 0);
     }
 }
 
@@ -1315,6 +1327,7 @@ void main()
      AOTS(oPC);
      EnlF(oPC);
      Morninglord(oPC);
+     FaveredOfMilil(oPC);
      // Truly massive debug message flood if activated.
      /*
 

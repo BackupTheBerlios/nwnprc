@@ -827,6 +827,44 @@ void FeatVirtuoso(object oPC)
     }
 }
 
+void DivineSongs(object oPC)
+{
+    int nUses = 3;
+    if(GetHasFeat(FEAT_FOM_GREATER_DIVINE_SONG, oPC)) nUses += 2;
+
+    FeatUsePerDay(oPC, FEAT_FOM_DIVINE_SONG_BLESS, -1, nUses);
+    FeatUsePerDay(oPC, FEAT_FOM_DIVINE_SONG_CONVICTION, -1, nUses);
+    FeatUsePerDay(oPC, FEAT_FOM_DIVINE_SONG_CURELIGHT, -1, nUses);
+    FeatUsePerDay(oPC, FEAT_FOM_DIVINE_SONG_REMOVEFEAR, -1, nUses);
+    FeatUsePerDay(oPC, FEAT_FOM_DIVINE_SONG_SANCTUARY, -1, nUses);
+    FeatUsePerDay(oPC, FEAT_FOM_DIVINE_SONG_SHIELDFAITH, -1, nUses);
+    FeatUsePerDay(oPC, FEAT_FOM_DIVINE_SONG_AID, -1, nUses);
+    FeatUsePerDay(oPC, FEAT_FOM_DIVINE_SONG_BULLSTRENGTH, -1, nUses);
+    FeatUsePerDay(oPC, FEAT_FOM_DIVINE_SONG_CUREMODERATE, -1, nUses);
+    FeatUsePerDay(oPC, FEAT_FOM_DIVINE_SONG_EAGLESPLENDOR, -1, nUses);
+    FeatUsePerDay(oPC, FEAT_FOM_DIVINE_SONG_ENDURANCE, -1, nUses);
+    FeatUsePerDay(oPC, FEAT_FOM_DIVINE_SONG_FOXCUNNING, -1, nUses);
+    FeatUsePerDay(oPC, FEAT_FOM_DIVINE_SONG_LESSRESTORE, -1, nUses);
+    FeatUsePerDay(oPC, FEAT_FOM_DIVINE_SONG_OWLWISDOM, -1, nUses);
+    FeatUsePerDay(oPC, FEAT_FOM_DIVINE_SONG_CLAIRVOYANCE, -1, nUses);
+    FeatUsePerDay(oPC, FEAT_FOM_DIVINE_SONG_CLARITY, -1, nUses);
+    FeatUsePerDay(oPC, FEAT_FOM_DIVINE_SONG_CURESERIOUS, -1, nUses);
+    FeatUsePerDay(oPC, FEAT_FOM_DIVINE_SONG_NEGATIVEPROT, -1, nUses);
+    FeatUsePerDay(oPC, FEAT_FOM_DIVINE_SONG_PRAYER, -1, nUses);
+    FeatUsePerDay(oPC, FEAT_FOM_DIVINE_SONG_PROTELEMENTS, -1, nUses);
+    FeatUsePerDay(oPC, FEAT_FOM_DIVINE_SONG_REMOVECURSE, -1, nUses);
+    FeatUsePerDay(oPC, FEAT_FOM_DIVINE_SONG_CURECRITICAL, -1, nUses);
+    FeatUsePerDay(oPC, FEAT_FOM_DIVINE_SONG_DEATHWARD, -1, nUses);
+    FeatUsePerDay(oPC, FEAT_FOM_DIVINE_SONG_FREEDOMMOVEMENT, -1, nUses);
+    FeatUsePerDay(oPC, FEAT_FOM_DIVINE_SONG_PANACEA, -1, nUses);
+    FeatUsePerDay(oPC, FEAT_FOM_DIVINE_SONG_RESTORATION, -1, nUses);
+    FeatUsePerDay(oPC, FEAT_FOM_DIVINE_SONG_STONESKIN, -1, nUses);
+    FeatUsePerDay(oPC, FEAT_FOM_DIVINE_SONG_TRUESEEING, -1, nUses);
+    FeatUsePerDay(oPC, FEAT_FOM_DIVINE_SONG_MONSTREGEN, -1, nUses);
+    FeatUsePerDay(oPC, FEAT_FOM_DIVINE_SONG_RAISEDEAD, -1, nUses);
+    FeatUsePerDay(oPC, FEAT_FOM_DIVINE_SONG_SPELLRESISTANCE, -1, nUses);
+}
+
 void HexCurse(object oPC)
 {
     int nUses = (GetLevelByClass(CLASS_TYPE_HEXBLADE, oPC) + 3) / 4; // every 4 levels get 1 more use
@@ -977,4 +1015,5 @@ void FeatSpecialUsePerDay(object oPC)
     FeatVirtuoso(oPC);
     ResetExtraStunfistUses(oPC);
     VestigeMeta(oPC);
+    DivineSongs(oPC);
 }

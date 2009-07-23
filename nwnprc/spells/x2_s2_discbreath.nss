@@ -90,7 +90,7 @@ void main()
     object oPC   = OBJECT_SELF;
     object oSkin = GetPCSkin(oPC);
     struct breath DiscBreath;
-
+    
     // Check the dragon breath delay lock
     if(GetLocalInt(oPC, DDISBREATHLOCK))
     {
@@ -169,7 +169,6 @@ void main()
                  GetHasFeat(FEAT_TARTIAN_DRAGON,   oPC) ? DAMAGE_TYPE_MAGICAL :
                 -1; // If none match, make the itemproperty invalid <- wtf? - Ornedan
 
-
     int dChaos  = GetHasFeat(FEAT_CHAOS_DRAGON,       oPC);
     int dPyCla  = GetHasFeat(FEAT_PYROCLASTIC_DRAGON, oPC);
     int dShadow = GetHasFeat(FEAT_SHADOW_DRAGON,      oPC);
@@ -177,45 +176,66 @@ void main()
     if (DBREED > 0)  DiscBreath = CreateBreath(oPC, IsLineBreath(), fRange, DBREED, 10, nDamageDice, ABILITY_CONSTITUTION, nSaveDCBonus);
     //If Topaz, activate override for special impact VFX for Topaz's breath
     if (GetHasFeat(FEAT_TOPAZ_DRAGON, oPC)) DiscBreath.nOverrideSpecial = BREATH_TOPAZ;
+    //vfx
+    effect eVis;
+    if (GetHasFeat(FEAT_RED_DRAGON, oPC) || GetHasFeat(FEAT_BRASS_DRAGON, oPC) || GetHasFeat(FEAT_GOLD_DRAGON, oPC) || GetHasFeat(FEAT_LUNG_WANG_DRAGON, oPC) || GetHasFeat(FEAT_TIEN_LUNG_DRAGON, oPC)) eVis = EffectVisualEffect(VFX_FNF_DRAGBREATHGROUND);
+    else if (GetHasFeat(FEAT_BLACK_DRAGON, oPC) || GetHasFeat(FEAT_GREEN_DRAGON, oPC) || GetHasFeat(FEAT_COPPER_DRAGON, oPC) || GetHasFeat(FEAT_BROWN_DRAGON, oPC) || GetHasFeat(FEAT_DEEP_DRAGON, oPC) || GetHasFeat(FEAT_RUST_DRAGON, oPC) || GetHasFeat(FEAT_STYX_DRAGON, oPC)) eVis = EffectVisualEffect(VFX_FNF_DRAGBREATHACID);
+    else if (GetHasFeat(FEAT_SILVER_DRAGON, oPC) || GetHasFeat(FEAT_WHITE_DRAGON, oPC)) eVis = EffectVisualEffect(VFX_FNF_DRAGBREATHCOLD);
+    else if (GetHasFeat(FEAT_BLUE_DRAGON, oPC) || GetHasFeat(FEAT_BRONZE_DRAGON, oPC) || GetHasFeat(FEAT_OCEANUS_DRAGON, oPC) || GetHasFeat(FEAT_SONG_DRAGON, oPC)) eVis = EffectVisualEffect(VFX_FNF_DRAGBREATHMIND);//VFX_FNF_DRAGBREATHELEC
+    else if (GetHasFeat(FEAT_EMERALD_DRAGON, oPC) || GetHasFeat(FEAT_SAPPHIRE_DRAGON, oPC) || GetHasFeat(FEAT_BATTLE_DRAGON, oPC) || GetHasFeat(FEAT_HOWLING_DRAGON, oPC)) eVis = EffectVisualEffect(VFX_FNF_DRAGBREATHSONIC);
+    else if (GetHasFeat(FEAT_CRYSTAL_DRAGON, oPC)) eVis = EffectVisualEffect(VFX_FNF_DRAGBREATHHOLY);
+    else if (GetHasFeat(FEAT_AMETHYST_DRAGON, oPC) || GetHasFeat(FEAT_TOPAZ_DRAGON, oPC) || GetHasFeat(FEAT_ETHEREAL_DRAGON, oPC) || GetHasFeat(FEAT_RADIANT_DRAGON, oPC) || GetHasFeat(FEAT_TARTIAN_DRAGON, oPC)) eVis = EffectVisualEffect(VFX_FNF_DRAGBREATHODD);
+    else if (GetHasFeat(FEAT_SHADOW_DRAGON, oPC)) eVis = EffectVisualEffect(VFX_FNF_DRAGBREATHMIND);//VFX_FNF_DRAGBREATHELEC
+    else eVis = EffectVisualEffect(VFX_FNF_DRAGBREATHGROUND);
+    
     if (dChaos > 0)  
     {
-    	int eleBreath;
-	
+    int eleBreath;
+
 	int nNumDice = d10();
 	//Sets the random Element factor of the Chaos Dragons Breath Weapon.
 	//Affects damage, saving throw, and impact visual.
 	if((nNumDice==1) || (nNumDice==2))
 	{
 	    eleBreath = DAMAGE_TYPE_COLD;
+	    eVis = EffectVisualEffect(VFX_FNF_DRAGBREATHCOLD);
 	}
 	else if((nNumDice==3) || (nNumDice==4))
 	{
 	    eleBreath = DAMAGE_TYPE_ACID;
+	    eVis = EffectVisualEffect(VFX_FNF_DRAGBREATHACID);
 	}
 	else if((nNumDice==5) || (nNumDice==6))
 	{
 	    eleBreath = DAMAGE_TYPE_FIRE;
+	    eVis = EffectVisualEffect(VFX_FNF_DRAGBREATHGROUND);
 	}
 	else if((nNumDice==7) || (nNumDice==8))
 	{
 	    eleBreath = DAMAGE_TYPE_SONIC;
+	    eVis = EffectVisualEffect(VFX_FNF_DRAGBREATHSONIC);
 	}
 	else //if((nNumDice==9) || (nNumDice==10))
 	{
 	    eleBreath = DAMAGE_TYPE_ELECTRICAL;
+	    eVis = EffectVisualEffect(VFX_FNF_DRAGBREATHMIND);//VFX_FNF_DRAGBREATHELEC
 	}
-	
+
 	DiscBreath = CreateBreath(oPC, IsLineBreath(), fRange, eleBreath, 10, nDamageDice, ABILITY_CONSTITUTION, nSaveDCBonus);
     }
     if (dPyCla > 0)  DiscBreath = CreateBreath(oPC, IsLineBreath(), fRange, DAMAGE_TYPE_SONIC, 10, nDamageDice, ABILITY_CONSTITUTION, nSaveDCBonus, BREATH_PYROCLASTIC);
     if (dShadow > 0) DiscBreath = CreateBreath(oPC, IsLineBreath(), fRange, -1, 10, nDamageDice, ABILITY_CONSTITUTION, nSaveDCBonus, BREATH_SHADOW);
 
+    
     //actual breath effect
     ApplyBreath(DiscBreath, PRCGetSpellTargetLocation());
 
+  
     //breath VFX
-    effect eVis = EffectVisualEffect(VFX_FNF_DRAGBREATHGROUND);
+    //effect eVis = EffectVisualEffect(1332);
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, PRCGetSpellTargetLocation());
+    
+    
     
     if(GetHasFeat(FEAT_FULL_DRAGON_BREATH, oPC))
     	IncrementRemainingFeatUses(oPC, FEAT_DRAGON_DIS_BREATH);

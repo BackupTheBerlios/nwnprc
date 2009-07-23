@@ -586,6 +586,16 @@ const int VFX_FNF_SCINTILLATING_PATTERN   	   = 947;
 const int VFX_IMP_DRAGONBLAST             	   = 948;
 const int VFX_FNF_DEEP_SLUMBER            	   = 949;
 const int VFX_AOE_ZONE_OF_TRUTH           	   = 950;
+
+//Recolored Dragon Disciple breath weapon
+const int VFX_FNF_DRAGBREATHACID              = 1327;
+const int VFX_FNF_DRAGBREATHCOLD              = 1328;
+const int VFX_FNF_DRAGBREATHELEC              = 1329;
+const int VFX_FNF_DRAGBREATHSONIC             = 1330;
+const int VFX_FNF_DRAGBREATHHOLY              = 1331;
+const int VFX_FNF_DRAGBREATHGAS               = 1332;
+const int VFX_FNF_DRAGBREATHMIND              = 1333;
+const int VFX_FNF_DRAGBREATHODD               = 1334;
 					   
 					   
 					   

@@ -6,7 +6,7 @@ void main()
   object oPC = OBJECT_SELF;
   object oTarget = PRCGetSpellTargetObject();
   effect eAoE = EffectAreaOfEffect(VFX_MOB_DAYLIGHT);
-  int nCasterLvl = GetLevelByClass(CLASS_TYPE_MORNINGLORD, oPC);
+  int nCasterLvl = GetPrCAdjustedCasterLevelByType(TYPE_DIVINE,oPC,1);
   float fDur = (600.0f * nCasterLvl);
 
   SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAoE, oTarget, fDur);

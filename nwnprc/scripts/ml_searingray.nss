@@ -5,7 +5,7 @@ void main()
     //Declare major variables
     object oCaster = OBJECT_SELF;
     object oTarget = GetSpellTargetObject();
-    int nCasterLevel = GetLevelByClass(CLASS_TYPE_MORNINGLORD, oCaster);
+    int nCasterLevel = GetPrCAdjustedCasterLevelByType(TYPE_DIVINE,OBJECT_SELF,1);
     int nPenetr = nCasterLevel + SPGetPenetr();
     int nDamage;
     effect eDam;

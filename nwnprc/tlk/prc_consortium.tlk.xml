@@ -647,6 +647,136 @@ Automatic Quicken Spell, Automatic Silent Spell, Automatic Still Spell, Bonus Do
 Prerequisite: Morninglord of Lathander level 3.
 Specifics: At 2nd level, a Morninglord of Lathander may use Daylight once per day (caster level equals Morninglord of Lathander's divine caster level).
 Use: Selected.</entry>
+  <entry id="12432" lang="en" sex="m">Divine Song: Bless</entry>
+  <entry id="12433" lang="en" sex="m">Duration: 1 Turn / Level 
+
+All allies within the area of effect gain a +1 bonus to attack rolls, along with a +1 on Will saves against fear.</entry>
+  <entry id="12434" lang="en" sex="m">Divine Song: Conviction</entry>
+  <entry id="12435" lang="en" sex="m">Duration: 1 Minute / Level
+
+The songl bolsters the mental, physical, and spiritual strength of the target creature. The song grants allies a +2 morale bonus to saving throws, with an additional +1 bonus for every 6 caster levels (maximum bonus +5).</entry>
+  <entry id="12436" lang="en" sex="m">Divine Song: Cure Light Wounds</entry>
+  <entry id="12437" lang="en" sex="m">Duration: Instant
+Save: Will 1/2
+
+All allies are healed for 1d8 points of damage, +1 point per caster level (to a maximum of +5). Healing spells have a reverse effect on undead, harming instead of healing them.</entry>
+  <entry id="12438" lang="en" sex="m">Divine Song: Remove Fear</entry>
+  <entry id="12439" lang="en" sex="m">Duration: 10 Turns
+
+All fear effects are removed from allies within the area of effect. The targets also gain a +4 bonus to saving throws against fear spells and effects for the duration of the spell.</entry>
+  <entry id="12440" lang="en" sex="m">Divine Song: Sanctuary</entry>
+  <entry id="12441" lang="en" sex="m">Duration: 1 Round / Level
+Save: Will Negates
+
+Presence of singer and his allies is completely ignored by nearby creatures for the duration of the song.</entry>
+  <entry id="12442" lang="en" sex="m">Divine Song: Shield of Faith</entry>
+  <entry id="12443" lang="en" sex="m">Duration: 1 turn / level
+
+All allies gain a +2 deflection bonus to their armor class, with an additional +1 bonus for every six levels of the caster (maximum of +5).</entry>
+  <entry id="12444" lang="en" sex="m">Divine Song: Aid</entry>
+  <entry id="12445" lang="en" sex="m">Duration: 1 Turn / Level
+
+All allies gain a +1 bonus to attack rolls, a +1 bonus on saving throws versus fear, and a 1d8 bonus to maximum hit points.</entry>
+  <entry id="12446" lang="en" sex="m">Divine Song: Bull's Strength</entry>
+  <entry id="12447" lang="en" sex="m">Duration: 1 Hour / Level
+
+Strength of all allies is increased by 1d4+1.</entry>
+  <entry id="12448" lang="en" sex="m">Divine Song: Cure Moderate Wounds</entry>
+  <entry id="12449" lang="en" sex="m">Duration: Instant
+Save: Will 1/2
+
+All allies are healed for 2d8 points of damage, +1 point per caster level (to a maximum of +10). Healing spells have a reverse effect on undead, harming instead of healing them.</entry>
+  <entry id="12450" lang="en" sex="m">Divine Song: Eagle's Splendor</entry>
+  <entry id="12451" lang="en" sex="m">Duration: 1 Hour / Level
+
+Charisma of all allies is increased by 1d4+1.</entry>
+  <entry id="12452" lang="en" sex="m">Divine Song: Endurance</entry>
+  <entry id="12453" lang="en" sex="m">Duration: 1 Hour / Level
+
+Constitution of all allies is increased by 1d4+1.</entry>
+  <entry id="12454" lang="en" sex="m">Divine Song: Fox's Cunning</entry>
+  <entry id="12455" lang="en" sex="m">Duration: 1 Hour / Level
+
+Intelligence of all allies is increased by 1d4+1.</entry>
+  <entry id="12456" lang="en" sex="m">Divine Song: Lesser Restoration</entry>
+  <entry id="12457" lang="en" sex="m">Duration: Instant
+
+Removes all magical, extraordinary, and supernatural effects that apply a penalty to ability scores, AC, attack and damage rolls, spell resistance, and saving throws. Will not remove the effects of a curse or a disease.</entry>
+  <entry id="12458" lang="en" sex="m">Divine Song: Owl's Wisdom</entry>
+  <entry id="12459" lang="en" sex="m">Duration: 1 Hour / Level
+
+Wisdom of all allies is increased by 1d4+1.</entry>
+  <entry id="12460" lang="en" sex="m">Divine Song: Clairaudience / Clairvoyance</entry>
+  <entry id="12461" lang="en" sex="m">Duration: 1 round / level
+
+You and your allies gain a +10 bonus to all Spot and Listen checks.</entry>
+  <entry id="12462" lang="en" sex="m">Divine Song: Clarity</entry>
+  <entry id="12463" lang="en" sex="m">Duration: 5 Rounds + 1 Round / Level
+
+This song removes the effects of Daze, Sleep, Confusion, Stun, and Charm, and protects against all mind-affecting effects until it expires. For every effect removed by the song, the target creature sustains 1 point of damage.</entry>
+  <entry id="12464" lang="en" sex="m">Divine Song: Cure Serious Wounds</entry>
+  <entry id="12465" lang="en" sex="m">Duration: Instant
+Save: Will 1/2
+
+You and your allies are healed for 3d8 points of damage, +1 point per caster level (to a maximum of +15). Healing spells have a reverse effect on undead, harming instead of healing them.</entry>
+  <entry id="12466" lang="en" sex="m">Divine Song: Negative Energy Protection</entry>
+  <entry id="12467" lang="en" sex="m">Duration: 1 Turn / Level
+
+You and your allies are rendered immune to all negative energy attacks, including supernatural ability damage and level drains.</entry>
+  <entry id="12468" lang="en" sex="m">Divine Song: Prayer</entry>
+  <entry id="12469" lang="en" sex="m">Duration: 1 Round / Level
+
+You and your allies within the area of effect gain +1 to attack and damage rolls, skill checks, and saving throws. Enemies receive -1 penalties to the same.</entry>
+  <entry id="12470" lang="en" sex="m">Divine Song: Protection from Elements</entry>
+  <entry id="12471" lang="en" sex="m">Duration: 24 Hours
+
+You and yourl allies gain damage resistance 30/- against all elemental forms of damage. The song effect ends after absorbing 40 points of damage from any single elemental type.</entry>
+  <entry id="12472" lang="en" sex="m">Divine Song: Remove Curse</entry>
+  <entry id="12473" lang="en" sex="m">Duration: Instant
+
+All curses and curse effects are removed from you and your allies.</entry>
+  <entry id="12474" lang="en" sex="m">Divine Song: Cure Critical Wounds</entry>
+  <entry id="12475" lang="en" sex="m">Duration: Instant
+Save: Will 1/2
+
+You and your allies are healed for 4d8 points of damage, +1 point per caster level (to a maximum of +20). Healing spells have a reverse effect on undead, harming instead of healing them.</entry>
+  <entry id="12476" lang="en" sex="m">Divine Song: Death Ward</entry>
+  <entry id="12477" lang="en" sex="m">Duration: 1 Hour / Level
+
+You and your allies become immune to any death spells, spell-like abilities, and effects.</entry>
+  <entry id="12478" lang="en" sex="m">Divine Song: Freedom of Movement</entry>
+  <entry id="12479" lang="en" sex="m">Duration: 1 Turn / Level
+
+You and your allies become immune to paralysis, slow, and entanglement spells and effects.</entry>
+  <entry id="12480" lang="en" sex="m">Divine Song: Panacea</entry>
+  <entry id="12481" lang="en" sex="m">Duration: Instant
+Save: Will half
+
+This song channels positive energy into a creature to wipe away afflictions. It immediately ends any of the following effects: blinded, confused, dazed, deafened, diseased, frightened, paralyzed, poisoned, sleep, and stunned. It also cures 1d8 points of damage +1 per caster level (maximum 1d8+20). Used against undead, panacea deals damage instead of curing it (with a will save for half), but has no other effect.</entry>
+  <entry id="12482" lang="en" sex="m">Divine Song: Restoration</entry>
+  <entry id="12483" lang="en" sex="m">Duration: Instant
+
+Removes all magical, extraordinary and supernatural effects that apply a penalty to ability scores, Armor Class, attack and damage rolls, spell resistance, saving throws and damage immunity. This song also removes all level drain, blindness and deafness effects. Will not remove the effects of a curse or a disease.</entry>
+  <entry id="12484" lang="en" sex="m">Divine Song: Stoneskin</entry>
+  <entry id="12485" lang="en" sex="m">Duration: 1 Hour / Level
+
+This song grants you and your allies damage reduction 10/+5. The song absorbs 10 points of melee damage per caster level, to a maximum of 100, before collapsing.</entry>
+  <entry id="12486" lang="en" sex="m">Divine Song: True Seeing</entry>
+  <entry id="12487" lang="en" sex="m">Duration: 1 Turn / Level
+
+You and your allies can see through Sanctuary and Invisibility effects, and automatically spot hiding opponents.</entry>
+  <entry id="12488" lang="en" sex="m">Divine Song: Monstrous Regeneration</entry>
+  <entry id="12489" lang="en" sex="m">Duration: 1 Round / 2 Caster Levels
+
+For the duration of the song, you and your allies gain the ability to regenerate 3 Hit Points every round.</entry>
+  <entry id="12490" lang="en" sex="m">Divine Song: Raise Dead</entry>
+  <entry id="12491" lang="en" sex="m">Duration: Instant
+
+Returns corpses of fallen allies to life. The raised characters returns to life with only 1 Hit Point.</entry>
+  <entry id="12492" lang="en" sex="m">Divine Song: Spell Resistance</entry>
+  <entry id="12493" lang="en" sex="m">Duration: 1 Turn / Level
+
+You and your allies have your spell resistance set to 12, +1 per caster level. If you already have a higher spell resistance, this song has no effect.</entry>
   <entry id="16390" lang="en" sex="m">
 </entry>
   <entry id="16396" lang="en" sex="m">
@@ -4051,7 +4181,7 @@ Alignment: Neutral Good, Chaotic Good, or True Neutral
 Skills: Perform 14 ranks, Lore 14 ranks
 Spellcasting: Ability to cast 4th level Divine spells and 2nd level Arcane spells
 Feats: Extra Music
-Special: Must worship Milil (Must be a cleric with the following domains: Good, Knowledge)
+Special: Must worship Milil (Clerics must have two of following domains: Good, Knowledge, Nobility or Charm)
 
 CLASS SKILLS
 
@@ -4064,11 +4194,12 @@ Saving Throws: Fortitude weak, Will strong, Reflex strong
 
 Level
 1: Divine Song I
-  Encore Performance
-2: Divine Song II
-3: Divine Song III
-4: Divine Song IV
-5: Divine Song V
+2: Encore Performance
+3: Divine Song II
+5: Divine Song III
+7: Divine Song IV
+9: Divine Song V
+10: Greater Divine Song
 
 Divine Song I: A Favored of Milil is able to sing a bard song that has the effects of divine spells. The Favored of Milil may select one of the following first-level divine spells as a Divine Song: Bless, Conviction, Cure Light Wounds, Remove Fear, Sanctuary, Shield of Faith.
 
@@ -4080,11 +4211,11 @@ Divine Song IV: The Favored of Milil may select one of the following fourth-leve
 
 Divine Song V: The Favored of Milil may select one of the following fifth-level divine spells as a Divine Song: Monstrous Regeneration, Raise Dead, Spell Resistance. Alternatively, he may select a lower-level Divine Song instead.
 
-Encore Performance: The Favored of Milil can add his class levels to his bard song uses, once per day.
+Encore Performance: The Favored of Milil can add 1/2 his class level to his bard song uses, once per day.
 
 SPELLCASTING
 
-Upon gaining a level in Favored of Milil, the character gains new spells per day as if he had also gained a level in his cleric class.</entry>
+Upon gaining a level in Favored of Milil, the character gains new spells per day as if he had also gained a level in his highest divine caster class.</entry>
   <entry id="45868" lang="en" sex="m">Milathur's Lullaby</entry>
   <entry id="45869" lang="en" sex="m">Quiet Melody</entry>
   <entry id="45870" lang="en" sex="m">Song of Alacrity</entry>
@@ -5388,7 +5519,7 @@ Use: Selected.</entry>
   <entry id="46275" lang="en" sex="m">Song of Valor</entry>
   <entry id="46276" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Favored of Milil Level 2
-Specifics: The Favored of Milil can add 1/2 his class levels to his bard song uses for the day, up to his bard song max.
+Specifics: The Favored of Milil can add 1/2 his class levels to his bard song uses for the day.
 Use: Selected.</entry>
   <entry id="46277" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Favored of Milil Level 10
@@ -36528,6 +36659,7 @@ Use: Automatic.</entry>
 Prerequisite: Contemplative Level 10.
 Specifics: Your racial type changes to outsider and you gain DR of 10/+1.
 Use: Automatic.</entry>
+  <entry id="54814" lang="en" sex="m">Lucky Shot</entry>
   <entry id="54815" lang="en" sex="m">Magic Circle against Evil (5)</entry>
   <entry id="54816" lang="en" sex="m">Magic Circle against Good (5)</entry>
   <entry id="54817" lang="en" sex="m">Magic Circle against Law (5)</entry>
@@ -36850,6 +36982,10 @@ Use: Automatic</entry>
 Prerequisites: Warblade 20.
 Specifics: You may use two stances at the same time.
 Use: Automatic</entry>
+  <entry id="54897" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Justices of Weald and Woe 4
+Specifics: Once per day as a free action, you can gain a +10 insight bonus to one attack roll with your longbow.
+Use: Selected.</entry>
   <entry id="54898" lang="en" sex="m">You have not drained levels in the last 24 hours, Soul Blast does not work.</entry>
   <entry id="54899" lang="en" sex="m">Target is immune to negative levels.</entry>
   <entry id="54900" lang="en" sex="m">Soul Eater</entry>

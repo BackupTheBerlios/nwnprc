@@ -41,7 +41,7 @@ return to life are the sacrifice cost for this spell.
 //:://////////////////////////////////////////////
 
 
-void Rebirth(object oPC);
+void Counter(object oPC, int nCounter);
 
 #include "prc_inc_spells"
 #include "prc_add_spell_dc"
@@ -67,14 +67,15 @@ void main()
         DelayCommand(0.3f, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eFire, oPC));
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDivine, oPC);
         
-        //Ash/smoke VFX at player's location
-        object oDust = CreateObject(OBJECT_TYPE_PLACEABLE,"plc_dustplume", lLoc, FALSE);
-        object oFire = CreateObject(OBJECT_TYPE_PLACEABLE,"plc_weathmark", lLoc, FALSE);
+        //VFX
+        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_GHOST_SMOKE_2), lLoc, fDur);             
         
         //"Kill" player
         effect eLink = EffectLinkEffects(EffectCutsceneParalyze(), EffectCutsceneGhost());
-        eLink = EffectLinkEffects(EffectVisualEffect(VFX_DUR_CUTSCENE_INVISIBILITY), eLink);    
+        eLink = EffectLinkEffects(EffectVisualEffect(VFX_DUR_CUTSCENE_INVISIBILITY), eLink);
+        eLink = EffectLinkEffects(eLink, EffectEthereal());
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, fDur);
+        Counter(oPC, 10);
         
         SetPlotFlag(oPC, TRUE);
         DelayCommand(fDur, SetPlotFlag(oPC, FALSE));
@@ -162,3 +163,10 @@ void main()
         PRCSetSchool();
         SPGoodShift(oPC);
 }
+
+void Counter(object oPC, int nCounter)
+{
+        FloatingTextStringOnCreature("Phoenix Fire: "  + IntToString(nCounter) + " turns remaining until resurrection.", oPC);
+        nCounter--;
+        if(nCounter > 0) DelayCommand(TurnsToSeconds(1), Counter(oPC, nCounter));
+}        

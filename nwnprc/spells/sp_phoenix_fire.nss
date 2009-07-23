@@ -153,7 +153,7 @@ void main()
                         }
                 }
                 //Get next object in shape
-                object oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lLoc, TRUE, OBJECT_TYPE_CREATURE);                
+                oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lLoc, TRUE, OBJECT_TYPE_CREATURE);                
         }
         
         //Sanctified spells get mandatory 10 pt good adjustment, regardless of switch

@@ -47,9 +47,9 @@ void main()
         effect eAOE = EffectAreaOfEffect(VFX_PER_SNARE);
         location lLoc = PRCGetSpellTargetLocation();
         
-        AssignCommand(oPC, PlayAnimation(ANIMATION_LOOPING_GET_LOW, 1.0, 1.0));
+        AssignCommand(oPC, ActionPlayAnimation(ANIMATION_LOOPING_GET_LOW, 1.0, 1.0));
         ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eAOE, lLoc);
-        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_AC_BONUS), lLoc);
+        DelayCommand(1.0, ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_AC_BONUS), lLoc));
         
         PRCSetSchool();
 }

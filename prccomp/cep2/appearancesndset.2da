@@ -30,9 +30,9 @@
 26        Mephit              leather        0             0             0             0                 0                0               0             ****               bf_small           bf_small           
 27        Gelatinous_Cube     leather        0             0             0             0                 0                0               0             fs_squishy         bf_squish          bf_squish          
 28        Metl_Golem          plate          2             2             2             2                 2                2               2             ****               bf_large           bf_large           
-29        ****                Bio_reserv     ****          ****          ****          ****              ****             ****            ****          ****               ****               ****               
-30        ****                Bio_reserv     ****          ****          ****          ****              ****             ****            ****          ****               ****               ****               
-31        ****                Bio_reserv     ****          ****          ****          ****              ****             ****            ****          ****               ****               ****               
+29        Halaster            leather        20            20            20            20                20               20              20            ****               ****               ****               
+30        Shark               leather        21            21            21            21                21               21              21            ****               ****               ****               
+31        Crystalline         crystal        2             2             2             2                 2                2               2             ****               ****               ****               
 32        ****                Bio_reserv     ****          ****          ****          ****              ****             ****            ****          ****               ****               ****               
 33        ****                Bio_reserv     ****          ****          ****          ****              ****             ****            ****          ****               ****               ****               
 34        ****                Bio_reserv     ****          ****          ****          ****              ****             ****            ****          ****               ****               ****               

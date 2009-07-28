@@ -16,6 +16,7 @@ Stirge                                          : Ryuujin          	: http://nwv
 Gold half-dragon                                : Ryuujin          	: http://nwvault.ign.com/View.php?view=Hakpaks.Detail&id=8963&id=6224
 Silver half-dragon				: apeiron          	: http://nwvault.ign.com/View.php?view=models.Detail&id=336
 Alyla                                           : Ryuujin          	: http://nwvault.ign.com/View.php?view=Hakpaks.Detail&id=8963&id=6560
+Fluffy purple dragon (plus portrait)            : Ryuujin               : http://nwvault.ign.com/View.php?view=hakpaks.Detail&id=5152
 Base Item Models                                : Den of Assassins 	: http://nwvault.ign.com/View.php?view=hakpaks.Detail&id=778
 Various other CODI models			: CODI		   	: http://nwvault.ign.com/View.php?view=Hakpaks.Detail&id=6800
 Various other CODI portraits and soundsets      : CODI		   	: http://nwvault.ign.com/View.php?view=Hakpaks.Detail&id=6985

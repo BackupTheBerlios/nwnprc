@@ -12,8 +12,8 @@
 <!-- This is a comment -->
 
 <tlk>
+        <tlkread sex="m">cep22_v2.tlk</tlkread>
         <tlkread sex="m">prc_consortium.tlk</tlkread>
-        <tlkread sex="m">cep2_v1.tlk</tlkread>
         <tlkwrite sex="m" lang="en">prccep.tlk</tlkwrite>
         <xmlwrite>prccep.xml</xmlwrite>
 </tlk>

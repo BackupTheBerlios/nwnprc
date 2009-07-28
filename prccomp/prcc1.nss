@@ -14,5 +14,5 @@ void main()
 {
     object oMod = GetModule();
     SetLocalInt(oMod, "Marker_PRC", TRUE);
-    SetLocalInt(oMod, "Marker_CEP153", TRUE);
+    SetLocalInt(oMod, "Marker_CEP1", TRUE);
 }

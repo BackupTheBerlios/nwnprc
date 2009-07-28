@@ -1,11 +1,11 @@
 ; Script generated with the Venis Install Wizard
 
 !ifndef PRCVERSION
-	!define PRCVERSION ""
+	!define PRCVERSION "3.2a"
 !endif
 
 !ifndef PRCINSTALLVERSION
-	!define PRCINSTALLVERSION ""
+	!define PRCINSTALLVERSION "32a"
 !endif
 
 ; Define your application name

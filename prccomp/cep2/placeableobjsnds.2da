@@ -50,8 +50,8 @@
 46        TTU_UDoor_09                plate         as_dr_x2ttu9op       as_dr_x2ttu9cl       cb_bu_metallrg      ****                 as_dr_locked3        
 47        TTU_UDoor_10                plate         as_dr_x2ttu10op      as_dr_x2ttu10cl      cb_bu_metallrg      ****                 as_dr_locked3        
 48        Force_Field_Door            Ethereal      sdr_spellturn        sim_shwngelec01      scm_hitelec         ****                 scm_hitelec          
-49        bio_reserved                ****          ****                 ****                 ****                ****                 ****                 
-50        USER                        ****          ****                 ****                 ****                ****                 ****                 
+49        TNO_Drawbridge              wood          tns_draw_down        tns_draw_up          cb_bu_woodlrg       ****                 as_dr_locked1        
+50        wood_on_destroy_only        wood          ****                 ****                 cb_bu_woodlrg       ****                 as_sw_genericlk1     
 51        USER                        ****          ****                 ****                 ****                ****                 ****                 
 52        USER                        ****          ****                 ****                 ****                ****                 ****                 
 53        USER                        ****          ****                 ****                 ****                ****                 ****                 

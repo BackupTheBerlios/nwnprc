@@ -4,14 +4,6 @@ del /q *.hak
 del /q *.log
 mkdir output
 
-ECHO Assembling PRC Companion hak
-erf -c prccomp.hak companion\2da\*.*
-erf -u prccomp.hak companion\data\*.*
-
-ECHO copying the prc companion 2das somewhere to be merged
-mkdir prccc
-REM copy companion\2da\*.2da prccc\*.2da
-
 ECHO Compiling marker scripts
 nwnnsscomp -g *.nss
 
@@ -23,32 +15,8 @@ REM NAME is the name of the files to make
 
 REM prc  = PRC
 REM prcc = PRC including Companion
-REM c2   = CEP2 (2.0b2)
-REM c1   = CEP1 (1.68)
-
-REM Merge PRC & Companion
-REM put this in its own dir for later
-SET SOURCE=prc
-SET MERGE=companion\2da
-SET OUTPUT=prcc
-SET NAME=prcc
-start /B /wAIT makeb.bat
-
-REM Merge CEP 2 & PRC Companion
-REM put this in its own dir for later
-SET SOURCE=cep2
-SET MERGE=prcc
-SET OUTPUT=prcccep2
-SET NAME=prccc2
-start /B /wAIT makeb.bat
- 
-REM Merge CEP 1 & PRC Companion
-REM put this in its own dir for later
-SET SOURCE=cep1
-SET MERGE=prcc
-SET OUTPUT=prcccep1
-SET NAME=prccc1
-start /B /wAIT makeb.bat
+REM c2   = CEP2 (2.1c)
+REM c1   = CEP1 (1.69)
 
 REM Merge CEP 2 & PRC
 REM put this in its own dir for later
@@ -56,6 +24,7 @@ SET SOURCE=cep2
 SET MERGE=prc
 SET OUTPUT=prccep2
 SET NAME=prcc2
+SET CEP=cep
 start /B /wAIT makeb.bat
 
 REM Merge CEP 1 & PRC
@@ -64,6 +33,7 @@ SET SOURCE=cep1
 SET MERGE=prc
 SET OUTPUT=prccep1
 SET NAME=prcc1
+SET CEP=cep
 start /B /wAIT makeb.bat
 
 

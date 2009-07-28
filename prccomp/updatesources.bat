@@ -6,4 +6,5 @@ xcopy /Q /Y ..\nwnprc\2das\*.2da prc\*.2da
 xcopy /Q /Y ..\nwnprc\craft2das\*.2da prc\*.2da
 xcopy /Q /Y ..\nwnprc\race2das\*.2da prc\*.2da
 xcopy /Q /Y ..\nwnprc\tools\prc.jar prc.jar
+xcopy /Q /Y ..\nwnprc\tools\rar.exe rar.exe
 pause

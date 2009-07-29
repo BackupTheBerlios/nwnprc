@@ -39,12 +39,12 @@ void main()
     	else if (12 > nHD && nHD >= 8)
     	{
     		eDR = EffectDamageReduction(5, DAMAGE_POWER_PLUS_TWO);
-    		nResist = 20;
+    		nResist = 15;
     	}
     	else if (8 > nHD && nHD >= 4)
     	{
     		eDR = EffectDamageReduction(5, DAMAGE_POWER_PLUS_ONE);
-    		nResist = 20;
+    		nResist = 10;
     	}
     	else if (4 > nHD)
     	{
